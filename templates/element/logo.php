@@ -12,9 +12,11 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div class="logo-wrapper">
     <a class="not-in-moblie-menu" href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
-        <img class="logo" src="/files/images/logo.jpg?<?php echo filemtime(WWW_ROOT.'files'.DS.'images'.DS.'logo.jpg')?>" />
+        <img class="logo" src="/files/images/<?php echo Configure::read('app.logoFileName'); ?>?<?php echo filemtime(WWW_ROOT.'files'.DS.'images'.DS.Configure::read('app.logoFileName'))?>" />
     </a>
 </div>

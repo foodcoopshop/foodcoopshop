@@ -30,7 +30,7 @@ use Cake\Core\Configure;
             <tr>
                 <td align="center" valign="middle" style="padding-bottom: 20px;">
                     <a href="<?php echo Configure::read('app.cakeServerName'); ?>">
-                        <img src="<?php echo Configure::read('app.cakeServerName').'/files/images/logo.jpg'; ?>" width="150" />
+                        <img src="<?php echo Configure::read('app.cakeServerName').'/files/images/'.Configure::read('app.logoFileName'); ?>" width="150" />
                     </a>
                 </td>
             </tr>
