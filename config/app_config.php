@@ -105,6 +105,8 @@ return [
          */
         'categoryAllProducts' => 20,
 
+        'logoFileName' => 'logo.png',
+
         /**
          * image upload sizes and suffixes
          */

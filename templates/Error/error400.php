@@ -41,7 +41,7 @@ endif;
 // START production error page
 if (!Configure::read('debug')) {
     $this->layout = 'error';
-    echo '<a href="/"><img id="installation-logo" src="/files/images/logo.jpg" /></a>';
+    echo '<a href="/"><img id="installation-logo" src="/files/images/' . Configure::read('app.logoFileName') . '" /></a>';
     echo '<h2>'.$message.'</h2>';
 }
 ?>
