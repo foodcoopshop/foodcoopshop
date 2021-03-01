@@ -154,9 +154,9 @@ foodcoopshop.AppChart = {
                     data: xAxisData1,
                     label: xAxisData1Label,
                     fill: false,
-                    borderColor: this.color + 'B3', //.7 alpha,
-                    pointBorderColor: this.color,
-                    pointBackgroundColor: this.color,
+                    borderColor: 'rgba(113,159,65,.7)',
+                    pointBorderColor: 'rgba(113,159,65,1)',
+                    pointBackgroundColor: 'rgba(113,159,65,1)',
                     pointRadius: 1,
                     tension: 0,
                     borderWidth: 1
