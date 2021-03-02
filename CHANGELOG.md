@@ -50,6 +50,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Übersetzung auf Polnisch wurde entfernt. Sie wurde nicht mehr verwendet und auch nicht mehr upgedatet. [I#631](https://github.com/foodcoopshop/foodcoopshop/issues/631) / [PR#632](https://github.com/foodcoopshop/foodcoopshop/pull/632) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - CI-Umstellung von Travis auf Github Actions [PR#556](https://github.com/foodcoopshop/foodcoopshop/pull/556) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### Deprecations
+- ⚠️⚠️⚠️ Wer das [Stundenabrechnungs-Modul](https://foodcoopshop.github.io/de/stundenabrechnungs-modul.html) aktiv verwendet, soll sich bitte bei mir melden. Ich habe nämlich den Eindruck, dass es kaum in Gebrauch ist. Da aber die Wartung Aufwand bedeutet, werde ich das Modul - sofern sich bis dahin niemand meldet - ab v3.3 (Herbst 2021) aus der Software entfernen.
+
 
 ## v3.1.0 / 2020-09-07 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...v3.1.0)
 
