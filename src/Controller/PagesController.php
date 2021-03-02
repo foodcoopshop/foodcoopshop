@@ -31,7 +31,7 @@ class PagesController extends FrontendController
         parent::beforeFilter($event);
         switch ($this->getRequest()->getParam('action')) {
             case 'detail':
-                $pageId = (int) $this->getRequest()->getParam('pass')[0];
+                $pageId = (int) $this->getRequest()->getParam('idAndSlug');
                 $this->Page = $this->getTableLocator()->get('Pages');
                 $page = $this->Page->find('all', [
                     'conditions' => [
@@ -100,7 +100,8 @@ class PagesController extends FrontendController
 
     public function detail()
     {
-        $pageId = (int) $this->getRequest()->getParam('pass')[0];
+
+        $pageId = (int) $this->getRequest()->getParam('idAndSlug');
 
         $conditions = [
             'Pages.id_page' => $pageId,
