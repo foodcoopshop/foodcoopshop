@@ -4,7 +4,6 @@ namespace App\Mailer;
 
 use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
@@ -61,7 +60,7 @@ class AppMailer extends Mailer
             // do not use parent:send() here because $replaced body would not be sent
             return $this->getTransport()->send($this->getMessage());
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             if ($this->fallbackEnabled && Configure::check('app.EmailTransport.fallback')) {
                 // only try to reconfigure callback config once
                 if (is_null(TransportFactory::getConfig('fallback'))) {
