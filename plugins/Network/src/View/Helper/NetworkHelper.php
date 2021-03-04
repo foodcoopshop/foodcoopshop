@@ -1,9 +1,5 @@
 <?php
 /**
- * NetworkHelper
- *
- * TODO use cake's routing
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

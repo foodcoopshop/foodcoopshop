@@ -7,8 +7,6 @@ use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 
 /**
- * SyncsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
