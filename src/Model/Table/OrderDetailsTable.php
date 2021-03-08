@@ -89,10 +89,10 @@ class OrderDetailsTable extends AppTable
     {
         $query = $this->find('all', [
             'conditions' => [
-                'OrderDetails.pickup_day = \'' . $pickupDay . '\'',
+                'OrderDetails.pickup_day' => $pickupDay,
             ],
             'contain' => [
-                'Products'
+                'Products',
             ]
         ]);
         return $query;
