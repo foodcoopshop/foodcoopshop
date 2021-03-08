@@ -481,20 +481,24 @@ class OrderDetailsTable extends AppTable
             // do not show any non-associated products that might be found in database
             $conditions[] = 'Products.id_manufacturer > 0';
         }
-        if ($year != '') {
-            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y\') = ' . $year;
-        }
 
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'Products'
+                'Products',
             ]
         ]);
+
+        if ($year != '') {
+            $query->where(function (QueryExpression $exp) use ($year) {
+                return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
+            });
+        }
+
         $query->group('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
-            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')',
         ]);
         return $query;
     }
@@ -510,32 +514,33 @@ class OrderDetailsTable extends AppTable
 
     public function getSumDeposit($customerId)
     {
-        $conditions = [
-            'OrderDetails.id_customer' => $customerId,
-            $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStatesCashless()),
-            'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
-        ];
-
         $query = $this->find('all', [
-            'conditions' => $conditions
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+            ],
         ]);
+        $query = $this->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStatesCashless());
+        $query->where(function (QueryExpression $exp) {
+            return $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-&d\')', Configure::read('app.depositPaymentCashlessStartDate'));
+        });
         $query->select(
             ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
         );
-
         return $query->toArray()[0]['SumTotalDeposit'];
     }
 
-    public function getOrderStateCondition($orderStates)
+    public function setOrderStateCondition($query, $orderStates)
     {
         if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
-            return false;
+            return $query;
         }
         if (!is_array($orderStates)) {
             $orderStates = [$orderStates];
         }
-        $condition = 'OrderDetails.order_state IN (' . join(', ', $orderStates) . ')';
-        return $condition;
+        $query->where(function (QueryExpression $exp) use ($orderStates) {
+            return $exp->in('OrderDetails.order_state', $orderStates);
+        });
+        return $query;
     }
 
     public function getVariableMemberFeeReducedPrice($price, $variableMemberFee)

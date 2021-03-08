@@ -147,7 +147,6 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         }
 
         $conditions = [];
-        $conditions[] = $this->OrderDetails->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
 
         if ($customerId) {
             $conditions['OrderDetails.id_customer'] = $customerId;
@@ -159,6 +158,8 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
                 'OrderDetails.Products'
             ]
         ]);
+        $query = $this->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStateIds());
+
         return $query;
     }
 
