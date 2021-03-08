@@ -181,7 +181,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $query->group('MonthAndYear');
         $query->select([
             'SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
-            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')',
         ]);
         return $query->toArray();
     }
@@ -195,7 +195,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     {
         $query = $this->getFilteredQuery($manufacturerId, $customerId);
         $query->select(
-            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')]
+            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')],
         );
 
         return $query->toArray()[0]['SumSeconds'];
