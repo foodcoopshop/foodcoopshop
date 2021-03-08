@@ -17,6 +17,7 @@ namespace App\Shell;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 
 class PickupReminderShell extends AppShell
 {
@@ -58,13 +59,14 @@ class PickupReminderShell extends AppShell
 
         $i = 0;
         $outString = '';
+        $exp = new QueryExpression();
         foreach ($customers as $customer) {
 
             $futureOrderDetails = $this->OrderDetail->find('all', [
                 'conditions' => [
                     'OrderDetails.id_customer' => $customer->id_customer,
-                    'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \''.date('Y-m-d', $nextPickupDay).'\'',
-                    'DATEDIFF(OrderDetails.pickup_day, DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')) > ' . $diffOrderAndPickupInDays
+                    $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', date('Y-m-d', $nextPickupDay)),
+                    $exp->gt('DATEDIFF(OrderDetails.pickup_day, DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\'))', $diffOrderAndPickupInDays),
                 ],
                 'contain' => [
                     'Products.Manufacturers'
