@@ -275,12 +275,15 @@ class OrderDetailsTable extends AppTable
         ]);
 
         if (!empty($orderDetailIds)) {
-            $orderDetails->where(['OrderDetails.id_order_detail IN (' . join(', ', $orderDetailIds) . ')']);
+            $orderDetails->where(function (QueryExpression $exp) use ($orderDetailIds) {
+                return $exp->in('OrderDetails.id_order_detail', $orderDetailIds);
+            });
         } else {
-            $orderDetails->where([
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\''
-            ]);
+            $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+                $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+                $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+                return $exp;
+            });
         }
 
         foreach($orderDetails as $orderDetail) {
