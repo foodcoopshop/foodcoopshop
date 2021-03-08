@@ -305,30 +305,25 @@ class OrderDetailsTable extends AppTable
         $cartsAssociation->setJoinType('INNER');
         $cartsAssociation->setConditions([
             'Carts.cart_type' => CartsTable::CART_TYPE_WEEKLY_RHYTHM,
-            'Carts.status' => APP_OFF
+            'Carts.status' => APP_OFF,
         ]);
-        $conditions = [
-            'OrderDetails.id_customer' => $customerId,
-        ];
-
-        $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
-            date('Y-m-d', $dateFrom)
-        ).'\'';
-
-        $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
-            date('Y-m-d', $dateTo)
-        ).'\'';
 
         $orderDetails = $this->find('all', [
-            'conditions' => $conditions,
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+            ],
             'order' => [
                 'OrderDetails.created' => 'DESC'
             ],
             'contain' => [
                 'CartProducts.Carts',
-                'Products.Manufacturers'
+                'Products.Manufacturers',
             ]
-        ])->toArray();
+        ])->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate(date('Y-m-d', $dateFrom)));
+            $exp->lte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate(date('Y-m-d', $dateTo)));
+            return $exp;
+        })->toArray();
 
         return $orderDetails;
     }
