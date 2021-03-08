@@ -7,6 +7,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\OrderDetailsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
@@ -441,10 +442,6 @@ class OrderDetailsController extends AdminAppController
                 $query->select(['Products.name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
                 break;
-        }
-
-        if (in_array('excludeCreatedLastMonth', array_keys($this->getRequest()->getQueryParams()))) {
-            $query->where(['DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'']);
         }
 
         $orderDetails = $this->paginate($query, [
