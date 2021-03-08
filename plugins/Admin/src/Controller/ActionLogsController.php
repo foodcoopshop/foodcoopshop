@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 
 /**
@@ -43,9 +44,6 @@ class ActionLogsController extends AdminAppController
             $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
-
-        $conditions[] = 'DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         $customerId = '';
         if (! empty($this->getRequest()->getQuery('customerId'))) {
@@ -128,6 +126,13 @@ class ActionLogsController extends AdminAppController
                 'Payments'
             ]
         ]);
+
+        $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            return $exp;
+        });
+
         $actionLogs = $this->paginate($query, [
             'sortableFields' => [
                 'ActionLogs.id', 'ActionLogs.type', 'ActionLogs.date', 'ActionLogs.text', 'Customers.' . Configure::read('app.customerMainNamePart')
