@@ -231,9 +231,13 @@ class CustomersTable extends AppTable
 
     public function getConditionToExcludeHostingUser()
     {
-        return [
-            (new QueryExpression())->notEq('Customers.email', Configure::read('app.hostingEmail')),
-        ];
+        $result = [];
+        if (Configure::read('app.hostingEmail') != '') {
+            $result = [
+                (new QueryExpression())->notEq('Customers.email', Configure::read('app.hostingEmail')),
+            ];
+        }
+        return $result;
     }
 
     public function dropManufacturersInNextFind()
