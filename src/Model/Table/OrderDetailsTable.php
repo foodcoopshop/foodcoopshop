@@ -3,7 +3,6 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Database\Query;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
@@ -114,12 +113,8 @@ class OrderDetailsTable extends AppTable
                 'conditions' => $conditions,
             ]);
             if ($year != '') {
-                $query->where(function (QueryExpression $exp, Query $q) use ($year) {
-                    return $exp->addCase(
-                        [
-                            $q->newExpr()->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year),
-                        ],
-                    );
+                $query->where(function (QueryExpression $exp) use ($year) {
+                    return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
                 });
             }
             $query->select([
