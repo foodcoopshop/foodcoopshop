@@ -521,7 +521,7 @@ class OrderDetailsTable extends AppTable
         ]);
         $query = $this->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStatesCashless());
         $query->where(function (QueryExpression $exp) {
-            return $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-&d\')', Configure::read('app.depositPaymentCashlessStartDate'));
+            return $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.depositPaymentCashlessStartDate'));
         });
         $query->select(
             ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
