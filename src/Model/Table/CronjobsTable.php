@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\I18n\Time;
@@ -70,12 +71,14 @@ class CronjobsTable extends AppTable
             $cronjobLog = $this->CronjobLogs->find('all', [
                 'conditions' => [
                     'CronjobLogs.cronjob_id' => $cronjob->id,
-                    'DATE_FORMAT(CronjobLogs.created, \'%Y-%m-%d\') = \'' . $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.Database')) . '\''
                 ],
                 'order' => [
                     'CronjobLogs.created' => 'DESC'
                 ]
-            ])->first();
+            ])
+            ->where(function (QueryExpression $exp) use ($cronjobRunDayObject) {
+                return $exp->eq('DATE_FORMAT(CronjobLogs.created, \'%Y-%m-%d\')', $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.Database')));
+            })->first();
 
             $executeCronjob = true;
 

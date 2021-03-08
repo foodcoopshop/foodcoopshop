@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use App\Lib\Csv\RaiffeisenBankingReader;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
 
@@ -183,8 +184,6 @@ class ReportsController extends AdminAppController
         $conditions = [
             'Payments.type' => $paymentType
         ];
-        $conditions[] = 'DATE_FORMAT(Payments.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(Payments.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         if ($customerId != '') {
             $conditions['Payments.id_customer'] = $customerId;
@@ -203,6 +202,12 @@ class ReportsController extends AdminAppController
                 'ChangedByCustomers'
             ]
         ]);
+
+        $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(Payments.date_add, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(Payments.date_add, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            return $exp;
+        });
 
         $payments = $this->paginate($query, [
             'order' => [
