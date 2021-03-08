@@ -58,9 +58,8 @@ class EmailOrderReminderShell extends AppShell
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $exp = new QueryExpression();
         $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
-            $exp->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
+            (new QueryExpression())->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
         ]);
 
         $customers = $this->Customer->find('all', [
