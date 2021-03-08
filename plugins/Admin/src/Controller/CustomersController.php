@@ -8,6 +8,7 @@ use App\Lib\PdfWriter\TermsOfUsePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
@@ -718,24 +719,25 @@ class CustomersController extends AdminAppController
 
         $this->Customer->dropManufacturersInNextFind();
 
-        $validOrderDetailsConditions = [];
-        if ($dateFrom != '') {
-            $validOrderDetailsConditions[] = 'DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom).'\'';
-        }
-        if ($dateTo != '') {
-            $validOrderDetailsConditions[] = 'DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo).'\'';
-        }
         $query = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-                'ValidOrderDetails' => function (Query $query) use($validOrderDetailsConditions) {
+                'ValidOrderDetails' => function (Query $query) use($dateFrom, $dateTo) {
                     $query->select([
                         'valid_order_detail_count' => $query->func()->count('ValidOrderDetails.id_order_detail'),
                         'ValidOrderDetails.id_customer',
                     ])
                     ->group(['ValidOrderDetails.id_customer'])
-                    ->where($validOrderDetailsConditions);
+                    ->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+                        if ($dateFrom != '') {
+                            $exp->gte('DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+                        }
+                        if ($dateTo != '') {
+                            $exp->lte('DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+                        }
+                        return $exp;
+                    });
                     return $query;
                 }
             ]
