@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
+use Cake\Database\Expression\QueryExpression;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -232,7 +233,7 @@ class CustomersTable extends AppTable
     public function getConditionToExcludeHostingUser()
     {
         return [
-            'Customers.email != \'' . Configure::read('app.hostingEmail') . '\''
+            (new QueryExpression())->notEq('Customers.email', Configure::read('app.hostingEmail')),
         ];
     }
 
