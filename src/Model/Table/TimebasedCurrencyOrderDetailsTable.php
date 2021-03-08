@@ -155,10 +155,10 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'OrderDetails.Products'
+                'OrderDetails.Products',
             ]
         ]);
-        $query = $this->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStateIds());
+        $query = $this->OrderDetails->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStateIds());
 
         return $query;
     }
