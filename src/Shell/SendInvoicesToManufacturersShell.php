@@ -16,6 +16,7 @@ namespace App\Shell;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\Time;
 
 class SendInvoicesToManufacturersShell extends AppShell
@@ -54,25 +55,28 @@ class SendInvoicesToManufacturersShell extends AppShell
 
         // 2) get all order details with pickup day in the given date range
         $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'OrderDetails.order_state NOT IN (' . join(",", [
-                    ORDER_STATE_BILLED_CASH,
-                    ORDER_STATE_BILLED_CASHLESS
-                ]) . ')' // order_state condition necessary for switch from OrderDetails.created to OrderDetails.pickup_day
-            ],
             'contain' => [
                 'Products.Manufacturers',
                 'Products'
             ]
         ]);
+        $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            // order_state condition necessary for switch from OrderDetails.created to OrderDetails.pickup_day
+            $notAllowedOrderStates = [
+                ORDER_STATE_BILLED_CASH,
+                ORDER_STATE_BILLED_CASHLESS,
+            ];
+            $exp->notIn('OrderDetails.order_state', $notAllowedOrderStates);
+            return $exp;
+        });
 
         if (!Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES')) {
             $orderDetails->where(function ($exp, $query) {
                 return $exp->or([
                     'Products.is_stock_product' => 0, // do not use "false" here!
-                    'Manufacturers.stock_management_enabled' => 0 // do not use "false" here!
+                    'Manufacturers.stock_management_enabled' => 0, // do not use "false" here!
                 ]);
             });
         }
