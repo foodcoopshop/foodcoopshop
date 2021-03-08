@@ -640,11 +640,12 @@ class OrderDetailsTable extends AppTable
     {
         $conditions = [];
 
+        $exp = new QueryExpression();
         if (count($pickupDay) == 2) {
-            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'';
-            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[1]) . '\'';
+            $conditions[] = $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
+            $conditions[] = $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[1]));
         } else {
-            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'';
+            $conditions[] = $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
         }
 
         if ($productId != '') {
