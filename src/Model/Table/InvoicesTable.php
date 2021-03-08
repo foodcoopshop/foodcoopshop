@@ -119,12 +119,8 @@ class InvoicesTable extends AppTable
             'contain' => [
                 'AddressCustomers',
                 'ActiveOrderDetails' => function (Query $q) use ($currentDay) {
-                    $q->where(function (QueryExpression $exp, Query $q) use ($currentDay) {
-                        return $exp->addCase(
-                            [
-                                $q->newExpr()->lte('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $currentDay),
-                            ],
-                        );
+                    $q->where(function (QueryExpression $exp) use ($currentDay) {
+                        return $exp->lte('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $currentDay);
                     });
                     return $q;
                 },
