@@ -100,6 +100,7 @@ body.iframe_start_page {
 }
 .modal .cke {
     width: 100% ! important;
+    float: none;
 }
 #modal-product-add .textarea-wrapper,
 #modal-product-name-edit .textarea-wrapper {
