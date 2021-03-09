@@ -465,7 +465,6 @@ class ManufacturersTable extends AppTable
                 break;
         }
 
-        // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
         $params = [
             'manufacturerId' => $manufacturerId
         ];
@@ -474,6 +473,7 @@ class ManufacturersTable extends AppTable
 
         if (is_null($dateTo)) {
             // order list
+            // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
             $orderDetailCondition = "AND od.id_order_detail IN (" . join(',', $orderDetailIds) . ")" ;
             $dateConditions = "";
         } else {
@@ -490,6 +490,7 @@ class ManufacturersTable extends AppTable
 
         $orderStateCondition = "";
         if (!empty($orderState)) {
+            // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
             $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
         }
 
