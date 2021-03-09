@@ -438,24 +438,23 @@ class OrderDetailsTable extends AppTable
 
     private function prepareSumProduct($customerId)
     {
-        $conditions = [
-            'OrderDetails.id_customer' => $customerId,
-            'OrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()) . ')'
-        ];
         $query = $this->find('all', [
-            'conditions' => $conditions
-        ]);
-
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+            ],
+        ])
+        ->where(function (QueryExpression $exp) {
+            return $exp->in('OrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless());
+        });
         return $query;
     }
 
     public function getCountByCustomerId($customerId)
     {
-        $conditions = [
-            'OrderDetails.id_customer' => $customerId
-        ];
         $query = $this->find('all', [
-            'conditions' => $conditions
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+            ],
         ]);
         return $query->count();
     }
