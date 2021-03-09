@@ -170,6 +170,11 @@ class SlugHelper extends Helper
         return '/' . __('route_new_products');
     }
 
+    public function getProductSearch($keyword)
+    {
+        return '/' . __('route_search') . '?' . $keyword;
+    }
+
     public function getAllProducts()
     {
         return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), __('route_all_products'));

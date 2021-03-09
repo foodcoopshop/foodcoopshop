@@ -47,7 +47,8 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getLogin(),
             $this->Slug->getListOfAllergens(),
             $this->Slug->getTermsOfUse(),
-            $this->Slug->getPrivacyPolicy()
+            $this->Slug->getPrivacyPolicy(),
+            $this->Slug->getProductSearch('artischocke'),
         ];
         $this->assertPagesForErrors($testUrls);
     }
