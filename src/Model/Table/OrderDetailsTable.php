@@ -273,12 +273,14 @@ class OrderDetailsTable extends AppTable
         $orderDetails = $this->find('all', [
             'conditions' => [
                 'Products.id_manufacturer' => $manufacturerId,
-                'OrderDetails.order_state IN (' . join(', ', $oldOrderStates) . ')'
             ],
             'contain' => [
-                'Products'
+                'Products',
             ]
-        ]);
+        ])
+        ->where(function (QueryExpression $exp) use ($oldOrderStates) {
+            return $exp->in('OrderDetails.order_state', $oldOrderStates);
+        });;
 
         if (!empty($orderDetailIds)) {
             $orderDetails->where(function (QueryExpression $exp) use ($orderDetailIds) {
@@ -293,14 +295,8 @@ class OrderDetailsTable extends AppTable
         }
 
         foreach($orderDetails as $orderDetail) {
-            $this->save(
-                $this->patchEntity(
-                    $orderDetail,
-                    [
-                        'order_state' => $newOrderState
-                    ]
-                )
-            );
+            $orderDetail->order_state = $newOrderState;
+            $this->save($orderDetail);
         }
 
     }
@@ -319,7 +315,7 @@ class OrderDetailsTable extends AppTable
                 'OrderDetails.id_customer' => $customerId,
             ],
             'order' => [
-                'OrderDetails.created' => 'DESC'
+                'OrderDetails.created' => 'DESC',
             ],
             'contain' => [
                 'CartProducts.Carts',
