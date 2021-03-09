@@ -297,4 +297,4 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Npm wird jetzt anstatt Bower als Dependency Manager verwendet. / [PR#199](https://github.com/foodcoopshop/foodcoopshop/pull/199) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Viele nicht benutzte Datenbank-Felder wurden entfernt und die Anzahl der Tabellen von 40 auf 31 reduziert. / [PR#189](https://github.com/foodcoopshop/foodcoopshop/pull/189) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-[Zum Changelog von FoodCoopShop v1.x](devtools/CHANGELOG-v1.md)
+[Zum Changelog von FoodCoopShop v1.x](CHANGELOG-v1.md)
