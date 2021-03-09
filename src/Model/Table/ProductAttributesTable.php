@@ -48,7 +48,7 @@ class ProductAttributesTable extends AppTable
 
         $productAttributesCount = $this->find('all', [
             'conditions' => [
-                'ProductAttributes.id_product' => $productId
+                'ProductAttributes.id_product' => $productId,
             ]
         ])->count();
 
@@ -56,14 +56,20 @@ class ProductAttributesTable extends AppTable
             $this->newEntity(
                 [
                     'id_product' => $productId,
-                    'default_on' => $productAttributesCount == 0 ? 1 : 0
+                    'default_on' => $productAttributesCount == 0 ? 1 : 0,
                 ]
             )
         );
         $productAttributeId = $newAttribute->id_product_attribute;
 
         // INSERT in ProductAttributeCombination tricky because of set primary_key
-        $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
+        $sql = 'INSERT INTO ' . $this->tablePrefix . 'product_attribute_combination (id_attribute, id_product_attribute) VALUES (:attributeId, :productAttributeId)';
+        $params = [
+            'attributeId' => (int) $attributeId,
+            'productAttributeId' => (int) $productAttributeId,
+        ];
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute($params);
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
         $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -71,14 +77,20 @@ class ProductAttributesTable extends AppTable
             $this->Product->patchEntity(
                 $this->Product->get($productId),
                 [
-                    'price' => 0
+                    'price' => 0,
                 ]
             )
         );
 
-        // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
-        // with custom sql
-        $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
+        // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock' with custom sql
+        $sql = 'INSERT INTO ' . $this->tablePrefix . 'stock_available (id_product, id_product_attribute, quantity) VALUES (:productId, :productAttributeId, :quantity)';
+        $params = [
+            'productId' => (int) $productId,
+            'productAttributeId' => (int) $productAttributeId,
+            'quantity' => (int) $defaultQuantity,
+        ];
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute($params);
 
         $this->StockAvailable = FactoryLocator::get('Table')->get('StockAvailables');
         $this->StockAvailable->updateQuantityForMainProduct($productId);
