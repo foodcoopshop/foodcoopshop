@@ -11,6 +11,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
+### Code Cleaning
+- Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v3.2.0 / 2021-03-08 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...v3.2.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
