@@ -33,7 +33,7 @@ if (isset($style) && $style != '') {
 
 echo '<div class="blog-wrapper"'.$style.'>';
     foreach ($blogPosts as $blogPost) {
-        echo '<a class="blog-post-wrapper swiper-slide transistion" href="'.$this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title).'">';
+        echo '<a class="blog-post-wrapper swiper-slide" href="'.$this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title).'">';
             echo '<span class="img-wrapper">';
                 echo '<img class="blog-post-image lazyload" data-src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
             echo '</span>';

@@ -18,21 +18,11 @@ body {
     background-image: url(/img/bg.jpg);
     background-attachment: fixed;
 }
-a.transistion {
-    -o-transition: all 0.3s ease-in;
-    -moz-transition: all 0.3s ease-in;
-    -khtml-transition: all 0.3s ease-in;
-    -webkit-transition: all 0.3s ease-in;
-    -ms-transition: all 0.3s ease-in;
-    transition: all 0.3s ease-in;
-}
-
 #container {
     width: 1234px;
     float: left;
     display: none;
 }
-
 #content {
     line-height: 20px;
     min-height: 500px; /* hack for mobile with little content */
@@ -46,10 +36,10 @@ a.transistion {
 }
 #inner-content {
     float: left;
-    width: 731px;
+    width: 736px;
     background: #fff;
     margin-top: 20px;
-    padding-right: 15px;
+    padding-right: 10px;
     padding-bottom: 15px;
 }
 #header {
@@ -97,7 +87,7 @@ a.transistion {
     padding-right: 10px;
     background: #fff;
     padding-top: 15px;
-    width: 195px;
+    width: 190px;
 }
 body.categories.detail div.img-wrapper {
     width: 100%;
@@ -1094,22 +1084,27 @@ body.carts.order_successful #inner-content ul {
 }
 a.blog-post-wrapper {
     float: left;
-    width: 174px ! important;
-    margin-right: 5px;
-    height: 255px;
-    padding: 5px;
+    width: 229px ! important;
+    margin-right: 16px;
+    height: 280px;
+    padding: 5px 10px;
     overflow: hidden;
     color: #333333;
-    margin-bottom: 5px;
-    border: 1px solid #d6d4d4;
+    margin-bottom: 21px;
     border-radius: 5px;
+    box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.50);
+    -webkit-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.50);
+    -moz-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.50);
+}
+a.blog-post-wrapper:nth-of-type(3n) {
+    margin-right: 0;
 }
 a.blog-post-wrapper img {
-    padding: 5px;
+    padding: 2px;
     width: 100%;
     object-fit: contain;
-    height: 115px;
-    margin-bottom: 5px;
+    height: 145px;
+    margin-bottom: 3px;
 }
 a.blog-post-wrapper h3 {
     font-size: 14px;
@@ -1132,10 +1127,9 @@ a.blog-post-wrapper span.img-wrapper {
     float: none;
 }
 a.blog-post-wrapper:hover {
-    background: #F5F5F5;
-}
-a.blog-post-wrapper:hover h3 {
-    border-color: #fff;
+    box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.6);
+    -moz-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.6);
 }
 a.blog-post-wrapper:hover .img-wrapper {
     border-color: #fff;
@@ -1182,8 +1176,10 @@ body.blog_posts.detail .blog-wrapper {
 body.categories.detail .blog-wrapper,
 body.categories.new_product .blog-wrapper,
 body.categories.search .blog-wrapper {
-    height: 255px;
+    height: 315px;
+    padding-top: 10px;
     overflow-y: auto;
+    width: 736px;
 }
 body.blog_posts.detail #inner-content .content h2,
 body.pages:not(.home) #inner-content h2,

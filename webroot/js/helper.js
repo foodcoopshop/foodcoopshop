@@ -255,12 +255,12 @@ foodcoopshop.Helper = {
         $(selector).append('<div class="swiper-wrapper"></div>');
         $(selector).find('.swiper-wrapper').append(slides);
 
-        var mySwiper = new Swiper(selector, {
+        new Swiper(selector, {
             loop: false,
             speed: 300,
             centeredSlides: true,
-            slidesPerView: 2,
-            spaceBetween: 5,
+            slidesPerView: 1,
+            spaceBetween: 16,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev'
@@ -271,7 +271,7 @@ foodcoopshop.Helper = {
                     centeredSlides: true,
                     slidesPerView: 1,
                     initialSlide: 0,
-                    spaceBetween: 6
+                    spaceBetween: 16
                 }
             }
         });
