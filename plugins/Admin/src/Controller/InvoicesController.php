@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -36,9 +37,8 @@ class InvoicesController extends AdminAppController
         $customerId = h($this->getRequest()->getQuery('customerId'));
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoices = $this->Invoice->find('all', [
-            'conditions' => $this->getInvoiceConditions($dateFrom, $dateTo, $customerId),
-        ]);
+        $invoices = $this->Invoice->find('all');
+        $invoices = $this->setInvoiceConditions($invoices, $dateFrom, $dateTo, $customerId);
 
         if (empty($invoices)) {
             throw new NotFoundException();
@@ -320,8 +320,8 @@ class InvoicesController extends AdminAppController
                 'CancellationInvoices',
                 'CancelledInvoices',
             ],
-            'conditions' => $this->getInvoiceConditions($dateFrom, $dateTo, $customerId),
         ]);
+        $query = $this->setInvoiceConditions($query, $dateFrom, $dateTo, $customerId);
 
         $invoices = $this->paginate($query, [
             'sortableFields' => [
@@ -363,20 +363,21 @@ class InvoicesController extends AdminAppController
 
     }
 
-    private function getInvoiceConditions($dateFrom, $dateTo, $customerId)
+    private function setInvoiceConditions($query, $dateFrom, $dateTo, $customerId)
     {
 
-        $conditions = [
-            'Invoices.id_customer > 0',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-        ];
+        $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(Invoices.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(Invoices.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            $exp->gt('Invoices.id_customer', 0);
+            return $exp;
+        });
 
         if ($customerId != '') {
-            $conditions['Invoices.id_customer'] = $customerId;
+            $query->where(['Invoices.id_customer' => $customerId]);
         }
 
-        return $conditions;
+        return $query;
 
     }
 

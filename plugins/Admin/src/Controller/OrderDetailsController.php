@@ -443,10 +443,6 @@ class OrderDetailsController extends AdminAppController
                 break;
         }
 
-        if (in_array('excludeCreatedLastMonth', array_keys($this->getRequest()->getQueryParams()))) {
-            $query->where(['DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'']);
-        }
-
         $orderDetails = $this->paginate($query, [
             'sortableFields' => [
                 'OrderDetails.product_amount',

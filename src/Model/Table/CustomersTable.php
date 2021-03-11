@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
+use Cake\Database\Expression\QueryExpression;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -199,15 +200,14 @@ class CustomersTable extends AppTable
     public function __construct(array $config = [])
     {
         parent::__construct($config);
-
         $this->getAssociation('ValidOrderDetails')->setConditions([
-            'ValidOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'
+            (new QueryExpression())->in('ValidOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStateIds()),
         ]);
         $this->getAssociation('ActiveOrderDetails')->setConditions([
-            'ActiveOrderDetails.order_state IN (' . ORDER_STATE_ORDER_PLACED . ', ' . ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER . ')'
+            (new QueryExpression())->in('ActiveOrderDetails.order_state', [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]),
         ]);
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
-            'PaidCashlessOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()). ')'
+            (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless()),
         ]);
     }
 
@@ -215,11 +215,11 @@ class CustomersTable extends AppTable
     {
         $customer = $this->find('all', [
             'conditions' => [
-                'Customers.id_customer' => $customerId
+                'Customers.id_customer' => $customerId,
             ],
             'fields' => [
-                'personalTransactionCode' => $this->getPersonalTransactionCodeField()
-            ]
+                'personalTransactionCode' => $this->getPersonalTransactionCodeField(),
+            ],
         ])->first();
         return $customer->personalTransactionCode;
     }
@@ -231,9 +231,13 @@ class CustomersTable extends AppTable
 
     public function getConditionToExcludeHostingUser()
     {
-        return [
-            'Customers.email != \'' . Configure::read('app.hostingEmail') . '\''
-        ];
+        $result = [];
+        if (Configure::read('app.hostingEmail') != '') {
+            $result = [
+                (new QueryExpression())->notEq('Customers.email', Configure::read('app.hostingEmail')),
+            ];
+        }
+        return $result;
     }
 
     public function dropManufacturersInNextFind()

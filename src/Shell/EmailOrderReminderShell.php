@@ -20,6 +20,7 @@ namespace App\Shell;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 
 class EmailOrderReminderShell extends AppShell
 {
@@ -57,17 +58,15 @@ class EmailOrderReminderShell extends AppShell
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $this->Customer->getAssociation('ActiveOrderDetails')->setConditions(
-            [
-                'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . $nextDeliveryDay . '\'',
-            ]
-        );
+        $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
+            (new QueryExpression())->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
+        ]);
 
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
                 'ActiveOrderDetails',
-                'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');

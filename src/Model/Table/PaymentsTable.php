@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
 use App\Lib\Error\Exception\InvalidParameterException;
@@ -109,16 +110,15 @@ class PaymentsTable extends AppTable
      */
     public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear)
     {
-        $conditions = $this->getManufacturerDepositConditions($manufacturerId);
-        $conditions[] = 'DATE_FORMAT(Payments.date_add, \'%Y-%c\') = \'' . $monthAndYear . '\'';
-
         $paymentSum = $this->find('all', [
-            'conditions' => $conditions,
+            'conditions' => $this->getManufacturerDepositConditions($manufacturerId),
             'order' => [
-                'Payments.date_add' => 'DESC'
+                'Payments.date_add' => 'DESC',
             ]
         ]);
-
+        $paymentSum->where(function (QueryExpression $exp) use ($monthAndYear) {
+            return $exp->eq('DATE_FORMAT(Payments.date_add, \'%Y-%c\')', $monthAndYear);
+        });
         return $paymentSum;
     }
 
@@ -137,7 +137,7 @@ class PaymentsTable extends AppTable
         $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
         $query->select([
             'YearWeek' => $formattedDate,
-            'SumAmount' => $query->func()->sum('Payments.amount')
+            'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
         $query->group($formattedDate);
         $result = $query->toArray();
@@ -171,7 +171,7 @@ class PaymentsTable extends AppTable
         $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
         $query->select([
             'YearWeek' => $formattedDate,
-            'SumAmount' => $query->func()->sum('Payments.amount')
+            'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
         $query->group($formattedDate);
         $result = $query->toArray();
@@ -216,15 +216,15 @@ class PaymentsTable extends AppTable
         $query = $this->find('all', [
             'conditions' => $conditions,
             'order' => $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payments.date_add' => 'DESC'],
-            'group' => $groupByMonth ? 'monthAndYear' : null
+            'group' => $groupByMonth ? 'monthAndYear' : null,
         ]);
 
         $query->select(
-            ['sumDepositReturned' => $query->func()->sum('Payments.amount')]
+            ['sumDepositReturned' => $query->func()->sum('Payments.amount')],
         );
         if ($groupByMonth) {
             $query->select(
-                ['monthAndYear' => 'DATE_FORMAT(Payments.date_add, \'%Y-%c\')']
+                ['monthAndYear' => 'DATE_FORMAT(Payments.date_add, \'%Y-%c\')'],
             );
         }
 
@@ -241,7 +241,7 @@ class PaymentsTable extends AppTable
         $conditions = [
             'Payments.id_customer' => $customerId,
             'Payments.id_manufacturer' => 0,
-            'Payments.status' => APP_ON
+            'Payments.status' => APP_ON,
         ];
 
         $conditions['Payments.type'] = $type;

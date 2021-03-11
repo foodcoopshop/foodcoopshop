@@ -147,7 +147,6 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         }
 
         $conditions = [];
-        $conditions[] = $this->OrderDetails->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
 
         if ($customerId) {
             $conditions['OrderDetails.id_customer'] = $customerId;
@@ -156,9 +155,11 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'OrderDetails.Products'
+                'OrderDetails.Products',
             ]
         ]);
+        $query = $this->OrderDetails->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStateIds());
+
         return $query;
     }
 
@@ -180,7 +181,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $query->group('MonthAndYear');
         $query->select([
             'SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
-            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')',
         ]);
         return $query->toArray();
     }
@@ -194,7 +195,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     {
         $query = $this->getFilteredQuery($manufacturerId, $customerId);
         $query->select(
-            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')]
+            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')],
         );
 
         return $query->toArray()[0]['SumSeconds'];
