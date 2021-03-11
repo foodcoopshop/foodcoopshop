@@ -48,7 +48,9 @@
     }
     body.blog_posts.detail .blog-wrapper,
     body.pages.home .blog-post-wrapper {
-        width: 24% ! important;
+        width: 29% ! important;
+        margin-left: 2%;
+        margin-right: 2%;
     }
     body.blog_posts.detail img.blog-post-image {
         margin-left: 0 ! important;
@@ -302,11 +304,16 @@
         max-width: 450px ! important;
     }
     body.blog_posts.detail .blog-wrapper {
-        width: 48% ! important;
-        margin-right: 5px ! important;
+        width: 100% ! important;
     }
     body.pages.home .blog-post-wrapper {
-        width: 48% ! important;
+        width: 45% ! important;
+        margin-right: 2% ! important;
+        margin-left: 2%;
+        height: 234px;
+    }
+    body.pages.home .blog-post-wrapper img {
+        height: 100px;
     }
     .product-wrapper .price {
         margin-bottom: 5px ! important;
