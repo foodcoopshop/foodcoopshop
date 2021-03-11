@@ -104,6 +104,7 @@ class ReportsController extends AdminAppController
                     $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
 
                         $i = 0;
+                        $sumAmount = 0;
                         foreach($csvPayments as $csvPayment) {
                             if ($csvPayment->isDirty('selected') && $csvPayment->getOriginal('selected') == 0) {
                                 unset($csvPayments[$i]);
@@ -113,6 +114,7 @@ class ReportsController extends AdminAppController
                                         'id_customer' => $csvPayment->id_customer,
                                     ]
                                 ])->first();
+                                $sumAmount += $csvPayment->amount;
                                 $email = new AppMailer();
                                 $email->viewBuilder()->setTemplate('Admin.credit_csv_upload_successful');
                                 $email->setTo($customer->email)
@@ -136,7 +138,10 @@ class ReportsController extends AdminAppController
 
                         $success = $this->Payment->saveManyOrFail($csvPayments);
                         if ($success) {
-                            $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]);
+                            $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}', [
+                                count($csvPayments),
+                                '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($sumAmount) . '</b>',
+                            ]);
                             $this->Flash->success($message);
                             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
                             $this->ActionLog->customSave('payment_product_csv_imported', $this->AppAuth->getUserId(), 0, 'payments', $message);

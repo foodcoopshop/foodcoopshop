@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-02-23 15:33+0100\n"
+"POT-Creation-Date: 2021-03-11 14:50+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -584,7 +584,7 @@ msgstr ""
 msgid "No_records_were_imported."
 msgstr ""
 
-msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
 msgstr ""
 
 msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."

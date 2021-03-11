@@ -295,7 +295,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             ]
         );
 
-        $this->assertFlashMessage('Ein Datensatz wurde erfolgreich importiert.');
+        $this->assertFlashMessage('Ein Datensatz wurde erfolgreich importiert. Summe: <b>200,00 €</b>');
         $payments = $this->Payment->find('all')->toArray();
         $newPayment = $payments[2];
         $this->assertEquals(3, count($payments));
