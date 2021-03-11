@@ -358,7 +358,6 @@ a[disabled] {
     opacity: 0.5;
 }
 
-body.blog_posts.index .blog-post-wrapper,
 .product-wrapper,
 .manufacturer-wrapper {
     margin-bottom: 0px;
@@ -386,7 +385,6 @@ body.superadmin .product-wrapper .heading h4 {
     margin-top: 0;
     line-height: 23px;
 }
-.blog-post-wrapper div.first-column,
 .product-wrapper div.first-column,
 .manufacturer-wrapper div.first-column {
     text-align: center;
@@ -397,7 +395,6 @@ body.superadmin .product-wrapper .heading h4 {
     width: 170px;
     position: relative;
 }
-.blog-post-wrapper div.first-column img,
 .manufacturer-wrapper div.first-column img {
     width: 148px;
 }
@@ -411,7 +408,6 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper .toggle-content.description img {
   margin-bottom: 3px;
 }
-.blog-post-wrapper div.second-column,
 .product-wrapper div.second-column,
 .manufacturer-wrapper div.second-column {
     float: left;
@@ -439,7 +435,6 @@ body.superadmin .product-wrapper .heading h4 {
     right: -10px;
     top: -10px;
 }
-.blog-post-wrapper div.third-column,
 .product-wrapper div.third-column,
 .manufacturer-wrapper div.third-column {
     float: left;
@@ -448,21 +443,12 @@ body.superadmin .product-wrapper .heading h4 {
     padding-left: 16px;
     border-left: 1px solid #d6d4d4;
 }
-.blog-post-wrapper div.third-column,
 .manufacturer-wrapper div.third-column {
     text-align: center;
-}
-.blog-post-wrapper div.third-column a.btn {
-    margin-top: 20px;
 }
 .manufacturer-wrapper div.third-column a.btn {
     margin-top: 65px;
 }
-.blog-post-wrapper div.third-column div.additional-info {
-    margin-top: 70px;
-    text-align: right;
-}
-
 .product-wrapper .entity-wrapper {
     float: left;
     margin-bottom: 5px;
