@@ -1169,9 +1169,7 @@ body.blog_posts.detail #inner-content ul {
 body.blog_posts.detail .blog-wrapper {
     margin-top: 10px;
 }
-body.categories.detail .blog-wrapper,
-body.categories.new_product .blog-wrapper,
-body.categories.search .blog-wrapper,
+body.categories .blog-wrapper,
 body.manufacturers.detail .blog-wrapper {
     height: 330px;
     padding-top: 10px;
