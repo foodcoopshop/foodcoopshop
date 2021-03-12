@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-02-20 22:41+0100\n"
+"POT-Creation-Date: 2021-03-12 15:08+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2000,9 +2000,6 @@ msgstr ""
 msgid "price_will_be_adapted."
 msgstr ""
 
-msgid "route_news"
-msgstr ""
-
 msgid "route_all_products"
 msgstr ""
 
@@ -2021,9 +2018,6 @@ msgstr ""
 msgid "Modified_on"
 msgstr ""
 
-msgid "Go_to_blog_from"
-msgstr ""
-
 msgid "by"
 msgstr ""
 
@@ -2037,12 +2031,6 @@ msgid "of_{0}"
 msgstr ""
 
 msgid "found"
-msgstr ""
-
-msgid "Show_Blog_post"
-msgstr ""
-
-msgid "Go_to_manufacturer"
 msgstr ""
 
 msgid "Your_cart_is_empty"
@@ -2142,9 +2130,6 @@ msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_ye
 msgstr ""
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr ""
-
-msgid "News_from"
 msgstr ""
 
 msgid "Imprint"
