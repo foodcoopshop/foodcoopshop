@@ -325,7 +325,7 @@
     body.blog_posts.detail .blog-post-wrapper {
         height: 234px;
     }
-    body.blog_posts.detail img.blog-post-image,
+    body.blog_posts.detail .blog-post-wrapper img.blog-post-image,
     body.categories img.blog-post-image,
     body.manufacturers.detail img.blog-post-image,
     body.pages.home .blog-post-wrapper img {
