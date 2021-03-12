@@ -31,7 +31,6 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 
 <?php
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
-    echo '<h2 class="blog-wrapper-heading"><a href="'.$this->Slug->getBlogList().'">'.__('News').'</a></h2>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
     ]);

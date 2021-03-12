@@ -1060,7 +1060,7 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
 }
 .blog-wrapper {
     margin-bottom: 20px;
-    height: 270px;
+    height: 320px;
 }
 body.carts.order_successful h2 {
     margin-top: 20px;
@@ -1171,11 +1171,13 @@ body.blog_posts.detail .blog-wrapper {
 }
 body.categories.detail .blog-wrapper,
 body.categories.new_product .blog-wrapper,
-body.categories.search .blog-wrapper {
-    height: 315px;
+body.categories.search .blog-wrapper,
+body.manufacturers.detail .blog-wrapper {
+    height: 330px;
     padding-top: 10px;
     overflow-y: auto;
     width: 736px;
+    margin-top: -15px;
 }
 body.blog_posts.detail #inner-content .content h2,
 body.pages:not(.home) #inner-content h2,
