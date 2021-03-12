@@ -46,7 +46,7 @@ if ($blogPost->short_description != '') {
 if (!empty($blogPost->manufacturer)) {
     echo '<br />';
     if ($blogPost->manufacturer->active) {
-        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">'.__('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
+        echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">'.__('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
     } else {
         echo __('by') . ' ' . $blogPost->manufacturer->name;
     }

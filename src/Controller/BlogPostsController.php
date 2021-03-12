@@ -103,22 +103,6 @@ class BlogPostsController extends FrontendController
             'BlogPosts.active' => APP_ON
         ];
 
-        if (!empty($this->getRequest()->getParam('manufacturerSlug'))) {
-            $manufacturerId = (int) $this->getRequest()->getParam('manufacturerSlug');
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId,
-                    'Manufacturers.active' => APP_ON
-                ]
-            ])->first();
-            if (empty($manufacturer)) {
-                throw new RecordNotFoundException('manufacturer not found or not active');
-            }
-            $this->set('manufacturer', $manufacturer);
-            $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
-        }
-
         if (! $this->AppAuth->user()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
