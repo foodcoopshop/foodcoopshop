@@ -38,6 +38,10 @@
         width: 48%;
         margin-left: 1%;
     }
+    body.categories .blog-wrapper,
+    body.manufacturers.detail .blog-wrapper {
+        height: 265px;
+    }
     body.blog_posts.detail .blog-wrapper,
     body.blog_posts.detail .blog-post-wrapper {
         height: 234px;

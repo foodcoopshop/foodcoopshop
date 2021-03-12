@@ -54,7 +54,6 @@
     }
     body.categories .blog-wrapper,
     body.manufacturers.detail .blog-wrapper {
-        height: 265px;
         margin-top: -10px;
     }
     body.blog_posts.detail img.blog-post-image {
