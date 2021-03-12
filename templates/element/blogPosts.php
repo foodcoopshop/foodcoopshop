@@ -46,9 +46,7 @@ foreach ($blogPosts as $blogPost) {
         }
         echo '<span class="desc">' . $contentText . '</span>';
     echo '</span>';
-    if (!$isMobile) {
-        echo '<span class="date">' . $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . '</span>';
-    }
+    echo '<span class="date">' . $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . '</span>';
     echo '</a>';
 }
 echo '</div>';
