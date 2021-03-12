@@ -259,7 +259,7 @@ foodcoopshop.Helper = {
             loop: false,
             speed: 300,
             centeredSlides: true,
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 16,
             navigation: {
                 nextEl: '.swiper-button-next',

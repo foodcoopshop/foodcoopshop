@@ -1187,7 +1187,6 @@ body.categories.detail .description-wrapper h2 {
     padding-top: 10px;
     font-size: 18px;
 }
-body.blog_posts.detail #inner-content .content h3,
 body.pages:not(.home) #inner-content h3,
 body.manufacturers.detail .manufacturer-infos h3,
 body.categories.detail .description-wrapper h3 {
