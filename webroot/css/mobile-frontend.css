@@ -42,8 +42,8 @@
     body.customers.registration_successful #inner-content h2 {
         padding-bottom: 5px ! important;
     }
-    body.pages.home #slider .swiper-button-next,
-    body.pages.home #slider .swiper-button-prev {
+    .swiper-button-next,
+    .swiper-button-prev {
         display: none;
     }
     body.blog_posts.index .blog-post-wrapper,
