@@ -11,7 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-@media only screen and (max-device-width: 768px) and (orientation : portrait) {
+@media only screen and (max-device-width: 850px) and (orientation : portrait) {
     #LoginForm button {
         margin-right: 0px;
     }
