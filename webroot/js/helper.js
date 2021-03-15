@@ -33,7 +33,11 @@ foodcoopshop.Helper = {
         }
     },
 
-    initCookieBanner() {
+    initCookieBanner: function() {
+        // IE breaks with GdprCookieConsentBanner
+        if (window.document.documentMode) {
+            return;
+        }
         var options = {
             cookieName: 'fcs-cookie-banner',
             heading: foodcoopshop.LocalizedJs.helper.ThisPageUsesCookies,
