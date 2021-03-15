@@ -471,7 +471,7 @@ body.superadmin .product-wrapper .heading h4 {
     margin-top: 3px;
     float: left;
 }
-.entity-wrapper .btn-success {
+.entity-wrapper .btn-cart {
     width: 100%;
     float: left;
 }
@@ -811,9 +811,10 @@ body.carts.detail #load-last-order-details,
 #cart .btn-success {
     padding-top: 6px;
     padding-bottom: 6px;
+}
+#cart .btn-success {
     font-size: 14px;
 }
-
 .cart .delete a.btn {
     padding: 0;
     color: #f3515c;

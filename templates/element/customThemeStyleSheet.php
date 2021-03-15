@@ -61,7 +61,9 @@ use Cake\Core\Configure;
     .product-wrapper .price-asterisk,
     i.fa.ok, i.fas.ok, i.far.ok,
     body.carts.detail .cart:not(#cart) span.amount .btn,
-    #filter-loader i {
+    #filter-loader i,
+    .btn-cart i.fa-cart-plus,
+    .btn-cart i.fa-shopping-bag {
         color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 

@@ -40,8 +40,8 @@ if ($hideButton) {
     }
     ?>
 
-    <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-success btn-cart" href="javascript:void(0);">
-        <i class="fa fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
+    <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-outline-light btn-cart" href="javascript:void(0);">
+        <i class="fa fa-fw fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
     </a>
 
 </div>

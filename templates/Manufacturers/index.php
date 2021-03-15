@@ -66,7 +66,7 @@ foreach ($manufacturers as $manufacturer) {
             echo $this->Html->link(
                 __('Show_all_products') . ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
                 $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
-                ['class' => 'btn btn-success']
+                ['class' => 'btn btn-outline-light']
             );
         echo '</div>';
 

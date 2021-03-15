@@ -149,7 +149,7 @@ foodcoopshop.Mobile = {
         });
 
         // button renaming
-        $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-shopping-bag"></i>');
+        $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-fw fa-shopping-bag"></i>');
 
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));
