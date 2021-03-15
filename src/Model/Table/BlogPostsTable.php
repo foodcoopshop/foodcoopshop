@@ -69,7 +69,7 @@ class BlogPostsTable extends AppTable
         return $this->findBlogPosts($appAuth, null, null, true);
     }
 
-    public function findBlogPosts($appAuth, $limit = null, $manufacturerId = null, $isFeatured = null)
+    public function findBlogPosts($appAuth, $limit = 75, $manufacturerId = null, $isFeatured = null)
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
