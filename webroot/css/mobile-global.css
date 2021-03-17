@@ -25,6 +25,10 @@
     body {
         margin: 0 ! important;
     }
+    .btn-outline-light:hover {
+        background-color: #fff ! important;
+        border-color: #ccc ! important;
+    }
     #container {
         overflow: hidden ! important; /* avoids iphone scrolling bug */
         min-height: initial ! important;
