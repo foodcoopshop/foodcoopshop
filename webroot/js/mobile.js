@@ -16,7 +16,7 @@ foodcoopshop.Mobile = {
     getSlidebarMenu: function (side) {
         var responsiveMenu = $('<ul/>');
         responsiveMenu.addClass('sb-slidebar sb-' + side); // for css
-        responsiveMenu.attr('off-canvas', 'sb-' + side + ' ' + side + ' push');
+        responsiveMenu.attr('off-canvas', 'sb-' + side + ' ' + side + ' overlay');
         return responsiveMenu;
     },
 
