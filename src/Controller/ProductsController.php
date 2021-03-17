@@ -54,10 +54,6 @@ class ProductsController extends FrontendController
     {
         $productId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
-        $this->set('blogPosts', $blogPosts);
-
         $this->Category = $this->getTableLocator()->get('Categories');
         $product = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
