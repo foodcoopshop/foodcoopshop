@@ -158,32 +158,23 @@ body.categories.detail div.description-wrapper {
     float: left;
 }
 #main-menu > li {
-    margin-right: 7px;
+    margin-right: 20px;
 }
 #main-menu li > a {
     color: #333;
-    padding: 10px;
-    border-radius: 5px;
     font-size: 14px;
+    padding-bottom: 5px;
 }
-#main-menu li a:hover,
-#main-menu li a.active {
-    color: #fff;
-}
-#main-menu ul li a:hover,
-#main-menu ul li a.active {
-    opacity: 0.8;
-}
-#main-menu ul li a i {
+#main-menu ul li a.has-icon i {
     margin-right: 5px;
 }
 #main-menu li ul {
     position: absolute;
     left: 241px;
-    top: 136px;
+    top: 132px;
     width: 670px;
-    padding-left: 2px;
-    padding-top: 2px;
+    padding: 10px;
+    padding-bottom: 0;
     background: #fff;
     border: 1px solid #d6d4d4;
     z-index: 1000;
@@ -195,22 +186,38 @@ body.categories.detail div.description-wrapper {
 #main-menu li ul li {
     float: left;
     line-height: 17px;
-    width: 220px;
-    margin-right: 2px;
+    width: 205px;
+    margin-right: 11px;
 }
 #main-menu li ul li a {
-    color: #fff;
-    margin-right: 15px;
     margin-top: 0px;
-    margin-bottom: 2px;
+    margin-bottom: 7px;
     float: left;
-    width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    max-width: 100%;
 }
 #main-menu li ul ul {
     display: none;
+}
+
+
+#main-menu a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    margin-top: 3px;
+    transition: width .3s;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main-menu a:hover::after,
+#main-menu a.active::after {
+    width: 100%;
+    /*transition: width .3s;*/
 }
 
 #user-menu {

@@ -30,12 +30,11 @@ use Cake\Core\Configure;
 
     .box h3,
     .btn-success,
-    #main-menu li a:hover, #main-menu li a.active,
-    #main-menu li ul li a,
     .vertical.menu a:hover, .vertical.menu a:hover i, .vertical.menu a.active, .vertical.menu a.active i,
     .vertical.menu li.heading,
     .menu.vertical a:hover span.additional-info,
     .menu.vertical a.active span.additional-info,
+    #main-menu a::after,
     #categories-menu li.header,
     #manufacturers-menu li.header,
     h2.info,

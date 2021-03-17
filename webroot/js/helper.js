@@ -511,7 +511,7 @@ foodcoopshop.Helper = {
         $('.menu.horizontal li').mouseenter(function () {
             $(this).children('ul').stop(true).animate({
                 opacity: 'toggle'
-            }, 500);
+            }, 300);
         }).mouseleave(function () {
             $(this).children('ul').stop(true).animate({
                 opacity: 'toggle'
