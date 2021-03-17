@@ -380,6 +380,7 @@ a[disabled] {
 }
 .product-wrapper .heading h4 {
     float: left;
+    font-weight: 600;
     margin-top: 0;
     margin-right: 10px;
     line-height: 23px;
@@ -482,8 +483,8 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .price,
 .product-wrapper .price-asterisk {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 600;
     margin-bottom: 5px;
     float: left;
 }
@@ -1100,7 +1101,7 @@ a.blog-post-wrapper img {
 }
 a.blog-post-wrapper h3 {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
     line-height: 17px;
     margin-bottom: 5px;
     width: 100%;
