@@ -473,7 +473,7 @@ class ManufacturersController extends AdminAppController
             if (!$this->AppAuth->isManufacturer()) {
                 // only admins and superadmins are allowed to change variable_member_fee
                 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->getRequest()->getData('Manufacturers.variable_member_fee') == Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
-                    $this->setRequest($this->getRequest()->withData('Manufacturers.variable_member_fee', null));
+                    $this->setRequest($this->getRequest()->withoutData('Manufacturers.variable_member_fee'));
                 }
             }
             if ($this->getRequest()->getData('Manufacturers.default_tax_id') == Configure::read('app.defaultTaxId')) {
@@ -508,10 +508,10 @@ class ManufacturersController extends AdminAppController
                 $this->setRequest($this->getRequest()->withData('Manufacturers.no_delivery_days', implode(',', $this->getRequest()->getData('Manufacturers.no_delivery_days'))));
             }
 
-            // remove post data that could be set by hacking attempt
+            // remove post data that could theoretically be added
             if ($this->AppAuth->isManufacturer()) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.variable_member_fee', null));
-                $this->setRequest($this->getRequest()->withData('Manufacturers.id_customer', null));
+                $this->setRequest($this->getRequest()->withoutData('Manufacturers.variable_member_fee'));
+                $this->setRequest($this->getRequest()->withoutData('Manufacturers.id_customer'));
             }
 
             // sic! patch again!
