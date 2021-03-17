@@ -65,19 +65,6 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     padding: 2px 3px 0px 3px;
     background: #fff;
 }
-.sb-left a i {
-    padding-left: 0;
-}
-.sb-left a, .sb-left li.header,
-.sb-left a, .sb-left li.footer {
-    color: #000 ! important;
-}
-.sb-slidebar {
-    background-color: #fff;
-}
-.sb-left li.header, .sb-left a:hover, .sb-left a.active {
-    color: #fff ! important;
-}
 .sb-left img.logo {
     width: 80%;
 }
@@ -140,9 +127,6 @@ table.list th, table.list td {
 #flashMessage {
     left: 5px;
     width: 97vw;
-}
-.sb-slidebar {
-   width: 45% ! important;
 }
 body.manufacturers .holiday-wrapper .description {
     margin-left: 0px;

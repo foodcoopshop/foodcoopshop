@@ -130,23 +130,14 @@ use Cake\Core\Configure;
             body.self_services #responsive-header i.ok {
                 color: #fff ! important;
             }
-            body:not(.admin) .sb-slidebar,
             body:not(.admin) .sb-right h3 {
                 background-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
-            body:not(.admin) .sb-left li.header,
-            body:not(.admin) .sb-left a:hover,
-            body:not(.admin) .sb-left a.active,
-            body:not(.admin) .sb-left a:hover i.fas:not(.gold),
-            body:not(.admin) .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
-                background-color: #fff;
-                color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
-            }
-            body.admin .sb-left li.header,
-            body.admin .sb-left a:hover,
-            body.admin .sb-left a.active,
-            body.admin .sb-left a:hover i.fas:not(.gold),
-            body.admin .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
+            .sb-left li.header,
+            .sb-left a:hover,
+            .sb-left a.active,
+            .sb-left a:hover i.fas:not(.gold),
+            .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
                 background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
                 color: #fff ! important;
             }

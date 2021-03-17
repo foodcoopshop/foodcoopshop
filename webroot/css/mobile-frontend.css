@@ -208,6 +208,7 @@
     #responsive-header .sb-toggle-left {
         float: left ! important;
         margin: 13px 5px 5px 3px ! important;
+        width: 24px;
     }
     #responsive-header .open-with-modal {
         float: right ! important;
@@ -271,37 +272,6 @@
     body.carts.detail #load-last-order-details {
         margin-bottom: 10px;
         border: 1px solid #d6d4d4;
-    }
-
-    /**
-     * sidebar-right: info box starts here
-     */
-    .sb-right h3 {
-        font-size: 16px ! important;
-        margin-top: 0px ! important;
-        margin-bottom: 5px ! important;
-        color: #fff ! important;
-        padding: 5px ! important;
-    }
-    .sb-right .inner {
-        background: #fff ! important;
-        padding: 5px ! important;
-    }
-    .sb-right .inner ul {
-       padding-left: 10px;
-       margin-left: 10px;
-       margin-top: 10px;
-    }
-    .sb-right .inner li {
-        list-style-type: disc;
-        line-height: 19px;
-        padding-bottom: 5px;
-    }
-    .sb-slidebar {
-       width: 40% ! important;
-    }
-    .sb-right {
-        color: #333 ! important;
     }
     body.carts.detail .cart:not(#cart) .input.checkbox .error-message,
     body.carts.detail .cart:not(#cart) .input.select .error-message {
