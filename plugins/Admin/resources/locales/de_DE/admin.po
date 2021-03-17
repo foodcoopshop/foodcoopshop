@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2021-03-11 14:50+0100\n"
-"PO-Revision-Date: 2021-03-11 14:50+0100\n"
+"PO-Revision-Date: 2021-03-17 15:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -2149,7 +2149,7 @@ msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_pr
 msgstr "im Anhang findest du zwei Bestelllisten (gruppiert nach Produkt und Mitglied) für die nächste Lieferung."
 
 msgid "Your_personal_manufacturer_panel"
-msgstr "Dein persönlicher Hersteller-Bereich:"
+msgstr "Dein persönlicher Hersteller-Bereich"
 
 msgid "Help_pages"
 msgstr "Online-Hilfe"
