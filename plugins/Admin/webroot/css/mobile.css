@@ -72,26 +72,6 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     float: left;
     min-width: 100%;
 }
-body.pages.home.slidebar-left-visible .sb-toggle-left {
-    margin: 0;
-}
-body.pages.home.slidebar-left-visible #content {
-    min-width: 100%;
-    width: 100%;
-}
-body.pages.home.slidebar-left-visible #installation-logo,
-body.pages.home.slidebar-left-visible h1 {
-    width: 100% ! important;
-    font-size: 21px;
-}
-body.pages.home.slidebar-left-visible #container {
-    min-width: 55%;
-    width: 55%;
-    padding: 2%;
-}
-body.pages.home.slidebar-left-visible .filter-container {
-    padding: 4%;
-}
 body.pages.home #container,
 body.pages.home #content,
 body.pages.home .filter-container {
