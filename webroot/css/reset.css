@@ -24,7 +24,7 @@ a {
 }
 
 b, strong{
-  font-weight: bold;
+  font-weight: 600 ! important;
 }
 
 i {

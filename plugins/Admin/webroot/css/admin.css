@@ -420,12 +420,12 @@ form div.error-message {
     margin-left: 200px;
 }
 .ui-dialog-content label {
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 0;
 }
 .overlay-info {
     color: red;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 14px;
 }
 #labelUnity span {
@@ -681,7 +681,7 @@ body.customers .generate-my-member-card-button {
 body.configurations.index td.first {
     vertical-align: top;
     width: 450px;
-    font-weight: bold;
+    font-weight: 600;
 }
 body.configurations.index td.first div.small {
     font-weight: normal;
@@ -852,7 +852,7 @@ body.reports.payment form#csv-upload {
 }
 body.reports.payment form#csv-upload label {
     margin-right: 10px;
-    font-weight: bold;
+    font-weight: 600;
 }
 body.reports.payment form#csv-records {
     padding-bottom: 40px;

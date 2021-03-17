@@ -80,6 +80,9 @@ tr:hover b.negative {
 table.list td.slim {
     line-height: 15px;
 }
+table.list th {
+    font-weight: 600;
+}
 table.list th,
 table.list td {
   border: 1px solid #dfdfdf;
@@ -102,7 +105,7 @@ table.list tr.fake-th {
   line-height: 14px;
 }
 table.list tr.fake-th td {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 table.list td.icon,
