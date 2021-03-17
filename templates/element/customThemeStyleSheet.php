@@ -79,7 +79,8 @@ use Cake\Core\Configure;
     .btn-success:active:hover,
     #flashMessage.success,
     hr,
-    .product-wrapper, .manufacturer-wrapper {
+    .product-wrapper, .manufacturer-wrapper,
+    h1.middle-line span.middle {
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 

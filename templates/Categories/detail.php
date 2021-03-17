@@ -37,7 +37,11 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
 }
 ?>
 
-<h1><?php echo $title_for_layout; ?> <span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+<h1 class="middle-line">
+    <span class="left"><?php echo $title_for_layout; ?></span>
+    <span class="middle"></span>
+    <span class="right"><?php echo count($products); ?> <?php echo __('found'); ?></span>
+</h1>
 
 <?php
 

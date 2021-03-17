@@ -69,9 +69,23 @@
     body.pages.home .blog-wrapper {
         width: 100% ! important;
     }
-    body.categories.detail h1,
     body.blog_posts.detail h1 {
         margin-bottom: 0 ! important;
+    }
+    h1.middle-line {
+        display: block;
+        width: 100%;
+        float: left;
+    }
+    h1.middle-line span.middle {
+        display: none;
+    }
+    h1.middle-line span.left {
+        float: left;
+    }
+    h1.middle-line span.right {
+        float: right;
+        margin-top: 10px;
     }
     #cart,
     .sidebar,

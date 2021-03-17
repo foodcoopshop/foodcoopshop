@@ -149,9 +149,6 @@ foodcoopshop.Helper = {
         }
         if ((prevElement || nextElement)) {
             $('#inner-content .prev-next-button.bottom').first().before($('<hr style="clear:both;" />'));
-            if (productsAvailable) {
-                $(afterContainerTop).after($('<hr style="clear:both;" />'));
-            }
         }
     },
 
