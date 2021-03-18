@@ -84,8 +84,9 @@
         padding-left: 10px;
     }
     .sb-slidebar {
-        width: 60% ! important;
+        width: 55% ! important;
         z-index: 99990;
+        margin-top: 54px;
     }
     .sb-left a i {
         padding-left: 0;
