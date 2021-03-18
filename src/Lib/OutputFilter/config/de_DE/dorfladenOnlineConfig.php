@@ -20,8 +20,4 @@ return [
     'FoodCoopShop' => 'Dorfladen Online',
     'Foodcoop Software' => 'Bestell-Software für den Lebensmittel-Einzelhandel',
     '_FOODCOOPSHOP_' => '_DORFLADEN_ONLINE_',
-    'href="https://foodcoopshop.github.io/(.*)"' => 'href="https://www.dorfladen-online.at/hilfe" data-url="/$1"',
-    'https://foodcoopshop.github.io/de/produkte"' => 'https://www.dorfladen-online.at/hilfe"',
-    'https://foodcoopshop.github.io/de/netzwerk-modul"' => 'https://www.dorfladen-online.at/hilfe"',
-    'https://foodcoopshop.github.io/de/selbstbedienungs-modus"' => 'https://www.dorfladen-online.at/hilfe"',
 ];
