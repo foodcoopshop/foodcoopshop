@@ -556,7 +556,6 @@ body.superadmin .product-wrapper .heading h4 {
 }
 body.manufacturers.detail .manufacturer-infos {
     width: 100%;
-    min-height: 160px;
     margin-bottom: 20px;
     float: left;
 }
