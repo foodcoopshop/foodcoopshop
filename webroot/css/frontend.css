@@ -407,6 +407,12 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper .radio label {
     word-break: break-word;
 }
+.product-wrapper .toggle-link {
+    margin-top: 5px;
+}
+.product-wrapper .toggle-content {
+    margin-bottom: 5px;
+}
 .product-wrapper .toggle-content.description img {
   margin-bottom: 3px;
 }

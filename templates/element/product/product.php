@@ -59,7 +59,6 @@ if ($product['is_new']) {
         }
         echo '</h4>';
     echo '</div>';
-    echo '<div class="sc"></div>';
 
 if ($product['description_short'] != '') {
     echo $product['description_short'].'<br />';
