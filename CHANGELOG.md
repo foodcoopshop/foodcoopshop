@@ -11,6 +11,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
+### Neue Funktionen
+- Das in die Jahre gekommene Frontend wurde aufgepeppt: Blog-Artikel, Hauptmenü, das mobile Menü und der Footer sind nun frischer. Systemweit größere Schriften, dezentere Fett-Schrift, [I#643](https://github.com/foodcoopshop/foodcoopshop/issues/643) / [PR#648](https://github.com/foodcoopshop/foodcoopshop/pull/648) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ### Code Cleaning
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
