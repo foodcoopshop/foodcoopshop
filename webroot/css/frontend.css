@@ -153,12 +153,12 @@ body.categories.detail div.description-wrapper {
 }
 
 #main-menu {
-    margin: 70px 0 20px 25px;
+    margin: 70px 0 20px 10px;
     width: 660px;
     float: left;
 }
 #main-menu > li {
-    margin-right: 15px;
+    margin-right: 18px;
 }
 #main-menu li > a {
     color: #333;
