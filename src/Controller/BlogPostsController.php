@@ -99,26 +99,8 @@ class BlogPostsController extends FrontendController
 
     public function index()
     {
-        $conditions = [
-            'BlogPosts.active' => APP_ON
-        ];
-
-        if (! $this->AppAuth->user()) {
-            $conditions['BlogPosts.is_private'] = APP_OFF;
-            $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
-        }
-
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->find('all', [
-            'conditions' => $conditions,
-            'order' => [
-                'BlogPosts.modified' => 'DESC'
-            ],
-            'contain' => [
-                'Manufacturers'
-            ]
-        ]);
-
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null);
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', __('News'));
     }
