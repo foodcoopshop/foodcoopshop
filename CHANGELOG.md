@@ -12,7 +12,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
-- Das in die Jahre gekommene Frontend wurde aufgepeppt: Blog-Artikel, Hauptmenü, das mobile Menü und der Footer sind nun frischer. Systemweit größere Schriften, dezentere Fett-Schrift, [I#643](https://github.com/foodcoopshop/foodcoopshop/issues/643) / [PR#648](https://github.com/foodcoopshop/foodcoopshop/pull/648) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Das in die Jahre gekommene Frontend wurde aufgepeppt: Blog-Artikel, Hauptmenü, das mobile Menü, die Produkt-Liste und der Footer sind nun frischer. Weiters ist die Haupt-Schrift etwas größer und die Fett-Schrift dezenter. [I#643](https://github.com/foodcoopshop/foodcoopshop/issues/643) / [PR#648](https://github.com/foodcoopshop/foodcoopshop/pull/648) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ### Code Cleaning
