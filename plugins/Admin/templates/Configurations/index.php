@@ -120,7 +120,7 @@ $this->element('addScript', [
 
         <?php if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
             <tr>
-                <td>
+                <td class="first">
                     <b><?php echo __d('admin', 'Remote_foodcoops'); ?></b>
                     <br /><div class="small"><?php echo __d('admin', 'Foodcoops_with_which_manufacturers_can_synchronize_their_product_data.'); ?><br /><a target="_blank" href="<?php echo $this->Network->getNetworkPluginDocs(); ?>"><?php echo __d('admin', 'Info_page_for_network_module'); ?></a></div>
                 </td>

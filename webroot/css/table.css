@@ -17,6 +17,7 @@ table.list {
   width: 100%;
   background-color: white;
   display: none;
+  font-size: 14px;
 }
 table.list tr td:first-child,
 table.list tr th:first-child {
@@ -60,7 +61,7 @@ table.list tr.line-through {
     text-decoration: line-through;
 }
 table.list tr.sub-row td {
-    font-size: 11px;
+    font-size: 13px;
     font-style: italic;
 }
 table.list td.not-available,
@@ -92,7 +93,6 @@ table.list td {
 }
 table.list th,
 table.list tr.fake-th td {
-  font-size: 11px;
   padding: 5px 2px;
   word-break: break-word;
 }

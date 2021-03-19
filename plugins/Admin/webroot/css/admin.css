@@ -15,7 +15,7 @@ body {
     font-family: 'Open Sans';
     margin: 0px 5px 15px 0px;
     color: #333333;
-    font-size: 10pt;
+    font-size: 11pt;
     background: #efefef;
     background-image: url(/admin/img/bg.jpg);
     background-attachment: fixed;
@@ -23,7 +23,7 @@ body {
 
 #container {
     position: relative;
-    min-width: 1201px; /* 1050px + navi width 150 + border */
+    min-width: 1234px; /* 1074px + navi width 155 + border 5px */
     display: none;
 }
 
@@ -68,11 +68,11 @@ body.taxes.edit #flashMessage {
     top: 3px;
 }
 #content {
-    width: 1050px;
+    width: 1074px;
     margin-top: 5px;
     line-height: 20px;
     float: left;
-    margin-left: 150px;
+    margin-left: 155px;
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
     padding: 2px 2px 2px 1px;
@@ -119,7 +119,7 @@ form.fcs-form .bootstrap-select {
     min-height: 500px;
 }
 .vertical.menu {
-    width: 150px;
+    width: 155px;
 }
 .vertical.menu > li a img.logo {
     padding: 0;
@@ -192,11 +192,11 @@ td.amount .fa-times {
 
 .filter-container {
     position: fixed;
-    left: 150px;
+    left: 155px;
     top: 0px;
     padding: 5px;
     background: #efefef;
-    width: 1050px; /* be aware of table border if scrolled */
+    width: 1074px; /* be aware of table border if scrolled */
     z-index: 100;
     border-bottom: 1px solid #dfdfdf;
 }
@@ -617,7 +617,7 @@ body.payments .bottom-button-container {
 .btn:not(.dropdown-toggle):not(.btn-close),
 .btn.dropdown-toggle {
     padding: 3px 6px;
-    font-size: 13px;
+    font-size: 14px;
 }
 form.fcs-form {
     padding: 10px;
@@ -643,7 +643,7 @@ form.fcs-form label {
     width: 200px;
     font-weight: normal ! important;
     vertical-align: top;
-    line-height: 18px;
+    line-height: 19px;
     margin-top: 4px;
     float: left;
 }
@@ -685,7 +685,8 @@ body.configurations.index td.first {
 }
 body.configurations.index td.first div.small {
     font-weight: normal;
-    line-height: 15px;
+    font-size: 13px;
+    line-height: 17px;
     float: left;
     padding-bottom: 4px;
 }
@@ -713,8 +714,9 @@ form.fcs-form .input input.short {
     text-align: center;
 }
 form.fcs-form .small {
-    line-height: 15px;
+    line-height: 17px;
     float: left;
+    font-size: 13px;
 }
 form.fcs-form .checkbox .small {
     line-height: 16px;

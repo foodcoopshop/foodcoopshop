@@ -14,7 +14,7 @@
 body {
     font-family: 'Open Sans';
     color: #333333;
-    font-size: 10pt;
+    font-size: 14px;
     background-image: url(/img/bg.jpg);
     background-attachment: fixed;
 }
@@ -132,14 +132,14 @@ body.categories.detail div.description-wrapper {
     width: 180px;
 }
 .vertical.menu li.header {
-    padding: 5px;
-    font-size: 17px;
+    padding: 10px;
+    font-size: 16px;
     padding-left: 10px;
     color: #fff;
     border-bottom: 1px solid #dfdfdf;
 }
 .vertical.menu a {
-    padding: 3px 10px;
+    padding: 4px 10px;
 }
 .vertical.menu a i.fas {
     font-size: 13px;
@@ -162,8 +162,8 @@ body.categories.detail div.description-wrapper {
 }
 #main-menu li > a {
     color: #333;
-    font-size: 14px;
-    padding-bottom: 5px;
+    font-size: 16px;
+    padding-bottom: 10px;
 }
 #main-menu ul li a.has-icon i {
     margin-right: 5px;
@@ -171,7 +171,7 @@ body.categories.detail div.description-wrapper {
 #main-menu li ul {
     position: absolute;
     left: 241px;
-    top: 132px;
+    top: 137px;
     width: 670px;
     padding: 15px;
     padding-bottom: 0;
@@ -201,8 +201,6 @@ body.categories.detail div.description-wrapper {
 #main-menu li ul ul {
     display: none;
 }
-
-
 #main-menu a::after {
     content: '';
     display: block;
@@ -213,11 +211,9 @@ body.categories.detail div.description-wrapper {
     margin-left: auto;
     margin-right: auto;
 }
-
 #main-menu a:hover::after,
 #main-menu a.active::after {
     width: 100%;
-    /*transition: width .3s;*/
 }
 
 #user-menu {
@@ -483,7 +479,7 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .price,
 .product-wrapper .price-asterisk {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     margin-bottom: 5px;
     float: left;
@@ -680,7 +676,7 @@ body.manufacturers.detail .imprint {
 .box h3 {
     color: #fff;
     padding: 10px;
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
 }
 .box h3 i {
@@ -808,7 +804,7 @@ body.carts.detail #load-last-order-details,
 }
 .btn {
     padding: 4px 8px;
-    font-size: 13px;
+    font-size: 14px;
 }
 .edit-shortcut-button {
     padding: 0px 4px;
@@ -1100,13 +1096,13 @@ a.blog-post-wrapper img {
     margin-bottom: 3px;
 }
 a.blog-post-wrapper h3 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
-    line-height: 17px;
-    margin-bottom: 3px;
+    line-height: 18px;
+    margin-bottom: 4px;
     width: 100%;
     float: left;
-    padding-top: 5px;
+    padding-top: 10px;
     border-top: 1px solid #d6d4d4;
     margin-top: 0;
     word-break: break-word;
@@ -1117,12 +1113,12 @@ a.blog-post-wrapper span {
     color: #333;
 }
 a.blog-post-wrapper span.content {
-    max-height: 122px;
+    max-height: 107px;
     overflow-y: hidden;
 }
 a.blog-post-wrapper span.date {
     position: absolute;
-    bottom: 2px;
+    bottom: 5px;
     right: 10px;
     font-style: italic;
 }
