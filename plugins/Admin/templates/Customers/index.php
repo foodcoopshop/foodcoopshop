@@ -162,7 +162,7 @@ foreach ($customers as $customer) {
     echo '<span class="group-for-dialog">' . $customer->id_default_group . '</span>';
     echo '</td>';
 
-    echo '<td>';
+    echo '<td style="text-align:center;">';
         echo '<i class="far fa-envelope ok fa-lg customer-email-button" data-email="'.h($customer->email).'" title="'.h($customer->email).'"></i>';
     echo '</td>';
 

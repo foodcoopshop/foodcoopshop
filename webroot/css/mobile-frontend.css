@@ -255,13 +255,15 @@
     #login-form .input input[type="checkbox"] {
        width: 30px ! important;
     }
+    #RegistrationForm .input.checkbox {
+        margin-left: 0;
+    }
     #RegistrationForm .input.checkbox input[type="checkbox"] {
         margin-left: -35px;
         margin-top: 0px;
     }
     form div.error-message {
         width: 60% ! important;
-        font-size: 11px;
     }
     #login-form div.error-message {
         margin-left: 85px;

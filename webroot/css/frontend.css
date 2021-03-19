@@ -853,6 +853,7 @@ body.carts.detail #CartsDetailForm {
 }
 #RegistrationForm .input.checkbox {
     margin-top: 0;
+    margin-left: 58px;
 }
 #CartsDetailForm .input.checkbox label,
 #RegistrationForm .input.checkbox label {

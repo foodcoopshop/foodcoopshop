@@ -494,7 +494,10 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .bootstrap-select .dropdown-menu li a span.text,
 .bootstrap-select .no-results {
     color: #262626;
-    font-size: 13px;
+    font-size: 14px;
+}
+.bootstrap-select .bs-searchbox .form-control {
+    font-size: 14px;
 }
 .bootstrap-select .form-control:focus {
     box-shadow: inherit;

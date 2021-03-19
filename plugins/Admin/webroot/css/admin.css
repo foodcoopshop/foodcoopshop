@@ -241,6 +241,7 @@ td.amount .fa-times {
 .filter-container input[type="text"] {
     padding: 5px 6px;
     border-radius: 4px;
+    font-size: 14px;
 }
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
@@ -640,7 +641,7 @@ form.fcs-form .input {
     margin-bottom: 10px;
 }
 form.fcs-form label {
-    width: 200px;
+    width: 220px;
     font-weight: normal ! important;
     vertical-align: top;
     line-height: 19px;
@@ -650,7 +651,7 @@ form.fcs-form label {
 form.fcs-form .description {
   clear: both;
   float: left;
-  margin-left: 200px;
+  margin-left: 220px;
   margin-bottom: 10px;
 }
 form.fcs-form .input.textarea label {
@@ -658,7 +659,7 @@ form.fcs-form .input.textarea label {
 }
 form.fcs-form .input.checkbox label {
     padding-left: 0;
-    width: 230px;
+    width: 250px;
 }
 form.fcs-form .input.checkbox input {
     float: right;
@@ -704,7 +705,8 @@ form.fcs-form .input.text input,
 form.fcs-form .input.email input,
 form.fcs-form .input.tel input,
 form.fcs-form .input.password input {
-    width: 250px;
+    width: 270px;
+    font-size: 14px;
 }
 form.fcs-form .input input.long {
     width: 562px;
