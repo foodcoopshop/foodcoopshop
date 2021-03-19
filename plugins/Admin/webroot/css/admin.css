@@ -520,7 +520,7 @@ body.products.index .table-cell-wrapper.price {
     text-align: right;
 }
 body.products.index .table-cell-wrapper.deposit {
-    width: 60px;
+    width: 61px;
     text-align: right;
 }
 body.order_details.index .table-cell-wrapper.price {
