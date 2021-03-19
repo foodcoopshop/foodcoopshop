@@ -588,8 +588,7 @@ body.manufacturers.detail .imprint {
     text-align: right;
 }
 #footer {
-    background-color: #3f3f3f;
-    color: #fff;
+    background-color: #dfdfdf;
     width: 928px;
     min-height: 172px;
     float: left;
@@ -620,7 +619,6 @@ body.manufacturers.detail .imprint {
     float: right;
     margin-right: 75px;
     text-align: left;
-    color: #777;
     font-size: 14px;
     border-left: 1px solid #777;
     padding-left: 20px;
@@ -632,17 +630,10 @@ body.manufacturers.detail .imprint {
 }
 #footer a {
     color: #777;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
     font-weight: 600;
 }
 #footer a:hover {
-    color: #fff;
-}
-#footer span a {
-    color: #fff;
-}
-#footer span a:hover {
-    color: #777;
+    color: #000;
 }
 #footer .additional-footer-info {
     text-align: right;
@@ -658,7 +649,6 @@ body.manufacturers.detail .imprint {
 #footer h2 {
     font-size: 20px;
     margin-bottom: 15px;
-    color: #fff;
     margin-top: 0;
 }
 #right {
