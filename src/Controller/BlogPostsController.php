@@ -6,10 +6,9 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\Http\Exception\NotFoundException;
 
 /**
- * BlogPostsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -101,6 +100,10 @@ class BlogPostsController extends FrontendController
     {
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null);
+        if ($blogPosts->count() === 0) {
+            throw new NotFoundException('no blog posts available');
+        }
+
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', __('News'));
     }
