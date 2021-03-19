@@ -295,7 +295,7 @@ foodcoopshop.Admin = {
                     var customerIds = foodcoopshop.Admin.getSelectedCustomerIds();
                     var emails = [];
                     for(var i=0; i < customerIds.length; i++) {
-                        var email = $('tr.data[data-customer-id="'+customerIds[i]+'"]').find('span.email').html();
+                        var email = $('tr.data[data-customer-id="'+customerIds[i]+'"]').find('i.customer-email-button').data('email');
                         emails.push(email);
                     }
                     return emails.join(',');
