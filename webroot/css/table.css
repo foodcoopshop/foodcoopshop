@@ -115,6 +115,7 @@ table.list th.icon {
 }
 table.list a.btn {
     padding: 0 4px ! important;
+    line-height: 20px;
 }
 .sort a.asc:before,
 .sort a.desc:before {
