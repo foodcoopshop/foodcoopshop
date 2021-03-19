@@ -529,7 +529,7 @@ body.order_details.index .table-cell-wrapper.price {
     width: 50px;
 }
 .table-cell-wrapper.group {
-    width: 105px;
+    width: 110px;
 }
 .table-cell-wrapper.group span {
     margin-left: 5px;
@@ -783,7 +783,6 @@ body.customers.index #selectgroupid,
 body.customers.index span.group-for-dialog {
     display: none;
 }
-
 body.attributes.index table.list td {
     padding-top: 3px;
     vertical-align: top;
