@@ -54,8 +54,8 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     margin-left: 0px;
 }
 #filter-loader {
-  left: 36vw;
-  margin-left: 0;
+  left: 50%;
+  margin-left: -75px;
 }
 .sb-toggle-left {
     float: left;

@@ -258,12 +258,7 @@ body.products.index td.status {
   position: fixed;
   top: 10px;
   left: 590px;
-  font-size: 7.5em;
-  background: white;
-  border-radius: 10px;
-  width: 150px;
-  height: 150px;
-  text-align: center;
+  font-size: 150px;
 }
 #filter-loader i {
   animation:10s infinite, fa-spin 2s infinite linear;
