@@ -485,17 +485,28 @@ foodcoopshop.Helper = {
 
     onWindowResize: function () {
 
-        // adapt height of cart
-        var difference = 146;
-        var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
-        if (loadLastOrderDetailsDropdown.length > 0) {
-            difference += loadLastOrderDetailsDropdown.closest('.input').height();
+        var difference = 0;
+
+        // whole page is called in iframe in instant-order-mode
+        var instantOrderIframe = window.parent.$('#instant-order-add .modal-body iframe');
+        if (instantOrderIframe.length > 0) {
+            difference = 149;
+            difference += $('.instant-order-customer-info').height();
+            newCartHeight = instantOrderIframe.height();
+        } else {
+            difference = 146;
+            var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
+            if (loadLastOrderDetailsDropdown.length > 0) {
+                difference += loadLastOrderDetailsDropdown.closest('.input').height();
+            }
+            var globalNoDeliveryDayBox = $('#global-no-delivery-day-box');
+            if (globalNoDeliveryDayBox.length > 0) {
+                difference += globalNoDeliveryDayBox.height();
+            }
+            var newCartHeight = $(window).height();
         }
-        var globalNoDeliveryDayBox = $('#global-no-delivery-day-box');
-        if (globalNoDeliveryDayBox.length > 0) {
-            difference += globalNoDeliveryDayBox.height();
-        }
-        $('#cart p.products').css('max-height', parseInt($(window).height()) - difference);
+
+        $('#cart p.products').css('max-height', parseInt(newCartHeight) - difference);
 
     },
 
