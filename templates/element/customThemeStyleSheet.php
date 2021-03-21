@@ -79,6 +79,7 @@ use Cake\Core\Configure;
     #flashMessage.success,
     hr,
     .product-wrapper, .manufacturer-wrapper,
+    body.manufacturers.detail #inner-content h2,
     h1.middle-line span.middle {
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
