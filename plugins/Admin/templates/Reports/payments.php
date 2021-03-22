@@ -141,7 +141,7 @@ foreach ($payments as $payment) {
         echo $additionalText;
     echo '</td>';
 
-    echo '<td style="text-align:right;width:135px;">';
+    echo '<td style="text-align:right;width:140px;">';
         echo $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
@@ -152,7 +152,7 @@ foreach ($payments as $payment) {
     echo '</td>';
 
     if ($useCsvUpload) {
-        echo '<td style="text-align:right;width:135px;">';
+        echo '<td style="text-align:right;width:140px;">';
             if ($payment->date_transaction_add) {
                 echo $payment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
             }
