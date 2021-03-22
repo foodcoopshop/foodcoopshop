@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-03-12 15:08+0100\n"
+"POT-Creation-Date: 2021-03-22 09:52+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -528,12 +528,6 @@ msgid "Close_all_orders?"
 msgstr ""
 
 msgid "Really_close_all_orders?"
-msgstr ""
-
-msgid "Generate_orders_as_pdf?"
-msgstr ""
-
-msgid "Really_generate_orders_as_pdf?"
 msgstr ""
 
 msgid "Email_addresses"

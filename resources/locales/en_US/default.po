@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-12 15:08+0100\n"
-"PO-Revision-Date: 2021-03-12 15:08+0100\n"
+"POT-Creation-Date: 2021-03-22 09:52+0100\n"
+"PO-Revision-Date: 2021-03-22 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -530,12 +530,6 @@ msgstr "Close all orders?"
 
 msgid "Really_close_all_orders?"
 msgstr "Really close all visible orders?"
-
-msgid "Generate_orders_as_pdf?"
-msgstr "Generate orders as PDF?"
-
-msgid "Really_generate_orders_as_pdf?"
-msgstr "Really generate orders as PDF?"
 
 msgid "Email_addresses"
 msgstr "E-mail addresses"
@@ -2501,6 +2495,12 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Generate_orders_as_pdf?"
+#~ msgstr "Generate orders as PDF?"
+
+#~ msgid "Really_generate_orders_as_pdf?"
+#~ msgstr "Really generate orders as PDF?"
 
 #~ msgid "route_news"
 #~ msgstr "news"

@@ -17,6 +17,7 @@ use Cake\Core\Configure;
 
 if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer())) {
     $this->element('addScript', [ 'script' =>
+        Configure::read('app.jsNamespace').".ModalOrderDetailAllProductsPickedUp.initPickedUpForAllCustomers();" .
         Configure::read('app.jsNamespace').".ModalOrderDetailAllProductsPickedUp.initPickedUpGroupedByCustomer();"
     ]);
     echo '<button class="change-products-picked-up-all-customers-button btn btn-outline-light"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';

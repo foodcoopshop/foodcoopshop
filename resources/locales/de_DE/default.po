@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-12 15:08+0100\n"
-"PO-Revision-Date: 2021-03-12 15:08+0100\n"
+"POT-Creation-Date: 2021-03-22 09:52+0100\n"
+"PO-Revision-Date: 2021-03-22 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -530,12 +530,6 @@ msgstr "Alle Bestellungen abschließen?"
 
 msgid "Really_close_all_orders?"
 msgstr "Möchtest du wirklich alle Bestellungen abschließen?"
-
-msgid "Generate_orders_as_pdf?"
-msgstr "Bestellungen als PDF generieren?"
-
-msgid "Really_generate_orders_as_pdf?"
-msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
 
 msgid "Email_addresses"
 msgstr "E-Mail-Adressen"
@@ -2501,6 +2495,12 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Generate_orders_as_pdf?"
+#~ msgstr "Bestellungen als PDF generieren?"
+
+#~ msgid "Really_generate_orders_as_pdf?"
+#~ msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
 
 #~ msgid "route_news"
 #~ msgstr "aktuelles"

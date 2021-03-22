@@ -126,8 +126,6 @@ class LocalizedController extends Controller
                 'PlaceInstantOrderFor' => __('Place_instant_order_for'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
-                'GenerateOrdersAsPdf' => __('Generate_orders_as_pdf?'),
-                'ReallyGenerateOrdersAsPdf' => __('Really_generate_orders_as_pdf?'),
                 'EmailAddresses' => __('Email_addresses'),
                 'DecreaseAmount' => __('Decrease_amount'),
                 'Stock' => __('Stock'),
