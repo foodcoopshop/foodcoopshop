@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-11 14:50+0100\n"
-"PO-Revision-Date: 2021-03-11 14:58+0100\n"
+"POT-Creation-Date: 2021-03-23 16:14+0100\n"
+"PO-Revision-Date: 2021-03-23 16:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1833,6 +1833,12 @@ msgstr "Give the manufacturer feedback for the product"
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
 
+msgid "Order_state"
+msgstr "Order state"
+
+msgid "Order_date"
+msgstr "Order date"
+
 msgid "products_picked_up"
 msgstr "Products picked up"
 
@@ -2051,9 +2057,6 @@ msgstr "Why has the product been assigned to another member?"
 
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "sorry, the product \"{0}\" can not be delivered."
-
-msgid "Order_date"
-msgstr "Order date"
 
 msgid "Why_has_the_product_been_cancelled?"
 msgstr "Why has the product been cancelled?"
