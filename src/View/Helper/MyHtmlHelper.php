@@ -356,9 +356,9 @@ class MyHtmlHelper extends HtmlHelper
         }
         if ($manufacturer->address_manufacturer->phone != '') {
             if ($outputType == 'html') {
-                $imprintLines[] = __('Mobile') . ': <a href="tel:' . $manufacturer->address_manufacturer->phone . '">' . $manufacturer->address_manufacturer->phone . '</a>';
+                $imprintLines[] = __('Phone') . ': <a href="tel:' . $manufacturer->address_manufacturer->phone . '">' . $manufacturer->address_manufacturer->phone . '</a>';
             } else {
-                $imprintLines[] = __('Mobile') . ': ' . $manufacturer->address_manufacturer->phone;
+                $imprintLines[] = __('Phone') . ': ' . $manufacturer->address_manufacturer->phone;
             }
         }
         $imprintLines[] = __('Email') . ': ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
