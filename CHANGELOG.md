@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.0...develop)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.1...develop)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
@@ -14,10 +14,17 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen
 - Das in die Jahre gekommene Frontend wurde optisch aufgepeppt: Blog-Artikel, Hauptmenü, das mobile Menü, die Produkt-Liste und der Footer sind nun frischer. Weiters ist die Haupt-Schrift etwas größer und die Fett-Schrift dezenter. [I#643](https://github.com/foodcoopshop/foodcoopshop/issues/643) / [PR#648](https://github.com/foodcoopshop/foodcoopshop/pull/648) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-
 ### Code Cleaning
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+
+## v3.2.1 / 2021-03-23 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.0...v3.2.1)
+
+### Bugfixes
+* Wenn ein Hersteller die eigenen Einstellungen speichert, wird die Ansprechperson jetzt nicht mehr gelöscht.
+* Layout-Fix im Overlay für die Produkt-Beschreibung.
+* Kamera-Icon wurde auf der Login-Seite für den Selbstbedienung-Modus auf Smartphones nicht angezeigt.
+* Wenn die Erstinstallation <= v3.0 war, müssen [zwei Migrations manuell ausgeführt werden](https://foodcoopshop.github.io/en/migration-guide.html).
 
 ## v3.2.0 / 2021-03-08 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...v3.2.0)
 
