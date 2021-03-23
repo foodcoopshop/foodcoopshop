@@ -353,6 +353,10 @@ h1 {
     width: 100%;
     padding-bottom: 10px;
 }
+body.home h1,
+body.blog_posts.index h1 {
+    padding-bottom: 0;
+}
 a.button {
     border-radius: 5px;
     color: #fff;
