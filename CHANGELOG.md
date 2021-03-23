@@ -6,6 +6,14 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v3.2.1 / 2021-03-23 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.0...v3.2.1)
+
+### Bugfixes
+* Wenn ein Hersteller die eigenen Einstellungen speichert, wird die Ansprechperson jetzt nicht mehr gelöscht.
+* Layout-Fix im Overlay für die Produkt-Beschreibung.
+* Kamera-Icon wurde auf der Login-Seite für den Selbstbedienung-Modus auf Smartphones nicht angezeigt.
+* Wenn die Erstinstallation <= v3.0 war, müssen [zwei Migrations manuell ausgeführt werden](https://foodcoopshop.github.io/en/migration-guide.html).
+
 ## v3.2.0 / 2021-03-08 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...v3.2.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
