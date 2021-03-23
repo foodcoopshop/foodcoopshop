@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 if ($groupBy == '') {
     $widthStyle = '';
     if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
@@ -20,7 +22,9 @@ if ($groupBy == '') {
     }
     echo '<td style="text-align:center;font-size:17px;'.$widthStyle.'">';
         if (isset($this->MyHtml->getOrderStates()[$orderDetail->order_state])) {
-            echo '<i title="'.$this->MyHtml->getOrderStates()[$orderDetail->order_state].'" class="' . $this->MyHtml->getOrderStateFontawesomeIcon($orderDetail->order_state).'"></i>';
+            $title = __d('admin', 'Order_state') . ': ' . $this->MyHtml->getOrderStates()[$orderDetail->order_state];
+            $title .= '<br />' . __d('admin', 'Order_date') . ': ' .  $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
+            echo '<i title="'.$title.'" class="order-state-icon ' . $this->MyHtml->getOrderStateFontawesomeIcon($orderDetail->order_state).'"></i>';
         }
         if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
             echo '&nbsp;<i title="'.__d('admin', 'products_picked_up').'" class="fas fa-home ok"></i>';

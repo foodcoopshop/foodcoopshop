@@ -39,7 +39,7 @@ use Cake\Core\Configure;
     if ($groupBy == '') {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button');" .
+            Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button, i.order-state-icon');" .
             Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailFeedbackAdd.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .

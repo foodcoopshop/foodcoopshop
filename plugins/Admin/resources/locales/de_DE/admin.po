@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-11 14:50+0100\n"
-"PO-Revision-Date: 2021-03-19 11:28+0100\n"
+"POT-Creation-Date: 2021-03-23 16:14+0100\n"
+"PO-Revision-Date: 2021-03-23 16:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1833,6 +1833,12 @@ msgstr "Gib dem Hersteller Feedback zum Produkt"
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
 
+msgid "Order_state"
+msgstr "Bestellstatus"
+
+msgid "Order_date"
+msgstr "Bestelldatum"
+
 msgid "products_picked_up"
 msgstr "Produkte abgeholt"
 
@@ -2051,9 +2057,6 @@ msgstr "Warum wurde das Produkt auf ein anderes Mitglied umgebucht?"
 
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "Das Produkt \"{0}\" kann leider nicht geliefert werden."
-
-msgid "Order_date"
-msgstr "Bestelldatum"
 
 msgid "Why_has_the_product_been_cancelled?"
 msgstr "Warum wurde das Produkt storniert?"

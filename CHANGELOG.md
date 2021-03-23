@@ -14,6 +14,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen
 - Das in die Jahre gekommene Frontend wurde optisch aufgepeppt: Blog-Artikel, Hauptmenü, das mobile Menü, die Produkt-Liste und der Footer sind nun frischer. Weiters ist die Haupt-Schrift etwas größer und die Fett-Schrift dezenter. [I#643](https://github.com/foodcoopshop/foodcoopshop/issues/643) / [PR#648](https://github.com/foodcoopshop/foodcoopshop/pull/648) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### Kleinere Verbesserungen
+- Das Bestelldatum wird nun im Tooltip über dem Bestellstatus-Icon angezeigt. [I#652](https://github.com/foodcoopshop/foodcoopshop/issues/652) / [PR#653](https://github.com/foodcoopshop/foodcoopshop/pull/653) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ### Code Cleaning
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
