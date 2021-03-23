@@ -11,7 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 850px) {
 
     /* START chrome pull refresh fix */
     html {
@@ -25,44 +25,13 @@
     body {
         margin: 0 ! important;
     }
+    .btn-outline-light:hover {
+        background-color: #fff ! important;
+        border-color: #ccc ! important;
+    }
     #container {
         overflow: hidden ! important; /* avoids iphone scrolling bug */
         min-height: initial ! important;
-    }
-    .sb-slidebar {
-        z-index: 99990;
-    }
-    .sb-left #product-search {
-        position: static ! important;
-        float: left;
-        width: 100%;
-        margin-bottom: 5px;
-    }
-    .sb-left #product-search input {
-        padding-left: 8px ! important;
-        width: 100% ! important;
-        padding-right: 14%;
-    }
-    .sb-left #product-search .btn-success {
-        border-color: transparent ! important;
-    }
-    .sb-left #product-search .btn-success.submit {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    .sb-left #product-search .btn-success.reset {
-        position: absolute;
-        top: 0;
-        right: 35px;
-    }
-    .sb-left #product-search select {
-        width: 100% ! important;
-    }
-    .sb-left #product-search input,
-    .sb-left #product-search select {
-        color: #333;
-        background-color: #fff;
     }
     #responsive-header .responsive-cart {
         float: right ! important;
@@ -111,13 +80,58 @@
     .sb-left li.footer {
         word-break: break-word;
     }
-    body:not(.admin) .sb-left li.header,
-    body:not(.admin) .sb-left a:hover,
-    body:not(.admin) .sb-left a.active {
-        background-color: #777;
-    }
     .sb-left li.header {
         padding-left: 10px;
+    }
+    .sb-slidebar {
+        width: 55% ! important;
+        z-index: 99990;
+        margin-top: 54px;
+    }
+    .sb-left a i {
+        padding-left: 0;
+    }
+    .sb-left a, .sb-left li.header,
+    .sb-left a, .sb-left li.footer {
+        color: #000 ! important;
+    }
+    .sb-slidebar {
+        background-color: #fff;
+    }
+    .sb-left li.header, .sb-left a:hover, .sb-left a.active {
+        color: #fff ! important;
+    }
+    .sb-left #product-search {
+        position: static ! important;
+        float: left;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .sb-left #product-search input {
+        padding-left: 8px ! important;
+        width: 100% ! important;
+        padding-right: 14%;
+    }
+    .sb-left #product-search .btn-success {
+        border-color: transparent ! important;
+    }
+    .sb-left #product-search .btn-success.submit {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .sb-left #product-search .btn-success.reset {
+        position: absolute;
+        top: 0;
+        right: 35px;
+    }
+    .sb-left #product-search select {
+        width: 100% ! important;
+    }
+    .sb-left #product-search input,
+    .sb-left #product-search select {
+        color: #333;
+        background-color: #fff;
     }
     li ul li a {
         font-size: 12px;
@@ -130,7 +144,7 @@
         padding-left: 25px ! important;
     }
     .sb-left a i {
-        padding-left: 5px;
+        padding-right: 5px;
     }
     .sb-left a i:before {
         padding-right: 5px;

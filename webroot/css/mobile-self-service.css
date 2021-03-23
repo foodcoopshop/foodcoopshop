@@ -11,7 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 850px) {
     .self-service,
     .self-service .header,
     .self-service #products,

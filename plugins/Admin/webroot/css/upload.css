@@ -56,7 +56,7 @@
 .modal .mini-upload-form p.heading {
     font-size: 16px;
     margin-top: -26px;
-    font-weight: bold;
+    font-weight: 600;
 }
 .modal .mini-upload-form .modify-icon {
     position: absolute;

@@ -109,7 +109,7 @@ body.iframe_start_page {
 }
 .modal.add-payment-form label {
     display: block;
-    font-weight: bold;
+    font-weight: 600;
 }
 .modal.add-payment-form .datepicker {
     text-align: right;
@@ -269,7 +269,7 @@ body.iframe_start_page {
     margin-top: 5px ! important;
     float: left;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight: 600;
 }
 #modal-product-price-edit .price-per-unit-wrapper,
 #modal-product-price-edit .price-wrapper {

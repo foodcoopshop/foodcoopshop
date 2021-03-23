@@ -44,11 +44,11 @@ if ($blogPost->short_description != '') {
     echo '<p><i>';
         echo '<br />'.__('Modified_on'). ' ' . $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
 if (!empty($blogPost->manufacturer)) {
-    echo '<br />';
+    echo '<br />' . __('by') . ' ';
     if ($blogPost->manufacturer->active) {
-        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">'.__('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
+        echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">'.$blogPost->manufacturer->name.'</a>';
     } else {
-        echo __('by') . ' ' . $blogPost->manufacturer->name;
+        echo $blogPost->manufacturer->name;
     }
 }
     echo '</i></p>';

@@ -30,12 +30,11 @@ use Cake\Core\Configure;
 
     .box h3,
     .btn-success,
-    #main-menu li a:hover, #main-menu li a.active,
-    #main-menu li ul li a,
     .vertical.menu a:hover, .vertical.menu a:hover i, .vertical.menu a.active, .vertical.menu a.active i,
     .vertical.menu li.heading,
     .menu.vertical a:hover span.additional-info,
     .menu.vertical a.active span.additional-info,
+    #main-menu a::after,
     #categories-menu li.header,
     #manufacturers-menu li.header,
     h2.info,
@@ -61,7 +60,9 @@ use Cake\Core\Configure;
     .product-wrapper .price-asterisk,
     i.fa.ok, i.fas.ok, i.far.ok,
     body.carts.detail .cart:not(#cart) span.amount .btn,
-    #filter-loader i {
+    #filter-loader i,
+    .btn-cart i.fa-cart-plus,
+    .btn-cart i.fa-shopping-bag {
         color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
@@ -75,7 +76,11 @@ use Cake\Core\Configure;
 
     .btn-success,
     .btn-success:active:hover,
-    #flashMessage.success {
+    #flashMessage.success,
+    hr,
+    .product-wrapper, .manufacturer-wrapper,
+    body.manufacturers.detail #inner-content h2,
+    h1.middle-line span.middle {
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
@@ -108,8 +113,8 @@ use Cake\Core\Configure;
     }
 
     <?php if ($isMobile) { ?>
-        @media only screen and (max-device-width: 768px) {
-            #responsive-header a,
+        @media only screen and (max-device-width: 850px) {
+            #responsive-header a:not(.btn-camera),
             body.self_services #responsive-header i.fa-circle-notch,
             :not(button)> i.fas
             :not(.fa-arrow-cycle-right)
@@ -126,23 +131,14 @@ use Cake\Core\Configure;
             body.self_services #responsive-header i.ok {
                 color: #fff ! important;
             }
-            body:not(.admin) .sb-slidebar,
             body:not(.admin) .sb-right h3 {
                 background-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
-            body:not(.admin) .sb-left li.header,
-            body:not(.admin) .sb-left a:hover,
-            body:not(.admin) .sb-left a.active,
-            body:not(.admin) .sb-left a:hover i.fas:not(.gold),
-            body:not(.admin) .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
-                background-color: #fff;
-                color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
-            }
-            body.admin .sb-left li.header,
-            body.admin .sb-left a:hover,
-            body.admin .sb-left a.active,
-            body.admin .sb-left a:hover i.fas:not(.gold),
-            body.admin .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
+            .sb-left li.header,
+            .sb-left a:hover,
+            .sb-left a.active,
+            .sb-left a:hover i.fas:not(.gold),
+            .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
                 background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
                 color: #fff ! important;
             }

@@ -50,7 +50,7 @@ a:not(.btn):hover {
   text-decoration: none;
 }
 h4 {
-    font-size: 18px;
+    font-size: 20px;
 }
 select {
     background-color: #fff;
@@ -137,11 +137,33 @@ h1 {
     margin-top: 0;
     font-weight: normal;
 }
-h1 span {
+h1.middle-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+h1:not(.middle-line) span {
     font-size: 15px;
     letter-spacing: 0;
     float: right;
     line-height: 34px;
+}
+h1.middle-line span.left {
+    margin-bottom: -5px;
+}
+h1.middle-line span.middle {
+    border-bottom: 1px solid #ccc;
+    flex-grow: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+    min-width: 50px;
+}
+h1.middle-line span.right {
+    font-size: 15px;
+    letter-spacing: 0;
+    align-self: flex-end;
+    margin-bottom: -2px;
+    text-align: right;
 }
 h2 {
     font-size: 26px;
@@ -170,9 +192,9 @@ h2.warning {
 #flashMessage {
     position: fixed;
     top: 48px;
-    left: 445px;
-    padding: 7px;
-    width: 350px;
+    left: 392px;
+    padding: 8px;
+    width: 450px;
     opacity: 0.9;
     border-radius: 5px;
     z-index: 1000;
@@ -242,7 +264,7 @@ h2.warning {
     background: #fff;
     border-bottom: 1px solid #dfdfdf;
     border-right: 1px solid #dfdfdf;
-    font-size: 13px;
+    font-size: 14px;
     width: 100%;
     position: relative;
 }
@@ -280,7 +302,7 @@ a.toggle-link.collapsed i:before {
     display: block;
 }
 .vertical.menu li.has-children ul a {
-    font-size: 12px;
+    font-size: 13px;
     padding-top: 3px;
     padding-bottom: 3px;
 }
@@ -472,7 +494,10 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .bootstrap-select .dropdown-menu li a span.text,
 .bootstrap-select .no-results {
     color: #262626;
-    font-size: 13px;
+    font-size: 14px;
+}
+.bootstrap-select .bs-searchbox .form-control {
+    font-size: 14px;
 }
 .bootstrap-select .form-control:focus {
     box-shadow: inherit;

@@ -42,7 +42,7 @@ if ($product['is_new']) {
     if ($showIsNewBadgeAsLink) {
         $isNewSrc = $this->Slug->getNewProducts();
     }
-    echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-success" title="'.__('New').'">';
+    echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-outline-light" title="'.__('New').'">';
         echo '<i class="fas fa-star gold"></i> '.__('New');
     echo '</a>';
 }
@@ -59,7 +59,6 @@ if ($product['is_new']) {
         }
         echo '</h4>';
     echo '</div>';
-    echo '<div class="sc"></div>';
 
 if ($product['description_short'] != '') {
     echo $product['description_short'].'<br />';

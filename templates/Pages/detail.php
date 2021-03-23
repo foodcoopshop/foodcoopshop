@@ -31,7 +31,7 @@ if (!empty($page['children'])) {
             $childPage->title,
             $this->Slug->getPageDetail($childPage->id_page, $childPage->title),
             [
-                'class' => 'btn btn-success',
+                'class' => 'btn btn-outline-light',
                 'escape' => false
             ]
         ).'</p>';

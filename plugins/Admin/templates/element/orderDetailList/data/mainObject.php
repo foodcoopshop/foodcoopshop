@@ -118,7 +118,7 @@ if ($groupBy == 'product') {
 echo '</td>';
 
 if ($groupBy == 'customer') {
-    echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
+    echo '<td'.(!$isMobile ? ' style="width: 159px;"' : '').'>';
     echo $this->Html->link(
         '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''),
         $groupByObjectHref,

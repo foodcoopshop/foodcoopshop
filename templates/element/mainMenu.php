@@ -30,9 +30,9 @@ if (!empty($manufacturersForMenu)) {
     ];
 }
 
-if (Configure::read('app.isBlogFeatureEnabled')) {
+if ($blogPostsAvailable) {
     $menu[] = [
-        'name' => __('News'), 'slug' => $this->Slug->getBlogList()
+        'name' => __('News'), 'slug' => $this->Slug->getBlogList(),
     ];
 }
 $menu = array_merge($menu, $this->Menu->buildPageMenu($pagesForHeader));

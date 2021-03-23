@@ -294,7 +294,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Cart.updateCartDepositSum(deposit * amount);
             foodcoopshop.Cart.updateCartTaxSum(tax * amount);
             foodcoopshop.Cart.updateCartTimebasedCurrencySum(timebasedCurrencyHours * amount);
-            var button = productWrapper.find('.entity-wrapper.active .btn-success');
+            var button = productWrapper.find('.entity-wrapper.active .btn-cart');
 
             foodcoopshop.Helper.ajaxCall(
                 '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',

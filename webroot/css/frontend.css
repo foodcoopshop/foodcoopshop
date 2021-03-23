@@ -14,25 +14,15 @@
 body {
     font-family: 'Open Sans';
     color: #333333;
-    font-size: 10pt;
+    font-size: 14px;
     background-image: url(/img/bg.jpg);
     background-attachment: fixed;
 }
-a.transistion {
-    -o-transition: all 0.3s ease-in;
-    -moz-transition: all 0.3s ease-in;
-    -khtml-transition: all 0.3s ease-in;
-    -webkit-transition: all 0.3s ease-in;
-    -ms-transition: all 0.3s ease-in;
-    transition: all 0.3s ease-in;
-}
-
 #container {
     width: 1234px;
     float: left;
     display: none;
 }
-
 #content {
     line-height: 20px;
     min-height: 500px; /* hack for mobile with little content */
@@ -46,10 +36,10 @@ a.transistion {
 }
 #inner-content {
     float: left;
-    width: 731px;
+    width: 736px;
     background: #fff;
     margin-top: 20px;
-    padding-right: 15px;
+    padding-right: 10px;
     padding-bottom: 15px;
 }
 #header {
@@ -97,7 +87,7 @@ a.transistion {
     padding-right: 10px;
     background: #fff;
     padding-top: 15px;
-    width: 195px;
+    width: 190px;
 }
 body.categories.detail div.img-wrapper {
     width: 100%;
@@ -135,6 +125,10 @@ body.categories.detail div.description-wrapper {
 #slider .swiper-button-prev {
     left: 20px ! important;
 }
+.swiper-button-next,
+.swiper-button-prev {
+    top: 44%; /* when css is packed, the vertical centering does not work with default 50% */
+}
 .vertical.menu {
     float: left;
     margin-bottom: 10px;
@@ -142,14 +136,14 @@ body.categories.detail div.description-wrapper {
     width: 180px;
 }
 .vertical.menu li.header {
-    padding: 5px;
-    font-size: 17px;
+    padding: 10px;
+    font-size: 16px;
     padding-left: 10px;
     color: #fff;
     border-bottom: 1px solid #dfdfdf;
 }
 .vertical.menu a {
-    padding: 3px 10px;
+    padding: 4px 10px;
 }
 .vertical.menu a i.fas {
     font-size: 13px;
@@ -163,37 +157,27 @@ body.categories.detail div.description-wrapper {
 }
 
 #main-menu {
-    margin: 70px 0 20px 25px;
+    margin: 70px 0 20px 10px;
     width: 660px;
     float: left;
 }
 #main-menu > li {
-    margin-right: 7px;
+    margin-right: 18px;
 }
 #main-menu li > a {
     color: #333;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px;
+    padding-bottom: 10px;
 }
-#main-menu li a:hover,
-#main-menu li a.active {
-    color: #fff;
-}
-#main-menu ul li a:hover,
-#main-menu ul li a.active {
-    opacity: 0.8;
-}
-#main-menu ul li a i {
+#main-menu ul li a.has-icon i {
     margin-right: 5px;
 }
 #main-menu li ul {
     position: absolute;
     left: 241px;
-    top: 136px;
+    top: 137px;
     width: 670px;
-    padding-left: 2px;
-    padding-top: 2px;
+    padding: 24px 15px 0 15px;
     background: #fff;
     border: 1px solid #d6d4d4;
     z-index: 1000;
@@ -205,22 +189,37 @@ body.categories.detail div.description-wrapper {
 #main-menu li ul li {
     float: left;
     line-height: 17px;
-    width: 220px;
-    margin-right: 2px;
+    width: 201px;
+    margin-right: 11px;
 }
 #main-menu li ul li a {
-    color: #fff;
-    margin-right: 15px;
     margin-top: 0px;
-    margin-bottom: 2px;
+    margin-bottom: 7px;
     float: left;
-    width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    max-width: 100%;
+}
+#main-menu li ul li::nth-last-child(1) a {
+    margin-bottom: 0;
 }
 #main-menu li ul ul {
     display: none;
+}
+#main-menu a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    margin-top: 3px;
+    transition: width .3s;
+    margin-left: auto;
+    margin-right: auto;
+}
+#main-menu a:hover::after,
+#main-menu a.active::after {
+    width: 100%;
 }
 
 #user-menu {
@@ -368,7 +367,6 @@ a[disabled] {
     opacity: 0.5;
 }
 
-body.blog_posts.index .blog-post-wrapper,
 .product-wrapper,
 .manufacturer-wrapper {
     margin-bottom: 0px;
@@ -384,6 +382,7 @@ body.blog_posts.index .blog-post-wrapper,
 }
 .product-wrapper .heading h4 {
     float: left;
+    font-weight: 600;
     margin-top: 0;
     margin-right: 10px;
     line-height: 23px;
@@ -396,18 +395,14 @@ body.superadmin .product-wrapper .heading h4 {
     margin-top: 0;
     line-height: 23px;
 }
-.blog-post-wrapper div.first-column,
 .product-wrapper div.first-column,
 .manufacturer-wrapper div.first-column {
     text-align: center;
     float: left;
     margin-right: 15px;
-    padding: 10px;
-    border: 1px solid #d6d4d4;
     width: 170px;
     position: relative;
 }
-.blog-post-wrapper div.first-column img,
 .manufacturer-wrapper div.first-column img {
     width: 148px;
 }
@@ -418,10 +413,15 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper .radio label {
     word-break: break-word;
 }
+.product-wrapper .toggle-link {
+    margin-top: 5px;
+}
+.product-wrapper .toggle-content {
+    margin-bottom: 5px;
+}
 .product-wrapper .toggle-content.description img {
   margin-bottom: 3px;
 }
-.blog-post-wrapper div.second-column,
 .product-wrapper div.second-column,
 .manufacturer-wrapper div.second-column {
     float: left;
@@ -449,7 +449,6 @@ body.superadmin .product-wrapper .heading h4 {
     right: -10px;
     top: -10px;
 }
-.blog-post-wrapper div.third-column,
 .product-wrapper div.third-column,
 .manufacturer-wrapper div.third-column {
     float: left;
@@ -458,21 +457,12 @@ body.superadmin .product-wrapper .heading h4 {
     padding-left: 16px;
     border-left: 1px solid #d6d4d4;
 }
-.blog-post-wrapper div.third-column,
 .manufacturer-wrapper div.third-column {
     text-align: center;
-}
-.blog-post-wrapper div.third-column a.btn {
-    margin-top: 20px;
 }
 .manufacturer-wrapper div.third-column a.btn {
     margin-top: 65px;
 }
-.blog-post-wrapper div.third-column div.additional-info {
-    margin-top: 70px;
-    text-align: right;
-}
-
 .product-wrapper .entity-wrapper {
     float: left;
     margin-bottom: 5px;
@@ -495,14 +485,14 @@ body.superadmin .product-wrapper .heading h4 {
     margin-top: 3px;
     float: left;
 }
-.entity-wrapper .btn-success {
+.entity-wrapper .btn-cart {
     width: 100%;
     float: left;
 }
 .product-wrapper .price,
 .product-wrapper .price-asterisk {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 5px;
     float: left;
 }
@@ -578,7 +568,6 @@ body.superadmin .product-wrapper .heading h4 {
 }
 body.manufacturers.detail .manufacturer-infos {
     width: 100%;
-    min-height: 160px;
     margin-bottom: 20px;
     float: left;
 }
@@ -610,8 +599,7 @@ body.manufacturers.detail .imprint {
     text-align: right;
 }
 #footer {
-    background-color: #3f3f3f;
-    color: #fff;
+    background-color: #dfdfdf;
     width: 928px;
     min-height: 172px;
     float: left;
@@ -642,7 +630,6 @@ body.manufacturers.detail .imprint {
     float: right;
     margin-right: 75px;
     text-align: left;
-    color: #777;
     font-size: 14px;
     border-left: 1px solid #777;
     padding-left: 20px;
@@ -654,17 +641,10 @@ body.manufacturers.detail .imprint {
 }
 #footer a {
     color: #777;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
-    font-weight: bold;
+    font-weight: 600;
 }
 #footer a:hover {
-    color: #fff;
-}
-#footer span a {
-    color: #fff;
-}
-#footer span a:hover {
-    color: #777;
+    color: #000;
 }
 #footer .additional-footer-info {
     text-align: right;
@@ -680,7 +660,6 @@ body.manufacturers.detail .imprint {
 #footer h2 {
     font-size: 20px;
     margin-bottom: 15px;
-    color: #fff;
     margin-top: 0;
 }
 #right {
@@ -698,7 +677,7 @@ body.manufacturers.detail .imprint {
 .box h3 {
     color: #fff;
     padding: 10px;
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
 }
 .box h3 i {
@@ -774,7 +753,7 @@ body.carts.detail #load-last-order-details,
 .cart p.deposit-sum-wrapper span.sum,
 .cart p.timebased-currency-sum-wrapper span.sum,
 .cart b.payment {
-    font-weight: bold;
+    font-weight: 600;
     float: right;
     margin-right: 20px;
 }
@@ -826,7 +805,7 @@ body.carts.detail #load-last-order-details,
 }
 .btn {
     padding: 4px 8px;
-    font-size: 13px;
+    font-size: 14px;
 }
 .edit-shortcut-button {
     padding: 0px 4px;
@@ -835,9 +814,10 @@ body.carts.detail #load-last-order-details,
 #cart .btn-success {
     padding-top: 6px;
     padding-bottom: 6px;
+}
+#cart .btn-success {
     font-size: 14px;
 }
-
 .cart .delete a.btn {
     padding: 0;
     color: #f3515c;
@@ -884,6 +864,7 @@ body.carts.detail #CartsDetailForm {
 }
 #RegistrationForm .input.checkbox {
     margin-top: 0;
+    margin-left: 58px;
 }
 #CartsDetailForm .input.checkbox label,
 #RegistrationForm .input.checkbox label {
@@ -959,7 +940,7 @@ body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
 }
 body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
-    font-weight: bold;
+    font-weight: 600;
     float: right;
     margin-right: 17px;
 }
@@ -1084,7 +1065,7 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
 }
 .blog-wrapper {
     margin-bottom: 20px;
-    height: 270px;
+    height: 320px;
 }
 body.carts.order_successful h2 {
     margin-top: 20px;
@@ -1094,28 +1075,33 @@ body.carts.order_successful #inner-content ul {
 }
 a.blog-post-wrapper {
     float: left;
-    width: 174px ! important;
-    margin-right: 5px;
-    height: 255px;
-    padding: 5px;
+    width: 229px ! important;
+    margin-right: 16px;
+    height: 295px;
+    padding: 5px 10px;
     overflow: hidden;
     color: #333333;
-    margin-bottom: 5px;
-    border: 1px solid #d6d4d4;
+    margin-bottom: 21px;
     border-radius: 5px;
+    box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.3);
+}
+a.blog-post-wrapper:nth-of-type(3n) {
+    margin-right: 0;
 }
 a.blog-post-wrapper img {
-    padding: 5px;
+    padding: 2px;
     width: 100%;
     object-fit: contain;
-    height: 115px;
-    margin-bottom: 5px;
+    height: 145px;
+    margin-bottom: 3px;
 }
 a.blog-post-wrapper h3 {
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 17px;
-    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 4px;
     width: 100%;
     float: left;
     padding-top: 10px;
@@ -1128,14 +1114,23 @@ a.blog-post-wrapper span {
     line-height: 19px;
     color: #333;
 }
+a.blog-post-wrapper span.content {
+    max-height: 107px;
+    overflow-y: hidden;
+}
+a.blog-post-wrapper span.date {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-style: italic;
+}
 a.blog-post-wrapper span.img-wrapper {
     float: none;
 }
 a.blog-post-wrapper:hover {
-    background: #F5F5F5;
-}
-a.blog-post-wrapper:hover h3 {
-    border-color: #fff;
+    box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.5);
 }
 a.blog-post-wrapper:hover .img-wrapper {
     border-color: #fff;
@@ -1179,11 +1174,13 @@ body.blog_posts.detail #inner-content ul {
 body.blog_posts.detail .blog-wrapper {
     margin-top: 10px;
 }
-body.categories.detail .blog-wrapper,
-body.categories.new_product .blog-wrapper,
-body.categories.search .blog-wrapper {
-    height: 255px;
+body.categories .blog-wrapper,
+body.manufacturers.detail .blog-wrapper {
+    height: 330px;
+    padding-top: 10px;
     overflow-y: auto;
+    width: 736px;
+    margin-top: -15px;
 }
 body.blog_posts.detail #inner-content .content h2,
 body.pages:not(.home) #inner-content h2,
@@ -1193,7 +1190,6 @@ body.categories.detail .description-wrapper h2 {
     padding-top: 10px;
     font-size: 18px;
 }
-body.blog_posts.detail #inner-content .content h3,
 body.pages:not(.home) #inner-content h3,
 body.manufacturers.detail .manufacturer-infos h3,
 body.categories.detail .description-wrapper h3 {
@@ -1254,4 +1250,9 @@ body.blog_posts.detail p.neighbors a {
 }
 .swiper-button-prev:after {
     content: "\f359" ! important;
+}
+.blog-wrapper .swiper-button-prev,
+.blog-wrapper .swiper-button-next {
+    background-color: #fff;
+    border-radius: 22px;
 }

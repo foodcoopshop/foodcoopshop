@@ -22,7 +22,7 @@ if (!empty($sliders)) {
     echo '<div id="slider">';
         echo '<div class="swiper-wrapper">';
         foreach ($sliders as $slider) {
-            $class = ' class="swiper-slide transistion"';
+            $class = ' class="swiper-slide"';
             if ($slider->link != '') {
                 echo '<a ' . $class . ' href="' . h($slider->link) . '">';
             }

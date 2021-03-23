@@ -5,13 +5,13 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.3.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 850px) {
 
     #container,
     #header,
@@ -42,13 +42,22 @@
     body.customers.registration_successful #inner-content h2 {
         padding-bottom: 5px ! important;
     }
-    body.pages.home #slider .swiper-button-next,
-    body.pages.home #slider .swiper-button-prev {
+    .swiper-button-next,
+    .swiper-button-prev {
         display: none;
     }
-    body.blog_posts.detail .blog-wrapper,
+    body.blog_posts.index .blog-post-wrapper,
     body.pages.home .blog-post-wrapper {
-        width: 24% ! important;
+        width: 29% ! important;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+    body.categories .blog-wrapper,
+    body.manufacturers.detail .blog-wrapper {
+        margin-top: -10px;
+    }
+    body.blog_posts.detail img.blog-post-image {
+        width: 100% ! important;
     }
     body.blog_posts.detail img.blog-post-image {
         margin-left: 0 ! important;
@@ -56,16 +65,27 @@
     body.blog_posts.detail #inner-content > .img-wrapper {
         float: none;
     }
-    body.blog_posts.detail img.blog-post-image,
-    body.pages.home .blog-post-wrapper img {
-        width: 100% ! important;
-    }
+    body.blog_posts.index .blog-wrapper,
     body.pages.home .blog-wrapper {
         width: 100% ! important;
     }
-    body.categories.detail h1,
     body.blog_posts.detail h1 {
         margin-bottom: 0 ! important;
+    }
+    h1.middle-line {
+        display: block;
+        width: 100%;
+        float: left;
+    }
+    h1.middle-line span.middle {
+        display: none;
+    }
+    h1.middle-line span.left {
+        float: left;
+    }
+    h1.middle-line span.right {
+        float: right;
+        margin-top: 10px;
     }
     #cart,
     .sidebar,
@@ -188,6 +208,7 @@
     #responsive-header .sb-toggle-left {
         float: left ! important;
         margin: 13px 5px 5px 3px ! important;
+        width: 24px;
     }
     #responsive-header .open-with-modal {
         float: right ! important;
@@ -219,7 +240,7 @@
         width: 30% ! important;
     }
     #LoginForm .input.checkbox label {
-        width: 135px ! important;
+        width: 140px ! important;
         padding-left: 0;
     }
     #LoginForm button {
@@ -234,13 +255,15 @@
     #login-form .input input[type="checkbox"] {
        width: 30px ! important;
     }
+    #RegistrationForm .input.checkbox {
+        margin-left: 0;
+    }
     #RegistrationForm .input.checkbox input[type="checkbox"] {
         margin-left: -35px;
         margin-top: 0px;
     }
     form div.error-message {
         width: 60% ! important;
-        font-size: 11px;
     }
     #login-form div.error-message {
         margin-left: 85px;
@@ -252,108 +275,9 @@
         margin-bottom: 10px;
         border: 1px solid #d6d4d4;
     }
-
-    /**
-     * sidebar-right: info box starts here
-     */
-    .sb-right h3 {
-        font-size: 16px ! important;
-        margin-top: 0px ! important;
-        margin-bottom: 5px ! important;
-        color: #fff ! important;
-        padding: 5px ! important;
-    }
-    .sb-right .inner {
-        background: #fff ! important;
-        padding: 5px ! important;
-    }
-    .sb-right .inner ul {
-       padding-left: 10px;
-       margin-left: 10px;
-       margin-top: 10px;
-    }
-    .sb-right .inner li {
-        list-style-type: disc;
-        line-height: 19px;
-        padding-bottom: 5px;
-    }
-    .sb-slidebar {
-       width: 40% ! important;
-    }
-    .sb-right {
-        color: #333 ! important;
-    }
     body.carts.detail .cart:not(#cart) .input.checkbox .error-message,
     body.carts.detail .cart:not(#cart) .input.select .error-message {
         font-size: 12px;
         line-height: 18px;
     }
 }
-
-@media only screen and (max-device-width: 768px) and (orientation : portrait) {
-    #LoginForm button {
-        margin-right: 0px;
-    }
-    #RegistrationForm .input.checkbox input[type="checkbox"] {
-        margin-top: 8px;
-    }
-    .ui-dialog {
-        width: 98% ! important;
-        max-width: 450px ! important;
-    }
-    body.blog_posts.detail .blog-wrapper {
-        width: 48% ! important;
-        margin-right: 5px ! important;
-    }
-    body.pages.home .blog-post-wrapper {
-        width: 48% ! important;
-    }
-    .product-wrapper .price {
-        margin-bottom: 5px ! important;
-    }
-    .product-wrapper .deposit {
-        margin-left: 0 ! important;
-        float: left ! important;
-        font-size: 12px ! important;
-        margin-bottom: 5px ! important;
-    }
-    div.second-column {
-        padding-right: 6px ! important;
-    }
-    div.third-column {
-        padding-left: 6px ! important;
-        padding-right: 0px ! important;
-    }
-    .product-wrapper .amount-wrapper {
-        margin-bottom: 5px ! important;
-    }
-    body.blog_posts.detail p.neighbors a {
-        width: 100% ! important;
-        margin-bottom: 5px ! important;
-    }
-    a.blog-post-wrapper .img-wrapper {
-        min-height: 100px ! important;
-    }
-    .sb-slidebar {
-       width: 55% ! important;
-    }
-    .carts.detail span.product-name-wrapper {
-        width: 190px ! important;
-    }
-    body.carts.detail .cart:not(#cart) .product {
-        padding-top: 10px;
-    }
-    body.carts.detail .cart:not(#cart) span.amount {
-        margin-left: -8px;
-        padding-right: 100px; /* to move short products names to next row */
-    }
-    body.carts.detail .cart:not(#cart) span.right {
-        position: static;
-    }
-    body.carts.detail .cart:not(#cart) .image {
-        margin-top: 0;
-    }
-    body.carts.detail .cart:not(#cart) .input.checkbox label {
-        font-size: 13px;
-    }
- }

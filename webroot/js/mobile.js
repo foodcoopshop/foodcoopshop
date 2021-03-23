@@ -16,7 +16,7 @@ foodcoopshop.Mobile = {
     getSlidebarMenu: function (side) {
         var responsiveMenu = $('<ul/>');
         responsiveMenu.addClass('sb-slidebar sb-' + side); // for css
-        responsiveMenu.attr('off-canvas', 'sb-' + side + ' ' + side + ' push');
+        responsiveMenu.attr('off-canvas', 'sb-' + side + ' ' + side + ' overlay');
         return responsiveMenu;
     },
 
@@ -149,7 +149,7 @@ foodcoopshop.Mobile = {
         });
 
         // button renaming
-        $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-shopping-bag"></i>');
+        $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-fw fa-shopping-bag"></i>');
 
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));

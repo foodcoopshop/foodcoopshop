@@ -23,7 +23,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".ModalCustomerStatusEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalCustomerGroupEdit.init();" .
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button');" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button, .customer-email-button');" .
             Configure::read('app.jsNamespace') . ".ModalCustomerCommentEdit.init();"
     ]);
     ?>
@@ -162,8 +162,8 @@ foreach ($customers as $customer) {
     echo '<span class="group-for-dialog">' . $customer->id_default_group . '</span>';
     echo '</td>';
 
-    echo '<td>';
-    echo '<span class="email">' . $customer->email . '</span>';
+    echo '<td style="text-align:center;">';
+        echo '<i class="far fa-envelope ok fa-lg customer-email-button" data-email="'.h($customer->email).'" title="'.h($customer->email).'"></i>';
     echo '</td>';
 
     echo '<td style="text-align:center;width:42px;">';

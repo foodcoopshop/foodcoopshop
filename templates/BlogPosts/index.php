@@ -27,77 +27,11 @@ $this->element('addScript', ['script' =>
 <span><?php echo $blogPosts->count(); ?> <?php echo __('found'); ?></span></h1>
 
 <?php
-foreach ($blogPosts as $blogPost) {
-    echo '<div class="blog-post-wrapper">';
 
-    $blogDetailLink = $this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title);
-    echo '<div class="first-column">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
-        $largeImageExists = preg_match('/(no-single-default|default-large)/', $srcLargeImage);
-        if (!$largeImageExists) {
-            echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($blogPost->title) . '" data-modal-image="'.$srcLargeImage.'">';
-        }
-        echo '<img class="lazyload" data-src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
-        if (!$largeImageExists) {
-            echo '</a>';
-        }
-        echo '</div>';
 
-        echo '<div class="second-column">';
-        echo '<h4>'.$this->Html->link(
-            $blogPost->title,
-            $blogDetailLink,
-            ['escape' => false]
-        ).'</h4>';
-        echo $blogPost->short_description.'<br />';
-        echo $this->Html->link(
-            '<i class="fas fa-plus-circle"></i> ' . __('Show_more'),
-            $blogDetailLink,
-            ['escape' => false]
-        );
+echo $this->element('blogPosts', [
+    'blogPosts' => $blogPosts,
+    'useCarousel' => false,
+]);
 
-    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        echo $this->Html->link(
-            '<i class="fas fa-pencil-alt"></i>',
-            $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
-            [
-                'class' => 'btn btn-outline-light edit-shortcut-button',
-                'title' => __('Edit'),
-                'escape' => false
-            ]
-        );
-    }
-
-    echo '</div>';
-
-    echo '<div class="third-column">';
-
-        echo $this->Html->link(
-            __('Show_Blog_post'),
-            $blogDetailLink,
-            ['class' => 'btn btn-success']
-        );
-
-        echo '<div class="additional-info">';
-            echo __('Modified_on') . ' ' .$blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
-    if (!empty($blogPost->manufacturer->id_manufacturer)) {
-        echo '<br />';
-        if ($blogPost->manufacturer->active) {
-            if ($this->request->getRequestTarget() == $this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name)) {
-                echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">' . __('Go_to_manufacturer') . ' ' . $blogPost->manufacturer->name.'</a>';
-            } else {
-                echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">' . __('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
-            }
-        } else {
-            echo ' ' . __('of_{0}', [$blogPost->manufacturer->name]);
-        }
-    }
-            echo '</div>';
-
-            echo '</div>';
-
-            echo '</div>';
-
-            echo '<div class="sc"></div>';
-}
 ?>

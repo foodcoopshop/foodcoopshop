@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-20 22:41+0100\n"
-"PO-Revision-Date: 2021-02-24 10:54+0100\n"
+"POT-Creation-Date: 2021-03-22 09:52+0100\n"
+"PO-Revision-Date: 2021-03-22 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -530,12 +530,6 @@ msgstr "Close all orders?"
 
 msgid "Really_close_all_orders?"
 msgstr "Really close all visible orders?"
-
-msgid "Generate_orders_as_pdf?"
-msgstr "Generate orders as PDF?"
-
-msgid "Really_generate_orders_as_pdf?"
-msgstr "Really generate orders as PDF?"
 
 msgid "Email_addresses"
 msgstr "E-mail addresses"
@@ -2001,9 +1995,6 @@ msgstr "default value"
 msgid "price_will_be_adapted."
 msgstr "price will be adapted."
 
-msgid "route_news"
-msgstr "news"
-
 msgid "route_all_products"
 msgstr "All-products"
 
@@ -2022,9 +2013,6 @@ msgstr "Account of {0}"
 msgid "Modified_on"
 msgstr "Modified on"
 
-msgid "Go_to_blog_from"
-msgstr "Show blog from"
-
 msgid "by"
 msgstr "by"
 
@@ -2039,12 +2027,6 @@ msgstr "of {0}"
 
 msgid "found"
 msgstr "found"
-
-msgid "Show_Blog_post"
-msgstr "Show blog post"
-
-msgid "Go_to_manufacturer"
-msgstr "Show manufacturer"
 
 msgid "Your_cart_is_empty"
 msgstr "Your cart is empty"
@@ -2144,9 +2126,6 @@ msgstr "Your account was created but not activated yet. This means, you can't lo
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "You will get an e-mail as soon as we activate you."
-
-msgid "News_from"
-msgstr "News from"
 
 msgid "Imprint"
 msgstr "Imprint"
@@ -2516,6 +2495,27 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Generate_orders_as_pdf?"
+#~ msgstr "Generate orders as PDF?"
+
+#~ msgid "Really_generate_orders_as_pdf?"
+#~ msgstr "Really generate orders as PDF?"
+
+#~ msgid "route_news"
+#~ msgstr "news"
+
+#~ msgid "Go_to_blog_from"
+#~ msgstr "Show blog from"
+
+#~ msgid "Show_Blog_post"
+#~ msgstr "Show blog post"
+
+#~ msgid "Go_to_manufacturer"
+#~ msgstr "Show manufacturer"
+
+#~ msgid "News_from"
+#~ msgstr "News from"
 
 #~ msgid "Other_initiaives_working_with_FoodCoopShop"
 #~ msgstr "Other initiatives working with FoodCoopShop"

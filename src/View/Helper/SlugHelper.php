@@ -57,11 +57,6 @@ class SlugHelper extends Helper
         return '/'.__('route_manufacturer_detail').'/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);
     }
 
-    public function getManufacturerBlogList($manufacturerId, $manufacturerName)
-    {
-        return $this->getManufacturerDetail($manufacturerId, $manufacturerName) . '/' . __('route_news');
-    }
-
     public function getPageDetail($pageId, $name)
     {
         return '/'.__('route_content').'/'.$pageId.'-'.StringComponent::slugify($name);

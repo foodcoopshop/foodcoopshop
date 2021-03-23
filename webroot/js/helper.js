@@ -149,9 +149,6 @@ foodcoopshop.Helper = {
         }
         if ((prevElement || nextElement)) {
             $('#inner-content .prev-next-button.bottom').first().before($('<hr style="clear:both;" />'));
-            if (productsAvailable) {
-                $(afterContainerTop).after($('<hr style="clear:both;" />'));
-            }
         }
     },
 
@@ -259,12 +256,12 @@ foodcoopshop.Helper = {
         $(selector).append('<div class="swiper-wrapper"></div>');
         $(selector).find('.swiper-wrapper').append(slides);
 
-        var mySwiper = new Swiper(selector, {
+        new Swiper(selector, {
             loop: false,
             speed: 300,
             centeredSlides: true,
             slidesPerView: 2,
-            spaceBetween: 5,
+            spaceBetween: 16,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev'
@@ -275,7 +272,7 @@ foodcoopshop.Helper = {
                     centeredSlides: true,
                     slidesPerView: 1,
                     initialSlide: 0,
-                    spaceBetween: 6
+                    spaceBetween: 16
                 }
             }
         });
@@ -525,7 +522,7 @@ foodcoopshop.Helper = {
         $('.menu.horizontal li').mouseenter(function () {
             $(this).children('ul').stop(true).animate({
                 opacity: 'toggle'
-            }, 500);
+            }, 300);
         }).mouseleave(function () {
             $(this).children('ul').stop(true).animate({
                 opacity: 'toggle'

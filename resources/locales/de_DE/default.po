@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-20 22:41+0100\n"
-"PO-Revision-Date: 2021-02-24 10:54+0100\n"
+"POT-Creation-Date: 2021-03-22 09:52+0100\n"
+"PO-Revision-Date: 2021-03-22 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -530,12 +530,6 @@ msgstr "Alle Bestellungen abschließen?"
 
 msgid "Really_close_all_orders?"
 msgstr "Möchtest du wirklich alle Bestellungen abschließen?"
-
-msgid "Generate_orders_as_pdf?"
-msgstr "Bestellungen als PDF generieren?"
-
-msgid "Really_generate_orders_as_pdf?"
-msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
 
 msgid "Email_addresses"
 msgstr "E-Mail-Adressen"
@@ -2001,9 +1995,6 @@ msgstr "Standardwert"
 msgid "price_will_be_adapted."
 msgstr "Preis wird angepasst."
 
-msgid "route_news"
-msgstr "aktuelles"
-
 msgid "route_all_products"
 msgstr "Alle-Produkte"
 
@@ -2022,9 +2013,6 @@ msgstr "{0}konto"
 msgid "Modified_on"
 msgstr "Geändert am"
 
-msgid "Go_to_blog_from"
-msgstr "Zum Blog von"
-
 msgid "by"
 msgstr "von"
 
@@ -2039,12 +2027,6 @@ msgstr "von {0}"
 
 msgid "found"
 msgstr "gefunden"
-
-msgid "Show_Blog_post"
-msgstr "Blog-Artikel anzeigen"
-
-msgid "Go_to_manufacturer"
-msgstr "Zum Hersteller"
 
 msgid "Your_cart_is_empty"
 msgstr "Dein Warenkorb ist leer"
@@ -2144,9 +2126,6 @@ msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das he
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
-
-msgid "News_from"
-msgstr "Aktuelles von"
 
 msgid "Imprint"
 msgstr "Impressum"
@@ -2516,6 +2495,27 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Generate_orders_as_pdf?"
+#~ msgstr "Bestellungen als PDF generieren?"
+
+#~ msgid "Really_generate_orders_as_pdf?"
+#~ msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
+
+#~ msgid "route_news"
+#~ msgstr "aktuelles"
+
+#~ msgid "Go_to_blog_from"
+#~ msgstr "Zum Blog von"
+
+#~ msgid "Show_Blog_post"
+#~ msgstr "Blog-Artikel anzeigen"
+
+#~ msgid "Go_to_manufacturer"
+#~ msgstr "Zum Hersteller"
+
+#~ msgid "News_from"
+#~ msgstr "Aktuelles von"
 
 #~ msgid "Other_initiaives_working_with_FoodCoopShop"
 #~ msgstr "Weitere Initiativen, die mit FoodCoopShop arbeiten"

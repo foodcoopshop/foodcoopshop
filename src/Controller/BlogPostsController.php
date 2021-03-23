@@ -6,10 +6,9 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\Http\Exception\NotFoundException;
 
 /**
- * BlogPostsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -99,41 +98,11 @@ class BlogPostsController extends FrontendController
 
     public function index()
     {
-        $conditions = [
-            'BlogPosts.active' => APP_ON
-        ];
-
-        if (!empty($this->getRequest()->getParam('manufacturerSlug'))) {
-            $manufacturerId = (int) $this->getRequest()->getParam('manufacturerSlug');
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId,
-                    'Manufacturers.active' => APP_ON
-                ]
-            ])->first();
-            if (empty($manufacturer)) {
-                throw new RecordNotFoundException('manufacturer not found or not active');
-            }
-            $this->set('manufacturer', $manufacturer);
-            $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
-        }
-
-        if (! $this->AppAuth->user()) {
-            $conditions['BlogPosts.is_private'] = APP_OFF;
-            $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
-        }
-
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->find('all', [
-            'conditions' => $conditions,
-            'order' => [
-                'BlogPosts.modified' => 'DESC'
-            ],
-            'contain' => [
-                'Manufacturers'
-            ]
-        ]);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null);
+        if ($blogPosts->count() === 0) {
+            throw new NotFoundException('no blog posts available');
+        }
 
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', __('News'));

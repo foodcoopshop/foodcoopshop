@@ -25,7 +25,6 @@
 #content {
     margin-left: 0px ! important;
     border-left: 0px ! important;
-    font-size: 9pt;
     width: 100%;
     min-height: 75vh;
     border-radius: 0;
@@ -55,8 +54,8 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     margin-left: 0px;
 }
 #filter-loader {
-  left: 36vw;
-  margin-left: 0;
+  left: 50%;
+  margin-left: -75px;
 }
 .sb-toggle-left {
     float: left;
@@ -65,45 +64,16 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     padding: 2px 3px 0px 3px;
     background: #fff;
 }
-.sb-left a i {
-    padding-left: 0;
-}
-.sb-left a, .sb-left li.header,
-.sb-left a, .sb-left li.footer {
-    color: #000 ! important;
-}
-.sb-slidebar {
-    background-color: #fff;
-}
-.sb-left li.header, .sb-left a:hover, .sb-left a.active {
-    color: #fff ! important;
-}
 .sb-left img.logo {
     width: 80%;
+}
+.sb-slidebar {
+    margin-top: 39px;
+    width: 45% ! important;
 }
 #container {
     float: left;
     min-width: 100%;
-}
-body.pages.home.slidebar-left-visible .sb-toggle-left {
-    margin: 0;
-}
-body.pages.home.slidebar-left-visible #content {
-    min-width: 100%;
-    width: 100%;
-}
-body.pages.home.slidebar-left-visible #installation-logo,
-body.pages.home.slidebar-left-visible h1 {
-    width: 100% ! important;
-    font-size: 21px;
-}
-body.pages.home.slidebar-left-visible #container {
-    min-width: 55%;
-    width: 55%;
-    padding: 2%;
-}
-body.pages.home.slidebar-left-visible .filter-container {
-    padding: 4%;
 }
 body.pages.home #container,
 body.pages.home #content,
@@ -140,9 +110,6 @@ table.list th, table.list td {
 #flashMessage {
     left: 5px;
     width: 97vw;
-}
-.sb-slidebar {
-   width: 45% ! important;
 }
 body.manufacturers .holiday-wrapper .description {
     margin-left: 0px;

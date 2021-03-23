@@ -1,0 +1,104 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 3.3.0
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+@media only screen and (max-device-width: 850px) and (orientation : portrait) {
+    #LoginForm button {
+        margin-right: 0px;
+    }
+    #RegistrationForm .input.checkbox input[type="checkbox"] {
+        margin-top: 8px;
+    }
+    .ui-dialog {
+        width: 98% ! important;
+        max-width: 450px ! important;
+    }
+    body.blog_posts.detail .blog-post-wrapper {
+        width: 100% ! important;
+    }
+    body.categories .blog-post-wrapper,
+    body.manufacturers.detail .blog-post-wrapper,
+    body.pages.home .blog-post-wrapper,
+    body.blog_posts.index .blog-post-wrapper {
+        width: 46% ! important;
+        margin-right: 2% ! important;
+        margin-left: 2%;
+        height: 234px;
+    }
+    body.blog_posts.detail .blog-wrapper {
+        width: 48%;
+        margin-left: 1%;
+    }
+    body.categories .blog-wrapper,
+    body.manufacturers.detail .blog-wrapper {
+        height: 265px;
+    }
+    body.blog_posts.detail .blog-wrapper,
+    body.blog_posts.detail .blog-post-wrapper {
+        height: 234px;
+    }
+    body.blog_posts.detail .blog-post-wrapper img.blog-post-image,
+    body.categories img.blog-post-image,
+    body.manufacturers.detail img.blog-post-image,
+    body.pages.home .blog-post-wrapper img,
+    body.blog_posts .blog-post-wrapper img {
+        height: 100px;
+    }
+    .blog-post-wrapper span.date {
+        display: none;
+    }
+    .product-wrapper .price {
+        margin-bottom: 5px ! important;
+    }
+    .product-wrapper .deposit {
+        margin-left: 0 ! important;
+        float: left ! important;
+        font-size: 12px ! important;
+        margin-bottom: 5px ! important;
+    }
+    div.second-column {
+        padding-right: 6px ! important;
+    }
+    div.third-column {
+        padding-left: 6px ! important;
+        padding-right: 0px ! important;
+    }
+    .product-wrapper .amount-wrapper {
+        margin-bottom: 5px ! important;
+    }
+    body.blog_posts.detail p.neighbors a {
+        width: 100% ! important;
+        margin-bottom: 5px ! important;
+    }
+    a.blog-post-wrapper .img-wrapper {
+        min-height: 100px ! important;
+    }
+    .carts.detail span.product-name-wrapper {
+        width: 190px ! important;
+    }
+    body.carts.detail .cart:not(#cart) .product {
+        padding-top: 10px;
+    }
+    body.carts.detail .cart:not(#cart) span.amount {
+        margin-left: -8px;
+        padding-right: 100px; /* to move short products names to next row */
+    }
+    body.carts.detail .cart:not(#cart) span.right {
+        position: static;
+    }
+    body.carts.detail .cart:not(#cart) .image {
+        margin-top: 0;
+    }
+    body.carts.detail .cart:not(#cart) .input.checkbox label {
+        font-size: 13px;
+    }
+ }

@@ -75,7 +75,6 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/'.__('route_category').'/*', ['controller' => 'Categories', 'action' => 'detail']);
     $builder->connect('/'.__('route_product').'/*', ['controller' => 'Products', 'action' => 'detail']);
     $builder->connect('/'.__('route_manufacturer_list'), ['controller' => 'Manufacturers', 'action' => 'index']);
-    $builder->connect('/'.__('route_manufacturer_detail').'/:manufacturerSlug/'.__('route_news_list'), ['controller' => 'BlogPosts', 'action' => 'index']);
     $builder->connect('/'.__('route_manufacturer_detail').'/*', ['controller' => 'Manufacturers', 'action' => 'detail']);
     $builder->connect('/'.__('route_content').'/{idAndSlug}', ['controller' => 'Pages', 'action' => 'detail'])
         ->setPatterns(['idAndSlug' => '[a-zA-Z0-9-]+'])

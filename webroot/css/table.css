@@ -17,6 +17,7 @@ table.list {
   width: 100%;
   background-color: white;
   display: none;
+  font-size: 14px;
 }
 table.list tr td:first-child,
 table.list tr th:first-child {
@@ -60,7 +61,7 @@ table.list tr.line-through {
     text-decoration: line-through;
 }
 table.list tr.sub-row td {
-    font-size: 11px;
+    font-size: 13px;
     font-style: italic;
 }
 table.list td.not-available,
@@ -80,6 +81,9 @@ tr:hover b.negative {
 table.list td.slim {
     line-height: 15px;
 }
+table.list th {
+    font-weight: 600;
+}
 table.list th,
 table.list td {
   border: 1px solid #dfdfdf;
@@ -89,7 +93,6 @@ table.list td {
 }
 table.list th,
 table.list tr.fake-th td {
-  font-size: 11px;
   padding: 5px 2px;
   word-break: break-word;
 }
@@ -102,7 +105,7 @@ table.list tr.fake-th {
   line-height: 14px;
 }
 table.list tr.fake-th td {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 table.list td.icon,
@@ -112,6 +115,7 @@ table.list th.icon {
 }
 table.list a.btn {
     padding: 0 4px ! important;
+    line-height: 20px;
 }
 .sort a.asc:before,
 .sort a.desc:before {

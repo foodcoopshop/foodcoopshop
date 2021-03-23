@@ -121,7 +121,7 @@ if ($appAuth->Cart->getProducts() !== null) {
         ?>
 
         <p><a class="btn btn-success btn-cart-detail" href="<?php echo $this->Slug->getCartDetail(); ?>">
-            <i class="fas fa-shopping-cart fa-lg"></i> <?php echo __('Show_cart_button'); ?>
+            <i class="fas fa-shopping-cart fa-lg fa-fw"></i> <?php echo __('Show_cart_button'); ?>
         </a></p>
         <?php } ?>
 
