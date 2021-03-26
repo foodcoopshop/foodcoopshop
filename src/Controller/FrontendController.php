@@ -169,7 +169,7 @@ class FrontendController extends AppController
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null);
-        $blogPostsAvailable = $blogPosts->count() > 0;
+        $blogPostsAvailable = !empty($blogPosts) && $blogPosts->count() > 0;
         $this->set('blogPostsAvailable', $blogPostsAvailable);
 
         $categoriesForMenu = [];
