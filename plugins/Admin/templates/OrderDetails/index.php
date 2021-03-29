@@ -95,6 +95,7 @@ use Cake\Core\Configure;
             if (
                 Configure::read('app.isDepositEnabled') &&
                 Configure::read('app.isDepositPaymentCashless') &&
+                !$appAuth->isManufacturer() &&
                 (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                     $showCustomerDropdown = false;
                     if (!empty($orderDetails) && isset($orderDetails[0]->id_customer)) {
