@@ -39,15 +39,6 @@ $changedOrderedProductsMenuElement = [
         'fa-icon' => 'fa-fw ok fa-times'
     ]
 ];
-if ($this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
-    $paymentDepositCustomerAddedMenuElement = [
-        'slug' => $this->Slug->getActionLogsList().'/index/?types[]=payment_deposit_customer_added',
-        'name' => __d('admin', 'Deposit_returns'),
-        'options' => [
-            'fa-icon' => $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))
-        ]
-    ];
-}
 $orderListsMenuElement = [
     'slug' => $this->Slug->getOrderLists(),
     'name' => __d('admin', 'Order_lists'),
@@ -106,9 +97,6 @@ $menu[] = [
 ];
 
 if ($appAuth->isCustomer()) {
-    if (isset($paymentDepositCustomerAddedMenuElement)) {
-        $orderDetailsGroupedByCustomerMenuElement['children'][] = $paymentDepositCustomerAddedMenuElement;
-    }
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $menu[] = $customerProfileMenuElement;
@@ -126,9 +114,6 @@ if ($appAuth->isCustomer()) {
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    if (isset($paymentDepositCustomerAddedMenuElement)) {
-        $orderDetailsGroupedByCustomerMenuElement['children'][] = $paymentDepositCustomerAddedMenuElement;
-    }
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $orderListsMenuElement;
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
