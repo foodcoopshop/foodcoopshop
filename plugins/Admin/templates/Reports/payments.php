@@ -107,7 +107,7 @@ foreach ($payments as $payment) {
                 ]
             );
         echo '</td>';
-        echo '<td>';
+        echo '<td style="text-align:right;width:51px;">';
         switch ($payment->approval) {
             case -1:
                 echo '<i class="fas fa-minus-circle not-ok payment-approval"></i>';
