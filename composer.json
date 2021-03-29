@@ -22,13 +22,13 @@
         "mobiledetect/mobiledetectlib": "2.*",
         "markstory/asset_compress": "4.*",
         "intervention/image": "2.*",
-        "tecnickcom/tcpdf": "dev-main#456b794f1fae9aee5c151a1ee515aae2aaa619a3",
         "natxet/cssmin": "3.*",
         "cviebrock/discourse-php": "^0.9.3",
         "studio-42/elfinder": "^2.1",
         "ezyang/htmlpurifier": "^4.11",
         "league/csv": "^9.5",
-        "dereuromark/cakephp-queue": "^5.0"
+        "dereuromark/cakephp-queue": "^5.0",
+        "tecnickcom/tcpdf": "^6.4"
     },
     "require-dev": {
         "psy/psysh": "@stable",
