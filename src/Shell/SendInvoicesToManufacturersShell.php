@@ -179,7 +179,6 @@ class SendInvoicesToManufacturersShell extends AppShell
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $tableData .= '<tr>';
                 $tableData .= '<td>' . html_entity_decode($manufacturer->name) . '</td>';
-                $tableData .= '<td>' . $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname . '</td>';
                 $tableData .= '<td>' . $manufacturer->invoiceNumber . '</td>';
                 $tableData .= '<td>' . ($sendInvoice ? '<i class="fas fa-envelope not-ok" data-identifier="send-invoice-'.$identifier.'"></i>' : '') . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';
@@ -206,7 +205,6 @@ class SendInvoicesToManufacturersShell extends AppShell
             $outString .= '<table class="list no-clone-last-row">';
             $outString .= '<tr>';
             $outString .= '<th>' . __('Manufacturer') . '</th>';
-            $outString .= '<th>' . __('Name') . '</th>';
             $outString .= '<th>' . __('Invoice_number_abbreviation') . '</th>';
             $outString .= '<th>' . __('Sent') . '?</th>';
             $outString .= '<th>' . __('Products') . '</th>';
@@ -214,8 +212,8 @@ class SendInvoicesToManufacturersShell extends AppShell
             $outString .= '<th></th>';
             $outString .= '</tr>';
             $outString .= $tableData;
-            $outString .= '<tr><td colspan="5" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
-            $outString .= '<tr><td colspan="5" align="right">'.__('Generated_invoices').'</td><td align="right"><b>'.$i.'</b></td><td></td></tr>';
+            $outString .= '<tr><td colspan="4" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
+            $outString .= '<tr><td colspan="4" align="right">'.__('Generated_invoices').'</td><td align="right"><b>'.$i.'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
 
