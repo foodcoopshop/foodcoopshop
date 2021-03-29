@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-03-23 16:14+0100\n"
+"POT-Creation-Date: 2021-03-29 16:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1722,6 +1722,9 @@ msgid "Add_deposit"
 msgstr ""
 
 msgid "Add_deposit_amount_for_{0}"
+msgstr ""
+
+msgid "Add_deposit_amount_for"
 msgstr ""
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."

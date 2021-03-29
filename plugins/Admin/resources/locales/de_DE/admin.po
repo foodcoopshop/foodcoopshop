@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-23 16:14+0100\n"
-"PO-Revision-Date: 2021-03-23 16:15+0100\n"
+"POT-Creation-Date: 2021-03-29 16:47+0200\n"
+"PO-Revision-Date: 2021-03-29 17:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1717,13 +1717,16 @@ msgid "Delete"
 msgstr "Löschen"
 
 msgid "Add_deposit_amount"
-msgstr "Pfand-Betrag eintragen"
+msgstr "Pfand eintragen"
 
 msgid "Add_deposit"
 msgstr "Pfand eintragen"
 
 msgid "Add_deposit_amount_for_{0}"
-msgstr "Pfand-Betrag für {0} eintragen"
+msgstr "Pfand für {0} eintragen"
+
+msgid "Add_deposit_amount_for"
+msgstr "Pfand eintragen für"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
 msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen wird."

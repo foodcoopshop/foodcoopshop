@@ -64,6 +64,16 @@ foodcoopshop.ModalPaymentAdd = {
 
         foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, form);
 
+        var customerDropdownSelector = modalSelector + ' #payments-customerid';
+        $(customerDropdownSelector).find('option[value=""]').remove();
+
+        $(customerDropdownSelector).selectpicker({
+            liveSearch: true,
+            size: 7,
+            title: foodcoopshop.LocalizedJs.admin.PleaseMember
+        });
+        foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
+
     },
 
     init : function() {
@@ -104,12 +114,18 @@ foodcoopshop.ModalPaymentAdd = {
         var amount = $(modalSelector + ' #payments-amount').val();
         var type = $(modalSelector + ' input[name="Payments[type]"]').val();
         var dateAddDomElement = $(modalSelector + ' input[name="Payments[date_add]"]');
-        var customerIdDomElement = $(modalSelector + ' input[name="Payments[customerId]"]');
+        var customerIdDomElement = $(modalSelector + ' [name="Payments[customerId]"]');
         var manufacturerIdDomElement = $(modalSelector + ' input[name="Payments[manufacturerId]"]');
 
         var text = '';
         if ($(modalSelector + ' input[name="Payments[text]"]').length > 0) {
             text = $(modalSelector + ' input[name="Payments[text]"]').val().trim();
+        }
+
+        if (customerIdDomElement.length > 0 && customerIdDomElement.val() === null) {
+            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseSelectAMember);
+            foodcoopshop.Modal.resetButtons(modalSelector);
+            return;
         }
 
         // radio buttons only if deposit is added to manufacurers

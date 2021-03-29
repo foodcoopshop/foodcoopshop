@@ -20,10 +20,10 @@ if ($groupBy == 'customer' && Configure::read('app.isDepositEnabled') && Configu
     if (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) {
         echo $this->element('addDepositPaymentOverlay', [
             'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
-            'rowId' => $orderDetail['customer_id'],
+            'objectId' => $orderDetail['customer_id'],
             'userName' => $orderDetail['name'],
             'customerId' => $orderDetail['customer_id'],
-            'manufacturerId' => null
+            'manufacturerId' => null,
         ]);
     } else {
         if ($orderDetail['sum_deposit'] > 0) {

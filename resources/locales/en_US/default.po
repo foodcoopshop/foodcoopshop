@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-22 09:52+0100\n"
-"PO-Revision-Date: 2021-03-22 09:52+0100\n"
+"POT-Creation-Date: 2021-03-29 17:14+0200\n"
+"PO-Revision-Date: 2021-03-29 17:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -830,6 +830,9 @@ msgstr "To which member should the ordered product {0} of {1} be assigned to?"
 
 msgid "Please_select_new_member."
 msgstr "Please select the new member."
+
+msgid "Please_select_a_member."
+msgstr "Please select a member."
 
 msgid "Amount_that_should_be_changed_to_member?"
 msgstr "Amount that should be assigned to the member?"
@@ -1905,6 +1908,9 @@ msgstr "{0} takes a delivery break on {1}."
 msgid "Mobile"
 msgstr "Mobile"
 
+msgid "Phone"
+msgstr "Phone"
+
 msgid "Email"
 msgstr "E-mail"
 
@@ -2099,9 +2105,6 @@ msgstr "Zip"
 
 msgid "City"
 msgstr "City"
-
-msgid "Phone"
-msgstr "Phone"
 
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Do you want to receive an order reminder e-mail every week?"
