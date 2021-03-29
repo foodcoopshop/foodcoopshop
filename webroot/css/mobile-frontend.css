@@ -200,6 +200,7 @@
         background: #fff ! important;
         z-index: 9999 ! important;
         position: fixed ! important;
+        height: 55px;
     }
     #responsive-header .logo {
         height: 50px ! important;
