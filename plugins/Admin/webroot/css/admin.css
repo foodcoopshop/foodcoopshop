@@ -885,7 +885,8 @@ body.reports.payment form#csv-records button {
     float: right;
 }
 body.payments.edit form {
-    width: 530px;
+    width: 100%;
+    float: left;
 }
 body.payments.edit form p {
     float: left;
@@ -938,4 +939,7 @@ body.invoices.index h4 {
 }
 body.invoices.index tr.data.cancelled {
     text-decoration: line-through;
+}
+body.action_logs.index tr.data div.changed img {
+    max-width: 100%;
 }
