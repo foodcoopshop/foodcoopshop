@@ -885,7 +885,8 @@ body.reports.payment form#csv-records button {
     float: right;
 }
 body.payments.edit form {
-    width: 530px;
+    width: 100%;
+    float: left;
 }
 body.payments.edit form p {
     float: left;
