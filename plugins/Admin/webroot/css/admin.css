@@ -939,3 +939,6 @@ body.invoices.index h4 {
 body.invoices.index tr.data.cancelled {
     text-decoration: line-through;
 }
+body.action_logs.index tr.data div.changed img {
+    max-width: 100%;
+}
