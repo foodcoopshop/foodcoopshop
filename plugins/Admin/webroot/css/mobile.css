@@ -61,14 +61,16 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     float: left;
     margin: 3px 5px 0 3px;
     border-radius: 3px;
-    padding: 2px 3px 0px 3px;
+    padding: 2px 5px 0px 5px;
     background: #fff;
+    width: 36px;
+    text-align: center;
 }
 .sb-left img.logo {
     width: 80%;
 }
 .sb-slidebar {
-    margin-top: 39px;
+    margin-top: 42px;
     width: 45% ! important;
 }
 #container {
