@@ -98,18 +98,18 @@ class CustomersController extends FrontendController
         }
     }
 
-    public function confirmEmailAddress()
+    public function activateEmailAddress()
     {
-        $emailConfirmationCode = $this->getRequest()->getParam('pass')[0];
+        $emailActivationCode = h($this->getRequest()->getParam('pass')[0]);
 
-        if (!isset($emailConfirmationCode)) {
-            throw new RecordNotFoundException('confirmation code not passed');
+        if (!isset($emailActivationCode)) {
+            throw new RecordNotFoundException('activation code not passed');
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
-                'Customers.activate_email_code' => $emailConfirmationCode,
+                'Customers.activate_email_code' => $emailActivationCode,
             ],
         ])->first();
 
@@ -206,7 +206,7 @@ class CustomersController extends FrontendController
 
     public function activateNewPassword()
     {
-        $activateNewPasswordCode = $this->getRequest()->getParam('pass')[0];
+        $activateNewPasswordCode = h($this->getRequest()->getParam('pass')[0]);
 
         if (!isset($activateNewPasswordCode)) {
             throw new RecordNotFoundException('activate new password code not passed');
@@ -373,9 +373,6 @@ class CustomersController extends FrontendController
                     $email = new AppMailer();
                     if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
-                        if (Configure::read('app.termsOfUseEnabled')) {
-                            $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf(), 'mimetype' => 'application/pdf']]);
-                        }
                     } else {
                         $template = 'customer_registered_inactive';
                     }

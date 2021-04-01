@@ -32,9 +32,9 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getConfirmEmailAddress($confirmationCode)
+    public function getActivateEmailAddress($activationCode)
     {
-        return '/customers/confirmEmailAddress/' . $confirmationCode;
+        return '/customers/activateEmailAddress/' . $activationCode;
     }
 
     public function getActionLogsList()
