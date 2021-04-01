@@ -64,7 +64,6 @@ foodcoopshop.Mobile = {
             });
             $('.sb-slidebar > *').on('click', function (event) {
                 event.stopPropagation();
-                foodcoopshop.Mobile.changeToogleIcon(true);
             });
         });
     },
