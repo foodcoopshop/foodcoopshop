@@ -225,7 +225,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
         $email = 'new-foodcoopshop-member-2@mailinator.com';
-        $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
+        $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
 
         $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
@@ -235,6 +235,21 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(1, 'Neue Registrierung: John Doe');
         $this->assertMailContainsHtmlAt(1, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
         $this->assertMailSentToAt(1, 'fcs-demo-superadmin@mailinator.com');
+
+        $this->assertNotNull($customer->activate_email_code);
+
+        // call activate email link
+        $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
+
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.email' => $email,
+            ],
+        ])->first();
+        $this->assertNull($customer->activate_email_code);
+
+        $this->assertMailSubjectContainsAt(2, 'Deine E-Mail-Adresse wurde erfolgreich aktiviert.');
+        $this->assertMailContainsAttachment('Nutzungsbedingungen.pdf');
 
     }
 
@@ -277,7 +292,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
                 'Customers.email' => $customerAddressEmail
             ],
             'contain' => [
-                'AddressCustomers'
+                'AddressCustomers',
             ]
         ])->first();
 
@@ -300,6 +315,8 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertEquals($customerPostcode, $customer->address_customer->postcode, 'saving field postcode failed');
         $this->assertEquals($customerPhoneMobile, $customer->address_customer->phone_mobile, 'saving field phone_mobile failed');
         $this->assertEquals($customerPhone, $customer->address_customer->phone, 'saving field phone failed');
+
+        return $customer;
     }
 
     public function testDeleteWithNotYetBilledOrdersAndNotEqualPayments()

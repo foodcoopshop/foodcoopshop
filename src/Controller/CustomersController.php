@@ -111,21 +111,37 @@ class CustomersController extends FrontendController
             'conditions' => [
                 'Customers.activate_email_code' => $emailActivationCode,
             ],
+            'contain' => [
+                'AddressCustomers',
+            ]
         ])->first();
 
         if (empty($customer)) {
             $this->Flash->success(__('Your_email_address_was_already_activated_or_the_activation_code_was_not_valid.'));
         } else {
+            $customer->activate_email_code = null;
+            $customer->active = true;
+            $this->Customer->save($customer);
+            $this->AppAuth->setUser($customer);
 
-            $patchedEntity = $this->Customer->patchEntity(
-                $customer,
-                [
-                    'activate_email_code' => null,
-                ]
-            );
-            $this->Customer->save($patchedEntity);
-            $this->AppAuth->setUser($patchedEntity);
-            $this->Flash->success(__('Your_email_address_was_successfully_activated.'));
+            $newPassword = $this->Customer->setNewPassword($customer->id_customer);
+
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('email_address_activated');
+            $email->setTo($customer->email)
+            ->setSubject(__('Your_email_address_has_been_activated_successfully.'))
+            ->setViewVars([
+                'appAuth' => $this->AppAuth,
+                'data' => $customer,
+                'newPassword' => $newPassword,
+            ]);
+
+            if (Configure::read('app.termsOfUseEnabled')) {
+                $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+            }
+            $email->send();
+
+            $this->Flash->success(__('Your_email_address_has_been_activated_successfully.'));
         }
 
         $this->redirect('/');

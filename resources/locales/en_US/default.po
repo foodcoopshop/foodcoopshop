@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-01 10:21+0200\n"
-"PO-Revision-Date: 2021-04-01 10:38+0200\n"
+"POT-Creation-Date: 2021-04-01 11:24+0200\n"
+"PO-Revision-Date: 2021-04-01 11:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -261,8 +261,8 @@ msgstr "Accepting the terms of use have been saved."
 msgid "Your_email_address_was_already_activated_or_the_activation_code_was_not_valid."
 msgstr "Your email address was already activated or the activation code was not valid."
 
-msgid "Your_email_address_was_successfully_activated."
-msgstr "Your email address was successfully activated and you are already signed in."
+msgid "Your_email_address_has_been_activated_successfully."
+msgstr "Your email address has been activated successfully."
 
 msgid "Request_new_password"
 msgstr "Request new password"
@@ -296,9 +296,6 @@ msgstr "Signing in failed. Accout inactive or password wrong?"
 
 msgid "Member_{0}_created_an_account."
 msgstr "Member {0} created an account."
-
-msgid "Filename_Terms-of-use"
-msgstr "Terms-of-use"
 
 msgid "Welcome"
 msgstr "Welcome"
@@ -2507,6 +2504,13 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "Your_email_address_was_activated"
+#~ msgstr "Your email address was successfully activated and you are already signed in."
+
+#~ msgid "Filename_Terms-of-use"
+#~ msgstr "Terms-of-use"
 
 #~ msgid "Generate_orders_as_pdf?"
 #~ msgstr "Generate orders as PDF?"
