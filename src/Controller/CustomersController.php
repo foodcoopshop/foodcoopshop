@@ -98,6 +98,40 @@ class CustomersController extends FrontendController
         }
     }
 
+    public function confirmEmailAddress()
+    {
+        $emailConfirmationCode = $this->getRequest()->getParam('pass')[0];
+
+        if (!isset($emailConfirmationCode)) {
+            throw new RecordNotFoundException('confirmation code not passed');
+        }
+
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.activate_email_code' => $emailConfirmationCode,
+            ],
+        ])->first();
+
+        if (empty($customer)) {
+            $this->Flash->success(__('Your_email_address_was_already_activated_or_the_activation_code_was_not_valid.'));
+        } else {
+
+            $patchedEntity = $this->Customer->patchEntity(
+                $customer,
+                [
+                    'activate_email_code' => null,
+                ]
+            );
+            $this->Customer->save($patchedEntity);
+            $this->AppAuth->setUser($patchedEntity);
+            $this->Flash->success(__('Your_email_address_was_successfully_activated.'));
+        }
+
+        $this->redirect('/');
+
+    }
+
     public function newPasswordRequest()
     {
         $this->set([
@@ -270,7 +304,7 @@ class CustomersController extends FrontendController
         $customer = $this->Customer->newEntity(
             [
                 'Customers' => [
-                    'active' => Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'),
+                    'active' => 0,
                     'id_default_group' => CUSTOMER_GROUP_MEMBER,
                     'terms_of_use_accepted_date' => Date::now(),
                     'passwd' => $ph->hash($newPassword)
@@ -301,6 +335,10 @@ class CustomersController extends FrontendController
                 $this->setRequest($this->getRequest()->withData('Customers.email', $this->getRequest()->getData('Customers.address_customer.email')));
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.lastname', $this->getRequest()->getData('Customers.lastname')));
+
+                if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                    $this->setRequest($this->getRequest()->withData('Customers.activate_email_code', StringComponent::createRandomString(12)));
+                }
 
                 $customer = $this->Customer->patchEntity(
                     $customer,

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-29 17:14+0200\n"
-"PO-Revision-Date: 2021-03-29 17:15+0200\n"
+"POT-Creation-Date: 2021-04-01 10:21+0200\n"
+"PO-Revision-Date: 2021-04-01 10:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -257,6 +257,12 @@ msgstr "Accepting terms of use"
 
 msgid "Accepting_the_terms_of_use_have_been_saved."
 msgstr "Accepting the terms of use have been saved."
+
+msgid "Your_email_address_was_already_activated_or_the_activation_code_was_not_valid."
+msgstr "Your email address was already activated or the activation code was not valid."
+
+msgid "Your_email_address_was_successfully_activated."
+msgstr "Your email address was successfully activated and you are already signed in."
 
 msgid "Request_new_password"
 msgstr "Request new password"
@@ -2369,6 +2375,9 @@ msgstr "Your account at {0} has just been activated."
 
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Your registration at {0} has been successful!"
+
+msgid "Please_confirm_your_email_address"
+msgstr "Please confirm your email address."
 
 msgid "Dear_responsible_person_for_new_members,"
 msgstr "Dear responsible for new members,"

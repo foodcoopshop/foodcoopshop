@@ -229,7 +229,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
-        $this->assertMailContainsHtmlAt(0, 'Zum Bestellen kannst du dich hier einloggen:');
+        $this->assertMailContainsHtmlAt(0, 'Bitte bestätige deine E-Mail-Adresse:');
         $this->assertMailSentToAt(0, $email);
 
         $this->assertMailSubjectContainsAt(1, 'Neue Registrierung: John Doe');
@@ -282,7 +282,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ])->first();
 
         // check customer record
-        $this->assertEquals((bool) Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer->active, 'saving field active failed');
+        $this->assertEquals(false, (bool) $customer->active, 'saving field active failed');
         $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group, 'saving user group failed');
         $this->assertEquals($customerAddressEmail, $customer->email, 'saving field email failed');
         $this->assertEquals('John', $customer->firstname, 'saving field firstname failed');

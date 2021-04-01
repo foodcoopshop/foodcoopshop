@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-29 16:47+0200\n"
+"POT-Creation-Date: 2021-04-01 10:21+0200\n"
 "PO-Revision-Date: 2021-03-29 17:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1782,9 +1782,6 @@ msgstr "BIC"
 msgid "Order_adaptions"
 msgstr "Bestelländerungen"
 
-msgid "Deposit_returns"
-msgstr "Pfand-Rückgaben"
-
 msgid "My_data"
 msgstr "Meine Daten"
 
@@ -2231,6 +2228,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Deposit_returns"
+#~ msgstr "Pfand-Rückgaben"
 
 #~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
 #~ msgstr "Stornierte Rechnung Nr."

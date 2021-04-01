@@ -32,6 +32,11 @@ class SlugHelper extends Helper
         return $url;
     }
 
+    public function getConfirmEmailAddress($confirmationCode)
+    {
+        return '/customers/confirmEmailAddress/' . $confirmationCode;
+    }
+
     public function getActionLogsList()
     {
         return $this->getAdminHome().'/action-logs';
