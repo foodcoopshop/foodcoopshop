@@ -237,9 +237,14 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, 'fcs-demo-superadmin@mailinator.com');
 
         $this->assertNotNull($customer->activate_email_code);
-        return;
 
         // call activate email link
+
+        // wrong code
+        $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress('adfasdfaa'));
+        $this->assertFlashMessage('Deine E-Mail-Adresse wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
+
+        // correct code
         $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
 
         $customer = $this->Customer->find('all', [
