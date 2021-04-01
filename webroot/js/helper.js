@@ -153,7 +153,7 @@ foodcoopshop.Helper = {
     },
 
     initBootstrapSelect : function(container) {
-        container.find('select').each(function () {
+        container.find('select:not(.no-bootstrap-select)').each(function () {
             var options = {
                 liveSearch: true,
                 showIcon: true,

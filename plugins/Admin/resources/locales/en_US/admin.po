@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-23 16:14+0100\n"
-"PO-Revision-Date: 2021-03-23 16:15+0100\n"
+"POT-Creation-Date: 2021-03-29 16:47+0200\n"
+"PO-Revision-Date: 2021-03-29 16:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1724,6 +1724,9 @@ msgstr "Add deposit"
 
 msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
+
+msgid "Add_deposit_amount_for"
+msgstr "Add deposit amount for"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
 msgstr "Please add the value of empty glasses that are taken back by the manufacturer."

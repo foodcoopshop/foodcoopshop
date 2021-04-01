@@ -19,16 +19,36 @@ echo $this->Html->link(
     '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')) . '"></i>' . $buttonText,
     'javascript:void(0);',
     [
-        'data-object-id' => $rowId,
+        'data-object-id' => $objectId,
         'class' => 'btn btn-outline-light add-payment-deposit-button',
         'title' => __d('admin', 'Add_deposit_amount'),
         'escape' => false
     ]
 );
 
-echo '<div id="add-payment-deposit-form-' . $rowId . '" class="add-payment-form add-payment-deposit-form">';
+echo '<div id="add-payment-deposit-form-' . $objectId . '" class="add-payment-form add-payment-deposit-form">';
 echo '<h3>'.__d('admin', 'Add_deposit').'</h3>';
-echo '<p>'.__d('admin', 'Add_deposit_amount_for_{0}', ['<b>' . $userName . '</b>']).':</p>';
+
+if (isset($userName)) {
+    echo '<p>'.__d('admin', 'Add_deposit_amount_for_{0}', ['<b>' . $userName . '</b>']).':</p>';
+}
+
+if (isset($customerId)) {
+    if (isset($showCustomerDropdown) && $showCustomerDropdown) {
+        echo '<p style="margin-bottom:0;">'.__d('admin', 'Add_deposit_amount_for').':</p>';
+        echo $this->Form->control('Payments.customerId', [
+            'type' => 'select',
+            'label' => '',
+            'class' => 'no-bootstrap-select',
+            'value' => $customerId,
+        ]);
+    } else {
+        echo $this->Form->control('Payments.customerId', [
+            'type' => 'hidden',
+            'value' => $customerId,
+        ]);
+    }
+}
 
 if (isset($manufacturerId)) {
     if ($appAuth->isAdmin() || $appAuth->isManufacturer()) {
@@ -42,7 +62,7 @@ if (isset($manufacturerId)) {
         echo '<p style="margin-top:10px;">'.__d('admin', 'Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?').'</p>';
         foreach ($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
             echo '<div class="radio-wrapper">';
-            echo '<label for="payment-'.$paymentTextKey.'-'.$rowId.'">'.$paymentText.'</label><input id="payment-'.$paymentTextKey.'-'.$rowId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
+            echo '<label for="payment-'.$paymentTextKey.'-'.$objectId.'">'.$paymentText.'</label><input id="payment-'.$paymentTextKey.'-'.$objectId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
             echo '</div>';
         }
     }
@@ -52,7 +72,7 @@ if (isset($manufacturerId)) {
 echo $this->Form->control('Payments.amount', [
     'label' => __d('admin', 'Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
     'type' => 'number',
-    'step' => '0.01'
+    'step' => '0.01',
 ]);
 
 if (isset($manufacturerId)) {
@@ -64,17 +84,14 @@ if (isset($manufacturerId)) {
     ]);
 }
 
-echo $this->Form->hidden('Payments.type', [
+echo $this->Form->control('Payments.type', [
+    'type' => 'hidden',
     'value' => 'deposit'
 ]);
-if (isset($customerId)) {
-    echo $this->Form->hidden('Payments.customerId', [
-        'value' => $customerId
-    ]);
-}
 if (isset($manufacturerId)) {
-    echo $this->Form->hidden('Payments.manufacturerId', [
-        'value' => $manufacturerId
+    echo $this->Form->control('Payments.manufacturerId', [
+        'type' => 'hidden',
+        'value' => $manufacturerId,
     ]);
 }
 echo '</div>';

@@ -92,16 +92,30 @@ use Cake\Core\Configure;
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
             <?php
-            if (Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
-                echo '<div class="add-payment-deposit-button-wrapper">';
-                    echo $this->element('addDepositPaymentOverlay', [
-                        'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
-                        'rowId' => $orderDetails[0]->id_order_detail,
-                        'userName' => $this->Html->getNameRespectingIsDeleted($orderDetails[0]->customer),
-                        'customerId' => $orderDetails[0]->id_customer,
-                        'manufacturerId' => null // explicitly unset manufacturerId
-                    ]);
-                echo '</div>';
+            if (
+                Configure::read('app.isDepositEnabled') &&
+                Configure::read('app.isDepositPaymentCashless') &&
+                !$appAuth->isManufacturer() &&
+                (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
+                    $showCustomerDropdown = false;
+                    if (!empty($orderDetails) && isset($orderDetails[0]->id_customer)) {
+                        $customerIdForDepositOverlay = $orderDetails[0]->id_customer;
+                        $customerNameForDepsitOverlay = $this->Html->getNameRespectingIsDeleted($orderDetails[0]->customer);
+                    } else {
+                        $customerIdForDepositOverlay = 0;
+                        $showCustomerDropdown = true;
+                        $customerNameForDepsitOverlay = null;
+                    }
+                    echo '<div class="add-payment-deposit-button-wrapper">';
+                        echo $this->element('addDepositPaymentOverlay', [
+                            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
+                            'objectId' => $customerIdForDepositOverlay,
+                            'userName' => $customerNameForDepsitOverlay,
+                            'customerId' => $customerIdForDepositOverlay,
+                            'showCustomerDropdown' => $showCustomerDropdown,
+                            'manufacturerId' => null, // explicitly unset manufacturerId
+                        ]);
+                    echo '</div>';
             }
             if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED'))) {
                 if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-22 09:52+0100\n"
-"PO-Revision-Date: 2021-03-22 09:52+0100\n"
+"POT-Creation-Date: 2021-03-29 17:14+0200\n"
+"PO-Revision-Date: 2021-03-29 17:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -830,6 +830,9 @@ msgstr "Auf welches Mitglied soll die Bestellung ({0}) von {1} umgebucht werden?
 
 msgid "Please_select_new_member."
 msgstr "Bitte wähle das neue Mitglied aus."
+
+msgid "Please_select_a_member."
+msgstr "Bitte wähle ein Mitglied aus."
 
 msgid "Amount_that_should_be_changed_to_member?"
 msgstr "Welche Anzahl soll umgebucht werden?"
@@ -1905,6 +1908,9 @@ msgstr "{0} hat am {1} Lieferpause."
 msgid "Mobile"
 msgstr "Handy"
 
+msgid "Phone"
+msgstr "Telefon"
+
 msgid "Email"
 msgstr "E-Mail"
 
@@ -2099,9 +2105,6 @@ msgstr "PLZ"
 
 msgid "City"
 msgstr "Ort"
-
-msgid "Phone"
-msgstr "Telefon"
 
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"

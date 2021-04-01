@@ -63,7 +63,6 @@ button,
 .btn:active,
 .btn:focus:active {
     box-shadow: initial ! important;
-    border-color: transparent ! important;
 }
 .btn-success:focus:active,
 .btn-danger:focus:active,
@@ -542,7 +541,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .bootstrap-select div.filter-option-inner-inner i.fas {
     position: absolute;
     right: 25px;
-    top: 7px;
+    top: 8px;
     font-size: 15px;
 }
 .ui-dialog-content #flashMessage {

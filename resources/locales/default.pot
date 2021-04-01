@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-03-22 09:52+0100\n"
+"POT-Creation-Date: 2021-03-29 17:14+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -828,6 +828,9 @@ msgid "To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?"
 msgstr ""
 
 msgid "Please_select_new_member."
+msgstr ""
+
+msgid "Please_select_a_member."
 msgstr ""
 
 msgid "Amount_that_should_be_changed_to_member?"
@@ -1904,6 +1907,9 @@ msgstr ""
 msgid "Mobile"
 msgstr ""
 
+msgid "Phone"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -2097,9 +2103,6 @@ msgid "Zip"
 msgstr ""
 
 msgid "City"
-msgstr ""
-
-msgid "Phone"
 msgstr ""
 
 msgid "Want_to_receive_reminder_emails?"

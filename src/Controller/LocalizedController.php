@@ -227,6 +227,7 @@ class LocalizedController extends Controller
                 'ChangeMember' => __('Change_member'),
                 'ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo' => __('To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?'),
                 'PleaseSelectNewMember' => __('Please_select_new_member.'),
+                'PleaseSelectAMember' => __('Please_select_a_member.'),
                 'AmountThatShouldBeChangedToMember' => __('Amount_that_should_be_changed_to_member?'),
                 'PleaseSelect' => __('Please_select...'),
                 'all' => __('all'),

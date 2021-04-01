@@ -54,7 +54,7 @@ echo '<div class="add-payment-deposit-wrapper">';
     ]);
     echo $this->element('addDepositPaymentOverlay', [
         'buttonText' => __d('admin', 'Add_return_of_empty_glasses'),
-        'rowId' => $manufacturer->id_manufacturer,
+        'objectId' => $manufacturer->id_manufacturer,
         'userName' => $manufacturer->name,
         'manufacturerId' => $manufacturer->id_manufacturer
     ]);
