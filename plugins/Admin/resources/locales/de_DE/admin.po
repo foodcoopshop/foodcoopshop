@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-01 10:21+0200\n"
-"PO-Revision-Date: 2021-03-29 17:08+0200\n"
+"POT-Creation-Date: 2021-04-01 12:02+0200\n"
+"PO-Revision-Date: 2021-04-01 12:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1040,6 +1040,9 @@ msgstr "Alle Bestellungen von {0} anzeigen"
 
 msgid "Change_group"
 msgstr "Gruppe ändern"
+
+msgid "The_email_address_is_not_yet_activated."
+msgstr "Die E-Mail-Adresse wurde noch nicht aktiviert."
 
 msgid "deactivate"
 msgstr "deaktivieren"
