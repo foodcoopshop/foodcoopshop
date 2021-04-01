@@ -251,6 +251,8 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(2, 'Deine E-Mail-Adresse wurde erfolgreich aktiviert.');
         $this->assertMailContainsAttachment('Nutzungsbedingungen.pdf');
 
+        $this->assertFlashMessage('Deine E-Mail-Adresse wurde erfolgreich aktiviert und du bist bereits eingeloggt.');
+
     }
 
     public function testLoginPageWithOutputStringReplacements()
