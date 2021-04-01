@@ -44,9 +44,6 @@ class ConfigurationHelper extends Helper
             case 'FCS_LOCALE':
                 return Configure::read('app.implementedLocales');
                 break;
-            case 'FCS_CUSTOMER_GROUP':
-                return array_slice(Configure::read('app.htmlHelper')->getGroups(), 0, 2, true); // true: preserveKeys
-                break;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $values = Configure::read('app.timeHelper')->getNextDailyDeliveryDays(365);

@@ -86,7 +86,6 @@ INSERT INTO `fcs_category` VALUES
 INSERT INTO `fcs_configuration` VALUES
 (11,1,'FCS_PRODUCT_AVAILABILITY_LOW','Low availability<br /><div class=\"small\">From which amount on there should be an information text visible \"(x available\")?</div>','10','number',600,'en_US','2017-07-26 13:24:47','2014-06-01 01:40:34'),
 (31,1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','How many days products should be \"marked as new\"?','7','number',700,'en_US','2017-07-26 13:24:47','2014-05-14 21:15:45'),
-(164,1,'FCS_CUSTOMER_GROUP','To which user group new members should be assigned to?','3','dropdown',400,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (456,1,'FCS_FOOTER_CMS_TEXT','Additional text for footer',NULL,'textarea_big',800,'en_US','2014-06-11 17:50:55','2016-07-01 21:47:47'),
 (508,1,'FCS_FACEBOOK_URL','Facebook url for embedding in footer','https://www.facebook.com/FoodCoopShop/','text',900,'en_US','2015-07-08 13:23:54','2015-07-08 13:23:54'),
 (538,1,'FCS_REGISTRATION_EMAIL_TEXT','Additional text that is sent in the registration e-mail after a successful registration. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-mail preview</a>','','textarea_big',1700,'en_US','2016-06-26 00:00:00','2016-06-26 00:00:00'),
@@ -248,7 +247,8 @@ INSERT INTO `phinxlog` VALUES
 (20201213120713,'AddRetailMode3','2020-12-13 12:14:01','2020-12-13 12:14:01',0),
 (20201217101514,'SliderWithLink','2020-12-17 10:26:36','2020-12-17 10:26:37',0),
 (20201220182015,'ImproveMemberFeeAdministration','2020-12-20 18:26:16','2020-12-20 18:26:16',0),
-(20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:39','2021-01-19 10:23:39',0);
+(20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:39','2021-01-19 10:23:39',0),
+(20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:49','2021-04-01 07:18:49',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

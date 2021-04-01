@@ -271,7 +271,7 @@ class CustomersController extends FrontendController
             [
                 'Customers' => [
                     'active' => Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'),
-                    'id_default_group' => Configure::read('appDb.FCS_CUSTOMER_GROUP'),
+                    'id_default_group' => CUSTOMER_GROUP_MEMBER,
                     'terms_of_use_accepted_date' => Date::now(),
                     'passwd' => $ph->hash($newPassword)
                 ]

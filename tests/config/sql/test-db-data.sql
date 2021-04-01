@@ -126,7 +126,6 @@ INSERT INTO `fcs_category_product` VALUES
 INSERT INTO `fcs_configuration` VALUES
 (11,1,'FCS_PRODUCT_AVAILABILITY_LOW','Geringe Verfügbarkeit<br /><div class=\"small\">Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?</div>','10','number',600,'de_DE','2017-07-26 13:19:19','2014-06-01 01:40:34'),
 (31,1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','Wie viele Tage sollen Produkte \"als neu markiert\" bleiben?','7','number',700,'de_DE','2017-07-26 13:19:19','2014-05-14 21:15:45'),
-(164,1,'FCS_CUSTOMER_GROUP','Welcher Gruppe sollen neu registrierte Mitglieder zugewiesen werden?','3','dropdown',400,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (456,1,'FCS_FOOTER_CMS_TEXT','Zusätzlicher Text für den Footer',NULL,'textarea_big',800,'de_DE','2014-06-11 17:50:55','2016-07-01 21:47:47'),
 (508,1,'FCS_FACEBOOK_URL','Facebook-Url für die Einbindung im Footer','https://www.facebook.com/FoodCoopShop/','text',900,'de_DE','2015-07-08 13:23:54','2015-07-08 13:23:54'),
 (538,1,'FCS_REGISTRATION_EMAIL_TEXT','Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-Mail-Vorschau anzeigen</a>','','textarea_big',1700,'de_DE','2016-06-26 00:00:00','2016-06-26 00:00:00'),
@@ -385,7 +384,8 @@ INSERT INTO `phinxlog` VALUES
 (20201217101514,'SliderWithLink','2020-12-17 10:26:47','2020-12-17 10:26:47',0),
 (20201217101515,'SliderWithLink','2020-12-17 18:47:08','2020-12-17 18:47:08',0),
 (20201220182015,'ImproveMemberFeeAdministration','2020-12-20 18:26:26','2020-12-20 18:26:26',0),
-(20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:49','2021-01-19 10:23:49',0);
+(20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:49','2021-01-19 10:23:49',0),
+(20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:55','2021-04-01 07:18:55',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

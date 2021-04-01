@@ -204,7 +204,6 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         // 5) register again with changed configuration
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
-        $this->changeConfiguration('FCS_CUSTOMER_GROUP', 4);
         $email = 'new-foodcoopshop-member-2@mailinator.com';
         $this->saveAndCheckValidCustomer($data, $email);
 
@@ -264,7 +263,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         // check customer record
         $this->assertEquals((bool) Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer->active, 'saving field active failed');
-        $this->assertEquals((int) Configure::read('appDb.FCS_CUSTOMER_GROUP'), $customer->id_default_group, 'saving user group failed');
+        $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group, 'saving user group failed');
         $this->assertEquals($customerAddressEmail, $customer->email, 'saving field email failed');
         $this->assertEquals('John', $customer->firstname, 'saving field firstname failed');
         $this->assertEquals('Doe', $customer->lastname, 'saving field lastname failed');
