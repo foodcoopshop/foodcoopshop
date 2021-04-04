@@ -199,7 +199,7 @@ class ManufacturersController extends AdminAppController
                 $this->renewAuthSession();
             }
 
-            $this->redirect($this->getRequest()->getData('referer'));
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('manufacturer', $manufacturer);
@@ -538,7 +538,7 @@ class ManufacturersController extends AdminAppController
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
-            $this->redirect($this->getRequest()->getData('referer'));
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('manufacturer', $manufacturer);

@@ -101,7 +101,7 @@ class ConfigurationsController extends AdminAppController
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
             $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
-            $this->redirect($this->getRequest()->getData('referer'));
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('configuration', $configuration);

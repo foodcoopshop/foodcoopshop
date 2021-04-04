@@ -177,6 +177,10 @@ class AppController extends Controller
         }
     }
 
+    public function getPreparedReferer()
+    {
+        return htmlspecialchars_decode($this->getRequest()->getData('referer'));
+    }
 
     public function setFormReferer()
     {

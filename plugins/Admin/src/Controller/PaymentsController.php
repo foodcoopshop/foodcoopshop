@@ -189,7 +189,7 @@ class PaymentsController extends AdminAppController
 
             $this->getRequest()->getSession()->write('highlightedRowId', $payment->id);
 
-            $this->redirect($this->getRequest()->getData('referer'));
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('payment', $payment);
