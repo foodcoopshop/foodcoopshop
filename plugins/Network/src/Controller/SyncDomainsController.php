@@ -111,7 +111,7 @@ class SyncDomainsController extends AppController
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $syncDomain->id, 'sync_domains', $message);
             $this->Flash->success($message);
 
-            $this->redirect($this->getRequest()->getData('referer'));
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('attribute', $syncDomain);

@@ -484,7 +484,7 @@ class CustomersController extends AdminAppController
                 $this->renewAuthSession();
             }
 
-            $this->redirect($this->getRequest()->getData('referer'));
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('customer', $customer);

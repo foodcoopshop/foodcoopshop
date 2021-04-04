@@ -166,7 +166,7 @@ class BlogPostsController extends AdminAppController
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $blogPost->id_blog_post);
-            $this->redirect($this->getRequest()->getData('referer'));
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('blogPost', $blogPost);
