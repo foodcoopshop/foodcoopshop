@@ -23,7 +23,13 @@ use Cake\Core\Configure;
         <tr>
             <td>
 
-                <p><?php echo __('Your_email_address_has_been_activated_successfully.'); ?></p>
+                <p><b><?php echo __('Your_email_address_has_been_activated_successfully.'); ?></b></p>
+
+                <?php
+                    if (Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
+                        echo Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT');
+                    }
+                ?>
 
                 <?php echo $this->element('email/profileLinks', ['data' => $data, 'newPassword' => $newPassword]); ?>
 

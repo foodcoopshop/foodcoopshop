@@ -25,12 +25,6 @@ use Cake\Core\Configure;
 
                 <p><?php echo __('Your_registration_at_{0}_has_just_been_successful!', [Configure::read('appDb.FCS_APP_NAME')])?></p>
 
-                <?php
-                    if (Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
-                        echo Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT');
-                    }
-                ?>
-
                 <p><b>
                     <?php echo __('Please_confirm_your_email_address'); ?>:<br />
                     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?></a>
