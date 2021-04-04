@@ -140,7 +140,7 @@ class CustomersController extends FrontendController
             }
             $email->send();
 
-            $this->Flash->success(__('Your_email_address_has_been_activated_successfully and you are already logged in.'));
+            $this->Flash->success(__('Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you.'));
         }
 
         $this->redirect('/');

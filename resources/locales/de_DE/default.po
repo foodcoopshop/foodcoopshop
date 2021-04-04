@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-01 11:33+0200\n"
-"PO-Revision-Date: 2021-04-01 11:35+0200\n"
+"POT-Creation-Date: 2021-04-04 20:55+0200\n"
+"PO-Revision-Date: 2021-04-04 22:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -264,8 +264,8 @@ msgstr "Deine E-Mail-Adresse wurde bereits aktiviert oder der Aktivierungscode w
 msgid "Your_email_address_has_been_activated_successfully."
 msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert."
 
-msgid "Your_email_address_has_been_activated_successfully and you are already logged in."
-msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert und du bist bereits eingeloggt."
+msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
+msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert, dein Passwort wurde dir soeben zugeschickt."
 
 msgid "Request_new_password"
 msgstr "Neues Passwort anfordern"
@@ -283,7 +283,7 @@ msgid "Your_new_password_was_already_activated_or_the_activation_code_was_not_va
 msgstr "Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig."
 
 msgid "Your_new_password_was_successfully_activated."
-msgstr "Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt."
+msgstr "Dein neues Passwort wurde erfolgreich aktiviert."
 
 msgid "Sign_in"
 msgstr "Anmelden"
@@ -2507,6 +2507,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Your_email_address_has_been_activated_successfully and you are already logged in."
+#~ msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert und du bist bereits eingeloggt."
 
 #, fuzzy
 #~ msgid "Your_email_address_was_activated"
