@@ -122,7 +122,6 @@ class CustomersController extends FrontendController
             $customer->activate_email_code = null;
             $customer->active = true;
             $this->Customer->save($customer);
-            $this->AppAuth->setUser($customer);
 
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
 
@@ -248,7 +247,6 @@ class CustomersController extends FrontendController
                 ]
             );
             $this->Customer->save($patchedEntity);
-            $this->AppAuth->setUser($patchedEntity);
             $this->Flash->success(__('Your_new_password_was_successfully_activated.'));
         }
 
