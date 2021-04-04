@@ -1144,8 +1144,6 @@ body.blog_posts.detail #inner-content > .img-wrapper img {
     float: left;
     margin-left: 15px;
     margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #d6d4d4;
     width: 300px;
 }
 body.blog_posts.detail #inner-content > .img-wrapper {
