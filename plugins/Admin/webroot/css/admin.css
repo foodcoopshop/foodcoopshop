@@ -757,7 +757,7 @@ ul.nav-tabs li.active a {
 a.btn-arrow {
     display: inline-block;
     position: absolute;
-    top: 7px;
+    top: 6px;
     color: #ccc ! important;
     width: 15px;
 }
