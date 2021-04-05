@@ -238,13 +238,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         $this->assertNotNull($customer->activate_email_code);
 
-        // call activate email link
-
-        // wrong code
+        // try to activate user with wrong activation code
         $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress('adfasdfaa'));
         $this->assertFlashMessage('Deine E-Mail-Adresse wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
 
-        // correct code
+        // try to activate user with correct activation code
         $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
 
         $customer = $this->Customer->find('all', [
@@ -253,6 +251,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
             ],
         ])->first();
         $this->assertNull($customer->activate_email_code);
+        $this->assertEquals(true, (bool) $customer->active);
 
         $this->assertMailSubjectContainsAt(2, 'Deine E-Mail-Adresse wurde erfolgreich aktiviert.');
         $this->assertMailContainsAttachment('Nutzungsbedingungen.pdf');
