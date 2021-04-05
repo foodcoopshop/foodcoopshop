@@ -304,24 +304,24 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ])->first();
 
         // check customer record
-        $this->assertEquals(false, (bool) $customer->active, 'saving field active failed');
-        $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group, 'saving user group failed');
-        $this->assertEquals($customerAddressEmail, $customer->email, 'saving field email failed');
-        $this->assertEquals('John', $customer->firstname, 'saving field firstname failed');
-        $this->assertEquals('Doe', $customer->lastname, 'saving field lastname failed');
-        $this->assertEquals(1, $customer->email_order_reminder, 'saving field email_order_reminder failed');
-        $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')), 'saving field terms_of_use_accepted_date failed');
+        $this->assertEquals(false, (bool) $customer->active);
+        $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group);
+        $this->assertEquals($customerAddressEmail, $customer->email);
+        $this->assertEquals('John', $customer->firstname);
+        $this->assertEquals('Doe', $customer->lastname);
+        $this->assertEquals(1, $customer->email_order_reminder);
+        $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')));
 
         // check address record
-        $this->assertEquals('John', $customer->address_customer->firstname, 'saving field firstname failed');
-        $this->assertEquals('Doe', $customer->address_customer->lastname, 'saving field lastname failed');
-        $this->assertEquals($customerAddressEmail, $customer->address_customer->email, 'saving field email failed');
-        $this->assertEquals($customerAddress1, $customer->address_customer->address1, 'saving field address1 failed');
-        $this->assertEquals($customerAddress2, $customer->address_customer->address2, 'saving field address2 failed');
-        $this->assertEquals($customerCity, $customer->address_customer->city, 'saving field city failed');
-        $this->assertEquals($customerPostcode, $customer->address_customer->postcode, 'saving field postcode failed');
-        $this->assertEquals($customerPhoneMobile, $customer->address_customer->phone_mobile, 'saving field phone_mobile failed');
-        $this->assertEquals($customerPhone, $customer->address_customer->phone, 'saving field phone failed');
+        $this->assertEquals('John', $customer->address_customer->firstname);
+        $this->assertEquals('Doe', $customer->address_customer->lastname);
+        $this->assertEquals($customerAddressEmail, $customer->address_customer->email);
+        $this->assertEquals($customerAddress1, $customer->address_customer->address1);
+        $this->assertEquals($customerAddress2, $customer->address_customer->address2);
+        $this->assertEquals($customerCity, $customer->address_customer->city);
+        $this->assertEquals($customerPostcode, $customer->address_customer->postcode);
+        $this->assertEquals($customerPhoneMobile, $customer->address_customer->phone_mobile);
+        $this->assertEquals($customerPhone, $customer->address_customer->phone);
 
         return $customer;
     }
