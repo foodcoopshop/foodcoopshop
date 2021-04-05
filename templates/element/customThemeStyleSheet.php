@@ -20,12 +20,16 @@ use Cake\Core\Configure;
 <style>
 
     ::selection {
-      background: <?php echo Configure::read('app.customThemeMainColor'); ?>; /* WebKit/Blink Browsers */
+      background: <?php echo Configure::read('app.customThemeMainColor'); ?>;
       color: #fff;
     }
-    ::-moz-selection {
-      background: <?php echo Configure::read('app.customThemeMainColor'); ?>; /* Gecko Browsers */
-      color: #fff;
+
+    h2.info::selection,
+    h2.info b::selection,
+    #flashMessage.success::selection,
+    #flashMessage.success b::selection {
+        background-color: #fff;
+        color: #000;
     }
 
     .box h3,
