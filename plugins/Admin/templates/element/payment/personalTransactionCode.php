@@ -23,13 +23,13 @@ $this->element('addScript', [
 <h2 class="info personal-transaction-code"><?php echo __d('admin', 'Please_add_this_code_to_your_transaction:_{0}', ['<b>' . $personalTransactionCode . '</b>']); ?>
 <?php
     echo $this->Html->link(
-        '<i class="far fa-clipboard"></i>',
+        '<i class="far fa-fw fa-clipboard"></i>',
         'javascript:void(0)',
         [
             'data-clipboard-text' => $personalTransactionCode,
             'class' => 'btn btn-outline-light btn-clipboard',
             'title' => __d('admin', 'Copy_to_clipboard'),
-            'style' => 'float:right;margin-top:-4px;margin-right:-2px;',
+            'style' => 'float:right;margin-top:-5px;margin-right:-3px;',
             'escape' => false
         ]
     );
