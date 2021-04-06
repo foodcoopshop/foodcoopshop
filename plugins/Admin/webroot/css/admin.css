@@ -928,12 +928,12 @@ body.invoices.index table.invoices-table {
     width: 1008px;
 }
 body.invoices.index table.tax-sum-table {
-    width: 480px;
+    width: 600px;
 }
 body.invoices.index table.tax-sum-table th,
 body.invoices.index table.tax-sum-table td {
     text-align: right;
-    width: 120px;
+    width: 150px;
 }
 body.invoices.index h4 {
     margin-top: 20px;
