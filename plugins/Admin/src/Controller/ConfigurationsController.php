@@ -120,7 +120,7 @@ class ConfigurationsController extends AdminAppController
         switch ($configurationName) {
             case 'FCS_REGISTRATION_EMAIL_TEXT':
                 if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
-                    $template = 'customer_registered_active';
+                    $template = 'email_address_activated';
                 } else {
                     $template = 'customer_registered_inactive';
                 }

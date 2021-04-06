@@ -163,7 +163,15 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td style="text-align:center;">';
-        echo '<i class="far fa-envelope ok fa-lg customer-email-button" data-email="'.h($customer->email).'" title="'.h($customer->email).'"></i>';
+        $classes = ['far fa-envelope ok fa-lg customer-email-button'];
+        $title = h($customer->email);
+        if ($customer->activate_email_code != null) {
+            $classes[] = 'not-activated';
+            $title .= '<br /><br />' . __d('admin', 'The_email_address_is_not_yet_activated.');
+            $title .= '<br />' . Configure::read('app.cakeServerName') . $this->Slug->getActivateEmailAddress($customer->activate_email_code);
+        }
+
+        echo '<i class="'.join(' ', $classes).'" data-email="'.h($customer->email).'" title="'.$title.'"></i>';
     echo '</td>';
 
     echo '<td style="text-align:center;width:42px;">';

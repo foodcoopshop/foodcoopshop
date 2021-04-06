@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.3.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -23,12 +23,15 @@ use Cake\Core\Configure;
         <tr>
             <td>
 
-                <p><?php echo __('Your_registration_at_{0}_has_just_been_successful!', [Configure::read('appDb.FCS_APP_NAME')])?></p>
+                <p><b><?php echo __('Your_email_address_has_been_activated_successfully.'); ?></b></p>
 
-                <p><b>
-                    <?php echo __('Please_confirm_your_email_address'); ?>:<br />
-                    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?></a>
-                </b></p>
+                <?php
+                    if (Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
+                        echo Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT');
+                    }
+                ?>
+
+                <?php echo $this->element('email/profileLinks', ['data' => $data, 'newPassword' => $newPassword]); ?>
 
             </td>
 

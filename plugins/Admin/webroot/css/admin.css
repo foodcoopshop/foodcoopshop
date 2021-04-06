@@ -448,7 +448,8 @@ body.order_details #add-instant-order-button-wrapper div.select {
     display: none;
 }
 body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,
-body.customers.index td .customer-comment-edit-button.btn-disabled i.fas {
+body.customers.index td .customer-comment-edit-button.btn-disabled i.fas,
+body.customers.index td i.not-activated {
   opacity: 0.3;
 }
 body.manufacturers.index a.edit-link,

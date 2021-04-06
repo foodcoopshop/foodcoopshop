@@ -46,19 +46,6 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         ]);
     }
 
-    public function testConfigurationEditFormFcsCustomerGroupOk()
-    {
-        $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', CUSTOMER_GROUP_ADMIN);
-        $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
-    }
-
-    public function testConfigurationEditFormFcsCustomerGroupInvalidId()
-    {
-        $this->enableRetainFlashMessages();
-        $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', 44);
-        $this->assertResponseContains('Bitte gib eine Zahl zwischen 3 und 4 an.');
-    }
-
     public function testConfigurationEditFormFcsAppNameEmpty()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '');

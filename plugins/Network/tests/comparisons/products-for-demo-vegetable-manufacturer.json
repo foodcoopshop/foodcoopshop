@@ -15,6 +15,7 @@
         "auto_login_hash": null,
         "email_order_reminder": false,
         "terms_of_use_accepted_date": "2018-08-03",
+        "activate_email_code": null,
         "active": true,
         "date_add": "2014-12-02T12:37:26+01:00",
         "date_upd": "2015-03-11T18:12:10+01:00",

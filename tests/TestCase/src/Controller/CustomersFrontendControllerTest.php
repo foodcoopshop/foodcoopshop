@@ -118,7 +118,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertFlashMessage('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
 
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
-        $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.');
+        $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert.');
 
         $this->assertMailSubjectContainsAt(0, 'Neues Passwort für FoodCoop Test');
         $this->assertMailContainsHtmlAt(0, 'Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren');
@@ -142,56 +142,70 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
     }
 
-    public function testRegistration()
-    {
-        $data = [
-            'Customers' => [
-                'firstname' => '',
-                'lastname' => '',
-                'email_order_reminder' => 1,
-                'terms_of_use_accepted_date_checkbox' => 0,
-                'address_customer' => [
-                    'email' => '',
-                    'address1' => '',
-                    'address2' => '',
-                    'postcode' => '',
-                    'city' => '',
-                    'phone_mobile' => '',
-                    'phone' => ''
-                ]
+    private $registrationDataEmpty = [
+        'Customers' => [
+            'firstname' => '',
+            'lastname' => '',
+            'email_order_reminder' => 1,
+            'terms_of_use_accepted_date_checkbox' => 0,
+            'address_customer' => [
+                'email' => '',
+                'address1' => '',
+                'address2' => '',
+                'postcode' => '',
+                'city' => '',
+                'phone_mobile' => '',
+                'phone' => ''
             ]
-        ];
+        ]
+    ];
 
-        // 1) check for spam protection
-        $this->addCustomer($data);
+    private function addValidRegistrationData()
+    {
+        $this->registrationDataEmpty['Customers']['address_customer']['email'] = 'fcs-demo-mitglied@mailinator.com';
+        $this->registrationDataEmpty['Customers']['address_customer']['postcode'] = 'ABCDEF';
+        $this->registrationDataEmpty['Customers']['address_customer']['phone_mobile'] = 'adsfkjasfasfdasfajaaa';
+        $this->registrationDataEmpty['Customers']['address_customer']['phone'] = '897++asdf+d';
+    }
+
+    public function testRegistrationSpamProtection()
+    {
+        $this->addCustomer($this->registrationDataEmpty);
         $this->assertFlashMessage('S-p-a-m-!');
+    }
 
-        // 2) check for missing required fields
-        $data['antiSpam'] = 4;
-        $this->addCustomer($data);
+    public function testRegistrationValidationEmptyData()
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addCustomer($this->registrationDataEmpty);
         $this->assertResponseContains('Bitte gib deine E-Mail-Adresse an.');
         $this->assertResponseContains('Bitte gib deinen Vornamen an.');
         $this->assertResponseContains('Bitte gib deinen Nachnamen an.');
         $this->assertResponseContains('Bitte gib deine Straße an.');
         $this->assertResponseContains('Bitte gib deinen Ort an.');
         $this->assertResponseContains('Bitte gib deine Handynummer an.');
+    }
 
-        // 3) check for wrong data
-        $data['Customers']['address_customer']['email'] = 'fcs-demo-mitglied@mailinator.com';
-        $data['Customers']['address_customer']['postcode'] = 'ABCDEF';
-        $data['Customers']['address_customer']['phone_mobile'] = 'adsfkjasfasfdasfajaaa';
-        $data['Customers']['address_customer']['phone'] = '897++asdf+d';
-        $this->addCustomer($data);
+    public function testRegistrationValidationWrongData()
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+        $this->addCustomer($this->registrationDataEmpty);
         $this->assertResponseContains('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.');
         $this->assertResponseContains('Die PLZ ist nicht gültig.');
         $this->assertResponseContains('Die Handynummer ist nicht gültig.');
         $this->assertResponseContains('Die Telefonnummer ist nicht gültig.');
         $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
+    }
 
-        // 4) save user and check record
+    public function testRegistrationUserNotActive()
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
         $email = 'new-foodcoopshop-member-1@mailinator.com';
+
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
-        $this->saveAndCheckValidCustomer($data, $email);
+        $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
 
         $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
@@ -202,20 +216,47 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertMailContainsHtmlAt(1, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
         $this->assertMailSentToAt(1, 'fcs-demo-superadmin@mailinator.com');
 
-        // 5) register again with changed configuration
+    }
+
+    public function testRegistrationUserActive()
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
-        $this->changeConfiguration('FCS_CUSTOMER_GROUP', 4);
         $email = 'new-foodcoopshop-member-2@mailinator.com';
-        $this->saveAndCheckValidCustomer($data, $email);
+        $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
 
-        $this->assertMailSubjectContainsAt(2, 'Willkommen');
-        $this->assertMailContainsHtmlAt(2, 'war erfolgreich!');
-        $this->assertMailContainsHtmlAt(2, 'Zum Bestellen kannst du dich hier einloggen:');
-        $this->assertMailSentToAt(2, $email);
+        $this->assertMailSubjectContainsAt(0, 'Willkommen');
+        $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
+        $this->assertMailContainsHtmlAt(0, 'Bitte bestätige deine E-Mail-Adresse:');
+        $this->assertMailSentToAt(0, $email);
 
-        $this->assertMailSubjectContainsAt(3, 'Neue Registrierung: John Doe');
-        $this->assertMailContainsHtmlAt(3, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
-        $this->assertMailSentToAt(3, 'fcs-demo-superadmin@mailinator.com');
+        $this->assertMailSubjectContainsAt(1, 'Neue Registrierung: John Doe');
+        $this->assertMailContainsHtmlAt(1, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
+        $this->assertMailSentToAt(1, 'fcs-demo-superadmin@mailinator.com');
+
+        $this->assertNotNull($customer->activate_email_code);
+
+        // try to activate user with wrong activation code
+        $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress('adfasdfaa'));
+        $this->assertFlashMessage('Deine E-Mail-Adresse wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
+
+        // try to activate user with correct activation code
+        $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
+
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.email' => $email,
+            ],
+        ])->first();
+        $this->assertNull($customer->activate_email_code);
+        $this->assertEquals(true, (bool) $customer->active);
+
+        $this->assertMailSubjectContainsAt(2, 'Deine E-Mail-Adresse wurde erfolgreich aktiviert.');
+        $this->assertMailContainsAttachment('Nutzungsbedingungen.pdf');
+
+        $this->assertFlashMessage('Deine E-Mail-Adresse wurde erfolgreich aktiviert, dein Passwort wurde dir soeben zugeschickt.');
 
     }
 
@@ -258,29 +299,31 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
                 'Customers.email' => $customerAddressEmail
             ],
             'contain' => [
-                'AddressCustomers'
+                'AddressCustomers',
             ]
         ])->first();
 
         // check customer record
-        $this->assertEquals((bool) Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer->active, 'saving field active failed');
-        $this->assertEquals((int) Configure::read('appDb.FCS_CUSTOMER_GROUP'), $customer->id_default_group, 'saving user group failed');
-        $this->assertEquals($customerAddressEmail, $customer->email, 'saving field email failed');
-        $this->assertEquals('John', $customer->firstname, 'saving field firstname failed');
-        $this->assertEquals('Doe', $customer->lastname, 'saving field lastname failed');
-        $this->assertEquals(1, $customer->email_order_reminder, 'saving field email_order_reminder failed');
-        $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')), 'saving field terms_of_use_accepted_date failed');
+        $this->assertEquals(false, (bool) $customer->active);
+        $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group);
+        $this->assertEquals($customerAddressEmail, $customer->email);
+        $this->assertEquals('John', $customer->firstname);
+        $this->assertEquals('Doe', $customer->lastname);
+        $this->assertEquals(1, $customer->email_order_reminder);
+        $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')));
 
         // check address record
-        $this->assertEquals('John', $customer->address_customer->firstname, 'saving field firstname failed');
-        $this->assertEquals('Doe', $customer->address_customer->lastname, 'saving field lastname failed');
-        $this->assertEquals($customerAddressEmail, $customer->address_customer->email, 'saving field email failed');
-        $this->assertEquals($customerAddress1, $customer->address_customer->address1, 'saving field address1 failed');
-        $this->assertEquals($customerAddress2, $customer->address_customer->address2, 'saving field address2 failed');
-        $this->assertEquals($customerCity, $customer->address_customer->city, 'saving field city failed');
-        $this->assertEquals($customerPostcode, $customer->address_customer->postcode, 'saving field postcode failed');
-        $this->assertEquals($customerPhoneMobile, $customer->address_customer->phone_mobile, 'saving field phone_mobile failed');
-        $this->assertEquals($customerPhone, $customer->address_customer->phone, 'saving field phone failed');
+        $this->assertEquals('John', $customer->address_customer->firstname);
+        $this->assertEquals('Doe', $customer->address_customer->lastname);
+        $this->assertEquals($customerAddressEmail, $customer->address_customer->email);
+        $this->assertEquals($customerAddress1, $customer->address_customer->address1);
+        $this->assertEquals($customerAddress2, $customer->address_customer->address2);
+        $this->assertEquals($customerCity, $customer->address_customer->city);
+        $this->assertEquals($customerPostcode, $customer->address_customer->postcode);
+        $this->assertEquals($customerPhoneMobile, $customer->address_customer->phone_mobile);
+        $this->assertEquals($customerPhone, $customer->address_customer->phone);
+
+        return $customer;
     }
 
     public function testDeleteWithNotYetBilledOrdersAndNotEqualPayments()

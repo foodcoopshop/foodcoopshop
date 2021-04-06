@@ -32,6 +32,11 @@ class SlugHelper extends Helper
         return $url;
     }
 
+    public function getActivateEmailAddress($activationCode)
+    {
+        return '/customers/activateEmailAddress/' . $activationCode;
+    }
+
     public function getActionLogsList()
     {
         return $this->getAdminHome().'/action-logs';

@@ -515,14 +515,8 @@ class CustomersController extends AdminAppController
             ]
         ])->first();
 
-        $this->Customer->save(
-            $this->Customer->patchEntity(
-                $customer,
-                [
-                    'active' => $status
-                ]
-                )
-            );
+        $customer->active = $status;
+        $this->Customer->save($customer);
 
         $message = __d('admin', 'The_member_{0}_has_been_deactivated_succesfully.', ['<b>' . $customer->name . '</b>']);
         $actionLogType = 'customer_set_inactive';
@@ -541,7 +535,7 @@ class CustomersController extends AdminAppController
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
-                'newPassword' => $newPassword
+                'newPassword' => $newPassword,
             ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
