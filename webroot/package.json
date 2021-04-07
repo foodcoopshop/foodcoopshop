@@ -35,7 +35,8 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "6.5.3",
+    "svelte": "^3.37.0",
+    "swiper": "6.5.4",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.13.3",
     "webrtc-adapter": "^7.7.1"
