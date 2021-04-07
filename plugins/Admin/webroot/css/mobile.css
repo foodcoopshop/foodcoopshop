@@ -51,6 +51,7 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     width: 150px ! important;
 }
 .fcs-form .error-message {
+    clear: both;
     margin-left: 0px;
 }
 #filter-loader {

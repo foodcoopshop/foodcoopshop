@@ -357,7 +357,7 @@ form div.error-message {
     background-color: #f3515c;
     padding: 3px 5px;
     margin-bottom: 5px;
-    width: 250px;
+    width: 270px;
 }
 form div.error-message.long {
     width: 562px;
