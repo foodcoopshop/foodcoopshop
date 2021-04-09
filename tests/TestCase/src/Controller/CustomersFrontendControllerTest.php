@@ -150,6 +150,8 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
                 'lastname' => '',
                 'email_order_reminder' => 1,
                 'terms_of_use_accepted_date_checkbox' => 0,
+                'id_default_group' => CUSTOMER_GROUP_SUPERADMIN, //must not be applied!
+                'active' => APP_ON, //must not be applied!
                 'address_customer' => [
                     'email' => '',
                     'address1' => '',

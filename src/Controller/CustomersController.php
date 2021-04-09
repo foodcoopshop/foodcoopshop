@@ -302,6 +302,9 @@ class CustomersController extends FrontendController
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.lastname', $this->getRequest()->getData('Customers.lastname')));
 
+                $this->setRequest($this->getRequest()->withoutData('Customers.active'));
+                $this->setRequest($this->getRequest()->withoutData('Customers.id_default_group'));
+
                 $customer = $this->Customer->patchEntity(
                     $customer,
                     $this->getRequest()->getData(),
