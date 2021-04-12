@@ -7,7 +7,6 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
-use Cake\Http\Exception\BadRequestException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
