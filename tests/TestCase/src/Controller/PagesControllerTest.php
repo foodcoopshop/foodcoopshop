@@ -33,6 +33,16 @@ class PagesControllerTest extends AppCakeTestCase
         $this->Page = $this->getTableLocator()->get('Pages');
     }
 
+    public function testFormWithFormProtector()
+    {
+        $this->enableSecurityToken();
+        $data = [];
+        $data['Customers']['firstname'] = 'Mario';
+        $this->post('/pages/form', $data);
+        $this->assertFlashMessage('ok');
+    }
+
+
     public function testAllPublicUrls()
     {
         $testUrls = [
