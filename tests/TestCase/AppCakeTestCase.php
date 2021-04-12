@@ -67,8 +67,9 @@ abstract class AppCakeTestCase extends TestCase
         $this->resetTestDatabaseData();
         $this->resetLogs();
         $this->Configuration->loadConfigurations();
-        $this->enableSecurityToken();
-
+        if (method_exists($this, 'enableSecurityToken')) {
+            $this->enableSecurityToken();
+        }
     }
 
     private function getLogFile($name)
