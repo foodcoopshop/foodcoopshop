@@ -68,6 +68,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
     public function testAddWithValidationErrors()
     {
         $this->loginAsSuperadmin();
+
         $this->add($this->manufacturerData);
 
         $this->assertResponseContains('Beim Speichern sind Fehler aufgetreten!');
@@ -80,6 +81,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testAdd()
     {
+        $this->loginAsSuperadmin();
+
         $this->manufacturerData['Manufacturers']['iban'] = 'AT193357281080332578';
         $this->manufacturerData['Manufacturers']['bic'] = 'BFKKAT2K';
         $this->manufacturerData['Manufacturers']['address_manufacturer']['email'] = 'test-manufacturer@mailinator.com';
@@ -88,7 +91,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->manufacturerData['Manufacturers']['homepage'] = 'www.foodcoopshop.com';
 
         $this->add($this->manufacturerData);
-
         $this->assertFlashMessage('Der Hersteller <b>Test Manufacturer</b> wurde erstellt.');
 
         // get inserted manufacturer from database and check detail page for patterns
