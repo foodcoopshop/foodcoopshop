@@ -46,7 +46,6 @@ class AppController extends Controller
                 throw $exception;
             }
         );
-        $this->FormProtection->setConfig('unlockedFields', ['antiSpam']);
 
         $authenticate = [
             'Form' => [

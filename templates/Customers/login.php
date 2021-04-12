@@ -93,6 +93,9 @@ $this->element('addScript', ['script' =>
                         'novalidate' => 'novalidate'
                     ]
                 );
+
+                  $this->Form->unlockField('antiSpam');
+
                   echo $this->Form->control('Customers.address_customer.email', ['label' => __('Email'), 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
 
                   echo '<div class="detail-form">';
