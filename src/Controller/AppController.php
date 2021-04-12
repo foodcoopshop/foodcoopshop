@@ -7,6 +7,7 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
+use Cake\Http\Exception\BadRequestException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,6 +38,15 @@ class AppController extends Controller
         ]);
         $this->loadComponent('String');
         $this->loadComponent('Cart');
+
+        $this->loadComponent('FormProtection');
+        $this->FormProtection->setConfig(
+            'validationFailureCallback',
+            function (BadRequestException $exception) {
+                throw $exception;
+            }
+        );
+        $this->FormProtection->setConfig('unlockedFields', ['antiSpam']);
 
         $authenticate = [
             'Form' => [
