@@ -6,6 +6,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v3.2.2 / 2021-04-12 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.1...v3.2.2)
+
+### Security Fix
+* Das Registrierungsformular und das Formular zum Bearbeiten des User-Profils sind nun besser abgesichert.
+
 ## v3.2.1 / 2021-03-23 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.0...v3.2.1)
 
 ### Bugfixes
