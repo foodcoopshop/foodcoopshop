@@ -38,14 +38,7 @@ class AppController extends Controller
         ]);
         $this->loadComponent('String');
         $this->loadComponent('Cart');
-
         $this->loadComponent('FormProtection');
-        $this->FormProtection->setConfig(
-            'validationFailureCallback',
-            function (BadRequestException $exception) {
-                throw $exception;
-            }
-        );
 
         $authenticate = [
             'Form' => [
