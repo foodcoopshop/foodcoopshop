@@ -67,6 +67,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->resetTestDatabaseData();
         $this->resetLogs();
         $this->Configuration->loadConfigurations();
+        $this->enableSecurityToken();
 
     }
 
