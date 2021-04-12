@@ -13,6 +13,7 @@ class FormProtectorTest extends TestCase
         $this->enableSecurityToken();
         $data = [];
         $data['Customers']['firstname'] = 'Mario';
+        $this->enableRetainFlashMessages();
         $this->post('/pages/form', $data);
         $this->assertFlashMessage('ok');
     }
