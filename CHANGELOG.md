@@ -22,6 +22,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Code Cleaning
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+## v3.2.2 / 2021-04-12 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.1...v3.2.2)
+
+### Security Fix
+* Das Registrierungsformular und das Formular zum Bearbeiten des User-Profils sind nun besser abgesichert.
 
 ## v3.2.1 / 2021-03-23 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.0...v3.2.1)
 
