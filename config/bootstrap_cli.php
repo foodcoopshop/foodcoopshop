@@ -26,5 +26,3 @@ use Cake\Core\Configure;
 // Set logs to different files so they don't have permission conflicts.
 Configure::write('Log.debug.file', 'cli-debug');
 Configure::write('Log.error.file', 'cli-error');
-
-session_id('cli');
