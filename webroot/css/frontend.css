@@ -404,7 +404,7 @@ body.superadmin .product-wrapper .heading h4 {
     text-align: center;
     float: left;
     margin-right: 15px;
-    width: 170px;
+    width: 150px;
     position: relative;
 }
 .manufacturer-wrapper div.first-column img {
@@ -429,7 +429,7 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper div.second-column,
 .manufacturer-wrapper div.second-column {
     float: left;
-    width: 335px;
+    width: 355px;
     min-height: 170px;
     padding-right: 15px;
     margin-right: 15px;
