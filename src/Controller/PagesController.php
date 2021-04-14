@@ -51,17 +51,6 @@ class PagesController extends FrontendController
         }
     }
 
-    public function form()
-    {
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->newEmptyEntity();
-        $this->set('customer', $customer);
-        $this->set('title_for_layout', 'Form test');
-        if (!empty($this->request->getData())) {
-            $this->Flash->success('ok');
-        }
-    }
-
     public function home()
     {
 
