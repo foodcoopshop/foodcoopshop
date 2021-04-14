@@ -32,7 +32,7 @@ $this->element('addScript', ['script' =>
     <?php
 
     echo $this->Form->create(
-        $customer,
+        null,
         [
             'url' => $this->Slug->getLogin($this->request->getQuery('redirect')),
             'id' => 'LoginForm',
