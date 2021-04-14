@@ -414,6 +414,15 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
 
+    public function testAddProductCustomerCanSelectPickupDayWithGlobalDeliveryBreakSameDay()
+    {
+        $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        $this->loginAsCustomer();
+        $this->addProductToCart($this->productId1, 1);
+        $this->assertJsonOk();
+    }
+
     public function testCustomerCanSelectPickupDayFinishWithPickupDayValidation()
     {
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
