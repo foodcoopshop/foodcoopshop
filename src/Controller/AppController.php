@@ -37,7 +37,10 @@ class AppController extends Controller
         ]);
         $this->loadComponent('String');
         $this->loadComponent('Cart');
-        $this->loadComponent('FormProtection');
+
+        if (!$this->getRequest()->is('json')) {
+            $this->loadComponent('FormProtection');
+        }
 
         $authenticate = [
             'Form' => [
