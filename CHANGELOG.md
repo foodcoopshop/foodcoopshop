@@ -18,6 +18,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Kleinere Verbesserungen
 - Beim Registrieren mit automatischer Aktivierung muss ab sofort die E-Mail-Adresse bestätigt werden, sonst bleibt der neue User inaktiv. [I#656](https://github.com/foodcoopshop/foodcoopshop/issues/656) / [PR#657](https://github.com/foodcoopshop/foodcoopshop/pull/657) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Das Bestelldatum wird nun im Tooltip über dem Bestellstatus-Icon angezeigt. [I#652](https://github.com/foodcoopshop/foodcoopshop/issues/652) / [PR#653](https://github.com/foodcoopshop/foodcoopshop/pull/653) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Alle Formulare sind jetzt noch besser gegen potenzielle Angriffe abgesichert. [I#659](https://github.com/foodcoopshop/foodcoopshop/issues/659) / [PR#661](https://github.com/foodcoopshop/foodcoopshop/pull/661) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Code Cleaning
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
