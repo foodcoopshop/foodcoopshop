@@ -186,10 +186,10 @@ foodcoopshop.AppChart = {
         };
 
         var lineChartOptions = this.lineChartOptions;
-        lineChartOptions.legend.display = true;
+        lineChartOptions.plugins.legend.display = true;
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
-        Chart(ctx, {
+        new Chart(ctx, {
             responsive : true,
             type: 'line',
             data: lineChartData,
