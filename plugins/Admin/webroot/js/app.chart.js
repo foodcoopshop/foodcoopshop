@@ -233,6 +233,23 @@ foodcoopshop.AppChart = {
                 backgroundColor: backgroundColorPieChart,
                 hoverBackgroundColor: this.color,
                 borderWidth: 1,
+                  datalabels: {
+                    labels: {
+                      outer: {
+                        align: 'end',
+                        anchor: 'end',
+                        color: '#333333',
+                        font: {
+                            size: 16
+                        },
+                        formatter: function(value, ctx) {
+                            return ctx.chart.data.labels[ctx.dataIndex];
+                        },
+                        offset: 5,
+                      }
+                    }
+                  }
+
             }],
             labels: labelsPieChart,
         };
