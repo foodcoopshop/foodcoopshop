@@ -8,6 +8,7 @@ module.exports = {
     "globals": {
         "Chart": true,
         "CKEDITOR": true,
+        "ChartDataLabels": true,
         "ClipboardJS": true,
         "Cookies": true,
         "foodcoopshop": true,
