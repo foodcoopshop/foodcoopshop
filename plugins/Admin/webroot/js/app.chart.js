@@ -16,6 +16,11 @@ foodcoopshop.AppChart = {
     color: '#cccccc', // default color
 
     barChartOptions : {
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
         datasetStrokeWidth : 1,
         scaleOverride: true,
         scaleStartValue: 0,
@@ -28,12 +33,9 @@ foodcoopshop.AppChart = {
                 }
             }
         },
-        legend: {
-            display: false
-        },
         scales: {
-            xAxes: [{
-                gridLines: {
+            x: {
+                grid: {
                     display: false
                 },
                 ticks: {
@@ -41,24 +43,21 @@ foodcoopshop.AppChart = {
                     maxRotation: 90,
                     minRotation: 90
                 }
-            }],
-            yAxes: [{
+            },
+            y: {
                 ticks: {
                     beginAtZero: true,
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
                 }
-            }]
+            }
         }
     },
 
     pieChartOptions : {
         cutoutPercentage: 25,
         rotation: 10,
-        legend: {
-            display: false
-        },
         tooltips: {
             callbacks: {
                 label: function(item, data) {
@@ -69,12 +68,15 @@ foodcoopshop.AppChart = {
             }
         },
         plugins: {
+            legend: {
+                display: false
+            },
             datalabels: {
                 color: '#fff',
                 labels: {
                     title: {
                         font: {
-                            size: 14,
+                            size: 14
                         }
                     }
                 }
@@ -83,8 +85,10 @@ foodcoopshop.AppChart = {
     },
 
     lineChartOptions : {
-        legend: {
-            display: false
+        plugins: {
+            legend: {
+                display: false
+            }
         },
         tooltips: {
             callbacks: {
@@ -95,19 +99,19 @@ foodcoopshop.AppChart = {
             }
         },
         scales: {
-            xAxes: [{
-                gridLines: {
+            x: {
+                grid: {
                     display: false
-                },
-            }],
-            yAxes: [{
+                }
+            },
+            y: {
                 ticks: {
                     beginAtZero: true,
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
                 }
-            }]
+            }
         }
     },
 
@@ -185,7 +189,7 @@ foodcoopshop.AppChart = {
         lineChartOptions.legend.display = true;
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
-        var myNewChart = new Chart(ctx, {
+        Chart(ctx, {
             responsive : true,
             type: 'line',
             data: lineChartData,
