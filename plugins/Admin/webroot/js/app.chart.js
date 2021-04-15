@@ -67,6 +67,10 @@ foodcoopshop.AppChart = {
                 }
             }
         },
+        aspectRatio: 4 / 3,
+        layout: {
+          padding: 32
+        },
         plugins: {
             legend: {
                 display: false
