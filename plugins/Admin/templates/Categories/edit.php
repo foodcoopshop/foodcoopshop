@@ -85,6 +85,7 @@ echo $this->Html->link(
 );
 echo '</div>';
 echo $this->Form->hidden('Categories.tmp_image');
+$this->Form->unlockField('Categories.tmp_image');
 echo '</div>';
 
 echo $this->Form->control('Categories.delete_image', [

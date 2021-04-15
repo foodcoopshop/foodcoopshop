@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,6 +23,13 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class ToolsController extends AdminAppController
 {
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->loadComponent('FormProtection');
+        $this->FormProtection->setConfig('validate', false);
+    }
 
     public function doTmpFileUpload()
     {

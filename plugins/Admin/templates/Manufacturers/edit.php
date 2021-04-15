@@ -146,6 +146,7 @@ if ($appAuth->isManufacturer()) {
         );
         echo '</div>';
         echo $this->Form->hidden('Manufacturers.tmp_image');
+        $this->Form->unlockField('Manufacturers.tmp_image');
         echo '</div>';
 
         echo $this->Form->control('Manufacturers.delete_image', [
@@ -219,6 +220,7 @@ if ($appAuth->isManufacturer()) {
         echo ' <span class="after small">'.__d('admin', 'If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
         echo '</div>';
         echo $this->Form->hidden('Manufacturers.tmp_general_terms_and_conditions');
+        $this->Form->unlockField('Manufacturers.tmp_general_terms_and_conditions');
         echo '</div>';
 
         if ($fileUploadExists) {
