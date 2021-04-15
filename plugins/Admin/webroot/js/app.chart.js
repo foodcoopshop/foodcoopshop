@@ -68,23 +68,18 @@ foodcoopshop.AppChart = {
                 }
             }
         },
-        pieceLabel: [
-            {
-                render: 'label',
-                fontSize: 14,
-                textShadow: true,
-                position: 'outside',
-                fontColor: '#333',
-                textMargin: 4,
-            },
-            {
-                render: 'percentage',
-                fontSize: 14,
-                fontColor: '#fff',
-                textShadow: true,
+        plugins: {
+            datalabels: {
+                color: '#fff',
+                labels: {
+                    title: {
+                        font: {
+                            size: 14,
+                        }
+                    }
+                }
             }
-
-        ],
+        }
     },
 
     lineChartOptions : {
@@ -136,7 +131,7 @@ foodcoopshop.AppChart = {
         };
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
-        var myNewChart = new Chart(ctx, {
+        new Chart(ctx, {
             responsive : true,
             type: 'line',
             data: lineChartData,
@@ -212,7 +207,7 @@ foodcoopshop.AppChart = {
         };
 
         var ctx = $('#myBarChart').get(0).getContext('2d');
-        var myNewChart = new Chart(ctx, {
+        new Chart(ctx, {
             responsive : true,
             type: 'bar',
             data: barChartData,
@@ -235,7 +230,8 @@ foodcoopshop.AppChart = {
         };
 
         var ctx = $('#myPieChart').get(0).getContext('2d');
-        var myNewChart = new Chart(ctx, {
+        new Chart(ctx, {
+            plugins: [ChartDataLabels],
             responsive : true,
             type: 'pie',
             data: pieChartData,
