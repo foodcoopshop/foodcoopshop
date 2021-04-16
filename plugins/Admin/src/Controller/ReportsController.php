@@ -6,6 +6,7 @@ use App\Lib\Csv\RaiffeisenBankingReader;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
 
@@ -36,6 +37,12 @@ class ReportsController extends AdminAppController
             }
         }
         return $this->AppAuth->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();
+    }
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->FormProtection->setConfig('unlockedActions', ['payments']);
     }
 
     private function handleCsvUpload()
