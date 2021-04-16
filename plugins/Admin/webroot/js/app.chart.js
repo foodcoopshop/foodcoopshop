@@ -19,20 +19,19 @@ foodcoopshop.AppChart = {
         plugins: {
             legend: {
                 display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.formattedValue);
+                    }
+                }
             }
         },
         datasetStrokeWidth : 1,
         scaleOverride: true,
         scaleStartValue: 0,
         scaleGridLineColor: 'rgba(0,0,0,.15)',
-        tooltips: {
-            callbacks: {
-                label: function(item, data) {
-                    var value = data.datasets[item.datasetIndex].data[item.index];
-                    return foodcoopshop.Helper.formatFloatAsCurrency(value);
-                }
-            }
-        },
         scales: {
             x: {
                 grid: {
@@ -56,23 +55,20 @@ foodcoopshop.AppChart = {
     },
 
     pieChartOptions : {
-        cutoutPercentage: 25,
-        rotation: 10,
-        tooltips: {
-            callbacks: {
-                label: function(item, data) {
-                    var label = data.labels[item.index];
-                    var value = data.datasets[item.datasetIndex].data[item.index];
-                    return label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(value);
-                }
-            }
-        },
+        cutout: 65,
         aspectRatio: 5 / 3,
         layout: {
             padding: 50
         },
         rotation: -30,
         plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        return ctx.label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(ctx.formattedValue);
+                    }
+                }
+            },
             legend: {
                 display: false
             },
@@ -105,13 +101,12 @@ foodcoopshop.AppChart = {
         plugins: {
             legend: {
                 display: false
-            }
-        },
-        tooltips: {
-            callbacks: {
-                label: function(item, data) {
-                    var value = data.datasets[item.datasetIndex].data[item.index];
-                    return foodcoopshop.Helper.formatFloatAsCurrency(value);
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.formattedValue);
+                    }
                 }
             }
         },
