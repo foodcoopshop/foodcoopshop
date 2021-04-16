@@ -862,7 +862,7 @@ body.reports.payment form#csv-records table.list {
     margin-bottom: 10px;
 }
 body.reports.payment form#csv-records select {
-    width: 250px;
+    width: 270px;
 }
 body.reports.payment form#csv-records .error-message {
     margin-left: 0;
