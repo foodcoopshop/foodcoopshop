@@ -241,31 +241,31 @@ foodcoopshop.AppChart = {
                 backgroundColor: backgroundColorPieChart,
                 hoverBackgroundColor: this.color,
                 borderWidth: 1,
-                    datalabels: {
-                        labels: {
-                            outer: {
-                                align: 'end',
-                                anchor: 'end',
-                                color: '#333333',
-                                font: {
-                                    size: 15
-                                },
-                                formatter: function(value, ctx) {
-                                    var sum = 0;
-                                    var dataArr = ctx.chart.data.datasets[0].data;
-                                    dataArr.map(function(data) {
-                                        sum += data;
-                                    });
-                                    var percentage = (value * 100 / sum).toFixed(0);
-                                    if (percentage > 2) {
-                                        return ctx.chart.data.labels[ctx.dataIndex];
-                                    }
-                                    return '';
-                                },
-                                offset: 15,
-                           }
-                       }
-                  }
+                datalabels: {
+                    labels: {
+                        outer: {
+                            align: 'end',
+                            anchor: 'end',
+                            color: '#333333',
+                            font: {
+                                size: 15
+                            },
+                            formatter: function(value, ctx) {
+                                var sum = 0;
+                                var dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(function(data) {
+                                    sum += data;
+                                });
+                                var percentage = (value * 100 / sum).toFixed(0);
+                                if (percentage > 2) {
+                                    return ctx.chart.data.labels[ctx.dataIndex];
+                                }
+                                return '';
+                            },
+                            offset: 15,
+                        }
+                    }
+                }
 
             }],
             labels: labelsPieChart,
