@@ -4,12 +4,10 @@ on:
   push:
     paths-ignore:
       - '**.md'
-      - '**.js'
       - '**.css'
   pull_request:
     paths-ignore:
       - '**.md'
-      - '**.js'
       - '**.css'
   
 jobs:
