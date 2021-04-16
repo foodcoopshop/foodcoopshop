@@ -87,6 +87,7 @@
         width: 55% ! important;
         z-index: 99990;
         margin-top: 54px;
+        height: calc(100% - 54px);
     }
     .sb-left a i {
         padding-left: 0;

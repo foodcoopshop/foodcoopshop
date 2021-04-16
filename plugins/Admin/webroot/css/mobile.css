@@ -72,6 +72,7 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
 }
 .sb-slidebar {
     margin-top: 42px;
+    height: calc(100% - 42px);
     width: 45% ! important;
 }
 #container {
