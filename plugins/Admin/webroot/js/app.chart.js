@@ -67,20 +67,33 @@ foodcoopshop.AppChart = {
                 }
             }
         },
-        aspectRatio: 4 / 3,
+        aspectRatio: 5 / 3,
         layout: {
-          padding: 32
+            padding: 50
         },
+        rotation: -30,
         plugins: {
             legend: {
                 display: false
             },
             datalabels: {
+                formatter: function(value, ctx) {
+                    var sum = 0;
+                    var dataArr = ctx.chart.data.datasets[0].data;
+                    dataArr.map(function(data) {
+                        sum += data;
+                    });
+                    var percentage = (value * 100 / sum).toFixed(0);
+                    if (percentage > 2) {
+                        return percentage + '%';
+                    }
+                    return '';
+                },
                 color: '#fff',
                 labels: {
                     title: {
                         font: {
-                            size: 14
+                            size: 15
                         }
                     }
                 }
@@ -233,21 +246,30 @@ foodcoopshop.AppChart = {
                 backgroundColor: backgroundColorPieChart,
                 hoverBackgroundColor: this.color,
                 borderWidth: 1,
-                  datalabels: {
-                    labels: {
-                      outer: {
-                        align: 'end',
-                        anchor: 'end',
-                        color: '#333333',
-                        font: {
-                            size: 16
-                        },
-                        formatter: function(value, ctx) {
-                            return ctx.chart.data.labels[ctx.dataIndex];
-                        },
-                        offset: 5,
-                      }
-                    }
+                    datalabels: {
+                        labels: {
+                            outer: {
+                                align: 'end',
+                                anchor: 'end',
+                                color: '#333333',
+                                font: {
+                                    size: 15
+                                },
+                                formatter: function(value, ctx) {
+                                    var sum = 0;
+                                    var dataArr = ctx.chart.data.datasets[0].data;
+                                    dataArr.map(function(data) {
+                                        sum += data;
+                                    });
+                                    var percentage = (value * 100 / sum).toFixed(0);
+                                    if (percentage > 2) {
+                                        return ctx.chart.data.labels[ctx.dataIndex];
+                                    }
+                                    return '';
+                                },
+                                offset: 15,
+                           }
+                       }
                   }
 
             }],
