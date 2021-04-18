@@ -256,8 +256,8 @@ foodcoopshop.AppChart = {
                                 dataArr.map(function(data) {
                                     sum += data;
                                 });
-                                var percentage = (value * 100 / sum).toFixed(0);
-                                if (percentage > 2) {
+                                var percentage = (value * 100 / sum);
+                                if (percentage > 0.7) {
                                     return ctx.chart.data.labels[ctx.dataIndex];
                                 }
                                 return '';
