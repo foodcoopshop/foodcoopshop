@@ -109,6 +109,10 @@ class AppController extends Controller
 
         $this->validateAuthentication();
 
+        if (!$this->getRequest()->is('json') && !$this->AppAuth->isInstantOrderMode()) {
+            $this->loadComponent('FormProtection');
+        }
+
         $isMobile = false;
         if ($this->getRequest()->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
             $isMobile = true;

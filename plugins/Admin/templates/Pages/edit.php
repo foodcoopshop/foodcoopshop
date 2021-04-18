@@ -112,8 +112,8 @@ echo $this->Form->control('Pages.content', [
     'escape' => false
 ]);
 
-?>
+echo $this->Form->end();
 
-</form>
+?>
 
 <div class="sc"></div>

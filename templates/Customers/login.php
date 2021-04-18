@@ -29,42 +29,50 @@ $this->element('addScript', ['script' =>
 
   <h1><?php echo $title_for_layout; ?></h1>
 
-  <form id="LoginForm" method="post" accept-charset="utf-8" action="<?php echo $this->Slug->getLogin($this->request->getQuery('redirect')); ?>">
+    <?php
 
-        <?php
-        if ($enableBarCodeLogin) {
-            $this->element('addScript', ['script' =>
-                Configure::read('app.jsNamespace').".SelfService.initLoginForm();"
-            ]);
-            echo $this->Form->control('barCode', ['type' => 'text', 'label' => __('Scan_member_card')]);
-            echo '<h2><span>'.__('or').'</span></h2>';
-        }
-        echo $this->Form->control('email', ['label' => __('Email')]);
-        echo $this->Form->control('passwd', ['label' => __('Password')]);
+    echo $this->Form->create(
+        null,
+        [
+            'url' => $this->Slug->getLogin($this->request->getQuery('redirect')),
+            'id' => 'LoginForm',
+        ]
+    );
 
+    if ($enableBarCodeLogin) {
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".ModalText.init('.remember-me-wrapper a');"
+            Configure::read('app.jsNamespace').".SelfService.initLoginForm();"
         ]);
+        echo $this->Form->control('barCode', ['type' => 'text', 'label' => __('Scan_member_card')]);
+        echo '<h2><span>'.__('or').'</span></h2>';
+    }
+    echo $this->Form->control('email', ['label' => __('Email')]);
+    echo $this->Form->control('passwd', ['label' => __('Password')]);
 
-        echo '<div class="remember-me-wrapper">';
-            echo $this->Form->control('remember_me', [
-                'type' => 'checkbox',
-                'label' => __('Stay_signed_in'),
-                'escape' => false
-            ]);
-        echo '</div>';
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".ModalText.init('.remember-me-wrapper a');"
+    ]);
 
-        ?>
+    echo '<div class="remember-me-wrapper">';
+        echo $this->Form->control('remember_me', [
+            'type' => 'checkbox',
+            'label' => __('Stay_signed_in'),
+            'escape' => false
+        ]);
+    echo '</div>';
 
-        <div class="sc"></div>
-        <?php
-            echo '<a style="float:left;" target="_blank" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
-        ?>
+    ?>
 
-        <div class="sc"></div>
-        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in'); ?></button>
+    <div class="sc"></div>
+    <?php
+        echo '<a style="float:left;" target="_blank" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
+    ?>
 
-  </form>
+    <div class="sc"></div>
+    <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in'); ?></button>
+
+    <?php echo $this->Form->end(); ?>
+
 
     <?php if (!$appAuth->user() && $enableRegistrationForm) { ?>
         <?php
@@ -85,6 +93,9 @@ $this->element('addScript', ['script' =>
                         'novalidate' => 'novalidate'
                     ]
                 );
+
+                  $this->Form->unlockField('antiSpam');
+
                   echo $this->Form->control('Customers.address_customer.email', ['label' => __('Email'), 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
 
                   echo '<div class="detail-form">';

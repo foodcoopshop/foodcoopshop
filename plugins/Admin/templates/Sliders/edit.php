@@ -73,6 +73,7 @@ echo $this->Html->link(
 );
 echo '</div>';
 echo $this->Form->hidden('Sliders.tmp_image');
+$this->Form->unlockField('Sliders.tmp_image');
 echo '</div>';
 
 echo $this->Form->control('Sliders.link', [

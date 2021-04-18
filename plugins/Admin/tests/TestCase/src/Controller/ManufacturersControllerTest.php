@@ -25,76 +25,78 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public $Manufacturer;
 
+    public $manufacturerData = [
+        'Manufacturers' => [
+            'name' => 'Test Manufacturer',
+            'bank_name' => 'Test Bank',
+            'iban' => 'Iban',
+            'bic' => 'bic',
+            'no_delivery_days' => '',
+            'active' => 1,
+            'additional_text_for_invoice' => '',
+            'uid_number' => '',
+            'tmp_image' => '',
+            'delete_image' => '',
+            'firmenbuchnummer' => '<b>number</b>',
+            'firmengericht' => '',
+            'aufsichtsbehoerde' => '',
+            'kammer' => '',
+            'homepage' => '',
+            'short_description' => '<i>Test Description</i>',
+            'description' => '<b>Text</b><script>alert("evil");</script><img src=n onerror=alert("evil")>',
+            'address_manufacturer' => [
+                'firstname' => '',
+                'lastname' => '',
+                'email' => 'fcs-demo-gemuese-hersteller@mailinator.com',
+                'phone_mobile' => '',
+                'phone' => '',
+                'address1' => 'Street 1',
+                'address2' => 'Street 2',
+                'postcode' => '',
+                'city' => 'Test City'
+            ]
+        ],
+        'referer' => '/'
+    ];
+
     public function setUp(): void
     {
         parent::setUp();
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
-    public function testAdd()
+    public function testAddWithValidationErrors()
     {
         $this->loginAsSuperadmin();
 
-        $manufacturerData = [
-            'Manufacturers' => [
-                'name' => 'Test Manufacturer',
-                'bank_name' => 'Test Bank',
-                'iban' => 'Iban',
-                'bic' => 'bic',
-                'no_delivery_days' => '',
-                'active' => 1,
-                'additional_text_for_invoice' => '',
-                'uid_number' => '',
-                'tmp_image' => '',
-                'delete_image' => '',
-                'firmenbuchnummer' => '<b>number</b>',
-                'firmengericht' => '',
-                'aufsichtsbehoerde' => '',
-                'kammer' => '',
-                'homepage' => '',
-                'short_description' => '<i>Test Description</i>',
-                'description' => '<b>Text</b><script>alert("evil");</script><img src=n onerror=alert("evil")>',
-                'address_manufacturer' => [
-                    'firstname' => '',
-                    'lastname' => '',
-                    'email' => 'fcs-demo-gemuese-hersteller@mailinator.com',
-                    'phone_mobile' => '',
-                    'phone' => '',
-                    'address1' => 'Street 1',
-                    'address2' => 'Street 2',
-                    'postcode' => '',
-                    'city' => 'Test City'
-                ]
-            ],
-            'referer' => '/'
-        ];
+        $this->add($this->manufacturerData);
 
-        $this->add($manufacturerData);
-
-        // provoke errors
-        $this->assertResponseContains(__d('admin', 'Errors_while_saving!'));
+        $this->assertResponseContains('Beim Speichern sind Fehler aufgetreten!');
         $this->assertResponseContains('Bitte gib einen gültigen IBAN ein.');
         $this->assertResponseContains('Bitte gib einen gültigen BIC ein.');
         $this->assertResponseContains('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.');
         $this->assertResponseContains('Bitte gib den Vornamen an.');
         $this->assertResponseContains('Bitte gib den Nachnamen an.');
+    }
 
-        // set proper data and post again
-        $manufacturerData['Manufacturers']['iban'] = 'AT193357281080332578';
-        $manufacturerData['Manufacturers']['bic'] = 'BFKKAT2K';
-        $manufacturerData['Manufacturers']['address_manufacturer']['email'] = 'test-manufacturer@mailinator.com';
-        $manufacturerData['Manufacturers']['address_manufacturer']['firstname'] = 'Test';
-        $manufacturerData['Manufacturers']['address_manufacturer']['lastname'] = 'Manufacturers';
-        $manufacturerData['Manufacturers']['homepage'] = 'www.foodcoopshop.com';
+    public function testAdd()
+    {
+        $this->loginAsSuperadmin();
 
-        $this->add($manufacturerData);
+        $this->manufacturerData['Manufacturers']['iban'] = 'AT193357281080332578';
+        $this->manufacturerData['Manufacturers']['bic'] = 'BFKKAT2K';
+        $this->manufacturerData['Manufacturers']['address_manufacturer']['email'] = 'test-manufacturer@mailinator.com';
+        $this->manufacturerData['Manufacturers']['address_manufacturer']['firstname'] = 'Test';
+        $this->manufacturerData['Manufacturers']['address_manufacturer']['lastname'] = 'Manufacturers';
+        $this->manufacturerData['Manufacturers']['homepage'] = 'www.foodcoopshop.com';
 
+        $this->add($this->manufacturerData);
         $this->assertFlashMessage('Der Hersteller <b>Test Manufacturer</b> wurde erstellt.');
 
         // get inserted manufacturer from database and check detail page for patterns
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
-                'Manufacturers.name' => $manufacturerData['Manufacturers']['name']
+                'Manufacturers.name' => $this->manufacturerData['Manufacturers']['name']
             ],
             'contain' => [
                 'AddressManufacturers'
@@ -110,8 +112,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals($manufacturer->short_description, '<i>Test Description</i>', 'tags must not be stripped');
         $this->assertEquals($manufacturer->firmenbuchnummer, 'number', 'tags must be stripped');
         $this->assertEquals($manufacturer->is_private, true);
-
-        $this->logout();
     }
 
     public function testEditOptionsMain()

@@ -87,6 +87,7 @@ echo $this->Html->link(
     );
 echo '</div>';
 echo $this->Form->hidden('Customers.tmp_image');
+$this->Form->unlockField('Customers.tmp_image');
 echo '</div>';
 
 echo $this->Form->control('Customers.delete_image', [

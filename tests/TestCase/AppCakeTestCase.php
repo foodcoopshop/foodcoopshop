@@ -68,6 +68,10 @@ abstract class AppCakeTestCase extends TestCase
         $this->resetLogs();
         $this->Configuration->loadConfigurations();
 
+        // enable security token only for IntegrationTests
+        if (method_exists($this, 'enableSecurityToken')) {
+            $this->enableSecurityToken();
+        }
     }
 
     private function getLogFile($name)

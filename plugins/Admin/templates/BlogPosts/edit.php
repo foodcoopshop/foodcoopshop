@@ -88,6 +88,7 @@ echo '<div class="blog-post-image-wrapper">';
     echo '<span class="small">' . $defaultImageExplanationText . '</span>';
 echo '</div>';
 echo $this->Form->hidden('BlogPosts.tmp_image');
+$this->Form->unlockField('BlogPosts.tmp_image');
 echo '</div>';
 echo $this->Form->control('BlogPosts.delete_image', [
     'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
