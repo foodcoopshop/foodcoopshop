@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.1...develop)
+# Unveröffentlichte Version [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.1...develop)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
@@ -23,12 +23,14 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Code Cleaning
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v3.2.2 / 2021-04-12 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.1...v3.2.2)
+[Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15)
+
+# v3.2.2 / 2021-04-12 [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.1...v3.2.2)
 
 ### Security Fix
 * Das Registrierungsformular und das Formular zum Bearbeiten des User-Profils sind nun besser abgesichert.
 
-## v3.2.1 / 2021-03-23 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.0...v3.2.1)
+# v3.2.1 / 2021-03-23 [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.0...v3.2.1)
 
 ### Bugfixes
 * Wenn ein Hersteller die eigenen Einstellungen speichert, wird die Ansprechperson jetzt nicht mehr gelöscht.
@@ -36,7 +38,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * Kamera-Icon wurde auf der Login-Seite für den Selbstbedienung-Modus auf Smartphones nicht angezeigt.
 * Wenn die Erstinstallation <= v3.0 war, müssen [zwei Migrations manuell ausgeführt werden](https://foodcoopshop.github.io/en/migration-guide.html).
 
-## v3.2.0 / 2021-03-08 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...v3.2.0)
+# v3.2.0 / 2021-03-08 [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...v3.2.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/AndreasEgger.png" width="20"> [AndreasEgger](https://github.com/AndreasEgger)
@@ -83,8 +85,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Deprecations
 - ⚠️⚠️⚠️ Wer das [Stundenabrechnungs-Modul](https://foodcoopshop.github.io/de/stundenabrechnungs-modul.html) aktiv verwendet, soll sich bitte bei mir melden. Ich habe nämlich den Eindruck, dass es kaum in Gebrauch ist. Da aber die Wartung Aufwand bedeutet, werde ich das Modul - sofern sich bis dahin niemand meldet - ab v3.3 (Herbst 2021) aus der Software entfernen.
 
+[Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/14)
 
-## v3.1.0 / 2020-09-07 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...v3.1.0)
+# v3.1.0 / 2020-09-07 [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...v3.1.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/AndreasEgger.png" width="20"> [AndreasEgger](https://github.com/AndreasEgger)
@@ -118,21 +121,21 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - All tests now work without HttpClient and use IntegrationTestTrait, the tests are now about 45% faster! [I#404](https://github.com/foodcoopshop/foodcoopshop/issues/404) / [PR#550](https://github.com/foodcoopshop/foodcoopshop/pull/550) / [PR#529](https://github.com/foodcoopshop/foodcoopshop/pull/529) / [PR#531](https://github.com/foodcoopshop/foodcoopshop/pull/531) / [PR#532](https://github.com/foodcoopshop/foodcoopshop/pull/532) <a href="https://github.com/swoichha"><img src="https://github.com/swoichha.png" width="20"></a> <a href="https://github.com/dpakach"><img src="https://github.com/dpakach.png" width="20"></a> <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - FoodCoopShop verwendet jetzt CakePHP v4.1.x. [I#541](https://github.com/foodcoopshop/foodcoopshop/issues/541) / [PR#545](https://github.com/foodcoopshop/foodcoopshop/pull/545) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+[Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/13)
 
-
-## v3.0.2 / 2020-03-26 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.1...v3.0.2)
+# v3.0.2 / 2020-03-26 [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.1...v3.0.2)
 
 ### Bugfix
 - Produkte waren fehlerhafterweise bestellbar, wenn das Produkt früher mal als Lagerprodukt deklariert war und das Feld "Bestellbar bis zu einer Anzahl von" einen Wert < 0 enthielt.
 - Es gab immer wieder Probleme beim automatischen Vermindern der Anzahl, wenn im gleichen Warenkorb ein Produkt mit einer Variante vorhanden war und dieses Produkt genau vor dem entsprechenden Produkt gereiht war. War schwer zu finden... / [PR#484](https://github.com/foodcoopshop/foodcoopshop/pull/484) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v3.0.1 / 2020-03-22 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.0...v3.0.1)
+# v3.0.1 / 2020-03-22 [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.0...v3.0.1)
 
 ### Bugfix
 - Kategorien wurden nicht korrekt sortiert. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/35d940d82912200d6aab60dd6adc5fedbb68b4de) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
-## v3.0.0 / 2020-03-20 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...3.0.0)
+# v3.0.0 / 2020-03-20 [Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...3.0.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
@@ -152,5 +155,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Begrenzung der maximalen Zeichenanzahl bei Seiten, Blog-Artikel, Produkt- und Herstellerbeschreibung wurde erhöht. [I#460](https://github.com/foodcoopshop/foodcoopshop/issues/460) / [PR#462](https://github.com/foodcoopshop/foodcoopshop/pull/462) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Neue Kategorien waren nicht mehr alfabetisch sortiert. [I#458](https://github.com/foodcoopshop/foodcoopshop/issues/458) / [PR#459](https://github.com/foodcoopshop/foodcoopshop/pull/459) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Legacy-Code von FCS v2 wurde entfernt. [PR#468](https://github.com/foodcoopshop/foodcoopshop/pull/468) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+[Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/12)
 
 [Zum Changelog von FoodCoopShop v2.x](devtools/CHANGELOG-v2.md)
