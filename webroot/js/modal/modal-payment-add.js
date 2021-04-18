@@ -65,15 +65,15 @@ foodcoopshop.ModalPaymentAdd = {
         foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, form);
 
         var customerDropdownSelector = modalSelector + ' #payments-customerid';
-        $(customerDropdownSelector).find('option[value=""]').remove();
-
-        $(customerDropdownSelector).selectpicker({
-            liveSearch: true,
-            size: 7,
-            title: foodcoopshop.LocalizedJs.admin.PleaseMember
-        });
-        foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
-
+        if ($(customerDropdownSelector).length > 0) {
+            $(customerDropdownSelector).find('option[value=""]').remove();
+            $(customerDropdownSelector).selectpicker({
+                liveSearch: true,
+                size: 7,
+                title: foodcoopshop.LocalizedJs.admin.PleaseMember
+            });
+            foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
+        }
     },
 
     init : function() {
