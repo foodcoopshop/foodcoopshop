@@ -158,7 +158,7 @@ foreach ($blogPosts as $blogPost) {
 
 
     echo '<td align="center">';
-        if (!is_null($blogPost->show_on_start_page_until)) {
+        if (!is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast()) {
             echo $blogPost->show_on_start_page_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
         }
     echo '</td>';
