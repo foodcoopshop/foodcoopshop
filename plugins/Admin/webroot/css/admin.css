@@ -931,6 +931,9 @@ body.invoices.index table.invoices-table {
 body.invoices.index table.invoices-table th:nth-child(1) {
     width: 98px;
 }
+body.invoices.index table.invoices-table th:nth-child(8) {
+    width: 105px;
+}
 body.invoices.index table.invoices-table th {
     word-break: normal;
 }
