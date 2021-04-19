@@ -48,6 +48,31 @@ echo $this->element('reportNavTabs', [
 
 echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b></p>';
 
+if (!empty($invoices)) {
+
+    if (!empty($taxRates['cash'])) {
+        echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';
+        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cash'], 'taxRatesSums' => $taxRatesSums['cash']]);
+    }
+
+
+    if (!empty($taxRates['cashless'])) {
+        echo '<h4>' . __d('admin', 'Tax_overview_cashless') . '</h4>';
+        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cashless'], 'taxRatesSums' => $taxRatesSums['cashless']]);
+    }
+
+    if (!empty($taxRates['total'])) {
+        echo '<h4>' . __d('admin', 'Tax_overview_total') . '</h4>';
+        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['total'], 'taxRatesSums' => $taxRatesSums['total']]);
+    }
+
+    echo '<hr />';
+
+}
+
+
+echo '<h4>' . __d('admin', 'Invoices') . '</h4>';
+
 echo $this->Html->link(
     '<i class="fas fa-fw fa-download"></i>',
     'javascript:void(0)',
@@ -181,29 +206,6 @@ echo '<table class="list invoices-table no-clone-last-row">';
 
     echo '</tr>';
 
-
 echo '</table>';
-
-if (!empty($invoices)) {
-
-    if (!empty($taxRates['cash'])) {
-        echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';
-        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cash'], 'taxRatesSums' => $taxRatesSums['cash']]);
-    }
-
-
-    if (!empty($taxRates['cashless'])) {
-        echo '<h4>' . __d('admin', 'Tax_overview_cashless') . '</h4>';
-        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cashless'], 'taxRatesSums' => $taxRatesSums['cashless']]);
-    }
-
-    echo '<hr />';
-
-    if (!empty($taxRates['total'])) {
-        echo '<h4>' . __d('admin', 'Tax_overview_total') . '</h4>';
-        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['total'], 'taxRatesSums' => $taxRatesSums['total']]);
-    }
-
-}
 
 ?>

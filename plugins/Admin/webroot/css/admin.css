@@ -926,6 +926,13 @@ body.deposits.overview_diagram table td {
 }
 body.invoices.index table.invoices-table {
     width: 1008px;
+    margin-bottom: 15px;
+}
+body.invoices.index table.invoices-table th:nth-child(1) {
+    width: 98px;
+}
+body.invoices.index table.invoices-table th {
+    word-break: normal;
 }
 body.invoices.index table.tax-sum-table {
     width: 600px;
