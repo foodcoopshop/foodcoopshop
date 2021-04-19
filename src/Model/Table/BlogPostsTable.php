@@ -2,6 +2,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
 use Cake\Validation\Validator;
 
@@ -42,6 +43,7 @@ class BlogPostsTable extends AppTable
         $validator->minLength('content', 3, __('Please_enter_at_least_{0}_characters.', [3]));
         $validator->allowEmptyString('short_description');
         $validator->maxLength('short_description', 100, __('Please_enter_max_{0}_characters.', [100]));
+        $validator->allowEmptyDate('show_on_start_page_until');
         return $validator;
     }
 
@@ -64,12 +66,12 @@ class BlogPostsTable extends AppTable
         return $next;
     }
 
-    public function findFeatured($appAuth)
+    public function findForStartPage($appAuth)
     {
         return $this->findBlogPosts($appAuth, null, null, true);
     }
 
-    public function findBlogPosts($appAuth, $limit = 75, $manufacturerId = null, $isFeatured = null)
+    public function findBlogPosts($appAuth, $limit = 75, $manufacturerId = null, $showOnStartPage = null)
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
@@ -86,9 +88,6 @@ class BlogPostsTable extends AppTable
         if ($manufacturerId) {
             $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
         }
-        if ($isFeatured) {
-            $conditions['BlogPosts.is_featured'] = APP_ON;
-        }
 
         $blogPosts = $this->find('all', [
             'conditions' => $conditions,
@@ -100,6 +99,13 @@ class BlogPostsTable extends AppTable
             ],
             'limit' => $limit
         ]);
+
+        if ($showOnStartPage) {
+            $blogPosts->where(function (QueryExpression $exp) {
+                $exp->gte('DATE_FORMAT(BlogPosts.show_on_start_page_until, "%Y-%m-%d")', Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+                return $exp;
+            });
+        }
 
         return $blogPosts;
     }

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-01 12:02+0200\n"
-"PO-Revision-Date: 2021-04-01 12:02+0200\n"
+"POT-Creation-Date: 2021-04-19 12:05+0200\n"
+"PO-Revision-Date: 2021-04-19 12:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -792,8 +792,11 @@ msgstr "Hersteller auswählen"
 msgid "Blog_post_manufacturer_description"
 msgstr "Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung \"nur für Mitglieder\")."
 
-msgid "Show_on_homepage"
-msgstr "Auf der Startseite anzeigen"
+msgid "Show_on_startpage_until"
+msgstr "Auf Startseite anzeigen bis"
+
+msgid "Leave_empty_to_never_show_blog_post_on_start_page."
+msgstr "Leeres Feld bedeutet: der Blog-Artikel wird nicht auf der Startseite angezeigt."
 
 msgid "Only_for_members"
 msgstr "Nur für Mitglieder"
@@ -821,9 +824,6 @@ msgstr "alle Mitglieder"
 
 msgid "all_manufacturers"
 msgstr "alle Hersteller"
-
-msgid "Homepage"
-msgstr "Homepage"
 
 msgid "Modified_by"
 msgstr "Geändert von"
@@ -2231,6 +2231,12 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Show_on_startpage"
+#~ msgstr "Auf Startseite anzeigen"
+
+#~ msgid "Homepage"
+#~ msgstr "Homepage"
 
 #~ msgid "Deposit_returns"
 #~ msgstr "Pfand-Rückgaben"

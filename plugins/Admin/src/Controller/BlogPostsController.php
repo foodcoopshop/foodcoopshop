@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -61,7 +62,7 @@ class BlogPostsController extends AdminAppController
             [
                 'active' => APP_ON,
                 'is_private' => APP_ON,
-                'is_featured' => APP_ON
+                'show_on_start_page_until' => Configure::read('app.timeHelper')->getInXDaysForDatabase(30),
             ],
             ['validate' => false]
         );
@@ -130,7 +131,12 @@ class BlogPostsController extends AdminAppController
             $this->BlogPost->removeBehavior('Timestamp');
         }
 
+        $this->setRequest(
+            $this->getRequest()->withData('BlogPosts.show_on_start_page_until',
+            FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
+        ));
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
+
         if ($blogPost->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('blogPost', $blogPost);
@@ -212,7 +218,7 @@ class BlogPostsController extends AdminAppController
         ]);
         $blogPosts = $this->paginate($query, [
             'sortableFields' => [
-                'BlogPosts.is_featured', 'BlogPosts.is_private', 'BlogPosts.title', 'BlogPosts.short_description', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.name', 'BlogPosts.modified', 'BlogPosts.active'
+                'BlogPosts.show_on_start_page_until', 'BlogPosts.is_private', 'BlogPosts.title', 'BlogPosts.short_description', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.name', 'BlogPosts.modified', 'BlogPosts.active'
             ],
             'order' => [
                 'BlogPosts.modified' => 'DESC'
