@@ -74,7 +74,7 @@ CREATE TABLE `fcs_blog_posts` (
   `active` int(11) DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` datetime DEFAULT NULL,
-  `is_featured` int(11) DEFAULT NULL,
+  `show_on_start_page_until` date DEFAULT NULL,
   PRIMARY KEY (`id_blog_post`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
