@@ -44,8 +44,8 @@ foodcoopshop.AppChart = {
                 }
             },
             y: {
+                beginAtZero: true,
                 ticks: {
-                    beginAtZero: true,
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
@@ -117,8 +117,8 @@ foodcoopshop.AppChart = {
                 }
             },
             y: {
+                beginAtZero: true,
                 ticks: {
-                    beginAtZero: true,
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
