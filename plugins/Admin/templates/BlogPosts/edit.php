@@ -113,6 +113,7 @@ echo $this->Form->control('BlogPosts.show_on_start_page_until', [
     'class' => 'datepicker',
     'type' => 'text',
     'escape' => false,
+    'value' => !is_null($blogPost->show_on_start_page_until) ? $blogPost->show_on_start_page_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : null,
 ]);
 
 echo $this->Form->control('BlogPosts.is_private', [
