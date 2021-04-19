@@ -183,7 +183,12 @@ class MyTimeHelper extends TimeHelper
     }
 
     public function getTomorrowForDatabase() {
-        return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +1 days'));
+        return $this->getInXDaysForDatabase(1);
+    }
+
+    public function getInXDaysForDatabase($days)
+    {
+        return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +' . $days . ' days'));
     }
 
     private function getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, $factor)

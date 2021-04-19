@@ -64,7 +64,6 @@ echo '<tr class="sort">';
 echo '<th class="hide"></th>';
 echo '<th>'.__d('admin', 'Image').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.is_featured', __d('admin', 'Homepage')) . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPosts.is_private', __d('admin', 'Only_for_members')) . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPosts.title', __d('admin', 'Title')) . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPosts.short_description', __d('admin', 'Short_description')) . '</th>';
@@ -73,6 +72,7 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('BlogPosts.modified', __d('admin', 'Modified_on')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.show_on_start_page_until', __d('admin', 'Show_on_startpage_until')) . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPosts.active', __d('admin', 'Active')) . '</th>';
 echo '<th></th>';
 echo '</tr>';
@@ -121,12 +121,6 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
 
     echo '<td align="center">';
-    if ($blogPost->is_featured == 1) {
-        echo '<i class="fas fa-check-circle ok"></i>';
-    }
-    echo '</td>';
-
-    echo '<td align="center">';
     if ($blogPost->is_private == 1) {
         echo '<i class="fas fa-check-circle ok"></i>';
     }
@@ -160,6 +154,13 @@ foreach ($blogPosts as $blogPost) {
 
     echo '<td>';
     echo $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
+    echo '</td>';
+
+
+    echo '<td align="center">';
+        if (!is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast()) {
+            echo $blogPost->show_on_start_page_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        }
     echo '</td>';
 
     echo '<td align="center">';

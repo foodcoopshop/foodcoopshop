@@ -249,7 +249,8 @@ INSERT INTO `phinxlog` VALUES
 (20201220182015,'ImproveMemberFeeAdministration','2020-12-20 18:26:10','2020-12-20 18:26:10',0),
 (20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:34','2021-01-19 10:23:34',0),
 (20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:43','2021-04-01 07:18:43',0),
-(20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:12','2021-04-01 08:29:12',0);
+(20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:12','2021-04-01 08:29:12',0),
+(20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:13','2021-04-19 09:41:13',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

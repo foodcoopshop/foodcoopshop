@@ -76,7 +76,7 @@ INSERT INTO `fcs_attribute` VALUES
 
 /*!40000 ALTER TABLE `fcs_blog_posts` DISABLE KEYS */;
 INSERT INTO `fcs_blog_posts` VALUES
-(2,'Demo Blog Artikel','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet.</p>',88,0,0,1,'2014-12-18 10:37:26','2015-03-16 12:41:46',1);
+(2,'Demo Blog Artikel','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet.</p>',88,0,0,1,'2014-12-18 10:37:26','2015-03-16 12:41:46','2021-05-19');
 /*!40000 ALTER TABLE `fcs_blog_posts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cart_product_units` DISABLE KEYS */;
@@ -386,7 +386,8 @@ INSERT INTO `phinxlog` VALUES
 (20201220182015,'ImproveMemberFeeAdministration','2020-12-20 18:26:26','2020-12-20 18:26:26',0),
 (20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:49','2021-01-19 10:23:49',0),
 (20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:55','2021-04-01 07:18:55',0),
-(20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:23','2021-04-01 08:29:23',0);
+(20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:23','2021-04-01 08:29:23',0),
+(20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

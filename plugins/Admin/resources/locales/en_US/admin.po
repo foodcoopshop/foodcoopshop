@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-01 12:02+0200\n"
-"PO-Revision-Date: 2021-04-01 12:03+0200\n"
+"POT-Creation-Date: 2021-04-19 12:05+0200\n"
+"PO-Revision-Date: 2021-04-19 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -792,8 +792,11 @@ msgstr "Chose manufacturer"
 msgid "Blog_post_manufacturer_description"
 msgstr "If the manufacturer is only shown for signed in members, this is also the case for the blog post (ignoring the setting for the blog post)."
 
-msgid "Show_on_homepage"
-msgstr "Show on home page"
+msgid "Show_on_startpage_until"
+msgstr "Show on start page until"
+
+msgid "Leave_empty_to_never_show_blog_post_on_start_page."
+msgstr "Leave empty to never show blog post on start page."
 
 msgid "Only_for_members"
 msgstr "Only for members"
@@ -821,9 +824,6 @@ msgstr "all members"
 
 msgid "all_manufacturers"
 msgstr "all manufacturers"
-
-msgid "Homepage"
-msgstr "Homepage"
 
 msgid "Modified_by"
 msgstr "Modified by"
@@ -2231,6 +2231,13 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "Show_on_startpage"
+#~ msgstr "Show on home page"
+
+#~ msgid "Homepage"
+#~ msgstr "Homepage"
 
 #~ msgid "Deposit_returns"
 #~ msgstr "Deposit returns"
