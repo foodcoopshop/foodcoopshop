@@ -30,9 +30,15 @@ $this->element('addScript', ['script' =>
         $termsOfUseTermsLink = '<a class="terms-of-use-overlay" href="javascript:void(0);" data-element-selector="#terms-of-use">'.__('terms_and_conditions').'</a>';
     ?>
     <p><?php echo __('if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}.', ['<b>' . $termsOfUseTermsLink . '</b>']); ?></p>
-    <form action="<?php echo $this->Slug->getAcceptTermsOfUse(); ?>" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
-        <?php
-            echo '<div id="terms-of-use" class="hide">';
+    <?php
+        echo $this->Form->create(
+            null,
+            [
+                'url' => $this->Slug->getAcceptTermsOfUse(),
+                'id' => 'AcceptTermsOfUseForm',
+            ]
+        );
+           echo '<div id="terms-of-use" class="hide">';
            if ($appAuth->isManufacturer()) {
             echo $this->element('legal/'.I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUseForManufacturers');
            } else {
@@ -48,5 +54,5 @@ $this->element('addScript', ['script' =>
         ?>
         <br />
         <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> <?php echo __('Save'); ?></button>
-    </form>
+    <?php echo $this->Form->end(); ?>
 </div>
