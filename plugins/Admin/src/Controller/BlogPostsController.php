@@ -88,9 +88,13 @@ class BlogPostsController extends AdminAppController
         ])->first();
 
         // defaults for edit
+        $showOnStartPageUntil = $blogPost->show_on_start_page_until;
+        if ($blogPost->show_on_start_page_until && $blogPost->show_on_start_page_until->isPast()) {
+            $showOnStartPageUntil = null;
+        }
         $blogPost = $this->BlogPost->patchEntity($blogPost, [
             'update_modified_field' => true,
-            'show_on_start_page_until' => $blogPost->show_on_start_page_until->isPast() ? null : $blogPost->show_on_start_page_until,
+            'show_on_start_page_until' => $showOnStartPageUntil,
         ]);
 
         if (empty($blogPost)) {
