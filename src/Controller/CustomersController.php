@@ -7,6 +7,7 @@ use App\Lib\PdfWriter\TermsOfUsePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
@@ -30,6 +31,14 @@ use Cake\Http\Exception\NotFoundException;
  */
 class CustomersController extends FrontendController
 {
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
+            $this->FormProtection->setConfig('validate', false);
+        }
+    }
 
     public function profileImage()
     {
