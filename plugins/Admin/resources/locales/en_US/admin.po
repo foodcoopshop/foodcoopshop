@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-19 12:05+0200\n"
-"PO-Revision-Date: 2021-04-19 12:05+0200\n"
+"POT-Creation-Date: 2021-04-22 10:22+0200\n"
+"PO-Revision-Date: 2021-04-22 10:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1041,8 +1041,8 @@ msgstr "Show all orders from {0}"
 msgid "Change_group"
 msgstr "Change group"
 
-msgid "The_email_address_is_not_yet_activated."
-msgstr "The e-mail address is not yet activated."
+msgid "This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}."
+msgstr "This e-mail address is not yet activated. You can <a href=\"{0}\">activate it here</a> and by doing that you approve the registration in the name of the member."
 
 msgid "deactivate"
 msgstr "deactivate"
@@ -1143,6 +1143,15 @@ msgstr "Returned deposit by member"
 msgid "All_amounts_in_{0}."
 msgstr "All amounts in {0}."
 
+msgid "Tax_overview_cash"
+msgstr "Tax overview cash"
+
+msgid "Tax_overview_cashless"
+msgstr "Tax overview cashless"
+
+msgid "Tax_overview_total"
+msgstr "Tax overview total"
+
 msgid "Download_invoices"
 msgstr "Download invoices"
 
@@ -1175,15 +1184,6 @@ msgstr "Cancellation"
 
 msgid "Total_sum"
 msgstr "Total sum"
-
-msgid "Tax_overview_cash"
-msgstr "Tax overview cash"
-
-msgid "Tax_overview_cashless"
-msgstr "Tax overview cashless"
-
-msgid "Tax_overview_total"
-msgstr "Tax overview total"
 
 msgid "Pickup_day"
 msgstr "Pickup day"

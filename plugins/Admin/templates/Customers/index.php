@@ -167,11 +167,12 @@ foreach ($customers as $customer) {
         $title = h($customer->email);
         if ($customer->activate_email_code != null) {
             $classes[] = 'not-activated';
-            $title .= '<br /><br />' . __d('admin', 'The_email_address_is_not_yet_activated.');
-            $title .= '<br />' . Configure::read('app.cakeServerName') . $this->Slug->getActivateEmailAddress($customer->activate_email_code);
+            $title .= '<br /><br />' . __d('admin', 'This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}.', [
+                $this->Slug->getActivateEmailAddress($customer->activate_email_code),
+            ]);
         }
 
-        echo '<i class="'.join(' ', $classes).'" data-email="'.h($customer->email).'" title="'.$title.'"></i>';
+        echo '<i class="'.join(' ', $classes).'" data-email="'.h($customer->email).'" title="'.h($title).'"></i>';
     echo '</td>';
 
     echo '<td style="text-align:center;width:42px;">';
@@ -189,7 +190,7 @@ foreach ($customers as $customer) {
         );
     }
 
-    if ($customer->active == '') {
+    if ($customer->active == '' && is_null($customer->activate_email_code)) {
         echo $this->Html->link(
             '<i class="fas fa-minus-circle not-ok"></i>',
             'javascript:void(0);',

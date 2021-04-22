@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-19 12:05+0200\n"
-"PO-Revision-Date: 2021-04-19 12:04+0200\n"
+"POT-Creation-Date: 2021-04-22 10:22+0200\n"
+"PO-Revision-Date: 2021-04-22 10:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1041,8 +1041,8 @@ msgstr "Alle Bestellungen von {0} anzeigen"
 msgid "Change_group"
 msgstr "Gruppe ändern"
 
-msgid "The_email_address_is_not_yet_activated."
-msgstr "Die E-Mail-Adresse wurde noch nicht aktiviert."
+msgid "This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}."
+msgstr "Diese E-Mail-Adresse wurde vom Mitglied noch nicht aktiviert. Du kannst sie <a href=\"{0}\">hier aktivieren</a> und bestätigst damit die Registrierung für das Mitglied."
 
 msgid "deactivate"
 msgstr "deaktivieren"
@@ -1143,6 +1143,15 @@ msgstr "Pfand-Rückgaben (Mitglieder)"
 msgid "All_amounts_in_{0}."
 msgstr "Alle Beträge in {0}."
 
+msgid "Tax_overview_cash"
+msgstr "Steuerübersicht bar"
+
+msgid "Tax_overview_cashless"
+msgstr "Steuerübersicht unbar"
+
+msgid "Tax_overview_total"
+msgstr "Steuerübersicht Gesamt"
+
 msgid "Download_invoices"
 msgstr "Rechnungen downloaden"
 
@@ -1175,15 +1184,6 @@ msgstr "Stornierung"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
-
-msgid "Tax_overview_cash"
-msgstr "Steuerübersicht bar"
-
-msgid "Tax_overview_cashless"
-msgstr "Steuerübersicht unbar"
-
-msgid "Tax_overview_total"
-msgstr "Steuerübersicht Gesamt"
 
 msgid "Pickup_day"
 msgstr "Abholtag"

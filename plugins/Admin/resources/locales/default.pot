@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-04-19 12:05+0200\n"
+"POT-Creation-Date: 2021-04-22 10:22+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1040,7 +1040,7 @@ msgstr ""
 msgid "Change_group"
 msgstr ""
 
-msgid "The_email_address_is_not_yet_activated."
+msgid "This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}."
 msgstr ""
 
 msgid "deactivate"
@@ -1142,6 +1142,15 @@ msgstr ""
 msgid "All_amounts_in_{0}."
 msgstr ""
 
+msgid "Tax_overview_cash"
+msgstr ""
+
+msgid "Tax_overview_cashless"
+msgstr ""
+
+msgid "Tax_overview_total"
+msgstr ""
+
 msgid "Download_invoices"
 msgstr ""
 
@@ -1173,15 +1182,6 @@ msgid "Cancellation"
 msgstr ""
 
 msgid "Total_sum"
-msgstr ""
-
-msgid "Tax_overview_cash"
-msgstr ""
-
-msgid "Tax_overview_cashless"
-msgstr ""
-
-msgid "Tax_overview_total"
 msgstr ""
 
 msgid "Pickup_day"
