@@ -46,6 +46,8 @@ echo '<div class="select-pickup-day-wrapper">';
         'escape' => false,
     ]);
 
+    $this->Form->unlockField('Carts.pickup_day');
+
 echo '</div>';
 
 ?>
