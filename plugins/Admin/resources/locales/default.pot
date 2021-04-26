@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-04-22 10:22+0200\n"
+"POT-Creation-Date: 2021-04-26 08:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1007,9 +1007,6 @@ msgstr ""
 msgid "Delete_member_irrevocably?"
 msgstr ""
 
-msgid "Last_pickup_day"
-msgstr ""
-
 msgid "Show_all_years"
 msgstr ""
 
@@ -1026,6 +1023,9 @@ msgid "Reminder"
 msgstr ""
 
 msgid "Register_date"
+msgstr ""
+
+msgid "Last_pickup_day"
 msgstr ""
 
 msgid "Comment_abbreviation"

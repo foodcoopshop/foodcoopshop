@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-22 10:22+0200\n"
-"PO-Revision-Date: 2021-04-22 10:34+0200\n"
+"POT-Creation-Date: 2021-04-26 08:31+0200\n"
+"PO-Revision-Date: 2021-04-26 08:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1008,9 +1008,6 @@ msgstr "I want to use my smartphone's camera for barcode scanning."
 msgid "Delete_member_irrevocably?"
 msgstr "Delete account irrevocably?"
 
-msgid "Last_pickup_day"
-msgstr "Last pickup day"
-
 msgid "Show_all_years"
 msgstr "Show all years"
 
@@ -1028,6 +1025,9 @@ msgstr "Reminder"
 
 msgid "Register_date"
 msgstr "Register date"
+
+msgid "Last_pickup_day"
+msgstr "Last pickup day"
 
 msgid "Comment_abbreviation"
 msgstr "Comm."

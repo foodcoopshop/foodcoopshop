@@ -671,30 +671,6 @@ class CustomersController extends AdminAppController
         }
         $this->set('active', $active);
 
-        $validOrdersCountFrom = ''; // default value
-        if (!empty($this->getRequest()->getQuery('validOrdersCountFrom'))) {
-            $validOrdersCountFrom = h($this->getRequest()->getQuery('validOrdersCountFrom'));
-        }
-        $this->set('validOrdersCountFrom', $validOrdersCountFrom);
-
-        $validOrdersCountTo = ''; // default value
-        if (!empty($this->getRequest()->getQuery('validOrdersCountTo'))) {
-            $validOrdersCountTo = h($this->getRequest()->getQuery('validOrdersCountTo'));
-        }
-        $this->set('validOrdersCountTo', $validOrdersCountTo);
-
-        $dateFrom = '';
-        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
-        }
-        $this->set('dateFrom', $dateFrom);
-
-        $dateTo = '';
-        if (! empty($this->getRequest()->getQuery('dateTo'))) {
-            $dateTo = h($this->getRequest()->getQuery('dateTo'));
-        }
-        $this->set('dateTo', $dateTo);
-
         $year = h($this->getRequest()->getQuery('year'));
         if (!in_array('year', array_keys($this->getRequest()->getQueryParams()))) {
             $year = date('Y');
@@ -720,23 +696,6 @@ class CustomersController extends AdminAppController
             'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-                'ValidOrderDetails' => function (Query $query) use($dateFrom, $dateTo) {
-                    $query->select([
-                        'valid_order_detail_count' => $query->func()->count('ValidOrderDetails.id_order_detail'),
-                        'ValidOrderDetails.id_customer',
-                    ])
-                    ->group(['ValidOrderDetails.id_customer'])
-                    ->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
-                        if ($dateFrom != '') {
-                            $exp->gte('DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
-                        }
-                        if ($dateTo != '') {
-                            $exp->lte('DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
-                        }
-                        return $exp;
-                    });
-                    return $query;
-                }
             ]
         ]);
 
