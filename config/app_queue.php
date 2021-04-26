@@ -14,10 +14,8 @@
  */
 
 $connection = 'default';
-$exitwhennothingtodo = true;
 if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
     $connection = 'test';
-    $exitwhennothingtodo = true;
 }
 
 return [
@@ -26,8 +24,10 @@ return [
         'defaultworkerretries' => 2,
         'workermaxruntime' => 180,
         'sleeptime' => 20,
+        'cleanuptimeout' => 2592000, // 30 days
+        'gcprob' => 100,
         'connection' => $connection,
-        'exitwhennothingtodo' => $exitwhennothingtodo,
+        'exitwhennothingtodo' => true,
     ],
 ];
 
