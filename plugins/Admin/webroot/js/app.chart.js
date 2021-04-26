@@ -23,7 +23,7 @@ foodcoopshop.AppChart = {
             tooltip: {
                 callbacks: {
                     label: function(ctx) {
-                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.formattedValue);
+                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed.y);
                     }
                 }
             }
@@ -65,7 +65,7 @@ foodcoopshop.AppChart = {
             tooltip: {
                 callbacks: {
                     label: function(ctx) {
-                        return ctx.label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(ctx.formattedValue);
+                        return ctx.label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed);
                     }
                 }
             },
@@ -105,7 +105,7 @@ foodcoopshop.AppChart = {
             tooltip: {
                 callbacks: {
                     label: function(ctx) {
-                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.formattedValue);
+                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed.y);
                     }
                 }
             }
