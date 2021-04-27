@@ -8,11 +8,9 @@ use App\Lib\PdfWriter\TermsOfUsePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
-use Cake\ORM\Query;
 use Cake\Utility\Hash;
 
 /**
