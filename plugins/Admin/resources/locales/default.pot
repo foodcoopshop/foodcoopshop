@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-04-26 08:31+0200\n"
+"POT-Creation-Date: 2021-04-27 17:06+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -411,9 +411,6 @@ msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there
 msgstr ""
 
 msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
-msgstr ""
-
-msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 msgstr ""
 
 msgid "The_payment_({0}_{1})_was_removed_successfully."
@@ -1601,15 +1598,6 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-msgid "Add_transfered_member_fee"
-msgstr ""
-
-msgid "Delete_payment?"
-msgstr ""
-
-msgid "Back_to_member_overview"
-msgstr ""
-
 msgid "docs_route_credit_system"
 msgstr ""
 
@@ -1623,6 +1611,9 @@ msgid "Delete_upload?"
 msgstr ""
 
 msgid "Your_credit_balance"
+msgstr ""
+
+msgid "Back_to_member_overview"
 msgstr ""
 
 msgid "chose_manufacturer..."
@@ -1875,9 +1866,6 @@ msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
 msgstr ""
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
-msgstr ""
-
-msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
 msgid "Upload_CSV_file_with_bank_transactions"

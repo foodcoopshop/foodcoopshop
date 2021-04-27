@@ -61,11 +61,6 @@ return [
         'cakeServerName' => 'http://localhost',
 
         /**
-         * whether to apply a member fee to the members account balance
-         */
-        'memberFeeEnabled' => true,
-
-        /**
          * cronjob needs to be activated too
          */
         'emailOrderReminderEnabled' => true,

@@ -68,11 +68,6 @@ return [
         'cakeServerName' => '',
 
         /**
-         * whether to apply a member fee to the members account balance
-         */
-        'memberFeeEnabled' => false,
-
-        /**
          * cronjob needs to be activated / deactivated too if you change emailOrderReminderEnabled
          * @see https://foodcoopshop.github.io/en/cronjobs
          */

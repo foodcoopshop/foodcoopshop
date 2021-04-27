@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-04-04 20:55+0200\n"
+"POT-Creation-Date: 2021-04-27 17:06+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1346,12 +1346,6 @@ msgstr ""
 msgid "Action_Log_Manufacturer_deposit_deleted"
 msgstr ""
 
-msgid "Action_Log_Member_member_fee_added"
-msgstr ""
-
-msgid "Action_Log_Member_member_fee_deleted"
-msgstr ""
-
 msgid "Action_Log_Blog_post_added"
 msgstr ""
 
@@ -1877,9 +1871,6 @@ msgstr ""
 msgid "Credit"
 msgstr ""
 
-msgid "Member_fee"
-msgstr ""
-
 msgid "weekly"
 msgstr ""
 
@@ -1962,9 +1953,6 @@ msgid "Payment_type_credit_upload"
 msgstr ""
 
 msgid "Payment_type_payback"
-msgstr ""
-
-msgid "Payment_type_member_fee"
 msgstr ""
 
 msgid "Empty_glasses"
@@ -2265,9 +2253,6 @@ msgid "Contact"
 msgstr ""
 
 msgid "Bank_account_credit_balance"
-msgstr ""
-
-msgid "Bank_account_member_fee"
 msgstr ""
 
 msgid "Attention_delivery_break!"

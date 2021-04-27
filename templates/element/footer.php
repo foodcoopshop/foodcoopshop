@@ -58,9 +58,6 @@ if ($appAuth->user()) {
     if ($this->Html->paymentIsCashless() && Configure::read('appDb.FCS_BANK_ACCOUNT_DATA') != '') {
         echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>'.__('Bank_account_credit_balance').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
     }
-    if (Configure::read('app.memberFeeEnabled') && Configure::read('appDb.FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') != '') {
-        echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>'.__('Bank_account_member_fee').':</b> '.Configure::read('appDb.FCS_MEMBER_FEE_BANK_ACCOUNT_DATA').'</p>';
-    }
 }
 ?>
 
