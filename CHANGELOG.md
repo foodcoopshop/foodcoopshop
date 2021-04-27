@@ -22,6 +22,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Alle Formulare sind jetzt noch besser gegen potenzielle Angriffe abgesichert. [I#659](https://github.com/foodcoopshop/foodcoopshop/issues/659) / [PR#661](https://github.com/foodcoopshop/foodcoopshop/pull/661) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Code Cleaning
+- Die alte Funktion zum Verwalten der Mitgliedbeitrag wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/6667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...develop)
