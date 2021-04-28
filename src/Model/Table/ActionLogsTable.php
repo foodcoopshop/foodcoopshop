@@ -306,12 +306,6 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-            'payment_member_fee_added' => [
-                'name' => __('Action_Log_Member_member_fee_added')
-            ],
-            'payment_member_fee_deleted' => [
-                'name' => __('Action_Log_Member_member_fee_deleted')
-            ],
 
             'blog_post_added' => [
                 'name' => __('Action_Log_Blog_post_added')

@@ -169,14 +169,6 @@ class MenuHelper extends Helper
         return [];
     }
 
-    public function getPaymentMemberFeeMenuElement()
-    {
-        if (Configure::read('app.memberFeeEnabled')) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyMemberFeeBalance(), 'name' => __('Member_fee'), 'options' => ['fa-icon' => 'fa-fw fa-heart']];
-        }
-        return [];
-    }
-
     public function getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth)
     {
         if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {

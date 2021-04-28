@@ -74,48 +74,6 @@ if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
     ]);
 }
 
-if ($paymentType == 'member_fee') {
-    echo '<div class="multiple-checkbox-wrapper">';
-
-    echo '<label for="PaymentMonthsRange">'.__d('admin', 'Please_chose_the_months_for_your_payment.').'</label>';
-
-    $currentYear = date('Y');
-
-    echo '<div style="width: 160px;float: left;opacity: 0.7">';
-    $lastYear = $currentYear - 1;
-    $monthsRange = $this->Time->getAllMonthsForYear($lastYear);
-    echo $this->Form->control('Payments.months_range_' . $lastYear, [
-        'label' => '',
-        'options' => $monthsRange,
-        'multiple' => 'checkbox',
-        'type' => 'select'
-    ]);
-    echo '</div>';
-
-    echo '<div style="width: 160px;float: left;">';
-    $monthsRange = $this->Time->getAllMonthsForYear($currentYear);
-    echo $this->Form->control('Payments.months_range_' . $currentYear, [
-        'label' => '',
-        'options' => $monthsRange,
-        'multiple' => 'checkbox',
-        'type' => 'select'
-    ]);
-    echo '</div>';
-
-    echo '<div style="width: 160px;float: left;opacity: 0.7">';
-    $nextYear = $currentYear + 1;
-    $monthsRange = $this->Time->getAllMonthsForYear($nextYear);
-    echo $this->Form->control('Payments.months_range_' . $nextYear, [
-        'label' => '',
-        'options' => $monthsRange,
-        'multiple' => 'checkbox',
-        'type' => 'select'
-    ]);
-    echo '</div>';
-
-    echo '</div>';
-}
-
 echo '</div>';
 
 if ($appAuth->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {

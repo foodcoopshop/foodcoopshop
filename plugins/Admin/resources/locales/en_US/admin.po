@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-26 08:31+0200\n"
-"PO-Revision-Date: 2021-04-26 08:31+0200\n"
+"POT-Creation-Date: 2021-04-27 17:06+0200\n"
+"PO-Revision-Date: 2021-04-27 17:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -413,9 +413,6 @@ msgstr "The amount was added to the credit system of {0} and can be deleted ther
 
 msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
 msgstr "The amount was added to the deposit account of {0} and can be deleted there."
-
-msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
-msgstr "The amount was added to the member fee system of {0} and can be deleted there."
 
 msgid "The_payment_({0}_{1})_was_removed_successfully."
 msgstr "The payment ({0}, {1}) was removed successfully."
@@ -1602,15 +1599,6 @@ msgstr "Email preview"
 msgid "Comment"
 msgstr "Comment"
 
-msgid "Add_transfered_member_fee"
-msgstr "Add transfered member fee"
-
-msgid "Delete_payment?"
-msgstr "Delete payment?"
-
-msgid "Back_to_member_overview"
-msgstr "Back to member overview"
-
 msgid "docs_route_credit_system"
 msgstr "credit-system"
 
@@ -1625,6 +1613,9 @@ msgstr "Delete upload?"
 
 msgid "Your_credit_balance"
 msgstr "Your credit balance"
+
+msgid "Back_to_member_overview"
+msgstr "Back to member overview"
 
 msgid "chose_manufacturer..."
 msgstr "chose manufacturer..."
@@ -1877,9 +1868,6 @@ msgstr "Please enter the amount that you just transfered to our bank account."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr "If you chose \"payback\", please enter the amount that you just transfered back to the bank account of the user."
-
-msgid "Please_chose_the_months_for_your_payment."
-msgstr "Please chose the months for your payment."
 
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "Upload CSV file with bank transactions"
@@ -2231,6 +2219,18 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
+#~ msgstr "The amount was added to the member fee system of {0} and can be deleted there."
+
+#~ msgid "Add_transfered_member_fee"
+#~ msgstr "Add transfered member fee"
+
+#~ msgid "Delete_payment?"
+#~ msgstr "Delete payment?"
+
+#~ msgid "Please_chose_the_months_for_your_payment."
+#~ msgstr "Please chose the months for your payment."
 
 #, fuzzy
 #~ msgid "Show_on_startpage"

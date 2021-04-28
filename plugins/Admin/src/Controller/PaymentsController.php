@@ -35,16 +35,7 @@ class PaymentsController extends AdminAppController
             case 'overview':
                 return Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
-            case 'myMemberFee':
-                return Configure::read('app.memberFeeEnabled') && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
-                break;
             case 'product':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'memberFee':
-                if (empty($this->getRequest()->getQuery('customerId'))) {
-                    $this->redirect(Configure::read('app.slugHelper')->getMyMemberFeeBalance());
-                }
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'edit':
@@ -203,8 +194,6 @@ class PaymentsController extends AdminAppController
             'product',
             'deposit',
             'payback',
-            'member_fee',
-            'member_fee_flexible'
         ])) {
             $message = 'payment type not correct: ' . $type;
             $this->set([
@@ -247,17 +236,10 @@ class PaymentsController extends AdminAppController
         if (in_array($type, ['product', 'payback'])) {
             $customerId = (int) $this->getRequest()->getData('customerId');
         }
-        if ($type == 'member_fee') {
-            $customerId = (int) $this->getRequest()->getData('customerId');
-            $text = implode(',', $this->getRequest()->getData('months_range'));
-        }
 
         $actionLogType = $type;
 
-        if (in_array($type, [
-            'deposit',
-            'member_fee_flexible'
-        ])) {
+        if ($type == 'deposit') {
             // payments to deposits can be added to customers or manufacturers
             $customerId = (int) $this->getRequest()->getData('customerId');
             if ($customerId > 0) {
@@ -309,11 +291,10 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        // payments paybacks, product and member_fee can also be placed for other users
+        // payments paybacks and product can also be placed for other users
         if (in_array($type, [
             'product',
             'payback',
-            'member_fee'
         ])) {
             $customer = $this->Customer->find('all', [
                 'conditions' => [
@@ -385,13 +366,9 @@ class PaymentsController extends AdminAppController
             '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>',
         ]);
 
-        if ($type == 'member_fee') {
-            $message .= ', ' . __d('admin', 'for') . ' ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
-        }
-
         $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $newPayment->id, 'payments', $message);
 
-        if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer', 'member_fee_flexible'])) {
+        if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer'])) {
             $message .= '. ';
             switch ($actionLogType) {
                 case 'deposit_customer':
@@ -399,9 +376,6 @@ class PaymentsController extends AdminAppController
                     break;
                 case 'deposit_manufacturer':
                     $message .= __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
-                    break;
-                case 'member_fee_flexible':
-                    $message .= __d('admin', 'The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']);
                     break;
             }
         }
@@ -524,28 +498,6 @@ class PaymentsController extends AdminAppController
         $this->render('product');
     }
 
-    public function myMemberFee()
-    {
-        $this->customerId = $this->AppAuth->getUserId();
-        $this->paymentType = 'member_fee';
-        $this->memberFee();
-        $this->render('member_fee');
-    }
-
-    public function memberFee()
-    {
-
-        $this->paymentType = 'member_fee';
-        $this->set('title_for_layout', __d('admin', 'Member_fee'));
-
-        $this->allowedPaymentTypes = [
-            'member_fee'
-        ];
-        $this->preparePayments();
-        $sumMemberFee = $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee');
-        $this->set('sumMemberFee', $sumMemberFee);
-    }
-
     public function product()
     {
 
@@ -597,11 +549,7 @@ class PaymentsController extends AdminAppController
         if (!empty($customer->payments)) {
             foreach ($customer->payments as $payment) {
                 $text = Configure::read('app.htmlHelper')->getPaymentText($payment->type);
-                if ($payment->type == 'member_fee') {
-                    $text .= ' '.__d('admin', 'for').': ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($payment->text);
-                } else {
-                    $text .= (! empty($payment->text) ? ': "' . $payment->text . '"' : '');
-                }
+                $text .= (! empty($payment->text) ? ': "' . $payment->text . '"' : '');
 
                 $payments[] = [
                     'dateRaw' => $payment->date_add,
@@ -664,7 +612,7 @@ class PaymentsController extends AdminAppController
         $this->set('column_title', $this->viewBuilder()->getVars()['title_for_layout']);
 
         $title = $this->viewBuilder()->getVars()['title_for_layout'];
-        if (in_array($this->getRequest()->getParam('action'), ['product', 'member_fee'])) {
+        if ($this->getRequest()->getParam('action') == 'product') {
             $title .= ' '.__d('admin', 'of_{0}', [$customer->name]);
         }
         $this->set('title_for_layout', $title);

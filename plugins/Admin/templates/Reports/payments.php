@@ -166,9 +166,6 @@ foreach ($payments as $payment) {
     if ($showTextColumn) {
         echo '<td>';
         switch ($paymentType) {
-            case 'member_fee':
-                echo $this->Html->getMemberFeeTextForFrontend($payment->text);
-                break;
             case 'deposit':
                 echo $this->Html->getManufacturerDepositPaymentText($payment->text);
                 break;

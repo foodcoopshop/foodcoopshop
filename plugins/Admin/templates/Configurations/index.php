@@ -59,9 +59,6 @@ $this->element('addScript', [
             ])) {
                 continue;
             }
-            if (! Configure::read('app.memberFeeEnabled') && $configuration->name == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
-                continue;
-            }
             if (! Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED' && substr($configuration->name, 0, 23) == 'FCS_TIMEBASED_CURRENCY_') {
                 continue;
             }
@@ -254,11 +251,6 @@ $this->element('addScript', [
         <tr>
             <td>app.orderStates</td>
             <td><?php echo json_encode(Configure::read('app.orderStates')); ?></td>
-        </tr>
-
-        <tr>
-            <td>app.memberFeeEnabled</td>
-            <td><?php echo Configure::read('app.memberFeeEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <tr>

@@ -157,25 +157,10 @@ foodcoopshop.ModalPaymentAdd = {
             }
         }
 
-        var months_range = [];
-        if ($(modalSelector + ' input[type="checkbox"]').length > 0) {
-            $(modalSelector + ' input[type="checkbox"]:checked').each(
-                function () {
-                    months_range.push($(this).val());
-                }
-            );
-            if (months_range.length == 0) {
-                foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseChoseAtLeastOneMonth);
-                foodcoopshop.Modal.resetButtons(modalSelector);
-                return;
-            }
-        }
-
         foodcoopshop.Helper.ajaxCall('/admin/payments/add/', {
             amount: amount,
             type: type,
             text: text,
-            months_range: months_range,
             customerId: customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0,
             manufacturerId: manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0,
             dateAdd: dateAddDomElement.length > 0 ? dateAddDomElement.val() : 0,

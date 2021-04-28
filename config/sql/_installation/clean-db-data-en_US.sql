@@ -97,7 +97,6 @@ INSERT INTO `fcs_configuration` VALUES
 (548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Automatically activate new members?','0','boolean',500,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (549,1,'FCS_MINIMAL_CREDIT_BALANCE','Up to which credit amount orders should be possible?','0','number',1250,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (550,1,'FCS_BANK_ACCOUNT_DATA','Bank account for credit uploads.','Credit account Example Bank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',1300,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
-(551,1,'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA','Bank account for member fee uploads.','Member fee account Example Bank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',1400,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (552,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Additional deliverey details for manufacturers<br /><div class=\"small\">will be shown in the order lists after the delivery date.</div>',', 3pm to 5pm','text',1200,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (553,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-mail adress to which all automatically generated e-mail are sent to as BCC (Backup).<br /><div class=\"small\">Can be left empty.</div>','','text',1900,'en_US','2016-10-06 00:00:00','2016-10-06 00:00:00'),
 (554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Show link to www.foodcoopshop.com?<br /><div class=\"small\">The link is shown in the footer.</div>','1','boolean',1800,'en_US','2016-11-27 00:00:00','2016-11-27 00:00:00'),
@@ -250,7 +249,8 @@ INSERT INTO `phinxlog` VALUES
 (20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:39','2021-01-19 10:23:39',0),
 (20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:49','2021-04-01 07:18:49',0),
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:17','2021-04-01 08:29:18',0),
-(20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:18','2021-04-19 09:41:18',0);
+(20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:18','2021-04-19 09:41:18',0),
+(20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:58','2021-04-27 15:04:58',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

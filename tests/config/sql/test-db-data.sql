@@ -137,7 +137,6 @@ INSERT INTO `fcs_configuration` VALUES
 (548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Neue Mitglieder automatisch aktivieren?','0','boolean',500,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (549,1,'FCS_MINIMAL_CREDIT_BALANCE','Bis zu welchem Guthaben-Betrag sollen Bestellungen möglich sein?','-100','number',1250,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (550,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',1300,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(551,1,'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA','Bankverbindung für die Mitgliedsbeitrags-Einzahlungen\".','MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',1400,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (552,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Zusätzliche Liefer-Informationen für die Hersteller<br /><div class=\"small\">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>',', 15:00 bis 17:00 Uhr','text',1200,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (553,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-Mail-Adresse, an die sämtliche vom System generierten E-Mails als BCC verschickt werden (Backup).<br /><div class=\"small\">Kann leer gelassen werden.</div>','','text',1900,'de_DE','2016-10-06 00:00:00','2016-10-06 00:00:00'),
 (554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer angezeigt.</div>','1','boolean',1800,'de_DE','2016-11-27 00:00:00','2016-11-27 00:00:00'),
@@ -387,7 +386,8 @@ INSERT INTO `phinxlog` VALUES
 (20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:49','2021-01-19 10:23:49',0),
 (20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:55','2021-04-01 07:18:55',0),
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:23','2021-04-01 08:29:23',0),
-(20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0);
+(20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0),
+(20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:05:04','2021-04-27 15:05:04',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

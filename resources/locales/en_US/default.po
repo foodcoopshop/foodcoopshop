@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-04 20:55+0200\n"
-"PO-Revision-Date: 2021-04-04 22:36+0200\n"
+"POT-Creation-Date: 2021-04-27 17:06+0200\n"
+"PO-Revision-Date: 2021-04-27 17:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1347,12 +1347,6 @@ msgstr "Member: Deposit deleted"
 msgid "Action_Log_Manufacturer_deposit_deleted"
 msgstr "Manufacturer: Deposit deleted"
 
-msgid "Action_Log_Member_member_fee_added"
-msgstr "Member: Member fee added"
-
-msgid "Action_Log_Member_member_fee_deleted"
-msgstr "Member: Member fee deleted"
-
 msgid "Action_Log_Blog_post_added"
 msgstr "Blog post: Added"
 
@@ -1878,9 +1872,6 @@ msgstr "Activities"
 msgid "Credit"
 msgstr "Credit"
 
-msgid "Member_fee"
-msgstr "Member fee"
-
 msgid "weekly"
 msgstr "weekly"
 
@@ -1964,9 +1955,6 @@ msgstr "Credit upload"
 
 msgid "Payment_type_payback"
 msgstr "Payback"
-
-msgid "Payment_type_member_fee"
-msgstr "Member fee"
 
 msgid "Empty_glasses"
 msgstr "Empty glasses"
@@ -2268,9 +2256,6 @@ msgstr "Contact"
 msgid "Bank_account_credit_balance"
 msgstr "Bank account (credit)"
 
-msgid "Bank_account_member_fee"
-msgstr "Bank account (member fee)"
-
 msgid "Attention_delivery_break!"
 msgstr "Attention, delivery break!"
 
@@ -2507,6 +2492,21 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Action_Log_Member_member_fee_added"
+#~ msgstr "Member: Member fee added"
+
+#~ msgid "Action_Log_Member_member_fee_deleted"
+#~ msgstr "Member: Member fee deleted"
+
+#~ msgid "Member_fee"
+#~ msgstr "Member fee"
+
+#~ msgid "Payment_type_member_fee"
+#~ msgstr "Member fee"
+
+#~ msgid "Bank_account_member_fee"
+#~ msgstr "Bank account (member fee)"
 
 #~ msgid "Your_email_address_has_been_activated_successfully and you are already logged in."
 #~ msgstr "Your email address has been activated successfully and you are already signed in."

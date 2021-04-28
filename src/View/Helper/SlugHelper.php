@@ -251,11 +251,6 @@ class SlugHelper extends Helper
         return '/admin/timebased-currency-payments/add/' . $customerId;
     }
 
-    public function getMyMemberFeeBalance()
-    {
-        return '/admin/payments/myMemberFee';
-    }
-
     public function getMyCreditBalance()
     {
         return '/admin/payments/overview';

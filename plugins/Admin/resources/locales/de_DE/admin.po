@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-26 08:31+0200\n"
-"PO-Revision-Date: 2021-04-26 08:31+0200\n"
+"POT-Creation-Date: 2021-04-27 17:06+0200\n"
+"PO-Revision-Date: 2021-04-27 17:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -413,9 +413,6 @@ msgstr "Der Betrag ist im Guthaben-System von {0} eingetragen worden und kann do
 
 msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
 msgstr "Der Betrag ist im Pfandkonto von {0} eingetragen worden und kann dort wieder gelöscht werden."
-
-msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
-msgstr "Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."
 
 msgid "The_payment_({0}_{1})_was_removed_successfully."
 msgstr "Die Zahlung ({0}, {1}) wurde erfolgreich gelöscht."
@@ -1602,15 +1599,6 @@ msgstr "E-Mail-Vorschau"
 msgid "Comment"
 msgstr "Kommentar"
 
-msgid "Add_transfered_member_fee"
-msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
-
-msgid "Delete_payment?"
-msgstr "Zahlung löschen?"
-
-msgid "Back_to_member_overview"
-msgstr "Zurück zur Mitglieder-Übersicht"
-
 msgid "docs_route_credit_system"
 msgstr "guthaben-system"
 
@@ -1625,6 +1613,9 @@ msgstr "Aufladung löschen?"
 
 msgid "Your_credit_balance"
 msgstr "Dein Kontostand"
+
+msgid "Back_to_member_overview"
+msgstr "Zurück zur Mitglieder-Übersicht"
 
 msgid "chose_manufacturer..."
 msgstr "Hersteller auswählen..."
@@ -1877,9 +1868,6 @@ msgstr "Bitte trage hier den Betrag ein, den du soeben auf unser Konto überwies
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast."
-
-msgid "Please_chose_the_months_for_your_payment."
-msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "CSV-Datei mit Überweisungen hochladen"
@@ -2231,6 +2219,18 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
+#~ msgstr "Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."
+
+#~ msgid "Add_transfered_member_fee"
+#~ msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
+
+#~ msgid "Delete_payment?"
+#~ msgstr "Zahlung löschen?"
+
+#~ msgid "Please_chose_the_months_for_your_payment."
+#~ msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
 #~ msgid "Show_on_startpage"
 #~ msgstr "Auf Startseite anzeigen"
