@@ -965,7 +965,7 @@ class ProductsTable extends AppTable
 
                     $grossPrice = 0;
                     if (! empty($attribute->price)) {
-                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->price);
+                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->price, $taxRate);
                     }
 
                     $rowClass = [
