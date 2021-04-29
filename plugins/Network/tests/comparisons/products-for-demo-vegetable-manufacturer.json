@@ -133,7 +133,7 @@
                 20
             ],
             "is_new": false,
-            "gross_price": "1.82",
+            "gross_price": 1.82,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
             "deposit": 0.5,
@@ -475,7 +475,7 @@
                 20
             ],
             "is_new": false,
-            "gross_price": "5.00",
+            "gross_price": 5,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
             "deposit": 0,
@@ -606,7 +606,7 @@
                 20
             ],
             "is_new": false,
-            "gross_price": "0.00",
+            "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
             "deposit": 0,
@@ -846,7 +846,7 @@
                 20
             ],
             "is_new": false,
-            "gross_price": "0.00",
+            "gross_price": 0,
             "delivery_rhythm_string": "w\u00f6chentlich",
             "last_order_weekday": "Dienstag",
             "deposit": 0,
@@ -859,7 +859,7 @@
         },
         {
             "id_product": "350-13",
-            "gross_price": "2.00",
+            "gross_price": 2,
             "active": -1,
             "is_stock_product": 1,
             "price_is_zero": false,
@@ -900,7 +900,7 @@
         },
         {
             "id_product": "350-14",
-            "gross_price": "4.00",
+            "gross_price": 4,
             "active": -1,
             "is_stock_product": 1,
             "price_is_zero": false,
@@ -941,7 +941,7 @@
         },
         {
             "id_product": "350-15",
-            "gross_price": "0.00",
+            "gross_price": 0,
             "active": -1,
             "is_stock_product": 1,
             "price_is_zero": false,
