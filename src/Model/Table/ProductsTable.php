@@ -871,7 +871,8 @@ class ProductsTable extends AppTable
                 $product->is_new = $this->isNew($product->created->i18nFormat(Configure::read('DateFormat.Database')));
             }
 
-            $product->gross_price = $this->getGrossPrice($product->id_product, $product->price);
+            $taxRate = is_null($product->tax) ? 0 : $product->tax->rate;
+            $product->gross_price = $this->getGrossPrice($product->id_product, $product->price, $taxRate);
 
             $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                 $product->is_stock_product && $product->manufacturer->stock_management_enabled,
@@ -1176,8 +1177,16 @@ class ProductsTable extends AppTable
         return $newNetPrice;
     }
 
-    public function getGrossPrice($productId, $netPrice)
+    public function getGrossPrice($productId, $netPrice, $taxRate = null)
     {
+
+        if (!is_null($taxRate)) {
+            $grossPrice = $netPrice * (100 + $taxRate) / 100;
+            $grossPrice = round($grossPrice, 2);
+            return $grossPrice;
+        }
+
+        // fallback: if $taxRate is not passed, get it from database
         $productId = (int) $productId;
         $sql = 'SELECT ROUND(:netPrice * (100 + t.rate) / 100, 2) as gross_price ';
         $sql .= $this->getTaxJoins();
