@@ -197,6 +197,7 @@ class AppTable extends Table
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
                 Manufacturers.timebased_currency_enabled, Manufacturers.no_delivery_days, Manufacturers.stock_management_enabled,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
+                Taxes.rate as taxRate,
                 StockAvailables.quantity, StockAvailables.quantity_limit, StockAvailables.always_available";
 
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
@@ -220,6 +221,7 @@ class AppTable extends Table
                 LEFT JOIN ".$this->tablePrefix."images Images ON Images.id_product = Products.id_product
                 LEFT JOIN ".$this->tablePrefix."deposits Deposits ON Products.id_product = Deposits.id_product
                 LEFT JOIN ".$this->tablePrefix."units Units ON Products.id_product = Units.id_product
+                LEFT JOIN ".$this->tablePrefix."tax Taxes ON Products.id_tax = Taxes.id_tax
                 LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturers ON Manufacturers.id_manufacturer = Products.id_manufacturer ";
     }
 
