@@ -99,8 +99,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
         foreach($result->active_order_details as $orderDetail) {
 
-            $taxRate = $orderDetail->tax->rate ?? 0;
-            $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
+            $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate);
 
             // products
             $this->table .= '<tr style="font-weight:normal;">';

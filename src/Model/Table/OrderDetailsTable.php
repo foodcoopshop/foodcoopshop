@@ -169,12 +169,7 @@ class OrderDetailsTable extends AppTable
             'sum_price_incl' => 0,
         ];
         foreach($orderDetails as $orderDetail) {
-            if (empty($orderDetail->tax)) {
-                $taxRate = 0;
-            } else {
-                $taxRate = $orderDetail->tax->rate;
-            }
-            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
+            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate);
             if (!isset($taxRates[$taxRate])) {
                 $taxRates[$taxRate] = $defaultArray;
             }
