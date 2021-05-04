@@ -12,21 +12,31 @@ class SaveTaxInOrderDetails extends AbstractMigration
         $this->execute("ALTER TABLE `fcs_order_detail` ADD `tax_unit_amount` DECIMAL(16,6) NOT NULL DEFAULT '0' AFTER `id_tax`, ADD `tax_total_amount` DECIMAL(16,6) NOT NULL DEFAULT '0' AFTER `tax_unit_amount`, ADD `tax_rate` DECIMAL(10,3) NOT NULL DEFAULT '0' AFTER `tax_total_amount`;");
 
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all', [
-            'contain' => [
-                'Taxes',
-                'OrderDetailTaxes',
-            ]
-        ])->toArray();
+
+        $orderDetails = $this->OrderDetail->find('all')->toArray();
 
         $i= 0;
         foreach($orderDetails as $orderDetail) {
-            if (!is_null($orderDetail->tax)) {
-                $orderDetails[$i]->tax_rate = $orderDetail->tax->rate;
+
+            $sql = "SELECT t.rate FROM fcs_tax t LEFT JOIN fcs_order_detail od ON t.id_tax = od.id_tax WHERE od.id_order_detail = :orderDetailId";
+            $statement = $this->OrderDetail->getConnection()->prepare($sql);
+            $params = ['orderDetailId' => $orderDetail->id_order_detail];
+            $statement->execute($params);
+            $taxes =  $statement->fetchAll('assoc');
+
+            if (!empty($taxes)) {
+                $orderDetails[$i]->tax_rate = $taxes[0]['rate'];
             }
-            if (!is_null($orderDetail->order_detail_tax)) {
-                $orderDetails[$i]->tax_unit_amount = $orderDetail->order_detail_tax->unit_amount;
-                $orderDetails[$i]->tax_total_amount = $orderDetail->order_detail_tax->total_amount;
+
+            $sql = "SELECT odt.* FROM fcs_order_detail od LEFT JOIN fcs_order_detail_tax odt ON odt.id_order_detail = od.id_order_detail WHERE od.id_order_detail = :orderDetailId";
+            $statement = $this->OrderDetail->getConnection()->prepare($sql);
+            $params = ['orderDetailId' => $orderDetail->id_order_detail];
+            $statement->execute($params);
+            $orderDetailTaxes =  $statement->fetchAll('assoc');
+
+            if (!empty($orderDetailTaxes)) {
+                $orderDetails[$i]->tax_unit_amount = $orderDetailTaxes[0]['unit_amount'] ?? 0;
+                $orderDetails[$i]->tax_total_amount = $orderDetailTaxes[0]['total_amount'] ?? 0;
             }
             $i++;
         }
