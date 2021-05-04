@@ -458,7 +458,7 @@ class ManufacturersTable extends AppTable
     {
         switch ($order) {
             case 'product':
-                $orderClause = 'od.product_name ASC, t.rate ASC, ' . Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC';
+                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC';
                 break;
             case 'customer':
                 $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
@@ -502,7 +502,7 @@ class ManufacturersTable extends AppTable
         m.uid_number as ManufacturerUidNumber,
         m.additional_text_for_invoice as ManufacturerAdditionalTextForInvoice,
         ma.firstname as ManufacturerFirstname, ma.lastname as ManufacturerLastname, ma.address1 as ManufacturerAddress1, ma.postcode as ManufacturerPostcode, ma.city as ManufacturerCity,
-        t.rate as TaxRate,
+        od.tax_rate as TaxRate,
         od.tax_total_amount as OrderDetailTaxAmount,
         od.id_order_detail AS OrderDetailId,
         od.product_id AS ProductId,
@@ -523,7 +523,6 @@ class ManufacturersTable extends AppTable
             LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = od.id_customer
             LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer
             LEFT JOIN ".$this->tablePrefix."address ma ON m.id_manufacturer = ma.id_manufacturer
-            LEFT JOIN ".$this->tablePrefix."tax t ON od.id_tax = t.id_tax
             WHERE 1
             {$dateConditions}
             AND m.id_manufacturer = :manufacturerId
