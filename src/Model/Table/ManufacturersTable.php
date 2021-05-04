@@ -503,7 +503,7 @@ class ManufacturersTable extends AppTable
         m.additional_text_for_invoice as ManufacturerAdditionalTextForInvoice,
         ma.firstname as ManufacturerFirstname, ma.lastname as ManufacturerLastname, ma.address1 as ManufacturerAddress1, ma.postcode as ManufacturerPostcode, ma.city as ManufacturerCity,
         t.rate as TaxRate,
-        odt.total_amount AS OrderDetailTaxAmount,
+        od.tax_total_amount as OrderDetailTaxAmount,
         od.id_order_detail AS OrderDetailId,
         od.product_id AS ProductId,
         od.product_name AS ProductName,
@@ -519,7 +519,6 @@ class ManufacturersTable extends AppTable
         {$customerNameAsSql} AS CustomerName
         FROM ".$this->tablePrefix."order_detail od
             LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
-            LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail
             LEFT JOIN ".$this->tablePrefix."order_detail_units odu ON od.id_order_detail = odu.id_order_detail
             LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = od.id_customer
             LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer

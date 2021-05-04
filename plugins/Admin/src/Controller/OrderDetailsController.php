@@ -168,7 +168,6 @@ class OrderDetailsController extends AdminAppController
             'contain' => [
                 'Customers',
                 'Products.Manufacturers',
-                'OrderDetailTaxes',
                 'OrderDetailUnits'
             ]
         ])->first();
@@ -228,18 +227,13 @@ class OrderDetailsController extends AdminAppController
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
-        $contain = $odParams['contain'];
-        if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
-            $contain[] = 'OrderDetailTaxes';
-            $contain[] = 'Taxes';
-        }
         $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
             'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
         ]);
         $contain[] = 'PickupDayEntities';
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
-            'contain' => $contain
+            'contain' => $odParams['contain'],
         ])->toArray();
 
         $customerName = [];
@@ -632,7 +626,6 @@ class OrderDetailsController extends AdminAppController
             'contain' => [
                 'Customers',
                 'Products.Manufacturers',
-                'OrderDetailTaxes',
                 'OrderDetailUnits'
             ]
         ])->first();
@@ -818,7 +811,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'OrderDetailTaxes',
                 'OrderDetailUnits',
                 'TimebasedCurrencyOrderDetails'
             ]
@@ -937,7 +929,6 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
                 'OrderDetailUnits',
-                'OrderDetailTaxes'
             ]
         ])->first();
 
@@ -1043,7 +1034,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'OrderDetailTaxes',
                 'TimebasedCurrencyOrderDetails',
             ]
         ])->first();
@@ -1456,7 +1446,6 @@ class OrderDetailsController extends AdminAppController
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
-                    'OrderDetailTaxes',
                     'TimebasedCurrencyOrderDetails',
                     'OrderDetailUnits'
                 ]

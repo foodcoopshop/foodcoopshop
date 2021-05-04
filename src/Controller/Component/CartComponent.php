@@ -239,6 +239,7 @@ class CartComponent extends Component
                     'StockAvailables',
                     'ProductAttributes.StockAvailables',
                     'ProductAttributes.ProductAttributeCombinations',
+                    'Taxes',
                 ]
             ])->first();
             $products[] = $product;
@@ -324,6 +325,10 @@ class CartComponent extends Component
             }
 
             // prepare data for table order_detail
+            $unitPriceExcl = $this->Product->getNetPrice($ids['productId'], $cartProduct['price'] / $cartProduct['amount']);
+            $unitTaxAmount = $this->Product->getUnitTax($cartProduct['price'], $unitPriceExcl, $cartProduct['amount']);
+            $totalTaxAmount = $unitTaxAmount * $cartProduct['amount'];
+
             $orderDetail2save = [
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
@@ -331,7 +336,9 @@ class CartComponent extends Component
                 'product_amount' => $cartProduct['amount'],
                 'total_price_tax_excl' => $cartProduct['priceExcl'],
                 'total_price_tax_incl' => $cartProduct['price'],
-                'id_tax' => $product->id_tax,
+                'tax_unit_amount' => $unitTaxAmount,
+                'tax_total_amount' => $totalTaxAmount,
+                'tax_rate' => !empty($product->tax) ? $product->tax->rate : 0,
                 'order_state' => ORDER_STATE_ORDER_PLACED,
                 'id_customer' => $this->AppAuth->getUserId(),
                 'id_cart_product' => $cartProduct['cartProductId'],
@@ -346,16 +353,6 @@ class CartComponent extends Component
                 $customerSelectedPickupDay = h($this->getController()->getRequest()->getData('Carts.pickup_day'));
                 $orderDetail2save['pickup_day'] = $customerSelectedPickupDay;
             }
-
-            // prepare data for table order_detail_tax
-            $unitPriceExcl = $this->Product->getNetPrice($ids['productId'], $cartProduct['price'] / $cartProduct['amount']);
-            $unitTaxAmount = $this->Product->getUnitTax($cartProduct['price'], $unitPriceExcl, $cartProduct['amount']);
-            $totalTaxAmount = $unitTaxAmount * $cartProduct['amount'];
-
-            $orderDetail2save['order_detail_tax'] = [
-                'unit_amount' => $unitTaxAmount,
-                'total_amount' => $totalTaxAmount
-            ];
 
             // prepare data for table order_detail_units
             if (isset($cartProduct['quantityInUnits'])) {
@@ -840,7 +837,7 @@ class CartComponent extends Component
                 'Carts.id_cart' => $cart['Cart']->id_cart,
             ],
             'contain' => [
-                'CartProducts.OrderDetails.OrderDetailTaxes',
+                'CartProducts.OrderDetails',
                 'CartProducts.Products',
                 'CartProducts.Products.Manufacturers.AddressManufacturers'
             ]

@@ -88,7 +88,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
             ],
             'contain' => [
                 'CartProducts.OrderDetails.OrderDetailUnits',
-                'CartProducts.OrderDetails.OrderDetailTaxes',
             ]
         ])->first();
         return $cart;
@@ -115,7 +114,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
                 'OrderDetails.id_order_detail IN' => $orderDetailIds
             ],
             'contain' => [
-                'OrderDetailTaxes',
                 'OrderDetailUnits',
                 'TimebasedCurrencyOrderDetails'
             ]

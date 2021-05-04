@@ -186,9 +186,7 @@ class InvoicesController extends AdminAppController
             'contain' => [
                 'Payments',
                 'Customers',
-                'OrderDetails.OrderDetailTaxes',
                 'OrderDetails.OrderDetailUnits',
-                'OrderDetails.Taxes',
                 'OrderDetails.Products.Manufacturers',
             ],
             'conditions' => [
@@ -220,8 +218,8 @@ class InvoicesController extends AdminAppController
             $orderDetail->total_price_tax_excl *= $cancellationFactor;
             $orderDetail->total_price_tax_incl *= $cancellationFactor;
             $orderDetail->deposit *= $cancellationFactor;
-            $orderDetail->order_detail_tax->unit_amount *= $cancellationFactor;
-            $orderDetail->order_detail_tax->total_amount *= $cancellationFactor;
+            $orderDetail->order_detail_tax_unit_amount *= $cancellationFactor;
+            $orderDetail->order_detail_tax_total_amount *= $cancellationFactor;
             $orderDetail->id_invoice = null;
         }
 

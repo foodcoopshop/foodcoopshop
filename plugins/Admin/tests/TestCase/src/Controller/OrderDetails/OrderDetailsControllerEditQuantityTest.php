@@ -45,8 +45,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
         $this->assertEquals(1, $changedOrderDetails[0]->order_detail_unit->mark_as_saved);
 
-        $this->assertEquals(0.55, $changedOrderDetails[0]->order_detail_tax->unit_amount);
-        $this->assertEquals(1.10, $changedOrderDetails[0]->order_detail_tax->total_amount);
+        $this->assertEquals(0.55, $changedOrderDetails[0]->tax_unit_amount);
+        $this->assertEquals(1.10, $changedOrderDetails[0]->tax_total_amount);
 
         $this->assertMailSubjectContainsAt(1, 'Gewicht angepasst für "Forelle : Stück": 800,584 g');
         $this->assertMailContainsHtmlAt(1, '800,584 g');
@@ -74,8 +74,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
         $this->assertEquals(1, $changedOrderDetails[0]->order_detail_unit->mark_as_saved);
 
-        $this->assertEquals(0.48, $changedOrderDetails[0]->order_detail_tax->unit_amount);
-        $this->assertEquals(0.96, $changedOrderDetails[0]->order_detail_tax->total_amount);
+        $this->assertEquals(0.48, $changedOrderDetails[0]->tax_unit_amount);
+        $this->assertEquals(0.96, $changedOrderDetails[0]->tax_total_amount);
 
         $this->assertMailCount(1);
     }
@@ -97,8 +97,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($changedOrderDetails[0]->total_price_tax_excl, $changedOrderDetails[0]->total_price_tax_excl);
         $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
 
-        $this->assertEquals($changedOrderDetails[0]->order_detail_tax->unit_amount, $changedOrderDetails[0]->order_detail_tax->unit_amount);
-        $this->assertEquals($changedOrderDetails[0]->order_detail_tax->total_amount, $changedOrderDetails[0]->order_detail_tax->total_amount);
+        $this->assertEquals($changedOrderDetails[0]->tax_unit_amount, $changedOrderDetails[0]->tax_unit_amount);
+        $this->assertEquals($changedOrderDetails[0]->tax_total_amount, $changedOrderDetails[0]->tax_total_amount);
 
         $this->assertMailCount(1);
     }

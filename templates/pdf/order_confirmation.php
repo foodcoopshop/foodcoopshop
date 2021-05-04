@@ -104,7 +104,7 @@ if (!empty($manufacturers)) {
             }
 
             $sumPrice += $orderDetail->total_price_tax_incl;
-            $sumOrderDetailTax += $orderDetail->order_detail_tax->total_amount;
+            $sumOrderDetailTax += $orderDetail->tax_total_amount;
 
             $pdf->table .= '</tr>';
 
