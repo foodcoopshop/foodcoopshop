@@ -318,7 +318,9 @@ CREATE TABLE `fcs_order_detail` (
   `product_amount` int(10) unsigned NOT NULL DEFAULT '0',
   `total_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `id_tax` int(11) unsigned DEFAULT '0',
+  `tax_unit_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
+  `tax_total_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
+  `tax_rate` decimal(10,3) NOT NULL DEFAULT '0.000',
   `deposit` decimal(10,2) NOT NULL DEFAULT '0.00',
   `id_customer` int(10) unsigned NOT NULL,
   `id_invoice` int(10) unsigned DEFAULT NULL,
@@ -345,16 +347,6 @@ CREATE TABLE `fcs_order_detail_feedbacks` (
   `text` text NOT NULL,
   `customer_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_order_detail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_order_detail_tax`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_order_detail_tax` (
-  `id_order_detail` int(11) NOT NULL DEFAULT '0',
-  `unit_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
-  `total_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
-  KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_order_detail_units`;

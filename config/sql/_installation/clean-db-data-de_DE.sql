@@ -31,7 +31,6 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
-TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -176,9 +175,6 @@ INSERT INTO `fcs_cronjobs` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
@@ -250,7 +246,8 @@ INSERT INTO `phinxlog` VALUES
 (20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:43','2021-04-01 07:18:43',0),
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:12','2021-04-01 08:29:12',0),
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:13','2021-04-19 09:41:13',0),
-(20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:53','2021-04-27 15:04:53',0);
+(20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:53','2021-04-27 15:04:53',0),
+(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:04','2021-05-04 09:10:04',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
