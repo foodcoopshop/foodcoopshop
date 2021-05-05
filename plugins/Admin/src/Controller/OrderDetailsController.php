@@ -1543,24 +1543,14 @@ class OrderDetailsController extends AdminAppController
             'total_price_tax_incl' => $productPrice,
             'total_price_tax_excl' => $totalPriceTaxExcl,
             'product_amount' => $productAmount,
-            'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_amount * $productAmount
+            'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_amount * $productAmount,
+            'tax_unit_amount' => $unitTaxAmount,
+            'tax_total_amount' => $totalTaxAmount,
         ];
 
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
         );
-
-        // update order_detail_tax for invoices
-        if (!empty($oldOrderDetail->order_detail_tax)) {
-            $orderDetailTax2save = [
-                'unit_amount' => $unitTaxAmount,
-                'total_amount' => $totalTaxAmount
-            ];
-            $this->OrderDetail->OrderDetailTaxes->id = $oldOrderDetail->id_order_detail;
-            $this->OrderDetail->OrderDetailTaxes->save(
-                $this->OrderDetail->OrderDetailTaxes->patchEntity($oldOrderDetail->order_detail_tax, $orderDetailTax2save)
-            );
-        }
 
         $newOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
