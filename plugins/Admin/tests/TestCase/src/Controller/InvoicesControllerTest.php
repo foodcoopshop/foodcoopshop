@@ -122,9 +122,6 @@ class InvoicesControllerTest extends AppCakeTestCase
             'conditions' => [
                 'OrderDetails.id_order_detail IN' => $orderDetailIds,
             ],
-            'contain' => [
-                'OrderDetailTaxes',
-            ],
         ])->toArray();
         $this->assertEquals(5, count($orderDetails));
 
