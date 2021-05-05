@@ -40,7 +40,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_total_amount);
 
@@ -59,8 +59,8 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
 
-        $this->assertEquals($this->newAmount, $changedOrderDetails[0]->product_amount, 'order detail amount was not changed properly');
-        $this->assertEquals('1,40', Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals($this->newAmount, $changedOrderDetails[0]->product_amount);
+        $this->assertEquals('1,40', Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
 
         $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 0.55, 0.6, 216);
     }
@@ -73,7 +73,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_total_amount);
 
@@ -93,7 +93,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->editOrderDetailAmount($orderDetailId, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_total_amount);
 
@@ -114,7 +114,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->tax_total_amount);
 
