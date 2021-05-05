@@ -690,10 +690,6 @@ class OrderDetailsController extends AdminAppController
             $savedEntity = $this->OrderDetail->save($newEntity, [
                 'associated' => false
             ]);
-            $newEntity->order_detail_tax->id_order_detail = $savedEntity->id_order_detail;
-            $newEntity->order_detail_tax->setNew(true);
-            $newOrderDetailTaxEntity = $this->OrderDetail->OrderDetailTaxes->save($newEntity->order_detail_tax);
-            $savedEntity->order_detail_tax = $newOrderDetailTaxEntity;
 
             $productPrice = $pricePerUnit * $amount;
             $this->changeOrderDetailPriceDepositTax($savedEntity, $productPrice, $amount);
