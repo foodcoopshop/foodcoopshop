@@ -154,9 +154,9 @@ class OrderDetailsController extends AdminAppController
      * 4) re-send invoice using `bin/cake SendInvoices yyyy-mm-dd` (month is one month later than order details)
      *
      * @param int $orderDetailId
-     * @param int $newTaxId
+     * @param int $newTaxRate
      */
-    public function changeTaxOfInvoicedOrderDetail($orderDetailId, $newTaxId)
+    public function changeTaxOfInvoicedOrderDetail($orderDetailId, $newTaxRate)
     {
 
         $this->RequestHandler->renderAs($this, 'json');
@@ -174,7 +174,7 @@ class OrderDetailsController extends AdminAppController
 
         $patchedEntity = $this->OrderDetail->patchEntity(
             $oldOrderDetail,
-            ['id_tax' => $newTaxId]
+            ['tax_rate' => $newTaxRate]
         );
         $orderDetailWithNewTax = $this->OrderDetail->save($patchedEntity);
 

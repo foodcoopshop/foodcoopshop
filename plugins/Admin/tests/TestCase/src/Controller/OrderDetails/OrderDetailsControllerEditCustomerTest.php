@@ -68,7 +68,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
 
-        $this->assertEquals($changedOrderDetails[0]->id_tax, $changedOrderDetails[1]->id_tax);
+        $this->assertEquals($changedOrderDetails[0]->tax_rate, $changedOrderDetails[1]->tax_rate);
 
         $this->assertEquals(5, $changedOrderDetails[0]->product_amount);
         $this->assertEquals(2, $changedOrderDetails[1]->product_amount);
