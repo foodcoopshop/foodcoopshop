@@ -135,6 +135,7 @@
     div.first-column {
         width: 23% ! important;
         margin-right: 3% ! important;
+        min-height: 1px;
     }
     .blog-post-wrapper div.third-column div.additional-info {
         margin-top: 10px ! important;
