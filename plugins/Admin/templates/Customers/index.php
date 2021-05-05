@@ -110,9 +110,9 @@ foreach ($customers as $customer) {
                 ]
             );
         }
-        if (!empty($customer->valid_order_details) && $customer->valid_order_details[0]->valid_order_detail_count <= 25) {
+        if ($customer->order_detail_count <= 25) {
             $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
-                $customer->valid_order_details[0]->valid_order_detail_count
+                $customer->order_detail_count
             ]).'"></i> ' . $customerName;
         }
 
@@ -205,12 +205,8 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td style="text-align:right">';
-        if (!empty($customer->valid_order_details)) {
-            echo $this->Number->formatAsDecimal($customer->valid_order_details[0]->valid_order_detail_count, 0);
-            $sumOrderDetailsCount += $customer->valid_order_details[0]->valid_order_detail_count;
-        } else {
-            echo $this->Number->formatAsDecimal(0, 0);
-        }
+        echo $this->Number->formatAsDecimal($customer->order_detail_count, 0);
+        $sumOrderDetailsCount += $customer->order_detail_count;
     echo '</td>';
 
     if ($this->Html->paymentIsCashless()) {
