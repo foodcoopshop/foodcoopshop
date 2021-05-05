@@ -116,6 +116,11 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->assertEquals(0.85, $changedOrderDetails[0]->tax_total_amount);
         $this->assertEquals(0.34, $changedOrderDetails[1]->tax_total_amount);
 
+        $this->assertEquals(0.17, $changedOrderDetails[0]->tax_unit_amount);
+        $this->assertEquals(0.17, $changedOrderDetails[1]->tax_unit_amount);
+
+        $this->assertEquals(10, $changedOrderDetails[1]->tax_rate);
+
     }
 
     private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount)

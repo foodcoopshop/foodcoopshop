@@ -43,6 +43,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);
@@ -76,6 +77,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);
@@ -96,6 +98,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $expectedCcEmail = Configure::read('test.loginEmailVegetableManufacturer');
@@ -117,6 +120,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
         $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);

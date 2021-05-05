@@ -130,6 +130,7 @@ class InvoicesControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->order_state, ORDER_STATE_ORDER_PLACED);
             $this->assertTrue($orderDetail->total_price_tax_excl >= 0);
             $this->assertTrue($orderDetail->total_price_tax_incl >= 0);
+            $this->assertEquals($orderDetail->tax_rate, 0);
             $this->assertTrue($orderDetail->tax_unit_amount >= 0);
             $this->assertTrue($orderDetail->tax_total_amount >= 0);
         }
