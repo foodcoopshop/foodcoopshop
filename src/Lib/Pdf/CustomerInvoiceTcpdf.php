@@ -196,8 +196,8 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
         // add additional line break(s) on top
         $lineCount = substr_count($convertedHeaderRight, '<br />');
-        if ($lineCount < 5) {
-            $convertedHeaderRight = str_repeat('<br />', 5 - $lineCount) . $convertedHeaderRight;
+        if ($lineCount < 6) {
+            $convertedHeaderRight = str_repeat('<br />', 6 - $lineCount) . $convertedHeaderRight;
         }
 
         $this->headerRight = $convertedHeaderRight;
