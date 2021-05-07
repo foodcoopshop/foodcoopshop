@@ -49,12 +49,12 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(1, 'Bestell-Erinnerung FoodCoop Test');
         $this->assertMailContainsHtmlAt(1, 'Hallo Demo Mitglied,');
         $this->assertMailContainsHtmlAt(1, 'ist schon wieder der letzte Bestelltag');
-        $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));
 
         $this->assertMailSubjectContainsAt(2, 'Bestell-Erinnerung FoodCoop Test');
         $this->assertMailContainsHtmlAt(2, 'Hallo Demo Superadmin,');
         $this->assertMailContainsHtmlAt(2, 'ist schon wieder der letzte Bestelltag');
-        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
 
     }
 
