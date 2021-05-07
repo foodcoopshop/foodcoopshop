@@ -47,7 +47,11 @@ use Cake\Core\Configure;
                     ]); ?></p>
                 <?php } ?>
            <?php } ?>
-
+            <?php
+                if (Configure::read('appDb.FCS_BANK_ACCOUNT_DATA') != '') {
+                    echo '<p><b>'.__d('admin', 'Bank_account_data').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
+                }
+            ?>
         </td>
 
     </tr>
