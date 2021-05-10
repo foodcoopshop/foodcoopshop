@@ -31,6 +31,7 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
+TRUNCATE TABLE `fcs_order_detail_purchase_prices`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -38,6 +39,7 @@ TRUNCATE TABLE `fcs_pickup_days`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
+TRUNCATE TABLE `fcs_purchase_prices`;
 TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
@@ -175,6 +177,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
@@ -195,6 +200,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
@@ -247,7 +255,8 @@ INSERT INTO `phinxlog` VALUES
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:17','2021-04-01 08:29:18',0),
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:18','2021-04-19 09:41:18',0),
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:58','2021-04-27 15:04:58',0),
-(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:09','2021-05-04 09:10:09',0);
+(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:09','2021-05-04 09:10:09',0),
+(20210510080630,'EnablePurchasePrices','2021-05-10 08:47:03','2021-05-10 08:47:03',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

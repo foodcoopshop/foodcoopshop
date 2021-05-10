@@ -31,6 +31,7 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
+TRUNCATE TABLE `fcs_order_detail_purchase_prices`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -38,6 +39,7 @@ TRUNCATE TABLE `fcs_pickup_days`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
+TRUNCATE TABLE `fcs_purchase_prices`;
 TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
@@ -130,7 +132,7 @@ INSERT INTO `fcs_configuration` VALUES
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',220,'de_DE','2020-04-15 09:41:54','2020-04-15 09:41:54'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',3200,'de_DE','2020-06-19 09:02:46','2020-06-19 09:02:46'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',590,'de_DE','2020-07-06 10:34:35','2020-07-06 10:34:35'),
-(591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/einzelhandel\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:34','2020-10-29 10:06:34'),
+(591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/dorfladen-online\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:34','2020-10-29 10:06:34'),
 (592,1,'FCS_DEPOSIT_TAX_RATE','Umsatzsteuersatz für Pfand','20,00','readonly',581,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55'),
 (593,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','','readonly',582,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55'),
 (594,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:10','2020-12-20 19:26:10'),
@@ -175,6 +177,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
@@ -195,6 +200,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
@@ -247,7 +255,8 @@ INSERT INTO `phinxlog` VALUES
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:12','2021-04-01 08:29:12',0),
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:13','2021-04-19 09:41:13',0),
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:53','2021-04-27 15:04:53',0),
-(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:04','2021-05-04 09:10:04',0);
+(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:04','2021-05-04 09:10:04',0),
+(20210510080630,'EnablePurchasePrices','2021-05-10 08:46:58','2021-05-10 08:46:58',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
