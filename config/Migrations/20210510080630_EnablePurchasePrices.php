@@ -23,7 +23,7 @@ class EnablePurchasePrices extends AbstractMigration
                 break;
         }
         $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_PURCHASE_PRICE_ENABLED', '".$text."', '0', 'readonly', '583', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
-
+        $this->execute($sql);
 
         $sql = "ALTER TABLE `fcs_units` ADD `purchase_price_incl_per_unit` DECIMAL(10,2) UNSIGNED NULL DEFAULT NULL AFTER `price_incl_per_unit`;";
         $this->execute($sql);
