@@ -41,6 +41,7 @@ class FileAndEmailLog extends FileLog
             'MissingActionException',
             'RecordNotFoundException',
             'MissingRouteException',
+            'MissingTemplateException',
             'UnauthorizedException',
             'cancellation_terms_accepted',
             'general_terms_and_conditions_accepted',
@@ -65,7 +66,11 @@ class FileAndEmailLog extends FileLog
             '{"id_customer":{"_required":',
             '{"id_customer":{"numeric":',
             '{"name":{"_empty":"Bitte gib einen Namen ein."',
-            '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000'
+            '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000',
+            '{"amount":{"greaterThanOrEqual":',
+            '{"amount":{"numeric":"Bitte gib eine korrekte Zahl ein.',
+            '{"no_delivery_days":',
+            '{"price_incl_per_unit":{"greaterThan":',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
