@@ -31,7 +31,6 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
-TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -229,20 +228,13 @@ INSERT INTO `fcs_manufacturer` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail` VALUES
-(1,346,0,'Artischocke : Stück',1,1.820000,1.650000,2,0.50,92,NULL,1,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52'),
-(2,340,0,'Beuschl',1,4.540000,4.540000,0,0.00,92,NULL,2,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52'),
-(3,60,10,'Milch : 0,5l',1,0.620000,0.550000,3,0.50,92,NULL,3,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52');
+(1,346,0,'Artischocke : Stück',1,1.820000,1.650000,0.170000,0.170000,10.000,0.50,92,NULL,1,3,'2018-02-02','2018-02-01 09:17:14','2021-05-04 11:10:14'),
+(2,340,0,'Beuschl',1,4.540000,4.540000,0.000000,0.000000,0.000,0.00,92,NULL,2,3,'2018-02-02','2018-02-01 09:17:14','2021-05-04 11:10:14'),
+(3,60,10,'Milch : 0,5l',1,0.620000,0.550000,0.070000,0.070000,13.000,0.50,92,NULL,3,3,'2018-02-02','2018-02-01 09:17:14','2021-05-04 11:10:14');
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
-INSERT INTO `fcs_order_detail_tax` VALUES
-(1,0.170000,0.170000),
-(2,0.000000,0.000000),
-(3,0.070000,0.070000);
-/*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
@@ -387,7 +379,8 @@ INSERT INTO `phinxlog` VALUES
 (20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:55','2021-04-01 07:18:55',0),
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:23','2021-04-01 08:29:23',0),
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0),
-(20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:05:04','2021-04-27 15:05:04',0);
+(20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:05:04','2021-04-27 15:05:04',0),
+(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:14','2021-05-04 09:10:14',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

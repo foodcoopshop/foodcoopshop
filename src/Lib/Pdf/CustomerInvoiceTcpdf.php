@@ -99,8 +99,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
         foreach($result->active_order_details as $orderDetail) {
 
-            $taxRate = $orderDetail->tax->rate ?? 0;
-            $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
+            $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate);
 
             // products
             $this->table .= '<tr style="font-weight:normal;">';
@@ -111,7 +110,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                         $orderDetail->product_name,
                         $this->textHelper->truncate($orderDetail->product->manufacturer->name, 18),
                         Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl),
-                        Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_tax->total_amount) . ' (' . $formattedTaxRate  . '%)',
+                        Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->tax_total_amount) . ' (' . $formattedTaxRate  . '%)',
                         Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
                         $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
                     ]

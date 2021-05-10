@@ -122,9 +122,6 @@ class InvoicesControllerTest extends AppCakeTestCase
             'conditions' => [
                 'OrderDetails.id_order_detail IN' => $orderDetailIds,
             ],
-            'contain' => [
-                'OrderDetailTaxes',
-            ],
         ])->toArray();
         $this->assertEquals(5, count($orderDetails));
 
@@ -133,10 +130,8 @@ class InvoicesControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->order_state, ORDER_STATE_ORDER_PLACED);
             $this->assertTrue($orderDetail->total_price_tax_excl >= 0);
             $this->assertTrue($orderDetail->total_price_tax_incl >= 0);
-            if (!empty($orderDetail->order_detail_tax)) {
-                $this->assertTrue($orderDetail->order_detail_tax->unit_amount >= 0);
-                $this->assertTrue($orderDetail->order_detail_tax->total_amount >= 0);
-            }
+            $this->assertTrue($orderDetail->tax_unit_amount >= 0);
+            $this->assertTrue($orderDetail->tax_total_amount >= 0);
         }
 
         $payments = $this->Payment->find('all', [

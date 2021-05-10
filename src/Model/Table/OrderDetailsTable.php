@@ -32,12 +32,6 @@ class OrderDetailsTable extends AppTable
         $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
-        $this->belongsTo('Taxes', [
-            'foreignKey' => 'id_tax'
-        ]);
-        $this->hasOne('OrderDetailTaxes', [
-            'foreignKey' => 'id_order_detail'
-        ]);
         $this->hasOne('OrderDetailFeedbacks', [
             'foreignKey' => 'id_order_detail'
         ]);
@@ -175,17 +169,12 @@ class OrderDetailsTable extends AppTable
             'sum_price_incl' => 0,
         ];
         foreach($orderDetails as $orderDetail) {
-            if (empty($orderDetail->tax)) {
-                $taxRate = 0;
-            } else {
-                $taxRate = $orderDetail->tax->rate;
-            }
-            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
+            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate);
             if (!isset($taxRates[$taxRate])) {
                 $taxRates[$taxRate] = $defaultArray;
             }
             $taxRates[$taxRate]['sum_price_excl'] += $orderDetail->total_price_tax_excl;
-            $taxRates[$taxRate]['sum_tax'] += $orderDetail->order_detail_tax->total_amount;
+            $taxRates[$taxRate]['sum_tax'] += $orderDetail->tax_total_amount;
             $taxRates[$taxRate]['sum_price_incl'] += $orderDetail->total_price_tax_incl;
         }
 
@@ -333,10 +322,6 @@ class OrderDetailsTable extends AppTable
     public function deleteOrderDetail($orderDetail)
     {
         $this->delete($orderDetail);
-
-        if (!empty($orderDetail->order_detail_tax)) {
-            $this->OrderDetailTaxes->delete($orderDetail->order_detail_tax);
-        }
 
         if (!empty($orderDetail->timebased_currency_order_detail)) {
             $this->TimebasedCurrencyOrderDetails->delete($orderDetail->timebased_currency_order_detail);

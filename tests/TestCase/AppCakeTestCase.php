@@ -270,7 +270,6 @@ abstract class AppCakeTestCase extends TestCase
                 'Carts.id_cart' => $cartId
             ],
             'contain' => [
-                'CartProducts.OrderDetails.OrderDetailTaxes',
                 'CartProducts.OrderDetails.OrderDetailUnits',
                 'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails',
             ]

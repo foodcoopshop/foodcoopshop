@@ -124,9 +124,7 @@ class InvoicesTable extends AppTable
                     });
                     return $q;
                 },
-                'ActiveOrderDetails.OrderDetailTaxes',
                 'ActiveOrderDetails.OrderDetailUnits',
-                'ActiveOrderDetails.Taxes',
                 'ActiveOrderDetails.Products.Manufacturers',
             ]
         ])->first();
@@ -228,7 +226,7 @@ class InvoicesTable extends AppTable
         foreach ($orderDetails as $orderDetail) {
             $sumPriceIncl += $orderDetail->total_price_tax_incl;
             $sumPriceExcl += $orderDetail->total_price_tax_excl;
-            $sumTax += $orderDetail->order_detail_tax->total_amount;
+            $sumTax += $orderDetail->tax_total_amount;
         }
 
         $sumPriceIncl += $orderedDeposit['deposit_incl'];

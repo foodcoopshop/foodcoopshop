@@ -154,9 +154,9 @@ class OrderDetailsController extends AdminAppController
      * 4) re-send invoice using `bin/cake SendInvoices yyyy-mm-dd` (month is one month later than order details)
      *
      * @param int $orderDetailId
-     * @param int $newTaxId
+     * @param int $newTaxRate
      */
-    public function changeTaxOfInvoicedOrderDetail($orderDetailId, $newTaxId)
+    public function changeTaxOfInvoicedOrderDetail($orderDetailId, $newTaxRate)
     {
 
         $this->RequestHandler->renderAs($this, 'json');
@@ -168,14 +168,13 @@ class OrderDetailsController extends AdminAppController
             'contain' => [
                 'Customers',
                 'Products.Manufacturers',
-                'OrderDetailTaxes',
                 'OrderDetailUnits'
             ]
         ])->first();
 
         $patchedEntity = $this->OrderDetail->patchEntity(
             $oldOrderDetail,
-            ['id_tax' => $newTaxId]
+            ['tax_rate' => $newTaxRate]
         );
         $orderDetailWithNewTax = $this->OrderDetail->save($patchedEntity);
 
@@ -228,18 +227,13 @@ class OrderDetailsController extends AdminAppController
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
-        $contain = $odParams['contain'];
-        if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
-            $contain[] = 'OrderDetailTaxes';
-            $contain[] = 'Taxes';
-        }
         $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
             'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
         ]);
         $contain[] = 'PickupDayEntities';
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
-            'contain' => $contain
+            'contain' => $odParams['contain'],
         ])->toArray();
 
         $customerName = [];
@@ -632,7 +626,6 @@ class OrderDetailsController extends AdminAppController
             'contain' => [
                 'Customers',
                 'Products.Manufacturers',
-                'OrderDetailTaxes',
                 'OrderDetailUnits'
             ]
         ])->first();
@@ -697,10 +690,6 @@ class OrderDetailsController extends AdminAppController
             $savedEntity = $this->OrderDetail->save($newEntity, [
                 'associated' => false
             ]);
-            $newEntity->order_detail_tax->id_order_detail = $savedEntity->id_order_detail;
-            $newEntity->order_detail_tax->setNew(true);
-            $newOrderDetailTaxEntity = $this->OrderDetail->OrderDetailTaxes->save($newEntity->order_detail_tax);
-            $savedEntity->order_detail_tax = $newOrderDetailTaxEntity;
 
             $productPrice = $pricePerUnit * $amount;
             $this->changeOrderDetailPriceDepositTax($savedEntity, $productPrice, $amount);
@@ -818,7 +807,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'OrderDetailTaxes',
                 'OrderDetailUnits',
                 'TimebasedCurrencyOrderDetails'
             ]
@@ -937,7 +925,6 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
                 'OrderDetailUnits',
-                'OrderDetailTaxes'
             ]
         ])->first();
 
@@ -1043,7 +1030,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'OrderDetailTaxes',
                 'TimebasedCurrencyOrderDetails',
             ]
         ])->first();
@@ -1456,7 +1442,6 @@ class OrderDetailsController extends AdminAppController
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
-                    'OrderDetailTaxes',
                     'TimebasedCurrencyOrderDetails',
                     'OrderDetailUnits'
                 ]
@@ -1558,24 +1543,14 @@ class OrderDetailsController extends AdminAppController
             'total_price_tax_incl' => $productPrice,
             'total_price_tax_excl' => $totalPriceTaxExcl,
             'product_amount' => $productAmount,
-            'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_amount * $productAmount
+            'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_amount * $productAmount,
+            'tax_unit_amount' => $unitTaxAmount,
+            'tax_total_amount' => $totalTaxAmount,
         ];
 
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
         );
-
-        // update order_detail_tax for invoices
-        if (!empty($oldOrderDetail->order_detail_tax)) {
-            $orderDetailTax2save = [
-                'unit_amount' => $unitTaxAmount,
-                'total_amount' => $totalTaxAmount
-            ];
-            $this->OrderDetail->OrderDetailTaxes->id = $oldOrderDetail->id_order_detail;
-            $this->OrderDetail->OrderDetailTaxes->save(
-                $this->OrderDetail->OrderDetailTaxes->patchEntity($oldOrderDetail->order_detail_tax, $orderDetailTax2save)
-            );
-        }
 
         $newOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
