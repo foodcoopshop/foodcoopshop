@@ -125,6 +125,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendOrderedProductAmountChangedNotification = 0;
         $newSendInstantOrderNotification = 0;
         $newDefaultTaxId = 3;
+        $newDefaultTaxIdPurchasePrice = 3;
 
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
@@ -164,6 +165,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification,
                     'send_instant_order_notification' => $newSendInstantOrderNotification,
                     'default_tax_id' => $newDefaultTaxId,
+                    'default_tax_id_purchase_price' => $newDefaultTaxIdPurchasePrice,
                     // althouth the following property is not tested, it needs to be included in the request to avoid
                     // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
                     'send_ordered_product_deleted_notification' => 1,

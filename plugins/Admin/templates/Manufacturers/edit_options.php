@@ -150,10 +150,20 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         ]);
     }
 
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo $this->Form->control('Manufacturers.default_tax_id_purchase_price', [
+            'type' => 'select',
+            'label' => '<b>' . __d('admin', 'Purchase_price') . '</b>: ' . __d('admin', 'Preselected_tax_rate_for_new_products'),
+            'options' => $taxesForDropdown,
+            'escape' => false,
+        ]);
+    }
+
     echo $this->Form->control('Manufacturers.default_tax_id', [
         'type' => 'select',
-        'label' => __d('admin', 'Preselected_tax_rate_for_new_products'),
-        'options' => $taxesForDropdown
+        'label' => '<b>' . __d('admin', 'Selling_price') . '</b>: ' . __d('admin', 'Preselected_tax_rate_for_new_products'),
+        'options' => $taxesForDropdown,
+        'escape' => false,
     ]);
 
     echo $this->Form->control('Manufacturers.stock_management_enabled', [

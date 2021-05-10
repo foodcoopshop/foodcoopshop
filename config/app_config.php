@@ -65,6 +65,7 @@ return [
         'defaultSendOrderList' => 1,
         'defaultSendInvoice' => 1,
         'defaultTaxId' => 2,
+        'defaultTaxIdPurchasePrice' => 2,
         'defaultSendInstantOrderNotification' => 1,
         'defaultSendOrderedProductDeletedNotification' => 1,
         'defaultSendOrderedProductPriceChangedNotification' => 1,
