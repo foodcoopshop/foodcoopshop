@@ -137,7 +137,7 @@ INSERT INTO `fcs_configuration` VALUES
 (593,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','','readonly',582,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55'),
 (594,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:10','2020-12-20 19:26:10'),
 (595,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','50','number',1450,'de_DE','2021-01-19 11:23:34','2021-01-19 11:23:34'),
-(596,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',583,'de_DE','2021-05-10 11:07:26','2021-05-10 11:07:26');
+(596,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',583,'de_DE','2021-05-10 11:27:38','2021-05-10 11:27:38');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -257,7 +257,7 @@ INSERT INTO `phinxlog` VALUES
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:13','2021-04-19 09:41:13',0),
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:53','2021-04-27 15:04:53',0),
 (20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:04','2021-05-04 09:10:04',0),
-(20210510080630,'EnablePurchasePrices','2021-05-10 09:07:26','2021-05-10 09:07:26',0);
+(20210510080630,'EnablePurchasePrices','2021-05-10 09:27:38','2021-05-10 09:27:38',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

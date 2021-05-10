@@ -178,7 +178,7 @@ INSERT INTO `fcs_configuration` VALUES
 (594,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','FoodCoop Test<br />Demostraße 4<br />A-4564 Demostadt<br />demo-foodcoop@maillinator.com','readonly',582,'de_DE','2020-11-03 15:24:12','2020-11-03 15:24:12'),
 (595,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:26','2020-12-20 19:26:26'),
 (596,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','0','number',1450,'de_DE','2021-01-19 11:23:49','2021-01-19 11:23:49'),
-(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',583,'de_DE','2021-05-10 11:07:37','2021-05-10 11:07:37');
+(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',583,'de_DE','2021-05-10 11:27:48','2021-05-10 11:27:48');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -223,10 +223,10 @@ INSERT INTO `fcs_images` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com,testfcs2@mailinator.com',NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
-(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,'',NULL,NULL,NULL,NULL,'1',0,30,100,0,1,1,''),
-(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,''),
-(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,'',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'');
+(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,NULL,'testfcs1@mailinator.com,testfcs2@mailinator.com',NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
+(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,NULL,'',NULL,NULL,NULL,NULL,'1',0,30,100,0,1,1,''),
+(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,NULL,'test@test.at',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,''),
+(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,NULL,'',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'');
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
@@ -390,7 +390,7 @@ INSERT INTO `phinxlog` VALUES
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0),
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:05:04','2021-04-27 15:05:04',0),
 (20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:14','2021-05-04 09:10:14',0),
-(20210510080630,'EnablePurchasePrices','2021-05-10 09:07:37','2021-05-10 09:07:37',0);
+(20210510080630,'EnablePurchasePrices','2021-05-10 09:27:48','2021-05-10 09:27:49',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

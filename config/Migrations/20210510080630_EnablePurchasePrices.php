@@ -28,6 +28,9 @@ class EnablePurchasePrices extends AbstractMigration
         $sql = "ALTER TABLE `fcs_units` ADD `purchase_price_incl_per_unit` DECIMAL(10,2) UNSIGNED NULL DEFAULT NULL AFTER `price_incl_per_unit`;";
         $this->execute($sql);
 
+        $sql = "ALTER TABLE `fcs_manufacturer` ADD `default_tax_id_purchase_price` INT(8) UNSIGNED NULL DEFAULT NULL AFTER `default_tax_id`;";
+        $this->execute($sql);
+
         $sql = "DROP TABLE IF EXISTS `fcs_purchase_prices`;
                 CREATE TABLE `fcs_purchase_prices` (
                   `id` int(10) UNSIGNED NOT NULL,
