@@ -492,8 +492,8 @@ DROP TABLE IF EXISTS `fcs_purchase_prices`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_purchase_prices` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `product_id` int(10) unsigned DEFAULT NULL,
-  `product_attribute_id` int(10) unsigned DEFAULT NULL,
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
   `tax_id` int(10) unsigned DEFAULT '0',
   `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
   PRIMARY KEY (`id`),

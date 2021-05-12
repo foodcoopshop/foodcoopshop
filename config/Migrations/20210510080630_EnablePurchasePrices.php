@@ -34,8 +34,8 @@ class EnablePurchasePrices extends AbstractMigration
         $sql = "DROP TABLE IF EXISTS `fcs_purchase_prices`;
                 CREATE TABLE `fcs_purchase_prices` (
                   `id` int(10) UNSIGNED NOT NULL,
-                  `product_id` int(10) UNSIGNED DEFAULT NULL,
-                  `product_attribute_id` int(10) UNSIGNED DEFAULT NULL,
+                  `product_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+                  `product_attribute_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
                   `tax_id` int(10) UNSIGNED DEFAULT '0',
                   `price` decimal(20,6) NOT NULL DEFAULT '0.000000'
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
