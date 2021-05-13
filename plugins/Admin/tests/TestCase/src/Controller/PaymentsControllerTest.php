@@ -293,6 +293,7 @@ class PaymentsControllerTest extends AppCakeTestCase
                 ]
             ]
         );
+        $this->assertResponseContains('Beim Speichern sind Fehler aufgetreten!');
         $this->assertResponseContains('name="Payments[0][id_customer]" class="select-member form-error"');
         $this->assertResponseContains('Bitte wähle ein Mitglied aus.');
     }

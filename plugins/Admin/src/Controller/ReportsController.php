@@ -59,6 +59,7 @@ class ReportsController extends AdminAppController
             $reader = RaiffeisenBankingReader::createFromString($content);
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
+                $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
             } catch(\Exception $e) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
                 $this->redirect($this->referer());
@@ -116,6 +117,12 @@ class ReportsController extends AdminAppController
 
                 }
 
+                $this->set('csvPayments', $csvPayments);
+
+                if ($paymentsHaveErrors && $saveRecords) {
+                    $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+                }
+
                 if (!$paymentsHaveErrors && $saveRecords) {
 
                     $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
@@ -166,10 +173,6 @@ class ReportsController extends AdminAppController
                         }
 
                     });
-
-                } else {
-                    $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
-                    $this->set('csvPayments', $csvPayments);
                 }
             } catch(PersistenceFailedException $e) {
                 $this->Flash->error(__d('admin', 'Errors_while_saving!'));
