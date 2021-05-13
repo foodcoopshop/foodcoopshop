@@ -15,6 +15,7 @@
 
 return [
     'Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar\.' => '',
+    'Bitte wähle ein Mitglied aus.' => 'Bitte wähle einen Kunden aus.',
     'uf welches Mitglied' => 'uf welchen Kunden',
     'uf das Mitglied' => 'uf den Kunden',
     'uf ein anderes Mitglied' => 'uf einen anderen Kunden',
