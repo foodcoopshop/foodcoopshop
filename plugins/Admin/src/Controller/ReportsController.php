@@ -80,11 +80,14 @@ class ReportsController extends AdminAppController
             $csvPayments = $this->Payment->newEntities(
                 $csvRecords,
                 [
-                    'validate' => 'csvImport',
-                ]
+                    'validate' => 'csvImportUpload',
+                ],
             );
 
             try {
+
+                $paymentsHaveErrors = false;
+
                 foreach($csvPayments as &$csvPayment) {
 
                     if (!isset($csvPayment->selected)) {
@@ -93,20 +96,27 @@ class ReportsController extends AdminAppController
                             $csvPayment->selected = false;
                         }
                     }
-
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
                             'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
-                            'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
+                            'id_customer' => $csvPayment->id_customer ?? $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
-                        ]
+                        ],
+                        [
+                            'validate' => 'csvImportSave',
+                        ],
                     );
 
+                    if ($csvPayment->selected && $csvPayment->hasErrors()) {
+                        $paymentsHaveErrors |= true;
+                    }
+
                 }
-                if ($saveRecords) {
+
+                if (!$paymentsHaveErrors && $saveRecords) {
 
                     $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
 
