@@ -298,7 +298,7 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 
 /*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
 INSERT INTO `fcs_purchase_prices` VALUES
-(1,'351','0', 1','1.2'),
+(1,'351','0','1','1.2'),
 (2,'0','13','1','1.4');
 /*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
