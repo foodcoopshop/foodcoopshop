@@ -665,6 +665,29 @@ class ProductsController extends AdminAppController
         $productId = (int) $this->getRequest()->getData('productId');
         $taxId = (int) $this->getRequest()->getData('taxId');
 
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $purchasePriceTaxId = (int) $this->getRequest()->getData('purchasePriceTaxId');
+            $pppTable = $this->Product->PurchasePriceProducts;
+
+            $entity2Save = $pppTable->find('all', [
+                'conditions' => [
+                    'product_id' => $productId,
+                ],
+            ])->first();
+            if (empty($entity2Save)) {
+                $entity2Save = $pppTable->newEntity(['product_id' => $productId]);
+            }
+
+            $pppTable->save(
+                $pppTable->patchEntity(
+                    $entity2Save,
+                    [
+                        'tax_id' => $purchasePriceTaxId,
+                    ]
+                )
+            );
+        }
+
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
