@@ -801,18 +801,21 @@ class ProductsTable extends AppTable
                     'StockAvailables.id_product_attribute' => 0
                 ]
             ],
-            'PurchasePriceProducts.Taxes',
             'ProductAttributes',
             'ProductAttributes.StockAvailables' => [
                 'conditions' => [
                     'StockAvailables.id_product_attribute > 0'
                 ]
             ],
-            'ProductAttributes.PurchasePriceProductAttributes.Taxes',
             'ProductAttributes.DepositProductAttributes',
             'ProductAttributes.UnitProductAttributes',
             'ProductAttributes.ProductAttributeCombinations.Attributes'
         ];
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $contain[] = 'PurchasePriceProducts.Taxes';
+            $contain[] = 'ProductAttributes.PurchasePriceProductAttributes.Taxes';
+        }
 
         $order = [
             'Products.active' => 'DESC',
@@ -838,9 +841,12 @@ class ProductsTable extends AppTable
         ->select('Images.id_image')
         ->select($this->Taxes)
         ->select($this->Manufacturers)
-        ->select($this->PurchasePriceProducts)
         ->select($this->UnitProducts)
         ->select($this->StockAvailables);
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $query->select($this->PurchasePriceProducts);
+        }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $query->select(['bar_code' => $this->getProductIdentifierField()]);
@@ -1008,11 +1014,6 @@ class ProductsTable extends AppTable
                         }
                     }
 
-                    $purchasePrice = [];
-                    if (!empty($attribute->product_attribute_purchase_price)) {
-                        $purchasePrice['price'] = $attribute->product_attribute_purchase_price->price;
-                    }
-
                     $preparedProduct = [
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
@@ -1030,7 +1031,6 @@ class ProductsTable extends AppTable
                             'stock_management_enabled' => (!empty($product->manufacturer) ? $product->manufacturer->stock_management_enabled : false),
                         ],
                         'default_on' => $attribute->default_on,
-                        'purchase_price' => $purchasePrice,
                         'stock_available' => [
                             'quantity' => $attribute->stock_available->quantity,
                             'quantity_limit' => $attribute->stock_available->quantity_limit,
@@ -1055,6 +1055,13 @@ class ProductsTable extends AppTable
                         }
                     }
 
+                    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                        $purchasePrice = [];
+                        if (!empty($attribute->product_attribute_purchase_price)) {
+                            $purchasePrice['price'] = $attribute->product_attribute_purchase_price->price;
+                        }
+                        $preparedProduct['purchase_price'] = $purchasePrice;
+                    }
                     $preparedProducts[] = $preparedProduct;
                 }
             }

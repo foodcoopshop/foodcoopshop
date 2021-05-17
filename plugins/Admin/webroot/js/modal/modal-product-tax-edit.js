@@ -51,7 +51,7 @@ foodcoopshop.ModalProductTaxEdit = {
             {
                 productId: productId,
                 taxId: $(modalSelector + ' #taxes-id-tax-' + productId).val(),
-                purchasePriceTaxId: $(modalSelector + ' #purchase-price-taxes-id-tax-' + productId).val()
+                purchasePriceTaxId: $(modalSelector + ' #purchasepricetaxes-id-tax-' + productId).val()
             },
             {
                 onOk: function (data) {
