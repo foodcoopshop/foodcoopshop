@@ -89,10 +89,12 @@ foodcoopshop.ModalProductTaxEdit = {
         select.val(preselectedTaxRate);
 
         select = $(modalSelector).find('select[name="PurchasePriceTaxes[id_tax]"]');
-        newId = select.attr('id') + '-' + productId;
-        select.attr('id', newId);
-        preselectedTaxRate = $('#product-' + productId + ' input[name="PurchasePriceProducts[id_tax]"').val();
-        select.val(preselectedTaxRate);
+        if (select.length > 0) {
+            newId = select.attr('id') + '-' + productId;
+            select.attr('id', newId);
+            preselectedTaxRate = $('#product-' + productId + ' input[name="PurchasePriceProducts[id_tax]"').val();
+            select.val(preselectedTaxRate);
+        }
 
         $(modalSelector + ' .product-id').val(productId);
 

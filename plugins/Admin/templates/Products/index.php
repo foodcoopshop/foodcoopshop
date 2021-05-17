@@ -298,14 +298,16 @@ use Cake\Core\Configure;
         ]);
      echo '</div>';
 
-    echo '<div class="purchase-price-tax-dropdown-wrapper">';
-        echo '<input type="hidden" class="product-id" />';
-        echo $this->Form->control('PurchasePriceTaxes.id_tax', [
-            'type' => 'select',
-            'label' => __d('admin', 'Purchase_price'),
-            'options' => $taxesForDropdown,
-        ]);
-    echo '</div>';
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo '<div class="purchase-price-tax-dropdown-wrapper">';
+            echo '<input type="hidden" class="product-id" />';
+            echo $this->Form->control('PurchasePriceTaxes.id_tax', [
+                'type' => 'select',
+                'label' => __d('admin', 'Purchase_price'),
+                'options' => $taxesForDropdown,
+            ]);
+        echo '</div>';
+    }
 
     echo '<div class="delivery-rhythm-dropdown-wrapper">';
         echo $this->Form->control('RhythmTypes', [
