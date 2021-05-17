@@ -293,7 +293,7 @@ use Cake\Core\Configure;
         echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('Taxes.id_tax', [
             'type' => 'select',
-            'label' => '',
+            'label' => __d('admin', 'Selling_price'),
             'options' => $taxesForDropdown,
         ]);
      echo '</div>';
@@ -302,7 +302,7 @@ use Cake\Core\Configure;
         echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('PurchasePriceTaxes.id_tax', [
             'type' => 'select',
-            'label' => '',
+            'label' => __d('admin', 'Purchase_price'),
             'options' => $taxesForDropdown,
         ]);
     echo '</div>';

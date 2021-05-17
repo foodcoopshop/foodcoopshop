@@ -70,8 +70,8 @@ foodcoopshop.ModalProductTaxEdit = {
         $(modalSelector).modal();
 
         var productId = button.data('objectId');
-        var formHtmlA = $('.tax-dropdown-wrapper').clone();
-        var formHtmlB = $('.purchase-price-tax-dropdown-wrapper').clone();
+        var formHtmlA = $('.purchase-price-tax-dropdown-wrapper').clone();
+        var formHtmlB = $('.tax-dropdown-wrapper').clone();
 
         $(modalSelector + ' .modal-body').append(formHtmlA);
         $(modalSelector + ' .modal-body').append(formHtmlB);

@@ -321,13 +321,6 @@ input.datepicker {
 .delivery-rhythm-dropdown-wrapper {
     display: none;
 }
-.tax-dropdown-wrapper {
-    width: 240px;
-}
-.tax-dropdown-wrapper select,
-.purchase-price-tax-dropdown-wrapper select {
-    width: 240px;
-}
 .date-dropdown-placeholder select {
     width: 300px;
 }
