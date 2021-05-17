@@ -86,7 +86,7 @@ foreach($csvPayments as $csvPayment) {
             'empty' => __d('admin', 'Please_select_a_member.'),
             'class' => 'select-member',
             'options' => $customersForDropdown,
-            'value' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
+            'value' => $csvPayment->id_customer,
         ]);
     }
     echo  '</td>';

@@ -269,6 +269,35 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte wähle ein Mitglied aus.');
     }
 
+    public function testCsvUploadSaveNotOk()
+    {
+        $newPaymentAmount = 200;
+        $newPaymentContent = 'transaction text';
+        $newPaymentDate = '2019-03-03 02:51:25.165000';
+
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->loginAsSuperadmin();
+        $this->post(
+            Configure::read('app.slugHelper')->getReport('product'),
+            [
+                'Payments' => [
+                    [
+                        'selected' => true,
+                        'original_id_customer' => 0,
+                        'id_customer' => 0,
+                        'content' => $newPaymentContent,
+                        'already_imported' => false,
+                        'amount' => $newPaymentAmount,
+                        'date' => $newPaymentDate,
+                    ]
+                ]
+            ]
+        );
+        $this->assertResponseContains('Beim Speichern sind Fehler aufgetreten!');
+        $this->assertResponseContains('name="Payments[0][id_customer]" class="select-member form-error"');
+        $this->assertResponseContains('Bitte wähle ein Mitglied aus.');
+    }
+
     public function testCsvUploadSaveOk()
     {
         $newPaymentCustomerId = Configure::read('test.adminId');
