@@ -100,7 +100,8 @@ body.iframe_start_page {
     margin-bottom: 10px;
 }
 .modal .categories-checkboxes,
-.modal .tax-dropdown-wrapper {
+.modal .tax-dropdown-wrapper,
+.modal .purchase-price-tax-dropdown-wrapper {
     display: block;
 }
 .modal .cke {

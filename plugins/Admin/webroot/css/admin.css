@@ -168,6 +168,12 @@ i.always-available {
     line-height: 21px;
     margin-left: 5px;
 }
+
+span.purchase-price-list-element {
+    display: none;
+    margin-left: 5px;
+}
+
 tr.main-product span.name-for-dialog {
     font-weight: 600;
     line-height: 24px;
@@ -311,13 +317,15 @@ input.datepicker {
 .last-n-days-dropdown,
 .categories-checkboxes,
 .tax-dropdown-wrapper,
+.purchase-price-tax-dropdown-wrapper,
 .delivery-rhythm-dropdown-wrapper {
     display: none;
 }
 .tax-dropdown-wrapper {
     width: 240px;
 }
-.tax-dropdown-wrapper select {
+.tax-dropdown-wrapper select,
+.purchase-price-tax-dropdown-wrapper select {
     width: 240px;
 }
 .date-dropdown-placeholder select {

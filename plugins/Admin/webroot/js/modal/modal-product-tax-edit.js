@@ -50,7 +50,8 @@ foodcoopshop.ModalProductTaxEdit = {
             '/admin/products/editTax/',
             {
                 productId: productId,
-                taxId: $(modalSelector + ' #taxes-id-tax-' + productId).val()
+                taxId: $(modalSelector + ' #taxes-id-tax-' + productId).val(),
+                purchasePriceTaxId: $(modalSelector + ' #purchase-price-taxes-id-tax-' + productId).val()
             },
             {
                 onOk: function (data) {
@@ -69,9 +70,11 @@ foodcoopshop.ModalProductTaxEdit = {
         $(modalSelector).modal();
 
         var productId = button.data('objectId');
-        var formHtml = $('.tax-dropdown-wrapper').clone();
+        var formHtmlA = $('.tax-dropdown-wrapper').clone();
+        var formHtmlB = $('.purchase-price-tax-dropdown-wrapper').clone();
 
-        $(modalSelector + ' .modal-body').append(formHtml);
+        $(modalSelector + ' .modal-body').append(formHtmlA);
+        $(modalSelector + ' .modal-body').append(formHtmlB);
 
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
         $(modalSelector + ' .modal-body').prepend(
@@ -79,10 +82,16 @@ foodcoopshop.ModalProductTaxEdit = {
         );
 
         // make id unique and preselect
-        var select = $(modalSelector).find('select');
+        var select = $(modalSelector).find('select[name="Taxes[id_tax]"]');
         var newId = select.attr('id') + '-' + productId;
         select.attr('id', newId);
         var preselectedTaxRate = $('#product-' + productId + ' input[name="Products[id_tax]"').val();
+        select.val(preselectedTaxRate);
+
+        var select = $(modalSelector).find('select[name="PurchasePriceTaxes[id_tax]"]');
+        var newId = select.attr('id') + '-' + productId;
+        select.attr('id', newId);
+        var preselectedTaxRate = $('#product-' + productId + ' input[name="PurchasePriceProducts[id_tax]"').val();
         select.val(preselectedTaxRate);
 
         $(modalSelector + ' .product-id').val(productId);

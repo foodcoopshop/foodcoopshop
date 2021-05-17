@@ -287,10 +287,20 @@ use Cake\Core\Configure;
             'options' => $categoriesForCheckboxes,
             'escape' => false,
         ]);
-        echo '</div>';
-        echo '<div class="tax-dropdown-wrapper">';
+    echo '</div>';
+
+    echo '<div class="tax-dropdown-wrapper">';
         echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('Taxes.id_tax', [
+            'type' => 'select',
+            'label' => '',
+            'options' => $taxesForDropdown,
+        ]);
+     echo '</div>';
+
+    echo '<div class="purchase-price-tax-dropdown-wrapper">';
+        echo '<input type="hidden" class="product-id" />';
+        echo $this->Form->control('PurchasePriceTaxes.id_tax', [
             'type' => 'select',
             'label' => '',
             'options' => $taxesForDropdown,
