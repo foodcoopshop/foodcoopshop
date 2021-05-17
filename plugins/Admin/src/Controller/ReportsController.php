@@ -59,6 +59,7 @@ class ReportsController extends AdminAppController
             $reader = RaiffeisenBankingReader::createFromString($content);
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
+                $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
             } catch(\Exception $e) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
                 $this->redirect($this->referer());
@@ -80,11 +81,14 @@ class ReportsController extends AdminAppController
             $csvPayments = $this->Payment->newEntities(
                 $csvRecords,
                 [
-                    'validate' => 'csvImport',
-                ]
+                    'validate' => 'csvImportUpload',
+                ],
             );
 
             try {
+
+                $paymentsHaveErrors = false;
+
                 foreach($csvPayments as &$csvPayment) {
 
                     if (!isset($csvPayment->selected)) {
@@ -93,20 +97,33 @@ class ReportsController extends AdminAppController
                             $csvPayment->selected = false;
                         }
                     }
-
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
                             'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
-                            'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
+                            'id_customer' => $csvPayment->id_customer ?? $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
-                        ]
+                        ],
+                        [
+                            'validate' => 'csvImportSave',
+                        ],
                     );
 
+                    if ($csvPayment->selected && $csvPayment->hasErrors()) {
+                        $paymentsHaveErrors |= true;
+                    }
+
                 }
-                if ($saveRecords) {
+
+                $this->set('csvPayments', $csvPayments);
+
+                if ($paymentsHaveErrors && $saveRecords) {
+                    $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+                }
+
+                if (!$paymentsHaveErrors && $saveRecords) {
 
                     $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
 
@@ -156,10 +173,6 @@ class ReportsController extends AdminAppController
                         }
 
                     });
-
-                } else {
-                    $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
-                    $this->set('csvPayments', $csvPayments);
                 }
             } catch(PersistenceFailedException $e) {
                 $this->Flash->error(__d('admin', 'Errors_while_saving!'));

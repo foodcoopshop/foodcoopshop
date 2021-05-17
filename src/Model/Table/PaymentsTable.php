@@ -68,13 +68,19 @@ class PaymentsTable extends AppTable
         return $validator;
     }
 
-    public function validationCsvImport(Validator $validator)
+    public function validationCsvImportUpload(Validator $validator)
     {
         $validator = $this->validationAdd($validator);
         $validator->requirePresence('amount', true, __('Please_enter_a_correct_amount.'));
         $validator->requirePresence('date', true, __('Please_enter_a_correct_date.'));
+        return $validator;
+    }
+
+    public function validationCsvImportSave(Validator $validator)
+    {
+        $validator = $this->validationAdd($validator);
         $validator->requirePresence('id_customer', true, __('Please_select_a_customer.'));
-        $validator->numeric('id_customer', __('Please_select_a_customer.'));
+        $validator->greaterThan('id_customer', 0, __('Please_select_a_customer.'));
         return $validator;
     }
 

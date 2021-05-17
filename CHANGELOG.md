@@ -21,8 +21,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Das Bestelldatum wird nun im Tooltip über dem Bestellstatus-Icon angezeigt. [I#652](https://github.com/foodcoopshop/foodcoopshop/issues/652) / [PR#653](https://github.com/foodcoopshop/foodcoopshop/pull/653) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Alle Formulare sind jetzt noch besser gegen potenzielle Angriffe abgesichert. [I#659](https://github.com/foodcoopshop/foodcoopshop/issues/659) / [PR#661](https://github.com/foodcoopshop/foodcoopshop/pull/661) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### Bugfixes
+- Guthaben-Aufladungen mit CSV-Upload: Wenn ein Mitglied nicht ausgewählt wurde und man speichern wollte, wurde nicht die Fehlermeldung beim Mitglied angezeigt, sondern die allgemeine Fehlerseite. [I#677](https://github.com/foodcoopshop/foodcoopshop/issues/677) / [PR#678](https://github.com/foodcoopshop/foodcoopshop/pull/678) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ### Code Cleaning
-- Die alte Funktion zum Verwalten der Mitgliedbeitrag wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/6667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die alte Funktion zum Verwalten der Mitgliedbeitrag wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...develop)

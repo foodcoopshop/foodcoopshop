@@ -65,6 +65,7 @@ class FileAndEmailLog extends FileLog
             '{"promise_to_pickup_products":{"equals":',
             '{"id_customer":{"_required":',
             '{"id_customer":{"numeric":',
+            '{"id_customer":{"greaterThan":',
             '{"name":{"_empty":"Bitte gib einen Namen ein."',
             '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000',
             '{"amount":{"greaterThanOrEqual":',

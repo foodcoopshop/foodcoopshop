@@ -36,12 +36,12 @@
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
     "svelte": "^3.38.2",
-    "swiper": "6.5.9",
+    "swiper": "6.6.1",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.13.5",
+    "uglify-js": "^3.13.6",
     "webrtc-adapter": "^8.0.0"
   },
   "devDependencies": {
-    "eslint": "^7.25.0"
+    "eslint": "^7.26.0"
   }
 }
