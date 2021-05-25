@@ -38,15 +38,19 @@ echo '<td>';
                     'id' => 'purchase-price-tax-id-' . $product->id_product,
                     'value' => $product->purchase_price_product->tax_id,
                 ]);
-                if (!empty($product->purchase_price_product->tax)) {
-                    echo '<span class="purchase-price-tax-for-dialog purchase-price-list-element">';
-                    if (!is_null($product->purchase_price_product->tax->rate)) {
-                        echo $this->Number->formatTaxRate($product->purchase_price_product->tax->rate) . '%';
-                    } else {
-                        echo '-';
+
+                echo '<span class="purchase-price-tax-for-dialog purchase-price-list-element">';
+                if ($product->purchase_price_product->tax_id !== null) {
+                    $taxRate = 0;
+                    if (!empty($product->purchase_price_product->tax)) {
+                        $taxRate = $product->purchase_price_product->tax->rate;
                     }
-                    echo '</span>';
+                    echo $this->Number->formatTaxRate($taxRate) . '%';
+                } else {
+                    echo '<i>x%</i>';
                 }
+                echo '</span>';
+
             }
         }
 

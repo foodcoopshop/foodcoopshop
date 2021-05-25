@@ -705,14 +705,7 @@ class ProductsController extends AdminAppController
                 $taxRate = 0; // 0 % does not have record in tax
             }
 
-            $entity2Save = $pppTable->find('all', [
-                'conditions' => [
-                    'product_id' => $productId,
-                ],
-            ])->first();
-            if (empty($entity2Save)) {
-                $entity2Save = $pppTable->newEntity(['product_id' => $productId]);
-            }
+            $entity2Save = $pppTable->getEntityToSave($productId);
             $patchedEntity = $pppTable->patchEntity(
                 $entity2Save,
                 [

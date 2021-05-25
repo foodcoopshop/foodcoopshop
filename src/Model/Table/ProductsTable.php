@@ -958,7 +958,7 @@ class ProductsTable extends AppTable
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                if (empty($product->purchase_price_product->tax)) {
+                if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
                     $product->purchase_price_product = (object) [
                         'tax_id' => null,
                         'tax' => [
@@ -1466,6 +1466,17 @@ class ProductsTable extends AppTable
 
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $entity2Save = $this->PurchasePriceProducts->getEntityToSave($newProductId);
+            $patchedEntity = $this->PurchasePriceProducts->patchEntity(
+                $entity2Save,
+                [
+                    'tax_id' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
+                ],
+            );
+            $this->PurchasePriceProducts->save($patchedEntity);
+        }
 
         // INSERT CATEGORY_PRODUCTS
         $this->CategoryProducts->save(

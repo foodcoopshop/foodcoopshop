@@ -28,4 +28,17 @@ class PurchasePriceProductsTable extends AppTable
         ]);
     }
 
+    public function getEntityToSave($productId)
+    {
+        $entity2Save = $this->find('all', [
+            'conditions' => [
+                'product_id' => $productId,
+            ],
+        ])->first();
+        if (empty($entity2Save)) {
+            $entity2Save = $this->newEntity(['product_id' => $productId]);
+        }
+        return $entity2Save;
+    }
+
 }
