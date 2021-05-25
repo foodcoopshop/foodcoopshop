@@ -684,44 +684,8 @@ class ProductsController extends AdminAppController
 
         $changedTaxInfoForMessage = [];
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-
             $purchasePriceTaxId = (int) $this->getRequest()->getData('purchasePriceTaxId');
-            $pppTable = $this->Product->PurchasePriceProducts;
-
-            $oldPurchasePriceTaxRate = 0;
-            if (!empty($oldProduct->purchase_price_product) && !empty($oldProduct->purchase_price_product->tax)) {
-                $oldPurchasePriceTaxRate = $oldProduct->purchase_price_product->tax->rate;
-            }
-
-            $tax = $this->Tax->find('all', [
-                'conditions' => [
-                    'Taxes.id_tax' => $purchasePriceTaxId,
-                ]
-            ])->first();
-
-            if (! empty($tax)) {
-                $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
-            } else {
-                $taxRate = 0; // 0 % does not have record in tax
-            }
-
-            $entity2Save = $pppTable->getEntityToSave($productId);
-            $patchedEntity = $pppTable->patchEntity(
-                $entity2Save,
-                [
-                    'tax_id' => $purchasePriceTaxId,
-                ]
-            );
-
-            if ($patchedEntity->isDirty('tax_id')) {
-                $changedTaxInfoForMessage[] = [
-                    'label' => __d('admin', 'Purchase_price') . ': ',
-                    'oldTaxRate' => $oldPurchasePriceTaxRate,
-                    'newTaxRate' => $taxRate,
-                ];
-                $pppTable->save($patchedEntity);
-            }
-
+            $changedTaxInfoForMessage = $this->Product->PurchasePriceProducts->savePurchasePriceTax($purchasePriceTaxId, $productId, $oldProduct);
         }
 
         if (empty($oldProduct->tax)) {

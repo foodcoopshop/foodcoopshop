@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -40,5 +42,47 @@ class PurchasePriceProductsTable extends AppTable
         }
         return $entity2Save;
     }
+
+    public function savePurchasePriceTax($taxId, $productId, $oldProduct): Array
+    {
+        $changedTaxInfoForMessage = [];
+        $oldPurchasePriceTaxRate = 0;
+        if (!empty($oldProduct->purchase_price_product) && !empty($oldProduct->purchase_price_product->tax)) {
+            $oldPurchasePriceTaxRate = $oldProduct->purchase_price_product->tax->rate;
+        }
+
+        $tax = $this->Taxes->find('all', [
+            'conditions' => [
+                'Taxes.id_tax' => $taxId,
+            ]
+        ])->first();
+
+        if (! empty($tax)) {
+            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
+        } else {
+            $taxRate = 0; // 0 % does not have record in tax
+        }
+
+        $entity2Save = $this->getEntityToSave($productId);
+        $patchedEntity = $this->patchEntity(
+            $entity2Save,
+            [
+                'tax_id' => $taxId,
+            ]
+        );
+
+        if ($patchedEntity->isDirty('tax_id')) {
+            $changedTaxInfoForMessage[] = [
+                'label' => __d('admin', 'Purchase_price') . ': ',
+                'oldTaxRate' => $oldPurchasePriceTaxRate,
+                'newTaxRate' => $taxRate,
+            ];
+            $this->save($patchedEntity);
+        }
+
+        return $changedTaxInfoForMessage;
+
+    }
+
 
 }
