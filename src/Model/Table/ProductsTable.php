@@ -962,7 +962,7 @@ class ProductsTable extends AppTable
                     $product->purchase_price_product = (object) [
                         'tax_id' => null,
                         'tax' => [
-                            'rate' => 0,
+                            'rate' => null,
                         ],
                     ];
                 }
