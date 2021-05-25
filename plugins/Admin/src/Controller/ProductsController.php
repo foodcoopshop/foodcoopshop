@@ -665,9 +665,45 @@ class ProductsController extends AdminAppController
         $productId = (int) $this->getRequest()->getData('productId');
         $taxId = (int) $this->getRequest()->getData('taxId');
 
+        $this->Tax = $this->getTableLocator()->get('Taxes');
+
+        $contain = [
+            'Taxes',
+            'ProductAttributes',
+            'Manufacturers',
+        ];
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $contain[] = 'PurchasePriceProducts.Taxes';
+        }
+        $oldProduct = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => $contain,
+        ])->first();
+
+        $changedTaxInfoForMessage = [];
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+
             $purchasePriceTaxId = (int) $this->getRequest()->getData('purchasePriceTaxId');
             $pppTable = $this->Product->PurchasePriceProducts;
+
+            $oldPurchasePriceTaxRate = 0;
+            if (!empty($oldProduct->purchase_price_product) && !empty($oldProduct->purchase_price_product->tax)) {
+                $oldPurchasePriceTaxRate = $oldProduct->purchase_price_product->tax->rate;
+            }
+
+            $tax = $this->Tax->find('all', [
+                'conditions' => [
+                    'Taxes.id_tax' => $purchasePriceTaxId,
+                ]
+            ])->first();
+
+            if (! empty($tax)) {
+                $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
+            } else {
+                $taxRate = 0; // 0 % does not have record in tax
+            }
 
             $entity2Save = $pppTable->find('all', [
                 'conditions' => [
@@ -677,27 +713,23 @@ class ProductsController extends AdminAppController
             if (empty($entity2Save)) {
                 $entity2Save = $pppTable->newEntity(['product_id' => $productId]);
             }
-
-            $pppTable->save(
-                $pppTable->patchEntity(
-                    $entity2Save,
-                    [
-                        'tax_id' => $purchasePriceTaxId,
-                    ]
-                )
+            $patchedEntity = $pppTable->patchEntity(
+                $entity2Save,
+                [
+                    'tax_id' => $purchasePriceTaxId,
+                ]
             );
-        }
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ],
-            'contain' => [
-                'Taxes',
-                'ProductAttributes',
-                'Manufacturers'
-            ]
-        ])->first();
+            if ($patchedEntity->isDirty('tax_id')) {
+                $changedTaxInfoForMessage[] = [
+                    'label' => __d('admin', 'Purchase_price') . ': ',
+                    'oldTaxRate' => $oldPurchasePriceTaxRate,
+                    'newTaxRate' => $taxRate,
+                ];
+                $pppTable->save($patchedEntity);
+            }
+
+        }
 
         if (empty($oldProduct->tax)) {
             $oldProduct->tax = (object) [
@@ -736,7 +768,6 @@ class ProductsController extends AdminAppController
                 );
             }
 
-            $this->Tax = $this->getTableLocator()->get('Taxes');
             $tax = $this->Tax->find('all', [
                 'conditions' => [
                     'Taxes.id_tax' => $taxId
@@ -744,23 +775,44 @@ class ProductsController extends AdminAppController
             ])->first();
 
             if (! empty($tax)) {
-                $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
+                $taxRate = $tax->rate;
             } else {
                 $taxRate = 0; // 0 % does not have record in tax
             }
 
             if (! empty($oldProduct->tax)) {
-                $oldTaxRate = Configure::read('app.numberHelper')->formatTaxRate($oldProduct->tax->rate);
+                $oldTaxRate = $oldProduct->tax->rate;
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
 
-            $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldTaxRate . '%', $taxRate . '%']);
+            $changedTaxInfoForMessage[] = [
+                'label' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Selling_price') . ': ' : '',
+                'oldTaxRate' => $oldTaxRate,
+                'newTaxRate' => $taxRate,
+            ];
+
+        }
+
+        if (!empty($changedTaxInfoForMessage)) {
+            $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully.', [
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+            ]);
+            foreach($changedTaxInfoForMessage as $info) {
+                $messageString .= '<br />';
+                if ($info['label'] != '') {
+                    $messageString .= '<b>' . $info['label'] . '</b>';
+                }
+                $messageString .= __d('admin', 'From_{0}_to_{1}', [
+                    Configure::read('app.numberHelper')->formatTaxRate($info['oldTaxRate']) . '%',
+                    '<b>' . Configure::read('app.numberHelper')->formatTaxRate($info['newTaxRate']) . '%</b>',
+                ]);
+            }
             $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
         } else {
             $messageString = __d('admin', 'Nothing_changed.');
         }
-
         $this->Flash->success($messageString);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
