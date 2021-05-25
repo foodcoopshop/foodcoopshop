@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-05-25 09:37+0200\n"
+"POT-Creation-Date: 2021-05-25 14:24+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -483,9 +483,6 @@ msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}."
 msgstr ""
 
 msgid "Saving_successful."
-msgstr ""
-
-msgid "Purchase_price"
 msgstr ""
 
 msgid "Selling_price"
@@ -1406,6 +1403,9 @@ msgstr ""
 msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
 msgstr ""
 
+msgid "Purchase_price"
+msgstr ""
+
 msgid "Preselected_tax_rate_for_new_products"
 msgstr ""
 
@@ -1650,6 +1650,12 @@ msgid "Product_declaration"
 msgstr ""
 
 msgid "Stock_product"
+msgstr ""
+
+msgid "Purchase_price_abbreviation"
+msgstr ""
+
+msgid "Selling_price_abbreviation"
 msgstr ""
 
 msgid "Price"

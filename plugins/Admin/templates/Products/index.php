@@ -163,7 +163,12 @@ use Cake\Core\Configure;
             echo '<th>' . $this->Paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
         echo '<th style="width:62px;">'.__d('admin', 'Amount').'</th>';
-        echo '<th>'.__d('admin', 'Price').'</th>';
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            echo '<th style="text-align:right;">'.__d('admin', 'Purchase_price_abbreviation').'</th>';
+            echo '<th style="text-align:right;">'.__d('admin', 'Selling_price_abbreviation').'</th>';
+        } else {
+            echo '<th>'.__d('admin', 'Price').'</th>';
+        }
         $taxWidth = 80;
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $taxWidth = 106;
@@ -215,6 +220,10 @@ use Cake\Core\Configure;
         ]);
 
         echo $this->element('productList/data/amount', [
+            'product' => $product
+        ]);
+
+        echo $this->element('productList/data/purchasePrice', [
             'product' => $product
         ]);
 

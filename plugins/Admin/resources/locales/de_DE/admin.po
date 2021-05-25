@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-25 09:37+0200\n"
-"PO-Revision-Date: 2021-05-25 09:37+0200\n"
+"POT-Creation-Date: 2021-05-25 14:24+0200\n"
+"PO-Revision-Date: 2021-05-25 14:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -485,9 +485,6 @@ msgstr "Der Lieferrhythmus von {0} Produkten wurde erfolgreich auf {1} geändert
 
 msgid "Saving_successful."
 msgstr "Speichern erfolgreich."
-
-msgid "Purchase_price"
-msgstr "Einkaufspreis"
 
 msgid "Selling_price"
 msgstr "Verkaufspreis"
@@ -1407,6 +1404,9 @@ msgstr "Variabler Mitgliedsbeitrag in"
 msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
 msgstr "Die Rechnung für den Hersteller wird um den angegebenen Prozentwert reduziert (nur ganze Zahlen erlaubt)."
 
+msgid "Purchase_price"
+msgstr "Einkaufspreis"
+
 msgid "Preselected_tax_rate_for_new_products"
 msgstr "Voreingestellter Steuersatz für neue Produkte"
 
@@ -1652,6 +1652,12 @@ msgstr "Produktdeklaration"
 
 msgid "Stock_product"
 msgstr "Lagerprodukt"
+
+msgid "Purchase_price_abbreviation"
+msgstr "EP"
+
+msgid "Selling_price_abbreviation"
+msgstr "VP"
 
 msgid "Price"
 msgstr "Preis"

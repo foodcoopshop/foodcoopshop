@@ -961,10 +961,20 @@ class ProductsTable extends AppTable
                 if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
                     $product->purchase_price_product = (object) [
                         'tax_id' => null,
+                        'price' => null,
                         'tax' => [
                             'rate' => null,
                         ],
                     ];
+                }
+                if (!empty($product->purchase_price_product)) {
+                    $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
+                    $purchasePrice = $product->purchase_price_product->price ?? null;
+                    if ($purchasePrice === null) {
+                        $product->purchase_gross_price = $purchasePrice;
+                    } else {
+                        $product->purchase_gross_price = $this->getGrossPrice($product->id_product, $purchasePrice, $purchasePriceTaxRate);
+                    }
                 }
             }
 
@@ -1067,11 +1077,12 @@ class ProductsTable extends AppTable
                     }
 
                     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                        $purchasePrice = [];
-                        if (!empty($attribute->product_attribute_purchase_price)) {
-                            $purchasePrice['price'] = $attribute->product_attribute_purchase_price->price;
+                        $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
+                        if ($purchasePrice === null) {
+                            $preparedProduct['purchase_gross_price'] = $purchasePrice;
+                        } else {
+                            $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($product->id_product, $purchasePrice, $purchasePriceTaxRate);
                         }
-                        $preparedProduct['purchase_price'] = $purchasePrice;
                     }
                     $preparedProducts[] = $preparedProduct;
                 }
