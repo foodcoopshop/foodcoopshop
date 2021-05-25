@@ -953,8 +953,19 @@ class ProductsTable extends AppTable
 
             if (empty($product->tax)) {
                 $product->tax = (object) [
-                    'rate' => 0
+                    'rate' => 0,
                 ];
+            }
+
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                if (empty($product->purchase_price_product->tax)) {
+                    $product->purchase_price_product = (object) [
+                        'tax_id' => null,
+                        'tax' => [
+                            'rate' => 0,
+                        ],
+                    ];
+                }
             }
 
             $rowClass[] = 'main-product';
