@@ -20,8 +20,8 @@
 /*
  * You can remove this if you are confident that your PHP version is sufficient.
  */
-if (version_compare(PHP_VERSION, '7.3.0') < 0) {
-    trigger_error('Your PHP version must be equal or higher than 7.3.0 to use CakePHP.', E_USER_ERROR);
+if (version_compare(PHP_VERSION, '7.4.0') < 0) {
+    trigger_error('Your PHP version must be equal or higher than 7.4.0 to use CakePHP.', E_USER_ERROR);
 }
 
 /*

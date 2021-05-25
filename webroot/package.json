@@ -20,9 +20,9 @@
     "blueimp-file-upload": "^10.31.0",
     "bootstrap": "^4.6.0",
     "bootstrap-select": "^1.13.18",
-    "chart.js": "^3.2.1",
+    "chart.js": "^3.3.0",
     "chartjs-plugin-datalabels": "^2.0.0-beta.1",
-    "ckeditor4": "^4.16.0",
+    "ckeditor4": "^4.16.1",
     "clipboard": "^2.0.8",
     "components-jqueryui": "~1.12",
     "jquery": "^3.6.0",
@@ -36,12 +36,12 @@
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
     "svelte": "^3.38.2",
-    "swiper": "6.6.1",
+    "swiper": "6.6.2",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.13.6",
+    "uglify-js": "^3.13.7",
     "webrtc-adapter": "^8.0.0"
   },
   "devDependencies": {
-    "eslint": "^7.26.0"
+    "eslint": "^7.27.0"
   }
 }
