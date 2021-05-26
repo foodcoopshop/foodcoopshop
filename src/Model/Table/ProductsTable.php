@@ -814,6 +814,7 @@ class ProductsTable extends AppTable
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $contain[] = 'PurchasePriceProducts.Taxes';
+            $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
         }
 
         $order = [
@@ -1485,7 +1486,7 @@ class ProductsTable extends AppTable
         $newProductId = $newProduct->id_product;
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $entity2Save = $this->PurchasePriceProducts->getEntityToSave($newProductId);
+            $entity2Save = $this->PurchasePriceProducts->getEntityToSaveByProductId($newProductId);
             $patchedEntity = $this->PurchasePriceProducts->patchEntity(
                 $entity2Save,
                 [

@@ -1031,6 +1031,20 @@ class ProductsController extends AdminAppController
             $taxRate = $oldProduct->purchase_price_product->tax->rate;
         }
 
+        $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
+
+        if ($ids['attributeId'] > 0) {
+            // override values for messages
+            foreach ($oldProduct->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute != $ids['attributeId']) {
+                    continue;
+                }
+                $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                $oldProduct->unit_product = $attribute->unit_product_attribute;
+                $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
+            }
+        }
+
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $entity2Save = $oldProduct->unit_product;
             $patchedEntity = $this->Product->UnitProducts->patchEntity(
@@ -1042,9 +1056,8 @@ class ProductsController extends AdminAppController
             $this->Product->UnitProducts->save($patchedEntity);
         } else {
             $purchasePrice2Save = $this->Product->getNetPrice($originalProductId, $purchaseGrossPrice, $taxRate);
-            $entity2Save = $this->Product->PurchasePriceProducts->getEntityToSave($originalProductId);
             $patchedEntity = $this->Product->PurchasePriceProducts->patchEntity(
-                $entity2Save,
+                $purchasePriceEntity2Save,
                 [
                     'price' => $purchasePrice2Save,
                 ]
@@ -1060,8 +1073,6 @@ class ProductsController extends AdminAppController
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 
-        // save: attribute + price per unit
-        // save: attribute + normal price (attention tax from product and not from attribute!)
         // price validation
         // action_log
         // unit test

@@ -30,7 +30,20 @@ class PurchasePriceProductsTable extends AppTable
         ]);
     }
 
-    public function getEntityToSave($productId)
+    public function getEntityToSaveByProductAttributeId($productAttributeId)
+    {
+        $entity2Save = $this->find('all', [
+            'conditions' => [
+                'product_attribute_id' => $productAttributeId,
+            ],
+        ])->first();
+        if (empty($entity2Save)) {
+            $entity2Save = $this->newEntity(['product_attribute_id' => $productAttributeId]);
+        }
+        return $entity2Save;
+    }
+
+    public function getEntityToSaveByProductId($productId)
     {
         $entity2Save = $this->find('all', [
             'conditions' => [
@@ -63,7 +76,7 @@ class PurchasePriceProductsTable extends AppTable
             $taxRate = 0; // 0 % does not have record in tax
         }
 
-        $entity2Save = $this->getEntityToSave($productId);
+        $entity2Save = $this->getEntityToSaveByProductId($productId);
         $patchedEntity = $this->patchEntity(
             $entity2Save,
             [
