@@ -47,7 +47,7 @@ echo '<td>';
                     }
                     echo $this->Number->formatTaxRate($taxRate) . '%';
                 } else {
-                    echo '<i>x%</i>';
+                    echo '<i>--</i>';
                 }
                 echo '</span>';
 

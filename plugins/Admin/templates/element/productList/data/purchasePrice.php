@@ -24,6 +24,7 @@ echo '<td class="cell-purchase-price ' . ($product->purchase_gross_price !== nul
     echo '<div class="table-cell-wrapper price">';
 
     if (empty($product->product_attributes)) {
+
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
@@ -33,19 +34,23 @@ echo '<td class="cell-purchase-price ' . ($product->purchase_gross_price !== nul
                 'escape' => false,
             ]
         );
-        echo '<span class="purchase-price-for-dialog">';
-            if (isset($product->purchase_gross_price)) {
+
+        echo '<span class="purchase-price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
+            if (!is_null($product->purchase_gross_price)) {
                 echo $this->Number->formatAsCurrency($product->purchase_gross_price);
             }
         echo '</span>';
-        /*
-         if (!empty($product->unit) && $product->unit->purchase_price_price_incl_per_unit) {
+
+        if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
             echo '<span class="unit-purchase-price-for-dialog">';
-                echo $this->PricePerUnit->getPricePerUnitBaseInfo($product->unit->purchase_price_price_incl_per_unit, $product->unit->name, $product->unit->amount);
+                if (!is_null($product->unit->purchase_price_incl_per_unit)) {
+                    echo $this->PricePerUnit->getPricePerUnitBaseInfo($product->unit->purchase_price_incl_per_unit, $product->unit->name, $product->unit->amount);
+                }
             echo '</span>';
         }
-        */
+
     }
+
     echo '</div>';
 
 echo '</td>';
