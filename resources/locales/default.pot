@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-04-27 17:06+0200\n"
+"POT-Creation-Date: 2021-05-26 09:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1038,6 +1038,9 @@ msgid "Default_quantity_after_sending_order_lists"
 msgstr ""
 
 msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
+msgstr ""
+
+msgid "Enter_purchase_price"
 msgstr ""
 
 msgid "delete"

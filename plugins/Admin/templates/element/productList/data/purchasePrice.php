@@ -19,7 +19,7 @@ if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
     return;
 }
 
-echo '<td class="cell-purchase-price ' . ($product->purchase_gross_price !== null && $product->purchase_gross_price == 0 ? 'not-available' : '') . '">';
+echo '<td class="cell-purchase-price">';
 
     echo '<div class="table-cell-wrapper price">';
 

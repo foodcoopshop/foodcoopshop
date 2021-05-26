@@ -34,6 +34,9 @@ class ProductsController extends AdminAppController
             case 'generateProductCards':
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
+            case 'editPurchasePrice':
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED');
+                break;
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
@@ -991,6 +994,39 @@ class ProductsController extends AdminAppController
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+    }
+
+    public function editPurchasePrice()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+
+        $originalProductId = $this->getRequest()->getData('productId');
+        $purchasePrice = $this->getRequest()->getData('purchasePrice');
+
+        pr($originalProductId);
+        pr($purchasePrice);
+        exit;
+
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productId = $ids['productId'];
+
+        $oldProduct = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ],
+            'contain' => [
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
+                'ProductAttributes.UnitProductAttributes',
+                'UnitProducts',
+            ]
+        ])->first();
+
     }
 
     public function editPrice()

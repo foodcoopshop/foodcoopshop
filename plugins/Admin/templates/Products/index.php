@@ -47,10 +47,16 @@ use Cake\Core\Configure;
 
         if ($advancedStockManagementEnabled) {
             $this->element('addScript', [
-                'script' =>
-                    Configure::read('app.jsNamespace') . ".ModalProductIsStockProductEdit.init();"
+                'script' => Configure::read('app.jsNamespace') . ".ModalProductIsStockProductEdit.init();"
             ]);
         }
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".ModalProductPurchasePriceEdit.init();"
+            ]);
+        }
+
     ?>
 
     <div class="filter-container">

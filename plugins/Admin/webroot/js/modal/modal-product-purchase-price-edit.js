@@ -18,47 +18,30 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
         var modalSelector = '#modal-product-purchase-price-edit';
 
         $('a.product-purchase-price-edit-button').on('click', function () {
+
+            foodcoopshop.Modal.appendModalToDom(
+                modalSelector,
+                foodcoopshop.LocalizedJs.dialogProduct.EnterPurchasePrice,
+                foodcoopshop.ModalProductPurchasePriceEdit.getHtml()
+            );
+
+            foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+                foodcoopshop.ModalProductPurchasePriceEdit.getSuccessHandler(modalSelector);
+            });
+
+            $(modalSelector).on('hidden.bs.modal', function (e) {
+                foodcoopshop.ModalProductPurchasePriceEdit.getCloseHandler(modalSelector);
+            });
             foodcoopshop.ModalProductPurchasePriceEdit.getOpenHandler($(this), modalSelector);
         });
 
     },
 
     getHtml : function() {
-        var html = '<label for="dialogPricePrice"></label><br />';
-        html += '<label class="radio">';
-        html += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price" checked="checked" class="price" />';
-        html += foodcoopshop.LocalizedJs.dialogProduct.PricePerUnit;
-        html += '</label>';
-        html += '<div class="price-wrapper">';
-        html += '<input type="number" step="0.01" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        html += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.inclVAT + ')<br />';
-        html += '</div>';
-        html += '<hr />';
-        html += '<label class="radio">';
-        html += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price-per-unit" class="price-per-unit"/>';
-        html += foodcoopshop.LocalizedJs.dialogProduct.PricePerWeightForAdaptionAfterDelivery;
-        html += '</label>';
-        html += '<div class="price-per-unit-wrapper deactivated">';
-        html += '<input type="number" step="0.01" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        html += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.inclVAT + ') ' + foodcoopshop.LocalizedJs.dialogProduct.for;
-        html += '<select name="dialogPriceUnitAmount" id="dialogPriceUnitAmount">';
-        html += '<option value="1" selected>1</option>';
-        html += '<option value="10">10</option>';
-        html += '<option value="20">20</option>';
-        html += '<option value="50">50</option>';
-        html += '<option value="100">100</option>';
-        html += '<option value="200">200</option>';
-        html += '<option value="500">500</option>';
-        html += '<option value="1000">1.000</option>';
-        html += '</select> ';
-        html += '<select name="dialogPriceUnitName" id="dialogPriceUnitName">';
-        html += '<option value="kg" selected>kg</option>';
-        html += '<option value="g">g</option>';
-        html += '<option value="l">l</option>';
-        html += '</select><br />';
-        html += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
-        html += '</div>';
-        html += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
+        var html = '<label for="dialogPurchasePricePrice"><b></b></label><br />';
+        html += '<input type="number" step="0.01" name="dialogPurchasePricePrice" id="dialogPurchasePricePrice" value="" />';
+        html += '<b class="currency-symbol">' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b>';
+        html += '<input type="hidden" name="dialogPurchasePriceProductId" id="dialogPurchasePriceProductId" value="" />';
         return html;
     },
 
@@ -68,27 +51,11 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
 
     getSuccessHandler : function(modalSelector) {
 
-        var pricePerUnitEnabled = $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0;
-
-        var priceInclPerUnit = $('#dialogPricePriceInclPerUnit').val();
-        var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
-
-        if ($('#dialogPriceProductId').val() == '') {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.helper.anErrorOccurred);
-            foodcoopshop.Modal.resetButtons(modalSelector);
-            return;
-        }
-
         foodcoopshop.Helper.ajaxCall(
-            '/admin/products/editPrice/',
+            '/admin/products/editPurchasePrice/',
             {
-                productId: $('#dialogPriceProductId').val(),
-                price: $('#dialogPricePrice').val(),
-                priceInclPerUnit: priceInclPerUnit,
-                pricePerUnitEnabled: pricePerUnitEnabled,
-                priceUnitName: $('#dialogPriceUnitName').val(),
-                priceUnitAmount: $('#dialogPriceUnitAmount').val(),
-                priceQuantityInUnits : quantityInUnits
+                productId: $('#dialogPurchasePriceProductId').val(),
+                purchasePrice: $('#dialogPurchasePricePrice').val()
             },
             {
                 onOk: function (data) {
@@ -105,78 +72,33 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        foodcoopshop.Modal.appendModalToDom(
-            modalSelector,
-            foodcoopshop.LocalizedJs.dialogProduct.ChangePrice,
-            foodcoopshop.ModalProductPurchasePriceEdit.getHtml()
-        );
-
-        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalProductPurchasePriceEdit.getSuccessHandler(modalSelector);
-        });
-
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalProductPurchasePriceEdit.getCloseHandler(modalSelector);
-        });
-
-        $(modalSelector + ' input[name="dialogPricePricePerUnitEnabled"]').on('change', function() {
-            var priceAsUnitWrapper = $(modalSelector + ' .price-per-unit-wrapper');
-            var priceWrapper = $(modalSelector + ' .price-wrapper');
-            if ($(this).val() == 'price-per-unit') {
-                priceAsUnitWrapper.removeClass('deactivated');
-                priceWrapper.addClass('deactivated');
-            } else {
-                priceAsUnitWrapper.addClass('deactivated');
-                priceWrapper.removeClass('deactivated');
-            }
-        });
-
-        var row = button.closest('tr');
-        var productId = row.find('td.cell-id').html();
-
-        var radioMainSelector = modalSelector + ' input[name="dialogPricePricePerUnitEnabled"]';
-        var radio;
-        var unitData = {};
-        var unitObject = $('#product-unit-object-' + productId);
-        if (unitObject.length > 0) {
-            unitData = unitObject.data('product-unit-object');
-            if (unitData.price_per_unit_enabled === 1) {
-                radio = $(radioMainSelector + '.price-per-unit');
-            }
-            $(modalSelector + ' #dialogPricePriceInclPerUnit').val(unitData.price_incl_per_unit);
-            $(modalSelector + ' #dialogPriceUnitName').val(unitData.name);
-            $(modalSelector + ' #dialogPriceUnitName').trigger('change');
-            $(modalSelector + ' #dialogPriceUnitAmount').val(unitData.amount);
-            $(modalSelector + ' #dialogPriceQuantityInUnits').val(parseFloat(unitData.quantity_in_units));
-        }
-        if (radio === undefined) {
-            radio = $(radioMainSelector + '.price');
-        }
-        radio.prop('checked', true);
-        radio.trigger('change');
-
-        var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('span.price-for-dialog').html()).toFixed(2);
-        $(modalSelector + ' #dialogPricePrice').val(price);
-        $(modalSelector + ' #dialogPriceProductId').val(productId);
-        var label = foodcoopshop.Admin.getProductNameForDialog(row);
-        $(modalSelector + ' label[for="dialogPricePrice"]').html('<b>' + label + '</b>');
-
-        $('#dialogPriceUnitName').on('change', function() {
-            var stepValue = '0.001';
-            var minValue = '0.001';
-            if ($(this).val() == 'g') {
-                stepValue = 1;
-                minValue = 1;
-            }
-            var quantityInUnitsField = $(modalSelector + ' #dialogPriceQuantityInUnits');
-            quantityInUnitsField.attr('step', stepValue);
-            quantityInUnitsField.attr('min', minValue);
-            $(modalSelector + ' span.unit-name-placeholder').html($(this).val());
-        }).trigger('change');
-
         $(modalSelector).modal();
 
+        var row = button.closest('tr');
+        var purchasePriceContainer = row.find('span.purchase-price-for-dialog');
+        var purchasePrice;
+        var purchasePriceUnit = '';
+        if (purchasePriceContainer.length > 0) {
+            purchasePrice = purchasePriceContainer.html();
+        }
+
+
+        var unitPurchasePriceContainer = row.find('span.unit-purchase-price-for-dialog');
+        if (unitPurchasePriceContainer.length > 0) {
+            purchasePrice = unitPurchasePriceContainer.html();
+            purchasePriceUnit = unitPurchasePriceContainer.html().split('&nbsp;')[1];
+            $(modalSelector).find('.currency-symbol').html(purchasePriceUnit);
+        }
+
+        purchasePrice = foodcoopshop.Helper.getCurrencyAsFloat(purchasePrice).toFixed(2);
+
+        $(modalSelector + ' #dialogPurchasePricePrice').val(purchasePrice);
+        $(modalSelector + ' #dialogPurchasePriceProductId').val(row.find('td.cell-id').html());
+        var label = foodcoopshop.Admin.getProductNameForDialog(row);
+        $(modalSelector + ' label[for="dialogPurchasePricePrice"] b').html(label);
+
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
+        $('#dialogPurchasePricePrice').focus();
 
     }
 
