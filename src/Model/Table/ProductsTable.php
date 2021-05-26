@@ -814,7 +814,6 @@ class ProductsTable extends AppTable
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $contain[] = 'PurchasePriceProducts.Taxes';
-            $contain[] = 'ProductAttributes.PurchasePriceProductAttributes.Taxes';
         }
 
         $order = [
@@ -1251,8 +1250,15 @@ class ProductsTable extends AppTable
         return $grossPrice;
     }
 
-    public function getNetPrice($productId, $grossPrice)
+    public function getNetPrice($productId, $grossPrice, $taxRate = null)
     {
+
+        if (!is_null($taxRate)) {
+            $netPrice = $grossPrice / (100 + $taxRate) * 100;
+            $netPrice = round($netPrice, 6);
+            return $netPrice;
+        }
+
         $grossPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($grossPrice);
 
         if (!$grossPrice > -1) { // allow 0 as new price

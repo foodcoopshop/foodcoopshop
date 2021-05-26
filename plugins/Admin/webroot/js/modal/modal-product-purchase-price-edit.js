@@ -86,7 +86,7 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
         var unitPurchasePriceContainer = row.find('span.unit-purchase-price-for-dialog');
         if (unitPurchasePriceContainer.length > 0) {
             purchasePrice = unitPurchasePriceContainer.html();
-            purchasePriceUnit = unitPurchasePriceContainer.html().split('&nbsp;')[1];
+            purchasePriceUnit = row.find('span.unit-price-for-dialog').html().split('&nbsp;')[1];
             $(modalSelector).find('.currency-symbol').html(purchasePriceUnit);
         }
 

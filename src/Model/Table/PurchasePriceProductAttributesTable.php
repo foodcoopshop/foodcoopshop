@@ -23,9 +23,6 @@ class PurchasePriceProductAttributesTable extends AppTable
         $this->setTable('purchase_prices');
         parent::initialize($config);
         $this->setPrimaryKey('product_attribute_id');
-        $this->belongsTo('Taxes', [
-            'foreignKey' => 'tax_id'
-        ]);
     }
 
 }

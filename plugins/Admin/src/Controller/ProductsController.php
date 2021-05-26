@@ -1005,11 +1005,8 @@ class ProductsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $originalProductId = $this->getRequest()->getData('productId');
-        $purchasePrice = $this->getRequest()->getData('purchasePrice');
-
-        pr($originalProductId);
-        pr($purchasePrice);
-        exit;
+        $purchaseGrossPrice = $this->getRequest()->getData('purchasePrice');
+        $purchaseGrossPrice = Configure::read('app.numberHelper')->getStringAsFloat($purchaseGrossPrice);
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
@@ -1024,8 +1021,50 @@ class ProductsController extends AdminAppController
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.UnitProductAttributes',
                 'UnitProducts',
-            ]
+                'PurchasePriceProducts.Taxes',
+                'ProductAttributes.PurchasePriceProductAttributes',
+            ],
         ])->first();
+
+        $taxRate = 0;
+        if (!empty($oldProduct->purchase_price_product->tax)) {
+            $taxRate = $oldProduct->purchase_price_product->tax->rate;
+        }
+
+        if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
+            $entity2Save = $oldProduct->unit_product;
+            $patchedEntity = $this->Product->UnitProducts->patchEntity(
+                $entity2Save,
+                [
+                    'purchase_price_incl_per_unit' => $purchaseGrossPrice,
+                ]
+            );
+            $this->Product->UnitProducts->save($patchedEntity);
+        } else {
+            $purchasePrice2Save = $this->Product->getNetPrice($originalProductId, $purchaseGrossPrice, $taxRate);
+            $entity2Save = $this->Product->PurchasePriceProducts->getEntityToSave($originalProductId);
+            $patchedEntity = $this->Product->PurchasePriceProducts->patchEntity(
+                $entity2Save,
+                [
+                    'price' => $purchasePrice2Save,
+                ]
+            );
+            $this->Product->PurchasePriceProducts->save($patchedEntity);
+        }
+
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+        // save: attribute + price per unit
+        // save: attribute + normal price (attention tax from product and not from attribute!)
+        // price validation
+        // action_log
+        // unit test
 
     }
 
