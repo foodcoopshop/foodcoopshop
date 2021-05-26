@@ -186,7 +186,6 @@ foodcoopshop.ModalPaymentAdd = {
         form.remove();
 
         $(modalSelector + ' input[type="number"]').focus();
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
 
         foodcoopshop.Helper.initDatepicker();
         $(modalSelector).find('input.datepicker').datepicker({  maxDate: '0'});

@@ -97,7 +97,6 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
         var label = foodcoopshop.Admin.getProductNameForDialog(row);
         $(modalSelector + ' label[for="dialogPurchasePricePrice"] b').html(label);
 
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
         $('#dialogPurchasePricePrice').focus();
 
     }

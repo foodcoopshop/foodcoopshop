@@ -287,27 +287,6 @@ foodcoopshop.Helper = {
         return isMobile;
     },
 
-    isEdge : function() {
-        var isEdge = false;
-        if (navigator.userAgent.indexOf('Edge') >= 0) {
-            isEdge = true;
-        }
-        return isEdge;
-    },
-
-    /**
-     * as long as edge is the only major browser that does not support commas in input fields
-     * with type="number", manually change the type to text
-     */
-    changeInputNumberToTextForEdge : function() {
-        if (this.isEdge()) {
-            var numberInputs = $('input[type="number"]');
-            numberInputs.each(function() {
-                $(this).get(0).type = 'text';
-            });
-        }
-    },
-
     initLoginForm: function () {
         $('#LoginForm button[type="submit"]').on('click', function () {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');

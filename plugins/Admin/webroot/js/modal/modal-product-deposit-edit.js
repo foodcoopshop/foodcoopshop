@@ -86,7 +86,6 @@ foodcoopshop.ModalProductDepositEdit = {
         var label = foodcoopshop.Admin.getProductNameForDialog(row);
         $(modalSelector + ' label[for="dialogDepositDeposit"] b').html(label);
 
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
         $('#dialogDepositDeposit').focus();
 
     }
