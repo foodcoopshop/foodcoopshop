@@ -1026,6 +1026,10 @@ class ProductsController extends AdminAppController
             ],
         ])->first();
 
+        if (empty($oldProduct->purchase_price_product)) {
+            $oldProduct->purchase_price_product = (object) ['price' => 0];
+        }
+
         $taxRate = 0;
         if (!empty($oldProduct->purchase_price_product->tax)) {
             $taxRate = $oldProduct->purchase_price_product->tax->rate;
@@ -1044,9 +1048,6 @@ class ProductsController extends AdminAppController
                 $oldPrice = 0;
                 if (!empty($attribute->purchase_price_product_attribute)) {
                     $oldPrice = $attribute->purchase_price_product_attribute->price;
-                }
-                if (empty($oldProduct->purchase_price_product)) {
-                    $oldProduct->purchase_price_product = (object) ['price' => 0];
                 }
                 $oldProduct->purchase_price_product->price = $oldPrice;
                 $oldProduct->unit_product = $attribute->unit_product_attribute;
@@ -1081,6 +1082,7 @@ class ProductsController extends AdminAppController
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
             $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
+
             $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->purchase_price_product->price, $taxRate));
             $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
         }
