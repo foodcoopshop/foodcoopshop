@@ -1032,21 +1032,31 @@ class ProductsController extends AdminAppController
         }
 
         $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
+        $purchaseTable = $this->Product->PurchasePriceProducts;
 
         if ($ids['attributeId'] > 0) {
-            // override values for messages
+            // override values
             foreach ($oldProduct->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute != $ids['attributeId']) {
                     continue;
                 }
                 $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                $oldPrice = 0;
+                if (!empty($attribute->purchase_price_product_attribute)) {
+                    $oldPrice = $attribute->purchase_price_product_attribute->price;
+                }
+                if (empty($oldProduct->purchase_price_product)) {
+                    $oldProduct->purchase_price_product = (object) ['price' => 0];
+                }
+                $oldProduct->purchase_price_product->price = $oldPrice;
                 $oldProduct->unit_product = $attribute->unit_product_attribute;
                 $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
+                $purchaseTable = $this->Product->ProductAttributes->PurchasePriceProductAttributes;
             }
         }
 
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
-            $entity2Save = $oldProduct->unit_product;
+            $entity2Save = clone $oldProduct->unit_product;
             $patchedEntity = $this->Product->UnitProducts->patchEntity(
                 $entity2Save,
                 [
@@ -1056,15 +1066,32 @@ class ProductsController extends AdminAppController
             $this->Product->UnitProducts->save($patchedEntity);
         } else {
             $purchasePrice2Save = $this->Product->getNetPrice($originalProductId, $purchaseGrossPrice, $taxRate);
-            $patchedEntity = $this->Product->PurchasePriceProducts->patchEntity(
+            $patchedEntity = $purchaseTable->patchEntity(
                 $purchasePriceEntity2Save,
                 [
                     'price' => $purchasePrice2Save,
                 ]
             );
-            $this->Product->PurchasePriceProducts->save($patchedEntity);
+            $purchaseTable->save($patchedEntity);
         }
 
+        $this->Flash->success(__d('admin', 'The_purchase_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
+
+        if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
+            $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+        } else {
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->purchase_price_product->price, $taxRate));
+            $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
+        }
+
+        $actionLogMessage = __d('admin', 'The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
+            '<b>' . $oldProduct->name . '</b>',
+            '<b>' . $oldProduct->manufacturer->name . '</b>',
+            $oldPrice,
+            $newPrice,
+        ]);
+        $this->ActionLog->customSave('product_purchase_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->set([
@@ -1072,10 +1099,6 @@ class ProductsController extends AdminAppController
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-
-        // price validation
-        // action_log
-        // unit test
 
     }
 

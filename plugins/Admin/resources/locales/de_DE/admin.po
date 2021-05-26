@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-25 14:24+0200\n"
-"PO-Revision-Date: 2021-05-25 14:24+0200\n"
+"POT-Creation-Date: 2021-05-26 11:18+0200\n"
+"PO-Revision-Date: 2021-05-26 11:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -533,6 +533,12 @@ msgstr "E-Mail-Benachrichtigung ab Anzahl"
 
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
 msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde geändert: {2}."
+
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
+msgstr "Der Einkaufspreis des Produktes {0} wurde erfolgreich geändert."
+
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "Der Einkaufspreis des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "Der Preis des Produktes {0} wurde erfolgreich geändert."

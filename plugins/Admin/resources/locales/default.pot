@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-05-25 14:24+0200\n"
+"POT-Creation-Date: 2021-05-26 11:18+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -531,6 +531,12 @@ msgid "Sold_out_limit"
 msgstr ""
 
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
+msgstr ""
+
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
+msgstr ""
+
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr ""
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."

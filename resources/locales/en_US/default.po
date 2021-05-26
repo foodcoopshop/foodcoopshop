@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-26 09:13+0200\n"
-"PO-Revision-Date: 2021-05-26 09:13+0200\n"
+"POT-Creation-Date: 2021-05-26 10:56+0200\n"
+"PO-Revision-Date: 2021-05-26 11:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1232,6 +1232,9 @@ msgstr "Product: activated"
 
 msgid "Action_Log_Product_quantity_changed"
 msgstr "Product: Quantity changed"
+
+msgid "Action_Log_Product_purchase_price_changed"
+msgstr "Product: Purchase price changed"
 
 msgid "Action_Log_Product_price_changed"
 msgstr "Product: Price changed"
