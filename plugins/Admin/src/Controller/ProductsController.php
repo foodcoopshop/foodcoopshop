@@ -733,16 +733,14 @@ class ProductsController extends AdminAppController
                 ]
             ])->first();
 
+            $taxRate = 0;
             if (! empty($tax)) {
                 $taxRate = $tax->rate;
-            } else {
-                $taxRate = 0; // 0 % does not have record in tax
             }
 
+            $oldTaxRate = 0;
             if (! empty($oldProduct->tax)) {
                 $oldTaxRate = $oldProduct->tax->rate;
-            } else {
-                $oldTaxRate = 0; // 0 % does not have record in tax
             }
 
             $changedTaxInfoForMessage[] = [
