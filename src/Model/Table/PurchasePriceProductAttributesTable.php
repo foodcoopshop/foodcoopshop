@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,6 +25,12 @@ class PurchasePriceProductAttributesTable extends AppTable
         $this->setTable('purchase_prices');
         parent::initialize($config);
         $this->setPrimaryKey('product_attribute_id');
+    }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->greaterThanOrEqual('price', 0, __('The_price_needs_to_be_greater_or_equal_than_0.'));
+        return $validator;
     }
 
 }
