@@ -1056,37 +1056,42 @@ class ProductsController extends AdminAppController
             }
         }
 
-        if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
-            $entity2Save = clone $oldProduct->unit_product;
-            $patchedEntity = $this->Product->UnitProducts->patchEntity(
-                $entity2Save,
-                [
-                    'purchase_price_incl_per_unit' => $purchaseGrossPrice,
-                ]
-            );
-            $this->Product->UnitProducts->save($patchedEntity);
-        } else {
-            $purchasePrice2Save = $this->Product->getNetPrice($originalProductId, $purchaseGrossPrice, $taxRate);
-            $patchedEntity = $purchaseTable->patchEntity(
-                $purchasePriceEntity2Save,
-                [
-                    'price' => $purchasePrice2Save,
-                ]
-            );
-            $purchaseTable->save($patchedEntity);
+        try {
+            if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
+                $entity2Save = clone $oldProduct->unit_product;
+                $patchedEntity = $this->Product->UnitProducts->patchEntity(
+                    $entity2Save,
+                    [
+                        'purchase_price_incl_per_unit' => $purchaseGrossPrice,
+                    ],
+                );
+                if ($patchedEntity->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->Product->UnitProducts->getAllValidationErrors($patchedEntity)));
+                }
+                $this->Product->UnitProducts->save($patchedEntity);
+                $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+                $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+            } else {
+                $purchasePrice2Save = $this->Product->getNetPrice($originalProductId, $purchaseGrossPrice, $taxRate);
+                $patchedEntity = $purchaseTable->patchEntity(
+                    $purchasePriceEntity2Save,
+                    [
+                        'price' => $purchasePrice2Save,
+                    ],
+                );
+                if ($patchedEntity->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($patchedEntity)));
+                }
+                $purchaseTable->save($patchedEntity);
+                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->purchase_price_product->price, $taxRate));
+                $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
+            }
+        }
+        catch (\Exception $e) {
+            return $this->sendAjaxError($e);
         }
 
         $this->Flash->success(__d('admin', 'The_purchase_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
-
-        if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
-            $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
-            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
-        } else {
-
-            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->purchase_price_product->price, $taxRate));
-            $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
-        }
-
         $actionLogMessage = __d('admin', 'The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
             '<b>' . $oldProduct->name . '</b>',
             '<b>' . $oldProduct->manufacturer->name . '</b>',

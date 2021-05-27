@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-26 10:56+0200\n"
-"PO-Revision-Date: 2021-05-26 11:21+0200\n"
+"POT-Creation-Date: 2021-05-27 10:49+0200\n"
+"PO-Revision-Date: 2021-05-27 10:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1745,6 +1745,9 @@ msgstr "Der erste Liefertag muss ein {0} {1} im Monat sein."
 
 msgid "deleted"
 msgstr "gelöscht"
+
+msgid "The_price_needs_to_be_greater_or_equal_than_0."
+msgstr "Der Preis muss eine positive Zahl sein."
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "Der Lagerstand muss eine Zahl sein."

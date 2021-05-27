@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-05-26 10:56+0200\n"
+"POT-Creation-Date: 2021-05-27 10:49+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1743,6 +1743,9 @@ msgid "The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month."
 msgstr ""
 
 msgid "deleted"
+msgstr ""
+
+msgid "The_price_needs_to_be_greater_or_equal_than_0."
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."

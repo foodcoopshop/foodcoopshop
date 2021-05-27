@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * fake model for using associations with foreign keys that are not the id of the model
  *
@@ -26,4 +28,11 @@ class UnitProductsTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
     }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->greaterThanOrEqual('purchase_price_incl_per_unit', 0, __('The_price_needs_to_be_greater_or_equal_than_0.'));
+        return $validator;
+    }
+
 }
