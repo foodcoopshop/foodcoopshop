@@ -1091,16 +1091,20 @@ class ProductsController extends AdminAppController
             return $this->sendAjaxError($e);
         }
 
-        $this->Flash->success(__d('admin', 'The_purchase_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
-        $actionLogMessage = __d('admin', 'The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
-            '<b>' . $oldProduct->name . '</b>',
-            '<b>' . $oldProduct->manufacturer->name . '</b>',
-            $oldPrice,
-            $newPrice,
-        ]);
-        $this->ActionLog->customSave('product_purchase_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
-        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+        $messageString = __d('admin', 'Nothing_changed.');
+        if ($oldPrice != $newPrice) {
+            $messageString = __d('admin', 'The_purchase_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']);
+            $actionLogMessage = __d('admin', 'The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+                $oldPrice,
+                $newPrice,
+            ]);
+            $this->ActionLog->customSave('product_purchase_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        }
+        $this->Flash->success($messageString);
 
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         $this->set([
             'status' => 1,
             'msg' => 'ok',
