@@ -1135,7 +1135,8 @@ class ProductsController extends AdminAppController
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.UnitProductAttributes',
-                'UnitProducts'
+                'UnitProducts',
+                'Taxes',
             ]
         ])->first();
 
@@ -1176,7 +1177,8 @@ class ProductsController extends AdminAppController
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
-            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->price));
+            $taxRate = $oldProduct->tax->rate ?? 0;
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->price, $taxRate));
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {

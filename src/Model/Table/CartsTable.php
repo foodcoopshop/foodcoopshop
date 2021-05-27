@@ -323,7 +323,7 @@ class CartsTable extends AppTable
 
         if ((!empty($unitProduct) && !$unitProduct->price_per_unit_enabled ) || is_null($unitProduct)) {
 
-            $grossPricePerPiece = $productsTable->getGrossPrice($productId, $netPricePerPiece);
+            $grossPricePerPiece = $productsTable->getGrossPrice($productId, $netPricePerPiece, $taxRate);
             $grossPrice = $grossPricePerPiece * $amount;
             $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $amount) * $amount;
 

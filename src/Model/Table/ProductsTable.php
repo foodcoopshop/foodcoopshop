@@ -1187,16 +1187,6 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    private function getTaxJoins()
-    {
-        // leave "t.active IN (0,1)" condition because 0% tax does not have a record in tax table
-        $taxJoins = 'FROM '.$this->tablePrefix.'product p
-             LEFT JOIN '.$this->tablePrefix.'tax t ON t.id_tax = p.id_tax
-             WHERE t.active IN (0,1)
-               AND p.id_product = :productId';
-        return $taxJoins;
-    }
-
     /**
      * needs to be called AFTER taxId of product was updated
      */
@@ -1208,8 +1198,11 @@ class ProductsTable extends AppTable
             $oldTaxRate = 0;
         }
 
-        $sql = 'SELECT ROUND(:oldNetPrice / ((100 + t.rate) / 100) * (1 + :oldTaxRate / 100), 6) as new_net_price ';
-        $sql .= $this->getTaxJoins();
+        $sql  = 'SELECT ROUND(:oldNetPrice / ((100 + t.rate) / 100) * (1 + :oldTaxRate / 100), 6) as new_net_price ';
+        $sql .= 'FROM '.$this->tablePrefix.'product p
+                 LEFT JOIN '.$this->tablePrefix.'tax t ON t.id_tax = p.id_tax
+                 WHERE t.active IN (0,1)
+                 AND p.id_product = :productId';
         $params = [
             'oldNetPrice' => $oldNetPrice,
             'oldTaxRate' => $oldTaxRate,
@@ -1229,34 +1222,10 @@ class ProductsTable extends AppTable
         return $newNetPrice;
     }
 
-    public function getGrossPrice($productId, $netPrice, $taxRate = null)
+    public function getGrossPrice($productId, $netPrice, $taxRate)
     {
-
-        if (!is_null($taxRate)) {
-            $grossPrice = $netPrice * (100 + $taxRate) / 100;
-            $grossPrice = round($grossPrice, 2);
-            return $grossPrice;
-        }
-
-        // fallback: if $taxRate is not passed, get it from database
-        $productId = (int) $productId;
-        $sql = 'SELECT ROUND(:netPrice * (100 + t.rate) / 100, 2) as gross_price ';
-        $sql .= $this->getTaxJoins();
-        $params = [
-            'netPrice' => $netPrice,
-            'productId' => $productId,
-        ];
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->execute($params);
-        $rate = $statement->fetchAll('assoc');
-
-        // if tax == 0% rate is empty...
-        if (empty($rate)) {
-            $grossPrice = round($netPrice, 2);
-        } else {
-            $grossPrice = $rate[0]['gross_price'];
-        }
-
+        $grossPrice = $netPrice * (100 + $taxRate) / 100;
+        $grossPrice = round($grossPrice, 2);
         return $grossPrice;
     }
 
