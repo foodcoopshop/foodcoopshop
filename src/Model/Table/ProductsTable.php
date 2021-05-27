@@ -1187,41 +1187,6 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    /**
-     * needs to be called AFTER taxId of product was updated
-     */
-    public function getNetPriceAfterTaxUpdate($productId, $oldNetPrice, $oldTaxRate)
-    {
-
-        // if old tax was 0, $oldTaxRate === null (tax 0 has no record in table tax) and would reset the price to 0
-        if (is_null($oldTaxRate)) {
-            $oldTaxRate = 0;
-        }
-
-        $sql  = 'SELECT ROUND(:oldNetPrice / ((100 + t.rate) / 100) * (1 + :oldTaxRate / 100), 6) as new_net_price ';
-        $sql .= 'FROM '.$this->tablePrefix.'product p
-                 LEFT JOIN '.$this->tablePrefix.'tax t ON t.id_tax = p.id_tax
-                 WHERE t.active IN (0,1)
-                 AND p.id_product = :productId';
-        $params = [
-            'oldNetPrice' => $oldNetPrice,
-            'oldTaxRate' => $oldTaxRate,
-            'productId' => $productId,
-        ];
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->execute($params);
-        $rate = $statement->fetchAll('assoc');
-
-        // if tax == 0 %, tax is empty
-        if (empty($rate)) {
-            $newNetPrice = $oldNetPrice * (1 + $oldTaxRate / 100);
-        } else {
-            $newNetPrice = $rate[0]['new_net_price'];
-        }
-
-        return $newNetPrice;
-    }
-
     public function getGrossPrice($productId, $netPrice, $taxRate)
     {
         $grossPrice = $netPrice * (100 + $taxRate) / 100;

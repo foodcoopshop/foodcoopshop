@@ -709,8 +709,7 @@ class ProductsController extends AdminAppController
             if (! empty($oldProduct->product_attributes)) {
                 // update net price of all attributes
                 foreach ($oldProduct->product_attributes as $attribute) {
-                    // netPrice needs to be calculated new - product tax has been saved above...
-                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute->price, $oldProduct->tax->rate);
+                    $newNetPrice = $this->Product->getNetPrice($productId, $attribute->price, $oldProduct->tax->rate);
                     $this->Product->ProductAttributes->updateAll([
                         'price' => $newNetPrice
                     ], [
@@ -719,7 +718,7 @@ class ProductsController extends AdminAppController
                 }
             } else {
                 // update price of product without attributes
-                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct->price, $oldProduct->tax->rate);
+                $newNetPrice = $this->Product->getNetPrice($productId, $oldProduct->price, $oldProduct->tax->rate);
                 $product2update = [
                     'price' => $newNetPrice
                 ];
