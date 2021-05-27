@@ -479,8 +479,17 @@ class ProductsTable extends AppTable
             $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
 
             $ids = $this->getProductIdAndAttributeId($productId);
+            $productEntity = $this->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $ids['productId'],
+                ],
+                'contain' => [
+                    'Taxes',
+                ]
+            ])->first();
+            $taxRate = $productEntity->tax->rate ?? 0;
 
-            $netPrice = $this->getNetPrice($ids['productId'], $price);
+            $netPrice = $this->getNetPrice($ids['productId'], $price, $taxRate);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
@@ -1251,38 +1260,10 @@ class ProductsTable extends AppTable
         return $grossPrice;
     }
 
-    public function getNetPrice($productId, $grossPrice, $taxRate = null)
+    public function getNetPrice($productId, $grossPrice, $taxRate)
     {
-
-        if (!is_null($taxRate)) {
-            $netPrice = $grossPrice / (100 + $taxRate) * 100;
-            $netPrice = round($netPrice, 6);
-            return $netPrice;
-        }
-
-        $grossPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($grossPrice);
-
-        if (!$grossPrice > -1) { // allow 0 as new price
-            return false;
-        }
-
-        $sql = 'SELECT ROUND(:grossPrice / (100 + t.rate) * 100, 6) as net_price ';
-        $sql .= $this->getTaxJoins();
-        $params = [
-            'productId' => $productId,
-            'grossPrice' => $grossPrice,
-        ];
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->execute($params);
-        $rate = $statement->fetchAll('assoc');
-
-        // if tax == 0% rate is empty...
-        if (empty($rate)) {
-            $netPrice = $grossPrice;
-        } else {
-            $netPrice = $rate[0]['net_price'];
-        }
-
+        $netPrice = $grossPrice / (100 + $taxRate) * 100;
+        $netPrice = round($netPrice, 6);
         return $netPrice;
     }
 

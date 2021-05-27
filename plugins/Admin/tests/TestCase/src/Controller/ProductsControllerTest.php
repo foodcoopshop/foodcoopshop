@@ -76,20 +76,20 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditPriceOfProductAsSuperadminToZero()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange(346, '0', '0,00');
+        $this->assertPriceChange(346, '0', '0,00', '10');
     }
 
     public function testEditPriceOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange(346, '2,20', '2,00');
+        $this->assertPriceChange(346, '2,20', '2,00', '10');
     }
 
     public function testEditPricePerUnitOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $productId = 346;
-        $this->assertPriceChange($productId, 0, 0, true, 15, 'g', 100, 50);
+        $this->assertPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -105,13 +105,13 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditPriceOfAttributeAsSuperadmin()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange('60-10', '1,25', '1,106195');
+        $this->assertPriceChange('60-10', '1,25', '1,106195', '13');
     }
 
     public function testEditPriceWith0PercentTax()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange('163', '1,60', '1,60');
+        $this->assertPriceChange('163', '1,60', '1,60', '0');
     }
 
     public function testEditDeliveryRhythmInvalidDeliveryRhythmA()
@@ -340,13 +340,13 @@ class ProductsControllerTest extends AppCakeTestCase
     /**
      * asserts price in database (getGrossPrice)
      */
-    private function assertPriceChange($productId, $price, $expectedNetPrice, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
+    private function assertPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
         $this->assertJsonOk();
-        $netPrice = $this->Product->getNetPrice($productId, $price);
+        $netPrice = $this->Product->getNetPrice($productId, $price, $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 }

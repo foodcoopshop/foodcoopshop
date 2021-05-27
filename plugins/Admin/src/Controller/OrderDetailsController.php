@@ -1533,7 +1533,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($oldOrderDetail->product_id, $productPrice / $productAmount);
+        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($oldOrderDetail->product_id, $productPrice / $productAmount, $oldOrderDetail->tax_rate);
         $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPrice, $unitPriceExcl, $productAmount);
         $totalTaxAmount = $unitTaxAmount * $productAmount;
         $totalPriceTaxExcl = $productPrice - $totalTaxAmount;

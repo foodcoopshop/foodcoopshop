@@ -159,6 +159,7 @@ class CartsTable extends AppTable
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.UnitProductAttributes',
                 'Products.Images',
+                'Products.Taxes',
             ]
         ])->toArray();
 
@@ -315,7 +316,7 @@ class CartsTable extends AppTable
         return $count;
     }
 
-    public function getPricesRespectingPricePerUnit($productId, $netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit)
+    public function getPricesRespectingPricePerUnit($productId, $netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate)
     {
 
         $productsTable = FactoryLocator::get('Table')->get('Products');
@@ -346,7 +347,7 @@ class CartsTable extends AppTable
             }
 
             $grossPricePerPiece = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
-            $netPricePerPiece = round($productsTable->getNetPrice($productId, $grossPricePerPiece), 2);
+            $netPricePerPiece = round($productsTable->getNetPrice($productId, $grossPricePerPiece, $taxRate), 2);
             $grossPrice = $grossPricePerPiece * $amount;
             if (!is_null($orderedQuantityInUnits)) {
                 $grossPrice = $grossPricePerPiece;
@@ -383,6 +384,7 @@ class CartsTable extends AppTable
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product->deposit_product,
+            $cartProduct->product->tax->rate ?? 0,
         );
 
         $productData = [
@@ -466,6 +468,7 @@ class CartsTable extends AppTable
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product_attribute->deposit_product_attribute,
+            $cartProduct->product->tax->rate ?? 0,
         );
 
         $productData = [
