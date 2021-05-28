@@ -11,6 +11,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Intervention\Image\ImageManagerStatic as Image;
 use Cake\I18n\FrozenTime;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -668,117 +669,137 @@ class ProductsController extends AdminAppController
         $productId = (int) $this->getRequest()->getData('productId');
         $taxId = (int) $this->getRequest()->getData('taxId');
 
-        $this->Tax = $this->getTableLocator()->get('Taxes');
+        try {
 
-        $contain = [
-            'Taxes',
-            'ProductAttributes',
-            'Manufacturers',
-        ];
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $contain[] = 'PurchasePriceProducts.Taxes';
-        }
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ],
-            'contain' => $contain,
-        ])->first();
-
-        $changedTaxInfoForMessage = [];
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $purchasePriceTaxId = (int) $this->getRequest()->getData('purchasePriceTaxId');
-            $changedTaxInfoForMessage = $this->Product->PurchasePriceProducts->savePurchasePriceTax($purchasePriceTaxId, $productId, $oldProduct);
-        }
-
-        if (empty($oldProduct->tax)) {
-            $oldProduct->tax = (object) [
-                'rate' => 0
+            $contain = [
+                'Taxes',
+                'ProductAttributes',
+                'Manufacturers',
             ];
-        }
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $contain[] = 'PurchasePriceProducts.Taxes';
+            }
+            $oldProduct = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId
+                ],
+                'contain' => $contain,
+            ])->first();
 
-        if ($taxId != $oldProduct->id_tax) {
-            $product2update = [
-                'id_tax' => $taxId
-            ];
+            $this->Tax = $this->getTableLocator()->get('Taxes');
+            $taxes = $this->Tax->find('all', [
+                'conditions' => [
+                    'Taxes.deleted' => APP_OFF,
+                ]
+            ])->toArray();
+            $validTaxIds = Hash::extract($taxes, '{n}.id_tax');
+            $validTaxIds[] = 0;
+            if (!in_array($taxId, $validTaxIds)) {
+                throw new InvalidParameterException('invalid taxId: ' . $taxId);
+            }
 
-            $this->Product->save(
-                $this->Product->patchEntity($oldProduct, $product2update)
-            );
-
-            if (! empty($oldProduct->product_attributes)) {
-                // update net price of all attributes
-                foreach ($oldProduct->product_attributes as $attribute) {
-                    $newNetPrice = $this->Product->getNetPrice($productId, $attribute->price, $oldProduct->tax->rate);
-                    $this->Product->ProductAttributes->updateAll([
-                        'price' => $newNetPrice
-                    ], [
-                        'id_product_attribute' => $attribute->id_product_attribute
-                    ]);
+            $changedTaxInfoForMessage = [];
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $purchasePriceTaxId = (int) $this->getRequest()->getData('purchasePriceTaxId');
+                if (!in_array($purchasePriceTaxId, $validTaxIds)) {
+                    throw new InvalidParameterException('invalid purchasePriceTaxId: ' . $purchasePriceTaxId);
                 }
-            } else {
-                // update price of product without attributes
-                $newNetPrice = $this->Product->getNetPrice($productId, $oldProduct->price, $oldProduct->tax->rate);
-                $product2update = [
-                    'price' => $newNetPrice
+                $changedTaxInfoForMessage = $this->Product->PurchasePriceProducts->savePurchasePriceTax($purchasePriceTaxId, $productId, $oldProduct);
+            }
+
+            if (empty($oldProduct->tax)) {
+                $oldProduct->tax = (object) [
+                    'rate' => 0
                 ];
+            }
+
+            if ($taxId != $oldProduct->id_tax) {
+                $product2update = [
+                    'id_tax' => $taxId,
+                ];
+
                 $this->Product->save(
                     $this->Product->patchEntity($oldProduct, $product2update)
                 );
-            }
 
-            $tax = $this->Tax->find('all', [
-                'conditions' => [
-                    'Taxes.id_tax' => $taxId
-                ]
-            ])->first();
-
-            $taxRate = 0;
-            if (! empty($tax)) {
-                $taxRate = $tax->rate;
-            }
-
-            $oldTaxRate = 0;
-            if (! empty($oldProduct->tax)) {
-                $oldTaxRate = $oldProduct->tax->rate;
-            }
-
-            $changedTaxInfoForMessage[] = [
-                'label' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Selling_price') . ': ' : '',
-                'oldTaxRate' => $oldTaxRate,
-                'newTaxRate' => $taxRate,
-            ];
-
-        }
-
-        if (!empty($changedTaxInfoForMessage)) {
-            $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully.', [
-                '<b>' . $oldProduct->name . '</b>',
-                '<b>' . $oldProduct->manufacturer->name . '</b>',
-            ]);
-            foreach($changedTaxInfoForMessage as $info) {
-                $messageString .= '<br />';
-                if ($info['label'] != '') {
-                    $messageString .= '<b>' . $info['label'] . '</b>';
+                if (! empty($oldProduct->product_attributes)) {
+                    // update net price of all attributes
+                    foreach ($oldProduct->product_attributes as $attribute) {
+                        $newNetPrice = $this->Product->getNetPrice($productId, $attribute->price, $oldProduct->tax->rate);
+                        $this->Product->ProductAttributes->updateAll([
+                            'price' => $newNetPrice
+                        ], [
+                            'id_product_attribute' => $attribute->id_product_attribute
+                        ]);
+                    }
+                } else {
+                    // update price of product without attributes
+                    $newNetPrice = $this->Product->getNetPrice($productId, $oldProduct->price, $oldProduct->tax->rate);
+                    $product2update = [
+                        'price' => $newNetPrice
+                    ];
+                    $this->Product->save(
+                        $this->Product->patchEntity($oldProduct, $product2update)
+                    );
                 }
-                $messageString .= __d('admin', 'From_{0}_to_{1}', [
-                    Configure::read('app.numberHelper')->formatTaxRate($info['oldTaxRate']) . '%',
-                    '<b>' . Configure::read('app.numberHelper')->formatTaxRate($info['newTaxRate']) . '%</b>',
-                ]);
+
+                $tax = $this->Tax->find('all', [
+                    'conditions' => [
+                        'Taxes.id_tax' => $taxId
+                    ]
+                ])->first();
+
+                $taxRate = 0;
+                if (! empty($tax)) {
+                    $taxRate = $tax->rate;
+                }
+
+                $oldTaxRate = 0;
+                if (! empty($oldProduct->tax)) {
+                    $oldTaxRate = $oldProduct->tax->rate;
+                }
+
+                $changedTaxInfoForMessage[] = [
+                    'label' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Selling_price') . ': ' : '',
+                    'oldTaxRate' => $oldTaxRate,
+                    'newTaxRate' => $taxRate,
+                ];
+
             }
-            $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
-        } else {
-            $messageString = __d('admin', 'Nothing_changed.');
+
+            if (!empty($changedTaxInfoForMessage)) {
+                $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully.', [
+                    '<b>' . $oldProduct->name . '</b>',
+                    '<b>' . $oldProduct->manufacturer->name . '</b>',
+                ]);
+                foreach($changedTaxInfoForMessage as $info) {
+                    $messageString .= '<br />';
+                    if ($info['label'] != '') {
+                        $messageString .= '<b>' . $info['label'] . '</b>';
+                    }
+                    $messageString .= __d('admin', 'From_{0}_to_{1}', [
+                        Configure::read('app.numberHelper')->formatTaxRate($info['oldTaxRate']) . '%',
+                        '<b>' . Configure::read('app.numberHelper')->formatTaxRate($info['newTaxRate']) . '%</b>',
+                    ]);
+                }
+                $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+            } else {
+                $messageString = __d('admin', 'Nothing_changed.');
+            }
+            $this->Flash->success($messageString);
+
+            $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+
+            $this->set([
+                'status' => 1,
+                'msg' => __d('admin', 'Saving_successful.'),
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
         }
-        $this->Flash->success($messageString);
 
-        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
-
-        $this->set([
-            'status' => 1,
-            'msg' => __d('admin', 'Saving_successful.'),
-        ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editCategories()

@@ -114,6 +114,45 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertPriceChange('163', '1,60', '1,60', '0');
     }
 
+    public function testEditTaxSellingPriceInvalid()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertTaxChange(346, 5, 2);
+    }
+
+    public function testEditTaxSellingPriceValidA()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertTaxChange(346, 1, 1);
+    }
+
+    public function testEditTaxSellingPriceValidZero()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertTaxChange(346, 0, 0);
+    }
+
+    public function testEditTaxPurchasePriceInvalid()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->assertTaxChange(346, 0, 2, 5, 2);
+    }
+
+    public function testEditTaxPurchasePriceValidA()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->assertTaxChange(346, 0, 0, 1, 1);
+    }
+
+    public function testEditTaxPurchasePriceValidZero()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->assertTaxChange(346, 0, 0, 0, 0);
+    }
+
     public function testEditDeliveryRhythmInvalidDeliveryRhythmA()
     {
         $this->loginAsSuperadmin();
@@ -337,9 +376,6 @@ class ProductsControllerTest extends AppCakeTestCase
         return $product;
     }
 
-    /**
-     * asserts price in database (getGrossPrice)
-     */
     private function assertPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
@@ -349,4 +385,38 @@ class ProductsControllerTest extends AppCakeTestCase
         $netPrice = $this->Product->getNetPrice($productId, $price, $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
+
+    private function assertTaxChange($productId, $newSellingPriceTaxId, $expectedSellingPriceTaxId, $newPurchasePriceTaxId = null, $expectedPurchasePriceTaxId = null)
+    {
+        $data = [
+            'productId' => $productId,
+            'taxId' => $newSellingPriceTaxId,
+        ];
+        if ($newPurchasePriceTaxId !== null) {
+            $data['purchasePriceTaxId'] = $newPurchasePriceTaxId;
+        }
+
+        $this->ajaxPost('/admin/products/editTax', $data);
+
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ],
+            'contain' => [
+                'Taxes',
+                'ProductAttributes',
+                'Manufacturers',
+                'PurchasePriceProducts',
+            ],
+        ])->first();
+        $this->assertEquals($product->id_tax, $expectedSellingPriceTaxId);
+
+        if ($newPurchasePriceTaxId !== null) {
+            if (!empty($product->purchase_price_product)) {
+                $this->assertEquals($product->purchase_price_product->tax_id, $expectedPurchasePriceTaxId);
+            }
+        }
+
+    }
+
 }
