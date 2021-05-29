@@ -136,7 +136,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->assertTaxChange(346, 0, 2, 5, 2);
+        $this->assertTaxChange(346, 0, 2, 5, 'empty');
     }
 
     public function testEditTaxPurchasePriceValidA()
@@ -411,8 +411,10 @@ class ProductsControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEquals($product->id_tax, $expectedSellingPriceTaxId);
 
-        if ($newPurchasePriceTaxId !== null) {
-            if (!empty($product->purchase_price_product)) {
+        if ($expectedPurchasePriceTaxId == 'empty') {
+            $this->assertEmpty($product->purchase_price_product);
+        } else {
+            if ($expectedPurchasePriceTaxId !== null) {
                 $this->assertEquals($product->purchase_price_product->tax_id, $expectedPurchasePriceTaxId);
             }
         }
