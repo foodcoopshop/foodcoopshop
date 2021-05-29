@@ -40,7 +40,8 @@ foodcoopshop.AppChart = {
                 ticks: {
                     autoSkip: false,
                     maxRotation: 90,
-                    minRotation: 90
+                    minRotation: 90,
+                    labelOffset: -5
                 }
             },
             y: {
