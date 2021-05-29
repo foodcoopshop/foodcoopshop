@@ -323,7 +323,7 @@ class CartsTable extends AppTable
 
         if ((!empty($unitProduct) && !$unitProduct->price_per_unit_enabled ) || is_null($unitProduct)) {
 
-            $grossPricePerPiece = $productsTable->getGrossPrice($productId, $netPricePerPiece, $taxRate);
+            $grossPricePerPiece = $productsTable->getGrossPrice($netPricePerPiece, $taxRate);
             $grossPrice = $grossPricePerPiece * $amount;
             $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $amount) * $amount;
 
@@ -347,7 +347,7 @@ class CartsTable extends AppTable
             }
 
             $grossPricePerPiece = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
-            $netPricePerPiece = round($productsTable->getNetPrice($productId, $grossPricePerPiece, $taxRate), 2);
+            $netPricePerPiece = round($productsTable->getNetPrice($grossPricePerPiece, $taxRate), 2);
             $grossPrice = $grossPricePerPiece * $amount;
             if (!is_null($orderedQuantityInUnits)) {
                 $grossPrice = $grossPricePerPiece;

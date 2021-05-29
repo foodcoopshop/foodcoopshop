@@ -725,7 +725,7 @@ class ProductsController extends AdminAppController
                 if (! empty($oldProduct->product_attributes)) {
                     // update net price of all attributes
                     foreach ($oldProduct->product_attributes as $attribute) {
-                        $newNetPrice = $this->Product->getNetPrice($productId, $attribute->price, $oldProduct->tax->rate);
+                        $newNetPrice = $this->Product->getNetPrice($attribute->price, $oldProduct->tax->rate);
                         $this->Product->ProductAttributes->updateAll([
                             'price' => $newNetPrice
                         ], [
@@ -734,7 +734,7 @@ class ProductsController extends AdminAppController
                     }
                 } else {
                     // update price of product without attributes
-                    $newNetPrice = $this->Product->getNetPrice($productId, $oldProduct->price, $oldProduct->tax->rate);
+                    $newNetPrice = $this->Product->getNetPrice($oldProduct->price, $oldProduct->tax->rate);
                     $product2update = [
                         'price' => $newNetPrice
                     ];
@@ -1090,7 +1090,7 @@ class ProductsController extends AdminAppController
                 $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
                 $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
             } else {
-                $purchasePrice2Save = $this->Product->getNetPrice($originalProductId, $purchaseGrossPrice, $taxRate);
+                $purchasePrice2Save = $this->Product->getNetPrice($purchaseGrossPrice, $taxRate);
                 $patchedEntity = $purchaseTable->patchEntity(
                     $purchasePriceEntity2Save,
                     [
@@ -1101,7 +1101,7 @@ class ProductsController extends AdminAppController
                     throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($patchedEntity)));
                 }
                 $purchaseTable->save($patchedEntity);
-                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->purchase_price_product->price, $taxRate));
+                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->purchase_price_product->price, $taxRate));
                 $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
             }
         }
@@ -1196,7 +1196,7 @@ class ProductsController extends AdminAppController
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
             $taxRate = $oldProduct->tax->rate ?? 0;
-            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->price, $taxRate));
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->price, $taxRate));
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {

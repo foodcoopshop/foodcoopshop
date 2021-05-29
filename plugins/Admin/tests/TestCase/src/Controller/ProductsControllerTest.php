@@ -382,7 +382,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
         $this->assertJsonOk();
-        $netPrice = $this->Product->getNetPrice($productId, $price, $taxRate);
+        $netPrice = $this->Product->getNetPrice($price, $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 

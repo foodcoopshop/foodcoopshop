@@ -489,7 +489,7 @@ class ProductsTable extends AppTable
             ])->first();
             $taxRate = $productEntity->tax->rate ?? 0;
 
-            $netPrice = $this->getNetPrice($ids['productId'], $price, $taxRate);
+            $netPrice = $this->getNetPrice($price, $taxRate);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
@@ -896,7 +896,7 @@ class ProductsTable extends AppTable
             }
 
             $taxRate = is_null($product->tax) ? 0 : $product->tax->rate;
-            $product->gross_price = $this->getGrossPrice($product->id_product, $product->price, $taxRate);
+            $product->gross_price = $this->getGrossPrice($product->price, $taxRate);
 
             $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                 $product->is_stock_product && $product->manufacturer->stock_management_enabled,
@@ -982,7 +982,7 @@ class ProductsTable extends AppTable
                     if ($purchasePrice === null) {
                         $product->purchase_gross_price = $purchasePrice;
                     } else {
-                        $product->purchase_gross_price = $this->getGrossPrice($product->id_product, $purchasePrice, $purchasePriceTaxRate);
+                        $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
                     }
                 }
             }
@@ -1010,7 +1010,7 @@ class ProductsTable extends AppTable
 
                     $grossPrice = 0;
                     if (! empty($attribute->price)) {
-                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->price, $taxRate);
+                        $grossPrice = $this->getGrossPrice($attribute->price, $taxRate);
                     }
 
                     $rowClass = [
@@ -1090,7 +1090,7 @@ class ProductsTable extends AppTable
                         if ($purchasePrice === null) {
                             $preparedProduct['purchase_gross_price'] = $purchasePrice;
                         } else {
-                            $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($product->id_product, $purchasePrice, $purchasePriceTaxRate);
+                            $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
                         }
                     }
                     $preparedProducts[] = $preparedProduct;
@@ -1187,14 +1187,14 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    public function getGrossPrice($productId, $netPrice, $taxRate)
+    public function getGrossPrice($netPrice, $taxRate)
     {
         $grossPrice = $netPrice * (100 + $taxRate) / 100;
         $grossPrice = round($grossPrice, 2);
         return $grossPrice;
     }
 
-    public function getNetPrice($productId, $grossPrice, $taxRate)
+    public function getNetPrice($grossPrice, $taxRate)
     {
         $netPrice = $grossPrice / (100 + $taxRate) * 100;
         $netPrice = round($netPrice, 6);

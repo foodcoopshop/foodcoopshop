@@ -41,7 +41,7 @@ class FrontendController extends AppController
 
         foreach ($products as &$product) {
             $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
-            $grossPrice = $this->Product->getGrossPrice($product['id_product'], $product['price'], $taxRate);
+            $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
             $product['gross_price'] = $grossPrice;
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
@@ -96,7 +96,7 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
-                $grossPrice = $this->Product->getGrossPrice($attribute->id_product, $attribute->price, $taxRate);
+                $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
                 $preparedAttributes['ProductAttributes'] = [
                     'gross_price' => $grossPrice,
                     'tax' => $grossPrice - $attribute->price,

@@ -326,7 +326,7 @@ class CartComponent extends Component
 
             // prepare data for table order_detail
             $taxRate = $product->tax->rate ?? 0;
-            $unitPriceExcl = $this->Product->getNetPrice($ids['productId'], $cartProduct['price'] / $cartProduct['amount'], $taxRate);
+            $unitPriceExcl = $this->Product->getNetPrice($cartProduct['price'] / $cartProduct['amount'], $taxRate);
             $unitTaxAmount = $this->Product->getUnitTax($cartProduct['price'], $unitPriceExcl, $cartProduct['amount']);
             $totalTaxAmount = $unitTaxAmount * $cartProduct['amount'];
 
