@@ -411,7 +411,7 @@ class ProductsControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEquals($product->id_tax, $expectedSellingPriceTaxId);
 
-        if ($expectedPurchasePriceTaxId == 'empty') {
+        if ($expectedPurchasePriceTaxId === 'empty') {
             $this->assertEmpty($product->purchase_price_product);
         } else {
             if ($expectedPurchasePriceTaxId !== null) {
