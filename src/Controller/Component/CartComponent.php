@@ -227,6 +227,7 @@ class CartComponent extends Component
         $stockAvailable2saveConditions = [];
 
         foreach ($this->getProducts() as $cartProduct) {
+
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
 
             $contain = [
@@ -369,42 +370,8 @@ class CartComponent extends Component
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-
-                $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
-
-                if (isset($cartProduct['quantityInUnits'])) {
-                    // price per unit
-                    if ($ids['attributeId'] > 0) {
-                        foreach ($product->product_attributes as $attribute) {
-                            if ($attribute->id_product_attribute == $ids['attributeId']) {
-                                // product attribute - price per unit
-                                $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
-                                continue;
-                            }
-                        }
-                    } else {
-                        // main product - price per unit
-                        $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
-                    }
-                    $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
-                } else {
-                    // normal price
-                    $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
-                    $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
-                }
-
-                $unitPurchasePriceExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl / $cartProduct['amount'], $purchasePriceTaxRate);
-                $unitPurchasePriceTaxAmount = $this->Product->getUnitTax($totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, $cartProduct['amount']);
-                $totalPurchasePriceTaxAmount = $unitPurchasePriceTaxAmount * $cartProduct['amount'];
-
-                $orderDetail2save['order_detail_purchase_price'] = [
-                    'tax_rate' => $purchasePriceTaxRate,
-                    'total_price_tax_incl' => $totalPurchasePriceTaxIncl,
-                    'total_price_tax_excl' => $totalPurchasePriceTaxExcl,
-                    'tax_unit_amount' => $unitPurchasePriceTaxAmount,
-                    'tax_total_amount' => $totalPurchasePriceTaxAmount,
-                ];
-
+                $orderDetailPurchasePrices = $this->prepareOrderdetailPurchasePrices($ids, $product, $cartProduct['amount']);
+                $orderDetail2save['order_detail_purchase_price'] = $orderDetailPurchasePrices;
             }
 
             $orderDetails2save[] = $orderDetail2save;
@@ -575,6 +542,59 @@ class CartComponent extends Component
         }
 
         return $cart;
+
+    }
+
+    private function prepareOrderdetailPurchasePrices($ids, $product, $amount)
+    {
+
+        $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
+        $totalPurchasePriceTaxIncl = 0;
+        $totalPurchasePriceTaxExcl = 0;
+        $unitPurchasePriceTaxAmount = 0;
+        $totalPurchasePriceTaxAmount = 0;
+
+        if ($ids['attributeId'] > 0) {
+            // attribute
+            foreach ($product->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute == $ids['attributeId']) {
+                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                        $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
+                        $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                    } else {
+                        $totalPurchasePriceTaxExcl = $attribute->purchase_price_product_attribute->price ?? 0;
+                        $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+                    }
+                    continue;
+                }
+            }
+        } else {
+            // main product
+            if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
+                $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
+                $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+            } else {
+                $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
+                $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
+            }
+        }
+
+        $totalPurchasePriceTaxIncl *= $amount;
+        $totalPurchasePriceTaxExcl *= $amount;
+
+        $unitPurchasePriceExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl / $amount, $purchasePriceTaxRate);
+        $unitPurchasePriceTaxAmount = $this->Product->getUnitTax($totalPurchasePriceTaxIncl, $unitPurchasePriceExcl, $amount);
+        $totalPurchasePriceTaxAmount = $unitPurchasePriceTaxAmount * $amount;
+
+        $result = [
+            'tax_rate' => $purchasePriceTaxRate,
+            'total_price_tax_incl' => $totalPurchasePriceTaxIncl,
+            'total_price_tax_excl' => $totalPurchasePriceTaxExcl,
+            'tax_unit_amount' => $unitPurchasePriceTaxAmount,
+            'tax_total_amount' => $totalPurchasePriceTaxAmount,
+        ];
+
+        return $result;
 
     }
 

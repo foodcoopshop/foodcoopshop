@@ -155,7 +155,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $product = $this->doPurchasePriceChange('60-10', '2,20');
         $this->assertJsonOk();
-        $this->assertEquals(2.2, $product->product_attributes[0]->purchase_price_product_attribute->price);
+        $this->assertEquals(2, $product->product_attributes[0]->purchase_price_product_attribute->price);
     }
 
     public function testEditPurchasePricePerUnitOfAttributeAsSuperadmin()

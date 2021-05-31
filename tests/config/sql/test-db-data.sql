@@ -301,7 +301,9 @@ INSERT INTO `fcs_purchase_prices` VALUES
 (1,'346','0','1','1.2'),
 (2,'0','13','0','1.4'),
 (3,'347','0','3','0'),
-(4,'348','0','3','0');
+(4,'348','0','3','0'),
+(5,'60','0','2','0'),
+(6,'0','10','0','0.25');
 /*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;

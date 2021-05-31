@@ -507,6 +507,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart(346, 2); // main product with normal price
         $this->addProductToCart(347, 3); // main product with price per unit
         $this->addProductToCart('348-12', 3); // attribute with price per unit
+        $this->addProductToCart('60-10', 1); // attribute with normal price
 
         $this->finishCart(1,1);
 
@@ -514,25 +515,35 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
 
-        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_rate, 13);
-        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_rate, 13);
-        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->tax_rate, 20);
+        $objectA = $cart->cart_products[3]->order_detail->order_detail_purchase_price;
+        $objectB = $cart->cart_products[1]->order_detail->order_detail_purchase_price;
+        $objectC = $cart->cart_products[0]->order_detail->order_detail_purchase_price;
+        $objectD = $cart->cart_products[2]->order_detail->order_detail_purchase_price;
 
-        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_incl, 14);
-        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_incl, 0.98);
-        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->total_price_tax_incl, 1.44);
+        $this->assertEquals($objectA->tax_rate, 20);
+        $this->assertEquals($objectB->tax_rate, 13);
+        $this->assertEquals($objectC->tax_rate, 13);
+        $this->assertEquals($objectD->tax_rate, 10);
 
-        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_excl, 12.389381);
-        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_excl, 0.867257);
-        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->total_price_tax_excl, 1.20);
+        $this->assertEquals($objectA->total_price_tax_incl, 2.88);
+        $this->assertEquals($objectB->total_price_tax_incl, 2.94);
+        $this->assertEquals($objectC->total_price_tax_incl, 42);
+        $this->assertEquals($objectD->total_price_tax_incl, 0.28);
 
-        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_unit_amount, 0.54);
-        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_unit_amount, 0.04);
-        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->tax_unit_amount, 0.12);
+        $this->assertEquals($objectA->total_price_tax_excl, 2.40);
+        $this->assertEquals($objectB->total_price_tax_excl, 2.601771);
+        $this->assertEquals($objectC->total_price_tax_excl, 37.168143);
+        $this->assertEquals($objectD->total_price_tax_excl, 0.25);
 
-        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_total_amount, 1.62);
-        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_total_amount, 0.12);
-        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->tax_total_amount, 0.24);
+        $this->assertEquals($objectA->tax_unit_amount, 0.24);
+        $this->assertEquals($objectB->tax_unit_amount, 0.11);
+        $this->assertEquals($objectC->tax_unit_amount, 1.61);
+        $this->assertEquals($objectD->tax_unit_amount, 0.03);
+
+        $this->assertEquals($objectA->tax_total_amount, 0.48);
+        $this->assertEquals($objectB->tax_total_amount, 0.33);
+        $this->assertEquals($objectC->tax_total_amount, 4.83);
+        $this->assertEquals($objectD->tax_total_amount, 0.03);
 
     }
 
