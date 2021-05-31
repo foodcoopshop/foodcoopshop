@@ -300,6 +300,39 @@ class OrderDetailsController extends AdminAppController
         die($pdfWriter->writeInline());
     }
 
+    public function purchasePrices()
+    {
+        $this->disableAutoRender();
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->find('all', [
+            'contain' => [
+                'OrderDetailPurchasePrices',
+                'Customers',
+            ]
+        ]);
+        $sumSellingPrice = 0;
+        $sumPurchasePrice = 0;
+        $tmpOutput = '';
+        foreach($orderDetails as $orderDetail) {
+            $tmpOutput .= $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ';
+            $tmpOutput .= $orderDetail->customer->name . ' / ';
+            $tmpOutput .= $orderDetail->product_name . ' / ';
+            if (!empty($orderDetail->order_detail_purchase_price)) {
+                $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_purchase_price->total_price_tax_excl) . ' / ';
+                $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+            } else {
+                $tmpOutput .= '--- / ';
+            }
+            $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl);
+            $sumSellingPrice += $orderDetail->total_price_tax_excl;
+            $tmpOutput .= '<br />';
+        }
+        echo '<b>Summe Einkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumPurchasePrice);
+        echo '<br />Summe Verkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice);
+        echo '<br />Gewinn exkl. USt.:' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice - $sumPurchasePrice);
+        echo '</b><br /><br />' . $tmpOutput;
+    }
+
     public function index()
     {
 
