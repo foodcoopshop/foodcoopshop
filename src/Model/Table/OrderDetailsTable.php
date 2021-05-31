@@ -54,6 +54,9 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('OrderDetailUnits', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->hasOne('OrderDetailPurchasePrices', [
+            'foreignKey' => 'id_order_detail'
+        ]);
         $this->belongsTo('CartProducts', [
             'foreignKey' => 'id_cart_product'
         ]);

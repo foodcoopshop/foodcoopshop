@@ -500,6 +500,43 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
+    public function testFinishWithPurchasePrice()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsAdmin();
+        $this->fillCart();
+        $this->finishCart(1,1);
+
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $this->checkCartStatusAfterFinish();
+        $cart = $this->getCartById($cartId);
+
+        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_rate, 0);
+        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_rate, 0);
+        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->tax_rate, 20);
+
+        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_incl, 0);
+        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_incl, 0);
+        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->total_price_tax_incl, 1.44);
+
+        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_excl, 0);
+        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_excl, 0);
+        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->total_price_tax_excl, 1.20);
+
+        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_unit_amount, 0);
+        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_unit_amount, 0);
+        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->tax_unit_amount, 0.12);
+
+        $this->assertEquals($cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_total_amount, 0);
+        $this->assertEquals($cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_total_amount, 0);
+        $this->assertEquals($cart->cart_products[2]->order_detail->order_detail_purchase_price->tax_total_amount, 0.24);
+
+//         pr($cart->cart_products[0]->order_detail->order_detail_purchase_price);
+//         pr($cart->cart_products[1]->order_detail->order_detail_purchase_price);
+//         pr($cart->cart_products[2]->order_detail->order_detail_purchase_price);
+
+    }
+
     public function testFinishOrderWithComment()
     {
 
