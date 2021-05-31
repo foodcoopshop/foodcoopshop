@@ -1201,6 +1201,12 @@ class ProductsTable extends AppTable
         return $netPrice;
     }
 
+    public function getNetPriceForNewTaxRate($netPrice, $oldTaxRate, $newTaxRate) {
+        $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
+        $netPrice = round($netPrice, 6);
+        return $netPrice;
+    }
+
     private function getIsQuantityMinFilterSetCondition()
     {
         return '(StockAvailables.quantity < 3 && (StockAvailables.always_available = 0 || (Products.is_stock_product = 1 && Manufacturers.stock_management_enabled = 1)))';

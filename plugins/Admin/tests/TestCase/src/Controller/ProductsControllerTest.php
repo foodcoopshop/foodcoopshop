@@ -117,19 +117,36 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditTaxSellingPriceInvalid()
     {
         $this->loginAsSuperadmin();
-        $this->assertTaxChange(346, 5, 2);
+        $product = $this->assertTaxChange(346, 5, 2);
+        $this->assertEquals($product->price, 1.652893);
     }
 
     public function testEditTaxSellingPriceValidA()
     {
         $this->loginAsSuperadmin();
-        $this->assertTaxChange(346, 1, 1);
+        $product = $this->assertTaxChange(346, 1, 1);
+        $this->assertEquals($product->price, 1.515152);
     }
 
     public function testEditTaxSellingPriceValidZero()
     {
         $this->loginAsSuperadmin();
-        $this->assertTaxChange(346, 0, 0);
+        $product = $this->assertTaxChange(346, 0, 0);
+        $this->assertEquals($product->price, 1.818182);
+    }
+
+    public function testEditTaxSellingPriceWithAttributesValidZero()
+    {
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(60, 0, 0);
+        $this->assertEquals($product->product_attributes[0]->price, 0.616364);
+    }
+
+    public function testEditTaxSellingPriceWithAttributesValidA()
+    {
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(60, 2, 2);
+        $this->assertEquals($product->product_attributes[0]->price, 0.560331);
     }
 
     public function testEditTaxPurchasePriceInvalid()
@@ -418,6 +435,8 @@ class ProductsControllerTest extends AppCakeTestCase
                 $this->assertEquals($product->purchase_price_product->tax_id, $expectedPurchasePriceTaxId);
             }
         }
+
+        return $product;
 
     }
 

@@ -722,10 +722,18 @@ class ProductsController extends AdminAppController
                     $this->Product->patchEntity($oldProduct, $product2update)
                 );
 
+                $newTaxRate = 0;
+                foreach($taxes as $tax) {
+                    if ($taxId == $tax->id_tax) {
+                        $newTaxRate = $tax->rate;
+                        continue;
+                    }
+                }
+
                 if (! empty($oldProduct->product_attributes)) {
                     // update net price of all attributes
                     foreach ($oldProduct->product_attributes as $attribute) {
-                        $newNetPrice = $this->Product->getNetPrice($attribute->price, $oldProduct->tax->rate);
+                        $newNetPrice = $this->Product->getNetPriceForNewTaxRate($attribute->price, $oldProduct->tax->rate, $newTaxRate);
                         $this->Product->ProductAttributes->updateAll([
                             'price' => $newNetPrice
                         ], [
@@ -734,24 +742,13 @@ class ProductsController extends AdminAppController
                     }
                 } else {
                     // update price of product without attributes
-                    $newNetPrice = $this->Product->getNetPrice($oldProduct->price, $oldProduct->tax->rate);
+                    $newNetPrice = $this->Product->getNetPriceForNewTaxRate($oldProduct->price, $oldProduct->tax->rate, $newTaxRate);
                     $product2update = [
                         'price' => $newNetPrice
                     ];
                     $this->Product->save(
                         $this->Product->patchEntity($oldProduct, $product2update)
                     );
-                }
-
-                $tax = $this->Tax->find('all', [
-                    'conditions' => [
-                        'Taxes.id_tax' => $taxId
-                    ]
-                ])->first();
-
-                $taxRate = 0;
-                if (! empty($tax)) {
-                    $taxRate = $tax->rate;
                 }
 
                 $oldTaxRate = 0;
@@ -762,7 +759,7 @@ class ProductsController extends AdminAppController
                 $changedTaxInfoForMessage[] = [
                     'label' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Selling_price') . ': ' : '',
                     'oldTaxRate' => $oldTaxRate,
-                    'newTaxRate' => $taxRate,
+                    'newTaxRate' => $newTaxRate,
                 ];
 
             }
