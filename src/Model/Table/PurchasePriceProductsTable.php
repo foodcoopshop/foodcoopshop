@@ -99,7 +99,7 @@ class PurchasePriceProductsTable extends AppTable
                 // update net price of all attributes
                 foreach ($oldProduct->product_attributes as $attribute) {
                     if (!empty($attribute->purchase_price_product_attribute)) {
-                        $newNetPrice = $this->Product->getNetPriceForNewTaxRate($attribute->purchase_price_product_attribute->price, $oldProduct->tax->rate, $taxRate);
+                        $newNetPrice = $this->Product->getNetPriceForNewTaxRate($attribute->purchase_price_product_attribute->price, $oldPurchasePriceTaxRate, $taxRate);
                         $entity2Save = $this->getEntityToSaveByProductAttributeId($attribute->id_product_attribute);
                         $entity2Save->price = $newNetPrice;
                         $this->save($entity2Save);
@@ -108,7 +108,7 @@ class PurchasePriceProductsTable extends AppTable
             } else {
                 // update net price of main product
                 if (!empty($oldProduct->purchase_price_product)) {
-                    $newNetPrice = $this->Product->getNetPriceForNewTaxRate($oldProduct->purchase_price_product->price, $oldProduct->tax->rate, $taxRate);
+                    $newNetPrice = $this->Product->getNetPriceForNewTaxRate($oldProduct->purchase_price_product->price, $oldPurchasePriceTaxRate, $taxRate);
                     $patchedEntity->price = $newNetPrice;
                 }
             }

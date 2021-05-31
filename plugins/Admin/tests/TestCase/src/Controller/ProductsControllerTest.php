@@ -214,7 +214,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $product = $this->assertTaxChange(346, 0, 0, 3, 3);
-        $this->assertEquals($product->purchase_price_product->price, 1.168142);
+        $this->assertEquals($product->purchase_price_product->price, 1.274336);
     }
 
     public function testEditTaxPurchasePriceWithAttributeValidA()
@@ -222,7 +222,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $product = $this->assertTaxChange(350, 0, 0, 3, 3);
-        $this->assertEquals($product->product_attributes[0]->purchase_price_product_attribute->price, 1.362832);
+        $this->assertEquals($product->product_attributes[0]->purchase_price_product_attribute->price, 1.238938);
     }
 
     public function testEditTaxPurchasePriceValidZero()
@@ -230,7 +230,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $product = $this->assertTaxChange(346, 0, 0, 0, 0);
-        $this->assertEquals($product->purchase_price_product->price, 1.32);
+        $this->assertEquals($product->purchase_price_product->price, 1.44);
     }
 
     public function testEditDeliveryRhythmInvalidDeliveryRhythmA()
