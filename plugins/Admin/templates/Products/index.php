@@ -170,8 +170,8 @@ use Cake\Core\Configure;
         }
         echo '<th style="width:62px;">'.__d('admin', 'Amount').'</th>';
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            echo '<th style="text-align:right;">'.__d('admin', 'Purchase_price_abbreviation').'</th>';
-            echo '<th style="text-align:right;">'.__d('admin', 'Selling_price_abbreviation').'</th>';
+            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
         } else {
             echo '<th>'.__d('admin', 'Price').'</th>';
         }
