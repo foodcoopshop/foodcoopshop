@@ -35,7 +35,10 @@ class CartsTable extends AppTable
             'foreignKey' => 'id_customer'
         ]);
         $this->hasMany('CartProducts', [
-            'foreignKey' => 'id_cart'
+            'foreignKey' => 'id_cart',
+            'conditions' => [
+                'CartProducts.amount > 0',
+            ],
         ]);
         $this->hasMany('PickupDayEntities', [
             'className' => 'PickupDays', // field has same name and would clash
@@ -144,7 +147,8 @@ class CartsTable extends AppTable
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
-                'CartProducts.id_cart' => $cart['id_cart']
+                'CartProducts.id_cart' => $cart['id_cart'],
+                'CartProducts.amount > 0',
             ],
             'order' => [
                 'Products.name',
@@ -333,6 +337,7 @@ class CartsTable extends AppTable
                 'gross' => $grossPrice,
                 'net' => $grossPrice - $tax,
                 'tax' => $tax,
+                'tax_per_piece' => $tax / $amount,
                 'gross_with_deposit' => $grossPrice + ($deposit->deposit ?? 0),
             ];
 
@@ -361,6 +366,7 @@ class CartsTable extends AppTable
                 'gross' => $grossPrice,
                 'net' => $grossPrice - $tax,
                 'tax' => $tax,
+                'tax_per_piece' => $tax / $amount,
                 'gross_with_deposit' => $grossPrice + ($deposit->deposit ?? 0),
             ];
 
@@ -397,6 +403,7 @@ class CartsTable extends AppTable
             'price' => $prices['gross'],
             'priceExcl' => $prices['net'],
             'tax' => $prices['tax'],
+            'taxPerPiece' => $prices['tax_per_piece'],
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
         ];
@@ -481,6 +488,7 @@ class CartsTable extends AppTable
             'price' => $prices['gross'],
             'priceExcl' => $prices['net'],
             'tax' => $prices['tax'],
+            'taxPerPiece' => $prices['tax_per_piece'],
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
         ];
