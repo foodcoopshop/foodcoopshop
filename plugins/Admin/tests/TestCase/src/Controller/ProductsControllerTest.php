@@ -99,7 +99,6 @@ class ProductsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
-
     }
 
     public function testEditSellingPriceOfAttributeAsSuperadmin()
@@ -112,6 +111,22 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->assertSellingPriceChange('163', '1,60', '1,60', '0');
+    }
+
+    public function testEditPurchasePriceOfProductAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange(346, '2,20');
+        $this->assertEquals(1.833333, $product->purchase_price_product->price);
+    }
+
+    public function testEditPurchasePriceOfAttributeAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange('60-10', '2,20');
+        $this->assertEquals(2.2, $product->product_attributes[0]->purchase_price_product_attribute->price);
     }
 
     public function testEditTaxSellingPriceInvalid()
@@ -401,6 +416,31 @@ class ProductsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         return $product;
+    }
+
+    private function doPurchasePriceChange($productId, $price)
+    {
+
+        $ids = $this->Product->getProductIdAndAttributeId($productId);
+
+        $this->ajaxPost('/admin/products/editPurchasePrice', [
+            'productId' => $productId,
+            'purchasePrice' => $price,
+        ]);
+        $this->assertJsonOk();
+
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $ids['productId'],
+            ],
+            'contain' => [
+                'ProductAttributes.PurchasePriceProductAttributes',
+                'PurchasePriceProducts',
+            ],
+        ])->first();
+
+        return $product;
+
     }
 
     private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
