@@ -334,6 +334,10 @@ class OrderDetailsTable extends AppTable
             $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
         }
 
+        if (!empty($orderDetail->order_detail_purchase_price)) {
+            $this->OrderDetailPurchasePrices->delete($orderDetail->order_detail_purchase_price);
+        }
+
     }
 
     /**
