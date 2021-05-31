@@ -678,6 +678,7 @@ class ProductsController extends AdminAppController
             ];
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                 $contain[] = 'PurchasePriceProducts.Taxes';
+                $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
             }
             $oldProduct = $this->Product->find('all', [
                 'conditions' => [

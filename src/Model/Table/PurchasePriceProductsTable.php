@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -77,10 +78,9 @@ class PurchasePriceProductsTable extends AppTable
             ]
         ])->first();
 
+        $taxRate = 0;
         if (! empty($tax)) {
             $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
-        } else {
-            $taxRate = 0; // 0 % does not have record in tax
         }
 
         $entity2Save = $this->getEntityToSaveByProductId($productId);
@@ -92,6 +92,27 @@ class PurchasePriceProductsTable extends AppTable
         );
 
         if ($patchedEntity->isDirty('tax_id')) {
+
+            $this->Product = FactoryLocator::get('Table')->get('Products');
+
+            if (! empty($oldProduct->product_attributes)) {
+                // update net price of all attributes
+                foreach ($oldProduct->product_attributes as $attribute) {
+                    if (!empty($attribute->purchase_price_product_attribute)) {
+                        $newNetPrice = $this->Product->getNetPriceForNewTaxRate($attribute->purchase_price_product_attribute->price, $oldProduct->tax->rate, $taxRate);
+                        $entity2Save = $this->getEntityToSaveByProductAttributeId($attribute->id_product_attribute);
+                        $entity2Save->price = $newNetPrice;
+                        $this->save($entity2Save);
+                    }
+                }
+            } else {
+                // update net price of main product
+                if (!empty($oldProduct->purchase_price_product)) {
+                    $newNetPrice = $this->Product->getNetPriceForNewTaxRate($oldProduct->purchase_price_product->price, $oldProduct->tax->rate, $taxRate);
+                    $patchedEntity->price = $newNetPrice;
+                }
+            }
+
             $changedTaxInfoForMessage[] = [
                 'label' => __d('admin', 'Purchase_price') . ': ',
                 'oldTaxRate' => $oldPurchasePriceTaxRate,
