@@ -1042,37 +1042,42 @@ class ProductsController extends AdminAppController
             ],
         ])->first();
 
-        if (empty($oldProduct->purchase_price_product)) {
-            $oldProduct->purchase_price_product = (object) ['price' => 0];
-        }
-
-        $taxRate = 0;
-        if (!empty($oldProduct->purchase_price_product->tax)) {
-            $taxRate = $oldProduct->purchase_price_product->tax->rate;
-        }
-
-        $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
-        $purchaseTable = $this->Product->PurchasePriceProducts;
-
-        if ($ids['attributeId'] > 0) {
-            // override values
-            foreach ($oldProduct->product_attributes as $attribute) {
-                if ($attribute->id_product_attribute != $ids['attributeId']) {
-                    continue;
-                }
-                $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
-                $oldPrice = 0;
-                if (!empty($attribute->purchase_price_product_attribute)) {
-                    $oldPrice = $attribute->purchase_price_product_attribute->price;
-                }
-                $oldProduct->purchase_price_product->price = $oldPrice;
-                $oldProduct->unit_product = $attribute->unit_product_attribute;
-                $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
-                $purchaseTable = $this->Product->ProductAttributes->PurchasePriceProductAttributes;
-            }
-        }
-
         try {
+
+            if (empty($oldProduct)) {
+                throw new InvalidParameterException('product not existing: id ' . $productId);
+            }
+
+            if (empty($oldProduct->purchase_price_product)) {
+                $oldProduct->purchase_price_product = (object) ['price' => 0];
+            }
+
+            $taxRate = 0;
+            if (!empty($oldProduct->purchase_price_product->tax)) {
+                $taxRate = $oldProduct->purchase_price_product->tax->rate;
+            }
+
+            $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
+            $purchaseTable = $this->Product->PurchasePriceProducts;
+
+            if ($ids['attributeId'] > 0) {
+                // override values
+                foreach ($oldProduct->product_attributes as $attribute) {
+                    if ($attribute->id_product_attribute != $ids['attributeId']) {
+                        continue;
+                    }
+                    $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                    $oldPrice = 0;
+                    if (!empty($attribute->purchase_price_product_attribute)) {
+                        $oldPrice = $attribute->purchase_price_product_attribute->price;
+                    }
+                    $oldProduct->purchase_price_product->price = $oldPrice;
+                    $oldProduct->unit_product = $attribute->unit_product_attribute;
+                    $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
+                    $purchaseTable = $this->Product->ProductAttributes->PurchasePriceProductAttributes;
+                }
+            }
+
             if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
                 $entity2Save = clone $oldProduct->unit_product;
                 $patchedEntity = $this->Product->UnitProducts->patchEntity(
@@ -1102,8 +1107,7 @@ class ProductsController extends AdminAppController
                 $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->purchase_price_product->price, $taxRate));
                 $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

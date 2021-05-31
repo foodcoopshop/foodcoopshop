@@ -113,12 +113,40 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertSellingPriceChange('163', '1,60', '1,60', '0');
     }
 
+    public function testEditPurchasePriceOfProductAsSuperadminNonExistingProduct()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->doPurchasePriceChange(4, '20');
+        $this->assertJsonError();
+        $this->assertRegExpWithUnquotedString('product not existing: id 4', $this->getJsonDecodedContent()->msg);
+    }
+
+    public function testEditPurchasePriceOfProductAsSuperadminInvalid()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->doPurchasePriceChange(346, '-1');
+        $this->assertJsonError();
+        $this->assertRegExpWithUnquotedString('Der Preis muss eine positive Zahl sein.', $this->getJsonDecodedContent()->msg);
+    }
+
     public function testEditPurchasePriceOfProductAsSuperadmin()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $product = $this->doPurchasePriceChange(346, '2,20');
+        $this->assertJsonOk();
         $this->assertEquals(1.833333, $product->purchase_price_product->price);
+    }
+
+    public function testEditPurchasePricePerUnitOfProductAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange(347, '1,00');
+        $this->assertJsonOk();
+        $this->assertEquals(1.00, $product->unit_product->purchase_price_incl_per_unit);
     }
 
     public function testEditPurchasePriceOfAttributeAsSuperadmin()
@@ -126,7 +154,17 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $product = $this->doPurchasePriceChange('60-10', '2,20');
+        $this->assertJsonOk();
         $this->assertEquals(2.2, $product->product_attributes[0]->purchase_price_product_attribute->price);
+    }
+
+    public function testEditPurchasePricePerUnitOfAttributeAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange('348-11', '13,30');
+        $this->assertJsonOk();
+        $this->assertEquals(13.30, $product->product_attributes[0]->unit_product_attribute->purchase_price_incl_per_unit);
     }
 
     public function testEditTaxSellingPriceInvalid()
@@ -427,7 +465,6 @@ class ProductsControllerTest extends AppCakeTestCase
             'productId' => $productId,
             'purchasePrice' => $price,
         ]);
-        $this->assertJsonOk();
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -435,7 +472,9 @@ class ProductsControllerTest extends AppCakeTestCase
             ],
             'contain' => [
                 'ProductAttributes.PurchasePriceProductAttributes',
+                'ProductAttributes.UnitProductAttributes',
                 'PurchasePriceProducts',
+                'UnitProducts',
             ],
         ])->first();
 
