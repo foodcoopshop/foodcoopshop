@@ -47,7 +47,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($product->active, $status, 'changing product status did not work');
     }
 
-    public function testEditPriceWithInvalidPriceAsSuperadmin()
+    public function testEditSellingPriceWithInvalidPriceAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
@@ -57,7 +57,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testEditPriceOfNonExistingProductAsSuperadmin()
+    public function testEditSellingPriceOfNonExistingProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $productId = 1000;
@@ -65,7 +65,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testEditPriceOfMeatManufactuerProductAsVegatableManufacturer()
+    public function testEditSellingPriceOfMeatManufactuerProductAsVegatableManufacturer()
     {
         $this->loginAsVegetableManufacturer();
         $productId = 102;
@@ -73,23 +73,23 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testEditPriceOfProductAsSuperadminToZero()
+    public function testEditSellingPriceOfProductAsSuperadminToZero()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange(346, '0', '0,00', '10');
+        $this->assertSellingPriceChange(346, '0', '0,00', '10');
     }
 
-    public function testEditPriceOfProductAsSuperadmin()
+    public function testEditSellingPriceOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange(346, '2,20', '2,00', '10');
+        $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
     }
 
-    public function testEditPricePerUnitOfProductAsSuperadmin()
+    public function testEditSellingPricePerUnitOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $productId = 346;
-        $this->assertPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -102,16 +102,16 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
-    public function testEditPriceOfAttributeAsSuperadmin()
+    public function testEditSellingPriceOfAttributeAsSuperadmin()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange('60-10', '1,25', '1,106195', '13');
+        $this->assertSellingPriceChange('60-10', '1,25', '1,106195', '13');
     }
 
-    public function testEditPriceWith0PercentTax()
+    public function testEditSellingPriceWith0PercentTax()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange('163', '1,60', '1,60', '0');
+        $this->assertSellingPriceChange('163', '1,60', '1,60', '0');
     }
 
     public function testEditTaxSellingPriceInvalid()
@@ -403,7 +403,7 @@ class ProductsControllerTest extends AppCakeTestCase
         return $product;
     }
 
-    private function assertPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
+    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
