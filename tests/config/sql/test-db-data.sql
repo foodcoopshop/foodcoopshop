@@ -299,7 +299,8 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 /*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
 INSERT INTO `fcs_purchase_prices` VALUES
 (1,'346','0','1','1.2'),
-(2,'0','13','0','1.4');
+(2,'0','13','0','1.4'),
+(3,'347','0','3','0');
 /*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
@@ -359,7 +360,7 @@ INSERT INTO `fcs_tax` VALUES
 
 /*!40000 ALTER TABLE `fcs_units` DISABLE KEYS */;
 INSERT INTO `fcs_units` VALUES
-(1,347,0,1.50,NULL,'g',100,1,350.000),
+(1,347,0,1.50,0.98,'g',100,1,350.000),
 (2,0,11,20.00,NULL,'kg',1,1,0.500),
 (3,0,12,20.00,NULL,'kg',1,1,1.000),
 (4,349,0,0.00,NULL,'kg',1,0,0.000),
