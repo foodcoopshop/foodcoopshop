@@ -171,7 +171,6 @@ foodcoopshop.SyncProductData = {
 
     getProductTableRows : function (products) {
 
-        var i = 0;
         var productRows = [];
 
         for (var product of products) {
@@ -249,7 +248,6 @@ foodcoopshop.SyncProductData = {
                 productRows.push(tableData);
             }
 
-            i++;
         }
 
         return productRows;
