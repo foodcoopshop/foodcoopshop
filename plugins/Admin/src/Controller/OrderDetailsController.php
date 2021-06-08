@@ -1567,7 +1567,7 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->OrderDetailUnits->save($patchedEntity);
     }
 
-    private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount, $productPurchasePrice)
+    private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount, $productPurchasePrice = 0)
     {
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
