@@ -288,6 +288,16 @@ class CartsTable extends AppTable
         return $cart;
     }
 
+    private function addPurchasePricePerUnitProductData($appAuth, $productData, $unitProduct)
+    {
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            if (!empty($unitProduct)) {
+                $productData['purchasePriceInclPerUnit'] = $unitProduct->purchase_price_incl_per_unit;
+            }
+        }
+        return $productData;
+    }
+
     private function addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
     {
         $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
@@ -447,6 +457,7 @@ class CartsTable extends AppTable
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product->unit_product);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -533,6 +544,7 @@ class CartsTable extends AppTable
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product_attribute->unit_product_attribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

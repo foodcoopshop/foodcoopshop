@@ -367,6 +367,9 @@ class CartComponent extends Component
                     'quantity_in_units' => $cartProduct['quantityInUnits'],
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    $orderDetail2save['order_detail_unit']['purchase_price_incl_per_unit'] = $cartProduct['purchasePriceInclPerUnit'];
+                }
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
