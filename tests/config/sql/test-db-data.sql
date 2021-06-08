@@ -298,12 +298,12 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 
 /*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
 INSERT INTO `fcs_purchase_prices` VALUES
-(1,'346','0','1','1.2'),
-(2,'0','13','0','1.4'),
-(3,'347','0','3','0'),
-(4,'348','0','3','0'),
-(5,'60','0','2','0'),
-(6,'0','10','0','0.25');
+(1,346,0,1,1.200000),
+(2,0,13,0,1.400000),
+(3,347,0,3,0.000000),
+(4,348,0,3,0.000000),
+(5,60,0,2,0.000000),
+(6,0,10,0,0.250000);
 /*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;

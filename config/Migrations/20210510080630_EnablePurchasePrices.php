@@ -61,5 +61,9 @@ class EnablePurchasePrices extends AbstractMigration
             COMMIT;";
         $this->execute($sql);
 
+        $sql = "ALTER TABLE `fcs_order_detail_units` ADD `purchase_price_incl_per_unit` DECIMAL(10,2) UNSIGNED NULL DEFAULT NULL AFTER `price_incl_per_unit`;";
+        $this->execute($sql);
+
+
     }
 }
