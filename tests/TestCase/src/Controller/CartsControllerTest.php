@@ -526,23 +526,23 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectD->tax_rate, 10);
 
         $this->assertEquals($objectA->total_price_tax_incl, 2.88);
-        $this->assertEquals($objectB->total_price_tax_incl, 2.94);
-        $this->assertEquals($objectC->total_price_tax_incl, 42);
+        $this->assertEquals($objectB->total_price_tax_incl, 10.29);
+        $this->assertEquals($objectC->total_price_tax_incl, 25.2);
         $this->assertEquals($objectD->total_price_tax_incl, 0.28);
 
         $this->assertEquals($objectA->total_price_tax_excl, 2.40);
-        $this->assertEquals($objectB->total_price_tax_excl, 2.601771);
-        $this->assertEquals($objectC->total_price_tax_excl, 37.168143);
+        $this->assertEquals($objectB->total_price_tax_excl, 9.106194);
+        $this->assertEquals($objectC->total_price_tax_excl, 22.300884);
         $this->assertEquals($objectD->total_price_tax_excl, 0.25);
 
         $this->assertEquals($objectA->tax_unit_amount, 0.24);
-        $this->assertEquals($objectB->tax_unit_amount, 0.11);
-        $this->assertEquals($objectC->tax_unit_amount, 1.61);
+        $this->assertEquals($objectB->tax_unit_amount, 0.39);
+        $this->assertEquals($objectC->tax_unit_amount, 0.97);
         $this->assertEquals($objectD->tax_unit_amount, 0.03);
 
         $this->assertEquals($objectA->tax_total_amount, 0.48);
-        $this->assertEquals($objectB->tax_total_amount, 0.33);
-        $this->assertEquals($objectC->tax_total_amount, 4.83);
+        $this->assertEquals($objectB->tax_total_amount, 1.17);
+        $this->assertEquals($objectC->tax_total_amount, 2.91);
         $this->assertEquals($objectD->tax_total_amount, 0.03);
 
     }
