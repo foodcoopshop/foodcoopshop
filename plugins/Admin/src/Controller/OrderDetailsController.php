@@ -329,7 +329,7 @@ class OrderDetailsController extends AdminAppController
         }
         echo '<b>Summe Einkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumPurchasePrice);
         echo '<br />Summe Verkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice);
-        echo '<br />Gewinn exkl. USt.:' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice - $sumPurchasePrice);
+        echo '<br />Gewinn exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice - $sumPurchasePrice);
         echo '</b><br /><br />' . $tmpOutput;
     }
 
