@@ -963,13 +963,20 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
                 'OrderDetailUnits',
+                'OrderDetailPurchasePrices',
             ]
         ])->first();
 
         $productPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount * $productAmount;
 
+        $productPurchasePrice = null;
+        if (!empty($oldOrderDetail->order_detail_purchase_price)) {
+            $productPurchasePrice = $oldOrderDetail->order_detail_purchase_price->total_price_tax_incl / $oldOrderDetail->product_amount * $productAmount;
+        }
+
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
+
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount, $productPurchasePrice);
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {
