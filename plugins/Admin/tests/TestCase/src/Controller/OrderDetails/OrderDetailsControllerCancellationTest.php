@@ -21,6 +21,23 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public $cancellationReason = 'Product was not fresh any more.';
 
+    public function testCancellationWithPurchasePrice()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->addProductToCart(346, 3);
+        $this->finishCart();
+        $orderDetailId = 4;
+        $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);
+
+        $changedOrderDetailPurchasePrices = $this->OrderDetail->OrderDetailPurchasePrices->find('all', [
+            'conditions' => [
+                'OrderDetailPurchasePrices.id_order_detail IN' => [$orderDetailId],
+            ],
+        ])->toArray();
+        $this->assertEmpty($changedOrderDetailPurchasePrices);
+    }
+
     public function testCancellationAsManufacturer()
     {
         $this->loginAsVegetableManufacturer();
@@ -130,7 +147,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
         $orderDetails = $this->getOrderDetailsFromDatabase($orderDetailIds);
-        $this->assertEmpty($orderDetails, 'order detail was not deleted properly');
+        $this->assertEmpty($orderDetails);
     }
 
     private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
