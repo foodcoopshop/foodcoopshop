@@ -116,12 +116,10 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->assertEquals(0.39, $changedOrderDetails[0]->order_detail_purchase_price->tax_unit_amount);
         $this->assertEquals(1.95, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
 
-        /*
-        $this->assertEquals(2.88, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(2.4, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_excl);
-        $this->assertEquals(0.24, $changedOrderDetails[1]->order_detail_purchase_price->tax_unit_amount);
-        $this->assertEquals(0.48, $changedOrderDetails[1]->order_detail_purchase_price->tax_total_amount);
-        */
+        $this->assertEquals(6.86, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(6.24, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(0.31, $changedOrderDetails[1]->order_detail_purchase_price->tax_unit_amount);
+        $this->assertEquals(0.62, $changedOrderDetails[1]->order_detail_purchase_price->tax_total_amount);
 
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
