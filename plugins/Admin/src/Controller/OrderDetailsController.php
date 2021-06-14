@@ -230,7 +230,6 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
             'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
         ]);
-        $contain[] = 'PickupDayEntities';
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $odParams['contain'],
