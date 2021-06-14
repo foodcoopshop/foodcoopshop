@@ -165,7 +165,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(347, 1, '500');
-         $this->addProductToSelfServiceCart('348-12', 1, '250');
+        $this->addProductToSelfServiceCart('348-12', 1, '250');
         $this->finishSelfServiceCart(1, 1);
 
         $this->Cart = $this->getTableLocator()->get('Carts');
