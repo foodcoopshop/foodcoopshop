@@ -90,7 +90,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $productId = '347'; // forelle
-        $amount = 7;
+        $amount = 6;
         $this->editCustomerAmount = 2;
         $this->addProductToCart($productId, $amount);
         $this->finishCart();
@@ -98,7 +98,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
-        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
+        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, 3);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
 
         $changedOrderDetails = $this->OrderDetail->find('all', [
@@ -111,33 +111,23 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
             ]
         ])->toArray();
 
-        $this->assertEquals(17.15, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(15.20, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(10.29, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(9.12, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
         $this->assertEquals(0.39, $changedOrderDetails[0]->order_detail_purchase_price->tax_unit_amount);
-        $this->assertEquals(1.95, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
+        $this->assertEquals(1.17, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
 
-        $this->assertEquals(6.86, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(6.24, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_excl);
-        $this->assertEquals(0.31, $changedOrderDetails[1]->order_detail_purchase_price->tax_unit_amount);
-        $this->assertEquals(0.62, $changedOrderDetails[1]->order_detail_purchase_price->tax_total_amount);
+        $this->assertEquals(10.29, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(9.12, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(0.39, $changedOrderDetails[1]->order_detail_purchase_price->tax_unit_amount);
+        $this->assertEquals(1.17, $changedOrderDetails[1]->order_detail_purchase_price->tax_total_amount);
 
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
 
         $this->assertEquals($changedOrderDetails[0]->tax_rate, $changedOrderDetails[1]->tax_rate);
 
-        $this->assertEquals(5, $changedOrderDetails[0]->product_amount);
-        $this->assertEquals(2, $changedOrderDetails[1]->product_amount);
-
-        $this->assertEquals(26.25, $changedOrderDetails[0]->total_price_tax_incl);
-        $this->assertEquals(10.5, $changedOrderDetails[1]->total_price_tax_incl);
-
-        $this->assertEquals(23.85, $changedOrderDetails[0]->total_price_tax_excl);
-        $this->assertEquals(9.54, $changedOrderDetails[1]->total_price_tax_excl);
-
-        $this->assertEquals(1750, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
-        $this->assertEquals(500, $changedOrderDetails[1]->order_detail_unit->product_quantity_in_units);
-
+        $this->assertEquals(3, $changedOrderDetails[0]->product_amount);
+        $this->assertEquals(3, $changedOrderDetails[1]->product_amount);
     }
 
     public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5()

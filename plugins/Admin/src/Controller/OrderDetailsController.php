@@ -748,7 +748,7 @@ class OrderDetailsController extends AdminAppController
                 $newOrderDetailPurchasePriceEntity = $this->OrderDetail->OrderDetailPurchasePrices->save($newEntity->order_detail_purchase_price);
                 $savedEntity->order_detail_purchase_price = $newOrderDetailPurchasePriceEntity;
                 $productPurchasePrice = $productPurchasePrice / $newAmountForOldOrderDetail * $amount;
-                $this->changeOrderDetailPurchasePrice($savedEntity, $productPurchasePrice, $amount);
+                $this->changeOrderDetailPurchasePrice($savedEntity->order_detail_purchase_price, $productPurchasePrice, $amount);
             }
 
         } else {
