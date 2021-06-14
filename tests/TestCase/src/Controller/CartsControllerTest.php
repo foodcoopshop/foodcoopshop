@@ -504,10 +504,10 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsAdmin();
-        $this->addProductToCart(346, 2); // main product with normal price
-        $this->addProductToCart(347, 3); // main product with price per unit
-        $this->addProductToCart('348-12', 3); // attribute with price per unit
-        $this->addProductToCart('60-10', 1); // attribute with normal price
+        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
+        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
+        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
+        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
 
         $this->finishCart(1,1);
 
@@ -536,8 +536,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectD->order_detail_purchase_price->total_price_tax_incl, 0.28);
 
         $this->assertEquals($objectA->order_detail_purchase_price->total_price_tax_excl, 2.40);
-        $this->assertEquals($objectB->order_detail_purchase_price->total_price_tax_excl, 9.106194);
-        $this->assertEquals($objectC->order_detail_purchase_price->total_price_tax_excl, 22.300884);
+        $this->assertEquals($objectB->order_detail_purchase_price->total_price_tax_excl, 9.106195);
+        $this->assertEquals($objectC->order_detail_purchase_price->total_price_tax_excl, 22.300885);
         $this->assertEquals($objectD->order_detail_purchase_price->total_price_tax_excl, 0.25);
 
         $this->assertEquals($objectA->order_detail_purchase_price->tax_unit_amount, 0.24);
