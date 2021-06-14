@@ -83,7 +83,7 @@ class UnitsTable extends AppTable
             'quantity_in_units' => $quantityInUnits,
             ],
             [
-                'validate' => $pricePerUnitEnabled ? 'default' : false
+                'validate' => 'default',
             ]
         );
 
