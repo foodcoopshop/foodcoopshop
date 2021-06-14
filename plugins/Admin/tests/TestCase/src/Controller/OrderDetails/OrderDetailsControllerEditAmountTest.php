@@ -94,13 +94,13 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
             ]
         ])->toArray();
 
-        $this->assertEquals(12, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(11.03, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(8.4, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(7.43, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
         $this->assertEquals(0.97, $changedOrderDetails[0]->order_detail_purchase_price->tax_unit_amount);
         $this->assertEquals(0.97, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
 
-        $this->assertEquals(3.64, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(3.16, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(2.88, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(2.4, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_excl);
         $this->assertEquals(0.24, $changedOrderDetails[1]->order_detail_purchase_price->tax_unit_amount);
         $this->assertEquals(0.48, $changedOrderDetails[1]->order_detail_purchase_price->tax_total_amount);
 

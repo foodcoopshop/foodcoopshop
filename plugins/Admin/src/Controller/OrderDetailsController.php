@@ -870,8 +870,9 @@ class OrderDetailsController extends AdminAppController
             $productPurchasePrice = null;
             if (!empty($oldOrderDetail->order_detail_purchase_price)) {
                 $productPurchasePrice = round($oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+                $this->changeOrderDetailPurchasePrice($oldOrderDetail, $productPurchasePrice, $object->product_amount);
             }
-            $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount, $productPurchasePrice);
+            $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
             $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
@@ -972,11 +973,12 @@ class OrderDetailsController extends AdminAppController
         $productPurchasePrice = null;
         if (!empty($oldOrderDetail->order_detail_purchase_price)) {
             $productPurchasePrice = $oldOrderDetail->order_detail_purchase_price->total_price_tax_incl / $oldOrderDetail->product_amount * $productAmount;
+            $this->changeOrderDetailPurchasePrice($oldOrderDetail, $productPurchasePrice, $productAmount);
         }
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
 
-        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount, $productPurchasePrice);
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {
@@ -1574,7 +1576,24 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->OrderDetailUnits->save($patchedEntity);
     }
 
-    private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount, $productPurchasePrice = 0)
+    private function changeOrderDetailPurchasePrice($oldOrderDetail, $productPurchasePrice, $productAmount)
+    {
+        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($productPurchasePrice / $productAmount, $oldOrderDetail->order_detail_purchase_price->tax_rate);
+        $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPurchasePrice, $unitPriceExcl, $productAmount);
+        $totalTaxAmount = $unitTaxAmount * $productAmount;
+        $totalPriceTaxExcl = $productPurchasePrice - $totalTaxAmount;
+        $orderDetailPurchasePrice2save = [
+            'total_price_tax_incl' => $productPurchasePrice,
+            'total_price_tax_excl' => $totalPriceTaxExcl,
+            'tax_unit_amount' => $unitTaxAmount,
+            'tax_total_amount' => $totalTaxAmount,
+        ];
+        $this->OrderDetail->OrderDetailPurchasePrices->save(
+            $this->OrderDetail->OrderDetailPurchasePrices->patchEntity($oldOrderDetail->order_detail_purchase_price, $orderDetailPurchasePrice2save)
+        );
+    }
+
+    private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount)
     {
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -1597,23 +1616,6 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
         );
-
-        // update order detail purchase prices
-        if (!empty($oldOrderDetail->order_detail_purchase_price)) {
-            $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($productPurchasePrice / $productAmount, $oldOrderDetail->order_detail_purchase_price->tax_rate);
-            $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPurchasePrice, $unitPriceExcl, $productAmount);
-            $totalTaxAmount = $unitTaxAmount * $productAmount;
-            $totalPriceTaxExcl = $productPrice - $totalTaxAmount;
-            $orderDetailPurchasePrice2save = [
-                'total_price_tax_incl' => $productPrice,
-                'total_price_tax_excl' => $totalPriceTaxExcl,
-                'tax_unit_amount' => $unitTaxAmount,
-                'tax_total_amount' => $totalTaxAmount,
-            ];
-            $this->OrderDetail->OrderDetailPurchasePrices->save(
-                $this->OrderDetail->OrderDetailPurchasePrices->patchEntity($oldOrderDetail->order_detail_purchase_price, $orderDetailPurchasePrice2save)
-            );
-        }
 
         $newOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [

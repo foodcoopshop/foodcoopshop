@@ -78,13 +78,11 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
             ]
         ])->toArray();
 
-        $this->assertEquals(12.01, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(11.11, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(7.85, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(6.95, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
         $this->assertEquals(0.45, $changedOrderDetails[0]->order_detail_purchase_price->tax_unit_amount);
         $this->assertEquals(0.90, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
-
     }
-
 
     public function testEditOrderDetailQuantityAsSuperadminSameQuantity()
     {
