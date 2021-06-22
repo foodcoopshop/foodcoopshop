@@ -11,6 +11,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Intervention\Image\ImageManagerStatic as Image;
 use Cake\I18n\FrozenTime;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,6 +34,9 @@ class ProductsController extends AdminAppController
         switch ($this->getRequest()->getParam('action')) {
             case 'generateProductCards':
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
+            case 'editPurchasePrice':
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED');
                 break;
             case 'index':
             case 'add':
@@ -665,88 +669,135 @@ class ProductsController extends AdminAppController
         $productId = (int) $this->getRequest()->getData('productId');
         $taxId = (int) $this->getRequest()->getData('taxId');
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ],
-            'contain' => [
+        try {
+
+            $contain = [
                 'Taxes',
                 'ProductAttributes',
-                'Manufacturers'
-            ]
-        ])->first();
-
-        if (empty($oldProduct->tax)) {
-            $oldProduct->tax = (object) [
-                'rate' => 0
+                'Manufacturers',
             ];
-        }
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $contain[] = 'PurchasePriceProducts.Taxes';
+                $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
+            }
+            $oldProduct = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId
+                ],
+                'contain' => $contain,
+            ])->first();
 
-        if ($taxId != $oldProduct->id_tax) {
-            $product2update = [
-                'id_tax' => $taxId
-            ];
+            $this->Tax = $this->getTableLocator()->get('Taxes');
+            $taxes = $this->Tax->find('all', [
+                'conditions' => [
+                    'Taxes.deleted' => APP_OFF,
+                ]
+            ])->toArray();
+            $validTaxIds = Hash::extract($taxes, '{n}.id_tax');
+            $validTaxIds[] = 0;
+            if (!in_array($taxId, $validTaxIds)) {
+                throw new InvalidParameterException('invalid taxId: ' . $taxId);
+            }
 
-            $this->Product->save(
-                $this->Product->patchEntity($oldProduct, $product2update)
-            );
-
-            if (! empty($oldProduct->product_attributes)) {
-                // update net price of all attributes
-                foreach ($oldProduct->product_attributes as $attribute) {
-                    // netPrice needs to be calculated new - product tax has been saved above...
-                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute->price, $oldProduct->tax->rate);
-                    $this->Product->ProductAttributes->updateAll([
-                        'price' => $newNetPrice
-                    ], [
-                        'id_product_attribute' => $attribute->id_product_attribute
-                    ]);
+            $changedTaxInfoForMessage = [];
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $purchasePriceTaxId = (int) $this->getRequest()->getData('purchasePriceTaxId');
+                if (!in_array($purchasePriceTaxId, $validTaxIds)) {
+                    throw new InvalidParameterException('invalid purchasePriceTaxId: ' . $purchasePriceTaxId);
                 }
-            } else {
-                // update price of product without attributes
-                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct->price, $oldProduct->tax->rate);
-                $product2update = [
-                    'price' => $newNetPrice
+                $changedTaxInfoForMessage = $this->Product->PurchasePriceProducts->savePurchasePriceTax($purchasePriceTaxId, $productId, $oldProduct);
+            }
+
+            if (empty($oldProduct->tax)) {
+                $oldProduct->tax = (object) [
+                    'rate' => 0
                 ];
+            }
+
+            if ($taxId != $oldProduct->id_tax) {
+                $product2update = [
+                    'id_tax' => $taxId,
+                ];
+
                 $this->Product->save(
                     $this->Product->patchEntity($oldProduct, $product2update)
                 );
+
+                $newTaxRate = 0;
+                foreach($taxes as $tax) {
+                    if ($taxId == $tax->id_tax) {
+                        $newTaxRate = $tax->rate;
+                        continue;
+                    }
+                }
+
+                if (! empty($oldProduct->product_attributes)) {
+                    // update net price of all attributes
+                    foreach ($oldProduct->product_attributes as $attribute) {
+                        $newNetPrice = $this->Product->getNetPriceForNewTaxRate($attribute->price, $oldProduct->tax->rate, $newTaxRate);
+                        $this->Product->ProductAttributes->updateAll([
+                            'price' => $newNetPrice
+                        ], [
+                            'id_product_attribute' => $attribute->id_product_attribute
+                        ]);
+                    }
+                } else {
+                    // update price of product without attributes
+                    $newNetPrice = $this->Product->getNetPriceForNewTaxRate($oldProduct->price, $oldProduct->tax->rate, $newTaxRate);
+                    $product2update = [
+                        'price' => $newNetPrice
+                    ];
+                    $this->Product->save(
+                        $this->Product->patchEntity($oldProduct, $product2update)
+                    );
+                }
+
+                $oldTaxRate = 0;
+                if (! empty($oldProduct->tax)) {
+                    $oldTaxRate = $oldProduct->tax->rate;
+                }
+
+                $changedTaxInfoForMessage[] = [
+                    'label' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Selling_price') . ': ' : '',
+                    'oldTaxRate' => $oldTaxRate,
+                    'newTaxRate' => $newTaxRate,
+                ];
+
             }
 
-            $this->Tax = $this->getTableLocator()->get('Taxes');
-            $tax = $this->Tax->find('all', [
-                'conditions' => [
-                    'Taxes.id_tax' => $taxId
-                ]
-            ])->first();
-
-            if (! empty($tax)) {
-                $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
+            if (!empty($changedTaxInfoForMessage)) {
+                $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully.', [
+                    '<b>' . $oldProduct->name . '</b>',
+                    '<b>' . $oldProduct->manufacturer->name . '</b>',
+                ]);
+                foreach($changedTaxInfoForMessage as $info) {
+                    $messageString .= '<br />';
+                    if ($info['label'] != '') {
+                        $messageString .= '<b>' . $info['label'] . '</b>';
+                    }
+                    $messageString .= __d('admin', 'From_{0}_to_{1}', [
+                        Configure::read('app.numberHelper')->formatTaxRate($info['oldTaxRate']) . '%',
+                        '<b>' . Configure::read('app.numberHelper')->formatTaxRate($info['newTaxRate']) . '%</b>',
+                    ]);
+                }
+                $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
             } else {
-                $taxRate = 0; // 0 % does not have record in tax
+                $messageString = __d('admin', 'Nothing_changed.');
             }
+            $this->Flash->success($messageString);
 
-            if (! empty($oldProduct->tax)) {
-                $oldTaxRate = Configure::read('app.numberHelper')->formatTaxRate($oldProduct->tax->rate);
-            } else {
-                $oldTaxRate = 0; // 0 % does not have record in tax
-            }
+            $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-            $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldTaxRate . '%', $taxRate . '%']);
-            $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
-        } else {
-            $messageString = __d('admin', 'Nothing_changed.');
+            $this->set([
+                'status' => 1,
+                'msg' => __d('admin', 'Saving_successful.'),
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
         }
 
-        $this->Flash->success($messageString);
-
-        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
-
-        $this->set([
-            'status' => 1,
-            'msg' => __d('admin', 'Saving_successful.'),
-        ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editCategories()
@@ -961,6 +1012,127 @@ class ProductsController extends AdminAppController
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
+    public function editPurchasePrice()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+
+        $originalProductId = $this->getRequest()->getData('productId');
+        $purchaseGrossPrice = $this->getRequest()->getData('purchasePrice');
+        $purchaseGrossPrice = Configure::read('app.numberHelper')->getStringAsFloat($purchaseGrossPrice);
+
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productId = $ids['productId'];
+
+        $oldProduct = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ],
+            'contain' => [
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
+                'ProductAttributes.UnitProductAttributes',
+                'UnitProducts',
+                'PurchasePriceProducts.Taxes',
+                'ProductAttributes.PurchasePriceProductAttributes',
+            ],
+        ])->first();
+
+        try {
+
+            if (empty($oldProduct)) {
+                throw new InvalidParameterException('product not existing: id ' . $productId);
+            }
+
+            if (empty($oldProduct->purchase_price_product)) {
+                $oldProduct->purchase_price_product = (object) ['price' => 0];
+            }
+
+            $taxRate = 0;
+            if (!empty($oldProduct->purchase_price_product->tax)) {
+                $taxRate = $oldProduct->purchase_price_product->tax->rate;
+            }
+
+            $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
+            $purchaseTable = $this->Product->PurchasePriceProducts;
+
+            if ($ids['attributeId'] > 0) {
+                // override values
+                foreach ($oldProduct->product_attributes as $attribute) {
+                    if ($attribute->id_product_attribute != $ids['attributeId']) {
+                        continue;
+                    }
+                    $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                    $oldPrice = 0;
+                    if (!empty($attribute->purchase_price_product_attribute)) {
+                        $oldPrice = $attribute->purchase_price_product_attribute->price;
+                    }
+                    $oldProduct->purchase_price_product->price = $oldPrice;
+                    $oldProduct->unit_product = $attribute->unit_product_attribute;
+                    $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
+                    $purchaseTable = $this->Product->ProductAttributes->PurchasePriceProductAttributes;
+                }
+            }
+
+            if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
+                $entity2Save = clone $oldProduct->unit_product;
+                $patchedEntity = $this->Product->UnitProducts->patchEntity(
+                    $entity2Save,
+                    [
+                        'purchase_price_incl_per_unit' => $purchaseGrossPrice,
+                    ],
+                );
+                if ($patchedEntity->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->Product->UnitProducts->getAllValidationErrors($patchedEntity)));
+                }
+                $this->Product->UnitProducts->save($patchedEntity);
+                $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+                $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+            } else {
+                $purchasePrice2Save = $this->Product->getNetPrice($purchaseGrossPrice, $taxRate);
+                $patchedEntity = $purchaseTable->patchEntity(
+                    $purchasePriceEntity2Save,
+                    [
+                        'price' => $purchasePrice2Save,
+                    ],
+                );
+                if ($patchedEntity->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($patchedEntity)));
+                }
+                $purchaseTable->save($patchedEntity);
+                $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->purchase_price_product->price, $taxRate));
+                $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($purchaseGrossPrice);
+            }
+        } catch (\Exception $e) {
+            return $this->sendAjaxError($e);
+        }
+
+        $messageString = __d('admin', 'Nothing_changed.');
+        if ($oldPrice != $newPrice) {
+            $messageString = __d('admin', 'The_purchase_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']);
+            $actionLogMessage = __d('admin', 'The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+                $oldPrice,
+                $newPrice,
+            ]);
+            $this->ActionLog->customSave('product_purchase_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        }
+        $this->Flash->success($messageString);
+
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+    }
+
     public function editPrice()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -983,7 +1155,8 @@ class ProductsController extends AdminAppController
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.UnitProductAttributes',
-                'UnitProducts'
+                'UnitProducts',
+                'Taxes',
             ]
         ])->first();
 
@@ -1024,7 +1197,8 @@ class ProductsController extends AdminAppController
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
-            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->price));
+            $taxRate = $oldProduct->tax->rate ?? 0;
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->price, $taxRate));
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {

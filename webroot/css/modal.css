@@ -99,9 +99,22 @@ body.iframe_start_page {
 #payment-deposit-add .bootstrap-select {
     margin-bottom: 10px;
 }
-.modal .categories-checkboxes,
-.modal .tax-dropdown-wrapper {
+.modal .categories-checkboxes {
     display: block;
+}
+.modal .tax-dropdown-wrapper,
+.modal .purchase-price-tax-dropdown-wrapper {
+    display: block;
+}
+.modal .tax-dropdown-wrapper select,
+.modal .purchase-price-tax-dropdown-wrapper select {
+    width: 240px;
+    float: left;
+}
+#product-tax-edit-form label {
+    width: 100px;
+    float: left;
+    margin-top: 4px;
 }
 .modal .cke {
     width: 100% ! important;
@@ -246,6 +259,7 @@ body.iframe_start_page {
     width: 60px;
     margin-left: 5px;
 }
+#modal-product-purchase-price-edit input[type="number"],
 #modal-product-price-edit input[type="number"],
 #modal-product-deposit-edit input[type="number"] {
     width: 70px;

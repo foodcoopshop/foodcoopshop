@@ -13,13 +13,14 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 echo '<td>';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo $this->Form->hidden('Products.id_tax', [
             'id' => 'tax-id-' . $product->id_product,
             'value' => $product->id_tax
         ]);
-        $taxRate = $product->tax->rate;
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
@@ -30,7 +31,33 @@ echo '<td>';
                 'escape' => false
             ]
         );
-        echo '<span class="tax-for-dialog">' . $this->Number->formatTaxRate($taxRate) . '%' . '</span>';
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            if (!empty($product->purchase_price_product)) {
+                echo $this->Form->hidden('PurchasePriceProducts.id_tax', [
+                    'id' => 'purchase-price-tax-id-' . $product->id_product,
+                    'value' => $product->purchase_price_product->tax_id,
+                ]);
+
+                echo '<span class="purchase-price-tax-for-dialog purchase-price-list-element">';
+                if ($product->purchase_price_product->tax_id !== null) {
+                    $taxRate = 0;
+                    if (!empty($product->purchase_price_product->tax)) {
+                        $taxRate = $product->purchase_price_product->tax->rate;
+                    }
+                    echo $this->Number->formatTaxRate($taxRate) . '%';
+                } else {
+                    echo '<i>--</i>';
+                }
+                echo '</span>';
+
+            }
+        }
+
+        echo '<span class="tax-for-dialog">' .
+            $this->Number->formatTaxRate($product->tax->rate) .
+        '%' . '</span>';
+
     }
 echo '</td>';
 

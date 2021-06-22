@@ -57,6 +57,33 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailSentWithAt(1, Configure::read('test.loginEmailMeatManufacturer'), 'cc');
     }
 
+    public function testEditOrderDetailQuantityAsSuperadminDifferentQuantityPurchasePriceAvailable()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+
+        $cart = $this->preparePricePerUnitOrder();
+
+        $newQuantity = 800.584;
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
+
+        $changedOrderDetails = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail IN' => [$orderDetailId],
+            ],
+            'contain' => [
+                'OrderDetailUnits',
+                'OrderDetailPurchasePrices',
+            ]
+        ])->toArray();
+
+        $this->assertEquals(7.85, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(6.95, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(0.45, $changedOrderDetails[0]->order_detail_purchase_price->tax_unit_amount);
+        $this->assertEquals(0.90, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
+    }
+
     public function testEditOrderDetailQuantityAsSuperadminSameQuantity()
     {
         $this->loginAsSuperadmin();

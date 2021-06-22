@@ -105,7 +105,8 @@ class CartProductsTable extends AppTable
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.StockAvailables',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
-                'ProductAttributes.UnitProductAttributes'
+                'ProductAttributes.UnitProductAttributes',
+                'Taxes',
             ]
         ])
         ->first();
@@ -165,6 +166,7 @@ class CartProductsTable extends AppTable
             $amount,
             $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
             $depositObject,
+            $product->tax->rate ?? 0,
         );
 
         $result = $this->validateMinimalCreditBalance($appAuth, $prices['gross_with_deposit']);

@@ -54,6 +54,9 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('OrderDetailUnits', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->hasOne('OrderDetailPurchasePrices', [
+            'foreignKey' => 'id_order_detail'
+        ]);
         $this->belongsTo('CartProducts', [
             'foreignKey' => 'id_cart_product'
         ]);
@@ -329,6 +332,10 @@ class OrderDetailsTable extends AppTable
 
         if (!empty($orderDetail->order_detail_unit)) {
             $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
+        }
+
+        if (!empty($orderDetail->order_detail_purchase_price)) {
+            $this->OrderDetailPurchasePrices->delete($orderDetail->order_detail_purchase_price);
         }
 
     }

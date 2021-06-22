@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-04-27 17:06+0200\n"
+"POT-Creation-Date: 2021-05-27 10:49+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1040,6 +1040,9 @@ msgstr ""
 msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
 msgstr ""
 
+msgid "Enter_purchase_price"
+msgstr ""
+
 msgid "delete"
 msgstr ""
 
@@ -1227,6 +1230,9 @@ msgid "Action_Log_Product_activated"
 msgstr ""
 
 msgid "Action_Log_Product_quantity_changed"
+msgstr ""
+
+msgid "Action_Log_Product_purchase_price_changed"
 msgstr ""
 
 msgid "Action_Log_Product_price_changed"
@@ -1737,6 +1743,9 @@ msgid "The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month."
 msgstr ""
 
 msgid "deleted"
+msgstr ""
+
+msgid "The_price_needs_to_be_greater_or_equal_than_0."
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."

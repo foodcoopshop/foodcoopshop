@@ -176,8 +176,6 @@ foodcoopshop.ModalProductPriceEdit = {
 
         $(modalSelector).modal();
 
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
-
     }
 
 };

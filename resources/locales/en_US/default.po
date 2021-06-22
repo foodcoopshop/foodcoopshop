@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-27 17:06+0200\n"
-"PO-Revision-Date: 2021-04-27 17:06+0200\n"
+"POT-Creation-Date: 2021-05-27 10:49+0200\n"
+"PO-Revision-Date: 2021-05-27 10:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -1041,6 +1041,9 @@ msgstr "Default quantity after sending order lists"
 msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
 msgstr "After the order lists are sent, the available amount is set to this value."
 
+msgid "Enter_purchase_price"
+msgstr "Enter purchase price"
+
 msgid "delete"
 msgstr "delete"
 
@@ -1229,6 +1232,9 @@ msgstr "Product: activated"
 
 msgid "Action_Log_Product_quantity_changed"
 msgstr "Product: Quantity changed"
+
+msgid "Action_Log_Product_purchase_price_changed"
+msgstr "Product: Purchase price changed"
 
 msgid "Action_Log_Product_price_changed"
 msgstr "Product: Price changed"
@@ -1739,6 +1745,9 @@ msgstr "The first delivery day needs to be a {0} {1} of the month."
 
 msgid "deleted"
 msgstr "deleted"
+
+msgid "The_price_needs_to_be_greater_or_equal_than_0."
+msgstr "The price needs to be greater or equal than 0."
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "The quantity needs to be a number."

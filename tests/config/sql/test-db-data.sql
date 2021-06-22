@@ -31,6 +31,7 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
+TRUNCATE TABLE `fcs_order_detail_purchase_prices`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -38,6 +39,7 @@ TRUNCATE TABLE `fcs_pickup_days`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
+TRUNCATE TABLE `fcs_purchase_prices`;
 TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
@@ -171,11 +173,12 @@ INSERT INTO `fcs_configuration` VALUES
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',3200,'de_DE','2020-06-19 09:03:00','2020-06-19 09:03:00'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',590,'de_DE','2020-07-06 10:34:48','2020-07-06 10:34:48'),
 (591,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',220,'de_DE','2020-09-25 10:03:09','2020-09-25 10:03:09'),
-(592,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/einzelhandel\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:50','2020-10-29 10:06:50'),
+(592,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/dorfladen-online\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:50','2020-10-29 10:06:50'),
 (593,1,'FCS_DEPOSIT_TAX_RATE','Umsatzsteuersatz für Pfand','20,00','readonly',581,'de_DE','2020-11-03 15:24:12','2020-11-03 15:24:12'),
 (594,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','FoodCoop Test<br />Demostraße 4<br />A-4564 Demostadt<br />demo-foodcoop@maillinator.com','readonly',582,'de_DE','2020-11-03 15:24:12','2020-11-03 15:24:12'),
 (595,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:26','2020-12-20 19:26:26'),
-(596,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','0','number',1450,'de_DE','2021-01-19 11:23:49','2021-01-19 11:23:49');
+(596,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','0','number',1450,'de_DE','2021-01-19 11:23:49','2021-01-19 11:23:49'),
+(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',583,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -220,10 +223,10 @@ INSERT INTO `fcs_images` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com,testfcs2@mailinator.com',NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
-(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,'',NULL,NULL,NULL,NULL,'1',0,30,100,0,1,1,''),
-(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,''),
-(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,'',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'');
+(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,NULL,'testfcs1@mailinator.com,testfcs2@mailinator.com',NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
+(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,NULL,'',NULL,NULL,NULL,NULL,'1',0,30,100,0,1,1,''),
+(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,NULL,'test@test.at',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,''),
+(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,NULL,'',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'');
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
@@ -235,6 +238,9 @@ INSERT INTO `fcs_order_detail` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
@@ -289,6 +295,16 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 (35,14),
 (36,15);
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
+INSERT INTO `fcs_purchase_prices` VALUES
+(1,346,0,1,1.200000),
+(2,0,13,0,1.400000),
+(3,347,0,3,0.000000),
+(4,348,0,3,0.000000),
+(5,60,0,2,0.000000),
+(6,0,10,0,0.250000);
+/*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
@@ -347,14 +363,14 @@ INSERT INTO `fcs_tax` VALUES
 
 /*!40000 ALTER TABLE `fcs_units` DISABLE KEYS */;
 INSERT INTO `fcs_units` VALUES
-(1,347,0,1.50,'g',100,1,350.000),
-(2,0,11,20.00,'kg',1,1,0.500),
-(3,0,12,20.00,'kg',1,1,1.000),
-(4,349,0,0.00,'kg',1,0,0.000),
-(5,0,13,0.00,'kg',1,0,0.000),
-(6,0,14,0.00,'kg',1,0,0.000),
-(7,0,15,10.00,'kg',1,1,0.500),
-(8,351,0,15.00,'kg',1,1,1.000);
+(1,347,0,1.50,0.98,'g',100,1,350.000),
+(2,0,11,20.00,NULL,'kg',1,1,0.500),
+(3,0,12,20.00,14.00,'g',500,1,300.000),
+(4,349,0,0.00,NULL,'kg',1,0,0.000),
+(5,0,13,0.00,NULL,'kg',1,0,0.000),
+(6,0,14,0.00,NULL,'kg',1,0,0.000),
+(7,0,15,10.00,6.00,'kg',1,1,0.500),
+(8,351,0,15.00,NULL,'kg',1,1,1.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
@@ -380,7 +396,8 @@ INSERT INTO `phinxlog` VALUES
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:23','2021-04-01 08:29:23',0),
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0),
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:05:04','2021-04-27 15:05:04',0),
-(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:14','2021-05-04 09:10:14',0);
+(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:14','2021-05-04 09:10:14',0),
+(20210510080630,'EnablePurchasePrices','2021-05-12 13:24:17','2021-05-12 13:24:18',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

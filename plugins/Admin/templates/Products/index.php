@@ -47,10 +47,16 @@ use Cake\Core\Configure;
 
         if ($advancedStockManagementEnabled) {
             $this->element('addScript', [
-                'script' =>
-                    Configure::read('app.jsNamespace') . ".ModalProductIsStockProductEdit.init();"
+                'script' => Configure::read('app.jsNamespace') . ".ModalProductIsStockProductEdit.init();"
             ]);
         }
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".ModalProductPurchasePriceEdit.init();"
+            ]);
+        }
+
     ?>
 
     <div class="filter-container">
@@ -163,8 +169,17 @@ use Cake\Core\Configure;
             echo '<th>' . $this->Paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
         echo '<th style="width:62px;">'.__d('admin', 'Amount').'</th>';
-        echo '<th>'.__d('admin', 'Price').'</th>';
-        echo '<th style="width:70px;">' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+        } else {
+            echo '<th>'.__d('admin', 'Price').'</th>';
+        }
+        $taxWidth = 80;
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $taxWidth = 106;
+        }
+        echo '<th style="width:'.$taxWidth.'px;">' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
         echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
         if (Configure::read('app.isDepositEnabled')) {
             echo '<th>'.__d('admin', 'Deposit').'</th>';
@@ -211,6 +226,10 @@ use Cake\Core\Configure;
         ]);
 
         echo $this->element('productList/data/amount', [
+            'product' => $product
+        ]);
+
+        echo $this->element('productList/data/purchasePrice', [
             'product' => $product
         ]);
 
@@ -287,15 +306,27 @@ use Cake\Core\Configure;
             'options' => $categoriesForCheckboxes,
             'escape' => false,
         ]);
-        echo '</div>';
-        echo '<div class="tax-dropdown-wrapper">';
+    echo '</div>';
+
+    echo '<div class="tax-dropdown-wrapper">';
         echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('Taxes.id_tax', [
             'type' => 'select',
-            'label' => '',
+            'label' => __d('admin', 'Selling_price'),
             'options' => $taxesForDropdown,
         ]);
-    echo '</div>';
+     echo '</div>';
+
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo '<div class="purchase-price-tax-dropdown-wrapper">';
+            echo '<input type="hidden" class="product-id" />';
+            echo $this->Form->control('PurchasePriceTaxes.id_tax', [
+                'type' => 'select',
+                'label' => __d('admin', 'Purchase_price'),
+                'options' => $taxesForDropdown,
+            ]);
+        echo '</div>';
+    }
 
     echo '<div class="delivery-rhythm-dropdown-wrapper">';
         echo $this->Form->control('RhythmTypes', [

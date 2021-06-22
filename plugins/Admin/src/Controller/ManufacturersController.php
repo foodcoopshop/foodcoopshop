@@ -406,6 +406,9 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->default_tax_id)) {
             $manufacturer->default_tax_id = Configure::read('app.defaultTaxId');
         }
+        if (is_null($manufacturer->default_tax_id_purchase_price)) {
+            $manufacturer->default_tax_id_purchase_price = Configure::read('app.defaultTaxIdPurchasePrice');
+        }
         if (is_null($manufacturer->send_instant_order_notification)) {
             $manufacturer->send_instant_order_notification = Configure::read('app.defaultSendInstantOrderNotification');
         }
@@ -478,6 +481,9 @@ class ManufacturersController extends AdminAppController
             }
             if ($this->getRequest()->getData('Manufacturers.default_tax_id') == Configure::read('app.defaultTaxId')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.default_tax_id', null));
+            }
+            if ($this->getRequest()->getData('Manufacturers.default_tax_id_purchase_price') == Configure::read('app.defaultTaxIdPurchasePrice')) {
+                $this->setRequest($this->getRequest()->withData('Manufacturers.default_tax_id_purchase_price', null));
             }
             if ($this->getRequest()->getData('Manufacturers.send_order_list') == Configure::read('app.defaultSendOrderList')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.send_order_list', null));

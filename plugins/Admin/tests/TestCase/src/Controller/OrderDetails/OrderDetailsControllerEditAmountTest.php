@@ -66,6 +66,46 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 0.55, 0.6, 216);
     }
 
+
+    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationPurchasePrice()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+
+        $this->addProductToCart(346, 3);
+        $this->addProductToCart('348-12', 5);
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $cart = $this->getCartById($cartId);
+
+        $this->editOrderDetailAmount($cart->cart_products[0]->order_detail->id_order_detail, 1, $this->editAmountReason);
+        $this->editOrderDetailAmount($cart->cart_products[1]->order_detail->id_order_detail, 2, $this->editAmountReason);
+
+        $changedOrderDetails = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail IN' => [
+                    $cart->cart_products[0]->order_detail->id_order_detail,
+                    $cart->cart_products[1]->order_detail->id_order_detail,
+                ],
+            ],
+            'contain' => [
+                'OrderDetailUnits',
+                'OrderDetailPurchasePrices',
+            ]
+        ])->toArray();
+
+        $this->assertEquals(8.4, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(7.43, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(0.97, $changedOrderDetails[0]->order_detail_purchase_price->tax_unit_amount);
+        $this->assertEquals(0.97, $changedOrderDetails[0]->order_detail_purchase_price->tax_total_amount);
+
+        $this->assertEquals(2.88, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(2.4, $changedOrderDetails[1]->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(0.24, $changedOrderDetails[1]->order_detail_purchase_price->tax_unit_amount);
+        $this->assertEquals(0.48, $changedOrderDetails[1]->order_detail_purchase_price->tax_total_amount);
+
+    }
+
     public function testEditOrderDetailAmountAsSuperadminWithEnabledNotification()
     {
         $this->loginAsSuperadmin();

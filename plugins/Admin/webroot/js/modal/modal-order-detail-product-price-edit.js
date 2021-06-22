@@ -141,7 +141,6 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
             productPriceField.val(price);
         }
 
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
         $('#dialogOrderDetailProductQuantityPrice').focus();
 
     }

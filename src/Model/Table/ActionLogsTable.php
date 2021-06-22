@@ -121,6 +121,12 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'product_purchase_price_changed' => [
+                'name' => __('Action_Log_Product_purchase_price_changed'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
             'product_price_changed' => [
                 'name' => __('Action_Log_Product_price_changed'),
                 'access' => [

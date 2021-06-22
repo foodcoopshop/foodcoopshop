@@ -35,7 +35,10 @@ class CartsTable extends AppTable
             'foreignKey' => 'id_customer'
         ]);
         $this->hasMany('CartProducts', [
-            'foreignKey' => 'id_cart'
+            'foreignKey' => 'id_cart',
+            'conditions' => [
+                'CartProducts.amount > 0',
+            ],
         ]);
         $this->hasMany('PickupDayEntities', [
             'className' => 'PickupDays', // field has same name and would clash
@@ -144,7 +147,8 @@ class CartsTable extends AppTable
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
-                'CartProducts.id_cart' => $cart['id_cart']
+                'CartProducts.id_cart' => $cart['id_cart'],
+                'CartProducts.amount > 0',
             ],
             'order' => [
                 'Products.name',
@@ -159,6 +163,7 @@ class CartsTable extends AppTable
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.UnitProductAttributes',
                 'Products.Images',
+                'Products.Taxes',
             ]
         ])->toArray();
 
@@ -283,6 +288,16 @@ class CartsTable extends AppTable
         return $cart;
     }
 
+    private function addPurchasePricePerUnitProductData($appAuth, $productData, $unitProduct)
+    {
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            if (!empty($unitProduct)) {
+                $productData['purchasePriceInclPerUnit'] = $unitProduct->purchase_price_incl_per_unit;
+            }
+        }
+        return $productData;
+    }
+
     private function addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
     {
         $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
@@ -315,14 +330,14 @@ class CartsTable extends AppTable
         return $count;
     }
 
-    public function getPricesRespectingPricePerUnit($productId, $netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit)
+    public function getPricesRespectingPricePerUnit($productId, $netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate)
     {
 
         $productsTable = FactoryLocator::get('Table')->get('Products');
 
         if ((!empty($unitProduct) && !$unitProduct->price_per_unit_enabled ) || is_null($unitProduct)) {
 
-            $grossPricePerPiece = $productsTable->getGrossPrice($productId, $netPricePerPiece);
+            $grossPricePerPiece = $productsTable->getGrossPrice($netPricePerPiece, $taxRate);
             $grossPrice = $grossPricePerPiece * $amount;
             $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $amount) * $amount;
 
@@ -332,6 +347,7 @@ class CartsTable extends AppTable
                 'gross' => $grossPrice,
                 'net' => $grossPrice - $tax,
                 'tax' => $tax,
+                'tax_per_piece' => $tax / $amount,
                 'gross_with_deposit' => $grossPrice + ($deposit->deposit ?? 0),
             ];
 
@@ -346,7 +362,7 @@ class CartsTable extends AppTable
             }
 
             $grossPricePerPiece = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
-            $netPricePerPiece = round($productsTable->getNetPrice($productId, $grossPricePerPiece), 2);
+            $netPricePerPiece = round($productsTable->getNetPrice($grossPricePerPiece, $taxRate), 2);
             $grossPrice = $grossPricePerPiece * $amount;
             if (!is_null($orderedQuantityInUnits)) {
                 $grossPrice = $grossPricePerPiece;
@@ -360,6 +376,7 @@ class CartsTable extends AppTable
                 'gross' => $grossPrice,
                 'net' => $grossPrice - $tax,
                 'tax' => $tax,
+                'tax_per_piece' => $tax / $amount,
                 'gross_with_deposit' => $grossPrice + ($deposit->deposit ?? 0),
             ];
 
@@ -383,6 +400,7 @@ class CartsTable extends AppTable
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product->deposit_product,
+            $cartProduct->product->tax->rate ?? 0,
         );
 
         $productData = [
@@ -395,6 +413,7 @@ class CartsTable extends AppTable
             'price' => $prices['gross'],
             'priceExcl' => $prices['net'],
             'tax' => $prices['tax'],
+            'taxPerPiece' => $prices['tax_per_piece'],
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
         ];
@@ -438,6 +457,7 @@ class CartsTable extends AppTable
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product->unit_product);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -466,6 +486,7 @@ class CartsTable extends AppTable
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product_attribute->deposit_product_attribute,
+            $cartProduct->product->tax->rate ?? 0,
         );
 
         $productData = [
@@ -478,6 +499,7 @@ class CartsTable extends AppTable
             'price' => $prices['gross'],
             'priceExcl' => $prices['net'],
             'tax' => $prices['tax'],
+            'taxPerPiece' => $prices['tax_per_piece'],
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
         ];
@@ -522,6 +544,7 @@ class CartsTable extends AppTable
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product_attribute->unit_product_attribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

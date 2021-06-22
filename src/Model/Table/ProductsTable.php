@@ -41,6 +41,12 @@ class ProductsTable extends AppTable
         $this->belongsTo('StockAvailables', [
             'foreignKey' => 'id_product'
         ]);
+        $this->belongsTo('PurchasePriceProducts', [
+            'foreignKey' => 'id_product',
+            'conditions' => [
+                'PurchasePriceProducts.product_attribute_id = 0',
+            ],
+        ]);
         $this->belongsTo('Taxes', [
             'foreignKey' => 'id_tax'
         ]);
@@ -473,8 +479,17 @@ class ProductsTable extends AppTable
             $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
 
             $ids = $this->getProductIdAndAttributeId($productId);
+            $productEntity = $this->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $ids['productId'],
+                ],
+                'contain' => [
+                    'Taxes',
+                ]
+            ])->first();
+            $taxRate = $productEntity->tax->rate ?? 0;
 
-            $netPrice = $this->getNetPrice($ids['productId'], $price);
+            $netPrice = $this->getNetPrice($price, $taxRate);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
@@ -806,6 +821,11 @@ class ProductsTable extends AppTable
             'ProductAttributes.ProductAttributeCombinations.Attributes'
         ];
 
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $contain[] = 'PurchasePriceProducts.Taxes';
+            $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
+        }
+
         $order = [
             'Products.active' => 'DESC',
             'Products.name' => 'ASC'
@@ -832,6 +852,10 @@ class ProductsTable extends AppTable
         ->select($this->Manufacturers)
         ->select($this->UnitProducts)
         ->select($this->StockAvailables);
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $query->select($this->PurchasePriceProducts);
+        }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $query->select(['bar_code' => $this->getProductIdentifierField()]);
@@ -872,7 +896,7 @@ class ProductsTable extends AppTable
             }
 
             $taxRate = is_null($product->tax) ? 0 : $product->tax->rate;
-            $product->gross_price = $this->getGrossPrice($product->id_product, $product->price, $taxRate);
+            $product->gross_price = $this->getGrossPrice($product->price, $taxRate);
 
             $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                 $product->is_stock_product && $product->manufacturer->stock_management_enabled,
@@ -938,8 +962,29 @@ class ProductsTable extends AppTable
 
             if (empty($product->tax)) {
                 $product->tax = (object) [
-                    'rate' => 0
+                    'rate' => 0,
                 ];
+            }
+
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
+                    $product->purchase_price_product = (object) [
+                        'tax_id' => null,
+                        'price' => null,
+                        'tax' => [
+                            'rate' => null,
+                        ],
+                    ];
+                }
+                if (!empty($product->purchase_price_product)) {
+                    $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
+                    $purchasePrice = $product->purchase_price_product->price ?? null;
+                    if ($purchasePrice === null) {
+                        $product->purchase_gross_price = $purchasePrice;
+                    } else {
+                        $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                    }
+                }
             }
 
             $rowClass[] = 'main-product';
@@ -965,7 +1010,7 @@ class ProductsTable extends AppTable
 
                     $grossPrice = 0;
                     if (! empty($attribute->price)) {
-                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->price, $taxRate);
+                        $grossPrice = $this->getGrossPrice($attribute->price, $taxRate);
                     }
 
                     $rowClass = [
@@ -1040,6 +1085,14 @@ class ProductsTable extends AppTable
                         }
                     }
 
+                    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                        $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
+                        if ($purchasePrice === null) {
+                            $preparedProduct['purchase_gross_price'] = $purchasePrice;
+                        } else {
+                            $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                        }
+                    }
                     $preparedProducts[] = $preparedProduct;
                 }
             }
@@ -1056,7 +1109,6 @@ class ProductsTable extends AppTable
             }
         }
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
-
         return $preparedProducts;
     }
 
@@ -1135,104 +1187,23 @@ class ProductsTable extends AppTable
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 
-    private function getTaxJoins()
+    public function getGrossPrice($netPrice, $taxRate)
     {
-        // leave "t.active IN (0,1)" condition because 0% tax does not have a record in tax table
-        $taxJoins = 'FROM '.$this->tablePrefix.'product p
-             LEFT JOIN '.$this->tablePrefix.'tax t ON t.id_tax = p.id_tax
-             WHERE t.active IN (0,1)
-               AND p.id_product = :productId';
-        return $taxJoins;
-    }
-
-    /**
-     * needs to be called AFTER taxId of product was updated
-     */
-    public function getNetPriceAfterTaxUpdate($productId, $oldNetPrice, $oldTaxRate)
-    {
-
-        // if old tax was 0, $oldTaxRate === null (tax 0 has no record in table tax) and would reset the price to 0
-        if (is_null($oldTaxRate)) {
-            $oldTaxRate = 0;
-        }
-
-        $sql = 'SELECT ROUND(:oldNetPrice / ((100 + t.rate) / 100) * (1 + :oldTaxRate / 100), 6) as new_net_price ';
-        $sql .= $this->getTaxJoins();
-        $params = [
-            'oldNetPrice' => $oldNetPrice,
-            'oldTaxRate' => $oldTaxRate,
-            'productId' => $productId,
-        ];
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->execute($params);
-        $rate = $statement->fetchAll('assoc');
-
-        // if tax == 0 %, tax is empty
-        if (empty($rate)) {
-            $newNetPrice = $oldNetPrice * (1 + $oldTaxRate / 100);
-        } else {
-            $newNetPrice = $rate[0]['new_net_price'];
-        }
-
-        return $newNetPrice;
-    }
-
-    public function getGrossPrice($productId, $netPrice, $taxRate = null)
-    {
-
-        if (!is_null($taxRate)) {
-            $grossPrice = $netPrice * (100 + $taxRate) / 100;
-            $grossPrice = round($grossPrice, 2);
-            return $grossPrice;
-        }
-
-        // fallback: if $taxRate is not passed, get it from database
-        $productId = (int) $productId;
-        $sql = 'SELECT ROUND(:netPrice * (100 + t.rate) / 100, 2) as gross_price ';
-        $sql .= $this->getTaxJoins();
-        $params = [
-            'netPrice' => $netPrice,
-            'productId' => $productId,
-        ];
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->execute($params);
-        $rate = $statement->fetchAll('assoc');
-
-        // if tax == 0% rate is empty...
-        if (empty($rate)) {
-            $grossPrice = round($netPrice, 2);
-        } else {
-            $grossPrice = $rate[0]['gross_price'];
-        }
-
+        $grossPrice = $netPrice * (100 + $taxRate) / 100;
+        $grossPrice = round($grossPrice, 2);
         return $grossPrice;
     }
 
-    public function getNetPrice($productId, $grossPrice)
+    public function getNetPrice($grossPrice, $taxRate)
     {
-        $grossPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($grossPrice);
+        $netPrice = $grossPrice / (100 + $taxRate) * 100;
+        $netPrice = round($netPrice, 6);
+        return $netPrice;
+    }
 
-        if (!$grossPrice > -1) { // allow 0 as new price
-            return false;
-        }
-
-        $sql = 'SELECT ROUND(:grossPrice / (100 + t.rate) * 100, 6) as net_price ';
-        $sql .= $this->getTaxJoins();
-        $params = [
-            'productId' => $productId,
-            'grossPrice' => $grossPrice,
-        ];
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->execute($params);
-        $rate = $statement->fetchAll('assoc');
-
-        // if tax == 0% rate is empty...
-        if (empty($rate)) {
-            $netPrice = $grossPrice;
-        } else {
-            $netPrice = $rate[0]['net_price'];
-        }
-
+    public function getNetPriceForNewTaxRate($netPrice, $oldTaxRate, $newTaxRate) {
+        $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
+        $netPrice = round($netPrice, 6);
         return $netPrice;
     }
 
@@ -1434,6 +1405,17 @@ class ProductsTable extends AppTable
 
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $entity2Save = $this->PurchasePriceProducts->getEntityToSaveByProductId($newProductId);
+            $patchedEntity = $this->PurchasePriceProducts->patchEntity(
+                $entity2Save,
+                [
+                    'tax_id' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
+                ],
+            );
+            $this->PurchasePriceProducts->save($patchedEntity);
+        }
 
         // INSERT CATEGORY_PRODUCTS
         $this->CategoryProducts->save(

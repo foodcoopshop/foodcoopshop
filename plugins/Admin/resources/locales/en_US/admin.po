@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-27 17:06+0200\n"
-"PO-Revision-Date: 2021-04-27 17:06+0200\n"
+"POT-Creation-Date: 2021-05-31 10:32+0200\n"
+"PO-Revision-Date: 2021-05-31 10:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -486,8 +486,14 @@ msgstr "The delivery rhythm of {0} products has been changed successfully to {1}
 msgid "Saving_successful."
 msgstr "Saving successful."
 
-msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "The tax rate of product {0} from manufacturer {1} was changed from {2} to {3}."
+msgid "Selling_price"
+msgstr "Selling price"
+
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgstr "The tax rate of product {0} from manufacturer {1} was changed successfully."
+
+msgid "From_{0}_to_{1}"
+msgstr "From {0} to {1}"
 
 msgid "Nothing_changed."
 msgstr "Nothing changed."
@@ -527,6 +533,12 @@ msgstr "Notification if amount is lower than"
 
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
 msgstr "The amount of the product {0} from manufacturer {1} was changed: {2}."
+
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
+msgstr "The purchase price of the product {0} was changed successfully."
+
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "The purchase price of the product {0} from manufacturer {1} was changed from {2} to {3}."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "The price of the product {0} was changed successfully."
@@ -573,6 +585,9 @@ msgstr "The product {0} of manufacturer {1} has been deactivated."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "The product {0} of manufacturer {1} has been activated."
 
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr "Upload successful. Please select the records you want to import and then click the save button."
+
 msgid "The_uploaded_file_is_not_valid."
 msgstr "The uploaded file is not valid."
 
@@ -584,9 +599,6 @@ msgstr "No records were imported."
 
 msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
 msgstr "{0,plural,=1{1 record was} other{# records were}} successfully imported.  Sum: {1}"
-
-msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
-msgstr "Upload successful. Please select the records you want to import and then click the save button."
 
 msgid "Report"
 msgstr "Report"
@@ -1398,6 +1410,9 @@ msgstr "Variable member fee in "
 msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
 msgstr "The invoice for the manufacturer will be reduced by the given percentage. No decimals allowed."
 
+msgid "Purchase_price"
+msgstr "Purchase price"
+
 msgid "Preselected_tax_rate_for_new_products"
 msgstr "Preselected tax rate for new products"
 
@@ -1643,6 +1658,15 @@ msgstr "Product declaration"
 
 msgid "Stock_product"
 msgstr "Stock product"
+
+msgid "Purchase_price_abbreviation"
+msgstr "PP"
+
+msgid "incl_vat"
+msgstr "incl. VAT"
+
+msgid "Selling_price_abbreviation"
+msgstr "SP"
 
 msgid "Price"
 msgstr "Price"

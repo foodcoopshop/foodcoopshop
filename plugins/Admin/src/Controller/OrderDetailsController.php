@@ -230,7 +230,6 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
             'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
         ]);
-        $contain[] = 'PickupDayEntities';
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $odParams['contain'],
@@ -298,6 +297,39 @@ class OrderDetailsController extends AdminAppController
             'taxRates' => isset($taxRates) ? $taxRates : null,
         ]);
         die($pdfWriter->writeInline());
+    }
+
+    public function purchasePrices()
+    {
+        $this->disableAutoRender();
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->find('all', [
+            'contain' => [
+                'OrderDetailPurchasePrices',
+                'Customers',
+            ]
+        ]);
+        $sumSellingPrice = 0;
+        $sumPurchasePrice = 0;
+        $tmpOutput = '';
+        foreach($orderDetails as $orderDetail) {
+            $tmpOutput .= $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ';
+            $tmpOutput .= $orderDetail->customer->name . ' / ';
+            $tmpOutput .= $orderDetail->product_name . ' / ';
+            if (!empty($orderDetail->order_detail_purchase_price)) {
+                $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_purchase_price->total_price_tax_excl) . ' / ';
+                $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+            } else {
+                $tmpOutput .= '--- / ';
+            }
+            $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl);
+            $sumSellingPrice += $orderDetail->total_price_tax_excl;
+            $tmpOutput .= '<br />';
+        }
+        echo '<b>Summe Einkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumPurchasePrice);
+        echo '<br />Summe Verkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice);
+        echo '<br />Gewinn exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice - $sumPurchasePrice);
+        echo '</b><br /><br />' . $tmpOutput;
     }
 
     public function index()
@@ -626,7 +658,8 @@ class OrderDetailsController extends AdminAppController
             'contain' => [
                 'Customers',
                 'Products.Manufacturers',
-                'OrderDetailUnits'
+                'OrderDetailUnits',
+                'OrderDetailPurchasePrices',
             ]
         ])->first();
 
@@ -682,6 +715,12 @@ class OrderDetailsController extends AdminAppController
                 $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
             }
 
+            if (!empty($object->order_detail_purchase_price)) {
+                $productPurchasePrice = $oldOrderDetail->order_detail_purchase_price->total_price_tax_incl / $oldOrderDetail->product_amount * $newAmountForOldOrderDetail;
+                $this->changeOrderDetailPurchasePrice($object->order_detail_purchase_price, $productPurchasePrice, $newAmountForOldOrderDetail);
+            }
+
+
             // 2) copy old order detail and modify it
             $newEntity = $oldOrderDetail;
             $newEntity->setNew(true);
@@ -701,6 +740,15 @@ class OrderDetailsController extends AdminAppController
                 $savedEntity->order_detail_unit = $newOrderDetailUnitEntity;
                 $productQuantity = $savedEntity->order_detail_unit->product_quantity_in_units / $originalProductAmount * $amount;
                 $this->changeOrderDetailQuantity($savedEntity->order_detail_unit, $productQuantity);
+            }
+
+            if (!empty($newEntity->order_detail_purchase_price)) {
+                $newEntity->order_detail_purchase_price->id_order_detail = $savedEntity->id_order_detail;
+                $newEntity->order_detail_purchase_price->setNew(true);
+                $newOrderDetailPurchasePriceEntity = $this->OrderDetail->OrderDetailPurchasePrices->save($newEntity->order_detail_purchase_price);
+                $savedEntity->order_detail_purchase_price = $newOrderDetailPurchasePriceEntity;
+                $productPurchasePrice = $productPurchasePrice / $newAmountForOldOrderDetail * $amount;
+                $this->changeOrderDetailPurchasePrice($savedEntity->order_detail_purchase_price, $productPurchasePrice, $amount);
             }
 
         } else {
@@ -807,8 +855,9 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
+                'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
-                'TimebasedCurrencyOrderDetails'
+                'TimebasedCurrencyOrderDetails',
             ]
         ])->first();
 
@@ -832,6 +881,10 @@ class OrderDetailsController extends AdminAppController
                     $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
                     return;
                 }
+            }
+            if (!empty($oldOrderDetail->order_detail_purchase_price)) {
+                $productPurchasePrice = round($oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+                $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
             }
             $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
             $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
@@ -925,12 +978,19 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
                 'OrderDetailUnits',
+                'OrderDetailPurchasePrices',
             ]
         ])->first();
 
         $productPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount * $productAmount;
 
+        if (!empty($oldOrderDetail->order_detail_purchase_price)) {
+            $productPurchasePrice = $oldOrderDetail->order_detail_purchase_price->total_price_tax_incl / $oldOrderDetail->product_amount * $productAmount;
+            $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $productAmount);
+        }
+
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
+
         $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
@@ -1443,7 +1503,8 @@ class OrderDetailsController extends AdminAppController
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
                     'TimebasedCurrencyOrderDetails',
-                    'OrderDetailUnits'
+                    'OrderDetailUnits',
+                    'OrderDetailPurchasePrices',
                 ]
             ])->first();
 
@@ -1528,12 +1589,29 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->OrderDetailUnits->save($patchedEntity);
     }
 
+    private function changeOrderDetailPurchasePrice($purchasePriceObject, $productPurchasePrice, $productAmount)
+    {
+        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($productPurchasePrice / $productAmount, $purchasePriceObject->tax_rate);
+        $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPurchasePrice, $unitPriceExcl, $productAmount);
+        $totalTaxAmount = $unitTaxAmount * $productAmount;
+        $totalPriceTaxExcl = $productPurchasePrice - $totalTaxAmount;
+        $orderDetailPurchasePrice2save = [
+            'total_price_tax_incl' => $productPurchasePrice,
+            'total_price_tax_excl' => $totalPriceTaxExcl,
+            'tax_unit_amount' => $unitTaxAmount,
+            'tax_total_amount' => $totalTaxAmount,
+        ];
+        $this->OrderDetail->OrderDetailPurchasePrices->save(
+            $this->OrderDetail->OrderDetailPurchasePrices->patchEntity($purchasePriceObject, $orderDetailPurchasePrice2save)
+        );
+    }
+
     private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount)
     {
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($oldOrderDetail->product_id, $productPrice / $productAmount);
+        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($productPrice / $productAmount, $oldOrderDetail->tax_rate);
         $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPrice, $unitPriceExcl, $productAmount);
         $totalTaxAmount = $unitTaxAmount * $productAmount;
         $totalPriceTaxExcl = $productPrice - $totalTaxAmount;

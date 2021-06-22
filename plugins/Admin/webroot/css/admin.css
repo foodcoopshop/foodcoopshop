@@ -155,6 +155,9 @@ span.name-for-dialog,
 span.quantity-for-dialog,
 span.product-amount-for-dialog,
 span.price-for-dialog,
+span.purchase-price-for-dialog,
+span.purchase-price-for-dialog,
+span.unit-purchase-price-for-dialog,
 span.unit-price-for-dialog,
 span.deposit-for-dialog,
 span.categories-for-dialog,
@@ -166,7 +169,14 @@ span.quantity-in-units,
 span.customer-name-for-dialog,
 i.always-available {
     line-height: 21px;
-    margin-left: 5px;
+    margin-left: 3px;
+}
+
+span.purchase-price-list-element {
+    margin-left: 3px;
+}
+span.purchase-price-list-element:after {
+    content: ' /';
 }
 tr.main-product span.name-for-dialog {
     font-weight: 600;
@@ -179,10 +189,10 @@ span.categories-for-dialog {
 span.is-declaration-ok-wrapper,
 span.product-declaration-header {
   float: right;
-  margin-left: 5px;
+  margin-left: 3px;
 }
 td.is-stock-product i.fas.no-button {
-    margin-left: 5px;
+    margin-left: 3px;
 }
 span.is-declaration-ok-wrapper .fa-times,
 td.is-stock-product .fa-times,
@@ -228,7 +238,7 @@ td.amount .fa-times {
 }
 #content .form-buttons a {
     float: left;
-    margin-left: 5px;
+    margin-left: 3px;
 }
 
 .filter-container h1 {
@@ -285,7 +295,7 @@ td span.description-for-dialog {
 }
 .bottom-button-container .btn {
     float: right;
-    margin-left: 5px;
+    margin-left: 3px;
     margin-bottom: 5px;
 }
 #customers-list input:not(.datepicker):not(.form-control) {
@@ -311,14 +321,9 @@ input.datepicker {
 .last-n-days-dropdown,
 .categories-checkboxes,
 .tax-dropdown-wrapper,
+.purchase-price-tax-dropdown-wrapper,
 .delivery-rhythm-dropdown-wrapper {
     display: none;
-}
-.tax-dropdown-wrapper {
-    width: 240px;
-}
-.tax-dropdown-wrapper select {
-    width: 240px;
 }
 .date-dropdown-placeholder select {
     width: 300px;
@@ -338,8 +343,8 @@ body.order_details.index .product-feedback-button {
     margin-right: 3px;
 }
 body.order_details.index i.product-feedback-button {
-    margin-left: 5px;
-    margin-right: 8px;
+    margin-left: 3px;
+    margin-right: 5px;
 }
 body.order_details.index td.date-short2,
 body.orders.index td.date-short2 {
@@ -475,7 +480,7 @@ body.order_details.index td a.pickup-day-comment-edit-button {
     margin-bottom: 3px;
 }
 .add-payment-form .checkbox label {
-    margin-left: 5px;
+    margin-left: 3px;
 }
 #timebasedCurrencyPaymentEditForm a.btn-arrow {
     top: 5px;
@@ -528,7 +533,7 @@ body.order_details.index .table-cell-wrapper.price {
     width: 110px;
 }
 .table-cell-wrapper.group span {
-    margin-left: 5px;
+    margin-left: 3px;
 }
 table.list td.amount > .has-separator:after {
     content: ' / ';
@@ -729,7 +734,7 @@ form.fcs-form .input.select .after.small,
 form.fcs-form .input.fcs-upload .after.small {
     float: right;
     line-height: 28px;
-    margin-left: 5px;
+    margin-left: 3px;
 }
 div.date-field-wrapper {
     position: relative;

@@ -227,6 +227,15 @@ class ManufacturersTable extends AppTable
         return $result;
     }
 
+    public function getOptionDefaultTaxIdPurchasePrice($defaultTaxIdPurchasePrice)
+    {
+        $result = $defaultTaxIdPurchasePrice;
+        if (is_null($defaultTaxIdPurchasePrice)) {
+            $result = Configure::read('app.defaultTaxIdPurchasePrice');
+        }
+        return $result;
+    }
+
     /**
      * @param int $variableMemberFee
      * @return int

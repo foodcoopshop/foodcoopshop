@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-04-27 17:06+0200\n"
+"POT-Creation-Date: 2021-05-31 10:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -485,7 +485,13 @@ msgstr ""
 msgid "Saving_successful."
 msgstr ""
 
-msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgid "Selling_price"
+msgstr ""
+
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgstr ""
+
+msgid "From_{0}_to_{1}"
 msgstr ""
 
 msgid "Nothing_changed."
@@ -525,6 +531,12 @@ msgid "Sold_out_limit"
 msgstr ""
 
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
+msgstr ""
+
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
+msgstr ""
+
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr ""
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
@@ -572,6 +584,9 @@ msgstr ""
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr ""
 
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr ""
+
 msgid "The_uploaded_file_is_not_valid."
 msgstr ""
 
@@ -582,9 +597,6 @@ msgid "No_records_were_imported."
 msgstr ""
 
 msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
-msgstr ""
-
-msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
 msgstr ""
 
 msgid "Report"
@@ -1397,6 +1409,9 @@ msgstr ""
 msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
 msgstr ""
 
+msgid "Purchase_price"
+msgstr ""
+
 msgid "Preselected_tax_rate_for_new_products"
 msgstr ""
 
@@ -1641,6 +1656,15 @@ msgid "Product_declaration"
 msgstr ""
 
 msgid "Stock_product"
+msgstr ""
+
+msgid "Purchase_price_abbreviation"
+msgstr ""
+
+msgid "incl_vat"
+msgstr ""
+
+msgid "Selling_price_abbreviation"
 msgstr ""
 
 msgid "Price"

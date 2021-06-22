@@ -265,15 +265,22 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function getCartById($cartId)
     {
+        $contain = [
+            'CartProducts.OrderDetails.OrderDetailUnits',
+            'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails',
+        ];
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $contain[] = 'CartProducts.OrderDetails.OrderDetailPurchasePrices';
+        }
+
         $cart = $this->Cart->find('all', [
             'conditions' => [
-                'Carts.id_cart' => $cartId
+                'Carts.id_cart' => $cartId,
             ],
-            'contain' => [
-                'CartProducts.OrderDetails.OrderDetailUnits',
-                'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails',
-            ]
+            'contain' => $contain,
         ])->first();
+
         return $cart;
     }
 

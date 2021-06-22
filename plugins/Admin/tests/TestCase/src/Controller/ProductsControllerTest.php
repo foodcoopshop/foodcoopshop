@@ -47,7 +47,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($product->active, $status, 'changing product status did not work');
     }
 
-    public function testEditPriceWithInvalidPriceAsSuperadmin()
+    public function testEditSellingPriceWithInvalidPriceAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
@@ -57,7 +57,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testEditPriceOfNonExistingProductAsSuperadmin()
+    public function testEditSellingPriceOfNonExistingProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $productId = 1000;
@@ -65,7 +65,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testEditPriceOfMeatManufactuerProductAsVegatableManufacturer()
+    public function testEditSellingPriceOfMeatManufactuerProductAsVegatableManufacturer()
     {
         $this->loginAsVegetableManufacturer();
         $productId = 102;
@@ -73,23 +73,23 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testEditPriceOfProductAsSuperadminToZero()
+    public function testEditSellingPriceOfProductAsSuperadminToZero()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange(346, '0', '0,00');
+        $this->assertSellingPriceChange(346, '0', '0,00', '10');
     }
 
-    public function testEditPriceOfProductAsSuperadmin()
+    public function testEditSellingPriceOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange(346, '2,20', '2,00');
+        $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
     }
 
-    public function testEditPricePerUnitOfProductAsSuperadmin()
+    public function testEditSellingPricePerUnitOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $productId = 346;
-        $this->assertPriceChange($productId, 0, 0, true, 15, 'g', 100, 50);
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -99,19 +99,138 @@ class ProductsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
-
     }
 
-    public function testEditPriceOfAttributeAsSuperadmin()
+    public function testEditSellingPriceOfAttributeAsSuperadmin()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange('60-10', '1,25', '1,106195');
+        $this->assertSellingPriceChange('60-10', '1,25', '1,106195', '13');
     }
 
-    public function testEditPriceWith0PercentTax()
+    public function testEditSellingPriceWith0PercentTax()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange('163', '1,60', '1,60');
+        $this->assertSellingPriceChange('163', '1,60', '1,60', '0');
+    }
+
+    public function testEditPurchasePriceOfProductAsSuperadminNonExistingProduct()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->doPurchasePriceChange(4, '20');
+        $this->assertJsonError();
+        $this->assertRegExpWithUnquotedString('product not existing: id 4', $this->getJsonDecodedContent()->msg);
+    }
+
+    public function testEditPurchasePriceOfProductAsSuperadminInvalid()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->doPurchasePriceChange(346, '-1');
+        $this->assertJsonError();
+        $this->assertRegExpWithUnquotedString('Der Preis muss eine positive Zahl sein.', $this->getJsonDecodedContent()->msg);
+    }
+
+    public function testEditPurchasePriceOfProductAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange(346, '2,20');
+        $this->assertJsonOk();
+        $this->assertEquals(1.833333, $product->purchase_price_product->price);
+    }
+
+    public function testEditPurchasePricePerUnitOfProductAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange(347, '1,00');
+        $this->assertJsonOk();
+        $this->assertEquals(1.00, $product->unit_product->purchase_price_incl_per_unit);
+    }
+
+    public function testEditPurchasePriceOfAttributeAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange('60-10', '2,20');
+        $this->assertJsonOk();
+        $this->assertEquals(2, $product->product_attributes[0]->purchase_price_product_attribute->price);
+    }
+
+    public function testEditPurchasePricePerUnitOfAttributeAsSuperadmin()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->doPurchasePriceChange('348-11', '13,30');
+        $this->assertJsonOk();
+        $this->assertEquals(13.30, $product->product_attributes[0]->unit_product_attribute->purchase_price_incl_per_unit);
+    }
+
+    public function testEditTaxSellingPriceInvalid()
+    {
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(346, 5, 2);
+        $this->assertEquals($product->price, 1.652893);
+    }
+
+    public function testEditTaxSellingPriceValidA()
+    {
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(346, 1, 1);
+        $this->assertEquals($product->price, 1.515152);
+    }
+
+    public function testEditTaxSellingPriceValidZero()
+    {
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(346, 0, 0);
+        $this->assertEquals($product->price, 1.818182);
+    }
+
+    public function testEditTaxSellingPriceWithAttributesValidZero()
+    {
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(60, 0, 0);
+        $this->assertEquals($product->product_attributes[0]->price, 0.616364);
+    }
+
+    public function testEditTaxSellingPriceWithAttributesValidA()
+    {
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(60, 2, 2);
+        $this->assertEquals($product->product_attributes[0]->price, 0.560331);
+    }
+
+    public function testEditTaxPurchasePriceInvalid()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->assertTaxChange(344, 0, 0, 5, 'empty');
+    }
+
+    public function testEditTaxPurchasePriceValidA()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(346, 0, 0, 3, 3);
+        $this->assertEquals($product->purchase_price_product->price, 1.274336);
+    }
+
+    public function testEditTaxPurchasePriceWithAttributeValidA()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(350, 0, 0, 3, 3);
+        $this->assertEquals($product->product_attributes[0]->purchase_price_product_attribute->price, 1.238938);
+    }
+
+    public function testEditTaxPurchasePriceValidZero()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $product = $this->assertTaxChange(346, 0, 0, 0, 0);
+        $this->assertEquals($product->purchase_price_product->price, 1.44);
     }
 
     public function testEditDeliveryRhythmInvalidDeliveryRhythmA()
@@ -337,16 +456,77 @@ class ProductsControllerTest extends AppCakeTestCase
         return $product;
     }
 
-    /**
-     * asserts price in database (getGrossPrice)
-     */
-    private function assertPriceChange($productId, $price, $expectedNetPrice, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
+    private function doPurchasePriceChange($productId, $price)
+    {
+
+        $ids = $this->Product->getProductIdAndAttributeId($productId);
+
+        $this->ajaxPost('/admin/products/editPurchasePrice', [
+            'productId' => $productId,
+            'purchasePrice' => $price,
+        ]);
+
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $ids['productId'],
+            ],
+            'contain' => [
+                'ProductAttributes.PurchasePriceProductAttributes',
+                'ProductAttributes.UnitProductAttributes',
+                'PurchasePriceProducts',
+                'UnitProducts',
+            ],
+        ])->first();
+
+        return $product;
+
+    }
+
+    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
         $this->assertJsonOk();
-        $netPrice = $this->Product->getNetPrice($productId, $price);
+        $netPrice = $this->Product->getNetPrice($price, $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
+
+    private function assertTaxChange($productId, $newSellingPriceTaxId, $expectedSellingPriceTaxId, $newPurchasePriceTaxId = null, $expectedPurchasePriceTaxId = null)
+    {
+        $data = [
+            'productId' => $productId,
+            'taxId' => $newSellingPriceTaxId,
+        ];
+        if ($newPurchasePriceTaxId !== null) {
+            $data['purchasePriceTaxId'] = $newPurchasePriceTaxId;
+        }
+
+        $this->ajaxPost('/admin/products/editTax', $data);
+
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ],
+            'contain' => [
+                'Taxes',
+                'ProductAttributes.PurchasePriceProductAttributes',
+                'Manufacturers',
+                'PurchasePriceProducts',
+            ],
+        ])->first();
+        $this->assertEquals($product->id_tax, $expectedSellingPriceTaxId);
+
+        if ($expectedPurchasePriceTaxId === 'empty') {
+            $this->assertEmpty($product->purchase_price_product);
+        } else {
+            if ($expectedPurchasePriceTaxId !== null) {
+                $this->assertEquals($product->purchase_price_product->tax_id, $expectedPurchasePriceTaxId);
+            }
+        }
+
+        return $product;
+
+    }
+
 }

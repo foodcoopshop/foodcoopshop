@@ -1064,7 +1064,7 @@ class ProductsTableTest extends AppCakeTestCase
                 'conditions' => [
                     'Products.id_product' => $productId
                 ],
-                'contain' => $contain
+                'contain' => $contain,
             ])->first();
 
             if ($productAndAttributeId['attributeId'] == 0) {
@@ -1087,27 +1087,27 @@ class ProductsTableTest extends AppCakeTestCase
             if ($forceUseThisPrice) {
                 $expectedPrice = $forceUseThisPrice;
             }
+            $contain = ['Taxes'];
             $expectedPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedPrice);
-            if ($productAndAttributeId['attributeId'] == 0) {
-                $contain = [];
-            } else {
+            if ($productAndAttributeId['attributeId'] > 0) {
                 $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
-                $contain = ['ProductAttributes'];
+                $contain[] = 'ProductAttributes';
             }
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productId
                 ],
-                'contain' => $contain
+                'contain' => $contain,
             ])->first();
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct;
             } else {
                 $resultEntity = $changedProduct->product_attributes[0];
             }
-            $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($productId, $resultEntity->price), 'changing the price did not work');
+            $taxRate = $changedProduct->tax->rate ?? 0;
+            $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($resultEntity->price, $taxRate));
         }
     }
 

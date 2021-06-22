@@ -291,6 +291,7 @@ CREATE TABLE `fcs_manufacturer` (
   `send_invoice` tinyint(4) unsigned DEFAULT NULL,
   `send_order_list` tinyint(4) unsigned DEFAULT NULL,
   `default_tax_id` int(8) unsigned DEFAULT NULL,
+  `default_tax_id_purchase_price` int(8) unsigned DEFAULT NULL,
   `send_order_list_cc` varchar(512) DEFAULT NULL,
   `send_instant_order_notification` tinyint(4) unsigned DEFAULT NULL,
   `send_ordered_product_deleted_notification` int(10) unsigned DEFAULT NULL,
@@ -349,6 +350,19 @@ CREATE TABLE `fcs_order_detail_feedbacks` (
   PRIMARY KEY (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_order_detail_purchase_prices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_order_detail_purchase_prices` (
+  `id_order_detail` int(10) unsigned NOT NULL,
+  `tax_rate` decimal(10,3) NOT NULL DEFAULT '0.000',
+  `total_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
+  `total_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
+  `tax_unit_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
+  `tax_total_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
+  PRIMARY KEY (`id_order_detail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_order_detail_units`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -356,6 +370,7 @@ CREATE TABLE `fcs_order_detail_units` (
   `id_order_detail` int(11) NOT NULL DEFAULT '0',
   `product_quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
+  `purchase_price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
   `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   `unit_name` varchar(50) NOT NULL DEFAULT '',
   `unit_amount` int(10) unsigned DEFAULT NULL,
@@ -473,6 +488,19 @@ CREATE TABLE `fcs_product_attribute_combination` (
   KEY `id_product_attribute` (`id_product_attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_purchase_prices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_purchase_prices` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `tax_id` int(10) unsigned DEFAULT '0',
+  `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`,`product_attribute_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_sliders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -579,6 +607,7 @@ CREATE TABLE `fcs_units` (
   `id_product` int(10) unsigned DEFAULT NULL,
   `id_product_attribute` int(11) unsigned DEFAULT NULL,
   `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
+  `purchase_price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `amount` int(10) unsigned DEFAULT NULL,
   `price_per_unit_enabled` tinyint(4) NOT NULL DEFAULT '0',

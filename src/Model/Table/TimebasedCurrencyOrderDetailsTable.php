@@ -42,7 +42,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
 
         $maxPercentage = $orderDetail->timebased_currency_order_detail->max_percentage;
         $grossProductPricePerUnit = $price / (100 - $maxPercentage) * 100 / $amount;
-        $netProductPricePerUnit = $this->OrderDetails->Products->getNetPrice($orderDetail->product_id, $grossProductPricePerUnit);
+        $netProductPricePerUnit = $this->OrderDetails->Products->getNetPrice($grossProductPricePerUnit, $orderDetail->tax_rate);
 
         $this->save(
             $this->patchEntity(

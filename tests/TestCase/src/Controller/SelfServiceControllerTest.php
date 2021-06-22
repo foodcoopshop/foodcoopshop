@@ -159,6 +159,34 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     }
 
+    public function testSelfServiceOrderWithPricePerUnitPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->addProductToSelfServiceCart(347, 1, '500');
+        $this->addProductToSelfServiceCart('348-12', 1, '250');
+        $this->finishSelfServiceCart(1, 1);
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', [
+            'order' => [
+                'Carts.id_cart' => 'DESC'
+            ],
+        ])->first();
+        $cart = $this->getCartById($cart->id_cart);
+
+        $this->assertEquals(4.9, $cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(4.336283, $cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(0.56, $cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_unit_amount);
+        $this->assertEquals(0.56, $cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_total_amount);
+
+        $this->assertEquals(7, $cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_incl);
+        $this->assertEquals(6.194690, $cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(0.81, $cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_unit_amount);
+        $this->assertEquals(0.81, $cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_total_amount);
+    }
+
     public function testSelfServideOrderWithDeliveryBreak()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);

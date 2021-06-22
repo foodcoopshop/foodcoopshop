@@ -31,6 +31,7 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
+TRUNCATE TABLE `fcs_order_detail_purchase_prices`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -38,6 +39,7 @@ TRUNCATE TABLE `fcs_pickup_days`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
+TRUNCATE TABLE `fcs_purchase_prices`;
 TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
@@ -134,7 +136,8 @@ INSERT INTO `fcs_configuration` VALUES
 (592,1,'FCS_DEPOSIT_TAX_RATE','VAT for deposit','20.00','readonly',581,'en_US','2020-11-03 15:24:01','2020-11-03 15:24:01'),
 (593,1,'FCS_INVOICE_HEADER_TEXT','Header text for invoices to members','','readonly',582,'en_US','2020-11-03 15:24:01','2020-11-03 15:24:01'),
 (594,1,'FCS_MEMBER_FEE_PRODUCTS','Which products are used as member fee product?<div class=\"small\">The selected products are the basis for the column Member Fee in the members adminstration and are not shown in the turnover statistics.</div>','','multiple_dropdown',3300,'en_US','2020-12-20 19:26:16','2020-12-20 19:26:16'),
-(595,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Height of credit saldo when the reminder email is sent.','50','number',1450,'en_US','2021-01-19 11:23:39','2021-01-19 11:23:39');
+(595,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Height of credit saldo when the reminder email is sent.','50','number',1450,'en_US','2021-01-19 11:23:39','2021-01-19 11:23:39'),
+(596,1,'FCS_PURCHASE_PRICE_ENABLED','Enable input of purchase price?<div class=\"small\">The purchase price is the base for profit statistics and bill of delivery to manufacturers.</div>','0','readonly',583,'en_US','2021-05-10 11:27:43','2021-05-10 11:27:43');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -175,6 +178,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_purchase_prices` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
@@ -195,6 +201,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
@@ -247,7 +256,8 @@ INSERT INTO `phinxlog` VALUES
 (20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:17','2021-04-01 08:29:18',0),
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:18','2021-04-19 09:41:18',0),
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:58','2021-04-27 15:04:58',0),
-(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:09','2021-05-04 09:10:09',0);
+(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:09','2021-05-04 09:10:09',0),
+(20210510080630,'EnablePurchasePrices','2021-05-10 09:27:43','2021-05-10 09:27:43',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
