@@ -172,6 +172,13 @@ return [
 
         'sendEmailWhenOrderDetailQuantityOrPriceChanged' => true,
 
+        'helloCashAtEndpoint' => '',
+
+        'helloCashAtCredentials' => [
+            'username' => '',
+            'password' => '',
+        ],
+
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
