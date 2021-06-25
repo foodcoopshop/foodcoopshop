@@ -114,15 +114,66 @@ class HelloCashController extends AdminAppController
         return $this->response;
     }
 
-    public function generateTestInvoice()
+    public function generateInvoice($customerId, $currentDay)
     {
+        //3/2021-06-25
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoiceData = $this->Invoice->getDataForCustomerInvoice($customerId, $currentDay);
+        $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
 
-        $invoiceData = [
+        $preparedInvoiceData = [
             'cashier_id' => 143635,
             'invoice_user_id' => 2390341,
             'invoice_testMode' => true,
             'invoice_paymentMethod' => 'Bar',
-            'invoice_text' => 'Zusatztext der Rechnung',
+            'signature_mandatory' => 0,
+            'invoice_reference' => 0,
+        ];
+        $items = [];
+
+        foreach($invoiceData->active_order_details as $orderDetail) {
+            $items[] = [
+                'item_name' => $orderDetail->product_name,
+                'item_quantity' => $orderDetail->product_amount,
+                'item_price' => $orderDetail->total_price_tax_incl,
+                'item_taxRate' => $orderDetail->tax_rate,
+            ];
+        };
+
+        /*
+        if (!empty($invoiceData->ordered_deposit)) {
+            $items[] = [
+                'item_name' => __('Delivered_deposit'),
+                'item_quantity' => $invoiceData->ordered_deposit['deposit_amount'],
+                'item_price' => $invoiceData->ordered_deposit['deposit_incl'],
+                'item_taxRate' => $depositTaxRate,
+            ];
+        };
+
+        if (!empty($invoiceData->returned_deposit)) {
+            $items[] = [
+                'item_name' => __('Payment_type_deposit_return'),
+                'item_quantity' => $invoiceData->returned_deposit['deposit_amount'],
+                'item_price' => $invoiceData->returned_deposit['deposit_incl'],
+                'item_taxRate' => $depositTaxRate,
+            ];
+        };
+        */
+
+        $preparedInvoiceData['items'] = $items;
+
+        $response = $this->postInvoiceData($preparedInvoiceData);
+        pr($response);
+        exit;
+    }
+
+    public function generateTestInvoice()
+    {
+        $preparedInvoiceData = [
+            'cashier_id' => 143635,
+            'invoice_user_id' => 2390341,
+            'invoice_testMode' => true,
+            'invoice_paymentMethod' => 'Bar',
             'signature_mandatory' => 0,
             'invoice_reference' => 0,
             'items' => [
@@ -140,18 +191,24 @@ class HelloCashController extends AdminAppController
                 ],
             ],
         ];
+
+        $response = $this->postInvoiceData($preparedInvoiceData);
+        pr($response);
+        exit;
+    }
+
+    private function postInvoiceData($invoiceData)
+    {
         $response = $this->getClient()->post(
             '/invoices',
-            json_encode($invoiceData),
+            json_encode($invoiceData, JSON_UNESCAPED_UNICODE),
             [
                 'auth' => $this->getAuth(),
                 'type' => 'json',
             ],
         );
         $response = json_decode($response->getStringBody());
-        pr($response);
-        exit;
-
+        return $response;
     }
 
 }
