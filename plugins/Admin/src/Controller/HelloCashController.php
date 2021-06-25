@@ -56,7 +56,7 @@ class HelloCashController extends AdminAppController
 
     public function getPrintableBon($invoiceId)
     {
-        //59252020
+        //59253497
         $host = 'https://myhellocash.com';
         $httpClient = Client::createFromUrl($host);
 
@@ -93,7 +93,7 @@ class HelloCashController extends AdminAppController
 
     public function getA4InvoiceAsPdf($invoiceId)
     {
-        //59252020
+        //59253497
         $response = $this->getClient()->get(
             '/invoices/' . $invoiceId . '/pdf',
             [],
@@ -127,11 +127,17 @@ class HelloCashController extends AdminAppController
             'invoice_reference' => 0,
             'items' => [
                 [
-                    'item_name' => 'Birne',
-                    'item_quantity' => 5,
-                    'item_price' => 120,
+                    'item_name' => 'Forelle 280g',
+                    'item_quantity' => 1,
+                    'item_price' => 19.9,
+                    'item_taxRate' => 13,
+                ],
+                [
+                    'item_name' => 'Pfand Retour',
+                    'item_quantity' => 2,
+                    'item_price' => -1,
                     'item_taxRate' => 20,
-                ]
+                ],
             ],
         ];
         $response = $this->getClient()->post(
