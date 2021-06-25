@@ -54,7 +54,43 @@ class HelloCashController extends AdminAppController
         exit;
     }
 
-    public function getInvoiceAsPdf($invoiceId)
+    public function getPrintableBon($invoiceId)
+    {
+        //59239385
+        $host = 'https://myhellocash.com';
+        $httpClient = Client::createFromUrl($host);
+
+        $response = $httpClient->post(
+            '/api/salon/login',
+            [
+                'email' => Configure::read('app.helloCashAtCredentials')['username'],
+                'password' => Configure::read('app.helloCashAtCredentials')['password'],
+            ],
+            [
+                'headers' => [
+                    'X-Requested-With' => 'XMLHttpRequest',
+                ],
+            ],
+        );
+
+        $response = $httpClient->get(
+            '/intern/cash-register/invoice/print?iid=' . $invoiceId,
+             [],
+             [
+                 'cookies' => [
+                     'locale' => 'de_AT',
+                 ],
+             ]
+        );
+
+        $response = $response->getStringBody();
+        $response = preg_replace('/src="\//', 'src="' . $host . '/', $response);
+        echo $response;
+        exit;
+
+    }
+
+    public function getA4InvoiceAsPdf($invoiceId)
     {
         //59239385
         $response = $this->getClient()->get(
