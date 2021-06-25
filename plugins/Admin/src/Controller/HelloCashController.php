@@ -56,7 +56,7 @@ class HelloCashController extends AdminAppController
 
     public function getPrintableBon($invoiceId)
     {
-        //59239385
+        //59252020
         $host = 'https://myhellocash.com';
         $httpClient = Client::createFromUrl($host);
 
@@ -84,7 +84,8 @@ class HelloCashController extends AdminAppController
         );
 
         $response = $response->getStringBody();
-        $response = preg_replace('/src="\//', 'src="' . $host . '/', $response);
+        $response = preg_replace('/src=("|\')\//', 'src=$1' . $host . '/', $response);
+        $response = preg_replace('/print_frame\(\);/', '', $response);
         echo $response;
         exit;
 
@@ -92,7 +93,7 @@ class HelloCashController extends AdminAppController
 
     public function getA4InvoiceAsPdf($invoiceId)
     {
-        //59239385
+        //59252020
         $response = $this->getClient()->get(
             '/invoices/' . $invoiceId . '/pdf',
             [],
