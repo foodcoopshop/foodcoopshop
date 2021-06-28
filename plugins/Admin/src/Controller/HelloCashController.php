@@ -49,14 +49,14 @@ class HelloCashController extends AdminAppController
                 'type' => 'json',
             ],
         );
-        $response = json_decode($response->getStringBody());
-        pr($response);
-        exit;
+        $this->disableAutoRender();
+        $this->response = $this->response->withStringBody($response->getStringBody());
+        $this->response = $this->response->withHeader('Content-Type', 'json');
+        return $this->response;
     }
 
     public function getPrintableBon($invoiceId)
     {
-        //59253497
         $host = 'https://myhellocash.com';
         $httpClient = Client::createFromUrl($host);
 
@@ -86,14 +86,16 @@ class HelloCashController extends AdminAppController
         $response = $response->getStringBody();
         $response = preg_replace('/src=("|\')\//', 'src=$1' . $host . '/', $response);
         $response = preg_replace('/print_frame\(\);/', '', $response);
-        echo $response;
-        exit;
+
+        $this->disableAutoRender();
+        $this->response = $this->response->withStringBody($response);
+        return $this->response;
 
     }
 
     public function getA4InvoiceAsPdf($invoiceId)
     {
-        //59253497
+
         $response = $this->getClient()->get(
             '/invoices/' . $invoiceId . '/pdf',
             [],
@@ -163,8 +165,12 @@ class HelloCashController extends AdminAppController
         $preparedInvoiceData['items'] = $items;
 
         $response = $this->postInvoiceData($preparedInvoiceData);
-        pr($response);
-        exit;
+
+        $this->disableAutoRender();
+        $this->response = $this->response->withStringBody($response);
+        $this->response = $this->response->withHeader('Content-Type', 'json');
+        return $this->response;
+
     }
 
     public function generateTestInvoice()
@@ -193,8 +199,10 @@ class HelloCashController extends AdminAppController
         ];
 
         $response = $this->postInvoiceData($preparedInvoiceData);
-        pr($response);
-        exit;
+        $this->disableAutoRender();
+        $this->response = $this->response->withStringBody($response);
+        $this->response = $this->response->withHeader('Content-Type', 'json');
+        return $this->response;
     }
 
     private function postInvoiceData($invoiceData)
@@ -207,8 +215,7 @@ class HelloCashController extends AdminAppController
                 'type' => 'json',
             ],
         );
-        $response = json_decode($response->getStringBody());
-        return $response;
+        return $response->getStringBody();
     }
 
 }
