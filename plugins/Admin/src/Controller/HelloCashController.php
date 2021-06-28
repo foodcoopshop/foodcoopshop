@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Client;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -118,14 +119,15 @@ class HelloCashController extends AdminAppController
 
     public function generateInvoice($customerId, $currentDay)
     {
-        //3/2021-06-25
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoiceData = $this->Invoice->getDataForCustomerInvoice($customerId, $currentDay);
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
 
+        $userId = $this->getAndUpdateUser($customerId);
+
         $preparedInvoiceData = [
             'cashier_id' => 143635,
-            'invoice_user_id' => 2390341,
+            'invoice_user_id' => $userId,
             'invoice_testMode' => true,
             'invoice_paymentMethod' => 'Bar',
             'signature_mandatory' => 0,
@@ -203,11 +205,64 @@ class HelloCashController extends AdminAppController
         return $this->response;
     }
 
-    private function postInvoiceData($invoiceData)
+    protected function getAndUpdateUser($customerId)
+    {
+
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'AddressCustomers',
+            ],
+        ])->first();
+
+        $response = $this->getClient()->get(
+            '/users',
+            [],
+            [
+                'auth' => $this->getAuth(),
+                'type' => 'json',
+            ],
+        );
+        $users = json_decode($response->getStringBody());
+        foreach($users->users as $user) {
+            if (!empty($user->user_notes)) {
+                $options = json_decode($user->user_notes);
+                if (!empty($options) && $options->FCS_ID == $customer->id_customer) {
+                    continue;
+                }
+            }
+        }
+
+        if (empty($user) || !isset($user->user_id)) {
+            throw new NotFoundException('user not found');
+        }
+
+        /*
+        $data = [
+            'user_firstname' => 'MarioX',
+        ];
+        $response = $this->getClient()->post(
+            '/users/' . $user->user_id,
+            json_encode($data, JSON_UNESCAPED_UNICODE),
+            [
+                'auth' => $this->getAuth(),
+                'type' => 'json',
+            ],
+        );
+        */
+
+        return $user->user_id;
+
+    }
+
+    protected function postInvoiceData($data)
     {
         $response = $this->getClient()->post(
             '/invoices',
-            json_encode($invoiceData, JSON_UNESCAPED_UNICODE),
+            json_encode($data, JSON_UNESCAPED_UNICODE),
             [
                 'auth' => $this->getAuth(),
                 'type' => 'json',
