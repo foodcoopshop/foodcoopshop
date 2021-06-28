@@ -4,6 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +29,7 @@ class Product extends Entity
     protected function _getNextDeliveryDay()
     {
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            $pickupDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+            $pickupDay = new FrozenDate('1970-01-01');
         } else {
             $productTable = FactoryLocator::get('Table')->get('Products');
             $pickupDay = $productTable->calculatePickupDayRespectingDeliveryRhythm($this);
