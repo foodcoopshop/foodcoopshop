@@ -142,11 +142,10 @@ class HelloCashController extends AdminAppController
             ];
         };
 
-        /*
         if (!empty($invoiceData->ordered_deposit)) {
             $items[] = [
                 'item_name' => __('Delivered_deposit'),
-                'item_quantity' => $invoiceData->ordered_deposit['deposit_amount'],
+                'item_quantity' => 1,
                 'item_price' => $invoiceData->ordered_deposit['deposit_incl'],
                 'item_taxRate' => $depositTaxRate,
             ];
@@ -155,12 +154,11 @@ class HelloCashController extends AdminAppController
         if (!empty($invoiceData->returned_deposit)) {
             $items[] = [
                 'item_name' => __('Payment_type_deposit_return'),
-                'item_quantity' => $invoiceData->returned_deposit['deposit_amount'],
+                'item_quantity' => 1,
                 'item_price' => $invoiceData->returned_deposit['deposit_incl'],
                 'item_taxRate' => $depositTaxRate,
             ];
         };
-        */
 
         $preparedInvoiceData['items'] = $items;
 
