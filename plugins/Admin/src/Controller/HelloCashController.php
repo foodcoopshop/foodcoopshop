@@ -247,7 +247,6 @@ class HelloCashController extends AdminAppController
                 'user_postalCode' => $customer->address_customer->postcode,
                 'user_city' => $customer->address_customer->city,
                 'user_street' => $customer->address_customer->address1,
-                'user_country' => 'Austria',
                 'user_notes' => json_encode(['FCS_ID' => $customer->id_customer]),
             ];
 
