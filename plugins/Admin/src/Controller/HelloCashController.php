@@ -4,7 +4,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Client;
-use Cake\Http\Exception\NotFoundException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
