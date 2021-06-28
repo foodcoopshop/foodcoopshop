@@ -227,17 +227,40 @@ class HelloCashController extends AdminAppController
             ],
         );
         $users = json_decode($response->getStringBody());
+        $foundUser = [];
         foreach($users->users as $user) {
             if (!empty($user->user_notes)) {
                 $options = json_decode($user->user_notes);
                 if (!empty($options) && $options->FCS_ID == $customer->id_customer) {
+                    $foundUser = $user;
                     continue;
                 }
             }
         }
 
-        if (empty($user) || !isset($user->user_id)) {
-            throw new NotFoundException('user not found');
+        if (empty($foundUser) || !isset($foundUser->user_id)) {
+
+            $data = [
+                'user_firstname' => $customer->firstname,
+                'user_surname' => $customer->lastname,
+                'user_email' => $customer->email,
+                'user_postalCode' => $customer->address_customer->postcode,
+                'user_city' => $customer->address_customer->city,
+                'user_street' => $customer->address_customer->address1,
+                'user_country' => 'Austria',
+                'user_notes' => json_encode(['FCS_ID' => $customer->id_customer]),
+            ];
+
+            $response = $this->getClient()->post(
+                '/users',
+                json_encode($data, JSON_UNESCAPED_UNICODE),
+                [
+                    'auth' => $this->getAuth(),
+                    'type' => 'json',
+                ],
+            );
+            $foundUser = json_decode($response->getStringBody());
+
         }
 
         /*
@@ -245,7 +268,7 @@ class HelloCashController extends AdminAppController
             'user_firstname' => 'MarioX',
         ];
         $response = $this->getClient()->post(
-            '/users/' . $user->user_id,
+            '/users/' . $foundUser->user_id,
             json_encode($data, JSON_UNESCAPED_UNICODE),
             [
                 'auth' => $this->getAuth(),
@@ -254,7 +277,7 @@ class HelloCashController extends AdminAppController
         );
         */
 
-        return $user->user_id;
+        return $foundUser->user_id;
 
     }
 
