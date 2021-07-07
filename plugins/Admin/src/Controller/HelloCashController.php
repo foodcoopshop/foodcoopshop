@@ -23,7 +23,9 @@ class HelloCashController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+        return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') &&
+            Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED') &&
+            $this->AppAuth->isSuperadmin();
     }
 
     protected function getClient()
