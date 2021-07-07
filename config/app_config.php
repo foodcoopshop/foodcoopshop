@@ -177,6 +177,8 @@ return [
         'helloCashAtCredentials' => [
             'username' => '',
             'password' => '',
+            'cashier_id' => 0,
+            'test_mode' => true,
         ],
 
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),

@@ -33,28 +33,20 @@ class HelloCashController extends AdminAppController
         return Client::createFromUrl(Configure::read('app.helloCashAtEndpoint'));
     }
 
-    protected function getAuth()
+    protected function encodeData($data)
     {
-        return [
-            'username' => Configure::read('app.helloCashAtCredentials')['username'],
-            'password' => Configure::read('app.helloCashAtCredentials')['password'],
-        ];
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    public function getInvoices()
+    protected function getOptions()
     {
-        $response = $this->getClient()->get(
-            '/invoices?mode=test',
-            [],
-            [
-                'auth' => $this->getAuth(),
-                'type' => 'json',
+        return [
+            'auth' => [
+                'username' => Configure::read('app.helloCashAtCredentials')['username'],
+                'password' => Configure::read('app.helloCashAtCredentials')['password'],
             ],
-        );
-        $this->disableAutoRender();
-        $this->response = $this->response->withStringBody($response->getStringBody());
-        $this->response = $this->response->withHeader('Content-Type', 'json');
-        return $this->response;
+            'type' => 'json',
+        ];
     }
 
     public function getPrintableBon($invoiceId)
@@ -101,10 +93,7 @@ class HelloCashController extends AdminAppController
         $response = $this->getClient()->get(
             '/invoices/' . $invoiceId . '/pdf',
             [],
-            [
-                'auth' => $this->getAuth(),
-                'type' => 'json',
-            ],
+            $this->getOptions(),
         );
         $response = json_decode($response->getStringBody());
 
@@ -127,9 +116,9 @@ class HelloCashController extends AdminAppController
         $userId = $this->createOrUpdateUser($customerId);
 
         $preparedInvoiceData = [
-            'cashier_id' => 143635,
+            'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
             'invoice_user_id' => $userId,
-            'invoice_testMode' => true,
+            'invoice_testMode' => Configure::read('app.helloCashAtCredentials')['test_mode'],
             'invoice_paymentMethod' => 'Bar',
             'signature_mandatory' => 0,
             'invoice_reference' => 0,
@@ -205,11 +194,8 @@ class HelloCashController extends AdminAppController
 
         $response = $this->getClient()->post(
             '/users',
-            json_encode($data, JSON_UNESCAPED_UNICODE),
-            [
-                'auth' => $this->getAuth(),
-                'type' => 'json',
-            ],
+            $this->encodeData($data),
+            $this->getOptions(),
         );
 
         $helloCashUser = json_decode($response->getStringBody());
@@ -227,11 +213,8 @@ class HelloCashController extends AdminAppController
     {
         $response = $this->getClient()->post(
             '/invoices',
-            json_encode($data, JSON_UNESCAPED_UNICODE),
-            [
-                'auth' => $this->getAuth(),
-                'type' => 'json',
-            ],
+            $this->encodeData($data),
+            $this->getOptions(),
         );
         return $response->getStringBody();
     }
