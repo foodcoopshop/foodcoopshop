@@ -124,7 +124,7 @@ class HelloCashController extends AdminAppController
         $invoiceData = $this->Invoice->getDataForCustomerInvoice($customerId, $currentDay);
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
 
-        $userId = $this->getAndUpdateUser($customerId);
+        $userId = $this->createOrUpdateUser($customerId);
 
         $preparedInvoiceData = [
             'cashier_id' => 143635,
@@ -174,7 +174,7 @@ class HelloCashController extends AdminAppController
 
     }
 
-    protected function getAndUpdateUser($customerId)
+    protected function createOrUpdateUser($customerId)
     {
 
         $this->Customer = $this->getTableLocator()->get('Customers');
@@ -187,65 +187,39 @@ class HelloCashController extends AdminAppController
             ],
         ])->first();
 
-        $response = $this->getClient()->get(
-            '/users',
-            [],
-            [
-                'auth' => $this->getAuth(),
-                'type' => 'json',
-            ],
-        );
-        $users = json_decode($response->getStringBody());
-        $foundUser = [];
-        foreach($users->users as $user) {
-            if (!empty($user->user_notes)) {
-                $options = json_decode($user->user_notes);
-                if (!empty($options) && $options->FCS_ID == $customer->id_customer) {
-                    $foundUser = $user;
-                    continue;
-                }
-            }
-        }
-
-        if (empty($foundUser) || !isset($foundUser->user_id)) {
-
-            $data = [
-                'user_firstname' => $customer->firstname,
-                'user_surname' => $customer->lastname,
-                'user_email' => $customer->email,
-                'user_postalCode' => $customer->address_customer->postcode,
-                'user_city' => $customer->address_customer->city,
-                'user_street' => $customer->address_customer->address1,
-                'user_notes' => json_encode(['FCS_ID' => $customer->id_customer]),
-            ];
-
-            $response = $this->getClient()->post(
-                '/users',
-                json_encode($data, JSON_UNESCAPED_UNICODE),
-                [
-                    'auth' => $this->getAuth(),
-                    'type' => 'json',
-                ],
-            );
-            $foundUser = json_decode($response->getStringBody());
-
-        }
-
-        /*
         $data = [
-            'user_firstname' => 'MarioX',
+            'user_firstname' => $customer->firstname,
+            'user_surname' => $customer->lastname,
+            'user_email' => $customer->email,
+            'user_postalCode' => $customer->address_customer->postcode,
+            'user_city' => $customer->address_customer->city,
+            'user_street' => $customer->address_customer->address1,
         ];
+
+        // updating user needs user_id in post data
+        if ($customer->user_id_registrierkasse > 0) {
+            $data = array_merge($data, [
+                'user_id' => $customer->user_id_registrierkasse,
+            ]);
+        }
+
         $response = $this->getClient()->post(
-            '/users/' . $foundUser->user_id,
+            '/users',
             json_encode($data, JSON_UNESCAPED_UNICODE),
             [
                 'auth' => $this->getAuth(),
                 'type' => 'json',
             ],
         );
-        */
 
-        return $foundUser->user_id;
+        $helloCashUser = json_decode($response->getStringBody());
+
+        if ($customer->user_id_registrierkasse == 0) {
+            $customer->user_id_registrierkasse = $helloCashUser->user_id;
+            $this->Customer->save($customer);
+        }
+
+        return $helloCashUser->user_id;
 
     }
 
