@@ -174,38 +174,6 @@ class HelloCashController extends AdminAppController
 
     }
 
-    public function generateTestInvoice()
-    {
-        $preparedInvoiceData = [
-            'cashier_id' => 143635,
-            'invoice_user_id' => 2390341,
-            'invoice_testMode' => true,
-            'invoice_paymentMethod' => 'Bar',
-            'signature_mandatory' => 0,
-            'invoice_reference' => 0,
-            'items' => [
-                [
-                    'item_name' => 'Forelle 280g',
-                    'item_quantity' => 1,
-                    'item_price' => 19.9,
-                    'item_taxRate' => 13,
-                ],
-                [
-                    'item_name' => 'Pfand Retour',
-                    'item_quantity' => 2,
-                    'item_price' => -1,
-                    'item_taxRate' => 20,
-                ],
-            ],
-        ];
-
-        $response = $this->postInvoiceData($preparedInvoiceData);
-        $this->disableAutoRender();
-        $this->response = $this->response->withStringBody($response);
-        $this->response = $this->response->withHeader('Content-Type', 'json');
-        return $this->response;
-    }
-
     protected function getAndUpdateUser($customerId)
     {
 
