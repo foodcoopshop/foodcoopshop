@@ -111,7 +111,7 @@ class HelloCash
             $items[] = [
                 'item_name' => $orderDetail->product_name,
                 'item_quantity' => $orderDetail->product_amount,
-                'item_price' => $orderDetail->total_price_tax_incl,
+                'item_price' => $orderDetail->total_price_tax_incl / $orderDetail->product_amount,
                 'item_taxRate' => $orderDetail->tax_rate,
             ];
         };
@@ -119,8 +119,8 @@ class HelloCash
         if (!empty($invoiceData->ordered_deposit)) {
             $items[] = [
                 'item_name' => __('Delivered_deposit'),
-                'item_quantity' => 1,
-                'item_price' => $invoiceData->ordered_deposit['deposit_incl'],
+                'item_quantity' => $invoiceData->ordered_deposit['deposit_amount'],
+                'item_price' => $invoiceData->ordered_deposit['deposit_incl'] / $invoiceData->ordered_deposit['deposit_amount'],
                 'item_taxRate' => $depositTaxRate,
             ];
         };
