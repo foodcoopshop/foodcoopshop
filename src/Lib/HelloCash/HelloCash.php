@@ -21,6 +21,10 @@ use Cake\Datasource\FactoryLocator;
 class HelloCash
 {
 
+    protected $Invoice;
+
+    protected $Customer;
+
     protected $hostname = 'https://myhellocash.com';
 
     protected $restEndpoint = 'https://api.hellocash.business/api/v1';
