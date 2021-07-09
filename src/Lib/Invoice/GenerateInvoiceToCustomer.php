@@ -58,8 +58,8 @@ class GenerateInvoiceToCustomer
         $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash);
 
         if (!$data->is_cancellation_invoice) {
-            $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
-            $this->updateOrderDetails($data, $newInvoice->id);
+            $this->Payment->linkReturnedDepositWithInvoice($data, $newInvoice->id);
+            $this->OrderDetail->updateOrderDetails($data, $newInvoice->id);
         }
 
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
@@ -74,27 +74,6 @@ class GenerateInvoiceToCustomer
 
         return $newInvoice;
 
-    }
-
-    private function updateOrderDetails($data, $invoiceId)
-    {
-        foreach($data->active_order_details as $orderDetail) {
-            // important to get a fresh order detail entity as price fields could be changed for cancellation invoices
-            $orderDetail = $this->OrderDetail->get($orderDetail->id_order_detail);
-            $orderDetail->order_state = Configure::read('app.htmlHelper')->getOrderStateBilled();
-            $orderDetail->id_invoice = $invoiceId;
-            $this->OrderDetail->save($orderDetail);
-        }
-    }
-
-    private function linkReturnedDepositWithInvoice($data, $invoiceId)
-    {
-        foreach($data->returned_deposit['entities'] as $payment) {
-            // important to get a fresh payment entity as amount field could be changed for cancellation invoices
-            $payment = $this->Payment->get($payment->id);
-            $payment->invoice_id = $invoiceId;
-            $this->Payment->save($payment);
-        }
     }
 
     private function saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)

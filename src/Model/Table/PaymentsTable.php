@@ -237,6 +237,16 @@ class PaymentsTable extends AppTable
         return $query->toArray();
     }
 
+    public function linkReturnedDepositWithInvoice($data, $invoiceId)
+    {
+        foreach($data->returned_deposit['entities'] as $payment) {
+            // important to get a fresh payment entity as amount field could be changed for cancellation invoices
+            $payment = $this->get($payment->id);
+            $payment->invoice_id = $invoiceId;
+            $this->save($payment);
+        }
+    }
+
     /**
      * @param int $customerId
      * @param string $type

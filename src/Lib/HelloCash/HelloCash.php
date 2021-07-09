@@ -21,9 +21,13 @@ use Cake\Datasource\FactoryLocator;
 class HelloCash
 {
 
+    protected $Customer;
+
     protected $Invoice;
 
-    protected $Customer;
+    protected $OrderDetail;
+
+    protected $Payment;
 
     protected $hostname = 'https://myhellocash.com';
 
@@ -90,14 +94,14 @@ class HelloCash
 
     }
 
-    public function generateInvoice($invoiceData, $currentDay, $paidInCash)
+    public function generateInvoice($data, $currentDay, $paidInCash)
     {
 
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(
             Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'),
         );
 
-        $userId = $this->createOrUpdateUser($invoiceData->id_customer);
+        $userId = $this->createOrUpdateUser($data->id_customer);
 
         $preparedInvoiceData = [
             'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
@@ -109,7 +113,7 @@ class HelloCash
         ];
         $items = [];
 
-        foreach($invoiceData->active_order_details as $orderDetail) {
+        foreach($data->active_order_details as $orderDetail) {
             $items[] = [
                 'item_name' => $orderDetail->product_name,
                 'item_quantity' => $orderDetail->product_amount,
@@ -118,20 +122,20 @@ class HelloCash
             ];
         };
 
-        if (!empty($invoiceData->ordered_deposit)) {
+        if (!empty($data->ordered_deposit)) {
             $items[] = [
                 'item_name' => __('Delivered_deposit'),
-                'item_quantity' => $invoiceData->ordered_deposit['deposit_amount'],
-                'item_price' => $invoiceData->ordered_deposit['deposit_incl'] / $invoiceData->ordered_deposit['deposit_amount'],
+                'item_quantity' => $data->ordered_deposit['deposit_amount'],
+                'item_price' => $data->ordered_deposit['deposit_incl'] / $data->ordered_deposit['deposit_amount'],
                 'item_taxRate' => $depositTaxRate,
             ];
         };
 
-        if (!empty($invoiceData->returned_deposit)) {
+        if (!empty($data->returned_deposit)) {
             $items[] = [
                 'item_name' => __('Payment_type_deposit_return'),
                 'item_quantity' => 1,
-                'item_price' => $invoiceData->returned_deposit['deposit_incl'],
+                'item_price' => $data->returned_deposit['deposit_incl'],
                 'item_taxRate' => $depositTaxRate,
             ];
         };
@@ -139,8 +143,15 @@ class HelloCash
         $preparedInvoiceData['items'] = $items;
 
         $response = $this->postInvoiceData($preparedInvoiceData);
+        $responseObject = json_decode($response);
 
-        return $response;
+        $this->Payment = FactoryLocator::get('Table')->get('Payments');
+        $this->Payment->linkReturnedDepositWithInvoice($data, $responseObject->invoice_id);
+
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $this->OrderDetail->updateOrderDetails($data, $responseObject->invoice_id);
+
+        return $responseObject;
     }
 
     protected function createOrUpdateUser($customerId)

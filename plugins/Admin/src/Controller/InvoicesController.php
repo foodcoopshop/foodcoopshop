@@ -103,8 +103,7 @@ class InvoicesController extends AdminAppController
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
             $helloCash = new HelloCash();
-            $response = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash);
-            $responseObject = json_decode($response);
+            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash);
             $invoiceId = $responseObject->invoice_id;
             $invoiceFilename = '/admin/hello-cash/getPrintableBon/' . $invoiceId;
             $invoiceNumber = $responseObject->invoice_number;
