@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
@@ -99,12 +100,27 @@ class InvoicesController extends AdminAppController
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
-        $invoiceToCustomer = new GenerateInvoiceToCustomer();
-        $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+
+            $helloCash = new HelloCash();
+            $response = $helloCash->generateInvoice($customerId, $currentDay, $paidInCash);
+            $responseObject = json_decode($response);
+            $invoiceId = $responseObject->invoice_id;
+            $invoiceFilename = '/admin/hello-cash/getPrintableBon/' . $invoiceId;
+            $invoiceNumber = $responseObject->invoice_number;
+
+        } else {
+
+            $invoiceToCustomer = new GenerateInvoiceToCustomer();
+            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+            $invoiceNumber = $newInvoice->invoice_number;
+            $invoiceId = $newInvoice->id;
+        }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),
-            '/admin/lists/getInvoice?file=' . $newInvoice->filename,
+            $invoiceFilename,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',
@@ -112,13 +128,13 @@ class InvoicesController extends AdminAppController
             ],
         );
         $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_generated_successfully.', [
-            '<b>' . $newInvoice->invoice_number . '</b>',
-            '<b>' . $customer   ->name . '</b>',
+            '<b>' . $invoiceNumber . '</b>',
+            '<b>' . $customer->name . '</b>',
         ]);
-        $this->Flash->success($messageString . ' ' . $linkToInvoice);
+        $this->Flash->success($messageString . '<br />' . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_added', $this->AppAuth->getUserId(), $newInvoice->id, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_added', $this->AppAuth->getUserId(), $invoiceId, 'invoices', $messageString);
 
         $this->redirect($this->referer());
 

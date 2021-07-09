@@ -86,7 +86,7 @@ class HelloCash
 
     }
 
-    public function generateInvoice($customerId, $currentDay)
+    public function generateInvoice($customerId, $currentDay, $paidInCash)
     {
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
@@ -101,7 +101,7 @@ class HelloCash
             'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
             'invoice_user_id' => $userId,
             'invoice_testMode' => Configure::read('app.helloCashAtCredentials')['test_mode'],
-            'invoice_paymentMethod' => 'Bar',
+            'invoice_paymentMethod' => $paidInCash ? 'Bar' : 'Kreditrechnung',
             'signature_mandatory' => 0,
             'invoice_reference' => 0,
         ];
