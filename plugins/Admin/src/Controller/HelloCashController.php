@@ -21,6 +21,8 @@ use Cake\Http\Client;
 class HelloCashController extends AdminAppController
 {
 
+    protected $endpoint = 'https://api.hellocash.business/api/v1';
+
     public function isAuthorized($user)
     {
         return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') &&
@@ -30,7 +32,7 @@ class HelloCashController extends AdminAppController
 
     protected function getClient()
     {
-        return Client::createFromUrl(Configure::read('app.helloCashAtEndpoint'));
+        return Client::createFromUrl($this->endpoint);
     }
 
     protected function encodeData($data)
