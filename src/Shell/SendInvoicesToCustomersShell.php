@@ -14,6 +14,7 @@
  */
 namespace App\Shell;
 
+use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
@@ -52,6 +53,10 @@ class SendInvoicesToCustomersShell extends AppShell
             ],
         ]);
 
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            $helloCash = new HelloCash();
+        }
+
         $i = 0;
         foreach($customers as $customer) {
 
@@ -61,7 +66,11 @@ class SendInvoicesToCustomersShell extends AppShell
                 continue;
             }
 
-            $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
+            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                $helloCash->generateInvoice($data, $this->cronjobRunDay, false);
+            } else {
+                $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
+            }
             $i++;
 
         }

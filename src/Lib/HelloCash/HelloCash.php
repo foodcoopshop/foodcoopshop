@@ -86,16 +86,14 @@ class HelloCash
 
     }
 
-    public function generateInvoice($customerId, $currentDay, $paidInCash)
+    public function generateInvoice($invoiceData, $currentDay, $paidInCash)
     {
 
-        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $invoiceData = $this->Invoice->getDataForCustomerInvoice($customerId, $currentDay);
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(
             Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'),
         );
 
-        $userId = $this->createOrUpdateUser($customerId);
+        $userId = $this->createOrUpdateUser($invoiceData->id_customer);
 
         $preparedInvoiceData = [
             'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
