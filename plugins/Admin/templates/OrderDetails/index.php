@@ -90,6 +90,8 @@ use Cake\Core\Configure;
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
+        <?php echo $this->Form->end(); ?>
+
             <div class="right">
             <?php
             if (
@@ -127,7 +129,6 @@ use Cake\Core\Configure;
             echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
             ?>
             </div>
-        <?php echo $this->Form->end(); ?>
     </div>
 
 <?php
