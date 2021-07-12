@@ -105,7 +105,7 @@ class InvoicesController extends AdminAppController
             $helloCash = new HelloCash();
             $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash);
             $invoiceId = $responseObject->invoice_id;
-            $invoiceFilename = '/admin/hello-cash/getPrintableBon/' . $invoiceId;
+            $invoiceFilename = '/admin/hello-cash/getBon/' . $invoiceId;
             $invoiceNumber = $responseObject->invoice_number;
 
         } else {

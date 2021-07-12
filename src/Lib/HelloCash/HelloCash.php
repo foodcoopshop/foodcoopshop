@@ -160,6 +160,9 @@ class HelloCash
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $this->OrderDetail->updateOrderDetails($data, $responseObject->invoice_id);
 
+        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+        $this->Invoice->saveInvoice($responseObject->invoice_id, $data, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+
         return $responseObject;
     }
 

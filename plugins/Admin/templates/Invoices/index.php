@@ -105,7 +105,10 @@ echo '<table class="list invoices-table no-clone-last-row">';
         echo '<th style="text-align:right;">' . __d('admin', 'Sum_incl_tax') . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __d('admin', 'Paid_in_cash')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.email_status', __d('admin', 'Email_sent')) . '</th>';
-        echo '<th>' . __d('admin', 'Download') . '</th>';
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            echo '<th>' . __d('admin', 'Bon') . '</th>';
+        }
+        echo '<th>' . __d('admin', 'Invoice') . '</th>';
         echo '<th>' . __d('admin', 'Cancellation') . '</th>';
     echo '</tr>';
 
@@ -149,10 +152,30 @@ echo '<table class="list invoices-table no-clone-last-row">';
                 }
             echo '</td>';
 
+            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                echo '<td style="text-align:center;">';
+                echo $this->Html->link(
+                    '<i class="fas fa-arrow-right ok"></i>',
+                    '/admin/hello-cash/getBon/' . $invoice->id,
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'target' => '_blank',
+                        'escape' => false,
+                    ],
+                    );
+                echo '</td>';
+            }
+
+            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                $invoiceDownloadLink = '/admin/hello-cash/getInvoice/' . $invoice->id;
+            } else {
+                $invoiceDownloadLink = '/admin/lists/getInvoice?file=' . $invoice->filename;
+            }
+
             echo '<td style="text-align:center;">';
                 echo $this->Html->link(
                     '<i class="fas fa-arrow-right ok"></i>',
-                    '/admin/lists/getInvoice?file=' . $invoice->filename,
+                    $invoiceDownloadLink,
                     [
                         'class' => 'btn btn-outline-light',
                         'target' => '_blank',
@@ -182,7 +205,6 @@ echo '<table class="list invoices-table no-clone-last-row">';
         echo '</tr>';
 
     }
-
     echo '<tr style="font-weight:bold;">';
 
         echo '<td colspan="3" style="text-align:right;">';
@@ -201,7 +223,13 @@ echo '<table class="list invoices-table no-clone-last-row">';
             echo $this->Number->formatAsDecimal($invoiceSums['total_sum_price_incl']);
         echo '</td>';
 
-        echo '<td colspan="4">';
+
+        $colspan = 4;
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            $colspan++;
+        }
+
+        echo '<td colspan="'.$colspan.'">';
         echo '</td>';
 
     echo '</tr>';

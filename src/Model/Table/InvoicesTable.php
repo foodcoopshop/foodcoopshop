@@ -6,6 +6,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\FrozenDate;
 use Cake\ORM\Query;
 
 /**
@@ -263,6 +264,38 @@ class InvoicesTable extends AppTable
             ]
         ])->first();
         return $lastInvoice;
+    }
+
+    public function saveInvoice($invoiceId, $data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)
+    {
+
+        $invoiceData = [
+            'id' => !empty($invoiceId) ? $invoiceId : null,
+            'id_customer' => $data->id_customer,
+            'invoice_number' => $invoiceNumber,
+            'filename' => $invoicePdfFile,
+            'created' => new FrozenDate($currentDay),
+            'paid_in_cash' => $paidInCash,
+            'invoice_taxes' => [],
+        ];
+        foreach($data->tax_rates as $taxRate => $values) {
+            $invoiceData['invoice_taxes'][] = [
+                'tax_rate' => $taxRate,
+                'total_price_tax_excl' => $values['sum_price_excl'],
+                'total_price_tax_incl' => $values['sum_price_incl'],
+                'total_price_tax' => $values['sum_tax'],
+            ];
+        }
+        $invoiceEntity = $this->newEntity($invoiceData);
+
+        $newInvoice = $this->save($invoiceEntity, [
+            'associated' => [
+                'InvoiceTaxes',
+            ],
+        ]);
+
+        return $newInvoice;
+
     }
 
     public function getNextInvoiceNumberForCustomer($currentYear, $lastInvoice)
