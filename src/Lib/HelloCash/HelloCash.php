@@ -48,6 +48,56 @@ class HelloCash
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    protected function getInvoicePostData($data, $userId, $paidInCash)
+    {
+
+        $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(
+            Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'),
+        );
+
+        $postData = [
+            'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
+            'invoice_user_id' => $userId,
+            'invoice_testMode' => Configure::read('app.helloCashAtCredentials')['test_mode'],
+            'invoice_paymentMethod' => $paidInCash ? 'Bar' : 'Kreditrechnung',
+            'signature_mandatory' => 0,
+            'invoice_reference' => 0,
+        ];
+        $items = [];
+
+        foreach($data->active_order_details as $orderDetail) {
+            $items[] = [
+                'item_name' => $orderDetail->product_name,
+                'item_quantity' => $orderDetail->product_amount,
+                'item_price' => $orderDetail->total_price_tax_incl / $orderDetail->product_amount,
+                'item_taxRate' => $orderDetail->tax_rate,
+            ];
+        };
+
+        if (!empty($data->ordered_deposit)) {
+            $items[] = [
+                'item_name' => __('Delivered_deposit'),
+                'item_quantity' => $data->ordered_deposit['deposit_amount'],
+                'item_price' => $data->ordered_deposit['deposit_incl'] / $data->ordered_deposit['deposit_amount'],
+                'item_taxRate' => $depositTaxRate,
+            ];
+        };
+
+        if (!empty($data->returned_deposit)) {
+            $items[] = [
+                'item_name' => __('Payment_type_deposit_return'),
+                'item_quantity' => 1,
+                'item_price' => $data->returned_deposit['deposit_incl'],
+                'item_taxRate' => $depositTaxRate,
+            ];
+        };
+
+        $postData['items'] = $items;
+
+        return $postData;
+
+    }
+
     public function getOptions()
     {
         return [
@@ -97,54 +147,13 @@ class HelloCash
     public function generateInvoice($data, $currentDay, $paidInCash)
     {
 
-        $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(
-            Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'),
-        );
-
         $userId = $this->createOrUpdateUser($data->id_customer);
+        $postData = $this->getInvoicePostData($data, $userId, $paidInCash);
 
-        $preparedInvoiceData = [
-            'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
-            'invoice_user_id' => $userId,
-            'invoice_testMode' => Configure::read('app.helloCashAtCredentials')['test_mode'],
-            'invoice_paymentMethod' => $paidInCash ? 'Bar' : 'Kreditrechnung',
-            'signature_mandatory' => 0,
-            'invoice_reference' => 0,
-        ];
-        $items = [];
-
-        foreach($data->active_order_details as $orderDetail) {
-            $items[] = [
-                'item_name' => $orderDetail->product_name,
-                'item_quantity' => $orderDetail->product_amount,
-                'item_price' => $orderDetail->total_price_tax_incl / $orderDetail->product_amount,
-                'item_taxRate' => $orderDetail->tax_rate,
-            ];
-        };
-
-        if (!empty($data->ordered_deposit)) {
-            $items[] = [
-                'item_name' => __('Delivered_deposit'),
-                'item_quantity' => $data->ordered_deposit['deposit_amount'],
-                'item_price' => $data->ordered_deposit['deposit_incl'] / $data->ordered_deposit['deposit_amount'],
-                'item_taxRate' => $depositTaxRate,
-            ];
-        };
-
-        if (!empty($data->returned_deposit)) {
-            $items[] = [
-                'item_name' => __('Payment_type_deposit_return'),
-                'item_quantity' => 1,
-                'item_price' => $data->returned_deposit['deposit_incl'],
-                'item_taxRate' => $depositTaxRate,
-            ];
-        };
-
-        $preparedInvoiceData['items'] = $items;
-
-        $response = $this->postInvoiceData($preparedInvoiceData);
+        $response = $this->postInvoiceData($postData);
         $responseObject = json_decode($response);
 
+        // after successful invoice generation
         $this->Payment = FactoryLocator::get('Table')->get('Payments');
         $this->Payment->linkReturnedDepositWithInvoice($data, $responseObject->invoice_id);
 
