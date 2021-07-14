@@ -24,8 +24,9 @@ class HelloCashTest extends AppCakeTestCase
     {
         parent::setUp();
 
-        Configure::write('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
-        Configure::write('appDb.FCS_HELLO_CASH_API_ENABLED', 1);
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
+
         Configure::write('app.helloCashRestEndpoint', 'https://private-anon-4523ba7d1d-hellocashapi.apiary-mock.com/api/v1/invoices');
         Configure::write('app.helloCashAtCredentials.username', '');
         Configure::write('app.helloCashAtCredentials.password', '');
