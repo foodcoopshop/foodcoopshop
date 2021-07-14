@@ -14,6 +14,7 @@
  */
 namespace App\Lib\HelloCash;
 
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\Datasource\FactoryLocator;
@@ -71,7 +72,7 @@ class HelloCash
 
         foreach($data->active_order_details as $orderDetail) {
             $items[] = [
-                'item_name' => $orderDetail->product_name,
+                'item_name' => StringComponent::removeEmojis($orderDetail->product_name),
                 'item_quantity' => $orderDetail->product_amount,
                 'item_price' => $orderDetail->total_price_tax_incl / $orderDetail->product_amount,
                 'item_taxRate' => $orderDetail->tax_rate,
