@@ -199,23 +199,32 @@ class HelloCash
 
         // updating user needs user_id in post data
         if ($customer->user_id_registrierkasse > 0) {
-            $data = array_merge($data, [
-                'user_id' => $customer->user_id_registrierkasse,
-            ]);
+
+            $response = $this->getRestClient()->get(
+                '/users/' . $customer->user_id_registrierkasse,
+                [],
+                $this->getOptions(),
+            );
+            $helloCashUser = json_decode($response->getStringBody());
+
+            // check if associated user_id_registrierkasse is still available within hello cash)
+            if ($helloCashUser != 'User not found') {
+                $data = array_merge($data, [
+                    'user_id' => $customer->user_id_registrierkasse,
+                ]);
+            }
+
         }
-        pr($this->getRestClient());
+
         $response = $this->getRestClient()->post(
             '/users',
             $this->encodeData($data),
             $this->getOptions(),
         );
 
-
-        pr($response);
-
         $helloCashUser = json_decode($response->getStringBody());
 
-        if ($customer->user_id_registrierkasse == 0) {
+        if (!array_key_exists('user_id', $data)) {
             $customer->user_id_registrierkasse = $helloCashUser->user_id;
             $this->Customer->save($customer);
         }
