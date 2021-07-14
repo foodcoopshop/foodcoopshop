@@ -16,12 +16,14 @@ use App\Lib\HelloCash\HelloCash;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
 use Cake\Core\Configure;
 
 class HelloCashTest extends AppCakeTestCase
 {
     use AppIntegrationTestTrait;
     use LoginTrait;
+    use PrepareInvoiceDataTrait;
 
     protected $HelloCash;
 
@@ -44,6 +46,16 @@ class HelloCashTest extends AppCakeTestCase
     public function tearDown(): void
     {
         $this->assertLogFilesForErrors();
+    }
+
+    public function testGenerateInvoice()
+    {
+        $this->markTestSkipped();
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
     }
 
     public function testGetInvoices()
