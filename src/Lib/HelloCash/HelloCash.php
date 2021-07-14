@@ -31,7 +31,11 @@ class HelloCash
 
     protected $hostname = 'https://myhellocash.com';
 
-    protected $restEndpoint = 'https://api.hellocash.business/api/v1';
+    public $restEndpoint;
+
+    public function __construct() {
+        $this->restEndpoint = Configure::read('app.helloCashRestEndpoint');
+    }
 
     public function getRestClient()
     {
@@ -100,11 +104,16 @@ class HelloCash
 
     public function getOptions()
     {
-        return [
-            'auth' => [
+        $auth = [];
+        if (Configure::read('app.helloCashAtCredentials')['username'] != '' &&
+            Configure::read('app.helloCashAtCredentials')['password'] != '') {
+            $auth = [
                 'username' => Configure::read('app.helloCashAtCredentials')['username'],
                 'password' => Configure::read('app.helloCashAtCredentials')['password'],
-            ],
+            ];
+        }
+        return [
+            'auth' => $auth,
             'type' => 'json',
         ];
     }
@@ -194,12 +203,15 @@ class HelloCash
                 'user_id' => $customer->user_id_registrierkasse,
             ]);
         }
-
+        pr($this->getRestClient());
         $response = $this->getRestClient()->post(
             '/users',
             $this->encodeData($data),
             $this->getOptions(),
         );
+
+
+        pr($response);
 
         $helloCashUser = json_decode($response->getStringBody());
 
