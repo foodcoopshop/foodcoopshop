@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-27 10:49+0200\n"
+"POT-Creation-Date: 2021-07-15 09:43+0200\n"
 "PO-Revision-Date: 2021-05-27 10:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1143,6 +1143,12 @@ msgstr "The product {0} was added to your cart."
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
 
+msgid "Delivered_deposit"
+msgstr "Delivered deposit"
+
+msgid "Payment_type_deposit_return"
+msgstr "Deposit return"
+
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
@@ -1157,12 +1163,6 @@ msgstr "VAT"
 
 msgid "Price_incl."
 msgstr "Price incl."
-
-msgid "Delivered_deposit"
-msgstr "Delivered deposit"
-
-msgid "Payment_type_deposit_return"
-msgstr "Deposit return"
 
 msgid "Total_sum"
 msgstr "Total sum"

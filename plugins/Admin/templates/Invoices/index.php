@@ -106,7 +106,7 @@ echo '<table class="list invoices-table no-clone-last-row">';
         echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __d('admin', 'Paid_in_cash')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.email_status', __d('admin', 'Email_sent')) . '</th>';
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-            echo '<th>' . __d('admin', 'Bon') . '</th>';
+            echo '<th>' . __d('admin', 'Receipt') . '</th>';
         }
         echo '<th>' . __d('admin', 'Invoice') . '</th>';
         echo '<th>' . __d('admin', 'Cancellation') . '</th>';

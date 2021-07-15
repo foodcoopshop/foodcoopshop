@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-05-31 10:32+0200\n"
+"POT-Creation-Date: 2021-07-15 09:43+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1187,6 +1187,12 @@ msgstr ""
 msgid "Email_sent"
 msgstr ""
 
+msgid "Receipt"
+msgstr ""
+
+msgid "Invoice"
+msgstr ""
+
 msgid "Cancellation"
 msgstr ""
 
@@ -1836,9 +1842,6 @@ msgid "Click_to_cancel_product"
 msgstr ""
 
 msgid "Click_to_change_member"
-msgstr ""
-
-msgid "Invoice"
 msgstr ""
 
 msgid "Invoice_cannot_be_generated"
