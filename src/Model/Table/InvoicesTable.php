@@ -199,26 +199,29 @@ class InvoicesTable extends AppTable
             $returnedDeposit['entities'][] = $deposit;
         }
 
-        $defaultArray = [
-            'sum_price_excl' => 0,
-            'sum_tax' => 0,
-            'sum_price_incl' => 0,
-        ];
-        $taxRates = $orderDetailTable->getTaxSums($orderDetails);
+        $taxRates = [];
+        if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            $defaultArray = [
+                'sum_price_excl' => 0,
+                'sum_tax' => 0,
+                'sum_price_incl' => 0,
+            ];
+            $taxRates = $orderDetailTable->getTaxSums($orderDetails);
 
-        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-        $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+            $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+            $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
 
-        if (!isset($taxRates[$depositVatRate])) {
-            $taxRates[$depositVatRate] = $defaultArray;
+            if (!isset($taxRates[$depositVatRate])) {
+                $taxRates[$depositVatRate] = $defaultArray;
+            }
+            $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
+            $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
+            $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
+
+            ksort($taxRates);
+
+            $taxRates = $this->clearZeroArray($taxRates);
         }
-        $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
-        $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
-        $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
-
-        ksort($taxRates);
-
-        $taxRates = $this->clearZeroArray($taxRates);
 
         // prepare sums
         $sumPriceIncl = 0;

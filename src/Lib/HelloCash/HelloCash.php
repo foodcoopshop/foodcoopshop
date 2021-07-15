@@ -171,7 +171,20 @@ class HelloCash
         $this->OrderDetail->updateOrderDetails($data, $responseObject->invoice_id);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+
+        // override taxes with data from payload to avoid rounding differences
+        $data->tax_rates = [];
+        foreach($responseObject->taxes as $tax) {
+            $data->tax_rates[$tax->tax_taxRate] = [
+                'sum_price_excl' => $tax->tax_net,
+                'sum_price_incl' => $tax->tax_gross,
+                'sum_tax' => $tax->tax_tax,
+            ];
+        }
+
         $this->Invoice->saveInvoice($responseObject->invoice_id, $data, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+
+
 
         return $responseObject;
     }
