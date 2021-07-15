@@ -22,9 +22,14 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
         Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);".
         Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerCancel.init();".
-        Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();".
-        Configure::read('app.jsNamespace') . ".Admin.initDownloadInvoicesAsZipFile();"
+        Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();"
 ]);
+
+if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+    $this->element('addScript', [
+        'script' =>  Configure::read('app.jsNamespace') . ".Admin.initDownloadInvoicesAsZipFile();"
+    ]);
+}
 ?>
 
 <div class="filter-container">
@@ -73,16 +78,18 @@ if (!empty($invoices)) {
 
 echo '<h4>' . __d('admin', 'Invoices') . '</h4>';
 
-echo $this->Html->link(
-    '<i class="fas fa-fw fa-download"></i>',
-    'javascript:void(0)',
-    [
-        'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
-        'title' => __d('admin', 'Download_invoices'),
-        'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
-        'escape' => false,
-    ]
-);
+if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+    echo $this->Html->link(
+        '<i class="fas fa-fw fa-download"></i>',
+        'javascript:void(0)',
+        [
+            'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
+            'title' => __d('admin', 'Download_invoices'),
+            'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
+            'escape' => false,
+        ]
+    );
+}
 echo $this->Html->link(
     '<i class="far fa-fw fa-clipboard"></i>',
     'javascript:void(0)',
