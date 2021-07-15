@@ -53,7 +53,7 @@ class HelloCash
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    protected function getInvoicePostData($data, $userId, $paidInCash)
+    protected function getInvoicePostData($data, $userId, $paidInCash, $isPreview)
     {
 
         $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(
@@ -63,7 +63,7 @@ class HelloCash
         $postData = [
             'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
             'invoice_user_id' => $userId,
-            'invoice_testMode' => Configure::read('app.helloCashAtCredentials')['test_mode'],
+            'invoice_testMode' => $isPreview,
             'invoice_paymentMethod' => $paidInCash ? 'Bar' : 'Kreditrechnung',
             'signature_mandatory' => 0,
             'invoice_reference' => 0,
@@ -119,7 +119,7 @@ class HelloCash
         ];
     }
 
-    public function getPrintableBon($invoiceId)
+    public function getReceipt($invoiceId)
     {
 
         $httpClient = $this->getClient();
@@ -154,16 +154,26 @@ class HelloCash
 
     }
 
-    public function generateInvoice($data, $currentDay, $paidInCash)
+    public function generateInvoice($data, $currentDay, $paidInCash, $isPreview)
     {
 
         $userId = $this->createOrUpdateUser($data->id_customer);
-        $postData = $this->getInvoicePostData($data, $userId, $paidInCash);
+        $postData = $this->getInvoicePostData($data, $userId, $paidInCash, $isPreview);
 
         $response = $this->postInvoiceData($postData);
         $responseObject = json_decode($response);
 
-        // after successful invoice generation
+        if (!$isPreview) {
+            $responseObject = $this->afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash);
+        }
+
+        return $responseObject;
+
+    }
+
+    protected function afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash)
+    {
+
         $this->Payment = FactoryLocator::get('Table')->get('Payments');
         $this->Payment->linkReturnedDepositWithInvoice($data, $responseObject->invoice_id);
 
@@ -184,9 +194,8 @@ class HelloCash
 
         $this->Invoice->saveInvoice($responseObject->invoice_id, $data, $responseObject->invoice_number, '', $currentDay, $paidInCash);
 
-
-
         return $responseObject;
+
     }
 
     protected function createOrUpdateUser($customerId)

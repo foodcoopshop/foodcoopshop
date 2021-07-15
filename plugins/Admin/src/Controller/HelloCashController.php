@@ -36,10 +36,10 @@ class HelloCashController extends AdminAppController
             $this->AppAuth->isSuperadmin();
     }
 
-    public function getBon($invoiceId)
+    public function getReceipt($invoiceId)
     {
         $this->disableAutoRender();
-        $response = $this->helloCash->getPrintableBon($invoiceId);
+        $response = $this->helloCash->getReceipt($invoiceId);
         $this->response = $this->response->withStringBody($response);
         return $this->response;
     }

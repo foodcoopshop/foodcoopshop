@@ -156,7 +156,7 @@ echo '<table class="list invoices-table no-clone-last-row">';
                 echo '<td style="text-align:center;">';
                 echo $this->Html->link(
                     '<i class="fas fa-arrow-right ok"></i>',
-                    '/admin/hello-cash/getBon/' . $invoice->id,
+                    $this->Slug->getHelloCashReceipt($invoice->id),
                     [
                         'class' => 'btn btn-outline-light',
                         'target' => '_blank',

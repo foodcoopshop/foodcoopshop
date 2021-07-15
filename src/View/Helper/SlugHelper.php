@@ -22,6 +22,10 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
+    public function getHelloCashReceipt($invoiceId)
+    {
+        return '/admin/hello-cash/getReceipt/' . $invoiceId;
+    }
 
     public function getSelfService($keyword = '')
     {

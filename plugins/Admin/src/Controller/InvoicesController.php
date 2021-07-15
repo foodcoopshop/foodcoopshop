@@ -103,9 +103,9 @@ class InvoicesController extends AdminAppController
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
             $helloCash = new HelloCash();
-            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash);
+            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
             $invoiceId = $responseObject->invoice_id;
-            $invoiceFilename = '/admin/hello-cash/getBon/' . $invoiceId;
+            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
             $invoiceNumber = $responseObject->invoice_number;
 
         } else {
@@ -160,29 +160,42 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        $newInvoiceNumber = 'xxx';
-        $newInvoiceDate = 'xx.xx.xxxx';
-
-        $pdfWriter = new InvoiceToCustomerPdfWriter();
         $invoiceData = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$invoiceData->new_invoice_necessary) {
             die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
         }
 
-        $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
-        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
-            return $this->response->withStringBody($pdfWriter->writeHtml());
+            $helloCash = new HelloCash();
+            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, true);
+            $invoiceId = $responseObject->invoice_id;
+            $this->redirect(Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId));
+            return;
+
+        } else {
+
+            $newInvoiceNumber = 'xxx';
+            $newInvoiceDate = 'xx.xx.xxxx';
+
+            $pdfWriter = new InvoiceToCustomerPdfWriter();
+            $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
+
+            if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+                return $this->response->withStringBody($pdfWriter->writeHtml());
+            }
+
+            $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($customer->name, $customerId, date('Y-m-d'), $newInvoiceNumber);
+            $invoicePdfFile = explode(DS, $invoicePdfFile);
+            $invoicePdfFile = end($invoicePdfFile);
+            $invoicePdfFile = substr($invoicePdfFile, 11);
+            $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
+            $pdfWriter->setFilename($invoicePdfFile);
+
+            die($pdfWriter->writeInline());
         }
 
-        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($customer->name, $customerId, date('Y-m-d'), $newInvoiceNumber);
-        $invoicePdfFile = explode(DS, $invoicePdfFile);
-        $invoicePdfFile = end($invoicePdfFile);
-        $invoicePdfFile = substr($invoicePdfFile, 11);
-        $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
-        $pdfWriter->setFilename($invoicePdfFile);
 
-        die($pdfWriter->writeInline());
     }
 
     public function cancel()
