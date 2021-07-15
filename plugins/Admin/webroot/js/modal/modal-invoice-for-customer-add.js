@@ -53,7 +53,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         var row = button.closest('tr');
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.ShowPreview, 'fa fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light preview-invoice-button'], foodcoopshop.LocalizedJs.admin.ShowPreview, 'fa fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light generate-invoice-button'], foodcoopshop.LocalizedJs.admin.GenerateInvoice, 'fas fa-exclamation-triangle not-ok'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
         ];
@@ -75,7 +75,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
             document.location.href = '/admin/invoices/generate.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash;
         });
 
-        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+        $(modalSelector + ' .preview-invoice-button').on('click', function() {
             foodcoopshop.ModalInvoiceForCustomerAdd.getSuccessHandler(modalSelector, customerId);
         });
 
