@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-07-15 09:43+0200\n"
+"POT-Creation-Date: 2021-07-15 10:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -194,10 +194,13 @@ msgstr ""
 msgid "No_data_available_to_generate_an_invoice."
 msgstr ""
 
-msgid "Download"
+msgid "Print"
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr ""
+
+msgid "Download"
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."

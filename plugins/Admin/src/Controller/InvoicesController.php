@@ -118,7 +118,7 @@ class InvoicesController extends AdminAppController
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
-            __d('admin', 'Download'),
+            __d('admin', 'Print'),
             $invoiceFilename,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',

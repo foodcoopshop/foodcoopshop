@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-15 09:43+0200\n"
-"PO-Revision-Date: 2021-07-15 09:44+0200\n"
+"POT-Creation-Date: 2021-07-15 10:44+0200\n"
+"PO-Revision-Date: 2021-07-15 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -195,11 +195,14 @@ msgstr "Rechnungen"
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
 
-msgid "Download"
-msgstr "Download"
+msgid "Print"
+msgstr "Drucken"
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich erstellt."
+
+msgid "Download"
+msgstr "Download"
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich storniert."
