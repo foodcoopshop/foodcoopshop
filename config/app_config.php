@@ -172,6 +172,8 @@ return [
 
         'sendEmailWhenOrderDetailQuantityOrPriceChanged' => true,
 
+        'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
+
         'helloCashAtCredentials' => [
             'username' => '',
             'password' => '',
