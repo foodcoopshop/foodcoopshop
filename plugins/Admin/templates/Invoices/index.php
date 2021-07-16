@@ -159,8 +159,9 @@ echo '<table class="list invoices-table no-clone-last-row">';
                 }
             echo '</td>';
 
-            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                echo '<td style="text-align:center;">';
+            // hello cash has no filename set
+            echo '<td style="text-align:center;">';
+            if ($invoice->filename == '') {
                 $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
                 if (!empty($invoice->cancelled_invoice)) {
                     $receiptLink = $this->Slug->getHelloCashReceipt($invoice->cancelled_invoice->id, true);
@@ -173,11 +174,12 @@ echo '<table class="list invoices-table no-clone-last-row">';
                         'target' => '_blank',
                         'escape' => false,
                     ],
-                    );
-                echo '</td>';
+                );
             }
+            echo '</td>';
 
-            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            // hello cash has no filename set
+            if ($invoice->filename == '') {
                 $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->id);
                 if (!empty($invoice->cancelled_invoice)) {
                     $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->cancelled_invoice->id, true);
