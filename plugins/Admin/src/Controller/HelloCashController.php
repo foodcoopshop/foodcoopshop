@@ -64,15 +64,4 @@ class HelloCashController extends AdminAppController
         return $this->response;
     }
 
-    public function generateInvoice($customerId, $currentDay)
-    {
-        $this->disableAutoRender();
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoiceData = $this->Invoice->getDataForCustomerInvoice($customerId, $currentDay);
-        $response = $this->helloCash->generateInvoice($invoiceData, $currentDay, false);
-        $this->response = $this->response->withStringBody($response);
-        $this->response = $this->response->withHeader('Content-Type', 'json');
-        return $this->response;
-    }
-
 }
