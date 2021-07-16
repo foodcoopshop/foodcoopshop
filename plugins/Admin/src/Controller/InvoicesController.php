@@ -118,7 +118,7 @@ class InvoicesController extends AdminAppController
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
-            __d('admin', 'Print'),
+            __d('admin', 'Print_receipt'),
             $invoiceFilename,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
@@ -276,16 +276,31 @@ class InvoicesController extends AdminAppController
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
-        $invoiceToCustomer = new GenerateInvoiceToCustomer();
-        $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+
+            $helloCash = new HelloCash();
+            $responseObject = $helloCash->cancelInvoice($customer, $invoice->id, $currentDay);
+            $invoiceId = $responseObject->cancellation_details->cancellation_number;
+            $invoiceNumber = $responseObject->cancellation_details->cancellation_number;
+            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+
+        } else {
+
+            $invoiceToCustomer = new GenerateInvoiceToCustomer();
+            $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);
+            $invoiceId = $newInvoice->id;
+            $invoiceNumber = $invoice->invoice_number;
+            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+
+        }
 
         $invoice->status = APP_DEL;
-        $invoice->cancellation_invoice_id = $newInvoice->id;
+        $invoice->cancellation_invoice_id = $invoiceId;
         $this->Invoice->save($invoice);
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),
-            '/admin/lists/getInvoice?file=' . $newInvoice->filename,
+            $invoiceFilename,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',
@@ -294,18 +309,18 @@ class InvoicesController extends AdminAppController
         );
 
         $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_successfully_cancelled.', [
-            '<b>' . $invoice->invoice_number . '</b>',
+            '<b>' . $invoiceNumber . '</b>',
             '<b>' . $invoice->customer->name . '</b>',
         ]);
 
-        $messageString .= ' ' . __d('admin', 'Cancellation_invoice_number_{0}_was_generated_successfully.', [
-            '<b>' . $newInvoice->invoice_number . '</b>',
+        $messageString .= '<br />' . __d('admin', 'Cancellation_invoice_number_{0}_was_generated_successfully.', [
+            '<b>' . $invoiceNumber . '</b>',
         ]);
 
         $this->Flash->success($messageString . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_cancelled', $this->AppAuth->getUserId(), $newInvoice->id, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_cancelled', $this->AppAuth->getUserId(), $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
@@ -359,7 +374,8 @@ class InvoicesController extends AdminAppController
                 'Invoices.email_status',
             ],
             'order' => [
-                'Invoices.id' => 'DESC'
+                'Invoices.created' => 'DESC',
+                'Invoices.id' => 'DESC',
             ]
         ])->toArray();
 

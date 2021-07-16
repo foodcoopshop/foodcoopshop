@@ -36,19 +36,19 @@ class HelloCashController extends AdminAppController
             $this->AppAuth->isSuperadmin();
     }
 
-    public function getReceipt($invoiceId)
+    public function getReceipt($invoiceId, $cancellation)
     {
         $this->disableAutoRender();
-        $response = $this->helloCash->getReceipt($invoiceId);
+        $response = $this->helloCash->getReceipt($invoiceId, $cancellation);
         $this->response = $this->response->withStringBody($response);
         return $this->response;
     }
 
-    public function getInvoice($invoiceId)
+    public function getInvoice($invoiceId, $cancellation)
     {
 
         $response = $this->helloCash->getRestClient()->get(
-            '/invoices/' . $invoiceId . '/pdf',
+            '/invoices/' . $invoiceId . '/pdf' . ($cancellation ? '&cancellation=true' : ''),
             [],
             $this->helloCash->getOptions(),
         );

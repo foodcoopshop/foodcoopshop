@@ -53,6 +53,28 @@ class HelloCash
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function cancelInvoice($data, $originalInvoiceId, $currentDay)
+    {
+        $postData = [
+            'cancellation_cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
+        ];
+
+        $response = $this->getRestClient()->post(
+            '/invoices/' . $originalInvoiceId . '/cancellation',
+            $this->encodeData($postData),
+            $this->getOptions(),
+        );
+        $responseObject = json_decode($response->getStringBody());
+        $paidInCash = $responseObject->invoice_payment == 'Bar' ? true : false;
+
+        $data = $this->overrideTaxesFromResponse($responseObject, $data);
+
+        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+        $this->Invoice->saveInvoice($responseObject->cancellation_details->cancellation_number, $data, $responseObject->cancellation_details->cancellation_number, '', $currentDay, $paidInCash);
+
+        return $responseObject;
+    }
+
     protected function getInvoicePostData($data, $userId, $paidInCash, $isPreview)
     {
 
@@ -66,8 +88,8 @@ class HelloCash
             'invoice_testMode' => $isPreview,
             'invoice_paymentMethod' => $paidInCash ? 'Bar' : 'Kreditrechnung',
             'signature_mandatory' => 0,
-            'invoice_reference' => 0,
         ];
+
         $items = [];
 
         foreach($data->active_order_details as $orderDetail) {
@@ -119,7 +141,7 @@ class HelloCash
         ];
     }
 
-    public function getReceipt($invoiceId)
+    public function getReceipt($invoiceId, $cancellation)
     {
 
         $httpClient = $this->getClient();
@@ -137,7 +159,7 @@ class HelloCash
         );
 
         $response = $httpClient->get(
-            '/intern/cash-register/invoice/print?iid=' . $invoiceId,
+            '/intern/cash-register/invoice/print?iid=' . $invoiceId . ($cancellation ? '&cancellation=true' : ''),
             [],
             [
                 'cookies' => [
@@ -180,9 +202,17 @@ class HelloCash
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $this->OrderDetail->updateOrderDetails($data, $responseObject->invoice_id);
 
-        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+        $data = $this->overrideTaxesFromResponse($responseObject, $data);
 
-        // override taxes with data from payload to avoid rounding differences
+        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+        $this->Invoice->saveInvoice($responseObject->invoice_id, $data, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+
+        return $responseObject;
+
+    }
+
+    protected function overrideTaxesFromResponse($responseObject, $data)
+    {
         $data->tax_rates = [];
         foreach($responseObject->taxes as $tax) {
             $data->tax_rates[$tax->tax_taxRate] = [
@@ -191,11 +221,7 @@ class HelloCash
                 'sum_tax' => $tax->tax_tax,
             ];
         }
-
-        $this->Invoice->saveInvoice($responseObject->invoice_id, $data, $responseObject->invoice_number, '', $currentDay, $paidInCash);
-
-        return $responseObject;
-
+        return $data;
     }
 
     protected function createOrUpdateUser($customerId)

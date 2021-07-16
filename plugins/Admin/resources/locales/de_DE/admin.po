@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-15 10:44+0200\n"
-"PO-Revision-Date: 2021-07-15 10:45+0200\n"
+"POT-Creation-Date: 2021-07-16 12:12+0200\n"
+"PO-Revision-Date: 2021-07-16 12:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -195,8 +195,8 @@ msgstr "Rechnungen"
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
 
-msgid "Print"
-msgstr "Drucken"
+msgid "Print_receipt"
+msgstr "Beleg drucken"
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich erstellt."
@@ -2249,6 +2249,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Print"
+#~ msgstr "Drucken"
 
 #~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 #~ msgstr "Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."
