@@ -53,7 +53,7 @@ class HelloCash
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
-    public function cancelInvoice($data, $originalInvoiceId, $currentDay)
+    public function cancelInvoice($customerId, $originalInvoiceId, $currentDay)
     {
         $postData = [
             'cancellation_cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
@@ -66,11 +66,10 @@ class HelloCash
         );
         $responseObject = json_decode($response->getStringBody());
         $paidInCash = $responseObject->invoice_payment == 'Bar' ? 1 : 0;
-
-        $data = $this->overrideTaxesFromResponse($responseObject, $data);
+        $taxRates = $this->prepareTaxesFromResponse($responseObject, true);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->Invoice->saveInvoice($responseObject->cancellation_details->cancellation_number, $data, $responseObject->cancellation_details->cancellation_number, '', $currentDay, $paidInCash);
+        $this->Invoice->saveInvoice($responseObject->cancellation_details->cancellation_number, $customerId, $taxRates, $responseObject->cancellation_details->cancellation_number, '', $currentDay, $paidInCash);
 
         return $responseObject;
     }
@@ -202,26 +201,33 @@ class HelloCash
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $this->OrderDetail->updateOrderDetails($data, $responseObject->invoice_id);
 
-        $data = $this->overrideTaxesFromResponse($responseObject, $data);
+        $taxRates = $this->prepareTaxesFromResponse($responseObject, false);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->Invoice->saveInvoice($responseObject->invoice_id, $data, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+        $this->Invoice->saveInvoice($responseObject->invoice_id, $data->id_customer, $taxRates, $responseObject->invoice_number, '', $currentDay, $paidInCash);
 
         return $responseObject;
 
     }
 
-    protected function overrideTaxesFromResponse($responseObject, $data)
+    protected function prepareTaxesFromResponse($responseObject, $cancellation)
     {
-        $data->tax_rates = [];
+
+        $cancellationFactor = 1;
+
+        if ($cancellation) {
+            $cancellationFactor = -1;
+        }
+
+        $taxRates = [];
         foreach($responseObject->taxes as $tax) {
-            $data->tax_rates[$tax->tax_taxRate] = [
-                'sum_price_excl' => $tax->tax_net,
-                'sum_price_incl' => $tax->tax_gross,
-                'sum_tax' => $tax->tax_tax,
+            $taxRates[$tax->tax_taxRate] = [
+                'sum_price_excl' => $tax->tax_net * $cancellationFactor,
+                'sum_price_incl' => $tax->tax_gross * $cancellationFactor,
+                'sum_tax' => $tax->tax_tax * $cancellationFactor,
             ];
         }
-        return $data;
+        return $taxRates;
     }
 
     protected function createOrUpdateUser($customerId)

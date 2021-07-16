@@ -269,19 +269,19 @@ class InvoicesTable extends AppTable
         return $lastInvoice;
     }
 
-    public function saveInvoice($invoiceId, $data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)
+    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)
     {
 
         $invoiceData = [
             'id' => !empty($invoiceId) ? $invoiceId : null,
-            'id_customer' => $data->id_customer,
+            'id_customer' => $customerId,
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFile,
             'created' => new FrozenDate($currentDay),
             'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
         ];
-        foreach($data->tax_rates as $taxRate => $values) {
+        foreach($taxRates as $taxRate => $values) {
             $invoiceData['invoice_taxes'][] = [
                 'tax_rate' => $taxRate,
                 'total_price_tax_excl' => $values['sum_price_excl'],

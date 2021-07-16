@@ -229,54 +229,53 @@ class InvoicesController extends AdminAppController
         $this->OrderDetail->onInvoiceCancellation($invoice->order_details);
         $this->Payment->onInvoiceCancellation($invoice->payments);
 
-        $cancellationFactor = -1;
-        foreach($invoice->payments as $payment) {
-            $payment->amount *= $cancellationFactor;
-        }
-
-        foreach($invoice->order_details as $orderDetail) {
-            $orderDetail->total_price_tax_excl *= $cancellationFactor;
-            $orderDetail->total_price_tax_incl *= $cancellationFactor;
-            $orderDetail->deposit *= $cancellationFactor;
-            $orderDetail->tax_unit_amount *= $cancellationFactor;
-            $orderDetail->tax_total_amount *= $cancellationFactor;
-            $orderDetail->id_invoice = null;
-        }
-
-        $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
-
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $invoice->id_customer,
-            ],
-            'contain' => [
-                'AddressCustomers',
-            ]
-        ])->first();
-
-        $customer->id_customer = $invoice->customer->id_customer;
-        $customer->active_order_details = $invoiceData['active_order_details'];
-        $customer->ordered_deposit = $invoiceData['ordered_deposit'];
-        $customer->returned_deposit = $invoiceData['returned_deposit'];
-        $customer->tax_rates = $invoiceData['tax_rates'];
-        $customer->sumPriceIncl = $invoiceData['sumPriceIncl'];
-        $customer->sumPriceExcl = $invoiceData['sumPriceExcl'];
-        $customer->sumTax = $invoiceData['sumTax'];
-        $customer->cancelledInvoice = $invoiceData['cancelledInvoice'];
-        $customer->new_invoice_necessary = true;
-        $customer->is_cancellation_invoice = true;
-
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
             $helloCash = new HelloCash();
-            $responseObject = $helloCash->cancelInvoice($customer, $invoice->id, $currentDay);
+            $responseObject = $helloCash->cancelInvoice($invoice->customer->id_customer, $invoice->id, $currentDay);
             $invoiceId = $responseObject->cancellation_details->cancellation_number;
             $invoiceNumber = $responseObject->cancellation_details->cancellation_number;
             $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
 
         } else {
+
+            $cancellationFactor = -1;
+            foreach($invoice->payments as $payment) {
+                $payment->amount *= $cancellationFactor;
+            }
+
+            foreach($invoice->order_details as $orderDetail) {
+                $orderDetail->total_price_tax_excl *= $cancellationFactor;
+                $orderDetail->total_price_tax_incl *= $cancellationFactor;
+                $orderDetail->deposit *= $cancellationFactor;
+                $orderDetail->tax_unit_amount *= $cancellationFactor;
+                $orderDetail->tax_total_amount *= $cancellationFactor;
+            }
+
+            $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
+
+            $customer = $this->Customer->find('all', [
+                'conditions' => [
+                    'Customers.id_customer' => $invoice->id_customer,
+                ],
+                'contain' => [
+                    'AddressCustomers',
+                ]
+            ])->first();
+
+            $customer->id_customer = $invoice->customer->id_customer;
+            $customer->active_order_details = $invoiceData['active_order_details'];
+            $customer->ordered_deposit = $invoiceData['ordered_deposit'];
+            $customer->returned_deposit = $invoiceData['returned_deposit'];
+            $customer->tax_rates = $invoiceData['tax_rates'];
+            $customer->sumPriceIncl = $invoiceData['sumPriceIncl'];
+            $customer->sumPriceExcl = $invoiceData['sumPriceExcl'];
+            $customer->sumTax = $invoiceData['sumTax'];
+            $customer->cancelledInvoice = $invoiceData['cancelledInvoice'];
+            $customer->new_invoice_necessary = true;
+            $customer->is_cancellation_invoice = true;
 
             $invoiceToCustomer = new GenerateInvoiceToCustomer();
             $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);

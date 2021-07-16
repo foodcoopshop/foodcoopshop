@@ -57,7 +57,7 @@ class GenerateInvoiceToCustomer
 
         $invoicePdfFileForDatabase = str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
         $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
-        $newInvoice = $this->Invoice->saveInvoice(null, $data, $invoiceNumber, $invoicePdfFileForDatabase, $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice(null, $data->id_customer, $data->tax_rates, $invoiceNumber, $invoicePdfFileForDatabase, $currentDay, $paidInCash);
 
         if (!$data->is_cancellation_invoice) {
             $this->Payment->linkReturnedDepositWithInvoice($data, $newInvoice->id);
