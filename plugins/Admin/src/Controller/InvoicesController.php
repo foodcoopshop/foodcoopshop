@@ -226,16 +226,8 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        foreach($invoice->order_details as $orderDetail) {
-            $orderDetail->order_state = ORDER_STATE_ORDER_PLACED;
-            $orderDetail->id_invoice = null;
-            $this->OrderDetail->save($orderDetail);
-        }
-
-        foreach($invoice->payments  as $payment) {
-            $payment->invoice_id = null;
-            $this->Payment->save($payment);
-        }
+        $this->OrderDetail->onInvoiceCancellation($invoice->order_details);
+        $this->Payment->onInvoiceCancellation($invoice->payments);
 
         $cancellationFactor = -1;
         foreach($invoice->payments as $payment) {

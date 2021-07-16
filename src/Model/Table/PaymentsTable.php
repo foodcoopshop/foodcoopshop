@@ -237,6 +237,14 @@ class PaymentsTable extends AppTable
         return $query->toArray();
     }
 
+    public function onInvoiceCancellation($payments)
+    {
+        foreach($payments  as $payment) {
+            $payment->invoice_id = null;
+            $this->save($payment);
+        }
+    }
+
     public function linkReturnedDepositWithInvoice($data, $invoiceId)
     {
         foreach($data->returned_deposit['entities'] as $payment) {
