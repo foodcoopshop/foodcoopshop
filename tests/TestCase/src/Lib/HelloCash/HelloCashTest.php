@@ -33,13 +33,11 @@ class HelloCashTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
-
         Configure::write('app.helloCashRestEndpoint', 'https://private-anon-4523ba7d1d-hellocashapi.apiary-mock.com/api/v1/invoices');
         Configure::write('app.helloCashAtCredentials.username', '');
         Configure::write('app.helloCashAtCredentials.password', '');
         Configure::write('app.helloCashAtCredentials.cashier_id', 0);
         Configure::write('app.helloCashAtCredentials.test_mode', true);
-
         $this->HelloCash = new HelloCash();
     }
 
@@ -48,15 +46,16 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertLogFilesForErrors();
     }
 
+    /*
     public function testGenerateInvoice()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
     }
+    */
 
     public function testGetInvoices()
     {
