@@ -65,7 +65,7 @@ class HelloCash
             $this->getOptions(),
         );
         $responseObject = json_decode($response->getStringBody());
-        $paidInCash = $responseObject->invoice_payment == 'Bar' ? true : false;
+        $paidInCash = $responseObject->invoice_payment == 'Bar' ? 1 : 0;
 
         $data = $this->overrideTaxesFromResponse($responseObject, $data);
 
