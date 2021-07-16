@@ -286,7 +286,6 @@ class InvoicesController extends AdminAppController
 
         }
 
-        $invoice->status = APP_DEL;
         $invoice->cancellation_invoice_id = $invoiceId;
         $this->Invoice->save($invoice);
 
