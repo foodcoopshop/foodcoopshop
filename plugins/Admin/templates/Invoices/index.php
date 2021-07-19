@@ -22,9 +22,14 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
         Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);".
         Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerCancel.init();".
-        Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();".
-        Configure::read('app.jsNamespace') . ".Admin.initDownloadInvoicesAsZipFile();"
+        Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();"
 ]);
+
+if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+    $this->element('addScript', [
+        'script' =>  Configure::read('app.jsNamespace') . ".Admin.initDownloadInvoicesAsZipFile();"
+    ]);
+}
 ?>
 
 <div class="filter-container">
@@ -73,16 +78,18 @@ if (!empty($invoices)) {
 
 echo '<h4>' . __d('admin', 'Invoices') . '</h4>';
 
-echo $this->Html->link(
-    '<i class="fas fa-fw fa-download"></i>',
-    'javascript:void(0)',
-    [
-        'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
-        'title' => __d('admin', 'Download_invoices'),
-        'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
-        'escape' => false,
-    ]
-);
+if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+    echo $this->Html->link(
+        '<i class="fas fa-fw fa-download"></i>',
+        'javascript:void(0)',
+        [
+            'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
+            'title' => __d('admin', 'Download_invoices'),
+            'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
+            'escape' => false,
+        ]
+    );
+}
 echo $this->Html->link(
     '<i class="far fa-fw fa-clipboard"></i>',
     'javascript:void(0)',
@@ -105,7 +112,10 @@ echo '<table class="list invoices-table no-clone-last-row">';
         echo '<th style="text-align:right;">' . __d('admin', 'Sum_incl_tax') . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __d('admin', 'Paid_in_cash')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.email_status', __d('admin', 'Email_sent')) . '</th>';
-        echo '<th>' . __d('admin', 'Download') . '</th>';
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            echo '<th>' . __d('admin', 'Receipt') . '</th>';
+        }
+        echo '<th>' . __d('admin', 'Invoice') . '</th>';
         echo '<th>' . __d('admin', 'Cancellation') . '</th>';
     echo '</tr>';
 
@@ -149,10 +159,39 @@ echo '<table class="list invoices-table no-clone-last-row">';
                 }
             echo '</td>';
 
+            // hello cash has no filename set
+            echo '<td style="text-align:center;">';
+            if ($invoice->filename == '') {
+                $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
+                if (!empty($invoice->cancelled_invoice)) {
+                    $receiptLink = $this->Slug->getHelloCashReceipt($invoice->cancelled_invoice->id, true);
+                }
+                echo $this->Html->link(
+                    '<i class="fas fa-arrow-right ok"></i>',
+                    $receiptLink,
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'target' => '_blank',
+                        'escape' => false,
+                    ],
+                );
+            }
+            echo '</td>';
+
+            // hello cash has no filename set
+            if ($invoice->filename == '') {
+                $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->id);
+                if (!empty($invoice->cancelled_invoice)) {
+                    $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->cancelled_invoice->id, true);
+                }
+            } else {
+                $invoiceDownloadLink = '/admin/lists/getInvoice?file=' . $invoice->filename;
+            }
+
             echo '<td style="text-align:center;">';
                 echo $this->Html->link(
                     '<i class="fas fa-arrow-right ok"></i>',
-                    '/admin/lists/getInvoice?file=' . $invoice->filename,
+                    $invoiceDownloadLink,
                     [
                         'class' => 'btn btn-outline-light',
                         'target' => '_blank',
@@ -182,7 +221,6 @@ echo '<table class="list invoices-table no-clone-last-row">';
         echo '</tr>';
 
     }
-
     echo '<tr style="font-weight:bold;">';
 
         echo '<td colspan="3" style="text-align:right;">';
@@ -201,7 +239,13 @@ echo '<table class="list invoices-table no-clone-last-row">';
             echo $this->Number->formatAsDecimal($invoiceSums['total_sum_price_incl']);
         echo '</td>';
 
-        echo '<td colspan="4">';
+
+        $colspan = 4;
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            $colspan++;
+        }
+
+        echo '<td colspan="'.$colspan.'">';
         echo '</td>';
 
     echo '</tr>';

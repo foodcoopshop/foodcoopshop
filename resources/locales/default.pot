@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-05-27 10:49+0200\n"
+"POT-Creation-Date: 2021-07-15 09:43+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1142,6 +1142,12 @@ msgstr ""
 msgid "Your_shopping_bag_was_empty."
 msgstr ""
 
+msgid "Delivered_deposit"
+msgstr ""
+
+msgid "Payment_type_deposit_return"
+msgstr ""
+
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
@@ -1155,12 +1161,6 @@ msgid "VAT"
 msgstr ""
 
 msgid "Price_incl."
-msgstr ""
-
-msgid "Delivered_deposit"
-msgstr ""
-
-msgid "Payment_type_deposit_return"
 msgstr ""
 
 msgid "Total_sum"

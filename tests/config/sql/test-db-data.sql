@@ -178,7 +178,8 @@ INSERT INTO `fcs_configuration` VALUES
 (594,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','FoodCoop Test<br />Demostraße 4<br />A-4564 Demostadt<br />demo-foodcoop@maillinator.com','readonly',582,'de_DE','2020-11-03 15:24:12','2020-11-03 15:24:12'),
 (595,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:26','2020-12-20 19:26:26'),
 (596,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','0','number',1450,'de_DE','2021-01-19 11:23:49','2021-01-19 11:23:49'),
-(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',583,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17');
+(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',584,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17'),
+(598,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:14','2021-07-07 10:55:14');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -193,12 +194,12 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
-(87,3,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0,0),
-(88,4,'Demo','Admin','fcs-demo-admin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0,0),
-(89,4,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0,0),
-(90,4,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0,0),
-(91,4,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0),
-(92,5,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0);
+(87,3,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0,0,0),
+(88,4,'Demo','Admin','fcs-demo-admin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0,0,0),
+(89,4,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0,0,0),
+(90,4,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0,0,0),
+(91,4,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0,0),
+(92,5,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,0);
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
@@ -397,7 +398,8 @@ INSERT INTO `phinxlog` VALUES
 (20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0),
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:05:04','2021-04-27 15:05:04',0),
 (20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:14','2021-05-04 09:10:14',0),
-(20210510080630,'EnablePurchasePrices','2021-05-12 13:24:17','2021-05-12 13:24:18',0);
+(20210510080630,'EnablePurchasePrices','2021-05-12 13:24:17','2021-05-12 13:24:18',0),
+(20210707083827,'AddRegistrierkasseApi','2021-07-07 08:55:14','2021-07-07 08:55:14',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

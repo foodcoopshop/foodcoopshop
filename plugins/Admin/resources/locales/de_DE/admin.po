@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-31 10:32+0200\n"
-"PO-Revision-Date: 2021-05-31 10:32+0200\n"
+"POT-Creation-Date: 2021-07-16 12:12+0200\n"
+"PO-Revision-Date: 2021-07-16 12:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -195,11 +195,14 @@ msgstr "Rechnungen"
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
 
-msgid "Download"
-msgstr "Download"
+msgid "Print_receipt"
+msgstr "Beleg drucken"
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich erstellt."
+
+msgid "Download"
+msgstr "Download"
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich storniert."
@@ -1188,6 +1191,12 @@ msgstr "Bar bezahlt"
 msgid "Email_sent"
 msgstr "E-Mail versendet"
 
+msgid "Receipt"
+msgstr "Beleg"
+
+msgid "Invoice"
+msgstr "Rechnung"
+
 msgid "Cancellation"
 msgstr "Stornierung"
 
@@ -1839,9 +1848,6 @@ msgstr "Zum Stornieren des Produktes anklicken"
 msgid "Click_to_change_member"
 msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
 
-msgid "Invoice"
-msgstr "Rechnung"
-
 msgid "Invoice_cannot_be_generated"
 msgstr "Keine Rechnung erstellbar"
 
@@ -2243,6 +2249,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Print"
+#~ msgstr "Drucken"
 
 #~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 #~ msgstr "Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."

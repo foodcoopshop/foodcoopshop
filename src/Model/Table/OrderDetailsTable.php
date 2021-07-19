@@ -629,6 +629,26 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
 
+    public function onInvoiceCancellation($orderDetails)
+    {
+        foreach($orderDetails as $orderDetail) {
+            $orderDetail->order_state = ORDER_STATE_ORDER_PLACED;
+            $orderDetail->id_invoice = null;
+            $this->save($orderDetail);
+        }
+    }
+
+    public function updateOrderDetails($data, $invoiceId)
+    {
+        foreach($data->active_order_details as $orderDetail) {
+            // important to get a fresh order detail entity as price fields could be changed for cancellation invoices
+            $orderDetail = $this->get($orderDetail->id_order_detail);
+            $orderDetail->order_state = Configure::read('app.htmlHelper')->getOrderStateBilled();
+            $orderDetail->id_invoice = $invoiceId;
+            $this->save($orderDetail);
+        }
+    }
+
     public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
     {
         $conditions = [];

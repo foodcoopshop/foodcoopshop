@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-31 10:32+0200\n"
-"PO-Revision-Date: 2021-05-31 10:33+0200\n"
+"POT-Creation-Date: 2021-07-16 12:12+0200\n"
+"PO-Revision-Date: 2021-07-16 12:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -195,11 +195,14 @@ msgstr "Invoices"
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "No data available to generate an invoice."
 
-msgid "Download"
-msgstr "Download"
+msgid "Print_receipt"
+msgstr "Print receipt"
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr "Invoice nº {0} of {1} was generated successfully."
+
+msgid "Download"
+msgstr "Download"
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
 msgstr "Invoice nº {0} of {1} was cancelled successfully."
@@ -1188,6 +1191,12 @@ msgstr "Paid in cash"
 msgid "Email_sent"
 msgstr "E-mail sent"
 
+msgid "Receipt"
+msgstr "Receipt"
+
+msgid "Invoice"
+msgstr "Invoice"
+
 msgid "Cancellation"
 msgstr "Cancellation"
 
@@ -1839,9 +1848,6 @@ msgstr "Click to cancel product"
 msgid "Click_to_change_member"
 msgstr "Click to change member"
 
-msgid "Invoice"
-msgstr "Invoice"
-
 msgid "Invoice_cannot_be_generated"
 msgstr "Invoice cannot be generated"
 
@@ -2243,6 +2249,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Print"
+#~ msgstr "Print"
 
 #~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 #~ msgstr "The amount was added to the member fee system of {0} and can be deleted there."

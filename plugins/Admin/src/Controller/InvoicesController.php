@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
@@ -99,12 +100,26 @@ class InvoicesController extends AdminAppController
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
-        $invoiceToCustomer = new GenerateInvoiceToCustomer();
-        $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+
+            $helloCash = new HelloCash();
+            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+            $invoiceId = $responseObject->invoice_id;
+            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+            $invoiceNumber = $responseObject->invoice_number;
+
+        } else {
+
+            $invoiceToCustomer = new GenerateInvoiceToCustomer();
+            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+            $invoiceNumber = $newInvoice->invoice_number;
+            $invoiceId = $newInvoice->id;
+        }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
-            __d('admin', 'Download'),
-            '/admin/lists/getInvoice?file=' . $newInvoice->filename,
+            __d('admin', 'Print_receipt'),
+            $invoiceFilename,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',
@@ -112,13 +127,13 @@ class InvoicesController extends AdminAppController
             ],
         );
         $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_generated_successfully.', [
-            '<b>' . $newInvoice->invoice_number . '</b>',
-            '<b>' . $customer   ->name . '</b>',
+            '<b>' . $invoiceNumber . '</b>',
+            '<b>' . $customer->name . '</b>',
         ]);
-        $this->Flash->success($messageString . ' ' . $linkToInvoice);
+        $this->Flash->success($messageString . '<br />' . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_added', $this->AppAuth->getUserId(), $newInvoice->id, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_added', $this->AppAuth->getUserId(), $invoiceId, 'invoices', $messageString);
 
         $this->redirect($this->referer());
 
@@ -145,29 +160,42 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        $newInvoiceNumber = 'xxx';
-        $newInvoiceDate = 'xx.xx.xxxx';
-
-        $pdfWriter = new InvoiceToCustomerPdfWriter();
         $invoiceData = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$invoiceData->new_invoice_necessary) {
             die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
         }
 
-        $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
-        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
-            return $this->response->withStringBody($pdfWriter->writeHtml());
+            $helloCash = new HelloCash();
+            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, true);
+            $invoiceId = $responseObject->invoice_id;
+            $this->redirect(Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId));
+            return;
+
+        } else {
+
+            $newInvoiceNumber = 'xxx';
+            $newInvoiceDate = 'xx.xx.xxxx';
+
+            $pdfWriter = new InvoiceToCustomerPdfWriter();
+            $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
+
+            if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+                return $this->response->withStringBody($pdfWriter->writeHtml());
+            }
+
+            $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($customer->name, $customerId, date('Y-m-d'), $newInvoiceNumber);
+            $invoicePdfFile = explode(DS, $invoicePdfFile);
+            $invoicePdfFile = end($invoicePdfFile);
+            $invoicePdfFile = substr($invoicePdfFile, 11);
+            $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
+            $pdfWriter->setFilename($invoicePdfFile);
+
+            die($pdfWriter->writeInline());
         }
 
-        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($customer->name, $customerId, date('Y-m-d'), $newInvoiceNumber);
-        $invoicePdfFile = explode(DS, $invoicePdfFile);
-        $invoicePdfFile = end($invoicePdfFile);
-        $invoicePdfFile = substr($invoicePdfFile, 11);
-        $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
-        $pdfWriter->setFilename($invoicePdfFile);
 
-        die($pdfWriter->writeInline());
     }
 
     public function cancel()
@@ -198,66 +226,73 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        foreach($invoice->order_details as $orderDetail) {
-            $orderDetail->order_state = ORDER_STATE_ORDER_PLACED;
-            $orderDetail->id_invoice = null;
-            $this->OrderDetail->save($orderDetail);
-        }
-
-        foreach($invoice->payments  as $payment) {
-            $payment->invoice_id = null;
-            $this->Payment->save($payment);
-        }
-
-        $cancellationFactor = -1;
-        foreach($invoice->payments as $payment) {
-            $payment->amount *= $cancellationFactor;
-        }
-
-        foreach($invoice->order_details as $orderDetail) {
-            $orderDetail->total_price_tax_excl *= $cancellationFactor;
-            $orderDetail->total_price_tax_incl *= $cancellationFactor;
-            $orderDetail->deposit *= $cancellationFactor;
-            $orderDetail->tax_unit_amount *= $cancellationFactor;
-            $orderDetail->tax_total_amount *= $cancellationFactor;
-            $orderDetail->id_invoice = null;
-        }
-
-        $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
-
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $invoice->id_customer,
-            ],
-            'contain' => [
-                'AddressCustomers',
-            ]
-        ])->first();
-
-        $customer->id_customer = $invoice->customer->id_customer;
-        $customer->active_order_details = $invoiceData['active_order_details'];
-        $customer->ordered_deposit = $invoiceData['ordered_deposit'];
-        $customer->returned_deposit = $invoiceData['returned_deposit'];
-        $customer->tax_rates = $invoiceData['tax_rates'];
-        $customer->sumPriceIncl = $invoiceData['sumPriceIncl'];
-        $customer->sumPriceExcl = $invoiceData['sumPriceExcl'];
-        $customer->sumTax = $invoiceData['sumTax'];
-        $customer->cancelledInvoice = $invoiceData['cancelledInvoice'];
-        $customer->new_invoice_necessary = true;
-        $customer->is_cancellation_invoice = true;
+        $this->OrderDetail->onInvoiceCancellation($invoice->order_details);
+        $this->Payment->onInvoiceCancellation($invoice->payments);
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
-        $invoiceToCustomer = new GenerateInvoiceToCustomer();
-        $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);
+        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
-        $invoice->status = APP_DEL;
-        $invoice->cancellation_invoice_id = $newInvoice->id;
+            $helloCash = new HelloCash();
+            $responseObject = $helloCash->cancelInvoice($invoice->customer->id_customer, $invoice->id, $currentDay);
+            $cancelledInvoiceNumber = $responseObject->invoice_number;
+            $invoiceId = $responseObject->cancellation_details->cancellation_number;
+            $cancellationInvoiceNumber = $responseObject->cancellation_details->cancellation_number;
+            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
+
+        } else {
+
+            $cancellationFactor = -1;
+            foreach($invoice->payments as $payment) {
+                $payment->amount *= $cancellationFactor;
+            }
+
+            foreach($invoice->order_details as $orderDetail) {
+                $orderDetail->total_price_tax_excl *= $cancellationFactor;
+                $orderDetail->total_price_tax_incl *= $cancellationFactor;
+                $orderDetail->deposit *= $cancellationFactor;
+                $orderDetail->tax_unit_amount *= $cancellationFactor;
+                $orderDetail->tax_total_amount *= $cancellationFactor;
+            }
+
+            $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
+
+            $customer = $this->Customer->find('all', [
+                'conditions' => [
+                    'Customers.id_customer' => $invoice->id_customer,
+                ],
+                'contain' => [
+                    'AddressCustomers',
+                ]
+            ])->first();
+
+            $customer->id_customer = $invoice->customer->id_customer;
+            $customer->active_order_details = $invoiceData['active_order_details'];
+            $customer->ordered_deposit = $invoiceData['ordered_deposit'];
+            $customer->returned_deposit = $invoiceData['returned_deposit'];
+            $customer->tax_rates = $invoiceData['tax_rates'];
+            $customer->sumPriceIncl = $invoiceData['sumPriceIncl'];
+            $customer->sumPriceExcl = $invoiceData['sumPriceExcl'];
+            $customer->sumTax = $invoiceData['sumTax'];
+            $customer->cancelledInvoice = $invoiceData['cancelledInvoice'];
+            $customer->new_invoice_necessary = true;
+            $customer->is_cancellation_invoice = true;
+
+            $invoiceToCustomer = new GenerateInvoiceToCustomer();
+            $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);
+            $invoiceId = $newInvoice->id;
+            $cancelledInvoiceNumber = $invoice->invoice_number;
+            $cancellationInvoiceNumber = $newInvoice->invoice_number;
+            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+
+        }
+
+        $invoice->cancellation_invoice_id = $invoiceId;
         $this->Invoice->save($invoice);
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),
-            '/admin/lists/getInvoice?file=' . $newInvoice->filename,
+            $invoiceFilename,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',
@@ -266,18 +301,18 @@ class InvoicesController extends AdminAppController
         );
 
         $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_successfully_cancelled.', [
-            '<b>' . $invoice->invoice_number . '</b>',
+            '<b>' . $cancelledInvoiceNumber . '</b>',
             '<b>' . $invoice->customer->name . '</b>',
         ]);
 
-        $messageString .= ' ' . __d('admin', 'Cancellation_invoice_number_{0}_was_generated_successfully.', [
-            '<b>' . $newInvoice->invoice_number . '</b>',
+        $messageString .= '<br />' . __d('admin', 'Cancellation_invoice_number_{0}_was_generated_successfully.', [
+            '<b>' . $cancellationInvoiceNumber . '</b>',
         ]);
 
         $this->Flash->success($messageString . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_cancelled', $this->AppAuth->getUserId(), $newInvoice->id, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_cancelled', $this->AppAuth->getUserId(), $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
@@ -331,7 +366,8 @@ class InvoicesController extends AdminAppController
                 'Invoices.email_status',
             ],
             'order' => [
-                'Invoices.id' => 'DESC'
+                'Invoices.created' => 'DESC',
+                'Invoices.id' => 'DESC',
             ]
         ])->toArray();
 

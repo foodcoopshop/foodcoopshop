@@ -172,6 +172,14 @@ return [
 
         'sendEmailWhenOrderDetailQuantityOrPriceChanged' => true,
 
+        'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
+
+        'helloCashAtCredentials' => [
+            'username' => '',
+            'password' => '',
+            'cashier_id' => 0,
+        ],
+
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-05-31 10:32+0200\n"
+"POT-Creation-Date: 2021-07-16 12:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -194,10 +194,13 @@ msgstr ""
 msgid "No_data_available_to_generate_an_invoice."
 msgstr ""
 
-msgid "Download"
+msgid "Print_receipt"
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr ""
+
+msgid "Download"
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
@@ -1187,6 +1190,12 @@ msgstr ""
 msgid "Email_sent"
 msgstr ""
 
+msgid "Receipt"
+msgstr ""
+
+msgid "Invoice"
+msgstr ""
+
 msgid "Cancellation"
 msgstr ""
 
@@ -1836,9 +1845,6 @@ msgid "Click_to_cancel_product"
 msgstr ""
 
 msgid "Click_to_change_member"
-msgstr ""
-
-msgid "Invoice"
 msgstr ""
 
 msgid "Invoice_cannot_be_generated"

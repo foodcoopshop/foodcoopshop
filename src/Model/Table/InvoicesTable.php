@@ -6,6 +6,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 
 /**
@@ -198,26 +199,29 @@ class InvoicesTable extends AppTable
             $returnedDeposit['entities'][] = $deposit;
         }
 
-        $defaultArray = [
-            'sum_price_excl' => 0,
-            'sum_tax' => 0,
-            'sum_price_incl' => 0,
-        ];
-        $taxRates = $orderDetailTable->getTaxSums($orderDetails);
+        $taxRates = [];
+        if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+            $defaultArray = [
+                'sum_price_excl' => 0,
+                'sum_tax' => 0,
+                'sum_price_incl' => 0,
+            ];
+            $taxRates = $orderDetailTable->getTaxSums($orderDetails);
 
-        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-        $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+            $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+            $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
 
-        if (!isset($taxRates[$depositVatRate])) {
-            $taxRates[$depositVatRate] = $defaultArray;
+            if (!isset($taxRates[$depositVatRate])) {
+                $taxRates[$depositVatRate] = $defaultArray;
+            }
+            $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
+            $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
+            $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
+
+            ksort($taxRates);
+
+            $taxRates = $this->clearZeroArray($taxRates);
         }
-        $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
-        $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
-        $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
-
-        ksort($taxRates);
-
-        $taxRates = $this->clearZeroArray($taxRates);
 
         // prepare sums
         $sumPriceIncl = 0;
@@ -263,6 +267,38 @@ class InvoicesTable extends AppTable
             ]
         ])->first();
         return $lastInvoice;
+    }
+
+    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)
+    {
+
+        $invoiceData = [
+            'id' => !empty($invoiceId) ? $invoiceId : null,
+            'id_customer' => $customerId,
+            'invoice_number' => $invoiceNumber,
+            'filename' => $invoicePdfFile,
+            'created' => new FrozenTime($currentDay),
+            'paid_in_cash' => $paidInCash,
+            'invoice_taxes' => [],
+        ];
+        foreach($taxRates as $taxRate => $values) {
+            $invoiceData['invoice_taxes'][] = [
+                'tax_rate' => $taxRate,
+                'total_price_tax_excl' => $values['sum_price_excl'],
+                'total_price_tax_incl' => $values['sum_price_incl'],
+                'total_price_tax' => $values['sum_tax'],
+            ];
+        }
+        $invoiceEntity = $this->newEntity($invoiceData);
+
+        $newInvoice = $this->save($invoiceEntity, [
+            'associated' => [
+                'InvoiceTaxes',
+            ],
+        ]);
+
+        return $newInvoice;
+
     }
 
     public function getNextInvoiceNumberForCustomer($currentYear, $lastInvoice)
