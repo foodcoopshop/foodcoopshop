@@ -235,9 +235,10 @@ class InvoicesController extends AdminAppController
 
             $helloCash = new HelloCash();
             $responseObject = $helloCash->cancelInvoice($invoice->customer->id_customer, $invoice->id, $currentDay);
+            $cancelledInvoiceNumber = $responseObject->invoice_number;
             $invoiceId = $responseObject->cancellation_details->cancellation_number;
-            $invoiceNumber = $responseObject->cancellation_details->cancellation_number;
-            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+            $cancellationInvoiceNumber = $responseObject->cancellation_details->cancellation_number;
+            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
 
         } else {
 
@@ -280,7 +281,8 @@ class InvoicesController extends AdminAppController
             $invoiceToCustomer = new GenerateInvoiceToCustomer();
             $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);
             $invoiceId = $newInvoice->id;
-            $invoiceNumber = $invoice->invoice_number;
+            $cancelledInvoiceNumber = $invoice->invoice_number;
+            $cancellationInvoiceNumber = $newInvoice->invoice_number;
             $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
 
         }
@@ -299,12 +301,12 @@ class InvoicesController extends AdminAppController
         );
 
         $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_successfully_cancelled.', [
-            '<b>' . $invoiceNumber . '</b>',
+            '<b>' . $cancelledInvoiceNumber . '</b>',
             '<b>' . $invoice->customer->name . '</b>',
         ]);
 
         $messageString .= '<br />' . __d('admin', 'Cancellation_invoice_number_{0}_was_generated_successfully.', [
-            '<b>' . $invoiceNumber . '</b>',
+            '<b>' . $cancellationInvoiceNumber . '</b>',
         ]);
 
         $this->Flash->success($messageString . $linkToInvoice);
