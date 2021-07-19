@@ -20,7 +20,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
+use Cake\I18n\FrozenTime;
 use Cake\TestSuite\EmailTrait;
 
 class SendInvoicesToCustomersShellTest extends AppCakeTestCase
@@ -94,7 +94,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 
         $this->assertEquals($invoice->id, 1);
         $this->assertEquals($invoice->id_manufacturer, 0);
-        $this->assertEquals($invoice->created, new FrozenDate($cronjobRunDay));
+        $this->assertEquals($invoice->created, new FrozenTime($cronjobRunDay));
         $this->assertEquals($invoice->invoice_number, '2018-000001');
         $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilenameWithPath));
 

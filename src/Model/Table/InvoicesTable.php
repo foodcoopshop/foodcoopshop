@@ -6,7 +6,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenDate;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 
 /**
@@ -277,7 +277,7 @@ class InvoicesTable extends AppTable
             'id_customer' => $customerId,
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFile,
-            'created' => new FrozenDate($currentDay),
+            'created' => new FrozenTime($currentDay),
             'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
         ];
