@@ -109,7 +109,7 @@ class HelloCash
             ];
         };
 
-        if (!empty($data->returned_deposit)) {
+        if ($data->returned_deposit['deposit_amount'] > 0) {
             $items[] = [
                 'item_name' => __('Payment_type_deposit_return'),
                 'item_quantity' => 1,
