@@ -278,7 +278,8 @@ INSERT INTO `queue_phinxlog` VALUES
 (20171019083502,'MigrationQueueStatus','2020-09-17 07:23:19','2020-09-17 07:23:20',0),
 (20171019083503,'MigrationQueueProcesses','2020-09-17 07:23:20','2020-09-17 07:23:20',0),
 (20171019083505,'MigrationQueueProcessesIndex','2020-09-17 07:23:20','2020-09-17 07:23:20',0),
-(20171019083506,'MigrationQueueProcessesKey','2020-09-17 07:23:20','2020-09-17 07:23:20',0);
+(20171019083506,'MigrationQueueProcessesKey','2020-09-17 07:23:20','2020-09-17 07:23:20',0),
+(20191319000002,'MigrationQueueRename','2021-07-20 11:12:52','2021-07-20 11:12:52',0);
 /*!40000 ALTER TABLE `queue_phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_processes` DISABLE KEYS */;

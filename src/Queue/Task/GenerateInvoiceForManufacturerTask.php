@@ -1,10 +1,9 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use Cake\Core\Configure;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,9 +19,15 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueGenerateInvoiceForManufacturerTask extends QueueTask implements QueueTaskInterface {
+class GenerateInvoiceForManufacturerTask extends Task {
 
     use UpdateActionLogTrait;
+
+    public $Manufacturer;
+
+    public $OrderDetail;
+
+    public $QueuedJobs;
 
     public $timeout = 30;
 
@@ -38,7 +43,7 @@ class QueueGenerateInvoiceForManufacturerTask extends QueueTask implements Queue
         $dateFrom = $data['dateFrom'];
         $dateTo = $data['dateTo'];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->loadModel('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $validOrderStates = [
@@ -63,12 +68,12 @@ class QueueGenerateInvoiceForManufacturerTask extends QueueTask implements Queue
             $this->Manufacturer->Invoices->newEntity($invoice2save)
         );
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->loadModel('OrderDetails');
         $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
 
         $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
         if ($sendInvoice) {
-            $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
             $this->QueuedJobs->createJob('SendInvoiceToManufacturer', [
                 'invoiceNumber' => $invoiceNumber,
                 'invoicePdfFile' => $invoicePdfFile,
