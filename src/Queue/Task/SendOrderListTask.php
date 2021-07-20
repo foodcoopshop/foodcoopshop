@@ -20,8 +20,11 @@ use Queue\Queue\Task;
 
 class SendOrderListTask extends Task {
 
-
     use UpdateActionLogTrait;
+
+    public $Manufacturer;
+
+    public $OrderDetail;
 
     public $timeout = 30;
 

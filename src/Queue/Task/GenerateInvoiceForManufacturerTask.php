@@ -23,6 +23,12 @@ class GenerateInvoiceForManufacturerTask extends Task {
 
     use UpdateActionLogTrait;
 
+    public $Manufacturer;
+
+    public $OrderDetail;
+
+    public $QueuedJobs;
+
     public $timeout = 30;
 
     public $retries = 2;

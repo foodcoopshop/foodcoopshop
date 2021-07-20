@@ -23,6 +23,8 @@ class SendInvoiceToManufacturerTask extends Task {
 
     use UpdateActionLogTrait;
 
+    public $Manufacturer;
+
     public $timeout = 30;
 
     public $retries = 2;

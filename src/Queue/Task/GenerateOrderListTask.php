@@ -24,6 +24,10 @@ class GenerateOrderListTask extends Task {
 
     use UpdateActionLogTrait;
 
+    public $Manufacturer;
+
+    public $QueuedJobs;
+
     public $timeout = 30;
 
     public $retries = 2;

@@ -20,6 +20,7 @@ use Cake\I18n\FrozenTime;
  */
 trait UpdateActionLogTrait
 {
+    public $ActionLog;
 
     public function updateActionLog($actionLogId, $identifier, $jobId)
     {
