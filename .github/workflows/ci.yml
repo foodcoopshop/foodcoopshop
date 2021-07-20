@@ -51,6 +51,7 @@ jobs:
         run: |
           composer install --optimize-autoloader  --no-progress
           cp ./.github/workflows/*.php ./config/
+          npm i -g npm@7
           npm --prefix ./webroot install ./webroot
           
       - name: PHPStan
