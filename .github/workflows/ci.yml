@@ -37,6 +37,12 @@ jobs:
           php-version: ${{ matrix.php-version }}
         env:
           update: true #forces minor release update
+          
+      - name: Setup NodeJS and NPM
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+        run: npm install && npm -v
                       
       - uses: actions/checkout@v2
                     
@@ -51,7 +57,6 @@ jobs:
         run: |
           composer install --optimize-autoloader  --no-progress
           cp ./.github/workflows/*.php ./config/
-          npm i -g npm@7
           npm --prefix ./webroot install ./webroot
           
       - name: PHPStan
