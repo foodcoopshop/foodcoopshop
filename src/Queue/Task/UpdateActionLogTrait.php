@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;

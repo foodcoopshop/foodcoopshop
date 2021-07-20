@@ -27,7 +27,7 @@
         "studio-42/elfinder": "^2.1",
         "ezyang/htmlpurifier": "^4.11",
         "league/csv": "^9.5",
-        "dereuromark/cakephp-queue": "^5.0",
+        "dereuromark/cakephp-queue": "^6.0",
         "tecnickcom/tcpdf": "^6.4"
     },
     "require-dev": {

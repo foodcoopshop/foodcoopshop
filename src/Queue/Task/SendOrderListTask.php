@@ -1,10 +1,8 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
-use Cake\Core\Configure;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,7 +18,8 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskInterface {
+class SendOrderListTask extends Task {
+
 
     use UpdateActionLogTrait;
 
@@ -31,32 +30,41 @@ class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskI
     public function run(array $data, $jobId) : void
     {
 
+        $productPdfFile = $data['productPdfFile'];
+        $customerPdfFile = $data['customerPdfFile'];
+        $pickupDayFormated = $data['pickupDayFormated'];
         $manufacturerId = $data['manufacturerId'];
-        $invoicePdfFile = $data['invoicePdfFile'];
-        $invoiceNumber = $data['invoiceNumber'];
+        $orderDetailIds = $data['orderDetailIds'];
+        $pickupDayFormated = $data['pickupDayFormated'];
         $actionLogId = $data['actionLogId'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
-        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+        $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
         $email = new AppMailer();
         $email->fallbackEnabled = false;
-        $email->viewBuilder()->setTemplate('Admin.send_invoice_to_manufacturer');
+        $email->viewBuilder()->setTemplate('Admin.send_order_list');
         $email->setTo($manufacturer->address_manufacturer->email)
         ->setAttachments([
-            $invoicePdfFile,
+            $productPdfFile,
+            $customerPdfFile,
         ])
-        ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
+        ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
         ->setViewVars([
             'manufacturer' => $manufacturer,
-            'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
-            'showManufacturerUnsubscribeLink' => true
+            'showManufacturerUnsubscribeLink' => true,
         ]);
+        if (!empty($ccRecipients)) {
+            $email->setCc($ccRecipients);
+        }
         $email->send();
 
-        $identifier = 'send-invoice-' . $manufacturer->id_manufacturer;
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
+
+        $identifier = 'send-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
         $this->updateActionLog($actionLogId, $identifier, $jobId);
 
     }

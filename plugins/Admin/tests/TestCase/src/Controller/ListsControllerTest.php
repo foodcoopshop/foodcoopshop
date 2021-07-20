@@ -43,7 +43,7 @@ class ListsControllerTest extends AppCakeTestCase
     public function testAccessOrderListPageAndDownloadableFile()
     {
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
-        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
+        $this->commandRunner->run(['cake', 'queue', 'run']);
 
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 

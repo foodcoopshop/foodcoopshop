@@ -662,7 +662,7 @@ DROP TABLE IF EXISTS `queued_jobs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `queued_jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `job_task` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `data` text,
   `job_group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `reference` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,

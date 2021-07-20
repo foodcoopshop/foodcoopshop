@@ -76,7 +76,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $statement->execute($params);
 
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
+        $this->commandRunner->run(['cake', 'queue', 'run']);
 
         $pdfFilenameWithoutPath = '2018-02-02_Demo-Superadmin_92_Rechnung_2018-000001_FoodCoop-Test.pdf';
         $pdfFilenameWithPath = DS . '2018' . DS . '02' . DS . $pdfFilenameWithoutPath;
@@ -128,7 +128,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 
         // call again
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
+        $this->commandRunner->run(['cake', 'queue', 'run']);
 
         $this->assertEquals(1, count($this->Invoice->find('all')->toArray()));
 

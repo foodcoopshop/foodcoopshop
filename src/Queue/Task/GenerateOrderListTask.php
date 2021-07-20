@@ -1,11 +1,10 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use Cake\Core\Configure;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +20,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface {
+class GenerateOrderListTask extends Task {
 
     use UpdateActionLogTrait;
 

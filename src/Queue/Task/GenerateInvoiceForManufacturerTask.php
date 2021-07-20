@@ -1,10 +1,9 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use Cake\Core\Configure;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,7 +19,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueGenerateInvoiceForManufacturerTask extends QueueTask implements QueueTaskInterface {
+class GenerateInvoiceForManufacturerTask extends Task {
 
     use UpdateActionLogTrait;
 
