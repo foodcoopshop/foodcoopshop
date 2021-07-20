@@ -37,6 +37,11 @@ jobs:
           php-version: ${{ matrix.php-version }}
         env:
           update: true #forces minor release update
+          
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
                       
       - uses: actions/checkout@v2
                     
