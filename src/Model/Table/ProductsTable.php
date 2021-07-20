@@ -542,7 +542,6 @@ class ProductsTable extends AppTable
      *              ]
      *          )
      *  )
-     * @return boolean $success
      */
     public function changeQuantity($products)
     {
