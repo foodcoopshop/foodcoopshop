@@ -37,7 +37,7 @@ class GenerateOrderListTask extends Task {
         $orderDetailIds = $data['orderDetailIds'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->loadModel('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
@@ -66,7 +66,7 @@ class GenerateOrderListTask extends Task {
 
         if ($sendEmail) {
 
-            $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
             $this->QueuedJobs->createJob('SendOrderList', [
                 'productPdfFile' => $productPdfFile,
                 'customerPdfFile' => $customerPdfFile,

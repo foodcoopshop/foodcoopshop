@@ -38,7 +38,7 @@ class SendOrderListTask extends Task {
         $pickupDayFormated = $data['pickupDayFormated'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->loadModel('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
@@ -61,7 +61,7 @@ class SendOrderListTask extends Task {
         }
         $email->send();
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->loadModel('OrderDetails');
         $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
 
         $identifier = 'send-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;

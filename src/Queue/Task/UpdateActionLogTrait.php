@@ -24,7 +24,7 @@ trait UpdateActionLogTrait
     public function updateActionLog($actionLogId, $identifier, $jobId)
     {
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->loadModel('ActionLogs');
 
         $search = 'not-ok" data-identifier="'.$identifier.'"';
         $now = new FrozenTime();

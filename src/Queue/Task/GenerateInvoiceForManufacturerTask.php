@@ -37,7 +37,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
         $dateFrom = $data['dateFrom'];
         $dateTo = $data['dateTo'];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->loadModel('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $validOrderStates = [
@@ -62,12 +62,12 @@ class GenerateInvoiceForManufacturerTask extends Task {
             $this->Manufacturer->Invoices->newEntity($invoice2save)
         );
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->loadModel('OrderDetails');
         $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
 
         $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
         if ($sendInvoice) {
-            $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
             $this->QueuedJobs->createJob('SendInvoiceToManufacturer', [
                 'invoiceNumber' => $invoiceNumber,
                 'invoicePdfFile' => $invoicePdfFile,
