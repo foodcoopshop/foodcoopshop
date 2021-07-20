@@ -46,21 +46,18 @@ class HelloCashController extends AdminAppController
 
     public function getInvoice($invoiceId, $cancellation)
     {
+        $this->disableAutoRender();
+        $response = $this->helloCash->getInvoice($invoiceId, $cancellation);
 
-        $response = $this->helloCash->getRestClient()->get(
-            '/invoices/' . $invoiceId . '/pdf' . ($cancellation ? '&cancellation=true' : ''),
-            [],
-            $this->helloCash->getOptions(),
+        $headerA = 'Content-Type';
+        $this->response = $this->response->withHeader($headerA, $response->getHeader($headerA));
+
+        $headerB = 'Content-Disposition';
+        $this->response = $this->response->withHeader($headerB,
+            str_replace('attachment', 'inline', $response->getHeader($headerB))
         );
-        $response = json_decode($response->getStringBody());
 
-        $this->response = $this->response->withType('pdf');
-        $this->response = $this->response->withStringBody(
-            base64_decode($response->pdf_base64_encoded),
-        );
-        $filenameWithoutPath = 'invoice.pdf';
-        $this->response = $this->response->withHeader('Content-Disposition', 'inline; filename="' . $filenameWithoutPath . '"');
-
+        $this->response = $this->response->withStringBody($response->getStringBody());
         return $this->response;
     }
 

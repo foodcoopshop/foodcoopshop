@@ -142,6 +142,20 @@ class HelloCash
 
     public function getReceipt($invoiceId, $cancellation)
     {
+        $response = $this->getReceiptOrInvoice('print', $invoiceId, $cancellation);
+        $response = $response->getStringBody();
+        $response = preg_replace('/src=("|\')\//', 'src=$1' . $this->hostname . '/', $response);
+        $response = preg_replace('/print_frame\(\);/', '', $response);
+        return $response;
+    }
+
+    public function getInvoice($invoiceId, $cancellation)
+    {
+        return $this->getReceiptOrInvoice('pdf', $invoiceId, $cancellation);
+    }
+
+    protected function getReceiptOrInvoice($type, $invoiceId, $cancellation)
+    {
 
         $httpClient = $this->getClient();
         $response = $httpClient->post(
@@ -158,7 +172,7 @@ class HelloCash
         );
 
         $response = $httpClient->get(
-            '/intern/cash-register/invoice/print?iid=' . $invoiceId . ($cancellation ? '&cancellation=true' : ''),
+            '/intern/cash-register/invoice/' . $type . '?iid=' . $invoiceId . ($cancellation ? '&cancellation=true' : ''),
             [],
             [
                 'cookies' => [
@@ -166,10 +180,6 @@ class HelloCash
                 ],
             ]
         );
-
-        $response = $response->getStringBody();
-        $response = preg_replace('/src=("|\')\//', 'src=$1' . $this->hostname . '/', $response);
-        $response = preg_replace('/print_frame\(\);/', '', $response);
 
         return $response;
 
