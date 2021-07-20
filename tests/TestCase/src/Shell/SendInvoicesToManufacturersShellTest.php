@@ -61,7 +61,7 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
         $this->changeManufacturer($milkManufacturerId, 'send_invoice', 0);
 
         $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
-        $this->commandRunner->run(['cake', 'queue', 'run']);
+        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
 
         $orderDetails = $this->OrderDetail->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
@@ -96,9 +96,9 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
 
         $this->prepareSendInvoices();
         $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
-        $this->commandRunner->run(['cake', 'queue', 'run']);
+        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
         $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']); // sic! run again
-        $this->commandRunner->run(['cake', 'queue', 'run']);
+        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
 
         // no additional (would be 8) emails should be sent if called twice on same day
         $this->assertMailCount(6);

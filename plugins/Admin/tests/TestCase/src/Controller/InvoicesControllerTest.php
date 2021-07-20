@@ -94,7 +94,7 @@ class InvoicesControllerTest extends AppCakeTestCase
                 'invoiceId' => $invoice->id,
             ]
         );
-        $this->commandRunner->run(['cake', 'queue', 'run']);
+        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
 
         $invoices = $this->Invoice->find('all', [
             'conditions' => [
