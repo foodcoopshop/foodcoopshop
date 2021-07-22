@@ -6,6 +6,7 @@ module.exports = {
     },
     "ignorePatterns": ["webroot/js/elFinder/"],
     "globals": {
+        "bootstrap": true,
         "Chart": true,
         "CKEDITOR": true,
         "ChartDataLabels": true,
