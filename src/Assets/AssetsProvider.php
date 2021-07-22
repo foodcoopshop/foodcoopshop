@@ -39,7 +39,7 @@ class AssetsProvider
     {
         return [
             'jquery/dist/jquery.js',
-            'popper.js/dist/umd/popper.js',
+            '@popperjs/core/dist/umd/popper.js',
             'jquery-backstretch/jquery.backstretch.js',
             'tooltipster/dist/js/tooltipster.bundle.js',
             'jquery.scrollto/jquery.scrollTo.js',
