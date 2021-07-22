@@ -344,7 +344,7 @@ body.customers.new_password_request .input input {
 #login-form #LoginForm button {
     float: right;
     margin-right: 5px;
-    margin-top: -65px;
+    margin-top: -54px;
 }
 form div.error-message {
     margin-left: 70px;
