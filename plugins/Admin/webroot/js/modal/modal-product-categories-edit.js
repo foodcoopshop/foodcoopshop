@@ -91,7 +91,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var productId = button.data('objectId');
         var formHtml = $('.categories-checkboxes').clone();

@@ -54,7 +54,7 @@ foodcoopshop.ModalInstantOrderAdd = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         // START DROPDOWN
         var customerDropdownId = 'customerDropdown';

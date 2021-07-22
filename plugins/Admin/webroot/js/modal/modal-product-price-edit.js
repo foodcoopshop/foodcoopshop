@@ -174,7 +174,7 @@ foodcoopshop.ModalProductPriceEdit = {
             $(modalSelector + ' span.unit-name-placeholder').html($(this).val());
         }).trigger('change');
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
     }
 

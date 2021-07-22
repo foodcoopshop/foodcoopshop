@@ -67,7 +67,7 @@ foodcoopshop.ModalProductTaxEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var productId = button.data('objectId');
         var formHtmlA = $('.purchase-price-tax-dropdown-wrapper').clone();

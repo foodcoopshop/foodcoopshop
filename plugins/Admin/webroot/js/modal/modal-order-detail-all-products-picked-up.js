@@ -96,7 +96,7 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
             infoMessage.html(foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp);
         }
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
     },
 

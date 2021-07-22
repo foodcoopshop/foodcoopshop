@@ -83,7 +83,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
             foodcoopshop.ModalInvoiceForCustomerAdd.getCloseHandler(modalSelector);
         });
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
     }
 

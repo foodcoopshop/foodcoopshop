@@ -131,7 +131,7 @@ foodcoopshop.ModalProductQuantityEdit = {
             foodcoopshop.ModalProductQuantityEdit.getCloseHandler(modalSelector);
         });
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
             if (row.find('i.quantity-limit-for-dialog').length > 0) {

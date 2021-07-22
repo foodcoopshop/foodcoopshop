@@ -98,7 +98,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
         foodcoopshop.Helper.initCkeditor('dialogEditPriceReason', true);
 
         var row = button.closest('tr');

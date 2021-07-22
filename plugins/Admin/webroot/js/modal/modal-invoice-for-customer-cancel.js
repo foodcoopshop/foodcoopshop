@@ -69,7 +69,7 @@ foodcoopshop.ModalInvoiceForCustomerCancel = {
             foodcoopshop.ModalInvoiceForCustomerCancel.getCloseHandler(modalSelector);
         });
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
     }
 

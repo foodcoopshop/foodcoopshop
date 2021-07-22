@@ -110,7 +110,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
         infoTextForEditProductAmount += row.find('td.customer-field span.customer-name-for-dialog').html() + ')</p>';
         $(modalSelector + ' .modal-body').prepend(infoTextForEditProductAmount);
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
     }
 

@@ -66,7 +66,7 @@ foodcoopshop.ModalUploadForm = {
             foodcoopshop.Upload.initUploadButtonFile(modalSelector, formElement, button.data('objectId'));
         }
         foodcoopshop.Upload.loadImageSrcFromDataAttribute(modalSelector);
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }
 
 };

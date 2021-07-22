@@ -43,7 +43,7 @@ foodcoopshop.ModalImage = {
         );
 
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalImage.getCloseHandler(modalSelector);

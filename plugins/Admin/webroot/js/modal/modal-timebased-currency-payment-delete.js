@@ -67,7 +67,7 @@ foodcoopshop.ModalTimebasedCurrencyPaymentDelete = {
 
     getOpenHandler : function(modalSelector, dataRow) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var dialogHtml = '<p>Willst du die Eintragung wirklich löschen?<br />';
         var dateElement = dataRow.find('td:nth-child(3)');

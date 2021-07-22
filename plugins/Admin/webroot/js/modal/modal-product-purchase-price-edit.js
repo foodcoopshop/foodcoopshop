@@ -72,7 +72,7 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var row = button.closest('tr');
         var purchasePriceContainer = row.find('span.purchase-price-for-dialog');

@@ -110,7 +110,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
 
     getOpenHandler : function(button, modalSelector, productIds, infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntil, selectedSendOrderListWeekday, selectedSendOrderListDay) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $(modalSelector + ' label[for="dialogDeliveryRhythm"]').html(infoText);
 

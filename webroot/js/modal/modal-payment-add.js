@@ -178,7 +178,7 @@ foodcoopshop.ModalPaymentAdd = {
 
     getOpenHandler : function(modalSelector, form) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
         $(modalSelector).addClass('add-payment-form');
         $(modalSelector + ' .modal-body').append(form.html());
 

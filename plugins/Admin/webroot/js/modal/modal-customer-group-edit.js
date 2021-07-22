@@ -83,7 +83,7 @@ foodcoopshop.ModalCustomerGroupEdit = {
         html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheUserNeedsToSignInAgain + '</p>';
         $(modalSelector + ' #dialogCustomerGroupEditText').html(html);
         $(modalSelector + ' #dialogCustomerGroupEditCustomerId').val(button.closest('tr').find('td:nth-child(2)').html());
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }
 
 };

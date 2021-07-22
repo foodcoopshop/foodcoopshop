@@ -81,7 +81,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
 
         foodcoopshop.Modal.removeTooltipster();
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();

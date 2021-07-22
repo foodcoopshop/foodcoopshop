@@ -110,7 +110,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
 
     getOpenHandler : function(modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var datepickerInput = $('#dialogChangePickupDay');
         datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());
