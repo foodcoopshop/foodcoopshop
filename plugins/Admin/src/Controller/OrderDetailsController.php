@@ -336,7 +336,7 @@ class OrderDetailsController extends AdminAppController
     {
 
         if (!empty($this->getRequest()->getQuery('message'))) {
-            $this->Flash->success(h($this->getRequest()->getQuery('message')));
+            $this->Flash->success(htmlspecialchars_decode($this->getRequest()->getQuery('message')));
             $this->redirect($this->referer());
         }
 

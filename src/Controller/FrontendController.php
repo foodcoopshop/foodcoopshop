@@ -50,8 +50,10 @@ class FrontendController extends AppController
                 $product['deposit'] = 0;
             }
 
-            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
+            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                 $product['next_delivery_day'] = new FrozenDate('1970-01-01');
+            } elseif ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
+                $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             } else {
                 $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
                     $this->Product->newEntity([
