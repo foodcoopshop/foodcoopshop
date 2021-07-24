@@ -67,7 +67,7 @@ class SendInvoicesToCustomersShell extends AppShell
             }
 
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                $helloCash->generateInvoice($data, $this->cronjobRunDay, false);
+                $helloCash->generateInvoice($data, $this->cronjobRunDay, false, false);
             } else {
                 $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
             }
