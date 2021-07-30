@@ -250,20 +250,28 @@ class ProductsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
 
         $products = $this->Product->getForDropdown($this->AppAuth, $manufacturerId);
+
         $productsForDropdown = [];
         foreach ($products as $key => $ps) {
-            $productsForDropdown[] = '<optgroup label="' . $key . '">';
+            $group = [
+                'text' => $key,
+                'children' => [],
+            ];
+            $products = [];
             foreach ($ps as $pId => $p) {
-                $productsForDropdown[] = '<option value="' . $pId . '">' . $p . '</option>';
+                $products[] = [
+                    'text' => $p,
+                    'value' => $pId,
+                ];
             }
-            $productsForDropdown[] = '</optgroup>';
+            $group['children'] = $products;
+            $productsForDropdown[] = $group;
         }
 
         $this->set([
-            'status' => 1,
-            'dropdownData' => join('', $productsForDropdown),
+            'data' => $productsForDropdown,
         ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'dropdownData']);
+        $this->viewBuilder()->setOption('serialize', ['data']);
     }
 
     /**

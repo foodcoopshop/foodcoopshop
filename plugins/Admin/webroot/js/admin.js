@@ -487,6 +487,26 @@ foodcoopshop.Admin = {
 
     initProductDropdown: function (selectedProductId, manufacturerId) {
 
+        $('select#productid').selectpicker({
+            liveSearch: true,
+            showIcon: true,
+            iconBase: 'fontawesome',
+            tickIcon: 'fas fa-check',
+            source: {
+                load: function (callback, page) {
+                    $.ajax('/admin/products/ajaxGetProductsForDropdown/' + manufacturerId, {
+                        data: { page }
+                    }).then((response) => {
+                            callback(response.data);
+                            $('select#productid').selectpicker('refresh');
+                        }
+                    )
+                },
+            }
+        });
+
+        return;
+
         manufacturerId = manufacturerId || 0;
         var productDropdown = $('select#productid').closest('.bootstrap-select').find('.dropdown-toggle');
 
