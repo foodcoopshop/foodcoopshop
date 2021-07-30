@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
@@ -20,11 +20,12 @@ use Cake\I18n\FrozenTime;
  */
 trait UpdateActionLogTrait
 {
+    public $ActionLog;
 
     public function updateActionLog($actionLogId, $identifier, $jobId)
     {
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->loadModel('ActionLogs');
 
         $search = 'not-ok" data-identifier="'.$identifier.'"';
         $now = new FrozenTime();

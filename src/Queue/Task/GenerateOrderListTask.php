@@ -1,11 +1,10 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use Cake\Core\Configure;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,9 +20,13 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface {
+class GenerateOrderListTask extends Task {
 
     use UpdateActionLogTrait;
+
+    public $Manufacturer;
+
+    public $QueuedJobs;
 
     public $timeout = 30;
 
@@ -38,7 +41,7 @@ class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface
         $orderDetailIds = $data['orderDetailIds'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->loadModel('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
@@ -67,7 +70,7 @@ class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface
 
         if ($sendEmail) {
 
-            $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
             $this->QueuedJobs->createJob('SendOrderList', [
                 'productPdfFile' => $productPdfFile,
                 'customerPdfFile' => $customerPdfFile,

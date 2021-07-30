@@ -1,11 +1,10 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\Time;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +20,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueSendInvoiceToCustomerTask extends QueueTask implements QueueTaskInterface {
+class SendInvoiceToCustomerTask extends Task {
 
     public $timeout = 30;
 

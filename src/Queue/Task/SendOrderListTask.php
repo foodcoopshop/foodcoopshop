@@ -1,9 +1,8 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -19,10 +18,13 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
-
+class SendOrderListTask extends Task {
 
     use UpdateActionLogTrait;
+
+    public $Manufacturer;
+
+    public $OrderDetail;
 
     public $timeout = 30;
 
@@ -39,7 +41,7 @@ class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
         $pickupDayFormated = $data['pickupDayFormated'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->loadModel('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
@@ -62,7 +64,7 @@ class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
         }
         $email->send();
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->loadModel('OrderDetails');
         $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
 
         $identifier = 'send-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;

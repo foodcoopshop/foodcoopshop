@@ -1,10 +1,9 @@
 <?php
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,9 +19,11 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskInterface {
+class SendInvoiceToManufacturerTask extends Task {
 
     use UpdateActionLogTrait;
+
+    public $Manufacturer;
 
     public $timeout = 30;
 
@@ -36,7 +37,7 @@ class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskI
         $invoiceNumber = $data['invoiceNumber'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->loadModel('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
