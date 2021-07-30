@@ -29,10 +29,12 @@ foodcoopshop.Admin = {
 
         var cookieName = 'SelectedOrderDetailIds';
         var preselectedOrderDetailIds = Cookies.get(cookieName);
+
         if (preselectedOrderDetailIds) {
-            preselectedOrderDetailIds = $.parseJSON(preselectedOrderDetailIds);
+            preselectedOrderDetailIds = preselectedOrderDetailIds.split(',');
         }
         for (var i in preselectedOrderDetailIds) {
+            console.log(preselectedOrderDetailIds[1]);
             $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
         }
 
