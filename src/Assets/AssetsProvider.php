@@ -1,6 +1,8 @@
 <?php
 namespace App\Assets;
 
+use Cake\I18n\I18n;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -40,6 +42,10 @@ class AssetsProvider
         return [
             'jquery/dist/jquery.js',
             '@popperjs/core/dist/umd/popper.js',
+            'bootstrap/dist/js/bootstrap.min.js',
+            'bootstrap-select/dist/js/bootstrap-select.js',
+            'components-jqueryui/jquery-ui.min.js',
+            'bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js',
             'jquery-backstretch/jquery.backstretch.js',
             'tooltipster/dist/js/tooltipster.bundle.js',
             'jquery.scrollto/jquery.scrollTo.js',
