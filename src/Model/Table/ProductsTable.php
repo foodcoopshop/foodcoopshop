@@ -1378,7 +1378,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk)
+    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation)
     {
         $defaultQuantity = 0;
 
@@ -1395,6 +1395,7 @@ class ProductsTable extends AppTable
                 'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
                 'unity' => StringComponent::removeSpecialChars(strip_tags(trim($unity))),
                 'is_declaration_ok' => $isDeclarationOk,
+                'id_storage_location' => $idStorageLocation,
             ],
             [
                 'validate' => 'name'

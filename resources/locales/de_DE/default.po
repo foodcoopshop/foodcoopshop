@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-15 09:43+0200\n"
-"PO-Revision-Date: 2021-06-14 15:36+0200\n"
+"POT-Creation-Date: 2021-08-02 12:13+0200\n"
+"PO-Revision-Date: 2021-08-02 12:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -1044,6 +1044,9 @@ msgstr "Nach jedem Bestelllisten-Versand wird die verfügbare Anzahl automatisch
 msgid "Enter_purchase_price"
 msgstr "Einkaufspreis eintragen"
 
+msgid "Storage_location"
+msgstr "Lagerort"
+
 msgid "delete"
 msgstr "löschen"
 
@@ -1800,6 +1803,18 @@ msgstr "Das ungefähre Liefergewicht muss eine Zahl sein."
 msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
 msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
 
+msgid "member"
+msgstr "Mitglied"
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Rechnung Nr. {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Storno-Rechnung Nr. {0}, {1}"
+
+msgid "Order_lists_for_the_day"
+msgstr "Bestellungen für den"
+
 msgid "Runtime"
 msgstr "Laufzeit"
 
@@ -1853,18 +1868,6 @@ msgstr "Produkte"
 
 msgid "Sent_order_lists"
 msgstr "Verschickte Bestelllisten"
-
-msgid "member"
-msgstr "Mitglied"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Rechnung Nr. {0}, {1}"
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr "Storno-Rechnung Nr. {0}, {1}"
-
-msgid "Order_lists_for_the_day"
-msgstr "Bestellungen für den"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Mitglieder tragen die Guthaben-Aufladungen selbst ein"

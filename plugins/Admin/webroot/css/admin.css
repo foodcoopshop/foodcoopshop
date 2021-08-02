@@ -322,6 +322,7 @@ input.datepicker {
 .categories-checkboxes,
 .tax-dropdown-wrapper,
 .purchase-price-tax-dropdown-wrapper,
+.storage-location-dropdown-wrapper,
 .delivery-rhythm-dropdown-wrapper {
     display: none;
 }

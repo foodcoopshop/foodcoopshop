@@ -27,7 +27,7 @@ class StorageLocationsTable extends AppTable
         ]);
         $preparedStorageLocations = [];
         foreach ($storageLocations as $storageLocation) {
-            $storageLocations[$storageLocation->id] = $storageLocation->name;
+            $preparedStorageLocations[$storageLocation->id] = $storageLocation->name;
         }
         return $preparedStorageLocations;
     }

@@ -567,7 +567,8 @@ class ProductsTableTest extends AppCakeTestCase
         $description = 'description <img src="test.jpg" />';
         $unity = '<b>piece</b>';
         $isDeclarationOk = 0;
-        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk);
+        $idStorageLocation = 1;
+        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -590,6 +591,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->is_declaration_ok, $isDeclarationOk);
         $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 0);
+        $this->assertEquals($product->id_storage_location, $idStorageLocation);
     }
 
     /**
