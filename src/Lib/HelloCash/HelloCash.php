@@ -100,7 +100,7 @@ class HelloCash
             ];
         };
 
-        if (!empty($data->ordered_deposit)) {
+        if (!empty($data->ordered_deposit) && $data->ordered_deposit['deposit_amount'] > 0) {
             $items[] = [
                 'item_name' => __('Delivered_deposit'),
                 'item_quantity' => $data->ordered_deposit['deposit_amount'],
@@ -109,7 +109,7 @@ class HelloCash
             ];
         };
 
-        if ($data->returned_deposit['deposit_amount'] > 0) {
+        if (!empty($data->returned_deposit) && $data->returned_deposit['deposit_amount'] > 0) {
             $items[] = [
                 'item_name' => __('Payment_type_deposit_return'),
                 'item_quantity' => 1,
