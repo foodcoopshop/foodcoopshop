@@ -971,7 +971,8 @@ class ProductsTableTest extends AppCakeTestCase
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
             'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
-            'description_short' => '<p>test description<br /> <em>short</em></p>    '
+            'description_short' => '<p>test description<br /> <em>short</em></p>    ',
+            'id_storage_location' => 2,
         ];
 
         $products = [
@@ -984,7 +985,8 @@ class ProductsTableTest extends AppCakeTestCase
             'name' => 'test name',
             'unity' => 'test unity',
             'description' => '<p>test <br /><strong><em>description</em></strong></p>',
-            'description_short' => '<p>test description<br /> <em>short</em></p>'
+            'description_short' => '<p>test description<br /> <em>short</em></p>',
+            'id_storage_location' => 2,
         ];
         $this->assertProductName($products, $expectedResults);
     }
@@ -996,16 +998,22 @@ class ProductsTableTest extends AppCakeTestCase
     private function assertProductName($products, $expectedResults)
     {
         foreach ($products as $product) {
+
             $productId = key($product);
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productId,
                 ]
             ])->first();
-            $this->assertEquals($expectedResults['name'], $changedProduct->name, 'changing the name did not work');
-            $this->assertEquals($expectedResults['unity'], $changedProduct->unity, 'changing the unity did not work');
-            $this->assertEquals($expectedResults['description'], $changedProduct->description, 'changing the description did not work');
-            $this->assertEquals($expectedResults['description_short'], $changedProduct->description_short, 'changing the description short did not work');
+            $this->assertEquals($expectedResults['name'], $changedProduct->name);
+            $this->assertEquals($expectedResults['unity'], $changedProduct->unity);
+            $this->assertEquals($expectedResults['description'], $changedProduct->description);
+            $this->assertEquals($expectedResults['description_short'], $changedProduct->description_short);
+
+            if (isset($expectedResults['id_storage_location'])) {
+                $this->assertEquals($expectedResults['id_storage_location'], $changedProduct->id_storage_location);
+            }
+
         }
     }
 

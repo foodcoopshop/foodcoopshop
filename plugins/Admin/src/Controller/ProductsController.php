@@ -1318,7 +1318,8 @@ class ProductsController extends AdminAppController
                         'description' => $this->getRequest()->getData('description'),
                         'description_short' => $this->getRequest()->getData('descriptionShort'),
                         'unity' => $this->getRequest()->getData('unity'),
-                        'is_declaration_ok' => $this->getRequest()->getData('isDeclarationOk')
+                        'is_declaration_ok' => $this->getRequest()->getData('isDeclarationOk'),
+                        'id_storage_location' => $this->getRequest()->getData('idStorageLocation'),
                     ]]
                 ]
             );

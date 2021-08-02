@@ -285,7 +285,8 @@ th.center {
 }
 
 td span.description-short-for-dialog,
-td span.description-for-dialog {
+td span.description-for-dialog,
+td span.storage-location-for-dialog {
     display: none;
 }
 

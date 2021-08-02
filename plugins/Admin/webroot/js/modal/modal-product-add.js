@@ -103,7 +103,7 @@ foodcoopshop.ModalProductAdd = {
 
         var storageLocationWrapper = $('.storage-location-dropdown-wrapper');
         if (storageLocationWrapper.length > 0) {
-            $('#dialogStorageLocation').append(storageLocationWrapper.find('select').html());
+            $(modalSelector + ' #dialogStorageLocation').append(storageLocationWrapper.find('select').html());
         }
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {

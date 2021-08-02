@@ -43,8 +43,7 @@ class AddStorageLocation extends AbstractMigration
             COMMIT;
         ");
 
-        $this->execute("ALTER TABLE `fcs_product` ADD `id_storage_location` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0' AFTER `id_tax`;");
-
+        $this->execute("ALTER TABLE `fcs_product` ADD `id_storage_location` TINYINT(4) UNSIGNED NOT NULL DEFAULT '1' AFTER `id_tax`;");
 
     }
 }
