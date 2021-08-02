@@ -123,6 +123,11 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
+    public function validationFcsSaveStorageLocationForProducts(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+
     public function validationFcsShowProductPriceForGuests(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
