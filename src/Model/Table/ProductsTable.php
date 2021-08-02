@@ -68,6 +68,9 @@ class ProductsTable extends AppTable
         $this->hasOne('UnitProducts', [
             'foreignKey' => 'id_product'
         ]);
+        $this->belongsTo('StorageLocations', [
+            'foreignKey' => 'id_storage_location',
+        ]);
         $this->addBehavior('Timestamp');
     }
 
