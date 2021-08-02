@@ -39,9 +39,9 @@
     "swiper": "6.8.0",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.14.1",
-    "webrtc-adapter": "^8.0.0"
+    "webrtc-adapter": "^8.1.0"
   },
   "devDependencies": {
-    "eslint": "^7.31.0"
+    "eslint": "^7.32.0"
   }
 }
