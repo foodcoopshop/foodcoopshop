@@ -38,11 +38,6 @@ class HelloCashTest extends AppCakeTestCase
         $this->Invoice = $this->getTableLocator()->get('Invoices');
     }
 
-    public function tearDown(): void
-    {
-        $this->assertLogFilesForErrors();
-    }
-
     public function testGenerateReceipt()
     {
         $this->loginAsSuperadmin();

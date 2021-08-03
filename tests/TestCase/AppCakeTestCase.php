@@ -12,6 +12,7 @@ use Cake\Filesystem\File;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\TestCase;
+use Cake\TestSuite\TestEmailTransport;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -72,6 +73,9 @@ abstract class AppCakeTestCase extends TestCase
         if (method_exists($this, 'enableSecurityToken')) {
             $this->enableSecurityToken();
         }
+
+        // sometimes tests were interfering with each other
+        TestEmailTransport::clearMessages();
     }
 
     private function getLogFile($name)
