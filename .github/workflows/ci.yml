@@ -44,7 +44,13 @@ jobs:
           node-version: '16'
                       
       - uses: actions/checkout@v2
-                    
+      
+      - name: Apply secrets
+        run: |
+          sed '/HELLO_CASH_USERNAME/${{ secrets.HELLO_CASH_USERNAME }}'
+          sed '/HELLO_CASH_PASSWORD/${{ secrets.HELLO_CASH_PASSWORD }}'
+          sed '/HELLO_CASH_CASHIER_ID/${{ secrets.HELLO_CASH_CASHIER_ID }}'
+   
       - name: Setup DB
         run: |
           sudo /etc/init.d/mysql start

@@ -74,7 +74,13 @@ return [
          */
         'paymentMethods' => [
             'cashless'
-        ]
+        ],
+
+        'helloCashAtCredentials' => [
+            'username' => 'HELLO_CASH_USERNAME',
+            'password' => 'HELLO_CASH_PASSWORD',
+            'cashier_id' => 'HELLO_CASH_CASHIER_ID',
+        ],
 
     ]
 ];
