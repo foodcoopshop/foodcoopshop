@@ -47,9 +47,9 @@ jobs:
       
       - name: Apply secrets
         run: |
-          sed '/HELLO_CASH_USERNAME/${{ secrets.HELLO_CASH_USERNAME }}'
-          sed '/HELLO_CASH_PASSWORD/${{ secrets.HELLO_CASH_PASSWORD }}'
-          sed '/HELLO_CASH_CASHIER_ID/${{ secrets.HELLO_CASH_CASHIER_ID }}'
+          sed 's/HELLO_CASH_USERNAME/${{ secrets.HELLO_CASH_USERNAME }}/' ./.github/workflows/custom_config.php
+          sed 's/HELLO_CASH_PASSWORD/${{ secrets.HELLO_CASH_PASSWORD }}/' ./.github/workflows/custom_config.php
+          sed 's/HELLO_CASH_CASHIER_ID/${{ secrets.HELLO_CASH_CASHIER_ID }}/' ./.github/workflows/custom_config.php
    
       - name: Setup DB
         run: |
