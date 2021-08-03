@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-07-16 12:12+0200\n"
+"POT-Creation-Date: 2021-08-02 21:27+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1688,6 +1688,9 @@ msgstr ""
 msgid "Delivery_rhythm"
 msgstr ""
 
+msgid "Storage_location"
+msgstr ""
+
 msgid "Added_on"
 msgstr ""
 
@@ -1832,7 +1835,10 @@ msgstr ""
 msgid "Cancel_selected_products"
 msgstr ""
 
-msgid "Generate_orders_as_pdf"
+msgid "Orders_as_pdf"
+msgstr ""
+
+msgid "Orders_as_pdf_order_by_storage_location"
 msgstr ""
 
 msgid "Multiple_pickup_days"

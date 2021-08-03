@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-15 09:43+0200\n"
+"POT-Creation-Date: 2021-08-02 12:13+0200\n"
 "PO-Revision-Date: 2021-05-27 10:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1044,6 +1044,9 @@ msgstr "After the order lists are sent, the available amount is set to this valu
 msgid "Enter_purchase_price"
 msgstr "Enter purchase price"
 
+msgid "Storage_location"
+msgstr ""
+
 msgid "delete"
 msgstr "delete"
 
@@ -1800,6 +1803,18 @@ msgstr "The approximate weight needs to be a number."
 msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
 msgstr "The approximate weight needs to be greater or equal than 0."
 
+msgid "member"
+msgstr "Member"
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Invoice nº {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Cancellation invoice nº {0}, {1}"
+
+msgid "Order_lists_for_the_day"
+msgstr "Order lists for"
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1853,18 +1868,6 @@ msgstr "Products"
 
 msgid "Sent_order_lists"
 msgstr "Sent order lists"
-
-msgid "member"
-msgstr "Member"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Invoice nº {0}, {1}"
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr "Cancellation invoice nº {0}, {1}"
-
-msgid "Order_lists_for_the_day"
-msgstr "Order lists for"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Members add their payments manually"

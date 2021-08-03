@@ -13,15 +13,27 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 echo '<td class="cell-name">';
 
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
+        $title = [];
+        if ($product->description_short != '') {
+            $title[] = '<b>'.__d('admin', 'Short_description').'</b><br />'.$product->description_short;
+        }
+        if ($product->description != '') {
+            $title[] = '<b>'.__d('admin', 'Long_description').'</b><br />'.$product->description;
+        }
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            $title[] = '<b>'.__d('admin', 'Storage_location').'</b>: '.$storageLocationsForForDropdown[$product->id_storage_location];
+        }
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-name-edit-button',
-                'title' => h('<b>'.__d('admin', 'Short_description').'</b><br />'.$product->description_short.'<br /><br /><b>'.__d('admin', 'Long_description').'</b><br />'.$product->description),
+                'title' => h(join('<br /><br />', $title)),
                 'escape' => false
             ]
         );
@@ -92,6 +104,13 @@ echo '<td class="cell-name">';
         if (! $product->category->all_products_found) {
             echo ' - <b>'.__d('admin', 'Category_"all_products"_is_missing!').'</b>';
         }
+
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            echo '<span class="storage-location-for-dialog">';
+            echo $product->id_storage_location;
+            echo '</span>';
+        }
+
     }
 
     echo '<span class="description-short-for-dialog">';

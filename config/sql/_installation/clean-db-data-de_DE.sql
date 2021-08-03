@@ -42,6 +42,7 @@ TRUNCATE TABLE `fcs_product_attribute_combination`;
 TRUNCATE TABLE `fcs_purchase_prices`;
 TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_stock_available`;
+TRUNCATE TABLE `fcs_storage_locations`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
@@ -138,7 +139,8 @@ INSERT INTO `fcs_configuration` VALUES
 (594,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:10','2020-12-20 19:26:10'),
 (595,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','50','number',1450,'de_DE','2021-01-19 11:23:34','2021-01-19 11:23:34'),
 (596,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',584,'de_DE','2021-05-10 11:27:38','2021-05-10 11:27:38'),
-(597,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:03','2021-07-07 10:55:03');
+(597,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:03','2021-07-07 10:55:03'),
+(598,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','0','boolean',3210,'de_DE','2021-08-02 11:28:29','2021-08-02 11:28:29');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -214,6 +216,13 @@ INSERT INTO `fcs_sliders` VALUES
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_storage_locations` DISABLE KEYS */;
+INSERT INTO `fcs_storage_locations` VALUES
+(1,'Keine Kühlung',10),
+(2,'Kühlschrank',20),
+(3,'Tiefkühler',30);
+/*!40000 ALTER TABLE `fcs_storage_locations` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_sync_domains` ENABLE KEYS */;
 
@@ -259,7 +268,8 @@ INSERT INTO `phinxlog` VALUES
 (20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:04:53','2021-04-27 15:04:53',0),
 (20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:04','2021-05-04 09:10:04',0),
 (20210510080630,'EnablePurchasePrices','2021-05-10 09:27:38','2021-05-10 09:27:38',0),
-(20210707083827,'AddRegistrierkasseApi','2021-07-07 08:55:03','2021-07-07 08:55:03',0);
+(20210707083827,'AddRegistrierkasseApi','2021-07-07 08:55:03','2021-07-07 08:55:03',0),
+(20210802090623,'AddStorageLocation','2021-08-02 09:28:29','2021-08-02 09:28:29',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

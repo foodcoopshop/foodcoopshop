@@ -681,6 +681,10 @@ class OrderDetailsTable extends AppTable
             'OrderDetailFeedbacks',
         ];
 
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            $contain[] = 'Products.StorageLocations';
+        }
+
         if ($customerId != '') {
             $conditions['OrderDetails.id_customer'] = $customerId;
         }

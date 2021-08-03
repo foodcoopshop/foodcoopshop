@@ -328,6 +328,18 @@ use Cake\Core\Configure;
         echo '</div>';
     }
 
+
+    if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+        echo '<div class="storage-location-dropdown-wrapper">';
+            echo '<input type="hidden" class="product-id" />';
+            echo $this->Form->control('Products.id_storage_location', [
+                'type' => 'select',
+                'label' => __d('admin', 'Storage_location'),
+                'options' => $storageLocationsForForDropdown,
+            ]);
+        echo '</div>';
+    }
+
     echo '<div class="delivery-rhythm-dropdown-wrapper">';
         echo $this->Form->control('RhythmTypes', [
             'type' => 'select',

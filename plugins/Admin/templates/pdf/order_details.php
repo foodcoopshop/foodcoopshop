@@ -68,9 +68,18 @@ foreach ($orderDetails as $od) {
     $sumDeposit = 0;
     $usesQuantityInUnits = 0;
     $timebasedCurrencyOrderDetailInList = false;
+    $oldStorageLocation = 0;
     $i = 1;
 
     foreach($od as $orderDetail) {
+
+        if ($order == 'storageLocation' && $oldStorageLocation != $orderDetail->product->id_storage_location) {
+            $pdf->table .= '<tr style="background-color:#cecece;">';
+            $pdf->table .= '<td width="'.array_sum($widths).'"><b>' . __d('admin', 'Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
+            $pdf->table .= '</tr>';
+        }
+
+        $oldStorageLocation = $orderDetail->product->id_storage_location;
 
         $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 

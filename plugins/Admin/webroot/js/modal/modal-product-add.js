@@ -39,6 +39,15 @@ foodcoopshop.ModalProductAdd = {
         html += '<span class="small">' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>';
         html += '<hr />';
         html += '</div>';
+
+        if ($('.storage-location-dropdown-wrapper').length > 0) {
+            html += '<div class="field-wrapper storage-location-wrapper">';
+                html += '<label for="dialogStorageLocation"><b>' + foodcoopshop.LocalizedJs.dialogProduct.StorageLocation + '</b></label>';
+                html += '<select name="dialogStorageLoation" id="dialogStorageLocation"></select><br />';
+                html += '<hr />';
+            html += '</div>';
+        }
+
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
         html += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
@@ -69,7 +78,8 @@ foodcoopshop.ModalProductAdd = {
                 unity: $('#dialogUnity').val(),
                 descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData().trim(),
                 description: CKEDITOR.instances['dialogDescription'].getData().trim(),
-                isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0
+                isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0,
+                idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0
             },
             {
                 onOk: function (data) {
@@ -90,6 +100,11 @@ foodcoopshop.ModalProductAdd = {
             foodcoopshop.LocalizedJs.admin.AddNewProduct,
             foodcoopshop.ModalProductAdd.getHtml()
         );
+
+        var storageLocationWrapper = $('.storage-location-dropdown-wrapper');
+        if (storageLocationWrapper.length > 0) {
+            $(modalSelector + ' #dialogStorageLocation').append(storageLocationWrapper.find('select').html());
+        }
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalProductAdd.getSuccessHandler(modalSelector);

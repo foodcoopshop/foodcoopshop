@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-07-15 09:43+0200\n"
+"POT-Creation-Date: 2021-08-02 12:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1043,6 +1043,9 @@ msgstr ""
 msgid "Enter_purchase_price"
 msgstr ""
 
+msgid "Storage_location"
+msgstr ""
+
 msgid "delete"
 msgstr ""
 
@@ -1799,6 +1802,18 @@ msgstr ""
 msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
 msgstr ""
 
+msgid "member"
+msgstr ""
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr ""
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr ""
+
+msgid "Order_lists_for_the_day"
+msgstr ""
+
 msgid "Runtime"
 msgstr ""
 
@@ -1851,18 +1866,6 @@ msgid "Products"
 msgstr ""
 
 msgid "Sent_order_lists"
-msgstr ""
-
-msgid "member"
-msgstr ""
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr ""
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr ""
-
-msgid "Order_lists_for_the_day"
 msgstr ""
 
 msgid "Customer_adds_payment_manually"

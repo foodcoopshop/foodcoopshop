@@ -285,7 +285,8 @@ th.center {
 }
 
 td span.description-short-for-dialog,
-td span.description-for-dialog {
+td span.description-for-dialog,
+td span.storage-location-for-dialog {
     display: none;
 }
 
@@ -322,6 +323,7 @@ input.datepicker {
 .categories-checkboxes,
 .tax-dropdown-wrapper,
 .purchase-price-tax-dropdown-wrapper,
+.storage-location-dropdown-wrapper,
 .delivery-rhythm-dropdown-wrapper {
     display: none;
 }

@@ -445,6 +445,7 @@ CREATE TABLE `fcs_product` (
   `id_product` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_manufacturer` int(10) unsigned DEFAULT NULL,
   `id_tax` int(11) unsigned NOT NULL DEFAULT '0',
+  `id_storage_location` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `name` mediumtext NOT NULL,
   `description` longtext,
@@ -532,6 +533,16 @@ CREATE TABLE `fcs_stock_available` (
   KEY `id_product` (`id_product`),
   KEY `id_product_attribute` (`id_product_attribute`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_storage_locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_storage_locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rank` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_sync_domains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
