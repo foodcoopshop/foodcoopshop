@@ -24,7 +24,6 @@ class HelloCashTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
     use PrepareInvoiceDataTrait;
-    use StringCompareTrait;
 
     protected $HelloCash;
     protected $Invoice;
