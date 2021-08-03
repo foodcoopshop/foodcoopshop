@@ -305,7 +305,6 @@ class HelloCash
             $this->encodeData($data),
             $this->getOptions(),
         );
-        print_r($response->getStringBody());
         return $response->getStringBody();
     }
 
