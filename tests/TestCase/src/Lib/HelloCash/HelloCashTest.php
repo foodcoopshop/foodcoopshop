@@ -82,6 +82,7 @@ class HelloCashTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
         $this->assertMailContainsAttachment('Rechnung_' . $invoice->invoice_number . '.pdf');
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
 
     }
 
