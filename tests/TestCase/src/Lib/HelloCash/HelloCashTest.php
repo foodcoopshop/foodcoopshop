@@ -21,7 +21,6 @@ use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
 
 class HelloCashTest extends AppCakeTestCase
 {
@@ -37,13 +36,11 @@ class HelloCashTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
         $this->HelloCash = new HelloCash();
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
-
     }
 
     public function testGenerateReceipt()
