@@ -109,9 +109,19 @@ class HelloCashTest extends AppCakeTestCase
 
         $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
 
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id' => $response->invoiceId,
+            ],
+            'contain' => [
+                'CancelledInvoices',
+            ]
+        ])->first();
+        $this->assertNotNull($invoice->email_status);
+
         $this->assertMailCount(3);
-        $this->assertMailContainsAttachment('Rechnung_' . $invoice->invoice_number . '.pdf');
-        $this->assertMailContainsAttachment('Storno-Rechnung_' . $response->cancellationInvoiceNumber . '.pdf');
+        $this->assertMailContainsAttachment('Rechnung_' . $invoice->cancelled_invoice->invoice_number . '.pdf');
+        $this->assertMailContainsAttachment('Storno-Rechnung_' . $invoice->invoice_number . '.pdf');
 
     }
 

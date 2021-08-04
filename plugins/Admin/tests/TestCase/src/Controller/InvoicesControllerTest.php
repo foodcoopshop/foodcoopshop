@@ -88,12 +88,13 @@ class InvoicesControllerTest extends AppCakeTestCase
         ])->toArray();
         $paymentIds = Hash::extract($payments, '{n}.id');
 
-        $this->ajaxPost(
+        $response = $this->ajaxPost(
             '/admin/invoices/cancel/',
             [
                 'invoiceId' => $invoice->id,
             ]
         );
+        $response = json_decode($this->_response);
         $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
 
         $invoices = $this->Invoice->find('all', [
@@ -158,6 +159,13 @@ class InvoicesControllerTest extends AppCakeTestCase
         $currentYear = date('Y', strtotime($currentDay));
         $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. ' . $currentYear . '-000001, ' . $formattedCurrentDay);
         $this->assertMailSubjectContainsAt(2, 'Storno-Rechnung Nr. ' . $currentYear . '-000002, ' . $formattedCurrentDay);
+
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id' => (int) $response->invoiceId,
+            ],
+        ])->first();
+        $this->assertNotNull($invoice->email_status);
 
     }
 

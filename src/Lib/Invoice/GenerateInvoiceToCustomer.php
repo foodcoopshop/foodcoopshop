@@ -72,6 +72,7 @@ class GenerateInvoiceToCustomer
             'invoiceNumber' => $invoiceNumber,
             'invoiceDate' => $invoiceDate,
             'invoiceId' => $newInvoice->id,
+            'originalInvoiceId' => null,
         ]);
 
         return $newInvoice;

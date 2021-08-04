@@ -39,6 +39,7 @@ class SendInvoiceToCustomerTask extends Task {
         $invoiceDate = $data['invoiceDate'];
         $invoiceId = $data['invoiceId'];
         $isCancellationInvoice = (bool) $data['isCancellationInvoice'];
+        $originalInvoiceId = $data['originalInvoiceId'];
 
         $subject = __('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]);
         $emailTemplate = 'Admin.send_invoice_to_customer';
@@ -66,7 +67,7 @@ class SendInvoiceToCustomerTask extends Task {
             }
             $email->addAttachments([
                 str_replace(' ', '_', $attachmentPrefix) . '_' . $invoiceNumber . '.pdf' => [
-                    'data' => $helloCash->getInvoice($invoiceId, $isCancellationInvoice)->getStringBody(),
+                    'data' => $helloCash->getInvoice($originalInvoiceId, $isCancellationInvoice)->getStringBody(),
                     'mimetype' => 'application/pdf',
                 ],
             ]);

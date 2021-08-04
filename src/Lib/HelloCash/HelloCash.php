@@ -92,7 +92,7 @@ class HelloCash
             $paidInCash,
         );
 
-        $newInvoice->id = $originalInvoiceId;
+        $newInvoice->original_invoice_id = $originalInvoiceId;
         $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
 
         return $responseObject;
@@ -261,6 +261,7 @@ class HelloCash
             'invoiceNumber' => $invoice->invoice_number,
             'invoiceDate' => $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
             'invoiceId' => $invoice->id,
+            'originalInvoiceId' => $invoice->original_invoice_id ?? null,
         ]);
 
     }
