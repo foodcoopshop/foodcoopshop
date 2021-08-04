@@ -122,6 +122,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertMailCount(3);
         $this->assertMailContainsAttachment('Rechnung_' . $invoice->cancelled_invoice->invoice_number . '.pdf');
         $this->assertMailContainsAttachment('Storno-Rechnung_' . $invoice->invoice_number . '.pdf');
+        $this->assertMailContainsHtmlAt(1, 'Dein Kontostand: <b>61,97 €</b>');
 
     }
 

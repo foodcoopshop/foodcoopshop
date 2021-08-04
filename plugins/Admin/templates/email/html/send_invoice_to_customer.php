@@ -27,7 +27,7 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
-            <p><?php echo __d('admin', 'Please_find_your_current_invoice_attached.'); ?></p>
+            <p><?php echo __d('admin', 'Please_find_your_current_invoice_attached.'); ?> <?php echo __d('admin', 'Your_credit_balance').': <b>' . $this->MyNumber->formatAsCurrency($creditBalance); ?></b></p>
 
             <p><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></p>
 

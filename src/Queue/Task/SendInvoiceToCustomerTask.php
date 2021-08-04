@@ -34,6 +34,7 @@ class SendInvoiceToCustomerTask extends Task {
 
         $customerName = $data['customerName'];
         $customerEmail = $data['customerEmail'];
+        $creditBalance = $data['creditBalance'];
         $invoicePdfFile = $data['invoicePdfFile'];
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
@@ -55,6 +56,7 @@ class SendInvoiceToCustomerTask extends Task {
         ->setSubject($subject)
         ->setViewVars([
             'customerName' => $customerName,
+            'creditBalance' => $creditBalance,
         ]);
 
         if (!empty($invoicePdfFile)) {

@@ -253,6 +253,7 @@ class HelloCash
         }
 
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
+        $this->Customer = FactoryLocator::get('Table')->get('Customers');
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
             'isCancellationInvoice' => $isCancellationInvoice,
             'customerName' => $customer->name,
@@ -262,6 +263,7 @@ class HelloCash
             'invoiceDate' => $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
             'invoiceId' => $invoice->id,
             'originalInvoiceId' => $invoice->original_invoice_id ?? null,
+            'creditBalance' => $this->Customer->getCreditBalance($customer->id_customer),
         ]);
 
     }
