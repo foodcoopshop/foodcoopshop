@@ -2,6 +2,7 @@
 namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
+use App\Lib\HelloCash\HelloCash;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\Time;
 use Queue\Queue\Task;
@@ -37,7 +38,7 @@ class SendInvoiceToCustomerTask extends Task {
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
         $invoiceId = $data['invoiceId'];
-        $isCancellationInvoice = $data['isCancellationInvoice'];
+        $isCancellationInvoice = (bool) $data['isCancellationInvoice'];
 
         $subject = __('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]);
         $emailTemplate = 'Admin.send_invoice_to_customer';
@@ -50,13 +51,27 @@ class SendInvoiceToCustomerTask extends Task {
         $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate($emailTemplate);
         $email->setTo($customerEmail)
-        ->setAttachments([
-            $invoicePdfFile,
-        ])
         ->setSubject($subject)
         ->setViewVars([
             'customerName' => $customerName,
         ]);
+
+        if (!empty($invoicePdfFile)) {
+            $email->addAttachments([$invoicePdfFile]);
+        } else {
+            $helloCash = new HelloCash();
+            $attachmentPrefix = __('Invoice');
+            if ($isCancellationInvoice) {
+                $attachmentPrefix = __('Cancellation_invoice');
+            }
+            $email->addAttachments([
+                str_replace(' ', '_', $attachmentPrefix) . '_' . $invoiceNumber . '.pdf' => [
+                    'data' => $helloCash->getInvoice($invoiceId, $isCancellationInvoice)->getStringBody(),
+                    'mimetype' => 'application/pdf',
+                ],
+            ]);
+        }
+
         $email->send();
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');

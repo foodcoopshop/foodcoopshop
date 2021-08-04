@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-02 12:13+0200\n"
-"PO-Revision-Date: 2021-08-02 12:14+0200\n"
+"POT-Creation-Date: 2021-08-04 10:59+0200\n"
+"PO-Revision-Date: 2021-08-04 10:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1812,6 +1812,12 @@ msgstr "Rechnung Nr. {0}, {1}"
 msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
 msgstr "Storno-Rechnung Nr. {0}, {1}"
 
+msgid "Invoice"
+msgstr "Rechnung"
+
+msgid "Cancellation_invoice"
+msgstr "Storno-Rechnung"
+
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
 
@@ -2577,9 +2583,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Last_order_day"
 #~ msgstr "Bestellschluss"
-
-#~ msgid "Invoices"
-#~ msgstr "Rechnungen"
 
 #~ msgid "Action_Log_Superadmin_deploy_failed"
 #~ msgstr "Superadmin: Update gescheitert"

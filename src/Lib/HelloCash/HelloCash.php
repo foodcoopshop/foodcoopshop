@@ -59,6 +59,16 @@ class HelloCash
             'cancellation_cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
         ];
 
+        $this->Customer = FactoryLocator::get('Table')->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'AddressCustomers',
+            ]
+        ])->first();
+
         $response = $this->getRestClient()->post(
             '/invoices/' . $originalInvoiceId . '/cancellation',
             $this->encodeData($postData),
@@ -66,10 +76,21 @@ class HelloCash
         );
         $responseObject = json_decode($response->getStringBody());
         $paidInCash = $responseObject->invoice_payment == 'Bar' ? 1 : 0;
+
         $taxRates = $this->prepareTaxesFromResponse($responseObject, true);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->Invoice->saveInvoice($responseObject->cancellation_details->cancellation_number, $customerId, $taxRates, $responseObject->cancellation_details->cancellation_number, '', $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice(
+            $responseObject->cancellation_details->cancellation_number,
+            $customerId,
+            $taxRates,
+            $responseObject->cancellation_details->cancellation_number,
+            '',
+            $currentDay,
+            $paidInCash,
+        );
+
+        $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
 
         return $responseObject;
     }
@@ -214,9 +235,30 @@ class HelloCash
         $taxRates = $this->prepareTaxesFromResponse($responseObject, false);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->Invoice->saveInvoice($responseObject->invoice_id, $data->id_customer, $taxRates, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice($responseObject->invoice_id, $data->id_customer, $taxRates, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+
+        $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
 
         return $responseObject;
+
+    }
+
+    protected function setSendInvoiceToCustomerQueue($customer, $invoice, $isCancellationInvoice, $paidInCash)
+    {
+        if ($paidInCash) {
+            return;
+        }
+
+        $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
+        $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
+            'isCancellationInvoice' => $isCancellationInvoice,
+            'customerName' => $customer->name,
+            'customerEmail' => $customer->email,
+            'invoicePdfFile' => '',
+            'invoiceNumber' => $invoice->invoice_number,
+            'invoiceDate' => $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
+            'invoiceId' => $invoice->id,
+        ]);
 
     }
 
