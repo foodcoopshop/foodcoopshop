@@ -193,7 +193,7 @@ class CronjobsTableTest extends AppCakeTestCase
         );
         $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('weekday not available');
-        $this->Cronjob->run();
+        $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
         $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
     }
