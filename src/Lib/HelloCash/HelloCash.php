@@ -92,6 +92,7 @@ class HelloCash
             $paidInCash,
         );
 
+        $newInvoice->id = $originalInvoiceId;
         $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
 
         return $responseObject;
