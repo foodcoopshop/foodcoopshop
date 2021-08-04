@@ -30,6 +30,8 @@ class HelloCash
 
     protected $Payment;
 
+    protected $QueuedJobs;
+
     protected $hostname = 'https://myhellocash.com';
 
     public $restEndpoint;
