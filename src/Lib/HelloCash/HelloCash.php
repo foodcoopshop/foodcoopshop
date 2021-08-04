@@ -76,7 +76,7 @@ class HelloCash
             $this->encodeData($postData),
             $this->getOptions(),
         );
-        $responseObject = json_decode($response->getStringBody());
+        $responseObject = $this->decodeResponseAndCheckForErrors($response);
         $paidInCash = $responseObject->invoice_payment == 'Bar' ? 1 : 0;
 
         $taxRates = $this->prepareTaxesFromResponse($responseObject, true);
@@ -215,8 +215,12 @@ class HelloCash
         $userId = $this->createOrUpdateUser($data->id_customer);
         $postData = $this->getInvoicePostData($data, $userId, $paidInCash, $isPreview);
 
-        $response = $this->postInvoiceData($postData);
-        $responseObject = json_decode($response);
+        $response = $this->getRestClient()->post(
+            '/invoices',
+            $this->encodeData($postData),
+            $this->getOptions(),
+        );
+        $responseObject = $this->decodeResponseAndCheckForErrors($response);
 
         if (!$isPreview) {
             $responseObject = $this->afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash);
@@ -318,7 +322,7 @@ class HelloCash
                 [],
                 $this->getOptions(),
             );
-            $helloCashUser = json_decode($response->getStringBody());
+            $helloCashUser = $this->decodeResponseAndCheckForErrors($response);
 
             // check if associated user_id_registrierkasse is still available within hello cash)
             if ($helloCashUser != 'User not found') {
@@ -335,7 +339,7 @@ class HelloCash
             $this->getOptions(),
         );
 
-        $helloCashUser = json_decode($response->getStringBody());
+        $helloCashUser = $this->decodeResponseAndCheckForErrors($response);
 
         if (!array_key_exists('user_id', $data)) {
             $customer->user_id_registrierkasse = $helloCashUser->user_id;
@@ -346,14 +350,21 @@ class HelloCash
 
     }
 
-    protected function postInvoiceData($data)
+    protected function decodeResponseAndCheckForErrors($response)
     {
-        $response = $this->getRestClient()->post(
-            '/invoices',
-            $this->encodeData($data),
-            $this->getOptions(),
-        );
-        return $response->getStringBody();
+        $decodedResponse = json_decode($response->getStringBody());
+
+        // An error occurred: Invalid Basic authentication: Benutzername oder Passwort falsch
+        if (!empty($decodedResponse->error)) {
+            throw new HelloCashApiException($decodedResponse->error);
+        }
+
+        if ($decodedResponse === 'An Error occurred') {
+            throw new HelloCashApiException($decodedResponse);
+        }
+
+        return $decodedResponse;
+
     }
 
 }
