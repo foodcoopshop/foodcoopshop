@@ -317,8 +317,9 @@ class InvoicesController extends AdminAppController
         $this->set([
             'status' => 1,
             'msg' => 'ok',
+            'invoiceId' => $invoiceId,
         ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'invoiceId']);
 
     }
 

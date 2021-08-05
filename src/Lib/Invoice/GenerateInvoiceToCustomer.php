@@ -72,6 +72,8 @@ class GenerateInvoiceToCustomer
             'invoiceNumber' => $invoiceNumber,
             'invoiceDate' => $invoiceDate,
             'invoiceId' => $newInvoice->id,
+            'originalInvoiceId' => null,
+            'creditBalance' => $this->Customer->getCreditBalance($data->id_customer),
         ]);
 
         return $newInvoice;

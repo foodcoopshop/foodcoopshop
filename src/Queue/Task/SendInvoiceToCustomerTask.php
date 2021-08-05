@@ -2,6 +2,7 @@
 namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
+use App\Lib\HelloCash\HelloCash;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\Time;
 use Queue\Queue\Task;
@@ -33,11 +34,13 @@ class SendInvoiceToCustomerTask extends Task {
 
         $customerName = $data['customerName'];
         $customerEmail = $data['customerEmail'];
+        $creditBalance = $data['creditBalance'];
         $invoicePdfFile = $data['invoicePdfFile'];
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
         $invoiceId = $data['invoiceId'];
-        $isCancellationInvoice = $data['isCancellationInvoice'];
+        $isCancellationInvoice = (bool) $data['isCancellationInvoice'];
+        $originalInvoiceId = $data['originalInvoiceId'];
 
         $subject = __('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]);
         $emailTemplate = 'Admin.send_invoice_to_customer';
@@ -50,13 +53,28 @@ class SendInvoiceToCustomerTask extends Task {
         $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate($emailTemplate);
         $email->setTo($customerEmail)
-        ->setAttachments([
-            $invoicePdfFile,
-        ])
         ->setSubject($subject)
         ->setViewVars([
             'customerName' => $customerName,
+            'creditBalance' => $creditBalance,
         ]);
+
+        if (!empty($invoicePdfFile)) {
+            $email->addAttachments([$invoicePdfFile]);
+        } else {
+            $helloCash = new HelloCash();
+            $attachmentPrefix = __('Invoice');
+            if ($isCancellationInvoice) {
+                $attachmentPrefix = __('Cancellation_invoice');
+            }
+            $email->addAttachments([
+                str_replace(' ', '_', $attachmentPrefix) . '_' . $invoiceNumber . '.pdf' => [
+                    'data' => $helloCash->getInvoice($originalInvoiceId, $isCancellationInvoice)->getStringBody(),
+                    'mimetype' => 'application/pdf',
+                ],
+            ]);
+        }
+
         $email->send();
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');

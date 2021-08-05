@@ -30,6 +30,8 @@ class HelloCash
 
     protected $Payment;
 
+    protected $QueuedJobs;
+
     protected $hostname = 'https://myhellocash.com';
 
     public $restEndpoint;
@@ -59,17 +61,39 @@ class HelloCash
             'cancellation_cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
         ];
 
+        $this->Customer = FactoryLocator::get('Table')->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'AddressCustomers',
+            ]
+        ])->first();
+
         $response = $this->getRestClient()->post(
             '/invoices/' . $originalInvoiceId . '/cancellation',
             $this->encodeData($postData),
             $this->getOptions(),
         );
-        $responseObject = json_decode($response->getStringBody());
+        $responseObject = $this->decodeResponseAndCheckForErrors($response);
         $paidInCash = $responseObject->invoice_payment == 'Bar' ? 1 : 0;
+
         $taxRates = $this->prepareTaxesFromResponse($responseObject, true);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->Invoice->saveInvoice($responseObject->cancellation_details->cancellation_number, $customerId, $taxRates, $responseObject->cancellation_details->cancellation_number, '', $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice(
+            $responseObject->cancellation_details->cancellation_number,
+            $customerId,
+            $taxRates,
+            $responseObject->cancellation_details->cancellation_number,
+            '',
+            $currentDay,
+            $paidInCash,
+        );
+
+        $newInvoice->original_invoice_id = $originalInvoiceId;
+        $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
 
         return $responseObject;
     }
@@ -191,8 +215,12 @@ class HelloCash
         $userId = $this->createOrUpdateUser($data->id_customer);
         $postData = $this->getInvoicePostData($data, $userId, $paidInCash, $isPreview);
 
-        $response = $this->postInvoiceData($postData);
-        $responseObject = json_decode($response);
+        $response = $this->getRestClient()->post(
+            '/invoices',
+            $this->encodeData($postData),
+            $this->getOptions(),
+        );
+        $responseObject = $this->decodeResponseAndCheckForErrors($response);
 
         if (!$isPreview) {
             $responseObject = $this->afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash);
@@ -214,9 +242,33 @@ class HelloCash
         $taxRates = $this->prepareTaxesFromResponse($responseObject, false);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->Invoice->saveInvoice($responseObject->invoice_id, $data->id_customer, $taxRates, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice($responseObject->invoice_id, $data->id_customer, $taxRates, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+
+        $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
 
         return $responseObject;
+
+    }
+
+    protected function setSendInvoiceToCustomerQueue($customer, $invoice, $isCancellationInvoice, $paidInCash)
+    {
+        if ($paidInCash) {
+            return;
+        }
+
+        $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
+        $this->Customer = FactoryLocator::get('Table')->get('Customers');
+        $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
+            'isCancellationInvoice' => $isCancellationInvoice,
+            'customerName' => $customer->name,
+            'customerEmail' => $customer->email,
+            'invoicePdfFile' => '',
+            'invoiceNumber' => $invoice->invoice_number,
+            'invoiceDate' => $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
+            'invoiceId' => $invoice->id,
+            'originalInvoiceId' => $invoice->original_invoice_id ?? null,
+            'creditBalance' => $this->Customer->getCreditBalance($customer->id_customer),
+        ]);
 
     }
 
@@ -270,7 +322,7 @@ class HelloCash
                 [],
                 $this->getOptions(),
             );
-            $helloCashUser = json_decode($response->getStringBody());
+            $helloCashUser = $this->decodeResponseAndCheckForErrors($response);
 
             // check if associated user_id_registrierkasse is still available within hello cash)
             if ($helloCashUser != 'User not found') {
@@ -287,7 +339,7 @@ class HelloCash
             $this->getOptions(),
         );
 
-        $helloCashUser = json_decode($response->getStringBody());
+        $helloCashUser = $this->decodeResponseAndCheckForErrors($response);
 
         if (!array_key_exists('user_id', $data)) {
             $customer->user_id_registrierkasse = $helloCashUser->user_id;
@@ -298,14 +350,21 @@ class HelloCash
 
     }
 
-    protected function postInvoiceData($data)
+    protected function decodeResponseAndCheckForErrors($response)
     {
-        $response = $this->getRestClient()->post(
-            '/invoices',
-            $this->encodeData($data),
-            $this->getOptions(),
-        );
-        return $response->getStringBody();
+        $decodedResponse = json_decode($response->getStringBody());
+
+        // An error occurred: Invalid Basic authentication: Benutzername oder Passwort falsch
+        if (!empty($decodedResponse->error)) {
+            throw new HelloCashApiException($decodedResponse->error);
+        }
+
+        if ($decodedResponse === 'An Error occurred') {
+            throw new HelloCashApiException($decodedResponse);
+        }
+
+        return $decodedResponse;
+
     }
 
 }
