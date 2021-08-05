@@ -104,7 +104,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1)
     {
         $blogPost = $this->BlogPost->get($blogPostId);
-        $blogPost->is_private = false;
+        $blogPost->is_private = $isPrivate;
         $blogPost->id_manufacturer = $manufacturerId;
         $blogPost->active = $active;
         $this->BlogPost->save($blogPost);
