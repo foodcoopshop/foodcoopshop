@@ -124,4 +124,71 @@ class HelloCashTest extends AppCakeTestCase
 
     }
 
+    public function testUpdatingExistingUserOnGeneratingReceipt()
+    {
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoiceA = $this->Invoice->find('all', [
+            'contain' => [
+                'Customers',
+            ],
+            'order' => ['Invoices.created' => 'DESC'],
+        ])->first();
+
+        $receiptHtml = $this->HelloCash->getReceipt($invoiceA->id, false);
+
+        $this->assertGreaterThan(0, $invoiceA->customer->user_id_registrierkasse);
+
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customer = $this->Customer->get($customerId);
+        $customer->firstname = 'Superadmin Firstname Changed';
+        $customer->lastname = 'Superadmin Lastname Changed';
+        $this->Customer->save($customer);
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoiceB = $this->Invoice->find('all', [
+            'contain' => [
+                'Customers',
+            ],
+            'order' => ['Invoices.created' => 'DESC'],
+        ])->first();
+        $receiptHtml = $this->HelloCash->getReceipt($invoiceB->id, false);
+
+        $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
+        $this->assertRegExpWithUnquotedString($customer->firstname, $receiptHtml);
+        $this->assertRegExpWithUnquotedString($customer->lasttname, $receiptHtml);
+
+    }
+
+    public function testCreatingUserThatDoesNotExistOnGeneratingReceipt()
+    {
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customer = $this->Customer->get($customerId);
+        $customer->user_id_registrierkasse = 1;
+        $this->Customer->save($customer);
+
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoiceA = $this->Invoice->find('all', [
+            'contain' => [
+                'Customers',
+            ],
+        ])->first();
+
+        $this->HelloCash->getReceipt($invoiceA->id, false);
+        $this->assertNotEquals($customer->user_id_registrierkasse, $invoiceA->customer->user_id_registrierkasse);
+
+    }
+
 }
