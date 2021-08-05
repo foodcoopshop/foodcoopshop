@@ -20,6 +20,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use Cake\TestSuite\EmailTrait;
 
 class HelloCashTest extends AppCakeTestCase
@@ -75,7 +76,6 @@ class HelloCashTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
 
         $invoice = $this->Invoice->find('all', [])->first();
-
         $this->HelloCash->getInvoice($invoice->id, false);
 
         $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
@@ -92,6 +92,7 @@ class HelloCashTest extends AppCakeTestCase
                 'InvoiceTaxes',
             ]
         ])->first();
+        $this->assertGreaterThan(1, $invoice->id);
 
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 33.69, 3.38, 37.07);
