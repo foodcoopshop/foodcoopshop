@@ -111,48 +111,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertEquals($invoices[0]->sum_price_excl * -1, $invoices[1]->sum_price_excl);
         $this->assertEquals($invoices[0]->sum_tax * -1, $invoices[1]->sum_tax);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_invoice' => $invoices[0]->id,
-            ],
-        ])->toArray();
-        $this->assertEquals(0, count($orderDetails));
-
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail IN' => $orderDetailIds,
-            ],
-        ])->toArray();
-        $this->assertEquals(5, count($orderDetails));
-
-        foreach($orderDetails as $orderDetail) {
-            $this->assertNull($orderDetail->id_invoice);
-            $this->assertEquals($orderDetail->order_state, ORDER_STATE_ORDER_PLACED);
-            $this->assertTrue($orderDetail->total_price_tax_excl >= 0);
-            $this->assertTrue($orderDetail->total_price_tax_incl >= 0);
-            $this->assertTrue($orderDetail->tax_unit_amount >= 0);
-            $this->assertTrue($orderDetail->tax_total_amount >= 0);
-        }
-
-        $payments = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.invoice_id' => $invoices[0]->id,
-            ],
-        ])->toArray();
-        $this->assertEquals(0, count($payments));
-
-        $payments = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id IN' => $paymentIds,
-            ],
-        ])->toArray();
-        $this->assertEquals(2, count($payments));
-
-        foreach($payments as $payment) {
-            $this->assertNull($payment->invoice_id);
-            $this->assertTrue($payment->amount >= 0);
-        }
+        $this->getAndAssertOrderDetailsAfterCancellation($orderDetailIds);
+        $this->getAndAssertPaymentsAfterCancellation($paymentIds);
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         $formattedCurrentDay = Configure::read('app.timeHelper')->formatToDateShort($currentDay);

@@ -20,8 +20,8 @@ use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\TestSuite\EmailTrait;
+use Cake\Utility\Hash;
 
 class HelloCashTest extends AppCakeTestCase
 {
@@ -99,6 +99,9 @@ class HelloCashTest extends AppCakeTestCase
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.5, -0.7, -4.2);
 
+        $this->getAndAssertOrderDetailsAfterInvoiceGeneration($invoice->id, 5);
+        $this->getAndAssertPaymentsAfterInvoiceGeneration($customerId);
+
     }
 
     public function testCancelInvoice()
@@ -109,9 +112,24 @@ class HelloCashTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoice = $this->Invoice->find('all', [])->first();
+        $invoice = $this->Invoice->find('all', [
+            'contain' => [
+                'InvoiceTaxes',
+                'OrderDetails',
+            ],
+        ])->first();
+        $orderDetailIds = Hash::extract($invoice, 'order_details.{n}.id_order_detail');
+
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $payments = $this->Payment->find('all', [
+            'conditions' => [
+                'Payments.invoice_id' => $invoice->id,
+            ],
+        ])->toArray();
+        $paymentIds = Hash::extract($payments, '{n}.id');
 
         $this->HelloCash->getInvoice($invoice->id, false);
+
         $this->ajaxPost(
             '/admin/invoices/cancel/',
             [
@@ -136,6 +154,9 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertMailContainsAttachment('Rechnung_' . $invoice->cancelled_invoice->invoice_number . '.pdf');
         $this->assertMailContainsAttachment('Storno-Rechnung_' . $invoice->invoice_number . '.pdf');
         $this->assertMailContainsHtmlAt(1, 'Dein Kontostand: <b>61,97 €</b>');
+
+        $this->getAndAssertOrderDetailsAfterCancellation($orderDetailIds);
+        $this->getAndAssertPaymentsAfterCancellation($paymentIds);
 
     }
 

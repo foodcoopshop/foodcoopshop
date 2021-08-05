@@ -103,28 +103,13 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.92, -0.78, -4.70);
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->getCustomerDepositNotBilled($customerId);
-
-        foreach($payments as $payment) {
-            $this->assertEquals($payment->id_invoice, 1);
-        }
-
         $this->assertMailCount(2);
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. 2018-000001, 02.02.2018');
         $this->assertMailContainsAttachment($pdfFilenameWithoutPath);
 
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_invoice' => $invoice->id,
-            ],
-        ])->toArray();
-
-        $this->assertEquals(4, count($orderDetails));
-        foreach($orderDetails as $orderDetail) {
-            $this->assertEquals($orderDetail->order_state, ORDER_STATE_BILLED_CASHLESS);
-        }
+        $this->getAndAssertOrderDetailsAfterInvoiceGeneration($invoice->id, 4);
+        $this->getAndAssertPaymentsAfterInvoiceGeneration($customerId);
 
         // call again
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
