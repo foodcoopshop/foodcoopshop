@@ -15,7 +15,7 @@ namespace App\Test\TestCase\Traits;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-trait PrepareInvoiceDataTrait
+trait PrepareAndTestInvoiceDataTrait
 {
 
     public function generateInvoice($customerId, $paidInCash)
@@ -47,5 +47,14 @@ trait PrepareInvoiceDataTrait
         $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
 
     }
+
+    public function doAssertInvoiceTaxes($data, $taxRate, $excl, $tax, $incl)
+    {
+        $this->assertEquals($data->tax_rate, $taxRate);
+        $this->assertEquals($data->total_price_tax_excl, $excl);
+        $this->assertEquals($data->total_price_tax, $tax);
+        $this->assertEquals($data->total_price_tax_incl, $incl);
+    }
+
 
 }

@@ -17,7 +17,7 @@ use App\Lib\HelloCash\HelloCash;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
@@ -27,7 +27,7 @@ class HelloCashTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use PrepareInvoiceDataTrait;
+    use PrepareAndTestInvoiceDataTrait;
 
     protected $HelloCash;
     protected $Invoice;
@@ -83,6 +83,20 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertMailCount(2);
         $this->assertMailContainsAttachment('Rechnung_' . $invoice->invoice_number . '.pdf');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
+
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id' => $invoice->id,
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ]
+        ])->first();
+
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 33.69, 3.38, 37.07);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.5, -0.7, -4.2);
 
     }
 

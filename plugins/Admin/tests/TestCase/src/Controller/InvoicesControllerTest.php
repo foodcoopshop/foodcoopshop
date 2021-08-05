@@ -8,7 +8,7 @@ use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Utility\Hash;
-use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +29,7 @@ class InvoicesControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use PrepareInvoiceDataTrait;
+    use PrepareAndTestInvoiceDataTrait;
 
     public $commandRunner;
 

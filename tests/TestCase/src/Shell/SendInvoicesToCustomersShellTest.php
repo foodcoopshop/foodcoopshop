@@ -17,7 +17,7 @@ use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
@@ -29,7 +29,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use PrepareInvoiceDataTrait;
+    use PrepareAndTestInvoiceDataTrait;
 
     public $commandRunner;
 
@@ -132,14 +132,6 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 
         $this->assertEquals(1, count($this->Invoice->find('all')->toArray()));
 
-    }
-
-    protected function doAssertInvoiceTaxes($data, $taxRate, $excl, $tax, $incl)
-    {
-        $this->assertEquals($data->tax_rate, $taxRate);
-        $this->assertEquals($data->total_price_tax_excl, $excl);
-        $this->assertEquals($data->total_price_tax, $tax);
-        $this->assertEquals($data->total_price_tax_incl, $incl);
     }
 
 }
