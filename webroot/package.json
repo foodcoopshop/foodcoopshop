@@ -16,7 +16,7 @@
   "dependencies": {
     "@beyonk/gdpr-cookie-consent-banner": "^7.1.1",
     "@ericblade/quagga2": "^1.4.1",
-    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "blueimp-file-upload": "^10.31.0",
     "bootstrap": "^4.6.0",
     "bootstrap-select": "^1.13.18",
@@ -35,8 +35,8 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "svelte": "^3.41.0",
-    "swiper": "6.8.0",
+    "svelte": "^3.42.1",
+    "swiper": "6.8.1",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.14.1",
     "webrtc-adapter": "^8.1.0"
