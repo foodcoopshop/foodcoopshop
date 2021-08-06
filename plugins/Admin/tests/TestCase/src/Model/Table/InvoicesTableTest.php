@@ -3,7 +3,7 @@
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
 
 /**
@@ -24,7 +24,7 @@ class InvoicesTableTest extends AppCakeTestCase
 
     use AppIntegrationTestTrait;
     use LoginTrait;
-    use PrepareInvoiceDataTrait;
+    use PrepareAndTestInvoiceDataTrait;
 
     public $Invoice;
 

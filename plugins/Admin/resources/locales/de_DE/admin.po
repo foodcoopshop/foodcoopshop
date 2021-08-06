@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-16 12:12+0200\n"
-"PO-Revision-Date: 2021-07-16 12:12+0200\n"
+"POT-Creation-Date: 2021-08-02 21:27+0200\n"
+"PO-Revision-Date: 2021-08-02 21:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1689,6 +1689,9 @@ msgstr "Neu?"
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
 
+msgid "Storage_location"
+msgstr ""
+
 msgid "Added_on"
 msgstr "Eingetragen am"
 
@@ -1833,8 +1836,11 @@ msgstr "Abholtag ändern"
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
 
-msgid "Generate_orders_as_pdf"
-msgstr "Bestellungen als PDF generieren"
+msgid "Orders_as_pdf"
+msgstr "Bestellungen als PDF"
+
+msgid "Orders_as_pdf_order_by_storage_location"
+msgstr "Bestellungen als PDF (nach Lagerort)"
 
 msgid "Multiple_pickup_days"
 msgstr "Mehrere Abholtage"

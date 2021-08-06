@@ -336,6 +336,10 @@ echo '<div class="bottom-button-container">';
         'pickupDay' => $pickupDay
     ]);
 
+    echo $this->element('orderDetailList/button/generateOrderDetailsAsPdfOrderByStorageLocation', [
+        'pickupDay' => $pickupDay
+    ]);
+
     echo $this->element('orderDetailList/button/generateOrderDetailsAsPdf', [
         'pickupDay' => $pickupDay
     ]);

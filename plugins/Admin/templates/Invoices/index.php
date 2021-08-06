@@ -160,23 +160,25 @@ echo '<table class="list invoices-table no-clone-last-row">';
             echo '</td>';
 
             // hello cash has no filename set
-            echo '<td style="text-align:center;">';
-            if ($invoice->filename == '') {
-                $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
-                if (!empty($invoice->cancelled_invoice)) {
-                    $receiptLink = $this->Slug->getHelloCashReceipt($invoice->cancelled_invoice->id, true);
+            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                echo '<td style="text-align:center;">';
+                if ($invoice->filename == '') {
+                    $receiptLink = $this->Slug->getHelloCashReceipt($invoice->id);
+                    if (!empty($invoice->cancelled_invoice)) {
+                        $receiptLink = $this->Slug->getHelloCashReceipt($invoice->cancelled_invoice->id, true);
+                    }
+                    echo $this->Html->link(
+                        '<i class="fas fa-arrow-right ok"></i>',
+                        $receiptLink,
+                        [
+                            'class' => 'btn btn-outline-light',
+                            'target' => '_blank',
+                            'escape' => false,
+                        ],
+                    );
                 }
-                echo $this->Html->link(
-                    '<i class="fas fa-arrow-right ok"></i>',
-                    $receiptLink,
-                    [
-                        'class' => 'btn btn-outline-light',
-                        'target' => '_blank',
-                        'escape' => false,
-                    ],
-                );
+                echo '</td>';
             }
-            echo '</td>';
 
             // hello cash has no filename set
             if ($invoice->filename == '') {

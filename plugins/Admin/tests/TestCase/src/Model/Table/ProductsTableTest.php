@@ -567,7 +567,8 @@ class ProductsTableTest extends AppCakeTestCase
         $description = 'description <img src="test.jpg" />';
         $unity = '<b>piece</b>';
         $isDeclarationOk = 0;
-        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk);
+        $idStorageLocation = 1;
+        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -590,6 +591,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->is_declaration_ok, $isDeclarationOk);
         $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 0);
+        $this->assertEquals($product->id_storage_location, $idStorageLocation);
     }
 
     /**
@@ -833,7 +835,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 'invalid parameter']
         ];
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
         $this->Product->changeStatus($products);
     }
@@ -843,7 +845,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 5] // invalid status
         ];
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
         $this->Product->changeStatus($products);
     }
@@ -853,7 +855,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             ['60-10' => 0]
         ];
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('change status is not allowed for product attributes');
         $this->Product->changeStatus($products);
     }
@@ -957,7 +959,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             ['60-10' => 0]
         ];
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('change name is not allowed for product attributes');
         $this->Product->changeName($products);
     }
@@ -969,7 +971,8 @@ class ProductsTableTest extends AppCakeTestCase
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
             'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
-            'description_short' => '<p>test description<br /> <em>short</em></p>    '
+            'description_short' => '<p>test description<br /> <em>short</em></p>    ',
+            'id_storage_location' => 2,
         ];
 
         $products = [
@@ -982,7 +985,8 @@ class ProductsTableTest extends AppCakeTestCase
             'name' => 'test name',
             'unity' => 'test unity',
             'description' => '<p>test <br /><strong><em>description</em></strong></p>',
-            'description_short' => '<p>test description<br /> <em>short</em></p>'
+            'description_short' => '<p>test description<br /> <em>short</em></p>',
+            'id_storage_location' => 2,
         ];
         $this->assertProductName($products, $expectedResults);
     }
@@ -994,16 +998,22 @@ class ProductsTableTest extends AppCakeTestCase
     private function assertProductName($products, $expectedResults)
     {
         foreach ($products as $product) {
+
             $productId = key($product);
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productId,
                 ]
             ])->first();
-            $this->assertEquals($expectedResults['name'], $changedProduct->name, 'changing the name did not work');
-            $this->assertEquals($expectedResults['unity'], $changedProduct->unity, 'changing the unity did not work');
-            $this->assertEquals($expectedResults['description'], $changedProduct->description, 'changing the description did not work');
-            $this->assertEquals($expectedResults['description_short'], $changedProduct->description_short, 'changing the description short did not work');
+            $this->assertEquals($expectedResults['name'], $changedProduct->name);
+            $this->assertEquals($expectedResults['unity'], $changedProduct->unity);
+            $this->assertEquals($expectedResults['description'], $changedProduct->description);
+            $this->assertEquals($expectedResults['description_short'], $changedProduct->description_short);
+
+            if (isset($expectedResults['id_storage_location'])) {
+                $this->assertEquals($expectedResults['id_storage_location'], $changedProduct->id_storage_location);
+            }
+
         }
     }
 

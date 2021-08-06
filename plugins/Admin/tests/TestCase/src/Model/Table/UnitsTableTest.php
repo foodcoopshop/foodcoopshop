@@ -1,5 +1,6 @@
 <?php
 
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 
 /**
@@ -38,7 +39,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidPriceString()
     {
         $this->priceInclPerUnit = 'random-string';
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Der Preis nach Gewicht muss eine Zahl sein. Der Preis nach Gewicht muss größer als 0 sein.');
         $this->doSave();
     }
@@ -46,7 +47,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidPriceZero()
     {
         $this->priceInclPerUnit = 0;
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Der Preis nach Gewicht muss größer als 0 sein.');
         $this->doSave();
     }
@@ -54,7 +55,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidNameWrongString()
     {
         $this->name = 'p';
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Der Name ist nicht erlaubt.');
         $this->doSave();
     }
@@ -62,7 +63,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidNameEmpty()
     {
         $this->name = '';
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Bitte gib einen Namen ein.');
         $this->doSave();
     }
@@ -70,7 +71,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidAmountString()
     {
         $this->amount = 'random-string';
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Die Anzahl muss eine Zahl sein. Die Anzahl muss größer als 0 sein.');
         $this->doSave();
     }
@@ -78,7 +79,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidAmountZero()
     {
         $this->amount = 0;
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Die Anzahl muss größer als 0 sein.');
         $this->doSave();
     }
@@ -86,7 +87,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidQuantityInUnitsString()
     {
         $this->quantityInUnits = 'random-string';
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Das ungefähre Liefergewicht muss eine Zahl sein.');
         $this->doSave();
     }
@@ -94,7 +95,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function testSaveProductWithInvalidQuantityInUnitsNegative()
     {
         $this->quantityInUnits = -1;
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('Das ungefähre Liefergewicht muss eine positive Zahl sein.');
         $this->doSave();
     }

@@ -12,60 +12,219 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Application;
 use App\Lib\HelloCash\HelloCash;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
+use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
+use Cake\TestSuite\EmailTrait;
+use Cake\Utility\Hash;
 
 class HelloCashTest extends AppCakeTestCase
 {
     use AppIntegrationTestTrait;
+    use EmailTrait;
     use LoginTrait;
-    use PrepareInvoiceDataTrait;
+    use PrepareAndTestInvoiceDataTrait;
 
     protected $HelloCash;
+    protected $Invoice;
+    protected $commandRunner;
 
     public function setUp(): void
     {
         parent::setUp();
-
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
-        Configure::write('app.helloCashRestEndpoint', 'https://private-anon-4523ba7d1d-hellocashapi.apiary-mock.com/api/v1/invoices');
-        Configure::write('app.helloCashAtCredentials.username', '');
-        Configure::write('app.helloCashAtCredentials.password', '');
-        Configure::write('app.helloCashAtCredentials.cashier_id', 0);
-        Configure::write('app.helloCashAtCredentials.test_mode', true);
         $this->HelloCash = new HelloCash();
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
-    public function tearDown(): void
-    {
-        $this->assertLogFilesForErrors();
-    }
-
-    /*
-    public function testGenerateInvoice()
+    public function testGenerateReceipt()
     {
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
-    }
-    */
 
-    public function testGetInvoices()
+        $invoice = $this->Invoice->find('all', [])->first();
+
+        $receiptHtml = $this->HelloCash->getReceipt($invoice->id, false);
+
+        $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
+
+        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+
+        $this->assertMailCount(1);
+
+    }
+
+    public function testGenerateInvoice()
     {
-        $response = $this->HelloCash->getRestClient()->get(
-            '/invoices',
-            [],
-            [],
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 0;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoice = $this->Invoice->find('all', [])->first();
+        $this->HelloCash->getInvoice($invoice->id, false);
+
+        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+
+        $this->assertMailCount(2);
+        $this->assertMailContainsAttachment('Rechnung_' . $invoice->invoice_number . '.pdf');
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
+
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id' => $invoice->id,
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ]
+        ])->first();
+        $this->assertGreaterThan(1, $invoice->id);
+
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 33.69, 3.38, 37.07);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.5, -0.7, -4.2);
+
+        $this->getAndAssertOrderDetailsAfterInvoiceGeneration($invoice->id, 5);
+        $this->getAndAssertPaymentsAfterInvoiceGeneration($customerId);
+
+    }
+
+    public function testCancelInvoice()
+    {
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 0;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoice = $this->Invoice->find('all', [
+            'contain' => [
+                'InvoiceTaxes',
+                'OrderDetails',
+            ],
+        ])->first();
+        $orderDetailIds = Hash::extract($invoice, 'order_details.{n}.id_order_detail');
+
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $payments = $this->Payment->find('all', [
+            'conditions' => [
+                'Payments.invoice_id' => $invoice->id,
+            ],
+        ])->toArray();
+        $paymentIds = Hash::extract($payments, '{n}.id');
+
+        $this->HelloCash->getInvoice($invoice->id, false);
+
+        $this->ajaxPost(
+            '/admin/invoices/cancel/',
+            [
+                'invoiceId' => $invoice->id,
+            ]
         );
-        $responseObject = json_decode($response->getStringBody());
-        $this->assertEquals(8639, $responseObject->invoice_id);
+        $response = json_decode($this->_response);
+
+        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id' => $response->invoiceId,
+            ],
+            'contain' => [
+                'CancelledInvoices',
+            ]
+        ])->first();
+        $this->assertNotNull($invoice->email_status);
+
+        $this->assertMailCount(3);
+        $this->assertMailContainsAttachment('Rechnung_' . $invoice->cancelled_invoice->invoice_number . '.pdf');
+        $this->assertMailContainsAttachment('Storno-Rechnung_' . $invoice->invoice_number . '.pdf');
+        $this->assertMailContainsHtmlAt(1, 'Dein Kontostand: <b>61,97 €</b>');
+
+        $this->getAndAssertOrderDetailsAfterCancellation($orderDetailIds);
+        $this->getAndAssertPaymentsAfterCancellation($paymentIds);
+
+    }
+
+    public function testUpdatingExistingUserOnGeneratingReceipt()
+    {
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoiceA = $this->Invoice->find('all', [
+            'contain' => [
+                'Customers',
+            ],
+            'order' => ['Invoices.created' => 'DESC'],
+        ])->first();
+
+        $receiptHtml = $this->HelloCash->getReceipt($invoiceA->id, false);
+
+        $this->assertGreaterThan(0, $invoiceA->customer->user_id_registrierkasse);
+
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customer = $this->Customer->get($customerId);
+        $customer->firstname = 'Superadmin Firstname Changed';
+        $customer->lastname = 'Superadmin Lastname Changed';
+        $this->Customer->save($customer);
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoiceB = $this->Invoice->find('all', [
+            'contain' => [
+                'Customers',
+            ],
+            'order' => ['Invoices.created' => 'DESC'],
+        ])->first();
+        $receiptHtml = $this->HelloCash->getReceipt($invoiceB->id, false);
+
+        $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
+        $this->assertRegExpWithUnquotedString($customer->firstname, $receiptHtml);
+        $this->assertRegExpWithUnquotedString($customer->lasttname, $receiptHtml);
+
+    }
+
+    public function testCreatingUserThatDoesNotExistOnGeneratingReceipt()
+    {
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customer = $this->Customer->get($customerId);
+        $customer->user_id_registrierkasse = 1;
+        $this->Customer->save($customer);
+
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoiceA = $this->Invoice->find('all', [
+            'contain' => [
+                'Customers',
+            ],
+        ])->first();
+
+        $this->HelloCash->getReceipt($invoiceA->id, false);
+        $this->assertNotEquals($customer->user_id_registrierkasse, $invoiceA->customer->user_id_registrierkasse);
+
     }
 
 }

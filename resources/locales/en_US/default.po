@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-07-15 09:43+0200\n"
-"PO-Revision-Date: 2021-05-27 10:49+0200\n"
+"POT-Creation-Date: 2021-08-04 10:59+0200\n"
+"PO-Revision-Date: 2021-08-04 11:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -1044,6 +1044,9 @@ msgstr "After the order lists are sent, the available amount is set to this valu
 msgid "Enter_purchase_price"
 msgstr "Enter purchase price"
 
+msgid "Storage_location"
+msgstr ""
+
 msgid "delete"
 msgstr "delete"
 
@@ -1800,6 +1803,24 @@ msgstr "The approximate weight needs to be a number."
 msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
 msgstr "The approximate weight needs to be greater or equal than 0."
 
+msgid "member"
+msgstr "Member"
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Invoice nº {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Cancellation invoice nº {0}, {1}"
+
+msgid "Invoice"
+msgstr "Invoice"
+
+msgid "Cancellation_invoice"
+msgstr "Cancellation invoice"
+
+msgid "Order_lists_for_the_day"
+msgstr "Order lists for"
+
 msgid "Runtime"
 msgstr "Runtime"
 
@@ -1853,18 +1874,6 @@ msgstr "Products"
 
 msgid "Sent_order_lists"
 msgstr "Sent order lists"
-
-msgid "member"
-msgstr "Member"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Invoice nº {0}, {1}"
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr "Cancellation invoice nº {0}, {1}"
-
-msgid "Order_lists_for_the_day"
-msgstr "Order lists for"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Members add their payments manually"
@@ -2574,9 +2583,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "Last_order_day"
 #~ msgstr "Last order day"
-
-#~ msgid "Invoices"
-#~ msgstr "Rechnungen"
 
 #~ msgid "Action_Log_Superadmin_deploy_failed"
 #~ msgstr "Superadmin: Deploy failed"

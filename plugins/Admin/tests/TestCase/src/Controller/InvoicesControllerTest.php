@@ -8,7 +8,7 @@ use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Utility\Hash;
-use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +29,7 @@ class InvoicesControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use PrepareInvoiceDataTrait;
+    use PrepareAndTestInvoiceDataTrait;
 
     public $commandRunner;
 
@@ -88,12 +88,13 @@ class InvoicesControllerTest extends AppCakeTestCase
         ])->toArray();
         $paymentIds = Hash::extract($payments, '{n}.id');
 
-        $this->ajaxPost(
+        $response = $this->ajaxPost(
             '/admin/invoices/cancel/',
             [
                 'invoiceId' => $invoice->id,
             ]
         );
+        $response = json_decode($this->_response);
         $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
 
         $invoices = $this->Invoice->find('all', [
@@ -110,54 +111,24 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertEquals($invoices[0]->sum_price_excl * -1, $invoices[1]->sum_price_excl);
         $this->assertEquals($invoices[0]->sum_tax * -1, $invoices[1]->sum_tax);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_invoice' => $invoices[0]->id,
-            ],
-        ])->toArray();
-        $this->assertEquals(0, count($orderDetails));
-
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail IN' => $orderDetailIds,
-            ],
-        ])->toArray();
-        $this->assertEquals(5, count($orderDetails));
-
-        foreach($orderDetails as $orderDetail) {
-            $this->assertNull($orderDetail->id_invoice);
-            $this->assertEquals($orderDetail->order_state, ORDER_STATE_ORDER_PLACED);
-            $this->assertTrue($orderDetail->total_price_tax_excl >= 0);
-            $this->assertTrue($orderDetail->total_price_tax_incl >= 0);
-            $this->assertTrue($orderDetail->tax_unit_amount >= 0);
-            $this->assertTrue($orderDetail->tax_total_amount >= 0);
-        }
-
-        $payments = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.invoice_id' => $invoices[0]->id,
-            ],
-        ])->toArray();
-        $this->assertEquals(0, count($payments));
-
-        $payments = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id IN' => $paymentIds,
-            ],
-        ])->toArray();
-        $this->assertEquals(2, count($payments));
-
-        foreach($payments as $payment) {
-            $this->assertNull($payment->invoice_id);
-            $this->assertTrue($payment->amount >= 0);
-        }
+        $this->getAndAssertOrderDetailsAfterCancellation($orderDetailIds);
+        $this->getAndAssertPaymentsAfterCancellation($paymentIds);
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         $formattedCurrentDay = Configure::read('app.timeHelper')->formatToDateShort($currentDay);
         $currentYear = date('Y', strtotime($currentDay));
         $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. ' . $currentYear . '-000001, ' . $formattedCurrentDay);
         $this->assertMailSubjectContainsAt(2, 'Storno-Rechnung Nr. ' . $currentYear . '-000002, ' . $formattedCurrentDay);
+        $this->assertMailContainsHtmlAt(1, 'Dein Kontostand: <b>61,97 €</b>');
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
+
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id' => (int) $response->invoiceId,
+            ],
+        ])->first();
+        $this->assertNotNull($invoice->email_status);
 
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 
 /**
@@ -190,9 +191,9 @@ class CronjobsTableTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('weekday not available');
-        $this->Cronjob->run();
+        $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
         $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
     }
@@ -207,7 +208,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('day of month not available or not valid');
         $this->Cronjob->run();
         $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());

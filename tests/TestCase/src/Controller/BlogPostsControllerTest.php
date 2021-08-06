@@ -103,14 +103,10 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1)
     {
-        $query = 'UPDATE ' . $this->BlogPost->getTable() . ' SET is_private = :isPrivate, id_manufacturer = :manufacturerId, active = :active WHERE id_blog_post = :blogPostId;';
-        $params = [
-            'blogPostId' => $blogPostId,
-            'isPrivate' => $isPrivate,
-            'manufacturerId' => $manufacturerId,
-            'active' => $active
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $blogPost = $this->BlogPost->get($blogPostId);
+        $blogPost->is_private = $isPrivate;
+        $blogPost->id_manufacturer = $manufacturerId;
+        $blogPost->active = $active;
+        $this->BlogPost->save($blogPost);
     }
 }

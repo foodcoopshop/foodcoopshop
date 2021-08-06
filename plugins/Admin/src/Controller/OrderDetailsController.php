@@ -224,6 +224,7 @@ class OrderDetailsController extends AdminAppController
     {
 
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
+        $order = $this->getRequest()->getQuery('order') ?? null;
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
@@ -235,19 +236,26 @@ class OrderDetailsController extends AdminAppController
             'contain' => $odParams['contain'],
         ])->toArray();
 
+        $storageLocation = [];
         $customerName = [];
         $manufacturerName = [];
         $productName = [];
         foreach($orderDetails as $orderDetail) {
+            $storageLocationValue = 0;
+            if (!is_null($order)) {
+                $storageLocationValue = $orderDetail->product->storage_location->rank;
+            }
+            $storageLocation[] = $storageLocationValue;
             $customerName[] = StringComponent::slugify($orderDetail->customer->name);
             $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
             $productName[] = StringComponent::slugify($orderDetail->product_name);
         }
         array_multisort(
+            $storageLocation, SORT_ASC,
             $customerName, SORT_ASC,
             $manufacturerName, SORT_ASC,
             $productName, SORT_ASC,
-            $orderDetails
+            $orderDetails,
         );
 
         $preparedOrderDetails = [];
@@ -294,6 +302,7 @@ class OrderDetailsController extends AdminAppController
         $pdfWriter->setData([
             'orderDetails' => $preparedOrderDetails,
             'appAuth' => $this->AppAuth,
+            'order' => $order,
             'taxRates' => isset($taxRates) ? $taxRates : null,
         ]);
         die($pdfWriter->writeInline());

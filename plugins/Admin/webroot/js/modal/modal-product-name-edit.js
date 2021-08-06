@@ -33,6 +33,15 @@ foodcoopshop.ModalProductNameEdit = {
         html += '<span class="small">' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>';
         html += '<hr />';
         html += '</div>';
+
+        if ($('.storage-location-dropdown-wrapper').length > 0) {
+            html += '<div class="field-wrapper storage-location-wrapper">';
+                html += '<label for="dialogStorageLocation"><b>' + foodcoopshop.LocalizedJs.dialogProduct.StorageLocation + '</b></label>';
+                html += '<select name="dialogStorageLoation" id="dialogStorageLocation"></select><br />';
+                html += '<hr />';
+            html += '</div>';
+        }
+
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
         html += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
@@ -63,7 +72,8 @@ foodcoopshop.ModalProductNameEdit = {
                 unity: $('#dialogUnity').val(),
                 descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData().trim(),
                 description: CKEDITOR.instances['dialogDescription'].getData().trim(),
-                isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0
+                isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0,
+                idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0
             },
             {
                 onOk: function (data) {
@@ -111,6 +121,13 @@ foodcoopshop.ModalProductNameEdit = {
         $(modalSelector + ' #dialogUnity').val(unity);
         CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
         $(modalSelector + ' #dialogProductId').val(row.find('td.cell-id').html());
+
+        var storageLocationWrapper = $('.storage-location-dropdown-wrapper');
+        if (storageLocationWrapper.length > 0) {
+            $(modalSelector + ' #dialogStorageLocation').append(storageLocationWrapper.find('select').html());
+            var storageLocationId = row.find('td.cell-name .storage-location-for-dialog').text();
+            $(modalSelector + ' #dialogStorageLocation').val(storageLocationId);
+        }
 
         var manufacturerId = row.data('manufacturerId');
         foodcoopshop.Helper.ajaxCall(

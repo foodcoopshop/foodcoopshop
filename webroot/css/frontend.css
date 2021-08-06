@@ -976,10 +976,8 @@ body.carts.detail .cart:not(#cart) .image {
     display: inline;
     text-align: center;
     float: left;
-    margin-right: 15px;
-    padding: 10px;
-    border: 1px solid #d6d4d4;
-    width: 120px;
+    margin-right: 10px;
+    width: 110px;
     margin-top: -30px;
 }
 body.carts.detail .cart:not(#cart) .image img {

@@ -481,6 +481,7 @@ class ProductsController extends AdminAppController
         $description = $this->getRequest()->getData('description');
         $unity = $this->getRequest()->getData('unity');
         $isDeclarationOk = $this->getRequest()->getData('isDeclarationOk');
+        $idStorageLocation = $this->getRequest()->getData('idStorageLocation');
 
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
@@ -499,7 +500,7 @@ class ProductsController extends AdminAppController
             if (empty($manufacturer)) {
                 throw new RecordNotFoundException('manufacturer not existing');
             }
-            $productEntity = $this->Product->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk);
+            $productEntity = $this->Product->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($productEntity)));
             }
@@ -1325,7 +1326,8 @@ class ProductsController extends AdminAppController
                         'description' => $this->getRequest()->getData('description'),
                         'description_short' => $this->getRequest()->getData('descriptionShort'),
                         'unity' => $this->getRequest()->getData('unity'),
-                        'is_declaration_ok' => $this->getRequest()->getData('isDeclarationOk')
+                        'is_declaration_ok' => $this->getRequest()->getData('isDeclarationOk'),
+                        'id_storage_location' => $this->getRequest()->getData('idStorageLocation'),
                     ]]
                 ]
             );
@@ -1459,6 +1461,12 @@ class ProductsController extends AdminAppController
         $this->set('advancedStockManagementEnabled', $advancedStockManagementEnabled);
 
         $this->set('title_for_layout', __d('admin', 'Products'));
+
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            $this->StorageLocation = $this->getTableLocator()->get('StorageLocations');
+            $storageLocationsForForDropdown = $this->StorageLocation->getForDropdown();
+            $this->set('storageLocationsForForDropdown', $storageLocationsForForDropdown);
+        }
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');

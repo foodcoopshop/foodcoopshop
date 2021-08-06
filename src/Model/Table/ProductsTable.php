@@ -68,6 +68,9 @@ class ProductsTable extends AppTable
         $this->hasOne('UnitProducts', [
             'foreignKey' => 'id_product'
         ]);
+        $this->belongsTo('StorageLocations', [
+            'foreignKey' => 'id_storage_location',
+        ]);
         $this->addBehavior('Timestamp');
     }
 
@@ -678,6 +681,7 @@ class ProductsTable extends AppTable
      *                      [description_short] => kbA, vom Gemüsehof Wild-Obermayr-1
      *                      [unity] => ca. 0,4 kg-1
      *                      [is_declaration_ok] => 1
+     *                      [id_storage_location] => 1
      *                  )
      *          )
      *  )
@@ -717,6 +721,9 @@ class ProductsTable extends AppTable
                 ];
                 if (isset($name['is_declaration_ok'])) {
                     $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
+                }
+                if (isset($name['id_storage_location'])) {
+                    $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
                 }
                 $products2save[] = $tmpProduct2Save;
             }
@@ -1375,7 +1382,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk)
+    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation)
     {
         $defaultQuantity = 0;
 
@@ -1392,6 +1399,7 @@ class ProductsTable extends AppTable
                 'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
                 'unity' => StringComponent::removeSpecialChars(strip_tags(trim($unity))),
                 'is_declaration_ok' => $isDeclarationOk,
+                'id_storage_location' => $idStorageLocation,
             ],
             [
                 'validate' => 'name'
