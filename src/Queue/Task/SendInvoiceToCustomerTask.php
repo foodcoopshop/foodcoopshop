@@ -40,7 +40,7 @@ class SendInvoiceToCustomerTask extends Task {
         $invoiceDate = $data['invoiceDate'];
         $invoiceId = $data['invoiceId'];
         $isCancellationInvoice = (bool) $data['isCancellationInvoice'];
-        $originalInvoiceId = $data['originalInvoiceId'];
+        $originalInvoiceId = $data['originalInvoiceId'] ?? $invoiceId;
 
         $subject = __('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]);
         $emailTemplate = 'Admin.send_invoice_to_customer';
