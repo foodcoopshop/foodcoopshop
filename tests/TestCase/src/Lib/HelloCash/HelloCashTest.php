@@ -83,6 +83,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertMailCount(2);
         $this->assertMailContainsAttachment('Rechnung_' . $invoice->invoice_number . '.pdf');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
+        $this->assertMailContainsHtmlAt(1, 'Guthaben beträgt <b>61,97 €</b>');
 
         $invoice = $this->Invoice->find('all', [
             'conditions' => [
@@ -153,7 +154,8 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertMailCount(3);
         $this->assertMailContainsAttachment('Rechnung_' . $invoice->cancelled_invoice->invoice_number . '.pdf');
         $this->assertMailContainsAttachment('Storno-Rechnung_' . $invoice->invoice_number . '.pdf');
-        $this->assertMailContainsHtmlAt(1, 'Dein Kontostand: <b>61,97 €</b>');
+        $this->assertMailContainsHtmlAt(1, 'Guthaben beträgt <b>61,97 €</b>');
+        $this->assertMailContainsHtmlAt(2, 'Guthaben beträgt <b>61,97 €</b>');
 
         $this->getAndAssertOrderDetailsAfterCancellation($orderDetailIds);
         $this->getAndAssertPaymentsAfterCancellation($paymentIds);
