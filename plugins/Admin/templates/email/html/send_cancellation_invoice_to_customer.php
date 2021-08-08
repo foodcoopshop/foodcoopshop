@@ -26,6 +26,14 @@
     <tr>
         <td>
 
+            <p>
+                <?php
+                    echo __d('admin', 'your_current_credit_equals_{0}.', [
+                        '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
+                    ]);
+                ?>
+            </p>
+
             <p><?php echo __d('admin', 'Please_find_your_cancellation_invoice_attached.'); ?></p>
 
         </td>
