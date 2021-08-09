@@ -58,6 +58,7 @@ class FileAndEmailLog extends FileLog
             '{"short_description":{"maxLength":',
             '{"firstname":{"_empty":',
             '{"lastname":{"_empty":',
+            '{"name":{"lengthBetween":',
             __('You_are_not_signed_in.'),
             '{"default_quantity_after_sending_order_lists":{"greaterThanOrEqual":',
             '{"quantity_limit":{"lessThanOrEqual":',
@@ -72,6 +73,7 @@ class FileAndEmailLog extends FileLog
             '{"amount":{"numeric":"Bitte gib eine korrekte Zahl ein.',
             '{"no_delivery_days":',
             '{"price_incl_per_unit":{"greaterThan":',
+            'Form tampering protection token validation failed',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
