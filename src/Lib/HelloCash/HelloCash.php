@@ -76,7 +76,7 @@ class HelloCash
             $this->encodeData($postData),
             $this->getOptions(),
         );
-        $responseObject = $this->decodeResponseAndCheckForErrors($response);
+        $responseObject = $this->decodeApiResponseAndCheckForErrors($response);
         $paidInCash = $responseObject->invoice_payment == 'Bar' ? 1 : 0;
 
         $taxRates = $this->prepareTaxesFromResponse($responseObject, true);
@@ -205,6 +205,8 @@ class HelloCash
             ]
         );
 
+        $response = $this->checkRequestForErrors($response);
+
         return $response;
 
     }
@@ -220,7 +222,7 @@ class HelloCash
             $this->encodeData($postData),
             $this->getOptions(),
         );
-        $responseObject = $this->decodeResponseAndCheckForErrors($response);
+        $responseObject = $this->decodeApiResponseAndCheckForErrors($response);
 
         if (!$isPreview) {
             $responseObject = $this->afterSuccessfulInvoiceGeneration($responseObject, $data, $currentDay, $paidInCash);
@@ -322,7 +324,7 @@ class HelloCash
                 [],
                 $this->getOptions(),
             );
-            $helloCashUser = $this->decodeResponseAndCheckForErrors($response);
+            $helloCashUser = $this->decodeApiResponseAndCheckForErrors($response);
 
             // check if associated user_id_registrierkasse is still available within hello cash)
             if ($helloCashUser != 'User not found') {
@@ -339,7 +341,7 @@ class HelloCash
             $this->getOptions(),
         );
 
-        $helloCashUser = $this->decodeResponseAndCheckForErrors($response);
+        $helloCashUser = $this->decodeApiResponseAndCheckForErrors($response);
 
         if (!array_key_exists('user_id', $data)) {
             $customer->user_id_registrierkasse = $helloCashUser->user_id;
@@ -350,8 +352,17 @@ class HelloCash
 
     }
 
-    protected function decodeResponseAndCheckForErrors($response)
+    protected function checkRequestForErrors($response)
     {
+        if (preg_match('/Seite nicht gefunden/', $response->getStringBody())) {
+            throw new HelloCashApiException($response->getStringBody());
+        }
+        return $response;
+    }
+
+    protected function decodeApiResponseAndCheckForErrors($response)
+    {
+
         $decodedResponse = json_decode($response->getStringBody());
 
         // An error occurred: Invalid Basic authentication: Benutzername oder Passwort falsch
