@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Utility\Hash;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
+use App\Test\TestCase\Traits\QueueTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,6 +31,7 @@ class InvoicesControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
+    use QueueTrait;
 
     public $commandRunner;
 
@@ -95,7 +97,7 @@ class InvoicesControllerTest extends AppCakeTestCase
             ]
         );
         $response = json_decode($this->_response);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $invoices = $this->Invoice->find('all', [
             'conditions' => [

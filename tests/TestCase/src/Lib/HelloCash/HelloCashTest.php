@@ -16,6 +16,7 @@ use App\Application;
 use App\Lib\HelloCash\HelloCash;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\QueueTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Console\CommandRunner;
@@ -29,6 +30,7 @@ class HelloCashTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
+    use QueueTrait;
 
     protected $HelloCash;
     protected $Invoice;
@@ -61,7 +63,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertMailCount(1);
 
@@ -77,8 +79,7 @@ class HelloCashTest extends AppCakeTestCase
 
         $invoice = $this->Invoice->find('all', [])->first();
         $this->HelloCash->getInvoice($invoice->id, false);
-
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertMailCount(2);
         $this->assertMailContainsAttachment('Rechnung_' . $invoice->invoice_number . '.pdf');
@@ -138,8 +139,7 @@ class HelloCashTest extends AppCakeTestCase
             ]
         );
         $response = json_decode($this->_response);
-
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $invoice = $this->Invoice->find('all', [
             'conditions' => [

@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
+use App\Test\TestCase\Traits\QueueTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,6 +31,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
+    use QueueTrait;
 
     public $Order;
     public $commandRunner;
@@ -48,7 +50,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         $this->OrderDetail->deleteAll([]);
         $this->commandRunner->run(['cake', 'send_order_lists']);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 
@@ -77,7 +79,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
 
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
@@ -105,7 +107,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($cronjobRunDay));
 
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $this->assertOrderDetailState(2, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
@@ -131,10 +133,10 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($cronjobRunDay));
 
         $this->changeManufacturer(4, 'send_order_list', 0);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $this->assertOrderDetailState(2, ORDER_STATE_ORDER_PLACED);
@@ -163,7 +165,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         // 1) run cronjob and assert no changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
         $this->assertMailCount(0);
@@ -179,7 +181,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
 
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $this->assertOrderDetailState(2, ORDER_STATE_ORDER_PLACED);
@@ -244,7 +246,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         // 1) run cronjob and assert changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailIdIndividualDate, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $this->assertOrderDetailState($orderDetailIdWeeklyA, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
@@ -274,7 +276,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         // 3) run cronjob again - no additional emails must be sent
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertMailCount(3);
 
@@ -291,7 +293,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         // run cronjob and assert no changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
         $this->assertMailCount(0);
@@ -314,7 +316,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         ]);
         $cronjobRunDay = '2018-01-31';
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $product1 = $this->Product->find('all', [
             'conditions' => [
@@ -375,7 +377,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $cronjobRunDay = '2020-08-05';
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
