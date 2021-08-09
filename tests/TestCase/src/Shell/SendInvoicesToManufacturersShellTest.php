@@ -17,6 +17,7 @@ use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\QueueTrait;
 use Cake\Core\Configure;
 use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
@@ -27,6 +28,7 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
+    use QueueTrait;
 
     public $Order;
     public $commandRunner;
@@ -61,7 +63,7 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
         $this->changeManufacturer($milkManufacturerId, 'send_invoice', 0);
 
         $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $orderDetails = $this->OrderDetail->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
@@ -96,9 +98,9 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
 
         $this->prepareSendInvoices();
         $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
         $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']); // sic! run again
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         // no additional (would be 8) emails should be sent if called twice on same day
         $this->assertMailCount(6);

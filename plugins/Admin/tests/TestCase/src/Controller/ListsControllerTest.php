@@ -7,6 +7,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
+use App\Test\TestCase\Traits\QueueTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,6 +27,7 @@ class ListsControllerTest extends AppCakeTestCase
 
     use AppIntegrationTestTrait;
     use LoginTrait;
+    use QueueTrait;
 
     public $commandRunner;
 
@@ -43,7 +45,7 @@ class ListsControllerTest extends AppCakeTestCase
     public function testAccessOrderListPageAndDownloadableFile()
     {
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->runAndAssertQueue();
 
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
