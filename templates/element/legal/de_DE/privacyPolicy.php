@@ -118,19 +118,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
         Dauer: 1 Jahr<br />
         Zweck: Speichert, ob die Cookies aktzeptiert wurden.
     </li>
-
 </ul>
-
-<?php if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) { ?>
-<p>Fremde Cookies:</p>
-<ul>
-    <li>
-    umap.openstreetmap.fr: anonymous_owner|211165, csrftoken<br />
-    Dauer: 1 Jahr<br />
-    Zweck: Zum Anzeigen der Open-Street-Map auf der Startseite
-  </li>
-</ul>
-<?php } ?>
 
 <h3>3.4 Verwaltung von Mitgliedern, Herstellern und Bestellungen</h3>
 <p><b>3.4.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
