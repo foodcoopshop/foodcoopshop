@@ -282,12 +282,9 @@ class ProductsTable extends AppTable
     }
 
     /**
-     *
-     * @param string $productId
-     *            (eg. 4 or '4-10' or '4'
-     * @return array ids (productId, attributeId)
+     * @param string|int $productId (eg. 4 or '4-10' or '4')
      */
-    public function getProductIdAndAttributeId($productId)
+    public function getProductIdAndAttributeId($productId): array
     {
         $attributeId = 0;
         $explodedProductId = explode('-', $productId);
@@ -296,8 +293,8 @@ class ProductsTable extends AppTable
             $attributeId = $explodedProductId[1];
         }
         return [
-            'productId' => $productId,
-            'attributeId' => $attributeId
+            'productId' => (int) $productId,
+            'attributeId' => (int) $attributeId,
         ];
     }
 
