@@ -76,7 +76,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $response = $this->addProductToCart('test', 2);
-        $this->assertRegExpWithUnquotedString('Das Produkt mit der ID test ist nicht vorhanden.', $response->msg);
+        $this->assertRegExpWithUnquotedString('Das Produkt mit der ID 0 ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
     }
 
