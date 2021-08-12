@@ -310,6 +310,11 @@ class SlugHelper extends Helper
         return '/'.__('route_request_new_password');
     }
 
+    public function getProfit()
+    {
+        return '/admin/order-details/profit';
+    }
+
     public function getInvoices()
     {
         return '/admin/invoices';

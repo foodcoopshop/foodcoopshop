@@ -523,6 +523,13 @@ class MyHtmlHelper extends HtmlHelper
                 'key' => 'invoices',
             ];
         }
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $tabs[] = [
+                'name' => __('Profit'),
+                'url' => Configure::read('app.slugHelper')->getProfit(),
+                'key' => 'profit',
+            ];
+        }
         return $tabs;
     }
 

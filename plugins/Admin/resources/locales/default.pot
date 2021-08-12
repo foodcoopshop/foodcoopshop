@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-02 21:27+0200\n"
+"POT-Creation-Date: 2021-08-12 11:51+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -255,6 +255,9 @@ msgid "No_member_found_with_id_{0}."
 msgstr ""
 
 msgid "Instant_order"
+msgstr ""
+
+msgid "Profit"
 msgstr ""
 
 msgid "Group_by_product"

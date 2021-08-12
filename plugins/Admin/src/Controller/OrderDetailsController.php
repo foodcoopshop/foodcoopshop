@@ -7,6 +7,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\OrderDetailsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
@@ -31,6 +32,9 @@ class OrderDetailsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'profit';
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
+                break;
             case 'changeTaxOfInvoicedOrderDetail';
                 return $this->AppAuth->isSuperadmin();
                 break;
@@ -308,37 +312,67 @@ class OrderDetailsController extends AdminAppController
         die($pdfWriter->writeInline());
     }
 
-    public function purchasePrices()
+    public function profit()
     {
-        $this->disableAutoRender();
+
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        }
+        $this->set('dateFrom', $dateFrom);
+
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        }
+        $this->set('dateTo', $dateTo);
+
+        $customerId = '';
+        if (! empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = h($this->getRequest()->getQuery('customerId'));
+        }
+        $this->set('customerId', $customerId);
+
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->find('all', [
             'contain' => [
                 'OrderDetailPurchasePrices',
                 'Customers',
-            ]
+                'Products.Manufacturers',
+            ],
+            'order' => [
+                'OrderDetails.pickup_day' => 'DESC',
+                'OrderDetails.created' => 'ASC',
+            ],
         ]);
+
+        $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            $exp->gt('OrderDetails.id_customer', 0);
+            return $exp;
+        });
+
+        if ($customerId != '') {
+            $orderDetails->where(['OrderDetails.id_customer' => $customerId]);
+        }
+
         $sumSellingPrice = 0;
         $sumPurchasePrice = 0;
-        $tmpOutput = '';
         foreach($orderDetails as $orderDetail) {
-            $tmpOutput .= $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ';
-            $tmpOutput .= $orderDetail->customer->name . ' / ';
-            $tmpOutput .= $orderDetail->product_name . ' / ';
             if (!empty($orderDetail->order_detail_purchase_price)) {
-                $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_purchase_price->total_price_tax_excl) . ' / ';
                 $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
-            } else {
-                $tmpOutput .= '--- / ';
             }
-            $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl);
             $sumSellingPrice += $orderDetail->total_price_tax_excl;
-            $tmpOutput .= '<br />';
         }
-        echo '<b>Summe Einkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumPurchasePrice);
-        echo '<br />Summe Verkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice);
-        echo '<br />Gewinn exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice - $sumPurchasePrice);
-        echo '</b><br /><br />' . $tmpOutput;
+        $this->set('orderDetails', $orderDetails);
+        $this->set('sums', [
+            'purchasePrice' => $sumPurchasePrice,
+            'sellingPrice' => $sumSellingPrice,
+            'profit' => $sumSellingPrice - $sumPurchasePrice,
+        ]);
+
+        $this->set('title_for_layout', __d('admin', 'Profit'));
     }
 
     public function index()

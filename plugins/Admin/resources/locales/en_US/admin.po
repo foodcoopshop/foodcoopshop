@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-02 21:27+0200\n"
-"PO-Revision-Date: 2021-08-02 21:28+0200\n"
+"POT-Creation-Date: 2021-08-12 11:51+0200\n"
+"PO-Revision-Date: 2021-08-12 11:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -257,6 +257,9 @@ msgstr "No member found with id {0}."
 
 msgid "Instant_order"
 msgstr "Instant order"
+
+msgid "Profit"
+msgstr "Profit"
 
 msgid "Group_by_product"
 msgstr "Group by product"
