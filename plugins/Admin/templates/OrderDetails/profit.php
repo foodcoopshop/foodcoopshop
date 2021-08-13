@@ -62,7 +62,12 @@ echo '<table class="list profit-table">';
 
     foreach($orderDetails as $orderDetail) {
 
-        echo '<tr class="data" data-invoice-id="'.$orderDetail->id_order_detail.'">';
+        $rowClass = ['data'];
+        if (!$orderDetail->purchase_price_ok) {
+            $rowClass[] = 'deactivated';
+            $rowClass[] = 'line-through';
+        }
+        echo '<tr class="' . join(' ', $rowClass) . '" data-invoice-id="'.$orderDetail->id_order_detail.'">';
 
             echo '<td>';
                 echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));

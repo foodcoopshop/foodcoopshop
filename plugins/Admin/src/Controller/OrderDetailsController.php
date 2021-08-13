@@ -357,19 +357,30 @@ class OrderDetailsController extends AdminAppController
             $orderDetails->where(['OrderDetails.id_customer' => $customerId]);
         }
 
+        $orderDetails = $orderDetails->toArray();
+
         $sumSellingPrice = 0;
         $sumPurchasePrice = 0;
+        $sumProfit = 0;
+        $i = 0;
         foreach($orderDetails as $orderDetail) {
+            $orderDetails[$i]->purchase_price_ok = false;
             if (!empty($orderDetail->order_detail_purchase_price)) {
-                $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+                $profit = $orderDetail->total_price_tax_excl - $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+                if ($profit >= 0) {
+                    $sumProfit += $profit;
+                    $orderDetails[$i]->purchase_price_ok = true;
+                    $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+                }
             }
             $sumSellingPrice += $orderDetail->total_price_tax_excl;
+            $i++;
         }
         $this->set('orderDetails', $orderDetails);
         $this->set('sums', [
             'purchasePrice' => $sumPurchasePrice,
             'sellingPrice' => $sumSellingPrice,
-            'profit' => $sumSellingPrice - $sumPurchasePrice,
+            'profit' => $sumProfit,
         ]);
 
         $this->set('title_for_layout', __d('admin', 'Profit'));
