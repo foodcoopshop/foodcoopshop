@@ -51,7 +51,7 @@ $this->element('highlightRowAfterEdit', [
     'rowIdPrefix' => '#order-detail-'
 ]);
 
-echo '<h2 style="margin-top:10px;">' . __d('admin', 'Profit') . '</h2>';
+echo '<h2 style="margin-top:10px;">' . __d('admin', 'Profit / all prices are net prices') . '</h2>';
 
 echo '<table class="list profit-table">';
 

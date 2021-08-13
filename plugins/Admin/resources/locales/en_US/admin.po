@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-13 10:13+0200\n"
-"PO-Revision-Date: 2021-08-13 10:14+0200\n"
+"POT-Creation-Date: 2021-08-13 10:30+0200\n"
+"PO-Revision-Date: 2021-08-13 10:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1544,6 +1544,9 @@ msgstr "All products"
 
 msgid "Show_all_ordered_products"
 msgstr "Show all ordered products"
+
+msgid "Profit / all prices are net prices"
+msgstr "Profit / all prices are net prices"
 
 msgid "Page_title"
 msgstr "Page title"
