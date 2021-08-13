@@ -44,7 +44,9 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
-
+$this->element('highlightRowAfterEdit', [
+    'rowIdPrefix' => '#order-detail-'
+]);
 
 echo '<h2 style="margin-top:10px;">' . __d('admin', 'Profit') . '</h2>';
 
@@ -68,7 +70,7 @@ echo '<table class="list profit-table">';
             $rowClass[] = 'deactivated';
             $rowClass[] = 'line-through';
         }
-        echo '<tr class="' . join(' ', $rowClass) . '" data-invoice-id="'.$orderDetail->id_order_detail.'">';
+        echo '<tr class="' . join(' ', $rowClass) . '" id="order-detail-' . $orderDetail->id_order_detail . '">';
 
             echo '<td>';
                 echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
@@ -95,9 +97,23 @@ echo '<table class="list profit-table">';
             echo '</td>';
 
             echo '<td style="text-align:right;">';
+
+                echo $this->Html->link(
+                    '<i class="fas fa-pencil-alt ok"></i>',
+                    $this->Slug->getOrderDetailPurchasePriceEdit($orderDetail->id_order_detail),
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Edit'),
+                        'escape' => false,
+                    ]
+                );
+
                 if (!empty($orderDetail->order_detail_purchase_price)) {
-                    echo $this->Number->formatAsDecimal($orderDetail->order_detail_purchase_price->total_price_tax_excl);
+                    echo '<span class="purchase-price">';
+                        echo $this->Number->formatAsDecimal($orderDetail->order_detail_purchase_price->total_price_tax_excl);
+                    echo '</span>';
                 }
+
             echo '</td>';
 
             echo '<td style="text-align:right;">';

@@ -40,7 +40,7 @@ class TaxesTable extends AppTable
         return $validator;
     }
 
-    public function getForDropdown()
+    public function getForDropdown($useRateAsKey = false)
     {
         $taxes = $this->find('all', [
             'conditions' => [
@@ -54,7 +54,12 @@ class TaxesTable extends AppTable
             0 => '0 %'
         ];
         foreach ($taxes as $tax) {
-            $preparedTaxes[$tax->id_tax] = Configure::read('app.numberHelper')->formatTaxRate($tax->rate) . '%';
+            $value = Configure::read('app.numberHelper')->formatTaxRate($tax->rate) . '%';
+            if ($useRateAsKey) {
+                $preparedTaxes[$tax->rate] = $value;
+            } else {
+                $preparedTaxes[$tax->id_tax] = $value;
+            }
         }
         return $preparedTaxes;
     }

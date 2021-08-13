@@ -51,6 +51,11 @@ class SlugHelper extends Helper
         return $this->getAdminHome().'/action-logs';
     }
 
+    public function getOrderDetailPurchasePriceEdit($orderDetailId)
+    {
+        return $this->getAdminHome().'/order-details/edit-purchase-price/' . $orderDetailId;
+    }
+
     public function getOrderDetailsList()
     {
         return $this->getAdminHome().'/order-details';

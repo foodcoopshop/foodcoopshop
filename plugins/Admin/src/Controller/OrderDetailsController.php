@@ -33,6 +33,7 @@ class OrderDetailsController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'profit';
+            case 'editPurchasePrice';
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
                 break;
             case 'changeTaxOfInvoicedOrderDetail';
@@ -310,6 +311,91 @@ class OrderDetailsController extends AdminAppController
             'taxRates' => isset($taxRates) ? $taxRates : null,
         ]);
         die($pdfWriter->writeInline());
+    }
+
+    public function editPurchasePrice($orderDetailId)
+    {
+
+        $this->set('title_for_layout', __d('admin', 'Edit_purchase_price'));
+
+        $this->Tax = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $this->Tax->getForDropdown(true));
+
+        $this->setFormReferer();
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Customers',
+                'Products.Manufacturers',
+                'OrderDetailUnits',
+                'OrderDetailPurchasePrices',
+            ]
+        ])->first();
+
+        if (empty($orderDetail)) {
+            throw new RecordNotFoundException('order detail not found');
+        }
+
+        if (empty($this->getRequest()->getData())) {
+            $this->set('orderDetail', $orderDetail);
+            return;
+        }
+
+        $orderDetail = $this->OrderDetail->patchEntity(
+            $orderDetail,
+            $this->getRequest()->getData(),
+            [
+                'validate' => false,
+                'associated' => [
+                    'OrderDetailPurchasePrices'
+                ],
+            ],
+        );
+
+        if ($orderDetail->hasErrors()) {
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->set('orderDetail', $orderDetail);
+        } else {
+            $this->Product = $this->getTableLocator()->get('Products');
+
+            $grossPrice = $this->Product->getGrossPrice(
+                $orderDetail->order_detail_purchase_price->total_price_tax_excl,
+                $orderDetail->order_detail_purchase_price->tax_rate,
+            );
+
+            $unitPriceExcl = $orderDetail->order_detail_purchase_price->total_price_tax_excl / $orderDetail->product_amount;
+            $unitTaxAmount = $this->Product->getUnitTax(
+                $grossPrice,
+                $unitPriceExcl,
+                $orderDetail->product_amount,
+            );
+
+            $totalTaxAmount = $unitTaxAmount * $orderDetail->product_amount;
+
+            $orderDetail->order_detail_purchase_price->tax_unit_amount = $unitTaxAmount;
+            $orderDetail->order_detail_purchase_price->tax_total_amount = $totalTaxAmount;
+            $orderDetail->order_detail_purchase_price->total_price_tax_incl = $grossPrice;
+
+            $orderDetail = $this->OrderDetail->save(
+                $orderDetail,
+                [
+                    'associated' => [
+                        'OrderDetailPurchasePrices'
+                    ],
+                ],
+            );
+
+            $this->Flash->success(__d('admin', 'Purchase_price_has_been_saved_successfully'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $orderDetail->id_order_detail);
+
+            $this->redirect($this->getPreparedReferer());
+        }
+
+        $this->set('orderDetail', $orderDetail);
     }
 
     public function profit()
