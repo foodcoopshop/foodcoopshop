@@ -473,7 +473,7 @@ class OrderDetailsController extends AdminAppController
             $orderDetails[$i]->purchase_price_ok = false;
             if (!empty($orderDetail->order_detail_purchase_price)) {
                 $profit = $orderDetail->total_price_tax_excl - $orderDetail->order_detail_purchase_price->total_price_tax_excl;
-                if ($profit >= 0) {
+                if ($orderDetail->order_detail_purchase_price->total_price_tax_excl > 0 && $profit >= 0) {
                     $sumProfit += $profit;
                     $orderDetails[$i]->purchase_price_ok = true;
                     $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
