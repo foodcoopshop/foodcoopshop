@@ -419,6 +419,18 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('customerId', $customerId);
 
+        $manufacturerId = '';
+        if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        }
+        $this->set('manufacturerId', $manufacturerId);
+
+        $productId = '';
+        if (! empty($this->getRequest()->getQuery('productId'))) {
+            $productId = h($this->getRequest()->getQuery('productId'));
+        }
+        $this->set('productId', $productId);
+
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->find('all', [
             'contain' => [
@@ -441,6 +453,14 @@ class OrderDetailsController extends AdminAppController
 
         if ($customerId != '') {
             $orderDetails->where(['OrderDetails.id_customer' => $customerId]);
+        }
+
+        if ($manufacturerId != '') {
+            $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
+        }
+
+        if ($productId != '') {
+            $orderDetails->where(['OrderDetails.product_id' => $productId]);
         }
 
         $orderDetails = $orderDetails->toArray();
@@ -470,6 +490,9 @@ class OrderDetailsController extends AdminAppController
         ]);
 
         $this->set('title_for_layout', __d('admin', 'Profit'));
+
+        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
+
     }
 
     public function index()
