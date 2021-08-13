@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-12 11:51+0200\n"
+"POT-Creation-Date: 2021-08-13 10:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -255,6 +255,12 @@ msgid "No_member_found_with_id_{0}."
 msgstr ""
 
 msgid "Instant_order"
+msgstr ""
+
+msgid "Edit_purchase_price"
+msgstr ""
+
+msgid "Purchase_price_has_been_saved_successfully"
 msgstr ""
 
 msgid "Profit"
@@ -1508,6 +1514,12 @@ msgstr ""
 msgid "Copy_all_email_addresses"
 msgstr ""
 
+msgid "Tax_rate"
+msgstr ""
+
+msgid "Purchase_price_tax_excl"
+msgstr ""
+
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr ""
 
@@ -1680,9 +1692,6 @@ msgid "Selling_price_abbreviation"
 msgstr ""
 
 msgid "Price"
-msgstr ""
-
-msgid "Tax_rate"
 msgstr ""
 
 msgid "New?"
