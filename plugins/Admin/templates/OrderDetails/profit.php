@@ -52,6 +52,7 @@ echo '<table class="list profit-table">';
 
     echo '<tr class="sort">';
         echo '<th>' . $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount')) . '</th>';
         echo '<th>' . $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product')) . '</th>';
         echo '<th>' . __d('admin', 'Manufacturer') . '</th>';
         echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
@@ -71,6 +72,10 @@ echo '<table class="list profit-table">';
 
             echo '<td>';
                 echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+            echo '</td>';
+
+            echo '<td>';
+                echo $this->Number->formatAsDecimal($orderDetail->product_amount, 0) . 'x';
             echo '</td>';
 
             echo '<td>';
@@ -108,7 +113,7 @@ echo '<table class="list profit-table">';
 
     echo '<tr style="font-weight:bold;">';
 
-        echo '<td colspan="4" style="text-align:right;">';
+        echo '<td colspan="5" style="text-align:right;">';
             echo __d('admin', 'Total_sum');
         echo '</td>';
 
