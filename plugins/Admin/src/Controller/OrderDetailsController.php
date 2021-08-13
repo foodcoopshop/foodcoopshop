@@ -477,9 +477,9 @@ class OrderDetailsController extends AdminAppController
                     $sumProfit += $profit;
                     $orderDetails[$i]->purchase_price_ok = true;
                     $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+                    $sumSellingPrice += $orderDetail->total_price_tax_excl;
                 }
             }
-            $sumSellingPrice += $orderDetail->total_price_tax_excl;
             $i++;
         }
         $this->set('orderDetails', $orderDetails);
