@@ -14,6 +14,9 @@
  */
 
 return [
+
+    'Mitgliedsbeitrag' => 'DO_NOT_REPLACE_A',
+
     'Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar\.' => '',
     'Bitte wähle ein Mitglied aus.' => 'Bitte wähle einen Kunden aus.',
     'uf welches Mitglied' => 'uf welchen Kunden',
@@ -36,4 +39,7 @@ return [
     'Mitglieder' => 'Kunden',
     'Mitglieds' => 'Kunden',
     'Mitglied' => 'Kunde',
+
+    'DO_NOT_REPLACE_A' => 'Mitgliedsbeitrag',
+
 ];
