@@ -341,6 +341,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         if (empty($this->getRequest()->getData())) {
+            $orderDetail->order_detail_purchase_price->total_price_tax_excl = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
             $this->set('orderDetail', $orderDetail);
             return;
         }

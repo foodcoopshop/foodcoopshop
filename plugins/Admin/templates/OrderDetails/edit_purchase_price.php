@@ -55,6 +55,8 @@ echo $this->Form->control('OrderDetails.order_detail_purchase_price.tax_rate', [
 
 echo $this->Form->control('OrderDetails.order_detail_purchase_price.total_price_tax_excl', [
     'label' => __d('admin', 'Purchase_price_tax_excl'),
+    'step' => '0.01',
+    'min' => '0.01',
 ]);
 
 echo $this->Form->end();
