@@ -508,6 +508,16 @@ class MyTimeHelper extends TimeHelper
         return $lastMonthAndYearString;
     }
 
+    public function getFirstDayOfThisMonth()
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime('first day of this month'));
+    }
+
+    public function getLastDayOfThisMonth()
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime('last day of this month'));
+    }
+
     public function getFirstDayOfLastMonth($date)
     {
         return date($this->getI18Format('DateShortAlt'), strtotime($date . ' first day of previous month'));

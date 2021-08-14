@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-02 21:27+0200\n"
-"PO-Revision-Date: 2021-08-02 21:29+0200\n"
+"POT-Creation-Date: 2021-08-13 10:30+0200\n"
+"PO-Revision-Date: 2021-08-13 10:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -257,6 +257,15 @@ msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
 
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
+
+msgid "Edit_purchase_price"
+msgstr "Einkaufspreis bearbeiten"
+
+msgid "Purchase_price_has_been_saved_successfully"
+msgstr "Der Einkaufspreis wurde erfolgreich gespeichert."
+
+msgid "Profit"
+msgstr "Gewinn"
 
 msgid "Group_by_product"
 msgstr "Gruppieren nach Produkt"
@@ -1506,6 +1515,12 @@ msgstr "Hersteller-Profil"
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
 
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "Purchase_price_tax_excl"
+msgstr "Einkaufspreis netto"
+
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
@@ -1529,6 +1544,9 @@ msgstr "Alle Produkte"
 
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
+
+msgid "Profit / all prices are net prices"
+msgstr "Gewinn / Netto-Preise"
 
 msgid "Page_title"
 msgstr "Seitentitel"
@@ -1679,9 +1697,6 @@ msgstr "VP"
 
 msgid "Price"
 msgstr "Preis"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "New?"
 msgstr "Neu?"

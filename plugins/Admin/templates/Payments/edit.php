@@ -53,7 +53,7 @@ echo $this->Form->create($payment, [
 ]);
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<p><label>'.__d('admin', 'Member').'</label>' . (!empty($payment->customer) ? $payment->customer->name : '').'</p>';
+echo '<p><label>'.__d('admin', 'Member').'</label>' . $this->Html->getNameRespectingIsDeleted($payment->customer).'</p>';
 echo '<p><label>'.__d('admin', 'Amount').'</label>' . $this->Number->formatAsCurrency($payment->amount).'</p>';
 echo '<p><label>'.__d('admin', 'Date_of_upload').'</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
 echo '<p><label>'.__d('admin', 'Date_last_modified').'</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';

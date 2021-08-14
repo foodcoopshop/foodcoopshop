@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-04 10:59+0200\n"
-"PO-Revision-Date: 2021-08-04 11:00+0200\n"
+"POT-Creation-Date: 2021-08-12 11:51+0200\n"
+"PO-Revision-Date: 2021-08-12 11:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1967,6 +1967,9 @@ msgstr "Deposit overview"
 
 msgid "Journal"
 msgstr "Journal"
+
+msgid "Profit"
+msgstr "Profit"
 
 msgid "Payment_type_credit_upload"
 msgstr "Credit upload"

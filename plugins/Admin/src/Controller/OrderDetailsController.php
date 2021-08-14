@@ -7,6 +7,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\OrderDetailsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
@@ -31,6 +32,10 @@ class OrderDetailsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'profit';
+            case 'editPurchasePrice';
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
+                break;
             case 'changeTaxOfInvoicedOrderDetail';
                 return $this->AppAuth->isSuperadmin();
                 break;
@@ -308,37 +313,198 @@ class OrderDetailsController extends AdminAppController
         die($pdfWriter->writeInline());
     }
 
-    public function purchasePrices()
+    public function editPurchasePrice($orderDetailId)
     {
-        $this->disableAutoRender();
+
+        $this->set('title_for_layout', __d('admin', 'Edit_purchase_price'));
+
+        $this->Tax = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $this->Tax->getForDropdown(true));
+
+        $this->setFormReferer();
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Customers',
+                'OrderDetailUnits',
+                'OrderDetailPurchasePrices',
+                'Products.Manufacturers',
+            ]
+        ])->first();
+
+        if (empty($orderDetail)) {
+            throw new RecordNotFoundException('order detail not found');
+        }
+
+        if (empty($this->getRequest()->getData())) {
+            $orderDetail->order_detail_purchase_price->total_price_tax_excl = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
+            $this->set('orderDetail', $orderDetail);
+            return;
+        }
+
+        $orderDetail = $this->OrderDetail->patchEntity(
+            $orderDetail,
+            $this->getRequest()->getData(),
+            [
+                'validate' => false,
+                'associated' => [
+                    'OrderDetailPurchasePrices'
+                ],
+            ],
+        );
+
+        if ($orderDetail->hasErrors()) {
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->set('orderDetail', $orderDetail);
+        } else {
+            $this->Product = $this->getTableLocator()->get('Products');
+
+            $grossPrice = $this->Product->getGrossPrice(
+                $orderDetail->order_detail_purchase_price->total_price_tax_excl,
+                $orderDetail->order_detail_purchase_price->tax_rate,
+            );
+
+            $unitPriceExcl = $orderDetail->order_detail_purchase_price->total_price_tax_excl / $orderDetail->product_amount;
+            $unitTaxAmount = $this->Product->getUnitTax(
+                $grossPrice,
+                $unitPriceExcl,
+                $orderDetail->product_amount,
+            );
+
+            $totalTaxAmount = $unitTaxAmount * $orderDetail->product_amount;
+
+            $orderDetail->order_detail_purchase_price->tax_unit_amount = $unitTaxAmount;
+            $orderDetail->order_detail_purchase_price->tax_total_amount = $totalTaxAmount;
+            $orderDetail->order_detail_purchase_price->total_price_tax_incl = $grossPrice;
+
+            $orderDetail = $this->OrderDetail->save(
+                $orderDetail,
+                [
+                    'associated' => [
+                        'OrderDetailPurchasePrices'
+                    ],
+                ],
+            );
+
+            $this->Flash->success(__d('admin', 'Purchase_price_has_been_saved_successfully'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $orderDetail->id_order_detail);
+
+            $this->redirect($this->getPreparedReferer());
+        }
+
+        $this->set('orderDetail', $orderDetail);
+    }
+
+    public function profit()
+    {
+
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisMonth();
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        }
+        $this->set('dateFrom', $dateFrom);
+
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisMonth();
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        }
+        $this->set('dateTo', $dateTo);
+
+        $customerId = '';
+        if (! empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = h($this->getRequest()->getQuery('customerId'));
+        }
+        $this->set('customerId', $customerId);
+
+        $manufacturerId = '';
+        if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        }
+        $this->set('manufacturerId', $manufacturerId);
+
+        $productId = '';
+        if (! empty($this->getRequest()->getQuery('productId'))) {
+            $productId = h($this->getRequest()->getQuery('productId'));
+        }
+        $this->set('productId', $productId);
+
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->find('all', [
             'contain' => [
-                'OrderDetailPurchasePrices',
                 'Customers',
-            ]
+                'OrderDetailPurchasePrices',
+                'OrderDetailUnits',
+                'Products.Manufacturers',
+            ],
         ]);
+
+        $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            $exp->gt('OrderDetails.id_customer', 0);
+            return $exp;
+        });
+
+        if ($customerId != '') {
+            $orderDetails->where(['OrderDetails.id_customer' => $customerId]);
+        }
+
+        if ($manufacturerId != '') {
+            $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
+        }
+
+        if ($productId != '') {
+            $orderDetails->where(['OrderDetails.product_id' => $productId]);
+        }
+
+        $orderDetails = $this->paginate($orderDetails, [
+            'sortableFields' => [
+                'OrderDetails.product_amount',
+                'OrderDetails.product_name',
+                'OrderDetails.pickup_day',
+                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'OrderDetailUnits.product_quantity_in_units',
+                'OrderDetails.total_price_tax_excl',
+                'OrderDetailPurchasePrices.total_price_tax_excl',
+            ],
+            'order' => [
+                'OrderDetails.pickup_day' => 'DESC',
+                'OrderDetails.created' => 'ASC',
+            ],
+        ])->toArray();
+
         $sumSellingPrice = 0;
         $sumPurchasePrice = 0;
-        $tmpOutput = '';
+        $sumProfit = 0;
+        $i = 0;
         foreach($orderDetails as $orderDetail) {
-            $tmpOutput .= $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ';
-            $tmpOutput .= $orderDetail->customer->name . ' / ';
-            $tmpOutput .= $orderDetail->product_name . ' / ';
+            $orderDetails[$i]->purchase_price_ok = false;
             if (!empty($orderDetail->order_detail_purchase_price)) {
-                $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_purchase_price->total_price_tax_excl) . ' / ';
-                $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
-            } else {
-                $tmpOutput .= '--- / ';
+                $profit = $orderDetail->total_price_tax_excl - $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+                if ($orderDetail->order_detail_purchase_price->total_price_tax_excl > 0 && $profit >= 0) {
+                    $sumProfit += $profit;
+                    $orderDetails[$i]->purchase_price_ok = true;
+                    $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
+                    $sumSellingPrice += $orderDetail->total_price_tax_excl;
+                }
             }
-            $tmpOutput .= Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl);
-            $sumSellingPrice += $orderDetail->total_price_tax_excl;
-            $tmpOutput .= '<br />';
+            $i++;
         }
-        echo '<b>Summe Einkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumPurchasePrice);
-        echo '<br />Summe Verkaufspreis exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice);
-        echo '<br />Gewinn exkl. USt.: ' . Configure::read('app.numberHelper')->formatAsCurrency($sumSellingPrice - $sumPurchasePrice);
-        echo '</b><br /><br />' . $tmpOutput;
+        $this->set('orderDetails', $orderDetails);
+        $this->set('sums', [
+            'purchasePrice' => $sumPurchasePrice,
+            'sellingPrice' => $sumSellingPrice,
+            'profit' => $sumProfit,
+        ]);
+
+        $this->set('title_for_layout', __d('admin', 'Profit'));
+
+        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
+
     }
 
     public function index()

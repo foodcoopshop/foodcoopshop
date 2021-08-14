@@ -51,6 +51,11 @@ class SlugHelper extends Helper
         return $this->getAdminHome().'/action-logs';
     }
 
+    public function getOrderDetailPurchasePriceEdit($orderDetailId)
+    {
+        return $this->getAdminHome().'/order-details/edit-purchase-price/' . $orderDetailId;
+    }
+
     public function getOrderDetailsList()
     {
         return $this->getAdminHome().'/order-details';
@@ -308,6 +313,11 @@ class SlugHelper extends Helper
     public function getNewPasswordRequest()
     {
         return '/'.__('route_request_new_password');
+    }
+
+    public function getProfit()
+    {
+        return '/admin/order-details/profit';
     }
 
     public function getInvoices()
