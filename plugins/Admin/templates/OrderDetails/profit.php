@@ -139,7 +139,7 @@ echo '<table class="list profit-table">';
 
     echo '<tr style="font-weight:bold;">';
 
-        echo '<td colspan="5" style="text-align:right;">';
+        echo '<td colspan="6" style="text-align:right;">';
             echo __d('admin', 'Total_sum');
         echo '</td>';
 
