@@ -59,6 +59,7 @@ echo '<table class="list profit-table">';
         echo '<th>' . $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
         echo '<th>' . $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount')) . '</th>';
         echo '<th>' . $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product')) . '</th>';
+        echo '<th>' . __d('admin', 'Weight') . '</th>';
         echo '<th>' . __d('admin', 'Manufacturer') . '</th>';
         echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
         echo '<th>' . $this->Paginator->sort('OrderDetails.total_price_tax_excl', __d('admin', 'Selling_price')) . '</th>';
@@ -85,6 +86,12 @@ echo '<table class="list profit-table">';
 
             echo '<td>';
                 echo $orderDetail->product_name;
+            echo '</td>';
+
+            echo '<td>';
+                if (!empty($orderDetail->order_detail_unit)) {
+                    echo $this->Number->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $orderDetail->order_detail_unit->unit_name;
+                }
             echo '</td>';
 
             echo '<td>';

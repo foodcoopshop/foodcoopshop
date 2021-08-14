@@ -45,6 +45,11 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 echo '<p><label>'.__d('admin', 'Member').'</label>' . $this->Html->getNameRespectingIsDeleted($orderDetail->customer) . '</p>';
 echo '<p><label>'.__d('admin', 'Amount').'</label>' . $this->Number->formatAsDecimal($orderDetail->product_amount, 0) . 'x</p>';
 echo '<p><label>'.__d('admin', 'Product').'</label>' . $orderDetail->product_name.'</p>';
+echo '<p><label>'.__d('admin', 'Weight').'</label>';
+    if (!empty($orderDetail->order_detail_unit)) {
+        echo $this->Number->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $orderDetail->order_detail_unit->unit_name;
+    }
+echo '</p>';
 echo '<p><label>'.__d('admin', 'Pickup_day').'</label>' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .'</p>';
 
 echo $this->Form->control('OrderDetails.order_detail_purchase_price.tax_rate', [

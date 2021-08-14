@@ -330,9 +330,9 @@ class OrderDetailsController extends AdminAppController
             ],
             'contain' => [
                 'Customers',
-                'Products.Manufacturers',
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
+                'Products.Manufacturers',
             ]
         ])->first();
 
@@ -435,8 +435,9 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->find('all', [
             'contain' => [
-                'OrderDetailPurchasePrices',
                 'Customers',
+                'OrderDetailPurchasePrices',
+                'OrderDetailUnits',
                 'Products.Manufacturers',
             ],
             'order' => [
