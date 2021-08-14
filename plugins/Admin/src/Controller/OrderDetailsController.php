@@ -440,10 +440,6 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetailUnits',
                 'Products.Manufacturers',
             ],
-            'order' => [
-                'OrderDetails.pickup_day' => 'DESC',
-                'OrderDetails.created' => 'ASC',
-            ],
         ]);
 
         $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
@@ -465,7 +461,21 @@ class OrderDetailsController extends AdminAppController
             $orderDetails->where(['OrderDetails.product_id' => $productId]);
         }
 
-        $orderDetails = $orderDetails->toArray();
+        $orderDetails = $this->paginate($orderDetails, [
+            'sortableFields' => [
+                'OrderDetails.product_amount',
+                'OrderDetails.product_name',
+                'OrderDetails.pickup_day',
+                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'OrderDetailUnits.product_quantity_in_units',
+                'OrderDetails.total_price_tax_excl',
+                'OrderDetailPurchasePrices.total_price_tax_excl',
+            ],
+            'order' => [
+                'OrderDetails.pickup_day' => 'DESC',
+                'OrderDetails.created' => 'ASC',
+            ],
+        ])->toArray();
 
         $sumSellingPrice = 0;
         $sumPurchasePrice = 0;
