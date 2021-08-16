@@ -350,9 +350,10 @@ class OrderDetailsController extends AdminAppController
             $orderDetail,
             $this->getRequest()->getData(),
             [
-                'validate' => false,
                 'associated' => [
-                    'OrderDetailPurchasePrices'
+                    'OrderDetailPurchasePrices' => [
+                        'validate' => 'edit',
+                    ],
                 ],
             ],
         );

@@ -29,7 +29,7 @@ class OrderDetailPurchasePricesTable extends AppTable
         $this->setPrimaryKey('id_order_detail');
     }
 
-    public function validationDefault(Validator $validator): Validator
+    public function validationEdit(Validator $validator): Validator
     {
         $validator->notEmptyString('total_price_tax_excl', __('Please_enter_a_number.'));
         $validator->numeric('total_price_tax_excl', __('Please_enter_a_correct_number.'));
