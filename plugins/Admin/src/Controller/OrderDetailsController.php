@@ -445,7 +445,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
-            $exp->lte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
             $exp->gt('OrderDetails.id_customer', 0);
             return $exp;
         });
