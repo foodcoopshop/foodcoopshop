@@ -28,24 +28,35 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
 echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'] . '">';
 
     echo '<div class="first-column">';
-        $srcLargeImage = $this->Html->getProductImageSrc($product['id_image'], 'thickbox');
-        $largeImageExists = preg_match('/de-default/', $srcLargeImage);
-if (!$largeImageExists) {
-    echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name'] . ', ' . $product['ManufacturersName']) . '" data-modal-image="'.$srcLargeImage.'">';
-}
-echo '<img class="lazyload" data-src="' . $this->Html->getProductImageSrc($product['id_image'], 'home'). '" />';
-if (!$largeImageExists) {
-    echo '</a>';
-}
-if ($product['is_new']) {
-    $isNewSrc = 'javascript:void(0);';
-    if ($showIsNewBadgeAsLink) {
-        $isNewSrc = $this->Slug->getNewProducts();
+
+        $productImageLargeSrc = $this->Html->getProductImageSrc($product['id_image'], 'thickbox');
+        $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
+        $productImageSrc = $this->Html->getProductImageSrc($product['id_image'], 'home');
+        if (!$productImageLargeExists) {
+            $productImageLargeSrc = $this->Html->getManufacturerImageSrc($product['id_manufacturer'], 'large');
+            $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
+            $productImageSrc = $this->Html->getManufacturerImageSrc($product['id_manufacturer'], 'medium');
+            if (!$productImageLargeExists) {
+                $productImageSrc = $this->Html->getProductImageSrc($product['id_image'], 'home');
+            }
+        }
+
+        if ($productImageLargeExists) {
+            echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name'] . ', ' . $product['ManufacturersName']) . '" data-modal-image="'.$productImageLargeSrc.'">';
+        }
+        echo '<img class="lazyload" data-src="' . $productImageSrc. '" />';
+        if ($productImageLargeExists) {
+            echo '</a>';
+        }
+    if ($product['is_new']) {
+        $isNewSrc = 'javascript:void(0);';
+        if ($showIsNewBadgeAsLink) {
+            $isNewSrc = $this->Slug->getNewProducts();
+        }
+        echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-outline-light" title="'.__('New').'">';
+            echo '<i class="fas fa-star gold"></i> '.__('New');
+        echo '</a>';
     }
-    echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-outline-light" title="'.__('New').'">';
-        echo '<i class="fas fa-star gold"></i> '.__('New');
-    echo '</a>';
-}
     echo '</div>';
 
     echo '<div class="second-column">';

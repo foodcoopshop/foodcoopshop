@@ -380,6 +380,10 @@ a[disabled] {
     width: 100%;
     position: relative;
 }
+.product-wrapper .first-column a img {
+    width: 150px;
+    height: auto;
+}
 .product-wrapper .heading {
     width: 100%;
     float: left;
