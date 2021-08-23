@@ -741,6 +741,32 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
+
+    public function getProductImageSrcWithManufacturerImageFallback($productImageId, $manufacturerId)
+    {
+
+        $productImageLargeSrc = $this->getProductImageSrc($productImageId, 'thickbox');
+        $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
+        $productImageSrc = $this->getProductImageSrc($productImageId, 'home');
+        if (!$productImageLargeExists) {
+            $productImageLargeSrc = $this->getManufacturerImageSrc($manufacturerId, 'large');
+            $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
+            $productImageSrc = $this->getManufacturerImageSrc($manufacturerId, 'medium');
+            if (!$productImageLargeExists) {
+                $productImageSrc = $this->getProductImageSrc($productImageId, 'home');
+            }
+        }
+
+        return [
+            'productImageLargeSrc' => $productImageLargeSrc,
+            'productImageLargeExists' => $productImageLargeExists,
+            'productImageSrc' => $productImageSrc,
+        ];
+
+
+    }
+
+
     public function prepareAsUrl($string)
     {
         $physicalFile = substr(WWW_ROOT, 0, - 1) . $string;

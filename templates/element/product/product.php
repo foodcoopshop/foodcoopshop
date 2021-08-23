@@ -29,23 +29,16 @@ echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'
 
     echo '<div class="first-column">';
 
-        $productImageLargeSrc = $this->Html->getProductImageSrc($product['id_image'], 'thickbox');
-        $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
-        $productImageSrc = $this->Html->getProductImageSrc($product['id_image'], 'home');
-        if (!$productImageLargeExists) {
-            $productImageLargeSrc = $this->Html->getManufacturerImageSrc($product['id_manufacturer'], 'large');
-            $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
-            $productImageSrc = $this->Html->getManufacturerImageSrc($product['id_manufacturer'], 'medium');
-            if (!$productImageLargeExists) {
-                $productImageSrc = $this->Html->getProductImageSrc($product['id_image'], 'home');
-            }
-        }
+        $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback(
+            $product['id_image'],
+            $product['id_manufacturer'],
+        );
 
-        if ($productImageLargeExists) {
-            echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name'] . ', ' . $product['ManufacturersName']) . '" data-modal-image="'.$productImageLargeSrc.'">';
+        if ($productImageData['productImageLargeExists']) {
+            echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name'] . ', ' . $product['ManufacturersName']) . '" data-modal-image="'.$productImageData['productImageLargeSrc'].'">';
         }
-        echo '<img class="lazyload" data-src="' . $productImageSrc. '" />';
-        if ($productImageLargeExists) {
+        echo '<img class="lazyload" data-src="' . $productImageData['productImageSrc']. '" />';
+        if ($productImageData['productImageLargeExists']) {
             echo '</a>';
         }
     if ($product['is_new']) {
