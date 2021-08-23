@@ -746,26 +746,30 @@ class MyHtmlHelper extends HtmlHelper
     {
 
         $productImageLargeSrc = $this->getProductImageSrc($productImageId, 'thickbox');
-        $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
+        $productImageLargeExists = $this->largeImageExists($productImageLargeSrc);
         $productImageSrc = $this->getProductImageSrc($productImageId, 'home');
         if (!$productImageLargeExists) {
             $productImageLargeSrc = $this->getManufacturerImageSrc($manufacturerId, 'large');
-            $productImageLargeExists = !preg_match('/de-default/', $productImageLargeSrc);
+            $productImageLargeExists = $this->largeImageExists($productImageLargeSrc);
             $productImageSrc = $this->getManufacturerImageSrc($manufacturerId, 'medium');
             if (!$productImageLargeExists) {
                 $productImageSrc = $this->getProductImageSrc($productImageId, 'home');
             }
         }
 
-        return [
+        $result = [
             'productImageLargeSrc' => $productImageLargeSrc,
             'productImageLargeExists' => $productImageLargeExists,
             'productImageSrc' => $productImageSrc,
         ];
 
-
+        return $result;
     }
 
+    public function largeImageExists($imgSrc): bool
+    {
+        return !preg_match('/de-default/', $imgSrc);
+    }
 
     public function prepareAsUrl($string)
     {
