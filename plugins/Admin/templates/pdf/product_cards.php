@@ -55,8 +55,8 @@ foreach($products as $product) {
     if ($product->image) {
         $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'thickbox');
         $srcProductImage = $this->Html->removeTimestampFromFile($srcProductImage);
-        $largeImageExists = preg_match('/de-default/', $srcProductImage);
-        if (!$largeImageExists) {
+        $largeImageExists = $this->Html->largeImageExists($srcProductImage);
+        if ($largeImageExists) {
             $productImage = WWW_ROOT . $srcProductImage;
             $fileinfos = getimagesize($productImage);
             $ratio = $fileinfos[1] / $fileinfos[0];

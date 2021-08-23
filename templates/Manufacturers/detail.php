@@ -41,12 +41,12 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
 <div class="manufacturer-infos">
     <?php
         $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
-        $largeImageExists = preg_match('/de-default/', $srcLargeImage);
-    if (!$largeImageExists) {
-        echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
-        echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
-        echo '</a>';
-    }
+        $largeImageExists = $this->Html->largeImageExists($srcLargeImage);
+        if ($largeImageExists) {
+            echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
+            echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
+            echo '</a>';
+        }
 
         echo $manufacturer->description;
 

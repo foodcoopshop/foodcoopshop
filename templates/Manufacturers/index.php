@@ -35,14 +35,14 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '<div class="first-column">';
             $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
-            $largeImageExists = preg_match('/de-default/', $srcLargeImage);
-    if (!$largeImageExists) {
-        echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
-    }
+            $largeImageExists = $this->Html->largeImageExists($srcLargeImage);
+            if ($largeImageExists) {
+                echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
+            }
             echo '<img class="lazyload" data-src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
-    if (!$largeImageExists) {
-        echo '</a>';
-    }
+            if ($largeImageExists) {
+                echo '</a>';
+            }
         echo '</div>';
 
         echo '<div class="second-column">';
