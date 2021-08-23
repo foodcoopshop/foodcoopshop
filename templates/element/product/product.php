@@ -150,6 +150,21 @@ if ($product['description'] != '') {
             echo $product['ManufacturersName'];
         }
     }
+
+    if (!empty($product['active_order_details'])) {
+        echo '<p style="margin-top:5px;"><i><b>';
+        $activeOrderDetailData = [];
+        foreach($product['active_order_details'] as $activeOrderDetail) {
+            $activeOrderDetailData[] = __('You_have_already_ordered_{0}_{1}_times_for_{2}.', [
+                '"' . $activeOrderDetail['product_name'] . '"',
+                $this->Number->formatAsDecimal($activeOrderDetail['product_amount'], 0),
+                $activeOrderDetail['pickup_day']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
+            ]);
+        }
+        echo implode('<br />', $activeOrderDetailData);
+        echo '</b></i></p>';
+    }
+
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt"></i>',

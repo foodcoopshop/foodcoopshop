@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-12 11:51+0200\n"
-"PO-Revision-Date: 2021-08-12 11:51+0200\n"
+"POT-Creation-Date: 2021-08-23 10:57+0200\n"
+"PO-Revision-Date: 2021-08-23 11:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1683,14 +1683,14 @@ msgstr "online"
 msgid "Please_enter_your_feedback."
 msgstr "Bitte gib dein Feedback ein."
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
-
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
 
 msgid "The_date_must_not_be_a_future_date."
 msgstr "Das Datum darf nicht in der Zukunft liegen."
@@ -2327,6 +2327,9 @@ msgstr "{0,plural,=1{1 Woche} other{# Wochen}}"
 
 msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
 msgstr "{0,plural,=1{1 Woche} other{# Wochen}} {1,plural,=1{und 1 Tag} other{und # Tage}}"
+
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr "Du hast {0} bereits {1}x für Abholtag {2} bestellt."
 
 msgid "from_which_{0}_%"
 msgstr "davon {0} %"
