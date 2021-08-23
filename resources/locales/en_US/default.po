@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-12 11:51+0200\n"
-"PO-Revision-Date: 2021-08-12 11:52+0200\n"
+"POT-Creation-Date: 2021-08-23 10:57+0200\n"
+"PO-Revision-Date: 2021-08-23 11:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1683,14 +1683,14 @@ msgstr "online"
 msgid "Please_enter_your_feedback."
 msgstr "Please enter your feedback."
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 product} other{# products}}"
-
 msgid "Please_enter_a_correct_number."
 msgstr "Please enter a correct number."
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "The amount needs to be greater than 0."
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 product} other{# products}}"
 
 msgid "The_date_must_not_be_a_future_date."
 msgstr "The date must not be a future date."
@@ -2327,6 +2327,9 @@ msgstr "{0,plural,=1{1 week} other{# week}}"
 
 msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
 msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
+
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr "You have already ordered {0} {1}x for {2}."
 
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"

@@ -39,6 +39,10 @@ class FrontendController extends AppController
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
 
+        if ($this->AppAuth->user()) {
+            $activeOrderDetails = $this->AppAuth->getOpenOrderDetails();
+        }
+
         foreach ($products as &$product) {
             $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
             $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
@@ -69,7 +73,19 @@ class FrontendController extends AppController
                         )
                     ]
                 ));
+
+                $product['active_order_details'] = [];
+                if (!empty($activeOrderDetails)) {
+                    foreach($activeOrderDetails as $activeOrderDetail) {
+                        if ($activeOrderDetail['product_id'] == $product['id_product']) {
+                            $product['active_order_details'][] = $activeOrderDetail;
+                            continue;
+                        }
+                    }
+                }
+
             }
+
             $product['attributes'] = [];
 
             if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
