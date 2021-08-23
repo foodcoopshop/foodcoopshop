@@ -381,7 +381,7 @@ a[disabled] {
     position: relative;
 }
 .product-wrapper .first-column a img {
-    width: 150px;
+    max-width: 150px;
     height: auto;
 }
 .product-wrapper .heading {
