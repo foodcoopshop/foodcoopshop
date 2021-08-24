@@ -85,7 +85,18 @@ echo '<table class="list profit-table">';
             echo '</td>';
 
             echo '<td>';
-                echo $orderDetail->product_name;
+                echo $this->Html->link(
+                    '<i class="fas fa-pencil-alt"></i>',
+                    $this->Slug->getProductAdmin($orderDetail->product->id_manufacturer, $orderDetail->product_id),
+                    [
+                        'class' => 'btn btn-outline-light edit-shortcut-button',
+                        'title' => __('Edit'),
+                        'escape' => false
+                    ]
+                );
+                echo '<span class="product-name">';
+                    echo $orderDetail->product_name;
+                echo '</span>';
             echo '</td>';
 
             echo '<td>';

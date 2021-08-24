@@ -168,7 +168,8 @@ span.delivery-rhythm-for-dialog,
 span.quantity-in-units,
 span.customer-name-for-dialog,
 i.always-available,
-span.purchase-price {
+span.purchase-price,
+span.product-name {
     line-height: 21px;
     margin-left: 3px;
 }
