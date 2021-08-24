@@ -548,16 +548,6 @@ class CartComponent extends Component
                             $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
                         }
 
-                        $linkToInvoice = Configure::read('app.htmlHelper')->link(
-                            __('Print_receipt'),
-                            $invoiceFilename,
-                            [
-                                'class' => 'btn btn-outline-light btn-flash-message btn-flash-message-print-invoice',
-                                'target' => '_blank',
-                                'escape' => false,
-                            ],
-                        );
-
                     }
 
                     $actionLogType = 'self_service_order_added';
@@ -565,8 +555,8 @@ class CartComponent extends Component
                     $message .= '<br />';
                     $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout().'">'.__('Sign_out').'</a>';
                     $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'">'.__('Continue_shopping').'</a>';
-                    if (isset($linkToInvoice)) {
-                        $message .= $linkToInvoice;
+                    if (isset($invoiceFilename)) {
+                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.SelfService.printInvoicePdf("'.Configure::read('app.cakeServerName') . $invoiceFilename. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);">'.__('Print_receipt').'</a>';
                     }
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
                     $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
