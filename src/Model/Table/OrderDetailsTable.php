@@ -239,14 +239,27 @@ class OrderDetailsTable extends AppTable
 
     }
 
+    private function getFutureOrdersConditions($customerId)
+    {
+        return [
+            'OrderDetails.id_customer' => $customerId,
+            'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') > DATE_FORMAT(NOW(), \'%Y-%m-%d\')'
+        ];
+    }
+
+    public function getFutureOrdersByCustomerId($customerId)
+    {
+        $futureOrders = $this->find('all', [
+            'conditions' => $this->getFutureOrdersConditions($customerId),
+        ]);
+        return $futureOrders;
+    }
+
     public function getGroupedFutureOrdersByCustomerId($customerId)
     {
         $query = $this->find('all', [
             'fields' => ['OrderDetails.pickup_day'],
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') > DATE_FORMAT(NOW(), \'%Y-%m-%d\')'
-            ],
+            'conditions' => $this->getFutureOrdersConditions($customerId),
             'order' => [
                 'OrderDetails.pickup_day' => 'ASC'
             ]

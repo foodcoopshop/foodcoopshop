@@ -40,7 +40,7 @@ class FrontendController extends AppController
         $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
 
         if ($this->AppAuth->user()) {
-            $activeOrderDetails = $this->AppAuth->getOpenOrderDetails();
+            $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
         }
 
         foreach ($products as &$product) {
@@ -74,11 +74,11 @@ class FrontendController extends AppController
                     ]
                 ));
 
-                $product['active_order_details'] = [];
-                if (!empty($activeOrderDetails)) {
-                    foreach($activeOrderDetails as $activeOrderDetail) {
-                        if ($activeOrderDetail['product_id'] == $product['id_product']) {
-                            $product['active_order_details'][] = $activeOrderDetail;
+                $product['future_order_details'] = [];
+                if (!empty($futureOrderDetails)) {
+                    foreach($futureOrderDetails as $futureOrderDetail) {
+                        if ($futureOrderDetail['product_id'] == $product['id_product']) {
+                            $product['future_order_details'][] = $futureOrderDetail;
                             continue;
                         }
                     }

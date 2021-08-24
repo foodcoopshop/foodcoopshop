@@ -81,18 +81,11 @@ class AppAuthComponent extends AuthComponent
         return $dropdownData;
     }
 
-    public function getOpenOrderDetails(): array
+    public function getFutureOrderDetails()
     {
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->getUserId(),
-            ],
-            'contain' => [
-                'ActiveOrderDetails',
-            ],
-        ])->first();
-        return $customer->active_order_details;
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $futureOrderDetails = $this->OrderDetail->getFutureOrdersByCustomerId($this->getUserId());
+        return $futureOrderDetails;
     }
 
     public function getCreditBalanceMinusCurrentCartSum()
