@@ -19,6 +19,18 @@ use Cake\Core\Configure;
 
 <style>
 
+    #header .logo-wrapper {
+        width: <?php echo Configure::read('app.logoWidth'); ?>px;
+    }
+    #header .logo {
+        max-width: <?php echo Configure::read('app.logoWidth'); ?>px;
+    }
+    <?php if (Configure::read('app.logoMaxHeight') != 'auto') { ?>
+        #header .logo {
+            max-height: <?php echo Configure::read('app.logoMaxHeight'); ?>px;
+        }
+    <?php } ?>
+
     ::selection {
       background: <?php echo Configure::read('app.customThemeMainColor'); ?>;
       color: #fff;

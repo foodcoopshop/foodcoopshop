@@ -68,19 +68,14 @@ body {
 }
 
 #header .logo-wrapper {
-    margin: 5px 10px 5px 0;
+    margin: 5px 0;
     float: left;
-    width: 220px;
     height: 120px;
     padding: 10px;
     padding-top: 0;
 }
 #header .logo-wrapper a {
     display: block;
-}
-#header .logo {
-    max-height: 120px;
-    max-width: 220px;
 }
 .sidebar {
     float: left;
@@ -157,8 +152,7 @@ body.categories.detail div.description-wrapper {
 }
 
 #main-menu {
-    margin: 70px 0 20px 10px;
-    width: 660px;
+    margin: 100px 0 20px 25px;
     float: left;
 }
 #main-menu > li {
@@ -223,7 +217,9 @@ body.categories.detail div.description-wrapper {
 }
 
 #user-menu {
-    float: right;
+    position: absolute;
+    top: 5px;
+    right: 0;
     line-height: 26px;
     margin-bottom: 2px;
 }
