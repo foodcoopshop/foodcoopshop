@@ -269,7 +269,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     display: none;
 }
 body.self_services .btn-flash-message-continue {
-    float: right;
+    float: right ! important;
 }
 body.self_services #categoryid {
     width: 193px;

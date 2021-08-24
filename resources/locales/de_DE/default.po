@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-23 10:57+0200\n"
-"PO-Revision-Date: 2021-08-24 17:19+0200\n"
+"POT-Creation-Date: 2021-08-24 21:27+0200\n"
+"PO-Revision-Date: 2021-08-24 21:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -216,14 +216,17 @@ msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgen
 msgid "Pickup_day"
 msgstr "Abholtag"
 
+msgid "Print_receipt"
+msgstr "Beleg drucken"
+
 msgid "Thank_you_for_your_purchase!"
 msgstr "Vielen Dank für deinen Einkauf!"
 
 msgid "Sign_out"
 msgstr "Abmelden"
 
-msgid "Continue_shopping?"
-msgstr "Weiter einkaufen?"
+msgid "Continue_shopping"
+msgstr "Weiter einkaufen"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Benachrichtigung über Sofort-Bestellung"
@@ -2162,6 +2165,9 @@ msgstr "Deine Einkaufstasche ist leer."
 
 msgid "Finish_pickup"
 msgstr "Abholung abschließen"
+
+msgid "Continue_shopping?"
+msgstr "Weiter einkaufen?"
 
 msgid "terms_and_conditions"
 msgstr "Nutzungsbedingungen"

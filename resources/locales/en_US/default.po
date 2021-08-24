@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-23 10:57+0200\n"
-"PO-Revision-Date: 2021-08-23 11:02+0200\n"
+"POT-Creation-Date: 2021-08-24 21:27+0200\n"
+"PO-Revision-Date: 2021-08-24 21:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -216,14 +216,17 @@ msgstr "Instant order ({0}) successfully placed for {1}. The following manufactu
 msgid "Pickup_day"
 msgstr "Pickup day"
 
+msgid "Print_receipt"
+msgstr "Print receipt"
+
 msgid "Thank_you_for_your_purchase!"
 msgstr "Thank you for your purchase!"
 
 msgid "Sign_out"
 msgstr "Sign out"
 
-msgid "Continue_shopping?"
-msgstr "Continue shopping?"
+msgid "Continue_shopping"
+msgstr "Continue shopping"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Notification about instant order"
@@ -2162,6 +2165,9 @@ msgstr "Your shopping bag is empty."
 
 msgid "Finish_pickup"
 msgstr "Finish pickup"
+
+msgid "Continue_shopping?"
+msgstr "Continue shopping?"
 
 msgid "terms_and_conditions"
 msgstr "terms and conditions"

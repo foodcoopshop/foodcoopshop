@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-23 10:57+0200\n"
+"POT-Creation-Date: 2021-08-24 21:27+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -215,13 +215,16 @@ msgstr ""
 msgid "Pickup_day"
 msgstr ""
 
+msgid "Print_receipt"
+msgstr ""
+
 msgid "Thank_you_for_your_purchase!"
 msgstr ""
 
 msgid "Sign_out"
 msgstr ""
 
-msgid "Continue_shopping?"
+msgid "Continue_shopping"
 msgstr ""
 
 msgid "Notification_about_instant_order_order"
@@ -2160,6 +2163,9 @@ msgid "Your_shopping_bag_is_empty."
 msgstr ""
 
 msgid "Finish_pickup"
+msgstr ""
+
+msgid "Continue_shopping?"
 msgstr ""
 
 msgid "terms_and_conditions"
