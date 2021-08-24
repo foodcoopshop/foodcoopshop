@@ -107,7 +107,7 @@ return [
         'categoryAllProducts' => 20,
 
         'logoFileName' => 'logo.png',
-        'logoWidth' => 240, //int
+        'logoWidth' => 220, //int
         'logoMaxHeight' => 120,  // int or string 'auto'
 
         /**
