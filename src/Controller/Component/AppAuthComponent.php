@@ -81,18 +81,11 @@ class AppAuthComponent extends AuthComponent
         return $dropdownData;
     }
 
-    public function getOpenOrderDetails(): array
+    public function getFutureOrderDetails()
     {
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->getUserId(),
-            ],
-            'contain' => [
-                'ActiveOrderDetails',
-            ],
-        ])->first();
-        return $customer->active_order_details;
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $futureOrderDetails = $this->OrderDetail->getFutureOrdersByCustomerId($this->getUserId());
+        return $futureOrderDetails;
     }
 
     public function getCreditBalanceMinusCurrentCartSum()
@@ -130,7 +123,7 @@ class AppAuthComponent extends AuthComponent
         }
     }
 
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
         if ($this->isManufacturer()) {
             return false;
@@ -141,11 +134,7 @@ class AppAuthComponent extends AuthComponent
         return false;
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    public function isManufacturer()
+    public function isManufacturer(): bool
     {
         $this->setManufacturer();
         if (! empty($this->manufacturer)) {
@@ -181,11 +170,7 @@ class AppAuthComponent extends AuthComponent
         return '';
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         if ($this->isManufacturer()) {
             return false;
@@ -196,11 +181,7 @@ class AppAuthComponent extends AuthComponent
         return false;
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    public function isCustomer()
+    public function isCustomer(): bool
     {
         if ($this->isManufacturer()) {
             return false;
@@ -278,12 +259,12 @@ class AppAuthComponent extends AuthComponent
         return $cart->getCart($this, $cartType);
     }
 
-    public function isTimebasedCurrencyEnabledForManufacturer()
+    public function isTimebasedCurrencyEnabledForManufacturer(): bool
     {
         return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->manufacturer->timebased_currency_enabled;
     }
 
-    public function isTimebasedCurrencyEnabledForCustomer()
+    public function isTimebasedCurrencyEnabledForCustomer(): bool
     {
         return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->user('timebased_currency_enabled');
     }
