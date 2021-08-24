@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2021-08-23 10:57+0200\n"
-"PO-Revision-Date: 2021-08-23 11:00+0200\n"
+"PO-Revision-Date: 2021-08-24 17:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2329,7 +2329,7 @@ msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_
 msgstr "{0,plural,=1{1 Woche} other{# Wochen}} {1,plural,=1{und 1 Tag} other{und # Tage}}"
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
-msgstr "Du hast {0} bereits {1}x für Abholtag {2} bestellt."
+msgstr "Du hast {0} bereits {1}x für den Abholtag {2} bestellt."
 
 msgid "from_which_{0}_%"
 msgstr "davon {0} %"
