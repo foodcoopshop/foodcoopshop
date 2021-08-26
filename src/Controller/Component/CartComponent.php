@@ -532,7 +532,6 @@ class CartComponent extends Component
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
 
                     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-
                         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
                         $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
                         $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
@@ -541,13 +540,14 @@ class CartComponent extends Component
                             $helloCash = new HelloCash();
                             $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
                             $invoiceId = $responseObject->invoice_id;
-                            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
                         } else {
                             $invoiceToCustomer = new GenerateInvoiceToCustomer();
                             $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
-                            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+                            $invoiceId = $newInvoice->id;
+                            $invoiceRoute = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
                         }
-
+                        $cart['invoice_id'] = $invoiceId;
                     }
 
                     $actionLogType = 'self_service_order_added';
@@ -555,8 +555,8 @@ class CartComponent extends Component
                     $message .= '<br />';
                     $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout().'"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
                     $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fa fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
-                    if (isset($invoiceFilename)) {
-                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.SelfService.printInvoice("'.Configure::read('app.cakeServerName') . $invoiceFilename. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
+                    if (isset($invoiceRoute)) {
+                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.SelfService.printInvoice("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
                     }
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
                     $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
