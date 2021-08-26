@@ -45,6 +45,7 @@ class SelfServiceController extends FrontendController
         }
 
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !empty($this->getRequest()->getQuery('invoiceId'))) {
+            $invoiceRoute = '';
             $invoiceId = h(trim($this->getRequest()->getQuery('invoiceId')));
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
                 $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
@@ -55,7 +56,9 @@ class SelfServiceController extends FrontendController
                         'Invoices.id' => $invoiceId,
                     ],
                 ])->first();
-                $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
+                if (!empty($invoice)) {
+                    $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
+                }
             }
             $this->set('invoiceRoute', $invoiceRoute);
         }

@@ -34,7 +34,7 @@ if (!$isMobile && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')
     ]);
 }
 
-if (!$isMobile && !empty($invoiceRoute)) {
+if (!$isMobile && $invoiceRoute != '') {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".SelfService.printInvoice('".Configure::read('app.cakeServerName') . $invoiceRoute. "');"
     ]);
