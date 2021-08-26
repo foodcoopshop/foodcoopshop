@@ -186,7 +186,23 @@ class AppAuthComponent extends AuthComponent
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->user('id_default_group') == CUSTOMER_GROUP_MEMBER) {
+        if (in_array($this->user('id_default_group'), [
+            CUSTOMER_GROUP_MEMBER,
+            CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER,
+            ],
+            )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isSelfServiceCustomer(): bool
+    {
+        if ($this->isManufacturer()) {
+            return false;
+        }
+        if ($this->user('id_default_group') == CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER) {
             return true;
         }
         return false;

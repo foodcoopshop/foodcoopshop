@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-24 21:27+0200\n"
+"POT-Creation-Date: 2021-08-26 11:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -215,9 +215,6 @@ msgstr ""
 msgid "Pickup_day"
 msgstr ""
 
-msgid "Print_receipt"
-msgstr ""
-
 msgid "Thank_you_for_your_purchase!"
 msgstr ""
 
@@ -225,6 +222,9 @@ msgid "Sign_out"
 msgstr ""
 
 msgid "Continue_shopping"
+msgstr ""
+
+msgid "Print_receipt"
 msgstr ""
 
 msgid "Notification_about_instant_order_order"
@@ -1580,6 +1580,9 @@ msgstr ""
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr ""
 
+msgid "Please_select_your_payment_type."
+msgstr ""
+
 msgid "Please_select_a_pickup_day."
 msgstr ""
 
@@ -1955,6 +1958,9 @@ msgstr ""
 msgid "Footer_(bottom)"
 msgstr ""
 
+msgid "Self_service_customer"
+msgstr ""
+
 msgid "Admin"
 msgstr ""
 
@@ -2217,6 +2223,12 @@ msgid "The_amount_will_be_reduced_from_the_credit_balance."
 msgstr ""
 
 msgid "Please_pay_when_picking_up_products."
+msgstr ""
+
+msgid "Payment_type"
+msgstr ""
+
+msgid "Cash"
 msgstr ""
 
 msgid "Write_message_to_pick_up_team_for_{0}?"

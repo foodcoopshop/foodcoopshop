@@ -115,6 +115,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         ]);
         echo $this->element('cart/generalTermsAndConditionsCheckbox');
         echo $this->element('cart/cancellationTermsCheckbox');
+        echo $this->element('cart/paymentTypeRadioButtons');
     ?>
     <button type="submit" class="btn btn-success btn-order">
         <i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
