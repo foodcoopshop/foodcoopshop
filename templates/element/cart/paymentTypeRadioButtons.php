@@ -21,7 +21,7 @@ if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 }
 
 $cartTable = FactoryLocator::get('Table')->get('Carts');
-echo $this->Form->control('Carts.payment_type', [
+echo $this->Form->control('Carts.self_service_payment_type', [
     'label' => __('Payment_type'),
     'type' => 'radio',
     'options' => [

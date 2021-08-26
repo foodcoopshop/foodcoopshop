@@ -79,21 +79,21 @@ class SelfServiceController extends FrontendController
         }
 
         $this->Cart = $this->getTableLocator()->get('Carts');
-        $defaultPaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT;
+        $defaultSelfServicePaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT;
         if ($this->AppAuth->isSelfServiceCustomer()) {
-            $defaultPaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH;
+            $defaultSelfServicePaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH;
         }
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
             $cart = $this->AppAuth->getCart();
             $this->set('cart', $cart['Cart']);
-            $this->request = $this->request->withData('Carts.payment_type', $defaultPaymentType);
+            $this->request = $this->request->withData('Carts.self_service_payment_type', $defaultSelfServicePaymentType);
         }
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
 
+            // data gets lost form element if it is disabled
             if ($this->AppAuth->isSelfServiceCustomer()) {
-                // data gets lost form element it is disabled
-                $this->request = $this->request->withData('Carts.payment_type', $defaultPaymentType);
+                $this->request = $this->request->withData('Carts.self_service_payment_type', $defaultSelfServicePaymentType);
             }
             if ($this->AppAuth->Cart->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));
