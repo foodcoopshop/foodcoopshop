@@ -26,13 +26,13 @@ class ListsController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'getInvoice':
-                return $this->AppAuth->user() && !$this->AppAuth->isManufacturer();
+                return (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->user()) ||
+                    ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer());
                 break;
             default:
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
                 break;
         }
-
     }
 
     public function orderLists()
@@ -154,7 +154,7 @@ class ListsController extends AdminAppController
     {
         $filenameWithPath = Configure::read('app.folder_invoices') . DS . h($this->getRequest()->getQuery('file'));
 
-        if ($this->AppAuth->isCustomer()) {
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isCustomer()) {
             $string = h($this->getRequest()->getQuery('file'));
             $positionInvoiceString = strpos($string, '_' . __d('admin', 'Invoice') . '_');
             $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
