@@ -237,8 +237,8 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     font-weight: bold;
     margin-right: 15px;
 }
-.self-service .radio label[for="carts-payment-type-1"],
-.self-service .radio label[for="carts-payment-type-2"] {
+.self-service .radio label[for="carts-self-service-payment-type-1"],
+.self-service .radio label[for="carts-self-service-payment-type-2"] {
     line-height: 20px;
     margin-right: 10px;
 }

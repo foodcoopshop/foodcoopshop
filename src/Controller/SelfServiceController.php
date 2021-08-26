@@ -55,7 +55,7 @@ class SelfServiceController extends FrontendController
                         'Invoices.id' => $invoiceId,
                     ],
                 ])->first();
-                $invoiceRoute = '/admin/lists/getInvoice?file=' . $invoice->filename;
+                $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
             }
             $this->set('invoiceRoute', $invoiceRoute);
         }

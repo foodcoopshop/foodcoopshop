@@ -22,6 +22,11 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
+    public function getInvoiceDownloadRoute($invoiceFilename)
+    {
+        return '/admin/lists/getInvoice?file=' . $invoiceFilename;
+    }
+
     public function getHelloCashInvoice($invoiceId, $cancellation=0)
     {
         return '/admin/hello-cash/getInvoice/' . $invoiceId . '/' . $cancellation;

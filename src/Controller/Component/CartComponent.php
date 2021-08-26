@@ -545,7 +545,7 @@ class CartComponent extends Component
                             $invoiceToCustomer = new GenerateInvoiceToCustomer();
                             $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
                             $invoiceId = $newInvoice->id;
-                            $invoiceRoute = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+                            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
                         }
                         $cart['invoice_id'] = $invoiceId;
                     }

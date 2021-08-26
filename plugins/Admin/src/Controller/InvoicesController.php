@@ -112,7 +112,7 @@ class InvoicesController extends AdminAppController
 
             $invoiceToCustomer = new GenerateInvoiceToCustomer();
             $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
-            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+            $invoiceFilename = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
             $invoiceNumber = $newInvoice->invoice_number;
             $invoiceId = $newInvoice->id;
         }
@@ -283,7 +283,7 @@ class InvoicesController extends AdminAppController
             $invoiceId = $newInvoice->id;
             $cancelledInvoiceNumber = $invoice->invoice_number;
             $cancellationInvoiceNumber = $newInvoice->invoice_number;
-            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+            $invoiceFilename = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
 
         }
 
