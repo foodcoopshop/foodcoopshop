@@ -28,7 +28,7 @@ echo $this->Form->control('Carts.self_service_payment_type', [
         $cartTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH => __('Cash'),
         $cartTable::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT => __('Credit')
     ],
-    'disabled' => $appAuth->isSelfServiceCustomer(),
+    'disabled' => true,
     'escape' => false,
 ]);
 
