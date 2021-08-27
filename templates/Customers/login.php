@@ -49,10 +49,6 @@ $this->element('addScript', ['script' =>
     echo $this->Form->control('email', ['label' => __('Email')]);
     echo $this->Form->control('passwd', ['label' => __('Password')]);
 
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".ModalText.init('.remember-me-wrapper a');"
-    ]);
-
     echo '<div class="remember-me-wrapper">';
         echo $this->Form->control('remember_me', [
             'type' => 'checkbox',
