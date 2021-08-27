@@ -85,7 +85,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
             echo '</p>';
         }
-        if ($appAuth->user() && $this->Html->paymentIsCashless()) {
+        if ($appAuth->user() && $this->Html->paymentIsCashless() && !$appAuth->isSelfServiceCustomer()) {
             $class = ['payment'];
             if ($creditBalance < 0) {
                 $class[] = 'negative';
