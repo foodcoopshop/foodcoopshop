@@ -44,8 +44,8 @@ class SelfServiceController extends FrontendController
             $this->set('keyword', $keyword);
         }
 
+        $invoiceRoute = '';
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !empty($this->getRequest()->getQuery('invoiceId'))) {
-            $invoiceRoute = '';
             $invoiceId = h(trim($this->getRequest()->getQuery('invoiceId')));
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
                 $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
@@ -60,8 +60,8 @@ class SelfServiceController extends FrontendController
                     $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
                 }
             }
-            $this->set('invoiceRoute', $invoiceRoute);
         }
+        $this->set('invoiceRoute', $invoiceRoute);
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect(null, false));
