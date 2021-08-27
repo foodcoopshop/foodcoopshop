@@ -46,16 +46,19 @@ $this->element('addScript', ['script' =>
         echo $this->Form->control('barCode', ['type' => 'text', 'label' => __('Scan_member_card')]);
         echo '<h2><span>'.__('or').'</span></h2>';
     }
+
     echo $this->Form->control('email', ['label' => __('Email')]);
     echo $this->Form->control('passwd', ['label' => __('Password')]);
 
-    echo '<div class="remember-me-wrapper">';
-        echo $this->Form->control('remember_me', [
-            'type' => 'checkbox',
-            'label' => __('Stay_signed_in'),
-            'escape' => false
-        ]);
-    echo '</div>';
+    if (!$enableBarCodeLogin) {
+        echo '<div class="remember-me-wrapper">';
+            echo $this->Form->control('remember_me', [
+                'type' => 'checkbox',
+                'label' => __('Stay_signed_in'),
+                'escape' => false
+            ]);
+        echo '</div>';
+    }
 
     ?>
 
