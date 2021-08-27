@@ -44,25 +44,6 @@ class SelfServiceController extends FrontendController
             $this->set('keyword', $keyword);
         }
 
-        $invoiceRoute = '';
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !empty($this->getRequest()->getQuery('invoiceId'))) {
-            $invoiceId = h(trim($this->getRequest()->getQuery('invoiceId')));
-            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
-            } else {
-                $this->Invoice = $this->getTableLocator()->get('Invoices');
-                $invoice = $this->Invoice->find('all', [
-                    'conditions' => [
-                        'Invoices.id' => $invoiceId,
-                    ],
-                ])->first();
-                if (!empty($invoice)) {
-                    $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
-                }
-            }
-        }
-        $this->set('invoiceRoute', $invoiceRoute);
-
         $this->Category = $this->getTableLocator()->get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect(null, false));
 
@@ -127,12 +108,30 @@ class SelfServiceController extends FrontendController
             $cart = $this->AppAuth->Cart->finish();
 
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
+
                 $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
+
                 if (isset($cart['invoice_id'])) {
-                    $redirectUrl .= '?invoiceId=' . $cart['invoice_id'];
+                    $invoiceId = $cart['invoice_id'];
+                    if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                        $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                    } else {
+                        $this->Invoice = $this->getTableLocator()->get('Invoices');
+                        $invoice = $this->Invoice->find('all', [
+                            'conditions' => [
+                                'Invoices.id' => $invoiceId,
+                            ],
+                        ])->first();
+                        if (!empty($invoice)) {
+                            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
+                        }
+                    }
+                    $this->request->getSession()->write('selfServiceInvoiceRoute', $invoiceRoute);
                 }
+
                 $this->redirect($redirectUrl);
                 return;
+
             }
 
         }

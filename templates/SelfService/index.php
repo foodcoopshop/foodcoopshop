@@ -34,10 +34,11 @@ if (!$isMobile && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')
     ]);
 }
 
-if (!$isMobile && $invoiceRoute != '') {
+if (!$isMobile && $this->request->getSession()->read('selfServiceInvoiceRoute') != '') {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".SelfService.printInvoice('".Configure::read('app.cakeServerName') . $invoiceRoute. "');"
+        Configure::read('app.jsNamespace').".SelfService.printInvoice('".Configure::read('app.cakeServerName') . $this->request->getSession()->read('selfServiceInvoiceRoute') . "');"
     ]);
+    $this->request->getSession()->delete('selfServiceInvoiceRoute');
 }
 
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);

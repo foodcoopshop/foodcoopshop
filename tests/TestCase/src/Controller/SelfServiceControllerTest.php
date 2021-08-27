@@ -220,6 +220,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->finishSelfServiceCart(1, 1, $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH);
         $this->runAndAssertQueue();
+        $this->assertSessionHasKey('selfServiceInvoiceRoute');
 
         $cart = $this->Cart->find('all', [
             'order' => [
