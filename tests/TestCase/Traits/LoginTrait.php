@@ -40,6 +40,12 @@ trait LoginTrait
         ];
     }
 
+    public function loginAsSelfServiceCustomer()
+    {
+        $sessionData =  $this->login(Configure::read('test.selfServiceCustomerId'));
+        $this->session($sessionData);
+    }
+
     public function loginAsSuperadmin()
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
