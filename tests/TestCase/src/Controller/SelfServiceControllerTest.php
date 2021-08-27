@@ -187,7 +187,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(0.81, $cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_total_amount);
     }
 
-    public function testSelfServideOrderWithDeliveryBreak()
+    public function testSelfServiceOrderWithDeliveryBreak()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
