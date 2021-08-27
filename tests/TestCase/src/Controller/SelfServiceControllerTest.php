@@ -213,6 +213,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers/changeStatus/' . Configure::read('test.selfServiceCustomerId'). '/1/0');
         $this->loginAsSelfServiceCustomer();
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->addProductToSelfServiceCart(351, 1, '0,5');
