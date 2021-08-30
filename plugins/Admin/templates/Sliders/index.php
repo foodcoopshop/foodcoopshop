@@ -122,7 +122,7 @@ foreach ($sliders as $slider) {
 }
 
 echo '<tr>';
-echo '<td colspan="5"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';
