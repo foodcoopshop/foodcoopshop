@@ -25,6 +25,9 @@ use Cake\Core\Configure;
     #header .logo {
         max-width: <?php echo Configure::read('app.logoWidth'); ?>px;
     }
+    #main-menu {
+        width: calc(100% - <?php echo Configure::read('app.logoWidth'); ?>px - 34px);
+    }
     <?php if (Configure::read('app.logoMaxHeight') != 'auto') { ?>
         #header .logo {
             max-height: <?php echo Configure::read('app.logoMaxHeight'); ?>px;
