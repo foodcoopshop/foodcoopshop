@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-# Unveröffentlichte Version
+# v3.3.0
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
@@ -35,7 +35,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die alte Funktion zum Verwalten der Mitgliedbeitrag wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-[Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...develop)
+Datum: xx.09.2021 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...v3.3.0)
 
 # v3.2.2
 
