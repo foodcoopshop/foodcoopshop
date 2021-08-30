@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-30 09:46+0200\n"
-"PO-Revision-Date: 2021-08-30 09:46+0200\n"
+"POT-Creation-Date: 2021-08-30 17:32+0200\n"
+"PO-Revision-Date: 2021-08-30 17:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2061,8 +2061,8 @@ msgstr "found"
 msgid "Your_cart_is_empty"
 msgstr "Your cart is empty"
 
-msgid "Product_sum_including_vat"
-msgstr "Product sum including VAT"
+msgid "Value_of_goods_sum"
+msgstr "Value of goods total"
 
 msgid "Deposit_sum"
 msgstr "Deposit sum"
@@ -2537,6 +2537,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Product_sum_including_vat"
+#~ msgstr "Product sum including VAT"
 
 #~ msgid "Self_service_client"
 #~ msgstr "Self-service client"

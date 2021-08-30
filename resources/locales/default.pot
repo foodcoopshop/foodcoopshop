@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-30 09:46+0200\n"
+"POT-Creation-Date: 2021-08-30 17:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2060,7 +2060,7 @@ msgstr ""
 msgid "Your_cart_is_empty"
 msgstr ""
 
-msgid "Product_sum_including_vat"
+msgid "Value_of_goods_sum"
 msgstr ""
 
 msgid "Deposit_sum"

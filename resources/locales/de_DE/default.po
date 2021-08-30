@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-30 09:46+0200\n"
-"PO-Revision-Date: 2021-08-30 09:47+0200\n"
+"POT-Creation-Date: 2021-08-30 17:32+0200\n"
+"PO-Revision-Date: 2021-08-30 17:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2061,8 +2061,8 @@ msgstr "gefunden"
 msgid "Your_cart_is_empty"
 msgstr "Dein Warenkorb ist leer"
 
-msgid "Product_sum_including_vat"
-msgstr "Warenwert gesamt (inkl. USt.)"
+msgid "Value_of_goods_sum"
+msgstr "Warenwert gesamt"
 
 msgid "Deposit_sum"
 msgstr "Pfand gesamt"
@@ -2537,6 +2537,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Product_sum_including_vat"
+#~ msgstr "Warenwert gesamt (inkl. USt.)"
 
 #~ msgid "Self_service_client"
 #~ msgstr "SB-Kunde"

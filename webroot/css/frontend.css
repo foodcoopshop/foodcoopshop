@@ -750,8 +750,21 @@ body.carts.detail #load-last-order-details,
     width: 100%;
     float: left;
 }
-.cart p.sum-wrapper span.sum,
+.cart p.product-sum-wrapper,
+.cart p.deposit-sum-wrapper,
+.cart p.total-sum-wrapper,
+.cart p.timebased-currency-sum-wrapper {
+    padding-top: 0;
+}
+#cart p.product-sum-wrapper,
+#cart p.total-sum-wrapper {
+    margin-top: 5px;
+    padding-top: 3px;
+    border-top: 1px dotted #d6d4d4;
+}
+.cart p.product-sum-wrapper span.sum,
 .cart p.deposit-sum-wrapper span.sum,
+.cart p.total-sum-wrapper span.sum,
 .cart p.timebased-currency-sum-wrapper span.sum,
 .cart b.payment {
     font-weight: 600;
@@ -777,7 +790,6 @@ body.carts.detail #load-last-order-details,
 .cart span.manufacturer-link,
 .cart .image,
 .cart span.deposit,
-.cart p.deposit-sum-wrapper,
 .cart p.tax-sum-wrapper,
 .cart span.tax,
 .cart span.timebasedCurrencyMoney,
@@ -939,7 +951,7 @@ body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
 body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
     margin-top: 20px;
 }
-body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
+body.carts.detail .cart:not(#cart) p.product-sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
     font-weight: 600;
     float: right;
@@ -1002,8 +1014,7 @@ body.carts.detail .cart:not(#cart) .products {
     overflow-x: hidden; /* error wrapper tricky to style */
     margin-bottom: 20px;
 }
-body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
-body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
+body.carts.detail .cart:not(#cart) p.total-sum-wrapper {
     font-size: 20px;
 }
 body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
