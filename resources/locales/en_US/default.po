@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-26 11:13+0200\n"
-"PO-Revision-Date: 2021-08-26 11:13+0200\n"
+"POT-Creation-Date: 2021-08-30 09:46+0200\n"
+"PO-Revision-Date: 2021-08-30 09:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2226,12 +2226,6 @@ msgstr "The amount will be reduced from the credit balance."
 msgid "Please_pay_when_picking_up_products."
 msgstr "Please pay when picking up your products."
 
-msgid "Payment_type"
-msgstr "Payment"
-
-msgid "Cash"
-msgstr "Cash"
-
 msgid "Write_message_to_pick_up_team_for_{0}?"
 msgstr "Want to write a message to the pick up team on {0}?"
 
@@ -2367,8 +2361,17 @@ msgstr "Add deposit"
 msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
 
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr "The entered deposit will not show up in the cart but added to your credit."
+
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
+
+msgid "Payment_type"
+msgstr "Payment"
+
+msgid "Cash"
+msgstr "Cash"
 
 msgid "Categories"
 msgstr "Categories"

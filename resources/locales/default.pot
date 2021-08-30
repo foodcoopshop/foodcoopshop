@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-26 11:13+0200\n"
+"POT-Creation-Date: 2021-08-30 09:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2225,12 +2225,6 @@ msgstr ""
 msgid "Please_pay_when_picking_up_products."
 msgstr ""
 
-msgid "Payment_type"
-msgstr ""
-
-msgid "Cash"
-msgstr ""
-
 msgid "Write_message_to_pick_up_team_for_{0}?"
 msgstr ""
 
@@ -2366,7 +2360,16 @@ msgstr ""
 msgid "Add_deposit_amount_for_{0}"
 msgstr ""
 
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr ""
+
 msgid "Amount_in_{0}"
+msgstr ""
+
+msgid "Payment_type"
+msgstr ""
+
+msgid "Cash"
 msgstr ""
 
 msgid "Categories"
