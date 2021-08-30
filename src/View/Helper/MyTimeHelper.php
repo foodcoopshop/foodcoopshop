@@ -170,7 +170,7 @@ class MyTimeHelper extends TimeHelper
         return self::getDeliveryDay($this->getCurrentDay());
     }
 
-    public function getNextWeeklyDeliveryDays($maxDays=30)
+    public function getNextWeeklyDeliveryDays($maxDays=52)
     {
         $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
         return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 7);
