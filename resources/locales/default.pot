@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-23 10:57+0200\n"
+"POT-Creation-Date: 2021-08-30 09:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -221,7 +221,10 @@ msgstr ""
 msgid "Sign_out"
 msgstr ""
 
-msgid "Continue_shopping?"
+msgid "Continue_shopping"
+msgstr ""
+
+msgid "Print_receipt"
 msgstr ""
 
 msgid "Notification_about_instant_order_order"
@@ -1577,6 +1580,9 @@ msgstr ""
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr ""
 
+msgid "Please_select_your_payment_type."
+msgstr ""
+
 msgid "Please_select_a_pickup_day."
 msgstr ""
 
@@ -1952,6 +1958,9 @@ msgstr ""
 msgid "Footer_(bottom)"
 msgstr ""
 
+msgid "Self_service_customer"
+msgstr ""
+
 msgid "Admin"
 msgstr ""
 
@@ -2162,6 +2171,9 @@ msgstr ""
 msgid "Finish_pickup"
 msgstr ""
 
+msgid "Continue_shopping?"
+msgstr ""
+
 msgid "terms_and_conditions"
 msgstr ""
 
@@ -2348,7 +2360,16 @@ msgstr ""
 msgid "Add_deposit_amount_for_{0}"
 msgstr ""
 
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr ""
+
 msgid "Amount_in_{0}"
+msgstr ""
+
+msgid "Payment_type"
+msgstr ""
+
+msgid "Cash"
 msgstr ""
 
 msgid "Categories"

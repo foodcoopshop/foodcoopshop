@@ -15,6 +15,8 @@
 
 use Cake\Core\Configure;
 
+Configure::write('test.loginEmailSelfServiceCustomer', 'fcs-demo-sb-kunde@mailinator.com');
+Configure::write('test.selfServiceCustomerId', 93);
 Configure::write('test.loginEmailCustomer', 'fcs-demo-mitglied@mailinator.com');
 Configure::write('test.customerId', 87);
 Configure::write('test.loginEmailAdmin', 'fcs-demo-admin@mailinator.com');

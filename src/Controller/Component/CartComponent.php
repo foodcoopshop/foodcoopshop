@@ -2,6 +2,8 @@
 
 namespace App\Controller\Component;
 
+use App\Lib\HelloCash\HelloCash;
+use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
 use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
@@ -528,11 +530,34 @@ class CartComponent extends Component
                     $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
+
+                    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+                        $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+                        $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
+                        $paidInCash = $this->getController()->getRequest()->getData('Carts.self_service_payment_type') == $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH ? 1 : 0;
+                        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                            $helloCash = new HelloCash();
+                            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+                            $invoiceId = $responseObject->invoice_id;
+                            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                        } else {
+                            $invoiceToCustomer = new GenerateInvoiceToCustomer();
+                            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+                            $invoiceId = $newInvoice->id;
+                            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
+                        }
+                        $cart['invoice_id'] = $invoiceId;
+                    }
+
                     $actionLogType = 'self_service_order_added';
                     $message = __('Thank_you_for_your_purchase!');
                     $message .= '<br />';
-                    $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout().'">'.__('Sign_out').'?</a>';
-                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'">'.__('Continue_shopping?').'</a>';
+                    $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout().'"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
+                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fa fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
+                    if (isset($invoiceRoute)) {
+                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.SelfService.printInvoice("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
+                    }
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
                     $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
                     break;

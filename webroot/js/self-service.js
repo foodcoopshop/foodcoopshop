@@ -267,6 +267,15 @@ foodcoopshop.SelfService = {
 
     renderTimer : function() {
         $('.auto-logout-timer').html(this.currentLogoutTimer);
+    },
+
+    printInvoice : function(file) {
+        var iframe = document.createElement('iframe');
+        iframe.style.visibility = 'hidden';
+        iframe.src = file;
+        document.body.appendChild(iframe);
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
     }
 
 };

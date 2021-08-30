@@ -34,6 +34,13 @@ if (!$isMobile && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')
     ]);
 }
 
+if (!$isMobile && $this->request->getSession()->read('selfServiceInvoiceRoute') != '') {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".SelfService.printInvoice('".Configure::read('app.cakeServerName') . $this->request->getSession()->read('selfServiceInvoiceRoute') . "');"
+    ]);
+    $this->request->getSession()->delete('selfServiceInvoiceRoute');
+}
+
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
 if ($isMobile) {
@@ -115,6 +122,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         ]);
         echo $this->element('cart/generalTermsAndConditionsCheckbox');
         echo $this->element('cart/cancellationTermsCheckbox');
+        echo $this->element('selfService/paymentTypeRadioButtons');
     ?>
     <button type="submit" class="btn btn-success btn-order">
         <i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>

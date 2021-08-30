@@ -92,7 +92,7 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
                 "no_delivery_days": ""
@@ -212,7 +212,7 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
                 "no_delivery_days": ""
@@ -324,7 +324,7 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
                 "no_delivery_days": ""
@@ -436,7 +436,7 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
                 "no_delivery_days": ""
@@ -571,7 +571,7 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
                 "no_delivery_days": ""
@@ -827,7 +827,7 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
                 "no_delivery_days": ""
@@ -891,7 +891,7 @@
             "unity": "",
             "manufacturer": {
                 "name": "Demo Gem\u00fcse-Hersteller",
-                "stock_management_enabled": 0
+                "stock_management_enabled": 1
             },
             "default_on": true,
             "stock_available": {
@@ -933,7 +933,7 @@
             "unity": "",
             "manufacturer": {
                 "name": "Demo Gem\u00fcse-Hersteller",
-                "stock_management_enabled": 0
+                "stock_management_enabled": 1
             },
             "default_on": false,
             "stock_available": {
@@ -975,7 +975,7 @@
             "unity": "",
             "manufacturer": {
                 "name": "Demo Gem\u00fcse-Hersteller",
-                "stock_management_enabled": 0
+                "stock_management_enabled": 1
             },
             "default_on": false,
             "stock_available": {
@@ -1069,7 +1069,7 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
                 "no_delivery_days": ""

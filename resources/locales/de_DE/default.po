@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-23 10:57+0200\n"
-"PO-Revision-Date: 2021-08-24 17:19+0200\n"
+"POT-Creation-Date: 2021-08-30 09:46+0200\n"
+"PO-Revision-Date: 2021-08-30 09:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -222,8 +222,11 @@ msgstr "Vielen Dank für deinen Einkauf!"
 msgid "Sign_out"
 msgstr "Abmelden"
 
-msgid "Continue_shopping?"
-msgstr "Weiter einkaufen?"
+msgid "Continue_shopping"
+msgstr "Weiter einkaufen"
+
+msgid "Print_receipt"
+msgstr "Beleg drucken"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Benachrichtigung über Sofort-Bestellung"
@@ -1578,6 +1581,9 @@ msgstr "Bitte akzeptiere die AGB."
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr "Bitte verspreche, die bestellten Produkte abzuholen und bei der Abholung bar zu bezahlen."
 
+msgid "Please_select_your_payment_type."
+msgstr "Bitte wähle deine Zahlungsart."
+
 msgid "Please_select_a_pickup_day."
 msgstr "Bitte wähle einen Abholtag aus."
 
@@ -1953,6 +1959,9 @@ msgstr "Header (oben)"
 msgid "Footer_(bottom)"
 msgstr "Footer (unten)"
 
+msgid "Self_service_customer"
+msgstr "SB-Kunde"
+
 msgid "Admin"
 msgstr "Admin"
 
@@ -2163,6 +2172,9 @@ msgstr "Deine Einkaufstasche ist leer."
 msgid "Finish_pickup"
 msgstr "Abholung abschließen"
 
+msgid "Continue_shopping?"
+msgstr "Weiter einkaufen?"
+
 msgid "terms_and_conditions"
 msgstr "Nutzungsbedingungen"
 
@@ -2349,8 +2361,17 @@ msgstr "Pfand eintragen"
 msgid "Add_deposit_amount_for_{0}"
 msgstr "Pfand-Betrag für {0} eintragen"
 
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr "Der eingetragene Pfand-Betrag scheint nicht im Warenkorb auf, wird aber trotzdem korrekt gutgeschrieben."
+
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
+
+msgid "Payment_type"
+msgstr "Zahlungsart"
+
+msgid "Cash"
+msgstr "Bar"
 
 msgid "Categories"
 msgstr "Kategorien"
@@ -2516,6 +2537,12 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Self_service_client"
+#~ msgstr "SB-Kunde"
+
+#~ msgid "Credit_system"
+#~ msgstr "Guthaben-System"
 
 #~ msgid "Action_Log_Member_member_fee_added"
 #~ msgstr "Mitglied: Mitgliedsbeitrag eingetragen"

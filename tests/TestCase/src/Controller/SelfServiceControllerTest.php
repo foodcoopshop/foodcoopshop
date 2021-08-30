@@ -12,10 +12,14 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\QueueTrait;
+use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
@@ -26,6 +30,9 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use AssertPagesForErrorsTrait;
     use LoginTrait;
     use EmailTrait;
+    use QueueTrait;
+
+    public $commandRunner;
 
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
@@ -187,7 +194,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(0.81, $cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_total_amount);
     }
 
-    public function testSelfServideOrderWithDeliveryBreak()
+    public function testSelfServiceOrderWithDeliveryBreak()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
@@ -197,6 +204,48 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [])->toArray();
         $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
+    }
+
+    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
+    {
+
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
+
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers/changeStatus/' . Configure::read('test.selfServiceCustomerId'). '/1/0');
+        $this->loginAsSelfServiceCustomer();
+        $this->addProductToSelfServiceCart(346, 1, 0);
+        $this->addProductToSelfServiceCart(351, 1, '0,5');
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $this->finishSelfServiceCart(1, 1, $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH);
+        $this->runAndAssertQueue();
+        $this->assertSessionHasKey('selfServiceInvoiceRoute');
+
+        $cart = $this->Cart->find('all', [
+            'order' => [
+                'Carts.id_cart' => 'DESC'
+            ],
+        ])->first();
+        $cart = $this->getCartById($cart->id_cart);
+
+        $this->assertEquals(2, count($cart->cart_products));
+
+        foreach($cart->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->order_state, ORDER_STATE_BILLED_CASHLESS);
+        }
+
+        $this->assertMailCount(2);
+
+        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
+
+        $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. 2021-000001');
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSelfServiceCustomer'));
+
     }
 
     private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
@@ -236,12 +285,13 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ]);
     }
 
-    private function finishSelfServiceCart($general_terms_and_conditions_accepted, $cancellation_terms_accepted)
+    private function finishSelfServiceCart($generalTermsAndConditionsAccepted, $cancellationTermsAccepted, $selfServicePaymentType = 1)
     {
         $data = [
             'Carts' => [
-                'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                'cancellation_terms_accepted' => $cancellation_terms_accepted
+                'general_terms_and_conditions_accepted' => $generalTermsAndConditionsAccepted,
+                'cancellation_terms_accepted' => $cancellationTermsAccepted,
+                'self_service_payment_type' => $selfServicePaymentType,
             ],
         ];
         $this->configRequest([

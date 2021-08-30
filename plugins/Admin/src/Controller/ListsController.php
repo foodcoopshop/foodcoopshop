@@ -24,7 +24,15 @@ class ListsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
+        switch ($this->getRequest()->getParam('action')) {
+            case 'getInvoice':
+                return (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->user()) ||
+                    ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer());
+                break;
+            default:
+                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
+                break;
+        }
     }
 
     public function orderLists()
@@ -145,6 +153,17 @@ class ListsController extends AdminAppController
     public function getInvoice()
     {
         $filenameWithPath = Configure::read('app.folder_invoices') . DS . h($this->getRequest()->getQuery('file'));
+
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isCustomer()) {
+            $string = h($this->getRequest()->getQuery('file'));
+            $positionInvoiceString = strpos($string, '_' . __d('admin', 'Invoice') . '_');
+            $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
+            $customerId = end($splittedFileName);
+            if ($customerId != $this->AppAuth->getUserId()) {
+                throw new UnauthorizedException();
+            }
+        }
+
         return $this->getFile($filenameWithPath);
     }
 

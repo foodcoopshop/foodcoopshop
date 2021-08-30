@@ -27,6 +27,9 @@ class CartsTable extends AppTable
     public const CART_TYPE_INSTANT_ORDER = 2;
     public const CART_TYPE_SELF_SERVICE  = 3;
 
+    public const CART_SELF_SERVICE_PAYMENT_TYPE_CASH   = 1;
+    public const CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT = 2;
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -54,6 +57,7 @@ class CartsTable extends AppTable
         $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
         $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
         $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+        $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
         return $validator;
     }
 

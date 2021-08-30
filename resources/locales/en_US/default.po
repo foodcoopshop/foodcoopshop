@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-23 10:57+0200\n"
-"PO-Revision-Date: 2021-08-23 11:02+0200\n"
+"POT-Creation-Date: 2021-08-30 09:46+0200\n"
+"PO-Revision-Date: 2021-08-30 09:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -222,8 +222,11 @@ msgstr "Thank you for your purchase!"
 msgid "Sign_out"
 msgstr "Sign out"
 
-msgid "Continue_shopping?"
-msgstr "Continue shopping?"
+msgid "Continue_shopping"
+msgstr "Continue shopping"
+
+msgid "Print_receipt"
+msgstr "Print receipt"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Notification about instant order"
@@ -1045,7 +1048,7 @@ msgid "Enter_purchase_price"
 msgstr "Enter purchase price"
 
 msgid "Storage_location"
-msgstr ""
+msgstr "Storage location"
 
 msgid "delete"
 msgstr "delete"
@@ -1578,6 +1581,9 @@ msgstr "Please accept the general terms and conditions."
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr "Please promise to pick up the ordered products."
 
+msgid "Please_select_your_payment_type."
+msgstr "Please select your payment type."
+
 msgid "Please_select_a_pickup_day."
 msgstr "Please select a pickup day."
 
@@ -1953,6 +1959,9 @@ msgstr "Header (top)"
 msgid "Footer_(bottom)"
 msgstr "Footer (bottom)"
 
+msgid "Self_service_customer"
+msgstr "Self-service customer"
+
 msgid "Admin"
 msgstr "Admin"
 
@@ -2163,6 +2172,9 @@ msgstr "Your shopping bag is empty."
 msgid "Finish_pickup"
 msgstr "Finish pickup"
 
+msgid "Continue_shopping?"
+msgstr "Continue shopping?"
+
 msgid "terms_and_conditions"
 msgstr "terms and conditions"
 
@@ -2349,8 +2361,17 @@ msgstr "Add deposit"
 msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
 
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr "The entered deposit will not show up in the cart but added to your credit."
+
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
+
+msgid "Payment_type"
+msgstr "Payment"
+
+msgid "Cash"
+msgstr "Cash"
 
 msgid "Categories"
 msgstr "Categories"
@@ -2516,6 +2537,13 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Self_service_client"
+#~ msgstr "Self-service client"
+
+#, fuzzy
+#~ msgid "Credit_system"
+#~ msgstr "Credit"
 
 #~ msgid "Action_Log_Member_member_fee_added"
 #~ msgstr "Member: Member fee added"

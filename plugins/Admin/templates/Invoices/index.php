@@ -187,7 +187,7 @@ echo '<table class="list invoices-table no-clone-last-row">';
                     $invoiceDownloadLink = $this->Slug->getHelloCashInvoice($invoice->cancelled_invoice->id, true);
                 }
             } else {
-                $invoiceDownloadLink = '/admin/lists/getInvoice?file=' . $invoice->filename;
+                $invoiceDownloadLink = $this->Slug->getInvoiceDownloadRoute($invoice->filename);
             }
 
             echo '<td style="text-align:center;">';

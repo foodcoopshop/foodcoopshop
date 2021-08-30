@@ -161,7 +161,7 @@ class SendInvoicesToManufacturersShell extends AppShell
             $manufacturer->invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
                 $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $manufacturer->invoiceNumber
             );
-            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(Configure::read('app.folder_invoices'), '', $manufacturer->invoicePdfFile);
+            $invoiceLink = Configure::read('app.slugHelper')->getInvoiceDownloadRoute(str_replace(Configure::read('app.folder_invoices'), '', $manufacturer->invoicePdfFile));
 
             if (!empty($manufacturer->current_order_count)) {
 

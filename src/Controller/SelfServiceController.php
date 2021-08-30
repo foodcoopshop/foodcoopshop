@@ -78,6 +78,15 @@ class SelfServiceController extends FrontendController
             }
         }
 
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $this->Cart = $this->getTableLocator()->get('Carts');
+            $defaultSelfServicePaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT;
+            if ($this->AppAuth->isSelfServiceCustomer()) {
+                $defaultSelfServicePaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH;
+            }
+            $this->request = $this->request->withData('Carts.self_service_payment_type', $defaultSelfServicePaymentType);
+        }
+
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
             $cart = $this->AppAuth->getCart();
             $this->set('cart', $cart['Cart']);
@@ -85,17 +94,44 @@ class SelfServiceController extends FrontendController
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
 
+            // data gets lost form element if it is disabled
+            if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                $this->request = $this->request->withData('Carts.self_service_payment_type', $defaultSelfServicePaymentType);
+            }
+
             if ($this->AppAuth->Cart->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;
             }
 
-            $this->AppAuth->Cart->finish();
+            $cart = $this->AppAuth->Cart->finish();
 
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
-                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+
+                $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
+
+                if (isset($cart['invoice_id'])) {
+                    $invoiceId = $cart['invoice_id'];
+                    if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                        $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                    } else {
+                        $this->Invoice = $this->getTableLocator()->get('Invoices');
+                        $invoice = $this->Invoice->find('all', [
+                            'conditions' => [
+                                'Invoices.id' => $invoiceId,
+                            ],
+                        ])->first();
+                        if (!empty($invoice)) {
+                            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
+                        }
+                    }
+                    $this->request->getSession()->write('selfServiceInvoiceRoute', $invoiceRoute);
+                }
+
+                $this->redirect($redirectUrl);
                 return;
+
             }
 
         }

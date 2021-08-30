@@ -673,6 +673,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishOrderStockNotificationsStockManagementDisabled()
     {
         $this->loginAsSuperadmin();
+        $this->changeManufacturer(5, 'stock_management_enabled', 0);
         $this->placeOrderWithStockProducts();
         $this->assertMailCount(1);
     }

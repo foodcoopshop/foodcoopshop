@@ -227,7 +227,23 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 .self-service #general-terms-and-conditions {
     display: none;
 }
-.self-service .right-box .input.checkbox {
+.self-service input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 3px;
+}
+.self-service #cart .radio label:first-child {
+    font-weight: bold;
+    margin-right: 15px;
+}
+.self-service .radio label[for="carts-self-service-payment-type-1"],
+.self-service .radio label[for="carts-self-service-payment-type-2"] {
+    line-height: 20px;
+    margin-right: 10px;
+}
+.self-service .right-box .input.checkbox,
+.self-service .right-box .input.radio {
     width: 295px;
     margin-left: 5px;
 }
@@ -269,7 +285,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     display: none;
 }
 body.self_services .btn-flash-message-continue {
-    float: right;
+    float: right ! important;
 }
 body.self_services #categoryid {
     width: 193px;
