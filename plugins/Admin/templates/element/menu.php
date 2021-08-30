@@ -293,13 +293,15 @@ if ($appAuth->isManufacturer()) {
     }
     $menu[] = $actionLogsMenuElement;
 
-    $menu[] = [
-        'slug' => $this->Slug->getMyStatistics(),
-        'name' => __d('admin', 'Turnover_statistics'),
-        'options' => [
-            'fa-icon' => 'fa-fw ok fa-chart-bar'
-        ]
-    ];
+    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $menu[] = [
+            'slug' => $this->Slug->getMyStatistics(),
+            'name' => __d('admin', 'Turnover_statistics'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-chart-bar'
+            ]
+        ];
+    }
 }
 
 // for all users

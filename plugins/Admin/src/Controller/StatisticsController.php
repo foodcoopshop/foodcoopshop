@@ -28,7 +28,7 @@ class StatisticsController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || ($this->AppAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'));
                 break;
             case 'myIndex':
-                return $this->AppAuth->isManufacturer();
+                return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isManufacturer();
                 break;
             default:
                 return $this->AppAuth->isManufacturer();
