@@ -275,12 +275,14 @@ foodcoopshop.Mobile = {
 
         // button renamings
         var regexp = new RegExp(foodcoopshop.LocalizedJs.mobile.showAllProducts);
-        $('.manufacturer-wrapper div.third-column a.btn').each(function (btn) {
+        $('.manufacturer-wrapper div.third-column a.btn').each(function () {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });
         $('.blog-post-wrapper div.third-column a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
         $('.entity-wrapper .btn').each(function() {
-            $(this).html($(this).find('i').after($(this).text()));
+            if (!$(this).find('i').hasClass('fa-times')) { // delivery break?
+                $(this).html($(this).find('i').after($(this).text()));
+            }
         });
         $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
