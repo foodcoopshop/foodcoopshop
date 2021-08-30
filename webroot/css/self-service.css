@@ -233,7 +233,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     float: left;
     margin-right: 3px;
 }
-.self-service .radio label:first-child {
+.self-service #cart .radio label:first-child {
     font-weight: bold;
     margin-right: 15px;
 }
