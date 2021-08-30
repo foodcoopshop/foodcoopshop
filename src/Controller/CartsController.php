@@ -356,9 +356,10 @@ class CartsController extends FrontendController
                 'status' => 1,
                 'msg' => 'ok'
             ];
-            if ($orderedQuantityInUnits > 0 && $this->AppAuth->isSelfServiceModeByReferer()) {
-                $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
-            }
+        }
+
+        if ($this->AppAuth->isSelfServiceModeByReferer()) {
+            $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
         }
 
         $this->set($result);
