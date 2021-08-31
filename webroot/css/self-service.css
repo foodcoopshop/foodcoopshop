@@ -234,7 +234,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     float: left;
     margin-right: 3px;
 }
-.self-service .radio label:first-child {
+.self-service #SelfServiceForm .radio label:first-child {
     margin-left: 17px;
     margin-right: 15px;
 }
