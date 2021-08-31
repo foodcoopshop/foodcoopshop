@@ -445,6 +445,9 @@ foodcoopshop.Cart = {
     },
 
     getCartProductHtml: function (productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay) {
+
+        priceInclPerUnit = parseFloat(priceInclPerUnit);
+
         var imgHtml = '<span class="image">' + image + '</span>';
         if (!$(image).attr('src').match(/de-default-home/)) {
             imgHtml = '<a href="javascript:void(0);" data-modal-title="' + productName + '" data-modal-image="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
