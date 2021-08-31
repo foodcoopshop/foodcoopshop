@@ -757,6 +757,10 @@ body.carts.detail #load-last-order-details,
     padding-top: 0;
 }
 #cart p.product-sum-wrapper,
+.cart p.deposit-sum-wrapper {
+    display: none;
+}
+#cart p.product-sum-wrapper,
 #cart p.total-sum-wrapper {
     margin-top: 5px;
     padding-top: 3px;
@@ -948,6 +952,10 @@ body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
     float: left;
     width: 100%;
 }
+body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper {
+    border-bottom: 1px dotted #d6d4d4;
+    padding-bottom: 15px;
+}
 body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
     margin-top: 20px;
 }
@@ -959,6 +967,11 @@ body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
 }
 body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
     margin-top: 20px;
+}
+body.carts.detail .cart:not(#cart) .sums-wrapper {
+    float: right;
+    margin-right: 17px;
+    width: 300px;
 }
 body.carts.detail .cart .manufacturer-link {
     display: none;

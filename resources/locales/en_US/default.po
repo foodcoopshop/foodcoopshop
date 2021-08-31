@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-30 17:32+0200\n"
-"PO-Revision-Date: 2021-08-30 17:32+0200\n"
+"POT-Creation-Date: 2021-08-31 08:25+0200\n"
+"PO-Revision-Date: 2021-08-31 08:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2061,11 +2061,14 @@ msgstr "found"
 msgid "Your_cart_is_empty"
 msgstr "Your cart is empty"
 
-msgid "Value_of_goods_sum"
-msgstr "Value of goods total"
+msgid "Value_of_goods"
+msgstr "Value of goods"
 
 msgid "Deposit_sum"
 msgstr "Deposit sum"
+
+msgid "Total"
+msgstr "Total"
 
 msgid "From_which_in"
 msgstr "From which in"
@@ -2249,9 +2252,6 @@ msgstr "How much of it do I want to pay in {0}?"
 
 msgid "Comment"
 msgstr "Comment"
-
-msgid "Total"
-msgstr "Total"
 
 msgid "You_can_sign_in_here_for_ordering"
 msgstr "You can sign in here for placing a new order"

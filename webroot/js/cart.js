@@ -482,7 +482,6 @@ foodcoopshop.Cart = {
     },
 
     updateCartProductSum: function (amount) {
-
         var cartProductSum = $('.cart p.product-sum-wrapper span.sum');
         if (cartProductSum.length == 0) {
             return;
@@ -491,11 +490,6 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.getCurrencyAsFloat(cartProductSum.html()) + amount
         );
         cartProductSum.html(newCartProductSumHtml);
-
-        if (foodcoopshop.Helper.isMobile()) {
-            $('.responsive-cart span.sum').html(newCartProductSumHtml);
-        }
-
     },
 
     updateCartTotalSum: function (amount) {
@@ -504,10 +498,9 @@ foodcoopshop.Cart = {
         if (cartTotalSum.length == 0) {
             return;
         }
-
-        var newCartTotalSumHtml = foodcoopshop.Helper.formatFloatAsCurrency(
-            foodcoopshop.Helper.getCurrencyAsFloat(cartTotalSum.html()) + amount
-        );
+        var newCartTotalSum = foodcoopshop.Helper.getCurrencyAsFloat(cartTotalSum.html()) + amount;
+        newCartTotalSum = Math.abs(newCartTotalSum); // avoid -0,00 as total due to eg. -4.440892098500626e-16
+        var newCartTotalSumHtml = foodcoopshop.Helper.formatFloatAsCurrency(newCartTotalSum);
 
         cartTotalSum.html(newCartTotalSumHtml);
 
@@ -522,11 +515,14 @@ foodcoopshop.Cart = {
         if (cartDepositSum.length == 0) {
             return;
         }
-        cartDepositSum.html(
-            foodcoopshop.Helper.formatFloatAsCurrency(
-                foodcoopshop.Helper.getCurrencyAsFloat(cartDepositSum.html()) + amount
-            )
-        );
+        var newDeposit = foodcoopshop.Helper.getCurrencyAsFloat(cartDepositSum.html()) + amount;
+        $('.cart p.product-sum-wrapper').hide();
+        cartDepositSum.parent().hide();
+        if (newDeposit > 0) {
+            $('.cart p.product-sum-wrapper').show();
+            cartDepositSum.parent().show();
+        }
+        cartDepositSum.html(foodcoopshop.Helper.formatFloatAsCurrency(newDeposit));
     },
 
     updateCartTaxSum: function (amount) {
