@@ -2,7 +2,7 @@
   <a href="https://www.foodcoopshop.com"><img src="https://raw.githubusercontent.com/foodcoopshop/foodcoopshop/develop/webroot/files/images/logo.png" alt="FoodCoopShop"></a>
 </h1>
 
-<h4 align="center">User-friendly open source software for food-coops.</h4>
+<h4 align="center">User-friendly open source software for <a href="https://www.foodcoopshop.com">food-coops</a> and <a href="https://dorfladen-online.at">local shops</a>.</h4>
 
 <p align="center">
   <a href="https://www.foodcoopshop.com/download">
