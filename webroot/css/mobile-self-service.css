@@ -52,10 +52,6 @@
     .self-service #SelfServiceForm {
        border-left: none;
     }
-    .self-service #SelfServiceForm .input.radio label:first-child {
-        margin-left: 17px;
-        margin-right: 15px;
-    }
     .self-service form div.error-message {
        width: 100% ! important;
     }

@@ -234,8 +234,8 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     float: left;
     margin-right: 3px;
 }
-.self-service #cart .radio label:first-child {
-    font-weight: bold;
+.self-service .radio label:first-child {
+    margin-left: 17px;
     margin-right: 15px;
 }
 .self-service .radio label[for="carts-self-service-payment-type-1"],
@@ -262,6 +262,9 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service .product-wrapper .unit-amount {
     display: none;
+}
+.self-service .cart .tax-sum-wrapper {
+    display: block;
 }
 .self-service .product-wrapper .quantity-in-units-input-field-wrapper {
     float: left;
