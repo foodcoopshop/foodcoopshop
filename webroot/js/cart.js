@@ -314,6 +314,7 @@ foodcoopshop.Cart = {
                         if (data.callback) {
                             eval(data.callback);
                         }
+                        foodcoopshop.Helper.onWindowResize();
                     },
                     onError: function (data) {
                         foodcoopshop.Helper.enableButton(button);
@@ -324,6 +325,7 @@ foodcoopshop.Cart = {
                         if (data.callback) {
                             eval(data.callback);
                         }
+                        foodcoopshop.Helper.onWindowResize();
                     }
                 }
             );

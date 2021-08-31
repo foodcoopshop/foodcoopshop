@@ -461,10 +461,15 @@ foodcoopshop.Helper = {
 
     onWindowResize: function () {
 
+        if ($('body').hasClass('self_services')) {
+            return;
+        }
+
         var difference = 0;
 
         // whole page is called in iframe in instant-order-mode
         var instantOrderIframe = window.parent.$('#instant-order-add .modal-body iframe');
+
         if (instantOrderIframe.length > 0) {
             difference = 149;
             difference += $('.instant-order-customer-info').height();
@@ -482,7 +487,8 @@ foodcoopshop.Helper = {
             var newCartHeight = $(window).height();
         }
 
-        $('#cart p.products').css('max-height', parseInt(newCartHeight) - difference);
+        var sumsWrapperHeight = $('#cart .sums-wrapper').height() - 30;
+        $('#cart .products').css('max-height', parseInt(newCartHeight) - difference - sumsWrapperHeight);
 
     },
 
