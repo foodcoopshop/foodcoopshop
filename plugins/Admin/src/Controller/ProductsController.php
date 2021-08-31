@@ -1060,6 +1060,7 @@ class ProductsController extends AdminAppController
 
             $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
             $purchaseTable = $this->Product->PurchasePriceProducts;
+            $unitTable = $this->Product->UnitProducts;
 
             if ($ids['attributeId'] > 0) {
                 // override values
@@ -1076,21 +1077,22 @@ class ProductsController extends AdminAppController
                     $oldProduct->unit_product = $attribute->unit_product_attribute;
                     $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
                     $purchaseTable = $this->Product->ProductAttributes->PurchasePriceProductAttributes;
+                    $unitTable = $this->Product->ProductAttributes->UnitProductAttributes;
                 }
             }
 
             if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
                 $entity2Save = clone $oldProduct->unit_product;
-                $patchedEntity = $this->Product->UnitProducts->patchEntity(
+                $patchedEntity = $unitTable->patchEntity(
                     $entity2Save,
                     [
                         'purchase_price_incl_per_unit' => $purchaseGrossPrice,
                     ],
                 );
                 if ($patchedEntity->hasErrors()) {
-                    throw new InvalidParameterException(join(' ', $this->Product->UnitProducts->getAllValidationErrors($patchedEntity)));
+                    throw new InvalidParameterException(join(' ', $unitTable->getAllValidationErrors($patchedEntity)));
                 }
-                $this->Product->UnitProducts->save($patchedEntity);
+                $unitTable->save($patchedEntity);
                 $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
                 $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
             } else {
