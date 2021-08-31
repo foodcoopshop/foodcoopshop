@@ -737,6 +737,7 @@ body.carts.detail #load-last-order-details,
 }
 .cart p.no-products {
     margin-bottom: 20px;
+    padding-bottom: 3px;
 }
 .cart p.products {
     display: none;

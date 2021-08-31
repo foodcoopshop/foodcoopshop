@@ -194,6 +194,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service #cart {
     position: static;
+    padding-bottom: 3px;
     border: 1px solid #ccc;
     border-top: none;
     border-right: none;
