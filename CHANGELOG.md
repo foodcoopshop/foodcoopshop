@@ -6,6 +6,10 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+### Verbesserungen
+- Die Summe im Warenkorb ist jetzt in Warenwert, Pfandsumme und Gesamtbetrag aufgesplittet. [I#636](https://github.com/foodcoopshop/foodcoopshop/issues/636) / [PR#699](https://github.com/foodcoopshop/foodcoopshop/pull/699) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 # Unveröffentlichte Version
 
 ### Herzlichen Dank an alle beteiligten Personen
