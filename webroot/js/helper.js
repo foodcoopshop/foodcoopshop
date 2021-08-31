@@ -246,7 +246,7 @@ foodcoopshop.Helper = {
     initBlogPostCarousel: function () {
 
         var selector = '.blog-wrapper';
-        $(selector).addClass('swiper-container');
+        $(selector).addClass('swiper');
 
         var slides = $(selector).find('.blog-post-wrapper');
         if (slides.length > 4) {
