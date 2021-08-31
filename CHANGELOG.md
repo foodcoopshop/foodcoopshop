@@ -8,7 +8,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Verbesserungen
 - Die Summe im Warenkorb ist jetzt in Warenwert, Pfandsumme und Gesamtbetrag aufgesplittet. [I#636](https://github.com/foodcoopshop/foodcoopshop/issues/636) / [PR#699](https://github.com/foodcoopshop/foodcoopshop/pull/699) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-
+- Im Selbstbedienungs-Modus wird jetzt nach jedem Einkauf automatisch die Rechnung erstellt und gedruckt. Zudem kann der Kunde zwischen Bar- und Guthabenzahlung wählen. [I#696](https://github.com/foodcoopshop/foodcoopshop/issues/696) / [PR#697](https://github.com/foodcoopshop/foodcoopshop/pull/697) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 # Unveröffentlichte Version
 
@@ -31,7 +31,6 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen für den [Einzelhandels-Modus](https://foodcoopshop.github.io/de/dorfladen-online.html)
 - Nahtlose Integration der Registrierkasse HelloCash für den Einzelhandels-Modus. [Zur Online-Doku](https://foodcoopshop.github.io/de/registrierkasse-hello-cash.html). [I#683](https://github.com/foodcoopshop/foodcoopshop/issues/683) / [PR#686](https://github.com/foodcoopshop/foodcoopshop/pull/686) / [I#687](https://github.com/foodcoopshop/foodcoopshop/issues/687) / [PR#691](https://github.com/foodcoopshop/foodcoopshop/pull/691) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Für Produkte kann nun auch der Einkaufspreis und dessen Umsatzsteuer angegeben werden. Diese Daten werden dann bei den Bestellungen mitgespeichert und liefern so die Datengrundlage für die neue Gewinnermittlung. [I#660](https://github.com/foodcoopshop/foodcoopshop/issues/660) / [PR#680](https://github.com/foodcoopshop/foodcoopshop/pull/680) / [I#671](https://github.com/foodcoopshop/foodcoopshop/issues/671) / [PR#692](https://github.com/foodcoopshop/foodcoopshop/pull/692) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Im Selbstbedienungs-Modus wird jetzt nach jedem Einkauf automatisch die Rechnung erstellt und gedruckt. Zudem kann der Kunde zwischen Bar- und Guthabenzahlung wählen. [I#696](https://github.com/foodcoopshop/foodcoopshop/issues/696) / [PR#697](https://github.com/foodcoopshop/foodcoopshop/pull/697) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
 - Guthaben-Aufladungen mit CSV-Upload: Wenn ein Mitglied nicht ausgewählt wurde und man speichern wollte, wurde nicht die Fehlermeldung beim Mitglied angezeigt, sondern die allgemeine Fehlerseite. [I#677](https://github.com/foodcoopshop/foodcoopshop/issues/677) / [PR#678](https://github.com/foodcoopshop/foodcoopshop/pull/678) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
