@@ -895,7 +895,8 @@ body.payments.edit form {
     width: 100%;
     float: left;
 }
-body.payments.edit form p {
+body.payments.edit form p,
+body.order_details.edit_purchase_price form p {
     float: left;
     clear: both;
     margin-bottom: 0;
