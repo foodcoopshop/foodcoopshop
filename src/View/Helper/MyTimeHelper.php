@@ -292,6 +292,7 @@ class MyTimeHelper extends TimeHelper
         $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
 
         $weekdayOrderDay = $this->formatAsWeekday($orderDay);
+        $weekdayOrderDay = $weekdayOrderDay % 7;
 
         if (is_null($sendOrderListsWeekday)) {
             $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
