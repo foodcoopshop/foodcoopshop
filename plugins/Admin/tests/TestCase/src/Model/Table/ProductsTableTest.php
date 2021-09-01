@@ -4,6 +4,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,6 +22,9 @@ use Cake\I18n\FrozenDate;
  */
 class ProductsTableTest extends AppCakeTestCase
 {
+
+    use AppIntegrationTestTrait;
+    use LoginTrait;
 
     public $Product;
 
@@ -194,6 +199,25 @@ class ProductsTableTest extends AppCakeTestCase
             ),
             'currentDay' => '2020-04-05',
             'result' => '2020-04-10'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDelta()
+    {
+        $this->changeConfiguration('FCS_SEND_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2021-02-05'),
+                    'delivery_rhythm_send_order_list_weekday' => 0,
+                ]
+            ),
+            'currentDay' => '2021-08-01',
+            'result' => '2021-08-20',
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }

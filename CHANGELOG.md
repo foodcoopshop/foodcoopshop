@@ -34,6 +34,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Bugfixes
 - Guthaben-Aufladungen mit CSV-Upload: Wenn ein Mitglied nicht ausgewählt wurde und man speichern wollte, wurde nicht die Fehlermeldung beim Mitglied angezeigt, sondern die allgemeine Fehlerseite. [I#677](https://github.com/foodcoopshop/foodcoopshop/issues/677) / [PR#678](https://github.com/foodcoopshop/foodcoopshop/pull/678) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Mehrwöchiger Lieferrhythmus für Produkte mit Standard-Bestellschluss Montag und vorgezogener Bestellschluss Samstag wurde falsch berechnet. [PR#701](https://github.com/foodcoopshop/foodcoopshop/pull/701) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Code Cleaning
 - Die alte Funktion zum Verwalten der Mitgliedbeitrag wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
