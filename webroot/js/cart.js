@@ -210,9 +210,11 @@ foodcoopshop.Cart = {
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
             var image = productWrapper.find('.first-column img');
             var deposit = 0;
-            if (productWrapper.find('.entity-wrapper.active .deposit b').length > 0) {
-                deposit = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .deposit b').html());
+            var depositWrapper = productWrapper.find('.entity-wrapper.active .deposit b');
+            if (depositWrapper.length > 0) {
+                deposit = foodcoopshop.Helper.getCurrencyAsFloat(depositWrapper.html());
             }
+
             var productId = productWrapper.find('.entity-wrapper.active input[name="productId"]').val();
             var unity = productWrapper.find('div.unity span.value').html();
             if (unity === undefined) {
