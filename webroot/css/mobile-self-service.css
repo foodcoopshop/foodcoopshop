@@ -41,7 +41,8 @@
     .self-service #login-form .input label {
        width: 95px;
     }
-    .self-service .header h2 {
+    .self-service .header h2,
+    .self-service p.info {
        margin-bottom: 0;
        margin-left: 10px;
        width: 95%;
@@ -91,6 +92,7 @@
        margin-top: 0;
        margin-bottom: 0;
        padding-top: 0px;
+       min-height: calc(100vh - 55px - 50px - 1px);
     }
     body.self_services #responsive-header .shopping-limit-reached-info {
        width: 95%;

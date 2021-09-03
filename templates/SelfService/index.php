@@ -93,7 +93,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 <?php
 
     if (count($products) == 0) {
-        echo '<p>';
+        echo '<p class="info">';
         if (!isset($keyword) && $categoryId == 0) {
             echo __('Please_search_or_scan_a_product_or_chose_a_category.');
         } else {
