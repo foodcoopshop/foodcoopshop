@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-31 08:25+0200\n"
-"PO-Revision-Date: 2021-08-31 08:25+0200\n"
+"POT-Creation-Date: 2021-09-03 10:15+0200\n"
+"PO-Revision-Date: 2021-09-03 10:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2163,6 +2163,12 @@ msgstr "Imprint"
 msgid "Search:_name_id_or_barcode"
 msgstr "Search: name, ID or barcode"
 
+msgid "Please_search_or_scan_a_product_or_chose_a_category."
+msgstr "Please search or scan a product or chose a categoey."
+
+msgid "No_products_found."
+msgstr "No products found."
+
 msgid "Shopping_bag"
 msgstr "Shopping bag"
 
@@ -2306,6 +2312,9 @@ msgstr "Please upload images only if you have the rights to use!"
 
 msgid "Print"
 msgstr "Print"
+
+msgid "chose_category..."
+msgstr "chose category..."
 
 msgid "Reset_search"
 msgstr "Reset search"
@@ -2670,9 +2679,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "Maximum_{0}_characters_please."
 #~ msgstr "Maximum {0} characters please."
-
-#~ msgid "New_product_of"
-#~ msgstr "New product of"
 
 #~ msgid "Do_not_cancel_button"
 #~ msgstr "Close"

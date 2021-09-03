@@ -89,7 +89,19 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 </div>
 
 <div id="products">
-    <?php
+
+<?php
+
+    if (count($products) == 0) {
+        echo '<p>';
+        if (!isset($keyword) && $categoryId == 0) {
+            echo __('Please_search_or_scan_a_product_or_chose_a_category.');
+        } else {
+            echo __('No_products_found.');
+        }
+        echo '</p>';
+    }
+
     foreach ($products as $product) {
         echo $this->element('product/product', [
             'product' => $product,
@@ -98,6 +110,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'showIsNewBadgeAsLink' => false
         ]);
     }
+
 ?>
 </div>
 

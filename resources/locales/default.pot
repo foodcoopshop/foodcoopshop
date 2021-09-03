@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-31 08:25+0200\n"
+"POT-Creation-Date: 2021-09-03 10:15+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2162,6 +2162,12 @@ msgstr ""
 msgid "Search:_name_id_or_barcode"
 msgstr ""
 
+msgid "Please_search_or_scan_a_product_or_chose_a_category."
+msgstr ""
+
+msgid "No_products_found."
+msgstr ""
+
 msgid "Shopping_bag"
 msgstr ""
 
@@ -2304,6 +2310,9 @@ msgid "Image_upload_legal_hint."
 msgstr ""
 
 msgid "Print"
+msgstr ""
+
+msgid "chose_category..."
 msgstr ""
 
 msgid "Reset_search"

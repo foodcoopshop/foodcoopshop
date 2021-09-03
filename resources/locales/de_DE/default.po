@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-31 08:25+0200\n"
-"PO-Revision-Date: 2021-08-31 08:26+0200\n"
+"POT-Creation-Date: 2021-09-03 10:15+0200\n"
+"PO-Revision-Date: 2021-09-03 10:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2163,6 +2163,12 @@ msgstr "Impressum"
 msgid "Search:_name_id_or_barcode"
 msgstr "Suche: Name, ID oder Barcode"
 
+msgid "Please_search_or_scan_a_product_or_chose_a_category."
+msgstr "Suche bzw. scanne ein Produkt oder wähle eine Kategorie aus."
+
+msgid "No_products_found."
+msgstr "Keine Produkte gefunden."
+
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"
 
@@ -2306,6 +2312,9 @@ msgstr "Bilder bitte nur hochladen, wenn du über die Nutzungsrechte verfügst!"
 
 msgid "Print"
 msgstr "Drucken"
+
+msgid "chose_category..."
+msgstr "Kategorie auswählen..."
 
 msgid "Reset_search"
 msgstr "Suche zurücksetzen"
@@ -2668,9 +2677,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Maximum_{0}_characters_please."
 #~ msgstr "Maximal {0} Zeichen bitte."
-
-#~ msgid "New_product_of"
-#~ msgstr "Neues Produkt von"
 
 #~ msgid "Do_not_cancel_button"
 #~ msgstr "Abbrechen"
