@@ -115,7 +115,7 @@ class CategoriesTable extends AppTable
         return $categories;
     }
 
-    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false)
+    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $appAuth=null, $showProductCount=false)
     {
         $conditions = [];
         if ($excludeCategoryId) {
@@ -124,11 +124,21 @@ class CategoriesTable extends AppTable
         if (!$showOfflineCategories) {
             $conditions['Categories.active'] = true;
         }
-        $categories = $this->getThreaded($conditions);
+        $categories = $this->getThreaded($conditions)->toArray();
+
         $flattenedCategories = $this->flattenNestedArrayWithChildren($categories, $renderParentIdAndChildrenIdContainers, '');
+
         $flattenedCategories = array_map(function($category) {
             return html_entity_decode($category);
         }, $flattenedCategories);
+
+        if ($showProductCount) {
+            foreach($flattenedCategories as $categoryId => $category) {
+                $productCount = $this->getProductsByCategoryId($appAuth, $categoryId, false, '', 0, true, true);
+                $flattenedCategories[$categoryId] .= ' (' . $productCount . ')';
+            }
+        }
+
         return $flattenedCategories;
     }
 

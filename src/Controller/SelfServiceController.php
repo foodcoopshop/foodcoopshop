@@ -45,7 +45,7 @@ class SelfServiceController extends FrontendController
         }
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $categoriesForSelect = $this->Category->getForSelect(null, false);
+        $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->AppAuth, true);
         $categoriesForSelect = [
             Configure::read('app.categoryAllProducts') => __('All_products'),
         ] + $categoriesForSelect;
