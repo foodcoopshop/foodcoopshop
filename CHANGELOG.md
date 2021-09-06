@@ -6,12 +6,19 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+# Unveröffentlichte Version
+
+### Herzlichen Dank an alle beteiligten Personen
+* <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
+
 ### Verbesserungen
 - Die Summe im Warenkorb ist jetzt in Warenwert, Pfandsumme und Gesamtbetrag aufgesplittet. [I#636](https://github.com/foodcoopshop/foodcoopshop/issues/636) / [PR#699](https://github.com/foodcoopshop/foodcoopshop/pull/699) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Im Selbstbedienungs-Modus wird jetzt nach jedem Einkauf automatisch die Rechnung erstellt und gedruckt. Zudem kann der Kunde zwischen Bar- und Guthabenzahlung wählen. [I#696](https://github.com/foodcoopshop/foodcoopshop/issues/696) / [PR#697](https://github.com/foodcoopshop/foodcoopshop/pull/697) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Im Selbstbedienungs-Modus werden die Produkte erst nach Suche, Scannen oder Kategorie-Auswahl angezeigt. Außerdem steht im Kategorien-Dropdown jetzt die Produkt-Anzahl. [I#703](https://github.com/foodcoopshop/foodcoopshop/issues/703) / [PR#704](https://github.com/foodcoopshop/foodcoopshop/pull/704) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-# Unveröffentlichte Version
+### Neue Funktionen für den [Einzelhandels-Modus](https://foodcoopshop.github.io/de/dorfladen-online.html)
+- Im Selbstbedienungs-Modus wird jetzt nach jedem Einkauf automatisch die Rechnung erstellt und gedruckt. Zudem kann der Kunde zwischen Bar- und Guthabenzahlung wählen. [I#696](https://github.com/foodcoopshop/foodcoopshop/issues/696) / [PR#697](https://github.com/foodcoopshop/foodcoopshop/pull/697) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+# v3.3.0
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
@@ -38,10 +45,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Mehrwöchiger Lieferrhythmus für Produkte mit Standard-Bestellschluss Montag und vorgezogener Bestellschluss Samstag wurde falsch berechnet. [PR#701](https://github.com/foodcoopshop/foodcoopshop/pull/701) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Code Cleaning
-- Die alte Funktion zum Verwalten der Mitgliedbeitrag wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die alte Funktion zum Verwalten der Mitgliedbeiträge wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-[Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...develop)
+Datum: 06.09.2021 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...v3.3.0)
 
 # v3.2.2
 
