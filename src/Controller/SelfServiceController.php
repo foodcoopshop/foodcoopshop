@@ -32,7 +32,7 @@ class SelfServiceController extends FrontendController
     public function index()
     {
 
-        $categoryId = Configure::read('app.categoryAllProducts');
+        $categoryId = 0;
         if (!empty($this->getRequest()->getQuery('categoryId'))) {
             $categoryId = h($this->getRequest()->getQuery('categoryId'));
         }
@@ -45,9 +45,17 @@ class SelfServiceController extends FrontendController
         }
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $this->set('categoriesForSelect', $this->Category->getForSelect(null, false));
+        $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->AppAuth, true);
+        $categoriesForSelect = [
+            Configure::read('app.categoryAllProducts') => __('All_products'),
+        ] + $categoriesForSelect;
+        $this->set('categoriesForSelect', $categoriesForSelect);
 
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryId, false, $keyword, 0, false, true);
+        $categoryIdForSearch = $categoryId;
+        if ($categoryId == 0 && $keyword != '') {
+            $categoryIdForSearch = Configure::read('app.categoryAllProducts');
+        }
+        $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 

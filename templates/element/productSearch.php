@@ -25,7 +25,7 @@ $this->element('addScript', ['script' =>
             echo $this->Form->control('categoryId', [
                 'type' => 'select',
                 'label' => '',
-                'empty' => __('All_products'),
+                'empty' => __('chose_category...'),
                 'options' => $categoriesForSelect,
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);

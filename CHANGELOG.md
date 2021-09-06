@@ -9,6 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Verbesserungen
 - Die Summe im Warenkorb ist jetzt in Warenwert, Pfandsumme und Gesamtbetrag aufgesplittet. [I#636](https://github.com/foodcoopshop/foodcoopshop/issues/636) / [PR#699](https://github.com/foodcoopshop/foodcoopshop/pull/699) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Im Selbstbedienungs-Modus wird jetzt nach jedem Einkauf automatisch die Rechnung erstellt und gedruckt. Zudem kann der Kunde zwischen Bar- und Guthabenzahlung wählen. [I#696](https://github.com/foodcoopshop/foodcoopshop/issues/696) / [PR#697](https://github.com/foodcoopshop/foodcoopshop/pull/697) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Im Selbstbedienungs-Modus werden die Produkte erst nach Suche, Scannen oder Kategorie-Auswahl angezeigt. Außerdem steht im Kategorien-Dropdown jetzt die Produkt-Anzahl. [I#703](https://github.com/foodcoopshop/foodcoopshop/issues/703) / [PR#704](https://github.com/foodcoopshop/foodcoopshop/pull/704) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 # Unveröffentlichte Version
 
