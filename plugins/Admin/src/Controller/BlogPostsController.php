@@ -61,7 +61,7 @@ class BlogPostsController extends AdminAppController
         $blogPost = $this->BlogPost->newEntity(
             [
                 'active' => APP_ON,
-                'is_private' => APP_ON,
+                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'show_on_start_page_until' => Configure::read('app.timeHelper')->getInXDaysForDatabase(30),
             ],
             ['validate' => false]

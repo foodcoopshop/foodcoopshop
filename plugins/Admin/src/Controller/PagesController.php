@@ -46,7 +46,7 @@ class PagesController extends AdminAppController
         $page = $this->Page->newEntity(
             [
                 'active' => APP_ON,
-                'is_private' => APP_ON,
+                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'position' => 10
             ],
             ['validate' => false]

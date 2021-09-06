@@ -26,7 +26,7 @@ class SlidersController extends AdminAppController
         $this->Slider = $this->getTableLocator()->get('Sliders');
         $slider = $this->Slider->newEntity(
             [
-                'is_private' => APP_ON,
+                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'active' => APP_ON,
                 'position' => 10,
             ],
