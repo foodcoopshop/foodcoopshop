@@ -6,15 +6,15 @@
 
 <p align="center">
   <a href="https://www.foodcoopshop.com/download">
-    <img src="https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable&style=flat-square"
-         alt="Latest stable version">
+    <img src="https://img.shields.io/github/v/release/foodcoopshop/foodcoopshop?label=stable&style=for-the-badge" alt="Latest stable version">
   </a>
+  <img src="https://img.shields.io/github/stars/foodcoopshop/foodcoopshop?style=for-the-badge" </img>
   <a href="https://github.com/foodcoopshop/foodcoopshop/actions">
-    <img src="https://img.shields.io/github/workflow/status/foodcoopshop/foodcoopshop/FoodCoopShop%20CI/develop?style=flat-square"
+    <img src="https://img.shields.io/github/workflow/status/foodcoopshop/foodcoopshop/FoodCoopShop%20CI/develop?style=for-the-badge"
         alt="Build status">
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop?style=flat-square"
+    <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop?style=for-the-badge"
          alt="Software license">
   </a>
 </p>
