@@ -4,6 +4,7 @@ use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
@@ -27,6 +28,7 @@ class ListsControllerTest extends AppCakeTestCase
 
     use AppIntegrationTestTrait;
     use LoginTrait;
+    use PrepareAndTestInvoiceDataTrait;
     use QueueTrait;
 
     public $commandRunner;
@@ -36,6 +38,47 @@ class ListsControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->prepareSendingOrderLists();
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
+    }
+
+    public function testAccessDownloadableInvoice()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.customerId');
+        $paidInCash = 1;
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        $this->loginAsCustomer();
+        $downloadUrl = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
+        $this->get($downloadUrl);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
+
+        $this->loginAsSuperadmin();
+        $this->get($downloadUrl);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
+
+        // change admin to customer to test access from different customer
+        $customerEntity = $this->Customer->get(Configure::read('test.adminId'));
+        $customerEntity->id_default_group = CUSTOMER_GROUP_MEMBER;
+        $this->Customer->save($customerEntity);
+
+        $this->loginAsAdmin();
+        $this->get($downloadUrl);
+        $this->assertResponseCode(401);
+
     }
 
     /**
