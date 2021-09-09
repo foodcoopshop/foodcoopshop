@@ -66,6 +66,13 @@ $changePasswordMenuElement = [
         'fa-icon' => 'fa-fw ok fa-key'
     ]
 ];
+$myInvoicesMenuElement = [
+    'slug' => $this->Slug->getMyInvoices(),
+    'name' => __d('admin', 'My_invoices'),
+    'options' => [
+        'fa-icon' => 'fa-fw ok fa-file-invoice'
+    ]
+];
 $blogPostsMenuElement = [
     'slug' => $this->Slug->getBlogPostListAdmin(),
     'name' => __d('admin', 'Blog_posts'),
@@ -104,6 +111,9 @@ if ($appAuth->isCustomer()) {
     }
     if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
         $menu[]= $timebasedCurrencyPaymentForCustomersMenuElement;
+    }
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $menu[] = $myInvoicesMenuElement;
     }
     $menu[] = $changePasswordMenuElement;
     $menu[] = $actionLogsMenuElement;
@@ -164,7 +174,11 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
         $customerProfileMenuElement['children'][] = $timebasedCurrencyPaymentForCustomersMenuElement;
     }
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $customerProfileMenuElement['children'][] = $myInvoicesMenuElement;
+    }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
+
     $menu[] = $customerProfileMenuElement;
     if (Configure::read('app.isBlogFeatureEnabled')) {
         $menu[] = $blogPostsMenuElement;
