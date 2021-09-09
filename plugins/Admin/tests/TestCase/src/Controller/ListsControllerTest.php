@@ -76,7 +76,9 @@ class ListsControllerTest extends AppCakeTestCase
         $this->Customer->save($customerEntity);
 
         $this->loginAsAdmin();
+        Configure::write('Error.log', false);
         $this->get($downloadUrl);
+        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
 
     }
