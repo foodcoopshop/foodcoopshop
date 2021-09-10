@@ -330,6 +330,11 @@ class SlugHelper extends Helper
         return '/admin/invoices';
     }
 
+    public function getMyInvoices()
+    {
+        return '/admin/invoices/myInvoices';
+    }
+
     public function getReport($paymentType)
     {
         return '/admin/reports/payments/'.$paymentType;

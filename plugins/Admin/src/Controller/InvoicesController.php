@@ -27,7 +27,14 @@ class InvoicesController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+        switch ($this->getRequest()->getParam('action')) {
+            case 'myInvoices':
+                return Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && !$this->AppAuth->isManufacturer();
+                break;
+            default:
+                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+                break;
+        }
     }
 
     public function downloadAsZipFile()
@@ -323,6 +330,35 @@ class InvoicesController extends AdminAppController
 
     }
 
+    public function myInvoices()
+    {
+
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        }
+        $this->set('dateFrom', $dateFrom);
+
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        }
+        $this->set('dateTo', $dateTo);
+
+        $customerId = $this->AppAuth->getUserId();
+
+        $this->set('customerId', $customerId);
+
+        $this->processIndex($dateFrom, $dateTo, $customerId);
+
+        $this->set('isOverviewMode', false);
+
+        $this->set('title_for_layout', __d('admin', 'My_invoices'));
+
+        $this->render('index');
+
+    }
+
     public function index()
     {
 
@@ -343,6 +379,16 @@ class InvoicesController extends AdminAppController
             $customerId = h($this->getRequest()->getQuery('customerId'));
         }
         $this->set('customerId', $customerId);
+
+        $this->processIndex($dateFrom, $dateTo, $customerId);
+
+        $this->set('title_for_layout', __d('admin', 'Journal'));
+        $this->set('isOverviewMode', true);
+
+    }
+
+    protected function processIndex($dateFrom, $dateTo, $customerId)
+    {
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
@@ -390,7 +436,6 @@ class InvoicesController extends AdminAppController
         $this->set('invoiceSums', $invoiceSums);
 
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
-        $this->set('title_for_layout', __d('admin', 'Journal'));
 
         $preparedTaxRates = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
         $this->set('taxRates', $preparedTaxRates['taxRates']);
@@ -398,7 +443,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    private function setInvoiceConditions($query, $dateFrom, $dateTo, $customerId)
+    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerId)
     {
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

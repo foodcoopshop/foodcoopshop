@@ -931,31 +931,31 @@ body.deposits.overview_diagram table th,
 body.deposits.overview_diagram table td {
     text-align: right;
 }
-body.invoices.index table.invoices-table {
+body.invoices table.invoices-table {
     width: 1008px;
     margin-bottom: 15px;
 }
-body.invoices.index table.invoices-table th:nth-child(1) {
+body.invoices table.invoices-table th:nth-child(1) {
     width: 98px;
 }
-body.invoices.index table.invoices-table th:nth-child(8) {
+body.invoices table.invoices-table th:nth-child(8) {
     width: 105px;
 }
-body.invoices.index table.invoices-table th {
+body.invoices table.invoices-table th {
     word-break: normal;
 }
-body.invoices.index table.tax-sum-table {
+body.invoices table.tax-sum-table {
     width: 600px;
 }
-body.invoices.index table.tax-sum-table th,
-body.invoices.index table.tax-sum-table td {
+body.invoices table.tax-sum-table th,
+body.invoices table.tax-sum-table td {
     text-align: right;
     width: 150px;
 }
-body.invoices.index h4 {
+body.invoices h4 {
     margin-top: 20px;
 }
-body.invoices.index tr.data.cancelled {
+body.invoices tr.data.cancelled {
     text-decoration: line-through;
 }
 body.action_logs.index tr.data div.changed img {

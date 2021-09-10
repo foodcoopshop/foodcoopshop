@@ -19,13 +19,18 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
         Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);".
         Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerCancel.init();".
         Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();"
 ]);
 
-if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+if ($isOverviewMode) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
+    ]);
+}
+
+if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
     $this->element('addScript', [
         'script' =>  Configure::read('app.jsNamespace') . ".Admin.initDownloadInvoicesAsZipFile();"
     ]);
@@ -36,7 +41,11 @@ if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
-        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]); ?>
+        <?php
+            if ($isOverviewMode) {
+                echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]);
+            }
+         ?>
         <div class="right">
             <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_infos_for_success'))]); ?>
         </div>
@@ -44,16 +53,16 @@ if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 </div>
 
 <?php
-
-echo $this->element('reportNavTabs', [
-    'key' => 'invoices',
-    'dateFrom' => $dateFrom,
-    'dateTo' => $dateTo,
-]);
-
+if ($isOverviewMode) {
+    echo $this->element('reportNavTabs', [
+        'key' => 'invoices',
+        'dateFrom' => $dateFrom,
+        'dateTo' => $dateTo,
+    ]);
+}
 echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b></p>';
 
-if (!empty($invoices)) {
+if ($isOverviewMode && !empty($invoices)) {
 
     if (!empty($taxRates['cash'])) {
         echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';
@@ -75,10 +84,11 @@ if (!empty($invoices)) {
 
 }
 
+if ($isOverviewMode) {
+    echo '<h4>' . __d('admin', 'Invoices') . '</h4>';
+}
 
-echo '<h4>' . __d('admin', 'Invoices') . '</h4>';
-
-if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
     echo $this->Html->link(
         '<i class="fas fa-fw fa-download"></i>',
         'javascript:void(0)',
@@ -209,14 +219,16 @@ echo '<table class="list invoices-table no-clone-last-row">';
                 } else if (!empty($invoice->cancelled_invoice)) {
                     echo $invoice->cancelled_invoice->invoice_number;
                 } else {
-                    echo $this->Html->link(
-                        '<i class="fas fa-times-circle neutral"></i>',
-                        'javascript:void(0);',
-                        [
-                            'class' => 'btn btn-outline-light invoice-for-customer-cancel-button',
-                            'escape' => false,
-                        ],
-                    );
+                    if ($isOverviewMode) {
+                        echo $this->Html->link(
+                            '<i class="fas fa-times-circle neutral"></i>',
+                            'javascript:void(0);',
+                            [
+                                'class' => 'btn btn-outline-light invoice-for-customer-cancel-button',
+                                'escape' => false,
+                            ],
+                        );
+                    }
                 }
             echo '</td>';
 
