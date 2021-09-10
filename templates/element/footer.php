@@ -55,13 +55,13 @@ if ($appAuth->user()) {
 <?php
     $socialMediaLinks = [];
     if (Configure::read('appDb.FCS_APP_EMAIL') != '') {
-        $socialMediaLinks[] = StringComponent::hideEmail(Configure::read('appDb.FCS_APP_EMAIL'), '\'<i class="fas fa-envelope-square fa-2x fa-fw" title="E-Mail"></i>\'');
+        $socialMediaLinks[] = StringComponent::hideEmail(Configure::read('appDb.FCS_APP_EMAIL'), '\'<i class="fas fa-envelope fa-2x fa-fw" title="E-Mail"></i>\'');
     }
     if (Configure::read('appDb.FCS_FACEBOOK_URL') != '') {
-        $socialMediaLinks[] = '<a target="_blank" title="Facebook: ' . Configure::read('appDb.FCS_APP_NAME')  . '" href="' . Configure::read('appDb.FCS_FACEBOOK_URL') . '"><i class="fab fa-2x fa-fw fa-facebook-square"></i></a>';
+        $socialMediaLinks[] = '<a target="_blank" title="Facebook: ' . Configure::read('appDb.FCS_APP_NAME')  . '" href="' . Configure::read('appDb.FCS_FACEBOOK_URL') . '"><i class="fab fa-2x fa-fw fa-facebook"></i></a>';
     }
     if (Configure::read('appDb.FCS_INSTAGRAM_URL') != '') {
-        $socialMediaLinks[] = '<a target="_blank" title="Instagram: ' . Configure::read('appDb.FCS_APP_NAME') . '" href="' . Configure::read('appDb.FCS_INSTAGRAM_URL') . '"><i class="fab fa-2x fa-fw fa-instagram-square"></i></a>';
+        $socialMediaLinks[] = '<a target="_blank" title="Instagram: ' . Configure::read('appDb.FCS_APP_NAME') . '" href="' . Configure::read('appDb.FCS_INSTAGRAM_URL') . '"><i class="fab fa-2x fa-fw fa-instagram"></i></a>';
     }
     if (Configure::read('appDb.FCS_SHOW_FOODCOOPSHOP_BACKLINK')) {
         $socialMediaLinks[] = '<a class="fcs-backlink" title="Foodcoop Software" target="_blank" href="https://www.foodcoopshop.com">foodcoopshop.com</a>';
