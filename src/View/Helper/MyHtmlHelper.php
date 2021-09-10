@@ -396,14 +396,6 @@ class MyHtmlHelper extends HtmlHelper
         return Configure::read('appDb.FCS_APP_ADDRESS');
     }
 
-    /**
-     * @return string
-     */
-    public function getEmailFromAddressConfiguration()
-    {
-        return Configure::read('appDb.FCS_APP_EMAIL');
-    }
-
     public function getMenuTypes()
     {
         return [

@@ -60,7 +60,8 @@ use Cake\Core\Configure;
     #flashMessage.success,
     .modal-header,
     .cookieConsentWrapper,
-    .drop a.upload-button {
+    .drop a.upload-button,
+    #footer .bottom {
         background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 

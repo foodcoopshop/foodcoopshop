@@ -613,12 +613,6 @@ body.manufacturers.detail .imprint {
     float: right;
     margin-top: 10px;
 }
-#footer .fcs-backlink {
-    float: right;
-    clear: both;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
 #footer .first-column {
     width: 250px;
     float: left;
@@ -662,6 +656,27 @@ body.manufacturers.detail .imprint {
     font-size: 20px;
     margin-bottom: 15px;
     margin-top: 0;
+}
+#footer .bottom {
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-bottom: -20px;
+    margin-top: 10px;
+    padding: 7px 0 5px 0;
+}
+#footer .bottom a {
+    color: #fff;
+}
+#footer .bottom a i.fab {
+    color: #fff;
+}
+#footer .bottom a.fcs-backlink {
+    float: right;
+    padding-top: 9px;
+    padding-right: 5px;
+}
+#footer .bottom a:hover i.fab {
+    opacity: .8;
 }
 #right {
     float: left;
