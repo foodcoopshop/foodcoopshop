@@ -141,7 +141,7 @@ class StringComponent extends Component
      * @param string $email
      * @return string
      */
-    public static function hideEmail($email)
+    public static function hideEmail($email, $innerHtml='d')
     {
         $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
         $key = str_shuffle($character_set);
@@ -153,7 +153,7 @@ class StringComponent extends Component
 
         $script = 'var a="' . $key . '";var b=a.split("").sort().join("");var c="' . $cipher_text . '";var d="";';
         $script .= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
-        $script .= 'document.getElementById("' . $id . '").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
+        $script .= 'document.getElementById("' . $id . '").innerHTML="<a href=\\"mailto:"+d+"\\">"+'.$innerHtml.'+"</a>"';
         $script = "eval(\"" . str_replace([
             "\\",
             '"'
