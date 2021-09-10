@@ -97,6 +97,9 @@
         text-align: center ! important;
         word-break: break-word;
     }
+    #footer .bottom a.fcs-backlink {
+        position: static;
+    }
     #footer .additional-footer-info {
         text-align: center ! important;
     }
