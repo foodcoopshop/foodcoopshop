@@ -17,7 +17,7 @@
     #header,
     #content,
     #inner-content,
-    body.categories.detail .blog-wrapper,
+    .blog-wrapper,
     #footer,
     #login-form,
     #login-form form,
@@ -25,7 +25,6 @@
     body.customers.new_password_request form,
     #login-form .input,
     body.customers.new_password_request .input,
-    .blog-wrapper.swiper-container,
     a.blog-post-wrapper img,
     #RegistrationForm .detail-form,
     #RegistrationForm .input.checkbox label,
@@ -64,10 +63,6 @@
     }
     body.blog_posts.detail #inner-content > .img-wrapper {
         float: none;
-    }
-    body.blog_posts.index .blog-wrapper,
-    body.pages.home .blog-wrapper {
-        width: 100% ! important;
     }
     body.blog_posts.detail h1 {
         margin-bottom: 0 ! important;
