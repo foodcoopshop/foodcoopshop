@@ -659,6 +659,7 @@ body.manufacturers.detail .imprint {
     padding: 8px 0 5px 0;
     position: relative;
     clear: both;
+    min-height: 42px;
 }
 #footer .bottom a {
     color: #fff;
