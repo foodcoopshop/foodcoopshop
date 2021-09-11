@@ -88,8 +88,8 @@ INSERT INTO `fcs_category` VALUES
 INSERT INTO `fcs_configuration` VALUES
 (11,1,'FCS_PRODUCT_AVAILABILITY_LOW','Low availability<br /><div class=\"small\">From which amount on there should be an information text visible \"(x available\")?</div>','10','number',600,'en_US','2017-07-26 13:24:47','2014-06-01 01:40:34'),
 (31,1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','How many days products should be \"marked as new\"?','7','number',700,'en_US','2017-07-26 13:24:47','2014-05-14 21:15:45'),
-(456,1,'FCS_FOOTER_CMS_TEXT','Additional text for footer',NULL,'textarea_big',800,'en_US','2014-06-11 17:50:55','2016-07-01 21:47:47'),
-(508,1,'FCS_FACEBOOK_URL','Facebook url for embedding in footer','https://www.facebook.com/FoodCoopShop/','text',900,'en_US','2015-07-08 13:23:54','2015-07-08 13:23:54'),
+(456,1,'FCS_FOOTER_CMS_TEXT','Additional text for footer',NULL,'textarea_big',920,'en_US','2014-06-11 17:50:55','2016-07-01 21:47:47'),
+(508,1,'FCS_FACEBOOK_URL','Facebook url for embedding in footer','https://www.facebook.com/FoodCoopShop/','text',910,'en_US','2015-07-08 13:23:54','2015-07-08 13:23:54'),
 (538,1,'FCS_REGISTRATION_EMAIL_TEXT','Additional text that is sent in the registration e-mail after a successful registration. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-mail preview</a>','','textarea_big',1700,'en_US','2016-06-26 00:00:00','2016-06-26 00:00:00'),
 (543,1,'FCS_RIGHT_INFO_BOX_HTML','Content of the box in the right column below the shopping cart. <br /><div class=\"small\">To make the background of a row green, please format as \"Heading 3\".</div>','<h3>Delivery time</h3><p>You can order every week until Tuesday midnight and pick the products up the following Friday.</p>','textarea_big',1500,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Delivery break for all manufacturers?<br /><div class=\"small\">Here you can define delivery-free days for the whole food-coop.</div>','','multiple_dropdown',100,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
@@ -101,10 +101,10 @@ INSERT INTO `fcs_configuration` VALUES
 (550,1,'FCS_BANK_ACCOUNT_DATA','Bank account for credit uploads.','Credit account Example Bank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',1300,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (552,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Additional deliverey details for manufacturers<br /><div class=\"small\">will be shown in the order lists after the delivery date.</div>',', 3pm to 5pm','text',1200,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (553,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-mail adress to which all automatically generated e-mail are sent to as BCC (Backup).<br /><div class=\"small\">Can be left empty.</div>','','text',1900,'en_US','2016-10-06 00:00:00','2016-10-06 00:00:00'),
-(554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Show link to www.foodcoopshop.com?<br /><div class=\"small\">The link is shown in the footer.</div>','1','boolean',1800,'en_US','2016-11-27 00:00:00','2016-11-27 00:00:00'),
+(554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Show link to www.foodcoopshop.com?<br /><div class=\"small\">The link is shown in the footer.</div>','1','boolean',930,'en_US','2016-11-27 00:00:00','2016-11-27 00:00:00'),
 (556,1,'FCS_APP_NAME','Name of the food-coop','','text',50,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (557,1,'FCS_APP_ADDRESS','Adress of the food-coop<br /><div class=\"small\">Used in footer of homepage and e-mails, privacy policy and terms of use.</div>','','textarea',60,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(558,1,'FCS_APP_EMAIL','E-mail adress of the food-coop<br /><div class=\"small\"></div>','','text',70,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(558,1,'FCS_APP_EMAIL','E-mail adress of the food-coop<br /><div class=\"small\"></div>','','text',900,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,1,'FCS_PLATFORM_OWNER','Operator of the platform<br /><div class=\"small\">For privacy policy and terms of use, please also add adrress. Can be left empty if the food-coop itself is operator.</div>','','textarea',90,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Show comment field when placing an order?<br /><div class=\"small\">Shown in admin area under \"Orders\".</div>','1','boolean',130,'en_US','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Use variable member fee?<br /><div class=\"small\">Reduce the variable member fee in the manufacturer\'s invoices? Therefore the prices need to be increased.</div>','0','readonly',400,'en_US','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -140,7 +140,8 @@ INSERT INTO `fcs_configuration` VALUES
 (595,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Height of credit saldo when the reminder email is sent.','50','number',1450,'en_US','2021-01-19 11:23:39','2021-01-19 11:23:39'),
 (596,1,'FCS_PURCHASE_PRICE_ENABLED','Enable input of purchase price?<div class=\"small\">The purchase price is the base for profit statistics and bill of delivery to manufacturers.</div>','0','readonly',584,'en_US','2021-05-10 11:27:43','2021-05-10 11:27:43'),
 (597,1,'FCS_HELLO_CASH_API_ENABLED','Enable API to hellocash.at?<div class=\"small\">Invoices (cash and cashless) are generated by hellocash.at.</div>','0','readonly',583,'en_US','2021-07-07 10:55:08','2021-07-07 10:55:08'),
-(598,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Save storage location for products?<div class=\"small\">New button next to \"Orders - show order as pdf\"</div>','0','boolean',3210,'en_US','2021-08-02 11:28:34','2021-08-02 11:28:34');
+(598,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Save storage location for products?<div class=\"small\">New button next to \"Orders - show order as pdf\"</div>','0','boolean',3210,'en_US','2021-08-02 11:28:34','2021-08-02 11:28:34'),
+(599,1,'FCS_INSTAGRAM_URL','Instagram url for embedding in footer','','text',920,'en_US','2021-09-10 21:23:13','2021-09-10 21:23:13');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -269,7 +270,8 @@ INSERT INTO `phinxlog` VALUES
 (20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:09','2021-05-04 09:10:09',0),
 (20210510080630,'EnablePurchasePrices','2021-05-10 09:27:43','2021-05-10 09:27:43',0),
 (20210707083827,'AddRegistrierkasseApi','2021-07-07 08:55:08','2021-07-07 08:55:08',0),
-(20210802090623,'AddStorageLocation','2021-08-02 09:28:34','2021-08-02 09:28:35',0);
+(20210802090623,'AddStorageLocation','2021-08-02 09:28:34','2021-08-02 09:28:35',0),
+(20210910191430,'Instagram','2021-09-10 19:23:13','2021-09-10 19:23:13',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

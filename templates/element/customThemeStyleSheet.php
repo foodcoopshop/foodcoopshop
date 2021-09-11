@@ -60,7 +60,8 @@ use Cake\Core\Configure;
     #flashMessage.success,
     .modal-header,
     .cookieConsentWrapper,
-    .drop a.upload-button {
+    .drop a.upload-button,
+    #footer .bottom {
         background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
@@ -73,7 +74,6 @@ use Cake\Core\Configure;
     .vertical.menu a i.fas,
     .vertical.menu span.additional-info,
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
-    #footer i.fab, #footer i.far, #footer i.fas,
     a.btn.edit-shortcut-button,
     a.btn.prev-button i, a.btn.next-button i,
     .product-wrapper .price-asterisk,

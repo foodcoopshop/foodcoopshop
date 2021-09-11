@@ -129,8 +129,8 @@ INSERT INTO `fcs_category_product` VALUES
 INSERT INTO `fcs_configuration` VALUES
 (11,1,'FCS_PRODUCT_AVAILABILITY_LOW','Geringe Verfügbarkeit<br /><div class=\"small\">Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?</div>','10','number',600,'de_DE','2017-07-26 13:19:19','2014-06-01 01:40:34'),
 (31,1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','Wie viele Tage sollen Produkte \"als neu markiert\" bleiben?','7','number',700,'de_DE','2017-07-26 13:19:19','2014-05-14 21:15:45'),
-(456,1,'FCS_FOOTER_CMS_TEXT','Zusätzlicher Text für den Footer',NULL,'textarea_big',800,'de_DE','2014-06-11 17:50:55','2016-07-01 21:47:47'),
-(508,1,'FCS_FACEBOOK_URL','Facebook-Url für die Einbindung im Footer','https://www.facebook.com/FoodCoopShop/','text',900,'de_DE','2015-07-08 13:23:54','2015-07-08 13:23:54'),
+(456,1,'FCS_FOOTER_CMS_TEXT','Zusätzlicher Text für den Footer',NULL,'textarea_big',920,'de_DE','2014-06-11 17:50:55','2016-07-01 21:47:47'),
+(508,1,'FCS_FACEBOOK_URL','Facebook-Url für die Einbindung im Footer','https://www.facebook.com/FoodCoopShop/','text',910,'de_DE','2015-07-08 13:23:54','2015-07-08 13:23:54'),
 (538,1,'FCS_REGISTRATION_EMAIL_TEXT','Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-Mail-Vorschau anzeigen</a>','','textarea_big',1700,'de_DE','2016-06-26 00:00:00','2016-06-26 00:00:00'),
 (543,1,'FCS_RIGHT_INFO_BOX_HTML','Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes. <br /><div class=\"small\">Um eine Zeile grün zu hinterlegen (Überschrift) bitte als \"Überschrift 3\" formatieren.</div>','<h3>Abholzeiten</h3>\r\n\r\n<p>Der Abholtag steht jetzt immer in der Produktbeschreibung, du kannst deine Produkte am Freitag abholen.</p>\r\n\r\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und sie am darauffolgenden Freitag abholen.</p>\r\n','textarea_big',1500,'de_DE','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Lieferpause für alle Hersteller?<br /><div class=\"small\">Hier können lieferfreie Tage (z.B. Feiertage) für die gesamte Foodcoop festgelegt werden.</div>','','multiple_dropdown',100,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
@@ -142,10 +142,10 @@ INSERT INTO `fcs_configuration` VALUES
 (550,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',1300,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (552,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Zusätzliche Liefer-Informationen für die Hersteller<br /><div class=\"small\">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>',', 15:00 bis 17:00 Uhr','text',1200,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (553,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-Mail-Adresse, an die sämtliche vom System generierten E-Mails als BCC verschickt werden (Backup).<br /><div class=\"small\">Kann leer gelassen werden.</div>','','text',1900,'de_DE','2016-10-06 00:00:00','2016-10-06 00:00:00'),
-(554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer angezeigt.</div>','1','boolean',1800,'de_DE','2016-11-27 00:00:00','2016-11-27 00:00:00'),
+(554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer angezeigt.</div>','1','boolean',930,'de_DE','2016-11-27 00:00:00','2016-11-27 00:00:00'),
 (556,1,'FCS_APP_NAME','Name der Foodcoop','FoodCoop Test','text',50,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (557,1,'FCS_APP_ADDRESS','Adresse der Foodcoop<br /><div class=\"small\">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>','Demostra&szlig;e 4<br />A-4564 Demostadt','textarea',60,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(558,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',70,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(558,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',900,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',90,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','1','boolean',130,'de_DE','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',400,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -182,7 +182,8 @@ INSERT INTO `fcs_configuration` VALUES
 (596,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','0','number',1450,'de_DE','2021-01-19 11:23:49','2021-01-19 11:23:49'),
 (597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',584,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17'),
 (598,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:14','2021-07-07 10:55:14'),
-(599,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','0','boolean',3210,'de_DE','2021-08-02 11:28:40','2021-08-02 11:28:40');
+(599,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','0','boolean',3210,'de_DE','2021-08-02 11:28:40','2021-08-02 11:28:40'),
+(600,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:18','2021-09-10 21:23:18');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -411,7 +412,8 @@ INSERT INTO `phinxlog` VALUES
 (20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:14','2021-05-04 09:10:14',0),
 (20210510080630,'EnablePurchasePrices','2021-05-12 13:24:17','2021-05-12 13:24:18',0),
 (20210707083827,'AddRegistrierkasseApi','2021-07-07 08:55:14','2021-07-07 08:55:14',0),
-(20210802090623,'AddStorageLocation','2021-08-02 09:28:40','2021-08-02 09:28:40',0);
+(20210802090623,'AddStorageLocation','2021-08-02 09:28:40','2021-08-02 09:28:40',0),
+(20210910191430,'Instagram','2021-09-10 19:23:18','2021-09-10 19:23:18',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

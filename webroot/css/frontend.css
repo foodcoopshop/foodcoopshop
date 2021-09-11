@@ -609,18 +609,8 @@ body.manufacturers.detail .imprint {
     padding: 20px;
     text-align: center;
 }
-#footer #facebook-wrapper {
-    float: right;
-    margin-top: 10px;
-}
-#footer .fcs-backlink {
-    float: right;
-    clear: both;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
 #footer .first-column {
-    width: 250px;
+    width: 45%;
     float: left;
     text-align: left;
     font-size: 14px;
@@ -631,10 +621,11 @@ body.manufacturers.detail .imprint {
     float: right;
     margin-right: 75px;
     text-align: left;
+    margin-bottom: 10px;
     font-size: 14px;
     border-left: 1px solid #777;
     padding-left: 20px;
-    max-width: 500px;
+    width: 45%;
 }
 #footer .second-column p i {
     margin-right: 5px;
@@ -662,6 +653,28 @@ body.manufacturers.detail .imprint {
     font-size: 20px;
     margin-bottom: 15px;
     margin-top: 0;
+}
+#footer .bottom {
+    margin: 20px -20px -20px -20px;
+    padding: 8px 0 5px 0;
+    position: relative;
+    clear: both;
+}
+#footer .bottom a {
+    color: #fff;
+}
+#footer .bottom a i.fab,
+#footer .bottom a i.fas {
+    color: #fff;
+}
+#footer .bottom a.fcs-backlink {
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+}
+#footer .bottom a:hover i.fab,
+#footer .bottom a:hover i.fas {
+    opacity: .8;
 }
 #right {
     float: left;

@@ -70,7 +70,7 @@ class ConfigurationsController extends AdminAppController
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
             $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         }
-        if ($configuration->name == 'FCS_FACEBOOK_URL') {
+        if (in_array($configuration->name, ['FCS_FACEBOOK_URL', 'FCS_INSTAGRAM_URL'])) {
             $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
         }
         if (in_array($configuration->type, ['multiple_dropdown'])) {

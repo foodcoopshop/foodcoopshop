@@ -97,6 +97,9 @@
         text-align: center ! important;
         word-break: break-word;
     }
+    #footer .bottom a.fcs-backlink {
+        position: static;
+    }
     #footer .additional-footer-info {
         text-align: center ! important;
     }
@@ -217,10 +220,6 @@
     #slider,
     #slider img {
         width: 100% ! important;
-    }
-    #footer .fcs-backlink {
-        margin-top: 15px ! important;
-        margin-bottom: 10px ! important;
     }
     /**
      * sidebar-left: menu starts here

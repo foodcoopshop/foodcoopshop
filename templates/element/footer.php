@@ -31,36 +31,39 @@ use Cake\Core\Configure;
 
 <div class="second-column">
     <h2><?php echo __('Contact'); ?></h2>
-    <p><i class="fas fa-map-marker-alt fa-2x fa-fw"></i> <span>
-    <?php
-       echo Configure::read('appDb.FCS_APP_NAME').', ';
-       echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration());
-    ?></span></p>
-    <?php
-       echo '<p><i class="far fa-envelope fa-2x fa-fw"></i> <span>'.__('Email').': '.StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
-    if (Configure::read('appDb.FCS_FACEBOOK_URL') != '') { ?>
-        <p>
-            <a target="_blank" href="<?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?>"><i class="fab fa-2x fa-fw fa-facebook-square"></i></a>
-            <a target="_blank" href="<?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?>"><?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?></a>
-        </p>
-    <?php
-    }
-    ?>
+    <p>
+        <?php
+           echo Configure::read('appDb.FCS_APP_NAME') . '<br />';
+           echo $this->Html->getAddressFromAddressConfiguration();
+        ?>
+    </p>
 </div>
 
 <?php
-
-if (Configure::read('appDb.FCS_FOOTER_CMS_TEXT') != '') {
-    echo '<p class="additional-footer-info">'.Configure::read('appDb.FCS_FOOTER_CMS_TEXT').'</p>';
-}
-
-if ($appAuth->user()) {
-    if ($this->Html->paymentIsCashless() && Configure::read('appDb.FCS_BANK_ACCOUNT_DATA') != '') {
-        echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>'.__('Bank_account_credit_balance').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
+    if (Configure::read('appDb.FCS_FOOTER_CMS_TEXT') != '') {
+        echo '<p class="additional-footer-info">'.Configure::read('appDb.FCS_FOOTER_CMS_TEXT').'</p>';
     }
-}
-?>
 
-<?php if (Configure::read('appDb.FCS_SHOW_FOODCOOPSHOP_BACKLINK')) { ?>
-    <a class="fcs-backlink" title="Foodcoop Software" target="_blank" href="https://www.foodcoopshop.com">foodcoopshop.com</a>
-<?php } ?>
+    $socialMediaLinks = [];
+    if (Configure::read('appDb.FCS_APP_EMAIL') != '') {
+        $socialMediaLinks[] = StringComponent::hideEmail(Configure::read('appDb.FCS_APP_EMAIL'), '\'<i class="fas fa-envelope fa-2x fa-fw" title="E-Mail"></i>\'');
+    }
+    if (Configure::read('appDb.FCS_FACEBOOK_URL') != '') {
+        $socialMediaLinks[] = '<a target="_blank" title="Facebook: ' . Configure::read('appDb.FCS_APP_NAME')  . '" href="' . Configure::read('appDb.FCS_FACEBOOK_URL') . '"><i class="fab fa-2x fa-fw fa-facebook"></i></a>';
+    }
+    if (Configure::read('appDb.FCS_INSTAGRAM_URL') != '') {
+        $socialMediaLinks[] = '<a target="_blank" title="Instagram: ' . Configure::read('appDb.FCS_APP_NAME') . '" href="' . Configure::read('appDb.FCS_INSTAGRAM_URL') . '"><i class="fab fa-2x fa-fw fa-instagram"></i></a>';
+    }
+    if (Configure::read('appDb.FCS_SHOW_FOODCOOPSHOP_BACKLINK')) {
+        $backlinkInnerHtml = 'foodcoopshop.com';
+        if ($isMobile) {
+            $backlinkInnerHtml = '<i class="fas fa-2x fa-fw fa-external-link-square-alt"></i>';
+        }
+        $socialMediaLinks[] = '<a class="fcs-backlink" title="Foodcoop Software" target="_blank" href="https://www.foodcoopshop.com">'.$backlinkInnerHtml.'</a>';
+    }
+    if (!empty($socialMediaLinks)) {
+        echo '<div class="bottom">';
+            echo join(' ', $socialMediaLinks);
+        echo '</div>';
+    }
+?>

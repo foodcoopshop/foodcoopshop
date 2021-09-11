@@ -58,6 +58,13 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    public function validationFcsInstagramUrl(Validator $validator)
+    {
+        $validator->allowEmptyString('value');
+        $validator->urlWithProtocol('value', __('Please_enter_a_valid_internet_address.'));
+        return $validator;
+    }
+
     public function validationFcsAppEmail(Validator $validator)
     {
         $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
