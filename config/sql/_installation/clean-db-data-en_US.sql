@@ -211,7 +211,7 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
-(6,'demo-slider.jpg',NULL,0,0,1);
+(1,'demo-slider.jpg',NULL,0,0,1);
 /*!40000 ALTER TABLE `fcs_sliders` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
