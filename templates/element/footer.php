@@ -40,19 +40,10 @@ use Cake\Core\Configure;
 </div>
 
 <?php
-
-if (Configure::read('appDb.FCS_FOOTER_CMS_TEXT') != '') {
-    echo '<p class="additional-footer-info">'.Configure::read('appDb.FCS_FOOTER_CMS_TEXT').'</p>';
-}
-
-if ($appAuth->user()) {
-    if ($this->Html->paymentIsCashless() && Configure::read('appDb.FCS_BANK_ACCOUNT_DATA') != '') {
-        echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>'.__('Bank_account_credit_balance').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
+    if (Configure::read('appDb.FCS_FOOTER_CMS_TEXT') != '') {
+        echo '<p class="additional-footer-info">'.Configure::read('appDb.FCS_FOOTER_CMS_TEXT').'</p>';
     }
-}
-?>
 
-<?php
     $socialMediaLinks = [];
     if (Configure::read('appDb.FCS_APP_EMAIL') != '') {
         $socialMediaLinks[] = StringComponent::hideEmail(Configure::read('appDb.FCS_APP_EMAIL'), '\'<i class="fas fa-envelope fa-2x fa-fw" title="E-Mail"></i>\'');
