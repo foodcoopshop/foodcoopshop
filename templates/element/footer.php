@@ -64,7 +64,11 @@ if ($appAuth->user()) {
         $socialMediaLinks[] = '<a target="_blank" title="Instagram: ' . Configure::read('appDb.FCS_APP_NAME') . '" href="' . Configure::read('appDb.FCS_INSTAGRAM_URL') . '"><i class="fab fa-2x fa-fw fa-instagram"></i></a>';
     }
     if (Configure::read('appDb.FCS_SHOW_FOODCOOPSHOP_BACKLINK')) {
-        $socialMediaLinks[] = '<a class="fcs-backlink" title="Foodcoop Software" target="_blank" href="https://www.foodcoopshop.com">foodcoopshop.com</a>';
+        $backlinkInnerHtml = 'foodcoopshop.com';
+        if ($isMobile) {
+            $backlinkInnerHtml = '<i class="fas fa-2x fa-fw fa-external-link-square-alt"></i>';
+        }
+        $socialMediaLinks[] = '<a class="fcs-backlink" title="Foodcoop Software" target="_blank" href="https://www.foodcoopshop.com">'.$backlinkInnerHtml.'</a>';
     }
     if (!empty($socialMediaLinks)) {
         echo '<div class="bottom">';

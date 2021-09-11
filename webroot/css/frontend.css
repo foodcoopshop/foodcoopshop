@@ -661,7 +661,8 @@ body.manufacturers.detail .imprint {
 #footer .bottom a {
     color: #fff;
 }
-#footer .bottom a i.fab {
+#footer .bottom a i.fab,
+#footer .bottom a i.fas {
     color: #fff;
 }
 #footer .bottom a.fcs-backlink {
