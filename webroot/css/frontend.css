@@ -621,6 +621,7 @@ body.manufacturers.detail .imprint {
     float: right;
     margin-right: 75px;
     text-align: left;
+    margin-bottom: 10px;
     font-size: 14px;
     border-left: 1px solid #777;
     padding-left: 20px;
