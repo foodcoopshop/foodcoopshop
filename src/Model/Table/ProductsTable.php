@@ -719,7 +719,7 @@ class ProductsTable extends AppTable
                 if (isset($name['is_declaration_ok'])) {
                     $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
                 }
-                if (isset($name['id_storage_location'])) {
+                if (isset($name['id_storage_location']) && $name['id_storage_location'] > 0) {
                     $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
                 }
                 $products2save[] = $tmpProduct2Save;
