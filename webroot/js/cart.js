@@ -99,7 +99,7 @@ foodcoopshop.Cart = {
         }
     },
 
-    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit) {
+    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName) {
 
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
@@ -286,7 +286,7 @@ foodcoopshop.Cart = {
 
             if (productContainer.length > 0) {
                 // product already in cart
-                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit);
+                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName);
             } else {
                 // product not yet in cart
                 foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay);
