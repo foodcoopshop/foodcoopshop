@@ -221,8 +221,8 @@ foodcoopshop.Cart = {
             }
 
             if (amount > 1) {
-                var forEachApproxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
-                unity = unity.replace(forEachApproxRegExp, foodcoopshop.LocalizedJs.cart.approx);
+                var approxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.approx);
+                unity = unity.replace(approxRegExp, foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
             }
 
             var orderedQuantityInUnits;
