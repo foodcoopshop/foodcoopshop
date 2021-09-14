@@ -27,7 +27,7 @@ class FrontendController extends AppController
         return true;
     }
 
-    protected function modifyProductForDiscount($product, $taxRate)
+    protected function modifyProductPricesForDiscount($product, $taxRate)
     {
 
         if (!$this->AppAuth->user() || $this->AppAuth->user('discount') == '0') {
@@ -65,7 +65,7 @@ class FrontendController extends AppController
 
     }
 
-    protected function modifyAttributeForDiscount($attribute, $taxRate)
+    protected function modifyAttributePricesForDiscount($attribute, $taxRate)
     {
 
         if (!$this->AppAuth->user() || $this->AppAuth->user('discount') == '0') {
@@ -131,7 +131,7 @@ class FrontendController extends AppController
         foreach ($products as &$product) {
 
             $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
-            $product = $this->modifyProductForDiscount($product, $taxRate);
+            $product = $this->modifyProductPricesForDiscount($product, $taxRate);
             $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
 
             $product['gross_price'] = $grossPrice;
@@ -202,7 +202,7 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
-                $attribute = $this->modifyAttributeForDiscount($attribute, $taxRate);
+                $attribute = $this->modifyAttributPricesForDiscount($attribute, $taxRate);
                 $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
                 $preparedAttributes['ProductAttributes'] = [
                     'gross_price' => $grossPrice,
