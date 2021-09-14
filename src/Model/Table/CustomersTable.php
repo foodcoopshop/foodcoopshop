@@ -82,6 +82,7 @@ class CustomersTable extends AppTable
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
         $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
+        $validator->inList('discount', array_keys(Configure::read('app.htmlHelper')->getDiscountForDropdown()), __('The_discount_is_not_valid.'));
         return $validator;
     }
 
