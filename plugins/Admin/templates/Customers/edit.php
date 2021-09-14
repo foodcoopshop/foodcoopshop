@@ -127,6 +127,16 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
     ]);
 }
 
+if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isSuperadmin()) {
+    echo $this->Form->control('Customers.discount', [
+        'type' => 'select',
+        'label' => __d('admin', 'Discount'),
+        'options' => $this->Html->getDiscountForDropdown(),
+        'escape' => false,
+    ]);
+
+}
+
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     $label = __d('admin', 'Paying_with_time_module_active?') . ' ';
     $label .= '<span class="after small">'.__d('admin', 'I_want_to_be_able_to_pay_my_products_also_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a>';

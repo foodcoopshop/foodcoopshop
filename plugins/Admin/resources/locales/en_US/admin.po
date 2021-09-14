@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-09 08:55+0200\n"
-"PO-Revision-Date: 2021-09-09 08:56+0200\n"
+"POT-Creation-Date: 2021-09-14 09:40+0200\n"
+"PO-Revision-Date: 2021-09-14 09:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -209,6 +209,9 @@ msgstr "Invoice nº {0} of {1} was cancelled successfully."
 
 msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
 msgstr "Cancellation invoice nº {0} was generated successfully."
+
+msgid "My_invoices"
+msgstr "My invoices"
 
 msgid "Journal"
 msgstr "Journal"
@@ -1008,6 +1011,9 @@ msgstr "Order reminder"
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Do you want to receive an order reminder e-mail every week?"
 
+msgid "Discount"
+msgstr "Discount"
+
 msgid "Paying_with_time_module_active?"
 msgstr "Paying-with-time-module active?"
 
@@ -1705,7 +1711,7 @@ msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
 
 msgid "Storage_location"
-msgstr ""
+msgstr "Storage location"
 
 msgid "Added_on"
 msgstr "Added on"
@@ -1829,9 +1835,6 @@ msgstr "Order adaptions"
 
 msgid "My_data"
 msgstr "My data"
-
-msgid "My_invoices"
-msgstr "My invoices"
 
 msgid "Configurations"
 msgstr "Settings"

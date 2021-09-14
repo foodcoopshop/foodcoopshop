@@ -34,6 +34,27 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function getDiscountForDropdown()
+    {
+        $options = [
+            'PP' => __('Shopping_with_purchase_price'),
+        ];
+        for($i=0;$i<=100;$i++) {
+            if ($i > 50 && $i < 100) {
+                continue;
+            }
+            $value = $i . '%';
+            if ($i == 0) {
+                $value .= ' (' . __('No_discount_normal_selling_prices_are_used') . ')';
+            }
+            if ($i == 100) {
+                $value .= ' (' . __('Shopping_with_zero_price') . ')';
+            }
+            $options[$i] = $value;
+        }
+        return $options;
+    }
+
     public function getLegalTextsSubfolder()
     {
         $subfolder = 'directSelling';

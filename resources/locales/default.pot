@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-09-03 10:15+0200\n"
+"POT-Creation-Date: 2021-09-14 09:40+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1895,6 +1895,15 @@ msgstr ""
 msgid "Credit"
 msgstr ""
 
+msgid "Shopping_with_purchase_price"
+msgstr ""
+
+msgid "No_discount_normal_selling_prices_are_used"
+msgstr ""
+
+msgid "Shopping_with_zero_price"
+msgstr ""
+
 msgid "weekly"
 msgstr ""
 
@@ -2289,9 +2298,6 @@ msgid "Information"
 msgstr ""
 
 msgid "Contact"
-msgstr ""
-
-msgid "Bank_account_credit_balance"
 msgstr ""
 
 msgid "Attention_delivery_break!"

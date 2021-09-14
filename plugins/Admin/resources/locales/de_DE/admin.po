@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-09 08:55+0200\n"
-"PO-Revision-Date: 2021-09-09 08:55+0200\n"
+"POT-Creation-Date: 2021-09-14 09:40+0200\n"
+"PO-Revision-Date: 2021-09-14 09:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -209,6 +209,9 @@ msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich storniert."
 
 msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
 msgstr "Die Storno-Rechnung Nr. {0} wurde erfolgreich erstellt."
+
+msgid "My_invoices"
+msgstr "Meine Rechnungen"
 
 msgid "Journal"
 msgstr "Journal"
@@ -1008,6 +1011,9 @@ msgstr "Bestell-Erinnerung"
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 
+msgid "Discount"
+msgstr "Rabatt"
+
 msgid "Paying_with_time_module_active?"
 msgstr "Stundenabrechnungs-Modul aktiv?"
 
@@ -1705,7 +1711,7 @@ msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
 
 msgid "Storage_location"
-msgstr ""
+msgstr "Lagerort"
 
 msgid "Added_on"
 msgstr "Eingetragen am"
@@ -1829,9 +1835,6 @@ msgstr "Bestelländerungen"
 
 msgid "My_data"
 msgstr "Meine Daten"
-
-msgid "My_invoices"
-msgstr "Meine Rechnungen"
 
 msgid "Configurations"
 msgstr "Einstellungen"

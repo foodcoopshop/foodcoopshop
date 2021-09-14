@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-03 10:15+0200\n"
-"PO-Revision-Date: 2021-09-03 10:17+0200\n"
+"POT-Creation-Date: 2021-09-14 09:40+0200\n"
+"PO-Revision-Date: 2021-09-14 09:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1896,6 +1896,15 @@ msgstr "Activities"
 msgid "Credit"
 msgstr "Credit"
 
+msgid "Shopping_with_purchase_price"
+msgstr "Use purchase price for shopping"
+
+msgid "No_discount_normal_selling_prices_are_used"
+msgstr "No discount - normal selling prices are used for shopping"
+
+msgid "Shopping_with_zero_price"
+msgstr "No discount - use zero price for shopping"
+
 msgid "weekly"
 msgstr "weekly"
 
@@ -2292,9 +2301,6 @@ msgstr "Information"
 msgid "Contact"
 msgstr "Contact"
 
-msgid "Bank_account_credit_balance"
-msgstr "Bank account (credit)"
-
 msgid "Attention_delivery_break!"
 msgstr "Attention, delivery break!"
 
@@ -2547,6 +2553,9 @@ msgstr "placed on"
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
 
+#~ msgid "Bank_account_credit_balance"
+#~ msgstr "Bank account (credit)"
+
 #~ msgid "Product_sum_including_vat"
 #~ msgstr "Product sum including VAT"
 
@@ -2640,9 +2649,6 @@ msgstr "The prices include the VAT."
 #, fuzzy
 #~ msgid "VAT_rate"
 #~ msgstr "Tax rate"
-
-#~ msgid "Shopping_limit_reached"
-#~ msgstr "Shopping limit reached"
 
 #~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
 #~ msgstr "You reached the order limit of {0}. Please add credit."

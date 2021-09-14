@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-03 10:15+0200\n"
-"PO-Revision-Date: 2021-09-03 10:17+0200\n"
+"POT-Creation-Date: 2021-09-14 09:40+0200\n"
+"PO-Revision-Date: 2021-09-14 09:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1896,6 +1896,15 @@ msgstr "Aktivitäten"
 msgid "Credit"
 msgstr "Guthaben"
 
+msgid "Shopping_with_purchase_price"
+msgstr "Einkaufen zum Einkaufspreis"
+
+msgid "No_discount_normal_selling_prices_are_used"
+msgstr "Kein Rabatt - Einkauf zum normalen Verkaufspreis"
+
+msgid "Shopping_with_zero_price"
+msgstr "Einkaufen zum Nullpreis"
+
 msgid "weekly"
 msgstr "wöchentlich"
 
@@ -2292,9 +2301,6 @@ msgstr "Informationen"
 msgid "Contact"
 msgstr "Kontakt"
 
-msgid "Bank_account_credit_balance"
-msgstr "Kontodaten (Guthaben aufladen)"
-
 msgid "Attention_delivery_break!"
 msgstr "Achtung, Lieferpause!"
 
@@ -2547,6 +2553,9 @@ msgstr "getätigt am"
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
+#~ msgid "Bank_account_credit_balance"
+#~ msgstr "Kontodaten (Guthaben aufladen)"
+
 #~ msgid "Product_sum_including_vat"
 #~ msgstr "Warenwert gesamt (inkl. USt.)"
 
@@ -2638,9 +2647,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "VAT_rate"
 #~ msgstr "Steuersatz"
-
-#~ msgid "Shopping_limit_reached"
-#~ msgstr "Guthaben-Limit erreicht"
 
 #~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
 #~ msgstr "Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen neues Guthaben auf."
