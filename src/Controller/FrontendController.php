@@ -27,90 +27,6 @@ class FrontendController extends AppController
         return true;
     }
 
-    protected function modifyProductPricesForDiscount($product, $taxRate)
-    {
-
-        if (!$this->AppAuth->user() || $this->AppAuth->user('discount') == '0') {
-            return $product;
-        }
-
-        if ($this->AppAuth->user('discount') == 'PP') {
-            $purchasePrices = $this->Product->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $product['id_product'],
-                ],
-                'contain' => [
-                    'PurchasePriceProducts',
-                    'UnitProducts',
-                ]
-            ])->first();
-
-            if ($product['price_per_unit_enabled']) {
-                if (!empty($purchasePrices->purchase_price_product)) {
-                    $product['price_incl_per_unit'] = $purchasePrices->unit_product->purchase_price_incl_per_unit;
-                }
-            } else {
-                if (!empty($purchasePrices->purchase_price_product)) {
-                    $product['price'] = $purchasePrices->purchase_price_product->price;
-                }
-            }
-
-        }
-
-        if ((int) $this->AppAuth->user('discount') > 0) {
-            $product['price'] = $product['price'] * (1 - $this->AppAuth->user('discount') / 100);
-        }
-
-        return $product;
-
-    }
-
-    protected function modifyAttributePricesForDiscount($attribute, $taxRate)
-    {
-
-        if (!$this->AppAuth->user() || $this->AppAuth->user('discount') == '0') {
-            return $attribute;
-        }
-
-        if ($this->AppAuth->user('discount') == 'PP') {
-
-            $purchasePrices = $this->Product->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $attribute->id_product,
-                ],
-                'contain' => [
-                    'ProductAttributes.PurchasePriceProductAttributes',
-                    'ProductAttributes.UnitProductAttributes',
-                ]
-            ])->first();
-
-            $foundPurchasePriceProductAttribute = null;
-            foreach ($purchasePrices->product_attributes as $purchasePriceProductAttribute) {
-                if ($purchasePriceProductAttribute->id_product_attribute == $attribute->id_product_attribute) {
-                    $foundPurchasePriceProductAttribute = $purchasePriceProductAttribute;
-                    continue;
-                }
-            }
-
-            if (!empty($foundPurchasePriceProductAttribute)) {
-                if (!empty($foundPurchasePriceProductAttribute->purchase_price_product_attribute)) {
-                    $attribute->price = $foundPurchasePriceProductAttribute->purchase_price_product_attribute->price;
-                }
-
-                if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && $foundPurchasePriceProductAttribute->unit_product_attribute->price_per_unit_enabled) {
-                    $attribute->unit_product_attribute->price_incl_per_unit = $foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit;
-                }
-            }
-
-        }
-        if ((int) $this->AppAuth->user('discount') > 0) {
-            $attribute->price = $attribute->price * (1 - $this->AppAuth->user('discount') / 100);
-        }
-
-        return $attribute;
-
-    }
-
 
     /**
      * should be moved into component
@@ -123,6 +39,7 @@ class FrontendController extends AppController
         $this->Product = $this->getTableLocator()->get('Products');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
+        $this->Customer = $this->getTableLocator()->get('Customers');
 
         if ($this->AppAuth->user()) {
             $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
@@ -131,7 +48,11 @@ class FrontendController extends AppController
         foreach ($products as &$product) {
 
             $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
-            $product = $this->modifyProductPricesForDiscount($product, $taxRate);
+
+            $modifiedProductPricesForDiscount = $this->Customer->getModifiedProductPricesForDiscount($this->AppAuth, $product['id_product'], $product['price'], $product['price_incl_per_unit'], $taxRate);
+            $product['price'] = $modifiedProductPricesForDiscount['price'];
+            $product['price_incl_per_unit'] = $modifiedProductPricesForDiscount['price_incl_per_unit'];
+
             $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
 
             $product['gross_price'] = $grossPrice;
@@ -202,8 +123,13 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
-                $attribute = $this->modifyAttributPricesForDiscount($attribute, $taxRate);
+
+                $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
+                $modifiedAttributePricesForDiscount = $this->Customer->getModifiedAttributePricesForDiscount($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $taxRate);
+                $attribute->price = $modifiedAttributePricesForDiscount['price'];
+                $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesForDiscount['price_incl_per_unit'];
                 $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
+
                 $preparedAttributes['ProductAttributes'] = [
                     'gross_price' => $grossPrice,
                     'tax' => $grossPrice - $attribute->price,

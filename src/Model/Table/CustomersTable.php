@@ -212,6 +212,103 @@ class CustomersTable extends AppTable
         ]);
     }
 
+    public function getModifiedProductPricesForDiscount($appAuth, $productId, $price, $priceInclPerUnit, $taxRate)
+    {
+
+        $result = [
+            'price' => $price,
+            'price_incl_per_unit' => $priceInclPerUnit,
+        ];
+
+        if (!$appAuth->user() || $appAuth->user('discount') == '0') {
+            return $result;
+        }
+
+        if ($appAuth->user('discount') == 'PP') {
+
+            $this->Product = FactoryLocator::get('Table')->get('Products');
+            $purchasePrices = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId,
+                ],
+                'contain' => [
+                    'PurchasePriceProducts',
+                    'UnitProducts',
+                ]
+            ])->first();
+
+            if ($priceInclPerUnit) {
+                if (!empty($purchasePrices->purchase_price_product)) {
+                    $result['price_incl_per_unit'] = $purchasePrices->unit_product->purchase_price_incl_per_unit;
+                }
+            } else {
+                if (!empty($purchasePrices->purchase_price_product)) {
+                    $result['price'] = $purchasePrices->purchase_price_product->price;
+                }
+            }
+
+        }
+
+        if ((int) $appAuth->user('discount') > 0) {
+            $result['price'] = $price * (1 - $appAuth->user('discount') / 100);
+        }
+
+        return $result;
+
+    }
+
+    public function getModifiedAttributePricesForDiscount($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $taxRate)
+    {
+
+        $result = [
+            'price' => $price,
+            'price_incl_per_unit' => $priceInclPerUnit,
+        ];
+
+        if (!$appAuth->user() || $appAuth->user('discount') == '0') {
+            return $result;
+        }
+
+        if ($appAuth->user('discount') == 'PP') {
+
+            $this->Product = FactoryLocator::get('Table')->get('Products');
+            $purchasePrices = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId,
+                ],
+                'contain' => [
+                    'ProductAttributes.PurchasePriceProductAttributes',
+                    'ProductAttributes.UnitProductAttributes',
+                ]
+            ])->first();
+
+            $foundPurchasePriceProductAttribute = null;
+            foreach ($purchasePrices->product_attributes as $purchasePriceProductAttribute) {
+                if ($purchasePriceProductAttribute->id_product_attribute == $productAttributeId) {
+                    $foundPurchasePriceProductAttribute = $purchasePriceProductAttribute;
+                    continue;
+                }
+            }
+
+            if (!empty($foundPurchasePriceProductAttribute)) {
+                if (!empty($foundPurchasePriceProductAttribute->purchase_price_product_attribute)) {
+                    $result['price'] = $foundPurchasePriceProductAttribute->purchase_price_product_attribute->price;
+                }
+
+                if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && $foundPurchasePriceProductAttribute->unit_product_attribute->price_per_unit_enabled) {
+                    $result['price_incl_per_unit'] = $foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit;
+                }
+            }
+
+        }
+        if ((int) $appAuth->user('discount') > 0) {
+            $result['price'] = $price * (1 - $appAuth->user('discount') / 100);
+        }
+
+        return $result;
+
+    }
+
     public function getPersonalTransactionCode($customerId): string
     {
         $customer = $this->find('all', [

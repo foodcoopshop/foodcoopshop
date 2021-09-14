@@ -394,6 +394,50 @@ class CartsTable extends AppTable
         return $prices;
     }
 
+    protected function modifyProductPricesForDiscount($appAuth, $prices, $product)
+    {
+
+        return $prices;
+
+        if ($this->AppAuth->user('discount') == '0') {
+            return $prices;
+        }
+
+        $prices = [
+            'net_per_piece' => 0,
+            'gross_per_piece' => 0,
+            'gross' => 0,
+            'net' => 0,
+            'tax' => 0,
+            'tax_per_piece' => 0,
+        ];
+
+        return $prices;
+
+    }
+
+    protected function modifyAttributePricesForDiscount($appAuth, $prices, $attribute)
+    {
+
+        return $prices;
+
+        if ($this->AppAuth->user('discount') == '0') {
+            return $prices;
+        }
+
+        $prices = [
+            'net_per_piece' => 0,
+            'gross_per_piece' => 0,
+            'gross' => 0,
+            'net' => 0,
+            'tax' => 0,
+            'tax_per_piece' => 0,
+        ];
+
+        return $prices;
+
+    }
+
     /**
      * @param CartProductsTable $cartProduct
      * @return array
@@ -411,6 +455,7 @@ class CartsTable extends AppTable
             $cartProduct->product->deposit_product,
             $cartProduct->product->tax->rate ?? 0,
         );
+        $prices = $this->modifyProductPricesForDiscount($appAuth, $prices, $cartProduct->product);
 
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
@@ -497,6 +542,7 @@ class CartsTable extends AppTable
             $cartProduct->product_attribute->deposit_product_attribute,
             $cartProduct->product->tax->rate ?? 0,
         );
+        $prices = $this->modifyAttributePricesForDiscount($appAuth, $prices, $cartProduct->product_attribute);
 
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
