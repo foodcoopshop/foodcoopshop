@@ -51,7 +51,7 @@ class FrontendController extends AppController
                 }
             } else {
                 if (!empty($purchasePrices->purchase_price_product)) {
-                    $product['price'] = $this->Product->getNetPrice($purchasePrices->purchase_price_product->price, $taxRate);
+                    $product['price'] = $purchasePrices->purchase_price_product->price;
                 }
             }
 
@@ -94,7 +94,7 @@ class FrontendController extends AppController
 
             if (!empty($foundPurchasePriceProductAttribute)) {
                 if (!empty($foundPurchasePriceProductAttribute->purchase_price_product_attribute)) {
-                    $attribute->price = $this->Product->getNetPrice($foundPurchasePriceProductAttribute->purchase_price_product_attribute->price, $taxRate);
+                    $attribute->price = $foundPurchasePriceProductAttribute->purchase_price_product_attribute->price;
                 }
 
                 if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && $foundPurchasePriceProductAttribute->unit_product_attribute->price_per_unit_enabled) {
