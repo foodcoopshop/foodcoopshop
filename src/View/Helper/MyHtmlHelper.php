@@ -36,9 +36,12 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getDiscountForDropdown()
     {
-        $options = [
-            'PP' => __('Shopping_with_purchase_price'),
-        ];
+        $options = [];
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $options = [
+                'PP' => __('Shopping_with_purchase_price'),
+            ];
+        }
         for($i=0;$i<=100;$i++) {
             if ($i > 50 && $i < 100) {
                 continue;

@@ -75,7 +75,7 @@ echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
-if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo '<th>' . $this->Paginator->sort('Customers.discount', __d('admin', 'Discount')) . '</th>';
 }
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
@@ -288,7 +288,7 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo '<td style="text-align:right;">';
             if ($customer->discount == 'PP') {
                 echo __d('admin', 'Purchase_price_abbreviation');
@@ -333,7 +333,7 @@ $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     $colspan++;
 }
-if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     $colspan++;
 }
 echo '<td colspan="'.$colspan.'"></td>';
