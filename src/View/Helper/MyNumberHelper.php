@@ -60,9 +60,9 @@ class MyNumberHelper extends NumberHelper
         return self::formatAsDecimal($amount) . ' ' . $shortcode;
     }
 
-    public function formatAsPercent($amount)
+    public function formatAsPercent($amount, $decimals = 2)
     {
-        return self::formatAsDecimal($amount) . '%';
+        return self::formatAsDecimal($amount, $decimals) . '%';
     }
 
     /**
