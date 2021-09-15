@@ -212,17 +212,14 @@ class CustomersTable extends AppTable
         ]);
     }
 
-    public function getModifiedProductPricesForDiscount($appAuth, $productId, $price, $priceInclPerUnit, $taxRate)
+    public function getModifiedProductPricesForDiscount($appAuth, $productId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [
             'price' => $price,
             'price_incl_per_unit' => $priceInclPerUnit,
+            'deposit' => $deposit,
         ];
-
-        if (!$appAuth->user() || $appAuth->user('discount') == '0') {
-            return $result;
-        }
 
         if ($appAuth->user('discount') == 'PP') {
             $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -248,25 +245,24 @@ class CustomersTable extends AppTable
 
         }
 
-        if ((int) $appAuth->user('discount') > 0) {
-            //$result['price'] = $price * (1 - $appAuth->user('discount') / 100);
+        if ((int) $appAuth->user('discount') == 100) {
+            $result['price'] = 0;
+            $result['price_incl_per_unit'] = 0;
+            $result['deposit'] = 0;
         }
 
         return $result;
 
     }
 
-    public function getModifiedAttributePricesForDiscount($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $taxRate)
+    public function getModifiedAttributePricesForDiscount($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [
             'price' => $price,
             'price_incl_per_unit' => $priceInclPerUnit,
+            'deposit' => $deposit,
         ];
-
-        if (!$appAuth->user() || $appAuth->user('discount') == '0') {
-            return $result;
-        }
 
         if ($appAuth->user('discount') == 'PP') {
 
@@ -303,8 +299,10 @@ class CustomersTable extends AppTable
 
         }
 
-        if ((int) $appAuth->user('discount') > 0) {
-            //$result['price'] = $price * (1 - $appAuth->user('discount') / 100);
+        if ((int) $appAuth->user('discount') == 100) {
+            $result['price'] = 0;
+            $result['price_incl_per_unit'] = 0;
+            $result['deposit'] = 0;
         }
 
         return $result;
