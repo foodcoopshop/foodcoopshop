@@ -42,10 +42,12 @@ class FrontendController extends AppController
 
             $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
 
+            // START: override shopping with purchase prices / zero prices
             $modifiedProductPricesForDiscount = $this->Customer->getModifiedProductPricesForDiscount($this->AppAuth, $product['id_product'], $product['price'], $product['price_incl_per_unit'], $product['deposit'], $taxRate);
             $product['price'] = $modifiedProductPricesForDiscount['price'];
             $product['price_incl_per_unit'] = $modifiedProductPricesForDiscount['price_incl_per_unit'];
             $product['deposit'] = $modifiedProductPricesForDiscount['price_incl_per_unit'];
+            // END: override shopping with purchase prices / zero prices
 
             $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
 
@@ -121,11 +123,17 @@ class FrontendController extends AppController
                 $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
                 $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
 
+                // START: override shopping with purchase prices / zero prices
                 $modifiedAttributePricesForDiscount = $this->Customer->getModifiedAttributePricesForDiscount($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
                 $attribute->price = $modifiedAttributePricesForDiscount['price'];
                 if (!empty($attribute->unit_product_attribute)) {
                     $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesForDiscount['price_incl_per_unit'];
                 }
+                if (!empty($attribute->deposit_product_attribute)) {
+                    $attribute->deposit_product_attribute->deposit = 0;$modifiedAttributePricesForDiscount['deposit'];
+                }
+                // END: override shopping with purchase prices / zero prices
+
                 $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
 
                 $preparedAttributes['ProductAttributes'] = [
@@ -140,7 +148,7 @@ class FrontendController extends AppController
                     'always_available' => $attribute->stock_available->always_available,
                 ];
                 $preparedAttributes['DepositProductAttributes'] = [
-                    'deposit' => Configure::read('app.isDepositEnabled') && $attributeDeposit,
+                    'deposit' => Configure::read('app.isDepositEnabled') && !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
                 ];
                 $preparedAttributes['ProductAttributeCombinations'] = [
                     'Attributes' => [

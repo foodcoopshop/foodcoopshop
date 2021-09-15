@@ -402,6 +402,7 @@ class CartsTable extends AppTable
         $unitProduct = $cartProduct->product->unit_product;
         $deposit = !empty($cartProduct->product->deposit_product) ? $cartProduct->product->deposit_product->deposit : 0;
 
+        // START: override shopping with purchase prices / zero prices
         $cm = FactoryLocator::get('Table')->get('Customers');
         $priceInclPerUnit = null;
         if (!empty($unitProduct)) {
@@ -415,6 +416,7 @@ class CartsTable extends AppTable
         if (!empty($cartProduct->product->deposit_product->deposit)) {
             $cartProduct->product->deposit_product->deposit = $modifiedProductPricesForDiscount['deposit'];
         }
+        // END override shopping with purchase prices / zero prices
 
         $prices = $this->getPricesRespectingPricePerUnit(
             $cartProduct->id_product,
@@ -501,6 +503,7 @@ class CartsTable extends AppTable
         $taxRate = $cartProduct->product->tax->rate ?? 0;
         $deposit = !empty($cartProduct->product_attribute->deposit_product_attribute) ? $cartProduct->product_attribute->deposit_product_attribute->deposit : 0;
 
+        // START: override shopping with purchase prices / zero prices
         $cm = FactoryLocator::get('Table')->get('Customers');
         $priceInclPerUnit = null;
         if (!empty($unitProductAttribute)) {
@@ -514,6 +517,7 @@ class CartsTable extends AppTable
         if (!empty(!empty($cartProduct->product_attribute->deposit_product_attribute))) {
             $cartProduct->product_attribute->deposit_product_attribute->deposit = $modifiedProductPricesForDiscount['deposit'];
         }
+        // END: override shopping with purchase prices / zero prices
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
         $prices = $this->getPricesRespectingPricePerUnit(
