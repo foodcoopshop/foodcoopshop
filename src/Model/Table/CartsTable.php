@@ -394,68 +394,33 @@ class CartsTable extends AppTable
         return $prices;
     }
 
-    protected function modifyProductPricesForDiscount($appAuth, $prices, $product)
-    {
-
-        return $prices;
-
-        if ($this->AppAuth->user('discount') == '0') {
-            return $prices;
-        }
-
-        $prices = [
-            'net_per_piece' => 0,
-            'gross_per_piece' => 0,
-            'gross' => 0,
-            'net' => 0,
-            'tax' => 0,
-            'tax_per_piece' => 0,
-        ];
-
-        return $prices;
-
-    }
-
-    protected function modifyAttributePricesForDiscount($appAuth, $prices, $attribute)
-    {
-
-        return $prices;
-
-        if ($this->AppAuth->user('discount') == '0') {
-            return $prices;
-        }
-
-        $prices = [
-            'net_per_piece' => 0,
-            'gross_per_piece' => 0,
-            'gross' => 0,
-            'net' => 0,
-            'tax' => 0,
-            'tax_per_piece' => 0,
-        ];
-
-        return $prices;
-
-    }
-
-    /**
-     * @param CartProductsTable $cartProduct
-     * @return array
-     */
-    private function prepareMainProduct($appAuth, $cartProduct)
+    private function prepareMainProduct($appAuth, $cartProduct): array
     {
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
+        $taxRate = $cartProduct->product->tax->rate ?? 0;
+        $unitProduct = $cartProduct->product->unit_product;
+
+        $cm = FactoryLocator::get('Table')->get('Customers');
+        $priceInclPerUnit = null;
+        if (!empty($unitProduct)) {
+            $priceInclPerUnit = $unitProduct->price_incl_per_unit;
+        }
+        $modifiedProductPricesForDiscount = $cm->getModifiedProductPricesForDiscount($appAuth, $cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $taxRate);
+        $cartProduct->product->price = $modifiedProductPricesForDiscount['price'];
+        if (!empty($unitProduct)) {
+            $unitProduct->price_incl_per_unit = $modifiedProductPricesForDiscount['price_incl_per_unit'];
+        }
+
         $prices = $this->getPricesRespectingPricePerUnit(
             $cartProduct->id_product,
             $cartProduct->product->price,
-            $cartProduct->product->unit_product,
+            $unitProduct,
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product->deposit_product,
-            $cartProduct->product->tax->rate ?? 0,
+            $taxRate,
         );
-        $prices = $this->modifyProductPricesForDiscount($appAuth, $prices, $cartProduct->product);
 
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
@@ -484,11 +449,11 @@ class CartsTable extends AppTable
         $unity = $cartProduct->product->unity;
         $productData['unity'] = $unity;
 
-        if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
+        if (!empty($unitProduct) && $unitProduct->price_per_unit_enabled) {
 
-            $unitName = $cartProduct->product->unit_product->name;
-            $unitAmount = $cartProduct->product->unit_product->amount;
-            $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
+            $unitName = $unitProduct->name;
+            $unitAmount = $unitProduct->amount;
+            $priceInclPerUnit = $unitProduct->price_incl_per_unit;
 
             if (!is_null($orderedQuantityInUnits)) {
                 $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits;
@@ -498,20 +463,20 @@ class CartsTable extends AppTable
                 $unity .= ', ';
             }
             $unity .=  Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
-                $cartProduct->product->unit_product->price_per_unit_enabled,
-                $cartProduct->product->unit_product->quantity_in_units,
+                $unitProduct->price_per_unit_enabled,
+                $unitProduct->quantity_in_units,
                 $unitName,
                 $cartProduct->amount
             );
             $productData['usesQuantityInUnits'] = true;
 
-            $productData['quantityInUnits'] = isset($cartProduct->product->unit_product) ? $cartProduct->product->unit_product->quantity_in_units : 0;
-            $productQuantityInUnits = $cartProduct->product->unit_product->quantity_in_units * $cartProduct->amount;
+            $productData['quantityInUnits'] = isset($unitProduct) ? $unitProduct->quantity_in_units : 0;
+            $productQuantityInUnits = $unitProduct->quantity_in_units * $cartProduct->amount;
             if (!is_null($orderedQuantityInUnits)) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
-            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product->unit_product);
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProduct);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -525,24 +490,33 @@ class CartsTable extends AppTable
 
     }
 
-    /**
-     * @param CartProductsTable $cartProduct
-     * @return array
-     */
-    private function prepareProductAttribute($appAuth, $cartProduct)
+    private function prepareProductAttribute($appAuth, $cartProduct): array
     {
+
+        $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
+        $taxRate = $cartProduct->product->tax->rate ?? 0;
+
+        $cm = FactoryLocator::get('Table')->get('Customers');
+        $priceInclPerUnit = null;
+        if (!empty($unitProductAttribute)) {
+            $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
+        }
+        $modifiedProductPricesForDiscount = $cm->getModifiedAttributePricesForDiscount($appAuth, $cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $taxRate);
+        $cartProduct->product_attribute->price = $modifiedProductPricesForDiscount['price'];
+        if (!empty($unitProductAttribute)) {
+            $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesForDiscount['price_incl_per_unit'];
+        }
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
         $prices = $this->getPricesRespectingPricePerUnit(
             $cartProduct->id_product,
             $cartProduct->product_attribute->price,
-            $cartProduct->product_attribute->unit_product_attribute ? $cartProduct->product_attribute->unit_product_attribute : null,
+            $unitProductAttribute,
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product_attribute->deposit_product_attribute,
-            $cartProduct->product->tax->rate ?? 0,
+            $taxRate,
         );
-        $prices = $this->modifyAttributePricesForDiscount($appAuth, $prices, $cartProduct->product_attribute);
 
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
@@ -570,14 +544,14 @@ class CartsTable extends AppTable
         $unitAmount = 0;
         $priceInclPerUnit = 0;
 
-        if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
+        if (!empty($unitProductAttribute) && $unitProductAttribute->price_per_unit_enabled) {
 
-            $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
+            $unitName = $unitProductAttribute->name;
             if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
                 $unityName = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
             }
-            $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
-            $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
+            $unitAmount = $unitProductAttribute->amount;
+            $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
 
             if (!is_null($orderedQuantityInUnits)) {
                 $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits;
@@ -586,20 +560,20 @@ class CartsTable extends AppTable
             $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
                 $cartProduct->product_attribute->product_attribute_combination->attribute->name,
                 $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,
-                $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled,
-                $cartProduct->product_attribute->unit_product_attribute->quantity_in_units,
+                $unitProductAttribute->price_per_unit_enabled,
+                $unitProductAttribute->quantity_in_units,
                 $unitName,
                 $cartProduct->amount
             );
             $productData['usesQuantityInUnits'] = true;
 
-            $productData['quantityInUnits'] = isset($cartProduct->product_attribute->unit_product_attribute->quantity_in_units) ? $cartProduct->product_attribute->unit_product_attribute->quantity_in_units : 0;
-            $productQuantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units * $cartProduct->amount;
+            $productData['quantityInUnits'] = isset($unitProductAttribute->quantity_in_units) ? $unitProductAttribute->quantity_in_units : 0;
+            $productQuantityInUnits = $unitProductAttribute->quantity_in_units * $cartProduct->amount;
             if (!is_null($orderedQuantityInUnits)) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
-            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product_attribute->unit_product_attribute);
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProductAttribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

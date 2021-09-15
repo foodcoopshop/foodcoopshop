@@ -225,7 +225,6 @@ class CustomersTable extends AppTable
         }
 
         if ($appAuth->user('discount') == 'PP') {
-
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
                 'conditions' => [
@@ -237,20 +236,17 @@ class CustomersTable extends AppTable
                 ]
             ])->first();
 
-            if ($priceInclPerUnit) {
-                if (!empty($purchasePrices->purchase_price_product)) {
-                    $result['price_incl_per_unit'] = $purchasePrices->unit_product->purchase_price_incl_per_unit;
-                }
-            } else {
-                if (!empty($purchasePrices->purchase_price_product)) {
-                    $result['price'] = $purchasePrices->purchase_price_product->price;
-                }
+            if (!empty($purchasePrices->purchase_price_product)) {
+                $result['price_incl_per_unit'] = $purchasePrices->unit_product->purchase_price_incl_per_unit;
+            }
+            if (!empty($purchasePrices->purchase_price_product)) {
+                $result['price'] = $purchasePrices->purchase_price_product->price;
             }
 
         }
 
         if ((int) $appAuth->user('discount') > 0) {
-            $result['price'] = $price * (1 - $appAuth->user('discount') / 100);
+            //$result['price'] = $price * (1 - $appAuth->user('discount') / 100);
         }
 
         return $result;
@@ -302,7 +298,7 @@ class CustomersTable extends AppTable
 
         }
         if ((int) $appAuth->user('discount') > 0) {
-            $result['price'] = $price * (1 - $appAuth->user('discount') / 100);
+            //$result['price'] = $price * (1 - $appAuth->user('discount') / 100);
         }
 
         return $result;
