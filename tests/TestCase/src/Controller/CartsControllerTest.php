@@ -882,19 +882,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectA->deposit, 1.00);
         $this->assertEmpty($objectA->order_detail_unit);
 
-        $this->assertEquals($objectB->total_price_tax_incl, 10.29);
-        $this->assertEquals($objectB->total_price_tax_excl, 9.36);
-        $this->assertEquals($objectB->tax_unit_amount, 0.31);
-        $this->assertEquals($objectB->tax_total_amount, 0.93);
+        $this->assertEquals($objectB->total_price_tax_incl, 9.99);
+        $this->assertEquals($objectB->total_price_tax_excl, 9.09);
+        $this->assertEquals($objectB->tax_unit_amount, 0.30);
+        $this->assertEquals($objectB->tax_total_amount, 0.90);
         $this->assertEquals($objectB->deposit, 0.00);
-        $this->assertEquals($objectB->order_detail_unit->price_incl_per_unit, 0.98);
+        $this->assertEquals($objectB->order_detail_unit->price_incl_per_unit, 0.95);
 
-        $this->assertEquals($objectC->total_price_tax_incl, 25.20);
-        $this->assertEquals($objectC->total_price_tax_excl, 22.92);
-        $this->assertEquals($objectC->tax_unit_amount, 0.76);
-        $this->assertEquals($objectC->tax_total_amount, 2.28);
+        $this->assertEquals($objectC->total_price_tax_incl, 24.54);
+        $this->assertEquals($objectC->total_price_tax_excl, 22.32);
+        $this->assertEquals($objectC->tax_unit_amount, 0.74);
+        $this->assertEquals($objectC->tax_total_amount, 2.22);
         $this->assertEquals($objectC->deposit, 0.00);
-        $this->assertEquals($objectC->order_detail_unit->price_incl_per_unit, 14.00);
+        $this->assertEquals($objectC->order_detail_unit->price_incl_per_unit, 13.63);
 
         $this->assertEquals($objectD->total_price_tax_incl, 0.28);
         $this->assertEquals($objectD->total_price_tax_excl, 0.25);
@@ -911,7 +911,6 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEmpty($objectE->order_detail_unit);
 
     }
-
 
     public function testInstantOrderOk()
     {

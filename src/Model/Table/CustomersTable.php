@@ -231,7 +231,7 @@ class CustomersTable extends AppTable
                     'Products.id_product' => $productId,
                 ],
                 'contain' => [
-                    'PurchasePriceProducts',
+                    'PurchasePriceProducts.Taxes',
                     'UnitProducts',
                 ]
             ])->first();
@@ -241,7 +241,9 @@ class CustomersTable extends AppTable
             }
 
             if (!empty($purchasePrices->purchase_price_product) && !empty($purchasePrices->unit_product)) {
-                $result['price_incl_per_unit'] = $purchasePrices->unit_product->purchase_price_incl_per_unit;
+                $priceInclPerUnitNet = $this->Product->getNetPrice($purchasePrices->unit_product->purchase_price_incl_per_unit, $purchasePrices->purchase_price_product->tax->rate);
+                $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
             }
 
         }
@@ -274,6 +276,7 @@ class CustomersTable extends AppTable
                     'Products.id_product' => $productId,
                 ],
                 'contain' => [
+                    'PurchasePriceProducts.Taxes',
                     'ProductAttributes.PurchasePriceProductAttributes',
                     'ProductAttributes.UnitProductAttributes',
                 ]
@@ -292,7 +295,9 @@ class CustomersTable extends AppTable
                     $result['price'] = $foundPurchasePriceProductAttribute->purchase_price_product_attribute->price;
                 }
                 if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute)) {
-                    $result['price_incl_per_unit'] = $foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit;
+                    $priceInclPerUnitNet = $this->Product->getNetPrice($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePrices->purchase_price_product->tax->rate);
+                    $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                    $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
                 }
             }
 
