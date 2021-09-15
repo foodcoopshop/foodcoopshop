@@ -237,10 +237,11 @@ class CustomersTable extends AppTable
             ])->first();
 
             if (!empty($purchasePrices->purchase_price_product)) {
-                $result['price_incl_per_unit'] = $purchasePrices->unit_product->purchase_price_incl_per_unit;
-            }
-            if (!empty($purchasePrices->purchase_price_product)) {
                 $result['price'] = $purchasePrices->purchase_price_product->price;
+            }
+
+            if (!empty($purchasePrices->purchase_price_product) && !empty($purchasePrices->unit_product)) {
+                $result['price_incl_per_unit'] = $purchasePrices->unit_product->purchase_price_incl_per_unit;
             }
 
         }
@@ -290,13 +291,13 @@ class CustomersTable extends AppTable
                 if (!empty($foundPurchasePriceProductAttribute->purchase_price_product_attribute)) {
                     $result['price'] = $foundPurchasePriceProductAttribute->purchase_price_product_attribute->price;
                 }
-
-                if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && $foundPurchasePriceProductAttribute->unit_product_attribute->price_per_unit_enabled) {
+                if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute)) {
                     $result['price_incl_per_unit'] = $foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit;
                 }
             }
 
         }
+
         if ((int) $appAuth->user('discount') > 0) {
             //$result['price'] = $price * (1 - $appAuth->user('discount') / 100);
         }

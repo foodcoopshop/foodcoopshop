@@ -27,13 +27,6 @@ class FrontendController extends AppController
         return true;
     }
 
-
-    /**
-     * should be moved into component
-     * adds product attributes and deposit
-     *
-     * @param array $products
-     */
     protected function prepareProductsForFrontend($products)
     {
         $this->Product = $this->getTableLocator()->get('Products');
@@ -127,7 +120,7 @@ class FrontendController extends AppController
                 $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
                 $modifiedAttributePricesForDiscount = $this->Customer->getModifiedAttributePricesForDiscount($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $taxRate);
                 $attribute->price = $modifiedAttributePricesForDiscount['price'];
-                if ($attribute->unit_product_attribute) {
+                if (!empty($attribute->unit_product_attribute)) {
                     $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesForDiscount['price_incl_per_unit'];
                 }
                 $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);

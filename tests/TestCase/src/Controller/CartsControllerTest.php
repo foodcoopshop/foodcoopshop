@@ -852,6 +852,67 @@ class CartsControllerTest extends AppCakeTestCase
 
     }
 
+    public function testFinishCartWithPricesArePurchasePrices()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'discount', 'PP');
+        $this->loginAsSuperadmin();
+        $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
+        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
+        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
+        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
+        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
+
+        $this->finishCart(1,1);
+
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $this->checkCartStatusAfterFinish();
+        $cart = $this->getCartById($cartId);
+
+        $objectA = $cart->cart_products[4]->order_detail;
+        $objectB = $cart->cart_products[1]->order_detail;
+        $objectC = $cart->cart_products[0]->order_detail;
+        $objectD = $cart->cart_products[2]->order_detail;
+        $objectE = $cart->cart_products[3]->order_detail;
+
+        $this->assertEquals($objectA->total_price_tax_incl, 2.64);
+        $this->assertEquals($objectA->total_price_tax_excl, 2.40);
+        $this->assertEquals($objectA->tax_unit_amount, 0.12);
+        $this->assertEquals($objectA->tax_total_amount, 0.24);
+        $this->assertEquals($objectA->deposit, 1.00);
+        $this->assertEmpty($objectA->order_detail_unit);
+
+        $this->assertEquals($objectB->total_price_tax_incl, 10.29);
+        $this->assertEquals($objectB->total_price_tax_excl, 9.36);
+        $this->assertEquals($objectB->tax_unit_amount, 0.31);
+        $this->assertEquals($objectB->tax_total_amount, 0.93);
+        $this->assertEquals($objectB->deposit, 0.00);
+        $this->assertEquals($objectB->order_detail_unit->price_incl_per_unit, 0.98);
+
+        $this->assertEquals($objectC->total_price_tax_incl, 25.20);
+        $this->assertEquals($objectC->total_price_tax_excl, 22.92);
+        $this->assertEquals($objectC->tax_unit_amount, 0.76);
+        $this->assertEquals($objectC->tax_total_amount, 2.28);
+        $this->assertEquals($objectC->deposit, 0.00);
+        $this->assertEquals($objectC->order_detail_unit->price_incl_per_unit, 14.00);
+
+        $this->assertEquals($objectD->total_price_tax_incl, 0.28);
+        $this->assertEquals($objectD->total_price_tax_excl, 0.25);
+        $this->assertEquals($objectD->tax_unit_amount, 0.03);
+        $this->assertEquals($objectD->tax_total_amount, 0.03);
+        $this->assertEquals($objectD->deposit, 0.50);
+        $this->assertEmpty($objectD->order_detail_unit);
+
+        $this->assertEquals($objectE->total_price_tax_incl, 2.72);
+        $this->assertEquals($objectE->total_price_tax_excl, 2.72);
+        $this->assertEquals($objectE->tax_unit_amount, 0);
+        $this->assertEquals($objectE->tax_total_amount, 0);
+        $this->assertEquals($objectE->deposit, 0);
+        $this->assertEmpty($objectE->order_detail_unit);
+
+    }
+
+
     public function testInstantOrderOk()
     {
 
