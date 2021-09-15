@@ -46,7 +46,7 @@ class FrontendController extends AppController
             $modifiedProductPricesForDiscount = $this->Customer->getModifiedProductPricesForDiscount($this->AppAuth, $product['id_product'], $product['price'], $product['price_incl_per_unit'], $product['deposit'], $taxRate);
             $product['price'] = $modifiedProductPricesForDiscount['price'];
             $product['price_incl_per_unit'] = $modifiedProductPricesForDiscount['price_incl_per_unit'];
-            $product['deposit'] = $modifiedProductPricesForDiscount['price_incl_per_unit'];
+            $product['deposit'] = $modifiedProductPricesForDiscount['deposit'];
             // END: override shopping with purchase prices / zero prices
 
             $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
@@ -130,7 +130,7 @@ class FrontendController extends AppController
                     $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesForDiscount['price_incl_per_unit'];
                 }
                 if (!empty($attribute->deposit_product_attribute)) {
-                    $attribute->deposit_product_attribute->deposit = 0;$modifiedAttributePricesForDiscount['deposit'];
+                    $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesForDiscount['deposit'];
                 }
                 // END: override shopping with purchase prices / zero prices
 
