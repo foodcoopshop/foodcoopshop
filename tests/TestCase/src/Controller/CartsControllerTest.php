@@ -855,7 +855,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishCartWithPricesAreZeroPrices()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
-        $this->changeCustomer(Configure::read('test.superadminId'), 'discount', '100');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'discount', 'ZP');
         $this->loginAsSuperadmin();
         $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
         $this->addProductToCart(346, 2);      // Artischocke: main product with normal price

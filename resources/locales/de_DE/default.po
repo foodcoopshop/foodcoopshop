@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-14 11:13+0200\n"
-"PO-Revision-Date: 2021-09-14 11:14+0200\n"
+"POT-Creation-Date: 2021-09-15 12:07+0200\n"
+"PO-Revision-Date: 2021-09-15 12:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1899,11 +1899,11 @@ msgstr "Aktivitäten"
 msgid "Credit"
 msgstr "Guthaben"
 
+msgid "Shopping_with_selling_price"
+msgstr "Einkaufen zum Verkaufspreis"
+
 msgid "Shopping_with_purchase_price"
 msgstr "Einkaufen zum Einkaufspreis"
-
-msgid "No_discount_normal_selling_prices_are_used"
-msgstr "Kein Rabatt - Einkauf zum normalen Verkaufspreis"
 
 msgid "Shopping_with_zero_price"
 msgstr "Einkaufen zum Nullpreis"
@@ -2555,6 +2555,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "No_discount_normal_selling_prices_are_used"
+#~ msgstr "Kein Rabatt - Einkauf zum normalen Verkaufspreis"
 
 #~ msgid "Bank_account_credit_balance"
 #~ msgstr "Kontodaten (Guthaben aufladen)"

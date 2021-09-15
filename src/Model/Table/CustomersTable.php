@@ -245,7 +245,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ((int) $appAuth->user('discount') == 100) {
+        if ($appAuth->user('discount') == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;
@@ -299,7 +299,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ((int) $appAuth->user('discount') == 100) {
+        if ($appAuth->user('discount') == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;

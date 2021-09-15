@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-09-14 09:40+0200\n"
+"POT-Creation-Date: 2021-09-15 12:10+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1010,7 +1010,7 @@ msgstr ""
 msgid "Want_to_receive_reminder_emails?"
 msgstr ""
 
-msgid "Discount"
+msgid "Prices"
 msgstr ""
 
 msgid "Paying_with_time_module_active?"
@@ -1083,6 +1083,12 @@ msgid "Show_credit"
 msgstr ""
 
 msgid "Show_{0}"
+msgstr ""
+
+msgid "Purchase_price_abbreviation"
+msgstr ""
+
+msgid "Zero_price_abbreviation"
 msgstr ""
 
 msgid "Add_comment"
@@ -1689,9 +1695,6 @@ msgid "Product_declaration"
 msgstr ""
 
 msgid "Stock_product"
-msgstr ""
-
-msgid "Purchase_price_abbreviation"
 msgstr ""
 
 msgid "incl_vat"

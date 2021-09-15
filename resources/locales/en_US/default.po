@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-14 11:13+0200\n"
-"PO-Revision-Date: 2021-09-14 11:15+0200\n"
+"POT-Creation-Date: 2021-09-15 12:07+0200\n"
+"PO-Revision-Date: 2021-09-15 12:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1899,14 +1899,14 @@ msgstr "Activities"
 msgid "Credit"
 msgstr "Credit"
 
+msgid "Shopping_with_selling_price"
+msgstr "User selling price for shopping"
+
 msgid "Shopping_with_purchase_price"
 msgstr "Use purchase price for shopping"
 
-msgid "No_discount_normal_selling_prices_are_used"
-msgstr "No discount - normal selling prices are used for shopping"
-
 msgid "Shopping_with_zero_price"
-msgstr "No discount - use zero price for shopping"
+msgstr "Use zero price for shopping"
 
 msgid "weekly"
 msgstr "weekly"
@@ -2555,6 +2555,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "No_discount_normal_selling_prices_are_used"
+#~ msgstr "No discount - normal selling prices are used for shopping"
 
 #~ msgid "Bank_account_credit_balance"
 #~ msgstr "Bank account (credit)"
