@@ -506,12 +506,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsAdmin();
-        $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
-        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
-        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
-        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
-        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
-
+        $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -857,12 +852,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
         $this->loginAsSuperadmin();
-        $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
-        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
-        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
-        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
-        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
-
+        $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -924,12 +914,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'PP');
         $this->loginAsSuperadmin();
-        $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
-        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
-        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
-        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
-        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
-
+        $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -1096,6 +1081,15 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, count($cart->cart_products));
         $this->assertEquals(1, $cart->cart_products[0]->order_detail->product_amount);
 
+    }
+
+    protected function addAllDifferentProductTypesToCart()
+    {
+        $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
+        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
+        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
+        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
+        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
     }
 
     private function fillCart()
