@@ -732,13 +732,23 @@ body.carts p.pickup-day-header {
 #cart p.pickup-day-header:first-of-type {
     margin-top: -5px;
 }
-#cart .instant-order-customer-info {
+#cart .cart-extra-info,
+body.carts.detail .cart-extra-info {
     color: #fff;
     background-color: #f3515c;
     padding-bottom: 5px ! important;
+    text-align: center;
 }
-#cart .instant-order-customer-info a {
+body.carts.detail .cart-extra-info {
+    padding-top: 5px;
+}
+#cart .cart-extra-info a,
+body.carts.detail .cart-extra-info a {
     margin-top: 3px;
+}
+#cart .cart-extra-info:not(:first-child),
+body.carts.detail .cart-extra-info:not(:first-child) {
+    border-top: 1px solid #d6d4d4;
 }
 #cart p.products span.product span:not(:first-of-type) {
     margin-right: 3px;

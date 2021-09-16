@@ -473,6 +473,7 @@ foodcoopshop.Helper = {
         if (instantOrderIframe.length > 0) {
             difference = 149;
             difference += $('.instant-order-customer-info').height();
+            difference += $('.shopping-price-info').height() + 1;
             newCartHeight = instantOrderIframe.height();
         } else {
             difference = 146;

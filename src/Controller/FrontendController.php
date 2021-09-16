@@ -288,6 +288,8 @@ class FrontendController extends AppController
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 
+            $this->set('shoppingPrice', $this->AppAuth->user('shopping_price'));
+
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
             $this->set('futureOrderDetails', $futureOrderDetails);
