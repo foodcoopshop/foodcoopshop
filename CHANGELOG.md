@@ -10,7 +10,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
-* <img src="https://github.com/pabneukistl.png" width="20"> [mrothauer](https://github.com/pabneukistl)
+* <img src="https://github.com/pabneukistl.png" width="20"> [pabneukistl](https://github.com/pabneukistl)
 
 ### Verbesserungen
 - Die Summe im Warenkorb ist jetzt in Warenwert, Pfandsumme und Gesamtbetrag aufgesplittet. [I#636](https://github.com/foodcoopshop/foodcoopshop/issues/636) / [PR#699](https://github.com/foodcoopshop/foodcoopshop/pull/699) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -20,7 +20,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen für den [Einzelhandels-Modus](https://foodcoopshop.github.io/de/dorfladen-online.html)
 - Im Selbstbedienungs-Modus wird jetzt nach jedem Einkauf automatisch die Rechnung erstellt und gedruckt. Zudem kann der Kunde zwischen Bar- und Guthabenzahlung wählen. [I#696](https://github.com/foodcoopshop/foodcoopshop/issues/696) / [PR#697](https://github.com/foodcoopshop/foodcoopshop/pull/697) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 - Kunden haben jetzt im neuen Menüpunkt "Meine Rechnungen" eine schöne Rechnungs-Übersicht mit Download-Funktion. [I#646](https://github.com/foodcoopshop/foodcoopshop/issues/646) / [PR#705](https://github.com/foodcoopshop/foodcoopshop/pull/705) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Es gibt nun eine neue Kunden-Einstellung, die Bestellungen zu Einkaufspreisen (für Eigenverbrauch) oder zu Nullpreisen (Vorbestellung von Produkten, die später nochmal verkauft werden) zulässt. [I#672](https://github.com/foodcoopshop/foodcoopshop/issues/672) / [PR#712](https://github.com/foodcoopshop/foodcoopshop/pull/712) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
+- Es gibt nun eine neue Kunden-Einstellung, die Bestellungen zu Einkaufspreisen (für Eigenverbrauch) oder zu Nullpreisen (Vorbestellung von Produkten, die später nochmal verkauft werden) ermöglicht. [I#672](https://github.com/foodcoopshop/foodcoopshop/issues/672) / [PR#712](https://github.com/foodcoopshop/foodcoopshop/pull/712) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 
 
 # v3.3.0
