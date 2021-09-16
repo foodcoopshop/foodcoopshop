@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-15 12:07+0200\n"
-"PO-Revision-Date: 2021-09-15 12:08+0200\n"
+"POT-Creation-Date: 2021-09-16 07:58+0200\n"
+"PO-Revision-Date: 2021-09-16 07:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1632,8 +1632,8 @@ msgstr "Please enter your first name."
 msgid "Please_enter_your_last_name."
 msgstr "Please enter your last name."
 
-msgid "The_discount_is_not_valid."
-msgstr "The discount is not valid."
+msgid "The_shopping_price_is_not_valid."
+msgstr "The price type is not valid."
 
 msgid "Please_enter_your_old_password."
 msgstr "Please enter your old password."
@@ -2555,6 +2555,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "The_discount_is_not_valid."
+#~ msgstr "The discount is not valid."
 
 #~ msgid "No_discount_normal_selling_prices_are_used"
 #~ msgstr "No discount - normal selling prices are used for shopping"

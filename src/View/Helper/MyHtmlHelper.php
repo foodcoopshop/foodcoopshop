@@ -34,11 +34,11 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
-    public function getDiscountForDropdown()
+    public function getShoppingPricesForDropdown()
     {
         $options = [
-            'SP' =>  __('Shopping_with_selling_price'),
-            'PP' =>  __('Shopping_with_purchase_price'),
+            'SP' => __('Shopping_with_selling_price'),
+            'PP' => __('Shopping_with_purchase_price'),
             'ZP' => __('Shopping_with_zero_price'),
         ];
         return $options;

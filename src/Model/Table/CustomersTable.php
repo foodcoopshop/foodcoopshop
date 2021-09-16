@@ -82,7 +82,7 @@ class CustomersTable extends AppTable
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
         $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
-        $validator->inList('shopping_price', array_keys(Configure::read('app.htmlHelper')->getShoppingPricesForDropdown()), __('The_discount_is_not_valid.'));
+        $validator->inList('shopping_price', array_keys(Configure::read('app.htmlHelper')->getShoppingPricesForDropdown()), __('The_shopping_price_is_not_valid.'));
         return $validator;
     }
 
@@ -212,7 +212,7 @@ class CustomersTable extends AppTable
         ]);
     }
 
-    public function getModifiedProductPricesForDiscount($appAuth, $productId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedProductPricesByShoppingPrice($appAuth, $productId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [
@@ -255,7 +255,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getModifiedAttributePricesForDiscount($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedAttributePricesByShoppingPrice($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [

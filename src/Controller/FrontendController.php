@@ -43,10 +43,10 @@ class FrontendController extends AppController
             $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
 
             // START: override shopping with purchase prices / zero prices
-            $modifiedProductPricesForDiscount = $this->Customer->getModifiedProductPricesForDiscount($this->AppAuth, $product['id_product'], $product['price'], $product['price_incl_per_unit'], $product['deposit'], $taxRate);
-            $product['price'] = $modifiedProductPricesForDiscount['price'];
-            $product['price_incl_per_unit'] = $modifiedProductPricesForDiscount['price_incl_per_unit'];
-            $product['deposit'] = $modifiedProductPricesForDiscount['deposit'];
+            $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice($this->AppAuth, $product['id_product'], $product['price'], $product['price_incl_per_unit'], $product['deposit'], $taxRate);
+            $product['price'] = $modifiedProductPricesByShoppingPrice['price'];
+            $product['price_incl_per_unit'] = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
+            $product['deposit'] = $modifiedProductPricesByShoppingPrice['deposit'];
             // END: override shopping with purchase prices / zero prices
 
             $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
@@ -124,13 +124,13 @@ class FrontendController extends AppController
                 $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
 
                 // START: override shopping with purchase prices / zero prices
-                $modifiedAttributePricesForDiscount = $this->Customer->getModifiedAttributePricesForDiscount($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
-                $attribute->price = $modifiedAttributePricesForDiscount['price'];
+                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
+                $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
                 if (!empty($attribute->unit_product_attribute)) {
-                    $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesForDiscount['price_incl_per_unit'];
+                    $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
                 }
                 if (!empty($attribute->deposit_product_attribute)) {
-                    $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesForDiscount['deposit'];
+                    $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
                 }
                 // END: override shopping with purchase prices / zero prices
 

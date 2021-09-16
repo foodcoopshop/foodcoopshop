@@ -290,10 +290,10 @@ foreach ($customers as $customer) {
 
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
         echo '<td style="text-align:right;">';
-            if ($customer->discount == 'PP') {
+            if ($customer->shopping_price == 'PP') {
                 echo __d('admin', 'Purchase_price_abbreviation');
             }
-            if ($customer->discount == 'ZP') {
+            if ($customer->shopping_price == 'ZP') {
                 echo __d('admin', 'Zero_price_abbreviation');
             }
         echo '</td>';

@@ -408,13 +408,13 @@ class CartsTable extends AppTable
         if (!empty($unitProduct)) {
             $priceInclPerUnit = $unitProduct->price_incl_per_unit;
         }
-        $modifiedProductPricesForDiscount = $cm->getModifiedProductPricesForDiscount($appAuth, $cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
-        $cartProduct->product->price = $modifiedProductPricesForDiscount['price'];
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedProductPricesByShoppingPrice($appAuth, $cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
+        $cartProduct->product->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProduct)) {
-            $unitProduct->price_incl_per_unit = $modifiedProductPricesForDiscount['price_incl_per_unit'];
+            $unitProduct->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
         }
         if (!empty($cartProduct->product->deposit_product->deposit)) {
-            $cartProduct->product->deposit_product->deposit = $modifiedProductPricesForDiscount['deposit'];
+            $cartProduct->product->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
         }
         // END override shopping with purchase prices / zero prices
 
@@ -509,13 +509,13 @@ class CartsTable extends AppTable
         if (!empty($unitProductAttribute)) {
             $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
         }
-        $modifiedProductPricesForDiscount = $cm->getModifiedAttributePricesForDiscount($appAuth, $cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
-        $cartProduct->product_attribute->price = $modifiedProductPricesForDiscount['price'];
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedAttributePricesByShoppingPrice($appAuth, $cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
+        $cartProduct->product_attribute->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProductAttribute)) {
-            $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesForDiscount['price_incl_per_unit'];
+            $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
         }
         if (!empty(!empty($cartProduct->product_attribute->deposit_product_attribute))) {
-            $cartProduct->product_attribute->deposit_product_attribute->deposit = $modifiedProductPricesForDiscount['deposit'];
+            $cartProduct->product_attribute->deposit_product_attribute->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
         }
         // END: override shopping with purchase prices / zero prices
 
