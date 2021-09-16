@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-16 07:58+0200\n"
-"PO-Revision-Date: 2021-09-16 07:59+0200\n"
+"POT-Creation-Date: 2021-09-16 10:34+0200\n"
+"PO-Revision-Date: 2021-09-16 10:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2205,14 +2205,17 @@ msgstr "if you want to continue to use this platform, please read the changed {0
 msgid "I_accept_the_{0}."
 msgstr "I accept the {0}."
 
-msgid "Load_past_orders"
-msgstr "Load past orders"
-
 msgid "This_order_will_be_placed_for_{0}."
 msgstr "This order will be placed for {0}."
 
 msgid "Only_stock_products_are_shown."
 msgstr "Only stock products are shown."
+
+msgid "activated"
+msgstr "activated"
+
+msgid "Load_past_orders"
+msgstr "Load past orders"
 
 msgid "Your_credit_balance"
 msgstr "Your credit balance"
