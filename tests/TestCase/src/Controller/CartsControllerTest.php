@@ -852,7 +852,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     }
 
-    public function testFinishCartWithPricesAreZeroPrices()
+    public function testFinishCartWithShoppingPricesAreZeroPrices()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
@@ -881,13 +881,16 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectA->tax_total_amount, 0);
         $this->assertEquals($objectA->deposit, 0);
         $this->assertEmpty($objectA->order_detail_unit);
+        $this->assertEmpty($objectA->order_detail_purchase_price);
 
         $this->assertEquals($objectB->total_price_tax_incl, 0);
         $this->assertEquals($objectB->total_price_tax_excl, 0);
         $this->assertEquals($objectB->tax_unit_amount, 0);
         $this->assertEquals($objectB->tax_total_amount, 0);
         $this->assertEquals($objectB->deposit, 0);
-        $this->assertEquals($objectB->order_detail_unit->price_incl_per_unit, 0.0);
+        $this->assertEquals($objectB->order_detail_unit->price_incl_per_unit, 0);
+        $this->assertNull($objectB->order_detail_unit->purchase_price_incl_per_unit);
+        $this->assertEmpty($objectB->order_detail_purchase_price);
 
         $this->assertEquals($objectC->total_price_tax_incl, 0);
         $this->assertEquals($objectC->total_price_tax_excl, 0);
@@ -895,6 +898,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectC->tax_total_amount, 0);
         $this->assertEquals($objectC->deposit, 0);
         $this->assertEquals($objectC->order_detail_unit->price_incl_per_unit, 0);
+        $this->assertNull($objectC->order_detail_unit->purchase_price_incl_per_unit);
+        $this->assertEmpty($objectC->order_detail_purchase_price);
 
         $this->assertEquals($objectD->total_price_tax_incl, 0);
         $this->assertEquals($objectD->total_price_tax_excl, 0);
@@ -902,6 +907,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectD->tax_total_amount, 0);
         $this->assertEquals($objectD->deposit, 0);
         $this->assertEmpty($objectD->order_detail_unit);
+        $this->assertEmpty($objectD->order_detail_purchase_price);
 
         $this->assertEquals($objectE->total_price_tax_incl, 0);
         $this->assertEquals($objectE->total_price_tax_excl, 0);
@@ -909,10 +915,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectE->tax_total_amount, 0);
         $this->assertEquals($objectE->deposit, 0);
         $this->assertEmpty($objectE->order_detail_unit);
+        $this->assertEmpty($objectE->order_detail_purchase_price);
 
     }
 
-    public function testFinishCartWithPricesArePurchasePrices()
+    public function testFinishCartWithShoppingPricesArePurchasePrices()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'PP');
