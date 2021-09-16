@@ -76,7 +76,7 @@ if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-    echo '<th>' . $this->Paginator->sort('Customers.discount', __d('admin', 'Prices')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
 }
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';

@@ -855,7 +855,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishCartWithPricesAreZeroPrices()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
-        $this->changeCustomer(Configure::read('test.superadminId'), 'discount', 'ZP');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
         $this->loginAsSuperadmin();
         $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
         $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
@@ -915,7 +915,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishCartWithPricesArePurchasePrices()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
-        $this->changeCustomer(Configure::read('test.superadminId'), 'discount', 'PP');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'PP');
         $this->loginAsSuperadmin();
         $this->addProductToCart(163, 2);      // Mangold: no purchase price defined
         $this->addProductToCart(346, 2);      // Artischocke: main product with normal price

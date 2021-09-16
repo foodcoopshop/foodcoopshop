@@ -128,10 +128,10 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 }
 
 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isSuperadmin()) {
-    echo $this->Form->control('Customers.discount', [
+    echo $this->Form->control('Customers.shopping_price', [
         'type' => 'select',
         'label' => __d('admin', 'Prices'),
-        'options' => $this->Html->getDiscountForDropdown(),
+        'options' => $this->Html->getShoppingPricesForDropdown(),
         'escape' => false,
     ]);
 }

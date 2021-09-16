@@ -82,7 +82,7 @@ class CustomersTable extends AppTable
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
         $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
-        $validator->inList('discount', array_keys(Configure::read('app.htmlHelper')->getDiscountForDropdown()), __('The_discount_is_not_valid.'));
+        $validator->inList('shopping_price', array_keys(Configure::read('app.htmlHelper')->getShoppingPricesForDropdown()), __('The_discount_is_not_valid.'));
         return $validator;
     }
 
@@ -221,7 +221,7 @@ class CustomersTable extends AppTable
             'deposit' => $deposit,
         ];
 
-        if ($appAuth->user('discount') == 'PP') {
+        if ($appAuth->user('shopping_price') == 'PP') {
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
                 'conditions' => [
@@ -245,7 +245,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ($appAuth->user('discount') == 'ZP') {
+        if ($appAuth->user('shopping_price') == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;
@@ -264,7 +264,7 @@ class CustomersTable extends AppTable
             'deposit' => $deposit,
         ];
 
-        if ($appAuth->user('discount') == 'PP') {
+        if ($appAuth->user('shopping_price') == 'PP') {
 
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
@@ -299,7 +299,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ($appAuth->user('discount') == 'ZP') {
+        if ($appAuth->user('shopping_price') == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;
