@@ -139,8 +139,7 @@ echo '<table class="list profit-table">';
 
             echo '<td style="text-align:right;">';
                 if (!empty($orderDetail->order_detail_purchase_price)) {
-                    $profit = $orderDetail->total_price_tax_excl - $orderDetail->order_detail_purchase_price->total_price_tax_excl;
-                    echo $this->Number->formatAsDecimal($profit);
+                    echo $this->Number->formatAsDecimal($orderDetail->profit);
                 }
             echo '</td>';
 

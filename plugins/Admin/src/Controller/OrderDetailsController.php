@@ -485,12 +485,17 @@ class OrderDetailsController extends AdminAppController
         foreach($orderDetails as $orderDetail) {
             $orderDetails[$i]->purchase_price_ok = false;
             if (!empty($orderDetail->order_detail_purchase_price)) {
-                $profit = $orderDetail->total_price_tax_excl - $orderDetail->order_detail_purchase_price->total_price_tax_excl;
-                if ($orderDetail->order_detail_purchase_price->total_price_tax_excl > 0 && $profit >= 0) {
-                    $sumProfit += $profit;
+                $roundedPurchasePrice = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
+                $roundedSellingPrice = round($orderDetail->total_price_tax_excl, 2);
+                $roundedProfit = round($roundedSellingPrice - $roundedPurchasePrice, 2);
+                if ($roundedPurchasePrice > 0 && $roundedProfit >= 0) {
                     $orderDetails[$i]->purchase_price_ok = true;
-                    $sumPurchasePrice += $orderDetail->order_detail_purchase_price->total_price_tax_excl;
-                    $sumSellingPrice += $orderDetail->total_price_tax_excl;
+                    $orderDetails[$i]->order_detail_purchase_price->total_price_tax_excl = $roundedPurchasePrice;
+                    $orderDetails[$i]->total_price_tax_excl = $roundedSellingPrice;
+                    $orderDetails[$i]->profit = $roundedProfit;
+                    $sumProfit += $roundedProfit;
+                    $sumPurchasePrice += $roundedPurchasePrice;
+                    $sumSellingPrice += $roundedSellingPrice;
                 }
             }
             $i++;
