@@ -188,7 +188,7 @@ use Cake\Core\Configure;
             $showSellingPriceAndDeposit = true;
             echo '<th>'.__d('admin', 'Price').'</th>';
         } else {
-            // do not show purchase price and selling price for manufacturers in retail mode
+            // do not show purchase price, selling price and deposit for manufacturers in retail mode
         }
 
         $taxWidth = 80;
