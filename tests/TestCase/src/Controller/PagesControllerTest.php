@@ -141,41 +141,6 @@ class PagesControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testProductAdminPricesAsManufacturerWithPurchasePriceEnabled()
-    {
-        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
-        $this->loginAsMeatManufacturer();
-        $this->get($this->Slug->getProductAdmin());
-        $this->assertResponseNotContains('product-price-edit-button');
-        $this->assertResponseNotContains('product-deposit-edit-button');
-        $this->assertResponseNotContains('product-purchase-price-edit-button');
-        $this->assertResponseNotContains('purchase-price-tax-for-dialog');
-        $this->assertResponseNotContains('tax-for-dialog');
-    }
-
-    public function testProductAdminPricesAsManufacturerWithPurchasePriceDisabled()
-    {
-        $this->loginAsMeatManufacturer();
-        $this->get($this->Slug->getProductAdmin());
-        $this->assertResponseContains('product-price-edit-button');
-        $this->assertResponseContains('product-deposit-edit-button');
-        $this->assertResponseNotContains('product-purchase-price-edit-button');
-        $this->assertResponseNotContains('purchase-price-tax-for-dialog');
-        $this->assertResponseContains('tax-for-dialog');
-    }
-
-    public function testProductAdminPricesAsSuperadminWithPurchasePriceEnabled()
-    {
-        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
-        $this->loginAsSuperadmin();
-        $this->get($this->Slug->getProductAdmin(5));
-        $this->assertResponseContains('product-deposit-edit-button');
-        $this->assertResponseContains('product-price-edit-button');
-        $this->assertResponseContains('product-purchase-price-edit-button');
-        $this->assertResponseContains('purchase-price-tax-for-dialog');
-        $this->assertResponseContains('tax-for-dialog');
-    }
-
     public function test404PagesLoggedOut()
     {
         $testUrls = [
