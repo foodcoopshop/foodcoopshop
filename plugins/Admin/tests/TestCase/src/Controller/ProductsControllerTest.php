@@ -73,6 +73,15 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
+    public function testEditSellingPriceOfMeatManufactuerWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsMeatManufacturer();
+        $productId = 102;
+        $this->changeProductPrice($productId, '0,15');
+        $this->assertAccessDeniedFlashMessage();
+    }
+
     public function testEditSellingPriceOfProductAsSuperadminToZero()
     {
         $this->loginAsSuperadmin();
@@ -140,6 +149,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(1.833333, $product->purchase_price_product->price);
     }
 
+    public function testEditPurchasePriceOfProductAsMeatManufacturer()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsMeatManufacturer();
+        $this->doPurchasePriceChange(342, '2,20');
+        $this->assertAccessDeniedFlashMessage();
+    }
+
     public function testEditPurchasePricePerUnitOfProductAsSuperadmin()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
@@ -165,6 +182,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $product = $this->doPurchasePriceChange('348-11', '13,30');
         $this->assertJsonOk();
         $this->assertEquals(13.30, $product->product_attributes[0]->unit_product_attribute->purchase_price_incl_per_unit);
+    }
+
+    public function testEditTaxSellingPriceAsManufacturerWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsVegetableManufacturer();
+        $this->assertTaxChange(346, 1, 2);
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditTaxSellingPriceInvalid()
@@ -442,6 +467,42 @@ class ProductsControllerTest extends AppCakeTestCase
         // active must not be changed!
         $this->assertEquals($product->active, APP_ON);
     }
+
+    public function testProductAdminPricesAsManufacturerWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsMeatManufacturer();
+        $this->get($this->Slug->getProductAdmin());
+        $this->assertResponseNotContains('product-price-edit-button');
+        $this->assertResponseNotContains('product-deposit-edit-button');
+        $this->assertResponseNotContains('product-purchase-price-edit-button');
+        $this->assertResponseNotContains('purchase-price-tax-for-dialog');
+        $this->assertResponseNotContains('tax-for-dialog');
+    }
+
+    public function testProductAdminPricesAsManufacturerWithPurchasePriceDisabled()
+    {
+        $this->loginAsMeatManufacturer();
+        $this->get($this->Slug->getProductAdmin());
+        $this->assertResponseContains('product-price-edit-button');
+        $this->assertResponseContains('product-deposit-edit-button');
+        $this->assertResponseNotContains('product-purchase-price-edit-button');
+        $this->assertResponseNotContains('purchase-price-tax-for-dialog');
+        $this->assertResponseContains('tax-for-dialog');
+    }
+
+    public function testProductAdminPricesAsSuperadminWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getProductAdmin(5));
+        $this->assertResponseContains('product-deposit-edit-button');
+        $this->assertResponseContains('product-price-edit-button');
+        $this->assertResponseContains('product-purchase-price-edit-button');
+        $this->assertResponseContains('purchase-price-tax-for-dialog');
+        $this->assertResponseContains('tax-for-dialog');
+    }
+
 
     private function deleteProduct($productId)
     {

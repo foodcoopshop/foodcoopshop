@@ -32,7 +32,7 @@ echo '<td>';
             ]
         );
 
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        if ($showPurchasePriceTax) {
             if (!empty($product->purchase_price_product)) {
                 echo $this->Form->hidden('PurchasePriceProducts.id_tax', [
                     'id' => 'purchase-price-tax-id-' . $product->id_product,

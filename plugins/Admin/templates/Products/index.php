@@ -51,7 +51,7 @@ use Cake\Core\Configure;
             ]);
         }
 
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !$appAuth->isManufacturer()) {
             $this->element('addScript', [
                 'script' => Configure::read('app.jsNamespace') . ".ModalProductPurchasePriceEdit.init();"
             ]);
@@ -169,19 +169,43 @@ use Cake\Core\Configure;
             echo '<th>' . $this->Paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
         echo '<th style="width:62px;">'.__d('admin', 'Amount').'</th>';
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
-            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
-        } else {
-            echo '<th>'.__d('admin', 'Price').'</th>';
+
+        $showSellingPriceAndDeposit = false;
+        $showSellingPriceTax = false;
+        $showPurchasePrice = false;
+        $showPurchasePriceTax = false;
+        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $showSellingPriceAndDeposit = true;
+                $showPurchasePrice = true;
+                $showSellingPriceTax = true;
+                $showPurchasePriceTax = true;
+                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+            } else {
+                $showSellingPriceAndDeposit = true;
+                $showSellingPriceTax = true;
+                echo '<th>'.__d('admin', 'Price').'</th>';
+            }
         }
+
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isManufacturer()) {
+            $showSellingPriceAndDeposit = true;
+            $showSellingPriceTax = true;
+            echo '<th>'.__d('admin', 'Price').'</th>';
+        } else {
+            // do not show purchase price, selling price and deposit for manufacturers in retail mode
+        }
+
         $taxWidth = 80;
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        if ($showSellingPriceTax && $showPurchasePrice) {
             $taxWidth = 106;
         }
-        echo '<th style="width:'.$taxWidth.'px;">' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
+        if ($showSellingPriceTax || $showPurchasePrice) {
+            echo '<th style="width:'.$taxWidth.'px;">' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
+        }
         echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
-        if (Configure::read('app.isDepositEnabled')) {
+        if (Configure::read('app.isDepositEnabled') && $showSellingPriceAndDeposit) {
             echo '<th>'.__d('admin', 'Deposit').'</th>';
         }
         echo '<th>' . $this->Paginator->sort('Products.delivery_rhythm_type', __d('admin', 'Delivery_rhythm')) . '</th>';
@@ -229,25 +253,34 @@ use Cake\Core\Configure;
             'product' => $product
         ]);
 
-        echo $this->element('productList/data/purchasePrice', [
-            'product' => $product
-        ]);
+        if ($showPurchasePrice) {
+            echo $this->element('productList/data/purchasePrice', [
+                'product' => $product
+            ]);
+        }
 
-        echo $this->element('productList/data/price', [
-            'product' => $product
-        ]);
+        if ($showSellingPriceAndDeposit) {
+            echo $this->element('productList/data/price', [
+                'product' => $product
+            ]);
+        }
 
-        echo $this->element('productList/data/tax', [
-            'product' => $product
-        ]);
+        if ($showSellingPriceTax || $showPurchasePrice) {
+            echo $this->element('productList/data/tax', [
+                'product' => $product,
+                'showPurchasePriceTax' => $showPurchasePriceTax,
+            ]);
+        }
 
         echo $this->element('productList/data/isNew', [
             'product' => $product
         ]);
 
-        echo $this->element('productList/data/deposit', [
-            'product' => $product
-        ]);
+        if ($showSellingPriceAndDeposit) {
+            echo $this->element('productList/data/deposit', [
+                'product' => $product
+            ]);
+        }
 
         echo $this->element('productList/data/deliveryRhythm', [
             'product' => $product
@@ -272,6 +305,21 @@ use Cake\Core\Configure;
     }
     if ($advancedStockManagementEnabled) {
         $colspan++;
+    }
+
+    if (!$showPurchasePrice) {
+        $colspan--;
+    }
+    if (!$showSellingPriceAndDeposit) {
+        $colspan--;
+    }
+
+    if (Configure::read('app.isDepositEnabled') && !$showSellingPriceAndDeposit) {
+        $colspan--;
+    }
+
+    if (!$showSellingPriceTax && !$showPurchasePrice) {
+        $colspan--;
     }
 
     echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
