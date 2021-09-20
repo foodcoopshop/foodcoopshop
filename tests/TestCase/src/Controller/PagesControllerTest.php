@@ -162,7 +162,7 @@ class PagesControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getProductAdmin(Configure::read('test.vegetableManufacturerId')));
+        $this->get($this->Slug->getProductAdmin(5));
         $this->assertResponseContains('product-price-edit-button');
         $this->assertResponseContains('product-purchase-price-edit-button');
     }
