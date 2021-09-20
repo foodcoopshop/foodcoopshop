@@ -15,8 +15,7 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
-    Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".ModalImage.init('a.open-with-modal');"
+    Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 ?>
 
@@ -27,7 +26,6 @@ $this->element('addScript', ['script' =>
 <span><?php echo $blogPosts->count(); ?> <?php echo __('found'); ?></span></h1>
 
 <?php
-
 
 echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,

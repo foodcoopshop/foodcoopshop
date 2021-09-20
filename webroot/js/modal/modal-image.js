@@ -42,7 +42,6 @@ foodcoopshop.ModalImage = {
             []
         );
 
-
         $(modalSelector).modal();
 
         $(modalSelector).on('hidden.bs.modal', function (e) {
