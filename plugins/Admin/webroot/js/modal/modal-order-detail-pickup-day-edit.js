@@ -84,8 +84,9 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
                     var cookieName = 'SelectedOrderDetailIds';
                     var preselectedOrderDetailIds = Cookies.get(cookieName);
                     if (preselectedOrderDetailIds) {
-                        preselectedOrderDetailIds = $.parseJSON(preselectedOrderDetailIds);
+                        preselectedOrderDetailIds = preselectedOrderDetailIds.split(',');
                     }
+
                     var selectedOrderDetailIds = preselectedOrderDetailIds;
                     var unselectedOrderDetailIds = orderDetailIds;
                     for (var index in unselectedOrderDetailIds) {
