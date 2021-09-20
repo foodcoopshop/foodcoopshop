@@ -147,6 +147,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->loginAsMeatManufacturer();
         $this->get($this->Slug->getProductAdmin());
         $this->assertResponseNotContains('product-price-edit-button');
+        $this->assertResponseNotContains('product-deposit-edit-button');
         $this->assertResponseNotContains('product-purchase-price-edit-button');
     }
 
@@ -155,6 +156,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->loginAsMeatManufacturer();
         $this->get($this->Slug->getProductAdmin());
         $this->assertResponseContains('product-price-edit-button');
+        $this->assertResponseContains('product-deposit-edit-button');
         $this->assertResponseNotContains('product-purchase-price-edit-button');
     }
 
@@ -163,6 +165,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getProductAdmin(5));
+        $this->assertResponseContains('product-deposit-edit-button');
         $this->assertResponseContains('product-price-edit-button');
         $this->assertResponseContains('product-purchase-price-edit-button');
     }
