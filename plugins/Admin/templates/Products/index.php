@@ -51,7 +51,7 @@ use Cake\Core\Configure;
             ]);
         }
 
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !$appAuth->isManufacturer()) {
             $this->element('addScript', [
                 'script' => Configure::read('app.jsNamespace') . ".ModalProductPurchasePriceEdit.init();"
             ]);
@@ -169,12 +169,28 @@ use Cake\Core\Configure;
             echo '<th>' . $this->Paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
         echo '<th style="width:62px;">'.__d('admin', 'Amount').'</th>';
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
-            echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
-        } else {
-            echo '<th>'.__d('admin', 'Price').'</th>';
+
+        $showSellingPrice = false;
+        $showPurchasePrice = false;
+        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $showSellingPrice = true;
+                $showPurchasePrice = true;
+                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+            } else {
+                $showSellingPrice = true;
+                echo '<th>'.__d('admin', 'Price').'</th>';
+            }
         }
+
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isManufacturer()) {
+            $showSellingPrice = true;
+            echo '<th>'.__d('admin', 'Price').'</th>';
+        } else {
+            // do not show purchase price and selling price for manufacturers in retail mode
+        }
+
         $taxWidth = 80;
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $taxWidth = 106;
@@ -229,13 +245,17 @@ use Cake\Core\Configure;
             'product' => $product
         ]);
 
-        echo $this->element('productList/data/purchasePrice', [
-            'product' => $product
-        ]);
+        if ($showPurchasePrice) {
+            echo $this->element('productList/data/purchasePrice', [
+                'product' => $product
+            ]);
+        }
 
-        echo $this->element('productList/data/price', [
-            'product' => $product
-        ]);
+        if ($showSellingPrice) {
+            echo $this->element('productList/data/price', [
+                'product' => $product
+            ]);
+        }
 
         echo $this->element('productList/data/tax', [
             'product' => $product
@@ -272,6 +292,13 @@ use Cake\Core\Configure;
     }
     if ($advancedStockManagementEnabled) {
         $colspan++;
+    }
+
+    if (!$showPurchasePrice) {
+        $colspan--;
+    }
+    if (!$showSellingPrice) {
+        $colspan--;
     }
 
     echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';

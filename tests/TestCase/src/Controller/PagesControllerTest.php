@@ -4,6 +4,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -140,6 +141,31 @@ class PagesControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
+    public function testProductAdminPricesAsManufacturerWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsMeatManufacturer();
+        $this->get($this->Slug->getProductAdmin());
+        $this->assertResponseNotContains('product-price-edit-button');
+        $this->assertResponseNotContains('product-purchase-price-edit-button');
+    }
+
+    public function testProductAdminPricesAsManufacturerWithPurchasePriceDisabled()
+    {
+        $this->loginAsMeatManufacturer();
+        $this->get($this->Slug->getProductAdmin());
+        $this->assertResponseContains('product-price-edit-button');
+        $this->assertResponseNotContains('product-purchase-price-edit-button');
+    }
+
+    public function testProductAdminPricesAsSuperadminWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getProductAdmin(Configure::read('test.vegetableManufacturerId')));
+        $this->assertResponseContains('product-price-edit-button');
+        $this->assertResponseContains('product-purchase-price-edit-button');
+    }
 
     public function test404PagesLoggedOut()
     {

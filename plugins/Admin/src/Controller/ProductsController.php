@@ -36,7 +36,36 @@ class ProductsController extends AdminAppController
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             case 'editPurchasePrice':
-                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED');
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
+            case 'editPrice':
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                        if (!empty($this->getRequest()->getData('productId')) && !$this->productExists()) {
+                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                            return false;
+                        }
+                        if (!$this->manufacturerIsProductOwner()) {
+                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                            return false;
+                        }
+                        return true;
+                    }
+                } else {
+                    if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()) {
+                        if (!empty($this->getRequest()->getData('productId')) && !$this->productExists()) {
+                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                            return false;
+                        }
+                        if (!$this->manufacturerIsProductOwner()) {
+                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                return false;
                 break;
             case 'index':
             case 'add':
@@ -44,68 +73,81 @@ class ProductsController extends AdminAppController
                 return $this->AppAuth->user();
                 break;
             default:
-                if (!empty($this->getRequest()->getData('productId'))) {
-                    $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
-                    $productId = $ids['productId'];
-                    $product = $this->Product->find('all', [
-                        'conditions' => [
-                            'Products.id_product' => $productId
-                        ]
-                    ])->first();
-                    if (empty($product)) {
-                        $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
-                        return false;
-                    }
+                if (!empty($this->getRequest()->getData('productId')) && !$this->productExists()) {
+                    $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                    return false;
                 }
 
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
                 }
-                /*
-                 * START manufacturer OWNER check
-                 */
-                if ($this->AppAuth->isManufacturer()) {
-                    // param productIds is passed via ajaxCall
-                    if (!empty($this->getRequest()->getData('productIds'))) {
-                        $productIds = $this->getRequest()->getData('productIds');
-                    }
-                    // param productId is passed via ajaxCall
-                    if (!empty($this->getRequest()->getData('productId'))) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
-                        $productIds = [$ids['productId']];
-                    }
-                    // param objectId is passed via ajaxCall
-                    if (!empty($this->getRequest()->getData('objectId'))) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('objectId'));
-                        $productIds = [$ids['productId']];
-                    }
-                    // param productId is passed as first argument of url
-                    if (!empty($this->getRequest()->getParam('pass')[0])) {
-                        $productIds = [$this->getRequest()->getParam('pass')[0]];
-                    }
-                    if (!isset($productIds)) {
-                        return false;
-                    }
-                    $result = true;
-                    foreach($productIds as $productId) {
-                        $product = $this->Product->find('all', [
-                            'conditions' => [
-                                'Products.id_product' => $productId
-                            ]
-                        ])->first();
-                        if (empty($product) || $product->id_manufacturer != $this->AppAuth->getManufacturerId()) {
-                            $result = false;
-                            break;
-                        }
-                    }
-                    if ($result) {
-                        return true;
-                    }
+
+                if (!$this->manufacturerIsProductOwner()) {
+                    $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                    return false;
                 }
+
                 $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                 return false;
                 break;
         }
+    }
+
+    protected function productExists()
+    {
+        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
+        $productId = $ids['productId'];
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ]
+        ])->first();
+        return !empty($product);
+    }
+
+    protected function manufacturerIsProductOwner()
+    {
+        if (!$this->AppAuth->isManufacturer()) {
+            return true;
+        }
+
+        // param productIds is passed via ajaxCall
+        if (!empty($this->getRequest()->getData('productIds'))) {
+            $productIds = $this->getRequest()->getData('productIds');
+        }
+        // param productId is passed via ajaxCall
+        if (!empty($this->getRequest()->getData('productId'))) {
+            $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
+            $productIds = [$ids['productId']];
+        }
+        // param objectId is passed via ajaxCall
+        if (!empty($this->getRequest()->getData('objectId'))) {
+            $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('objectId'));
+            $productIds = [$ids['productId']];
+        }
+        // param productId is passed as first argument of url
+        if (!empty($this->getRequest()->getParam('pass')[0])) {
+            $productIds = [$this->getRequest()->getParam('pass')[0]];
+        }
+        if (!isset($productIds)) {
+            return false;
+        }
+        $result = true;
+        foreach($productIds as $productId) {
+            $product = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId
+                ]
+            ])->first();
+            if (empty($product) || $product->id_manufacturer != $this->AppAuth->getManufacturerId()) {
+                $result = false;
+                break;
+            }
+        }
+        if ($result) {
+            return true;
+        }
+
     }
 
     public function beforeFilter(EventInterface $event)

@@ -73,6 +73,15 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
+    public function testEditSellingPriceOfMeatManufactuerWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsMeatManufacturer();
+        $productId = 102;
+        $this->changeProductPrice($productId, '0,15');
+        $this->assertAccessDeniedFlashMessage();
+    }
+
     public function testEditSellingPriceOfProductAsSuperadminToZero()
     {
         $this->loginAsSuperadmin();
@@ -138,6 +147,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $product = $this->doPurchasePriceChange(346, '2,20');
         $this->assertJsonOk();
         $this->assertEquals(1.833333, $product->purchase_price_product->price);
+    }
+
+    public function testEditPurchasePriceOfProductAsMeatManufacturer()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsMeatManufacturer();
+        $this->doPurchasePriceChange(342, '2,20');
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditPurchasePricePerUnitOfProductAsSuperadmin()
