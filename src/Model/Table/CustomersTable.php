@@ -237,7 +237,7 @@ class CustomersTable extends AppTable
                 $result['price'] = $purchasePrices->purchase_price_product->price;
             }
 
-            if (!empty($purchasePrices->purchase_price_product) && !empty($purchasePrices->unit_product)) {
+            if (!empty($purchasePrices->unit_product) && !is_null($purchasePrices->unit_product->purchase_price_incl_per_unit)) {
                 $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
                 $priceInclPerUnitNet = $this->Product->getNetPrice($purchasePrices->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
                 $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
@@ -291,7 +291,7 @@ class CustomersTable extends AppTable
                 if (!empty($foundPurchasePriceProductAttribute->purchase_price_product_attribute)) {
                     $result['price'] = $foundPurchasePriceProductAttribute->purchase_price_product_attribute->price;
                 }
-                if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute)) {
+                if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && !is_null($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit)) {
                     $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
                     $priceInclPerUnitNet = $this->Product->getNetPrice($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
                     $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
