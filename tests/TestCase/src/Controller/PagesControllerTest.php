@@ -4,7 +4,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -204,10 +203,6 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    /**
-     * array $testPages
-     * @return void
-     */
     protected function assertPagesFor404($testPages)
     {
         foreach ($testPages as $url) {
