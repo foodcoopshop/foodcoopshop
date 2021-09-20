@@ -77,18 +77,14 @@ class ProductsController extends AdminAppController
                     $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                     return false;
                 }
-
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
                 }
-
                 if (!$this->manufacturerIsProductOwner()) {
                     $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                     return false;
                 }
-
-                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
-                return false;
+                return true;
                 break;
         }
     }
@@ -147,6 +143,8 @@ class ProductsController extends AdminAppController
         if ($result) {
             return true;
         }
+
+        return $result;
 
     }
 
