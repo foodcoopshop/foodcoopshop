@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-03 10:15+0200\n"
-"PO-Revision-Date: 2021-09-03 10:17+0200\n"
+"POT-Creation-Date: 2021-09-16 10:34+0200\n"
+"PO-Revision-Date: 2021-09-16 10:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1632,6 +1632,9 @@ msgstr "Bitte gib deinen Vornamen an."
 msgid "Please_enter_your_last_name."
 msgstr "Bitte gib deinen Nachnamen an."
 
+msgid "The_shopping_price_is_not_valid."
+msgstr "Die Preis-Art ist nicht gültig."
+
 msgid "Please_enter_your_old_password."
 msgstr "Bitte gib dein altes Passwort ein."
 
@@ -1895,6 +1898,15 @@ msgstr "Aktivitäten"
 
 msgid "Credit"
 msgstr "Guthaben"
+
+msgid "Shopping_with_selling_price"
+msgstr "Einkaufen zum Verkaufspreis"
+
+msgid "Shopping_with_purchase_price"
+msgstr "Einkaufen zum Einkaufspreis"
+
+msgid "Shopping_with_zero_price"
+msgstr "Einkaufen zum Nullpreis"
 
 msgid "weekly"
 msgstr "wöchentlich"
@@ -2193,14 +2205,17 @@ msgstr "um diese Plattform weiterhin verwenden zu können, lese bitte die geänd
 msgid "I_accept_the_{0}."
 msgstr "Ich akzeptiere die {0}."
 
-msgid "Load_past_orders"
-msgstr "Vergangene Bestellungen laden"
-
 msgid "This_order_will_be_placed_for_{0}."
 msgstr "Diese Bestellung wird für {0} getätigt."
 
 msgid "Only_stock_products_are_shown."
 msgstr "Es werden nur Lagerprodukte angezeigt."
+
+msgid "activated"
+msgstr "aktiviert"
+
+msgid "Load_past_orders"
+msgstr "Vergangene Bestellungen laden"
 
 msgid "Your_credit_balance"
 msgstr "Dein Guthaben"
@@ -2291,9 +2306,6 @@ msgstr "Informationen"
 
 msgid "Contact"
 msgstr "Kontakt"
-
-msgid "Bank_account_credit_balance"
-msgstr "Kontodaten (Guthaben aufladen)"
 
 msgid "Attention_delivery_break!"
 msgstr "Achtung, Lieferpause!"
@@ -2547,6 +2559,15 @@ msgstr "getätigt am"
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
+#~ msgid "The_discount_is_not_valid."
+#~ msgstr "Der Rabatt ist nicht gültig."
+
+#~ msgid "No_discount_normal_selling_prices_are_used"
+#~ msgstr "Kein Rabatt - Einkauf zum normalen Verkaufspreis"
+
+#~ msgid "Bank_account_credit_balance"
+#~ msgstr "Kontodaten (Guthaben aufladen)"
+
 #~ msgid "Product_sum_including_vat"
 #~ msgstr "Warenwert gesamt (inkl. USt.)"
 
@@ -2638,9 +2659,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "VAT_rate"
 #~ msgstr "Steuersatz"
-
-#~ msgid "Shopping_limit_reached"
-#~ msgstr "Guthaben-Limit erreicht"
 
 #~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
 #~ msgstr "Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen neues Guthaben auf."

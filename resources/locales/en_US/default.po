@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-03 10:15+0200\n"
-"PO-Revision-Date: 2021-09-03 10:17+0200\n"
+"POT-Creation-Date: 2021-09-16 10:34+0200\n"
+"PO-Revision-Date: 2021-09-16 10:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1632,6 +1632,9 @@ msgstr "Please enter your first name."
 msgid "Please_enter_your_last_name."
 msgstr "Please enter your last name."
 
+msgid "The_shopping_price_is_not_valid."
+msgstr "The price type is not valid."
+
 msgid "Please_enter_your_old_password."
 msgstr "Please enter your old password."
 
@@ -1895,6 +1898,15 @@ msgstr "Activities"
 
 msgid "Credit"
 msgstr "Credit"
+
+msgid "Shopping_with_selling_price"
+msgstr "User selling price for shopping"
+
+msgid "Shopping_with_purchase_price"
+msgstr "Use purchase price for shopping"
+
+msgid "Shopping_with_zero_price"
+msgstr "Use zero price for shopping"
 
 msgid "weekly"
 msgstr "weekly"
@@ -2193,14 +2205,17 @@ msgstr "if you want to continue to use this platform, please read the changed {0
 msgid "I_accept_the_{0}."
 msgstr "I accept the {0}."
 
-msgid "Load_past_orders"
-msgstr "Load past orders"
-
 msgid "This_order_will_be_placed_for_{0}."
 msgstr "This order will be placed for {0}."
 
 msgid "Only_stock_products_are_shown."
 msgstr "Only stock products are shown."
+
+msgid "activated"
+msgstr "activated"
+
+msgid "Load_past_orders"
+msgstr "Load past orders"
 
 msgid "Your_credit_balance"
 msgstr "Your credit balance"
@@ -2291,9 +2306,6 @@ msgstr "Information"
 
 msgid "Contact"
 msgstr "Contact"
-
-msgid "Bank_account_credit_balance"
-msgstr "Bank account (credit)"
 
 msgid "Attention_delivery_break!"
 msgstr "Attention, delivery break!"
@@ -2547,6 +2559,15 @@ msgstr "placed on"
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
 
+#~ msgid "The_discount_is_not_valid."
+#~ msgstr "The discount is not valid."
+
+#~ msgid "No_discount_normal_selling_prices_are_used"
+#~ msgstr "No discount - normal selling prices are used for shopping"
+
+#~ msgid "Bank_account_credit_balance"
+#~ msgstr "Bank account (credit)"
+
 #~ msgid "Product_sum_including_vat"
 #~ msgstr "Product sum including VAT"
 
@@ -2640,9 +2661,6 @@ msgstr "The prices include the VAT."
 #, fuzzy
 #~ msgid "VAT_rate"
 #~ msgstr "Tax rate"
-
-#~ msgid "Shopping_limit_reached"
-#~ msgstr "Shopping limit reached"
 
 #~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
 #~ msgstr "You reached the order limit of {0}. Please add credit."

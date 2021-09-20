@@ -369,12 +369,17 @@ class CartComponent extends Component
                     'quantity_in_units' => $cartProduct['quantityInUnits'],
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
-                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && isset($cartProduct['purchasePriceInclPerUnit'])) {
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
+                    && in_array($this->AppAuth->user('shopping_price'), ['PP', 'SP'])
+                    && isset($cartProduct['purchasePriceInclPerUnit'])
+                    ) {
                     $orderDetail2save['order_detail_unit']['purchase_price_incl_per_unit'] = $cartProduct['purchasePriceInclPerUnit'];
                 }
             }
 
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
+                && in_array($this->AppAuth->user('shopping_price'), ['PP', 'SP'])
+                ) {
                 $orderDetailPurchasePrices = $this->prepareOrderDetailPurchasePrices($ids, $product, $cartProduct);
                 $orderDetail2save['order_detail_purchase_price'] = $orderDetailPurchasePrices;
             }

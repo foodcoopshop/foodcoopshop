@@ -75,6 +75,9 @@ echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
+if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
+}
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
@@ -285,6 +288,17 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo '<td style="text-align:right;">';
+            if ($customer->shopping_price == 'PP') {
+                echo __d('admin', 'Purchase_price_abbreviation');
+            }
+            if ($customer->shopping_price == 'ZP') {
+                echo __d('admin', 'Zero_price_abbreviation');
+            }
+        echo '</td>';
+    }
+
     echo '<td style="padding-left: 11px;">';
         $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __d('admin', 'Add_comment');
         echo $this->Html->link(
@@ -316,7 +330,10 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 }
 $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    $colspan = 4;
+    $colspan++;
+}
+if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+    $colspan++;
 }
 echo '<td colspan="'.$colspan.'"></td>';
 echo '</tr>';

@@ -288,7 +288,7 @@ foodcoopshop.Mobile = {
 
         // add special infos to cart page
         var cartPage = $('body.carts.detail #inner-content h1:first');
-        cartPage.after($('#cart p.instant-order-customer-info'));
+        cartPage.after($('#cart p.cart-extra-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
         cartPage.after($('#cart p.future-orders'));
 

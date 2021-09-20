@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-09-03 10:15+0200\n"
+"POT-Creation-Date: 2021-09-16 10:34+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1631,6 +1631,9 @@ msgstr ""
 msgid "Please_enter_your_last_name."
 msgstr ""
 
+msgid "The_shopping_price_is_not_valid."
+msgstr ""
+
 msgid "Please_enter_your_old_password."
 msgstr ""
 
@@ -1893,6 +1896,15 @@ msgid "Activities"
 msgstr ""
 
 msgid "Credit"
+msgstr ""
+
+msgid "Shopping_with_selling_price"
+msgstr ""
+
+msgid "Shopping_with_purchase_price"
+msgstr ""
+
+msgid "Shopping_with_zero_price"
 msgstr ""
 
 msgid "weekly"
@@ -2192,13 +2204,16 @@ msgstr ""
 msgid "I_accept_the_{0}."
 msgstr ""
 
-msgid "Load_past_orders"
-msgstr ""
-
 msgid "This_order_will_be_placed_for_{0}."
 msgstr ""
 
 msgid "Only_stock_products_are_shown."
+msgstr ""
+
+msgid "activated"
+msgstr ""
+
+msgid "Load_past_orders"
 msgstr ""
 
 msgid "Your_credit_balance"
@@ -2289,9 +2304,6 @@ msgid "Information"
 msgstr ""
 
 msgid "Contact"
-msgstr ""
-
-msgid "Bank_account_credit_balance"
 msgstr ""
 
 msgid "Attention_delivery_break!"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-09 08:55+0200\n"
-"PO-Revision-Date: 2021-09-09 08:56+0200\n"
+"POT-Creation-Date: 2021-09-15 12:10+0200\n"
+"PO-Revision-Date: 2021-09-15 12:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -209,6 +209,9 @@ msgstr "Invoice nº {0} of {1} was cancelled successfully."
 
 msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
 msgstr "Cancellation invoice nº {0} was generated successfully."
+
+msgid "My_invoices"
+msgstr "My invoices"
 
 msgid "Journal"
 msgstr "Journal"
@@ -1008,6 +1011,9 @@ msgstr "Order reminder"
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Do you want to receive an order reminder e-mail every week?"
 
+msgid "Prices"
+msgstr "Prices"
+
 msgid "Paying_with_time_module_active?"
 msgstr "Paying-with-time-module active?"
 
@@ -1079,6 +1085,12 @@ msgstr "Show credit"
 
 msgid "Show_{0}"
 msgstr "Show {0}"
+
+msgid "Purchase_price_abbreviation"
+msgstr "PP"
+
+msgid "Zero_price_abbreviation"
+msgstr "ZP"
 
 msgid "Add_comment"
 msgstr "Add comment"
@@ -1686,9 +1698,6 @@ msgstr "Product declaration"
 msgid "Stock_product"
 msgstr "Stock product"
 
-msgid "Purchase_price_abbreviation"
-msgstr "PP"
-
 msgid "incl_vat"
 msgstr "incl. VAT"
 
@@ -1705,7 +1714,7 @@ msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
 
 msgid "Storage_location"
-msgstr ""
+msgstr "Storage location"
 
 msgid "Added_on"
 msgstr "Added on"
@@ -1829,9 +1838,6 @@ msgstr "Order adaptions"
 
 msgid "My_data"
 msgstr "My data"
-
-msgid "My_invoices"
-msgstr "My invoices"
 
 msgid "Configurations"
 msgstr "Settings"
@@ -2273,6 +2279,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Discount"
+#~ msgstr "Discount"
 
 #~ msgid "Print"
 #~ msgstr "Print"

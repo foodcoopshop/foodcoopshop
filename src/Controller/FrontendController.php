@@ -27,25 +27,30 @@ class FrontendController extends AppController
         return true;
     }
 
-    /**
-     * should be moved into component
-     * adds product attributes and deposit
-     *
-     * @param array $products
-     */
     protected function prepareProductsForFrontend($products)
     {
         $this->Product = $this->getTableLocator()->get('Products');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
+        $this->Customer = $this->getTableLocator()->get('Customers');
 
         if ($this->AppAuth->user()) {
             $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
         }
 
         foreach ($products as &$product) {
+
             $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
+
+            // START: override shopping with purchase prices / zero prices
+            $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice($this->AppAuth, $product['id_product'], $product['price'], $product['price_incl_per_unit'], $product['deposit'], $taxRate);
+            $product['price'] = $modifiedProductPricesByShoppingPrice['price'];
+            $product['price_incl_per_unit'] = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
+            $product['deposit'] = $modifiedProductPricesByShoppingPrice['deposit'];
+            // END: override shopping with purchase prices / zero prices
+
             $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
+
             $product['gross_price'] = $grossPrice;
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
@@ -114,7 +119,23 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
+
+                $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
+                $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
+
+                // START: override shopping with purchase prices / zero prices
+                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
+                $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
+                if (!empty($attribute->unit_product_attribute)) {
+                    $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
+                }
+                if (!empty($attribute->deposit_product_attribute)) {
+                    $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
+                }
+                // END: override shopping with purchase prices / zero prices
+
                 $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
+
                 $preparedAttributes['ProductAttributes'] = [
                     'gross_price' => $grossPrice,
                     'tax' => $grossPrice - $attribute->price,
@@ -127,7 +148,7 @@ class FrontendController extends AppController
                     'always_available' => $attribute->stock_available->always_available,
                 ];
                 $preparedAttributes['DepositProductAttributes'] = [
-                    'deposit' => Configure::read('app.isDepositEnabled') && !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0
+                    'deposit' => Configure::read('app.isDepositEnabled') && !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
                 ];
                 $preparedAttributes['ProductAttributeCombinations'] = [
                     'Attributes' => [
@@ -266,6 +287,8 @@ class FrontendController extends AppController
         if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
+
+            $this->set('shoppingPrice', $this->AppAuth->user('shopping_price'));
 
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());

@@ -57,6 +57,25 @@ if ($appAuth->Cart->getProducts() !== null) {
     <div class="inner">
 
         <?php
+        if ($appAuth->isInstantOrderMode()) {
+            $this->element('addScript', ['script' =>
+                Configure::read('app.jsNamespace').".ModalInstantOrderCancel.init();"
+            ]);
+            echo '<p class="cart-extra-info instant-order-customer-info">';
+                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
+                if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
+                    echo ' ' . __('Only_stock_products_are_shown.');
+                }
+            echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
+            echo '</p>';
+        }
+
+        if (in_array($shoppingPrice, ['PP', 'ZP'])) {
+            echo '<p class="cart-extra-info shopping-price-info">';
+                echo $this->Html->getShoppingPricesForDropdown()[$shoppingPrice] . ' ' . __('activated');
+            echo '</p>';
+        }
+
         if ($showLoadLastOrderDetailsDropdown && !$appAuth->isInstantOrderMode()) {
             $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
             if (!empty($lastOrderDetails)) {
@@ -73,18 +92,6 @@ if ($appAuth->Cart->getProducts() !== null) {
             }
         }
 
-        if ($appAuth->isInstantOrderMode()) {
-            $this->element('addScript', ['script' =>
-                Configure::read('app.jsNamespace').".ModalInstantOrderCancel.init();"
-            ]);
-            echo '<p class="instant-order-customer-info">';
-                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
-                if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-                    echo ' ' . __('Only_stock_products_are_shown.');
-                }
-            echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
-            echo '</p>';
-        }
         if ($appAuth->user() && $this->Html->paymentIsCashless() && !$appAuth->isSelfServiceCustomer()) {
             $class = ['payment'];
             if ($creditBalance < 0) {
