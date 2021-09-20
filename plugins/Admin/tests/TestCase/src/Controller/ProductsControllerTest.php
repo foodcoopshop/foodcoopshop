@@ -184,6 +184,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(13.30, $product->product_attributes[0]->unit_product_attribute->purchase_price_incl_per_unit);
     }
 
+    public function testEditTaxSellingPriceAsManufacturerWithPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsVegetableManufacturer();
+        $this->assertTaxChange(346, 1, 2);
+        $this->assertAccessDeniedFlashMessage();
+    }
+
     public function testEditTaxSellingPriceInvalid()
     {
         $this->loginAsSuperadmin();

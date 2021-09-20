@@ -39,13 +39,12 @@ class ProductsController extends AdminAppController
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             case 'editPrice':
+            case 'editDeposit':
+            case 'editTax':
                 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                     if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
-                        if (!empty($this->getRequest()->getData('productId')) && !$this->productExists()) {
-                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
-                            return false;
-                        }
-                        if (!$this->manufacturerIsProductOwner()) {
+                        if ((!empty($this->getRequest()->getData('productId')) && !$this->productExists())
+                            || !$this->manufacturerIsProductOwner()) {
                             $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                             return false;
                         }
@@ -53,11 +52,8 @@ class ProductsController extends AdminAppController
                     }
                 } else {
                     if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()) {
-                        if (!empty($this->getRequest()->getData('productId')) && !$this->productExists()) {
-                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
-                            return false;
-                        }
-                        if (!$this->manufacturerIsProductOwner()) {
+                        if ((!empty($this->getRequest()->getData('productId')) && !$this->productExists())
+                            || !$this->manufacturerIsProductOwner()) {
                             $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                             return false;
                         }

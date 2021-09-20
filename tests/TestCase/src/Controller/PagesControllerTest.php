@@ -149,6 +149,8 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseNotContains('product-price-edit-button');
         $this->assertResponseNotContains('product-deposit-edit-button');
         $this->assertResponseNotContains('product-purchase-price-edit-button');
+        $this->assertResponseNotContains('purchase-price-tax-for-dialog');
+        $this->assertResponseNotContains('tax-for-dialog');
     }
 
     public function testProductAdminPricesAsManufacturerWithPurchasePriceDisabled()
@@ -158,6 +160,8 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseContains('product-price-edit-button');
         $this->assertResponseContains('product-deposit-edit-button');
         $this->assertResponseNotContains('product-purchase-price-edit-button');
+        $this->assertResponseNotContains('purchase-price-tax-for-dialog');
+        $this->assertResponseContains('tax-for-dialog');
     }
 
     public function testProductAdminPricesAsSuperadminWithPurchasePriceEnabled()
@@ -168,6 +172,8 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseContains('product-deposit-edit-button');
         $this->assertResponseContains('product-price-edit-button');
         $this->assertResponseContains('product-purchase-price-edit-button');
+        $this->assertResponseContains('purchase-price-tax-for-dialog');
+        $this->assertResponseContains('tax-for-dialog');
     }
 
     public function test404PagesLoggedOut()
