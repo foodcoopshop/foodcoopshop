@@ -53,7 +53,6 @@ TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
 TRUNCATE TABLE `queue_processes`;
 TRUNCATE TABLE `queued_jobs`;
-TRUNCATE TABLE `queued_tasks`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -272,7 +271,8 @@ INSERT INTO `phinxlog` VALUES
 (20210707083827,'AddRegistrierkasseApi','2021-07-07 08:55:08','2021-07-07 08:55:08',0),
 (20210802090623,'AddStorageLocation','2021-08-02 09:28:34','2021-08-02 09:28:35',0),
 (20210910191430,'Instagram','2021-09-10 19:23:13','2021-09-10 19:23:13',0),
-(20210914071747,'DifferentPricesForCustomers','2021-09-16 05:50:07','2021-09-16 05:50:07',0);
+(20210914071747,'DifferentPricesForCustomers','2021-09-16 05:50:07','2021-09-16 05:50:07',0),
+(20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:43:04','2021-09-22 15:43:04',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
@@ -300,9 +300,6 @@ INSERT INTO `queue_phinxlog` VALUES
 
 /*!40000 ALTER TABLE `queued_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `queued_jobs` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `queued_tasks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `queued_tasks` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
