@@ -28,7 +28,8 @@
     body.categories .blog-post-wrapper,
     body.manufacturers.detail .blog-post-wrapper,
     body.pages.home .blog-post-wrapper,
-    body.blog_posts.index .blog-post-wrapper {
+    body.blog_posts.index .blog-post-wrapper,
+    body.carts.order_successful .blog-post-wrapper {
         width: 46% ! important;
         margin-right: 2% ! important;
         margin-left: 2%;
