@@ -70,7 +70,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             echo '</p>';
         }
 
-        if (in_array($shoppingPrice, ['PP', 'ZP'])) {
+        if (isset($shoppingPrice) && in_array($shoppingPrice, ['PP', 'ZP'])) {
             echo '<p class="cart-extra-info shopping-price-info">';
                 echo $this->Html->getShoppingPricesForDropdown()[$shoppingPrice] . ' ' . __('activated');
             echo '</p>';
