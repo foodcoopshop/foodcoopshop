@@ -169,8 +169,10 @@ class ListTcpdf extends AppTcpdf
                     $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)</td>';
                 }
 
-                $indexForWidth ++;
-                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . ($showPricePerUnitSign ? '*' : '') . '</td>';
+                if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    $indexForWidth ++;
+                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . ($showPricePerUnitSign ? '*' : '') . '</td>';
+                }
 
                 if (in_array(__('Order_day'), $headers)) {
                     $indexForWidth ++;
@@ -264,7 +266,9 @@ class ListTcpdf extends AppTcpdf
             $indexForWidth ++;
         }
 
-        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceInclSum) . '</td>';
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceInclSum) . '</td>';
+        }
         $indexForWidth ++;
 
         if ($colspan > 0) {
@@ -286,6 +290,9 @@ class ListTcpdf extends AppTcpdf
     public function getCorrectColspan($headers)
     {
         $diff = 2;
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $diff = 1;
+        }
         // first page of invoices does not contain column "member"
         if (! in_array(__('Member'), $headers)) {
             $diff = 3;
