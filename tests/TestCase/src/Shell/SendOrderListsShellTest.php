@@ -56,6 +56,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
     public function testSendOrderListsIfOneOrderAvailable()
     {
+
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
 
@@ -352,6 +353,23 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnit.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+
+    }
+
+    public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+
+        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnitAndPurchasePriceEnabled.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+
+        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnitAndPurchasePriceEnabled.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
