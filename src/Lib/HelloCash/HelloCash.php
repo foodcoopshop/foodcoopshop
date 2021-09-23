@@ -109,7 +109,7 @@ class HelloCash
             'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
             'invoice_user_id' => $userId,
             'invoice_testMode' => $isPreview,
-            'invoice_paymentMethod' => $paidInCash ? 'Bar' : 'Kreditrechnung',
+            'invoice_paymentMethod' => $paidInCash ? Configure::read('app.helloCashAtCredentials')['payment_type_cash'] : Configure::read('app.helloCashAtCredentials')['payment_type_cashless'],
             'signature_mandatory' => 0,
         ];
 

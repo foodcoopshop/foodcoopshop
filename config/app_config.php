@@ -181,6 +181,8 @@ return [
             'username' => '',
             'password' => '',
             'cashier_id' => 0,
+            'payment_type_cash' => 'Bar',
+            'payment_type_cashless' => 'Guthaben-System',
         ],
 
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
