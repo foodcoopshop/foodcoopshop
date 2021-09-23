@@ -129,7 +129,6 @@ INSERT INTO `fcs_configuration` VALUES
 (585,1,'FCS_APP_ADDITIONAL_DATA','Zusätzliche Infos zur Foodcoop<br /><div class=\"small\">Z.B. ZVR-Zahl</div>','','textarea',80,'de_DE','2019-08-03 20:07:04','2019-08-03 20:07:04'),
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','0','boolean',3100,'de_DE','2019-12-09 13:46:27','2019-12-09 13:46:27'),
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',1450,'de_DE','2020-02-11 10:12:57','2020-02-11 10:12:57'),
-(588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',220,'de_DE','2020-04-15 09:41:54','2020-04-15 09:41:54'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',3200,'de_DE','2020-06-19 09:02:46','2020-06-19 09:02:46'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',590,'de_DE','2020-07-06 10:34:35','2020-07-06 10:34:35'),
 (591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/dorfladen-online\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:34','2020-10-29 10:06:34'),
@@ -272,7 +271,8 @@ INSERT INTO `phinxlog` VALUES
 (20210802090623,'AddStorageLocation','2021-08-02 09:28:29','2021-08-02 09:28:29',0),
 (20210910191430,'Instagram','2021-09-10 19:23:08','2021-09-10 19:23:08',0),
 (20210914071747,'DifferentPricesForCustomers','2021-09-16 05:50:01','2021-09-16 05:50:01',0),
-(20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:42:59','2021-09-22 15:42:59',0);
+(20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:42:59','2021-09-22 15:42:59',0),
+(20210923073422,'RemoveSettingShowNewProductsOnHome','2021-09-23 07:39:22','2021-09-23 07:39:22',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

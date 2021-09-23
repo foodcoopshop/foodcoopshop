@@ -129,7 +129,6 @@ INSERT INTO `fcs_configuration` VALUES
 (585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',80,'en_US','2019-08-03 20:07:08','2019-08-03 20:07:08'),
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Run self-service mode in test mode?<br /><div class=\"small\">Does not add links to main menu and to stock products.</div>','0','boolean',3100,'en_US','2019-12-09 13:46:32','2019-12-09 13:46:32'),
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Type of adding the payments<br /><div class=\"small\">How do the payment addings get into FoodCoopShop?</div>','manual','dropdown',1450,'en_US','2020-02-11 10:13:01','2020-02-11 10:13:01'),
-(588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Show new products on home?','1','boolean',220,'en_US','2020-04-15 09:41:58','2020-04-15 09:41:58'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Are members allowed to write feedback to products?','1','boolean',3200,'en_US','2020-06-19 09:02:50','2020-06-19 09:02:50'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Pickup day can be selected by member on order confirmation.','0','readonly',590,'en_US','2020-07-06 10:34:39','2020-07-06 10:34:39'),
 (591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Retail mode activated?.','0','readonly',580,'en_US','2020-10-29 10:06:39','2020-10-29 10:06:39'),
@@ -272,7 +271,8 @@ INSERT INTO `phinxlog` VALUES
 (20210802090623,'AddStorageLocation','2021-08-02 09:28:34','2021-08-02 09:28:35',0),
 (20210910191430,'Instagram','2021-09-10 19:23:13','2021-09-10 19:23:13',0),
 (20210914071747,'DifferentPricesForCustomers','2021-09-16 05:50:07','2021-09-16 05:50:07',0),
-(20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:43:04','2021-09-22 15:43:04',0);
+(20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:43:04','2021-09-22 15:43:04',0),
+(20210923073422,'RemoveSettingShowNewProductsOnHome','2021-09-23 07:39:27','2021-09-23 07:39:27',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
