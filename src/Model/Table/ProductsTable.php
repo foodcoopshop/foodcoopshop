@@ -1410,6 +1410,17 @@ class ProductsTable extends AppTable
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
 
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $entity2Save = $this->PurchasePriceProducts->getEntityToSaveByProductId($newProductId);
+            $patchedEntity = $this->PurchasePriceProducts->patchEntity(
+                $entity2Save,
+                [
+                    'tax_id' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
+                ],
+            );
+            $this->PurchasePriceProducts->save($patchedEntity);
+        }
+
         // INSERT CATEGORY_PRODUCTS
         $this->CategoryProducts->save(
             $this->CategoryProducts->newEntity(

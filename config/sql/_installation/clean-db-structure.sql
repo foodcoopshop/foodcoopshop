@@ -500,7 +500,7 @@ CREATE TABLE `fcs_purchase_prices` (
   `product_id` int(10) unsigned NOT NULL DEFAULT '0',
   `product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
   `tax_id` int(10) unsigned DEFAULT '0',
-  `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
+  `price` decimal(20,6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`,`product_attribute_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

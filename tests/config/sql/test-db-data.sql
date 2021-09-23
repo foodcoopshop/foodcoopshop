@@ -303,9 +303,9 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 INSERT INTO `fcs_purchase_prices` VALUES
 (1,346,0,1,1.200000),
 (2,0,13,0,1.400000),
-(3,347,0,3,0.000000),
-(4,348,0,3,0.000000),
-(5,60,0,2,0.000000),
+(3,347,0,3,null),
+(4,348,0,3,null),
+(5,60,0,2,null),
 (6,0,10,0,0.250000);
 /*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
@@ -413,7 +413,8 @@ INSERT INTO `phinxlog` VALUES
 (20210910191430,'Instagram','2021-09-10 19:23:18','2021-09-10 19:23:18',0),
 (20210914071747,'DifferentPricesForCustomers','2021-09-16 05:50:12','2021-09-16 05:50:12',0),
 (20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:43:09','2021-09-22 15:43:09',0),
-(20210923073422,'RemoveSettingShowNewProductsOnHome','2021-09-23 07:39:32','2021-09-23 07:39:32',0);
+(20210923073422,'RemoveSettingShowNewProductsOnHome','2021-09-23 07:39:32','2021-09-23 07:39:32',0),
+(20210923090820,'AllowNullAsPurchasePrice','2021-09-23 09:09:52','2021-09-23 09:09:52',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
