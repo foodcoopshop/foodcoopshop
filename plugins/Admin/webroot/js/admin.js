@@ -32,13 +32,13 @@ foodcoopshop.Admin = {
 
         if (preselectedOrderDetailIds) {
             preselectedOrderDetailIds = preselectedOrderDetailIds.split(',');
-        }
-
-        if (preselectedOrderDetailIds.length > 0) {
-            for (var i in preselectedOrderDetailIds) {
-                $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
+            if (preselectedOrderDetailIds.length > 0) {
+                for (var i in preselectedOrderDetailIds) {
+                    $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
+                }
             }
         }
+
 
         $('.row-marker').on('click', function() {
 
