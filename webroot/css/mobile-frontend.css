@@ -55,6 +55,12 @@
     body.manufacturers.detail .blog-wrapper {
         margin-top: -10px;
     }
+    body.blog_posts.detail .blog-wrapper {
+        width: 46% ! important;
+    }
+    body.blog_posts.detail .blog-post-wrapper {
+        width: 100% ! important;
+    }
     body.blog_posts.detail img.blog-post-image {
         width: 100% ! important;
     }

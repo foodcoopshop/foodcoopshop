@@ -22,9 +22,6 @@
         width: 98% ! important;
         max-width: 450px ! important;
     }
-    body.blog_posts.detail .blog-post-wrapper {
-        width: 100% ! important;
-    }
     body.categories .blog-post-wrapper,
     body.manufacturers.detail .blog-post-wrapper,
     body.pages.home .blog-post-wrapper,
@@ -34,10 +31,6 @@
         margin-right: 2% ! important;
         margin-left: 2%;
         height: 234px;
-    }
-    body.blog_posts.detail .blog-wrapper {
-        width: 48%;
-        margin-left: 1%;
     }
     body.categories .blog-wrapper,
     body.manufacturers.detail .blog-wrapper {
