@@ -44,6 +44,10 @@ class SelfServiceController extends FrontendController
             $this->set('keyword', $keyword);
         }
 
+        if (!empty($this->getRequest()->getQuery('productWithError'))) {
+            $keyword = h(trim($this->getRequest()->getQuery('productWithError')));
+        }
+
         $this->Category = $this->getTableLocator()->get('Categories');
         $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->AppAuth, true);
         $categoriesForSelect = [
@@ -81,7 +85,7 @@ class SelfServiceController extends FrontendController
                         '<b>' . $products[0]['name'] . '</b>'
                     ]) . $imgString);
                 }
-                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+                $this->redirect(Configure::read('app.slugHelper')->getSelfService('', $keyword));
                 return;
             }
         }
