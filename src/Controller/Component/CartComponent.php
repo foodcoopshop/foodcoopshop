@@ -564,6 +564,16 @@ class CartComponent extends Component
                         $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.SelfService.printInvoice("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
                     }
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+
+                    if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
+                        $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                        $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
+                            $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['name'],
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        ]);
+                    }
+
                     $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
                     break;
             }

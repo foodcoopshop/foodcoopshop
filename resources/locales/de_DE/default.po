@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-28 16:39+0200\n"
-"PO-Revision-Date: 2021-09-28 16:39+0200\n"
+"POT-Creation-Date: 2021-09-28 21:31+0200\n"
+"PO-Revision-Date: 2021-09-28 21:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -227,6 +227,9 @@ msgstr "Weiter einkaufen"
 
 msgid "Print_receipt"
 msgstr "Beleg drucken"
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} hat eine neue Bestellung für {1} getätigt ({2})."
 
 msgid "Notification_about_instant_order_order"
 msgstr "Benachrichtigung über Sofort-Bestellung"

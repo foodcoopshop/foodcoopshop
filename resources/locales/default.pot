@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-09-28 16:39+0200\n"
+"POT-Creation-Date: 2021-09-28 21:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -225,6 +225,9 @@ msgid "Continue_shopping"
 msgstr ""
 
 msgid "Print_receipt"
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
 msgstr ""
 
 msgid "Notification_about_instant_order_order"
