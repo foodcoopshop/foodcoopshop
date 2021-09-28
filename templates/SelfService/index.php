@@ -28,7 +28,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 
-if (!$isMobile && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
+if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
     ]);
