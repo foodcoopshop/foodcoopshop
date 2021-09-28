@@ -123,7 +123,7 @@ class LocalizedController extends Controller
             ],
             'admin' => [
                 'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
-                'PlaceInstantOrderFor' => __('Place_instant_order_for'),
+                'PlaceOrderFor' => __('Place_order_for'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
                 'EmailAddresses' => __('Email_addresses'),
