@@ -82,7 +82,7 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
     ]);
 }
 
-if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByUrl()) {
+if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl()) {
     $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
     if ($manufacturerNoDeliveryDaysString != '') {
         echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';

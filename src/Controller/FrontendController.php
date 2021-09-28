@@ -61,7 +61,7 @@ class FrontendController extends AppController
 
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                 $product['next_delivery_day'] = new FrozenDate('1970-01-01');
-            } elseif ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
+            } elseif ($this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
                 $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             } else {
                 $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
@@ -280,7 +280,7 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired instantOrderCustomer
          */
-        if ($this->AppAuth->isInstantOrderMode()) {
+        if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
             $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.orderCustomer'));
         }

@@ -213,7 +213,7 @@ class CartComponent extends Component
 
         $cartErrors = [];
 
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$this->AppAuth->isInstantOrderMode()) {
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
             if ($this->AppAuth->getCreditBalanceMinusCurrentCartSum() < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')) {
                 $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
@@ -307,13 +307,13 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (! $product->manufacturer->active || (!$this->AppAuth->isInstantOrderMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
+            if (! $product->manufacturer->active || (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
                 $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (!$this->AppAuth->isInstantOrderMode()) {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
                 if ( !($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
                     if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                         $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
@@ -323,7 +323,7 @@ class CartComponent extends Component
                 }
             }
 
-            if (!$this->AppAuth->isInstantOrderMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
                 $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                     [
                         Configure::read('appDb.FCS_APP_NAME'),
@@ -693,7 +693,7 @@ class CartComponent extends Component
     private function sendInstantOrderNotificationToManufacturers($cartProducts)
     {
 
-        if (!$this->AppAuth->isInstantOrderMode()) {
+        if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
             return [];
         }
 

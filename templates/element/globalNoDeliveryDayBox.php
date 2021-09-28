@@ -19,7 +19,7 @@ if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
     return;
 }
 
-if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
+if ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
     return;
 }
 

@@ -214,7 +214,7 @@ class AppAuthComponent extends AuthComponent
         return $c->getCreditBalance($this->getUserId());
     }
 
-    public function isInstantOrderMode()
+    public function isOrderForDifferentCustomerMode()
     {
         return $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer');
     }
@@ -249,7 +249,7 @@ class AppAuthComponent extends AuthComponent
     {
         $cart = FactoryLocator::get('Table')->get('Carts');
         $cartType = $cart::CART_TYPE_WEEKLY_RHYTHM;
-        if ($this->isInstantOrderMode()) {
+        if ($this->isOrderForDifferentCustomerMode()) {
             $cartType = $cart::CART_TYPE_INSTANT_ORDER;
         }
         if ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer()) {

@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (!$appAuth->isInstantOrderMode()) {
+if (!$appAuth->isOrderForDifferentCustomerMode()) {
     return;
 }
 

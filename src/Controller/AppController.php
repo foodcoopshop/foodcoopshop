@@ -109,7 +109,7 @@ class AppController extends Controller
 
         $this->validateAuthentication();
 
-        if (!$this->getRequest()->is('json') && !$this->AppAuth->isInstantOrderMode()) {
+        if (!$this->getRequest()->is('json') && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
 

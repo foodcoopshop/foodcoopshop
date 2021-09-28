@@ -53,7 +53,7 @@ foreach ($manufacturers as $manufacturer) {
             ).'</h4>';
             echo $manufacturer->short_description;
 
-            if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByUrl()) {
+            if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl()) {
                 $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
                 if ($manufacturerNoDeliveryDaysString != '') {
                     echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
