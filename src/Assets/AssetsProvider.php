@@ -45,7 +45,7 @@ class AssetsProvider
             'jquery.scrollto/jquery.scrollTo.js',
             'modal/modal.js',
             'modal/modal-logout.js',
-            'modal/modal-instant-order-cancel.js',
+            'modal/modal-order-for-different-customer-cancel.js',
             'modal/modal-payment-add.js',
             'modal/modal-image.js',
             'modal/modal-text.js',

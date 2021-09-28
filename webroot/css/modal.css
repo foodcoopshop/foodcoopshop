@@ -76,10 +76,12 @@
     padding: 10px;
     padding-left: 0;
 }
-body.iframe_start_page {
+body.iframe_instant_order,
+body.iframe_self_service_order {
     margin: 0;
 }
-.iframe_start_page #content {
+.iframe_instant_order #content,
+.iframe_self_service_order #content {
     width: 100%;
     height: 1000px;
     text-align: center;

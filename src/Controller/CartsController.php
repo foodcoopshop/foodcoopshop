@@ -34,7 +34,7 @@ class CartsController extends FrontendController
             'generateRightOfWithdrawalInformationPdf',
             'ajaxAdd',
             'ajaxRemove',
-            'ajaxDeleteInstantOrderCustomer',
+            'ajaxDeleteOrderForDifferentCustomer',
             'ajaxGetTimebasedCurrencyHoursDropdown',
         ]);
     }
@@ -158,7 +158,7 @@ class CartsController extends FrontendController
         $this->destroyInstantOrderCustomer();
     }
 
-    public function ajaxDeleteInstantOrderCustomer()
+    public function ajaxDeleteOrderForDifferentCustomer()
     {
         try {
             $this->ajaxIsAuthorized();

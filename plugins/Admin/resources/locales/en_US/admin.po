@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-15 12:10+0200\n"
-"PO-Revision-Date: 2021-09-15 12:11+0200\n"
+"POT-Creation-Date: 2021-09-28 14:57+0200\n"
+"PO-Revision-Date: 2021-09-28 14:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -263,6 +263,9 @@ msgstr "No member found with id {0}."
 
 msgid "Instant_order"
 msgstr "Instant order"
+
+msgid "Self_service_order"
+msgstr "Self-service order"
 
 msgid "Edit_purchase_price"
 msgstr "Edit purchase price"
@@ -1533,8 +1536,8 @@ msgstr "Tax rate"
 msgid "Purchase_price_tax_excl"
 msgstr "Purchase price tax excl."
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr "Please chose the member you want to place the instant order for in the dropdown above."
+msgid "Please_chose_member_in_above_dropdown_for_placing_order."
+msgstr "Please chose the member you want to place the order for in the dropdown above."
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr "The pickup day of the instant order will be automatically changed to <b>today, {0}</b>."
@@ -2279,6 +2282,15 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Please_chose_member_in_above_dropdown_for_placing_self_service_order."
+#~ msgstr "Please chose the member you want to place the self service order for in the dropdown above."
+
+#~ msgid "The_pickup_day_of_the_self_service_order_will_be_today_{0}."
+#~ msgstr "The pickup day of the self service order will be automatically changed to <b>today, {0}</b>."
+
+#~ msgid "Self_service_order_for_member"
+#~ msgstr "Self-service order for member"
 
 #~ msgid "Discount"
 #~ msgstr "Discount"

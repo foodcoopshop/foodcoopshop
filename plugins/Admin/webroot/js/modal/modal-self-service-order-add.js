@@ -11,7 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalInstantOrderAdd = {
+foodcoopshop.ModalSelfServiceOrderAdd = {
 
     init : function(button) {
 
@@ -27,10 +27,10 @@ foodcoopshop.ModalInstantOrderAdd = {
             );
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
-                foodcoopshop.ModalInstantOrderAdd.getCloseHandler(modalSelector);
+                foodcoopshop.ModalSelfServiceOrderAdd.getCloseHandler(modalSelector);
             });
 
-            foodcoopshop.ModalInstantOrderAdd.getOpenHandler(button, modalSelector);
+            foodcoopshop.ModalSelfServiceOrderAdd.getOpenHandler(button, modalSelector);
         });
 
     },
@@ -72,7 +72,7 @@ foodcoopshop.ModalInstantOrderAdd = {
         // always preselect user if there is a dropdown called #customerId (for call from order detail)
         var customerId = $('#customerid').val();
         foodcoopshop.Admin.initCustomerDropdown(customerId, 0, 0, customerDropdownSelector, function () {
-            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(customerDropdownSelector).val();
+            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initSelfServiceOrder/' + $(customerDropdownSelector).val();
             $(modalSelector + ' iframe').attr('src', newSrc);
         });
 
@@ -81,15 +81,15 @@ foodcoopshop.ModalInstantOrderAdd = {
 
         // START IFRAME
         var iframe = $('<iframe></iframe>');
-        iframe.attr('src', foodcoopshop.Helper.cakeServerName + '/admin/order-details/iframeInstantOrder');
+        iframe.attr('src', foodcoopshop.Helper.cakeServerName + '/admin/order-details/iframeSelfServiceOrder');
         iframe.css('width', '100%');
         iframe.css('border', 'none');
         $(modalSelector + ' .modal-body').append(iframe);
 
         $(window).on('resize', function () {
-            foodcoopshop.ModalInstantOrderAdd.onWindowResize(iframe);
+            foodcoopshop.ModalSelfServiceOrderAdd.onWindowResize(iframe);
         });
-        foodcoopshop.ModalInstantOrderAdd.onWindowResize(iframe);
+        foodcoopshop.ModalSelfServiceOrderAdd.onWindowResize(iframe);
 
         $(modalSelector + ' iframe').on('load', function () {
             // called after each url change in iframe!

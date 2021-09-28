@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-09-15 12:10+0200\n"
+"POT-Creation-Date: 2021-09-28 14:57+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -261,6 +261,9 @@ msgid "No_member_found_with_id_{0}."
 msgstr ""
 
 msgid "Instant_order"
+msgstr ""
+
+msgid "Self_service_order"
 msgstr ""
 
 msgid "Edit_purchase_price"
@@ -1532,7 +1535,7 @@ msgstr ""
 msgid "Purchase_price_tax_excl"
 msgstr ""
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgid "Please_chose_member_in_above_dropdown_for_placing_order."
 msgstr ""
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."

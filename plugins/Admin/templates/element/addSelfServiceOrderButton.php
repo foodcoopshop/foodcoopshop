@@ -17,18 +17,18 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
-        Configure::read('app.jsNamespace') . ".ModalInstantOrderAdd.init('#add-instant-order-button-wrapper .btn');"
+        Configure::read('app.jsNamespace') . ".ModalSelfServiceOrderAdd.init('#add-self-service-order-button-wrapper .btn');"
 ]);
-echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
+echo '<div id="add-self-service-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
     $options = [
         'escape' => false
     ];
     $options['class'] = 'btn btn-outline-light';
-    echo $this->Html->link('<i class="fas fa-shopping-cart ok"></i> '.__d('admin', 'Instant_order_for_today'), 'javascript:void(0);', $options);
+    echo $this->Html->link('<i class="fas fa-shopping-bag ok"></i> '.__d('admin', 'Self_service_order'), 'javascript:void(0);', $options);
     echo $this->Form->control('', [
         'type' => 'select',
         'label' => '',
-        'id' => 'instantOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
+        'id' => 'selfServiceOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
         'class' => 'do-not-submit',
         'empty' => __d('admin', 'chose_member...'),
     ]);

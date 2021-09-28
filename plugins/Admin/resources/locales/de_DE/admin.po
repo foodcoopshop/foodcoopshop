@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-15 12:10+0200\n"
-"PO-Revision-Date: 2021-09-15 12:11+0200\n"
+"POT-Creation-Date: 2021-09-28 14:57+0200\n"
+"PO-Revision-Date: 2021-09-28 14:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -263,6 +263,9 @@ msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
 
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
+
+msgid "Self_service_order"
+msgstr "Bestellung über SB-Modus"
 
 msgid "Edit_purchase_price"
 msgstr "Einkaufspreis bearbeiten"
@@ -1533,7 +1536,7 @@ msgstr "Steuersatz"
 msgid "Purchase_price_tax_excl"
 msgstr "Einkaufspreis netto"
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgid "Please_chose_member_in_above_dropdown_for_placing_order."
 msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
@@ -2279,6 +2282,15 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Please_chose_member_in_above_dropdown_for_placing_self_service_order."
+#~ msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+
+#~ msgid "The_pickup_day_of_the_self_service_order_will_be_today_{0}."
+#~ msgstr "Der Abholtag der Bestellung im SB-Modus wird automatisch auf <b>heute, {0}</b> gesetzt."
+
+#~ msgid "Self_service_order_for_member"
+#~ msgstr "Bestellung über SB-Modus"
 
 #~ msgid "Discount"
 #~ msgstr "Rabatt"
