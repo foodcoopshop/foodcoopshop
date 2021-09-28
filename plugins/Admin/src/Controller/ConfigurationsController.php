@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\OutputFilter\OutputFilter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
@@ -109,6 +110,9 @@ class ConfigurationsController extends AdminAppController
 
     public function previewEmail($configurationName)
     {
+
+        $this->disableAutoRender();
+
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->Configuration->getConfigurations();
         $email = new AppMailer();
@@ -138,8 +142,14 @@ class ConfigurationsController extends AdminAppController
                 ]);
                 break;
         }
-        echo $email->render()->getMessage()->getBodyString();
-        exit;
+
+        $output = $email->render()->getMessage()->getBodyString();
+
+        if (Configure::check('app.outputStringReplacements')) {
+            $output = OutputFilter::replace($output, Configure::read('app.outputStringReplacements'));
+        }
+
+        echo $output;
     }
 
     public function index()
