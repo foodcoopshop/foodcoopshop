@@ -979,7 +979,7 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->loginAsSuperadminAddInstantOrderCustomerToSession($_SESSION);
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->assertResponseContains('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.');
 
@@ -1018,7 +1018,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->loginAsSuperadminAddInstantOrderCustomerToSession($_SESSION);
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
@@ -1043,7 +1043,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->loginAsSuperadminAddInstantOrderCustomerToSession($_SESSION);
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);

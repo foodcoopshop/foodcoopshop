@@ -520,12 +520,12 @@ class CartComponent extends Component
                     if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>'
                         ]);
                     } else {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
                             '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                         ]);
                     }

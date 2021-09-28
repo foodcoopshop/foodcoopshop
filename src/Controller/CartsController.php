@@ -155,7 +155,7 @@ class CartsController extends FrontendController
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
 
         $this->resetOriginalLoggedCustomer();
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
     }
 
     public function ajaxDeleteOrderForDifferentCustomer()
@@ -170,7 +170,7 @@ class CartsController extends FrontendController
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
 
         $this->set([
             'status' => 1,

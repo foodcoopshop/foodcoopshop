@@ -186,9 +186,9 @@ class FrontendController extends AppController
         }
     }
 
-    protected function destroyInstantOrderCustomer()
+    protected function destroyOrderCustomer()
     {
-        $this->getRequest()->getSession()->delete('Auth.instantOrderCustomer');
+        $this->getRequest()->getSession()->delete('Auth.orderCustomer');
         $this->getRequest()->getSession()->delete('Auth.originalLoggedCustomer');
     }
 
@@ -282,7 +282,7 @@ class FrontendController extends AppController
          */
         if ($this->AppAuth->isInstantOrderMode()) {
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.instantOrderCustomer'));
+            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.orderCustomer'));
         }
         if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();

@@ -335,7 +335,7 @@ if ($product['description'] != '') {
                     echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
                 }
                 echo '</div>';
-                if (!$this->request->getSession()->read('Auth.instantOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
+                if (!$this->request->getSession()->read('Auth.orderCustomer') && !empty($product['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'manufacturerLimitReached' => $product['timebased_currency_manufacturer_limit_reached'],
                         'class' => 'timebased-currency-product-info',

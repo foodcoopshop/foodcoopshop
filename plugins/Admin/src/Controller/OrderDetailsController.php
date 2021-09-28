@@ -210,7 +210,7 @@ class OrderDetailsController extends AdminAppController
         ])->first();
 
         if (! empty($instantOrderCustomer)) {
-            $this->getRequest()->getSession()->write('Auth.instantOrderCustomer', $instantOrderCustomer);
+            $this->getRequest()->getSession()->write('Auth.orderCustomer', $instantOrderCustomer);
         } else {
             $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
         }

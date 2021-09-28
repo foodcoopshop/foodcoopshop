@@ -216,7 +216,7 @@ class AppAuthComponent extends AuthComponent
 
     public function isInstantOrderMode()
     {
-        return $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer');
+        return $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer');
     }
 
     public function isSelfServiceModeByUrl()
