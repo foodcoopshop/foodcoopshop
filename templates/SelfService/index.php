@@ -133,8 +133,10 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        echo $this->element('cart/generalTermsAndConditionsCheckbox');
-        echo $this->element('cart/cancellationTermsCheckbox');
+        if (!$appAuth->isOrderForDifferentCustomerMode()) {
+            echo $this->element('cart/generalTermsAndConditionsCheckbox');
+            echo $this->element('cart/cancellationTermsCheckbox');
+        }
         echo $this->element('selfService/paymentTypeRadioButtons');
     ?>
     <button type="submit" class="btn btn-success btn-order">
