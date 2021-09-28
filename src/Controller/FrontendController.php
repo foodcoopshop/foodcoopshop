@@ -276,9 +276,9 @@ class FrontendController extends AppController
         }
 
         /*
-         * changed the acutally logged in customer to the desired instantOrderCustomer
+         * changed the acutally logged in customer to the desired orderCustomer
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
-         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired instantOrderCustomer
+         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired orderCustomer
          */
         if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());

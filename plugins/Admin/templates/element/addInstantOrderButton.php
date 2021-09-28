@@ -28,7 +28,7 @@ echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(is
     echo $this->Form->control('', [
         'type' => 'select',
         'label' => '',
-        'id' => 'instantOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
+        'id' => 'orderCustomerId', //null as first param and id removes attribute name => field is not submitted
         'class' => 'do-not-submit',
         'empty' => __d('admin', 'chose_member...'),
     ]);

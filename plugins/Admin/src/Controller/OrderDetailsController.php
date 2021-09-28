@@ -200,7 +200,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $instantOrderCustomer = $this->Customer->find('all', [
+        $orderCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
             ],
@@ -209,8 +209,8 @@ class OrderDetailsController extends AdminAppController
             ]
         ])->first();
 
-        if (! empty($instantOrderCustomer)) {
-            $this->getRequest()->getSession()->write('Auth.orderCustomer', $instantOrderCustomer);
+        if (! empty($orderCustomer)) {
+            $this->getRequest()->getSession()->write('Auth.orderCustomer', $orderCustomer);
         } else {
             $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
         }
