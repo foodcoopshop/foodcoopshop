@@ -467,14 +467,14 @@ foodcoopshop.Helper = {
 
         var difference = 0;
 
-        // whole page is called in iframe in instant-order-mode
-        var instantOrderIframe = window.parent.$('#instant-order-add .modal-body iframe');
+        // whole page is called in iframe in order-for-different-customer-mode
+        var orderForDifferentCustomerIframe = window.parent.$('#order-for-different-customer-add .modal-body iframe');
 
-        if (instantOrderIframe.length > 0) {
+        if (orderForDifferentCustomerIframe.length > 0) {
             difference = 149;
             difference += $('.order-for-different-customer-info').height();
             difference += $('.shopping-price-info').height() + 1;
-            newCartHeight = instantOrderIframe.height();
+            newCartHeight = orderForDifferentCustomerIframe.height();
         } else {
             difference = 146;
             var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
