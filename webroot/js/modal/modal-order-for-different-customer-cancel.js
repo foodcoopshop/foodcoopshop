@@ -49,8 +49,7 @@ foodcoopshop.ModalOrderForDifferentCustomerCancel = {
             {},
             {
                 onOk: function (data) {
-                    foodcoopshop.Modal.destroy('#instant-order-add', window.parent.document);
-                    foodcoopshop.Modal.destroy('#self-service-order-add', window.parent.document);
+                    foodcoopshop.Modal.destroy('#order-for-different-customer-add', window.parent.document);
                     document.location.reload();
                 },
                 onError: function (data) {

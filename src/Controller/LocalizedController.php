@@ -105,7 +105,7 @@ class LocalizedController extends Controller
                 'removeFromCart' => __('Remove_from_cart?'),
                 'forEach' => __('for_each'),
                 'approx' => __('approx.'),
-                'PickupDay' => __('Pickup_day')
+                'PickupDay' => __('Pickup_day'),
             ],
             'mobile' => [
                 'home' => __('Home'),
@@ -241,6 +241,7 @@ class LocalizedController extends Controller
                 'PaidInCash' => __('Paid_in_cash'),
                 'ReallyCancelInvoiceNumber0OfCustomer1' => __('Really_cancel_invoice_number_{0}_of_{1}?'),
                 'CancelInvoice' => __('Cancel_invoice'),
+                'TheOrderWasPlacedSuccessfully' => __('The_order_was_placed_successfully.'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

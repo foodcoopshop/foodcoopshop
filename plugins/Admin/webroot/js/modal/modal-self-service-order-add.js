@@ -17,7 +17,7 @@ foodcoopshop.ModalSelfServiceOrderAdd = {
 
         $(button).on('click', function() {
 
-            var modalSelector = '#instant-order-add';
+            var modalSelector = '#order-for-different-customer-add';
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
@@ -93,10 +93,8 @@ foodcoopshop.ModalSelfServiceOrderAdd = {
 
         $(modalSelector + ' iframe').on('load', function () {
             // called after each url change in iframe!
-            var currentUrl = $(this).get(0).contentWindow.document.URL;
-            var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
-            if (currentUrl.match(cartFinishedRegExp)) {
-                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|i)[^>]*>/g,'');
+            if ($(this).contents().find('.btn-flash-message-continue').length == 1) {
+                var message = foodcoopshop.LocalizedJs.admin.TheOrderWasPlacedSuccessfully;
                 document.location.href = foodcoopshop.Admin.addParameterToURL(
                     foodcoopshop.Admin.getParentLocation(),
                     'message=' + encodeURIComponent(message)

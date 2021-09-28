@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-28 15:12+0200\n"
-"PO-Revision-Date: 2021-09-28 15:12+0200\n"
+"POT-Creation-Date: 2021-09-28 16:25+0200\n"
+"PO-Revision-Date: 2021-09-28 16:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -881,6 +881,9 @@ msgstr "Really cancel invoice {0} of {1}?"
 
 msgid "Cancel_invoice"
 msgstr "Cancel invoice"
+
+msgid "The_order_was_placed_successfully."
+msgstr "The order was placed successfully."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"

@@ -45,34 +45,34 @@
     margin-right: auto;
     margin-left: auto;
 }
-#instant-order-add .modal-dialog {
+#order-for-different-customer-add .modal-dialog {
     max-width: 95vw;
     height: 90vh;
 }
-#instant-order-add .modal-content {
+#order-for-different-customer-add .modal-content {
     height: 100%;
 }
-#instant-order-add .modal-body {
+#order-for-different-customer-add .modal-body {
     padding: 0;
 }
-#instant-order-add .modal-footer,
+#order-for-different-customer-add .modal-footer,
 #modal-image .modal-footer {
     display: none;
 }
-#instant-order-add .bootstrap-select {
+#order-for-different-customer-add .bootstrap-select {
     width: 300px ! important;
     margin-top: -5px;
 }
-#instant-order-add .modal-header .start {
+#order-for-different-customer-add .modal-header .start {
     line-height: 35px;
 }
-#instant-order-add .bootstrap-select div.filter-option-inner-inner i.fas {
+#order-for-different-customer-add .bootstrap-select div.filter-option-inner-inner i.fas {
     top: 10px;
 }
-#instant-order-add .message-container select#customersDropdown {
+#order-for-different-customer-add .message-container select#customersDropdown {
     width: 400px;
 }
-#instant-order-add .modal-header .close {
+#order-for-different-customer-add .modal-header .close {
     padding: 10px;
     padding-left: 0;
 }

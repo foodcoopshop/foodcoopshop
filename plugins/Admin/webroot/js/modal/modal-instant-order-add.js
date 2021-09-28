@@ -17,7 +17,7 @@ foodcoopshop.ModalInstantOrderAdd = {
 
         $(button).on('click', function() {
 
-            var modalSelector = '#instant-order-add';
+            var modalSelector = '#order-for-different-customer-add';
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
