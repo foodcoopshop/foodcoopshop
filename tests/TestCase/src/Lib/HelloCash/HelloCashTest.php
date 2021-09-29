@@ -200,7 +200,7 @@ class HelloCashTest extends AppCakeTestCase
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
         $this->assertRegExpWithUnquotedString($customer->firstname, $receiptHtml);
-        $this->assertRegExpWithUnquotedString($customer->lasttname, $receiptHtml);
+        $this->assertRegExpWithUnquotedString($customer->lastname, $receiptHtml);
 
     }
 
