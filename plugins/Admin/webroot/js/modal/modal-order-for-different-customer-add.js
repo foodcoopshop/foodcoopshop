@@ -5,13 +5,13 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.1.0
+ * @since         FoodCoopShop 3.4.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalInstantOrderAdd = {
+foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
     init : function(button) {
 
@@ -27,10 +27,21 @@ foodcoopshop.ModalInstantOrderAdd = {
             );
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
-                foodcoopshop.ModalInstantOrderAdd.getCloseHandler(modalSelector);
+                foodcoopshop.ModalIOrderForDifferentCustomerAdd.getCloseHandler(modalSelector);
             });
 
-            foodcoopshop.ModalInstantOrderAdd.getOpenHandler(button, modalSelector);
+            var iframeSrcInit = '/admin/order-details/initInstantOrder';
+            var iframeSrc = '/admin/order-details/iframeInstantOrder';
+            var isInstantOrder = true;
+
+            if ($(this).closest('.add-button-wrapper').attr('id') == 'add-self-service-order-button-wrapper') {
+                iframeSrcInit = '/admin/order-details/initSelfServiceOrder';
+                iframeSrc = '/admin/order-details/iframeSelfServiceOrder';
+                isInstantOrder = false;
+            }
+
+            foodcoopshop.ModalIOrderForDifferentCustomerAdd.getOpenHandler(modalSelector, iframeSrcInit, iframeSrc, isInstantOrder);
+
         });
 
     },
@@ -52,7 +63,7 @@ foodcoopshop.ModalInstantOrderAdd = {
         iframe.css('height', height);
     },
 
-    getOpenHandler : function(button, modalSelector) {
+    getOpenHandler : function(modalSelector, iframeSrcInit, iframeSrc, isInstantOrder) {
 
         $(modalSelector).modal();
 
@@ -72,7 +83,7 @@ foodcoopshop.ModalInstantOrderAdd = {
         // always preselect user if there is a dropdown called #customerId (for call from order detail)
         var customerId = $('#customerid').val();
         foodcoopshop.Admin.initCustomerDropdown(customerId, 0, 0, customerDropdownSelector, function () {
-            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(customerDropdownSelector).val();
+            var newSrc = foodcoopshop.Helper.cakeServerName + iframeSrcInit + '/' + $(customerDropdownSelector).val();
             $(modalSelector + ' iframe').attr('src', newSrc);
         });
 
@@ -81,22 +92,31 @@ foodcoopshop.ModalInstantOrderAdd = {
 
         // START IFRAME
         var iframe = $('<iframe></iframe>');
-        iframe.attr('src', foodcoopshop.Helper.cakeServerName + '/admin/order-details/iframeInstantOrder');
+        iframe.attr('src', foodcoopshop.Helper.cakeServerName + iframeSrc);
         iframe.css('width', '100%');
         iframe.css('border', 'none');
         $(modalSelector + ' .modal-body').append(iframe);
 
         $(window).on('resize', function () {
-            foodcoopshop.ModalInstantOrderAdd.onWindowResize(iframe);
+            foodcoopshop.ModalIOrderForDifferentCustomerAdd.onWindowResize(iframe);
         });
-        foodcoopshop.ModalInstantOrderAdd.onWindowResize(iframe);
+        foodcoopshop.ModalIOrderForDifferentCustomerAdd.onWindowResize(iframe);
 
         $(modalSelector + ' iframe').on('load', function () {
-            // called after each url change in iframe!
-            var currentUrl = $(this).get(0).contentWindow.document.URL;
-            var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
-            if (currentUrl.match(cartFinishedRegExp)) {
-                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|i)[^>]*>/g,'');
+            // called after each url change in iframe
+            var message = '';
+            if (isInstantOrder) {
+                var currentUrl = $(this).get(0).contentWindow.document.URL;
+                var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
+                if (currentUrl.match(cartFinishedRegExp)) {
+                    message = $(this).contents().find('#flashMessage').html().replace(/<(a|i)[^>]*>/g,'');
+                }
+            } else {
+                if ($(this).contents().find('.btn-flash-message-continue').length == 1) {
+                    message = foodcoopshop.LocalizedJs.admin.TheOrderWasPlacedSuccessfully;
+                }
+            }
+            if (message != '') {
                 document.location.href = foodcoopshop.Admin.addParameterToURL(
                     foodcoopshop.Admin.getParentLocation(),
                     'message=' + encodeURIComponent(message)

@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
-        Configure::read('app.jsNamespace') . ".ModalSelfServiceOrderAdd.init('#add-self-service-order-button-wrapper .btn');"
+        Configure::read('app.jsNamespace') . ".ModalIOrderForDifferentCustomerAdd.init('#add-self-service-order-button-wrapper .btn');"
 ]);
 echo '<div id="add-self-service-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
     $options = [
