@@ -120,7 +120,7 @@ use Cake\Core\Configure;
                     echo '</div>';
             }
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
+                if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
                     echo $this->element('addSelfServiceOrderButton');
                 }
             }
