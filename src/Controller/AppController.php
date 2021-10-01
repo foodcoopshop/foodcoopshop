@@ -115,7 +115,7 @@ class AppController extends Controller
         }
 
         $detect = new MobileDetect();
-        $this->set('isMobile', $detect->isMobile());
+        $this->set('isMobile', $detect->isMobile() && !$detect->isTablet());
 
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
