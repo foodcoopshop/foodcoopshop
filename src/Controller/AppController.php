@@ -7,6 +7,7 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
+use Detection\MobileDetect;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -113,11 +114,8 @@ class AppController extends Controller
             $this->loadComponent('FormProtection');
         }
 
-        $isMobile = false;
-        if ($this->getRequest()->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
-            $isMobile = true;
-        }
-        $this->set('isMobile', $isMobile);
+        $detect = new MobileDetect();
+        $this->set('isMobile', $detect->isMobile());
 
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
