@@ -30,7 +30,7 @@ if ($depositSum > 0) {
     $columns[] = __('Deposit');
 }
 
-if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
 }
 
@@ -124,7 +124,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 </td>
             <?php } ?>
 
-            <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+            <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                     <?php
                         if (isset($product['timebasedCurrencySeconds'])) {
@@ -151,7 +151,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 ?>
             </td>
 
-            <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+            <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                     <?php
                         echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum());
@@ -170,7 +170,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
             ?>
         </td>
-        <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+        <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
         <?php } ?>
     </tr>

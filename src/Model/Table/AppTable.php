@@ -241,7 +241,7 @@ class AppTable extends Table
         }
 
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-            if ($appAuth->isInstantOrderMode()) {
+            if ($appAuth->isOrderForDifferentCustomerMode()) {
                 $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
             }
         }
@@ -260,7 +260,7 @@ class AppTable extends Table
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
     {
 
-        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
             return $products;
         }
         $this->Product = FactoryLocator::get('Table')->get('Products');

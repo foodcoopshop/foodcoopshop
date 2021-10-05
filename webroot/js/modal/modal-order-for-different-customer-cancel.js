@@ -11,11 +11,11 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalInstantOrderCancel = {
+foodcoopshop.ModalOrderForDifferentCustomerCancel = {
 
     init : function() {
 
-        var modalSelector = '#instant-order-cancel';
+        var modalSelector = '#order-for-different-customer-cancel';
 
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa fa-check'),
@@ -24,32 +24,32 @@ foodcoopshop.ModalInstantOrderCancel = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.helper.CancelInstantOrder,
+            foodcoopshop.LocalizedJs.helper.CancelOrder,
             this.getHtml(),
             buttons
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalInstantOrderCancel.getSuccessHandler();
+            foodcoopshop.ModalOrderForDifferentCustomerCancel.getSuccessHandler();
         });
 
-        $('#cart .instant-order-customer-info a.btn').on('click', function () {
-            foodcoopshop.ModalInstantOrderCancel.getOpenHandler(modalSelector);
+        $('#cart .order-for-different-customer-info a.btn').on('click', function () {
+            foodcoopshop.ModalOrderForDifferentCustomerCancel.getOpenHandler(modalSelector);
         });
 
     },
 
     getHtml : function() {
-        return '<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p>';
+        return '<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelOrder + '</p>';
     },
 
     getSuccessHandler : function() {
         foodcoopshop.Helper.ajaxCall(
-            '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
+            '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteOrderForDifferentCustomer',
             {},
             {
                 onOk: function (data) {
-                    foodcoopshop.Modal.destroy('#instant-order-add', window.parent.document);
+                    foodcoopshop.Modal.destroy('#order-for-different-customer-add', window.parent.document);
                     document.location.reload();
                 },
                 onError: function (data) {

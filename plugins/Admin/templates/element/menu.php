@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
-if (! $appAuth->user() || $this->request->getParam('action') == 'iframeStartPage') {
+if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
     return;
 }
 

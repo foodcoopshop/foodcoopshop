@@ -30,18 +30,18 @@ if ($appAuth->isManufacturer()) {
     $userName = $appAuth->getManufacturerName();
 }
 
-if ($appAuth->user() && !$appAuth->isInstantOrderMode()) {
+if ($appAuth->user() && !$appAuth->isOrderForDifferentCustomerMode()) {
     $menu[] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['class' => $class]];
 }
 if ($appAuth->user()) {
-    if (!$appAuth->isInstantOrderMode()) {
+    if (!$appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName];
     }
-    if ($appAuth->isInstantOrderMode()) {
+    if ($appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
     }
 }
-if (!$appAuth->isInstantOrderMode() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
+if (!$appAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
     $menu[] = [
         'slug' => $this->Slug->getSelfService(),
         'name' => ' ' . __('Self_service'),
@@ -51,7 +51,7 @@ if (!$appAuth->isInstantOrderMode() && Configure::read('appDb.FCS_SELF_SERVICE_M
         ]
     ];
 }
-if (!$appAuth->isInstantOrderMode()) {
+if (!$appAuth->isOrderForDifferentCustomerMode()) {
     $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 }
 echo $this->Menu->render($menu, ['id' => 'user-menu', 'class' => 'horizontal menu']);

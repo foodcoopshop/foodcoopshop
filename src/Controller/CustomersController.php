@@ -448,7 +448,7 @@ class CustomersController extends FrontendController
     {
         $this->Flash->success(__('You_have_been_signed_out.'));
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
 
         $this->AppAuth->logout();
         $redirectUrl = '/';

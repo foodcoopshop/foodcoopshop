@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 $showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $appAuth->user();
 
 $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
-    $appAuth->isInstantOrderMode(),
+    $appAuth->isOrderForDifferentCustomerMode(),
     $appAuth->isSelfServiceModeByUrl(),
     Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
     (boolean) $product['stock_management_enabled'],
@@ -83,7 +83,7 @@ if ($product['description'] != '') {
 
     if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
-        if (!$appAuth->isInstantOrderMode() && !($product['stock_management_enabled'] && $product['is_stock_product'])) {
+        if (!$appAuth->isOrderForDifferentCustomerMode() && !($product['stock_management_enabled'] && $product['is_stock_product'])) {
 
             $lastOrderDay = $this->Time->getLastOrderDay(
                 $product['next_delivery_day'],
@@ -108,7 +108,7 @@ if ($product['description'] != '') {
             echo '<br />'.__('Pickup_day').': ';
         }
         echo '<span class="pickup-day">';
-            if ($appAuth->isInstantOrderMode()) {
+            if ($appAuth->isOrderForDifferentCustomerMode()) {
                 $pickupDayDetailText = __('Instant_order');
             } else {
                 $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
@@ -122,7 +122,7 @@ if ($product['description'] != '') {
         if (!$appAuth->isSelfServiceModeByUrl()) {
             echo ' (' . $pickupDayDetailText . ')';
         }
-        if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isInstantOrderMode()) {
+        if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isOrderForDifferentCustomerMode()) {
             if (strtotime($product['next_delivery_day']) != $this->Time->getDeliveryDayByCurrentDay()) {
                 $weeksAsFloat = (strtotime($product['next_delivery_day']) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
                 $fullWeeks = (int) ($weeksAsFloat / 7);
@@ -241,7 +241,7 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
                 }
-                if (!$appAuth->isInstantOrderMode() && !empty($attribute['timebased_currency_money_incl'])) {
+                if (!$appAuth->isOrderForDifferentCustomerMode() && !empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'manufacturerLimitReached' => $attribute['timebased_currency_manufacturer_limit_reached'],
                         'class' => 'timebased-currency-product-info',
@@ -335,7 +335,7 @@ if ($product['description'] != '') {
                     echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
                 }
                 echo '</div>';
-                if (!$this->request->getSession()->read('Auth.instantOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
+                if (!$this->request->getSession()->read('Auth.orderCustomer') && !empty($product['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'manufacturerLimitReached' => $product['timebased_currency_manufacturer_limit_reached'],
                         'class' => 'timebased-currency-product-info',

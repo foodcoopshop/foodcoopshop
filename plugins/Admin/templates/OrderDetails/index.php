@@ -119,11 +119,15 @@ use Cake\Core\Configure;
                         ]);
                     echo '</div>';
             }
+            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+                    echo $this->element('addSelfServiceOrderButton');
+                }
+            }
+
             if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED'))) {
                 if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
-                    echo $this->element('addInstantOrderButton', [
-                        'customers' => $customersForInstantOrderDropdown
-                    ]);
+                    echo $this->element('addInstantOrderButton');
                 }
             }
             echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
@@ -327,8 +331,7 @@ echo '<div class="bottom-button-container">';
 
     if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
         echo $this->element('addInstantOrderButton', [
-            'customers' => $customersForInstantOrderDropdown,
-            'additionalClass' => 'bottom'
+            'additionalClass' => 'bottom',
         ]);
     }
 

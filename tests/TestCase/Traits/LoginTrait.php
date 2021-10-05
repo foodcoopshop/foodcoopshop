@@ -81,10 +81,10 @@ trait LoginTrait
         $this->get($this->Slug->getLogout());
     }
 
-    public function loginAsSuperadminAddInstantOrderCustomerToSession($session)
+    public function loginAsSuperadminAddOrderCustomerToSession($session)
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
-        $sessionData['Auth']['instantOrderCustomer'] = $session['Auth']['instantOrderCustomer'];
+        $sessionData['Auth']['orderCustomer'] = $session['Auth']['orderCustomer'];
         $this->session($sessionData);
     }
 

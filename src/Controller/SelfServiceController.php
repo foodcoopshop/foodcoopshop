@@ -141,6 +141,9 @@ class SelfServiceController extends FrontendController
                     $this->request->getSession()->write('selfServiceInvoiceRoute', $invoiceRoute);
                 }
 
+                $this->resetOriginalLoggedCustomer();
+                $this->destroyOrderCustomer();
+
                 $this->redirect($redirectUrl);
                 return;
 

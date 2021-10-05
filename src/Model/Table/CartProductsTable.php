@@ -58,7 +58,7 @@ class CartProductsTable extends AppTable
     public function validateMinimalCreditBalance($appAuth, $grossPrice)
     {
         $result = true;
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isInstantOrderMode()) {
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isOrderForDifferentCustomerMode()) {
             if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
                 $result = __('The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2}).', [
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($grossPrice).'</b>',
@@ -232,7 +232,7 @@ class CartProductsTable extends AppTable
         }
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            if (!$product->manufacturer->active || (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
+            if (!$product->manufacturer->active || (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
                 $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
                 return [
                     'status' => 0,
@@ -242,7 +242,7 @@ class CartProductsTable extends AppTable
             }
         }
 
-        if (!$appAuth->isInstantOrderMode()) {
+        if (!$appAuth->isOrderForDifferentCustomerMode()) {
             if (!($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
                 if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                     $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
@@ -256,7 +256,7 @@ class CartProductsTable extends AppTable
         }
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+            if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
                 $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                     [
                         Configure::read('appDb.FCS_APP_NAME'),

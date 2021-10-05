@@ -193,18 +193,14 @@ class OrderDetailsController extends AdminAppController
 
     }
 
-    /**
-     * this url is called if instant order is initialized
-     * saves the desired user in session
-     */
-    public function initInstantOrder($customerId)
+    protected function initOrderForDifferentCustomer($customerId)
     {
         if (! $customerId) {
             throw new RecordNotFoundException('customerId not passed');
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $instantOrderCustomer = $this->Customer->find('all', [
+        $orderCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
             ],
@@ -212,17 +208,34 @@ class OrderDetailsController extends AdminAppController
                 'AddressCustomers'
             ]
         ])->first();
-        if (! empty($instantOrderCustomer)) {
-            $this->getRequest()->getSession()->write('Auth.instantOrderCustomer', $instantOrderCustomer);
+
+        if (! empty($orderCustomer)) {
+            $this->getRequest()->getSession()->write('Auth.orderCustomer', $orderCustomer);
         } else {
             $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
         }
+    }
+
+    public function initInstantOrder($customerId)
+    {
+        $this->initOrderForDifferentCustomer($customerId);
         $this->redirect('/');
     }
 
-    public function iframeStartPage()
+    public function initSelfServiceOrder($customerId)
+    {
+        $this->initOrderForDifferentCustomer($customerId);
+        $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+    }
+
+    public function iframeInstantOrder()
     {
         $this->set('title_for_layout', __d('admin', 'Instant_order'));
+    }
+
+    public function iframeSelfServiceOrder()
+    {
+        $this->set('title_for_layout', __d('admin', 'Self_service_order'));
     }
 
     public function orderDetailsAsPdf()
@@ -730,15 +743,6 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
         $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
-
-        if (!$this->AppAuth->isManufacturer()) {
-            $filter = [];
-            if ($this->AppAuth->isCustomer()) {
-                $filter = ['Customers.id_customer' => $this->AppAuth->getUserId()];
-            }
-            $customersForInstantOrderDropdown = $this->OrderDetail->Customers->getForDropdown(false, $this->AppAuth->isSuperadmin(), $filter);
-            $this->set('customersForInstantOrderDropdown', $customersForInstantOrderDropdown);
-        }
 
         $this->set('title_for_layout', __d('admin', 'Orders'));
     }

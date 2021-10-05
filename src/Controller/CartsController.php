@@ -34,7 +34,7 @@ class CartsController extends FrontendController
             'generateRightOfWithdrawalInformationPdf',
             'ajaxAdd',
             'ajaxRemove',
-            'ajaxDeleteInstantOrderCustomer',
+            'ajaxDeleteOrderForDifferentCustomer',
             'ajaxGetTimebasedCurrencyHoursDropdown',
         ]);
     }
@@ -155,10 +155,10 @@ class CartsController extends FrontendController
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
 
         $this->resetOriginalLoggedCustomer();
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
     }
 
-    public function ajaxDeleteInstantOrderCustomer()
+    public function ajaxDeleteOrderForDifferentCustomer()
     {
         try {
             $this->ajaxIsAuthorized();
@@ -170,7 +170,7 @@ class CartsController extends FrontendController
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
 
         $this->set([
             'status' => 1,

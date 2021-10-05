@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-16 10:34+0200\n"
-"PO-Revision-Date: 2021-09-16 10:34+0200\n"
+"POT-Creation-Date: 2021-09-28 21:31+0200\n"
+"PO-Revision-Date: 2021-09-28 21:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -228,6 +228,9 @@ msgstr "Continue shopping"
 msgid "Print_receipt"
 msgstr "Print receipt"
 
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} has placed a new order for {1} ({2})."
+
 msgid "Notification_about_instant_order_order"
 msgstr "Notification about instant order"
 
@@ -354,11 +357,11 @@ msgstr "Save"
 msgid "Cancel"
 msgstr "Cancel"
 
-msgid "Cancel_instant_order?"
-msgstr "Cancel instant order?"
+msgid "Cancel_order?"
+msgstr "Cancel order?"
 
-msgid "Really_cancel_instant_order?"
-msgstr "Do you really want to cancel the instant order?"
+msgid "Really_cancel_order?"
+msgstr "Do you really want to cancel the order?"
 
 msgid "January"
 msgstr "January"
@@ -531,8 +534,8 @@ msgstr "Show"
 msgid "Show_all_products"
 msgstr "Show all products"
 
-msgid "Place_instant_order_for"
-msgstr "Place instant order for"
+msgid "Place_order_for"
+msgstr "Place order for"
 
 msgid "Close_all_orders?"
 msgstr "Close all orders?"
@@ -881,6 +884,9 @@ msgstr "Really cancel invoice {0} of {1}?"
 
 msgid "Cancel_invoice"
 msgstr "Cancel invoice"
+
+msgid "The_order_was_placed_successfully."
+msgstr "The order was placed successfully."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"

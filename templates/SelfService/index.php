@@ -28,7 +28,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 
-if (!$isMobile && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
+if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
     ]);
@@ -133,8 +133,10 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        echo $this->element('cart/generalTermsAndConditionsCheckbox');
-        echo $this->element('cart/cancellationTermsCheckbox');
+        if (!$appAuth->isOrderForDifferentCustomerMode()) {
+            echo $this->element('cart/generalTermsAndConditionsCheckbox');
+            echo $this->element('cart/cancellationTermsCheckbox');
+        }
         echo $this->element('selfService/paymentTypeRadioButtons');
     ?>
     <button type="submit" class="btn btn-success btn-order">

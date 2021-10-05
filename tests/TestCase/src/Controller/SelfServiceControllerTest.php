@@ -22,6 +22,7 @@ use App\Test\TestCase\Traits\QueueTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -247,6 +248,67 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSelfServiceCustomer'));
 
     }
+
+    public function testSelfServiceOrderForDifferentCustomer()
+    {
+
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+
+        // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
+        $this->loginAsCustomer();
+        $this->addProductToCart(346, 5);
+        $this->logout();
+
+        $this->loginAsSuperadmin();
+        $testCustomer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => Configure::read('test.customerId'),
+            ]
+        ])->first();
+        $this->get($this->Slug->getOrderDetailsList().'/initSelfServiceOrder/' . Configure::read('test.customerId'));
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
+        $this->get($this->_response->getHeaderLine('Location'));
+        $this->assertResponseContains('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.');
+
+        $this->addProductToSelfServiceCart(349, 1);
+        $this->addProductToSelfServiceCart('350-13', 2, 1);
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $this->finishSelfServiceCart(1, 1, $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT);
+
+        $carts = $this->Cart->find('all', [
+            'conditions' => [
+                'Carts.id_customer' => Configure::read('test.customerId'),
+            ],
+            'order' => [
+                'Carts.id_cart' => 'DESC'
+            ],
+            'contain' => [
+                'CartProducts.OrderDetails',
+            ]
+        ])->toArray();
+
+        $this->assertEquals(2, count($carts[0]->cart_products));
+        $this->assertEquals(1, count($carts[1]->cart_products));
+
+        foreach($carts[0]->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->id_customer, $testCustomer->id_customer);
+            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        }
+
+        $this->assertMailCount(1);
+        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
+        $this->assertMailSentToAt(0, $testCustomer->email);
+
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $this->assertEquals('carts', $actionLogs[0]->object_type);
+        $this->assertEquals($carts[0]->id_cart, $actionLogs[0]->object_id);
+        $this->assertEquals($actionLogs[0]->text, 'Demo Superadmin hat eine neue Bestellung für <b>Demo Mitglied</b> getätigt (9,00 €).');
+        $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
+    }
+
 
     private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
     {

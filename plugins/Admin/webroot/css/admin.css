@@ -452,7 +452,8 @@ body.payments.product #add-payment-button-wrapper {
 body.order_details #add-instant-order-button-wrapper.bottom {
     float: left;
 }
-body.order_details #add-instant-order-button-wrapper div.select {
+body.order_details #add-instant-order-button-wrapper div.select,
+body.order_details #add-self-service-order-button-wrapper div.select {
     display: none;
 }
 body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,

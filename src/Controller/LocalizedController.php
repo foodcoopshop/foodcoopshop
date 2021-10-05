@@ -46,8 +46,8 @@ class LocalizedController extends Controller
                 'yes' => __('Yes'),
                 'save' => __('Save'),
                 'cancel' => __('Cancel'),
-                'CancelInstantOrder' => __('Cancel_instant_order?'),
-                'ReallyCancelInstantOrder' => __('Really_cancel_instant_order?'),
+                'CancelOrder' => __('Cancel_order?'),
+                'ReallyCancelOrder' => __('Really_cancel_order?'),
                 'January' => __('January'),
                 'February' => __('February'),
                 'March' => __('March'),
@@ -105,7 +105,7 @@ class LocalizedController extends Controller
                 'removeFromCart' => __('Remove_from_cart?'),
                 'forEach' => __('for_each'),
                 'approx' => __('approx.'),
-                'PickupDay' => __('Pickup_day')
+                'PickupDay' => __('Pickup_day'),
             ],
             'mobile' => [
                 'home' => __('Home'),
@@ -123,7 +123,7 @@ class LocalizedController extends Controller
             ],
             'admin' => [
                 'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
-                'PlaceInstantOrderFor' => __('Place_instant_order_for'),
+                'PlaceOrderFor' => __('Place_order_for'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
                 'EmailAddresses' => __('Email_addresses'),
@@ -241,6 +241,7 @@ class LocalizedController extends Controller
                 'PaidInCash' => __('Paid_in_cash'),
                 'ReallyCancelInvoiceNumber0OfCustomer1' => __('Really_cancel_invoice_number_{0}_of_{1}?'),
                 'CancelInvoice' => __('Cancel_invoice'),
+                'TheOrderWasPlacedSuccessfully' => __('The_order_was_placed_successfully.'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

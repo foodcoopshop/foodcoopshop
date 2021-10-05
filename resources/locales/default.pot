@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-09-16 10:34+0200\n"
+"POT-Creation-Date: 2021-09-28 21:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -227,6 +227,9 @@ msgstr ""
 msgid "Print_receipt"
 msgstr ""
 
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr ""
+
 msgid "Notification_about_instant_order_order"
 msgstr ""
 
@@ -353,10 +356,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-msgid "Cancel_instant_order?"
+msgid "Cancel_order?"
 msgstr ""
 
-msgid "Really_cancel_instant_order?"
+msgid "Really_cancel_order?"
 msgstr ""
 
 msgid "January"
@@ -530,7 +533,7 @@ msgstr ""
 msgid "Show_all_products"
 msgstr ""
 
-msgid "Place_instant_order_for"
+msgid "Place_order_for"
 msgstr ""
 
 msgid "Close_all_orders?"
@@ -879,6 +882,9 @@ msgid "Really_cancel_invoice_number_{0}_of_{1}?"
 msgstr ""
 
 msgid "Cancel_invoice"
+msgstr ""
+
+msgid "The_order_was_placed_successfully."
 msgstr ""
 
 msgid "Were_the_products_picked_up?"

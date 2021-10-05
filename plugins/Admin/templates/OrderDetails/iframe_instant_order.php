@@ -20,5 +20,5 @@ $this->element('addScript', [
     "
 ]);
 ?>
-<h4><?php echo __d('admin', 'Please_chose_member_in_above_dropdown_for_placing_instant_order.')?></h4>
+<h4><?php echo __d('admin', 'Please_chose_member_in_above_dropdown_for_placing_order.')?></h4>
 <h4><?php echo __d('admin', 'The_pickup_day_of_the_instant_order_will_be_today_{0}.', [$this->Time->getDateFormattedWithWeekday($this->Time->getCurrentDay())]); ?></h4>

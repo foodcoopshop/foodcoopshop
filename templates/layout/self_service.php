@@ -29,25 +29,27 @@ echo $this->element('layout/header');
     ?>
     <?php echo $this->fetch('content'); ?>
 
-    <div class="footer">
-        <div class="left-wrapper">
-            <?php
-                $logoutButton = $this->Menu->getAuthMenuElement($appAuth);
-                if ($appAuth->user()) { ?>
-                    <a class="btn btn-success <?php echo join(' ', $logoutButton['options']['class']); ?>" href="<?php echo $logoutButton['slug']; ?>"><i class="fas fa-fw fa-sign-out-alt"></i><?php echo $logoutButton['name']; ?></a> <span class="user-name-wrapper"><?php echo $appAuth->getUserName(); ?>
-                    <?php if (Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) { ?>
-                         - </span><?php echo str_replace('X', '<span class="auto-logout-timer"></span>', __('Auto_logout_in_X_sec')); ?>
-                    <?php } ?>
-            <?php } ?>
+    <?php if (!$appAuth->isOrderForDifferentCustomerMode()) { ?>
+        <div class="footer">
+            <div class="left-wrapper">
+                <?php
+                    $logoutButton = $this->Menu->getAuthMenuElement($appAuth);
+                    if ($appAuth->user()) { ?>
+                        <a class="btn btn-success <?php echo join(' ', $logoutButton['options']['class']); ?>" href="<?php echo $logoutButton['slug']; ?>"><i class="fas fa-fw fa-sign-out-alt"></i><?php echo $logoutButton['name']; ?></a> <span class="user-name-wrapper"><?php echo $appAuth->getUserName(); ?>
+                        <?php if (Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) { ?>
+                             - </span><?php echo str_replace('X', '<span class="auto-logout-timer"></span>', __('Auto_logout_in_X_sec')); ?>
+                        <?php } ?>
+                <?php } ?>
+            </div>
+            <div class="right-wrapper">
+                <a class="btn btn-success" href="<?php echo $this->Slug->getHome(); ?>">
+                    <i class="fas fa-home"></i> <?php echo __('Home'); ?>
+                </a>
+                <?php echo $this->element('selfService/addDeposit'); ?>
+                <?php echo $this->element('logo'); ?>
+            </div>
         </div>
-        <div class="right-wrapper">
-            <a class="btn btn-success" href="<?php echo $this->Slug->getHome(); ?>">
-                <i class="fas fa-home"></i> <?php echo __('Home'); ?>
-            </a>
-            <?php echo $this->element('selfService/addDeposit'); ?>
-            <?php echo $this->element('logo'); ?>
-        </div>
-    </div>
+    <?php } ?>
 
 </div>
 
