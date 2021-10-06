@@ -69,7 +69,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
         // START DROPDOWN
         var customerDropdownId = 'customerDropdown';
-        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceOrderFor + ': <select id="' + customerDropdownId + '"><option value="0">' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '</option></select></span></div>');
+        var header = $('<div class="message-container"><span class="start"><span class="title">' + foodcoopshop.LocalizedJs.admin.PlaceOrderFor + ': </span><select id="' + customerDropdownId + '"><option value="0">' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '</option></select></span></div>');
         $(modalSelector + ' .modal-title').append(header);
 
         var customerDropdownSelector = '#' + customerDropdownId;

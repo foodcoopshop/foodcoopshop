@@ -151,3 +151,6 @@ table.list tr.fake-th td {
 .modal .field-wrapper label:not(.checkbox) {
     width: 100%;
 }
+#order-for-different-customer-add .bootstrap-select {
+    width: 100% ! important;
+}

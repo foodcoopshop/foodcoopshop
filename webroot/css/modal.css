@@ -61,10 +61,11 @@
 }
 #order-for-different-customer-add .bootstrap-select {
     width: 300px ! important;
-    margin-top: -5px;
 }
-#order-for-different-customer-add .modal-header .start {
-    line-height: 35px;
+#order-for-different-customer-add .modal-header .start span.title {
+    float: left;
+    line-height: 30px;
+    margin-right: 5px;
 }
 #order-for-different-customer-add .bootstrap-select div.filter-option-inner-inner i.fas {
     top: 10px;
