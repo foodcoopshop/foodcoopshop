@@ -22,7 +22,6 @@ use App\Test\TestCase\Traits\QueueTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -221,7 +220,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(351, 1, '0,5');
 
         $this->Cart = $this->getTableLocator()->get('Carts');
-        $this->finishSelfServiceCart(1, 1, $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH);
+        $this->finishSelfServiceCart(1, 1);
         $this->runAndAssertQueue();
         $this->assertSessionHasKey('selfServiceInvoiceRoute');
 
@@ -347,13 +346,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ]);
     }
 
-    private function finishSelfServiceCart($generalTermsAndConditionsAccepted, $cancellationTermsAccepted, $selfServicePaymentType = 1)
+    private function finishSelfServiceCart($generalTermsAndConditionsAccepted, $cancellationTermsAccepted)
     {
         $data = [
             'Carts' => [
                 'general_terms_and_conditions_accepted' => $generalTermsAndConditionsAccepted,
                 'cancellation_terms_accepted' => $cancellationTermsAccepted,
-                'self_service_payment_type' => $selfServicePaymentType,
             ],
         ];
         $this->configRequest([

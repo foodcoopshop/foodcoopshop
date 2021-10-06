@@ -208,6 +208,10 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     padding-bottom: 80px;
     border-left: 1px solid #d6d4d4;
 }
+.self-service #SelfServiceForm p.payment-type {
+    padding-left: 5px;
+    width: 100%;
+}
 .self-service .product.error,
 .self-service .error-message {
     background: #f3515c;

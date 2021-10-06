@@ -540,7 +540,11 @@ class CartComponent extends Component
                         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
                         $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
                         $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
-                        $paidInCash = $this->getController()->getRequest()->getData('Carts.self_service_payment_type') == $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH ? 1 : 0;
+
+                        $paidInCash = false;
+                        if ($this->AppAuth->isSelfServiceCustomer()) {
+                            $paidInCash = true;
+                        }
                         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
                             $helloCash = new HelloCash();
                             $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);

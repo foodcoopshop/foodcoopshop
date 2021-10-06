@@ -91,26 +91,12 @@ class SelfServiceController extends FrontendController
             }
         }
 
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-            $this->Cart = $this->getTableLocator()->get('Carts');
-            $defaultSelfServicePaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT;
-            if ($this->AppAuth->isSelfServiceCustomer()) {
-                $defaultSelfServicePaymentType = $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CASH;
-            }
-            $this->request = $this->request->withData('Carts.self_service_payment_type', $defaultSelfServicePaymentType);
-        }
-
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
             $cart = $this->AppAuth->getCart();
             $this->set('cart', $cart['Cart']);
         }
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
-
-            // data gets lost form element if it is disabled
-            if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-                $this->request = $this->request->withData('Carts.self_service_payment_type', $defaultSelfServicePaymentType);
-            }
 
             if ($this->AppAuth->Cart->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));

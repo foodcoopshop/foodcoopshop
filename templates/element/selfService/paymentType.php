@@ -20,16 +20,12 @@ if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     return false;
 }
 
-$cartTable = FactoryLocator::get('Table')->get('Carts');
-echo $this->Form->control('Carts.self_service_payment_type', [
-    'label' => __('Payment_type'),
-    'type' => 'radio',
-    'options' => [
-        $cartTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH => __('Cash'),
-        $cartTable::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT => __('Credit')
-    ],
-    'disabled' => true,
-    'escape' => false,
-]);
+$cartsTable = FactoryLocator::get('Table')->get('Carts');
+$paymentTypeAsString = __('Credit');
+if ($paymentType == $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH) {
+    $paymentTypeAsString =  __('Cash');
+}
+
+echo '<p class="payment-type">' .  __('Payment_type') . ': ' . $paymentTypeAsString . '</p>';
 
 ?>

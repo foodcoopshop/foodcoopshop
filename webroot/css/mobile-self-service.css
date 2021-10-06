@@ -51,6 +51,8 @@
        display: none;
     }
     .self-service #SelfServiceForm {
+       padding-left: 13px;
+       padding-right: 13px;
        border-left: none;
     }
     .self-service form div.error-message {
@@ -68,7 +70,6 @@
        position: static;
        display: none;
        width: 100%;
-       margin-top: 10px;
        padding-bottom: 20px;
     }
     .self-service .right-box .input.checkbox,
