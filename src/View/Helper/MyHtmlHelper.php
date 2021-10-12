@@ -647,7 +647,19 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
-        $imageFilename = $blogPost->id_blog_post . '-' . $size . '-default.jpg';
+        $dir = new Folder($thumbsPath);
+        $files = $dir->read();
+        if (!empty($files[1])) {
+            foreach($files[1] as $file) {
+                preg_match('/' . $blogPost->id_blog_post .'-home-default\.(.*)/', $file, $matches);
+                if (!empty($matches[1])) {
+                    $extension = $matches[1];
+                    $imageFilename = $blogPost->id_blog_post . '-' . $size . '-default.' . $extension;
+                    continue;
+                }
+            }
+        }
+
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
 
             $manufacturerSize = "medium";

@@ -4,6 +4,8 @@ namespace Admin\Controller;
 
 use App\Controller\AppController;
 use Intervention\Image\ImageManagerStatic as Image;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,12 +39,14 @@ class AdminAppController extends AppController
      */
     protected function deleteUploadedImage($imageId, $thumbsPath, $imageSizes)
     {
-
-        // delete physical files
-        foreach ($imageSizes as $thumbSize => $options) {
-            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.jpg';
-            if (file_exists($thumbsFileName)) {
-                unlink($thumbsFileName);
+        $dir = new Folder($thumbsPath);
+        $files = $dir->read();
+        if (!empty($files[1])) {
+            foreach($files[1] as $file) {
+                if (preg_match('/' . $imageId . '/', $file)) {
+                    $file = new File($thumbsPath . DS . $file);
+                    $file->delete();
+                }
             }
         }
     }
@@ -53,10 +57,11 @@ class AdminAppController extends AppController
      * @param string $filename
      * @param string $thumbsPath
      * @param array $imageSizes
-     * @return string
      */
     protected function saveUploadedImage($imageId, $filename, $thumbsPath, $imageSizes)
     {
+
+        $this->deleteUploadedImage($imageId, $thumbsPath, $imageSizes);
 
         // if image was rotated, cut off ?xyz (random string)
         $explodedFilename = explode('?', $filename);
