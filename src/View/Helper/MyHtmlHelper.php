@@ -3,6 +3,7 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
 use Cake\Utility\Text;
 use Cake\View\View;
@@ -736,7 +737,16 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getProductThumbsPath($imageIdAsPath);
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'products' . DS;
 
-        $imageFilename = $imageId . '-' . $size . '_default.jpg';
+        $dir = new Folder($thumbsPath);
+        $files = $dir->read();
+        if (!empty($files[1])) {
+            preg_match('/home_default\.(.*)/', $files[1][0], $matches);
+            if (!empty($matches[1])) {
+                $extension = $matches[1];
+                $imageFilename = $imageId . '-' . $size . '_default.' . $extension;
+            }
+        }
+
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {

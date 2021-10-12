@@ -389,10 +389,12 @@ class ProductsController extends AdminAppController
 
         // recursively create path
         $dir = new Folder();
+        $dir->delete($thumbsPath);
         $dir->create($thumbsPath);
         $dir->chmod($thumbsPath, 0755);
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+
             $physicalImage = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($physicalImage->getHeight() > $physicalImage->getWidth()) {
