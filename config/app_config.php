@@ -58,7 +58,6 @@ return [
             'GIF'=> 'image/gif',
             'JPG' => 'image/jpeg',
             'PNG' => 'image/png',
-            'WEBP' => 'image/webp',
         ],
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
         'uploadedFilesDir' => DS . 'files' . DS . 'files',
