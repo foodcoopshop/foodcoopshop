@@ -177,7 +177,7 @@ class ManufacturersController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('Manufacturers.delete_image'))) {
-                $this->deleteUploadedImage($manufacturer->id_manufacturer, Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
+                $this->deleteUploadedImage($manufacturer->id_manufacturer, Configure::read('app.htmlHelper')->getManufacturerThumbsPath());
             }
 
             if (!empty($this->getRequest()->getData('Manufacturers.tmp_general_terms_and_conditions'))) {

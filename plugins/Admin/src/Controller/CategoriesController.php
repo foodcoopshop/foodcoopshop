@@ -113,11 +113,12 @@ class CategoriesController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('Categories.delete_image'))) {
-                $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
+                $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath());
             }
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Categories.delete_category'))) {
+                $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath());
                 $this->Category->delete($category);
                 $actionLogType = 'category_deleted';
                 $messageSuffix = __d('admin', 'deleted');

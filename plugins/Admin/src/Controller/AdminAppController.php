@@ -37,13 +37,13 @@ class AdminAppController extends AppController
     /**
      * deletes physical files (thumbs)
      */
-    protected function deleteUploadedImage($imageId, $thumbsPath, $imageSizes)
+    protected function deleteUploadedImage($imageId, $thumbsPath)
     {
         $dir = new Folder($thumbsPath);
         $files = $dir->read();
         if (!empty($files[1])) {
             foreach($files[1] as $file) {
-                if (preg_match('/' . $imageId . '/', $file)) {
+                if (preg_match('/^' . $imageId . '-/', $file)) {
                     $file = new File($thumbsPath . DS . $file);
                     $file->delete();
                 }
@@ -61,7 +61,7 @@ class AdminAppController extends AppController
     protected function saveUploadedImage($imageId, $filename, $thumbsPath, $imageSizes)
     {
 
-        $this->deleteUploadedImage($imageId, $thumbsPath, $imageSizes);
+        $this->deleteUploadedImage($imageId, $thumbsPath);
 
         // if image was rotated, cut off ?xyz (random string)
         $explodedFilename = explode('?', $filename);
