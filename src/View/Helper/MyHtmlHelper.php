@@ -660,7 +660,7 @@ class MyHtmlHelper extends HtmlHelper
             }
         }
 
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
+        if (!isset($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
 
             $manufacturerSize = "medium";
             if($size == "single") {
@@ -759,7 +759,7 @@ class MyHtmlHelper extends HtmlHelper
             }
         }
 
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
+        if (!isset($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageIdAsPath . DS . $imageFilename;
