@@ -633,7 +633,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($urlPrefix . $sliderImage);
     }
 
-    protected function getImageFile($thumbsPath, $filenameWithoutExtension)
+    public function getImageFile($thumbsPath, $filenameWithoutExtension)
     {
         $imageFilename = null;
         $dir = new Folder($thumbsPath);
