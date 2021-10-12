@@ -662,9 +662,9 @@ class MyHtmlHelper extends HtmlHelper
 
         if (!isset($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
 
-            $manufacturerSize = "medium";
-            if($size == "single") {
-                $manufacturerSize = "large";
+            $manufacturerSize = 'medium';
+            if($size == 'single') {
+                $manufacturerSize = 'large';
             }
 
             $imageFilenameAndPath = $urlPrefix . 'no-' . $size . '-default.jpg';
@@ -698,12 +698,23 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getManufacturerThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
 
-        $imageFilename = $manufacturerId . '-' . $size . '_default.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
-            $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
-        } else {
-            $imageFilenameAndPath = $urlPrefix . $imageFilename;
+        $dir = new Folder($thumbsPath);
+        $files = $dir->read();
+        if (!empty($files[1])) {
+            foreach($files[1] as $file) {
+                preg_match('/' . $manufacturerId .'-' . $size . '_default\.(.*)/', $file, $matches);
+                if (!empty($matches[1])) {
+                    $extension = $matches[1];
+                    $imageFilename = $manufacturerId . '-' . $size . '_default.' . $extension;
+                    continue;
+                }
+            }
         }
+
+        if (!isset($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
+            $imageFilename = 'de-default-' . $size . '_default.jpg';
+        }
+        $imageFilenameAndPath = $urlPrefix . $imageFilename;
 
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
@@ -713,14 +724,26 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getCustomerThumbsPath();
         $urlPrefix = 'profile-images/customers/';
 
-        $imageFilename = $customerId . '-' . $size . '.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
-            $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
-        } else {
-            $imageFilenameAndPath = $urlPrefix . $imageFilename;
+        $dir = new Folder($thumbsPath);
+        $files = $dir->read();
+        if (!empty($files[1])) {
+            foreach($files[1] as $file) {
+                preg_match('/' . $customerId . '-' . $size . '\.(.*)/', $file, $matches);
+                if (!empty($matches[1])) {
+                    $extension = $matches[1];
+                    $imageFilename = $customerId . '-' . $size . '.' . $extension;
+                    continue;
+                }
+            }
         }
 
-        $physicalFile = Configure::read('app.customerImagesDir') . DS . $imageFilename;
+        if (!isset($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
+            $imageFilename = 'de-default-' . $size . '_default.jpg';
+        }
+
+        $imageFilenameAndPath = $urlPrefix . $imageFilename;
+
+        $physicalFile = $thumbsPath . DS . $imageFilename;
         if (file_exists($physicalFile)) {
             $imageFilenameAndPath .= '?' . filemtime($physicalFile);
         }
@@ -733,8 +756,20 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getCategoryThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
 
-        $imageFilename = $categoryId . '-category_default.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
+        $dir = new Folder($thumbsPath);
+        $files = $dir->read();
+        if (!empty($files[1])) {
+            foreach($files[1] as $file) {
+                preg_match('/' . $categoryId .'-category_default\.(.*)/', $file, $matches);
+                if (!empty($matches[1])) {
+                    $extension = $matches[1];
+                    $imageFilename = $categoryId . '-category_default' . '.' . $extension;
+                    continue;
+                }
+            }
+        }
+
+        if (!isset($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
             return false; // do not show any image if image does not exist
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
