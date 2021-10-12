@@ -639,13 +639,9 @@ class MyHtmlHelper extends HtmlHelper
         $dir = new Folder($thumbsPath);
         $files = $dir->read();
         if (!empty($files[1])) {
-            foreach($files[1] as $file) {
-                preg_match('/' . $filenameWithoutExtension . '\.(.*)/', $file, $matches);
-                if (!empty($matches[1])) {
-                    $extension = $matches[1];
-                    $imageFilename = $filenameWithoutExtension . '.' . $extension;
-                    continue;
-                }
+            $matches = preg_grep('/' . $filenameWithoutExtension . '\.(.*)/', $files[1]);
+            if (!empty($matches)) {
+                $imageFilename = array_values($matches)[0];
             }
         }
         return $imageFilename;
