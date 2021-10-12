@@ -55,9 +55,9 @@ return [
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS . 'tmp',
         'allowedImageMimeTypes' => [
-            'GIF'=> 'image/gif',
-            'JPG' => 'image/jpeg',
+            'JPG' => 'image/jpeg', // keep jpg as first element for best performance
             'PNG' => 'image/png',
+            'GIF'=> 'image/gif',
         ],
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
         'uploadedFilesDir' => DS . 'files' . DS . 'files',

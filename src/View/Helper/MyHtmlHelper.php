@@ -636,12 +636,11 @@ class MyHtmlHelper extends HtmlHelper
     public function getImageFile($thumbsPath, $filenameWithoutExtension)
     {
         $imageFilename = null;
-        $dir = new Folder($thumbsPath);
-        $files = $dir->read();
-        if (!empty($files[1])) {
-            $matches = preg_grep('/' . $filenameWithoutExtension . '\.(.*)/', $files[1]);
-            if (!empty($matches)) {
-                $imageFilename = array_values($matches)[0];
+        foreach(Configure::read('app.allowedImageMimeTypes') as $allowedImageExtension => $allowedImageMimeType) {
+            $imageFilenameWithExtension = $filenameWithoutExtension . '.' . strtolower($allowedImageExtension);
+            $imageFilename = $thumbsPath . DS . $imageFilenameWithExtension;
+            if (file_exists($imageFilename)) {
+                return $imageFilenameWithExtension;
             }
         }
         return $imageFilename;
