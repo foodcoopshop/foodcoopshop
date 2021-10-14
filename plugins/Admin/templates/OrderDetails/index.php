@@ -296,7 +296,9 @@ if ($groupBy != 'customer') {
     if ($sums['deposit']> 0) {
         $sumDepositString = $this->Number->formatAsCurrency($sums['deposit']);
     }
-    echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+    if (Configure::read('app.isDepositEnabled')) {
+        echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+    }
 } else {
     if (Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless')) {
         echo '<td></td>';

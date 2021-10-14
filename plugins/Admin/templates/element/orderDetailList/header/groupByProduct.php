@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 echo '<th class="right">';
     echo $this->Paginator->sort('sum_amount', __d('admin', 'Amount'));
 echo '</th>';
@@ -29,8 +31,9 @@ echo '<th class="right">';
     echo $this->Paginator->sort('sum_price', __d('admin', 'Price'));
 echo '</th>';
 
-echo '<th class="right">';
-    echo $this->Paginator->sort('sum_deposit', __d('admin', 'Deposit'));
-echo '</th>';
-
+if (Configure::read('app.isDepositEnabled')) {
+    echo '<th class="right">';
+        echo $this->Paginator->sort('sum_deposit', __d('admin', 'Deposit'));
+    echo '</th>';
+}
 ?>
