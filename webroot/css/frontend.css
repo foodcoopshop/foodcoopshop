@@ -130,8 +130,8 @@ body.categories.detail div.description-wrapper {
     width: 180px;
 }
 .vertical.menu li.header {
-    padding: 10px;
-    font-size: 16px;
+    padding: 8px 10px;
+    font-size: 18px;
     padding-left: 10px;
     color: #fff;
     border-bottom: 1px solid #dfdfdf;
@@ -386,7 +386,6 @@ a[disabled] {
 }
 .product-wrapper .heading h4 {
     float: left;
-    font-weight: 600;
     margin-top: 0;
     margin-right: 10px;
     line-height: 23px;
@@ -694,8 +693,8 @@ body.manufacturers.detail .imprint {
 }
 .box h3 {
     color: #fff;
-    padding: 10px;
-    font-size: 16px;
+    padding: 8px 10px;
+    font-size: 18px;
     margin: 0;
     font-weight: 600;
 }

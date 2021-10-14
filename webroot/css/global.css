@@ -51,6 +51,7 @@ a:not(.btn):hover {
 }
 h4 {
     font-size: 20px;
+    font-weight: 600;
 }
 select {
     background-color: #fff;
@@ -183,7 +184,7 @@ h2.info2 {
     color: #fff;
     line-height: 19px;
     clear: both;
-    font-weight: normal;
+    font-weight: normal ! important;
 }
 h2.warning {
     background-color: #f3515c;
