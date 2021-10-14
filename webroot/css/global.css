@@ -134,7 +134,7 @@ h1 {
     font-size: 26px;
     margin-bottom: 10px;
     margin-top: 0;
-    font-weight: normal;
+    font-weight: 600;
 }
 h1.middle-line {
     display: flex;
@@ -146,6 +146,7 @@ h1:not(.middle-line) span {
     letter-spacing: 0;
     float: right;
     line-height: 34px;
+    font-weight: normal;
 }
 h1.middle-line span.left {
     margin-bottom: -5px;
@@ -163,12 +164,13 @@ h1.middle-line span.right {
     align-self: flex-end;
     margin-bottom: -2px;
     text-align: right;
+    font-weight: normal;
 }
 h2 {
     font-size: 26px;
     margin-bottom: 10px;
     margin-top: 0;
-    font-weight: normal;
+    font-weight: 600;
 }
 h2.warning,
 h2.info,
@@ -181,6 +183,7 @@ h2.info2 {
     color: #fff;
     line-height: 19px;
     clear: both;
+    font-weight: normal;
 }
 h2.warning {
     background-color: #f3515c;

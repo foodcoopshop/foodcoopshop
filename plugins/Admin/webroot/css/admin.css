@@ -634,6 +634,7 @@ h2 {
 h2 span {
     font-size: 12px;
     color: #333;
+    font-weight: normal;
 }
 .fcs-form h2:not(:nth-of-type(1)) {
     margin-top: 25px;
