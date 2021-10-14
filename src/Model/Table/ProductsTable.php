@@ -1321,6 +1321,7 @@ class ProductsTable extends AppTable
 
             $imageFromRemoteServer = $product[$productId];
             $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
+            $extension = strtolower(pathinfo($imageFromRemoteServer, PATHINFO_EXTENSION));
 
             $product = $this->find('all', [
                 'conditions' => [
@@ -1349,11 +1350,12 @@ class ProductsTable extends AppTable
 
                 // recursively create path
                 $dir = new Folder();
+                $dir->delete($thumbsPath);
                 $dir->create($thumbsPath);
                 $dir->chmod($thumbsPath, 0755);
 
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
                     $remoteFileName = preg_replace('/-home_default/', $options['suffix'], $imageFromRemoteServer);
                     copy($remoteFileName, $thumbsFileName);
                 }
@@ -1366,12 +1368,8 @@ class ProductsTable extends AppTable
                 ]);
 
                 // delete physical files
-                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
-                    if (file_exists($thumbsFileName)) {
-                        unlink($thumbsFileName);
-                    }
-                }
+                $dir = new Folder();
+                $dir->delete($thumbsPath);
 
             }
         }

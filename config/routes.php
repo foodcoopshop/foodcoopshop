@@ -95,7 +95,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/js/localized-javascript', ['controller' => 'Localized', 'action' => 'renderAsJsFile'])->setExtensions(['js']);
 
     // first folder must not exist physically!
-    $builder->connect('/photos/profile-images/customers/:imageSrc', ['controller' => 'Customers', 'action' => 'profileImage'])->setExtensions(['jpg']);
+    $builder->connect('/photos/profile-images/customers/:imageSrc', ['controller' => 'Customers', 'action' => 'profileImage']);
 
     /*
      * Connect catchall routes for all controllers.

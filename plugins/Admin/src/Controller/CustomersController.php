@@ -351,7 +351,7 @@ class CustomersController extends AdminAppController
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
         $this->ActionLog->removeCustomerEmailFromAllActionLogs($customer->email);
 
-        $this->deleteUploadedImage($customerId, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
+        $this->deleteUploadedImage($customerId, Configure::read('app.htmlHelper')->getCustomerThumbsPath());
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {

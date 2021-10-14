@@ -49,6 +49,8 @@ class CustomersController extends FrontendController
         // customer exists check (if customer was deleted and somehow files were not deleted)
         $customerId = explode('-', $this->request->getParam('imageSrc'));
         $customerId = $customerId[0];
+        $extension = strtolower(pathinfo($this->request->getParam('imageSrc'), PATHINFO_EXTENSION));
+
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -56,11 +58,12 @@ class CustomersController extends FrontendController
             ],
         ])->first();
         if (empty($customer)) {
-            throw new NotFoundException('image not found');
+            throw new NotFoundException('customer not found');
         }
 
-        $this->RequestHandler->renderAs($this, 'jpg');
-        $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc') . '.jpg';
+        $this->RequestHandler->renderAs($this, $extension);
+        $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc');
+
         if (!file_exists($imagePath)) {
             throw new NotFoundException('image not found');
         }

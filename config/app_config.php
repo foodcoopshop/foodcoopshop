@@ -54,6 +54,11 @@ return [
         'jsNamespace' => 'foodcoopshop',
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS . 'tmp',
+        'allowedImageMimeTypes' => [
+            'JPG' => 'image/jpeg', // keep jpg as first element for best performance
+            'PNG' => 'image/png',
+            'GIF'=> 'image/gif',
+        ],
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
         'uploadedFilesDir' => DS . 'files' . DS . 'files',
         'customerImagesDir' => ROOT . DS . 'files_private'. DS . 'customers',
