@@ -155,96 +155,110 @@ class ProductsController extends AdminAppController
     {
 
         $this->RequestHandler->renderAs($this, 'json');
-
         $productIds = $this->getRequest()->getData('productIds');
-        $surcharge = (int) h($this->getRequest()->getData('surcharge'));
 
-        $products = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product IN' => $productIds,
-            ],
-            'contain' => [
-                'Taxes',
-                'Manufacturers',
-                'ProductAttributes.PurchasePriceProductAttributes',
-                'ProductAttributes.UnitProductAttributes',
-                'PurchasePriceProducts.Taxes',
-                'UnitProducts',
-            ]
-        ]);
+        try {
 
-        $preparedProductsForActionLog = [];
-        foreach($products as $product) {
+            $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
+            if ($surcharge < 0) {
+                throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0'));
+            }
 
-            $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
-            $sellingPriceTaxRate = $product->tax->rate ?? 0;
+            $products = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product IN' => $productIds,
+                ],
+                'contain' => [
+                    'Taxes',
+                    'Manufacturers',
+                    'ProductAttributes.PurchasePriceProductAttributes',
+                    'ProductAttributes.UnitProductAttributes',
+                    'PurchasePriceProducts.Taxes',
+                    'UnitProducts',
+                ]
+            ]);
 
-            $pricesToChange = [];
+            $preparedProductsForActionLog = [];
 
-            if (empty($product->product_attributes)) {
+            foreach($products as $product) {
 
-                // main product
+                $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
+                $sellingPriceTaxRate = $product->tax->rate ?? 0;
 
-                $grossPrice = 0;
-                if (!empty($product->purchase_price_product)) {
-                    $purchasePriceNetWithSurcharge = $product->purchase_price_product->price * (100 + $surcharge) / 100;
-                    $grossPrice = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
-                }
+                $preparedProductData = [];
 
-                $grossPricePerUnit = 0;
-                if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
-                    $purchasePriceNet = $this->Product->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
-                    $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
-                    $grossPricePerUnit = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
-                }
+                if (empty($product->product_attributes)) {
 
-                $pricesToChange[] = [
-                    $product->id_product => [
-                        'gross_price' => $grossPrice,
-                        'unit_product_price_per_unit_enabled' => !empty($product->unit_product) ? $product->unit_product->price_per_unit_enabled : 0,
-                        'unit_product_price_incl_per_unit' => $grossPricePerUnit > 0 ? $grossPricePerUnit : null,
-                        'unit_product_name' => !empty($product->unit_product) ? $product->unit_product->name : null,
-                        'unit_product_amount' => !empty($product->unit_product) ? $product->unit_product->amount : null,
-                        'unit_product_quantity_in_units' => !empty($product->unit_product) ? $product->unit_product->quantity_in_units : null,
-                    ]
-                ];
-
-            } else {
-
-                foreach($product->product_attributes as $attribute) {
-
-                    $productId = $product->id_product . '-' . $attribute->id_product_attribute;
+                    // main product
 
                     $grossPrice = 0;
-                    if (!empty($attribute->purchase_price_product_attribute)) {
-                        $purchasePriceNetWithSurcharge = $attribute->purchase_price_product_attribute->price * (100 + $surcharge) / 100;
-                        $grossPrice = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
+                    if (!empty($product->purchase_price_product)) {
+                        $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
                     }
 
                     $grossPricePerUnit = 0;
-                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                        $purchasePriceNet = $this->Product->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
-                        $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
-                        $grossPricePerUnit = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
+                    if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
+                        $purchasePriceNet = $this->Product->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
+                        $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                     }
 
-                    $pricesToChange[] = [
-                        $productId => [
+                    $preparedProductData[] = [
+                        'product_id' => $product->id_product,
+                        'gross_price' => $grossPrice,
+                        'price_incl_per_unit' => $grossPricePerUnit,
+                        'price_per_unit_entity' => $product->unit_product,
+                    ];
+
+                } else {
+
+                    foreach($product->product_attributes as $attribute) {
+
+                        // attribute
+
+                        $productId = $product->id_product . '-' . $attribute->id_product_attribute;
+
+                        $grossPrice = 0;
+                        if (!empty($attribute->purchase_price_product_attribute)) {
+                            $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
+                        }
+
+                        $grossPricePerUnit = 0;
+                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                            $purchasePriceNet = $this->Product->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
+                            $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                        }
+
+                        $preparedProductData[] = [
+                            'product_id' => $productId,
                             'gross_price' => $grossPrice,
-                            'unit_product_price_per_unit_enabled' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_per_unit_enabled : 0,
-                            'unit_product_price_incl_per_unit' => $grossPricePerUnit > 0 ? $grossPricePerUnit : null,
-                            'unit_product_name' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->name : null,
-                            'unit_product_amount' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->amount : null,
-                            'unit_product_quantity_in_units' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->quantity_in_units : null,
-                        ]
+                            'price_incl_per_unit' => $grossPricePerUnit,
+                            'price_per_unit_entity' => $attribute->unit_product_attribute,
+                        ];
+
+                    }
+
+                }
+
+                $pricesToChange = [];
+                foreach($preparedProductData as $ppd) {
+                    $pricesToChange[] = [
+                        $ppd['product_id'] => [
+                            'gross_price' => $ppd['gross_price'],
+                            'unit_product_price_incl_per_unit' => $ppd['price_incl_per_unit'] > 0 ? $ppd['price_incl_per_unit'] : null,
+                            'unit_product_price_per_unit_enabled' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->price_per_unit_enabled : 0,
+                            'unit_product_name' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->name : null,
+                            'unit_product_amount' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->amount : null,
+                            'unit_product_quantity_in_units' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->quantity_in_units : null,
+                        ],
                     ];
 
                 }
 
+                $this->Product->changePrice($pricesToChange);
             }
 
-            $this->Product->changePrice($pricesToChange);
-
+        } catch (\Exception $e) {
+            return $this->sendAjaxError($e);
         }
 
         $message = __d('admin', 'The_selling_price_of_{0,plural,=1{1_product_was} other{#_products_were}}_was_set_to_{1}_%_of_PP.', [
