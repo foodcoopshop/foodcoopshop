@@ -205,15 +205,13 @@ class ProductsController extends AdminAppController
                         $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                     }
 
-                    if ($grossPricePerUnit > 0) {
-                        $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
-                        $preparedProductData[] = [
-                            'product_id' => $productId,
-                            'gross_price' => $grossPrice,
-                            'price_incl_per_unit' => $grossPricePerUnit,
-                            'price_per_unit_entity' => $product->unit_product,
-                        ];
-                    }
+                    $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
+                    $preparedProductData[] = [
+                        'product_id' => $productId,
+                        'gross_price' => $grossPrice,
+                        'price_incl_per_unit' => $grossPricePerUnit,
+                        'price_per_unit_entity' => $product->unit_product,
+                    ];
 
                 } else {
 
@@ -234,15 +232,13 @@ class ProductsController extends AdminAppController
                             $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                         }
 
-                        if ($grossPricePerUnit > 0) {
-                            $preparedProductsForActionLog[] = '<b>' . $product->name . ': ' . $attribute->product_attribute_combination->attribute->name . '</b>: ID ' . $productId . ',  ' . $product->manufacturer->name;
-                            $preparedProductData[] = [
-                                'product_id' => $productId,
-                                'gross_price' => $grossPrice,
-                                'price_incl_per_unit' => $grossPricePerUnit,
-                                'price_per_unit_entity' => $attribute->unit_product_attribute,
-                            ];
-                        }
+                        $preparedProductsForActionLog[] = '<b>' . $product->name . ': ' . $attribute->product_attribute_combination->attribute->name . '</b>: ID ' . $productId . ',  ' . $product->manufacturer->name;
+                        $preparedProductData[] = [
+                            'product_id' => $productId,
+                            'gross_price' => $grossPrice,
+                            'price_incl_per_unit' => $grossPricePerUnit,
+                            'price_per_unit_entity' => $attribute->unit_product_attribute,
+                        ];
 
                     }
 
