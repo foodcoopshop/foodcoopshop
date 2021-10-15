@@ -192,17 +192,25 @@ class ProductsController extends AdminAppController
 
                     // main product
 
-                    if (empty($product->purchase_price_product->tax) || empty($product->purchase_price_product)) {
+                    if (empty($product->purchase_price_product->tax)) {
                         continue;
                     }
 
                     $productId = $product->id_product;
-                    $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
+
+                    $grossPrice = 0;
+                    if (!empty($product->purchase_price_product)) {
+                        $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
+                    }
 
                     $grossPricePerUnit = 0;
                     if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
                         $purchasePriceNet = $this->Product->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
                         $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                    }
+
+                    if ($grossPrice == 0 && $grossPricePerUnit == 0) {
+                        continue;
                     }
 
                     $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
@@ -219,17 +227,25 @@ class ProductsController extends AdminAppController
 
                         // attribute
 
-                        if (empty($product->purchase_price_product->tax) || empty($attribute->purchase_price_product_attribute)) {
+                        if (empty($product->purchase_price_product->tax)) {
                             continue;
                         }
 
                         $productId = $product->id_product . '-' . $attribute->id_product_attribute;
-                        $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
+
+                        $grossPrice = 0;
+                        if (!empty($attribute->purchase_price_product_attribute)) {
+                            $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
+                        }
 
                         $grossPricePerUnit = 0;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                             $purchasePriceNet = $this->Product->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
                             $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                        }
+
+                        if ($grossPrice == 0 && $grossPricePerUnit == 0) {
+                            continue;
                         }
 
                         $preparedProductsForActionLog[] = '<b>' . $product->name . ': ' . $attribute->product_attribute_combination->attribute->name . '</b>: ID ' . $productId . ',  ' . $product->manufacturer->name;
