@@ -151,6 +151,75 @@ class ProductsController extends AdminAppController
         $this->Product = $this->getTableLocator()->get('Products');
     }
 
+    public function calculateSellingPriceWithSurcharge()
+    {
+
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $productIds = $this->getRequest()->getData('productIds');
+        $surcharge = h($this->getRequest()->getData('surcharge'));
+
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product IN' => $productIds,
+            ],
+            'contain' => [
+                'Taxes',
+                'PurchasePriceProducts',
+                'Manufacturers',
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
+            ]
+        ]);
+
+        $preparedProductsForActionLog = [];
+        foreach($products as $product) {
+
+            $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
+
+            if (empty($product->product_attributes)) {
+                $grossPrice = 0;
+                if (!empty($product->purchase_price_product)) {
+                    $purchasePriceNet = $this->Product->getNetPrice($product->purchase_price_product->price, $product->purchase_price_product->tax_rate);
+                    $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
+                    $grossPrice = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $product->tax->rate);
+                }
+
+                $this->Product->changePrice(
+                    [
+                        [
+                            $product->id_product => [
+                                'gross_price' => $grossPrice,
+                                /*
+                                'unit_product_price_incl_per_unit' => $this->getRequest()->getData('priceInclPerUnit'),
+                                'unit_product_name' => $this->getRequest()->getData('priceUnitName'),
+                                'unit_product_amount' => $this->getRequest()->getData('priceUnitAmount'),
+                                'unit_product_quantity_in_units' => $this->getRequest()->getData('priceQuantityInUnits'),
+                                'unit_product_price_per_unit_enabled' => $this->getRequest()->getData('pricePerUnitEnabled')
+                                */
+                            ]
+                        ]
+                    ]
+                );
+            }
+
+
+        }
+
+        $message = __d('admin', 'The_selling_price_of_{0,plural,=1{1_product_was} other{#_products_were}}_was_set_to_{1}_%_of_PP.', [
+            count($productIds),
+            '<b>' . $surcharge . '</b>',
+        ]);
+        $this->Flash->success($message);
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+    }
+
     public function delete()
     {
         $this->RequestHandler->renderAs($this, 'json');
