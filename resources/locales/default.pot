@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-10-15 20:59+0200\n"
+"POT-Creation-Date: 2021-10-15 23:11+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -890,13 +890,13 @@ msgstr ""
 msgid "Errors_occurred_while_calculating_selling_price."
 msgstr ""
 
-msgid "Surcharge"
-msgstr ""
-
 msgid "Calculate_selling_price"
 msgstr ""
 
-msgid "Percent_from_purchase_price_net"
+msgid "Surcharge_in_percent_from_purchase_price_net"
+msgstr ""
+
+msgid "Calculate_selling_price_explanation_text."
 msgstr ""
 
 msgid "Were_the_products_picked_up?"

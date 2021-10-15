@@ -174,6 +174,7 @@ class ProductsController extends AdminAppController
                     'Manufacturers',
                     'ProductAttributes.PurchasePriceProductAttributes',
                     'ProductAttributes.UnitProductAttributes',
+                    'ProductAttributes.ProductAttributeCombinations.Attributes',
                     'PurchasePriceProducts.Taxes',
                     'UnitProducts',
                 ]
@@ -183,7 +184,6 @@ class ProductsController extends AdminAppController
 
             foreach($products as $product) {
 
-                $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
                 $sellingPriceTaxRate = $product->tax->rate ?? 0;
 
                 $preparedProductData = [];
@@ -192,10 +192,12 @@ class ProductsController extends AdminAppController
 
                     // main product
 
-                    $grossPrice = 0;
-                    if (!empty($product->purchase_price_product)) {
-                        $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
+                    if (empty($product->purchase_price_product->tax) || empty($product->purchase_price_product)) {
+                        continue;
                     }
+
+                    $productId = $product->id_product;
+                    $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
 
                     $grossPricePerUnit = 0;
                     if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
@@ -203,12 +205,15 @@ class ProductsController extends AdminAppController
                         $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                     }
 
-                    $preparedProductData[] = [
-                        'product_id' => $product->id_product,
-                        'gross_price' => $grossPrice,
-                        'price_incl_per_unit' => $grossPricePerUnit,
-                        'price_per_unit_entity' => $product->unit_product,
-                    ];
+                    if ($grossPricePerUnit > 0) {
+                        $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
+                        $preparedProductData[] = [
+                            'product_id' => $productId,
+                            'gross_price' => $grossPrice,
+                            'price_incl_per_unit' => $grossPricePerUnit,
+                            'price_per_unit_entity' => $product->unit_product,
+                        ];
+                    }
 
                 } else {
 
@@ -216,12 +221,12 @@ class ProductsController extends AdminAppController
 
                         // attribute
 
-                        $productId = $product->id_product . '-' . $attribute->id_product_attribute;
-
-                        $grossPrice = 0;
-                        if (!empty($attribute->purchase_price_product_attribute)) {
-                            $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
+                        if (empty($product->purchase_price_product->tax) || empty($attribute->purchase_price_product_attribute)) {
+                            continue;
                         }
+
+                        $productId = $product->id_product . '-' . $attribute->id_product_attribute;
+                        $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
 
                         $grossPricePerUnit = 0;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
@@ -229,12 +234,15 @@ class ProductsController extends AdminAppController
                             $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                         }
 
-                        $preparedProductData[] = [
-                            'product_id' => $productId,
-                            'gross_price' => $grossPrice,
-                            'price_incl_per_unit' => $grossPricePerUnit,
-                            'price_per_unit_entity' => $attribute->unit_product_attribute,
-                        ];
+                        if ($grossPricePerUnit > 0) {
+                            $preparedProductsForActionLog[] = '<b>' . $product->name . ': ' . $attribute->product_attribute_combination->attribute->name . '</b>: ID ' . $productId . ',  ' . $product->manufacturer->name;
+                            $preparedProductData[] = [
+                                'product_id' => $productId,
+                                'gross_price' => $grossPrice,
+                                'price_incl_per_unit' => $grossPricePerUnit,
+                                'price_per_unit_entity' => $attribute->unit_product_attribute,
+                            ];
+                        }
 
                     }
 
@@ -252,7 +260,6 @@ class ProductsController extends AdminAppController
                             'unit_product_quantity_in_units' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->quantity_in_units : null,
                         ],
                     ];
-
                 }
 
                 $this->Product->changePrice($pricesToChange);
@@ -262,8 +269,7 @@ class ProductsController extends AdminAppController
             return $this->sendAjaxError($e);
         }
 
-        $message = __d('admin', 'The_selling_price_net_of_{0,plural,=1{1_product_was} other{#_products_were}}_was_set_to:_{1}_of_purchase_price_net', [
-            count($productIds),
+        $message = __d('admin', 'The_selling_price_net_was_set_to:_{0}_of_purchase_price_net', [
             '<b>' . Configure::read('app.numberHelper')->formatAsPercent($surcharge) . '</b>',
         ]);
         $this->Flash->success($message);

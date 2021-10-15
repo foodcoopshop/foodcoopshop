@@ -35,10 +35,12 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
             }
             var html = '<ul><li>' + products.join('</li><li>') + '</li></ul>';
 
-            html += '<label for="dialogProductSurcharge">' + foodcoopshop.LocalizedJs.admin.Surcharge + ': </label><br />';
+            html += '<div class="field-wrapper">';
+            html += '<label for="dialogProductSurcharge">' + foodcoopshop.LocalizedJs.admin.SurchargeInPercentFromPurchasePriceNet + ':<br />';
+            html += '<br /><span class="small">' + foodcoopshop.LocalizedJs.admin.CalculateSellingPriceExplanationText + '</span>';
+            html += '</label>';
             html += '<input type="number" step="0.01" min="0.01" name="dialogProductSurcharge" id="dialogProductSurcharge" value="" />';
-            html += ' ' + foodcoopshop.LocalizedJs.admin.PercentFromPurchasePriceNet;
-
+            html += '</div>';
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 title,
