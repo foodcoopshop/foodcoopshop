@@ -36,6 +36,7 @@ class ProductsController extends AdminAppController
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             case 'editPurchasePrice':
+            case 'calculateSellingPriceWithSurcharge':
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             case 'editPrice':
