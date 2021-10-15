@@ -596,7 +596,6 @@ foodcoopshop.Cart = {
                         foodcoopshop.Cart.updateCartTaxSum(
                             foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.tax').html()) * -1
                         );
-                        //console.log(depositToUpdate);
                         foodcoopshop.Cart.updateCartTotalSum(priceToUpdate + depositToUpdate);
                         var timebasedCurrencyHours = p.find('.timebasedCurrencySeconds');
                         if (timebasedCurrencyHours.length > 0) {

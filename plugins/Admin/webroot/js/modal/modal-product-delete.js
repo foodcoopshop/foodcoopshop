@@ -67,8 +67,6 @@ foodcoopshop.ModalProductDelete = {
     },
 
     getSuccessHandler : function(modalSelector, productIds) {
-        console.log(productIds);
-
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/delete/',
             {
@@ -90,7 +88,8 @@ foodcoopshop.ModalProductDelete = {
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, message);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
-            });
+            }
+        );
     },
 
     getOpenHandler : function(modalSelector) {
