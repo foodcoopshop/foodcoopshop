@@ -157,7 +157,7 @@ class ProductsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
 
         $productIds = $this->getRequest()->getData('productIds');
-        $surcharge = h($this->getRequest()->getData('surcharge'));
+        $surcharge = (int) h($this->getRequest()->getData('surcharge'));
 
         $products = $this->Product->find('all', [
             'conditions' => [
@@ -165,9 +165,10 @@ class ProductsController extends AdminAppController
             ],
             'contain' => [
                 'Taxes',
-                'PurchasePriceProducts',
                 'Manufacturers',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
+                'PurchasePriceProducts.Taxes',
+                'UnitProducts',
             ]
         ]);
 
@@ -177,11 +178,20 @@ class ProductsController extends AdminAppController
             $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
 
             if (empty($product->product_attributes)) {
+
+                $sellingPriceTaxRate = $product->tax->rate ?? 0;
+
                 $grossPrice = 0;
                 if (!empty($product->purchase_price_product)) {
-                    $purchasePriceNet = $this->Product->getNetPrice($product->purchase_price_product->price, $product->purchase_price_product->tax_rate);
+                    $purchasePriceNetWithSurcharge = $product->purchase_price_product->price * (100 + $surcharge) / 100;
+                    $grossPrice = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
+                }
+
+                $grossPricePerUnit = 0;
+                if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
+                    $purchasePriceNet = $this->Product->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
                     $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
-                    $grossPrice = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $product->tax->rate);
+                    $grossPricePerUnit = $this->Product->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
                 }
 
                 $this->Product->changePrice(
@@ -189,13 +199,11 @@ class ProductsController extends AdminAppController
                         [
                             $product->id_product => [
                                 'gross_price' => $grossPrice,
-                                /*
-                                'unit_product_price_incl_per_unit' => $this->getRequest()->getData('priceInclPerUnit'),
-                                'unit_product_name' => $this->getRequest()->getData('priceUnitName'),
-                                'unit_product_amount' => $this->getRequest()->getData('priceUnitAmount'),
-                                'unit_product_quantity_in_units' => $this->getRequest()->getData('priceQuantityInUnits'),
-                                'unit_product_price_per_unit_enabled' => $this->getRequest()->getData('pricePerUnitEnabled')
-                                */
+                                'unit_product_price_per_unit_enabled' => !empty($product->unit_product) ? $product->unit_product->price_per_unit_enabled : 0,
+                                'unit_product_price_incl_per_unit' => $grossPricePerUnit > 0 ? $grossPricePerUnit : null,
+                                'unit_product_name' => !empty($product->unit_product) ? $product->unit_product->name : null,
+                                'unit_product_amount' => !empty($product->unit_product) ? $product->unit_product->amount : null,
+                                'unit_product_quantity_in_units' => !empty($product->unit_product) ? $product->unit_product->quantity_in_units : null,
                             ]
                         ]
                     ]
