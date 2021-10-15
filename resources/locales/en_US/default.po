@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-28 21:31+0200\n"
-"PO-Revision-Date: 2021-09-28 21:32+0200\n"
+"POT-Creation-Date: 2021-10-15 20:59+0200\n"
+"PO-Revision-Date: 2021-10-15 21:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -887,6 +887,18 @@ msgstr "Cancel invoice"
 
 msgid "The_order_was_placed_successfully."
 msgstr "The order was placed successfully."
+
+msgid "Errors_occurred_while_calculating_selling_price."
+msgstr "Errors occurred while calculating selling price."
+
+msgid "Surcharge"
+msgstr "Surcharge"
+
+msgid "Calculate_selling_price"
+msgstr "Calculate selling price"
+
+msgid "Percent_from_purchase_price_net"
+msgstr "% from purchase price net"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -2394,11 +2406,11 @@ msgstr "The entered deposit will not show up in the cart but added to your credi
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
 
-msgid "Payment_type"
-msgstr "Payment"
-
 msgid "Cash"
 msgstr "Cash"
+
+msgid "Payment_type"
+msgstr "Payment"
 
 msgid "Categories"
 msgstr "Categories"

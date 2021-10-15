@@ -242,6 +242,12 @@ class LocalizedController extends Controller
                 'ReallyCancelInvoiceNumber0OfCustomer1' => __('Really_cancel_invoice_number_{0}_of_{1}?'),
                 'CancelInvoice' => __('Cancel_invoice'),
                 'TheOrderWasPlacedSuccessfully' => __('The_order_was_placed_successfully.'),
+                'ErrorsOccurredWhileCalculatingSellingPrice' => __('Errors_occurred_while_calculating_selling_price.'),
+                'Surcharge' => __('Surcharge'),
+                'CalculateSellingPrice' => __('Calculate_selling_price'),
+                'PercentFromPurchasePriceNet' => __('Percent_from_purchase_price_net')
+
+
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

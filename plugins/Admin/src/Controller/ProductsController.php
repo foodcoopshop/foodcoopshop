@@ -261,9 +261,9 @@ class ProductsController extends AdminAppController
             return $this->sendAjaxError($e);
         }
 
-        $message = __d('admin', 'The_selling_price_of_{0,plural,=1{1_product_was} other{#_products_were}}_was_set_to_{1}_%_of_PP.', [
+        $message = __d('admin', 'The_selling_price_net_of_{0,plural,=1{1_product_was} other{#_products_were}}_was_set_to:_{1}_of_purchase_price_net', [
             count($productIds),
-            '<b>' . $surcharge . '</b>',
+            '<b>' . Configure::read('app.numberHelper')->formatAsPercent($surcharge) . '</b>',
         ]);
         $this->Flash->success($message);
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-28 14:57+0200\n"
-"PO-Revision-Date: 2021-09-28 14:58+0200\n"
+"POT-Creation-Date: 2021-10-15 21:09+0200\n"
+"PO-Revision-Date: 2021-10-15 21:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -449,6 +449,12 @@ msgstr "Show order"
 
 msgid "of_{0}"
 msgstr "of {0}"
+
+msgid "Surcharge_needs_to_be_greater_than_0"
+msgstr ""
+
+msgid "The_selling_price_net_of_{0,plural,=1{1_product_was} other{#_products_were}}_was_set_to:_{1}_of_purchase_price_net"
+msgstr "The selling price net of {0,plural,=1{one product was} other{# products was}} was set to: {1} of purchase price net"
 
 msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
 msgstr "The product {0} has {1,plural,=1{1 open order} other{# open orders}}."
@@ -1958,6 +1964,9 @@ msgstr "Thank you very much for delivering your products to us!"
 
 msgid "Customer_ID"
 msgstr "Customer-ID"
+
+msgid "Calculate_selling_price_with_surcharge_for_selected_products"
+msgstr "Calculate selling price with surcharge for selected products"
 
 msgid "Delete_selected_products"
 msgstr "Delete selected products"

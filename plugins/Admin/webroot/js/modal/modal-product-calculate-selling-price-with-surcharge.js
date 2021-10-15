@@ -27,8 +27,7 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
         button.on('click', function () {
 
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            var title = 'Verkaufspreis berechnen';
-            //var title = productIds.length == 1 ? foodcoopshop.LocalizedJs.admin.Product : foodcoopshop.LocalizedJs.admin.Products;
+            var title = foodcoopshop.LocalizedJs.admin.CalculateSellingPrice;
 
             var products = [];
             for (var i in productIds) {
@@ -36,9 +35,9 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
             }
             var html = '<ul><li>' + products.join('</li><li>') + '</li></ul>';
 
-            html += '<label for="dialogProductSurcharge">Aufschlag: </label><br />';
+            html += '<label for="dialogProductSurcharge">' + foodcoopshop.LocalizedJs.admin.Surcharge + ': </label><br />';
             html += '<input type="number" step="0.01" min="0.01" name="dialogProductSurcharge" id="dialogProductSurcharge" value="" />';
-            html += ' % vom Netto-Einkaufspreis';
+            html += ' ' + foodcoopshop.LocalizedJs.admin.PercentFromPurchasePriceNet;
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
@@ -76,11 +75,7 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
                 },
                 onError: function (data) {
                     var message = '<p>';
-                    if (productIds.length == 1) {
-                        message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductWasDeleted;
-                    } else {
-                        message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductsWereDeleted;
-                    }
+                    message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileCalculatingSellingPrice;
                     message += ':</p>';
                     message = message + data.msg;
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, message);
