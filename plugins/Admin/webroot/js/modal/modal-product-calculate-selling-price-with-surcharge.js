@@ -92,6 +92,8 @@ foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
 
     getOpenHandler : function(modalSelector) {
         $(modalSelector).modal();
+        $(modalSelector + ' #dialogProductSurcharge').focus();
+
     }
 
 };
