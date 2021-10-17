@@ -46,6 +46,22 @@ class PurchasePriceProductsTable extends AppTable
         return $sellingPriceGross;
     }
 
+    public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate)
+    {
+        $productTable = FactoryLocator::get('Table')->get('Products');
+        $sellingPriceNet = $productTable->getNetPrice($sellingPriceGross, $sellingPriceTaxRate);
+        $purchasePriceNet = $productTable->getNetPrice($purchasePriceGross, $purchasePriceTaxRate);
+
+        if ($purchasePriceNet == 0) {
+            return false;
+        }
+
+        $surcharge = ($sellingPriceNet / $purchasePriceNet * 100) - 100;
+        $surcharge = round($surcharge, 0);
+        return $surcharge;
+
+    }
+
     public function getEntityToSaveByProductAttributeId($productAttributeId)
     {
         $entity2Save = $this->find('all', [
