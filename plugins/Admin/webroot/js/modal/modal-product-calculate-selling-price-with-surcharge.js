@@ -11,13 +11,13 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalProductDelete = {
+foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge = {
 
     init : function() {
 
-        var modalSelector = '#modal-product-delete';
+        var modalSelector = '#modal-product-calculate-selling-price-with-surcharge';
 
-        var button = $('#deleteSelectedProducts');
+        var button = $('#calculateSellingPriceWithSurchargForSelectedProducts');
         foodcoopshop.Helper.disableButton(button);
 
         $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
@@ -27,22 +27,20 @@ foodcoopshop.ModalProductDelete = {
         button.on('click', function () {
 
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            var title = productIds.length == 1 ? foodcoopshop.LocalizedJs.admin.DeleteProduct : foodcoopshop.LocalizedJs.admin.DeleteProducts;
-
-            var html = '<p style="margin-top: 10px;">';
-            if (productIds.length == 1) {
-                html += foodcoopshop.LocalizedJs.admin.ReallyDeleteOneProduct;
-            } else {
-                html += foodcoopshop.LocalizedJs.admin.ReallyDelete0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
-            }
-            html += '</p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p>';
+            var title = foodcoopshop.LocalizedJs.admin.CalculateSellingPrice;
 
             var products = [];
             for (var i in productIds) {
                 products.push($('tr#product-' + productIds[i] + ' span.product-name').html());
             }
-            html += '<ul><li>' + products.join('</li><li>') + '</li></ul>';
+            var html = '<ul><li>' + products.join('</li><li>') + '</li></ul>';
 
+            html += '<div class="field-wrapper">';
+            html += '<label for="dialogProductSurcharge">' + foodcoopshop.LocalizedJs.admin.SurchargeInPercentFromPurchasePriceNet + ':<br />';
+            html += '<br /><span class="small">' + foodcoopshop.LocalizedJs.admin.CalculateSellingPriceExplanationText + '</span>';
+            html += '</label>';
+            html += '<input type="number" step="0.01" min="0.01" name="dialogProductSurcharge" id="dialogProductSurcharge" value="" />';
+            html += '</div>';
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 title,
@@ -50,13 +48,13 @@ foodcoopshop.ModalProductDelete = {
             );
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-                foodcoopshop.ModalProductDelete.getSuccessHandler(modalSelector, productIds);
+                foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge.getSuccessHandler(modalSelector, productIds);
             });
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
-                foodcoopshop.ModalProductDelete.getCloseHandler(modalSelector);
+                foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge.getCloseHandler(modalSelector);
             });
-            foodcoopshop.ModalProductDelete.getOpenHandler(modalSelector);
+            foodcoopshop.ModalProductCalculateSellingPriceWithSurcharge.getOpenHandler(modalSelector);
 
         });
 
@@ -68,9 +66,10 @@ foodcoopshop.ModalProductDelete = {
 
     getSuccessHandler : function(modalSelector, productIds) {
         foodcoopshop.Helper.ajaxCall(
-            '/admin/products/delete/',
+            '/admin/products/calculate-selling-price-with-surcharge',
             {
-                productIds: productIds
+                productIds: productIds,
+                surcharge: $('#dialogProductSurcharge').val()
             },
             {
                 onOk: function (data) {
@@ -78,11 +77,7 @@ foodcoopshop.ModalProductDelete = {
                 },
                 onError: function (data) {
                     var message = '<p>';
-                    if (productIds.length == 1) {
-                        message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductWasDeleted;
-                    } else {
-                        message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductsWereDeleted;
-                    }
+                    message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileCalculatingSellingPrice;
                     message += ':</p>';
                     message = message + data.msg;
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, message);
@@ -94,6 +89,8 @@ foodcoopshop.ModalProductDelete = {
 
     getOpenHandler : function(modalSelector) {
         $(modalSelector).modal();
+        $(modalSelector + ' #dialogProductSurcharge').focus();
+
     }
 
 };

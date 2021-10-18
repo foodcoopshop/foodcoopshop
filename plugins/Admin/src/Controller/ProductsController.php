@@ -36,6 +36,7 @@ class ProductsController extends AdminAppController
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             case 'editPurchasePrice':
+            case 'calculateSellingPriceWithSurcharge':
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             case 'editPrice':
@@ -149,6 +150,38 @@ class ProductsController extends AdminAppController
         parent::beforeFilter($event);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Product = $this->getTableLocator()->get('Products');
+    }
+
+    public function calculateSellingPriceWithSurcharge()
+    {
+
+        $this->RequestHandler->renderAs($this, 'json');
+        $productIds = $this->getRequest()->getData('productIds');
+
+        $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
+        if ($surcharge < 0) {
+            throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0'));
+        }
+
+        try {
+            $result = $this->Product->PurchasePriceProducts->getSellingPricesWithSurcharge($productIds, $surcharge);
+            $this->Product->changePrice($result['pricesToChange']);
+        } catch (\Exception $e) {
+            return $this->sendAjaxError($e);
+        }
+
+        $message = __d('admin', 'The_selling_price_net_was_set_to:_{0}_of_purchase_price_net', [
+            '<b>' . Configure::read('app.numberHelper')->formatAsPercent($surcharge) . '</b>',
+        ]);
+        $this->Flash->success($message);
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $result['preparedProductsForActionLog']));
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
     }
 
     public function delete()

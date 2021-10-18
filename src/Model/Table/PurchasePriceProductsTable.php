@@ -38,6 +38,30 @@ class PurchasePriceProductsTable extends AppTable
         return $validator;
     }
 
+    public function calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate)
+    {
+        $productTable = FactoryLocator::get('Table')->get('Products');
+        $purchasePriceNetWithSurcharge = $purchasePriceNet * (100 + $surcharge) / 100;
+        $sellingPriceGross = $productTable->getGrossPrice($purchasePriceNetWithSurcharge, $sellingPriceTaxRate);
+        return $sellingPriceGross;
+    }
+
+    public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate)
+    {
+        $productTable = FactoryLocator::get('Table')->get('Products');
+        $sellingPriceNet = $productTable->getNetPrice($sellingPriceGross, $sellingPriceTaxRate);
+        $purchasePriceNet = $productTable->getNetPrice($purchasePriceGross, $purchasePriceTaxRate);
+
+        if ($purchasePriceNet == 0) {
+            return false;
+        }
+
+        $surcharge = ($sellingPriceNet / $purchasePriceNet * 100) - 100;
+        $surcharge = round($surcharge, 0);
+        return $surcharge;
+
+    }
+
     public function getEntityToSaveByProductAttributeId($productAttributeId)
     {
         $entity2Save = $this->find('all', [
@@ -62,6 +86,128 @@ class PurchasePriceProductsTable extends AppTable
             $entity2Save = $this->newEntity(['product_id' => $productId]);
         }
         return $entity2Save;
+    }
+
+    public function getSellingPricesWithSurcharge($productIds, $surcharge): array
+    {
+
+        $productTable = FactoryLocator::get('Table')->get('Products');
+        $products = $productTable->find('all', [
+            'conditions' => [
+                'Products.id_product IN' => $productIds,
+            ],
+            'contain' => [
+                'Taxes',
+                'Manufacturers',
+                'ProductAttributes.PurchasePriceProductAttributes',
+                'ProductAttributes.UnitProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
+                'PurchasePriceProducts.Taxes',
+                'UnitProducts',
+            ]
+        ]);
+
+        $preparedProductsForActionLog = [];
+        $preparedProductData = [];
+
+        foreach($products as $product) {
+
+            $sellingPriceTaxRate = $product->tax->rate ?? 0;
+
+            if (empty($product->purchase_price_product) || is_null($product->purchase_price_product->tax_id)) {
+                continue;
+            }
+
+            $purchasePriceTaxRate = 0;
+            if (!empty($product->purchase_price_product->tax)) {
+                $purchasePriceTaxRate = $product->purchase_price_product->tax->rate;
+            }
+
+            if (empty($product->product_attributes)) {
+
+                // main product
+
+                $grossPrice = 0;
+                if (!empty($product->purchase_price_product)) {
+                    $grossPrice = $this->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
+                }
+
+                $grossPricePerUnit = 0;
+                if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
+                    $purchasePriceNet = $productTable->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                    $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                }
+
+                if ($grossPrice == 0 && $grossPricePerUnit == 0) {
+                    continue;
+                }
+
+                $productId = $product->id_product;
+                $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
+                $preparedProductData[] = [
+                    'product_id' => $productId,
+                    'gross_price' => $grossPrice,
+                    'price_incl_per_unit' => $grossPricePerUnit,
+                    'price_per_unit_entity' => $product->unit_product,
+                ];
+
+            } else {
+
+                foreach($product->product_attributes as $attribute) {
+
+                    // attribute
+
+                    $grossPrice = 0;
+                    if (!empty($attribute->purchase_price_product_attribute)) {
+                        $grossPrice = $this->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
+                    }
+
+                    $grossPricePerUnit = 0;
+                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                        $purchasePriceNet = $productTable->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                        $grossPricePerUnit = $this->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
+                    }
+
+                    if ($grossPrice == 0 && $grossPricePerUnit == 0) {
+                        continue;
+                    }
+
+                    $productId = $product->id_product . '-' . $attribute->id_product_attribute;
+                    $preparedProductsForActionLog[] = '<b>' . $product->name . ': ' . $attribute->product_attribute_combination->attribute->name . '</b>: ID ' . $productId . ',  ' . $product->manufacturer->name;
+                    $preparedProductData[] = [
+                        'product_id' => $productId,
+                        'gross_price' => $grossPrice,
+                        'price_incl_per_unit' => $grossPricePerUnit,
+                        'price_per_unit_entity' => $attribute->unit_product_attribute,
+                    ];
+
+                }
+
+            }
+
+        }
+
+        $pricesToChange = [];
+        foreach($preparedProductData as $ppd) {
+            $pricesToChange[] = [
+                $ppd['product_id'] => [
+                    'gross_price' => $ppd['gross_price'],
+                    'unit_product_price_incl_per_unit' => $ppd['price_incl_per_unit'] > 0 ? $ppd['price_incl_per_unit'] : null,
+                    'unit_product_price_per_unit_enabled' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->price_per_unit_enabled : 0,
+                    'unit_product_name' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->name : null,
+                    'unit_product_amount' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->amount : null,
+                    'unit_product_quantity_in_units' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->quantity_in_units : null,
+                ],
+            ];
+        }
+
+        $result = [
+            'pricesToChange' => $pricesToChange,
+            'preparedProductsForActionLog' => $preparedProductsForActionLog,
+        ];
+
+        return $result;
+
     }
 
     public function savePurchasePriceTax($taxId, $productId, $oldProduct): Array

@@ -329,6 +329,7 @@ use Cake\Core\Configure;
 
     echo '<div class="bottom-button-container">';
         echo $this->element('productList/button/deleteSelectedProducts');
+        echo $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
         echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
         echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts', [
             'products' => $products

@@ -249,10 +249,12 @@ body.iframe_self_service_order {
 #order-detail-product-quantity-edit-form input[type="checkbox"] {
     float: left;
 }
-#modal-product-quantity-edit input[type="number"] {
+#modal-product-quantity-edit input[type="number"],
+#modal-product-calculate-selling-price-with-surcharge input[type="number"] {
     width: 20%;
 }
-#modal-product-quantity-edit .field-wrapper label:not(.checkbox) {
+#modal-product-quantity-edit .field-wrapper label:not(.checkbox),
+#modal-product-calculate-selling-price-with-surcharge .field-wrapper label:not(.checkbox) {
     width: 75%;
 }
 #modal-product-price-edit .deactivated {

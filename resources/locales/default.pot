@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-09-28 21:31+0200\n"
+"POT-Creation-Date: 2021-10-15 23:11+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -885,6 +885,18 @@ msgid "Cancel_invoice"
 msgstr ""
 
 msgid "The_order_was_placed_successfully."
+msgstr ""
+
+msgid "Errors_occurred_while_calculating_selling_price."
+msgstr ""
+
+msgid "Calculate_selling_price"
+msgstr ""
+
+msgid "Surcharge_in_percent_from_purchase_price_net"
+msgstr ""
+
+msgid "Calculate_selling_price_explanation_text."
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
@@ -2393,10 +2405,10 @@ msgstr ""
 msgid "Amount_in_{0}"
 msgstr ""
 
-msgid "Payment_type"
+msgid "Cash"
 msgstr ""
 
-msgid "Cash"
+msgid "Payment_type"
 msgstr ""
 
 msgid "Categories"

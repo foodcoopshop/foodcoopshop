@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-28 21:31+0200\n"
-"PO-Revision-Date: 2021-10-14 21:30+0200\n"
+"POT-Creation-Date: 2021-10-15 23:11+0200\n"
+"PO-Revision-Date: 2021-10-15 23:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -887,6 +887,18 @@ msgstr "Rechnung stornieren"
 
 msgid "The_order_was_placed_successfully."
 msgstr "Die Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "Errors_occurred_while_calculating_selling_price."
+msgstr "Beim Berechnen des Verkaufspreises sind Fehler aufgetreten."
+
+msgid "Calculate_selling_price"
+msgstr "Verkaufspreis berechnen"
+
+msgid "Surcharge_in_percent_from_purchase_price_net"
+msgstr "Aufschlag in % vom Netto-Einkaufspreis"
+
+msgid "Calculate_selling_price_explanation_text."
+msgstr "Beispiel: VP brutto = EP brutto / 1,13 * 1,35 * 1,2<br />(für EP-USt. = 13%, Aufschlag= 35% und VP-USt = 20%); <br />Falls die EP-USt. nicht angeben ist, wird der VP nicht neu berechnet."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
@@ -2394,11 +2406,11 @@ msgstr "Der eingetragene Pfand-Betrag scheint nicht im Warenkorb auf, wird aber 
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
 
-msgid "Payment_type"
-msgstr "Zahlungsart"
-
 msgid "Cash"
 msgstr "Bar"
+
+msgid "Payment_type"
+msgstr "Zahlungsart"
 
 msgid "Categories"
 msgstr "Kategorien"
@@ -2564,6 +2576,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Surcharge"
+#~ msgstr "Aufschlag"
 
 #~ msgid "The_discount_is_not_valid."
 #~ msgstr "Der Rabatt ist nicht gültig."
