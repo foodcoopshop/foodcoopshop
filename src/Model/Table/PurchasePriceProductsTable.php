@@ -88,7 +88,7 @@ class PurchasePriceProductsTable extends AppTable
         return $entity2Save;
     }
 
-    public function getPricesWithSurcharge($productIds, $surcharge): array
+    public function getSellingPricesWithSurcharge($productIds, $surcharge): array
     {
 
         $productTable = FactoryLocator::get('Table')->get('Products');
@@ -107,16 +107,14 @@ class PurchasePriceProductsTable extends AppTable
             ]
         ]);
 
-        $pricesToChange = [];
         $preparedProductsForActionLog = [];
+        $preparedProductData = [];
 
         foreach($products as $product) {
 
             $sellingPriceTaxRate = $product->tax->rate ?? 0;
 
-            $preparedProductData = [];
-
-            if (is_null($product->purchase_price_product->tax_id)) {
+            if (empty($product->purchase_price_product) || is_null($product->purchase_price_product->tax_id)) {
                 continue;
             }
 
@@ -128,8 +126,6 @@ class PurchasePriceProductsTable extends AppTable
             if (empty($product->product_attributes)) {
 
                 // main product
-
-                $productId = $product->id_product;
 
                 $grossPrice = 0;
                 if (!empty($product->purchase_price_product)) {
@@ -146,6 +142,7 @@ class PurchasePriceProductsTable extends AppTable
                     continue;
                 }
 
+                $productId = $product->id_product;
                 $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
                 $preparedProductData[] = [
                     'product_id' => $productId,
@@ -159,8 +156,6 @@ class PurchasePriceProductsTable extends AppTable
                 foreach($product->product_attributes as $attribute) {
 
                     // attribute
-
-                    $productId = $product->id_product . '-' . $attribute->id_product_attribute;
 
                     $grossPrice = 0;
                     if (!empty($attribute->purchase_price_product_attribute)) {
@@ -177,6 +172,7 @@ class PurchasePriceProductsTable extends AppTable
                         continue;
                     }
 
+                    $productId = $product->id_product . '-' . $attribute->id_product_attribute;
                     $preparedProductsForActionLog[] = '<b>' . $product->name . ': ' . $attribute->product_attribute_combination->attribute->name . '</b>: ID ' . $productId . ',  ' . $product->manufacturer->name;
                     $preparedProductData[] = [
                         'product_id' => $productId,
@@ -189,19 +185,20 @@ class PurchasePriceProductsTable extends AppTable
 
             }
 
-            $pricesToChange = [];
-            foreach($preparedProductData as $ppd) {
-                $pricesToChange[] = [
-                    $ppd['product_id'] => [
-                        'gross_price' => $ppd['gross_price'],
-                        'unit_product_price_incl_per_unit' => $ppd['price_incl_per_unit'] > 0 ? $ppd['price_incl_per_unit'] : null,
-                        'unit_product_price_per_unit_enabled' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->price_per_unit_enabled : 0,
-                        'unit_product_name' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->name : null,
-                        'unit_product_amount' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->amount : null,
-                        'unit_product_quantity_in_units' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->quantity_in_units : null,
-                    ],
-                ];
-            }
+        }
+
+        $pricesToChange = [];
+        foreach($preparedProductData as $ppd) {
+            $pricesToChange[] = [
+                $ppd['product_id'] => [
+                    'gross_price' => $ppd['gross_price'],
+                    'unit_product_price_incl_per_unit' => $ppd['price_incl_per_unit'] > 0 ? $ppd['price_incl_per_unit'] : null,
+                    'unit_product_price_per_unit_enabled' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->price_per_unit_enabled : 0,
+                    'unit_product_name' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->name : null,
+                    'unit_product_amount' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->amount : null,
+                    'unit_product_quantity_in_units' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->quantity_in_units : null,
+                ],
+            ];
         }
 
         $result = [

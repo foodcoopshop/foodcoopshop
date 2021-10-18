@@ -164,7 +164,7 @@ class ProductsController extends AdminAppController
         }
 
         try {
-            $result = $this->Product->PurchasePriceProducts->getPricesWithSurcharge($productIds, $surcharge);
+            $result = $this->Product->PurchasePriceProducts->getSellingPricesWithSurcharge($productIds, $surcharge);
             $this->Product->changePrice($result['pricesToChange']);
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
