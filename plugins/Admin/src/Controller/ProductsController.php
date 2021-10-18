@@ -188,13 +188,18 @@ class ProductsController extends AdminAppController
 
                 $preparedProductData = [];
 
+                if (is_null($product->purchase_price_product->tax_id)) {
+                    continue;
+                }
+
+                $purchasePriceTaxRate = 0;
+                if (!empty($product->purchase_price_product->tax)) {
+                    $purchasePriceTaxRate = $product->purchase_price_product->tax->rate;
+                }
+
                 if (empty($product->product_attributes)) {
 
                     // main product
-
-                    if (empty($product->purchase_price_product->tax)) {
-                        continue;
-                    }
 
                     $productId = $product->id_product;
 
@@ -205,7 +210,7 @@ class ProductsController extends AdminAppController
 
                     $grossPricePerUnit = 0;
                     if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
-                        $purchasePriceNet = $this->Product->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
+                        $purchasePriceNet = $this->Product->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
                         $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                     }
 
@@ -227,10 +232,6 @@ class ProductsController extends AdminAppController
 
                         // attribute
 
-                        if (empty($product->purchase_price_product->tax)) {
-                            continue;
-                        }
-
                         $productId = $product->id_product . '-' . $attribute->id_product_attribute;
 
                         $grossPrice = 0;
@@ -240,7 +241,7 @@ class ProductsController extends AdminAppController
 
                         $grossPricePerUnit = 0;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                            $purchasePriceNet = $this->Product->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $product->purchase_price_product->tax->rate);
+                            $purchasePriceNet = $this->Product->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
                             $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
                         }
 
