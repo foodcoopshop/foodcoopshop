@@ -158,126 +158,14 @@ class ProductsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
         $productIds = $this->getRequest()->getData('productIds');
 
+        $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
+        if ($surcharge < 0) {
+            throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0'));
+        }
+
         try {
-
-            $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
-            if ($surcharge < 0) {
-                throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0'));
-            }
-
-            $products = $this->Product->find('all', [
-                'conditions' => [
-                    'Products.id_product IN' => $productIds,
-                ],
-                'contain' => [
-                    'Taxes',
-                    'Manufacturers',
-                    'ProductAttributes.PurchasePriceProductAttributes',
-                    'ProductAttributes.UnitProductAttributes',
-                    'ProductAttributes.ProductAttributeCombinations.Attributes',
-                    'PurchasePriceProducts.Taxes',
-                    'UnitProducts',
-                ]
-            ]);
-
-            $preparedProductsForActionLog = [];
-
-            foreach($products as $product) {
-
-                $sellingPriceTaxRate = $product->tax->rate ?? 0;
-
-                $preparedProductData = [];
-
-                if (is_null($product->purchase_price_product->tax_id)) {
-                    continue;
-                }
-
-                $purchasePriceTaxRate = 0;
-                if (!empty($product->purchase_price_product->tax)) {
-                    $purchasePriceTaxRate = $product->purchase_price_product->tax->rate;
-                }
-
-                if (empty($product->product_attributes)) {
-
-                    // main product
-
-                    $productId = $product->id_product;
-
-                    $grossPrice = 0;
-                    if (!empty($product->purchase_price_product)) {
-                        $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($product->purchase_price_product->price, $surcharge, $sellingPriceTaxRate);
-                    }
-
-                    $grossPricePerUnit = 0;
-                    if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
-                        $purchasePriceNet = $this->Product->getNetPrice($product->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                        $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
-                    }
-
-                    if ($grossPrice == 0 && $grossPricePerUnit == 0) {
-                        continue;
-                    }
-
-                    $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
-                    $preparedProductData[] = [
-                        'product_id' => $productId,
-                        'gross_price' => $grossPrice,
-                        'price_incl_per_unit' => $grossPricePerUnit,
-                        'price_per_unit_entity' => $product->unit_product,
-                    ];
-
-                } else {
-
-                    foreach($product->product_attributes as $attribute) {
-
-                        // attribute
-
-                        $productId = $product->id_product . '-' . $attribute->id_product_attribute;
-
-                        $grossPrice = 0;
-                        if (!empty($attribute->purchase_price_product_attribute)) {
-                            $grossPrice = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($attribute->purchase_price_product_attribute->price, $surcharge, $sellingPriceTaxRate);
-                        }
-
-                        $grossPricePerUnit = 0;
-                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                            $purchasePriceNet = $this->Product->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
-                            $grossPricePerUnit = $this->Product->PurchasePriceProducts->calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate);
-                        }
-
-                        if ($grossPrice == 0 && $grossPricePerUnit == 0) {
-                            continue;
-                        }
-
-                        $preparedProductsForActionLog[] = '<b>' . $product->name . ': ' . $attribute->product_attribute_combination->attribute->name . '</b>: ID ' . $productId . ',  ' . $product->manufacturer->name;
-                        $preparedProductData[] = [
-                            'product_id' => $productId,
-                            'gross_price' => $grossPrice,
-                            'price_incl_per_unit' => $grossPricePerUnit,
-                            'price_per_unit_entity' => $attribute->unit_product_attribute,
-                        ];
-
-                    }
-
-                }
-
-                $pricesToChange = [];
-                foreach($preparedProductData as $ppd) {
-                    $pricesToChange[] = [
-                        $ppd['product_id'] => [
-                            'gross_price' => $ppd['gross_price'],
-                            'unit_product_price_incl_per_unit' => $ppd['price_incl_per_unit'] > 0 ? $ppd['price_incl_per_unit'] : null,
-                            'unit_product_price_per_unit_enabled' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->price_per_unit_enabled : 0,
-                            'unit_product_name' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->name : null,
-                            'unit_product_amount' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->amount : null,
-                            'unit_product_quantity_in_units' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->quantity_in_units : null,
-                        ],
-                    ];
-                }
-
-                $this->Product->changePrice($pricesToChange);
-            }
-
+            $result = $this->Product->PurchasePriceProducts->getPricesWithSurcharge($productIds, $surcharge);
+            $this->Product->changePrice($result['pricesToChange']);
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
@@ -286,7 +174,7 @@ class ProductsController extends AdminAppController
             '<b>' . Configure::read('app.numberHelper')->formatAsPercent($surcharge) . '</b>',
         ]);
         $this->Flash->success($message);
-        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $result['preparedProductsForActionLog']));
 
         $this->set([
             'status' => 1,
