@@ -23,7 +23,8 @@ $j = 1;
 foreach ($orderDetails as $od) {
 
     $pdf->Ln(5);
-    $pdf->writeHTML('<h2>' . $od[0]->customer->name . '</h2>', true, false, true, false, '');
+    $customerHtml = '<h2>' . $od[0]->customer->name . ' / ID: ' . $od[0]->customer->id_customer . '</h2>';
+    $pdf->writeHTML($customerHtml, true, false, true, false, '');
     $pdf->writeHTML('<h3>'.__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</h3>', true, false, true, false, '');
 
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && !empty($od[0]->pickup_day_entity) && $od[0]->pickup_day_entity->comment != '') {
