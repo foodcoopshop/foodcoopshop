@@ -70,7 +70,9 @@ jobs:
         
       - name: ESLint
         if: always()
-        run: bash devtools/eslint.sh
+        run: |
+            npm install -g eslint
+            bash devtools/eslint.sh
         
       - name: PHPUnit
         if: always()
