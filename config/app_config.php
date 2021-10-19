@@ -174,6 +174,8 @@ return [
 
         'applyOrdersNotYetBilledCheckOnDeletingCustomers' => true,
 
+        'applyPaymentsOkCheckOnDeletingCustomers' => true,
+
         'isCustomerAllowedToModifyOwnOrders' => true,
 
         'showStatisticsForAdmins' => true,

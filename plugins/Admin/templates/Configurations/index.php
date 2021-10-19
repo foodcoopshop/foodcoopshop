@@ -296,6 +296,16 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.applyOrdersNotYetBilledCheckOnDeletingCustomers</td>
+            <td><?php echo Configure::read('app.applyOrdersNotYetBilledCheckOnDeletingCustomers') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.applyPaymentsOkCheckOnDeletingCustomers</td>
+            <td><?php echo Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.sendEmailWhenOrderDetailQuantityOrPriceChanged</td>
             <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>

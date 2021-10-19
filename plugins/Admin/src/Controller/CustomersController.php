@@ -308,17 +308,19 @@ class CustomersController extends AdminAppController
                 }
             }
 
-            $notApprovedPaymentsCount = $this->Payment->find('all', [
-                'conditions' => [
-                    'id_customer' => $customerId,
-                    'approval < ' => APP_ON,
-                    'status' => APP_ON,
-                    'type' => 'product',
-                    'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
-                ]
-            ])->count();
-            if ($notApprovedPaymentsCount > 0) {
-                $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
+            if (Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers')) {
+                $notApprovedPaymentsCount = $this->Payment->find('all', [
+                    'conditions' => [
+                        'id_customer' => $customerId,
+                        'approval < ' => APP_ON,
+                        'status' => APP_ON,
+                        'type' => 'product',
+                        'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
+                    ]
+                ])->count();
+                if ($notApprovedPaymentsCount > 0) {
+                    $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
+                }
             }
 
             $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
