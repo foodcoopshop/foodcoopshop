@@ -131,6 +131,10 @@ foodcoopshop.ModalProductPriceEdit = {
             }
         });
 
+        $(modalSelector + ' input, select').on('focus', function() {
+            $(this).closest('div').prev().find('input').trigger('click');
+        });
+
         var row = button.closest('tr');
         var productId = row.find('td.cell-id').html();
 
