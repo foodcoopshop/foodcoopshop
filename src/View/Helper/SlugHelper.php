@@ -220,9 +220,13 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getLogout()
+    public function getLogout($redirect='')
     {
-        return '/'.__('route_sign_out');
+        $url = '/'.__('route_sign_out');
+        if ($redirect != '') {
+            $url .= '?redirect=' . urlencode($redirect);
+        }
+        return $url;
     }
 
     public function getRegistrationSuccessful()
