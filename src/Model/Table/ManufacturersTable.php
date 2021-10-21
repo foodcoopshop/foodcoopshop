@@ -539,7 +539,7 @@ class ManufacturersTable extends AppTable
             {$orderStateCondition}
             {$includeStockProductCondition}
             {$orderDetailCondition}
-            ORDER BY {$orderClause}, DATE_FORMAT (od.created, '%d.%m.%Y, %H:%i') DESC;";
+            ORDER BY {$orderClause}, DATE_FORMAT(od.created, '%d.%m.%Y, %H:%i') DESC;";
 
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
