@@ -9,6 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 # Unveröffentlichte Version
 
 ### Herzlichen Dank an alle beteiligten Personen
+* <img src="https://github.com/Confuset.png" width="20"> [Confuset](https://github.com/Confuset)
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 * <img src="https://github.com/pabneukistl.png" width="20"> [pabneukistl](https://github.com/pabneukistl)
 
@@ -25,6 +26,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Es gibt nun eine neue Kunden-Einstellung, die Bestellungen zu Einkaufspreisen (für Eigenverbrauch) oder zu Nullpreisen (Vorbestellung von Produkten, die später nochmal verkauft werden) ermöglicht. [I#672](https://github.com/foodcoopshop/foodcoopshop/issues/672) / [PR#712](https://github.com/foodcoopshop/foodcoopshop/pull/712) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 - Falls die Funktion zum Erfassen der Einkaufspreise aktiviert ist, können Hersteller nun folgende Daten der eigenen Produkte nicht mehr ändern: Einkaufspreis, Verkaufspreis, Pfand, Steuer. Außerdem wird auf den Bestelllisten der Preis nicht mehr angezeigt. [I#710](https://github.com/foodcoopshop/foodcoopshop/issues/710) [I#711](https://github.com/foodcoopshop/foodcoopshop/issues/711) / [PR#714](https://github.com/foodcoopshop/foodcoopshop/pull/714) [PR#715](https://github.com/foodcoopshop/foodcoopshop/pull/715) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Verkaufspreise können jetzt auch auf Basis eines Aufschlages automatisch berechnet werden. [I#721](https://github.com/foodcoopshop/foodcoopshop/issues/721) / [PR#722](https://github.com/foodcoopshop/foodcoopshop/pull/722) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+### Bugfixes
+- Fehlerhafte SQL-Abfrage mit MariaDB beim Erstellen der Bestelllisten. [I#724](https://github.com/foodcoopshop/foodcoopshop/issues/724) / [PR#726](https://github.com/foodcoopshop/foodcoopshop/pull/726) <a href="https://github.com/Confuset"><img src="https://github.com/Confuset.png" width="20"></a>
 
 
 # v3.3.0
