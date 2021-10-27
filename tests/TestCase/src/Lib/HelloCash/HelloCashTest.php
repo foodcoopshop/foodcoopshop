@@ -38,6 +38,13 @@ class HelloCashTest extends AppCakeTestCase
 
     public function setUp(): void
     {
+        if (
+            Configure::read('app.helloCashAtCredentials.username') == ''
+            || Configure::read('app.helloCashAtCredentials.password') == ''
+            || Configure::read('app.helloCashAtCredentials.cashier_id') == ''
+            ) {
+                $this->markTestSkipped('The credentials for HelloCash are missing.');
+            }
         parent::setUp();
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
