@@ -60,6 +60,18 @@ CREATE TABLE `fcs_attribute` (
   PRIMARY KEY (`id_attribute`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_barcodes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_barcodes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `barcode` varchar(13) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`,`product_attribute_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_blog_posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
