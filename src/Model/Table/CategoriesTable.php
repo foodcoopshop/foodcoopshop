@@ -189,7 +189,8 @@ class CategoriesTable extends AppTable
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                 $params['barcodeIdentifier'] = strtolower(substr($keyword, 0, 4));
                 $sql .= " OR " . $this->getProductIdentifierField() . " = :barcodeIdentifier";
-                $sql .= " OR Barcodes.barcode = :keyword";
+                $sql .= " OR ProductBarcodes.barcode = :keyword";
+                $sql .= " OR ProductAttributeBarcodes.barcode = :keyword";
             }
 
             $sql .= ")";

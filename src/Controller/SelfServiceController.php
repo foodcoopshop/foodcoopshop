@@ -69,18 +69,20 @@ class SelfServiceController extends FrontendController
 
         if (!empty($this->getRequest()->getQuery('keyword')) && count($products) == 1) {
 
-            $hashedProductId = null;
-            $customProductBarcodeFound = false;
+            $hashedProductId = strtolower(substr($keyword, 0, 4));
+            $attributeId = (int) substr($keyword, 4, 4);
 
-            if ($keyword == $products[0]['Barcode']) {
-                $customProductBarcodeFound = true;
+            $customBarcodeFound = false;
+            if ($keyword == $products[0]['ProductBarcode']) {
+                $customBarcodeFound = true;
                 $attributeId = 0;
-            } else {
-                $hashedProductId = strtolower(substr($keyword, 0, 4));
-                $attributeId = (int) substr($keyword, 4, 4);
+            }
+            if ($keyword == $products[0]['ProductAttributeBarcode']) {
+                $customBarcodeFound = true;
+                $attributeId = $products[0]['ProductAttributeId'];
             }
 
-            if ($hashedProductId == $products[0]['ProductIdentifier'] || $customProductBarcodeFound) {
+            if ($hashedProductId == $products[0]['ProductIdentifier'] || $customBarcodeFound) {
                 $this->CartProduct = $this->getTableLocator()->get('CartProducts');
                 $result = $this->CartProduct->add($this->AppAuth, $products[0]['id_product'], $attributeId, 1);
                 if (!empty($result['msg'])) {

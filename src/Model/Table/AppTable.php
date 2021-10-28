@@ -206,7 +206,8 @@ class AppTable extends Table
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $fields .= ", " . $this->getProductIdentifierField() . " as ProductIdentifier";
-            $fields .= ", Barcodes.barcode as Barcode";
+            $fields .= ", ProductBarcodes.barcode as ProductBarcode";
+            $fields .= ", ProductAttributeBarcodes.barcode as ProductAttributeBarcode, ProductAttributes.id_product_attribute as ProductAttributeId";
         }
 
         $fields .= " ";
@@ -226,7 +227,10 @@ class AppTable extends Table
                 LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturers ON Manufacturers.id_manufacturer = Products.id_manufacturer ";
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes Barcodes ON Barcodes.product_id = Products.id_product ";
+            $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes ProductBarcodes ON ProductBarcodes.product_id = Products.id_product ";
+
+            $sql .= "LEFT JOIN ".$this->tablePrefix."product_attribute ProductAttributes ON ProductAttributes.id_product = Products.id_product ";
+            $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes ProductAttributeBarcodes ON ProductAttributeBarcodes.product_attribute_id = ProductAttributes.id_product_attribute ";
         }
 
         return $sql;
