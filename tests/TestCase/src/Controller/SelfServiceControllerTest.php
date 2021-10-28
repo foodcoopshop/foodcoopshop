@@ -206,6 +206,15 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
     }
 
+    public function testSearchByCustomProductBarcode()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = '1234567890123';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+    }
+
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
 

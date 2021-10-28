@@ -78,6 +78,9 @@ INSERT INTO `fcs_attribute` VALUES
 /*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_barcodes` DISABLE KEYS */;
+INSERT INTO `fcs_barcodes` VALUES
+(1,349,0,'1234567890123'),
+(2,0,13,'2345678901234');
 /*!40000 ALTER TABLE `fcs_barcodes` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_blog_posts` DISABLE KEYS */;
