@@ -212,7 +212,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '1234567890123';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $this->assertFlashMessageAt(0, 'Das Produkt <b>Lagerprodukt</b> wurde in deine Einkaufstasche gelegt.<br /><img src="/files/images/products/de-default-home_default.jpg?1620899578" />');
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
     }
 
@@ -222,7 +222,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2345678901234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $this->assertFlashMessageAt(0, 'Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.<br /><img src="/files/images/products/de-default-home_default.jpg?1620899578" />');
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
     }
 
