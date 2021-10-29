@@ -236,6 +236,16 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
     }
 
+    public function testSearchBySystemProductAttributeBarcodeWithMissingWeight()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = 'e05f0015';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->assertFlashMessageAt(0, 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.');
+        $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+    }
+
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
 
