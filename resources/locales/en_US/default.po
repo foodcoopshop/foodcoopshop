@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-15 23:11+0200\n"
-"PO-Revision-Date: 2021-10-15 23:11+0200\n"
+"POT-Creation-Date: 2021-10-29 11:08+0200\n"
+"PO-Revision-Date: 2021-10-29 11:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -897,9 +897,8 @@ msgstr "Calculate selling price"
 msgid "Surcharge_in_percent_from_purchase_price_net"
 msgstr "Surcharge in % from purchase price net"
 
-#, fuzzy
 msgid "Calculate_selling_price_explanation_text."
-msgstr "Calculate selling price"
+msgstr "Calculate selling price."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1068,6 +1067,9 @@ msgstr "Enter purchase price"
 
 msgid "Storage_location"
 msgstr "Storage location"
+
+msgid "Existing_EAN_13_code"
+msgstr "Existing EAN13 barcode"
 
 msgid "delete"
 msgstr "delete"

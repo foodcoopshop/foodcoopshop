@@ -121,6 +121,12 @@ echo '<td class="cell-name">';
         echo $product->description;
     echo '</span>';
 
-echo '</td>';
+    echo '<span class="barcode-for-dialog">';
+        if (!empty($product->barcode_product)) {
+            echo $product->barcode_product->barcode;
+        }
+    echo '</span>';
+
+    echo '</td>';
 
 ?>

@@ -26,6 +26,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".ModalProductNameEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#products');" .
             Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace') . ".Helper.setIsSelfServiceModeEnabled(" . Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') . ");" .
             Configure::read('app.jsNamespace') . ".ModalProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductTaxEdit.init();" .

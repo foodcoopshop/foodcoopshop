@@ -126,7 +126,7 @@ class CustomersController extends AdminAppController
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
             'fields' => [
-                'bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
+                'system_bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
             ],
             'conditions' => [
                 'Customers.id_customer IN' => $customerIds

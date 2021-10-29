@@ -40,6 +40,12 @@ class ProductAttributesTable extends AppTable
                 'PurchasePriceProductAttributes.product_attribute_id > 0',
             ],
         ]);
+        $this->hasOne('BarcodeProductAttributes', [
+            'foreignKey' => 'product_attribute_id',
+            'conditions' => [
+                'BarcodeProductAttributes.product_attribute_id > 0',
+            ],
+        ]);
         $this->hasOne('DepositProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);

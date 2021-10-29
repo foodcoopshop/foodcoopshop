@@ -641,6 +641,10 @@ foodcoopshop.Helper = {
         this.isManufacturer = isManufacturer;
     },
 
+    setIsSelfServiceModeEnabled: function (isSelfServiceModeEnabled) {
+        this.isSelfServiceModeEnabled = isSelfServiceModeEnabled;
+    },
+
     setPaymentMethods: function (paymentMethods) {
         this.paymentMethods = paymentMethods;
     },

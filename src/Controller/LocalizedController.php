@@ -308,6 +308,7 @@ class LocalizedController extends Controller
                 'DefaultQuantityAfterSendingOrderListsHelpText' => __('After_the_order_lists_are_sent_available_amount_is_set_to_this_value.'),
                 'EnterPurchasePrice' => __('Enter_purchase_price'),
                 'StorageLocation' => __('Storage_location'),
+                'BarcodeDescription' => __('Existing_EAN_13_code'),
             ],
             'upload' => [
                 'delete' => __('delete'),

@@ -299,7 +299,7 @@ class ProductsController extends AdminAppController
                }
             }
             if (preg_match('/main-product/', $product->row_class)) {
-                $product->bar_code .= '0000';
+                $product->system_bar_code .= '0000';
             }
             $product->prepared_price = $price;
             $preparedProducts[] = $product;
@@ -1393,6 +1393,7 @@ class ProductsController extends AdminAppController
                         'unity' => $this->getRequest()->getData('unity'),
                         'is_declaration_ok' => $this->getRequest()->getData('isDeclarationOk'),
                         'id_storage_location' => $this->getRequest()->getData('idStorageLocation'),
+                        'barcode' => $this->getRequest()->getData('barcode'),
                     ]]
                 ]
             );

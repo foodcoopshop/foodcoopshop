@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-15 23:11+0200\n"
-"PO-Revision-Date: 2021-10-15 23:11+0200\n"
+"POT-Creation-Date: 2021-10-29 11:08+0200\n"
+"PO-Revision-Date: 2021-10-29 11:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1067,6 +1067,9 @@ msgstr "Einkaufspreis eintragen"
 
 msgid "Storage_location"
 msgstr "Lagerort"
+
+msgid "Existing_EAN_13_code"
+msgstr "Bestehender EAN13-Barcode"
 
 msgid "delete"
 msgstr "löschen"
@@ -2576,6 +2579,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Barcode"
+#~ msgstr "Barcode"
 
 #~ msgid "Surcharge"
 #~ msgstr "Aufschlag"
