@@ -212,7 +212,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '1234567890123';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+        $this->assertFlashMessageAt(0, 'Das Produkt <b>Lagerprodukt</b> wurde in deine Einkaufstasche gelegt.<br /><img src="/files/images/products/de-default-home_default.jpg?1620899578" />');
+        $this->assertRedirect($this->Slug->getSelfService());
     }
 
     public function testSearchByCustomProductAttributeBarcode()
@@ -221,7 +222,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2345678901234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+        $this->assertFlashMessageAt(0, 'Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.<br /><img src="/files/images/products/de-default-home_default.jpg?1620899578" />');
+        $this->assertRedirect($this->Slug->getSelfService());
     }
 
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()

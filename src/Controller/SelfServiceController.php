@@ -88,6 +88,7 @@ class SelfServiceController extends FrontendController
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]['id_product']); // sic! no attributeId needed!
+                    $redirectUrl = Configure::read('app.slugHelper')->getSelfService('', $keyword);
                 } else {
                     $imgString = '';
                     $imgSrc = Configure::read('app.htmlHelper')->getProductImageSrc($products[0]['id_image'], 'home');
@@ -97,8 +98,9 @@ class SelfServiceController extends FrontendController
                     $this->Flash->success(__('The_product_{0}_was_added_to_your_cart.', [
                         '<b>' . $products[0]['name'] . '</b>'
                     ]) . $imgString);
+                    $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
                 }
-                $this->redirect(Configure::read('app.slugHelper')->getSelfService('', $keyword));
+                $this->redirect($redirectUrl);
                 return;
             }
         }
