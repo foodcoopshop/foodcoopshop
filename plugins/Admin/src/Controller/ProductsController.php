@@ -485,7 +485,7 @@ class ProductsController extends AdminAppController
         }
 
         if ($deleteProductAttribute) {
-            $this->Product->deleteProductAttribute($productId, $productAttributeId);
+            $this->Product->ProductAttributes->deleteProductAttribute($productId, $productAttributeId);
             $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
                 '<b>' . $attributeName . '</b>',
                 '<b>' . $oldProduct->name . '</b>',

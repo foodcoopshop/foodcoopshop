@@ -1290,47 +1290,6 @@ class ProductsTable extends AppTable
         ]);
     }
 
-    public function deleteProductAttribute($productId, $attributeId)
-    {
-
-        $pac = $this->ProductAttributes->ProductAttributeCombinations->find('all', [
-            'conditions' => [
-                'ProductAttributeCombinations.id_product_attribute' => $attributeId,
-            ]
-        ])->first();
-        $productAttributeId = $pac->id_product_attribute;
-
-        $this->ProductAttributes->deleteAll([
-            'ProductAttributes.id_product_attribute' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->ProductAttributeCombinations->deleteAll([
-            'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->UnitProductAttributes->deleteAll([
-            'UnitProductAttributes.id_product_attribute' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->PurchasePriceProductAttributes->deleteAll([
-            'product_attribute_id' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->BarcodeProductAttributes->deleteAll([
-            'product_attribute_id' => $productAttributeId,
-        ]);
-
-        // deleteAll can only get primary key as condition
-        $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
-        $this->StockAvailables->setPrimaryKey('id_product_attribute');
-        $this->StockAvailables->deleteAll([
-            'StockAvailables.id_product_attribute' => $attributeId,
-        ]);
-        $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
-
-        $this->StockAvailables->updateQuantityForMainProduct($productId);
-    }
-
     public function changeImage($products)
     {
 
