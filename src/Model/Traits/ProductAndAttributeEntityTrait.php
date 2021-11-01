@@ -11,7 +11,7 @@ namespace App\Model\Traits;
  *
  * @since         FoodCoopShop 3.4.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
- * @author        Swoichha Adhikari
+ * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
