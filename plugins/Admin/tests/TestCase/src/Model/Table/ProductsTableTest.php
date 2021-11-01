@@ -592,7 +592,8 @@ class ProductsTableTest extends AppCakeTestCase
         $unity = '<b>piece</b>';
         $isDeclarationOk = 0;
         $idStorageLocation = 1;
-        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
+        $barcode = '1234567890123';
+        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -600,7 +601,8 @@ class ProductsTableTest extends AppCakeTestCase
             ],
             'contain' => [
                 'CategoryProducts',
-                'StockAvailables'
+                'StockAvailables',
+                'BarcodeProducts',
             ]
         ])->first();
 
@@ -616,6 +618,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 0);
         $this->assertEquals($product->id_storage_location, $idStorageLocation);
+        $this->assertEquals($product->barcode_product->barcode, $barcode);
     }
 
     /**

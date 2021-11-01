@@ -545,6 +545,7 @@ class ProductsController extends AdminAppController
         $unity = $this->getRequest()->getData('unity');
         $isDeclarationOk = $this->getRequest()->getData('isDeclarationOk');
         $idStorageLocation = $this->getRequest()->getData('idStorageLocation');
+        $barcode = $this->getRequest()->getData('barcode');
 
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
@@ -563,7 +564,16 @@ class ProductsController extends AdminAppController
             if (empty($manufacturer)) {
                 throw new RecordNotFoundException('manufacturer not existing');
             }
-            $productEntity = $this->Product->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
+            $productEntity = $this->Product->add(
+                $manufacturer,
+                $productName,
+                $descriptionShort,
+                $description,
+                $unity,
+                $isDeclarationOk,
+                $idStorageLocation,
+                $barcode,
+            );
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($productEntity)));
             }

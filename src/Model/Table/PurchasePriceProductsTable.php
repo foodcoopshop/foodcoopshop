@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductAndAttributeEntityTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
@@ -21,6 +22,8 @@ use Cake\Datasource\FactoryLocator;
  */
 class PurchasePriceProductsTable extends AppTable
 {
+
+    use ProductAndAttributeEntityTrait;
 
     public function initialize(array $config): void
     {
@@ -60,32 +63,6 @@ class PurchasePriceProductsTable extends AppTable
         $surcharge = round($surcharge, 0);
         return $surcharge;
 
-    }
-
-    public function getEntityToSaveByProductAttributeId($productAttributeId)
-    {
-        $entity2Save = $this->find('all', [
-            'conditions' => [
-                'product_attribute_id' => $productAttributeId,
-            ],
-        ])->first();
-        if (empty($entity2Save)) {
-            $entity2Save = $this->newEntity(['product_attribute_id' => $productAttributeId]);
-        }
-        return $entity2Save;
-    }
-
-    public function getEntityToSaveByProductId($productId)
-    {
-        $entity2Save = $this->find('all', [
-            'conditions' => [
-                'product_id' => $productId,
-            ],
-        ])->first();
-        if (empty($entity2Save)) {
-            $entity2Save = $this->newEntity(['product_id' => $productId]);
-        }
-        return $entity2Save;
     }
 
     public function getSellingPricesWithSurcharge($productIds, $surcharge): array

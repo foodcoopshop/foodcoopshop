@@ -60,6 +60,14 @@ foodcoopshop.ModalProductAdd = {
         html += '<textarea class="ckeditor hide" name="dialogDescription" id="dialogDescription"></textarea>';
         html += '</div>';
         html += '</div>';
+
+        if (foodcoopshop.Helper.isSelfServiceModeEnabled) {
+            html += '<hr />';
+            html += '<div class="dialog-barcode-wrapper">';
+            html += '<label id="dialogLabelBarcode" for="dialogBarcode"><b>' + foodcoopshop.LocalizedJs.dialogProduct.BarcodeDescription + '</b></label><br />';
+            html += '<input type="text" name="dialogBarcode" id="dialogBarcode" value="" /><br />';
+        }
+
         html += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
         return html;
     },
@@ -79,7 +87,8 @@ foodcoopshop.ModalProductAdd = {
                 descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData().trim(),
                 description: CKEDITOR.instances['dialogDescription'].getData().trim(),
                 isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0,
-                idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0
+                idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0,
+                barcode: $('#dialogBarcode').length > 0 ? $('#dialogBarcode').val() : '',
             },
             {
                 onOk: function (data) {

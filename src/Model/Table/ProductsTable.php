@@ -1390,13 +1390,12 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation)
+    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode)
     {
         $defaultQuantity = 0;
 
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
 
-        // INSERT PRODUCT
         $productEntity = $this->newEntity(
             [
                 'id_manufacturer' => $manufacturer->id_manufacturer,
@@ -1420,6 +1419,14 @@ class ProductsTable extends AppTable
 
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
+
+        if ($barcode != '') {
+            $barcodeEntity2Save = $this->BarcodeProducts->newEntity([
+                'product_id' => $newProductId,
+                'barcode' => $barcode,
+            ]);
+            $this->BarcodeProducts->save($barcodeEntity2Save);
+        }
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $entity2Save = $this->PurchasePriceProducts->getEntityToSaveByProductId($newProductId);
