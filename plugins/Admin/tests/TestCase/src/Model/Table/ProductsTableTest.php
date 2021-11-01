@@ -993,13 +993,13 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeNameWithMultipleProducts()
     {
-
         $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
             'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>    ',
             'id_storage_location' => 2,
+            'barcode' => '1234567890123',
         ];
 
         $products = [
@@ -1014,13 +1014,10 @@ class ProductsTableTest extends AppCakeTestCase
             'description' => '<p>test <br /><strong><em>description</em></strong></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>',
             'id_storage_location' => 2,
+            'barcode' => '1234567890123',
         ];
         $this->assertProductName($products, $expectedResults);
     }
-
-    /**
-     * START helper methods
-     */
 
     private function assertProductName($products, $expectedResults)
     {
@@ -1030,6 +1027,9 @@ class ProductsTableTest extends AppCakeTestCase
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productId,
+                ],
+                'contain' => [
+                    'BarcodeProducts',
                 ]
             ])->first();
             $this->assertEquals($expectedResults['name'], $changedProduct->name);
@@ -1039,6 +1039,10 @@ class ProductsTableTest extends AppCakeTestCase
 
             if (isset($expectedResults['id_storage_location'])) {
                 $this->assertEquals($expectedResults['id_storage_location'], $changedProduct->id_storage_location);
+            }
+
+            if (isset($expectedResults['barcode'])) {
+                $this->assertEquals($expectedResults['barcode'], $changedProduct->barcode_product->barcode);
             }
 
         }

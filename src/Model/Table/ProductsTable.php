@@ -729,13 +729,26 @@ class ProductsTable extends AppTable
                 if (isset($name['id_storage_location']) && $name['id_storage_location'] > 0) {
                     $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
                 }
+
+                if (isset($name['barcode'])) {
+                    $barcode = StringComponent::removeSpecialChars(strip_tags(trim($name['barcode'])));
+                    $tmpProduct2Save['barcode_product'] = [
+                        'product_id' => $ids['productId'],
+                        'barcode' => $barcode,
+                    ];
+                }
                 $products2save[] = $tmpProduct2Save;
             }
         }
 
         $success = false;
+
         if (!empty($products2save)) {
-            $entities = $this->newEntities($products2save);
+            $entities = $this->newEntities($products2save, [
+                'associated' => [
+                    'BarcodeProducts',
+                ],
+            ]);
             $result = $this->saveMany($entities);
             $success = !empty($result);
         }
