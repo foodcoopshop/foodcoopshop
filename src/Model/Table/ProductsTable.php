@@ -1421,6 +1421,7 @@ class ProductsTable extends AppTable
         $newProductId = $newProduct->id_product;
 
         if ($barcode != '') {
+            $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
             $barcodeEntity2Save = $this->BarcodeProducts->newEntity([
                 'product_id' => $newProductId,
                 'barcode' => $barcode,
