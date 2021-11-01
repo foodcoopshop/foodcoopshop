@@ -918,7 +918,8 @@
                 "names": [],
                 "all_products_found": true
             },
-            "image": null
+            "image": null,
+            "barcode_product": null
         },
         {
             "id_product": "350-14",
@@ -960,7 +961,8 @@
                 "names": [],
                 "all_products_found": true
             },
-            "image": null
+            "image": null,
+            "barcode_product": null
         },
         {
             "id_product": "350-15",
@@ -1002,7 +1004,8 @@
                 "names": [],
                 "all_products_found": true
             },
-            "image": null
+            "image": null,
+            "barcode_product": null
         },
         {
             "id_product": 163,
