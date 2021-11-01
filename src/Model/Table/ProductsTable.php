@@ -707,38 +707,53 @@ class ProductsTable extends AppTable
 
             $productEntity = $this->newEntity(
                 [
-                    'name' => $newName
+                    'name' => $newName,
                 ],
                 [
-                    'validate' => 'name'
+                    'validate' => 'name',
                 ]
             );
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($productEntity)));
-            } else {
-                $tmpProduct2Save = [
-                    'id_product' => $ids['productId'],
-                    'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
-                    'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
-                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity']))),
-                ];
-                if (isset($name['is_declaration_ok'])) {
-                    $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
-                }
-                if (isset($name['id_storage_location']) && $name['id_storage_location'] > 0) {
-                    $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
-                }
-
-                if (isset($name['barcode'])) {
-                    $barcode = StringComponent::removeSpecialChars(strip_tags(trim($name['barcode'])));
-                    $tmpProduct2Save['barcode_product'] = [
-                        'product_id' => $ids['productId'],
-                        'barcode' => $barcode,
-                    ];
-                }
-                $products2save[] = $tmpProduct2Save;
             }
+
+            if (isset($name['barcode'])) {
+                $barcode = StringComponent::removeSpecialChars(strip_tags(trim($name['barcode'])));
+                $barcodeProductEntity = $this->BarcodeProducts->newEntity(
+                    [
+                        'barcode' => $barcode,
+                    ],
+                    [
+                        'validate' => true
+                    ]
+                );
+                if ($barcodeProductEntity->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($barcodeProductEntity)));
+                }
+            }
+
+            $tmpProduct2Save = [
+                'id_product' => $ids['productId'],
+                'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
+                'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
+                'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity']))),
+            ];
+            if (isset($name['is_declaration_ok'])) {
+                $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
+            }
+            if (isset($name['id_storage_location']) && $name['id_storage_location'] > 0) {
+                $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
+            }
+
+            if (isset($name['barcode'])) {
+                $tmpProduct2Save['barcode_product'] = [
+                    'product_id' => $ids['productId'],
+                    'barcode' => $barcode,
+                ];
+            }
+            $products2save[] = $tmpProduct2Save;
+
         }
 
         $success = false;
@@ -1439,15 +1454,21 @@ class ProductsTable extends AppTable
             return $productEntity;
         }
 
+        if ($barcode != '') {
+            $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
+            $barcodeEntity2Save = $this->BarcodeProducts->newEntity([
+                'barcode' => $barcode,
+            ], ['validate' => true]);
+            if ($barcodeEntity2Save->hasErrors()) {
+                return $barcodeEntity2Save;
+            }
+        }
+
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
 
         if ($barcode != '') {
-            $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
-            $barcodeEntity2Save = $this->BarcodeProducts->newEntity([
-                'product_id' => $newProductId,
-                'barcode' => $barcode,
-            ]);
+            $barcodeEntity2Save->product_id = $newProductId;
             $this->BarcodeProducts->save($barcodeEntity2Save);
         }
 

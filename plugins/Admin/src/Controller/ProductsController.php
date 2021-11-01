@@ -493,10 +493,24 @@ class ProductsController extends AdminAppController
             ]);
             $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
         } else {
-            $entity2Save = $this->Product->BarcodeProducts->getEntityToSaveByProductAttributeId($productAttributeId);
-            $entity2Save->barcode = $barcode;
-            $entity2Save->product_attribute_id = $productAttributeId;
-            $this->Product->BarcodeProducts->save($entity2Save);
+            try {
+                $entity2Save = $this->Product->BarcodeProducts->getEntityToSaveByProductAttributeId($productAttributeId);
+                $entity2Save = $this->Product->BarcodeProducts->patchEntity(
+                    $entity2Save,
+                    [
+                        'barcode' => $barcode,
+                        'product_attribute_id' => $productAttributeId,
+                    ],
+                    [
+                        'validate' => true,
+                    ]);
+                if ($entity2Save->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($entity2Save)));
+                }
+                $this->Product->BarcodeProducts->save($entity2Save);
+            } catch (\Exception $e) {
+                return $this->sendAjaxError($e);
+            }
             $actionLogMessage = __d('admin', 'The_product_attribute_{0}_was_changed_successfully.', [
                 '<b>' . $attributeName . '</b>',
             ]);

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-01 10:36+0100\n"
-"PO-Revision-Date: 2021-11-01 10:37+0100\n"
+"POT-Creation-Date: 2021-11-01 11:24+0100\n"
+"PO-Revision-Date: 2021-11-01 11:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1574,6 +1574,9 @@ msgstr "Please enter a name."
 
 msgid "An_attribute_with_this_name_already_exists."
 msgstr "An attribute with this name already exists."
+
+msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
+msgstr "The length of the barcode needs to be exactly {0}."
 
 msgid "Please_enter_a_title."
 msgstr "Please enter a title."

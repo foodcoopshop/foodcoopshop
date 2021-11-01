@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use App\Model\Traits\ProductAndAttributeEntityTrait;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,6 +28,13 @@ class BarcodeProductsTable extends AppTable
         $this->setTable('barcodes');
         parent::initialize($config);
         $this->setPrimaryKey('product_id');
+    }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->allowEmptyString('barcode');
+        $validator->lengthBetween('barcode', [13, 13], __('The_length_of_the_barcode_needs_to_be_exactly_{0}.', [13]));
+        return $validator;
     }
 
 }
