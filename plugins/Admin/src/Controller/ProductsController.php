@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\ProductCardsPdfWriter;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -454,18 +455,24 @@ class ProductsController extends AdminAppController
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
-    public function deleteProductAttribute($productId, $productAttributeId)
+    public function editProductAttribute()
     {
 
-        // get new data
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $productId = h($this->getRequest()->getData('productId'));
+        $productAttributeId = h($this->getRequest()->getData('productAttributeId'));
+        $deleteProductAttribute = h($this->getRequest()->getData('deleteProductAttribute'));
+        $barcode = StringComponent::removeSpecialChars(strip_tags(trim($this->getRequest()->getData('barcode'))));
+
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
-                'Products.id_product' => $productId
+                'Products.id_product' => $productId,
             ],
             'contain' => [
                 'Manufacturers',
                 'ProductAttributes',
-                'ProductAttributes.ProductAttributeCombinations.Attributes'
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
             ]
         ])->first();
 
@@ -477,17 +484,30 @@ class ProductsController extends AdminAppController
             }
         }
 
-        $this->Product->deleteProductAttribute($productId, $productAttributeId);
-
-        $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
-            '<b>' . $attributeName . '</b>',
-            '<b>' . $oldProduct->name . '</b>',
-            '<b>' . $oldProduct->manufacturer->name . '</b>'
-        ]);
+        if ($deleteProductAttribute) {
+            $this->Product->deleteProductAttribute($productId, $productAttributeId);
+            $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
+                '<b>' . $attributeName . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>'
+            ]);
+            $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+        } else {
+            $entity2Save = $this->Product->BarcodeProducts->getEntityToSaveByProductAttributeId($productAttributeId);
+            $entity2Save->barcode = $barcode;
+            $entity2Save->product_attribute_id = $productAttributeId;
+            $this->Product->BarcodeProducts->save($entity2Save);
+            $actionLogMessage = __d('admin', 'The_product_attribute_{0}_was_changed_successfully.', [
+                '<b>' . $attributeName . '</b>',
+            ]);
+            $this->ActionLog->customSave('product_attribute_changed', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+        }
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $actionLogMessage);
-
-        $this->redirect($this->referer());
+        $this->set([
+            'status' => 1,
+            'msg' => 'success',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function addProductAttribute($productId, $productAttributeId)

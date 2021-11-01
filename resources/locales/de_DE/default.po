@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-29 11:08+0200\n"
-"PO-Revision-Date: 2021-10-29 11:08+0200\n"
+"POT-Creation-Date: 2021-11-01 10:36+0100\n"
+"PO-Revision-Date: 2021-11-01 10:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -708,11 +708,14 @@ msgstr "Möchtest du das Produkt {0} wirklich aktivieren?"
 msgid "Really_deactivate_product_{0}?"
 msgstr "Möchtest du das Produkt {0} wirklich deaktivieren?"
 
-msgid "Delete_attribute"
-msgstr "Variante löschen"
+msgid "Edit_attribute"
+msgstr "Variante bearbeiten"
 
-msgid "Really_delete_attribute_{0}?"
-msgstr "Möchtest du die Variante {0} wirklich löschen?"
+msgid "Delete_attribute_{0}?"
+msgstr "Variante {0} löschen?"
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
 
 msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
 msgstr "Bitte wähle aus, ob es sich um eine Aufladung oder ein Rückzahlung handelt."
@@ -1068,8 +1071,8 @@ msgstr "Einkaufspreis eintragen"
 msgid "Storage_location"
 msgstr "Lagerort"
 
-msgid "Existing_EAN_13_code"
-msgstr "Bestehender EAN13-Barcode"
+msgid "EAN_13_code"
+msgstr "EAN13-Barcode"
 
 msgid "delete"
 msgstr "löschen"
@@ -1241,6 +1244,9 @@ msgstr "Produkt: erstellt"
 
 msgid "Action_Log_Product_attribute_added"
 msgstr "Produkt: Variante erstellt"
+
+msgid "Action_Log_Product_attribute_changed"
+msgstr "Produkt: Variante geändert"
 
 msgid "Action_Log_Product_image_uploaded"
 msgstr "Produkt: Bild hochgeladen"
@@ -2579,6 +2585,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Really_delete_attribute_{0}?"
+#~ msgstr "Möchtest du die Variante {0} wirklich löschen?"
 
 #~ msgid "Barcode"
 #~ msgstr "Barcode"

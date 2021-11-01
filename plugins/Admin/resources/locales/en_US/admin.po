@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-15 22:53+0200\n"
-"PO-Revision-Date: 2021-10-29 11:07+0200\n"
+"POT-Creation-Date: 2021-11-01 10:37+0100\n"
+"PO-Revision-Date: 2021-11-01 10:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -476,6 +476,9 @@ msgstr "A new image was uploaded to product {0} from manufacturer {1}."
 
 msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
 msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully deleted."
+
+msgid "The_product_attribute_{0}_was_changed_successfully."
+msgstr "The product attribute was changed successfully."
 
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
 msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully created."
@@ -2016,8 +2019,8 @@ msgstr "Do not mark product as new any more?"
 msgid "Is_stock_product"
 msgstr "Is stock product"
 
-msgid "Delete_attribute_for_product_{0}"
-msgstr "Delete attribute for product {0}"
+msgid "Edit_attribute_for_product_{0}"
+msgstr "Edit attribute for product {0}"
 
 msgid "This_attribute_is_the_default_attribute."
 msgstr "This attribute is the default attribute"

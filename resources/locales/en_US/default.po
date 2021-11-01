@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-29 11:08+0200\n"
-"PO-Revision-Date: 2021-10-29 11:08+0200\n"
+"POT-Creation-Date: 2021-11-01 10:36+0100\n"
+"PO-Revision-Date: 2021-11-01 10:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -708,11 +708,14 @@ msgstr "Do you really want to activate product {0}?"
 msgid "Really_deactivate_product_{0}?"
 msgstr "Do you really want to deactivate product {0}?"
 
-msgid "Delete_attribute"
-msgstr "Delete attribute"
+msgid "Edit_attribute"
+msgstr "Edit attribute"
 
-msgid "Really_delete_attribute_{0}?"
-msgstr "Do you really want to delete the attribute {0}?"
+msgid "Delete_attribute_{0}?"
+msgstr "Delete attribute {0}?"
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Check and do not forget to click save button."
 
 msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
 msgstr "Please chose if you want to add a payback or a credit upload."
@@ -1068,8 +1071,8 @@ msgstr "Enter purchase price"
 msgid "Storage_location"
 msgstr "Storage location"
 
-msgid "Existing_EAN_13_code"
-msgstr "Existing EAN13 barcode"
+msgid "EAN_13_code"
+msgstr "EAN13 barcode"
 
 msgid "delete"
 msgstr "delete"
@@ -1241,6 +1244,9 @@ msgstr "Product: Added"
 
 msgid "Action_Log_Product_attribute_added"
 msgstr "Product: Attribute added"
+
+msgid "Action_Log_Product_attribute_changed"
+msgstr "Product: Attribute changed"
 
 msgid "Action_Log_Product_image_uploaded"
 msgstr "Product: Image uploaded"
@@ -2579,6 +2585,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Really_delete_attribute_{0}?"
+#~ msgstr "Do you really want to delete the attribute {0}?"
 
 #~ msgid "Surcharge"
 #~ msgstr "Surcharge"
