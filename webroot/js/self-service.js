@@ -49,7 +49,10 @@ foodcoopshop.SelfService = {
             },
             numOfWorkers: navigator.hardwareConcurrency,
             decoder : {
-                readers : ['code_39_reader']
+                readers : [
+                    'code_39_reader',
+                    'ean_reader',
+                ],
             },
         }, function(err) {
             if (err) {
