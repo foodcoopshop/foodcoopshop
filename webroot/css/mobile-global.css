@@ -156,5 +156,14 @@
     #modal-image .modal-dialog img {
         max-width: 100%;
     }
+    .modal-dialog .block {
+        width: 100%;
+    }
+    .modal-dialog .block-a {
+        margin-right: auto;
+    }
+    .modal-dialog .block hr:last-of-type {
+        display: block;
+    }
 
 }
