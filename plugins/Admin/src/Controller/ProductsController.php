@@ -489,7 +489,7 @@ class ProductsController extends AdminAppController
             $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
                 '<b>' . $attributeName . '</b>',
                 '<b>' . $oldProduct->name . '</b>',
-                '<b>' . $oldProduct->manufacturer->name . '</b>'
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
             $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
         } else {
@@ -511,8 +511,10 @@ class ProductsController extends AdminAppController
             } catch (\Exception $e) {
                 return $this->sendAjaxError($e);
             }
-            $actionLogMessage = __d('admin', 'The_product_attribute_{0}_was_changed_successfully.', [
+            $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully.', [
                 '<b>' . $attributeName . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
             $this->ActionLog->customSave('product_attribute_changed', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
         }
