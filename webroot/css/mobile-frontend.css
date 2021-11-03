@@ -45,7 +45,7 @@
     .swiper-button-prev {
         display: none;
     }
-    .blog-wrapper {
+    body.pages.home .blog-wrapper {
         height: 255px;
         margin-bottom: 0px;
     }
