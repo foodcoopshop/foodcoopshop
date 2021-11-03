@@ -92,8 +92,10 @@
     .sb-left a i {
         padding-left: 0;
     }
-    .sb-left a, .sb-left li.header,
-    .sb-left a, .sb-left li.footer {
+    .sb-left a:not(.btn),
+    .sb-left li.header,
+    .sb-left a:not(.btn),
+    .sb-left li.footer {
         color: #000 ! important;
     }
     .sb-slidebar {
