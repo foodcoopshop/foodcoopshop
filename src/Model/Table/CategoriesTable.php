@@ -212,6 +212,19 @@ class CategoriesTable extends AppTable
         $products = $statement->fetchAll('assoc');
         $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
 
+        // remove multiple rows due to multiple attributes that were needed for custom attribute barcode search
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $i = 0;
+            $containingProductIds = [];
+            foreach($products as $product) {
+                if (in_array($product['id_product'], $containingProductIds)) {
+                    unset($products[$i]);
+                }
+                $containingProductIds[] = $product['id_product'];
+                $i++;
+            }
+        }
+
         if (! $countMode) {
             return $products;
         } else {

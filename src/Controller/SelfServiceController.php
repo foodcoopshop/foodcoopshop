@@ -63,17 +63,6 @@ class SelfServiceController extends FrontendController
         $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, true);
         $products = $this->prepareProductsForFrontend($products);
 
-        // remove multiple rows due to multiple attributes that were needed for custom attribute barcode search
-        $i = 0;
-        $containingProductIds = [];
-        foreach($products as $product) {
-            if (in_array($product['id_product'], $containingProductIds)) {
-                unset($products[$i]);
-            }
-            $containingProductIds[] = $product['id_product'];
-            $i++;
-        }
-
         $this->set('products', $products);
 
         $this->viewBuilder()->setLayout('self_service');
