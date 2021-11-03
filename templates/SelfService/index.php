@@ -75,7 +75,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 ?>
 
 <div class="header">
-    <h2><?php echo __('Self_service_mode'); ?></h2>
+    <h2><?php echo __('Self_service'); ?></h2>
     <?php if (!$isMobile) { ?>
         <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
     <?php } ?>

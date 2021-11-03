@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-11-01 11:24+0100\n"
+"POT-Creation-Date: 2021-11-03 09:17+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2201,6 +2201,9 @@ msgstr ""
 msgid "Imprint"
 msgstr ""
 
+msgid "Self_service"
+msgstr ""
+
 msgid "Search:_name_id_or_barcode"
 msgstr ""
 
@@ -2364,9 +2367,6 @@ msgid "available"
 msgstr ""
 
 msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr ""
-
-msgid "Self_service"
 msgstr ""
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."

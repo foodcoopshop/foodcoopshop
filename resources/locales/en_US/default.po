@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-01 11:24+0100\n"
+"POT-Creation-Date: 2021-11-03 09:17+0100\n"
 "PO-Revision-Date: 2021-11-01 11:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2202,6 +2202,9 @@ msgstr "You will get an e-mail as soon as we activate you."
 msgid "Imprint"
 msgstr "Imprint"
 
+msgid "Self_service"
+msgstr "Self-service"
+
 msgid "Search:_name_id_or_barcode"
 msgstr "Search: name, ID or barcode"
 
@@ -2366,9 +2369,6 @@ msgstr "available"
 
 msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr "Stock product: order possible only by {0}."
-
-msgid "Self_service"
-msgstr "Self-service"
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr "Stock product: order possible only with instant order when picking it up."

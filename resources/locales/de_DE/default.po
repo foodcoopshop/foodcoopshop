@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-01 11:24+0100\n"
+"POT-Creation-Date: 2021-11-03 09:17+0100\n"
 "PO-Revision-Date: 2021-11-01 11:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2202,6 +2202,9 @@ msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
 msgid "Imprint"
 msgstr "Impressum"
 
+msgid "Self_service"
+msgstr "Selbstbedienung"
+
 msgid "Search:_name_id_or_barcode"
 msgstr "Suche: Name, ID oder Barcode"
 
@@ -2366,9 +2369,6 @@ msgstr "verfügbar"
 
 msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr "Lagerprodukt: nur über {0} bestellbar."
-
-msgid "Self_service"
-msgstr "Selbstbedienung"
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
