@@ -26,13 +26,14 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".ModalProductNameEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#products');" .
             Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace') . ".Helper.setIsSelfServiceModeEnabled(" . Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') . ");" .
             Configure::read('app.jsNamespace') . ".ModalProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductTaxEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductStatusNewEdit.init();" .
             Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage);" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeAdd.init();" .
-            Configure::read('app.jsNamespace') . ".ModalProductAttributeDelete.init();" .
+            Configure::read('app.jsNamespace') . ".ModalProductAttributeEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeSetDefault.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductPriceEdit.init();" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button');".

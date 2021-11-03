@@ -1116,7 +1116,7 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
 }
 .blog-wrapper {
     margin-bottom: 20px;
-    height: 320px;
+    height: 300px;
 }
 body.carts.order_successful h2 {
     margin-top: 20px;

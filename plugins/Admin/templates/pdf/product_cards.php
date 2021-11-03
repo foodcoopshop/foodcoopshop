@@ -41,7 +41,7 @@ foreach($products as $product) {
     // START ROW barcode and product image
     $pdf->table .= '<tr>';
     $pdf->table .= '<td style="width:255px;">';
-    $barcodeObject = new TCPDFBarcode($product->bar_code, 'C39');
+    $barcodeObject = new TCPDFBarcode($product->system_bar_code, 'C39');
     //https://stackoverflow.com/a/54520065/2100184
     $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.3, 108));
     // move barcode to bottom

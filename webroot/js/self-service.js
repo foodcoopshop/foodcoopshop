@@ -49,7 +49,10 @@ foodcoopshop.SelfService = {
             },
             numOfWorkers: navigator.hardwareConcurrency,
             decoder : {
-                readers : ['code_39_reader']
+                readers : [
+                    'code_39_reader',
+                    'ean_reader',
+                ],
             },
         }, function(err) {
             if (err) {
@@ -190,7 +193,9 @@ foodcoopshop.SelfService = {
         });
         $(rowId).css('background-color', '#f3515c');
         $(rowId).css('color', 'white');
+        $(rowId).find('.line *').css('color', 'white');
         $(rowId).one('mouseover', function () {
+            $(this).find('.line *').removeAttr('style');
             $(this).removeAttr('style');
         });
         $(rowId).find('.quantity-in-units-input-field-wrapper input').focus();

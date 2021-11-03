@@ -47,6 +47,12 @@ class ProductsTable extends AppTable
                 'PurchasePriceProducts.product_attribute_id = 0',
             ],
         ]);
+        $this->belongsTo('BarcodeProducts', [
+            'foreignKey' => 'id_product',
+            'conditions' => [
+                'BarcodeProducts.product_attribute_id = 0',
+            ],
+        ]);
         $this->belongsTo('Taxes', [
             'foreignKey' => 'id_tax'
         ]);
@@ -679,6 +685,7 @@ class ProductsTable extends AppTable
      *                      [unity] => ca. 0,4 kg-1
      *                      [is_declaration_ok] => 1
      *                      [id_storage_location] => 1
+     *                      [barcode] => '1234567890123'
      *                  )
      *          )
      *  )
@@ -700,35 +707,63 @@ class ProductsTable extends AppTable
 
             $productEntity = $this->newEntity(
                 [
-                    'name' => $newName
+                    'name' => $newName,
                 ],
                 [
-                    'validate' => 'name'
+                    'validate' => 'name',
                 ]
             );
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($productEntity)));
-            } else {
-                $tmpProduct2Save = [
-                    'id_product' => $ids['productId'],
-                    'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
-                    'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
-                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
-                ];
-                if (isset($name['is_declaration_ok'])) {
-                    $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
-                }
-                if (isset($name['id_storage_location']) && $name['id_storage_location'] > 0) {
-                    $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
-                }
-                $products2save[] = $tmpProduct2Save;
             }
+
+            if (isset($name['barcode'])) {
+                $barcode = StringComponent::removeSpecialChars(strip_tags(trim($name['barcode'])));
+                $barcodeProductEntity = $this->BarcodeProducts->newEntity(
+                    [
+                        'barcode' => $barcode,
+                    ],
+                    [
+                        'validate' => true
+                    ]
+                );
+                if ($barcodeProductEntity->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($barcodeProductEntity)));
+                }
+            }
+
+            $tmpProduct2Save = [
+                'id_product' => $ids['productId'],
+                'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
+                'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
+                'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity']))),
+            ];
+            if (isset($name['is_declaration_ok'])) {
+                $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
+            }
+            if (isset($name['id_storage_location']) && $name['id_storage_location'] > 0) {
+                $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
+            }
+
+            if (isset($name['barcode'])) {
+                $tmpProduct2Save['barcode_product'] = [
+                    'product_id' => $ids['productId'],
+                    'barcode' => $barcode,
+                ];
+            }
+            $products2save[] = $tmpProduct2Save;
+
         }
 
         $success = false;
+
         if (!empty($products2save)) {
-            $entities = $this->newEntities($products2save);
+            $entities = $this->newEntities($products2save, [
+                'associated' => [
+                    'BarcodeProducts',
+                ],
+            ]);
             $result = $this->saveMany($entities);
             $success = !empty($result);
         }
@@ -829,6 +864,11 @@ class ProductsTable extends AppTable
             $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
         }
 
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $contain[] = 'BarcodeProducts';
+            $contain[] = 'ProductAttributes.BarcodeProductAttributes';
+        }
+
         $order = [
             'Products.active' => 'DESC',
             'Products.name' => 'ASC'
@@ -861,7 +901,8 @@ class ProductsTable extends AppTable
         }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $query->select(['bar_code' => $this->getProductIdentifierField()]);
+            $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
+            $query->select($this->BarcodeProducts);
         }
 
         if ($controller) {
@@ -1077,11 +1118,12 @@ class ProductsTable extends AppTable
                             'names' => [],
                             'all_products_found' => true
                         ],
-                        'image' => null
+                        'image' => null,
+                        'barcode_product' => $attribute->barcode_product_attribute,
                     ];
 
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                        $preparedProduct['bar_code'] = $product->bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attribute->id_product_attribute, 4);
+                        $preparedProduct['system_bar_code'] = $product->sytem_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attribute->id_product_attribute, 4);
                         $preparedProduct['image'] = $product->image;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                             $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;
@@ -1248,39 +1290,6 @@ class ProductsTable extends AppTable
         ]);
     }
 
-    public function deleteProductAttribute($productId, $attributeId)
-    {
-
-        $pac = $this->ProductAttributes->ProductAttributeCombinations->find('all', [
-            'conditions' => [
-                'ProductAttributeCombinations.id_product_attribute' => $attributeId,
-            ]
-        ])->first();
-        $productAttributeId = $pac->id_product_attribute;
-
-        $this->ProductAttributes->deleteAll([
-            'ProductAttributes.id_product_attribute' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->ProductAttributeCombinations->deleteAll([
-            'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->UnitProductAttributes->deleteAll([
-            'UnitProductAttributes.id_product_attribute' => $productAttributeId,
-        ]);
-
-        // deleteAll can only get primary key as condition
-        $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
-        $this->StockAvailables->setPrimaryKey('id_product_attribute');
-        $this->StockAvailables->deleteAll([
-            'StockAvailables.id_product_attribute' => $attributeId,
-        ]);
-        $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
-
-        $this->StockAvailables->updateQuantityForMainProduct($productId);
-    }
-
     public function changeImage($products)
     {
 
@@ -1377,13 +1386,12 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation)
+    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode)
     {
         $defaultQuantity = 0;
 
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
 
-        // INSERT PRODUCT
         $productEntity = $this->newEntity(
             [
                 'id_manufacturer' => $manufacturer->id_manufacturer,
@@ -1405,8 +1413,23 @@ class ProductsTable extends AppTable
             return $productEntity;
         }
 
+        if ($barcode != '') {
+            $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
+            $barcodeEntity2Save = $this->BarcodeProducts->newEntity([
+                'barcode' => $barcode,
+            ], ['validate' => true]);
+            if ($barcodeEntity2Save->hasErrors()) {
+                return $barcodeEntity2Save;
+            }
+        }
+
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
+
+        if ($barcode != '') {
+            $barcodeEntity2Save->product_id = $newProductId;
+            $this->BarcodeProducts->save($barcodeEntity2Save);
+        }
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $entity2Save = $this->PurchasePriceProducts->getEntityToSaveByProductId($newProductId);

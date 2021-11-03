@@ -42,11 +42,11 @@ echo '<td class="cell-name">';
     if (! isset($product->product_attributes)) {
         echo '<span style="float:left;margin-right: 5px;">';
         echo $this->Html->link(
-            '<i class="far fa-trash-alt not-ok"></i>',
+            '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
             [
-                'class' => 'btn btn-outline-light delete-product-attribute-button',
-                'title' => __d('admin', 'Delete_attribute_for_product_{0}', [$product->unchanged_name]),
+                'class' => 'btn btn-outline-light edit-product-attribute-button',
+                'title' => __d('admin', 'Edit_attribute_for_product_{0}', [$product->name]),
                 'escape' => false
             ]
         );
@@ -121,6 +121,12 @@ echo '<td class="cell-name">';
         echo $product->description;
     echo '</span>';
 
-echo '</td>';
+    echo '<span class="barcode-for-dialog">';
+        if (!empty($product->barcode_product)) {
+            echo $product->barcode_product->barcode;
+        }
+        echo '</span>';
+
+    echo '</td>';
 
 ?>

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-15 22:53+0200\n"
-"PO-Revision-Date: 2021-10-15 23:16+0200\n"
+"POT-Creation-Date: 2021-11-03 18:12+0100\n"
+"PO-Revision-Date: 2021-11-03 18:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -476,6 +476,9 @@ msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
 
 msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
 msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich gelöscht."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
+msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich geändert."
 
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
 msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgreich erstellt."
@@ -2016,8 +2019,8 @@ msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
 msgid "Is_stock_product"
 msgstr "Produkt ist ein Lagerprodukt"
 
-msgid "Delete_attribute_for_product_{0}"
-msgstr "Variante für Produkt {0} löschen"
+msgid "Edit_attribute_for_product_{0}"
+msgstr "Variante {0} bearbeiten"
 
 msgid "This_attribute_is_the_default_attribute."
 msgstr "Diese Variante ist die Standardvariante."
@@ -2291,6 +2294,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "The_product_attribute_{0}_was_changed_successfully."
+#~ msgstr "Die Variante {0} wurde erfolgreich geändert."
 
 #~ msgid "Please_chose_member_in_above_dropdown_for_placing_self_service_order."
 #~ msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."

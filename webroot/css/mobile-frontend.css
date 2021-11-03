@@ -45,6 +45,10 @@
     .swiper-button-prev {
         display: none;
     }
+    body.pages.home .blog-wrapper {
+        height: 255px;
+        margin-bottom: 0px;
+    }
     body.blog_posts.index .blog-post-wrapper,
     body.pages.home .blog-post-wrapper {
         width: 29% ! important;

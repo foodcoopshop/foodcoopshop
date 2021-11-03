@@ -182,12 +182,15 @@ class CategoriesTable extends AppTable
 
             $params['keywordLike'] = '%' . $keyword . '%';
             $params['keyword'] = $keyword;
+
             // use id_product LIKE and not = because barcode search "SELECT * FROM fcs_product WHERE id_product LIKE '1a1b0000'" would find product with ID 1
             $sql .= " AND (Products.name LIKE :keywordLike OR Products.description_short LIKE :keywordLike OR Products.id_product LIKE :keyword ";
 
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                 $params['barcodeIdentifier'] = strtolower(substr($keyword, 0, 4));
                 $sql .= " OR " . $this->getProductIdentifierField() . " = :barcodeIdentifier";
+                $sql .= " OR ProductBarcodes.barcode = :keyword";
+                $sql .= " OR ProductAttributeBarcodes.barcode = :keyword";
             }
 
             $sql .= ")";
@@ -208,6 +211,19 @@ class CategoriesTable extends AppTable
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
         $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
+
+        // remove multiple rows due to multiple attributes that were needed for custom attribute barcode search
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $i = 0;
+            $containingProductIds = [];
+            foreach($products as $product) {
+                if (in_array($product['id_product'], $containingProductIds)) {
+                    unset($products[$i]);
+                }
+                $containingProductIds[] = $product['id_product'];
+                $i++;
+            }
+        }
 
         if (! $countMode) {
             return $products;

@@ -56,7 +56,7 @@ foreach($customers as $customer) {
         // START ROW barcode and customer image
         $pdf->table .= '<tr>';
             $pdf->table .= '<td style="width:120px;">';
-            $barcodeObject = new TCPDFBarcode($customer->bar_code, 'C39');
+            $barcodeObject = new TCPDFBarcode($customer->system_bar_code, 'C39');
             //https://stackoverflow.com/a/54520065/2100184
             $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 102));
             // move barcode to bottom

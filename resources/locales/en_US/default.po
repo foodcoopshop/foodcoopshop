@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-15 23:11+0200\n"
-"PO-Revision-Date: 2021-10-15 23:11+0200\n"
+"POT-Creation-Date: 2021-11-03 09:17+0100\n"
+"PO-Revision-Date: 2021-11-01 11:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -708,11 +708,14 @@ msgstr "Do you really want to activate product {0}?"
 msgid "Really_deactivate_product_{0}?"
 msgstr "Do you really want to deactivate product {0}?"
 
-msgid "Delete_attribute"
-msgstr "Delete attribute"
+msgid "Edit_attribute"
+msgstr "Edit attribute"
 
-msgid "Really_delete_attribute_{0}?"
-msgstr "Do you really want to delete the attribute {0}?"
+msgid "Delete_attribute_{0}?"
+msgstr "Delete attribute {0}?"
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Check and do not forget to click save button."
 
 msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
 msgstr "Please chose if you want to add a payback or a credit upload."
@@ -897,9 +900,8 @@ msgstr "Calculate selling price"
 msgid "Surcharge_in_percent_from_purchase_price_net"
 msgstr "Surcharge in % from purchase price net"
 
-#, fuzzy
 msgid "Calculate_selling_price_explanation_text."
-msgstr "Calculate selling price"
+msgstr "Calculate selling price."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1068,6 +1070,9 @@ msgstr "Enter purchase price"
 
 msgid "Storage_location"
 msgstr "Storage location"
+
+msgid "EAN_13_code"
+msgstr "EAN13 barcode"
 
 msgid "delete"
 msgstr "delete"
@@ -1239,6 +1244,9 @@ msgstr "Product: Added"
 
 msgid "Action_Log_Product_attribute_added"
 msgstr "Product: Attribute added"
+
+msgid "Action_Log_Product_attribute_changed"
+msgstr "Product: Attribute changed"
 
 msgid "Action_Log_Product_image_uploaded"
 msgstr "Product: Image uploaded"
@@ -1566,6 +1574,9 @@ msgstr "Please enter a name."
 
 msgid "An_attribute_with_this_name_already_exists."
 msgstr "An attribute with this name already exists."
+
+msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
+msgstr "The length of the barcode needs to be exactly {0}."
 
 msgid "Please_enter_a_title."
 msgstr "Please enter a title."
@@ -2191,6 +2202,9 @@ msgstr "You will get an e-mail as soon as we activate you."
 msgid "Imprint"
 msgstr "Imprint"
 
+msgid "Self_service"
+msgstr "Self-service"
+
 msgid "Search:_name_id_or_barcode"
 msgstr "Search: name, ID or barcode"
 
@@ -2355,9 +2369,6 @@ msgstr "available"
 
 msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr "Stock product: order possible only by {0}."
-
-msgid "Self_service"
-msgstr "Self-service"
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr "Stock product: order possible only with instant order when picking it up."
@@ -2577,6 +2588,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Really_delete_attribute_{0}?"
+#~ msgstr "Do you really want to delete the attribute {0}?"
 
 #~ msgid "Surcharge"
 #~ msgstr "Surcharge"

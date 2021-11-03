@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:20px;' : '') . '">';
+echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:10px;' : '') . '">';
     echo __('Other_initiatives');
 echo '</h1>';
 

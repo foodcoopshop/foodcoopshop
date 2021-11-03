@@ -85,6 +85,12 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'product_attribute_changed' => [
+                'name' => __('Action_Log_Product_attribute_changed'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
             'product_image_added' => [
                 'name' => __('Action_Log_Product_image_uploaded'),
                 'access' => [

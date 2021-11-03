@@ -34,6 +34,7 @@ return [
     'für das Mitglied' => 'für den Kunden',
     's Mitgliedskontos' => 's Kundenkontos',
     'Mitgliedskonto' => 'Kundenkonto',
+    'Mitgliedskarte' => 'Kundenkarte',
     'chtest du das Mitglied' => 'chtest du den Kunden',
     'Das Mitglied' => 'Der Kunde',
     'das Mitglied' => 'der Kunde',

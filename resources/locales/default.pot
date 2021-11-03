@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-10-15 23:11+0200\n"
+"POT-Creation-Date: 2021-11-03 09:17+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -707,10 +707,13 @@ msgstr ""
 msgid "Really_deactivate_product_{0}?"
 msgstr ""
 
-msgid "Delete_attribute"
+msgid "Edit_attribute"
 msgstr ""
 
-msgid "Really_delete_attribute_{0}?"
+msgid "Delete_attribute_{0}?"
+msgstr ""
+
+msgid "Check_and_do_not_forget_to_click_save_button."
 msgstr ""
 
 msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
@@ -1067,6 +1070,9 @@ msgstr ""
 msgid "Storage_location"
 msgstr ""
 
+msgid "EAN_13_code"
+msgstr ""
+
 msgid "delete"
 msgstr ""
 
@@ -1236,6 +1242,9 @@ msgid "Action_Log_Product_added"
 msgstr ""
 
 msgid "Action_Log_Product_attribute_added"
+msgstr ""
+
+msgid "Action_Log_Product_attribute_changed"
 msgstr ""
 
 msgid "Action_Log_Product_image_uploaded"
@@ -1563,6 +1572,9 @@ msgid "Please_enter_a_name."
 msgstr ""
 
 msgid "An_attribute_with_this_name_already_exists."
+msgstr ""
+
+msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
 msgstr ""
 
 msgid "Please_enter_a_title."
@@ -2189,6 +2201,9 @@ msgstr ""
 msgid "Imprint"
 msgstr ""
 
+msgid "Self_service"
+msgstr ""
+
 msgid "Search:_name_id_or_barcode"
 msgstr ""
 
@@ -2352,9 +2367,6 @@ msgid "available"
 msgstr ""
 
 msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr ""
-
-msgid "Self_service"
 msgstr ""
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."

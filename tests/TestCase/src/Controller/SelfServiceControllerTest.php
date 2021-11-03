@@ -206,6 +206,46 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
     }
 
+    public function testSearchByCustomProductBarcode()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = '1234567890123';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+        $this->assertRedirect($this->Slug->getSelfService());
+    }
+
+    public function testSearchByCustomProductAttributeBarcode()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = '2345678901234';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+        $this->assertRedirect($this->Slug->getSelfService());
+    }
+
+    public function testSearchBySystemProductBarcodeWithMissingWeight()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = 'b5320000';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->assertFlashMessageAt(0, 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.');
+        $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+    }
+
+    public function testSearchBySystemProductAttributeBarcodeWithMissingWeight()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = 'e05f0015';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+        $this->assertFlashMessageAt(0, 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.');
+        $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+    }
+
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
 

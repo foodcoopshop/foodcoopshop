@@ -14,7 +14,7 @@
 CKEDITOR.editorConfig = function ( config ) {
 
     config.width = 413;
-    config.height = 250;
+    config.height = 343;
     config.format_tags = 'p';
     config.language = foodcoopshop.LocalizedJs.helper.defaultLocale;
 

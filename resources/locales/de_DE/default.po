@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-10-15 23:11+0200\n"
-"PO-Revision-Date: 2021-10-15 23:11+0200\n"
+"POT-Creation-Date: 2021-11-03 09:17+0100\n"
+"PO-Revision-Date: 2021-11-01 11:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -708,11 +708,14 @@ msgstr "Möchtest du das Produkt {0} wirklich aktivieren?"
 msgid "Really_deactivate_product_{0}?"
 msgstr "Möchtest du das Produkt {0} wirklich deaktivieren?"
 
-msgid "Delete_attribute"
-msgstr "Variante löschen"
+msgid "Edit_attribute"
+msgstr "Variante bearbeiten"
 
-msgid "Really_delete_attribute_{0}?"
-msgstr "Möchtest du die Variante {0} wirklich löschen?"
+msgid "Delete_attribute_{0}?"
+msgstr "Variante {0} löschen?"
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
 
 msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
 msgstr "Bitte wähle aus, ob es sich um eine Aufladung oder ein Rückzahlung handelt."
@@ -1068,6 +1071,9 @@ msgstr "Einkaufspreis eintragen"
 msgid "Storage_location"
 msgstr "Lagerort"
 
+msgid "EAN_13_code"
+msgstr "EAN13-Barcode"
+
 msgid "delete"
 msgstr "löschen"
 
@@ -1238,6 +1244,9 @@ msgstr "Produkt: erstellt"
 
 msgid "Action_Log_Product_attribute_added"
 msgstr "Produkt: Variante erstellt"
+
+msgid "Action_Log_Product_attribute_changed"
+msgstr "Produkt: Variante geändert"
 
 msgid "Action_Log_Product_image_uploaded"
 msgstr "Produkt: Bild hochgeladen"
@@ -1565,6 +1574,9 @@ msgstr "Bitte gib einen Namen ein."
 
 msgid "An_attribute_with_this_name_already_exists."
 msgstr "Eine Variante mit dem Namen existiert bereits."
+
+msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
+msgstr "Die Länge des Barcodes muss genau {0} Zeichen betragen."
 
 msgid "Please_enter_a_title."
 msgstr "Bitte gib einen Titel ein."
@@ -2190,6 +2202,9 @@ msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
 msgid "Imprint"
 msgstr "Impressum"
 
+msgid "Self_service"
+msgstr "Selbstbedienung"
+
 msgid "Search:_name_id_or_barcode"
 msgstr "Suche: Name, ID oder Barcode"
 
@@ -2354,9 +2369,6 @@ msgstr "verfügbar"
 
 msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr "Lagerprodukt: nur über {0} bestellbar."
-
-msgid "Self_service"
-msgstr "Selbstbedienung"
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
@@ -2576,6 +2588,12 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Really_delete_attribute_{0}?"
+#~ msgstr "Möchtest du die Variante {0} wirklich löschen?"
+
+#~ msgid "Barcode"
+#~ msgstr "Barcode"
 
 #~ msgid "Surcharge"
 #~ msgstr "Aufschlag"

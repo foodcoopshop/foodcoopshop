@@ -36,9 +36,9 @@ class ProductAttributesTable extends AppTable
         ]);
         $this->hasOne('PurchasePriceProductAttributes', [
             'foreignKey' => 'product_attribute_id',
-            'conditions' => [
-                'PurchasePriceProductAttributes.product_attribute_id > 0',
-            ],
+        ]);
+        $this->hasOne('BarcodeProductAttributes', [
+            'foreignKey' => 'product_attribute_id',
         ]);
         $this->hasOne('DepositProductAttributes', [
             'foreignKey' => 'id_product_attribute'
@@ -47,6 +47,48 @@ class ProductAttributesTable extends AppTable
             'foreignKey' => 'id_product_attribute'
         ]);
     }
+
+    public function deleteProductAttribute($productId, $productAttributeId)
+    {
+
+        $pac = $this->ProductAttributeCombinations->find('all', [
+            'conditions' => [
+                'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
+            ]
+        ])->first();
+        $productAttributeId = $pac->id_product_attribute;
+
+        $this->deleteAll([
+            'ProductAttributes.id_product_attribute' => $productAttributeId,
+        ]);
+
+        $this->ProductAttributeCombinations->deleteAll([
+            'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
+        ]);
+
+        $this->UnitProductAttributes->deleteAll([
+            'UnitProductAttributes.id_product_attribute' => $productAttributeId,
+        ]);
+
+        $this->PurchasePriceProductAttributes->deleteAll([
+            'PurchasePriceProductAttributes.product_attribute_id' => $productAttributeId,
+        ]);
+
+        $this->BarcodeProductAttributes->deleteAll([
+            'BarcodeProductAttributes.product_attribute_id' => $productAttributeId,
+        ]);
+
+        // deleteAll can only get primary key as condition
+        $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
+        $this->StockAvailables->setPrimaryKey('id_product_attribute');
+        $this->StockAvailables->deleteAll([
+            'StockAvailables.id_product_attribute' => $productAttributeId,
+        ]);
+        $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
+
+        $this->StockAvailables->updateQuantityForMainProduct($productId);
+    }
+
 
     public function add($productId, $attributeId)
     {

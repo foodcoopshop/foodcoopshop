@@ -592,7 +592,8 @@ class ProductsTableTest extends AppCakeTestCase
         $unity = '<b>piece</b>';
         $isDeclarationOk = 0;
         $idStorageLocation = 1;
-        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
+        $barcode = '1234567890123';
+        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -600,7 +601,8 @@ class ProductsTableTest extends AppCakeTestCase
             ],
             'contain' => [
                 'CategoryProducts',
-                'StockAvailables'
+                'StockAvailables',
+                'BarcodeProducts',
             ]
         ])->first();
 
@@ -616,6 +618,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 0);
         $this->assertEquals($product->id_storage_location, $idStorageLocation);
+        $this->assertEquals($product->barcode_product->barcode, $barcode);
     }
 
     /**
@@ -990,13 +993,13 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeNameWithMultipleProducts()
     {
-
         $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
             'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>    ',
             'id_storage_location' => 2,
+            'barcode' => '1234567890123',
         ];
 
         $products = [
@@ -1011,13 +1014,10 @@ class ProductsTableTest extends AppCakeTestCase
             'description' => '<p>test <br /><strong><em>description</em></strong></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>',
             'id_storage_location' => 2,
+            'barcode' => '1234567890123',
         ];
         $this->assertProductName($products, $expectedResults);
     }
-
-    /**
-     * START helper methods
-     */
 
     private function assertProductName($products, $expectedResults)
     {
@@ -1027,6 +1027,9 @@ class ProductsTableTest extends AppCakeTestCase
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productId,
+                ],
+                'contain' => [
+                    'BarcodeProducts',
                 ]
             ])->first();
             $this->assertEquals($expectedResults['name'], $changedProduct->name);
@@ -1036,6 +1039,10 @@ class ProductsTableTest extends AppCakeTestCase
 
             if (isset($expectedResults['id_storage_location'])) {
                 $this->assertEquals($expectedResults['id_storage_location'], $changedProduct->id_storage_location);
+            }
+
+            if (isset($expectedResults['barcode'])) {
+                $this->assertEquals($expectedResults['barcode'], $changedProduct->barcode_product->barcode);
             }
 
         }

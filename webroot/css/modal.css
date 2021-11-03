@@ -123,6 +123,21 @@ body.iframe_self_service_order {
     width: 100% ! important;
     float: none;
 }
+#modal-product-add .modal-dialog,
+#modal-product-name-edit .modal-dialog {
+    max-width: 900px;
+}
+.modal-dialog .block {
+    width: 49%;
+    float: left;
+}
+.modal-dialog .block-a {
+    margin-right: 2%;
+}
+.modal-dialog .block hr:last-of-type {
+    display: none;
+}
+
 #modal-product-add .textarea-wrapper,
 #modal-product-name-edit .textarea-wrapper {
     width: 100%;

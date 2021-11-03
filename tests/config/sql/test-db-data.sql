@@ -14,6 +14,7 @@
 TRUNCATE TABLE `fcs_action_logs`;
 TRUNCATE TABLE `fcs_address`;
 TRUNCATE TABLE `fcs_attribute`;
+TRUNCATE TABLE `fcs_barcodes`;
 TRUNCATE TABLE `fcs_blog_posts`;
 TRUNCATE TABLE `fcs_cart_product_units`;
 TRUNCATE TABLE `fcs_cart_products`;
@@ -75,6 +76,12 @@ INSERT INTO `fcs_attribute` VALUES
 (35,'1 kg',1,1,NULL,NULL),
 (36,'0,5 kg',1,1,NULL,NULL);
 /*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_barcodes` DISABLE KEYS */;
+INSERT INTO `fcs_barcodes` VALUES
+(1,349,0,'1234567890123'),
+(2,0,13,'2345678901234');
+/*!40000 ALTER TABLE `fcs_barcodes` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_blog_posts` DISABLE KEYS */;
 INSERT INTO `fcs_blog_posts` VALUES
@@ -303,9 +310,9 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 INSERT INTO `fcs_purchase_prices` VALUES
 (1,346,0,1,1.200000),
 (2,0,13,0,1.400000),
-(3,347,0,3,null),
-(4,348,0,3,null),
-(5,60,0,2,null),
+(3,347,0,3,NULL),
+(4,348,0,3,NULL),
+(5,60,0,2,NULL),
 (6,0,10,0,0.250000);
 /*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
 
@@ -414,7 +421,8 @@ INSERT INTO `phinxlog` VALUES
 (20210914071747,'DifferentPricesForCustomers','2021-09-16 05:50:12','2021-09-16 05:50:12',0),
 (20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:43:09','2021-09-22 15:43:09',0),
 (20210923073422,'RemoveSettingShowNewProductsOnHome','2021-09-23 07:39:32','2021-09-23 07:39:32',0),
-(20210923090820,'AllowNullAsPurchasePrice','2021-09-23 09:09:52','2021-09-23 09:09:52',0);
+(20210923090820,'AllowNullAsPurchasePrice','2021-09-23 09:09:52','2021-09-23 09:09:52',0),
+(20211028083847,'UseExistingBarcode','2021-10-28 08:45:02','2021-10-28 08:45:02',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

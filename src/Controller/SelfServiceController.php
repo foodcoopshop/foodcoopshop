@@ -62,20 +62,34 @@ class SelfServiceController extends FrontendController
         }
         $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, true);
         $products = $this->prepareProductsForFrontend($products);
+
         $this->set('products', $products);
 
         $this->viewBuilder()->setLayout('self_service');
         $this->set('title_for_layout', __('Self_service_mode'));
 
         if (!empty($this->getRequest()->getQuery('keyword')) && count($products) == 1) {
+
             $hashedProductId = strtolower(substr($keyword, 0, 4));
             $attributeId = (int) substr($keyword, 4, 4);
-            if ($hashedProductId == $products[0]['ProductIdentifier']) {
+
+            $customBarcodeFound = false;
+            if ($keyword == $products[0]['ProductBarcode']) {
+                $customBarcodeFound = true;
+                $attributeId = 0;
+            }
+            if ($keyword == $products[0]['ProductAttributeBarcode']) {
+                $customBarcodeFound = true;
+                $attributeId = $products[0]['ProductAttributeId'];
+            }
+
+            if ($hashedProductId == $products[0]['ProductIdentifier'] || $customBarcodeFound) {
                 $this->CartProduct = $this->getTableLocator()->get('CartProducts');
                 $result = $this->CartProduct->add($this->AppAuth, $products[0]['id_product'], $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]['id_product']); // sic! no attributeId needed!
+                    $redirectUrl = Configure::read('app.slugHelper')->getSelfService('', $keyword);
                 } else {
                     $imgString = '';
                     $imgSrc = Configure::read('app.htmlHelper')->getProductImageSrc($products[0]['id_image'], 'home');
@@ -85,8 +99,9 @@ class SelfServiceController extends FrontendController
                     $this->Flash->success(__('The_product_{0}_was_added_to_your_cart.', [
                         '<b>' . $products[0]['name'] . '</b>'
                     ]) . $imgString);
+                    $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
                 }
-                $this->redirect(Configure::read('app.slugHelper')->getSelfService('', $keyword));
+                $this->redirect($redirectUrl);
                 return;
             }
         }
