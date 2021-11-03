@@ -31,7 +31,7 @@ $this->element('addScript', ['script' =>
             ]);
         }
     ?>
-    <?php if (isset($keyword) || ($includeCategoriesDropdown && $categoryId != Configure::read('app.categoryAllProducts'))) { ?>
+    <?php if (isset($keyword) || ($includeCategoriesDropdown && $categoryId > 0)) { ?>
         <a href="<?php echo $resetSearchUrl; ?>" class="btn btn-success do-not-change-to-target-blank reset" title="<?php echo __('Reset_search'); ?>"><i class="fas fa-backspace"></i></a>
     <?php } ?>
     <button type="submit" class="btn btn-success submit"><i class="fas fa-search"></i></button>
