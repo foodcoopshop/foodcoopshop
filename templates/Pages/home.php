@@ -45,7 +45,7 @@ if (!empty($newProducts)) {
     echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
     $isFirstElement = empty($blogPosts) || $blogPosts->count() == 0;
-    echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:20px;' : '') . '">';
+    echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:10px;' : '') . '">';
         echo __('New_products');
     echo '</h2>';
 
