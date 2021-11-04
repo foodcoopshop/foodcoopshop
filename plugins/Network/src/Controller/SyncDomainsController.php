@@ -31,7 +31,7 @@ class SyncDomainsController extends AppController
     {
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('Admin.default');
-        $this->viewBuilder()->addHelper(['Network.Network']);
+        $this->viewBuilder()->addHelper('Network.Network');
         $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
     }
 
