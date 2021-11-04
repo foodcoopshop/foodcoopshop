@@ -454,6 +454,7 @@ class ManufacturersTable extends AppTable
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
         $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
+        $products = $this->hideMultipleAttributes($products);
 
         if (! $countMode) {
             return $products;
