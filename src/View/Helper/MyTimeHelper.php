@@ -56,7 +56,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC($time)
     {
-        $timeObject = new Time($time);
+        $timeObject = new FrozenTime($time);
         $timeObject->setTimezone('UTC');
         return $timeObject;
     }
