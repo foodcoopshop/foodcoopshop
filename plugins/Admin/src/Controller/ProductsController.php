@@ -246,7 +246,7 @@ class ProductsController extends AdminAppController
         // 1) set field active to -1
         $this->Product->updateAll([
             'active' => APP_DEL,
-            'modified' => FrozenFrozenTime::now() // timestamp behavior does not work here...
+            'modified' => FrozenTime::now() // timestamp behavior does not work here...
         ], [
             'id_product IN' => $productIds
         ]);

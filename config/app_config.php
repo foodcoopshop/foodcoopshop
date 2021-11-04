@@ -207,5 +207,11 @@ return [
         'DatabaseWithTimeAlt' => 'Y-m-d H:i:s',
         'DatabaseWithTimeAndMicrosecondsAlt' => 'Y-m-d H:i:s.u',
         'DateWithTimeForFilename' => 'Y-m-d_H-i-s'
+    ],
+    'Error' => [
+        'ignoredDeprecationPaths' => [
+            'vendor/cakephp/cakephp/src/Routing/Router.php',
+            'vendor/dereuromark/cakephp-queue/config/routes.php',
+        ]
     ]
 ];
