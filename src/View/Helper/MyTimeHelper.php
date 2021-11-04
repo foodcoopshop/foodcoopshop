@@ -4,7 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\View\Helper\TimeHelper;
 
 /**

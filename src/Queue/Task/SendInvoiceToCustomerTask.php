@@ -4,7 +4,7 @@ namespace App\Queue\Task;
 use App\Mailer\AppMailer;
 use App\Lib\HelloCash\HelloCash;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Queue\Queue\Task;
 
 /**
@@ -80,7 +80,7 @@ class SendInvoiceToCustomerTask extends Task {
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
         $invoiceEntity = $this->Invoice->patchEntity(
             $this->Invoice->get($invoiceId), [
-            'email_status' => Time::now(),
+            'email_status' => FrozenTime::now(),
         ]);
         $this->Invoice->save($invoiceEntity);
 

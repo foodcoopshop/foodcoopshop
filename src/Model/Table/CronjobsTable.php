@@ -6,7 +6,7 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

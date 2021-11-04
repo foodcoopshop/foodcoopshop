@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -500,7 +500,7 @@ class ActionLogsTable extends AppTable
             'object_id' => $objectId,
             'object_type' => $objectType,
             'text' => $text,
-            'date' => is_null($time) ? Time::now() : $time
+            'date' => is_null($time) ? FrozenTime::now() : $time
         ];
         return $this->save($this->newEntity($data2save));
     }

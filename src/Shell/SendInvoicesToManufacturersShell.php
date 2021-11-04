@@ -17,7 +17,7 @@ namespace App\Shell;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 class SendInvoicesToManufacturersShell extends AppShell
 {

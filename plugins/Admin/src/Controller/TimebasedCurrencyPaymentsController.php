@@ -5,7 +5,7 @@ namespace Admin\Controller;
 use App\Mailer\AppMailer;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Hash;
