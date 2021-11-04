@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-11-03 09:17+0100\n"
+"POT-Creation-Date: 2021-11-04 20:58+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2199,6 +2199,12 @@ msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr ""
 
 msgid "Imprint"
+msgstr ""
+
+msgid "Show_manufacturer_profile"
+msgstr ""
+
+msgid "Show_products"
 msgstr ""
 
 msgid "Self_service"

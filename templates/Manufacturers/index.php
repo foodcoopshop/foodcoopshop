@@ -63,8 +63,12 @@ foreach ($manufacturers as $manufacturer) {
         echo '</div>';
 
         echo '<div class="third-column">';
+            $manufacturerDetailLinkName  = __('Show_manufacturer_profile');
+            if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+                $manufacturerDetailLinkName = __('Show_products');
+            }
             echo $this->Html->link(
-                __('Show_all_products') . ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
+                $manufacturerDetailLinkName . ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
                 $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
                 ['class' => 'btn btn-outline-light']
             );
