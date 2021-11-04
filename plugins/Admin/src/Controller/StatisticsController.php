@@ -123,8 +123,8 @@ class StatisticsController extends AdminAppController
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2014);
 
-        $monthsWithTurnoverMonthAndYear = $monthlySumProducts->extract('MonthAndYear')->toArray();
-        $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->extract('SumTotalPaid')->toArray();
+        $monthsWithTurnoverMonthAndYear = $monthlySumProducts->all()->extract('MonthAndYear')->toArray();
+        $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray();
 
         $xAxisData = array_values($monthsAndYear);
         $yAxisData = [];
