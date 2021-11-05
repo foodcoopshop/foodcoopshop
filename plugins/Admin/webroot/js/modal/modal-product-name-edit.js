@@ -174,7 +174,9 @@ foodcoopshop.ModalProductNameEdit = {
 
         // hide unity field if product has attributes
         if (button.closest('tr').next().hasClass('sub-row')) {
-            $(modalSelector + ' .dialog-unity-wrapper').hide();
+            var dialogUnityWrapper = $(modalSelector + ' .dialog-unity-wrapper');
+            dialogUnityWrapper.hide();
+            dialogUnityWrapper.prev().hide(); // remove hr
             $(modalSelector + ' #dialogLabelUnity').html(foodcoopshop.LocalizedJs.admin.Weight + '<br />' + '<span>' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>');
         }
 
