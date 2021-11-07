@@ -206,7 +206,8 @@ return [
         'DatabaseAlt' => 'Y-m-d',
         'DatabaseWithTimeAlt' => 'Y-m-d H:i:s',
         'DatabaseWithTimeAndMicrosecondsAlt' => 'Y-m-d H:i:s.u',
-        'DateWithTimeForFilename' => 'Y-m-d_H-i-s'
+        'DateWithTimeForFilename' => 'Y-m-d_H-i-s',
+        'TimeShortAlt' => 'H:i',
     ],
     'Error' => [
         'ignoredDeprecationPaths' => [

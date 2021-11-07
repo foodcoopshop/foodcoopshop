@@ -2,10 +2,10 @@
 
 namespace App\Model\Table;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\I18n;
+use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\I18n\FrozenTime;
 
 /**
@@ -59,14 +59,18 @@ class CronjobsTable extends AppTable
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
             $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');
 
-            $cronjobNotBeforeTimeWithCronjobRunDay = new FrozenTime($cronjob->not_before_time);
+            $cronjobNotBeforeTimeWithCronjobRunDay = FrozenTime::createFromFormat(
+                Configure::read('DateFormat.TimeShortAlt'),
+                $cronjob->not_before_time->i18nFormat(Configure::read('DateFormat.TimeShort')),
+                'UTC',
+            );
+
             $cronjobNotBeforeTimeWithCronjobRunDay->setDate(
                 $cronjobRunDayObject->year,
                 $cronjobRunDayObject->month,
                 $cronjobRunDayObject->day
             );
             $cronjobNotBeforeTimeWithCronjobRunDay->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($cronjobNotBeforeTimeWithCronjobRunDay->getTimestamp()) . ' seconds');
-            $cronjobNotBeforeTimeWithCronjobRunDay->setTimezone('UTC');
 
             $cronjobLog = $this->CronjobLogs->find('all', [
                 'conditions' => [
@@ -129,7 +133,7 @@ class CronjobsTable extends AppTable
                 'created' => $cronjobRunDayObject,
                 'success' => $success
             ]
-        );
+            );
         $this->CronjobLogs->save($entity);
 
         return [
