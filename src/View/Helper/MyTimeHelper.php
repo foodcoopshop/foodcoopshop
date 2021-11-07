@@ -60,11 +60,6 @@ class MyTimeHelper extends TimeHelper
         return $timeObject;
     }
 
-    public function correctTimezone($timeObject)
-    {
-        return $timeObject->modify($this->getTimezoneDiffInSeconds($timeObject->toUnixString()) . ' seconds');
-    }
-
     public function getTimezoneDiffInSeconds($timestamp)
     {
         $timezoneDiff = date('Z', $timestamp);
