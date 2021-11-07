@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "4.3.0",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "fc71c2d7e1bda979da41ed1dea726d6e04240d3b"
+                "reference": "6b1cf0e74bbfbb73ecdb1e8a5d0fd36230930931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/fc71c2d7e1bda979da41ed1dea726d6e04240d3b",
-                "reference": "fc71c2d7e1bda979da41ed1dea726d6e04240d3b",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/6b1cf0e74bbfbb73ecdb1e8a5d0fd36230930931",
+                "reference": "6b1cf0e74bbfbb73ecdb1e8a5d0fd36230930931",
                 "shasum": ""
             },
             "require": {
@@ -30,6 +30,7 @@
                 "laminas/laminas-httphandlerrunner": "^1.1",
                 "league/container": "^4.1.1",
                 "php": ">=7.2.0",
+                "psr/container": "^2.0",
                 "psr/http-client": "^1.0",
                 "psr/http-server-handler": "^1.0",
                 "psr/http-server-middleware": "^1.0",
@@ -107,7 +108,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/cakephp"
             },
-            "time": "2021-10-24T01:34:13+00:00"
+            "time": "2021-11-06T15:39:56+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -1738,20 +1739,20 @@
         },
         {
             "name": "psr/container",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "2ae37329ee82f91efadc282cc2d527fd6065a5ef"
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/2ae37329ee82f91efadc282cc2d527fd6065a5ef",
-                "reference": "2ae37329ee82f91efadc282cc2d527fd6065a5ef",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.0"
+                "php": ">=7.4.0"
             },
             "type": "library",
             "extra": {
@@ -1785,9 +1786,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/2.0.1"
+                "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
-            "time": "2021-03-24T13:40:57+00:00"
+            "time": "2021-11-05T16:47:00+00:00"
         },
         {
             "name": "psr/http-client",
