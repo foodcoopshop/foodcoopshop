@@ -14,35 +14,13 @@
  */
 use Cake\Routing\RouteBuilder;
 
-/*
 return function (RouteBuilder $builder) {
     $builder->plugin('Network',
-        ['path' => '/network'],
+        ['path' => '/'],
         function (RouteBuilder $builder) {
             $builder->setExtensions(['json']);
-            $builder->connect('/:controller/:action/*', ['plugin' => 'Network']);
+            $builder->connect('/api/{action}', ['plugin' => 'Network', 'controller' => 'Api']);
+            $builder->connect('/network/{controller}/{action}/*', ['plugin' => 'Network']);
         }
     );
-};
-*/
-
-return function (RouteBuilder $builder) {
-//     $builder->scope('/', function (RouteBuilder $builder) {
-//         $builder->plugin('Network',
-//             ['path' => '/network'],
-//             function (RouteBuilder $builder) {
-//                 $builder->setExtensions(['json']);
-//                 $builder->connect('/api/:action', ['plugin' => 'Network', 'controller' => 'Api']);
-//             }
-//         );
-//     });
-    $builder->scope('/', function (RouteBuilder $builder) {
-        $builder->plugin('Network',
-            function (RouteBuilder $builder) {
-                $builder->setExtensions(['json']);
-                $builder->connect('/api/{action}', ['plugin' => 'Network', 'controller' => 'Api']);
-                $builder->connect('/{controller}/{action}/*', ['plugin' => 'Network']);
-            }
-        );
-    });
 };
