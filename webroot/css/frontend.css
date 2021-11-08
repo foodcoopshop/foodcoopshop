@@ -600,6 +600,9 @@ body.manufacturers.detail .imprint {
     width: 100%;
     text-align: right;
 }
+body.manufacturers.index h2.info {
+    margin-top: 5px;
+}
 #footer {
     background-color: #dfdfdf;
     width: 928px;
