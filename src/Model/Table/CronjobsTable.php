@@ -124,13 +124,16 @@ class CronjobsTable extends AppTable
             }
         }
 
+        $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(
+            $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')
+        ));
         $entity = $this->CronjobLogs->newEntity(
             [
                 'cronjob_id' => $cronjob->id,
-                'created' => $cronjobRunDayObject,
+                'created' => $databasePreparedCronjobRunDay,
                 'success' => $success,
             ]
-            );
+        );
         $this->CronjobLogs->save($entity);
 
         return [
