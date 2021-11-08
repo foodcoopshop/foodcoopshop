@@ -127,7 +127,7 @@ class CronjobsTable extends AppTable
             [
                 'cronjob_id' => $cronjob->id,
                 'created' => $cronjobRunDayObject,
-                'success' => $success
+                'success' => $success,
             ]
         );
         $this->CronjobLogs->save($entity);
@@ -135,7 +135,8 @@ class CronjobsTable extends AppTable
         return [
             'name' => $cronjob->name,
             'time_interval' => $cronjob->time_interval,
-            'success' => $success
+            'created' => $entity->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+            'success' => $success,
         ];
     }
 
