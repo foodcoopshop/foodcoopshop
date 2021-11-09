@@ -57,6 +57,9 @@
         "post-update-cmd": [
             "bash devtools/composer-post-install.sh"
         ],
+        "build": [
+            "bash bin/cake asset_compress build"
+        ],
         "migrate": [
             "bash bin/cake migrations migrate",
             "bash bin/cake migrations migrate -p Queue"
