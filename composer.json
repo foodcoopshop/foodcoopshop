@@ -57,6 +57,10 @@
         "post-update-cmd": [
             "bash devtools/composer-post-install.sh"
         ],
+        "migrate": [
+            "bash bin/cake migrations migrate",
+            "bash bin/cake migrations migrate -p Queue"
+        ],
         "check": [
             "@test",
             "@cs-check"
