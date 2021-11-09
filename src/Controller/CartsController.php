@@ -128,7 +128,8 @@ class CartsController extends FrontendController
             return;
         }
 
-        $this->setAction('detail');
+        $this->detail();
+        $this->render('detail');
     }
 
     public function orderSuccessful($cartId)

@@ -62,7 +62,7 @@ abstract class PdfWriter
         $reflect = new \ReflectionClass($this);
         $templateFile = Inflector::underscore(str_replace('PdfWriter', '', $reflect->getShortName()));
         $templateFile = DS . 'pdf' . DS . $templateFile;
-        return $viewBuilder->setLayout('ajax')->build($this->getData())->render($templateFile);
+        $viewBuilder->setLayout('ajax')->setVars($this->getData())->setTemplate($templateFile)->build()->render();
     }
 
     private function setContent()

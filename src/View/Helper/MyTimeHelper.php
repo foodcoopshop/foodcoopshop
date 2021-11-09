@@ -4,7 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\View\Helper\TimeHelper;
 
 /**
@@ -56,14 +56,8 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC($time)
     {
-        $timeObject = new Time($time);
-        $timeObject->setTimezone('UTC');
+        $timeObject = FrozenTime::createFromTimestamp(strtotime($time), 'UTC');
         return $timeObject;
-    }
-
-    public function correctTimezone($timeObject)
-    {
-        return $timeObject->modify($this->getTimezoneDiffInSeconds($timeObject->toUnixString()) . ' seconds');
     }
 
     public function getTimezoneDiffInSeconds($timestamp)

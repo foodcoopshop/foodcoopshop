@@ -5,7 +5,7 @@ namespace Admin\Controller;
 use App\Mailer\AppMailer;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Hash;
@@ -168,7 +168,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['approval_comment', 'text'])));
 
         if (!empty($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))) {
-            $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.working_day', new Time($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))));
+            $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.working_day', new FrozenTime($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))));
         }
 
         $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.seconds', $this->getRequest()->getData('TimebasedCurrencyPayments.hours') * 3600 + $this->getRequest()->getData('TimebasedCurrencyPayments.minutes') * 60));
