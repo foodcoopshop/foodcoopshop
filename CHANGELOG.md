@@ -28,8 +28,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Falls die Funktion zum Erfassen der Einkaufspreise aktiviert ist, können Hersteller nun folgende Daten der eigenen Produkte nicht mehr ändern: Einkaufspreis, Verkaufspreis, Pfand, Steuer. Außerdem wird auf den Bestelllisten der Preis nicht mehr angezeigt. [I#710](https://github.com/foodcoopshop/foodcoopshop/issues/710) [I#711](https://github.com/foodcoopshop/foodcoopshop/issues/711) / [PR#714](https://github.com/foodcoopshop/foodcoopshop/pull/714) [PR#715](https://github.com/foodcoopshop/foodcoopshop/pull/715) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Verkaufspreise können jetzt auch auf Basis eines Aufschlages automatisch berechnet werden. [I#721](https://github.com/foodcoopshop/foodcoopshop/issues/721) / [PR#722](https://github.com/foodcoopshop/foodcoopshop/pull/722) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-### Bugfixes
+### Bugfixes / Updates
 - Fehlerhafte SQL-Abfrage mit MariaDB beim Erstellen der Bestelllisten. [I#724](https://github.com/foodcoopshop/foodcoopshop/issues/724) / [PR#726](https://github.com/foodcoopshop/foodcoopshop/pull/726) <a href="https://github.com/Confuset"><img src="https://github.com/Confuset.png" width="20"></a>
+- CakePHP Update v4.3. [I#728](https://github.com/foodcoopshop/foodcoopshop/issues/728) / [PR#731](https://github.com/foodcoopshop/foodcoopshop/pull/731) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 # v3.3.0
