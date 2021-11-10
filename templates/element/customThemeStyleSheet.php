@@ -78,7 +78,7 @@ use Cake\Core\Configure;
     a.btn.prev-button i, a.btn.next-button i,
     .product-wrapper .price-asterisk,
     i.fa.ok, i.fas.ok, i.far.ok,
-    body.carts.detail .cart:not(#cart) span.amount .btn,
+    body.carts .cart:not(#cart) span.amount .btn,
     #filter-loader i,
     .btn-cart i.fa-cart-plus,
     .btn-cart i.fa-shopping-bag {

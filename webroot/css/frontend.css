@@ -739,27 +739,27 @@ body.carts p.pickup-day-header {
     margin-top: -5px;
 }
 #cart .cart-extra-info,
-body.carts.detail .cart-extra-info {
+body.carts .cart-extra-info {
     color: #fff;
     background-color: #f3515c;
     padding-bottom: 5px ! important;
     text-align: center;
 }
-body.carts.detail .cart-extra-info {
+body.carts .cart-extra-info {
     padding-top: 5px;
 }
 #cart .cart-extra-info a,
-body.carts.detail .cart-extra-info a {
+body.carts .cart-extra-info a {
     margin-top: 3px;
 }
 #cart .cart-extra-info:not(:first-child),
-body.carts.detail .cart-extra-info:not(:first-child) {
+body.carts .cart-extra-info:not(:first-child) {
     border-top: 1px solid #d6d4d4;
 }
 #cart p.products span.product span:not(:first-of-type) {
     margin-right: 3px;
 }
-body.carts.detail #load-last-order-details,
+body.carts #load-last-order-details,
 #cart #load-last-order-details {
     width: 100%;
     border: none;
@@ -878,20 +878,20 @@ body.carts.detail #load-last-order-details,
 .cart .price-per-unit {
     display: none;
 }
-body.carts.detail .cart:not(#cart) span.product-name-wrapper {
+body.carts .cart:not(#cart) span.product-name-wrapper {
     width: 210px;
 }
-body.carts.detail .cart:not(#cart) span.amount {
+body.carts .cart:not(#cart) span.amount {
     margin-right: 15px;
     margin-top: -5px;
 }
-body.carts.detail .cart:not(#cart) span.product-name-wrapper span.product-name {
+body.carts .cart:not(#cart) span.product-name-wrapper span.product-name {
     float: left;
 }
-body.carts.detail .cart:not(#cart) a.btn {
+body.carts .cart:not(#cart) a.btn {
     font-size: 17px;
 }
-body.carts.detail #CartsDetailForm {
+body.carts #CartsDetailForm {
     float: left;
     margin-top: 10px;
 }
@@ -967,67 +967,67 @@ body.carts.detail #CartsDetailForm {
 #inner-content .next-button {
     float: right;
 }
-body.carts.detail .cart:not(#cart) span.right .delete {
+body.carts .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;
 }
-body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
+body.carts .cart:not(#cart) span.product-name-wrapper span.unity {
     float: left;
     font-size: 13px;
     margin-top: 1px;
 }
-body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
-body.carts.detail .cart:not(#cart) p.tax-sum-wrapper,
-body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
+body.carts .cart:not(#cart) p.deposit-sum-wrapper,
+body.carts .cart:not(#cart) p.tax-sum-wrapper,
+body.carts .cart:not(#cart) p.timebased-currency-sum-wrapper {
     display: block;
     float: left;
     width: 100%;
 }
-body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper {
+body.carts .cart:not(#cart) p.deposit-sum-wrapper {
     border-bottom: 1px dotted #d6d4d4;
     padding-bottom: 15px;
 }
-body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
+body.carts .cart:not(#cart) p.timebased-currency-sum-wrapper {
     margin-top: 20px;
 }
-body.carts.detail .cart:not(#cart) p.product-sum-wrapper span.sum,
-body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
+body.carts .cart:not(#cart) p.product-sum-wrapper span.sum,
+body.carts .cart:not(#cart) p.deposit-sum-wrapper span.sum {
     font-weight: 600;
     float: right;
     margin-right: 17px;
 }
-body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
+body.carts .cart:not(#cart) p.tax-sum-wrapper {
     margin-top: 20px;
 }
-body.carts.detail .cart:not(#cart) .sums-wrapper {
+body.carts .cart:not(#cart) .sums-wrapper {
     float: right;
     margin-right: 17px;
     width: 300px;
 }
-body.carts.detail .cart .manufacturer-link {
+body.carts .cart .manufacturer-link {
     display: none;
 }
-body.carts.detail .cart.showManufacturerListAndDetailPage .manufacturer-link {
+body.carts .cart.showManufacturerListAndDetailPage .manufacturer-link {
     display: inline;
     width: 150px;
 }
-body.carts.detail .cart:not(#cart) span.deposit {
+body.carts .cart:not(#cart) span.deposit {
     display: inline;
     clear: both;
     margin-right: 22px;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds {
+body.carts .cart:not(#cart) span.timebasedCurrencySeconds {
     display: inline;
     clear: both;
     text-align: right;
     padding-right: 25px;
     width: 100%;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds span {
+body.carts .cart:not(#cart) span.timebasedCurrencySeconds span {
     float: right;
     clear: both;
 }
-body.carts.detail .cart:not(#cart) .image {
+body.carts .cart:not(#cart) .image {
     display: inline;
     text-align: center;
     float: left;
@@ -1035,56 +1035,56 @@ body.carts.detail .cart:not(#cart) .image {
     width: 110px;
     margin-top: -30px;
 }
-body.carts.detail .cart:not(#cart) .image img {
+body.carts .cart:not(#cart) .image img {
     width: 100px;
 }
-body.carts.detail .cart:not(#cart) {
+body.carts .cart:not(#cart) {
     font-size: 15px;
 }
-body.carts.detail .cart:not(#cart) span.right {
+body.carts .cart:not(#cart) span.right {
     position: absolute;
     right: 10px;
     top: 40px;
 }
-body.carts.detail .cart:not(#cart) .product {
+body.carts .cart:not(#cart) .product {
     max-height: none;
     padding: 10px;
     border-bottom: 1px solid #d6d4d4;
     position: relative;
     padding-top: 40px;
 }
-body.carts.detail .cart:not(#cart) .products {
+body.carts .cart:not(#cart) .products {
     max-height: none;
     overflow-x: hidden; /* error wrapper tricky to style */
     margin-bottom: 20px;
 }
-body.carts.detail .cart:not(#cart) p.total-sum-wrapper {
+body.carts .cart:not(#cart) p.total-sum-wrapper {
     font-size: 20px;
 }
-body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
+body.carts .cart:not(#cart) p.sum-deposit-wrapper span.sum {
     font-weight: normal;
 }
-body.carts.detail .cart:not(#cart) .product.error,
-body.carts.detail .cart:not(#cart) .error-message {
+body.carts .cart:not(#cart) .product.error,
+body.carts .cart:not(#cart) .error-message {
     background: #f3515c;
     color: #fff;
 }
-body.carts.detail .cart:not(#cart) .product.error span ,
-body.carts.detail .cart:not(#cart) .product.error a {
+body.carts .cart:not(#cart) .product.error span ,
+body.carts .cart:not(#cart) .product.error a {
     color: #fff;
 }
-body.carts.detail .cart:not(#cart) ul.error-message.global {
+body.carts .cart:not(#cart) ul.error-message.global {
     padding: 10px;
     margin: 0;
 }
-body.carts.detail .cart:not(#cart) ul.error-message:not(.global) {
+body.carts .cart:not(#cart) ul.error-message:not(.global) {
     width: 102%;
     float: left;
     padding: 15px 10px 10px 40px;
     margin-left: -10px;
     margin-top: -10px;
 }
-body.carts.detail .cart:not(#cart) .btn-success.btn-order {
+body.carts .cart:not(#cart) .btn-success.btn-order {
     font-size: 18px;
     float: right;
     padding: 5px 10px;

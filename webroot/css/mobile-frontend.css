@@ -117,10 +117,10 @@
         max-width: 100%;
         height: auto ! important;
     }
-    .carts.detail .credit-balance-wrapper {
+    .carts .credit-balance-wrapper {
         font-size: 16px ! important;
     }
-    .carts.detail .credit-balance-wrapper .payment {
+    .carts .credit-balance-wrapper .payment {
         float: right ! important;
     }
     .image-badge {
@@ -277,12 +277,12 @@
     form .input.textarea div.error-message {
         width: 100% ! important;
     }
-    body.carts.detail #load-last-order-details {
+    body.carts #load-last-order-details {
         margin-bottom: 10px;
         border: 1px solid #d6d4d4;
     }
-    body.carts.detail .cart:not(#cart) .input.checkbox .error-message,
-    body.carts.detail .cart:not(#cart) .input.select .error-message {
+    body.carts .cart:not(#cart) .input.checkbox .error-message,
+    body.carts .cart:not(#cart) .input.select .error-message {
         font-size: 12px;
         line-height: 18px;
     }

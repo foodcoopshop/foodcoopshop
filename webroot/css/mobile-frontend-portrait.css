@@ -72,23 +72,23 @@
     a.blog-post-wrapper .img-wrapper {
         min-height: 100px ! important;
     }
-    .carts.detail span.product-name-wrapper {
+    .carts span.product-name-wrapper {
         width: 190px ! important;
     }
-    body.carts.detail .cart:not(#cart) .product {
+    body.carts .cart:not(#cart) .product {
         padding-top: 10px;
     }
-    body.carts.detail .cart:not(#cart) span.amount {
+    body.carts .cart:not(#cart) span.amount {
         margin-left: -8px;
         padding-right: 100px; /* to move short products names to next row */
     }
-    body.carts.detail .cart:not(#cart) span.right {
+    body.carts .cart:not(#cart) span.right {
         position: static;
     }
-    body.carts.detail .cart:not(#cart) .image {
+    body.carts .cart:not(#cart) .image {
         margin-top: 0;
     }
-    body.carts.detail .cart:not(#cart) .input.checkbox label {
+    body.carts .cart:not(#cart) .input.checkbox label {
         font-size: 13px;
     }
  }

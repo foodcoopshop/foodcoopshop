@@ -287,7 +287,7 @@ foodcoopshop.Mobile = {
         $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
         // add special infos to cart page
-        var cartPage = $('body.carts.detail #inner-content h1:first');
+        var cartPage = $('body.carts #inner-content h1:first');
         cartPage.after($('#cart p.cart-extra-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
         cartPage.after($('#cart p.future-orders'));
