@@ -14,6 +14,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
@@ -242,6 +243,16 @@ $this->element('addScript', [
             <td>app.emailOrderReminderEnabled</td>
             <td><?php echo Configure::read('app.emailOrderReminderEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
+
+
+        <?php
+        $ct = FactoryLocator::get('Table')->get('Configurations');
+        if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == $ct::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD) { ?>
+        <tr>
+            <td>app.bankNameForCreditSystem</td>
+            <td><?php echo Configure::read('app.bankNameForCreditSystem'); ?></td>
+        </tr>
+        <?php } ?>
 
         <tr>
             <td>app.paymentMethods</td>
