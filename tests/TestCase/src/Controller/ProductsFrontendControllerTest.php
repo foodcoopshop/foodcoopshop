@@ -125,16 +125,4 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $statement->execute($params);
     }
 
-    protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
-    {
-        $this->ajaxPost('/admin/products/editDeliveryRhythm', [
-            'productIds' => [$productId],
-            'deliveryRhythmType' => $deliveryRhythmType,
-            'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,
-            'deliveryRhythmOrderPossibleUntil' => $deliveryRhythmOrderPossibleUntil,
-            'deliveryRhythmSendOrderListWeekday' => $deliveryRhythmSendOrderListWeekday,
-            'deliveryRhythmSendOrderListDay' => $deliveryRhythmSendOrderListDay,
-        ]);
-        return json_decode($this->_getBodyAsString());
-    }
 }
