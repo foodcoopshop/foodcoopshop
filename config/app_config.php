@@ -82,7 +82,7 @@ return [
         'depositForManufacturersStartDate' => '2016-01-01',
 
         /**
-         * valid options: 'Raiffeisen' (default) and 'Volksbank'
+         * 'Raiffeisen' or 'Volksbank'
          */
         'bankNameForCreditSystem' => 'Raiffeisen',
 
