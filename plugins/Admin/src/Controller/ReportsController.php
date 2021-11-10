@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Csv\RaiffeisenBankingReader;
+use App\Lib\Csv\VolksbankBankingReaderBankingReader;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
@@ -56,7 +57,8 @@ class ReportsController extends AdminAppController
         if (!empty($this->getRequest()->getData('upload'))) {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
-            $reader = RaiffeisenBankingReader::createFromString($content);
+            $bankClassName = Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
+            $reader = $bankClassName::createFromString($content);
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
                 $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));

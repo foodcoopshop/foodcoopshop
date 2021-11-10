@@ -23,6 +23,8 @@ use League\Csv\Reader;
 
 abstract class BankingReader extends Reader implements BankingReaderInterface {
 
+    public $dataContainsHeadline = true;
+
     public function __construct($document)
     {
         parent::__construct($document);
@@ -56,6 +58,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
 
     public function getPreparedRecords(): array
     {
+
         if (!$this->checkStructure()) {
             throw new \Exception('structure of csv is not valid');
         }

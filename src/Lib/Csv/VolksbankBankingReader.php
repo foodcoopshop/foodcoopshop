@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.1.0
+ * @since         FoodCoopShop 3.4.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -16,13 +16,12 @@ namespace App\Lib\Csv;
 
 use Cake\Core\Configure;
 
-class RaiffeisenBankingReader extends BankingReader {
-
-    public $dataContainsHeadline = false;
+class VolksbankBankingReader extends BankingReader {
 
     public function configureType(): void
     {
         $this->setDelimiter(';');
+        $this->setHeaderOffset(0);
     }
 
     public function checkStructureForRecord($record): bool
@@ -30,13 +29,12 @@ class RaiffeisenBankingReader extends BankingReader {
 
         $result = false;
 
-        if (in_array(count($record), [6,7]) &&
-            strlen($record[0]) == 10 &&
-            strlen($record[2]) == 10 &&
-            is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record[3])) &&
-            $record[4] == 'EUR' &&
-            strlen($record[5]) == 23 &&
-            (empty($record[6]) || !isset($record[6]))
+        if (in_array(count($record), [10]) &&
+            strlen($record['Valutadatum']) == 10 &&
+            strlen($record['Umsatzzeit']) == 26 &&
+            $record['Waehrung'] == 'EUR' &&
+            is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record['Betrag'])) &&
+            !empty($record['Umsatztext'])
             ) {
             $result = true;
         }
@@ -53,13 +51,13 @@ class RaiffeisenBankingReader extends BankingReader {
             // remove empty array elements
             $record = array_filter($record);
 
-            $record['content'] = $record[1];
+            $record['content'] = $record['Umsatztext'];
 
-            $record['amount'] = $record[3];
+            $record['amount'] = $record['Betrag'];
 
-            // 01.02.2019 02:51:14:563 =>
-            // 01.02.2019 02:51:14.563
-            $record['date'] =  substr_replace($record[5], '.', 19, 1);
+            // 2021-07-06-07.54.26.789861 =>
+            // 2021-07-06 07.54.26.789861
+            $record['date'] =  substr_replace($record['Umsatzzeit'], ' ', 10, 1);
 
             $preparedRecords[] = $record;
         }

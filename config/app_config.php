@@ -82,6 +82,11 @@ return [
         'depositForManufacturersStartDate' => '2016-01-01',
 
         /**
+         * valid options: 'Raiffeisen' (default) and 'Volksbank'
+         */
+        'bankNameForCreditSystem' => 'Raiffeisen',
+
+        /**
          * not used since v2.4
          * sendOrderListsWeekday is replaced by the new database setting FCS_WEEKLY_PICKUP_DAY
          * and can be removed after successful migration of 20190218101915_IndividualSendOrderListDay.php
