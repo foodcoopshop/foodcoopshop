@@ -227,6 +227,11 @@ class ProductsTable extends AppTable
                     $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
                     $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
                 }
+
+                if ($product->delivery_rhythm_count == 2 && $pickupDay != $calculatedPickupDay) {
+                    return 'delivery-rhythm-triggered-delivery-break';
+                }
+
                 $pickupDay = $calculatedPickupDay;
             }
         }

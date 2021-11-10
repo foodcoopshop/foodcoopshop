@@ -311,6 +311,12 @@ class AppTable extends Table
                 )
             );
 
+            // hides the product for two-week delivery rhythms when
+            // current week is not the week before calculated pickup day
+            if ($deliveryDate == 'delivery-rhythm-triggered-delivery-break') {
+                unset($products[$i]);
+            }
+
             // deactivates the product if manufacturer based delivery break is enabled
             if ($this->Product->deliveryBreakEnabled($product['no_delivery_days'], $deliveryDate)) {
                 $products[$i]['delivery_break_enabled'] = true;
