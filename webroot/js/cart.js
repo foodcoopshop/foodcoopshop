@@ -88,11 +88,11 @@ foodcoopshop.Cart = {
             var container;
             var errorMessageString = '<ul class="error-message ' + key + '"><li>' + cartErrors[key].join('</li><li>') + '</li></ul>';
             if (key == 'global') {
-                container = $('.carts.detail .cart:not(#cart) #CartsDetailForm');
+                container = $('.carts .cart:not(#cart) #CartsDetailForm');
                 container.addClass('error');
                 container.prepend(errorMessageString);
             } else {
-                container = $('.carts.detail .cart:not(#cart) .product.' + key);
+                container = $('.carts .cart:not(#cart) .product.' + key);
                 container.addClass('error');
                 container.after(errorMessageString);
             }
