@@ -111,7 +111,6 @@ return [
         'showPickupPlaceInfo' => true,
         'showTaxSumTableOnOrderDetailPdf' => false,
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
-        'canProductsWithDeliveryRhythm2WeekOnlyBeOrderedInDeliveryWeek' => true,
 
         /**
          * id of the category "all products"
