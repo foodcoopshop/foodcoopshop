@@ -6,17 +6,17 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.1.0
+ * @since         FoodCoopShop 3.4.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Lib\Csv\RaiffeisenBankingReader;
+use App\Lib\Csv\VolksbankBankingReader;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 
-class RaiffeisenBankingReaderTest extends AppCakeTestCase
+class VolksbankBankingReaderTest extends AppCakeTestCase
 {
 
     public function setUp(): void
@@ -31,29 +31,28 @@ class RaiffeisenBankingReaderTest extends AppCakeTestCase
 
     public function testRead()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv');
+        $reader = VolksbankBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank.csv');
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
         }
 
-        $this->assertEquals('2019-02-01 12:51:14.563000', $records[2]['date']);
-        $this->assertEquals(100, $records[2]['amount']);
-        $this->assertEquals(Configure::read('test.adminId'), $records[2]['original_id_customer']);
-        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_id_customer']);
+        $this->assertEquals('2021-07-06 07:54:26.789861', $records[0]['date']);
+        $this->assertEquals(100, $records[0]['amount']);
+        $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_id_customer']);
 
-        $this->assertEquals(3, count($records));
+        $this->assertEquals(1, count($records));
     }
 
     public function testCheckStructureNotOk()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen-wrong-structure.csv');
+        $reader = VolksbankBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
     public function testCheckStructureOk()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv');
+        $reader = VolksbankBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank.csv');
         $this->assertTrue($reader->checkStructure());
     }
 
