@@ -2,8 +2,6 @@
 
 namespace Admin\Controller;
 
-use App\Lib\Csv\RaiffeisenBankingReader;
-use App\Lib\Csv\VolksbankBankingReaderBankingReader;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
@@ -57,7 +55,7 @@ class ReportsController extends AdminAppController
         if (!empty($this->getRequest()->getData('upload'))) {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
-            $bankClassName = Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
+            $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
             $reader = $bankClassName::createFromString($content);
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
