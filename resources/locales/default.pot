@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-11-04 20:58+0100\n"
+"POT-Creation-Date: 2021-11-10 12:05+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -177,6 +177,9 @@ msgid "Please_delete_product_from_cart_to_place_order."
 msgstr ""
 
 msgid "The_product_{0}_is_not_activated_any_more."
+msgstr ""
+
+msgid "{0}_can_be_ordered_next_week."
 msgstr ""
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."

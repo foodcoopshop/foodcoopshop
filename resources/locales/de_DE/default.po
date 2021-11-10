@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-04 20:58+0100\n"
-"PO-Revision-Date: 2021-11-04 20:58+0100\n"
+"POT-Creation-Date: 2021-11-10 12:05+0100\n"
+"PO-Revision-Date: 2021-11-10 12:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -179,6 +179,9 @@ msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzusch
 
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
+
+msgid "{0}_can_be_ordered_next_week."
+msgstr "Das Produkt {0} kann erst nächste Woche wieder bestellt werden."
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."

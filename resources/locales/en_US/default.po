@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-04 20:58+0100\n"
-"PO-Revision-Date: 2021-11-04 20:59+0100\n"
+"POT-Creation-Date: 2021-11-10 12:05+0100\n"
+"PO-Revision-Date: 2021-11-10 12:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -179,6 +179,9 @@ msgstr "Please remove product from cart to place order."
 
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "The product {0} is not activated any more."
+
+msgid "{0}_can_be_ordered_next_week."
+msgstr "{0} can be ordered next week."
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
