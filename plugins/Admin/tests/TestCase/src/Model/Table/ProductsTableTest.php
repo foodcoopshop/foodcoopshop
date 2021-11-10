@@ -303,7 +303,7 @@ class ProductsTableTest extends AppCakeTestCase
                     'is_stock_product' => '0',
                     'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06')
                 ]
-                ),
+            ),
             'currentDay' => '2018-09-15',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
