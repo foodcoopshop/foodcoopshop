@@ -87,13 +87,6 @@ return [
         'bankNameForCreditSystem' => 'Raiffeisen',
 
         /**
-         * not used since v2.4
-         * sendOrderListsWeekday is replaced by the new database setting FCS_WEEKLY_PICKUP_DAY
-         * and can be removed after successful migration of 20190218101915_IndividualSendOrderListDay.php
-         */
-        'sendOrderListsWeekday' => 3,
-
-        /**
          * should names of members be shown as "John Doe" or "Doe John"
          * options:
          * - firstname
@@ -213,10 +206,4 @@ return [
         'DatabaseWithTimeAndMicrosecondsAlt' => 'Y-m-d H:i:s.u',
         'DateWithTimeForFilename' => 'Y-m-d_H-i-s',
     ],
-    'Error' => [
-        'ignoredDeprecationPaths' => [
-            'vendor/cakephp/cakephp/src/Routing/Router.php',
-            'vendor/dereuromark/cakephp-queue/config/routes.php',
-        ]
-    ]
 ];
