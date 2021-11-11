@@ -169,7 +169,7 @@ use Cake\Core\Configure;
         if ($advancedStockManagementEnabled) {
             echo '<th>' . $this->Paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
-        echo '<th style="width:62px;">'.__d('admin', 'Amount').'</th>';
+        echo '<th style="width:65px;">'.__d('admin', 'Amount').'</th>';
 
         $showSellingPriceAndDeposit = false;
         $showSellingPriceTax = false;
