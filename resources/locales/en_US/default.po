@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-10 12:05+0100\n"
-"PO-Revision-Date: 2021-11-10 12:06+0100\n"
+"POT-Creation-Date: 2021-11-12 20:05+0100\n"
+"PO-Revision-Date: 2021-11-12 20:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2210,6 +2210,9 @@ msgstr "Show manufacturer"
 
 msgid "Show_products"
 msgstr "Show products"
+
+msgid "Stock_products"
+msgstr "Stock products"
 
 msgid "Self_service"
 msgstr "Self-service"
