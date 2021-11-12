@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-03 18:12+0100\n"
-"PO-Revision-Date: 2021-11-03 18:13+0100\n"
+"POT-Creation-Date: 2021-11-12 20:07+0100\n"
+"PO-Revision-Date: 2021-11-12 20:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1809,6 +1809,9 @@ msgstr "Sofort-Bestellung für heute"
 msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
+msgid "Order_stock_products"
+msgstr "Lagerprodukte bestellen"
+
 msgid "Copy_email_addresses_of_selected_customers"
 msgstr "E-Mail-Adressen der ausgewählten Mitglieder kopieren"
 
@@ -2294,6 +2297,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Stock_product_order"
+#~ msgstr "Lagerprodukt bestellen"
 
 #~ msgid "The_product_attribute_{0}_was_changed_successfully."
 #~ msgstr "Die Variante {0} wurde erfolgreich geändert."

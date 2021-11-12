@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-03 18:12+0100\n"
-"PO-Revision-Date: 2021-11-03 18:13+0100\n"
+"POT-Creation-Date: 2021-11-12 20:07+0100\n"
+"PO-Revision-Date: 2021-11-12 20:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1809,6 +1809,9 @@ msgstr "Instant order for today"
 msgid "chose_member..."
 msgstr "chose member..."
 
+msgid "Order_stock_products"
+msgstr "Order stock products"
+
 msgid "Copy_email_addresses_of_selected_customers"
 msgstr "Copy e-mail adresses of selected customers"
 
@@ -2294,6 +2297,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Stock_product_order"
+#~ msgstr "Stock product order"
 
 #~ msgid "The_product_attribute_{0}_was_changed_successfully."
 #~ msgstr "The product attribute was changed successfully."
