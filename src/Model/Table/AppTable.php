@@ -285,7 +285,10 @@ class AppTable extends Table
                 $i++;
             }
         }
+
+        $products = $this->reindexArray($products);
         return $products;
+
     }
 
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
@@ -334,6 +337,19 @@ class AppTable extends Table
                 }
             }
         }
+
+        $products = $this->reindexArray($products);
         return $products;
+
     }
+
+    protected function reindexArray($array)
+    {
+        $reindexedArray = [];
+        foreach($array as $a) {
+            $reindexedArray[] = $a;
+        }
+        return $reindexedArray;
+    }
+
 }
