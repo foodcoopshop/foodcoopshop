@@ -210,8 +210,8 @@ class CategoriesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
         $products = $this->hideMultipleAttributes($products);
+        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
 
         if (! $countMode) {
             return $products;
