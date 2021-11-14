@@ -337,7 +337,6 @@ class PaymentsController extends AdminAppController
             $dateAddForEntity = FrozenTime::now(); // always save time for today, even if it's explicitely passed
         }
 
-
         // add entry in table payments
         $entity = $this->Payment->newEntity(
             [
@@ -352,6 +351,10 @@ class PaymentsController extends AdminAppController
                 'created_by' => $this->AppAuth->getUserId(),
             ]
         );
+
+        if ($this->AppAuth->isSuperadmin() && $type == 'product') {
+            $entity->approval = APP_ON;
+        }
 
         $newPayment = $this->Payment->save($entity);
 
