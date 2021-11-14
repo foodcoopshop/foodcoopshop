@@ -550,22 +550,24 @@ class CartComponent extends Component
                         $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
                         $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
 
-                        $paidInCash = false;
-                        if ($this->AppAuth->isSelfServiceCustomer()) {
-                            $paidInCash = true;
+                        if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
+                            $paidInCash = false;
+                            if ($this->AppAuth->isSelfServiceCustomer()) {
+                                $paidInCash = true;
+                            }
+                            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                                $helloCash = new HelloCash();
+                                $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+                                $invoiceId = $responseObject->invoice_id;
+                                $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                            } else {
+                                $invoiceToCustomer = new GenerateInvoiceToCustomer();
+                                $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+                                $invoiceId = $newInvoice->id;
+                                $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
+                            }
+                            $cart['invoice_id'] = $invoiceId;
                         }
-                        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                            $helloCash = new HelloCash();
-                            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
-                            $invoiceId = $responseObject->invoice_id;
-                            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
-                        } else {
-                            $invoiceToCustomer = new GenerateInvoiceToCustomer();
-                            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
-                            $invoiceId = $newInvoice->id;
-                            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
-                        }
-                        $cart['invoice_id'] = $invoiceId;
                     }
 
                     $actionLogType = 'self_service_order_added';
@@ -585,9 +587,9 @@ class CartComponent extends Component
                             '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
                         ]);
+                    } else {
+                        $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
                     }
-
-                    $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
                     break;
             }
 

@@ -286,6 +286,10 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. 2021-000001');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSelfServiceCustomer'));
 
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoiceCount = $this->Invoice->find('all')->count();
+        $this->assertEquals($invoiceCount, 1);
+
     }
 
     public function testSelfServiceOrderForDifferentCustomer()
@@ -336,9 +340,11 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
-        $this->assertMailCount(1);
-        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
-        $this->assertMailSentToAt(0, $testCustomer->email);
+        $this->assertMailCount(0);
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoiceCount = $this->Invoice->find('all')->count();
+        $this->assertEquals($invoiceCount, 0);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [])->toArray();

@@ -138,6 +138,13 @@ class PaymentsControllerTest extends AppCakeTestCase
             'payments',
             'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>20,50 €'
         );
+
+        $payment = $this->Payment->find('all', [
+            'order' => [
+                'Payments.id' => 'DESC' ,
+            ]
+        ])->first();
+        $this->assertEquals(APP_ON, $payment->approval);
     }
 
     public function testAddDepositPaymentToCustomer()

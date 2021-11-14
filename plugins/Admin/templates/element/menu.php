@@ -122,6 +122,18 @@ if ($appAuth->isCustomer()) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $orderListsMenuElement;
+
+    if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $invoicesMenuElement = [
+            'slug' => Configure::read('app.slugHelper')->getInvoices(),
+            'name' => __d('admin', 'Invoices'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-file-invoice',
+            ],
+        ];
+        $orderDetailsGroupedByCustomerMenuElement['children'][] = $invoicesMenuElement;
+    }
+
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $manufacturerMenu = [
         'slug' => '/admin/manufacturers',

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-10 12:05+0100\n"
-"PO-Revision-Date: 2021-11-10 12:05+0100\n"
+"POT-Creation-Date: 2021-11-14 21:37+0100\n"
+"PO-Revision-Date: 2021-11-14 21:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1533,8 +1533,8 @@ msgstr "Die E-Mail-Adresse ist nicht gültig."
 msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
 msgstr "Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits."
 
-msgid "Please_enter_your_street."
-msgstr "Bitte gib deine Straße an."
+msgid "Please_enter_your_street_and_number."
+msgstr "Bitte gib deine Straße und Nummer an."
 
 msgid "Please_enter_your_city."
 msgstr "Bitte gib deinen Ort an."
@@ -2166,8 +2166,8 @@ msgstr "Vorname"
 msgid "Lastname"
 msgstr "Nachname"
 
-msgid "Street"
-msgstr "Straße"
+msgid "Street_and_number"
+msgstr "Straße + Nummer"
 
 msgid "Additional_address_information"
 msgstr "Adresszusatz"
@@ -2210,6 +2210,9 @@ msgstr "Hersteller anzeigen"
 
 msgid "Show_products"
 msgstr "Produkte anzeigen"
+
+msgid "Stock_products"
+msgstr "Lagerprodukte"
 
 msgid "Self_service"
 msgstr "Selbstbedienung"
@@ -2597,6 +2600,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Street"
+#~ msgstr "Straße"
 
 #~ msgid "Really_delete_attribute_{0}?"
 #~ msgstr "Möchtest du die Variante {0} wirklich löschen?"
