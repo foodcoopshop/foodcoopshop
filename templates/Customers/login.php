@@ -113,7 +113,7 @@ $this->element('addScript', ['script' =>
                       ]);
 
                       echo $this->Form->control('Customers.address_customer.address1', [
-                          'label' => __('Street'),
+                          'label' => __('Street_and_number'),
                       ]);
                       echo $this->Form->control('Customers.address_customer.address2', [
                           'label' => __('Additional_address_information'),

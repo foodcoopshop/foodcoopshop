@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-12 20:07+0100\n"
-"PO-Revision-Date: 2021-11-12 20:07+0100\n"
+"POT-Creation-Date: 2021-11-14 21:37+0100\n"
+"PO-Revision-Date: 2021-11-14 21:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -999,8 +999,8 @@ msgstr "Profilbild löschen?"
 msgid "Email"
 msgstr "E-Mail"
 
-msgid "Street"
-msgstr "Straße"
+msgid "Street_and_number"
+msgstr "Straße + Nummer"
 
 msgid "Additional_address_information"
 msgstr "Adresszusatz"
@@ -2297,6 +2297,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Street"
+#~ msgstr "Straße"
 
 #~ msgid "Stock_product_order"
 #~ msgstr "Lagerprodukt bestellen"

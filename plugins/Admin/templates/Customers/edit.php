@@ -100,7 +100,7 @@ echo $this->Form->control('Customers.address_customer.email', [
     'label' => __d('admin', 'Email')
 ]);
 echo $this->Form->control('Customers.address_customer.address1', [
-    'label' => __d('admin', 'Street'),
+    'label' => __d('admin', 'Street_and_number'),
 ]);
 echo $this->Form->control('Customers.address_customer.address2', [
     'label' => __d('admin', 'Additional_address_information'),

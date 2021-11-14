@@ -253,7 +253,7 @@
         margin-right: 65px;
     }
     #login-form .input label {
-        width: 75px;
+        width: 80px;
     }
     #login-form h1 {
         padding-left: 10px;
@@ -272,7 +272,7 @@
         width: 60% ! important;
     }
     #login-form div.error-message {
-        margin-left: 85px;
+        margin-left: 90px;
     }
     form .input.textarea div.error-message {
         width: 100% ! important;

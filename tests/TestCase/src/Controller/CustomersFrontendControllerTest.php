@@ -183,7 +183,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte gib deine E-Mail-Adresse an.');
         $this->assertResponseContains('Bitte gib deinen Vornamen an.');
         $this->assertResponseContains('Bitte gib deinen Nachnamen an.');
-        $this->assertResponseContains('Bitte gib deine Straße an.');
+        $this->assertResponseContains('Bitte gib deine Straße und Nummer an.');
         $this->assertResponseContains('Bitte gib deinen Ort an.');
         $this->assertResponseContains('Bitte gib deine Handynummer an.');
     }
