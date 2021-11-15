@@ -352,7 +352,7 @@ class PaymentsController extends AdminAppController
             ]
         );
 
-        if ($this->AppAuth->isSuperadmin() && $type == 'product') {
+        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId && $type == 'product') {
             $entity->approval = APP_ON;
         }
 

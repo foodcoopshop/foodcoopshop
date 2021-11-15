@@ -104,7 +104,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $jsonDecodedContent->msg);
     }
 
-    public function testAddProductPaymentForOneself()
+    public function testAddProductPaymentAsCustomerForOneself()
     {
         $this->loginAsCustomer();
         $this->addPaymentAndAssertIncreasedCreditBalance(
@@ -145,6 +145,31 @@ class PaymentsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         $this->assertEquals(APP_ON, $payment->approval);
+    }
+
+    public function testAddProductPaymentAsSuperadminForOneself()
+    {
+        $this->loginAsSuperadmin();
+        $this->addPaymentAndAssertIncreasedCreditBalance(
+            Configure::read('test.superadminId'),
+            '20,5',
+            'product'
+            );
+        $this->logout();
+
+        $this->assertActionLogRecord(
+            Configure::read('test.superadminId'),
+            'payment_product_added',
+            'payments',
+            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>20,50 €'
+        );
+
+        $payment = $this->Payment->find('all', [
+            'order' => [
+                'Payments.id' => 'DESC' ,
+            ]
+        ])->first();
+        $this->assertEquals(APP_OFF, $payment->approval);
     }
 
     public function testAddDepositPaymentToCustomer()
