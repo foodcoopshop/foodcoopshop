@@ -122,8 +122,10 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddProductPaymentAsSuperadminForAnotherUser()
+    public function testAddProductPaymentAsSuperadminRetailModeEnabled()
     {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
@@ -147,7 +149,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $payment->approval);
     }
 
-    public function testAddProductPaymentAsSuperadminForOneself()
+    public function testAddProductPaymentAsSuperadminRetailModeDisabled()
     {
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(

@@ -352,7 +352,7 @@ class PaymentsController extends AdminAppController
             ]
         );
 
-        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId && $type == 'product') {
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $type == 'product' && $this->AppAuth->isSuperadmin()) {
             $entity->approval = APP_ON;
         }
 
