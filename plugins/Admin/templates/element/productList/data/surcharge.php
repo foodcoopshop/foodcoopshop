@@ -15,7 +15,7 @@
 
 echo '<td class="cell-surcharge">';
     if (empty($product->product_attributes)) {
-        if ($product->surcharge_percent) {
+        if (isset($product->surcharge_percent)) {
             echo '<b>' . $this->Number->formatAsPercent($product->surcharge_percent, 0) . '</b><br />';
             echo $this->Number->formatAsCurrency($product->surcharge_price);
         }
