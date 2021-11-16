@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-11-14 21:37+0100\n"
+"POT-Creation-Date: 2021-11-16 21:58+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1710,6 +1710,12 @@ msgid "Stock_product"
 msgstr ""
 
 msgid "incl_vat"
+msgstr ""
+
+msgid "Surcharge"
+msgstr ""
+
+msgid "excl_vat"
 msgstr ""
 
 msgid "Selling_price_abbreviation"
