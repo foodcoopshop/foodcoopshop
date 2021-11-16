@@ -6,7 +6,6 @@ use App\Model\Traits\ProductAndAttributeEntityTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
-use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
