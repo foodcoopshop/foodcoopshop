@@ -182,6 +182,7 @@ use Cake\Core\Configure;
                 $showSellingPriceTax = true;
                 $showPurchasePriceTax = true;
                 echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+                echo '<th style="text-align:center;">'.__d('admin', 'Surcharge') . ' (' . __d('admin', 'excl_vat') . ') </th>';
                 echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
             } else {
                 $showSellingPriceAndDeposit = true;
@@ -258,6 +259,9 @@ use Cake\Core\Configure;
             echo $this->element('productList/data/purchasePrice', [
                 'product' => $product
             ]);
+            echo $this->element('productList/data/surcharge', [
+                'product' => $product
+            ]);
         }
 
         if ($showSellingPriceAndDeposit) {
@@ -300,7 +304,7 @@ use Cake\Core\Configure;
 
     echo '<tr>';
 
-    $colspan = 13;
+    $colspan = 14;
     if ($manufacturerId == 'all') {
         $colspan++;
     }
@@ -309,7 +313,7 @@ use Cake\Core\Configure;
     }
 
     if (!$showPurchasePrice) {
-        $colspan--;
+        $colspan = $colspan - 2;
     }
     if (!$showSellingPriceAndDeposit) {
         $colspan--;
@@ -320,7 +324,7 @@ use Cake\Core\Configure;
     }
 
     if (!$showSellingPriceTax && !$showPurchasePrice) {
-        $colspan--;
+        $colspan = $colspan - 2;
     }
 
     echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';

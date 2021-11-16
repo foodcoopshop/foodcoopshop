@@ -541,6 +541,9 @@ body.order_details.index .table-cell-wrapper.price {
 .table-cell-wrapper.group span {
     margin-left: 3px;
 }
+.cell-surcharge {
+    text-align: center;
+}
 table.list td.amount > .has-separator:after {
     content: ' / ';
 }

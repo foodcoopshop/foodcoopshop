@@ -1033,6 +1033,13 @@ class ProductsTable extends AppTable
                     } else {
                         $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
                     }
+                    $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                        $product->gross_price,
+                        $taxRate,
+                        $product->purchase_gross_price,
+                        $purchasePriceTaxRate,
+                    );
+                    $product->surcharge_price = $product->price - $purchasePrice;
                 }
             }
 
@@ -1142,6 +1149,14 @@ class ProductsTable extends AppTable
                         } else {
                             $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
                         }
+
+                        $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                            $grossPrice,
+                            $taxRate,
+                            $preparedProduct['purchase_gross_price'],
+                            $purchasePriceTaxRate,
+                        );
+                        $preparedProduct['surcharge_price'] = $attribute->price - $purchasePrice;
                     }
                     $preparedProducts[] = $preparedProduct;
                 }
