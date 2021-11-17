@@ -60,7 +60,6 @@ class PurchasePriceProductsTable extends AppTable
         }
 
         $surcharge = ($sellingPriceNet / $purchasePriceNet * 100) - 100;
-        $surcharge = round($surcharge, 0);
         return $surcharge;
 
     }

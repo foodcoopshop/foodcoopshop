@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-14 21:37+0100\n"
-"PO-Revision-Date: 2021-11-14 21:39+0100\n"
+"POT-Creation-Date: 2021-11-17 09:12+0100\n"
+"PO-Revision-Date: 2021-11-17 09:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -933,8 +933,8 @@ msgstr "Change price"
 msgid "Price_per_unit"
 msgstr "Price per unit"
 
-msgid "incl_vat"
-msgstr "incl. VAT"
+msgid "gross"
+msgstr "gross"
 
 msgid "Price_per_weight_(for_adaption_after_delivery)"
 msgstr "Price per weight (for adapting the weight after delivery)"
@@ -2600,6 +2600,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "incl_vat"
+#~ msgstr "incl. VAT"
 
 #~ msgid "Street"
 #~ msgstr "Street"

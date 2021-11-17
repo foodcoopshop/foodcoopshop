@@ -229,7 +229,7 @@ if ($product['description'] != '') {
                 $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($attribute['ProductAttributes']['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
-                    $priceHtml = $this->PricePerUnit->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
+                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
                         $attribute['Units']['price_incl_per_unit'],
                         $attribute['Units']['unit_name'],
@@ -322,7 +322,7 @@ if ($product['description'] != '') {
                 $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($product['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($product['price_per_unit_enabled']) {
-                    $priceHtml = $this->PricePerUnit->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
+                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
                         $product['price_incl_per_unit'],
                         $product['unit_name'],

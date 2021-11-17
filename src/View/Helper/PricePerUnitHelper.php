@@ -74,9 +74,16 @@ class PricePerUnitHelper extends Helper
         return $result;
     }
 
+    public function getPricePerUnitForFrontend($priceInclPerUnit, $quantityInUnits, $amount)
+    {
+        return '<div class="price">' . $this->MyNumber->formatAsCurrency(
+            $this->getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
+        ) . '</div> <div class="price-asterisk">*</div>';
+    }
+
     public function getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
     {
-        return '<div class="price">' . $this->MyNumber->formatAsCurrency($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
+        return $priceInclPerUnit * $quantityInUnits / $amount;
     }
 
     public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount, $showAdaptionMessage=true)

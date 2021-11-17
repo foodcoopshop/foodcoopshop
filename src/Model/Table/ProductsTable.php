@@ -1026,6 +1026,7 @@ class ProductsTable extends AppTable
                     ];
                 }
                 if (!empty($product->purchase_price_product)) {
+
                     $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
                     $purchasePrice = $product->purchase_price_product->price ?? null;
                     if ($purchasePrice === null) {
@@ -1033,6 +1034,29 @@ class ProductsTable extends AppTable
                     } else {
                         $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
                     }
+
+                    if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
+                        if (!is_null($product->unit->purchase_price_incl_per_unit)) {
+                            $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                                Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
+                                $taxRate,
+                                Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->purchase_price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
+                                $purchasePriceTaxRate,
+                            );
+                            $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $taxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                            $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                            $product->surcharge_price = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                        }
+                    } else {
+                        $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                            $product->gross_price,
+                            $taxRate,
+                            $product->purchase_gross_price,
+                            $purchasePriceTaxRate,
+                        );
+                        $product->surcharge_price = $product->price - $purchasePrice;
+                    }
+
                 }
             }
 
@@ -1142,6 +1166,30 @@ class ProductsTable extends AppTable
                         } else {
                             $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
                         }
+
+                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                            if (!is_null($attribute->unit_product_attribute->purchase_price_incl_per_unit)) {
+                                $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
+                                    $taxRate,
+                                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->purchase_price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
+                                    $purchasePriceTaxRate,
+                                );
+                                $priceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->price_incl_per_unit, $taxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                                $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                                $preparedProduct['surcharge_price'] = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                            }
+                        } else {
+                            $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                                $grossPrice,
+                                $taxRate,
+                                $preparedProduct['purchase_gross_price'],
+                                $purchasePriceTaxRate,
+                            );
+                            $preparedProduct['surcharge_price'] = $attribute->price - $purchasePrice;
+                        }
+
+
                     }
                     $preparedProducts[] = $preparedProduct;
                 }
