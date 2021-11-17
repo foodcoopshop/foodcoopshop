@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-16 21:58+0100\n"
-"PO-Revision-Date: 2021-11-16 21:59+0100\n"
+"POT-Creation-Date: 2021-11-17 09:12+0100\n"
+"PO-Revision-Date: 2021-11-17 09:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1710,14 +1710,14 @@ msgstr "Produktdeklaration"
 msgid "Stock_product"
 msgstr "Lagerprodukt"
 
-msgid "incl_vat"
-msgstr "inkl. USt."
+msgid "gross"
+msgstr "brutto"
 
 msgid "Surcharge"
 msgstr "Aufschlag"
 
-msgid "excl_vat"
-msgstr "exkl. USt."
+msgid "net"
+msgstr "netto"
 
 msgid "Selling_price_abbreviation"
 msgstr "VP"
@@ -2303,6 +2303,12 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "incl_vat"
+#~ msgstr "inkl. USt."
+
+#~ msgid "excl_vat"
+#~ msgstr "exkl. USt."
 
 #~ msgid "Street"
 #~ msgstr "Straße"

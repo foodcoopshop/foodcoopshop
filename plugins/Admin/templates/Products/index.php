@@ -181,9 +181,9 @@ use Cake\Core\Configure;
                 $showPurchasePrice = true;
                 $showSellingPriceTax = true;
                 $showPurchasePriceTax = true;
-                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
-                echo '<th style="text-align:center;">'.__d('admin', 'Surcharge') . ' (' . __d('admin', 'excl_vat') . ') </th>';
-                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' (' . __d('admin', 'incl_vat') . ') </th>';
+                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Purchase_price_abbreviation') . ' ' . __d('admin', 'gross') . '</th>';
+                echo '<th style="text-align:center;">'.__d('admin', 'Surcharge') . ' ' . __d('admin', 'net') . '</th>';
+                echo '<th style="text-align:right;width:98px;">'.__d('admin', 'Selling_price_abbreviation') . ' ' . __d('admin', 'gross') . '</th>';
             } else {
                 $showSellingPriceAndDeposit = true;
                 $showSellingPriceTax = true;
@@ -324,7 +324,7 @@ use Cake\Core\Configure;
     }
 
     if (!$showSellingPriceTax && !$showPurchasePrice) {
-        $colspan = $colspan - 2;
+        $colspan--;
     }
 
     echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
