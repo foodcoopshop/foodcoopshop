@@ -489,7 +489,7 @@ class ManufacturersController extends AdminAppController
         $sheet->setCellValueByColumnAndRow(6, $row, $totalSumPurchasePriceTax);
         $this->setNumberFormatForCell($sheet, 6, $row);
         $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceGross);
-        $this->setNumberFormatForCell($sheet, $column, $row);
+        $this->setNumberFormatForCell($sheet, 8, $row);
 
         $writer = new Xlsx($spreadsheet);
         $filename = __d('admin', 'Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturer->name) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
