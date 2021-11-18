@@ -11,6 +11,8 @@ use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,6 +45,12 @@ class ManufacturersController extends AdminAppController
             case 'edit':
             case 'editOptions':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+                break;
+            case 'getDeliveryNote':
+                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+                break;
+            case 'getInvoice':
+                return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             default:
                 return $this->AppAuth->user();
@@ -366,6 +374,41 @@ class ManufacturersController extends AdminAppController
         if (empty($this->getRequest()->getData())) {
             $this->render('editOptions');
         }
+    }
+
+    public function getDeliveryNote()
+    {
+
+        $this->disableAutoRender();
+
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        $dateTo = h($this->getRequest()->getQuery('dateTo'));
+
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId
+            ],
+        ])->first();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', __d('admin', 'Manufacturer'));
+        $sheet->setCellValue('A2', __d('admin', 'Date_from'));
+        $sheet->setCellValue('A3', __d('admin', 'Date_to'));
+        $sheet->setCellValue('B1', $manufacturer->name);
+        $sheet->setCellValue('B2', $dateFrom);
+        $sheet->setCellValue('B3', $dateTo);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = __d('admin', 'Delivery_note') . '-'.$manufacturerId . '.xlsx';
+        $writer->save(TMP . $filename);
+
+        $this->response = $this->response->withHeader('Content-Disposition', 'inline;filename="'.$filename.'"');
+        $this->response = $this->response->withFile(TMP . $filename);
+        unlink(TMP . $filename);
+        return $this->response;
+
     }
 
     public function editOptions($manufacturerId)
