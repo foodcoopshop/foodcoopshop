@@ -463,7 +463,7 @@ class ManufacturersController extends AdminAppController
             $row++;
         }
         $writer = new Xlsx($spreadsheet);
-        $filename = __d('admin', 'Delivery_note') . '-'.$manufacturerId . '.xlsx';
+        $filename = __d('admin', 'Delivery_note') . '-' . StringComponent::slugify($manufacturer->name) . '-' . $dateFrom . '-' . $dateTo . '.xlsx';
         $writer->save(TMP . $filename);
 
         $this->response = $this->response->withHeader('Content-Disposition', 'inline;filename="'.$filename.'"');
