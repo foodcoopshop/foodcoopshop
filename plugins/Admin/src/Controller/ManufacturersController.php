@@ -476,13 +476,16 @@ class ManufacturersController extends AdminAppController
 
         // add row with sums
         $row++;
+        $sheet->setCellValueByColumnAndRow(1, $row, __d('admin', 'Sum'));
+
+        $row++;
         $sheet->setCellValueByColumnAndRow(1, $row, $totalSumAmount);
         $sheet->setCellValueByColumnAndRow(5, $row, $totalSumPurchasePriceNet);
         $sheet->setCellValueByColumnAndRow(6, $row, $totalSumPurchasePriceTax);
         $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceGross);
 
         $writer = new Xlsx($spreadsheet);
-        $filename = __d('admin', 'Delivery_note') . '-' . StringComponent::slugify($manufacturer->name) . '-' . $dateFrom . '-' . $dateTo . '.xlsx';
+        $filename = __d('admin', 'Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturer->name) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
         $writer->save(TMP . $filename);
 
         $this->response = $this->response->withHeader('Content-Disposition', 'inline;filename="'.$filename.'"');
