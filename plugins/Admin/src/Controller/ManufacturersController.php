@@ -7,6 +7,7 @@ use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
@@ -391,15 +392,76 @@ class ManufacturersController extends AdminAppController
             ],
         ])->first();
 
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+
+        $query = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'Products.id_manufacturer' => $manufacturerId,
+            ],
+            'contain' => [
+                'Products.Manufacturers.AddressManufacturers',
+                'OrderDetailPurchasePrices',
+                'OrderDetailUnits',
+            ],
+        ]);
+        $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            return $exp;
+        });
+        $query->select([
+            'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
+            'ProductName' => 'OrderDetails.product_name',
+            'SumWeight' => $query->func()->sum('OrderDetailUnits.product_quantity_in_units'),
+            'Unit' => 'OrderDetailUnits.unit_name',
+            'SumPurchasePriceNet' => $query->func()->sum('ROUND(OrderDetailPurchasePrices.total_price_tax_excl, 2)'),
+            'SumPurchasePriceTax' => $query->func()->sum('OrderDetailPurchasePrices.tax_total_amount'),
+            'PurchasePriceTaxRate' => 'OrderDetailPurchasePrices.tax_rate',
+            'SumPurchasePriceGross' => $query->func()->sum('OrderDetailPurchasePrices.total_price_tax_incl'),
+        ]);
+        $query->group([
+            'OrderDetails.product_name',
+            'OrderDetailPurchasePrices.tax_rate',
+            'OrderDetailUnits.unit_name',
+        ]);
+
+        $headlines = [
+            __d('admin', 'Amount'),
+            __d('admin', 'Product'),
+            __d('admin', 'Weight'),
+            __d('admin', 'Unit'),
+            __d('admin', 'net'),
+            __d('admin', 'VAT'),
+            __d('admin', 'Tax_rate'),
+            __d('admin', 'gross'),
+        ];
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', __d('admin', 'Manufacturer'));
-        $sheet->setCellValue('A2', __d('admin', 'Date_from'));
-        $sheet->setCellValue('A3', __d('admin', 'Date_to'));
-        $sheet->setCellValue('B1', $manufacturer->name);
-        $sheet->setCellValue('B2', $dateFrom);
-        $sheet->setCellValue('B3', $dateTo);
 
+        $column = 1;
+        foreach($headlines as $headline) {
+            $sheet->setCellValueByColumnAndRow($column, 1, $headline);
+            $column++;
+        }
+
+        // column "product name"
+        $sheet->getColumnDimension('B')->setWidth(50);
+        // column "tax rate"
+        $sheet->getColumnDimension('G')->setWidth(10);
+
+        $row = 2;
+        foreach($query as $orderDetail) {
+            $sheet->setCellValueByColumnAndRow(1, $row, $orderDetail->SumAmount);
+            $sheet->setCellValueByColumnAndRow(2, $row, $orderDetail->ProductName);
+            $sheet->setCellValueByColumnAndRow(3, $row, $orderDetail->SumWeight);
+            $sheet->setCellValueByColumnAndRow(4, $row, $orderDetail->Unit);
+            $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->SumPurchasePriceNet);
+            $sheet->setCellValueByColumnAndRow(6, $row, $orderDetail->SumPurchasePriceTax);
+            $sheet->setCellValueByColumnAndRow(7, $row, $orderDetail->PurchasePriceTaxRate);
+            $sheet->setCellValueByColumnAndRow(8, $row, $orderDetail->SumPurchasePriceGross);
+            $row++;
+        }
         $writer = new Xlsx($spreadsheet);
         $filename = __d('admin', 'Delivery_note') . '-'.$manufacturerId . '.xlsx';
         $writer->save(TMP . $filename);
