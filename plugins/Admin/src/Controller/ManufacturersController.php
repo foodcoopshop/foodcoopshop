@@ -450,8 +450,19 @@ class ManufacturersController extends AdminAppController
         // column "tax rate"
         $sheet->getColumnDimension('G')->setWidth(10);
 
+        $totalSumAmount = 0;
+        $totalSumPurchasePriceNet = 0;
+        $totalSumPurchasePriceTax = 0;
+        $totalSumPurchasePriceGross = 0;
+
         $row = 2;
         foreach($query as $orderDetail) {
+
+            $totalSumAmount += $orderDetail->SumAmount;
+            $totalSumPurchasePriceNet += $orderDetail->SumPurchasePriceNet;
+            $totalSumPurchasePriceTax += $orderDetail->SumPurchasePriceTax;
+            $totalSumPurchasePriceGross += $orderDetail->SumPurchasePriceGross;
+
             $sheet->setCellValueByColumnAndRow(1, $row, $orderDetail->SumAmount);
             $sheet->setCellValueByColumnAndRow(2, $row, $orderDetail->ProductName);
             $sheet->setCellValueByColumnAndRow(3, $row, $orderDetail->SumWeight);
@@ -462,6 +473,14 @@ class ManufacturersController extends AdminAppController
             $sheet->setCellValueByColumnAndRow(8, $row, $orderDetail->SumPurchasePriceGross);
             $row++;
         }
+
+        // add row with sums
+        $row++;
+        $sheet->setCellValueByColumnAndRow(1, $row, $totalSumAmount);
+        $sheet->setCellValueByColumnAndRow(5, $row, $totalSumPurchasePriceNet);
+        $sheet->setCellValueByColumnAndRow(6, $row, $totalSumPurchasePriceTax);
+        $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceGross);
+
         $writer = new Xlsx($spreadsheet);
         $filename = __d('admin', 'Delivery_note') . '-' . StringComponent::slugify($manufacturer->name) . '-' . $dateFrom . '-' . $dateTo . '.xlsx';
         $writer->save(TMP . $filename);
