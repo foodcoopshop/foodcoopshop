@@ -431,9 +431,9 @@ class ManufacturersController extends AdminAppController
             __d('admin', 'Product'),
             __d('admin', 'Weight'),
             __d('admin', 'Unit'),
+            __d('admin', 'Tax_rate'),
             __d('admin', 'net'),
             __d('admin', 'VAT'),
-            __d('admin', 'Tax_rate'),
             __d('admin', 'gross'),
         ];
 
@@ -449,12 +449,19 @@ class ManufacturersController extends AdminAppController
         // column "product name"
         $sheet->getColumnDimension('B')->setWidth(50);
         // column "tax rate"
-        $sheet->getColumnDimension('G')->setWidth(10);
+        $sheet->getColumnDimension('E')->setWidth(10);
 
         $totalSumAmount = 0;
         $totalSumPurchasePriceNet = 0;
         $totalSumPurchasePriceTax = 0;
         $totalSumPurchasePriceGross = 0;
+
+        $defaultTaxArray = [
+            'sum_price_net' => 0,
+            'sum_tax' => 0,
+            'sum_price_gross' => 0,
+        ];
+        $taxRates = [];
 
         $row = 2;
         foreach($query as $orderDetail) {
@@ -464,15 +471,23 @@ class ManufacturersController extends AdminAppController
             $totalSumPurchasePriceTax += $orderDetail->SumPurchasePriceTax;
             $totalSumPurchasePriceGross += $orderDetail->SumPurchasePriceGross;
 
+            $taxRate = $orderDetail->PurchasePriceTaxRate;
+            if (!isset($taxRates[$taxRate])) {
+                $taxRates[$taxRate] = $defaultTaxArray;
+            }
+            $taxRates[$taxRate]['sum_price_net'] += $orderDetail->SumPurchasePriceNet;
+            $taxRates[$taxRate]['sum_tax'] += $orderDetail->SumPurchasePriceTax;
+            $taxRates[$taxRate]['sum_price_gross'] += $orderDetail->SumPurchasePriceGross;
+
             $sheet->setCellValueByColumnAndRow(1, $row, $orderDetail->SumAmount);
             $sheet->setCellValueByColumnAndRow(2, $row, $orderDetail->ProductName);
             $sheet->setCellValueByColumnAndRow(3, $row, $orderDetail->SumWeight);
             $sheet->setCellValueByColumnAndRow(4, $row, $orderDetail->Unit);
-            $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->SumPurchasePriceNet);
-            $this->setNumberFormatForCell($sheet, 5, $row);
-            $sheet->setCellValueByColumnAndRow(6, $row, $orderDetail->SumPurchasePriceTax);
+            $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->PurchasePriceTaxRate);
+            $sheet->setCellValueByColumnAndRow(6, $row, $orderDetail->SumPurchasePriceNet);
             $this->setNumberFormatForCell($sheet, 6, $row);
-            $sheet->setCellValueByColumnAndRow(7, $row, $orderDetail->PurchasePriceTaxRate);
+            $sheet->setCellValueByColumnAndRow(7, $row, $orderDetail->SumPurchasePriceTax);
+            $this->setNumberFormatForCell($sheet, 7, $row);
             $sheet->setCellValueByColumnAndRow(8, $row, $orderDetail->SumPurchasePriceGross);
             $this->setNumberFormatForCell($sheet, 8, $row);
             $row++;
@@ -483,17 +498,36 @@ class ManufacturersController extends AdminAppController
         $sheet->setCellValueByColumnAndRow(1, $row, $totalSumAmount);
         $this->setBoldForCell($sheet, 1, $row);
 
-        $sheet->setCellValueByColumnAndRow(5, $row, $totalSumPurchasePriceNet);
-        $this->setNumberFormatForCell($sheet, 5, $row);
-        $this->setBoldForCell($sheet, 5, $row);
-
-        $sheet->setCellValueByColumnAndRow(6, $row, $totalSumPurchasePriceTax);
-        $this->setNumberFormatForCell($sheet, 6, $row, true);
+        $sheet->setCellValueByColumnAndRow(6, $row, $totalSumPurchasePriceNet);
+        $this->setNumberFormatForCell($sheet, 6, $row);
         $this->setBoldForCell($sheet, 6, $row);
+
+        $sheet->setCellValueByColumnAndRow(7, $row, $totalSumPurchasePriceTax);
+        $this->setNumberFormatForCell($sheet, 7, $row, true);
+        $this->setBoldForCell($sheet, 7, $row);
 
         $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceGross);
         $this->setNumberFormatForCell($sheet, 8, $row, true);
         $this->setBoldForCell($sheet, 8, $row);
+
+        // add rows for sums / tax rates
+        $row++;
+        $row++;
+        $sheet->setCellValueByColumnAndRow(2, $row, __d('admin', 'Tax_rates_overview_table'));
+        $row++;
+
+        if (count($taxRates) > 0) {
+            foreach($taxRates as $taxRate => $trt) {
+                $sheet->setCellValueByColumnAndRow(5, $row, $taxRate);
+                $sheet->setCellValueByColumnAndRow(6, $row, $trt['sum_price_net']);
+                $this->setNumberFormatForCell($sheet, 6, $row, true);
+                $sheet->setCellValueByColumnAndRow(7, $row, $trt['sum_tax']);
+                $this->setNumberFormatForCell($sheet, 7, $row, true);
+                $sheet->setCellValueByColumnAndRow(8, $row, $trt['sum_price_gross']);
+                $this->setNumberFormatForCell($sheet, 8, $row, true);
+                $row++;
+            }
+        }
 
         $writer = new Xlsx($spreadsheet);
         $filename = __d('admin', 'Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturer->name) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
