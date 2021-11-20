@@ -480,16 +480,20 @@ class ManufacturersController extends AdminAppController
 
         // add row with sums
         $row++;
-        $sheet->setCellValueByColumnAndRow(1, $row, __d('admin', 'Sum'));
-
-        $row++;
         $sheet->setCellValueByColumnAndRow(1, $row, $totalSumAmount);
+        $this->setBoldForCell($sheet, 1, $row);
+
         $sheet->setCellValueByColumnAndRow(5, $row, $totalSumPurchasePriceNet);
         $this->setNumberFormatForCell($sheet, 5, $row);
+        $this->setBoldForCell($sheet, 5, $row);
+
         $sheet->setCellValueByColumnAndRow(6, $row, $totalSumPurchasePriceTax);
-        $this->setNumberFormatForCell($sheet, 6, $row);
+        $this->setNumberFormatForCell($sheet, 6, $row, true);
+        $this->setBoldForCell($sheet, 6, $row);
+
         $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceGross);
-        $this->setNumberFormatForCell($sheet, 8, $row);
+        $this->setNumberFormatForCell($sheet, 8, $row, true);
+        $this->setBoldForCell($sheet, 8, $row);
 
         $writer = new Xlsx($spreadsheet);
         $filename = __d('admin', 'Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturer->name) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
@@ -502,11 +506,15 @@ class ManufacturersController extends AdminAppController
 
     }
 
+    protected function setBoldForCell($sheet, $column, $row)
+    {
+        $sheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
+    }
+
+
     protected function setNumberFormatForCell($sheet, $column, $row)
     {
-        $sheet->getStyleByColumnAndRow($column, $row)
-            ->getNumberFormat()
-            ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat() ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
     }
 
     public function editOptions($manufacturerId)
