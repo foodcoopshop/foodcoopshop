@@ -184,12 +184,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $cart = $this->getCartById($cart->id_cart);
 
         $this->assertEquals(4.9, $cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(4.336283, $cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(4.34, $cart->cart_products[1]->order_detail->order_detail_purchase_price->total_price_tax_excl);
         $this->assertEquals(0.56, $cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_unit_amount);
         $this->assertEquals(0.56, $cart->cart_products[1]->order_detail->order_detail_purchase_price->tax_total_amount);
 
         $this->assertEquals(7, $cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_incl);
-        $this->assertEquals(6.194690, $cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_excl);
+        $this->assertEquals(6.19, $cart->cart_products[0]->order_detail->order_detail_purchase_price->total_price_tax_excl);
         $this->assertEquals(0.81, $cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_unit_amount);
         $this->assertEquals(0.81, $cart->cart_products[0]->order_detail->order_detail_purchase_price->tax_total_amount);
     }
