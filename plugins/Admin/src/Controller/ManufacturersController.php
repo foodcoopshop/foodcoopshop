@@ -510,13 +510,11 @@ class ManufacturersController extends AdminAppController
         $this->setNumberFormatForCell($sheet, 8, $row, true);
         $this->setBoldForCell($sheet, 8, $row);
 
-        // add rows for sums / tax rates
-        $row++;
-        $row++;
-        $sheet->setCellValueByColumnAndRow(2, $row, __d('admin', 'Tax_rates_overview_table'));
-        $row++;
-
-        if (count($taxRates) > 0) {
+        if (count($taxRates) > 1) {
+            // add rows for sums / tax rates
+            $row++;
+            $row++;
+            $sheet->setCellValueByColumnAndRow(2, $row, __d('admin', 'Tax_rates_overview_table'));
             foreach($taxRates as $taxRate => $trt) {
                 $sheet->setCellValueByColumnAndRow(5, $row, $taxRate);
                 $sheet->setCellValueByColumnAndRow(6, $row, $trt['sum_price_net']);
