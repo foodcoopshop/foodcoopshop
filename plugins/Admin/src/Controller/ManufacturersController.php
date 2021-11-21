@@ -511,6 +511,9 @@ class ManufacturersController extends AdminAppController
         $this->setBoldForCell($sheet, 8, $row);
 
         if (count($taxRates) > 1) {
+
+            ksort($taxRates);
+
             // add rows for sums / tax rates
             $row++;
             $row++;
