@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-11-17 09:12+0100\n"
+"POT-Creation-Date: 2021-11-18 10:49+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -248,6 +248,33 @@ msgstr ""
 msgid "Edit_settings"
 msgstr ""
 
+msgid "Amount"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Unit"
+msgstr ""
+
+msgid "net"
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "gross"
+msgstr ""
+
+msgid "Delivery_note"
+msgstr ""
+
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr ""
 
@@ -300,9 +327,6 @@ msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr ""
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
-msgstr ""
-
-msgid "Amount"
 msgstr ""
 
 msgid "Reason"
@@ -771,9 +795,6 @@ msgid "Check_and_do_not_forget_to_click_save_button."
 msgstr ""
 
 msgid "ID"
-msgstr ""
-
-msgid "Weight"
 msgstr ""
 
 msgid "Associated_to_active_products?"
@@ -1526,9 +1547,6 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
-msgid "Product"
-msgstr ""
-
 msgid "Test_invoice"
 msgstr ""
 
@@ -1536,9 +1554,6 @@ msgid "Manufacturer_profile"
 msgstr ""
 
 msgid "Copy_all_email_addresses"
-msgstr ""
-
-msgid "Tax_rate"
 msgstr ""
 
 msgid "Purchase_price_tax_excl"
@@ -1709,13 +1724,7 @@ msgstr ""
 msgid "Stock_product"
 msgstr ""
 
-msgid "gross"
-msgstr ""
-
 msgid "Surcharge"
-msgstr ""
-
-msgid "net"
 msgstr ""
 
 msgid "Selling_price_abbreviation"
@@ -2259,9 +2268,6 @@ msgid "Orders_from"
 msgstr ""
 
 msgid "Price_excl."
-msgstr ""
-
-msgid "VAT"
 msgstr ""
 
 msgid "Price_incl."

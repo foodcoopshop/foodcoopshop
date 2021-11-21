@@ -252,9 +252,23 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
-        'target' => '_blank'
-    ]);
+    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        echo $this->Html->link(
+            __d('admin', 'Test_invoice'),
+            '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
+            [
+                'target' => '_blank',
+            ],
+        );
+    } else {
+        echo $this->Html->link(
+            __d('admin', 'Delivery_note'),
+            '/admin/manufacturers/getDeliveryNote.xlsx?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
+            [
+                'target' => '_blank',
+            ],
+        );
+    }
     echo '</td>';
 
     echo '<td style="width: 29px;">';

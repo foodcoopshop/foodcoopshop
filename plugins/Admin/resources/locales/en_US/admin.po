@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-17 09:12+0100\n"
-"PO-Revision-Date: 2021-11-17 09:12+0100\n"
+"POT-Creation-Date: 2021-11-18 10:49+0100\n"
+"PO-Revision-Date: 2021-11-18 10:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -249,6 +249,33 @@ msgstr "Manufacturers"
 msgid "Edit_settings"
 msgstr "Edit settings"
 
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Weight"
+msgstr "Weight"
+
+msgid "Unit"
+msgstr ""
+
+msgid "net"
+msgstr "net"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "gross"
+msgstr "gross"
+
+msgid "Delivery_note"
+msgstr "Delivery note"
+
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr "The settings of manufacturer {0} have been changed."
 
@@ -302,9 +329,6 @@ msgstr "The reason for changing the member is mandatory."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
-
-msgid "Amount"
-msgstr "Amount"
 
 msgid "Reason"
 msgstr "Reason"
@@ -773,9 +797,6 @@ msgstr "Check and do not forget to click <b>Save</b> button."
 
 msgid "ID"
 msgstr "ID"
-
-msgid "Weight"
-msgstr "Weight"
 
 msgid "Associated_to_active_products?"
 msgstr "Associated with active products?"
@@ -1527,9 +1548,6 @@ msgstr "Edit manufacturer settings"
 msgid "Test_order_list"
 msgstr "Test order list"
 
-msgid "Product"
-msgstr "Product"
-
 msgid "Test_invoice"
 msgstr "Test invoice"
 
@@ -1538,9 +1556,6 @@ msgstr "Manufacturer profile"
 
 msgid "Copy_all_email_addresses"
 msgstr "Copy all e-mail adresses"
-
-msgid "Tax_rate"
-msgstr "Tax rate"
 
 msgid "Purchase_price_tax_excl"
 msgstr "Purchase price tax excl."
@@ -1710,14 +1725,8 @@ msgstr "Product declaration"
 msgid "Stock_product"
 msgstr "Stock product"
 
-msgid "gross"
-msgstr "gross"
-
 msgid "Surcharge"
 msgstr "Surcharge"
-
-msgid "net"
-msgstr "net"
 
 msgid "Selling_price_abbreviation"
 msgstr "SP"
@@ -2262,9 +2271,6 @@ msgstr "Orders from"
 msgid "Price_excl."
 msgstr "Price excl."
 
-msgid "VAT"
-msgstr "VAT"
-
 msgid "Price_incl."
 msgstr "Price incl."
 
@@ -2402,10 +2408,6 @@ msgstr "ProductID"
 #, fuzzy
 #~ msgid "Feedback_to_product"
 #~ msgstr "products"
-
-#, fuzzy
-#~ msgid "Delivery_date"
-#~ msgstr "Delivery day"
 
 #~ msgid "Quantity"
 #~ msgstr "Available quantity"

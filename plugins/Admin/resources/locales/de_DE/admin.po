@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-17 09:12+0100\n"
-"PO-Revision-Date: 2021-11-17 09:13+0100\n"
+"POT-Creation-Date: 2021-11-18 10:49+0100\n"
+"PO-Revision-Date: 2021-11-18 10:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -249,6 +249,33 @@ msgstr "Hersteller"
 msgid "Edit_settings"
 msgstr "Einstellungen bearbeiten"
 
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Weight"
+msgstr "Gewicht"
+
+msgid "Unit"
+msgstr ""
+
+msgid "net"
+msgstr "netto"
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "gross"
+msgstr "brutto"
+
+msgid "Delivery_note"
+msgstr "Lieferschein"
+
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
 
@@ -302,9 +329,6 @@ msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
-
-msgid "Amount"
-msgstr "Anzahl"
 
 msgid "Reason"
 msgstr "Grund"
@@ -773,9 +797,6 @@ msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
 
 msgid "ID"
 msgstr "ID"
-
-msgid "Weight"
-msgstr "Gewicht"
 
 msgid "Associated_to_active_products?"
 msgstr "Aktivierten Produkten zugewiesen?"
@@ -1527,9 +1548,6 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
-msgid "Product"
-msgstr "Produkt"
-
 msgid "Test_invoice"
 msgstr "Rechnung prüfen"
 
@@ -1538,9 +1556,6 @@ msgstr "Hersteller-Profil"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "Purchase_price_tax_excl"
 msgstr "Einkaufspreis netto"
@@ -1710,14 +1725,8 @@ msgstr "Produktdeklaration"
 msgid "Stock_product"
 msgstr "Lagerprodukt"
 
-msgid "gross"
-msgstr "brutto"
-
 msgid "Surcharge"
 msgstr "Aufschlag"
-
-msgid "net"
-msgstr "netto"
 
 msgid "Selling_price_abbreviation"
 msgstr "VP"
@@ -2262,9 +2271,6 @@ msgstr "Bestellungen vom"
 msgid "Price_excl."
 msgstr "Preis exkl."
 
-msgid "VAT"
-msgstr "USt."
-
 msgid "Price_incl."
 msgstr "Preis inkl."
 
@@ -2401,10 +2407,6 @@ msgstr "Produkt-Nr."
 #, fuzzy
 #~ msgid "Feedback_to_product"
 #~ msgstr "produkte"
-
-#, fuzzy
-#~ msgid "Delivery_date"
-#~ msgstr "Liefertag"
 
 #~ msgid "Quantity"
 #~ msgstr "Verfügbare Menge"
