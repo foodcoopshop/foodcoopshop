@@ -301,7 +301,7 @@ class ListTcpdf extends AppTcpdf
         return $colspan;
     }
 
-    public function addLastSumRow($headers, $sumPriceExcl, $sumTax, $sumPriceIncl)
+    public function addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl)
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -317,7 +317,11 @@ class ListTcpdf extends AppTcpdf
 
         $this->table .= '<tr style="font-size:12px;font-weight:bold;">';
 
-        $this->table .= '<td></td>';
+        if (in_array(__('Amount'), $headers)) {
+            $colspan --;
+            $this->table .= '<td align="right">' . $sumAmount . 'x</td>';
+        }
+
         $this->table .= '<td>' . __('Total_sum') . '</td>';
 
         if (in_array(__('Price_excl.'), $headers)) {
@@ -330,7 +334,11 @@ class ListTcpdf extends AppTcpdf
             $this->table .= '<td align="right">' . $sumTax . '</td>';
         }
 
-        $this->table .= '<td align="right">' . $sumPriceIncl . '</td>';
+        if (is_null($sumPriceIncl)) {
+            $colspan++;
+        } else {
+            $this->table .= '<td align="right">' . $sumPriceIncl . '</td>';
+        }
 
         if ($colspan > 0) {
             $this->table .= '<td colspan="' . $colspan . '"></td>';

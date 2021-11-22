@@ -57,14 +57,14 @@ if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
 }
 $pdf->renderDetailedOrderList($results, $widths, $headers, $groupType, false);
 
-if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-    $pdf->addLastSumRow(
-        $headers,
-        null,
-        null,
-        $this->MyNumber->formatAsDecimal($sumPriceIncl)
-    );
-}
+$pdf->addLastSumRow(
+    $headers,
+    $this->MyNumber->formatAsDecimal($sumAmount, 0),
+    null,
+    null,
+    (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? null : $this->MyNumber->formatAsDecimal($sumPriceIncl)),
+);
+
 $pdf->renderTable();
 
 $pdf->Ln(5);
