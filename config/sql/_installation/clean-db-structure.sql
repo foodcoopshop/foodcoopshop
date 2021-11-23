@@ -70,7 +70,7 @@ CREATE TABLE `fcs_barcodes` (
   `barcode` varchar(13) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`,`product_attribute_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_blog_posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -222,6 +222,7 @@ CREATE TABLE `fcs_customer` (
   `use_camera_for_barcode_scanning` tinyint(3) unsigned DEFAULT '0',
   `user_id_registrierkasse` int(10) unsigned DEFAULT '0',
   `shopping_price` varchar(2) DEFAULT 'SP',
+  `check_credit_reminder_enabled` tinyint(3) unsigned DEFAULT '1',
   PRIMARY KEY (`id_customer`),
   KEY `customer_email` (`email`),
   KEY `customer_login` (`email`,`passwd`),
