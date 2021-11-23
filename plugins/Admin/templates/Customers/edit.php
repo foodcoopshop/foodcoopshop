@@ -121,7 +121,17 @@ echo $this->Form->control('Customers.address_customer.phone', [
 
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo $this->Form->control('Customers.email_order_reminder', [
-        'label' => __d('admin', 'Order_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_reminder_emails?').'</span>',
+        'label' => __d('admin', 'Order_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_order_reminder_emails?').'</span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+}
+
+if ($this->Html->paymentIsCashless()) {
+    echo $this->Form->control('Customers.check_credit_reminder_enabled', [
+        'label' => __d('admin', 'Check_credit_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?', [
+            $this->Number->formatAsCurrency(Configure::read('appDb.FCS_CHECK_CREDIT_BALANCE_LIMIT')),
+        ]).'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

@@ -33,7 +33,8 @@ class CheckCreditBalanceShell extends AppShell
 
         $this->Customer->dropManufacturersInNextFind();
         $conditions = [
-            'Customers.active' => 1
+            'Customers.active' => 1,
+            'Customers.check_credit_reminder_enabled' => 1,
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 

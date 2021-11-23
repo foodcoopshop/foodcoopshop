@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-18 10:49+0100\n"
-"PO-Revision-Date: 2021-11-18 10:50+0100\n"
+"POT-Creation-Date: 2021-11-23 11:06+0100\n"
+"PO-Revision-Date: 2021-11-23 11:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -261,17 +261,20 @@ msgstr "Weight"
 msgid "Unit"
 msgstr ""
 
+msgid "Tax_rate"
+msgstr "Tax rate"
+
 msgid "net"
 msgstr "net"
 
 msgid "VAT"
 msgstr "VAT"
 
-msgid "Tax_rate"
-msgstr "Tax rate"
-
 msgid "gross"
 msgstr "gross"
+
+msgid "Tax_rates_overview_table"
+msgstr "Tax overview total"
 
 msgid "Delivery_note"
 msgstr "Delivery note"
@@ -1041,8 +1044,14 @@ msgstr "Phone"
 msgid "Order_reminder"
 msgstr "Order reminder"
 
-msgid "Want_to_receive_reminder_emails?"
-msgstr "Do you want to receive an order reminder e-mail every week?"
+msgid "Want_to_receive_order_reminder_emails?"
+msgstr "Do you want to receive a weekly order reminder e-mail?"
+
+msgid "Check_credit_reminder"
+msgstr "Check credit reminder"
+
+msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
+msgstr "Do you want to receive a weekly reminder e-mail when your credit is lower than {0}?"
 
 msgid "Prices"
 msgstr "Prices"
