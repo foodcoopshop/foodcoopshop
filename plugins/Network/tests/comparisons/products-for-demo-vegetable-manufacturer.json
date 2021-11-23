@@ -23,6 +23,7 @@
         "use_camera_for_barcode_scanning": 0,
         "user_id_registrierkasse": 0,
         "shopping_price": "SP",
+        "check_credit_reminder_enabled": 1,
         "address_customer": null,
         "name": "Demo Gem\u00fcse-Hersteller"
     },
