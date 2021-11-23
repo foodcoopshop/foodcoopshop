@@ -9,6 +9,8 @@ use Cake\I18n\FrozenTime;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
+use Cake\Mailer\Transport\MailTransport;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -62,6 +64,17 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         $this->assertMailContainsHtmlAt(1, 'IBAN: AT65 5645 4154 8748 8999');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));
 
+    }
+
+    public function testEmailSentWithIsCashlessPaymentTypeManualReminderDisabled() {
+        $this->changeCustomer(Configure::read('test.customerId'), 'check_credit_reminder_enabled', 0);
+        $this->loginAsCustomer();
+        $this->addProductToCart(346, 20);
+        $this->finishCart();
+        $this->logout();
+        $this->resetCustomerCreditBalance();
+        $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->assertMailCount(1);
     }
 
     public function testEmailSentWithIsCashlessPaymentTypeListUpload() {
