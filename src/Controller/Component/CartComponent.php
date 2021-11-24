@@ -374,6 +374,7 @@ class CartComponent extends Component
                 $orderDetail2save['order_detail_unit'] = [
                     'unit_name' => $cartProduct['unitName'],
                     'unit_amount' => $cartProduct['unitAmount'],
+                    'mark_as_saved' => $cartProduct['markAsSaved'],
                     'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
                     'quantity_in_units' => $cartProduct['quantityInUnits'],
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']

@@ -478,10 +478,13 @@ class CartsTable extends AppTable
 
             $productData['quantityInUnits'] = isset($unitProduct) ? $unitProduct->quantity_in_units : 0;
             $productQuantityInUnits = $unitProduct->quantity_in_units * $cartProduct->amount;
+            $markAsSaved = APP_OFF;
             if (!is_null($orderedQuantityInUnits)) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
+                $markAsSaved = APP_ON;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
+            $productData['markAsSaved'] = $markAsSaved;
             $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProduct);
 
         }
@@ -581,10 +584,13 @@ class CartsTable extends AppTable
 
             $productData['quantityInUnits'] = isset($unitProductAttribute->quantity_in_units) ? $unitProductAttribute->quantity_in_units : 0;
             $productQuantityInUnits = $unitProductAttribute->quantity_in_units * $cartProduct->amount;
+            $markAsSaved = APP_OFF;
             if (!is_null($orderedQuantityInUnits)) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
+                $markAsSaved = APP_ON;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
+            $productData['markAsSaved'] = $markAsSaved;
             $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProductAttribute);
 
         } else {

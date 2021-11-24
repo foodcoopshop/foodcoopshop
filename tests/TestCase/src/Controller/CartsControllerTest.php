@@ -846,12 +846,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetailA->order_detail_unit->quantity_in_units, 350);
         $this->assertEquals($orderDetailA->order_detail_unit->unit_name, 'g');
         $this->assertEquals($orderDetailA->order_detail_unit->unit_amount, 100);
+        $this->assertEquals($orderDetailA->order_detail_unit->mark_as_saved, 0);
 
         $this->assertEquals($orderDetailB->order_detail_unit->product_quantity_in_units, 1.5);
         $this->assertEquals($orderDetailB->order_detail_unit->price_incl_per_unit, 20);
         $this->assertEquals($orderDetailB->order_detail_unit->quantity_in_units, 0.5);
         $this->assertEquals($orderDetailB->order_detail_unit->unit_name, 'kg');
         $this->assertEquals($orderDetailB->order_detail_unit->unit_amount, 1);
+        $this->assertEquals($orderDetailB->order_detail_unit->mark_as_saved, 0);
 
         $this->assertEquals($orderDetailA->tax_rate, 10);
         $this->assertEquals($orderDetailA->tax_unit_amount, 0.48);

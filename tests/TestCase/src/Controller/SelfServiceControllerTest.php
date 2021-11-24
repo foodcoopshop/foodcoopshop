@@ -153,6 +153,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         foreach($cart->cart_products as $cartProduct) {
             $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->order_detail_unit->mark_as_saved, 1);
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
