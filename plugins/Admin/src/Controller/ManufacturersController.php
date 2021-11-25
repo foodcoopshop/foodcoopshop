@@ -49,10 +49,10 @@ class ManufacturersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
             case 'getDeliveryNote':
-                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
                 break;
             case 'getInvoice':
-                return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                return !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             default:
                 return $this->AppAuth->user();

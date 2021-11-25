@@ -252,7 +252,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+    if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
         echo $this->Html->link(
             __d('admin', 'Test_invoice'),
             '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
