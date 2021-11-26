@@ -494,8 +494,8 @@ class ProductsController extends AdminAppController
             $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
         } else {
             try {
-                $entity2Save = $this->Product->BarcodeProducts->getEntityToSaveByProductAttributeId($productAttributeId);
-                $entity2Save = $this->Product->BarcodeProducts->patchEntity(
+                $entity2Save = $this->Product->ProductAttributes->BarcodeProductAttributes->getEntityToSaveByProductAttributeId($productAttributeId);
+                $entity2Save = $this->Product->ProductAttributes->BarcodeProductAttributes->patchEntity(
                     $entity2Save,
                     [
                         'barcode' => $barcode,
@@ -507,7 +507,7 @@ class ProductsController extends AdminAppController
                 if ($entity2Save->hasErrors()) {
                     throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($entity2Save)));
                 }
-                $this->Product->BarcodeProducts->save($entity2Save);
+                $this->Product->ProductAttributes->BarcodeProductAttributes->save($entity2Save);
             } catch (\Exception $e) {
                 return $this->sendAjaxError($e);
             }

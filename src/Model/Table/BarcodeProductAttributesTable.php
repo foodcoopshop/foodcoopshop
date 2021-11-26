@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductAndAttributeEntityTrait;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,6 +19,8 @@ namespace App\Model\Table;
  */
 class BarcodeProductAttributesTable extends AppTable
 {
+
+    use ProductAndAttributeEntityTrait;
 
     public function initialize(array $config): void
     {
