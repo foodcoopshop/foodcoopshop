@@ -822,6 +822,10 @@ class OrderDetailsController extends AdminAppController
             $orderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
         }
 
+        if ($groupBy == 'customer') {
+            $orderDetails = Hash::sort($orderDetails, '{n}.products_picked_up', 'ASC');
+        }
+
         return $orderDetails;
 
     }

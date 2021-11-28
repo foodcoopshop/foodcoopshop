@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 echo '<th>';
-echo $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member'));
+echo __d('admin', 'Member');
 echo '</th>';
 
 echo '<th>';
