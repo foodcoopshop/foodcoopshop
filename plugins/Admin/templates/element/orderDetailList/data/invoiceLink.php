@@ -16,9 +16,9 @@
 use Cake\Core\Configure;
 
 if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
-    echo '<td>';
+    echo '<td class="invoice">';
 
-        $invoiceText = __d('admin', 'Invoice') . ': ' . $this->Number->formatAsCurrency($orderDetail['invoiceData']->sumPriceIncl);
+        $invoiceText = __d('admin', 'Invoice') . ': <span class="invoice-amount">' . $this->Number->formatAsCurrency($orderDetail['invoiceData']->sumPriceIncl) . '</span>';
         if (!$orderDetail['invoiceData']->new_invoice_necessary) {
             $invoiceText = __d('admin', 'Invoice_cannot_be_generated');
         }

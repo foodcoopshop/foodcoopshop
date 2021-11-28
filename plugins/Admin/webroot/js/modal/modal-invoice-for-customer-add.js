@@ -20,8 +20,9 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         });
     },
 
-    getHtml : function(customerName) {
+    getHtml : function(customerName, invoiceAmount) {
         var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>';
+        html += '<h3 style="text-align:center;font-weight:bold;">' + invoiceAmount + '</h3>';
         html += '<div class="field-wrapper">';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" checked="checked" name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
@@ -60,11 +61,12 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
 
         var customerName = row.find('td:nth-child(3)').text();
         var customerId = row.find('td:nth-child(2)').text();
+        var invoiceAmount = row.find('td.invoice .invoice-amount').text();
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.admin.GenerateInvoice,
-            foodcoopshop.ModalInvoiceForCustomerAdd.getHtml(customerName),
+            foodcoopshop.ModalInvoiceForCustomerAdd.getHtml(customerName, invoiceAmount),
             buttons
         );
 
