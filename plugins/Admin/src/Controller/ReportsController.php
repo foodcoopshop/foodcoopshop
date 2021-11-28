@@ -235,9 +235,17 @@ class ReportsController extends AdminAppController
         });
 
         $payments = $this->paginate($query, [
+            'sortableFields' => [
+                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'Payments.approval',
+                'Payments.date_add',
+                'CreatedBy.' . Configure::read('app.customerMainNamePart'),
+                'Payments.date_transaction_add',
+                'Payments.amount',
+            ],
             'order' => [
                 'Payments.date_add' => 'DESC'
-            ]
+            ],
         ]);
         $this->set('payments', $payments);
 

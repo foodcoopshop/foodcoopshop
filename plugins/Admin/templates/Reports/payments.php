@@ -73,7 +73,7 @@ echo '<th>' . $this->Paginator->sort('CreatedBy.' . Configure::read('app.custome
 if ($useCsvUpload) {
     echo '<th>' . $this->Paginator->sort('Payments.date_transaction_add', __d('admin', 'Transaction_added_on')) . '</th>';
 }
-echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
+echo '<th style="text-align:right;">' . $this->Paginator->sort('Payments.amount', $this->Html->getPaymentText($paymentType)) . '</th>';
 if ($showTextColumn) {
     echo '<th>' . $this->Paginator->sort('Payments.text', __d('admin', 'Text')) . '</th>';
 }
