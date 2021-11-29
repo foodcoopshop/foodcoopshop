@@ -1,4 +1,4 @@
-SELECT MAX(cp.modified) as Modified, COUNT(cp.id_cart) as Products, CONCAT(c.firstname, ' ', c.lastname) AS Name
+SELECT MAX(cp.modified) as Modified, COUNT(cp.id_cart) as Products, CONCAT(c.lastname, ' ', c.firstname) AS Name
 FROM fcs_cart_products cp
 JOIN fcs_carts ON fcs_carts.id_cart = cp.id_cart
 JOIN fcs_customer c ON fcs_carts.id_customer = c.id_customer
