@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-11-23 11:06+0100\n"
+"POT-Creation-Date: 2021-11-29 14:53+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -194,10 +194,19 @@ msgstr ""
 msgid "No_data_available_to_generate_an_invoice."
 msgstr ""
 
+msgid "Paid_in_cash"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
 msgid "Print_receipt"
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr ""
+
+msgid "Invoice_cancelled"
 msgstr ""
 
 msgid "Download"
@@ -1235,9 +1244,6 @@ msgstr ""
 msgid "Copy_to_clipboard"
 msgstr ""
 
-msgid "Invoice_number_abbreviation"
-msgstr ""
-
 msgid "Invoice_date"
 msgstr ""
 
@@ -1248,9 +1254,6 @@ msgid "Sum_tax"
 msgstr ""
 
 msgid "Sum_incl_tax"
-msgstr ""
-
-msgid "Paid_in_cash"
 msgstr ""
 
 msgid "Email_sent"
@@ -2105,6 +2108,9 @@ msgstr ""
 msgid "Transactions_were_checked_until_{0}."
 msgstr ""
 
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr ""
+
 msgid "Amount_(Money)"
 msgstr ""
 
@@ -2121,9 +2127,6 @@ msgid "route_cart"
 msgstr ""
 
 msgid "Click_here_to_open_the"
-msgstr ""
-
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
 msgstr ""
 
 msgid "The_amount_of_the_product_{0}_has_been_adapted."
