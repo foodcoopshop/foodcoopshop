@@ -1604,16 +1604,8 @@ class OrderDetailsController extends AdminAppController
                 }
 
             }
-
-            $result = $this->PickupDay->insertOrUpdate(
-                [
-                    'customer_id' => $customerId,
-                    'pickup_day' => $pickupDay
-                ],
-                [
-                    'products_picked_up' => $state,
-                ]
-            );
+            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
+            $result = $this->PickupDay->changeState($customerId, $pickupDay, $state);
         }
 
         if (!empty($errorMessages)) {

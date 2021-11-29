@@ -142,6 +142,14 @@ class InvoicesController extends AdminAppController
                 ]
             );
             $this->Payment->save($paymentEntity);
+
+            // mark row as picked up
+            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
+            $this->PickupDay->changeState(
+                $customerId,
+                Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
+                APP_ON,
+            );
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
@@ -330,6 +338,14 @@ class InvoicesController extends AdminAppController
                 'id_customer' => $invoice->customer->id_customer,
                 'approval_comment' => $approvalString,
             ]);
+
+            // remove "mark row as picked up"
+            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
+            $this->PickupDay->changeState(
+                $invoice->customer->id_customer,
+                Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
+                APP_OFF,
+            );
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
