@@ -317,6 +317,21 @@ class InvoicesController extends AdminAppController
         $invoice->cancellation_invoice_id = $invoiceId;
         $this->Invoice->save($invoice);
 
+        // cancel automatically added payment
+        if ($invoice->paid_in_cash) {
+            $this->Payment = $this->getTableLocator()->get('Payments');
+            $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
+            $this->Payment->updateAll([
+                'status' => APP_DEL,
+                'date_changed' => FrozenTime::now(),
+                'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
+            ], [
+                'type' => 'product',
+                'id_customer' => $invoice->customer->id_customer,
+                'approval_comment' => $approvalString,
+            ]);
+        }
+
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),
             $invoiceFilename,
