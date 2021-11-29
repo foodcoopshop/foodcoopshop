@@ -8,6 +8,7 @@ use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -122,6 +123,25 @@ class InvoicesController extends AdminAppController
             $invoiceFilename = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
             $invoiceNumber = $newInvoice->invoice_number;
             $invoiceId = $newInvoice->id;
+        }
+
+        if ($paidInCash) {
+            $this->Payment = $this->getTableLocator()->get('Payments');
+            $paymentEntity = $this->Payment->newEntity(
+                [
+                    'status' => APP_ON,
+                    'approval' => APP_ON,
+                    'type' => 'product',
+                    'id_customer' => $customerId,
+                    'id_manufacturer' => 0,
+                    'date_add' => FrozenTime::now(),
+                    'date_changed' => FrozenTime::now(),
+                    'amount' => $invoiceData->sumPriceIncl,
+                    'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
+                    'created_by' => $this->AppAuth->getUserId(),
+                ]
+            );
+            $this->Payment->save($paymentEntity);
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(

@@ -55,6 +55,11 @@ class InvoicesControllerTest extends AppCakeTestCase
 
         $this->assertEquals($invoice->paid_in_cash, $paidInCash);
 
+        // assert that payment was automatically added
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $credit = $this->Customer->getCreditBalance($customerId);
+        $this->assertEquals(100, $credit);
+
     }
 
     public function testCancel()
