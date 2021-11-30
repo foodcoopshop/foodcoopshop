@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-23 11:06+0100\n"
-"PO-Revision-Date: 2021-11-23 11:10+0100\n"
+"POT-Creation-Date: 2021-11-29 14:53+0100\n"
+"PO-Revision-Date: 2021-11-29 14:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -195,11 +195,20 @@ msgstr "Rechnungen"
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
 
+msgid "Paid_in_cash"
+msgstr "Bar bezahlt"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Rechnung Nr."
+
 msgid "Print_receipt"
 msgstr "Beleg drucken"
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich erstellt."
+
+msgid "Invoice_cancelled"
+msgstr "Rechnung storniert"
 
 msgid "Download"
 msgstr "Download"
@@ -1236,9 +1245,6 @@ msgstr "Rechnungen downloaden"
 msgid "Copy_to_clipboard"
 msgstr "In die Zwischenablage kopieren"
 
-msgid "Invoice_number_abbreviation"
-msgstr "Rechnung Nr."
-
 msgid "Invoice_date"
 msgstr "Rechnungsdatum"
 
@@ -1250,9 +1256,6 @@ msgstr "Summe USt."
 
 msgid "Sum_incl_tax"
 msgstr "Summe inkl. USt."
-
-msgid "Paid_in_cash"
-msgstr "Bar bezahlt"
 
 msgid "Email_sent"
 msgstr "E-Mail versendet"
@@ -2106,6 +2109,9 @@ msgstr "Bitte überweise bald wieder ein neues Guthaben auf unser Konto und verg
 msgid "Transactions_were_checked_until_{0}."
 msgstr "Es wurden alle Überweisungen bis zum {0} berücksichtigt."
 
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr "Und hier kannst du diese E-Mail abbestellen"
+
 msgid "Amount_(Money)"
 msgstr "Betrag"
 
@@ -2123,9 +2129,6 @@ msgstr "warenkorb"
 
 msgid "Click_here_to_open_the"
 msgstr "Hier geht's zur"
-
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr "Und hier kannst du diese E-Mail abbestellen"
 
 msgid "The_amount_of_the_product_{0}_has_been_adapted."
 msgstr "Die Anzahl des Produktes {0} wurde angepasst."
