@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-23 11:06+0100\n"
-"PO-Revision-Date: 2021-11-23 11:11+0100\n"
+"POT-Creation-Date: 2021-11-29 14:53+0100\n"
+"PO-Revision-Date: 2021-11-29 14:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -195,11 +195,20 @@ msgstr "Invoices"
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "No data available to generate an invoice."
 
+msgid "Paid_in_cash"
+msgstr "Paid in cash"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Invoice nº"
+
 msgid "Print_receipt"
 msgstr "Print receipt"
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr "Invoice nº {0} of {1} was generated successfully."
+
+msgid "Invoice_cancelled"
+msgstr "Invoice cancelled"
 
 msgid "Download"
 msgstr "Download"
@@ -1236,9 +1245,6 @@ msgstr "Download invoices"
 msgid "Copy_to_clipboard"
 msgstr "Copy to clipboard"
 
-msgid "Invoice_number_abbreviation"
-msgstr "Invoice nº"
-
 msgid "Invoice_date"
 msgstr "Invoice date"
 
@@ -1250,9 +1256,6 @@ msgstr "Sum tax"
 
 msgid "Sum_incl_tax"
 msgstr "Sum incl. tax"
-
-msgid "Paid_in_cash"
-msgstr "Paid in cash"
 
 msgid "Email_sent"
 msgstr "E-mail sent"
@@ -2106,6 +2109,9 @@ msgstr "Pleas soon transfer new credit to our bank account and do not forget to 
 msgid "Transactions_were_checked_until_{0}."
 msgstr "Transactions were checked until {0}."
 
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr "And here you can unsubscribe from this email reminder"
+
 msgid "Amount_(Money)"
 msgstr "Amount"
 
@@ -2123,9 +2129,6 @@ msgstr "cart"
 
 msgid "Click_here_to_open_the"
 msgstr "Click here to open the"
-
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr "And here you can unsubscribe from this email reminder"
 
 msgid "The_amount_of_the_product_{0}_has_been_adapted."
 msgstr "The amount of the product {0} has been apapted."

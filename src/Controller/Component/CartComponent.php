@@ -552,9 +552,9 @@ class CartComponent extends Component
                         $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
 
                         if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
-                            $paidInCash = false;
+                            $paidInCash = 0;
                             if ($this->AppAuth->isSelfServiceCustomer()) {
-                                $paidInCash = true;
+                                $paidInCash = 1;
                             }
                             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
                                 $helloCash = new HelloCash();

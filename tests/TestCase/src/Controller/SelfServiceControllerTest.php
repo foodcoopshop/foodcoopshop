@@ -288,8 +288,9 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSelfServiceCustomer'));
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoiceCount = $this->Invoice->find('all')->count();
-        $this->assertEquals($invoiceCount, 1);
+        $invoices = $this->Invoice->find('all');
+        $this->assertEquals($invoices->count(), 1);
+        $this->assertEquals($invoices->toArray()[0]->paid_in_cash, 1);
 
     }
 

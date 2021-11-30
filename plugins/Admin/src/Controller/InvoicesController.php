@@ -8,6 +8,7 @@ use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -122,6 +123,33 @@ class InvoicesController extends AdminAppController
             $invoiceFilename = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
             $invoiceNumber = $newInvoice->invoice_number;
             $invoiceId = $newInvoice->id;
+        }
+
+        if ($paidInCash) {
+            $this->Payment = $this->getTableLocator()->get('Payments');
+            $paymentEntity = $this->Payment->newEntity(
+                [
+                    'status' => APP_ON,
+                    'approval' => APP_ON,
+                    'type' => 'product',
+                    'id_customer' => $customerId,
+                    'id_manufacturer' => 0,
+                    'date_add' => FrozenTime::now(),
+                    'date_changed' => FrozenTime::now(),
+                    'amount' => $invoiceData->sumPriceIncl,
+                    'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
+                    'created_by' => $this->AppAuth->getUserId(),
+                ]
+            );
+            $this->Payment->save($paymentEntity);
+
+            // mark row as picked up
+            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
+            $this->PickupDay->changeState(
+                $customerId,
+                Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
+                APP_ON,
+            );
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
@@ -296,6 +324,29 @@ class InvoicesController extends AdminAppController
 
         $invoice->cancellation_invoice_id = $invoiceId;
         $this->Invoice->save($invoice);
+
+        // cancel automatically added payment
+        if ($invoice->paid_in_cash) {
+            $this->Payment = $this->getTableLocator()->get('Payments');
+            $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
+            $this->Payment->updateAll([
+                'status' => APP_DEL,
+                'date_changed' => FrozenTime::now(),
+                'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
+            ], [
+                'type' => 'product',
+                'id_customer' => $invoice->customer->id_customer,
+                'approval_comment' => $approvalString,
+            ]);
+
+            // remove "mark row as picked up"
+            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
+            $this->PickupDay->changeState(
+                $invoice->customer->id_customer,
+                Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
+                APP_OFF,
+            );
+        }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),

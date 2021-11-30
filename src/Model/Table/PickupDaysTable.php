@@ -36,6 +36,20 @@ class PickupDaysTable extends AppTable
         return $validator;
     }
 
+    public function changeState($customerId, $pickupDay, $state)
+    {
+        $result = $this->insertOrUpdate(
+            [
+                'customer_id' => $customerId,
+                'pickup_day' => $pickupDay,
+            ],
+            [
+                'products_picked_up' => $state,
+            ],
+        );
+        return $result;
+    }
+
     public function getUniquePickupDays($cartProducts)
     {
         $uniquePickupDays = [];
