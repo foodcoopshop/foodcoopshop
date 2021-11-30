@@ -161,7 +161,10 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     ]);
 }
 
-if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
+    && (
+        !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') || $appAuth->isSuperadmin())
+    ) {
     echo '<div class="sc"></div>';
     echo '<h2 style="margin-top:20px;">' . __d('admin', 'Self_service_mode') . '</h2>';
     if ($isOwnProfile) {
