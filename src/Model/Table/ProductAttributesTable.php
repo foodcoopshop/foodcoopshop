@@ -130,6 +130,11 @@ class ProductAttributesTable extends AppTable
             )
         );
 
+        $this->BarcodeProduct = FactoryLocator::get('Table')->get('BarcodeProducts');
+        $this->BarcodeProduct->deleteAll([
+            'BarcodeProducts.product_id' => $productId,
+        ]);
+
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock' with custom sql
         $sql = 'INSERT INTO ' . $this->tablePrefix . 'stock_available (id_product, id_product_attribute, quantity) VALUES (:productId, :productAttributeId, :quantity)';
         $params = [
