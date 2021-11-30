@@ -71,9 +71,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
         $this->runAndAssertQueue();
-
-        $this->assertMailCount(1);
-
+        $this->assertMailCount(2);
     }
 
     public function testGenerateInvoice()

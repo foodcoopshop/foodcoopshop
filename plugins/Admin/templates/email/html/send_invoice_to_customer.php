@@ -27,13 +27,15 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
-            <p>
-                <?php
-                    echo __d('admin', 'your_current_credit_equals_{0}.', [
-                        '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
-                    ]);
-                ?>
-            </p>
+            <?php if (!$paidInCash) { ?>
+                <p>
+                    <?php
+                        echo __d('admin', 'your_current_credit_equals_{0}.', [
+                            '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
+                        ]);
+                    ?>
+                </p>
+            <?php } ?>
 
             <p><?php echo __d('admin', 'Please_find_your_current_invoice_attached.'); ?></p>
 

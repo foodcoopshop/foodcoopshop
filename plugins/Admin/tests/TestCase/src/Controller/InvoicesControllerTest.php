@@ -126,7 +126,6 @@ class InvoicesControllerTest extends AppCakeTestCase
         $currentYear = date('Y', strtotime($currentDay));
         $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. ' . $currentYear . '-000001, ' . $formattedCurrentDay);
         $this->assertMailSubjectContainsAt(2, 'Storno-Rechnung Nr. ' . $currentYear . '-000002, ' . $formattedCurrentDay);
-        $this->assertMailContainsHtmlAt(1, 'Guthaben beträgt <b>61,97 €</b>');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
 

@@ -39,6 +39,7 @@ class SendInvoiceToCustomerTask extends Task {
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
         $invoiceId = $data['invoiceId'];
+        $paidInCash = $data['paidInCash'];
         $isCancellationInvoice = (bool) $data['isCancellationInvoice'];
         $originalInvoiceId = $data['originalInvoiceId'] ?? $invoiceId;
 
@@ -55,6 +56,7 @@ class SendInvoiceToCustomerTask extends Task {
         $email->setTo($customerEmail)
         ->setSubject($subject)
         ->setViewVars([
+            'paidInCash' => $paidInCash,
             'customerName' => $customerName,
             'creditBalance' => $creditBalance,
         ]);

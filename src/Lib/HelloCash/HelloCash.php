@@ -254,10 +254,6 @@ class HelloCash
 
     protected function setSendInvoiceToCustomerQueue($customer, $invoice, $isCancellationInvoice, $paidInCash)
     {
-        if ($paidInCash) {
-            return;
-        }
-
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
         $this->Customer = FactoryLocator::get('Table')->get('Customers');
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
@@ -270,8 +266,8 @@ class HelloCash
             'invoiceId' => $invoice->id,
             'originalInvoiceId' => $invoice->original_invoice_id ?? null,
             'creditBalance' => $this->Customer->getCreditBalance($customer->id_customer),
+            'paidInCash' => $paidInCash,
         ]);
-
     }
 
     protected function prepareTaxesFromResponse($responseObject, $cancellation)

@@ -108,6 +108,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertMailCount(2);
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. 2018-000001, 02.02.2018');
+        $this->assertMailContainsHtmlAt(1, 'Guthaben beträgt <b>61,97 €</b>');
         $this->assertMailContainsAttachment($pdfFilenameWithoutPath);
 
         $this->getAndAssertOrderDetailsAfterInvoiceGeneration($invoice->id, 4);
