@@ -25,6 +25,10 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    hasProductAttributes: function(row) {
+        return row.next().hasClass('sub-row');
+    },
+
     initKeepSelectedCheckbox : function() {
 
         var cookieName = 'SelectedOrderDetailIds';

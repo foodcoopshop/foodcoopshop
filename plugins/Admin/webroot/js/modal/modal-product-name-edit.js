@@ -23,7 +23,7 @@ foodcoopshop.ModalProductNameEdit = {
 
     },
 
-    getHtml : function() {
+    getHtml : function(row) {
 
         var html = '<div class="block block-a">';
 
@@ -44,7 +44,7 @@ foodcoopshop.ModalProductNameEdit = {
             html += '</div>';
         }
 
-        if (foodcoopshop.Helper.isSelfServiceModeEnabled) {
+        if (foodcoopshop.Helper.isSelfServiceModeEnabled && !foodcoopshop.Admin.hasProductAttributes(row)) {
             html += '<hr />';
             html += '<div class="dialog-barcode-wrapper">';
             html += '<label id="dialogLabelBarcode" for="dialogBarcode"><b>' + foodcoopshop.LocalizedJs.dialogProduct.BarcodeDescription + '</b></label><br />';
@@ -111,10 +111,11 @@ foodcoopshop.ModalProductNameEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
+        var row = button.closest('tr');
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.dialogProduct.ChangeNameAndDescription,
-            foodcoopshop.ModalProductNameEdit.getHtml()
+            foodcoopshop.ModalProductNameEdit.getHtml(row)
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
@@ -131,7 +132,6 @@ foodcoopshop.ModalProductNameEdit = {
 
         foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 
-        var row = button.closest('tr');
         var nameCell = row.find('td.cell-name');
         $(modalSelector + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog .product-name').html()));
         $(modalSelector + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
