@@ -14,7 +14,7 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "@beyonk/gdpr-cookie-consent-banner": "^7.1.2",
+    "@beyonk/gdpr-cookie-consent-banner": "^9.0.2",
     "@ericblade/quagga2": "^1.4.2",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "blueimp-file-upload": "^10.32.0",
@@ -36,7 +36,7 @@
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
     "svelte": "^3.44.2",
-    "swiper": "7.3.0",
+    "swiper": "7.3.1",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.14.3",
     "webrtc-adapter": "^8.1.0"
