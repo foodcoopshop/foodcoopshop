@@ -280,6 +280,19 @@ class CartProductsTable extends AppTable
             ];
         }
 
+        if (!$appAuth->isOrderForDifferentCustomerMode() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
+            $message = __('{0}_can_be_ordered_next_week.',
+                [
+                    '<b>' . $product->name . '</b>'
+                ]
+            );
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId
+            ];
+        }
+
         // update amount if cart product already exists
         $cart = $appAuth->getCart();
         $appAuth->setCart($cart);
