@@ -74,6 +74,10 @@ class MyTimeHelper extends TimeHelper
     public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
     {
 
+        if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
+            return '';
+        }
+
         if ($deliveryRhythmType == 'individual') {
             $result = strtotime($deliveryRhythmOrderPossibleUntil);
         } else {

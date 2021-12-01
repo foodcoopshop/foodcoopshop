@@ -96,7 +96,9 @@ if ($product['description'] != '') {
             if (!($product['delivery_rhythm_type'] == 'week'
                 && $product['delivery_rhythm_count'] == 1
                 && $this->Time->getSendOrderListsWeekday() == $product['delivery_rhythm_send_order_list_weekday']
-                )) {
+                )
+                && $lastOrderDay != ''
+                ) {
                     echo '<span class="last-order-day">';
                     echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($lastOrderDay));
                     echo '</span>';
@@ -117,13 +119,18 @@ if ($product['description'] != '') {
                     $product['delivery_rhythm_count']
                 );
             }
-            echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
+            if ($product['next_delivery_day'] != 'delivery-rhythm-triggered-delivery-break') {
+                echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
+            }
         echo '</span>';
         if (!$appAuth->isSelfServiceModeByUrl()) {
             echo ' (' . $pickupDayDetailText . ')';
         }
         if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isOrderForDifferentCustomerMode()) {
-            if (strtotime($product['next_delivery_day']) != $this->Time->getDeliveryDayByCurrentDay()) {
+            if (
+                $product['next_delivery_day'] != 'delivery-rhythm-triggered-delivery-break'
+                && strtotime($product['next_delivery_day']) != $this->Time->getDeliveryDayByCurrentDay()
+            ) {
                 $weeksAsFloat = (strtotime($product['next_delivery_day']) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
                 $fullWeeks = (int) ($weeksAsFloat / 7);
                 $days = $weeksAsFloat % 7;
