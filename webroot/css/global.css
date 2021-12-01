@@ -250,6 +250,7 @@ h2.warning {
     height: 200px;
     float: left;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 #flashMessage .btn-flash-message {
     float: left;
