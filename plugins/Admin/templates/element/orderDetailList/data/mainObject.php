@@ -54,12 +54,12 @@ if ($groupBy == '' || $groupBy == 'product') {
                 }
             }
         }
-
         echo $this->MyHtml->link(
             $orderDetail->product_name,
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $orderDetail->product_id,
             [
-                'class' => 'name-for-dialog'
+                'class' => 'name-for-dialog',
+                'escape' => false,
             ]
         );
     }
