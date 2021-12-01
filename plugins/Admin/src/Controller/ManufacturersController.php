@@ -480,7 +480,7 @@ class ManufacturersController extends AdminAppController
             $taxRates[$taxRate]['sum_price_gross'] += $orderDetail->SumPurchasePriceGross;
 
             $sheet->setCellValueByColumnAndRow(1, $row, $orderDetail->SumAmount);
-            $sheet->setCellValueByColumnAndRow(2, $row, $orderDetail->ProductName);
+            $sheet->setCellValueByColumnAndRow(2, $row, html_entity_decode($orderDetail->ProductName));
             $sheet->setCellValueByColumnAndRow(3, $row, $orderDetail->SumWeight);
             $sheet->setCellValueByColumnAndRow(4, $row, $orderDetail->Unit);
             $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->PurchasePriceTaxRate);
