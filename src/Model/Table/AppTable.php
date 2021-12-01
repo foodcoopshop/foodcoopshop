@@ -228,9 +228,12 @@ class AppTable extends Table
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes ProductBarcodes ON ProductBarcodes.product_id = Products.id_product ";
-
             $sql .= "LEFT JOIN ".$this->tablePrefix."product_attribute ProductAttributes ON ProductAttributes.id_product = Products.id_product ";
             $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes ProductAttributeBarcodes ON ProductAttributeBarcodes.product_attribute_id = ProductAttributes.id_product_attribute ";
+        }
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $sql .= "LEFT JOIN ".$this->tablePrefix."purchase_prices ProductPurchasePrices ON ProductPurchasePrices.product_id = Products.id_product AND ProductPurchasePrices.product_attribute_id = 0 ";
         }
 
         return $sql;
@@ -255,6 +258,15 @@ class AppTable extends Table
             if ($appAuth->isOrderForDifferentCustomerMode()) {
                 $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
             }
+        }
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $conditions .= " AND (";
+                $conditions .= "IF (Units.price_per_unit_enabled = 1, ";
+                    $conditions .= "Units.purchase_price_incl_per_unit IS NOT NULL, ";
+                    $conditions .= "ProductPurchasePrices.price IS NOT NULL";
+                $conditions .= ")";
+            $conditions .= ") ";
         }
 
         return $conditions;
