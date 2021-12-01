@@ -853,8 +853,38 @@ foodcoopshop.Helper = {
         $('#flashMessage').remove();
     },
 
-    appendFlashMessageCloser: function () {
+    addFlashMessageTools: function () {
+
         $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
+
+        var progressBarHtml = '<div class="progress">';
+        progressBarHtml += '<div class="progress-bar bg-success" style="width:0%;"></div>';
+        progressBarHtml += '<div class="progress-bar bg-white" style="width:100%;"></div>';
+        progressBarHtml += '</div>';
+        $('#flashMessage.success').append(progressBarHtml);
+
+        var duration = 5000;
+        $("#flashMessage.success .progress-bar.bg-success")
+            .animate({
+                'width': '100%',
+            }, {
+                duration: duration,
+                easing: 'linear',
+            }
+        );
+        $("#flashMessage.success .progress-bar.bg-white")
+            .animate({
+                'width': '0%',
+            }, {
+                duration: duration,
+                easing: 'linear',
+            }
+        );
+
+        setTimeout(function() {
+            $('#flashMessage.success a.closer').trigger('click');
+        }, duration);
+
     },
 
     bindFlashMessageCloser: function () {
@@ -889,7 +919,7 @@ foodcoopshop.Helper = {
             .attr('id', 'flashMessage');
         $(root).append(messageNode);
 
-        this.appendFlashMessageCloser();
+        this.addFlashMessageTools();
         this.bindFlashMessageCloser();
 
     },
