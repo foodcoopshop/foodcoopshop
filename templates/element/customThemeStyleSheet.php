@@ -111,6 +111,7 @@ use Cake\Core\Configure;
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
     .btn-success:focus:active,
+    #flashMessage.success .progress-bar.bg-success,
     .bootstrap-select .dropdown-item.active,
     .bootstrap-select .dropdown-item:active,
     table.list tr.selected {

@@ -235,10 +235,22 @@ h2.warning {
     text-decoration: underline ! important;
     color: #fff ! important;
 }
+#flashMessage.error .progress-bar.bg-success {
+    background-color: #f3515c ! important;
+}
+#flashMessage .progress {
+    clear: both;
+    margin-top: 3px;
+}
+#flashMessage .progress,
+#flashMessage .progress .progress-bar {
+    height: 2px;
+}
 #flashMessage img {
     height: 200px;
     float: left;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 #flashMessage .btn-flash-message {
     float: left;
