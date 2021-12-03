@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-29 14:53+0100\n"
-"PO-Revision-Date: 2021-12-01 11:39+0100\n"
+"POT-Creation-Date: 2021-12-03 22:44+0100\n"
+"PO-Revision-Date: 2021-12-03 22:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1923,6 +1923,12 @@ msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
 msgid "Invoice_cannot_be_generated"
 msgstr "Keine Rechnung erstellbar"
 
+msgid "Latest_invoices"
+msgstr "Letzte Rechnungen"
+
+msgid "No_invoices_available."
+msgstr "Keine Rechnungen vorhanden."
+
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
 
@@ -2321,6 +2327,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Latest_invoices_for_{0}"
+#~ msgstr "Letzte Rechnungen für {0}"
 
 #~ msgid "incl_vat"
 #~ msgstr "inkl. USt."
