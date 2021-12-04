@@ -317,6 +317,13 @@ input.datepicker {
     font-family: 'Open Sans';
 }
 
+.tooltipster-content ul {
+    margin-bottom: 0;
+}
+.tooltipster-content li.negative {
+    color: red;
+}
+.tooltipster-content li,
 #content ul.help-text-wrapper li {
     margin-left: 20px;
     margin-top: 0px;

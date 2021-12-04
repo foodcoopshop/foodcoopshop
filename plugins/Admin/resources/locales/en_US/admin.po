@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-29 14:53+0100\n"
-"PO-Revision-Date: 2021-11-29 14:54+0100\n"
+"POT-Creation-Date: 2021-12-03 22:44+0100\n"
+"PO-Revision-Date: 2021-12-03 22:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1923,6 +1923,12 @@ msgstr "Click to change member"
 msgid "Invoice_cannot_be_generated"
 msgstr "Invoice cannot be generated"
 
+msgid "Latest_invoices"
+msgstr "Latest invoices"
+
+msgid "No_invoices_available."
+msgstr "No invoices available."
+
 msgid "Add_product_feedback"
 msgstr "Give the manufacturer feedback for the product"
 
@@ -2321,6 +2327,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Latest_invoices_for_{0}"
+#~ msgstr "Latest invoices for {0}"
 
 #~ msgid "incl_vat"
 #~ msgstr "incl. VAT"

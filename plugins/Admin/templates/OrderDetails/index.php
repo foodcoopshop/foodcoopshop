@@ -51,7 +51,9 @@ use Cake\Core\Configure;
 
     if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init();"
+            'script' =>
+            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init();".
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.latest-invoices-tooltip-wrapper');"
         ]);
     }
 
