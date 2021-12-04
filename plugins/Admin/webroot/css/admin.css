@@ -263,8 +263,10 @@ body.products.index .bootstrap-select {
 }
 body.products.index td.status {
     text-align: center;
-    padding-left: 10px;
-    width: 42px;
+    width: 49px;
+}
+body.products.index td.status .fa-exclamation {
+    margin-left: 3px;
 }
 #filter-loader {
   position: fixed;

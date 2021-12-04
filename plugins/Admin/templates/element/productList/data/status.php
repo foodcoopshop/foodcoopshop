@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 echo '<td class="status">';
 
     if ($product->active == 1) {
@@ -39,6 +41,10 @@ echo '<td class="status">';
                 'escape' => false
             ]
         );
+    }
+
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !$product->is_purchase_price_set) {
+        echo '<i class="fas fa-exclamation not-ok" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
     }
 
 echo '</td>';
