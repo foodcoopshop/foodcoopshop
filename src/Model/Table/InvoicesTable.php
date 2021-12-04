@@ -50,6 +50,33 @@ class InvoicesTable extends AppTable
         ]);
     }
 
+    public function getLastInvoicesForCustomer($customerId)
+    {
+
+        $invoices = $this->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+            'order' => [
+                'Invoices.invoice_number' => 'DESC'
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ],
+            'limit' => 5,
+        ])->toArray();
+
+        foreach($invoices as &$invoice) {
+            foreach($invoice->invoice_taxes as $invoiceTax) {
+                $invoice->total_sum_price_excl += $invoiceTax->total_price_tax_excl;
+                $invoice->total_sum_tax += $invoiceTax->total_price_tax;
+                $invoice->total_sum_price_incl += $invoiceTax->total_price_tax_incl;
+            }
+        }
+
+        return $invoices;
+    }
+
     public function getPreparedTaxRatesForSumTable($invoices)
     {
 
