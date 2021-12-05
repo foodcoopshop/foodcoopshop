@@ -296,26 +296,33 @@ class AppTable extends Table
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $i = 0;
             foreach($products as $product) {
-                $unitProductEntity = $this->Product->UnitProducts->newEntity([
-                        'price_per_unit_enabled' => $product['price_per_unit_enabled'],
-                        'purchase_price_incl_per_unit' => $product['purchase_price_incl_per_unit'],
-                    ],
-                    [
-                        'validate' => false
-                    ],
-                );
-                $purchasePriceEntity = $this->Product->PurchasePriceProducts->find('all', [
+                $attributesCount = $this->Product->ProductAttributes->find('all', [
                     'conditions' => [
-                        'PurchasePriceProducts.product_id' => $product['id_product'],
+                        'ProductAttributes.id_product' => $product['id_product'],
                     ],
-                ])->first();
-                $productEntity = [
-                    'unit_product' => $unitProductEntity,
-                    'purchase_price_product' => $purchasePriceEntity,
-                ];
-                $productEntity = json_decode(json_encode($productEntity), false); // convert array recursively into object
-                if (!$this->Product->PurchasePriceProducts->isPurchasePriceSet($productEntity)) {
-                    unset($products[$i]);
+                ])->count();
+                if ($attributesCount == 0) {
+                    $unitProductEntity = $this->Product->UnitProducts->newEntity([
+                            'price_per_unit_enabled' => $product['price_per_unit_enabled'],
+                            'purchase_price_incl_per_unit' => $product['purchase_price_incl_per_unit'],
+                        ],
+                        [
+                            'validate' => false
+                        ],
+                    );
+                    $purchasePriceEntity = $this->Product->PurchasePriceProducts->find('all', [
+                        'conditions' => [
+                            'PurchasePriceProducts.product_id' => $product['id_product'],
+                        ],
+                    ])->first();
+                    $productEntity = [
+                        'unit_product' => $unitProductEntity,
+                        'purchase_price_product' => $purchasePriceEntity,
+                    ];
+                    $productEntity = json_decode(json_encode($productEntity), false); // convert array recursively into object
+                    if (!$this->Product->PurchasePriceProducts->isPurchasePriceSet($productEntity)) {
+                        unset($products[$i]);
+                    }
                 }
                 $i++;
             }
