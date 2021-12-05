@@ -43,8 +43,11 @@ echo '<td class="status">';
         );
     }
 
-    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !$product->is_purchase_price_set) {
-        echo '<i class="fas fa-exclamation not-ok" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') &&
+        empty($product->product_attributes) &&
+        !$product->is_purchase_price_set
+        ) {
+            echo '<i class="fas fa-exclamation not-ok" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
     }
 
 echo '</td>';

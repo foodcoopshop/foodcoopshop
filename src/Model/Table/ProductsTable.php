@@ -1016,7 +1016,9 @@ class ProductsTable extends AppTable
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $product->is_purchase_price_set = true;
+
+                $product->is_purchase_price_set = $this->PurchasePriceProducts->isPurchasePriceSet($product);
+
                 if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
                     $product->purchase_price_product = (object) [
                         'tax_id' => null,
@@ -1161,7 +1163,9 @@ class ProductsTable extends AppTable
                     }
 
                     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                        $preparedProduct['is_purchase_price_set'] = false;
+
+                        $preparedProduct['is_purchase_price_set'] = $this->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute);
+
                         $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
                         if ($purchasePrice === null) {
                             $preparedProduct['purchase_gross_price'] = $purchasePrice;

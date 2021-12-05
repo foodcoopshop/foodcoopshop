@@ -20,7 +20,8 @@ if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
 }
 
 $rowClasses = ['cell-purchase-price'];
-if (!$product->is_purchase_price_set) {
+
+if (empty($product->product_attributes) && !$product->is_purchase_price_set) {
     $rowClasses[] = 'not-available';
 }
 
