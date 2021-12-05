@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-17 09:12+0100\n"
-"PO-Revision-Date: 2021-11-17 09:13+0100\n"
+"POT-Creation-Date: 2021-12-05 21:16+0100\n"
+"PO-Revision-Date: 2021-12-05 21:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -168,14 +168,20 @@ msgstr "The desired amount {0} of the product {1} is not available any more. Ava
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr "Please change the amout or remove product from cart to place order."
 
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
-
-msgid "The_attribute_does_not_exist."
-msgstr "The attribute does not exist."
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "The product {0} cannot be ordered any more due to interal reasons."
 
 msgid "Please_delete_product_from_cart_to_place_order."
 msgstr "Please remove product from cart to place order."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "The attribute {0} of the product {1} cannot be ordered any more due to interal reasons."
+
+msgid "The_attribute_does_not_exist."
+msgstr "The attribute does not exist."
 
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "The product {0} is not activated any more."

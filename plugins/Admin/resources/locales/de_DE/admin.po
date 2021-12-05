@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-03 22:44+0100\n"
+"POT-Creation-Date: 2021-12-05 21:16+0100\n"
 "PO-Revision-Date: 2021-12-03 22:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2075,6 +2075,9 @@ msgstr "Produkt-Vorschau"
 
 msgid "change_price"
 msgstr "Preis ändern"
+
+msgid "Purchase_price_not_set_and_therefore_never_active."
+msgstr ""
 
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"

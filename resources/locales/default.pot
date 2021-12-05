@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-11-17 09:12+0100\n"
+"POT-Creation-Date: 2021-12-05 21:16+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -167,13 +167,19 @@ msgstr ""
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr ""
 
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr ""
-
-msgid "The_attribute_does_not_exist."
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
 msgstr ""
 
 msgid "Please_delete_product_from_cart_to_place_order."
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr ""
+
+msgid "The_attribute_does_not_exist."
 msgstr ""
 
 msgid "The_product_{0}_is_not_activated_any_more."

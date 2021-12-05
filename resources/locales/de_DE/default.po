@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-11-17 09:12+0100\n"
-"PO-Revision-Date: 2021-11-17 09:13+0100\n"
+"POT-Creation-Date: 2021-12-05 21:16+0100\n"
+"PO-Revision-Date: 2021-12-05 21:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -168,14 +168,20 @@ msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verf�
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr "Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
 
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
-
-msgid "The_attribute_does_not_exist."
-msgstr "Die Variante existiert nicht."
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "Das Produkt {0} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
 
 msgid "Please_delete_product_from_cart_to_place_order."
 msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "Die Variante {0} des Produkts {1} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
+
+msgid "The_attribute_does_not_exist."
+msgstr "Die Variante existiert nicht."
 
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
