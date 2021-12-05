@@ -266,6 +266,13 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
+            // purchase price check for product
+            if ($ids['attributeId'] == 0 && !$this->Product->PurchasePriceProducts->isPurchasePriceSet($product)) {
+                $message = __('The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $product->name . '</b>']);
+                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                $cartErrors[$cartProduct['productId']][] = $message;
+            }
+
             $attribute = null;
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
@@ -291,6 +298,20 @@ class CartComponent extends Component
                             $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
+
+                        // purchase price check for attribute
+                        if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+                            $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
+                            $attribute = $this->Attribute->find('all', [
+                                'conditions' => [
+                                    'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
+                                ]
+                            ])->first();
+                            $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>']);
+                            $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                            $cartErrors[$cartProduct['productId']][] = $message;
+                        }
+
                         break;
                     }
                 }
