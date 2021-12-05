@@ -126,7 +126,7 @@ class FrontendController extends AppController
             foreach ($attributes as $attribute) {
 
                 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                    if (!$this->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+                    if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
                         continue;
                     }
                 }

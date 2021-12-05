@@ -232,10 +232,6 @@ class AppTable extends Table
             $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes ProductAttributeBarcodes ON ProductAttributeBarcodes.product_attribute_id = ProductAttributes.id_product_attribute ";
         }
 
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $sql .= "LEFT JOIN ".$this->tablePrefix."purchase_prices ProductPurchasePrices ON ProductPurchasePrices.product_id = Products.id_product AND ProductPurchasePrices.product_attribute_id = 0 ";
-        }
-
         return $sql;
     }
 
@@ -258,15 +254,6 @@ class AppTable extends Table
             if ($appAuth->isOrderForDifferentCustomerMode()) {
                 $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
             }
-        }
-
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $conditions .= " AND (";
-                $conditions .= "IF (Units.price_per_unit_enabled = 1, ";
-                    $conditions .= "Units.purchase_price_incl_per_unit IS NOT NULL, ";
-                    $conditions .= "ProductPurchasePrices.price IS NOT NULL";
-                $conditions .= ")";
-            $conditions .= ") ";
         }
 
         return $conditions;
@@ -301,6 +288,33 @@ class AppTable extends Table
         $products = $this->reindexArray($products);
         return $products;
 
+    }
+    protected function hideIfPurchasePriceNotSet($products)
+    {
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $this->Product = FactoryLocator::get('Table')->get('Products');
+            $i = 0;
+            foreach($products as $product) {
+                $unitProductEntity = $this->Product->UnitProducts->newEntity([
+                    'price_per_unit_enabled' => $product['price_per_unit_enabled'],
+                ]);
+                $purchasePriceEntity = $this->Product->PurchasePriceProducts->find('all', [
+                    'conditions' => [
+                        'PurchasePriceProducts.product_id' => $product['id_product'],
+                    ],
+                ]);
+                $productEntity = $this->Product->newEntity([
+                    'unit_product' => $unitProductEntity,
+                    'purchase_price_product' => $purchasePriceEntity,
+                ]);
+                if ($this->Product->PurchasePriceProducts->isPurchasePriceSet($productEntity)) {
+                    unset($products[$i]);
+                }
+                $i++;
+            }
+        }
+        $products = $this->reindexArray($products);
+        return $products;
     }
 
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)

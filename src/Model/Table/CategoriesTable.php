@@ -211,6 +211,7 @@ class CategoriesTable extends AppTable
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
         $products = $this->hideMultipleAttributes($products);
+        $products = $this->hideIfPurchasePriceNotSet($products);
         $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
 
         if (! $countMode) {
