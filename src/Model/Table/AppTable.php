@@ -197,6 +197,7 @@ class AppTable extends Table
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
                 Manufacturers.timebased_currency_enabled, Manufacturers.no_delivery_days, Manufacturers.stock_management_enabled,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
+                Units.purchase_price_incl_per_unit,
                 Taxes.rate as taxRate,
                 StockAvailables.quantity, StockAvailables.quantity_limit, StockAvailables.always_available";
 
@@ -296,18 +297,24 @@ class AppTable extends Table
             $i = 0;
             foreach($products as $product) {
                 $unitProductEntity = $this->Product->UnitProducts->newEntity([
-                    'price_per_unit_enabled' => $product['price_per_unit_enabled'],
-                ]);
+                        'price_per_unit_enabled' => $product['price_per_unit_enabled'],
+                        'purchase_price_incl_per_unit' => $product['purchase_price_incl_per_unit'],
+                    ],
+                    [
+                        'validate' => false
+                    ],
+                );
                 $purchasePriceEntity = $this->Product->PurchasePriceProducts->find('all', [
                     'conditions' => [
                         'PurchasePriceProducts.product_id' => $product['id_product'],
                     ],
-                ]);
-                $productEntity = $this->Product->newEntity([
+                ])->first();
+                $productEntity = [
                     'unit_product' => $unitProductEntity,
                     'purchase_price_product' => $purchasePriceEntity,
-                ]);
-                if ($this->Product->PurchasePriceProducts->isPurchasePriceSet($productEntity)) {
+                ];
+                $productEntity = json_decode(json_encode($productEntity), false); // convert array recursively into object
+                if (!$this->Product->PurchasePriceProducts->isPurchasePriceSet($productEntity)) {
                     unset($products[$i]);
                 }
                 $i++;
