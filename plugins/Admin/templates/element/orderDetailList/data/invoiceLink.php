@@ -22,9 +22,9 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
         if (!$orderDetail['invoiceData']->new_invoice_necessary) {
             $invoiceText = __d('admin', 'Invoice_cannot_be_generated');
         }
-        $invoicesForTitle = '<span style="float:left;margin-bottom:5px;"><b>' . $orderDetail['name'] . ': </b>' . __d('admin', 'Latest_invoices') . '</span>';
+        $invoicesForTitle = '<span style="width:100%;float:left;margin-bottom:10px;"><b>' . $orderDetail['name'] . ': </b>' . __d('admin', 'Latest_invoices') . '</span>';
         if (empty($orderDetail['latestInvoices'])) {
-            $invoicesForTitle .= '<br />' . __d('admin', 'No_invoices_available.');
+            $invoicesForTitle .= '<span style="width:100%;float:left;">' . __d('admin', 'No_invoices_available.') . '</span>';
         } else {
             $invoicesForTitle .= '<ul>';
         }
@@ -41,6 +41,20 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
         if (!empty($orderDetail['latestInvoices'])) {
             $invoicesForTitle .= '</ul>';
         }
+
+        $invoicesForTitle .= '<p class="credit-balance-wrapper">';
+        $invoicesForTitle .= '<span style="float:left;margin-top:6px;margin-right:5px;">' . __d('admin', 'Credit') . ': </span>';
+            $invoicesForTitle .= $this->Html->link(
+                '<span class="'.($orderDetail['creditBalance'] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($orderDetail['creditBalance']) . '</span>',
+                $this->Slug->getCreditBalance($orderDetail['customer_id']),
+                [
+                    'class' => 'btn btn-outline-light',
+                    'title' => __d('admin', 'Show_credit'),
+                    'style' => 'text-decoration:none ! important;',
+                    'escape' => false,
+                ]
+            );
+        $invoicesForTitle .= '</p>';
 
         // use wrapper as tooltipster does not work on disabled elements
         echo '<span class="latest-invoices-tooltip-wrapper" title="' . h($invoicesForTitle) . '">';
