@@ -325,6 +325,13 @@ input.datepicker {
 .tooltipster-content li.negative {
     color: red;
 }
+.tooltipster-content .credit-balance-wrapper {
+    margin-top: 10px;
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-bottom: 0;
+}
 .tooltipster-content li,
 #content ul.help-text-wrapper li {
     margin-left: 20px;

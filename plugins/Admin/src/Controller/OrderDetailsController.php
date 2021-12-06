@@ -766,9 +766,11 @@ class OrderDetailsController extends AdminAppController
                 $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                     $this->Invoice = $this->getTableLocator()->get('Invoices');
+                    $this->Customer = $this->getTableLocator()->get('Customers');
                     foreach($preparedOrderDetails as &$orderDetail) {
                         $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id'], Configure::read('app.timeHelper')->getCurrentDateForDatabase());
-                        $orderDetail['lastInvoices'] = $this->Invoice->getLastInvoicesForCustomer($orderDetail['customer_id']);
+                        $orderDetail['latestInvoices'] = $this->Invoice->getLatestInvoicesForCustomer($orderDetail['customer_id']);
+                        $orderDetail['creditBalance'] = $this->Customer->getCreditBalance($orderDetail['customer_id']);
                     }
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
