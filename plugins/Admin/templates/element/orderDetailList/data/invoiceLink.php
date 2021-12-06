@@ -23,12 +23,12 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
             $invoiceText = __d('admin', 'Invoice_cannot_be_generated');
         }
         $invoicesForTitle = '<span style="float:left;margin-bottom:5px;"><b>' . $orderDetail['name'] . ': </b>' . __d('admin', 'Latest_invoices') . '</span>';
-        if (empty($orderDetail['lastInvoices'])) {
+        if (empty($orderDetail['latestInvoices'])) {
             $invoicesForTitle .= '<br />' . __d('admin', 'No_invoices_available.');
         } else {
             $invoicesForTitle .= '<ul>';
         }
-        foreach($orderDetail['lastInvoices'] as $invoice) {
+        foreach($orderDetail['latestInvoices'] as $invoice) {
             $invoiceRow = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong2'));
             $invoiceRow .=  ' / <b>' . ($invoice->paid_in_cash ? __d('admin', 'Paid_in_cash') : __d('admin', 'Credit')) . '</b>';
             $invoiceRow .= ' / ' . $this->Number->formatAsCurrency($invoice->total_sum_price_incl);
@@ -38,7 +38,7 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
             }
             $invoicesForTitle .= '<li class="' . $invoiceRowClass . '">' . $invoiceRow . '</li>';
         }
-        if (!empty($orderDetail['lastInvoices'])) {
+        if (!empty($orderDetail['latestInvoices'])) {
             $invoicesForTitle .= '</ul>';
         }
 

@@ -50,7 +50,7 @@ class InvoicesTable extends AppTable
         ]);
     }
 
-    public function getLastInvoicesForCustomer($customerId)
+    public function getLatestInvoicesForCustomer($customerId)
     {
 
         $invoices = $this->find('all', [

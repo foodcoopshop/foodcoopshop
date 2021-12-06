@@ -768,7 +768,7 @@ class OrderDetailsController extends AdminAppController
                     $this->Invoice = $this->getTableLocator()->get('Invoices');
                     foreach($preparedOrderDetails as &$orderDetail) {
                         $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id'], Configure::read('app.timeHelper')->getCurrentDateForDatabase());
-                        $orderDetail['lastInvoices'] = $this->Invoice->getLastInvoicesForCustomer($orderDetail['customer_id']);
+                        $orderDetail['latestInvoices'] = $this->Invoice->getLatestInvoicesForCustomer($orderDetail['customer_id']);
                     }
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
