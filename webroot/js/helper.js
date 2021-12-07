@@ -875,6 +875,7 @@ foodcoopshop.Helper = {
         $("#flashMessage.success .progress-bar.bg-white")
             .animate({
                 'width': '0%',
+                'opacity': 0.2,
             }, {
                 duration: duration,
                 easing: 'linear',
