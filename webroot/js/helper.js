@@ -864,7 +864,12 @@ foodcoopshop.Helper = {
         $('#flashMessage.success').append(progressBarHtml);
 
         var duration = 5000;
-        $("#flashMessage.success .progress-bar.bg-success")
+        var flashMessageText = $('#flashMessage.success').text();
+        if (flashMessageText.match(/wurde in deine Einkaufstasche gelegt/)) {
+            duration = 1500;
+        }
+
+        $('#flashMessage.success .progress-bar.bg-success')
             .animate({
                 'width': '100%',
             }, {
@@ -872,7 +877,7 @@ foodcoopshop.Helper = {
                 easing: 'linear',
             }
         );
-        $("#flashMessage.success .progress-bar.bg-white")
+        $('#flashMessage.success .progress-bar.bg-white')
             .animate({
                 'width': '0%',
                 'opacity': 0.2,
