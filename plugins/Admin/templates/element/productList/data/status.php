@@ -47,7 +47,7 @@ echo '<td class="status">';
         empty($product->product_attributes) &&
         !$product->purchase_price_is_set
         ) {
-            echo '<i class="fas fa-exclamation not-ok" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
+            echo '<i class="fas fa-exclamation not-ok purchase-price-not-set-info-text" title="' . __d('admin', 'Purchase_price_not_set_and_therefore_never_active.') . '"></i>';
     }
 
 echo '</td>';

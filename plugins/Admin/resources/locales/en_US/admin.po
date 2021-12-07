@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-05 21:16+0100\n"
-"PO-Revision-Date: 2021-12-03 22:45+0100\n"
+"POT-Creation-Date: 2021-12-07 15:46+0100\n"
+"PO-Revision-Date: 2021-12-07 15:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -309,7 +309,7 @@ msgstr "Self-service order"
 msgid "Edit_purchase_price"
 msgstr "Edit purchase price"
 
-msgid "Purchase_price_has_been_saved_successfully"
+msgid "Purchase_price_has_been_saved_successfully."
 msgstr "The purchase price has been saved successfully."
 
 msgid "Profit"
@@ -2077,7 +2077,7 @@ msgid "change_price"
 msgstr "change price"
 
 msgid "Purchase_price_not_set_and_therefore_never_active."
-msgstr ""
+msgstr "The purchase price was not yet set, only then the product can be ordered."
 
 msgid "change_tax_rate"
 msgstr "change tax rate"
