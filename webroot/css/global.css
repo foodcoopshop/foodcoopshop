@@ -241,6 +241,7 @@ h2.warning {
 #flashMessage .progress {
     clear: both;
     margin-top: 3px;
+    background-color: transparent;
 }
 #flashMessage .progress,
 #flashMessage .progress .progress-bar {
