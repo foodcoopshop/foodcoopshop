@@ -494,6 +494,9 @@ tr.selected > td > div > i.fas, table:not(.no-hover) tr:hover > td > div > i.fas
 tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far {
     color: #fff;
 }
+.tooltipster-box .tooltipster-content {
+    color: #333 ! important;
+}
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {
     background: #fff ! important;
 }
