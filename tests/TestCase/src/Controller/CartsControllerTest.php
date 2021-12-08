@@ -524,7 +524,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
     }
 
-    public function testFinishWithPurchasePrice()
+    public function testFinishWithPurchasePriceOk()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsAdmin();
@@ -541,6 +541,16 @@ class CartsControllerTest extends AppCakeTestCase
         );
         $this->PurchasePriceProduct->save($entity);
         $this->addProductToCart($productId, 2);
+
+        $entity = $this->PurchasePriceProduct->newEntity(
+            [
+                'product_id' => 163, // mangold
+                'tax_id' => 0,
+                'price' => 1.072727,
+            ],
+        );
+        $this->PurchasePriceProduct->save($entity);
+
         $this->finishCart(1,1);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -572,14 +582,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($objectB->order_detail_purchase_price->total_price_tax_incl, 10.29);
         $this->assertEquals($objectC->order_detail_purchase_price->total_price_tax_incl, 25.2);
         $this->assertEquals($objectD->order_detail_purchase_price->total_price_tax_incl, 0.28);
-        $this->assertEquals($objectE->order_detail_purchase_price->total_price_tax_incl, 0);
+        $this->assertEquals($objectE->order_detail_purchase_price->total_price_tax_incl, 2.14);
         $this->assertEquals($objectF->order_detail_purchase_price->total_price_tax_incl, 2.36);
 
         $this->assertEquals($objectA->order_detail_purchase_price->total_price_tax_excl, 2.40);
         $this->assertEquals($objectB->order_detail_purchase_price->total_price_tax_excl, 9.11);
         $this->assertEquals($objectC->order_detail_purchase_price->total_price_tax_excl, 22.30);
         $this->assertEquals($objectD->order_detail_purchase_price->total_price_tax_excl, 0.25);
-        $this->assertEquals($objectE->order_detail_purchase_price->total_price_tax_excl, 0);
+        $this->assertEquals($objectE->order_detail_purchase_price->total_price_tax_excl, 2.14);
         $this->assertEquals($objectF->order_detail_purchase_price->total_price_tax_excl, 2.14);
 
         $this->assertEquals($objectA->order_detail_purchase_price->tax_unit_amount, 0.24);
