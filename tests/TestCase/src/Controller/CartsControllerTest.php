@@ -502,6 +502,28 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
+    public function testFinishWithPurchasePriceIncludingProductsWithoutPurchasePrice()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsAdmin();
+
+        $this->addProductToCart('350-14', 1); // add lagerprodukt mit variante
+        $this->Unit = $this->getTableLocator()->get('Units');
+        $this->Unit->saveUnits(346, 12, false, 1, 'kg', 1, 0.4); // artischocke
+        $this->Unit->saveUnits(347, 0, false, 1, 'kg', 1, 0.4); // forelle
+
+        $this->addAllDifferentProductTypesToCart();
+        $this->finishCart(1,1);
+        // product and missing pp per piece
+        $this->assertMatchesRegularExpression('/Das Produkt (.*)Mangold(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        // product and missing pp per unit
+        $this->assertMatchesRegularExpression('/Das Produkt (.*)Forelle(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        // attribute and missing pp per piece
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Lagerprodukt mit Varianten(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        // attribute and missing pp per unit
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+    }
+
     public function testFinishWithPurchasePrice()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
