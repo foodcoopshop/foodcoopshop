@@ -114,6 +114,58 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<i class="fa fa-fw fa-lg fa-times"></i> Lieferpause!');
     }
 
+    public function testProductDetailProductNoPurchasePricePerPiece()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $productId = 340;
+        $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
+        $this->assertResponseCode(404);
+    }
+
+    public function testProductDetailProductNoPurchasePricePerUnit()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $productId = 340;
+        $this->Unit = $this->getTableLocator()->get('Units');
+        $this->Unit->saveUnits($productId, 0, true, 1, 'kg', 1, 0.4);
+        $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
+        $this->assertResponseCode(404);
+    }
+
+    public function testProductDetailAttributeNoPurchasePricePerPiece()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $productId = 350;
+        $this->get($this->Slug->getProductDetail($productId, 'Lagerprodukt-mit-Varianten'));
+        $this->assertResponseNotContains('1 kg');
+        $this->assertResponseContains('0,5 kg');
+        $this->assertResponseContains('ca. 0,5 kg');
+    }
+
+    public function testProductDetailAttributeNoPurchasePricePerUnit()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $productId = 348;
+        $this->get($this->Slug->getProductDetail($productId, 'Rindfleisch'));
+        $this->assertResponseNotContains('ca. 0,5 kg');
+        $this->assertResponseContains('ca. 300 g');
+    }
+
+    public function testProductDetailProductWithAllAttributesRemovedDueToNoPurchasePrice()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $productId = 348;
+        $this->Unit = $this->getTableLocator()->get('Units');
+        $this->Unit->saveUnits($productId, 12, false, 1, 'kg', 1, 0.4);
+        $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
+        $this->assertResponseCode(404);
+    }
+
     protected function changeProductStatus($productId, $active)
     {
         $query = 'UPDATE ' . $this->Product->getTable().' SET active = :active WHERE id_product = :productId;';
