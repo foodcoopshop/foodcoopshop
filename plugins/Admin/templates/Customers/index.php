@@ -113,9 +113,9 @@ foreach ($customers as $customer) {
                 ]
             );
         }
-        if ($customer->order_detail_count <= 25) {
-            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
-                $customer->order_detail_count
+        if ($customer->different_pickup_day_count <= 2) {
+            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_has_{0}_orders.', [
+                $customer->different_pickup_day_count,
             ]).'"></i> ' . $customerName;
         }
 

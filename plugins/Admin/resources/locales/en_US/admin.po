@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-07 15:46+0100\n"
-"PO-Revision-Date: 2021-12-07 15:49+0100\n"
+"POT-Creation-Date: 2021-12-09 10:09+0100\n"
+"PO-Revision-Date: 2021-12-09 10:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1113,8 +1113,8 @@ msgstr "Last pickup day"
 msgid "Comment_abbreviation"
 msgstr "Comm."
 
-msgid "Newbie_only_{0}_products_ordered."
-msgstr "Newbie: has only ordered {0} products"
+msgid "Newbie_has_{0}_orders."
+msgstr "Newbie: has only ordered {0}x."
 
 msgid "Show_all_orders_from_{0}"
 msgstr "Show all orders from {0}"
@@ -2330,6 +2330,10 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "Newbie_has_max_{0}_orders."
+#~ msgstr "Newbie: has only ordered {0} products"
 
 #~ msgid "Latest_invoices_for_{0}"
 #~ msgstr "Latest invoices for {0}"

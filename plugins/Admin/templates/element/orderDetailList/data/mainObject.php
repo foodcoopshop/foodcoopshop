@@ -99,9 +99,9 @@ if ($groupBy == 'customer') {
         );
     }
     $name = $orderDetail['name'];
-    if ($orderDetail['order_detail_count'] <= 25) {
-        $name = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
-            $orderDetail['order_detail_count']
+    if ($orderDetail['different_pickup_day_count'] <= 2) {
+        $name = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_has_{0}_orders.', [
+            $orderDetail['different_pickup_day_count'],
         ]).'"></i> ' . $name;
     }
     echo $name;

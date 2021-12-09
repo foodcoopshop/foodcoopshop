@@ -752,7 +752,6 @@ class OrderDetailsController extends AdminAppController
             'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
             'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
-            'order_detail_count' => $query->func()->count('OrderDetails.id_order_detail'),
             'timebased_currency_order_detail_seconds_sum' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')
         ]);
         return $query;

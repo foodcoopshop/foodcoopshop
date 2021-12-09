@@ -454,6 +454,19 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
+    public function getDifferentPickupDayCountByCustomerId($customerId)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+            ],
+        ]);
+        $query->select([
+            'different_pickup_day_count' => $query->func()->count('DISTINCT(OrderDetails.pickup_day)'),
+        ]);
+        return $query->toArray()[0]['different_pickup_day_count'];
+    }
+
     public function getCountByCustomerId($customerId)
     {
         $query = $this->find('all', [
@@ -637,7 +650,7 @@ class OrderDetailsTable extends AppTable
         }
 
         foreach($preparedOrderDetails as &$orderDetail) {
-            $orderDetail['order_detail_count'] = $this->getCountByCustomerId($orderDetail['customer_id']);
+            $orderDetail['different_pickup_day_count'] = $this->getDifferentPickupDayCountByCustomerId($orderDetail['customer_id']);
         }
         return $preparedOrderDetails;
     }

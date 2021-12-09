@@ -724,6 +724,7 @@ class CustomersController extends AdminAppController
                 }
             }
             $customer->order_detail_count = $this->OrderDetail->getCountByCustomerId($customer->id_customer);
+            $customer->different_pickup_day_count = $this->OrderDetail->getDifferentPickupDayCountByCustomerId($customer->id_customer);
             $customer->last_order_date = $this->OrderDetail->getLastOrderDate($customer->id_customer);
             $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
             $i ++;
