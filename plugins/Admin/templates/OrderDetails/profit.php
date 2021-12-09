@@ -162,7 +162,7 @@ echo '<table class="list profit-table">';
         echo '</td>';
 
         echo '<td style="text-align:right;">';
-            echo $this->Number->formatAsDecimal($sums['profit']);
+            echo $this->Number->formatAsDecimal($sums['profit']) . '<br />' . $this->Number->formatAsPercent($sums['surcharge']);
         echo '</td>';
 
     echo '</tr>';

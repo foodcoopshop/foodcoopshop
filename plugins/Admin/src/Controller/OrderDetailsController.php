@@ -514,10 +514,13 @@ class OrderDetailsController extends AdminAppController
             $i++;
         }
         $this->set('orderDetails', $orderDetails);
+
+        $this->PurchasePrice = $this->getTableLocator()->get('PurchasePriceProducts');
         $this->set('sums', [
             'purchasePrice' => $sumPurchasePrice,
             'sellingPrice' => $sumSellingPrice,
             'profit' => $sumProfit,
+            'surcharge' => $this->PurchasePrice->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
         ]);
 
         $this->set('title_for_layout', __d('admin', 'Profit'));
