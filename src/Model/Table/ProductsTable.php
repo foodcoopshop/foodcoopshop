@@ -1016,6 +1016,10 @@ class ProductsTable extends AppTable
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+
+                $product->purchase_price_is_zero = true;
+                $product->purchase_price_is_set = $this->PurchasePriceProducts->isPurchasePriceSet($product);
+
                 if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
                     $product->purchase_price_product = (object) [
                         'tax_id' => null,
@@ -1033,6 +1037,9 @@ class ProductsTable extends AppTable
                         $product->purchase_gross_price = $purchasePrice;
                     } else {
                         $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                        if ($product->purchase_gross_price > 0) {
+                            $product->purchase_price_is_zero = false;
+                        }
                     }
 
                     if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
@@ -1046,6 +1053,9 @@ class ProductsTable extends AppTable
                             $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $taxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
                             $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
                             $product->surcharge_price = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                            if ($purchasePriceInclPerUnitAndAmount > 0) {
+                                $product->purchase_price_is_zero = false;
+                            }
                         }
                     } else {
                         $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
@@ -1160,11 +1170,18 @@ class ProductsTable extends AppTable
                     }
 
                     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+
+                        $preparedProduct['purchase_price_is_set'] = $this->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute);
+                        $preparedProduct['purchase_price_is_zero'] = true;
+
                         $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
                         if ($purchasePrice === null) {
                             $preparedProduct['purchase_gross_price'] = $purchasePrice;
                         } else {
                             $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                            if ($preparedProduct['purchase_gross_price'] > 0) {
+                                $preparedProduct['purchase_price_is_zero'] = false;
+                            }
                         }
 
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
@@ -1178,6 +1195,9 @@ class ProductsTable extends AppTable
                                 $priceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->price_incl_per_unit, $taxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
                                 $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
                                 $preparedProduct['surcharge_price'] = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                                if ($purchasePriceInclPerUnitAndAmount > 0) {
+                                    $preparedProduct['purchase_price_is_zero'] = false;
+                                }
                             }
                         } else {
                             $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(

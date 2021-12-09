@@ -39,7 +39,7 @@ class PurchasePriceProductsTableTest extends AppCakeTestCase
         $this->PurchasePriceProduct->save($entity);
 
         $productIds = [
-            340, // Beuschl with 0 % purchase price
+            103, // Bratwürstel with 0 % purchase price
             163, // Mangold: no purchase price defined
             346, // Artischocke: main product with normal price
             347, // Forelle: main product with price per unit

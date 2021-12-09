@@ -103,19 +103,34 @@ class FrontendController extends AppController
 
             }
 
+            $conditions = [
+                'ProductAttributes.id_product' => $product['id_product'],
+            ];
+            $contain = [
+                'StockAvailables',
+                'ProductAttributeCombinations.Attributes',
+                'DepositProductAttributes',
+                'UnitProductAttributes'
+            ];
+
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $contain[] = 'PurchasePriceProductAttributes';
+            }
+
             $attributes = $this->ProductAttribute->find('all', [
-                'conditions' => [
-                    'ProductAttributes.id_product' => $product['id_product']
-                ],
-                'contain' => [
-                    'StockAvailables',
-                    'ProductAttributeCombinations.Attributes',
-                    'DepositProductAttributes',
-                    'UnitProductAttributes'
-                ]
+                'conditions' => $conditions,
+                'contain' => $contain,
             ]);
+
             $preparedAttributes = [];
             foreach ($attributes as $attribute) {
+
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+                        continue;
+                    }
+                }
+
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];

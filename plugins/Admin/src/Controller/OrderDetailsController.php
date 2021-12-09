@@ -404,7 +404,7 @@ class OrderDetailsController extends AdminAppController
                 ],
             );
 
-            $this->Flash->success(__d('admin', 'Purchase_price_has_been_saved_successfully'));
+            $this->Flash->success(__d('admin', 'Purchase_price_has_been_saved_successfully.'));
             $this->getRequest()->getSession()->write('highlightedRowId', $orderDetail->id_order_detail);
 
             $this->redirect($this->getPreparedReferer());

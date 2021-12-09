@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-03 22:44+0100\n"
-"PO-Revision-Date: 2021-12-03 22:45+0100\n"
+"POT-Creation-Date: 2021-12-07 15:46+0100\n"
+"PO-Revision-Date: 2021-12-07 15:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -309,7 +309,7 @@ msgstr "Bestellung über SB-Modus"
 msgid "Edit_purchase_price"
 msgstr "Einkaufspreis bearbeiten"
 
-msgid "Purchase_price_has_been_saved_successfully"
+msgid "Purchase_price_has_been_saved_successfully."
 msgstr "Der Einkaufspreis wurde erfolgreich gespeichert."
 
 msgid "Profit"
@@ -2075,6 +2075,9 @@ msgstr "Produkt-Vorschau"
 
 msgid "change_price"
 msgstr "Preis ändern"
+
+msgid "Purchase_price_not_set_and_therefore_never_active."
+msgstr "Das Produkt kann erst bestellt werden, sobald der Einkaufspreis hinterlegt wurde."
 
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"

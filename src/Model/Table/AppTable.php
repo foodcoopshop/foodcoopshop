@@ -197,6 +197,7 @@ class AppTable extends Table
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
                 Manufacturers.timebased_currency_enabled, Manufacturers.no_delivery_days, Manufacturers.stock_management_enabled,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
+                Units.purchase_price_incl_per_unit,
                 Taxes.rate as taxRate,
                 StockAvailables.quantity, StockAvailables.quantity_limit, StockAvailables.always_available";
 
@@ -228,7 +229,6 @@ class AppTable extends Table
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes ProductBarcodes ON ProductBarcodes.product_id = Products.id_product ";
-
             $sql .= "LEFT JOIN ".$this->tablePrefix."product_attribute ProductAttributes ON ProductAttributes.id_product = Products.id_product ";
             $sql .= "LEFT JOIN ".$this->tablePrefix."barcodes ProductAttributeBarcodes ON ProductAttributeBarcodes.product_attribute_id = ProductAttributes.id_product_attribute ";
         }
@@ -274,21 +274,79 @@ class AppTable extends Table
      */
     protected function hideMultipleAttributes($products)
     {
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $i = 0;
-            $containingProductIds = [];
-            foreach($products as $product) {
-                if (in_array($product['id_product'], $containingProductIds)) {
-                    unset($products[$i]);
-                }
-                $containingProductIds[] = $product['id_product'];
-                $i++;
+        if (!Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            return $products;
+        }
+
+        $i = 0;
+        $containingProductIds = [];
+        foreach($products as $product) {
+            if (in_array($product['id_product'], $containingProductIds)) {
+                unset($products[$i]);
             }
+            $containingProductIds[] = $product['id_product'];
+            $i++;
         }
 
         $products = $this->reindexArray($products);
         return $products;
 
+    }
+    protected function hideIfPurchasePriceNotSet($products)
+    {
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            return $products;
+        }
+
+        $this->Product = FactoryLocator::get('Table')->get('Products');
+        $i = 0;
+
+        foreach($products as $product) {
+            $attributes = $this->Product->ProductAttributes->find('all', [
+                'conditions' => [
+                    'ProductAttributes.id_product' => $product['id_product'],
+                ],
+                'contain' => [
+                    'PurchasePriceProductAttributes',
+                    'UnitProductAttributes',
+                ],
+            ]);
+            $attributesCount = $attributes->count();
+            foreach($attributes as $attribute) {
+                if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+                    $attributesCount--;
+                }
+            }
+
+            if ($attributesCount == 0) {
+                $unitProductEntity = $this->Product->UnitProducts->newEntity([
+                        'price_per_unit_enabled' => $product['price_per_unit_enabled'],
+                        'purchase_price_incl_per_unit' => $product['purchase_price_incl_per_unit'],
+                    ],
+                    [
+                        'validate' => false
+                    ],
+                );
+                $purchasePriceEntity = $this->Product->PurchasePriceProducts->find('all', [
+                    'conditions' => [
+                        'PurchasePriceProducts.product_id' => $product['id_product'],
+                    ],
+                ])->first();
+                $productEntity = [
+                    'unit_product' => $unitProductEntity,
+                    'purchase_price_product' => $purchasePriceEntity,
+                ];
+                $productEntity = json_decode(json_encode($productEntity), false); // convert array recursively into object
+                if (!$this->Product->PurchasePriceProducts->isPurchasePriceSet($productEntity)) {
+                    unset($products[$i]);
+                }
+            }
+
+            $i++;
+        }
+
+        $products = $this->reindexArray($products);
+        return $products;
     }
 
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
@@ -297,6 +355,7 @@ class AppTable extends Table
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
             return $products;
         }
+
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = -1;
         foreach($products as $product) {

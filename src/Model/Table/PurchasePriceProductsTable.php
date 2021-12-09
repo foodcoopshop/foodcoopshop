@@ -41,6 +41,21 @@ class PurchasePriceProductsTable extends AppTable
         return $validator;
     }
 
+    public function isPurchasePriceSet($entity): bool
+    {
+        $result = true;
+        if (!empty($entity->unit_product) && $entity->unit_product->price_per_unit_enabled) {
+            if (is_null($entity->unit_product->purchase_price_incl_per_unit)) {
+                $result = false;
+            }
+        } else {
+            if (empty($entity->purchase_price_product) || is_null($entity->purchase_price_product->price)) {
+                $result = false;
+            }
+        }
+        return $result;
+    }
+
     public function calculateSellingPriceGrossBySurcharge($purchasePriceNet, $surcharge, $sellingPriceTaxRate)
     {
         $productTable = FactoryLocator::get('Table')->get('Products');
@@ -51,6 +66,7 @@ class PurchasePriceProductsTable extends AppTable
 
     public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate)
     {
+
         $productTable = FactoryLocator::get('Table')->get('Products');
         $sellingPriceNet = $productTable->getNetPrice($sellingPriceGross, $sellingPriceTaxRate);
         $purchasePriceNet = $productTable->getNetPrice($purchasePriceGross, $purchasePriceTaxRate);

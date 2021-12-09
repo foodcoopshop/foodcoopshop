@@ -19,7 +19,15 @@ if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
     return;
 }
 
-echo '<td class="cell-purchase-price">';
+$rowClasses = ['cell-purchase-price'];
+
+if (empty($product->product_attributes)) {
+    if (!$product->purchase_price_is_set || $product->purchase_price_is_zero) {
+        $rowClasses[] = 'not-available';
+    }
+}
+
+echo '<td class="' . join(' ', $rowClasses) . '">';
 
     echo '<div class="table-cell-wrapper price">';
 
