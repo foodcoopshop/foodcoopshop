@@ -14,13 +14,13 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "@beyonk/gdpr-cookie-consent-banner": "^9.0.2",
+    "@beyonk/gdpr-cookie-consent-banner": "^9.0.3",
     "@ericblade/quagga2": "^1.4.2",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "blueimp-file-upload": "^10.32.0",
     "bootstrap": "^4.6.0",
     "bootstrap-select": "^1.13.18",
-    "chart.js": "^3.6.0",
+    "chart.js": "^3.6.2",
     "chartjs-plugin-datalabels": "^2.0.0",
     "ckeditor4": "^4.17.1",
     "clipboard": "^2.0.8",
@@ -38,7 +38,7 @@
     "svelte": "^3.44.2",
     "swiper": "7.3.1",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.14.3",
+    "uglify-js": "^3.14.4",
     "webrtc-adapter": "^8.1.0"
   }
 }
