@@ -233,6 +233,7 @@ if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.i
     I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
     setlocale(LC_CTYPE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
+    setlocale(LC_COLLATE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
 }
 
 // Number::config(Configure::read('appDb.FCS_DEFAULT_LOCALE'), NumberFormatter::DECIMAL);

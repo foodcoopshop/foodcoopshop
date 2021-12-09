@@ -138,7 +138,10 @@ class AppTable extends Table
 
     public function sortByVirtualField($object, $name)
     {
-        $sortedObject = (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
+        $sortedObject = (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC', [
+            'type' => 'locale',
+            'ignoreCase' => true,
+        ]);
         return $sortedObject;
     }
 

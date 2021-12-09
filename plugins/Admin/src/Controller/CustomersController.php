@@ -730,7 +730,10 @@ class CustomersController extends AdminAppController
         }
 
         if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) && $this->getRequest()->getQuery('sort') == 'Customers.member_fee') {
-            $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'));
+            $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'), [
+                'type' => 'locale',
+                'ignoreCase' => true,
+            ]);
         }
 
         $this->set('customers', $customers);
