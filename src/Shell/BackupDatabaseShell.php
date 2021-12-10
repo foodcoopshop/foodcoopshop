@@ -53,8 +53,13 @@ class BackupDatabaseShell extends AppShell
         $configFileContent = '[mysqldump]
 host=%host%
 user=%user%
-password="%password%"';
+password="%password%"
+';
         $configFileContent = str_replace(['%host%', '%user%', '%password%'], [$dbConfig['host'], $dbConfig['username'], $dbConfig['password']], $configFileContent);
+        if (isset($dbConfig['port'])) {
+            $configFileContent .= 'port=' . $dbConfig['port'];
+        }
+
         $configFileObject->write($configFileContent);
 
         $cmdString = Configure::read('app.mysqlDumpCommand');
