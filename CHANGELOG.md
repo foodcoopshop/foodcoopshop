@@ -11,6 +11,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/Confuset.png" width="20"> [Confuset](https://github.com/Confuset)
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
+* <img src="https://github.com/ocapito.png" width="20"> [ocapito](https://github.com/ocapito)
 * <img src="https://github.com/pabneukistl.png" width="20"> [pabneukistl](https://github.com/pabneukistl)
 
 ### Verbesserungen
@@ -42,6 +43,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Fehlerhafte SQL-Abfrage mit MariaDB beim Erstellen der Bestelllisten. [I#724](https://github.com/foodcoopshop/foodcoopshop/issues/724) / [PR#726](https://github.com/foodcoopshop/foodcoopshop/pull/726) <a href="https://github.com/Confuset"><img src="https://github.com/Confuset.png" width="20"></a>
 - Die Sortierung von Mitgliedern / Herstellern funktioniert jetzt systemweit (z.B. in Admin-Bereich / Bestellungen) auch mit beginnenden Umlauten bzw. Kleinbuchstaben. [C](5edbc970cc688f7a116ffba04170b391cc5a2e77) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - CakePHP Update v4.3. [I#728](https://github.com/foodcoopshop/foodcoopshop/issues/728) / [PR#731](https://github.com/foodcoopshop/foodcoopshop/pull/731) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- BackupDatabaseShell now uses defined port. [PR#749](https://github.com/foodcoopshop/foodcoopshop/pull/749) <a href="https://github.com/ocapito"><img src="https://github.com/ocapito.png" width="20"></a>
 
 
 # v3.3.0
