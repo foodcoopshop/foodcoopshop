@@ -84,10 +84,8 @@ $paymentSum = 0;
 
 foreach ($payments as $payment) {
     $rowClass = '';
-    $additionalText = '';
     if ($payment->status == APP_DEL) {
         $rowClass = 'deactivated line-through';
-        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' '.__d('admin', 'deleted_on').' ' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' - '.__d('admin', 'does_not_appear_in_sum.').')';
     } else {
         $i ++;
         $paymentSum += $payment->amount;
@@ -97,6 +95,7 @@ foreach ($payments as $payment) {
 
     if ($paymentType == 'product') {
         echo '<td>';
+        if ($payment->status > APP_DEL) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 $this->Slug->getPaymentEdit($payment->id),
@@ -106,6 +105,7 @@ foreach ($payments as $payment) {
                     'escape' => false
                 ]
             );
+        }
         echo '</td>';
         echo '<td style="text-align:right;width:51px;">';
         switch ($payment->approval) {
@@ -129,6 +129,10 @@ foreach ($payments as $payment) {
                 ]
             );
         }
+        if ($payment->status == APP_DEL) {
+            $infoText = $this->Html->getPaymentText($paymentType) . ' '.__d('admin', 'deleted_on').' ' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' - '.__d('admin', 'does_not_appear_in_sum.');
+            echo '<i class="fas fa-minus-circle not-ok" title="' . h($infoText) . '"></i>';
+        }
         echo '</td>';
     }
 
@@ -138,7 +142,6 @@ foreach ($payments as $payment) {
     } else {
         echo $this->Html->getNameRespectingIsDeleted($payment->customer);
     }
-        echo $additionalText;
     echo '</td>';
 
     echo '<td style="text-align:right;width:140px;">';
