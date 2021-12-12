@@ -264,9 +264,9 @@ class OrderDetailsController extends AdminAppController
                 $storageLocationValue = $orderDetail->product->storage_location->rank;
             }
             $storageLocation[] = $storageLocationValue;
-            $customerName[] = StringComponent::slugify($orderDetail->customer->name);
-            $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
-            $productName[] = StringComponent::slugify($orderDetail->product_name);
+            $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
+            $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
+            $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
         }
         array_multisort(
             $storageLocation, SORT_ASC,
@@ -802,10 +802,10 @@ class OrderDetailsController extends AdminAppController
                         }
                     }
                     $deliveryDay[] = $orderDetail->pickup_day;
-                    $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
-                    $productName[] = StringComponent::slugify($orderDetail->product_name);
+                    $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
+                    $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
                     if (!empty($orderDetail->customer)) {
-                        $customerName[] = StringComponent::slugify($orderDetail->customer->name);
+                        $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
                     } else {
                         $customerName[] = '';
                     }

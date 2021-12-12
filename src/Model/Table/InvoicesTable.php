@@ -182,8 +182,8 @@ class InvoicesTable extends AppTable
 
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
         foreach($orderDetails as $orderDetail) {
-            $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
-            $productName[] = StringComponent::slugify($orderDetail->product_name);
+            $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
+            $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
             $deliveryDay[] = $orderDetail->pickup_day;
         }
 

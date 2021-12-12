@@ -225,7 +225,7 @@ class CartsTable extends AppTable
         $deliveryDay = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
             $deliveryDay[] = $cartProduct['nextDeliveryDayAsTimestamp'];
-            $productName[] = StringComponent::slugify($cartProduct['productName']);
+            $productName[] = mb_strtolower(StringComponent::slugify($cartProduct['productName']));
         }
 
         array_multisort(
