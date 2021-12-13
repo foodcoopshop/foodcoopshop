@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-13 10:39+0100\n"
-"PO-Revision-Date: 2021-12-13 10:53+0100\n"
+"POT-Creation-Date: 2021-12-13 11:28+0100\n"
+"PO-Revision-Date: 2021-12-13 11:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2256,11 +2256,17 @@ msgstr "As you placed your order earlier than {0} days ago, you get this reminde
 msgid "Please_find_your_cancellation_invoice_attached."
 msgstr "Please find your cancellation invoice attached."
 
-msgid "Please_find_your_current_invoice_attached."
-msgstr "Please find your current invoice attached."
+msgid "Please_find_your_invoice_attached."
+msgstr "Please find your invoice attached."
 
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "Thank you for your purchase!"
+
+msgid "Post_scriptum_abbreviation"
+msgstr "PS"
+
+msgid "Your_current_credit_equals_{0}."
+msgstr "Your current credit equals {0}."
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "this invoice contains all products that have been delivered in {0}."

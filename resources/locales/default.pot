@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-12-05 21:16+0100\n"
+"POT-Creation-Date: 2021-12-13 12:04+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1710,6 +1710,9 @@ msgid "Manufacturers:_inactive"
 msgstr ""
 
 msgid "Members:_inactive"
+msgstr ""
+
+msgid "deactivated"
 msgstr ""
 
 msgid "Please_enter_between_{0}_and_{1}_characters."

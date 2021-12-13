@@ -277,7 +277,7 @@ CREATE TABLE `fcs_invoices` (
   `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
   `paid_in_cash` tinyint(4) unsigned DEFAULT '0',
   `filename` varchar(512) NOT NULL DEFAULT '',
-  `email_status` datetime DEFAULT NULL,
+  `email_status` varchar(30) DEFAULT NULL,
   `cancellation_invoice_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -27,19 +27,20 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
+            <p><?php echo __d('admin', 'Please_find_your_invoice_attached.'); ?></p>
+
+            <p><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></p>
+
             <?php if (!$paidInCash) { ?>
-                <p>
+                <p><br />
                     <?php
-                        echo __d('admin', 'your_current_credit_equals_{0}.', [
+                        echo __d('admin', 'Post_scriptum_abbreviation') . ': ';
+                        echo __d('admin', 'Your_current_credit_equals_{0}.', [
                             '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
                         ]);
                     ?>
                 </p>
             <?php } ?>
-
-            <p><?php echo __d('admin', 'Please_find_your_current_invoice_attached.'); ?></p>
-
-            <p><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></p>
 
         </td>
 

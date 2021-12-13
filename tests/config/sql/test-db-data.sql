@@ -425,7 +425,8 @@ INSERT INTO `phinxlog` VALUES
 (20210923090820,'AllowNullAsPurchasePrice','2021-09-23 09:09:52','2021-09-23 09:09:52',0),
 (20211028083847,'UseExistingBarcode','2021-10-28 08:45:02','2021-10-28 08:45:02',0),
 (20211123095227,'DeactivateCheckCreditReminder','2021-11-23 10:01:05','2021-11-23 10:01:05',0),
-(20211213081433,'ImproveCustomerNotifications','2021-12-13 09:24:45','2021-12-13 09:24:46',0);
+(20211213081433,'ImproveCustomerNotifications','2021-12-13 09:24:45','2021-12-13 09:24:46',0),
+(20211213081434,'ImproveCustomerNotifications','2021-12-13 10:44:55','2021-12-13 10:44:55',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

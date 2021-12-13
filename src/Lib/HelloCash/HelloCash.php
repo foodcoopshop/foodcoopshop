@@ -90,10 +90,13 @@ class HelloCash
             '',
             $currentDay,
             $paidInCash,
+            $customer->invoices_per_email_enabled,
         );
 
         $newInvoice->original_invoice_id = $originalInvoiceId;
-        $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
+        if ($customer->invoices_per_email_enabled) {
+            $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
+        }
 
         return $responseObject;
     }

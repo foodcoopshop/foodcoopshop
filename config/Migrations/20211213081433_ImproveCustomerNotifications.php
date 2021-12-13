@@ -11,5 +11,6 @@ class ImproveCustomerNotifications extends AbstractMigration
         $this->execute("ALTER TABLE `fcs_customer` ADD `pickup_day_reminder_enabled` TINYINT UNSIGNED NULL DEFAULT '1' AFTER `invoices_per_email_enabled`;");
         $this->execute("ALTER TABLE `fcs_customer` ADD `credit_upload_reminder_enabled` TINYINT UNSIGNED NULL DEFAULT '1' AFTER `pickup_day_reminder_enabled`;");
         $this->execute("ALTER TABLE `fcs_customer` CHANGE `email_order_reminder` `email_order_reminder_enabled` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0';");
+        $this->execute("ALTER TABLE `fcs_invoices` CHANGE `email_status` `email_status` VARCHAR(30) NULL DEFAULT NULL;");
     }
 }

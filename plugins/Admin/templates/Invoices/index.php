@@ -14,6 +14,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
@@ -165,7 +166,13 @@ echo '<table class="list invoices-table no-clone-last-row">';
                 if (is_null($invoice->email_status)) {
                     echo '<i class="fa fa-times not-ok"></i>';
                 } else {
-                    echo $invoice->email_status->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
+                    try {
+                        $dateNTimeObject = FrozenTime::createFromFormat(Configure::read('DateFormat.DatabaseWithTimeAlt'), $invoice->email_status);
+                        $emailStatusString = $dateNTimeObject->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
+                    } catch(InvalidArgumentException $e) {
+                        $emailStatusString = $invoice->email_status;
+                    }
+                    echo $emailStatusString;
                 }
             echo '</td>';
 
