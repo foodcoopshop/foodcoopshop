@@ -247,7 +247,16 @@ class HelloCash
         $taxRates = $this->prepareTaxesFromResponse($responseObject, false);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $newInvoice = $this->Invoice->saveInvoice($responseObject->invoice_id, $data->id_customer, $taxRates, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice(
+            $responseObject->invoice_id,
+            $data->id_customer,
+            $taxRates,
+            $responseObject->invoice_number,
+            '',
+            $currentDay,
+            $paidInCash,
+            $data->invoices_per_email_enabled,
+        );
 
         $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
 
