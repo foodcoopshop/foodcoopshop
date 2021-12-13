@@ -21,7 +21,9 @@
 
     <tr>
         <td>
+
             <p><?php echo __d('admin', 'Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}.', ['<b>' . $formattedPickupDay . '</b>']); ?></p>
+
             <ul style="padding-left:10px;">
                 <?php
                      foreach($futureOrderDetails as $orderDetail) {
@@ -29,7 +31,12 @@
                      }
                 ?>
             </ul>
+
             <p><?php echo __d('admin', 'As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder.', [$diffOrderAndPickupInDays]); ?></p>
+
+            <p>
+                <?php echo __d('admin', 'And_here_you_can_unsubscribe_this_email_reminder'); ?>: <br /> <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+            </p>
 
         </td>
     </tr>
