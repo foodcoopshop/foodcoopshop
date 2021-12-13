@@ -53,7 +53,7 @@ jobs:
    
       - name: Setup DB
         run: |
-          /etc/init.d/mysql start
+          sudo /etc/init.d/mysql start
           mysql --version
           mysql -h 127.0.0.1 --port 8888 -u root -ppassword foodcoopshop_test < ./config/sql/_installation/clean-db-structure.sql
           mysql -h 127.0.0.1 --port 8888 -u root -ppassword foodcoopshop_test < ./tests/config/sql/test-db-data.sql
