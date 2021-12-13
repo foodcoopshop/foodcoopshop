@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-12-09 10:09+0100\n"
+"POT-Creation-Date: 2021-12-13 10:39+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1049,10 +1049,31 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+msgid "Notifications"
+msgstr ""
+
 msgid "Order_reminder"
 msgstr ""
 
 msgid "Want_to_receive_order_reminder_emails?"
+msgstr ""
+
+msgid "Pickup_day_reminder"
+msgstr ""
+
+msgid "Want_to_receive_pickup_day_reminder_emails?"
+msgstr ""
+
+msgid "Invoices_per_email"
+msgstr ""
+
+msgid "Want_to_receive_invoices_per_email?"
+msgstr ""
+
+msgid "Credit_upload_reminder"
+msgstr ""
+
+msgid "Want_to_receive_credit_upload_reminder?"
 msgstr ""
 
 msgid "Check_credit_reminder"
@@ -1061,7 +1082,13 @@ msgstr ""
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
 msgstr ""
 
-msgid "Prices"
+msgid "Self_service_mode"
+msgstr ""
+
+msgid "Generate_my_member_card"
+msgstr ""
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
 msgstr ""
 
 msgid "Paying_with_time_module_active?"
@@ -1076,13 +1103,10 @@ msgstr ""
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr ""
 
-msgid "Self_service_mode"
+msgid "Superadmin_functions"
 msgstr ""
 
-msgid "Generate_my_member_card"
-msgstr ""
-
-msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgid "Prices"
 msgstr ""
 
 msgid "Delete_member_irrevocably?"
@@ -1419,9 +1443,6 @@ msgid "How_do_I_use_the_function_delivery_break?"
 msgstr ""
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
-msgstr ""
-
-msgid "Notifications"
 msgstr ""
 
 msgid "Order_lists_by_email"
@@ -1920,9 +1941,6 @@ msgid "Click_to_change_member"
 msgstr ""
 
 msgid "Invoice_cannot_be_generated"
-msgstr ""
-
-msgid "Latest_invoices"
 msgstr ""
 
 msgid "No_invoices_available."

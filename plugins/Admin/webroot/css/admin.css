@@ -692,7 +692,7 @@ form.fcs-form input[type="checkbox"] {
     left: 200px;
 }
 body.customers .delete-customer-button {
-    float: right;
+    float: left;
     clear: both;
     margin-bottom: 15px;
     margin-top: 15px;

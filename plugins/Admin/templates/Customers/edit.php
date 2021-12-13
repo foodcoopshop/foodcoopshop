@@ -119,12 +119,34 @@ echo $this->Form->control('Customers.address_customer.phone', [
     'label' => __d('admin', 'Phone')
 ]);
 
+echo '<div class="sc"></div>';
+echo '<h2 style="margin-top:20px;">'.__d('admin', 'Notifications').'</h2>';
+
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo $this->Form->control('Customers.email_order_reminder_enabled', [
         'label' => __d('admin', 'Order_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_order_reminder_emails?').'</span>',
         'type' => 'checkbox',
-        'escape' => false
+        'escape' => false,
     ]);
+    echo $this->Form->control('Customers.pickup_day_reminder_enabled', [
+        'label' => __d('admin', 'Pickup_day_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_pickup_day_reminder_emails?').'</span>',
+        'type' => 'checkbox',
+        'escape' => false,
+    ]);
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        echo $this->Form->control('Customers.invoices_per_email_enabled', [
+            'label' => __d('admin', 'Invoices_per_email').'<span class="after small">'.__d('admin', 'Want_to_receive_invoices_per_email?').'</span>',
+            'type' => 'checkbox',
+            'escape' => false,
+        ]);
+    }
+    if (!$this->Configuration->isCashlessPaymentTypeManual()) {
+        echo $this->Form->control('Customers.credit_upload_reminder_enabled', [
+            'label' => __d('admin', 'Credit_upload_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_credit_upload_reminder?').'</span>',
+            'type' => 'checkbox',
+            'escape' => false,
+        ]);
+    }
 }
 
 if ($this->Html->paymentIsCashless()) {
@@ -133,30 +155,6 @@ if ($this->Html->paymentIsCashless()) {
             $this->Number->formatAsCurrency(Configure::read('appDb.FCS_CHECK_CREDIT_BALANCE_LIMIT')),
         ]).'</span>',
         'type' => 'checkbox',
-        'escape' => false
-    ]);
-}
-
-if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isSuperadmin()) {
-    echo $this->Form->control('Customers.shopping_price', [
-        'type' => 'select',
-        'label' => __d('admin', 'Prices'),
-        'options' => $this->Html->getShoppingPricesForDropdown(),
-        'escape' => false,
-    ]);
-}
-
-if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    $label = __d('admin', 'Paying_with_time_module_active?') . ' ';
-    $label .= '<span class="after small">'.__d('admin', 'I_want_to_be_able_to_pay_my_products_also_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a>';
-    if (!$timebasedCurrencyDisableOptionAllowed) {
-        $label .= ' Zum Deaktivieren der Option muss dein ' . $this->TimebasedCurrency->getName() . ' ausgeglichen sein, derzeit beträgt es '.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'.';
-    }
-    $label .= '</span>';
-    echo $this->Form->control('Customers.timebased_currency_enabled', [
-        'label' => $label,
-        'type' => 'checkbox',
-        'disabled' => (!$timebasedCurrencyDisableOptionAllowed ? 'disabled' : ''),
         'escape' => false
     ]);
 }
@@ -177,7 +175,34 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     ]);
 }
 
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    $label = __d('admin', 'Paying_with_time_module_active?') . ' ';
+    $label .= '<span class="after small">'.__d('admin', 'I_want_to_be_able_to_pay_my_products_also_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a>';
+    if (!$timebasedCurrencyDisableOptionAllowed) {
+        $label .= ' Zum Deaktivieren der Option muss dein ' . $this->TimebasedCurrency->getName() . ' ausgeglichen sein, derzeit beträgt es '.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'.';
+    }
+    $label .= '</span>';
+    echo $this->Form->control('Customers.timebased_currency_enabled', [
+        'label' => $label,
+        'type' => 'checkbox',
+        'disabled' => (!$timebasedCurrencyDisableOptionAllowed ? 'disabled' : ''),
+        'escape' => false
+    ]);
+}
+
 if ($appAuth->isSuperadmin()) {
+
+    echo '<div class="sc"></div>';
+    echo '<h2>'.__d('admin', 'Superadmin_functions').'</h2>';
+
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isSuperadmin()) {
+        echo $this->Form->control('Customers.shopping_price', [
+            'type' => 'select',
+            'label' => __d('admin', 'Prices'),
+            'options' => $this->Html->getShoppingPricesForDropdown(),
+            'escape' => false,
+        ]);
+    }
     echo '<a class="delete-customer-button btn btn-danger" href="javascript:void(0);">'.__d('admin', 'Delete_member_irrevocably?').'</a>';
 }
 
