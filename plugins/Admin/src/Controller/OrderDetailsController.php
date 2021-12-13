@@ -825,7 +825,7 @@ class OrderDetailsController extends AdminAppController
         if (isset($sortField)) {
             $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
             $orderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection, [
-                'type' => 'locale',
+                'type' => in_array($sortField, ['manufacturer_name', 'name']) ? 'locale' : 'regular',
                 'ignoreCase' => true,
             ]);
         }
