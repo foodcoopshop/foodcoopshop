@@ -748,7 +748,7 @@ class CartComponent extends Component
     private function sendInstantOrderNotificationToManufacturers($cartProducts)
     {
 
-        if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
+        if (!$this->AppAuth->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             return [];
         }
 
