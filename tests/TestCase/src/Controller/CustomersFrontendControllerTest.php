@@ -146,7 +146,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         'Customers' => [
             'firstname' => '',
             'lastname' => '',
-            'email_order_reminder' => 1,
+            'email_order_reminder_enabled' => 1,
             'terms_of_use_accepted_date_checkbox' => 0,
             'id_default_group' => CUSTOMER_GROUP_SUPERADMIN, //must not be applied!
             'active' => APP_ON, // must not be applied!
@@ -311,7 +311,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertEquals($customerAddressEmail, $customer->email);
         $this->assertEquals('John', $customer->firstname);
         $this->assertEquals('Doe', $customer->lastname);
-        $this->assertEquals(1, $customer->email_order_reminder);
+        $this->assertEquals(1, $customer->email_order_reminder_enabled);
         $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')));
 
         // check address record
