@@ -139,18 +139,21 @@ class ReportsController extends AdminAppController
                                     ]
                                 ])->first();
                                 $sumAmount += $csvPayment->amount;
-                                $email = new AppMailer();
-                                $email->viewBuilder()->setTemplate('Admin.credit_csv_upload_successful');
-                                $email->setTo($customer->email)
-                                ->setSubject(__d('admin', 'Your_transaction_({0})_was_added_to_the_credit_system.', [
-                                    Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount),
-                                ]))
-                                ->setViewVars([
-                                    'customer' => $customer,
-                                    'csvPayment' => $csvPayment,
-                                    'appAuth' => $this->AppAuth,
-                                ]);
-                                $email->send();
+
+                                if ($customer->credit_upload_reminder_enabled) {
+                                    $email = new AppMailer();
+                                    $email->viewBuilder()->setTemplate('Admin.credit_csv_upload_successful');
+                                    $email->setTo($customer->email)
+                                    ->setSubject(__d('admin', 'Your_transaction_({0})_was_added_to_the_credit_system.', [
+                                        Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount),
+                                    ]))
+                                    ->setViewVars([
+                                        'customer' => $customer,
+                                        'csvPayment' => $csvPayment,
+                                        'appAuth' => $this->AppAuth,
+                                    ]);
+                                    $email->send();
+                                }
                             }
                             $i++;
                         }
