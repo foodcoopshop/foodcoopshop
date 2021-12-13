@@ -70,6 +70,25 @@ class PickupReminderShellTest extends AppCakeTestCase
 
     }
 
+    public function testOneCustomerHasFutureOrdersForNextPickupDayNotificationDisabled()
+    {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'pickup_day_reminder_enabled', 0);
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->prepareOrderDetails();
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get(2),
+                [
+                    'created' => FrozenTime::create(2018,3,9,0,0,0),
+                    'pickup_day' => FrozenDate::create(2018,3,16)
+                ]
+            )
+        );
+        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
+        $this->assertMailCount(0);
+    }
+
+
     private function prepareOrderDetails()
     {
         $this->OrderDetail->save(
