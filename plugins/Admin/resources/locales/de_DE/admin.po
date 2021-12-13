@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-13 11:28+0100\n"
-"PO-Revision-Date: 2021-12-13 12:29+0100\n"
+"POT-Creation-Date: 2021-12-13 14:54+0100\n"
+"PO-Revision-Date: 2021-12-13 14:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -2136,8 +2136,8 @@ msgstr "Bitte überweise bald wieder ein neues Guthaben auf unser Konto und verg
 msgid "Transactions_were_checked_until_{0}."
 msgstr "Es wurden alle Überweisungen bis zum {0} berücksichtigt."
 
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr "Und hier kannst du diese E-Mail abbestellen"
+msgid "Here_you_can_unsubscribe_this_email_reminder"
+msgstr "Hier kannst du diese E-Mail abbestellen"
 
 msgid "Amount_(Money)"
 msgstr "Betrag"
@@ -2256,17 +2256,17 @@ msgstr "Du bekommst diese E-Mail, weil deine Bestellung länger als {0} Tage her
 msgid "Please_find_your_cancellation_invoice_attached."
 msgstr "Deine Storno-Rechnung befindet sich im Anhang."
 
-msgid "Please_find_your_invoice_attached."
-msgstr "Deine Rechnung befindet sich im Anhang."
-
-msgid "{0}_thanks_you_for_your_purchase!"
-msgstr "{0} sagt Danke für Deinen Einkauf!"
-
 msgid "Post_scriptum_abbreviation"
 msgstr "PS"
 
 msgid "Your_current_credit_equals_{0}."
 msgstr "Dein aktuelles Guthaben beträgt {0}."
+
+msgid "Please_find_your_invoice_attached."
+msgstr "Deine Rechnung befindet sich im Anhang."
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr "{0} sagt Danke für Deinen Einkauf!"
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "in dieser Rechnung sind alle Produkte enthalten, die im {0} geliefert wurden."

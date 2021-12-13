@@ -37,7 +37,7 @@ use Cake\Core\Configure;
             <p><?php echo __d('admin', 'As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder.', [$diffOrderAndPickupInDays]); ?></p>
 
             <p>
-                <?php echo __d('admin', 'And_here_you_can_unsubscribe_this_email_reminder'); ?>: <br /> <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
             </p>
 
         </td>
