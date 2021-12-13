@@ -258,7 +258,9 @@ class HelloCash
             $data->invoices_per_email_enabled,
         );
 
-        $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
+        if ($data->invoices_per_email_enabled) {
+            $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
+        }
 
         return $responseObject;
 
