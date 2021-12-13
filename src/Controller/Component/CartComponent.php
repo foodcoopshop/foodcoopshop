@@ -573,7 +573,7 @@ class CartComponent extends Component
 
                     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-                        $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+                        $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
                         $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
 
                         if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
