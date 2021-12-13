@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-09 10:09+0100\n"
-"PO-Revision-Date: 2021-12-12 19:41+0100\n"
+"POT-Creation-Date: 2021-12-13 14:54+0100\n"
+"PO-Revision-Date: 2021-12-13 14:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1050,11 +1050,32 @@ msgstr "Handy"
 msgid "Phone"
 msgstr "Telefon"
 
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
 msgid "Order_reminder"
 msgstr "Bestell-Erinnerung"
 
 msgid "Want_to_receive_order_reminder_emails?"
 msgstr "Ich möchte 1x wöchentlich per E-Mail ans Bestellen erinnert werden."
+
+msgid "Pickup_day_reminder"
+msgstr "Abholtag-Erinnerung"
+
+msgid "Want_to_receive_pickup_day_reminder_emails?"
+msgstr "Ich möchte bei Sammelbestellungen an das Abholen meiner Produkte erinnert werden."
+
+msgid "Invoices_per_email"
+msgstr "Rechnungen per E-Mail"
+
+msgid "Want_to_receive_invoices_per_email?"
+msgstr "Ich möchte meine Rechnungen per E-Mail erhalten. Du findest deine Rechnungen immer unter <a href=\"/admin/invoices/myInvoices\">Meine Rechnungen</a>."
+
+msgid "Credit_upload_reminder"
+msgstr "Überweisung ins Guthaben-System übernommen"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
 
 msgid "Check_credit_reminder"
 msgstr "Guthaben-Aufladung-Erinnerung"
@@ -1062,8 +1083,14 @@ msgstr "Guthaben-Aufladung-Erinnerung"
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
 msgstr "Ich möchte 1x wöchentlich per E-Mail benachrichtigt werden, wenn mein Guthaben weniger als {0} beträgt."
 
-msgid "Prices"
-msgstr "Preise"
+msgid "Self_service_mode"
+msgstr "Selbstbedienungs-Modus"
+
+msgid "Generate_my_member_card"
+msgstr "Meine Mitgliedskarte generieren"
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgstr "Ich möchte die Kamera meines Smartphones zum Scannen der Barcodes benutzen."
 
 msgid "Paying_with_time_module_active?"
 msgstr "Stundenabrechnungs-Modul aktiv?"
@@ -1077,14 +1104,11 @@ msgstr "stundenabrechnungs-modul"
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
 
-msgid "Self_service_mode"
-msgstr "Selbstbedienungs-Modus"
+msgid "Superadmin_functions"
+msgstr ""
 
-msgid "Generate_my_member_card"
-msgstr "Meine Mitgliedskarte generieren"
-
-msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
-msgstr "Ich möchte die Kamera meines Smartphones zum Scannen der Barcodes benutzen."
+msgid "Prices"
+msgstr "Preise"
 
 msgid "Delete_member_irrevocably?"
 msgstr "Mitgliedskonto unwiderruflich löschen?"
@@ -1421,9 +1445,6 @@ msgstr "Wie verwende ich die Funktion \"Lieferpause\"?"
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Hersteller-Profil und Produkte werden <b>nur für eingeloggte Mitglieder</b> angezeigt."
-
-msgid "Notifications"
-msgstr "Benachrichtigungen"
 
 msgid "Order_lists_by_email"
 msgstr "Bestelllisten per E-Mail"
@@ -1923,9 +1944,6 @@ msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
 msgid "Invoice_cannot_be_generated"
 msgstr "Keine Rechnung erstellbar"
 
-msgid "Latest_invoices"
-msgstr "Letzte Rechnungen"
-
 msgid "No_invoices_available."
 msgstr "Keine Rechnungen vorhanden."
 
@@ -2118,8 +2136,8 @@ msgstr "Bitte überweise bald wieder ein neues Guthaben auf unser Konto und verg
 msgid "Transactions_were_checked_until_{0}."
 msgstr "Es wurden alle Überweisungen bis zum {0} berücksichtigt."
 
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr "Und hier kannst du diese E-Mail abbestellen"
+msgid "Here_you_can_unsubscribe_this_email_reminder"
+msgstr "Hier kannst du diese E-Mail abbestellen"
 
 msgid "Amount_(Money)"
 msgstr "Betrag"
@@ -2238,8 +2256,14 @@ msgstr "Du bekommst diese E-Mail, weil deine Bestellung länger als {0} Tage her
 msgid "Please_find_your_cancellation_invoice_attached."
 msgstr "Deine Storno-Rechnung befindet sich im Anhang."
 
-msgid "Please_find_your_current_invoice_attached."
-msgstr "Die aktuelle Rechnung befindet sich im Anhang."
+msgid "Post_scriptum_abbreviation"
+msgstr "PS"
+
+msgid "Your_current_credit_equals_{0}."
+msgstr "Dein aktuelles Guthaben beträgt {0}."
+
+msgid "Please_find_your_invoice_attached."
+msgstr "Deine Rechnung befindet sich im Anhang."
 
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "{0} sagt Danke für Deinen Einkauf!"
@@ -2330,6 +2354,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Latest_invoices"
+#~ msgstr "Letzte Rechnungen"
 
 #, fuzzy
 #~ msgid "Newbie_has_max_{0}_orders."

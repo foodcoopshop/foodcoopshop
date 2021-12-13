@@ -13,7 +13,7 @@
         "tmp_new_passwd": null,
         "activate_new_password_code": null,
         "auto_login_hash": null,
-        "email_order_reminder": false,
+        "email_order_reminder_enabled": false,
         "terms_of_use_accepted_date": "2018-08-03",
         "activate_email_code": null,
         "active": true,
@@ -24,6 +24,9 @@
         "user_id_registrierkasse": 0,
         "shopping_price": "SP",
         "check_credit_reminder_enabled": 1,
+        "invoices_per_email_enabled": 1,
+        "pickup_day_reminder_enabled": 1,
+        "credit_upload_reminder_enabled": 1,
         "address_customer": null,
         "name": "Demo Gem\u00fcse-Hersteller"
     },

@@ -62,6 +62,34 @@ class InvoicesControllerTest extends AppCakeTestCase
 
     }
 
+    public function testGenerateInvoiceSendPerEmailDeactivated()
+    {
+
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 0;
+
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        $this->commandRunner->run(['cake', 'send_invoices_to_customers']);
+        $this->runAndAssertQueue();
+
+        $this->assertEquals($invoice->email_status, 'deaktiviert');
+        $this->assertMailCount(0);
+
+    }
+
     public function testCancel()
     {
 

@@ -34,7 +34,7 @@ use Cake\Core\Configure;
             </p>
 
             <p>
-                <?php echo __d('admin', 'And_here_you_can_unsubscribe_this_email_reminder'); ?>: <br /> <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
             </p>
 
         </td>

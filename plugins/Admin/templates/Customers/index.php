@@ -68,7 +68,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder',  __d('admin', 'Reminder')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Reminder')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
@@ -267,8 +267,8 @@ foreach ($customers as $customer) {
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';
-        echo $customer->email_order_reminder;
-        $sumEmailReminders += $customer->email_order_reminder;
+        echo $customer->email_order_reminder_enabled;
+        $sumEmailReminders += $customer->email_order_reminder_enabled;
         echo '</td>';
     }
 

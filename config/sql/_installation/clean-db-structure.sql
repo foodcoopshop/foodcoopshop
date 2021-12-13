@@ -212,7 +212,7 @@ CREATE TABLE `fcs_customer` (
   `tmp_new_passwd` char(60) DEFAULT NULL,
   `activate_new_password_code` varchar(12) DEFAULT NULL,
   `auto_login_hash` varchar(40) DEFAULT NULL,
-  `email_order_reminder` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `email_order_reminder_enabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `terms_of_use_accepted_date` date NOT NULL DEFAULT '1000-01-01',
   `activate_email_code` varchar(12) DEFAULT NULL,
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -223,6 +223,9 @@ CREATE TABLE `fcs_customer` (
   `user_id_registrierkasse` int(10) unsigned DEFAULT '0',
   `shopping_price` varchar(2) DEFAULT 'SP',
   `check_credit_reminder_enabled` tinyint(3) unsigned DEFAULT '1',
+  `invoices_per_email_enabled` tinyint(3) unsigned DEFAULT '1',
+  `pickup_day_reminder_enabled` tinyint(3) unsigned DEFAULT '1',
+  `credit_upload_reminder_enabled` tinyint(3) unsigned DEFAULT '1',
   PRIMARY KEY (`id_customer`),
   KEY `customer_email` (`email`),
   KEY `customer_login` (`email`,`passwd`),
@@ -274,7 +277,7 @@ CREATE TABLE `fcs_invoices` (
   `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
   `paid_in_cash` tinyint(4) unsigned DEFAULT '0',
   `filename` varchar(512) NOT NULL DEFAULT '',
-  `email_status` datetime DEFAULT NULL,
+  `email_status` varchar(30) DEFAULT NULL,
   `cancellation_invoice_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

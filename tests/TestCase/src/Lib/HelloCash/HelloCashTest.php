@@ -74,7 +74,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertMailCount(2);
     }
 
-    public function testGenerateInvoice()
+    public function testGenerateInvoiceSendPerEmailActivated()
     {
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
@@ -109,6 +109,32 @@ class HelloCashTest extends AppCakeTestCase
         $this->getAndAssertOrderDetailsAfterInvoiceGeneration($invoice->id, 5);
         $this->getAndAssertPaymentsAfterInvoiceGeneration($customerId);
 
+    }
+
+    public function testGenerateInvoiceSendPerEmailDeactivated()
+    {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 0;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoice = $this->Invoice->find('all', [])->first();
+        $this->HelloCash->getInvoice($invoice->id, false);
+        $this->runAndAssertQueue();
+
+        $this->assertMailCount(1);
+
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id' => $invoice->id,
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ]
+        ])->first();
+        $this->assertEquals($invoice->email_status, 'deaktiviert');
     }
 
     public function testCancelInvoice()

@@ -52,7 +52,7 @@ class EmailOrderReminderShell extends AppShell
         $this->startTimeLogging();
 
         $conditions = [
-            'Customers.email_order_reminder' => 1,
+            'Customers.email_order_reminder_enabled' => 1,
             'Customers.active' => 1
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();

@@ -9,8 +9,6 @@ use Cake\I18n\FrozenTime;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
-use Cake\Mailer\Transport\MailTransport;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

@@ -701,7 +701,7 @@ class CustomersController extends AdminAppController
 
         $customers = $this->paginate($query, [
             'sortableFields' => [
-                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder', 'Customers.date_add', 'Customers.timebased_currency_enabled',
+                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder_enabled', 'Customers.date_add', 'Customers.timebased_currency_enabled',
             ],
             'order' => [
                 'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'

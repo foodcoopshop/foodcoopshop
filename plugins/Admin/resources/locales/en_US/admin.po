@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-09 10:09+0100\n"
-"PO-Revision-Date: 2021-12-09 10:10+0100\n"
+"POT-Creation-Date: 2021-12-13 14:54+0100\n"
+"PO-Revision-Date: 2021-12-13 14:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -1050,11 +1050,32 @@ msgstr "Mobile"
 msgid "Phone"
 msgstr "Phone"
 
+msgid "Notifications"
+msgstr "Notifications"
+
 msgid "Order_reminder"
 msgstr "Order reminder"
 
 msgid "Want_to_receive_order_reminder_emails?"
 msgstr "Do you want to receive a weekly order reminder e-mail?"
+
+msgid "Pickup_day_reminder"
+msgstr "Pickup day reminder"
+
+msgid "Want_to_receive_pickup_day_reminder_emails?"
+msgstr "Do you want to receive a pickup day reminder e-mail?"
+
+msgid "Invoices_per_email"
+msgstr "Invoices by email"
+
+msgid "Want_to_receive_invoices_per_email?"
+msgstr "Do you want to receive your invoices per e-mail?"
+
+msgid "Credit_upload_reminder"
+msgstr "Credit upload reminder"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Do you want to receive an e-mail when your transaction is uploaded to the credit system?"
 
 msgid "Check_credit_reminder"
 msgstr "Check credit reminder"
@@ -1062,8 +1083,14 @@ msgstr "Check credit reminder"
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
 msgstr "Do you want to receive a weekly reminder e-mail when your credit is lower than {0}?"
 
-msgid "Prices"
-msgstr "Prices"
+msgid "Self_service_mode"
+msgstr "Self-service mode"
+
+msgid "Generate_my_member_card"
+msgstr "Generate my member card"
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgstr "I want to use my smartphone's camera for barcode scanning."
 
 msgid "Paying_with_time_module_active?"
 msgstr "Paying-with-time-module active?"
@@ -1077,14 +1104,11 @@ msgstr "paying-with-time-module"
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "How do I use the paying-with-time-module?"
 
-msgid "Self_service_mode"
-msgstr "Self-service mode"
+msgid "Superadmin_functions"
+msgstr ""
 
-msgid "Generate_my_member_card"
-msgstr "Generate my member card"
-
-msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
-msgstr "I want to use my smartphone's camera for barcode scanning."
+msgid "Prices"
+msgstr "Prices"
 
 msgid "Delete_member_irrevocably?"
 msgstr "Delete account irrevocably?"
@@ -1421,9 +1445,6 @@ msgstr "How do I use the function \"delivery break\"?"
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Manufacturer provile and products are only visible for signed in members."
-
-msgid "Notifications"
-msgstr "Notifications"
 
 msgid "Order_lists_by_email"
 msgstr "Order lists by email"
@@ -1923,9 +1944,6 @@ msgstr "Click to change member"
 msgid "Invoice_cannot_be_generated"
 msgstr "Invoice cannot be generated"
 
-msgid "Latest_invoices"
-msgstr "Latest invoices"
-
 msgid "No_invoices_available."
 msgstr "No invoices available."
 
@@ -2118,8 +2136,8 @@ msgstr "Pleas soon transfer new credit to our bank account and do not forget to 
 msgid "Transactions_were_checked_until_{0}."
 msgstr "Transactions were checked until {0}."
 
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr "And here you can unsubscribe from this email reminder"
+msgid "Here_you_can_unsubscribe_this_email_reminder"
+msgstr "Here you can unsubscribe from this email reminder"
 
 msgid "Amount_(Money)"
 msgstr "Amount"
@@ -2238,8 +2256,14 @@ msgstr "As you placed your order earlier than {0} days ago, you get this reminde
 msgid "Please_find_your_cancellation_invoice_attached."
 msgstr "Please find your cancellation invoice attached."
 
-msgid "Please_find_your_current_invoice_attached."
-msgstr "Please find your current invoice attached."
+msgid "Post_scriptum_abbreviation"
+msgstr "PS"
+
+msgid "Your_current_credit_equals_{0}."
+msgstr "Your current credit equals {0}."
+
+msgid "Please_find_your_invoice_attached."
+msgstr "Please find your invoice attached."
 
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "Thank you for your purchase!"
@@ -2330,6 +2354,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Latest_invoices"
+#~ msgstr "Latest invoices"
 
 #, fuzzy
 #~ msgid "Newbie_has_max_{0}_orders."

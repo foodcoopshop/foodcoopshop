@@ -132,12 +132,14 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     ]);
     echo '<div class="sc"></div>';
 
-    echo $this->Form->control('Manufacturers.send_instant_order_notification', [
-        'label' => __d('admin', 'Instant_orders').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' .__d('admin', 'to_receive_an_email_on_every_instant_order.').'</span>',
-        'type' => 'checkbox',
-        'escape' => false
-    ]);
-    echo '<div class="sc"></div>';
+    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        echo $this->Form->control('Manufacturers.send_instant_order_notification', [
+            'label' => __d('admin', 'Instant_orders').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' .__d('admin', 'to_receive_an_email_on_every_instant_order.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+        echo '<div class="sc"></div>';
+    }
 
     echo '<h2>'.__d('admin', 'Other_settings').'</h2>';
 

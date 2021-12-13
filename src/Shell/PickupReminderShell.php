@@ -39,7 +39,8 @@ class PickupReminderShell extends AppShell
         $this->startTimeLogging();
 
         $conditions = [
-            'Customers.active' => 1
+            'Customers.pickup_day_reminder_enabled' => 1,
+            'Customers.active' => 1,
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();

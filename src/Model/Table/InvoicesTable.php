@@ -296,7 +296,7 @@ class InvoicesTable extends AppTable
         return $lastInvoice;
     }
 
-    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)
+    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash, $invoicesPerEmailEnabled)
     {
 
         $invoiceData = [
@@ -307,6 +307,7 @@ class InvoicesTable extends AppTable
             'created' => new FrozenTime($currentDay),
             'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
+            'email_status' => $invoicesPerEmailEnabled ? null : __('deactivated'),
         ];
         foreach($taxRates as $taxRate => $values) {
             $invoiceData['invoice_taxes'][] = [

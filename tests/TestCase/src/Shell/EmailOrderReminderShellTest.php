@@ -93,7 +93,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
 
     public function testIfServiceNotSubscribed()
     {
-        $query = 'UPDATE '.$this->Customer->getTable().' SET email_order_reminder = 0;';
+        $query = 'UPDATE '.$this->Customer->getTable().' SET email_order_reminder_enabled = 0;';
         $this->dbConnection->query($query);
         $this->commandRunner->run(['cake', 'email_order_reminder']);
         $this->assertMailCount(0);
