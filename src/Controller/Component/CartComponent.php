@@ -291,12 +291,12 @@ class CartComponent extends Component
                         // stock available check for attribute
                         if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available) && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
-                            $attribute = $this->Attribute->find('all', [
+                            $attributeEntity = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
-                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
+                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                             $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
@@ -305,12 +305,12 @@ class CartComponent extends Component
                         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                             if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
                                 $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
-                                $attribute = $this->Attribute->find('all', [
+                                $attributeEntity = $this->Attribute->find('all', [
                                     'conditions' => [
                                         'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                     ]
                                 ])->first();
-                                $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>']);
+                                $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>']);
                                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                                 $cartErrors[$cartProduct['productId']][] = $message;
                             }
