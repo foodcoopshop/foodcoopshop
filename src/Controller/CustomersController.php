@@ -394,7 +394,11 @@ class CustomersController extends FrontendController
 
                     // write action log
                     $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-                    $message = __('Member_{0}_created_an_account.', [$this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname')]);
+                    $fullname = $this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname');
+                    if (Configure::read('app.customerMainNamePart') == 'lastname') {
+                        $fullname = $this->getRequest()->getData('Customers.lastname') . ' ' . $this->getRequest()->getData('Customers.firstname');
+                    }
+                    $message = __('{0}_created_an_account.', [$fullname]);
 
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
