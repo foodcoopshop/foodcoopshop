@@ -167,10 +167,11 @@ if (!is_null(Configure::read('Security.salt'))) {
     Security::setSalt(Configure::consume('Security.salt'));
 }
 
-if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
-    || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
-        Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
-    }
+if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
+    Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
+    // always set to app.customerMainNamePart to firstname for unit tests even if different in custom_config.php
+    Configure::write('app.customerMainNamePart', 'firstname');
+}
 
 /*
  * Setup detectors for mobile and tablet.
