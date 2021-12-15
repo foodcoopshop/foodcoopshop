@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-12-13 12:04+0100\n"
+"POT-Creation-Date: 2021-12-15 11:53+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1850,7 +1850,7 @@ msgstr ""
 msgid "The_approximate_weight_needs_to_be_a_number."
 msgstr ""
 
-msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
+msgid "The_approximate_weight_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "member"
