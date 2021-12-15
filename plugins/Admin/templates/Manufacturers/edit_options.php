@@ -188,6 +188,11 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
                 'escape' => false
             ]);
         }
+        echo $this->Form->control('Manufacturers.include_stock_products_in_order_lists', [
+            'label' => __d('admin', 'Stock_products_in_order_lists').' <span class="after small">'.__d('admin', 'Should_stock_products_be_included_in_order_lists?').'</span>',
+            'type' => 'checkbox',
+            'escape' => false,
+        ]);
     }
 
     if (!$appAuth->isManufacturer()) {
