@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 18:54+0100\n"
-"PO-Revision-Date: 2021-12-15 19:11+0100\n"
+"POT-Creation-Date: 2021-12-15 19:41+0100\n"
+"PO-Revision-Date: 2021-12-15 19:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2609,6 +2609,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "net"
+#~ msgstr "net"
 
 #~ msgid "incl_vat"
 #~ msgstr "incl. VAT"

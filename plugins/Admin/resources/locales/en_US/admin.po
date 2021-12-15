@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 19:16+0100\n"
+"POT-Creation-Date: 2021-12-15 19:41+0100\n"
 "PO-Revision-Date: 2021-12-15 19:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1272,14 +1272,13 @@ msgstr "Copy to clipboard"
 msgid "Invoice_date"
 msgstr "Invoice date"
 
-msgid "Sum_excl_tax"
-msgstr "Sum excl. tax"
+#, fuzzy
+msgid "Net"
+msgstr "net"
 
-msgid "Sum_tax"
-msgstr "Sum tax"
-
-msgid "Sum_incl_tax"
-msgstr "Sum incl. tax"
+#, fuzzy
+msgid "Gross"
+msgstr "gross"
 
 msgid "Email_sent"
 msgstr "E-mail sent"
@@ -1875,12 +1874,6 @@ msgstr "1 day back"
 msgid "to"
 msgstr "to"
 
-msgid "Sum_price_excl."
-msgstr "Sum price excl."
-
-msgid "Sum_price_incl."
-msgstr "Sum price incl."
-
 msgid "Bank_account_data"
 msgstr "Bank account data"
 
@@ -2354,6 +2347,21 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Sum_excl_tax"
+#~ msgstr "Sum excl. tax"
+
+#~ msgid "Sum_tax"
+#~ msgstr "Sum tax"
+
+#~ msgid "Sum_incl_tax"
+#~ msgstr "Sum incl. tax"
+
+#~ msgid "Sum_price_excl."
+#~ msgstr "Sum price excl."
+
+#~ msgid "Sum_price_incl."
+#~ msgstr "Sum price incl."
 
 #~ msgid "Latest_invoices"
 #~ msgstr "Latest invoices"

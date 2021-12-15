@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 19:16+0100\n"
-"PO-Revision-Date: 2021-12-15 19:16+0100\n"
+"POT-Creation-Date: 2021-12-15 19:41+0100\n"
+"PO-Revision-Date: 2021-12-15 19:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1272,14 +1272,11 @@ msgstr "In die Zwischenablage kopieren"
 msgid "Invoice_date"
 msgstr "Rechnungsdatum"
 
-msgid "Sum_excl_tax"
-msgstr "Summe exkl. USt."
+msgid "Net"
+msgstr "Netto"
 
-msgid "Sum_tax"
-msgstr "Summe USt."
-
-msgid "Sum_incl_tax"
-msgstr "Summe inkl. USt."
+msgid "Gross"
+msgstr "Brutto"
 
 msgid "Email_sent"
 msgstr "E-Mail versendet"
@@ -1875,12 +1872,6 @@ msgstr "1 Tag vor"
 msgid "to"
 msgstr "bis"
 
-msgid "Sum_price_excl."
-msgstr "Summe Preis exkl."
-
-msgid "Sum_price_incl."
-msgstr "Summe Preis inkl."
-
 msgid "Bank_account_data"
 msgstr "Bankdaten"
 
@@ -2354,6 +2345,21 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Sum_excl_tax"
+#~ msgstr "Summe exkl. USt."
+
+#~ msgid "Sum_tax"
+#~ msgstr "Summe USt."
+
+#~ msgid "Sum_incl_tax"
+#~ msgstr "Summe inkl. USt."
+
+#~ msgid "Sum_price_excl."
+#~ msgstr "Summe Preis exkl."
+
+#~ msgid "Sum_price_incl."
+#~ msgstr "Summe Preis inkl."
 
 #~ msgid "Latest_invoices"
 #~ msgstr "Letzte Rechnungen"

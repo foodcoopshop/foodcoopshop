@@ -118,9 +118,9 @@ echo '<table class="list invoices-table no-clone-last-row">';
         echo '<th>' . $this->Paginator->sort('Invoices.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.created', __d('admin', 'Invoice_date')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'Sum_excl_tax') . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'Sum_tax') . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'Sum_incl_tax') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Net') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'VAT') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Gross') . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __d('admin', 'Paid_in_cash')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.email_status', __d('admin', 'Email_sent')) . '</th>';
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
