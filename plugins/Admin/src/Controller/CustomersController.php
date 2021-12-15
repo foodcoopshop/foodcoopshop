@@ -247,7 +247,7 @@ class CustomersController extends AdminAppController
                 $actionLogId = $this->AppAuth->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = __d('admin', 'The_member_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getUsername() . '</b>']);
+                $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->AppAuth->getUsername() . '</b>']);
                 $actionLogType = 'customer_password_changed';
                 $actionLogId = $this->AppAuth->getUserId();
                 $actionLogModel = 'customers';
