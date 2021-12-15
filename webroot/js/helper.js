@@ -857,6 +857,8 @@ foodcoopshop.Helper = {
 
         $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
 
+        $('#flashMessage .progress').remove();
+
         var progressBarHtml = '<div class="progress">';
         progressBarHtml += '<div class="progress-bar bg-success" style="width:0%;"></div>';
         progressBarHtml += '<div class="progress-bar bg-white" style="width:100%;"></div>';
