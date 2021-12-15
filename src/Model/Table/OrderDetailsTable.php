@@ -134,12 +134,13 @@ class OrderDetailsTable extends AppTable
     {
         $query = $this->find('all', [
             'contain' => [
-                'Products',
+                'Products.Manufacturers',
                 'Products.StockAvailables',
                 'ProductAttributes.StockAvailables'
             ]
         ]);
         $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
+        $query->where(['IF(Manufacturers.include_stock_products_in_order_lists = 0, (Products.is_stock_product = 0 OR Manufacturers.stock_management_enabled = 0), 1)']);
 
         if ($customerCanSelectPickupDay) {
             $query->where(['OrderDetails.pickup_day' => $pickupDay]);
