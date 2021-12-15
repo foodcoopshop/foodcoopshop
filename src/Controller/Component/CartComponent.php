@@ -567,7 +567,9 @@ class CartComponent extends Component
                     $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                     $messageForActionLog = $message;
                     $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
-                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
+                    if (!($this->AppAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
+                        $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
+                    }
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
 
