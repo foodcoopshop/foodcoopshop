@@ -100,6 +100,14 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
 
+    public function testSaveProductWithInvalidQuantityInUnitsZero()
+    {
+        $this->quantityInUnits = 0;
+        $this->expectException(InvalidParameterException::class);
+        $this->expectExceptionMessage('Das ungefähre Liefergewicht muss eine positive Zahl sein.');
+        $this->doSave();
+    }
+
     public function testSaveProductNoValidationIfDisabled()
     {
         $this->pricePerUnitEnabled = false;
