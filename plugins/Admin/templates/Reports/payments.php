@@ -69,7 +69,7 @@ if ($paymentType == 'product') {
 }
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Payments.date_add', __d('admin', 'Added_on')) . '</th>';
-echo '<th>' . $this->Paginator->sort('CreatedBy.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Added_by')) . '</th>';
+echo '<th>' . $this->Paginator->sort('CreatedByCustomers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Added_by')) . '</th>';
 if ($useCsvUpload) {
     echo '<th>' . $this->Paginator->sort('Payments.date_transaction_add', __d('admin', 'Transaction_added_on')) . '</th>';
 }

@@ -242,7 +242,7 @@ class ReportsController extends AdminAppController
                 'Customers.' . Configure::read('app.customerMainNamePart'),
                 'Payments.approval',
                 'Payments.date_add',
-                'CreatedBy.' . Configure::read('app.customerMainNamePart'),
+                'CreatedByCustomers.' . Configure::read('app.customerMainNamePart'),
                 'Payments.date_transaction_add',
                 'Payments.amount',
             ],
