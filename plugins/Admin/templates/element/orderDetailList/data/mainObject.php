@@ -55,7 +55,7 @@ if ($groupBy == '' || $groupBy == 'product') {
             }
         }
 
-        if ($editRecordAllowed) {
+        if ($appAuth->isSuperadmin() && $editRecordAllowed) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 'javascript:void(0);',

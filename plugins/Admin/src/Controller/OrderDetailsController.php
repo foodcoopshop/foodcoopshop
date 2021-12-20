@@ -37,6 +37,7 @@ class OrderDetailsController extends AdminAppController
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
                 break;
             case 'changeTaxOfInvoicedOrderDetail';
+            case 'editProductName':
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'addFeedback';
