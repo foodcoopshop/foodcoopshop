@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-20 16:04+0100\n"
-"PO-Revision-Date: 2021-12-15 19:41+0100\n"
+"POT-Creation-Date: 2021-12-20 16:19+0100\n"
+"PO-Revision-Date: 2021-12-20 16:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -912,9 +912,8 @@ msgstr "Surcharge in % from purchase price net"
 msgid "Calculate_selling_price_explanation_text."
 msgstr "Calculate selling price."
 
-#, fuzzy
 msgid "Change_product_name"
-msgstr "Assign another member to ordered product"
+msgstr "Change product name"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -2613,6 +2612,10 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "The_name_must_not_be_empty."
+#~ msgstr "The date must not be a future date."
 
 #~ msgid "net"
 #~ msgstr "net"

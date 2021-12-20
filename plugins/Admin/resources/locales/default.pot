@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-12-20 16:03+0100\n"
+"POT-Creation-Date: 2021-12-20 16:18+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -375,6 +375,9 @@ msgid "Ordered_amount_adapted"
 msgstr ""
 
 msgid "The_stock_was_increased_to_{0}."
+msgstr ""
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
 msgstr ""
 
 msgid "The_price_is_not_valid."
