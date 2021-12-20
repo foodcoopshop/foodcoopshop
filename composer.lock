@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "4.3.2",
+            "version": "4.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "bc44fd0a383592c5bf52eab17b25fbd9d929b851"
+                "reference": "9bfef5659088c446b2f7bdb612cc321d83779287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/bc44fd0a383592c5bf52eab17b25fbd9d929b851",
-                "reference": "bc44fd0a383592c5bf52eab17b25fbd9d929b851",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/9bfef5659088c446b2f7bdb612cc321d83779287",
+                "reference": "9bfef5659088c446b2f7bdb612cc321d83779287",
                 "shasum": ""
             },
             "require": {
@@ -108,7 +108,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/cakephp"
             },
-            "time": "2021-11-26T19:47:23+00:00"
+            "time": "2021-12-17T16:07:12+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -718,16 +718,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.7.0",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "9a8cc99d30415ec0b3f7649e1647d03a55698545"
+                "reference": "744ebba495319501b873a4e48787759c72e3fb8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/9a8cc99d30415ec0b3f7649e1647d03a55698545",
-                "reference": "9a8cc99d30415ec0b3f7649e1647d03a55698545",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/744ebba495319501b873a4e48787759c72e3fb8c",
+                "reference": "744ebba495319501b873a4e48787759c72e3fb8c",
                 "shasum": ""
             },
             "require": {
@@ -786,7 +786,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image/issues",
-                "source": "https://github.com/Intervention/image/tree/2.7.0"
+                "source": "https://github.com/Intervention/image/tree/2.7.1"
             },
             "funding": [
                 {
@@ -798,7 +798,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-03T14:17:12+00:00"
+            "time": "2021-12-16T16:49:26+00:00"
         },
         {
             "name": "jaybizzle/crawler-detect",
@@ -3635,16 +3635,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "4.6.0",
+            "version": "4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "2635f89f35c2c7752a955972b38c60e3a2193452"
+                "reference": "6de421f1ed67bbf2b47985b9c81be2940a7eba87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/2635f89f35c2c7752a955972b38c60e3a2193452",
-                "reference": "2635f89f35c2c7752a955972b38c60e3a2193452",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/6de421f1ed67bbf2b47985b9c81be2940a7eba87",
+                "reference": "6de421f1ed67bbf2b47985b9c81be2940a7eba87",
                 "shasum": ""
             },
             "require": {
@@ -3697,7 +3697,7 @@
                 "issues": "https://github.com/cakephp/debug_kit/issues",
                 "source": "https://github.com/cakephp/debug_kit"
             },
-            "time": "2021-12-13T21:45:42+00:00"
+            "time": "2021-12-18T04:44:00+00:00"
         },
         {
             "name": "composer/composer",
