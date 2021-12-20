@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 19:59+0100\n"
+"POT-Creation-Date: 2021-12-20 16:03+0100\n"
 "PO-Revision-Date: 2021-12-15 20:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1946,6 +1946,10 @@ msgstr "Keine Rechnungen vorhanden."
 
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
+
+#, fuzzy
+msgid "Click_to_change_name"
+msgstr "Zum Ändern der Anzahl anklicken"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"

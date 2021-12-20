@@ -360,7 +360,8 @@ body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
 }
-body.order_details.index .product-feedback-button {
+body.order_details.index .product-feedback-button,
+body.order_details.index .order-detail-product-name-edit-button {
     margin-right: 3px;
 }
 body.order_details.index i.product-feedback-button {

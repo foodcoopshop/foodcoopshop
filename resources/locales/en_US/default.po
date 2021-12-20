@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 19:41+0100\n"
+"POT-Creation-Date: 2021-12-20 16:04+0100\n"
 "PO-Revision-Date: 2021-12-15 19:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -912,6 +912,10 @@ msgstr "Surcharge in % from purchase price net"
 msgid "Calculate_selling_price_explanation_text."
 msgstr "Calculate selling price."
 
+#, fuzzy
+msgid "Change_product_name"
+msgstr "Assign another member to ordered product"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
 
@@ -1737,11 +1741,11 @@ msgstr "Please enter your feedback."
 msgid "Please_enter_a_correct_number."
 msgstr "Please enter a correct number."
 
-msgid "The_amount_(money)_needs_to_be_greater_than_0."
-msgstr "The amount needs to be greater than 0."
-
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 product} other{# products}}"
+
+msgid "The_amount_(money)_needs_to_be_greater_than_0."
+msgstr "The amount needs to be greater than 0."
 
 msgid "The_date_must_not_be_a_future_date."
 msgstr "The date must not be a future date."
