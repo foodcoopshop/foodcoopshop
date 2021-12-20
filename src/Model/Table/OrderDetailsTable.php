@@ -69,6 +69,12 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
 
+    public function validationName(Validator $validator)
+    {
+        $validator->notEmptyString('product_name', __('Please_enter_a_name.'));
+        return $validator;
+    }
+
     public function getLastOrderDate($customerId)
     {
         $query = $this->find('all', [
