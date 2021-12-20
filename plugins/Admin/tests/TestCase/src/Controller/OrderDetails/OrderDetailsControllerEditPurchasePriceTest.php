@@ -47,10 +47,10 @@ class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsController
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $orderDetailId = 1;
-        $newPriceExcl = -3;
+        $newPriceExcl = 'invalid-price';
         $newTaxRate = 13;
         $this->editOrderDetailPurchasePrice($orderDetailId, $newPriceExcl, $newTaxRate);
-        $this->assertResponseContains('Der Betrag muss größer als 0 sein.');
+        $this->assertResponseContains('Bitte gib eine korrekte Zahl ein.');
     }
 
     protected function editOrderDetailPurchasePrice($orderDetailId, $purchasePriceExcl, $taxRate)
