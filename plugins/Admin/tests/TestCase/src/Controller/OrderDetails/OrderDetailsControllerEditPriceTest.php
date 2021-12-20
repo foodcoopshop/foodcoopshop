@@ -25,8 +25,17 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     public function testEditOrderDetailPriceNotValid()
     {
         $this->loginAsVegetableManufacturer();
-        $this->editOrderDetailPrice($this->orderDetailIdA, -1, $this->editPriceReason);
+        $this->editOrderDetailPrice($this->orderDetailIdA, 'not-valid-price', $this->editPriceReason);
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der Preis ist nicht gültig.');
+    }
+
+    public function testEditOrderDetaiWithNegativePrice()
+    {
+        $this->loginAsVegetableManufacturer();
+        $this->newPrice = '-10,50';
+        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason);
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl), 'order detail price was not changed properly');
     }
 
     public function testEditOrderDetailPriceAsManufacturer()
