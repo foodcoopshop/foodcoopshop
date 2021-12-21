@@ -60,7 +60,7 @@ abstract class OrderListPdfWriter extends PdfWriter
             $pickupDay,
             null,
             $validOrderStates,
-            Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'),
+            (bool) $manufacturer->include_stock_products_in_order_lists,
             $orderDetailIds,
         );
 

@@ -342,6 +342,25 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->quantity);
     }
 
+    public function testSendOrderListWithoutStockProducts()
+    {
+
+        $stockProductId = 346;
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->changeManufacturer(5, 'stock_management_enabled', 1);
+        $this->changeManufacturer(5, 'include_stock_products_in_order_lists', 0);
+        $this->Product->changeIsStockProduct([[$stockProductId => true]]);
+
+        $cronjobRunDay = '2018-01-31';
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->runAndAssertQueue();
+
+        $this->assertOrderDetailState(1, ORDER_STATE_ORDER_PLACED);
+        $this->assertOrderDetailState(2, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+
+    }
+
     public function testContentOfOrderListWithoutPricePerUnit()
     {
         $this->loginAsSuperadmin();

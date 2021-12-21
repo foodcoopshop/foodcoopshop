@@ -465,7 +465,7 @@ class ManufacturersTable extends AppTable
 
     }
 
-    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProductsInInvoices, $orderDetailIds = [])
+    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
         switch ($order) {
             case 'product':
@@ -480,8 +480,6 @@ class ManufacturersTable extends AppTable
             'manufacturerId' => $manufacturerId
         ];
 
-        $includeStockProductCondition = '';
-
         if (is_null($dateTo)) {
             // order list
             // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
@@ -493,10 +491,12 @@ class ManufacturersTable extends AppTable
             $dateConditions .= "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') <= :dateTo" ;
             $params['dateFrom'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom);
             $params['dateTo'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo);
-            if (!$includeStockProductsInInvoices) {
-                $includeStockProductCondition = "AND (p.is_stock_product = 0 OR m.stock_management_enabled = 0)";
-            }
             $orderDetailCondition = "";
+        }
+
+        $includeStockProductCondition = '';
+        if (!$includeStockProducts) {
+            $includeStockProductCondition = "AND (p.is_stock_product = 0 OR m.stock_management_enabled = 0)";
         }
 
         $orderStateCondition = "";

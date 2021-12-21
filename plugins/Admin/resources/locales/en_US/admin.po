@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 19:41+0100\n"
-"PO-Revision-Date: 2021-12-15 19:16+0100\n"
+"POT-Creation-Date: 2021-12-15 19:59+0100\n"
+"PO-Revision-Date: 2021-12-15 19:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1272,13 +1272,11 @@ msgstr "Copy to clipboard"
 msgid "Invoice_date"
 msgstr "Invoice date"
 
-#, fuzzy
 msgid "Net"
-msgstr "net"
+msgstr "Net"
 
-#, fuzzy
 msgid "Gross"
-msgstr "gross"
+msgstr "Gross"
 
 msgid "Email_sent"
 msgstr "E-mail sent"
@@ -1528,6 +1526,12 @@ msgstr "Sold out limit reached notification for contact person?"
 
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr "The contact person wants to receive an email when the stock limit for a product is reached."
+
+msgid "Stock_products_in_order_lists"
+msgstr "Stock products in order lists"
+
+msgid "Should_stock_products_be_included_in_order_lists?"
+msgstr "Should stock products be included in order lists?"
 
 msgid "Contact_person"
 msgstr "Contact person"
@@ -2348,6 +2352,10 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "Product_ID"
 msgstr "ProductID"
 
+#, fuzzy
+#~ msgid "to_include_stock_products_in_order_lists."
+#~ msgstr "Stock product order"
+
 #~ msgid "Sum_excl_tax"
 #~ msgstr "Sum excl. tax"
 
@@ -2381,9 +2389,6 @@ msgstr "ProductID"
 
 #~ msgid "Street"
 #~ msgstr "Street"
-
-#~ msgid "Stock_product_order"
-#~ msgstr "Stock product order"
 
 #~ msgid "The_product_attribute_{0}_was_changed_successfully."
 #~ msgstr "The product attribute was changed successfully."
