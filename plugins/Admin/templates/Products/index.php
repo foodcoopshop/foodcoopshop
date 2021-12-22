@@ -79,6 +79,11 @@ use Cake\Core\Configure;
                     'empty' => __d('admin', 'chose_manufacturer...'),
                     'default' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
+            } else {
+                echo $this->Form->hidden('manufacturerId', [
+                    'id' => 'manufacturerid',
+                    'val' => $appAuth->getManufacturerId(),
+                ]);
             }
             echo $this->Form->control('active', [
                 'type' => 'select',
@@ -101,7 +106,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 // only show button if no manufacturer filter is applied
-                if ($manufacturerId > 0) {
+                if ($manufacturerId != 'all') {
                     $this->element('addScript', [
                         'script' => Configure::read('app.jsNamespace') . ".ModalProductAdd.init();"
                     ]);
