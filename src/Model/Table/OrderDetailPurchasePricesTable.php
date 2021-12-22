@@ -33,7 +33,6 @@ class OrderDetailPurchasePricesTable extends AppTable
     {
         $validator->notEmptyString('total_price_tax_excl', __('Please_enter_a_number.'));
         $validator->numeric('total_price_tax_excl', __('Please_enter_a_correct_number.'));
-        $validator->greaterThanOrEqual('total_price_tax_excl', 0.01, __('The_amount_(money)_needs_to_be_greater_than_0.'));
         return $validator;
     }
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 19:59+0100\n"
-"PO-Revision-Date: 2021-12-15 20:00+0100\n"
+"POT-Creation-Date: 2021-12-20 16:18+0100\n"
+"PO-Revision-Date: 2021-12-20 16:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -377,6 +377,9 @@ msgstr "Bestellte Anzahl angepasst"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Der Lagerstand wurde auf {0} erhöht."
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr "Der Name des bestellten Produktes {0} wurde erfolgreich auf {1} geändert."
 
 msgid "The_price_is_not_valid."
 msgstr "Der Preis ist nicht gültig."
@@ -1946,6 +1949,9 @@ msgstr "Keine Rechnungen vorhanden."
 
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
+
+msgid "Click_to_change_name"
+msgstr "Zum Ändern des Namens anklicken"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"

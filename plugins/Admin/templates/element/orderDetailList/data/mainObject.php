@@ -54,6 +54,19 @@ if ($groupBy == '' || $groupBy == 'product') {
                 }
             }
         }
+
+        if ($appAuth->isSuperadmin() && $editRecordAllowed) {
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light order-detail-product-name-edit-button',
+                    'title' => __d('admin', 'Click_to_change_name'),
+                    'escape' => false
+                ]
+            );
+        }
+
         echo $this->MyHtml->link(
             $orderDetail->product_name,
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $orderDetail->product_id,

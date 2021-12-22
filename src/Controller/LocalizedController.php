@@ -247,6 +247,7 @@ class LocalizedController extends Controller
                 'CalculateSellingPrice' => __('Calculate_selling_price'),
                 'SurchargeInPercentFromPurchasePriceNet' => __('Surcharge_in_percent_from_purchase_price_net'),
                 'CalculateSellingPriceExplanationText' => __('Calculate_selling_price_explanation_text.'),
+                'ChangeProductName' => __('Change_product_name'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
