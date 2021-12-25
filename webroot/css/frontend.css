@@ -503,12 +503,12 @@ body.superadmin .pw .heading h4 {
     margin-bottom: 0;
     margin-left: 5px;
 }
-.pw .additional-price-info {
+.pw .p-info {
     float: left;
     line-height: 17px;
     color: #969696;
 }
-.pw .additional-price-info .unit-amount {
+.pw .p-info .unit-amount {
     display: none;
 }
 .pw .deposit {
@@ -532,7 +532,7 @@ body.superadmin .pw .heading h4 {
     margin-bottom: 10px;
     float: left;
 }
-.pw .amount-wrapper .left-of-input {
+.pw .amount-wrapper .loi {
     float: left;
     margin-right: 3px;
 }

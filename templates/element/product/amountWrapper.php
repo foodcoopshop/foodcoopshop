@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 <div class="amount-wrapper">
 
     <?php if (!$hideAmountSelector) { ?>
-        <span class="left-of-input"><?php echo __('Amount'); ?></span>
+        <span class="loi"><?php echo __('Amount'); ?></span>
         <input name="amount" value="1" type="text" />
         <a class="as as-plus" href="javascript:void(0);">
             <i class="fas fa-plus-circle"></i>
