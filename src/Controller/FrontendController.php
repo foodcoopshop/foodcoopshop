@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
@@ -36,6 +37,23 @@ class FrontendController extends AppController
 
         if ($this->AppAuth->user()) {
             $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
+        }
+
+        $productsCacheKeyUniqueString = '';
+        foreach ($products as &$product) {
+            $productsCacheKeyUniqueString .= $product['id_product'];
+        }
+        $productsCacheKey = join('_', [
+            'FrontendController_prepareProductsForFrontend',
+            substr(md5($productsCacheKeyUniqueString), 6),
+            $this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl(),
+            $this->AppAuth->user('shopping_price'),
+            $this->AppAuth->isTimebasedCurrencyEnabledForCustomer(),
+            'date-' . date('Y-m-d'),
+        ]);
+        $cachedProducts = Cache::read($productsCacheKey);
+        if ($cachedProducts !== null) {
+            return $cachedProducts;
         }
 
         foreach ($products as &$product) {
@@ -191,6 +209,9 @@ class FrontendController extends AppController
                 $product['attributes'][] = $preparedAttributes;
             }
         }
+
+        Cache::write($productsCacheKey, $products);
+
         return $products;
     }
 
