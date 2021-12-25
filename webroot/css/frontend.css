@@ -367,7 +367,7 @@ a[disabled] {
     opacity: 0.5;
 }
 
-.product-wrapper,
+.pw,
 .manufacturer-wrapper {
     margin-bottom: 0px;
     padding: 15px 0px;
@@ -376,21 +376,21 @@ a[disabled] {
     width: 100%;
     position: relative;
 }
-.product-wrapper .first-column a img {
+.pw .c1 a img {
     max-width: 150px;
     height: auto;
 }
-.product-wrapper .heading {
+.pw .heading {
     width: 100%;
     float: left;
 }
-.product-wrapper .heading h4 {
+.pw .heading h4 {
     float: left;
     margin-top: 0;
     margin-right: 10px;
     line-height: 23px;
 }
-body.superadmin .product-wrapper .heading h4 {
+body.superadmin .pw .heading h4 {
     max-width: 95%;
 }
 .blog-post-wrapper h4 {
@@ -398,35 +398,35 @@ body.superadmin .product-wrapper .heading h4 {
     margin-top: 0;
     line-height: 23px;
 }
-.product-wrapper div.first-column,
-.manufacturer-wrapper div.first-column {
+.pw div.c1,
+.manufacturer-wrapper div.c1 {
     text-align: center;
     float: left;
     margin-right: 15px;
     width: 150px;
     position: relative;
 }
-.manufacturer-wrapper div.first-column img {
+.manufacturer-wrapper div.c1 img {
     width: 148px;
 }
-.product-wrapper div.first-column span.fa-stack i.fa-star {
+.pw div.c1 span.fa-stack i.fa-star {
     color: #fff;
 }
-.product-wrapper div.third-column .unity,
-.product-wrapper .radio label {
+.pw div.c3 .unity,
+.pw .radio label {
     word-break: break-word;
 }
-.product-wrapper .toggle-link {
+.pw .toggle-link {
     margin-top: 5px;
 }
-.product-wrapper .toggle-content {
+.pw .toggle-content {
     margin-bottom: 5px;
 }
-.product-wrapper .toggle-content.description img {
+.pw .toggle-content.description img {
   margin-bottom: 3px;
 }
-.product-wrapper div.second-column,
-.manufacturer-wrapper div.second-column {
+.pw div.c2,
+.manufacturer-wrapper div.c2 {
     float: left;
     width: 355px;
     min-height: 170px;
@@ -434,16 +434,16 @@ body.superadmin .product-wrapper .heading h4 {
     margin-right: 15px;
     border-right: 1px solid #d6d4d4;
 }
-.product-wrapper div.second-column {
+.pw div.c2 {
     overflow: hidden;
     word-wrap: break-word;
     position: relative;
 }
-.product-wrapper div.second-column .toggle-content img {
+.pw div.c2 .toggle-content img {
     max-width: 100%;
     height: auto ! important;
 }
-.blog-post-wrapper div.second-column {
+.blog-post-wrapper div.c2 {
     min-height: 148px;
     position: relative;
 }
@@ -452,71 +452,71 @@ body.superadmin .product-wrapper .heading h4 {
     right: -10px;
     top: -10px;
 }
-.product-wrapper div.third-column,
-.manufacturer-wrapper div.third-column {
+.pw div.c3,
+.manufacturer-wrapper div.c3 {
     float: left;
     width: 195px;
     margin-left: -16px;
     padding-left: 16px;
     border-left: 1px solid #d6d4d4;
 }
-.manufacturer-wrapper div.third-column {
+.manufacturer-wrapper div.c3 {
     text-align: center;
 }
-.manufacturer-wrapper div.third-column a.btn {
+.manufacturer-wrapper div.c3 a.btn {
     margin-top: 65px;
 }
-.product-wrapper .entity-wrapper {
+.pw .ew {
     float: left;
     margin-bottom: 5px;
     width: 100%;
 }
-.product-wrapper .entity-wrapper:not(.active),
-.product-wrapper .entity-wrapper div.tax,
-.product-wrapper .entity-wrapper .timebasedCurrencySeconds {
+.pw .ew:not(.active),
+.pw .ew div.tax,
+.pw .ew .timebasedCurrencySeconds {
     display: none;
 }
-.product-wrapper .line {
+.pw .line {
     float: left;
     width: 100%;
 }
-.product-wrapper .line p {
+.pw .line p {
     margin-bottom: 0px;
 }
-.product-wrapper label.attribute-button input {
+.pw label.attribute-button input {
     margin-right: 3px;
     margin-top: 3px;
     float: left;
 }
-.entity-wrapper .btn-cart {
+.ew .btn-cart {
     width: 100%;
     float: left;
 }
-.product-wrapper .price,
-.product-wrapper .price-asterisk {
+.pw .price,
+.pw .price-asterisk {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 5px;
     float: left;
 }
-.product-wrapper .price-asterisk {
+.pw .price-asterisk {
     margin-bottom: 0;
     margin-left: 5px;
 }
-.product-wrapper .additional-price-info {
+.pw .additional-price-info {
     float: left;
     line-height: 17px;
     color: #969696;
 }
-.product-wrapper .additional-price-info .unit-amount {
+.pw .additional-price-info .unit-amount {
     display: none;
 }
-.product-wrapper .deposit {
+.pw .deposit {
     float: right;
     margin-left: 10px;
     line-height: 20px;
 }
-.product-wrapper .timebased-currency-product-info {
+.pw .timebased-currency-product-info {
     float: left;
     margin-top: -5px;
     margin-bottom: 5px;
@@ -526,44 +526,44 @@ body.superadmin .product-wrapper .heading h4 {
     float: right;
     margin-left: 5px;
 }
-.product-wrapper .amount-wrapper {
+.pw .amount-wrapper {
     line-height: 28px;
     margin-top: 5px;
     margin-bottom: 10px;
     float: left;
 }
-.product-wrapper .amount-wrapper .left-of-input {
+.pw .amount-wrapper .left-of-input {
     float: left;
     margin-right: 3px;
 }
-.product-wrapper .amount-switcher-minus .fas {
+.pw .as-minus .fas {
     margin-left: 3px;
     display: none;
 }
-.product-wrapper .amount-switcher-plus .fas {
+.pw .as-plus .fas {
     margin-left: 4px;
 }
-.product-wrapper .amount-wrapper .fas {
+.pw .amount-wrapper .fas {
    color: #ccc;
    float: left;
    margin-top: 6px;
    font-size: 17px;
 }
-.product-wrapper .amount-wrapper .fas:hover {
+.pw .amount-wrapper .fas:hover {
     color: #d6d4d4 ! important;
 }
-.product-wrapper .amount-wrapper input {
+.pw .amount-wrapper input {
     float:left;
     text-align: center;
     height: 28px;
     border: 1px solid #d6d4d4;
     width: 28px;
 }
-.product-wrapper .amount-wrapper .right-of-input {
+.pw .amount-wrapper .right-of-input {
     float: left;
     clear: both;
 }
-.product-wrapper span.not-available-info {
+.pw span.not-available-info {
     display: block;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -613,7 +613,7 @@ body.manufacturers.index h2.info {
     padding: 20px;
     text-align: center;
 }
-#footer .first-column {
+#footer .c1 {
     width: 45%;
     float: left;
     text-align: left;
@@ -621,7 +621,7 @@ body.manufacturers.index h2.info {
     margin-bottom: 5px;
     margin-left: 10px;
 }
-#footer .second-column {
+#footer .c2 {
     float: right;
     margin-right: 75px;
     text-align: left;
@@ -631,7 +631,7 @@ body.manufacturers.index h2.info {
     padding-left: 20px;
     width: 45%;
 }
-#footer .second-column p i {
+#footer .c2 p i {
     margin-right: 5px;
     vertical-align: middle;
 }
@@ -858,7 +858,7 @@ body.carts #load-last-order-details,
 .edit-shortcut-button {
     padding: 0px 4px;
 }
-.entity-wrapper .btn,
+.ew .btn,
 #cart .btn-success {
     padding-top: 6px;
     padding-bottom: 6px;
@@ -1214,7 +1214,7 @@ body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
 body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
     top: -16px;
 }
-.product-wrapper .second-column a.edit-shortcut-button {
+.pw .c2 a.edit-shortcut-button {
   position: absolute;
   top: 0;
   right: 5px;
@@ -1249,7 +1249,7 @@ body.categories.detail .description-wrapper h3 {
     padding-top: 10px;
     font-size: 16px;
 }
-body.products.detail .product-wrapper {
+body.products.detail .pw {
     border-bottom: 1px solid #d6d4d4;
     margin-bottom: 20px;
 }

@@ -95,11 +95,11 @@
     #cart,
     .sidebar,
     #header,
-    #footer .first-column,
+    #footer .c1,
     #right {
         display: none ! important;
     }
-    #footer .second-column {
+    #footer .c2 {
         border-left: none ! important;
         float: left ! important;
         width: 100% ! important;
@@ -136,56 +136,56 @@
         width: 100% ! important;
         height: auto ! important;
     }
-    body.superadmin .product-wrapper .heading h4,
-    .blog-post-wrapper .second-column h4 {
+    body.superadmin .pw .heading h4,
+    .blog-post-wrapper .c2 h4 {
         max-width: 89%;
     }
-    div.first-column {
+    div.c1 {
         width: 23% ! important;
         margin-right: 3% ! important;
         min-height: 1px;
     }
-    .blog-post-wrapper div.third-column div.additional-info {
+    .blog-post-wrapper div.c3 div.additional-info {
         margin-top: 10px ! important;
     }
-    .blog-post-wrapper div.third-column a.btn {
+    .blog-post-wrapper div.c3 a.btn {
         margin-top: 0 ! important;
     }
-    div.first-column img {
+    div.c1 img {
         width: 100% ! important;
         margin-right: 1% ! important;
     }
-    div.second-column {
+    div.c2 {
         width: 44% ! important;
         min-height: 100px ! important;
     }
-    div.second-column h4,
-    div.third-column .price {
+    div.c2 h4,
+    div.c3 .price {
         font-size: 16px ! important;
     }
-    div.second-column h4 {
+    div.c2 h4 {
         margin-top: 0 ! important;
         line-height: 19px ! important;
         width: 100% ! important;
     }
-    div.third-column {
+    div.c3 {
         width: 30% ! important;
         padding-right: 8px ! important;
     }
-    div.third-column .entity-wrapper {
+    div.c3 .ew {
         margin-bottom: 0 ! important;
     }
-    .product-wrapper .amount-wrapper .left-of-input {
+    .pw .amount-wrapper .left-of-input {
         display: none;
     }
-    .product-wrapper .amount-wrapper {
+    .pw .amount-wrapper {
         width: 100%;
     }
-    .product-wrapper .amount-wrapper .fas {
+    .pw .amount-wrapper .fas {
         font-size: 26px;
         margin-top: 0px;
     }
-    .manufacturer-wrapper div.third-column a.btn {
+    .manufacturer-wrapper div.c3 a.btn {
         margin-top: 35px ! important;
         float: right ! important;
     }

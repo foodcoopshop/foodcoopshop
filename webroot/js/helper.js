@@ -130,7 +130,7 @@ foodcoopshop.Helper = {
             }
             i++;
         });
-        var productsAvailable = $('#inner-content .product-wrapper').length > 0;
+        var productsAvailable = $('#inner-content .pw').length > 0;
         if (prevElement) {
             prevElement.attr('class', 'prev-next-button prev-button btn btn-outline-light');
             prevElement.html('<i class="fas fa-arrow-circle-left fa"></i> ' + prevElement.text());
@@ -172,14 +172,14 @@ foodcoopshop.Helper = {
     },
 
     initAmountSwitcher : function() {
-        $('.entity-wrapper a.amount-switcher').on('click', function() {
+        $('.ew a.as').on('click', function() {
             var inputField = $(this).closest('.amount-wrapper').find('input[name="amount"]');
             var currentValue = parseInt(inputField.val());
             if (isNaN(currentValue)) {
                 currentValue = 0;
             }
             var result = 0;
-            if ($(this).hasClass('amount-switcher-plus')) {
+            if ($(this).hasClass('as-plus')) {
                 result = currentValue + 1;
             } else {
                 result = currentValue - 1;
@@ -194,7 +194,7 @@ foodcoopshop.Helper = {
                     result = max;
                 }
             }
-            var amountSwitcherMinus = $(this).closest('.amount-wrapper').find('.amount-switcher-minus .fas');
+            var amountSwitcherMinus = $(this).closest('.amount-wrapper').find('.as-minus .fas');
             if (result > 1) {
                 amountSwitcherMinus.show();
             } else {
@@ -523,11 +523,11 @@ foodcoopshop.Helper = {
 
     initProductAttributesButtons: function () {
         $('.attribute-button').on('click', function () {
-            var entityWrappers = $(this).closest('.product-wrapper').find('.entity-wrapper');
+            var entityWrappers = $(this).closest('.pw').find('.ew');
             entityWrappers.hide();
             entityWrappers.removeClass('active');
             var id = $(this).attr('id').replace(/attribute-button-/, '');
-            var activeEntityWrapper = $('#entity-wrapper-' + id);
+            var activeEntityWrapper = $('#ew-' + id);
             activeEntityWrapper.addClass('active');
             activeEntityWrapper.show();
         });

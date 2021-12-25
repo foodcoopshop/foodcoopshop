@@ -20,10 +20,10 @@ use Cake\Core\Configure;
     <?php if (!$hideAmountSelector) { ?>
         <span class="left-of-input"><?php echo __('Amount'); ?></span>
         <input name="amount" value="1" type="text" />
-        <a class="amount-switcher amount-switcher-plus" href="javascript:void(0);">
+        <a class="as as-plus" href="javascript:void(0);">
             <i class="fas fa-plus-circle"></i>
         </a>
-        <a class="amount-switcher amount-switcher-minus" href="javascript:void(0);">
+        <a class="as as-minus" href="javascript:void(0);">
             <i class="fas fa-minus-circle"></i>
         </a>
     <?php } ?>
