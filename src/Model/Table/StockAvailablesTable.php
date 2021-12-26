@@ -2,7 +2,11 @@
 
 namespace App\Model\Table;
 
+use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
+use ArrayObject;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -44,6 +48,11 @@ class StockAvailablesTable extends AppTable
         $validator->allowEmptyString('default_quantity_after_sending_order_lists');
 
         return $validator;
+    }
+
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    {
+        Cache::clearAll();
     }
 
     public function updateQuantityForMainProduct($productId)

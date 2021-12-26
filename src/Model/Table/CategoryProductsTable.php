@@ -2,6 +2,11 @@
 
 namespace App\Model\Table;
 
+use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
+use ArrayObject;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -27,4 +32,10 @@ class CategoryProductsTable extends AppTable
             'foreignKey' => 'id_category'
         ]);
     }
+
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    {
+        Cache::clearAll();
+    }
+
 }

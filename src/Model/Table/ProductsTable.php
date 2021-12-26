@@ -5,11 +5,15 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\RemoteFile\RemoteFile;
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
+use Cake\Datasource\EntityInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use ArrayObject;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -194,6 +198,11 @@ class ProductsTable extends AppTable
 
         ]);
         return $validator;
+    }
+
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    {
+        Cache::clearAll();
     }
 
     public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
