@@ -158,7 +158,6 @@ class CategoriesTable extends AppTable
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . $keyword,
             'productId-' . $productId,
-            'countMode-' . $countMode,
             'getOnlyStockProducts-' . $getOnlyStockProducts,
             'date-' . date('Y-m-d'),
         ]);
