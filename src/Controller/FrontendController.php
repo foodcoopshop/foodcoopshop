@@ -39,178 +39,179 @@ class FrontendController extends AppController
             $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
         }
 
-        $productsCacheKeyUniqueString = '';
-        foreach ($products as &$product) {
-            $productsCacheKeyUniqueString .= $product['id_product'];
-        }
-        $productsCacheKey = join('_', [
-            'FrontendController_prepareProductsForFrontend',
-            substr(md5($productsCacheKeyUniqueString), 6),
-            $this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl(),
-            $this->AppAuth->user('shopping_price'),
-            $this->AppAuth->isTimebasedCurrencyEnabledForCustomer(),
-            'date-' . date('Y-m-d'),
-        ]);
-        $cachedProducts = Cache::read($productsCacheKey);
-        if ($cachedProducts !== null) {
-            return $cachedProducts;
-        }
+        $i = 0;
+        foreach ($products as $product) {
 
-        foreach ($products as &$product) {
+            $productCacheKey = join('_', [
+                'FrontendController_prepareProductsForFrontend',
+                'productId' => $products[$i]['id_product'],
+                $this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl(),
+                $this->AppAuth->user('shopping_price'),
+                $this->AppAuth->isTimebasedCurrencyEnabledForCustomer(),
+                'date-' . date('Y-m-d'),
+            ]);
+            $cachedProduct = Cache::read($productCacheKey);
 
-            $taxRate = is_null($product['taxRate']) ? 0 : $product['taxRate'];
+            if ($cachedProduct === null) {
 
-            // START: override shopping with purchase prices / zero prices
-            $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice($this->AppAuth, $product['id_product'], $product['price'], $product['price_incl_per_unit'], $product['deposit'], $taxRate);
-            $product['price'] = $modifiedProductPricesByShoppingPrice['price'];
-            $product['price_incl_per_unit'] = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
-            $product['deposit'] = $modifiedProductPricesByShoppingPrice['deposit'];
-            // END: override shopping with purchase prices / zero prices
+                $taxRate = is_null($products[$i]['taxRate']) ? 0 : $products[$i]['taxRate'];
 
-            $grossPrice = $this->Product->getGrossPrice($product['price'], $taxRate);
+                // START: override shopping with purchase prices / zero prices
+                $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice($this->AppAuth, $products[$i]['id_product'], $products[$i]['price'], $products[$i]['price_incl_per_unit'], $products[$i]['deposit'], $taxRate);
+                $products[$i]['price'] = $modifiedProductPricesByShoppingPrice['price'];
+                $products[$i]['price_incl_per_unit'] = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
+                $products[$i]['deposit'] = $modifiedProductPricesByShoppingPrice['deposit'];
+                // END: override shopping with purchase prices / zero prices
 
-            $product['gross_price'] = $grossPrice;
-            $product['tax'] = $grossPrice - $product['price'];
-            $product['is_new'] = $this->Product->isNew($product['created']);
+                $grossPrice = $this->Product->getGrossPrice($products[$i]['price'], $taxRate);
 
-            if (!Configure::read('app.isDepositEnabled')) {
-                $product['deposit'] = 0;
-            }
+                $products[$i]['gross_price'] = $grossPrice;
+                $products[$i]['tax'] = $grossPrice - $products[$i]['price'];
+                $products[$i]['is_new'] = $this->Product->isNew($products[$i]['created']);
 
-            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                $product['next_delivery_day'] = new FrozenDate('1970-01-01');
-            } elseif ($this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
-                $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-            } else {
-                $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
-                    $this->Product->newEntity([
-                        'delivery_rhythm_order_possible_until' => $product['delivery_rhythm_order_possible_until'] == '' ? null : new FrozenDate($product['delivery_rhythm_order_possible_until']),
-                        'delivery_rhythm_first_delivery_day' => $product['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($product['delivery_rhythm_first_delivery_day']),
-                        'delivery_rhythm_type' => $product['delivery_rhythm_type'],
-                        'delivery_rhythm_count' => $product['delivery_rhythm_count'],
-                        'delivery_rhythm_send_order_list_weekday' => $product['delivery_rhythm_send_order_list_weekday'],
-                        'delivery_rhythm_send_order_list_day' => $product['delivery_rhythm_send_order_list_day'],
-                        // convert database strings to boolean to && them and then re-convert to string
-                        'is_stock_product' => (string) (
-                            (boolean) $product['is_stock_product'] && (boolean) $product['stock_management_enabled']
-                        )
-                    ]
-                ));
+                if (!Configure::read('app.isDepositEnabled')) {
+                    $products[$i]['deposit'] = 0;
+                }
 
-                $product['future_order_details'] = [];
-                if (!empty($futureOrderDetails)) {
-                    foreach($futureOrderDetails as $futureOrderDetail) {
-                        if ($futureOrderDetail['product_id'] == $product['id_product']) {
-                            $product['future_order_details'][] = $futureOrderDetail;
+                if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+                    $products[$i]['next_delivery_day'] = new FrozenDate('1970-01-01');
+                } elseif ($this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
+                    $products[$i]['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+                } else {
+                    $products[$i]['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
+                        $this->Product->newEntity([
+                            'delivery_rhythm_order_possible_until' => $products[$i]['delivery_rhythm_order_possible_until'] == '' ? null : new FrozenDate($products[$i]['delivery_rhythm_order_possible_until']),
+                            'delivery_rhythm_first_delivery_day' => $products[$i]['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($products[$i]['delivery_rhythm_first_delivery_day']),
+                            'delivery_rhythm_type' => $products[$i]['delivery_rhythm_type'],
+                            'delivery_rhythm_count' => $products[$i]['delivery_rhythm_count'],
+                            'delivery_rhythm_send_order_list_weekday' => $products[$i]['delivery_rhythm_send_order_list_weekday'],
+                            'delivery_rhythm_send_order_list_day' => $products[$i]['delivery_rhythm_send_order_list_day'],
+                            // convert database strings to boolean to && them and then re-convert to string
+                            'is_stock_product' => (string) (
+                                (boolean) $products[$i]['is_stock_product'] && (boolean) $products[$i]['stock_management_enabled']
+                            )
+                        ]
+                    ));
+
+                    $products[$i]['future_order_details'] = [];
+                    if (!empty($futureOrderDetails)) {
+                        foreach($futureOrderDetails as $futureOrderDetail) {
+                            if ($futureOrderDetail['product_id'] == $products[$i]['id_product']) {
+                                $products[$i]['future_order_details'][] = $futureOrderDetail;
+                                continue;
+                            }
+                        }
+                    }
+
+                }
+
+                $products[$i]['attributes'] = [];
+
+                if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
+                    if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]['timebased_currency_enabled'])) {
+                        $products[$i]['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($products[$i]['gross_price'], $products[$i]['timebased_currency_max_percentage']);
+                        $products[$i]['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($products[$i]['price'], $products[$i]['timebased_currency_max_percentage']);
+                        $products[$i]['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($products[$i]['gross_price'], $products[$i]['timebased_currency_max_percentage']);
+                        $products[$i]['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]['id_manufacturer']);
+                    }
+
+                }
+
+                $conditions = [
+                    'ProductAttributes.id_product' => $product['id_product'],
+                ];
+                $contain = [
+                    'StockAvailables',
+                    'ProductAttributeCombinations.Attributes',
+                    'DepositProductAttributes',
+                    'UnitProductAttributes'
+                ];
+
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    $contain[] = 'PurchasePriceProductAttributes';
+                }
+
+                $attributes = $this->ProductAttribute->find('all', [
+                    'conditions' => $conditions,
+                    'contain' => $contain,
+                ]);
+
+                $preparedAttributes = [];
+                foreach ($attributes as $attribute) {
+
+                    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                        if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
                             continue;
                         }
                     }
-                }
 
-            }
+                    $preparedAttributes['ProductAttributes'] = [
+                        'id_product_attribute' => $attribute->id_product_attribute
+                    ];
 
-            $product['attributes'] = [];
+                    $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
+                    $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
 
-            if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-                if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
-                    $product['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
-                    $product['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['price'], $product['timebased_currency_max_percentage']);
-                    $product['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($product['gross_price'], $product['timebased_currency_max_percentage']);
-                    $product['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($product['id_manufacturer']);
-                }
-
-            }
-
-            $conditions = [
-                'ProductAttributes.id_product' => $product['id_product'],
-            ];
-            $contain = [
-                'StockAvailables',
-                'ProductAttributeCombinations.Attributes',
-                'DepositProductAttributes',
-                'UnitProductAttributes'
-            ];
-
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $contain[] = 'PurchasePriceProductAttributes';
-            }
-
-            $attributes = $this->ProductAttribute->find('all', [
-                'conditions' => $conditions,
-                'contain' => $contain,
-            ]);
-
-            $preparedAttributes = [];
-            foreach ($attributes as $attribute) {
-
-                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                    if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
-                        continue;
+                    // START: override shopping with purchase prices / zero prices
+                    $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
+                    $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
+                    if (!empty($attribute->unit_product_attribute)) {
+                        $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
                     }
-                }
-
-                $preparedAttributes['ProductAttributes'] = [
-                    'id_product_attribute' => $attribute->id_product_attribute
-                ];
-
-                $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
-                $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
-
-                // START: override shopping with purchase prices / zero prices
-                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
-                $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
-                if (!empty($attribute->unit_product_attribute)) {
-                    $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
-                }
-                if (!empty($attribute->deposit_product_attribute)) {
-                    $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
-                }
-                // END: override shopping with purchase prices / zero prices
-
-                $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
-
-                $preparedAttributes['ProductAttributes'] = [
-                    'gross_price' => $grossPrice,
-                    'tax' => $grossPrice - $attribute->price,
-                    'default_on' => $attribute->default_on,
-                    'id_product_attribute' => $attribute->id_product_attribute
-                ];
-                $preparedAttributes['StockAvailables'] = [
-                    'quantity' => $attribute->stock_available->quantity,
-                    'quantity_limit' => $attribute->stock_available->quantity_limit,
-                    'always_available' => $attribute->stock_available->always_available,
-                ];
-                $preparedAttributes['DepositProductAttributes'] = [
-                    'deposit' => Configure::read('app.isDepositEnabled') && !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
-                ];
-                $preparedAttributes['ProductAttributeCombinations'] = [
-                    'Attributes' => [
-                        'name' => $attribute->product_attribute_combination->attribute->name,
-                        'can_be_used_as_unit' => $attribute->product_attribute_combination->attribute->can_be_used_as_unit
-                    ]
-                ];
-                $preparedAttributes['Units'] = [
-                    'price_per_unit_enabled' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_per_unit_enabled : 0,
-                    'price_incl_per_unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0,
-                    'unit_name' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->name : '',
-                    'unit_amount' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->amount : 0,
-                    'quantity_in_units' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->quantity_in_units : 0
-                ];
-
-                if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-                    if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
-                        $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $product['timebased_currency_max_percentage']);
-                        $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->price, $product['timebased_currency_max_percentage']);
-                        $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $product['timebased_currency_max_percentage']);
-                        $preparedAttributes['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($product['id_manufacturer']);
+                    if (!empty($attribute->deposit_product_attribute)) {
+                        $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
                     }
-                }
+                    // END: override shopping with purchase prices / zero prices
 
-                $product['attributes'][] = $preparedAttributes;
+                    $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
+
+                    $preparedAttributes['ProductAttributes'] = [
+                        'gross_price' => $grossPrice,
+                        'tax' => $grossPrice - $attribute->price,
+                        'default_on' => $attribute->default_on,
+                        'id_product_attribute' => $attribute->id_product_attribute
+                    ];
+                    $preparedAttributes['StockAvailables'] = [
+                        'quantity' => $attribute->stock_available->quantity,
+                        'quantity_limit' => $attribute->stock_available->quantity_limit,
+                        'always_available' => $attribute->stock_available->always_available,
+                    ];
+                    $preparedAttributes['DepositProductAttributes'] = [
+                        'deposit' => Configure::read('app.isDepositEnabled') && !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
+                    ];
+                    $preparedAttributes['ProductAttributeCombinations'] = [
+                        'Attributes' => [
+                            'name' => $attribute->product_attribute_combination->attribute->name,
+                            'can_be_used_as_unit' => $attribute->product_attribute_combination->attribute->can_be_used_as_unit
+                        ]
+                    ];
+                    $preparedAttributes['Units'] = [
+                        'price_per_unit_enabled' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_per_unit_enabled : 0,
+                        'price_incl_per_unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0,
+                        'unit_name' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->name : '',
+                        'unit_amount' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->amount : 0,
+                        'quantity_in_units' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->quantity_in_units : 0
+                    ];
+
+                    if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
+                        if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]['timebased_currency_enabled'])) {
+                            $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $products[$i]['timebased_currency_max_percentage']);
+                            $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->price, $products[$i]['timebased_currency_max_percentage']);
+                            $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $products[$i]['timebased_currency_max_percentage']);
+                            $preparedAttributes['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]['id_manufacturer']);
+                        }
+                    }
+
+                    $products[$i]['attributes'][] = $preparedAttributes;
+                }
+            } else {
+                $products[$i] = $cachedProduct;
             }
+
+            Cache::write($productCacheKey, $products[$i]);
+            $i++;
         }
 
-        Cache::write($productsCacheKey, $products);
 
         return $products;
     }
