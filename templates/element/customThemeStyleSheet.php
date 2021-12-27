@@ -68,7 +68,7 @@ use Cake\Core\Configure;
     h1,
     h2,
     a.blog-post-wrapper h3,
-    .product-wrapper .price,
+    .pw .price,
     #scroll-to-top a,
     #scroll-to-top a i,
     .vertical.menu a i.fas,
@@ -76,7 +76,7 @@ use Cake\Core\Configure;
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
     a.btn.edit-shortcut-button,
     a.btn.prev-button i, a.btn.next-button i,
-    .product-wrapper .price-asterisk,
+    .pw .price-asterisk,
     i.fa.ok, i.fas.ok, i.far.ok,
     body.carts .cart:not(#cart) span.amount .btn,
     #filter-loader i,
@@ -97,7 +97,7 @@ use Cake\Core\Configure;
     .btn-success:active:hover,
     #flashMessage.success,
     hr,
-    .product-wrapper, .manufacturer-wrapper,
+    .pw, .manufacturer-wrapper,
     body.manufacturers.detail #inner-content h2,
     h1.middle-line span.middle {
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
