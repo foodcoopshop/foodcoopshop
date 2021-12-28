@@ -152,9 +152,8 @@ class CategoriesTable extends AppTable
         $cacheKey = join('_', [
             'CategoriesTable_getProductsByCategoryId',
             'categoryId-' . $categoryId,
-            'isSuperadmin-' . $appAuth->isSuperadmin(),
-            'isAdmin-' . $appAuth->isAdmin(),
-            'isCustomer-' . $appAuth->isCustomer(),
+            'isLoggedIn-' . $appAuth->user(),
+            'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . $keyword,
             'productId-' . $productId,
