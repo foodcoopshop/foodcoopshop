@@ -2,7 +2,6 @@
 namespace App\Assets;
 
 use Cake\Core\Configure;
-use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -64,8 +63,6 @@ class AssetsProvider
             'modal/modal-load-last-order-details.js',
             'mobile.js',
         ]);
-
-        Log::error(print_r($result, true));
 
         return $result;
 
