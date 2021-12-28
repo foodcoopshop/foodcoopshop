@@ -152,7 +152,7 @@ class CategoriesTable extends AppTable
         $cacheKey = join('_', [
             'CategoriesTable_getProductsByCategoryId',
             'categoryId-' . $categoryId,
-            'isLoggedIn-' . $appAuth->user(),
+            'isLoggedIn-' . empty($appAuth->user()),
             'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . $keyword,

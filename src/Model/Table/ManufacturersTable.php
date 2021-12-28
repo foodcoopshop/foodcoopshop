@@ -447,7 +447,7 @@ class ManufacturersTable extends AppTable
         $cacheKey = join('_', [
             'ManufacturersController_getProductsByManufacturerId',
             'manufacturerId-' . $manufacturerId,
-            'isLoggedIn-' . $appAuth->user(),
+            'isLoggedIn-' . empty($appAuth->user()),
             'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
             'date-' . date('Y-m-d'),
         ]);
