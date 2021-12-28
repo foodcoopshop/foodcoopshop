@@ -17,8 +17,5 @@ use Cake\Core\Configure;
 
 if (Configure::read('debug')) {
     echo $this->Html->script(['/js/localized-javascript.js']);
-} else {
-    // if file does not exist, run `bin/cake SavedLocalizedJsAsStaticFile`
-    echo $this->Html->script(['/js/localized-javascript-static.js']);
 }
 ?>

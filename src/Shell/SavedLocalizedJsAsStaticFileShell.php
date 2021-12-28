@@ -32,9 +32,10 @@ class SavedLocalizedJsAsStaticFileShell extends AppShell
         $url = parse_url(Configure::read('app.cakeServerName'));
         $httpClient = new Client([
             'host' => $url['host'],
+            'redirect' => true,
         ]);
         $response = $httpClient->get('/js/localized-javascript.js');
-        $jsFile = new File(WWW_ROOT . '/js/localized-javascript-static.js');
+        $jsFile = new File(WWW_ROOT . '/cache/localized-javascript-static.js');
         $jsFile->write($response->getStringBody());
     }
 
