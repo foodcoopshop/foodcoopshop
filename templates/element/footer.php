@@ -16,7 +16,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
 ?>
-<div class="first-column">
+<div class="c1">
     <?php
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
         if (Configure::read('app.termsOfUseEnabled')) {
@@ -29,7 +29,7 @@ use Cake\Core\Configure;
     ?>
 </div>
 
-<div class="second-column">
+<div class="c2">
     <h2><?php echo __('Contact'); ?></h2>
     <p>
         <?php
