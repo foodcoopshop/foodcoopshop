@@ -97,7 +97,7 @@ return [
     'Cache' => [
         'default' => [
             'className' => FileEngine::class,
-            'path' => CACHE . DS . 'views',
+            'path' => CACHE,
             'url' => env('CACHE_DEFAULT_URL', null),
         ],
 
