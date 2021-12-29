@@ -13,7 +13,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
-use Cake\I18n\FrozenDate;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
