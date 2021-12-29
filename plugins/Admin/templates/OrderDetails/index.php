@@ -42,6 +42,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button, i.order-state-icon');" .
             Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailFeedbackAdd.init();" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailProductNameEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductCustomerEdit.init();" .
@@ -197,6 +198,7 @@ foreach ($orderDetails as $orderDetail) {
 
     echo $this->element('orderDetailList/data/mainObject', [
         'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
         'groupBy' => $groupBy
     ]);
 

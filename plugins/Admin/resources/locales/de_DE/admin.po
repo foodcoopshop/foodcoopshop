@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-15 19:41+0100\n"
-"PO-Revision-Date: 2021-12-15 19:41+0100\n"
+"POT-Creation-Date: 2021-12-20 16:18+0100\n"
+"PO-Revision-Date: 2021-12-20 16:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -377,6 +377,9 @@ msgstr "Bestellte Anzahl angepasst"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Der Lagerstand wurde auf {0} erhöht."
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr "Der Name des bestellten Produktes {0} wurde erfolgreich auf {1} geändert."
 
 msgid "The_price_is_not_valid."
 msgstr "Der Preis ist nicht gültig."
@@ -1527,6 +1530,12 @@ msgstr "Geringer Lagerstand: Benachrichtigung für Ansprechperson?"
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr "Die Ansprechperson möchte eine E-Mail bekommen, sobald der Lagerstand eines Produktes zu Ende geht."
 
+msgid "Stock_products_in_order_lists"
+msgstr "Lagerprodukte in Bestelllisten"
+
+msgid "Should_stock_products_be_included_in_order_lists?"
+msgstr "Sollen die Bestelllisten auch Lagerprodukte enthalten?"
+
 msgid "Contact_person"
 msgstr "Ansprechperson"
 
@@ -1941,6 +1950,9 @@ msgstr "Keine Rechnungen vorhanden."
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
 
+msgid "Click_to_change_name"
+msgstr "Zum Ändern des Namens anklicken"
+
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
 
@@ -2346,6 +2358,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#~ msgid "to_include_stock_products_in_order_lists."
+#~ msgstr "in den Bestelllisten auch Lagerprodukte anzeigen."
+
 #~ msgid "Sum_excl_tax"
 #~ msgstr "Summe exkl. USt."
 
@@ -2379,9 +2394,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "Street"
 #~ msgstr "Straße"
-
-#~ msgid "Stock_product_order"
-#~ msgstr "Lagerprodukt bestellen"
 
 #~ msgid "The_product_attribute_{0}_was_changed_successfully."
 #~ msgstr "Die Variante {0} wurde erfolgreich geändert."

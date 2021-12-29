@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-12-15 19:41+0100\n"
+"POT-Creation-Date: 2021-12-20 16:18+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -375,6 +375,9 @@ msgid "Ordered_amount_adapted"
 msgstr ""
 
 msgid "The_stock_was_increased_to_{0}."
+msgstr ""
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
 msgstr ""
 
 msgid "The_price_is_not_valid."
@@ -1526,6 +1529,12 @@ msgstr ""
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr ""
 
+msgid "Stock_products_in_order_lists"
+msgstr ""
+
+msgid "Should_stock_products_be_included_in_order_lists?"
+msgstr ""
+
 msgid "Contact_person"
 msgstr ""
 
@@ -1938,6 +1947,9 @@ msgid "No_invoices_available."
 msgstr ""
 
 msgid "Add_product_feedback"
+msgstr ""
+
+msgid "Click_to_change_name"
 msgstr ""
 
 msgid "Show_all_ordered_products_from_{0}"

@@ -199,7 +199,8 @@ body.iframe_self_service_order {
     max-height: calc(100vh - 154px);
 }
 #modal-product-add input[type="text"],
-#modal-product-name-edit input[type="text"] {
+#modal-product-name-edit input[type="text"],
+#order-detail-product-name-edit-form #dialogOrderDetailProductNameName {
     width: 100%;
     margin-bottom: 5px;
 }

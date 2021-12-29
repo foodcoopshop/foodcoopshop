@@ -37,6 +37,7 @@ class OrderDetailsController extends AdminAppController
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
                 break;
             case 'changeTaxOfInvoicedOrderDetail';
+            case 'editProductName':
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'addFeedback';
@@ -1255,6 +1256,51 @@ class OrderDetailsController extends AdminAppController
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
+    public function editProductName()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $productName = strip_tags(html_entity_decode($this->getRequest()->getData('productName')));
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId,
+            ],
+        ])->first();
+        $oldName = $oldOrderDetail->product_name;
+
+        try {
+            $entity = $this->OrderDetail->patchEntity(
+                $oldOrderDetail,
+                ['product_name' => $productName],
+                ['validate' => 'name'],
+            );
+            if ($entity->hasErrors()) {
+                $errorMessages = $this->OrderDetail->getAllValidationErrors($entity);
+                throw new InvalidParameterException(join('<br />', $errorMessages));
+            }
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
+        }
+
+        $this->OrderDetail->save($entity);
+
+        $message = __d('admin', 'The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}.', [
+            '<b>' . $oldName . '</b>',
+            '<b>' . $productName . '</b>',
+        ]);
+
+        $this->Flash->success($message);
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+    }
+
     public function editProductPrice()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -1265,7 +1311,7 @@ class OrderDetailsController extends AdminAppController
         $productPrice = trim($this->getRequest()->getData('productPrice'));
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
 
-        if (! is_numeric($orderDetailId) || !$productPrice || $productPrice < 0) {
+        if (! is_numeric($orderDetailId) || $productPrice === false) {
             $message = __d('admin', 'The_price_is_not_valid.');
             if (! is_numeric($orderDetailId)) {
                 $message = 'input format wrong';

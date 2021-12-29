@@ -100,7 +100,8 @@
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1
             },
             "unit_product": null,
             "tax": {
@@ -220,7 +221,8 @@
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1
             },
             "unit_product": null,
             "tax": {
@@ -332,7 +334,8 @@
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1
             },
             "unit_product": null,
             "tax": {
@@ -444,7 +447,8 @@
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1
             },
             "unit_product": {
                 "id": 4,
@@ -579,7 +583,8 @@
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1
             },
             "unit_product": {
                 "id": 8,
@@ -835,7 +840,8 @@
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1
             },
             "unit_product": null,
             "tax": {
@@ -1080,7 +1086,8 @@
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1
             },
             "unit_product": null,
             "tax": {
