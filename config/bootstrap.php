@@ -96,7 +96,7 @@ Configure::load('credentials', 'default');
  * for a short time.
  */
 if (Configure::read('debug')) {
-    //Cache::disable();
+    Cache::disable();
     // disable router cache during development
     Configure::write('Cache._cake_routes_.duration', '+2 seconds');
 }
