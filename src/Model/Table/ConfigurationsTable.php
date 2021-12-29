@@ -2,14 +2,11 @@
 
 namespace App\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
 use App\Lib\Error\Exception\ConfigFileMissingException;
-use Cake\Event\EventInterface;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Filesystem\File;
 use Cake\Validation\Validator;
-use ArrayObject;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,6 +24,8 @@ use ArrayObject;
 class ConfigurationsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveTrait;
+
     public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
     public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
 
@@ -35,11 +34,6 @@ class ConfigurationsTable extends AppTable
         $this->setTable('configuration');
         parent::initialize($config);
         $this->setPrimaryKey('id_configuration');
-    }
-
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
-    {
-        Cache::clearAll();
     }
 
     /**

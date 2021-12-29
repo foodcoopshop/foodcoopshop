@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
@@ -21,6 +23,9 @@ use Cake\Validation\Validator;
  */
 class CategoriesTable extends AppTable
 {
+
+    use ProductCacheClearAfterDeleteTrait;
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {
@@ -152,7 +157,7 @@ class CategoriesTable extends AppTable
         $cacheKey = join('_', [
             'CategoriesTable_getProductsByCategoryId',
             'categoryId-' . $categoryId,
-            'isLoggedIn-' . empty($appAuth->user()),
+            'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
             'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . $keyword,

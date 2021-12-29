@@ -2,11 +2,8 @@
 
 namespace App\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\Datasource\EntityInterface;
-use Cake\Event\EventInterface;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Validation\Validator;
-use ArrayObject;
 
 /**
  * fake model for using associations with foreign keys that are not the id of the model
@@ -26,6 +23,8 @@ use ArrayObject;
 class UnitProductsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveTrait;
+
     public function initialize(array $config): void
     {
         $this->setTable('units');
@@ -37,11 +36,6 @@ class UnitProductsTable extends AppTable
     {
         $validator->greaterThanOrEqual('purchase_price_incl_per_unit', 0, __('The_price_needs_to_be_greater_or_equal_than_0.'));
         return $validator;
-    }
-
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
-    {
-        Cache::clearAll();
     }
 
 }

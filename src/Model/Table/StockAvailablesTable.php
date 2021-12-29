@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
@@ -23,6 +24,8 @@ use ArrayObject;
  */
 class StockAvailablesTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {
@@ -48,11 +51,6 @@ class StockAvailablesTable extends AppTable
         $validator->allowEmptyString('default_quantity_after_sending_order_lists');
 
         return $validator;
-    }
-
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
-    {
-        Cache::clearAll();
     }
 
     public function updateQuantityForMainProduct($productId)

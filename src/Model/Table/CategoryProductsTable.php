@@ -2,10 +2,7 @@
 
 namespace App\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\Datasource\EntityInterface;
-use Cake\Event\EventInterface;
-use ArrayObject;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +20,8 @@ use ArrayObject;
 class CategoryProductsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveTrait;
+
     public function initialize(array $config): void
     {
         $this->setTable('category_product');
@@ -31,11 +30,6 @@ class CategoryProductsTable extends AppTable
         $this->belongsTo('Categories', [
             'foreignKey' => 'id_category'
         ]);
-    }
-
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
-    {
-        Cache::clearAll();
     }
 
 }

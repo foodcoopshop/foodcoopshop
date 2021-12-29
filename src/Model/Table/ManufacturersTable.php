@@ -2,13 +2,11 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
 use Cake\Datasource\FactoryLocator;
-use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
-use ArrayObject;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,6 +24,8 @@ use ArrayObject;
 
 class ManufacturersTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {
@@ -87,11 +87,6 @@ class ManufacturersTable extends AppTable
         $validator->numeric('timebased_currency_max_credit_balance', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
-    }
-
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
-    {
-        Cache::clearAll();
     }
 
     public function getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId)
