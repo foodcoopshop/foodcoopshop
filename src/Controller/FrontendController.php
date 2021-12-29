@@ -45,7 +45,6 @@ class FrontendController extends AppController
             $productCacheKey = join('_', [
                 'FrontendController_prepareProductsForFrontend',
                 'productId' => $products[$i]['id_product'],
-                'isLoggedIn-' . (empty($this->AppAuth->user() ? 0 : 1)),
                 $this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl(),
                 $this->AppAuth->user('shopping_price'),
                 $this->AppAuth->isTimebasedCurrencyEnabledForCustomer(),
