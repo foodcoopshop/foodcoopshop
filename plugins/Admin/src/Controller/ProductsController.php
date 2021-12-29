@@ -10,10 +10,10 @@ use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
-use Intervention\Image\ImageManagerStatic as Image;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
-
+use Intervention\Image\ImageManagerStatic as Image;
+use Cake\I18n\FrozenDate;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -1638,20 +1638,7 @@ class ProductsController extends AdminAppController
             throw new InvalidParameterException('New status needs to be 0 or 1: ' . $status);
         }
 
-        $newCreated = 'NOW()';
-        if ($status == 0) {
-            $newCreated = 'DATE_ADD(NOW(), INTERVAL -'.((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1).' DAY)';
-        }
-
         $this->Product = $this->getTableLocator()->get('Products');
-        // newCreated can't be set as param because of mysql function DATE_ADD
-        $sql = "UPDATE " . $this->Product->getTable() . " p SET p.created = " . $newCreated . " WHERE p.id_product = :productId;";
-        $params = [
-            'productId' => $productId,
-        ];
-        $statement = $this->Product->getConnection()->prepare($sql);
-        $statement->execute($params);
-
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -1660,6 +1647,12 @@ class ProductsController extends AdminAppController
                 'Manufacturers'
             ]
         ])->first();
+
+        $product->created = FrozenTime::now();
+        if ($status == APP_OFF) {
+            $product->created = FrozenTime::now()->subDay((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
+        }
+        $this->Product->save($product);
 
         $actionLogType = 'product_set_to_old';
         $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more.', [
