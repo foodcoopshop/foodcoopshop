@@ -36,5 +36,10 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
         'showProductDetailLink' => true,
         'showManufacturerDetailLink' => true,
         'showIsNewBadgeAsLink' => true
+    ],
+    [
+        'cache' => [
+            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+        ],
     ]);
 ?>

@@ -55,6 +55,11 @@ if (!empty($newProducts)) {
             'showProductDetailLink' => true,
             'showManufacturerDetailLink' => true,
             'showIsNewBadgeAsLink' => true
+        ],
+        [
+            'cache' => [
+                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+            ],
         ]);
     }
 

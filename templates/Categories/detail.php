@@ -67,6 +67,11 @@ foreach ($products as $product) {
         'showProductDetailLink' => true,
         'showManufacturerDetailLink' => true,
         'showIsNewBadgeAsLink' => true
+    ],
+    [
+        'cache' => [
+            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+        ],
     ]);
 }
 

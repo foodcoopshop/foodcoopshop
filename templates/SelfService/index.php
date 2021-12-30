@@ -116,6 +116,11 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'showProductDetailLink' => false,
             'showManufacturerDetailLink' => false,
             'showIsNewBadgeAsLink' => false
+        ],
+        [
+            'cache' => [
+                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+            ],
         ]);
     }
 

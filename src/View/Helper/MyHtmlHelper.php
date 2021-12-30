@@ -3,7 +3,6 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
 use Cake\Utility\Text;
 use Cake\View\View;
@@ -33,6 +32,20 @@ class MyHtmlHelper extends HtmlHelper
         $this->helpers[] = 'MyNumber';
         $this->helpers[] = 'MyTime';
         parent::__construct($View, $config);
+    }
+
+    public function buildElementProductCacheKey($product, $appAuth)
+    {
+        $elementCacheKey = join('_', [
+            'product',
+            'productId' => $product['id_product'],
+            'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
+            'isSelfServiceModeByUrl-' . ($appAuth->isSelfServiceModeByUrl() ? 1 : 0),
+            'isOrderForDifferentCustomerMode-' . ($appAuth->isOrderForDifferentCustomerMode() ? 1 : 0),
+            $appAuth->user('shopping_price'),
+            'date-' . date('Y-m-d'),
+        ]);
+        return $elementCacheKey;
     }
 
     public function getShoppingPricesForDropdown()
