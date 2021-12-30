@@ -573,11 +573,15 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->StockAvailables->updateAll($product[$productId], [
-                    'id_product_attribute' => $ids['attributeId'],
-                    'id_product' => $ids['productId']
-                ]);
+                $entity = $this->StockAvailables->find('all', [
+                    'conditions' => [
+                        'id_product_attribute' => $ids['attributeId'],
+                        'id_product' => $ids['productId']
+                    ],
+                ])->first();
+                $this->StockAvailables->save(
+                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                );
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $entity = $this->StockAvailables->get($ids['productId']);

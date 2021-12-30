@@ -733,12 +733,13 @@ class CartComponent extends Component
     {
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = 0;
-        foreach ($stockAvailable2saveData as &$data) {
-            $this->Product->StockAvailables->updateAll(
-                $stockAvailable2saveData[$i],
-                $stockAvailable2saveConditions[$i]
-                );
-            $this->Product->StockAvailables->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['id_product']);
+        foreach($stockAvailable2saveConditions as $condition) {
+            $stockAvailableEntity = $this->Product->StockAvailables->find('all', [
+                'conditions' => $condition,
+            ])->first();
+            $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
+            $this->Product->StockAvailables->save($stockAvailableEntity);
+            $this->Product->StockAvailables->updateQuantityForMainProduct($condition['id_product']);
             $i++;
         }
     }
