@@ -40,6 +40,8 @@ class MyHtmlHelper extends HtmlHelper
             'product',
             'productId' => $product['id_product'],
             'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
+            'isManufacturer-' . ($appAuth->isManufacturer() ? 1 : 0),
+            'isSuperadmin-' . ($appAuth->isSuperadmin() ? 1 : 0),
             'isSelfServiceModeByUrl-' . ($appAuth->isSelfServiceModeByUrl() ? 1 : 0),
             'isOrderForDifferentCustomerMode-' . ($appAuth->isOrderForDifferentCustomerMode() ? 1 : 0),
             $appAuth->user('shopping_price'),
