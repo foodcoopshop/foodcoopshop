@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-20 16:19+0100\n"
-"PO-Revision-Date: 2021-12-20 16:19+0100\n"
+"POT-Creation-Date: 2022-01-01 22:58+0100\n"
+"PO-Revision-Date: 2022-01-01 23:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -914,6 +914,12 @@ msgstr "Beispiel: VP brutto = EP brutto / 1,13 * 1,35 * 1,2<br />(für EP-USt. =
 
 msgid "Change_product_name"
 msgstr "Produktname ändern"
+
+msgid "Given_amount"
+msgstr "Überreichter Betrag"
+
+msgid "back"
+msgstr "zurück"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
@@ -2208,6 +2214,9 @@ msgstr "Senden"
 msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
 msgstr "Die Bestätigung deiner Registrierung wurde per E-Mail an dich versendet."
 
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
+msgstr "Bitte überprüfe auch den Spam-Ordner deines Postfaches und berücksichtige, dass das Empfangen der Bestätigungs-E-Mail ein paar Minuten dauern kann!"
+
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!"
 
@@ -2309,6 +2318,9 @@ msgstr "Bezahlung bei Warenübergabe."
 
 msgid "Write_message_to_pick_up_team_for_{0}?"
 msgstr "Nachricht an Abholdienst für den {0} schreiben?"
+
+msgid "Write_message_to_{0}_for_{1}?"
+msgstr "Nachricht an {0} für den {1} schreiben?"
 
 msgid "Write_message_to_your_order."
 msgstr "Kommentar zur Bestellung schreiben?"
@@ -2612,6 +2624,13 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#, fuzzy
+#~ msgid "Placeholder_message_pickup_day_comment_can_be_edited."
+#~ msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
+
+#~ msgid "Please_also_check_the_spam_folder_of_your_inbox!"
+#~ msgstr "Bitte überprüfe auch den Spam-Ordner deines E-Mail-Postfaches!"
 
 #~ msgid "The_name_must_not_be_empty."
 #~ msgstr "Der Name darf nicht leer sein."

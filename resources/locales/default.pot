@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-12-20 16:19+0100\n"
+"POT-Creation-Date: 2022-01-01 22:58+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -912,6 +912,12 @@ msgid "Calculate_selling_price_explanation_text."
 msgstr ""
 
 msgid "Change_product_name"
+msgstr ""
+
+msgid "Given_amount"
+msgstr ""
+
+msgid "back"
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
@@ -2207,6 +2213,9 @@ msgstr ""
 msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
 msgstr ""
 
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
+msgstr ""
+
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr ""
 
@@ -2307,6 +2316,9 @@ msgid "Please_pay_when_picking_up_products."
 msgstr ""
 
 msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr ""
+
+msgid "Write_message_to_{0}_for_{1}?"
 msgstr ""
 
 msgid "Write_message_to_your_order."

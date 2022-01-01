@@ -22,7 +22,14 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
 
     getHtml : function(customerName, invoiceAmount) {
         var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>';
-        html += '<h3 style="text-align:center;font-weight:bold;">' + invoiceAmount + '</h3>';
+        html += '<h3 style="text-align:center;font-weight:bold;" id="invoiceAmount">' + invoiceAmount + '</h3>';
+        html += '<div class="field-wrapper">';
+        html += '<input type="number" id="givenAmount" style="text-align:left;margin-bottom:15px;" />';
+        html += ' ' + foodcoopshop.LocalizedJs.admin.GivenAmount;
+        html += '</div>';
+        html += '<div class="field-wrapper">';
+        html += '<h3 style="text-align:center;font-weight:bold;color:red;" id="changeAmount">&nbsp;</h3>';
+        html += '</div>';
         html += '<div class="field-wrapper">';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" checked="checked" name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
@@ -77,6 +84,16 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
             document.location.href = '/admin/invoices/generate.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash;
         });
 
+        $(modalSelector + ' #givenAmount').keyup(function (e) {
+            var changeAmount = parseFloat($(this).val()) - foodcoopshop.Helper.getCurrencyAsFloat($(modalSelector + ' #invoiceAmount').text());
+            var newValue = '&nbsp;';
+            if (changeAmount > 0) {
+                newValue = foodcoopshop.Helper.formatFloatAsCurrency(changeAmount) + ' ' + foodcoopshop.LocalizedJs.admin.back;
+            }
+            $(modalSelector + ' #changeAmount').html(newValue);
+
+        });
+
         $(modalSelector + ' .preview-invoice-button').on('click', function() {
             foodcoopshop.ModalInvoiceForCustomerAdd.getSuccessHandler(modalSelector, customerId);
         });
@@ -87,6 +104,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
 
         $(modalSelector).modal();
 
+        $(modalSelector + ' #givenAmount').focus();
     }
 
 };

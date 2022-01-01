@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-20 16:19+0100\n"
-"PO-Revision-Date: 2021-12-20 16:23+0100\n"
+"POT-Creation-Date: 2022-01-01 22:58+0100\n"
+"PO-Revision-Date: 2022-01-01 23:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -914,6 +914,12 @@ msgstr "Calculate selling price."
 
 msgid "Change_product_name"
 msgstr "Change product name"
+
+msgid "Given_amount"
+msgstr "Given amount"
+
+msgid "back"
+msgstr "back"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -2208,6 +2214,9 @@ msgstr "Send"
 msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
 msgstr "The confirmation of your registration was sent to you by email."
 
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
+msgstr "Please also check the spam folder of your inbox and be aware that receiving the mail might last up to a several minutes!"
+
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr "Your account was created but not activated yet. This means, you can't login yet!"
 
@@ -2308,7 +2317,10 @@ msgid "Please_pay_when_picking_up_products."
 msgstr "Please pay when picking up your products."
 
 msgid "Write_message_to_pick_up_team_for_{0}?"
-msgstr "Want to write a message to the pick up team on {0}?"
+msgstr "Want to write a message to the pick up team for {0}?"
+
+msgid "Write_message_to_{0}_for_{1}?"
+msgstr "Want to write a message to {0} for {1}?"
 
 msgid "Write_message_to_your_order."
 msgstr "Add message to your order?"
@@ -2612,6 +2624,13 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "Placeholder_message_pickup_day_comment_can_be_edited."
+#~ msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
+
+#~ msgid "Please_also_check_the_spam_folder_of_your_inbox!"
+#~ msgstr "Please also check the spam folder of your inbox!"
 
 #, fuzzy
 #~ msgid "The_name_must_not_be_empty."
