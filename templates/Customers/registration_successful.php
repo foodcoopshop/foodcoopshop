@@ -24,6 +24,7 @@ $this->element('addScript', ['script' =>
 <ul>
 
     <li><?php echo __('The_confirmation_of_your_registration_was_sent_to_you_by_email.'); ?></li>
+    <li><b><?php echo __('Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!'); ?></b></li>
 
     <?php if (!Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
     <li><b><?php echo __('Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!'); ?></b><br />
