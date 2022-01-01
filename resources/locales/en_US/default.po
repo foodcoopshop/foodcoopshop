@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-01 22:26+0100\n"
-"PO-Revision-Date: 2022-01-01 22:27+0100\n"
+"POT-Creation-Date: 2022-01-01 22:58+0100\n"
+"PO-Revision-Date: 2022-01-01 23:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2317,7 +2317,10 @@ msgid "Please_pay_when_picking_up_products."
 msgstr "Please pay when picking up your products."
 
 msgid "Write_message_to_pick_up_team_for_{0}?"
-msgstr "Want to write a message to the pick up team on {0}?"
+msgstr "Want to write a message to the pick up team for {0}?"
+
+msgid "Write_message_to_{0}_for_{1}?"
+msgstr "Want to write a message to {0} for {1}?"
 
 msgid "Write_message_to_your_order."
 msgstr "Add message to your order?"
@@ -2621,6 +2624,10 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "Placeholder_message_pickup_day_comment_can_be_edited."
+#~ msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
 
 #~ msgid "Please_also_check_the_spam_folder_of_your_inbox!"
 #~ msgstr "Please also check the spam folder of your inbox!"

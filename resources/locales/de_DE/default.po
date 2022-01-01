@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-01 22:26+0100\n"
-"PO-Revision-Date: 2022-01-01 22:28+0100\n"
+"POT-Creation-Date: 2022-01-01 22:58+0100\n"
+"PO-Revision-Date: 2022-01-01 23:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2319,6 +2319,9 @@ msgstr "Bezahlung bei Warenübergabe."
 msgid "Write_message_to_pick_up_team_for_{0}?"
 msgstr "Nachricht an Abholdienst für den {0} schreiben?"
 
+msgid "Write_message_to_{0}_for_{1}?"
+msgstr "Nachricht an {0} für den {1} schreiben?"
+
 msgid "Write_message_to_your_order."
 msgstr "Kommentar zur Bestellung schreiben?"
 
@@ -2621,6 +2624,10 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#, fuzzy
+#~ msgid "Placeholder_message_pickup_day_comment_can_be_edited."
+#~ msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
 
 #~ msgid "Please_also_check_the_spam_folder_of_your_inbox!"
 #~ msgstr "Bitte überprüfe auch den Spam-Ordner deines E-Mail-Postfaches!"
