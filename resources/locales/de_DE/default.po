@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-20 16:19+0100\n"
-"PO-Revision-Date: 2021-12-20 16:19+0100\n"
+"POT-Creation-Date: 2022-01-01 22:03+0100\n"
+"PO-Revision-Date: 2022-01-01 22:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -914,6 +914,12 @@ msgstr "Beispiel: VP brutto = EP brutto / 1,13 * 1,35 * 1,2<br />(für EP-USt. =
 
 msgid "Change_product_name"
 msgstr "Produktname ändern"
+
+msgid "Given_amount"
+msgstr "Überreichter Betrag"
+
+msgid "back"
+msgstr "zurück"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"

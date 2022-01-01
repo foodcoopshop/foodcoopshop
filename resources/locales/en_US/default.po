@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-20 16:19+0100\n"
+"POT-Creation-Date: 2022-01-01 22:03+0100\n"
 "PO-Revision-Date: 2021-12-20 16:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -914,6 +914,13 @@ msgstr "Calculate selling price."
 
 msgid "Change_product_name"
 msgstr "Change product name"
+
+#, fuzzy
+msgid "Given_amount"
+msgstr "New amount"
+
+msgid "back"
+msgstr ""
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
