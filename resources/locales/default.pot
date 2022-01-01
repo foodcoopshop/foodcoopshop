@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-01 22:03+0100\n"
+"POT-Creation-Date: 2022-01-01 22:26+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2211,6 +2211,9 @@ msgid "Send"
 msgstr ""
 
 msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr ""
+
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
 msgstr ""
 
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"

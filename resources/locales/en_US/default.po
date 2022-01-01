@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-01 22:03+0100\n"
-"PO-Revision-Date: 2022-01-01 22:18+0100\n"
+"POT-Creation-Date: 2022-01-01 22:26+0100\n"
+"PO-Revision-Date: 2022-01-01 22:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2214,6 +2214,9 @@ msgstr "Send"
 msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
 msgstr "The confirmation of your registration was sent to you by email."
 
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
+msgstr "Please also check the spam folder of your inbox and be aware that receiving the mail might last up to a several minutes!"
+
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr "Your account was created but not activated yet. This means, you can't login yet!"
 
@@ -2618,6 +2621,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Please_also_check_the_spam_folder_of_your_inbox!"
+#~ msgstr "Please also check the spam folder of your inbox!"
 
 #, fuzzy
 #~ msgid "The_name_must_not_be_empty."
