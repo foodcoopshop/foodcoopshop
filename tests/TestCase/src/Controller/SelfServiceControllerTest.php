@@ -284,7 +284,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
 
-        $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. 2021-000001');
+        $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. ' . date('Y') .  '-000001');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSelfServiceCustomer'));
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
