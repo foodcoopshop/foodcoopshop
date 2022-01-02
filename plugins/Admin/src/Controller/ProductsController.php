@@ -161,7 +161,7 @@ class ProductsController extends AdminAppController
 
         $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
         if ($surcharge < 0) {
-            throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0'));
+            throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0.'));
         }
 
         try {
