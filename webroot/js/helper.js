@@ -471,12 +471,15 @@ foodcoopshop.Helper = {
         var orderForDifferentCustomerIframe = window.parent.$('#order-for-different-customer-add .modal-body iframe');
 
         if (orderForDifferentCustomerIframe.length > 0) {
-            difference = 149;
+            difference = 130;
             difference += $('.order-for-different-customer-info').height();
-            difference += $('.shopping-price-info').height() + 1;
+            var shoppingPriceElement = $('.shopping-price-info');
+            if (shoppingPriceElement.length > 0) {
+                difference += shoppingPriceElement.height() + 8;
+            }
             newCartHeight = orderForDifferentCustomerIframe.height();
         } else {
-            difference = 146;
+            difference = 120;
             var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
             if (loadLastOrderDetailsDropdown.length > 0) {
                 difference += loadLastOrderDetailsDropdown.closest('.input').height();
@@ -485,11 +488,16 @@ foodcoopshop.Helper = {
             if (globalNoDeliveryDayBox.length > 0) {
                 difference += globalNoDeliveryDayBox.height();
             }
+            var shoppingPriceElement = $('.shopping-price-info');
+            if (shoppingPriceElement.length > 0) {
+                difference += shoppingPriceElement.height() + 8;
+            }
             var newCartHeight = $(window).height();
         }
 
-        var sumsWrapperHeight = $('#cart .sums-wrapper').height() - 30;
-        $('#cart .products').css('max-height', parseInt(newCartHeight) - difference - sumsWrapperHeight);
+        var sumsWrapperHeight = $('#cart .sums-wrapper').height();
+        var newMaxHeight = parseInt(newCartHeight) - difference - sumsWrapperHeight;
+        $('#cart .products').css('max-height', newMaxHeight);
 
     },
 
