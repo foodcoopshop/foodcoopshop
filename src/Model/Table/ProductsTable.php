@@ -579,9 +579,12 @@ class ProductsTable extends AppTable
                         'id_product' => $ids['productId']
                     ],
                 ])->first();
+                $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
+                $this->StockAvailables->setPrimaryKey('id_product_attribute');
                 $this->StockAvailables->save(
                     $this->StockAvailables->patchEntity($entity, $product[$productId])
                 );
+                $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $entity = $this->StockAvailables->get($ids['productId']);
