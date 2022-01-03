@@ -503,7 +503,7 @@ class OrderDetailsController extends AdminAppController
                 $roundedPurchasePrice = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
                 $roundedSellingPrice = round($orderDetail->total_price_tax_excl, 2);
                 $roundedProfit = round($roundedSellingPrice - $roundedPurchasePrice, 2);
-                if ($roundedPurchasePrice > 0) {
+                if ($roundedPurchasePrice >= 0) {
                     $orderDetails[$i]->purchase_price_ok = true;
                     $orderDetails[$i]->order_detail_purchase_price->total_price_tax_excl = $roundedPurchasePrice;
                     $orderDetails[$i]->total_price_tax_excl = $roundedSellingPrice;
