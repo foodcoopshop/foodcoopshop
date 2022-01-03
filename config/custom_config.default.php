@@ -42,7 +42,6 @@ return [
             'username' => '',
             'password' => '',
             'database' => '',
-            'prefix' => 'fcs_'
         ]
     ],
 
