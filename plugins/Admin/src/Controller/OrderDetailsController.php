@@ -492,6 +492,7 @@ class OrderDetailsController extends AdminAppController
             ],
         ])->toArray();
 
+        $sumAmount = 0;
         $sumSellingPrice = 0;
         $sumPurchasePrice = 0;
         $sumProfit = 0;
@@ -507,6 +508,7 @@ class OrderDetailsController extends AdminAppController
                     $orderDetails[$i]->order_detail_purchase_price->total_price_tax_excl = $roundedPurchasePrice;
                     $orderDetails[$i]->total_price_tax_excl = $roundedSellingPrice;
                     $orderDetails[$i]->profit = $roundedProfit;
+                    $sumAmount += $orderDetail->product_amount;
                     $sumProfit += $roundedProfit;
                     $sumPurchasePrice += $roundedPurchasePrice;
                     $sumSellingPrice += $roundedSellingPrice;
@@ -518,6 +520,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->PurchasePrice = $this->getTableLocator()->get('PurchasePriceProducts');
         $this->set('sums', [
+            'amount' => $sumAmount,
             'purchasePrice' => $sumPurchasePrice,
             'sellingPrice' => $sumSellingPrice,
             'profit' => $sumProfit,
