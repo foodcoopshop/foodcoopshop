@@ -178,14 +178,14 @@ foodcoopshop.SelfService = {
 
     initHighlightedProductIdForMobileBarcodeScanning: function(productId) {
         $('#products').show();
-        $('.product-wrapper').hide();
-        var rowId = '#product-wrapper-' + productId;
+        $('.pw').hide();
+        var rowId = '#pw-' + productId;
         $(rowId).show();
         this.initHighlightedProductId(productId);
     },
 
     initHighlightedProductId: function(productId) {
-        var rowId = '#product-wrapper-' + productId;
+        var rowId = '#pw-' + productId;
         $.scrollTo(rowId, 1000, {
             offset: {
                 top: -100
@@ -204,7 +204,7 @@ foodcoopshop.SelfService = {
     bindQuantityInUnitsInputFields: function(){
         $('.quantity-in-units-input-field-wrapper input').on('keypress', function(e) {
             if (e.which === 13) {
-                $(this).closest('.entity-wrapper').find('.btn-cart').trigger('click');
+                $(this).closest('.ew').find('.btn-cart').trigger('click');
                 $(this).val('');
             }
         });

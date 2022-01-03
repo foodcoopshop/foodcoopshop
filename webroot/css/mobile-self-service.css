@@ -15,7 +15,7 @@
     .self-service,
     .self-service .header,
     .self-service #products,
-    .self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
+    .self-service .pw .quantity-in-units-input-field-wrapper input {
        width: 100%;
     }
     body.customers.login #content.self-service {
@@ -31,7 +31,7 @@
        border-right: none;
        display: none;
     }
-    .self-service .product-wrapper {
+    .self-service .pw {
        padding-left: 10px;
     }
     .self-service #login-form {
@@ -156,13 +156,13 @@
         float: right;
         margin-top: 11px;
     }
-    .self-service .product-wrapper div.second-column {
+    .self-service .pw div.c2 {
        width: 33% ! important;
     }
-    .self-service .product-wrapper div.third-column {
+    .self-service .pw div.c3 {
        width: 40% ! important;
     }
-    .self-service .product-wrapper .quantity-in-units-input-field-wrapper {
+    .self-service .pw .quantity-in-units-input-field-wrapper {
         padding: 0;
         margin-left: 0;
         margin-bottom: 5px;

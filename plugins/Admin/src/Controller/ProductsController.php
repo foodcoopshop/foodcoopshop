@@ -10,9 +10,9 @@ use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
-use Intervention\Image\ImageManagerStatic as Image;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -942,26 +942,36 @@ class ProductsController extends AdminAppController
 
         $this->CategoryProduct = $this->getTableLocator()->get('CategoryProducts');
         $this->CategoryProduct->deleteAll([
-            'id_product' => $productId
+            'id_product' => $productId,
         ]);
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $selectedCategoryNames = [];
-        foreach ($selectedCategories as $selectedCategory) {
+        $data = [];
+        foreach ($selectedCategories as $selectedCategoryId) {
             // only add if entry of passed id exists in category table
             $oldCategory = $this->Category->find('all', [
                 'conditions' => [
-                    'Categories.id_category' => $selectedCategory
+                    'Categories.id_category' => $selectedCategoryId
                 ]
             ])->first();
             if (! empty($oldCategory)) {
                 // do not track "all-products"
-                if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
+                if ($selectedCategoryId != Configure::read('app.categoryAllProducts')) {
                     $selectedCategoryNames[] = $oldCategory->name;
                 }
-                $sql = 'INSERT INTO ' . $this->CategoryProduct->getTable() . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
-                $this->CategoryProduct->getConnection()->query($sql);
+                $data[] = [
+                    'id_product' => $productId,
+                    'id_category' => $selectedCategoryId,
+                ];
             }
+        }
+        if (!empty($data)) {
+            $tmpPrimaryKey = $this->CategoryProduct->getPrimaryKey();
+            $this->CategoryProduct->setPrimaryKey(null);
+            $categoryProducts = $this->CategoryProduct->newEntities($data);
+            $this->CategoryProduct->saveMany($categoryProducts);
+            $this->CategoryProduct->setPrimaryKey($tmpPrimaryKey);
         }
 
         $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
@@ -1638,20 +1648,7 @@ class ProductsController extends AdminAppController
             throw new InvalidParameterException('New status needs to be 0 or 1: ' . $status);
         }
 
-        $newCreated = 'NOW()';
-        if ($status == 0) {
-            $newCreated = 'DATE_ADD(NOW(), INTERVAL -'.((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1).' DAY)';
-        }
-
         $this->Product = $this->getTableLocator()->get('Products');
-        // newCreated can't be set as param because of mysql function DATE_ADD
-        $sql = "UPDATE " . $this->Product->getTable() . " p SET p.created = " . $newCreated . " WHERE p.id_product = :productId;";
-        $params = [
-            'productId' => $productId,
-        ];
-        $statement = $this->Product->getConnection()->prepare($sql);
-        $statement->execute($params);
-
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -1660,6 +1657,12 @@ class ProductsController extends AdminAppController
                 'Manufacturers'
             ]
         ])->first();
+
+        $product->created = FrozenTime::now();
+        if ($status == APP_OFF) {
+            $product->created = FrozenTime::now()->subDay((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
+        }
+        $this->Product->save($product);
 
         $actionLogType = 'product_set_to_old';
         $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more.', [

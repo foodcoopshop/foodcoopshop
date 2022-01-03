@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\RemoteFile\RemoteFile;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
@@ -26,6 +27,8 @@ use Cake\Validation\Validator;
  */
 class ProductsTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
@@ -570,11 +573,15 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->StockAvailables->updateAll($product[$productId], [
-                    'id_product_attribute' => $ids['attributeId'],
-                    'id_product' => $ids['productId']
-                ]);
+                $entity = $this->StockAvailables->find('all', [
+                    'conditions' => [
+                        'id_product_attribute' => $ids['attributeId'],
+                        'id_product' => $ids['productId']
+                    ],
+                ])->first();
+                $this->StockAvailables->save(
+                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                );
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $entity = $this->StockAvailables->get($ids['productId']);

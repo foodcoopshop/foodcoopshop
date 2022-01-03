@@ -89,7 +89,7 @@ class PricePerUnitHelper extends Helper
     public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount, $showAdaptionMessage=true)
     {
         $infoText = '<div class="line">';
-        $infoText .= '<span class="additional-price-info">';
+        $infoText .= '<span class="p-info">';
         $infoText .= ' * ' . __('Base_price') . ': ' . $this->getPricePerUnitBaseInfoForCart($priceInclPerUnit, $unitName, $unitAmount);
         if ($showAdaptionMessage) {
             $infoText .= ', ' . __('price_will_be_adapted.');

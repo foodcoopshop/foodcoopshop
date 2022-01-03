@@ -2,7 +2,12 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
+use ArrayObject;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -19,6 +24,8 @@ use Cake\Validation\Validator;
  */
 class StockAvailablesTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {

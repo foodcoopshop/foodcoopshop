@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".ModalImage.init('.first-column a.open-with-modal');"
+    Configure::read('app.jsNamespace').".ModalImage.init('.c1 a.open-with-modal');"
 ]);
 ?>
 
@@ -33,7 +33,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
 foreach ($manufacturers as $manufacturer) {
     echo '<div class="manufacturer-wrapper">';
 
-        echo '<div class="first-column">';
+        echo '<div class="c1">';
             $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
             $largeImageExists = $this->Html->largeImageExists($srcLargeImage);
             if ($largeImageExists) {
@@ -45,7 +45,7 @@ foreach ($manufacturers as $manufacturer) {
             }
         echo '</div>';
 
-        echo '<div class="second-column">';
+        echo '<div class="c2">';
             echo '<h4>'.$this->Html->link(
                 $manufacturer->name,
                 $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
@@ -62,7 +62,7 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '</div>';
 
-        echo '<div class="third-column">';
+        echo '<div class="c3">';
             $manufacturerDetailLinkName  = __('Show_manufacturer_profile');
             if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 $manufacturerDetailLinkName = __('Show_products');

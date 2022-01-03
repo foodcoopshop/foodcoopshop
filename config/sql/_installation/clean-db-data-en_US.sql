@@ -282,7 +282,8 @@ INSERT INTO `phinxlog` VALUES
 (20211123095227,'DeactivateCheckCreditReminder','2021-11-23 10:01:00','2021-11-23 10:01:00',0),
 (20211213081433,'ImproveCustomerNotifications','2021-12-13 09:24:39','2021-12-13 09:24:40',0),
 (20211213081434,'ImproveCustomerNotifications','2021-12-13 10:44:50','2021-12-13 10:44:50',0),
-(20211215184633,'ManufacturerSettingIncludeStockProductsOnOrderList','2021-12-15 18:50:55','2021-12-15 18:50:55',0);
+(20211215184633,'ManufacturerSettingIncludeStockProductsOnOrderList','2021-12-15 18:50:55','2021-12-15 18:50:55',0),
+(20211229194617,'AddIndizesForBetterPerformance','2021-12-29 19:55:34','2021-12-29 19:55:34',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

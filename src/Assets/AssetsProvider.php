@@ -1,6 +1,8 @@
 <?php
 namespace App\Assets;
 
+use Cake\Core\Configure;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -37,7 +39,16 @@ class AssetsProvider
 
     public static function getJsFilesBase()
     {
-        return [
+
+        $result = [];
+
+        // if file does not exist, run `bin/cake SavedLocalizedJsAsStaticFile`
+        // and then run `bin/cake asset_compress build`
+        if (!Configure::read('debug')) {
+            $result[] = 'cache/localized-javascript-static.js';
+        }
+
+        $result = array_merge($result, [
             'jquery/dist/jquery.js',
             'popper.js/dist/umd/popper.js',
             'jquery-backstretch/jquery.backstretch.js',
@@ -51,7 +62,10 @@ class AssetsProvider
             'modal/modal-text.js',
             'modal/modal-load-last-order-details.js',
             'mobile.js',
-        ];
+        ]);
+
+        return $result;
+
     }
 
 }

@@ -25,9 +25,9 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     (boolean) $product['is_stock_product']
 );
 
-echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'] . '">';
+echo '<div class="pw" id="pw-' . $product['id_product'] . '">';
 
-    echo '<div class="first-column">';
+    echo '<div class="c1">';
 
         $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback(
             $product['id_image'],
@@ -52,7 +52,7 @@ echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'
     }
     echo '</div>';
 
-    echo '<div class="second-column">';
+    echo '<div class="c2">';
 
     echo '<div class="heading">';
         echo '<h4>';
@@ -172,21 +172,23 @@ if ($product['description'] != '') {
         echo '</b></i></p>';
     }
 
-    if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
-        echo $this->Html->link(
-            '<i class="fas fa-pencil-alt"></i>',
-            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product']),
-            [
-                'class' => 'btn btn-outline-light edit-shortcut-button',
-                'title' => __('Edit'),
-                'escape' => false
-            ]
-        );
+    if (!$appAuth->isOrderForDifferentCustomerMode()) {
+        if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt"></i>',
+                $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product']),
+                [
+                    'class' => 'btn btn-outline-light edit-shortcut-button',
+                    'title' => __('Edit'),
+                    'escape' => false
+                ]
+            );
+        }
     }
 
     echo '</div>';
 
-    echo '<div class="third-column">';
+    echo '<div class="c3">';
 
     if (!empty($product['attributes'])) {
         // PRODUCT WITH ATTRIBUTES
@@ -226,11 +228,11 @@ if ($product['description'] != '') {
 
         // render remaining attributes (with attribute "checked")
         foreach ($preparedProductAttributes as $attribute) {
-            $entityClasses = ['entity-wrapper'];
+            $entityClasses = ['ew'];
             if ($attribute['checked']) {
                 $entityClasses[] = 'active';
             }
-            echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
+            echo '<div class="'.join(' ', $entityClasses).'" id="ew-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
             if ($showProductPrice) {
                 echo '<div class="line">';
                 $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($attribute['ProductAttributes']['gross_price']) . '</div>';
@@ -323,7 +325,7 @@ if ($product['description'] != '') {
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
-        echo '<div class="entity-wrapper active">';
+        echo '<div class="ew active">';
             if ($showProductPrice) {
                 echo '<div class="line">';
                 $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($product['gross_price']) . '</div>';
