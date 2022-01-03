@@ -95,7 +95,10 @@ echo '<table class="list profit-table">';
                     ]
                 );
                 echo '<span class="product-name">';
-                    echo $orderDetail->product_name;
+                    echo $this->Html->link(
+                        $orderDetail->product_name,
+                        $this->Slug->getProfit($dateFrom, $dateTo, $customerId, $manufacturerId, $orderDetail->product_id),
+                    );
                 echo '</span>';
             echo '</td>';
 
@@ -106,11 +109,17 @@ echo '<table class="list profit-table">';
             echo '</td>';
 
             echo '<td>';
-                echo $orderDetail->product->manufacturer->name;
+                echo $this->Html->link(
+                    $orderDetail->product->manufacturer->name,
+                    $this->Slug->getProfit($dateFrom, $dateTo, $customerId, $orderDetail->product->id_manufacturer, $productId),
+                );
             echo '</td>';
 
             echo '<td>';
-                echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
+                echo $this->Html->link(
+                    $this->Html->getNameRespectingIsDeleted($orderDetail->customer),
+                    $this->Slug->getProfit($dateFrom, $dateTo, $orderDetail->id_customer, $manufacturerId, $productId),
+                );
             echo '</td>';
 
             echo '<td style="text-align:right;">';
