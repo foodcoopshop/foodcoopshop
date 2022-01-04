@@ -33,6 +33,15 @@ foodcoopshop.Helper = {
         }
     },
 
+    openPrintDialogForFile : function(file) {
+        var iframe = document.createElement('iframe');
+        iframe.style.visibility = 'hidden';
+        iframe.src = file;
+        document.body.appendChild(iframe);
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+    },
+
     initCookieBanner: function() {
         // IE breaks with GdprCookieConsentBanner
         if (window.document.documentMode) {

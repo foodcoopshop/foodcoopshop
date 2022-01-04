@@ -140,7 +140,7 @@ class SelfServiceController extends FrontendController
                             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
                         }
                     }
-                    $this->request->getSession()->write('selfServiceInvoiceRoute', $invoiceRoute);
+                    $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
                 }
 
                 $this->resetOriginalLoggedCustomer();

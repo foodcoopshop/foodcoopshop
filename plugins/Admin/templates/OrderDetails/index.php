@@ -30,6 +30,8 @@ use Cake\Core\Configure;
         "
     ]);
 
+    echo $this->element('autoPrintInvoice');
+
     if (Configure::read('app.isDepositEnabled')) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace').".ModalPaymentAdd.initDepositInList();"

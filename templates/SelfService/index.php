@@ -34,12 +34,7 @@ if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::rea
     ]);
 }
 
-if (!$isMobile && $this->request->getSession()->read('selfServiceInvoiceRoute') != '') {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".SelfService.printInvoice('".Configure::read('app.cakeServerName') . $this->request->getSession()->read('selfServiceInvoiceRoute') . "');"
-    ]);
-    $this->request->getSession()->delete('selfServiceInvoiceRoute');
-}
+echo $this->element('autoPrintInvoice');
 
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 

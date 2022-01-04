@@ -60,6 +60,7 @@ class HelloCashTest extends AppCakeTestCase
         $paidInCash = 1;
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $invoice = $this->Invoice->find('all', [])->first();
 
@@ -248,6 +249,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->Customer->save($customer);
 
         $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $invoiceA = $this->Invoice->find('all', [
             'contain' => [

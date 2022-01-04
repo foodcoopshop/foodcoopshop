@@ -45,6 +45,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $paidInCash = 1;
 
         $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoice = $this->Invoice->find('all', [
@@ -102,6 +103,7 @@ class InvoicesControllerTest extends AppCakeTestCase
 
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoice = $this->Invoice->find('all', [
