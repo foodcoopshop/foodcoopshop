@@ -147,8 +147,8 @@ use Cake\Core\Configure;
             :not(.fa-plus-circle) {
                 color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
-            body.self_services #responsive-header a.btn,
-            body.self_services #responsive-header i.ok {
+            body.self_services #responsive-header a.btn:not(.btn-flash-message),
+            body.self_services #responsive-header a.btn:not(.btn-flash-message) i.ok {
                 color: #fff ! important;
             }
             body:not(.admin) .sb-right h3 {
