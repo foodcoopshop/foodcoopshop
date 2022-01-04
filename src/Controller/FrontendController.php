@@ -35,10 +35,6 @@ class FrontendController extends AppController
         $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
         $this->Customer = $this->getTableLocator()->get('Customers');
 
-        if ($this->AppAuth->user()) {
-            $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
-        }
-
         $i = 0;
         foreach ($products as $product) {
 
@@ -92,17 +88,6 @@ class FrontendController extends AppController
                             )
                         ]
                     ));
-
-                    $products[$i]['future_order_details'] = [];
-                    if (!empty($futureOrderDetails)) {
-                        foreach($futureOrderDetails as $futureOrderDetail) {
-                            if ($futureOrderDetail['product_id'] == $products[$i]['id_product']) {
-                                $products[$i]['future_order_details'][] = $futureOrderDetail;
-                                continue;
-                            }
-                        }
-                    }
-
                 }
 
                 $products[$i]['attributes'] = [];
@@ -212,6 +197,24 @@ class FrontendController extends AppController
             $i++;
         }
 
+        // never cache user dependent future order details
+        if ($this->AppAuth->user()) {
+            $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
+        }
+
+        $i = 0;
+        foreach($products as $product) {
+            $products[$i]['future_order_details'] = [];
+            if (!empty($futureOrderDetails)) {
+                foreach($futureOrderDetails as $futureOrderDetail) {
+                    if ($futureOrderDetail['product_id'] == $products[$i]['id_product']) {
+                        $products[$i]['future_order_details'][] = $futureOrderDetail;
+                        continue;
+                    }
+                }
+            }
+            $i++;
+        }
 
         return $products;
     }
