@@ -113,14 +113,14 @@ class InvoicesController extends AdminAppController
             $helloCash = new HelloCash();
             $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
             $invoiceId = $responseObject->invoice_id;
-            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
             $invoiceNumber = $responseObject->invoice_number;
 
         } else {
 
             $invoiceToCustomer = new GenerateInvoiceToCustomer();
             $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
-            $invoiceFilename = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
+            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
             $invoiceNumber = $newInvoice->invoice_number;
             $invoiceId = $newInvoice->id;
         }
@@ -150,11 +150,14 @@ class InvoicesController extends AdminAppController
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_ON,
             );
+
+            $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
+
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Print_receipt'),
-            $invoiceFilename,
+            $invoiceRoute,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',
@@ -273,7 +276,7 @@ class InvoicesController extends AdminAppController
             $cancelledInvoiceNumber = $responseObject->invoice_number;
             $invoiceId = $responseObject->cancellation_details->cancellation_number;
             $cancellationInvoiceNumber = $responseObject->cancellation_details->cancellation_number;
-            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
+            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
 
         } else {
 
@@ -318,7 +321,7 @@ class InvoicesController extends AdminAppController
             $invoiceId = $newInvoice->id;
             $cancelledInvoiceNumber = $invoice->invoice_number;
             $cancellationInvoiceNumber = $newInvoice->invoice_number;
-            $invoiceFilename = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
+            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
 
         }
 
@@ -346,11 +349,14 @@ class InvoicesController extends AdminAppController
                 Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
                 APP_OFF,
             );
+
+            $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
+
         }
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),
-            $invoiceFilename,
+            $invoiceRoute,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',

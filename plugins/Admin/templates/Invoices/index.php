@@ -25,6 +25,8 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();"
 ]);
 
+echo $this->element('autoPrintInvoice');
+
 if ($isOverviewMode) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
