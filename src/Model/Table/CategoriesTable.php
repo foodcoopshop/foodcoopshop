@@ -128,7 +128,7 @@ class CategoriesTable extends AppTable
             $conditions[] = 'Categories.id_category != ' . $excludeCategoryId;
         }
         if (!$showOfflineCategories) {
-            $conditions['Categories.active'] = true;
+            $conditions['Categories.active'] = APP_ON;
         }
         $categories = $this->getThreaded($conditions)->toArray();
 
