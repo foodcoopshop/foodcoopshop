@@ -55,6 +55,7 @@ class HelloCashTest extends AppCakeTestCase
 
     public function testGenerateReceipt()
     {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
@@ -72,7 +73,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
         $this->runAndAssertQueue();
-        $this->assertMailCount(2);
+        $this->assertMailCount(1);
     }
 
     public function testGenerateInvoiceSendPerEmailActivated()
@@ -238,6 +239,7 @@ class HelloCashTest extends AppCakeTestCase
 
     public function testCreatingUserThatDoesNotExistOnGeneratingReceipt()
     {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
