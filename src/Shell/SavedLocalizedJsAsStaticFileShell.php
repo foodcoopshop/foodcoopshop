@@ -15,28 +15,31 @@
 
 namespace App\Shell;
 
-use Cake\Core\Configure;
 use Cake\Filesystem\File;
-use Cake\Http\Client;
+use Cake\TestSuite\IntegrationTestTrait;
 
 class SavedLocalizedJsAsStaticFileShell extends AppShell
 {
 
+    use IntegrationTestTrait;
+
     /**
      * do not call parent::main because db connection might not be available
+     *
+     * this script was written to be executed in the deploy process
+     * in order to get the javascript content from the tmp installation
+     * (and not from app.cakeServerName where the new code is not yet available)
+     * the built-in HttpClient from IntegrationTest is used
+     *
      * run this script to generate a static file for production use
+     *
      * @see AppShell::main()
      */
     public function main()
     {
-        $url = parse_url(Configure::read('app.cakeServerName'));
-        $httpClient = new Client([
-            'host' => $url['host'],
-            'redirect' => true,
-        ]);
-        $response = $httpClient->get('/js/localized-javascript.js');
+        $this->get('/js/localized-javascript.js');
         $jsFile = new File(WWW_ROOT . '/cache/localized-javascript-static.js');
-        $jsFile->write($response->getStringBody());
+        $jsFile->write($this->_response);
     }
 
 }
