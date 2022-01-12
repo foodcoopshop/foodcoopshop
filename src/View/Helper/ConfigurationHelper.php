@@ -80,6 +80,18 @@ class ConfigurationHelper extends Helper
         return self::getConfigurationDropdownOptions($name, $appAuth)[$value];
     }
 
+    public function getConfigurationDropdownEmpty($name)
+    {
+        switch($name) {
+            case 'FCS_MEMBER_FEE_PRODUCTS':
+                return __('All_products');
+                break;
+            default:
+                return null;
+                break;
+        }
+    }
+
     public function getConfigurationMultipleDropdownOptions($name, $value)
     {
         switch($name) {
