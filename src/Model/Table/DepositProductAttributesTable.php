@@ -2,9 +2,9 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+
 /**
- * fake model for using associations with foreign keys that are not the id of the model
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -19,6 +19,8 @@ namespace App\Model\Table;
  */
 class DepositProductAttributesTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {
