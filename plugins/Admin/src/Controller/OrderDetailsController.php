@@ -247,9 +247,14 @@ class OrderDetailsController extends AdminAppController
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
-        $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
-            'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
-        ]);
+
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
+            ]);
+            $odParams['contain'][] = 'PickupDayEntities';
+        }
+
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $odParams['contain'],
