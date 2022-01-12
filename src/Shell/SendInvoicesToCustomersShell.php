@@ -31,7 +31,6 @@ class SendInvoicesToCustomersShell extends AppShell
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             throw new ForbiddenException();
         }
-
         $this->startTimeLogging();
 
         $this->Customer = $this->getTableLocator()->get('Customers');

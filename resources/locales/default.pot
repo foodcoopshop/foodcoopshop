@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-01 22:58+0100\n"
+"POT-Creation-Date: 2022-01-12 21:43+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2076,6 +2076,12 @@ msgid "active_state_inactive"
 msgstr ""
 
 msgid "active_state_all"
+msgstr ""
+
+msgid "{0,plural,=1{1_minute} other{#_minutes}}"
+msgstr ""
+
+msgid "{0,plural,=1{1_second} other{#_seconds}}"
 msgstr ""
 
 msgid "midnight"

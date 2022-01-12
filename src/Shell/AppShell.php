@@ -44,7 +44,7 @@ class AppShell extends Shell
     public function getRuntime()
     {
         $time = $this->timeEnd - $this->timeStart;
-        return __('Runtime') . ': ' . Configure::read('app.numberHelper')->formatAsDecimal($time) . ' ' . __('seconds');
+        return __('Runtime') . ': ' . Configure::read('app.timeHelper')->convertSecondsInMinutesAndSeconds($time);
     }
 
     public function out($message, int $newlines = 1, int $level = Shell::NORMAL): ?int

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-01 22:58+0100\n"
-"PO-Revision-Date: 2022-01-12 12:35+0100\n"
+"POT-Creation-Date: 2022-01-12 21:43+0100\n"
+"PO-Revision-Date: 2022-01-12 21:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2078,6 +2078,12 @@ msgstr "deaktiviert"
 
 msgid "active_state_all"
 msgstr "alle"
+
+msgid "{0,plural,=1{1_minute} other{#_minutes}}"
+msgstr "{0,plural,=1{1 Minute} other{# Minuten}}"
+
+msgid "{0,plural,=1{1_second} other{#_seconds}}"
+msgstr "{0,plural,=1{1 Sekunde} other{# Sekunden}}"
 
 msgid "midnight"
 msgstr "Mitternacht"
