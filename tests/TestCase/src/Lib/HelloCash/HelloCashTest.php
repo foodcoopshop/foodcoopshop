@@ -247,7 +247,7 @@ class HelloCashTest extends AppCakeTestCase
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->get($customerId);
-        $customer->user_id_registrierkasse = 1;
+        $customer->user_id_registrierkasse = 1234567890;
         $this->Customer->save($customer);
 
         $this->generateInvoice($customerId, $paidInCash);
