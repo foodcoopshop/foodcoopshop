@@ -106,7 +106,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 // only show button if no manufacturer filter is applied
-                if ($manufacturerId != 'all') {
+                if ($manufacturerId != 'all' && $manufacturerId != '') {
                     $this->element('addScript', [
                         'script' => Configure::read('app.jsNamespace') . ".ModalProductAdd.init();"
                     ]);
