@@ -40,7 +40,7 @@
         "cakephp/debug_kit": "^4.0",
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^9.0",
-        "phpstan/phpstan": "0.*"
+        "phpstan/phpstan": "^1.0"
     },
     "autoload": {
         "psr-4": {
