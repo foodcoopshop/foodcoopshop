@@ -112,14 +112,18 @@ echo '<table class="list profit-table">';
                 echo $this->Html->link(
                     $orderDetail->product->manufacturer->name,
                     $this->Slug->getProfit($dateFrom, $dateTo, $customerId, $orderDetail->product->id_manufacturer, $productId),
-                );
+                    [
+                        'escape' => false
+                    ]);
             echo '</td>';
 
             echo '<td>';
                 echo $this->Html->link(
                     $this->Html->getNameRespectingIsDeleted($orderDetail->customer),
                     $this->Slug->getProfit($dateFrom, $dateTo, $orderDetail->id_customer, $manufacturerId, $productId),
-                );
+                    [
+                        'escape' => false
+                    ]);
             echo '</td>';
 
             echo '<td style="text-align:right;">';
