@@ -35,10 +35,10 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "svelte": "^3.46.0",
+    "svelte": "^3.46.3",
     "swiper": "7.4.1",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.14.5",
+    "uglify-js": "^3.15.0",
     "webrtc-adapter": "^8.1.1"
   }
 }
