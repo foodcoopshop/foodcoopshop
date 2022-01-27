@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-12 21:43+0100\n"
-"PO-Revision-Date: 2022-01-12 21:49+0100\n"
+"POT-Creation-Date: 2022-01-27 22:55+0100\n"
+"PO-Revision-Date: 2022-01-27 22:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -920,6 +920,9 @@ msgstr "Given amount"
 
 msgid "back"
 msgstr "back"
+
+msgid "Send_email_to_member"
+msgstr "Send email to member"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1884,9 +1887,6 @@ msgstr "Order lists for"
 msgid "Runtime"
 msgstr "Runtime"
 
-msgid "seconds"
-msgstr "seconds"
-
 msgid "Database_backup_successful"
 msgstr "Database backup successful"
 
@@ -2630,6 +2630,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "seconds"
+#~ msgstr "seconds"
 
 #, fuzzy
 #~ msgid "Placeholder_message_pickup_day_comment_can_be_edited."

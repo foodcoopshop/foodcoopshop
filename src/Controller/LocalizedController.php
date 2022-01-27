@@ -250,6 +250,7 @@ class LocalizedController extends Controller
                 'ChangeProductName' => __('Change_product_name'),
                 'GivenAmount' => __('Given_amount'),
                 'back' => __('back'),
+                'SendEmailToMember' => __('Send_email_to_member'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

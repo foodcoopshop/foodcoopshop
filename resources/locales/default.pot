@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-12 21:43+0100\n"
+"POT-Creation-Date: 2022-01-27 22:55+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -918,6 +918,9 @@ msgid "Given_amount"
 msgstr ""
 
 msgid "back"
+msgstr ""
+
+msgid "Send_email_to_member"
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
@@ -1881,9 +1884,6 @@ msgid "Order_lists_for_the_day"
 msgstr ""
 
 msgid "Runtime"
-msgstr ""
-
-msgid "seconds"
 msgstr ""
 
 msgid "Database_backup_successful"
