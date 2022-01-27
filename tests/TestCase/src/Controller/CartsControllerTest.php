@@ -600,6 +600,16 @@ class CartsControllerTest extends AppCakeTestCase
 
     }
 
+    public function testDecreaseStockAvailableForMultipleAttributesOfOneProduct()
+    {
+        $productA = '350-13';
+        $this->loginAsSuperadmin();
+        $this->addProductToCart($productA, 1);
+        $this->finishCart(1, 1);
+        $this->checkStockAvailable($productA, 4);
+        $this->checkStockAvailable('350-14', 999); // must be same as before fnishing order
+    }
+
     public function testFinishOrderWithComment()
     {
 
