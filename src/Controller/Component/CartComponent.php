@@ -738,7 +738,12 @@ class CartComponent extends Component
                 'conditions' => $condition,
             ])->first();
             $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
+            $originalPrimaryKey = $this->Product->StockAvailables->getPrimaryKey();
+            if ($condition['id_product_attribute'] > 0) {
+                $this->Product->StockAvailables->setPrimaryKey('id_product_attribute');
+            }
             $this->Product->StockAvailables->save($stockAvailableEntity);
+            $this->Product->StockAvailables->setPrimaryKey($originalPrimaryKey);
             $this->Product->StockAvailables->updateQuantityForMainProduct($condition['id_product']);
             $i++;
         }
