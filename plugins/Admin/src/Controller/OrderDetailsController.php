@@ -1410,6 +1410,7 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $editPickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('editPickupDayReason')), '<strong><b>'));
+        $sendEmail = $this->getRequest()->getData('sendEmail');
 
         try {
             if (empty($orderDetailIds)) {
@@ -1467,25 +1468,34 @@ class OrderDetailsController extends AdminAppController
                     $customers[$orderDetail->id_customer] = [];
                 }
                 $customers[$orderDetail->id_customer][] = $orderDetail;
+
+                if ($sendEmail) {
+                    foreach($customers as $orderDetails) {
+                        $email = new AppMailer();
+                        $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
+                        $email->setTo($orderDetails[0]->customer->email)
+                        ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
+                        ->setViewVars([
+                            'orderDetails' => $orderDetails,
+                            'customer' => $orderDetails[0]->customer,
+                            'appAuth' => $this->AppAuth,
+                            'oldPickupDay' => $oldPickupDay,
+                            'newPickupDay' => $newPickupDay,
+                            'editPickupDayReason' => $editPickupDayReason
+                        ]);
+                        $email->send();
+                    }
+                }
             }
 
-            foreach($customers as $orderDetails) {
-                $email = new AppMailer();
-                $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
-                $email->setTo($orderDetails[0]->customer->email)
-                ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
-                ->setViewVars([
-                    'orderDetails' => $orderDetails,
-                    'customer' => $orderDetails[0]->customer,
-                    'appAuth' => $this->AppAuth,
-                    'oldPickupDay' => $oldPickupDay,
-                    'newPickupDay' => $newPickupDay,
-                    'editPickupDayReason' => $editPickupDayReason
-                ]);
-                $email->send();
-            }
+            $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}.', [
+                count($orderDetailIds),
+                '<b>'.$newPickupDay.'</b>',
+            ]);
 
-            $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($orderDetailIds), '<b>'.$newPickupDay.'</b>', count($customers)]);
+            if ($sendEmail) {
+                $message .= ' ' . __d('admin', '{0,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($customers)]);
+            }
 
             if ($editPickupDayReason != '') {
                 $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $editPickupDayReason . '"</b>';
