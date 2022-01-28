@@ -125,13 +125,13 @@ class InvoicesController extends AdminAppController
             $invoiceId = $newInvoice->id;
         }
 
-        if ($paidInCash) {
+        if ($paidInCash && $invoiceData->sumPriceIncl != 0) {
             $this->Payment = $this->getTableLocator()->get('Payments');
             $paymentEntity = $this->Payment->newEntity(
                 [
                     'status' => APP_ON,
                     'approval' => APP_ON,
-                    'type' => 'product',
+                    'type' => $invoiceData->sumPriceIncl > 0 ? 'product' : 'payback',
                     'id_customer' => $customerId,
                     'id_manufacturer' => 0,
                     'date_add' => FrozenTime::now(),

@@ -62,7 +62,7 @@ $colspan = 3;
 if ($useCsvUpload) {
     $colspan++;
 }
-if ($paymentType == 'product') {
+if (in_array($paymentType, ['product', 'payback'])) {
     echo '<th style="width:25px;"></th>';
     echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', __d('admin', 'Status')) . '</th>';
     $colspan = $colspan + 2;
@@ -93,7 +93,7 @@ foreach ($payments as $payment) {
 
     echo '<tr id="payment-'.$payment->id.'" class="data ' . $rowClass . '">';
 
-    if ($paymentType == 'product') {
+    if (in_array($paymentType, ['product', 'payback'])) {
         echo '<td>';
         if ($payment->status > APP_DEL) {
             echo $this->Html->link(

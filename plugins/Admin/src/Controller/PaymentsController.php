@@ -105,7 +105,7 @@ class PaymentsController extends AdminAppController
         $payment = $this->Payment->find('all', [
             'conditions' => [
                 'Payments.id' => $paymentId,
-                'Payments.type' => 'product'
+                'Payments.type IN' => ['product', 'payback'],
             ],
             'contain' => [
                 'Customers',
