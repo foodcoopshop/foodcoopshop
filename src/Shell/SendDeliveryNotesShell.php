@@ -78,7 +78,10 @@ class SendDeliveryNotesShell extends AppShell
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $message = join('<br />', $actionLogDatas);
-        $message .= '<br />' . __('{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully.', [count($manufacturersWithData)]);
+        if (count($actionLogDatas) > 0) {
+            $message .= '<br />';
+        }
+        $message .=  __('{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully.', [count($manufacturersWithData)]);
         $actionLog = $this->ActionLog->customSave('cronjob_send_delivery_notes', 0, 0, 'manufacturers', $message . '<br />' . $this->getRuntime());
 
         foreach($manufacturersWithData as $manufacturer) {
