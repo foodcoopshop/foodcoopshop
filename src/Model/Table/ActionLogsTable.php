@@ -450,6 +450,9 @@ class ActionLogsTable extends AppTable
             'cronjob_send_invoices' => [
                 'name' => __('Action_Log_Cronjob_invoices_sent')
             ],
+            'cronjob_send_delivery_notes' => [
+                'name' => __('Action_Log_Cronjob_delivery_notes_sent')
+            ],
             'cronjob_email_order_reminder' => [
                 'name' => __('Action_Log_Cronjob_email_order_reminder_sent')
             ],

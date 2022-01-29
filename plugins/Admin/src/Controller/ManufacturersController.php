@@ -3,18 +3,15 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\DeliveryNote\GenerateDeliveryNote;
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -394,202 +391,21 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo);
 
-        $query = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'Products.id_manufacturer' => $manufacturerId,
-            ],
-            'contain' => [
-                'Products.Manufacturers.AddressManufacturers',
-                'OrderDetailPurchasePrices',
-                'OrderDetailUnits',
-            ],
-        ]);
-        $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
-            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
-            $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
-            return $exp;
-        });
-        $query->select([
-            'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
-            'ProductName' => 'OrderDetails.product_name',
-            'SumWeight' => $query->func()->sum('OrderDetailUnits.product_quantity_in_units'),
-            'Unit' => 'OrderDetailUnits.unit_name',
-            'SumPurchasePriceNet' => $query->func()->sum('ROUND(OrderDetailPurchasePrices.total_price_tax_excl, 2)'),
-            'SumPurchasePriceTax' => $query->func()->sum('OrderDetailPurchasePrices.tax_total_amount'),
-            'PurchasePriceTaxRate' => 'OrderDetailPurchasePrices.tax_rate',
-            'SumPurchasePriceGross' => $query->func()->sum('OrderDetailPurchasePrices.total_price_tax_incl'),
-        ]);
-        $query->group([
-            'OrderDetails.product_name',
-            'OrderDetailPurchasePrices.tax_rate',
-            'OrderDetailUnits.unit_name',
-        ]);
+        $generateDeliverNotes = new GenerateDeliveryNote();
+        $spreadsheet = $generateDeliverNotes->getSpreadsheet($orderDetails);
 
-        $headlines = [
-            [
-                'name' => __d('admin', 'Amount'),
-                'alignment' => 'right',
-            ],
-            [
-                'name' => __d('admin', 'Product'),
-                'alignment' => 'left',
-                'width' => 50,
-            ],
-            [
-                'name' => __d('admin', 'net_per_piece_abbr'),
-                'alignment' => 'right',
-                'width' => 9,
-            ],
-            [
-                'name' => __d('admin', 'Weight'),
-                'alignment' => 'right',
-            ],
-            [
-                'name' => __d('admin', 'Unit'),
-                'alignment' => 'left',
-            ],
-            [
-                'name' => __d('admin', 'Tax_rate'),
-                'alignment' => 'right',
-                'width' => 10,
-            ],
-            [
-                'name' => __d('admin', 'net'),
-                'alignment' => 'right',
-            ],
-            [
-                'name' => __d('admin', 'VAT'),
-                'alignment' => 'right',
-            ],
-            [
-                'name' => __d('admin', 'gross'),
-                'alignment' => 'right',
-            ],
-        ];
-
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $column = 1;
-        foreach($headlines as $headline) {
-            $sheet->setCellValueByColumnAndRow($column, 1, $headline['name']);
-            $this->setAlignmentForCell($sheet, $column, 1, $headline['alignment']);
-            $this->setBoldForCell($sheet, $column, 1);
-            if (isset($headline['width'])) {
-                $sheet->getColumnDimensionByColumn($column)->setWidth($headline['width']);
-            }
-            $column++;
-        }
-
-        $totalSumAmount = 0;
-        $totalSumPurchasePriceNet = 0;
-        $totalSumPurchasePriceTax = 0;
-        $totalSumPurchasePriceGross = 0;
-
-        $defaultTaxArray = [
-            'sum_price_net' => 0,
-            'sum_tax' => 0,
-            'sum_price_gross' => 0,
-        ];
-        $taxRates = [];
-
-        $row = 2;
-        foreach($query as $orderDetail) {
-
-            $totalSumAmount += $orderDetail->SumAmount;
-            $totalSumPurchasePriceNet += $orderDetail->SumPurchasePriceNet;
-            $totalSumPurchasePriceTax += $orderDetail->SumPurchasePriceTax;
-            $totalSumPurchasePriceGross += $orderDetail->SumPurchasePriceGross;
-            $netPerPiece = round($orderDetail->SumPurchasePriceNet / $orderDetail->SumAmount, 2);
-
-            $taxRate = $orderDetail->PurchasePriceTaxRate;
-            if (!isset($taxRates[$taxRate])) {
-                $taxRates[$taxRate] = $defaultTaxArray;
-            }
-            $taxRates[$taxRate]['sum_price_net'] += $orderDetail->SumPurchasePriceNet;
-            $taxRates[$taxRate]['sum_tax'] += $orderDetail->SumPurchasePriceTax;
-            $taxRates[$taxRate]['sum_price_gross'] += $orderDetail->SumPurchasePriceGross;
-
-            $sheet->setCellValueByColumnAndRow(1, $row, $orderDetail->SumAmount);
-            $sheet->setCellValueByColumnAndRow(2, $row, html_entity_decode($orderDetail->ProductName));
-            $sheet->setCellValueByColumnAndRow(3, $row, $netPerPiece);
-            $this->setNumberFormatForCell($sheet, 3, $row);
-            $sheet->setCellValueByColumnAndRow(4, $row, $orderDetail->SumWeight);
-            $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->Unit);
-            $sheet->setCellValueByColumnAndRow(6, $row, $orderDetail->PurchasePriceTaxRate);
-            $sheet->setCellValueByColumnAndRow(7, $row, $orderDetail->SumPurchasePriceNet);
-            $this->setNumberFormatForCell($sheet, 7, $row);
-            $sheet->setCellValueByColumnAndRow(8, $row, $orderDetail->SumPurchasePriceTax);
-            $this->setNumberFormatForCell($sheet, 8, $row);
-            $sheet->setCellValueByColumnAndRow(9, $row, $orderDetail->SumPurchasePriceGross);
-            $this->setNumberFormatForCell($sheet, 9, $row);
-            $row++;
-        }
-
-        // add row with sums
-        $row++;
-        $sheet->setCellValueByColumnAndRow(1, $row, $totalSumAmount);
-        $this->setBoldForCell($sheet, 1, $row);
-
-        $sheet->setCellValueByColumnAndRow(7, $row, $totalSumPurchasePriceNet);
-        $this->setNumberFormatForCell($sheet, 7, $row);
-        $this->setBoldForCell($sheet, 7, $row);
-
-        $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceTax);
-        $this->setNumberFormatForCell($sheet, 8, $row, true);
-        $this->setBoldForCell($sheet, 8, $row);
-
-        $sheet->setCellValueByColumnAndRow(9, $row, $totalSumPurchasePriceGross);
-        $this->setNumberFormatForCell($sheet, 9, $row, true);
-        $this->setBoldForCell($sheet, 9, $row);
-
-        if (count($taxRates) > 1) {
-
-            ksort($taxRates);
-
-            // add rows for sums / tax rates
-            $row++;
-            $row++;
-            $sheet->setCellValueByColumnAndRow(2, $row, __d('admin', 'Tax_rates_overview_table'));
-            foreach($taxRates as $taxRate => $trt) {
-                $sheet->setCellValueByColumnAndRow(6, $row, $taxRate);
-                $sheet->setCellValueByColumnAndRow(7, $row, $trt['sum_price_net']);
-                $this->setNumberFormatForCell($sheet, 7, $row, true);
-                $sheet->setCellValueByColumnAndRow(8, $row, $trt['sum_tax']);
-                $this->setNumberFormatForCell($sheet, 8, $row, true);
-                $sheet->setCellValueByColumnAndRow(9, $row, $trt['sum_price_gross']);
-                $this->setNumberFormatForCell($sheet, 9, $row, true);
-                $row++;
-            }
-        }
-
-        $writer = new Xlsx($spreadsheet);
-        $filename = __d('admin', 'Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturer->name) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
-        $writer->save(TMP . $filename);
+        $filename = $generateDeliverNotes->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
 
         $this->response = $this->response->withHeader('Content-Disposition', 'inline;filename="'.$filename.'"');
         $this->response = $this->response->withFile(TMP . $filename);
-        unlink(TMP . $filename);
+
+        $generateDeliverNotes->deleteTmpFile($filename);
+
         return $this->response;
 
     }
-
-    protected function setAlignmentForCell($sheet, $column, $row, $alignment)
-    {
-        $sheet->getStyleByColumnAndRow($column, $row)->getAlignment()->setHorizontal($alignment);
-    }
-
-    protected function setBoldForCell($sheet, $column, $row)
-    {
-        $sheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
-    }
-
-    protected function setNumberFormatForCell($sheet, $column, $row)
-    {
-        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat() ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
-    }
-
     public function editOptions($manufacturerId)
     {
         if ($manufacturerId === null) {

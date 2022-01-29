@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 09:39+0100\n"
+"POT-Creation-Date: 2022-01-29 10:14+0100\n"
 "PO-Revision-Date: 2022-01-29 09:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -258,39 +258,6 @@ msgstr "Hersteller"
 msgid "Edit_settings"
 msgstr "Einstellungen bearbeiten"
 
-msgid "Amount"
-msgstr "Anzahl"
-
-msgid "Product"
-msgstr "Produkt"
-
-msgid "net_per_piece_abbr"
-msgstr "netto/St."
-
-msgid "Weight"
-msgstr "Gewicht"
-
-msgid "Unit"
-msgstr "Einheit"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
-
-msgid "net"
-msgstr "netto"
-
-msgid "VAT"
-msgstr "USt."
-
-msgid "gross"
-msgstr "brutto"
-
-msgid "Tax_rates_overview_table"
-msgstr "Steuerübersicht Gesamt"
-
-msgid "Delivery_note"
-msgstr "Lieferschein"
-
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
 
@@ -344,6 +311,9 @@ msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
+
+msgid "Amount"
+msgstr "Anzahl"
 
 msgid "Reason"
 msgstr "Grund"
@@ -819,6 +789,9 @@ msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
 msgid "ID"
 msgstr "ID"
 
+msgid "Weight"
+msgstr "Gewicht"
+
 msgid "Associated_to_active_products?"
 msgstr "Aktivierten Produkten zugewiesen?"
 
@@ -1284,6 +1257,9 @@ msgstr "Rechnungsdatum"
 msgid "Net"
 msgstr "Netto"
 
+msgid "VAT"
+msgstr "USt."
+
 msgid "Gross"
 msgstr "Brutto"
 
@@ -1599,14 +1575,23 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
+msgid "Product"
+msgstr "Produkt"
+
 msgid "Test_invoice"
 msgstr "Rechnung prüfen"
+
+msgid "Delivery_note"
+msgstr "Lieferschein"
 
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
 
 msgid "Purchase_price_tax_excl"
 msgstr "Einkaufspreis netto"
@@ -1776,8 +1761,14 @@ msgstr "Produktdeklaration"
 msgid "Stock_product"
 msgstr "Lagerprodukt"
 
+msgid "gross"
+msgstr "brutto"
+
 msgid "Surcharge"
 msgstr "Aufschlag"
+
+msgid "net"
+msgstr "netto"
 
 msgid "Selling_price_abbreviation"
 msgstr "VP"
@@ -2369,6 +2360,15 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "net_per_piece_abbr"
+#~ msgstr "netto/St."
+
+#~ msgid "Unit"
+#~ msgstr "Einheit"
+
+#~ msgid "Tax_rates_overview_table"
+#~ msgstr "Steuerübersicht Gesamt"
 
 #~ msgid "to_include_stock_products_in_order_lists."
 #~ msgstr "in den Bestelllisten auch Lagerprodukte anzeigen."

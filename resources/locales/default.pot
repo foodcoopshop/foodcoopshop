@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-27 22:55+0100\n"
+"POT-Creation-Date: 2022-01-29 10:14+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1517,6 +1517,9 @@ msgstr ""
 msgid "Action_Log_Cronjob_invoices_sent"
 msgstr ""
 
+msgid "Action_Log_Cronjob_delivery_notes_sent"
+msgstr ""
+
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr ""
 
@@ -1908,6 +1911,9 @@ msgid "tomorrow"
 msgstr ""
 
 msgid "Pickup_reminder_for"
+msgstr ""
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
 msgstr ""
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."

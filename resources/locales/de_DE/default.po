@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-27 22:55+0100\n"
-"PO-Revision-Date: 2022-01-27 22:56+0100\n"
+"POT-Creation-Date: 2022-01-29 10:14+0100\n"
+"PO-Revision-Date: 2022-01-29 10:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1518,6 +1518,9 @@ msgstr "Cronjob: Bestelllisten verschickt"
 msgid "Action_Log_Cronjob_invoices_sent"
 msgstr "Cronjob: Rechnungen verschickt"
 
+msgid "Action_Log_Cronjob_delivery_notes_sent"
+msgstr "Cronjob: Lieferscheine verschickt"
+
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr "Cronjob: Bestell-Erinnerung"
 
@@ -1910,6 +1913,9 @@ msgstr "morgen"
 
 msgid "Pickup_reminder_for"
 msgstr "Abhol-Erinnerung für"
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 Lieferschein wurde} other{# Lieferscheine wurden}} erfolgreich erstellt."
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 Rechnung wurde} other{# Rechnungen wurden}} erfolgreich erstellt."
