@@ -27,7 +27,7 @@ class SendDeliveryNotesShell extends AppShell
     {
         parent::main();
 
-        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             throw new ForbiddenException();
         }
         $this->startTimeLogging();

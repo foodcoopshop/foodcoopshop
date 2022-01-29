@@ -42,7 +42,6 @@ class SendDeliveryNotesShellTest extends AppCakeTestCase
     public function testSendDeliveryNotes()
     {
 
-        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
 
         $cronjobRunDay = '2018-03-01';
