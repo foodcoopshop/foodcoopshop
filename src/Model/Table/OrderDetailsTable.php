@@ -75,6 +75,41 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
 
+    public function getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'Products.id_manufacturer' => $manufacturerId,
+            ],
+            'contain' => [
+                'Products.Manufacturers.AddressManufacturers',
+                'OrderDetailPurchasePrices',
+                'OrderDetailUnits',
+            ],
+        ]);
+        $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            return $exp;
+        });
+        $query->select([
+            'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
+            'ProductName' => 'OrderDetails.product_name',
+            'SumWeight' => $query->func()->sum('OrderDetailUnits.product_quantity_in_units'),
+            'Unit' => 'OrderDetailUnits.unit_name',
+            'SumPurchasePriceNet' => $query->func()->sum('ROUND(OrderDetailPurchasePrices.total_price_tax_excl, 2)'),
+            'SumPurchasePriceTax' => $query->func()->sum('OrderDetailPurchasePrices.tax_total_amount'),
+            'PurchasePriceTaxRate' => 'OrderDetailPurchasePrices.tax_rate',
+            'SumPurchasePriceGross' => $query->func()->sum('OrderDetailPurchasePrices.total_price_tax_incl'),
+        ]);
+        $query->group([
+            'OrderDetails.product_name',
+            'OrderDetailPurchasePrices.tax_rate',
+            'OrderDetailUnits.unit_name',
+        ]);
+        return $query;
+    }
+
     public function getLastOrderDate($customerId)
     {
         $query = $this->find('all', [

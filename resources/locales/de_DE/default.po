@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-27 22:55+0100\n"
-"PO-Revision-Date: 2022-01-27 22:56+0100\n"
+"POT-Creation-Date: 2022-01-29 10:56+0100\n"
+"PO-Revision-Date: 2022-01-29 10:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1194,6 +1194,24 @@ msgstr "Das Produkt {0} wurde in deine Einkaufstasche gelegt."
 msgid "Your_shopping_bag_was_empty."
 msgstr "Deine Einkaufstasche war leer."
 
+msgid "net_per_piece_abbr"
+msgstr "netto/St."
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "net"
+msgstr "netto"
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Tax_rates_overview_table"
+msgstr "Übersichtstabelle nach Steuersatz"
+
+msgid "Delivery_note"
+msgstr "Lieferschein"
+
 msgid "Delivered_deposit"
 msgstr "Pfand geliefert"
 
@@ -1208,9 +1226,6 @@ msgstr ""
 
 msgid "Price_excl."
 msgstr "Preis exkl."
-
-msgid "VAT"
-msgstr "USt."
 
 msgid "Price_incl."
 msgstr "Preis inkl."
@@ -1235,12 +1250,6 @@ msgstr "Gelöschtes Mitglied"
 
 msgid "Price_per_weight"
 msgstr "Preis nach Gewicht"
-
-msgid "Tax_rates_overview_table"
-msgstr "Übersichtstabelle nach Steuersatz"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "Sum_price_excl."
 msgstr "Summe Preis exkl."
@@ -1517,6 +1526,9 @@ msgstr "Cronjob: Bestelllisten verschickt"
 
 msgid "Action_Log_Cronjob_invoices_sent"
 msgstr "Cronjob: Rechnungen verschickt"
+
+msgid "Action_Log_Cronjob_delivery_notes_sent"
+msgstr "Cronjob: Lieferscheine verschickt"
 
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr "Cronjob: Bestell-Erinnerung"
@@ -1869,6 +1881,9 @@ msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
 msgid "member"
 msgstr "Mitglied"
 
+msgid "Delivery_note_for_{0}"
+msgstr "Lieferschein für {0}"
+
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Rechnung Nr. {0}, {1}"
 
@@ -1910,6 +1925,9 @@ msgstr "morgen"
 
 msgid "Pickup_reminder_for"
 msgstr "Abhol-Erinnerung für"
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 Lieferschein wurde} other{# Lieferscheine wurden}} erfolgreich erstellt."
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 Rechnung wurde} other{# Rechnungen wurden}} erfolgreich erstellt."
@@ -2643,9 +2661,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "The_name_must_not_be_empty."
 #~ msgstr "Der Name darf nicht leer sein."
-
-#~ msgid "net"
-#~ msgstr "netto"
 
 #~ msgid "incl_vat"
 #~ msgstr "inkl. USt."

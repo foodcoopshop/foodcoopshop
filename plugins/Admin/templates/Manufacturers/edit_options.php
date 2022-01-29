@@ -109,6 +109,15 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         echo '<div class="sc"></div>';
     }
 
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo $this->Form->control('Manufacturers.send_delivery_notes', [
+            'label' => __d('admin', 'Delivery_notes_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_delivery_note_every_month_by_email.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+        echo '<div class="sc"></div>';
+    }
+
     echo $this->Form->control('Manufacturers.send_ordered_product_deleted_notification', [
         'label' => __d('admin', 'Cancellations').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_cancellation.').'</span>',
         'type' => 'checkbox',

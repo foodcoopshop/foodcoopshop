@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 08:55+0100\n"
-"PO-Revision-Date: 2022-01-29 08:57+0100\n"
+"POT-Creation-Date: 2022-01-29 10:46+0100\n"
+"PO-Revision-Date: 2022-01-29 10:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -258,39 +258,6 @@ msgstr "Manufacturers"
 msgid "Edit_settings"
 msgstr "Edit settings"
 
-msgid "Amount"
-msgstr "Amount"
-
-msgid "Product"
-msgstr "Product"
-
-msgid "net_per_piece_abbr"
-msgstr "net/piece"
-
-msgid "Weight"
-msgstr "Weight"
-
-msgid "Unit"
-msgstr "Unit"
-
-msgid "Tax_rate"
-msgstr "Tax rate"
-
-msgid "net"
-msgstr "net"
-
-msgid "VAT"
-msgstr "VAT"
-
-msgid "gross"
-msgstr "gross"
-
-msgid "Tax_rates_overview_table"
-msgstr "Tax overview total"
-
-msgid "Delivery_note"
-msgstr "Delivery note"
-
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr "The settings of manufacturer {0} have been changed."
 
@@ -344,6 +311,9 @@ msgstr "The reason for changing the member is mandatory."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
+
+msgid "Amount"
+msgstr "Amount"
 
 msgid "Reason"
 msgstr "Reason"
@@ -819,6 +789,9 @@ msgstr "Check and do not forget to click <b>Save</b> button."
 msgid "ID"
 msgstr "ID"
 
+msgid "Weight"
+msgstr "Weight"
+
 msgid "Associated_to_active_products?"
 msgstr "Associated with active products?"
 
@@ -1284,6 +1257,9 @@ msgstr "Invoice date"
 msgid "Net"
 msgstr "Net"
 
+msgid "VAT"
+msgstr "VAT"
+
 msgid "Gross"
 msgstr "Gross"
 
@@ -1479,6 +1455,12 @@ msgstr "Invoices by email"
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr "to receive his invoice every month by email."
 
+msgid "Delivery_notes_by_email"
+msgstr "Delivery notes by email"
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr "to receive his delivery note every month by email."
+
 msgid "Cancellations"
 msgstr "Cancellations"
 
@@ -1593,14 +1575,23 @@ msgstr "Edit manufacturer settings"
 msgid "Test_order_list"
 msgstr "Test order list"
 
+msgid "Product"
+msgstr "Product"
+
 msgid "Test_invoice"
 msgstr "Test invoice"
+
+msgid "Delivery_note"
+msgstr "Delivery note"
 
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
 
 msgid "Copy_all_email_addresses"
 msgstr "Copy all e-mail adresses"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
 
 msgid "Purchase_price_tax_excl"
 msgstr "Purchase price tax excl."
@@ -1770,8 +1761,14 @@ msgstr "Product declaration"
 msgid "Stock_product"
 msgstr "Stock product"
 
+msgid "gross"
+msgstr "gross"
+
 msgid "Surcharge"
 msgstr "Surcharge"
+
+msgid "net"
+msgstr "net"
 
 msgid "Selling_price_abbreviation"
 msgstr "SP"
@@ -2271,6 +2268,9 @@ msgstr "PS"
 msgid "Your_current_credit_equals_{0}."
 msgstr "Your current credit equals {0}."
 
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "this delivery note contains all products that have been delivered in {0}."
+
 msgid "Please_find_your_invoice_attached."
 msgstr "Please find your invoice attached."
 
@@ -2363,6 +2363,15 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "net_per_piece_abbr"
+#~ msgstr "net/piece"
+
+#~ msgid "Unit"
+#~ msgstr "Unit"
+
+#~ msgid "Tax_rates_overview_table"
+#~ msgstr "Tax overview total"
 
 #, fuzzy
 #~ msgid "to_include_stock_products_in_order_lists."

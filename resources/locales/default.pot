@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-27 22:55+0100\n"
+"POT-Creation-Date: 2022-01-29 10:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1193,6 +1193,24 @@ msgstr ""
 msgid "Your_shopping_bag_was_empty."
 msgstr ""
 
+msgid "net_per_piece_abbr"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "net"
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Tax_rates_overview_table"
+msgstr ""
+
+msgid "Delivery_note"
+msgstr ""
+
 msgid "Delivered_deposit"
 msgstr ""
 
@@ -1206,9 +1224,6 @@ msgid "ID"
 msgstr ""
 
 msgid "Price_excl."
-msgstr ""
-
-msgid "VAT"
 msgstr ""
 
 msgid "Price_incl."
@@ -1233,12 +1248,6 @@ msgid "Deleted_Member"
 msgstr ""
 
 msgid "Price_per_weight"
-msgstr ""
-
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "Tax_rate"
 msgstr ""
 
 msgid "Sum_price_excl."
@@ -1515,6 +1524,9 @@ msgid "Action_Log_Cronjob_order_lists_sent"
 msgstr ""
 
 msgid "Action_Log_Cronjob_invoices_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_delivery_notes_sent"
 msgstr ""
 
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
@@ -1868,6 +1880,9 @@ msgstr ""
 msgid "member"
 msgstr ""
 
+msgid "Delivery_note_for_{0}"
+msgstr ""
+
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr ""
 
@@ -1908,6 +1923,9 @@ msgid "tomorrow"
 msgstr ""
 
 msgid "Pickup_reminder_for"
+msgstr ""
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
 msgstr ""
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."

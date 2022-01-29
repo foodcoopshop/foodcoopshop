@@ -327,6 +327,7 @@ CREATE TABLE `fcs_manufacturer` (
   `send_product_sold_out_limit_reached_for_contact_person` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `no_delivery_days` mediumtext,
   `include_stock_products_in_order_lists` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `send_delivery_notes` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_manufacturer`),
   KEY `stock_management_enabled` (`stock_management_enabled`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
