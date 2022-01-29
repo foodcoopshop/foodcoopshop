@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-29 08:55+0100\n"
+"POT-Creation-Date: 2022-01-29 09:39+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1476,6 +1476,12 @@ msgid "Invoices_by_email"
 msgstr ""
 
 msgid "to_receive_his_invoice_every_month_by_email."
+msgstr ""
+
+msgid "Delivery_notes_by_email"
+msgstr ""
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
 msgstr ""
 
 msgid "Cancellations"

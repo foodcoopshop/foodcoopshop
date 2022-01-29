@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 08:55+0100\n"
-"PO-Revision-Date: 2022-01-29 08:55+0100\n"
+"POT-Creation-Date: 2022-01-29 09:39+0100\n"
+"PO-Revision-Date: 2022-01-29 09:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1478,6 +1478,12 @@ msgstr "Rechnungen per E-Mail"
 
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr "monatlich per E-Mail die Rechnungen erhalten."
+
+msgid "Delivery_notes_by_email"
+msgstr "Lieferscheine per E-Mail"
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr "monatlich per E-Mail die Lieferscheine erhalten."
 
 msgid "Cancellations"
 msgstr "Stornierungen"
