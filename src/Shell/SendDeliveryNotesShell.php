@@ -48,34 +48,49 @@ class SendDeliveryNotesShell extends AppShell
             'conditions' => [
                 'Manufacturers.send_delivery_notes' => APP_ON,
             ],
+            'order' => [
+                'Manufacturers.name' => 'ASC',
+            ]
         ]);
 
-        $i = 0;
+        $actionLogDatas = [];
+        $manufacturersWithData = [];
         foreach($manufacturers as $manufacturer) {
 
             $orderDetails = $this->OrderDetail->getOrderDetailsForDeliveryNotes($manufacturer->id_manufacturer, $dateFrom, $dateTo);
-
             if ($orderDetails->count() == 0) {
                 continue;
             }
 
+            $newData = '- <i class="fas fa-envelope not-ok" data-identifier="send-delivery-note-'.$manufacturer->id_manufacturer.'"></i> ';
+            $newData .= html_entity_decode($manufacturer->name);
+            $actionLogDatas[] = $newData;
+
             $generateDeliverNotes = new GenerateDeliveryNote();
             $spreadsheet = $generateDeliverNotes->getSpreadsheet($orderDetails);
+            $manufacturer->deliverNotesFilename = $generateDeliverNotes->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
 
-            $filename = $generateDeliverNotes->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
+            $manufacturersWithData[] = $manufacturer;
 
-            // send email here with queue, queue should not delete tmp file
-
-            $generateDeliverNotes->deleteTmpFile($filename);
-
-            $i++;
         }
 
         $this->stopTimeLogging();
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $message = __('{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully.', [$i]);
-        $this->ActionLog->customSave('delivery_note_added', 0, 0, 'manufacturers', $message . '<br />' . $this->getRuntime());
+        $message = join('<br />', $actionLogDatas);
+        $message .= '<br />' . __('{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully.', [count($manufacturersWithData)]);
+        $actionLog = $this->ActionLog->customSave('cronjob_send_delivery_notes', 0, 0, 'manufacturers', $message . '<br />' . $this->getRuntime());
+
+        foreach($manufacturersWithData as $manufacturer) {
+
+            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
+            $this->QueuedJobs->createJob('SendDeliveryNote', [
+                'deliveryNoteFile' => $manufacturer->deliverNotesFilename,
+                'manufacturerId' => $manufacturer->id_manufacturer,
+                'actionLogId' => $actionLog->id,
+            ]);
+
+        }
 
         return true;
 

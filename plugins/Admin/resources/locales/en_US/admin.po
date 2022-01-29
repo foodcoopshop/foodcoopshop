@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 10:14+0100\n"
-"PO-Revision-Date: 2022-01-29 09:39+0100\n"
+"POT-Creation-Date: 2022-01-29 10:46+0100\n"
+"PO-Revision-Date: 2022-01-29 10:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2267,6 +2267,9 @@ msgstr "PS"
 
 msgid "Your_current_credit_equals_{0}."
 msgstr "Your current credit equals {0}."
+
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "this delivery note contains all products that have been delivered in {0}."
 
 msgid "Please_find_your_invoice_attached."
 msgstr "Please find your invoice attached."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 10:14+0100\n"
-"PO-Revision-Date: 2022-01-29 10:14+0100\n"
+"POT-Creation-Date: 2022-01-29 10:46+0100\n"
+"PO-Revision-Date: 2022-01-29 10:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1871,6 +1871,9 @@ msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
 
 msgid "member"
 msgstr "Mitglied"
+
+msgid "Delivery_note_for_{0}"
+msgstr "Lieferschein für {0}"
 
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Rechnung Nr. {0}, {1}"

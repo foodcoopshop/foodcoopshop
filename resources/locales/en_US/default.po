@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 10:14+0100\n"
-"PO-Revision-Date: 2022-01-29 10:15+0100\n"
+"POT-Creation-Date: 2022-01-29 10:46+0100\n"
+"PO-Revision-Date: 2022-01-29 10:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1871,6 +1871,9 @@ msgstr "The approximate weight needs to be greater than 0."
 
 msgid "member"
 msgstr "Member"
+
+msgid "Delivery_note_for_{0}"
+msgstr "Delivery note for {0}"
 
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Invoice nº {0}, {1}"
