@@ -52,6 +52,7 @@ class SendDeliveryNoteTask extends Task {
         ->setSubject(__('Delivery_note_for_{0}', [$invoicePeriodMonthAndYear]))
         ->setViewVars([
             'manufacturer' => $manufacturer,
+            'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
             'showManufacturerUnsubscribeLink' => true,
         ]);
         $email->send();
