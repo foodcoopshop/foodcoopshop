@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 10:46+0100\n"
-"PO-Revision-Date: 2022-01-29 10:47+0100\n"
+"POT-Creation-Date: 2022-01-29 10:56+0100\n"
+"PO-Revision-Date: 2022-01-29 10:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1194,6 +1194,24 @@ msgstr "The product {0} was added to your cart."
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
 
+msgid "net_per_piece_abbr"
+msgstr "net/piece"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "net"
+msgstr "net"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Tax_rates_overview_table"
+msgstr "Tax rates overview table"
+
+msgid "Delivery_note"
+msgstr "Delivery note"
+
 msgid "Delivered_deposit"
 msgstr "Delivered deposit"
 
@@ -1208,9 +1226,6 @@ msgstr ""
 
 msgid "Price_excl."
 msgstr "Price excl."
-
-msgid "VAT"
-msgstr "VAT"
 
 msgid "Price_incl."
 msgstr "Price incl."
@@ -1235,12 +1250,6 @@ msgstr "Deleted member"
 
 msgid "Price_per_weight"
 msgstr "Price per weight"
-
-msgid "Tax_rates_overview_table"
-msgstr "Tax rates overview table"
-
-msgid "Tax_rate"
-msgstr "Tax rate"
 
 msgid "Sum_price_excl."
 msgstr "Sum price excl."
@@ -2653,9 +2662,6 @@ msgstr "The prices include the VAT."
 #, fuzzy
 #~ msgid "The_name_must_not_be_empty."
 #~ msgstr "The date must not be a future date."
-
-#~ msgid "net"
-#~ msgstr "net"
 
 #~ msgid "incl_vat"
 #~ msgstr "incl. VAT"

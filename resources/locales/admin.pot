@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-29 10:14+0100\n"
+"POT-Creation-Date: 2022-01-29 10:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,39 +15,6 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Filename_Terms-of-use"
-msgstr ""
-
-msgid "Amount"
-msgstr ""
-
-msgid "Product"
-msgstr ""
-
-msgid "net_per_piece_abbr"
-msgstr ""
-
-msgid "Weight"
-msgstr ""
-
-msgid "Unit"
-msgstr ""
-
-msgid "Tax_rate"
-msgstr ""
-
-msgid "net"
-msgstr ""
-
-msgid "VAT"
-msgstr ""
-
-msgid "gross"
-msgstr ""
-
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "Delivery_note"
 msgstr ""
 
 msgid "Purchase_price"

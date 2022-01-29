@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-29 10:46+0100\n"
+"POT-Creation-Date: 2022-01-29 10:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1193,6 +1193,24 @@ msgstr ""
 msgid "Your_shopping_bag_was_empty."
 msgstr ""
 
+msgid "net_per_piece_abbr"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "net"
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Tax_rates_overview_table"
+msgstr ""
+
+msgid "Delivery_note"
+msgstr ""
+
 msgid "Delivered_deposit"
 msgstr ""
 
@@ -1206,9 +1224,6 @@ msgid "ID"
 msgstr ""
 
 msgid "Price_excl."
-msgstr ""
-
-msgid "VAT"
 msgstr ""
 
 msgid "Price_incl."
@@ -1233,12 +1248,6 @@ msgid "Deleted_Member"
 msgstr ""
 
 msgid "Price_per_weight"
-msgstr ""
-
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "Tax_rate"
 msgstr ""
 
 msgid "Sum_price_excl."

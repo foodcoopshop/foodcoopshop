@@ -26,42 +26,42 @@ class GenerateDeliveryNote {
 
         $headlines = [
             [
-                'name' => __d('admin', 'Amount'),
+                'name' => __('Amount'),
                 'alignment' => 'right',
             ],
             [
-                'name' => __d('admin', 'Product'),
+                'name' => __('Product'),
                 'alignment' => 'left',
                 'width' => 50,
             ],
             [
-                'name' => __d('admin', 'net_per_piece_abbr'),
+                'name' => __('net_per_piece_abbr'),
                 'alignment' => 'right',
                 'width' => 9,
             ],
             [
-                'name' => __d('admin', 'Weight'),
+                'name' => __('Weight'),
                 'alignment' => 'right',
             ],
             [
-                'name' => __d('admin', 'Unit'),
+                'name' => __('Unit'),
                 'alignment' => 'left',
             ],
             [
-                'name' => __d('admin', 'Tax_rate'),
+                'name' => __('Tax_rate'),
                 'alignment' => 'right',
                 'width' => 10,
             ],
             [
-                'name' => __d('admin', 'net'),
+                'name' => __('net'),
                 'alignment' => 'right',
             ],
             [
-                'name' => __d('admin', 'VAT'),
+                'name' => __('VAT'),
                 'alignment' => 'right',
             ],
             [
-                'name' => __d('admin', 'gross'),
+                'name' => __('gross'),
                 'alignment' => 'right',
             ],
         ];
@@ -149,7 +149,7 @@ class GenerateDeliveryNote {
             // add rows for sums / tax rates
             $row++;
             $row++;
-            $sheet->setCellValueByColumnAndRow(2, $row, __d('admin', 'Tax_rates_overview_table'));
+            $sheet->setCellValueByColumnAndRow(2, $row, __('Tax_rates_overview_table'));
             foreach($taxRates as $taxRate => $trt) {
                 $sheet->setCellValueByColumnAndRow(6, $row, $taxRate);
                 $sheet->setCellValueByColumnAndRow(7, $row, $trt['sum_price_net']);
@@ -169,7 +169,7 @@ class GenerateDeliveryNote {
     public function writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturerName)
     {
         $writer = new Xlsx($spreadsheet);
-        $filename = __d('admin', 'Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturerName) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
+        $filename = __('Delivery_note') . '-' . $dateFrom . '-' . $dateTo . '-' .StringComponent::slugify($manufacturerName) . '-' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.xlsx';
         $writer->save(TMP . $filename);
         return $filename;
     }
