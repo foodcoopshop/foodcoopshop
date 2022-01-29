@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-27 22:52+0100\n"
-"PO-Revision-Date: 2022-01-27 22:58+0100\n"
+"POT-Creation-Date: 2022-01-29 08:55+0100\n"
+"PO-Revision-Date: 2022-01-29 08:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -263,6 +263,9 @@ msgstr "Anzahl"
 
 msgid "Product"
 msgstr "Produkt"
+
+msgid "net_per_piece_abbr"
+msgstr "netto/St."
 
 msgid "Weight"
 msgstr "Gewicht"

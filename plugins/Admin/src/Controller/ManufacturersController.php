@@ -427,14 +427,45 @@ class ManufacturersController extends AdminAppController
         ]);
 
         $headlines = [
-            __d('admin', 'Amount'),
-            __d('admin', 'Product'),
-            __d('admin', 'Weight'),
-            __d('admin', 'Unit'),
-            __d('admin', 'Tax_rate'),
-            __d('admin', 'net'),
-            __d('admin', 'VAT'),
-            __d('admin', 'gross'),
+            [
+                'name' => __d('admin', 'Amount'),
+                'alignment' => 'right',
+            ],
+            [
+                'name' => __d('admin', 'Product'),
+                'alignment' => 'left',
+                'width' => 50,
+            ],
+            [
+                'name' => __d('admin', 'net_per_piece_abbr'),
+                'alignment' => 'right',
+                'width' => 9,
+            ],
+            [
+                'name' => __d('admin', 'Weight'),
+                'alignment' => 'right',
+            ],
+            [
+                'name' => __d('admin', 'Unit'),
+                'alignment' => 'left',
+            ],
+            [
+                'name' => __d('admin', 'Tax_rate'),
+                'alignment' => 'right',
+                'width' => 10,
+            ],
+            [
+                'name' => __d('admin', 'net'),
+                'alignment' => 'right',
+            ],
+            [
+                'name' => __d('admin', 'VAT'),
+                'alignment' => 'right',
+            ],
+            [
+                'name' => __d('admin', 'gross'),
+                'alignment' => 'right',
+            ],
         ];
 
         $spreadsheet = new Spreadsheet();
@@ -442,14 +473,14 @@ class ManufacturersController extends AdminAppController
 
         $column = 1;
         foreach($headlines as $headline) {
-            $sheet->setCellValueByColumnAndRow($column, 1, $headline);
+            $sheet->setCellValueByColumnAndRow($column, 1, $headline['name']);
+            $this->setAlignmentForCell($sheet, $column, 1, $headline['alignment']);
+            $this->setBoldForCell($sheet, $column, 1);
+            if (isset($headline['width'])) {
+                $sheet->getColumnDimensionByColumn($column)->setWidth($headline['width']);
+            }
             $column++;
         }
-
-        // column "product name"
-        $sheet->getColumnDimension('B')->setWidth(50);
-        // column "tax rate"
-        $sheet->getColumnDimension('E')->setWidth(10);
 
         $totalSumAmount = 0;
         $totalSumPurchasePriceNet = 0;
@@ -470,6 +501,7 @@ class ManufacturersController extends AdminAppController
             $totalSumPurchasePriceNet += $orderDetail->SumPurchasePriceNet;
             $totalSumPurchasePriceTax += $orderDetail->SumPurchasePriceTax;
             $totalSumPurchasePriceGross += $orderDetail->SumPurchasePriceGross;
+            $netPerPiece = round($orderDetail->SumPurchasePriceNet / $orderDetail->SumAmount, 2);
 
             $taxRate = $orderDetail->PurchasePriceTaxRate;
             if (!isset($taxRates[$taxRate])) {
@@ -481,15 +513,17 @@ class ManufacturersController extends AdminAppController
 
             $sheet->setCellValueByColumnAndRow(1, $row, $orderDetail->SumAmount);
             $sheet->setCellValueByColumnAndRow(2, $row, html_entity_decode($orderDetail->ProductName));
-            $sheet->setCellValueByColumnAndRow(3, $row, $orderDetail->SumWeight);
-            $sheet->setCellValueByColumnAndRow(4, $row, $orderDetail->Unit);
-            $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->PurchasePriceTaxRate);
-            $sheet->setCellValueByColumnAndRow(6, $row, $orderDetail->SumPurchasePriceNet);
-            $this->setNumberFormatForCell($sheet, 6, $row);
-            $sheet->setCellValueByColumnAndRow(7, $row, $orderDetail->SumPurchasePriceTax);
+            $sheet->setCellValueByColumnAndRow(3, $row, $netPerPiece);
+            $this->setNumberFormatForCell($sheet, 3, $row);
+            $sheet->setCellValueByColumnAndRow(4, $row, $orderDetail->SumWeight);
+            $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->Unit);
+            $sheet->setCellValueByColumnAndRow(6, $row, $orderDetail->PurchasePriceTaxRate);
+            $sheet->setCellValueByColumnAndRow(7, $row, $orderDetail->SumPurchasePriceNet);
             $this->setNumberFormatForCell($sheet, 7, $row);
-            $sheet->setCellValueByColumnAndRow(8, $row, $orderDetail->SumPurchasePriceGross);
+            $sheet->setCellValueByColumnAndRow(8, $row, $orderDetail->SumPurchasePriceTax);
             $this->setNumberFormatForCell($sheet, 8, $row);
+            $sheet->setCellValueByColumnAndRow(9, $row, $orderDetail->SumPurchasePriceGross);
+            $this->setNumberFormatForCell($sheet, 9, $row);
             $row++;
         }
 
@@ -498,17 +532,17 @@ class ManufacturersController extends AdminAppController
         $sheet->setCellValueByColumnAndRow(1, $row, $totalSumAmount);
         $this->setBoldForCell($sheet, 1, $row);
 
-        $sheet->setCellValueByColumnAndRow(6, $row, $totalSumPurchasePriceNet);
-        $this->setNumberFormatForCell($sheet, 6, $row);
-        $this->setBoldForCell($sheet, 6, $row);
-
-        $sheet->setCellValueByColumnAndRow(7, $row, $totalSumPurchasePriceTax);
-        $this->setNumberFormatForCell($sheet, 7, $row, true);
+        $sheet->setCellValueByColumnAndRow(7, $row, $totalSumPurchasePriceNet);
+        $this->setNumberFormatForCell($sheet, 7, $row);
         $this->setBoldForCell($sheet, 7, $row);
 
-        $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceGross);
+        $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceTax);
         $this->setNumberFormatForCell($sheet, 8, $row, true);
         $this->setBoldForCell($sheet, 8, $row);
+
+        $sheet->setCellValueByColumnAndRow(9, $row, $totalSumPurchasePriceGross);
+        $this->setNumberFormatForCell($sheet, 9, $row, true);
+        $this->setBoldForCell($sheet, 9, $row);
 
         if (count($taxRates) > 1) {
 
@@ -519,13 +553,13 @@ class ManufacturersController extends AdminAppController
             $row++;
             $sheet->setCellValueByColumnAndRow(2, $row, __d('admin', 'Tax_rates_overview_table'));
             foreach($taxRates as $taxRate => $trt) {
-                $sheet->setCellValueByColumnAndRow(5, $row, $taxRate);
-                $sheet->setCellValueByColumnAndRow(6, $row, $trt['sum_price_net']);
-                $this->setNumberFormatForCell($sheet, 6, $row, true);
-                $sheet->setCellValueByColumnAndRow(7, $row, $trt['sum_tax']);
+                $sheet->setCellValueByColumnAndRow(6, $row, $taxRate);
+                $sheet->setCellValueByColumnAndRow(7, $row, $trt['sum_price_net']);
                 $this->setNumberFormatForCell($sheet, 7, $row, true);
-                $sheet->setCellValueByColumnAndRow(8, $row, $trt['sum_price_gross']);
+                $sheet->setCellValueByColumnAndRow(8, $row, $trt['sum_tax']);
                 $this->setNumberFormatForCell($sheet, 8, $row, true);
+                $sheet->setCellValueByColumnAndRow(9, $row, $trt['sum_price_gross']);
+                $this->setNumberFormatForCell($sheet, 9, $row, true);
                 $row++;
             }
         }
@@ -541,11 +575,15 @@ class ManufacturersController extends AdminAppController
 
     }
 
+    protected function setAlignmentForCell($sheet, $column, $row, $alignment)
+    {
+        $sheet->getStyleByColumnAndRow($column, $row)->getAlignment()->setHorizontal($alignment);
+    }
+
     protected function setBoldForCell($sheet, $column, $row)
     {
         $sheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
     }
-
 
     protected function setNumberFormatForCell($sheet, $column, $row)
     {
