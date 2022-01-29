@@ -32,7 +32,7 @@ class GenerateDeliveryNote {
             [
                 'name' => __('Product'),
                 'alignment' => 'left',
-                'width' => 50,
+                'width' => 60,
             ],
             [
                 'name' => __('net_per_piece_abbr'),
@@ -99,7 +99,11 @@ class GenerateDeliveryNote {
             $totalSumPurchasePriceNet += $orderDetail->SumPurchasePriceNet;
             $totalSumPurchasePriceTax += $orderDetail->SumPurchasePriceTax;
             $totalSumPurchasePriceGross += $orderDetail->SumPurchasePriceGross;
-            $netPerPiece = round($orderDetail->SumPurchasePriceNet / $orderDetail->SumAmount, 2);
+
+            $netPerPiece = '';
+            if ($orderDetail->Unit == '') {
+                $netPerPiece = round($orderDetail->SumPurchasePriceNet / $orderDetail->SumAmount, 2);
+            }
 
             $taxRate = $orderDetail->PurchasePriceTaxRate;
             if (!isset($taxRates[$taxRate])) {
