@@ -128,25 +128,19 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
         'type' => 'checkbox',
         'escape' => false,
     ]);
-    echo $this->Form->control('Customers.pickup_day_reminder_enabled', [
-        'label' => __d('admin', 'Pickup_day_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_pickup_day_reminder_emails?').'</span>',
+}
+
+echo $this->Form->control('Customers.pickup_day_reminder_enabled', [
+    'label' => __d('admin', 'Pickup_day_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_pickup_day_reminder_emails?').'</span>',
+    'type' => 'checkbox',
+    'escape' => false,
+]);
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+    echo $this->Form->control('Customers.invoices_per_email_enabled', [
+        'label' => __d('admin', 'Invoices_per_email').'<span class="after small">'.__d('admin', 'Want_to_receive_invoices_per_email?').'</span>',
         'type' => 'checkbox',
         'escape' => false,
     ]);
-    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        echo $this->Form->control('Customers.invoices_per_email_enabled', [
-            'label' => __d('admin', 'Invoices_per_email').'<span class="after small">'.__d('admin', 'Want_to_receive_invoices_per_email?').'</span>',
-            'type' => 'checkbox',
-            'escape' => false,
-        ]);
-    }
-    if (!$this->Configuration->isCashlessPaymentTypeManual()) {
-        echo $this->Form->control('Customers.credit_upload_reminder_enabled', [
-            'label' => __d('admin', 'Credit_upload_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_credit_upload_reminder?').'</span>',
-            'type' => 'checkbox',
-            'escape' => false,
-        ]);
-    }
 }
 
 if ($this->Html->paymentIsCashless()) {
@@ -157,6 +151,13 @@ if ($this->Html->paymentIsCashless()) {
         'type' => 'checkbox',
         'escape' => false
     ]);
+    if (!$this->Configuration->isCashlessPaymentTypeManual()) {
+        echo $this->Form->control('Customers.credit_upload_reminder_enabled', [
+            'label' => __d('admin', 'Credit_upload_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_credit_upload_reminder?').'</span>',
+            'type' => 'checkbox',
+            'escape' => false,
+        ]);
+    }
 }
 
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
