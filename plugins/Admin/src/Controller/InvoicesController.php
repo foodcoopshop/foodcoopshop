@@ -136,7 +136,7 @@ class InvoicesController extends AdminAppController
                     'id_manufacturer' => 0,
                     'date_add' => FrozenTime::now(),
                     'date_changed' => FrozenTime::now(),
-                    'amount' => $invoiceData->sumPriceIncl,
+                    'amount' => abs($invoiceData->sumPriceIncl),
                     'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
                     'created_by' => $this->AppAuth->getUserId(),
                 ]
