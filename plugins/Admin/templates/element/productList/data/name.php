@@ -25,7 +25,7 @@ echo '<td class="cell-name">';
         if ($product->description != '') {
             $title[] = '<b>'.__d('admin', 'Long_description').'</b><br />'.$product->description;
         }
-        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && isset($storageLocationsForForDropdown[$product->id_storage_location])) {
             $title[] = '<b>'.__d('admin', 'Storage_location').'</b>: '.$storageLocationsForForDropdown[$product->id_storage_location];
         }
         echo $this->Html->link(
