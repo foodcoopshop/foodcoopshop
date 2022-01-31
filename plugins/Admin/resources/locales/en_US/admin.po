@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 10:46+0100\n"
-"PO-Revision-Date: 2022-01-29 10:56+0100\n"
+"POT-Creation-Date: 2022-01-31 08:51+0100\n"
+"PO-Revision-Date: 2022-01-31 08:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1053,17 +1053,17 @@ msgstr "Invoices by email"
 msgid "Want_to_receive_invoices_per_email?"
 msgstr "Do you want to receive your invoices per e-mail?"
 
-msgid "Credit_upload_reminder"
-msgstr "Credit upload reminder"
-
-msgid "Want_to_receive_credit_upload_reminder?"
-msgstr "Do you want to receive an e-mail when your transaction is uploaded to the credit system?"
-
 msgid "Check_credit_reminder"
 msgstr "Check credit reminder"
 
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
 msgstr "Do you want to receive a weekly reminder e-mail when your credit is lower than {0}?"
+
+msgid "Credit_upload_reminder"
+msgstr "Credit upload reminder"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Do you want to receive an e-mail when your transaction is uploaded to the credit system?"
 
 msgid "Self_service_mode"
 msgstr "Self-service mode"
@@ -1234,7 +1234,7 @@ msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
 
 msgid "All_amounts_in_{0}."
-msgstr "All amounts in {0}."
+msgstr "All prices in {0}."
 
 msgid "Tax_overview_cash"
 msgstr "Tax overview cash"

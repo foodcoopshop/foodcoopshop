@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-29 10:46+0100\n"
+"POT-Creation-Date: 2022-01-31 08:51+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1052,16 +1052,16 @@ msgstr ""
 msgid "Want_to_receive_invoices_per_email?"
 msgstr ""
 
-msgid "Credit_upload_reminder"
-msgstr ""
-
-msgid "Want_to_receive_credit_upload_reminder?"
-msgstr ""
-
 msgid "Check_credit_reminder"
 msgstr ""
 
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
+msgstr ""
+
+msgid "Credit_upload_reminder"
+msgstr ""
+
+msgid "Want_to_receive_credit_upload_reminder?"
 msgstr ""
 
 msgid "Self_service_mode"

@@ -166,6 +166,10 @@ class GenerateDeliveryNote {
             }
         }
 
+        $row++;
+        $row++;
+        $sheet->setCellValueByColumnAndRow(2, $row, __('All_amounts_in_{0}.', [Configure::read('app.currencyName')]));
+
         return $spreadsheet;
 
     }

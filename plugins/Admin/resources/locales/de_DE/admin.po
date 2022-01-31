@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 10:46+0100\n"
+"POT-Creation-Date: 2022-01-31 08:51+0100\n"
 "PO-Revision-Date: 2022-01-29 11:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1053,17 +1053,17 @@ msgstr "Rechnungen per E-Mail"
 msgid "Want_to_receive_invoices_per_email?"
 msgstr "Ich möchte meine Rechnungen per E-Mail erhalten. Du findest deine Rechnungen immer unter <a href=\"/admin/invoices/myInvoices\">Meine Rechnungen</a>."
 
-msgid "Credit_upload_reminder"
-msgstr "Überweisung ins Guthaben-System übernommen"
-
-msgid "Want_to_receive_credit_upload_reminder?"
-msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
-
 msgid "Check_credit_reminder"
 msgstr "Guthaben-Aufladung-Erinnerung"
 
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
 msgstr "Ich möchte 1x wöchentlich per E-Mail benachrichtigt werden, wenn mein Guthaben weniger als {0} beträgt."
+
+msgid "Credit_upload_reminder"
+msgstr "Überweisung ins Guthaben-System übernommen"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
 
 msgid "Self_service_mode"
 msgstr "Selbstbedienungs-Modus"

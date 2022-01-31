@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-29 10:56+0100\n"
-"PO-Revision-Date: 2022-01-29 10:57+0100\n"
+"POT-Creation-Date: 2022-01-31 08:51+0100\n"
+"PO-Revision-Date: 2022-01-31 08:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1208,6 +1208,9 @@ msgstr "VAT"
 
 msgid "Tax_rates_overview_table"
 msgstr "Tax rates overview table"
+
+msgid "All_amounts_in_{0}."
+msgstr "All prices in {0}."
 
 msgid "Delivery_note"
 msgstr "Delivery note"
