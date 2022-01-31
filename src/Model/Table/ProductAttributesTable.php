@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -19,6 +20,8 @@ use Cake\Datasource\FactoryLocator;
  */
 class ProductAttributesTable extends AppTable
 {
+
+    use ProductCacheClearAfterDeleteTrait;
 
     public function initialize(array $config): void
     {

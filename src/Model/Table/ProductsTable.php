@@ -1351,7 +1351,7 @@ class ProductsTable extends AppTable
             'conditions' => [
                 'ProductAttributes.id_product' => $productId,
             ]
-        ])->toArray();
+        ]);
 
         $productAttributeIds = [];
         foreach ($productAttributes as $attribute) {
@@ -1366,11 +1366,11 @@ class ProductsTable extends AppTable
         ]);
 
         // then set the new one
-        $this->ProductAttributes->updateAll([
-            'default_on' => 1
-        ], [
-            'id_product_attribute' => $productAttributeId,
-        ]);
+        $productAttributeEntity = $productAttributes->where([
+            'ProductAttributes.id_product_attribute' => $productAttributeId,
+        ])->first();
+        $productAttributeEntity->default_on = APP_ON;
+        $this->ProductAttributes->save($productAttributeEntity);
     }
 
     public function changeImage($products)
