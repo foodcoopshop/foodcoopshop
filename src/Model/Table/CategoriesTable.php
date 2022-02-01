@@ -6,6 +6,7 @@ use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 
 /**
@@ -160,7 +161,7 @@ class CategoriesTable extends AppTable
             'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
             'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
-            'keywords-' . $keyword,
+            'keywords-' . Text::slug($keyword, ['replacement' => ' ']),
             'productId-' . $productId,
             'getOnlyStockProducts-' . $getOnlyStockProducts,
             'date-' . date('Y-m-d'),
