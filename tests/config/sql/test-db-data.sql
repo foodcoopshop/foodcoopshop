@@ -187,7 +187,8 @@ INSERT INTO `fcs_configuration` VALUES
 (597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',584,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17'),
 (598,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:14','2021-07-07 10:55:14'),
 (599,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','0','boolean',3210,'de_DE','2021-08-02 11:28:40','2021-08-02 11:28:40'),
-(600,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:18','2021-09-10 21:23:18');
+(600,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:18','2021-09-10 21:23:18'),
+(601,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich.','0','boolean',3210,'de_DE','2022-02-01 17:48:46','2022-02-01 17:48:46');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -429,7 +430,8 @@ INSERT INTO `phinxlog` VALUES
 (20211213081434,'ImproveCustomerNotifications','2021-12-13 10:44:55','2021-12-13 10:44:55',0),
 (20211215184633,'ManufacturerSettingIncludeStockProductsOnOrderList','2021-12-15 18:51:00','2021-12-15 18:51:00',0),
 (20211229194617,'AddIndizesForBetterPerformance','2021-12-29 19:53:31','2021-12-29 19:53:31',0),
-(20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:32:01','2022-01-29 08:32:02',0);
+(20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:32:01','2022-01-29 08:32:02',0),
+(20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:46','2022-02-01 16:48:46',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
