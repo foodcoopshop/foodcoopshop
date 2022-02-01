@@ -206,6 +206,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDelta()
     {
         $this->changeConfiguration('FCS_SEND_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
             'product' => $this->Product->newEntity(
                 [
@@ -224,6 +225,7 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayMonday()
     {
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
             'product' => $this->Product->newEntity(
                 [
@@ -278,6 +280,7 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekA()
     {
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
             'product' => $this->Product->newEntity(
                 [
@@ -295,6 +298,7 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekB()
     {
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
             'product' => $this->Product->newEntity(
                 [
@@ -312,6 +316,7 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekCurrentWeek()
     {
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
             'product' => $this->Product->newEntity(
                 [
