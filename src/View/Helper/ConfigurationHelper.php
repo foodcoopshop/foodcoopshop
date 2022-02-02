@@ -39,6 +39,7 @@ class ConfigurationHelper extends Helper
             case 'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED':
             case 'FCS_FEEDBACK_TO_PRODUCTS_ENABLED':
             case 'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS':
+            case 'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
                 break;
             case 'FCS_LOCALE':
