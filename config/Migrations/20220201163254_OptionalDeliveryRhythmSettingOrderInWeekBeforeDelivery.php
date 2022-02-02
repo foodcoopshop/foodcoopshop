@@ -6,13 +6,6 @@ use Migrations\AbstractMigration;
 
 class OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
-     * @return void
-     */
     public function change()
     {
         switch(I18n::getLocale()) {
@@ -24,7 +17,6 @@ class OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery extends AbstractMig
                 break;
         }
         $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', '".$text."', '0', 'boolean', '3210', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
-        echo $sql;
         $this->execute($sql);
     }
 }
