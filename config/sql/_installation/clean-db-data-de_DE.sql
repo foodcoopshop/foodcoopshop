@@ -159,7 +159,7 @@ INSERT INTO `fcs_cronjobs` VALUES
 (5,'SendInvoicesToManufacturers','month',11,NULL,'10:30:00',1),
 (6,'SendOrderLists','day',NULL,NULL,'04:30:00',1),
 (7,'SendInvoicesToCustomers','week',NULL,'Saturday','10:00:00',0),
-(8,'SendDeliveryNotes','month',5,NULL,'06:00:00',0);
+(8,'SendDeliveryNotes','month',1,NULL,'18:00:00',0);
 /*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
