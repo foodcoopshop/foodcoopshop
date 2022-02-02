@@ -203,10 +203,9 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDelta()
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOff()
     {
         $this->changeConfiguration('FCS_SEND_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
-        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
             'product' => $this->Product->newEntity(
                 [
@@ -218,12 +217,50 @@ class ProductsTableTest extends AppCakeTestCase
                 ]
             ),
             'currentDay' => '2021-08-01',
+            'result' => '2021-08-20',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOn()
+    {
+        $this->changeConfiguration('FCS_SEND_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2021-02-05'),
+                    'delivery_rhythm_send_order_list_weekday' => 0,
+            ]
+            ),
+            'currentDay' => '2021-08-01',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayMonday()
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01')
+                ]
+            ),
+            'currentDay' => '2019-02-25',
+            'result' => '2019-03-15',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
@@ -278,7 +315,24 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekA()
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekAAllowOrderConfigOff()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-10')
+                ]
+            ),
+            'currentDay' => '2018-08-14',
+            'result' => '2018-08-24',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekAAllowOrderConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
@@ -296,7 +350,24 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekB()
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekBAllowOrderConfigOff()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06')
+                ]
+            ),
+            'currentDay' => '2018-09-15',
+            'result' => '2018-09-28',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekNotCurrentWeekBAllowOrderConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
@@ -314,7 +385,24 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekCurrentWeek()
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekCurrentWeekAllowOrderConfigOff()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                ]
+                ),
+            'currentDay' => '2018-08-14',
+            'result' => '2018-08-17',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekCurrentWeekAllowOrderConfigOnf()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
