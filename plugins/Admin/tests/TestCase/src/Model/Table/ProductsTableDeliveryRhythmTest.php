@@ -32,7 +32,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->Product = $this->getTableLocator()->get('Products');
     }
 
-    public function test1WeekWithFirstDeliveryDay()
+    public function test1WeekWithFirstDeliveryDayAllowOrdersConfigOff()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -149,6 +149,41 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
                 ]
                 ),
             'currentDay' => '2021-08-01',
+            'result' => 'delivery-rhythm-triggered-delivery-break',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 1,
+                ]
+            ),
+            'currentDay' => '2022-02-01',
+            'result' => '2022-02-11',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
+    {
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 1,
+                ]
+                ),
+            'currentDay' => '2022-02-01',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
