@@ -1107,7 +1107,7 @@ class OrderDetailsController extends AdminAppController
         $quantityWasChanged = $oldOrderDetail->order_detail_unit->product_quantity_in_units != $productQuantity;
 
         // send email to customer if price was changed
-        if (!$doNotChangePrice && $quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged')) {
+        if (!$doNotChangePrice && $quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityChanged')) {
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
@@ -1357,35 +1357,33 @@ class OrderDetailsController extends AdminAppController
 
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
 
-        if (Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged')) {
-            // send email to customer
-            $email = new AppMailer();
-            $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
-            $email->setTo($oldOrderDetail->customer->email)
-            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
-            ->setViewVars([
-                'oldOrderDetail' => $oldOrderDetail,
-                'newOrderDetail' => $newOrderDetail,
-                'appAuth' => $this->AppAuth,
-                'editPriceReason' => $editPriceReason
+        // send email to customer
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
+        $email->setTo($oldOrderDetail->customer->email)
+        ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+        ->setViewVars([
+            'oldOrderDetail' => $oldOrderDetail,
+            'newOrderDetail' => $newOrderDetail,
+            'appAuth' => $this->AppAuth,
+            'editPriceReason' => $editPriceReason
+        ]);
+
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+        if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
-
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
-
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-            if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-                $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                    '<b>' . $oldOrderDetail->customer->name . '</b>',
-                    '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
-                ]);
-                $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
-            }
-
-            $email->send();
-
-            $message .= $emailMessage;
+            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
         }
+
+        $email->send();
+
+        $message .= $emailMessage;
 
         if ($editPriceReason != '') {
             $message .= ' '.__d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';

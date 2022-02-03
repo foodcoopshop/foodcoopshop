@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-31 08:51+0100\n"
+"POT-Creation-Date: 2022-02-03 10:23+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1470,6 +1470,12 @@ msgid "Adaptions_of_price_and_weight_of_ordered_products"
 msgstr ""
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
+msgstr ""
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr ""
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
 msgstr ""
 
 msgid "Adaptions_of_the_ordered_amount"

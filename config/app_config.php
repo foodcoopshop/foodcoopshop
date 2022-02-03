@@ -178,7 +178,7 @@ return [
 
         'showStatisticsForAdmins' => true,
 
-        'sendEmailWhenOrderDetailQuantityOrPriceChanged' => true,
+        'sendEmailWhenOrderDetailQuantityChanged' => true,
 
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 

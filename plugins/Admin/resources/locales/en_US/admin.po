@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-31 08:51+0100\n"
-"PO-Revision-Date: 2022-01-31 08:53+0100\n"
+"POT-Creation-Date: 2022-02-03 10:23+0100\n"
+"PO-Revision-Date: 2022-02-03 10:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1468,10 +1468,16 @@ msgid "to_receive_an_email_on_every_cancellation."
 msgstr "to receive an email on every cancellation."
 
 msgid "Adaptions_of_price_and_weight_of_ordered_products"
-msgstr "Adaptiosn of price and weight of ordered products"
+msgstr "Adaptions of price and weight of ordered products"
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
 msgstr "to receive an email on every adaptaion of price or weight"
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr "Adaptions of price of ordered products"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
+msgstr "to receive an email on every adaptaion of price"
 
 msgid "Adaptions_of_the_ordered_amount"
 msgstr "Adaptions of the ordered amount"

@@ -132,7 +132,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
     public function testEditOrderDetailQuantityAsSuperadminEmailDisabledWithConfig()
     {
-        Configure::write('app.sendEmailWhenOrderDetailQuantityOrPriceChanged', false);
+        Configure::write('app.sendEmailWhenOrderDetailQuantityChanged', false);
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
