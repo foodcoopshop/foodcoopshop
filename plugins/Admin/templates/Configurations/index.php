@@ -317,8 +317,8 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.sendEmailWhenOrderDetailQuantityOrPriceChanged</td>
-            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td>app.sendEmailWhenOrderDetailQuantityChanged</td>
+            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <tr>
