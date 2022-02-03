@@ -241,7 +241,7 @@ class ProductsTable extends AppTable
                 }
 
                 if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
-                    if ($product->delivery_rhythm_count == 2 && $pickupDay != $calculatedPickupDay) {
+                    if (in_array($product->delivery_rhythm_count, [1, 2]) && $pickupDay != $calculatedPickupDay) {
                         return 'delivery-rhythm-triggered-delivery-break';
                     }
                 }
