@@ -32,7 +32,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->Product = $this->getTableLocator()->get('Products');
     }
 
-    public function testWeekWithFirstDeliveryDay()
+    public function test1WeekWithFirstDeliveryDay()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -49,7 +49,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testWeekNoFirstDeliveryDay()
+    public function test1WeekNoFirstDeliveryDay()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -65,7 +65,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testWeekNormal()
+    public function test1WeekNormal()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -81,7 +81,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testWeekWithSendOrderListDayOneDayBeforeDefault()
+    public function test1WeekWithSendOrderListDayOneDayBeforeDefault()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -98,7 +98,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testWeekWithSendOrderListDayTwoDaysBeforeDefault()
+    public function test1WeekWithSendOrderListDayTwoDaysBeforeDefault()
     {
         $data = [
             'product' => $this->Product->newEntity(
