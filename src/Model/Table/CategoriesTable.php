@@ -161,7 +161,7 @@ class CategoriesTable extends AppTable
             'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
             'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
-            'keywords-' . Text::slug($keyword, ['replacement' => ' ']),
+            'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
             'getOnlyStockProducts-' . $getOnlyStockProducts,
             'date-' . date('Y-m-d'),
