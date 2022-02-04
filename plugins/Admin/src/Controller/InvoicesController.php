@@ -339,7 +339,7 @@ class InvoicesController extends AdminAppController
                 'date_changed' => FrozenTime::now(),
                 'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
             ], [
-                'type' => 'product',
+                'type IN' => ['product', 'payback'],
                 'id_customer' => $invoice->customer->id_customer,
                 'approval_comment' => $approvalString,
             ]);
