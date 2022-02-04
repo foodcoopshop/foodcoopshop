@@ -352,7 +352,7 @@ class InvoicesController extends AdminAppController
                 APP_OFF,
             );
 
-            if (!$customer->invoices_per_email_enabled) {
+            if (!$invoice->customer->invoices_per_email_enabled) {
                 $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
             }
 
