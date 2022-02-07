@@ -223,6 +223,15 @@ class ProductsTable extends AppTable
             return $pickupDay;
         }
 
+        if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
+            if ($product->delivery_rhythm_type == 'week' && $product->delivery_rhythm_count == 1) {
+                $regularPickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
+                if ($pickupDay != $regularPickupDay) {
+                    return 'delivery-rhythm-triggered-delivery-break';
+                }
+            }
+        }
+
         if ($product->delivery_rhythm_type == 'week') {
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
@@ -232,7 +241,7 @@ class ProductsTable extends AppTable
                 }
 
                 if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
-                    if ($product->delivery_rhythm_count == 2 && $pickupDay != $calculatedPickupDay) {
+                    if (in_array($product->delivery_rhythm_count, [1, 2]) && $pickupDay != $calculatedPickupDay) {
                         return 'delivery-rhythm-triggered-delivery-break';
                     }
                 }
