@@ -111,8 +111,6 @@ class LocalizedController extends Controller
                 'home' => __('Home'),
                 'routeManufacturerList' => __('route_manufacturer_list'),
                 'manufacturers' => __('Manufacturers'),
-                'routeNewsList' => __('route_news_list'),
-                'news' => __('News'),
                 'pages' => __('Pages'),
                 'routeAllCategories' => Configure::read('app.slugHelper')->getAllProducts(),
                 'show' => __('Show'),
