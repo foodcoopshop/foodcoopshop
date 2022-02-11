@@ -258,7 +258,7 @@ foodcoopshop.Helper = {
         $(selector).addClass('swiper');
 
         var slides = $(selector).find('.blog-post-wrapper');
-        if (slides.length > 4) {
+        if (slides.length > 3) {
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
         }
