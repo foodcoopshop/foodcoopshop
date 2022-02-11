@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-31 08:51+0100\n"
+"POT-Creation-Date: 2022-02-11 22:40+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -68,6 +68,9 @@ msgstr ""
 msgid "route_activate_new_password"
 msgstr ""
 
+msgid "route_news_list_old"
+msgstr ""
+
 msgid "route_news_list"
 msgstr ""
 
@@ -110,7 +113,7 @@ msgstr ""
 msgid "You_have_been_signed_out."
 msgstr ""
 
-msgid "News"
+msgid "Blog_archive"
 msgstr ""
 
 msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
@@ -531,6 +534,9 @@ msgid "Home"
 msgstr ""
 
 msgid "Manufacturers"
+msgstr ""
+
+msgid "News"
 msgstr ""
 
 msgid "Pages"
@@ -2394,6 +2400,9 @@ msgid "Other_initiatives"
 msgstr ""
 
 msgid "Map_with_all_Austrian_foodocops"
+msgstr ""
+
+msgid "Archive"
 msgstr ""
 
 msgid "Information"

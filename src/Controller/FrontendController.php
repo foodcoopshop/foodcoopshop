@@ -248,9 +248,9 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null);
-        $blogPostsAvailable = !empty($blogPosts) && $blogPosts->count() > 0;
-        $this->set('blogPostsAvailable', $blogPostsAvailable);
+        $blogPostsForArchiveLinkCheck = $this->BlogPost->findBlogPosts($this->AppAuth, null, false);
+        $blogPostsAvailableForArchiveLink = !empty($blogPostsForArchiveLinkCheck) && $blogPostsForArchiveLinkCheck->count() > 0;
+        $this->set('blogPostsAvailableForArchiveLink', $blogPostsAvailableForArchiveLink);
 
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {

@@ -31,6 +31,7 @@ return function (RouteBuilder $routes) {
         $routes->connect('/'.__('route_activate_new_password').'/*', ['controller' => 'Customers', 'action' => 'activateNewPassword']);
 
         if (Configure::read('app.isBlogFeatureEnabled')) {
+            $routes->redirect('/'.__('route_news_list_old'), ['controller' => 'BlogPosts', 'action' => 'index']);
             $routes->connect('/'.__('route_news_list'), ['controller' => 'BlogPosts', 'action' => 'index']);
             $routes->connect('/'.__('route_news_detail').'/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
         }

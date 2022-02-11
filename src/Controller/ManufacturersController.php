@@ -121,7 +121,7 @@ class ManufacturersController extends FrontendController
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, $manufacturerId, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('manufacturer', $manufacturer);

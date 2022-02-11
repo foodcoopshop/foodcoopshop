@@ -36,7 +36,7 @@ class CategoriesController extends FrontendController
     public function newProducts()
     {
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->Category = $this->getTableLocator()->get('Categories');
@@ -63,7 +63,7 @@ class CategoriesController extends FrontendController
         $this->set('keyword', $keyword);
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->Category = $this->getTableLocator()->get('Categories');
@@ -99,7 +99,7 @@ class CategoriesController extends FrontendController
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryId);

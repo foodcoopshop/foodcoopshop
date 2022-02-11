@@ -47,15 +47,12 @@ class BlogPostsTable extends AppTable
         return $validator;
     }
 
-
-    /**
-     * Find neighbors method
-     */
     public function findNeighborPrev(Query $query, array $options): Query
     {
         $previous = $this->find()
             ->orderAsc($this->getAlias().'.modified')
             ->where($this->getAlias() . '.modified > \'' . $options['modified'] . '\'');
+        $previous = $this->getConditionShowOnStartPage($previous, $options['showOnStartPage']);
         return $previous;
     }
     public function findNeighborNext(Query $query, array $options): Query
@@ -63,15 +60,11 @@ class BlogPostsTable extends AppTable
         $next = $this->find()
             ->orderDesc($this->getAlias().'.modified')
             ->where($this->getAlias() . '.modified < \'' . $options['modified'] . '\'');
+        $next = $this->getConditionShowOnStartPage($next, $options['showOnStartPage']);
         return $next;
     }
 
-    public function findForStartPage($appAuth)
-    {
-        return $this->findBlogPosts($appAuth, null, null, true);
-    }
-
-    public function findBlogPosts($appAuth, $limit = 75, $manufacturerId = null, $showOnStartPage = null)
+    public function findBlogPosts($appAuth, $manufacturerId = null, $showOnStartPage = false)
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
@@ -79,7 +72,7 @@ class BlogPostsTable extends AppTable
         }
 
         $conditions = [
-            'BlogPosts.active' => APP_ON
+            'BlogPosts.active' => APP_ON,
         ];
         if (! $appAuth->user()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
@@ -92,21 +85,30 @@ class BlogPostsTable extends AppTable
         $blogPosts = $this->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'BlogPosts.modified' => 'DESC'
+                'BlogPosts.modified' => 'DESC',
             ],
             'contain' => [
-                'Manufacturers'
+                'Manufacturers',
             ],
-            'limit' => $limit
         ]);
 
-        if ($showOnStartPage) {
-            $blogPosts->where(function (QueryExpression $exp) {
-                $exp->gte('DATE_FORMAT(BlogPosts.show_on_start_page_until, "%Y-%m-%d")', Configure::read('app.timeHelper')->getCurrentDateForDatabase());
-                return $exp;
-            });
-        }
-
+        $blogPosts = $this->getConditionShowOnStartPage($blogPosts, $showOnStartPage);
         return $blogPosts;
     }
+
+    public function getConditionShowOnStartPage($query, $showOnStartPage)
+    {
+        $query->where(function (QueryExpression $exp) use ($showOnStartPage) {
+            $key = 'DATE_FORMAT(BlogPosts.show_on_start_page_until, "%Y-%m-%d")';
+            $value = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+            if ($showOnStartPage) {
+                $exp->gte($key, $value);
+            } else {
+                $exp->lt($key, $value);
+            }
+            return $exp;
+        });
+        return $query;
+    }
+
 }
