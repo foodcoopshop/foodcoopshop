@@ -98,15 +98,17 @@ class BlogPostsTable extends AppTable
 
     public function getConditionShowOnStartPage($query, $showOnStartPage)
     {
-        $query->where(function (QueryExpression $exp) use ($showOnStartPage) {
+        $query->where(function (QueryExpression $exp, Query $q) use ($showOnStartPage) {
             $key = 'DATE_FORMAT(BlogPosts.show_on_start_page_until, "%Y-%m-%d")';
             $value = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             if ($showOnStartPage) {
-                $exp->gte($key, $value);
+                return $exp->gte($key, $value);
             } else {
-                $exp->lt($key, $value);
+                return $exp->or([
+                    $q->newExpr()->lt($key, $value),
+                    $q->newExpr()->isNull('BlogPosts.show_on_start_page_until'),
+                ]);
             }
-            return $exp;
         });
         return $query;
     }

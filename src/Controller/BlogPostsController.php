@@ -87,7 +87,7 @@ class BlogPostsController extends FrontendController
 
         $options = [
             'modified' => $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-            'showOnStartPage' => !$blogPost->show_on_start_page_until->isPast(),
+            'showOnStartPage' => !is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast(),
         ];
         $neighbors = [
             'prev' => $this->BlogPost->find('neighborPrev', $options)->contain('Manufacturers')->where($conditions)->first(),
