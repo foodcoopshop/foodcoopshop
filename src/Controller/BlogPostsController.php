@@ -102,10 +102,6 @@ class BlogPostsController extends FrontendController
     {
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, false);
-        if ($blogPosts->count() === 0) {
-            throw new RecordNotFoundException('no blog posts available');
-        }
-
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', __('Blog_archive'));
     }
