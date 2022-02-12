@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-02-11 22:40+0100\n"
-"PO-Revision-Date: 2022-02-11 23:06+0100\n"
+"POT-Creation-Date: 2022-02-12 17:14+0100\n"
+"PO-Revision-Date: 2022-02-12 17:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -536,9 +536,6 @@ msgstr "Home"
 
 msgid "Manufacturers"
 msgstr "Manufacturers"
-
-msgid "News"
-msgstr "News"
 
 msgid "Pages"
 msgstr "Pages"
@@ -1971,6 +1968,9 @@ msgstr "Payments are added by a superadmin by uploading a CSV list"
 msgid "Members"
 msgstr "Members"
 
+msgid "News"
+msgstr "News"
+
 msgid "Activities"
 msgstr "Activities"
 
@@ -2138,9 +2138,6 @@ msgstr "Account of {0}"
 
 msgid "Modified_on"
 msgstr "Modified on"
-
-msgid "by"
-msgstr "by"
 
 msgid "Edit"
 msgstr "Edit"
@@ -2403,9 +2400,6 @@ msgstr "Other initiatives"
 msgid "Map_with_all_Austrian_foodocops"
 msgstr "Map with <b>all</b> Austrian Foodcoops"
 
-msgid "Archive"
-msgstr "Archive"
-
 msgid "Information"
 msgstr "Information"
 
@@ -2660,6 +2654,12 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "by"
+#~ msgstr "by"
+
+#~ msgid "Archive"
+#~ msgstr "Archive"
 
 #, fuzzy
 #~ msgid "route_blog_list"

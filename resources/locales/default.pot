@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-02-11 22:40+0100\n"
+"POT-Creation-Date: 2022-02-12 17:14+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -534,9 +534,6 @@ msgid "Home"
 msgstr ""
 
 msgid "Manufacturers"
-msgstr ""
-
-msgid "News"
 msgstr ""
 
 msgid "Pages"
@@ -1970,6 +1967,9 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
+msgid "News"
+msgstr ""
+
 msgid "Activities"
 msgstr ""
 
@@ -2136,9 +2136,6 @@ msgid "Paying_with_time_account_name_{0}"
 msgstr ""
 
 msgid "Modified_on"
-msgstr ""
-
-msgid "by"
 msgstr ""
 
 msgid "Edit"
@@ -2400,9 +2397,6 @@ msgid "Other_initiatives"
 msgstr ""
 
 msgid "Map_with_all_Austrian_foodocops"
-msgstr ""
-
-msgid "Archive"
 msgstr ""
 
 msgid "Information"

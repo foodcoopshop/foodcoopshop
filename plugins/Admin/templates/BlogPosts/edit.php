@@ -109,12 +109,14 @@ if (Configure::read('app.showManufacturerListAndDetailPage') && ($appAuth->isSup
 }
 
 echo $this->Form->control('BlogPosts.show_on_start_page_until', [
-    'label' => __d('admin', 'Show_on_startpage_until') . '? <span class="after small">'.__d('admin', 'Leave_empty_to_never_show_blog_post_on_start_page.').'</span>',
     'class' => 'datepicker',
+    'label' => __d('admin', 'Show_on_startpage_until'),
     'type' => 'text',
     'escape' => false,
     'value' => !is_null($blogPost->show_on_start_page_until) ? $blogPost->show_on_start_page_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : null,
 ]);
+echo '<span class="description small">' . __d('admin', 'After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page.') . '</span>';
+
 
 echo $this->Form->control('BlogPosts.is_private', [
     'label' => __d('admin', 'Only_for_members').'?',
