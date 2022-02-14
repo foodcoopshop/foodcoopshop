@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-31 08:51+0100\n"
-"PO-Revision-Date: 2022-01-31 08:52+0100\n"
+"POT-Creation-Date: 2022-02-12 17:14+0100\n"
+"PO-Revision-Date: 2022-02-12 17:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -69,8 +69,11 @@ msgstr "neues-passwort-anfordern"
 msgid "route_activate_new_password"
 msgstr "neues-passwort-aktivieren"
 
-msgid "route_news_list"
+msgid "route_news_list_old"
 msgstr "aktuelles"
+
+msgid "route_news_list"
+msgstr "blog-archiv"
 
 msgid "route_news_detail"
 msgstr "aktuelles"
@@ -111,8 +114,8 @@ msgstr "selbstbedienung"
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
 
-msgid "News"
-msgstr "Aktuelles"
+msgid "Blog_archive"
+msgstr "Blog-Archiv"
 
 msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
 msgstr "Zum Bestellen <a href=\"{0}\">bitte zuerst anmelden oder neu registrieren</a>."
@@ -1965,6 +1968,9 @@ msgstr "Superadmins importieren die Guthaben-Aufladungen über eine CSV-Liste in
 msgid "Members"
 msgstr "Mitglieder"
 
+msgid "News"
+msgstr "Aktuelles"
+
 msgid "Activities"
 msgstr "Aktivitäten"
 
@@ -2132,9 +2138,6 @@ msgstr "{0}konto"
 
 msgid "Modified_on"
 msgstr "Geändert am"
-
-msgid "by"
-msgstr "von"
 
 msgid "Edit"
 msgstr "Bearbeiten"
@@ -2651,6 +2654,23 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "by"
+#~ msgstr "von"
+
+#~ msgid "Archive"
+#~ msgstr "Archiv"
+
+#, fuzzy
+#~ msgid "route_blog_list"
+#~ msgstr "archiv"
+
+#, fuzzy
+#~ msgid "route_blog_detail"
+#~ msgstr "aktuelles"
+
+#~ msgid "route_news_detail_old"
+#~ msgstr "aktuelles"
 
 #~ msgid "seconds"
 #~ msgstr "Sekunden"

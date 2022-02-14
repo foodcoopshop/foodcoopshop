@@ -247,11 +247,6 @@ class FrontendController extends AppController
 
         $this->resetOriginalLoggedCustomer();
 
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null);
-        $blogPostsAvailable = !empty($blogPosts) && $blogPosts->count() > 0;
-        $this->set('blogPostsAvailable', $blogPostsAvailable);
-
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->Category = $this->getTableLocator()->get('Categories');

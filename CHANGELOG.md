@@ -8,6 +8,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 # Unveröffentlichte Version
 
+- Verbesserte Darstellung der Blog-Artikel: Der Menüpunkt "Aktuelles" wandert in den Footer, heißt jetzt "Blog-Archiv"und zeigt nur noch jene Blog-Artikel an, die nicht auf der Startseite angezeigt werden. Im Blog-Archiv-Slider über den Produkten werden nur noch die Blog-Artikel von der Startseite angezeigt. [I#790](https://github.com/foodcoopshop/foodcoopshop/issues/790) / [PR#xxx](https://github.com/foodcoopshop/foodcoopshop/pull/xxx) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+# Unveröffentlichte Version
+
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/Confuset.png" width="20"> [Confuset](https://github.com/Confuset)
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-31 08:51+0100\n"
-"PO-Revision-Date: 2022-01-31 08:52+0100\n"
+"POT-Creation-Date: 2022-02-12 17:14+0100\n"
+"PO-Revision-Date: 2022-02-12 17:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -69,8 +69,11 @@ msgstr "request-new-password"
 msgid "route_activate_new_password"
 msgstr "activate-new-password"
 
-msgid "route_news_list"
+msgid "route_news_list_old"
 msgstr "news"
+
+msgid "route_news_list"
+msgstr "blog-archive"
 
 msgid "route_news_detail"
 msgstr "news"
@@ -111,8 +114,8 @@ msgstr "self-service"
 msgid "You_have_been_signed_out."
 msgstr "You have been signed out."
 
-msgid "News"
-msgstr "News"
+msgid "Blog_archive"
+msgstr "Blog archive"
 
 msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
 msgstr "For placing an order <a href=\"{0}\">please sign in or register</a>."
@@ -1965,6 +1968,9 @@ msgstr "Payments are added by a superadmin by uploading a CSV list"
 msgid "Members"
 msgstr "Members"
 
+msgid "News"
+msgstr "News"
+
 msgid "Activities"
 msgstr "Activities"
 
@@ -2132,9 +2138,6 @@ msgstr "Account of {0}"
 
 msgid "Modified_on"
 msgstr "Modified on"
-
-msgid "by"
-msgstr "by"
 
 msgid "Edit"
 msgstr "Edit"
@@ -2651,6 +2654,24 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "by"
+#~ msgstr "by"
+
+#~ msgid "Archive"
+#~ msgstr "Archive"
+
+#, fuzzy
+#~ msgid "route_blog_list"
+#~ msgstr "archive"
+
+#, fuzzy
+#~ msgid "route_blog_detail"
+#~ msgstr "news"
+
+#, fuzzy
+#~ msgid "route_news_detail_old"
+#~ msgstr "news"
 
 #~ msgid "seconds"
 #~ msgstr "seconds"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-02-03 10:23+0100\n"
-"PO-Revision-Date: 2022-02-03 10:26+0100\n"
+"POT-Creation-Date: 2022-02-12 17:25+0100\n"
+"PO-Revision-Date: 2022-02-12 17:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -849,8 +849,8 @@ msgstr "If the manufacturer is only shown for signed in members, this is also th
 msgid "Show_on_startpage_until"
 msgstr "Show on start page until"
 
-msgid "Leave_empty_to_never_show_blog_post_on_start_page."
-msgstr "Leave empty to never show blog post on start page."
+msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
+msgstr "After that date, the blog post is shown in the <a href=\"/news\">blog archive</a>. Leave empty to never show blog post on start page."
 
 msgid "Only_for_members"
 msgstr "Only for members"
@@ -2369,6 +2369,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Leave_empty_to_never_show_blog_post_on_start_page._After_that_the_blog_post_is_shown_in_the_blog_archive."
+#~ msgstr "Leave empty to never show blog post on start page. After that the blog post is shown in the <a href=\"/news\">blog archive</a>."
 
 #~ msgid "net_per_piece_abbr"
 #~ msgstr "net/piece"
