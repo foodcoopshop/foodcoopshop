@@ -432,13 +432,6 @@ foodcoopshop.Helper = {
             }
         });
 
-        $('#scroll-to-top a').on('click', function () {
-            $('body,html').animate({
-                scrollTop: 0
-            }, 400);
-            return false;
-        });
-
         $('#scroll-to-top a').mouseenter(function () {
             $(this).children('i').removeClass('fas');
             $(this).children('i').addClass('far');
