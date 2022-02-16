@@ -17,7 +17,8 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".ModalText.init('.cart .input.checkbox label a.open-with-modal');".
-    Configure::read('app.jsNamespace').".Cart.initCartFinish();"
+    Configure::read('app.jsNamespace').".Cart.initCartFinish();".
+    Configure::read('app.jsNamespace').".Cart.scrollToCartFinishButton();"
 ]);
 if (!$appAuth->termsOfUseAccepted()) {
     $this->element('addScript', ['script' =>
