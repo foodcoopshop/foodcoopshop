@@ -82,6 +82,14 @@ foodcoopshop.Cart = {
         });
     },
 
+    scrollToCartFinishButton: function() {
+        setTimeout(function() {
+            $('body,html').animate({
+                scrollTop: $('button.btn-order').offset().top - $(window).height() + 50
+            }, 400);
+        }, 500);
+    },
+
     initCartErrors: function (cartErrors) {
         cartErrors = $.parseJSON(cartErrors);
         for (var key in cartErrors) {
