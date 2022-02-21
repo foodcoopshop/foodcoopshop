@@ -319,9 +319,12 @@ class FrontendController extends AppController
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
             $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.orderCustomer'));
         }
-        if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
-            $creditBalance = $this->AppAuth->getCreditBalance();
-            $this->set('creditBalance', $creditBalance);
+        if (!empty($this->AppAuth->user())) {
+
+            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+                $creditBalance = $this->AppAuth->getCreditBalance();
+                $this->set('creditBalance', $creditBalance);
+            }
 
             $this->set('shoppingPrice', $this->AppAuth->user('shopping_price'));
 
