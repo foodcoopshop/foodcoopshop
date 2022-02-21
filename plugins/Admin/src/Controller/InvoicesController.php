@@ -126,22 +126,25 @@ class InvoicesController extends AdminAppController
         }
 
         if ($paidInCash && $invoiceData->sumPriceIncl != 0) {
-            $this->Payment = $this->getTableLocator()->get('Payments');
-            $paymentEntity = $this->Payment->newEntity(
-                [
-                    'status' => APP_ON,
-                    'approval' => APP_ON,
-                    'type' => $invoiceData->sumPriceIncl > 0 ? 'product' : 'payback',
-                    'id_customer' => $customerId,
-                    'id_manufacturer' => 0,
-                    'date_add' => FrozenTime::now(),
-                    'date_changed' => FrozenTime::now(),
-                    'amount' => abs($invoiceData->sumPriceIncl),
-                    'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
-                    'created_by' => $this->AppAuth->getUserId(),
-                ]
-            );
-            $this->Payment->save($paymentEntity);
+
+            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+                $this->Payment = $this->getTableLocator()->get('Payments');
+                $paymentEntity = $this->Payment->newEntity(
+                    [
+                        'status' => APP_ON,
+                        'approval' => APP_ON,
+                        'type' => $invoiceData->sumPriceIncl > 0 ? 'product' : 'payback',
+                        'id_customer' => $customerId,
+                        'id_manufacturer' => 0,
+                        'date_add' => FrozenTime::now(),
+                        'date_changed' => FrozenTime::now(),
+                        'amount' => abs($invoiceData->sumPriceIncl),
+                        'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
+                        'created_by' => $this->AppAuth->getUserId(),
+                    ]
+                );
+                $this->Payment->save($paymentEntity);
+            }
 
             // mark row as picked up
             $this->PickupDay = $this->getTableLocator()->get('PickupDays');
@@ -332,17 +335,20 @@ class InvoicesController extends AdminAppController
 
         // cancel automatically added payment
         if ($invoice->paid_in_cash) {
-            $this->Payment = $this->getTableLocator()->get('Payments');
-            $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
-            $this->Payment->updateAll([
-                'status' => APP_DEL,
-                'date_changed' => FrozenTime::now(),
-                'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
-            ], [
-                'type IN' => ['product', 'payback'],
-                'id_customer' => $invoice->customer->id_customer,
-                'approval_comment' => $approvalString,
-            ]);
+
+            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+                $this->Payment = $this->getTableLocator()->get('Payments');
+                $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
+                $this->Payment->updateAll([
+                    'status' => APP_DEL,
+                    'date_changed' => FrozenTime::now(),
+                    'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
+                ], [
+                    'type IN' => ['product', 'payback'],
+                    'id_customer' => $invoice->customer->id_customer,
+                    'approval_comment' => $approvalString,
+                ]);
+            }
 
             // remove "mark row as picked up"
             $this->PickupDay = $this->getTableLocator()->get('PickupDays');
