@@ -30,7 +30,7 @@ class InvoicesController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'myInvoices':
-                return Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && !$this->AppAuth->isManufacturer();
+                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !$this->AppAuth->isManufacturer();
                 break;
             default:
                 return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
