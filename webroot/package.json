@@ -38,7 +38,7 @@
     "svelte": "^3.46.4",
     "swiper": "8.0.6",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.15.1",
+    "uglify-js": "^3.15.2",
     "webrtc-adapter": "^8.1.1"
   }
 }
