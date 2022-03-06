@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-# Unveröffentlichte Version
+# 3.4.0
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/Confuset.png" width="20"> [Confuset](https://github.com/Confuset)
@@ -51,6 +51,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - CakePHP Update v4.3. [I#728](https://github.com/foodcoopshop/foodcoopshop/issues/728) / [PR#731](https://github.com/foodcoopshop/foodcoopshop/pull/731) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - BackupDatabaseShell now uses defined port. [PR#749](https://github.com/foodcoopshop/foodcoopshop/pull/749) <a href="https://github.com/ocapito"><img src="https://github.com/ocapito.png" width="20"></a>
 
+Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/16) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.3.0...v3.4.0)
 
 # v3.3.0
 
