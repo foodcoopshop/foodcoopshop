@@ -391,12 +391,13 @@ class AppTable extends Table
                 $products[$i]['delivery_break_enabled'] = true;
             }
 
-            if ($product['delivery_rhythm_type'] == 'individual') {
-                // hides products when order_possible_until is reached
-                if ($product['delivery_rhythm_order_possible_until'] < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+            // hides products when order_possible_until is reached (do not apply if product is stock product)
+            if (!($product['is_stock_product'] && $product['stock_management_enabled']) &&
+                $product['delivery_rhythm_type'] == 'individual' &&
+                $product['delivery_rhythm_order_possible_until'] < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                     unset($products[$i]);
-                }
             }
+
         }
 
         $products = $this->reindexArray($products);
