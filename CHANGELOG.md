@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-# 3.4.0
+# v3.4.0
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/Confuset.png" width="20"> [Confuset](https://github.com/Confuset)
