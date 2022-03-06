@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-# Unveröffentlichte Version
+# v3.4.0
 
 - Verbesserte Darstellung der Blog-Artikel: Der Menüpunkt "Aktuelles" wandert in den Footer, heißt jetzt "Blog-Archiv"und zeigt nur noch jene Blog-Artikel an, die nicht auf der Startseite angezeigt werden. Im Blog-Archiv-Slider über den Produkten werden nur noch die Blog-Artikel von der Startseite angezeigt. [I#790](https://github.com/foodcoopshop/foodcoopshop/issues/790) / [PR#795](https://github.com/foodcoopshop/foodcoopshop/pull/795) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Nach Klick auf "Warenkorb anzeigen" wird automatisch zum Button "Zahlungspflichtig bestellen" gescrollt. Dieser kann - vor allem wenn viele Produkte im Warenkorb sind - leicht übersehen werden. [PR#796](https://github.com/foodcoopshop/foodcoopshop/pull/796) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -58,6 +58,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - CakePHP Update v4.3. [I#728](https://github.com/foodcoopshop/foodcoopshop/issues/728) / [PR#731](https://github.com/foodcoopshop/foodcoopshop/pull/731) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - BackupDatabaseShell now uses defined port. [PR#749](https://github.com/foodcoopshop/foodcoopshop/pull/749) <a href="https://github.com/ocapito"><img src="https://github.com/ocapito.png" width="20"></a>
 
+Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/16) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.3.0...v3.4.0)
 
 # v3.3.0
 
