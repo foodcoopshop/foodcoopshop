@@ -18,6 +18,13 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Bugfixes
 - Produkt, das von Lieferrhythmus "Sammelbestellung - mit abgelaufenem Bestellschlusss" auf "Lagerprodukt" umgestellt wurde, war nicht bestellbar. [I#774](https://github.com/foodcoopshop/foodcoopshop/issues/774) / [PR#801](https://github.com/foodcoopshop/foodcoopshop/pull/801) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+# v3.4.1
+
+### Bugfix
+- Fix error on creating build. [PR#802](https://github.com/foodcoopshop/foodcoopshop/pull/802)
+
+Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/16) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.4.0...v3.4.1)
+
 # v3.4.0
 
 ### Herzlichen Dank an alle beteiligten Personen
