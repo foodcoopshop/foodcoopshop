@@ -45,7 +45,7 @@ class AssetsProvider
         // if file does not exist, run `bin/cake SavedLocalizedJsAsStaticFile`
         // and then run `bin/cake asset_compress build`
         if (!Configure::read('debug')) {
-            $result[] = 'cache/localized-javascript-static.js';
+            $result[] = 'localized-javascript-static.js';
         }
 
         $result = array_merge($result, [
