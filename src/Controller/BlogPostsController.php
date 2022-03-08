@@ -85,7 +85,10 @@ class BlogPostsController extends FrontendController
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
 
-        $options = ['modified' => $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))];
+        $options = [
+            'modified' => $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+            'showOnStartPage' => !is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast(),
+        ];
         $neighbors = [
             'prev' => $this->BlogPost->find('neighborPrev', $options)->contain('Manufacturers')->where($conditions)->first(),
             'next' => $this->BlogPost->find('neighborNext', $options)->contain('Manufacturers')->where($conditions)->first(),
@@ -98,12 +101,8 @@ class BlogPostsController extends FrontendController
     public function index()
     {
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null);
-        if ($blogPosts->count() === 0) {
-            throw new RecordNotFoundException('no blog posts available');
-        }
-
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, false);
         $this->set('blogPosts', $blogPosts);
-        $this->set('title_for_layout', __('News'));
+        $this->set('title_for_layout', __('Blog_archive'));
     }
 }

@@ -69,7 +69,8 @@ CREATE TABLE `fcs_barcodes` (
   `product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
   `barcode` varchar(13) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`,`product_attribute_id`)
+  KEY `product_id` (`product_id`,`product_attribute_id`),
+  KEY `barcode` (`barcode`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_blog_posts`;
@@ -143,7 +144,8 @@ CREATE TABLE `fcs_category` (
   KEY `nleftrightactive` (`nleft`,`nright`,`active`),
   KEY `nright` (`nright`),
   KEY `activenleft` (`active`,`nleft`),
-  KEY `activenright` (`active`,`nright`)
+  KEY `activenright` (`active`,`nright`),
+  KEY `active` (`active`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_category_product`;
@@ -153,7 +155,8 @@ CREATE TABLE `fcs_category_product` (
   `id_category` int(10) unsigned NOT NULL DEFAULT '0',
   `id_product` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_category`,`id_product`),
-  KEY `id_product` (`id_product`)
+  KEY `id_product` (`id_product`),
+  KEY `id_category` (`id_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_configuration`;
@@ -324,7 +327,9 @@ CREATE TABLE `fcs_manufacturer` (
   `send_product_sold_out_limit_reached_for_contact_person` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `no_delivery_days` mediumtext,
   `include_stock_products_in_order_lists` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id_manufacturer`)
+  `send_delivery_notes` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_manufacturer`),
+  KEY `stock_management_enabled` (`stock_management_enabled`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_order_detail`;
@@ -483,7 +488,8 @@ CREATE TABLE `fcs_product` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),
   KEY `product_manufacturer` (`id_manufacturer`,`id_product`),
-  KEY `id_manufacturer` (`id_manufacturer`)
+  KEY `id_manufacturer` (`id_manufacturer`),
+  KEY `is_stock_product` (`is_stock_product`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product_attribute`;

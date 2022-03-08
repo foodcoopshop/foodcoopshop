@@ -247,9 +247,14 @@ class OrderDetailsController extends AdminAppController
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
-        $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
-            'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
-        ]);
+
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
+            ]);
+            $odParams['contain'][] = 'PickupDayEntities';
+        }
+
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $odParams['contain'],
@@ -492,6 +497,7 @@ class OrderDetailsController extends AdminAppController
             ],
         ])->toArray();
 
+        $sumAmount = 0;
         $sumSellingPrice = 0;
         $sumPurchasePrice = 0;
         $sumProfit = 0;
@@ -502,11 +508,12 @@ class OrderDetailsController extends AdminAppController
                 $roundedPurchasePrice = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
                 $roundedSellingPrice = round($orderDetail->total_price_tax_excl, 2);
                 $roundedProfit = round($roundedSellingPrice - $roundedPurchasePrice, 2);
-                if ($roundedPurchasePrice > 0) {
+                if ($roundedPurchasePrice >= 0) {
                     $orderDetails[$i]->purchase_price_ok = true;
                     $orderDetails[$i]->order_detail_purchase_price->total_price_tax_excl = $roundedPurchasePrice;
                     $orderDetails[$i]->total_price_tax_excl = $roundedSellingPrice;
                     $orderDetails[$i]->profit = $roundedProfit;
+                    $sumAmount += $orderDetail->product_amount;
                     $sumProfit += $roundedProfit;
                     $sumPurchasePrice += $roundedPurchasePrice;
                     $sumSellingPrice += $roundedSellingPrice;
@@ -518,6 +525,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->PurchasePrice = $this->getTableLocator()->get('PurchasePriceProducts');
         $this->set('sums', [
+            'amount' => $sumAmount,
             'purchasePrice' => $sumPurchasePrice,
             'sellingPrice' => $sumSellingPrice,
             'profit' => $sumProfit,
@@ -1099,7 +1107,7 @@ class OrderDetailsController extends AdminAppController
         $quantityWasChanged = $oldOrderDetail->order_detail_unit->product_quantity_in_units != $productQuantity;
 
         // send email to customer if price was changed
-        if (!$doNotChangePrice && $quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged')) {
+        if (!$doNotChangePrice && $quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityChanged')) {
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
@@ -1349,35 +1357,33 @@ class OrderDetailsController extends AdminAppController
 
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
 
-        if (Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged')) {
-            // send email to customer
-            $email = new AppMailer();
-            $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
-            $email->setTo($oldOrderDetail->customer->email)
-            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
-            ->setViewVars([
-                'oldOrderDetail' => $oldOrderDetail,
-                'newOrderDetail' => $newOrderDetail,
-                'appAuth' => $this->AppAuth,
-                'editPriceReason' => $editPriceReason
+        // send email to customer
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
+        $email->setTo($oldOrderDetail->customer->email)
+        ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+        ->setViewVars([
+            'oldOrderDetail' => $oldOrderDetail,
+            'newOrderDetail' => $newOrderDetail,
+            'appAuth' => $this->AppAuth,
+            'editPriceReason' => $editPriceReason
+        ]);
+
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+        if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
-
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
-
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-            if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-                $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                    '<b>' . $oldOrderDetail->customer->name . '</b>',
-                    '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
-                ]);
-                $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
-            }
-
-            $email->send();
-
-            $message .= $emailMessage;
+            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
         }
+
+        $email->send();
+
+        $message .= $emailMessage;
 
         if ($editPriceReason != '') {
             $message .= ' '.__d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
@@ -1402,6 +1408,7 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $editPickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('editPickupDayReason')), '<strong><b>'));
+        $sendEmail = $this->getRequest()->getData('sendEmail');
 
         try {
             if (empty($orderDetailIds)) {
@@ -1459,25 +1466,34 @@ class OrderDetailsController extends AdminAppController
                     $customers[$orderDetail->id_customer] = [];
                 }
                 $customers[$orderDetail->id_customer][] = $orderDetail;
+
+                if ($sendEmail) {
+                    foreach($customers as $orderDetails) {
+                        $email = new AppMailer();
+                        $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
+                        $email->setTo($orderDetails[0]->customer->email)
+                        ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
+                        ->setViewVars([
+                            'orderDetails' => $orderDetails,
+                            'customer' => $orderDetails[0]->customer,
+                            'appAuth' => $this->AppAuth,
+                            'oldPickupDay' => $oldPickupDay,
+                            'newPickupDay' => $newPickupDay,
+                            'editPickupDayReason' => $editPickupDayReason
+                        ]);
+                        $email->send();
+                    }
+                }
             }
 
-            foreach($customers as $orderDetails) {
-                $email = new AppMailer();
-                $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
-                $email->setTo($orderDetails[0]->customer->email)
-                ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
-                ->setViewVars([
-                    'orderDetails' => $orderDetails,
-                    'customer' => $orderDetails[0]->customer,
-                    'appAuth' => $this->AppAuth,
-                    'oldPickupDay' => $oldPickupDay,
-                    'newPickupDay' => $newPickupDay,
-                    'editPickupDayReason' => $editPickupDayReason
-                ]);
-                $email->send();
-            }
+            $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}.', [
+                count($orderDetailIds),
+                '<b>'.$newPickupDay.'</b>',
+            ]);
 
-            $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($orderDetailIds), '<b>'.$newPickupDay.'</b>', count($customers)]);
+            if ($sendEmail) {
+                $message .= ' ' . __d('admin', '{0,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($customers)]);
+            }
 
             if ($editPickupDayReason != '') {
                 $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $editPickupDayReason . '"</b>';

@@ -20,6 +20,9 @@ $this->element('addScript', ['script' =>
 ?>
 
 <h1><?php echo $title_for_layout; ?>
+
+<?php if (is_array($blogPosts)); //app.isBlogFeatureEnabled false ?>
+
 <?php if (isset($manufacturer->name)) {
     echo ' ' . __('of_{0}', [$manufacturer->name]);
 } ?>

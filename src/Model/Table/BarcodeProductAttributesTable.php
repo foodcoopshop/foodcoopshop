@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use App\Model\Traits\ProductAndAttributeEntityTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,6 +22,7 @@ class BarcodeProductAttributesTable extends AppTable
 {
 
     use ProductAndAttributeEntityTrait;
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {

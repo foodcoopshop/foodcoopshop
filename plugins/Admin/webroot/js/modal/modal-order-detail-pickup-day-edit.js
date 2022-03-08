@@ -61,6 +61,10 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogEditPickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
         html += '<textarea class="ckeditor" name="dialogEditPickupDayReason" id="dialogEditPickupDayReason"></textarea>';
+        html += '<label class="checkbox">';
+        html += '<input type="checkbox" name="dialogEditPickupdaySendEmail" id="dialogEditPickupdaySendEmail" value="" />';
+        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToMember + '</span>';
+        html += '</label>';
         html += '</div>';
         return html;
     },
@@ -76,7 +80,8 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
             {
                 orderDetailIds: orderDetailIds,
                 pickupDay: $('#dialogChangePickupDay').val(),
-                editPickupDayReason: CKEDITOR.instances['dialogEditPickupDayReason'].getData().trim()
+                editPickupDayReason: CKEDITOR.instances['dialogEditPickupDayReason'].getData().trim(),
+                sendEmail: $('#dialogEditPickupdaySendEmail:checked').length > 0 ? 1 : 0,
             },
             {
                 onOk: function (data) {

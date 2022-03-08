@@ -2,6 +2,9 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,9 +21,13 @@ namespace App\Model\Table;
 class ImagesTable extends AppTable
 {
 
+    use ProductCacheClearAfterDeleteTrait;
+    use ProductCacheClearAfterSaveTrait;
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_image');
     }
+
 }

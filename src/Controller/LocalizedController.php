@@ -111,8 +111,6 @@ class LocalizedController extends Controller
                 'home' => __('Home'),
                 'routeManufacturerList' => __('route_manufacturer_list'),
                 'manufacturers' => __('Manufacturers'),
-                'routeNewsList' => __('route_news_list'),
-                'news' => __('News'),
                 'pages' => __('Pages'),
                 'routeAllCategories' => Configure::read('app.slugHelper')->getAllProducts(),
                 'show' => __('Show'),
@@ -250,6 +248,7 @@ class LocalizedController extends Controller
                 'ChangeProductName' => __('Change_product_name'),
                 'GivenAmount' => __('Given_amount'),
                 'back' => __('back'),
+                'SendEmailToMember' => __('Send_email_to_member'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

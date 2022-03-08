@@ -79,7 +79,7 @@ class PagesController extends FrontendController
          */
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findForStartPage($this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));

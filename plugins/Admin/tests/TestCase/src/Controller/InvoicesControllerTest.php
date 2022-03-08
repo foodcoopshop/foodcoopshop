@@ -39,12 +39,14 @@ class InvoicesControllerTest extends AppCakeTestCase
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
 
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
 
         $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoice = $this->Invoice->find('all', [
@@ -168,6 +170,26 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->Customer = $this->getTableLocator()->get('Customers');
         $credit = $this->Customer->getCreditBalance($customerId);
         $this->assertEquals(61.97, $credit);
+
+    }
+
+    public function testCancelInvoiceEmailDisabled()
+    {
+
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
+
+        $this->assertMailCount(1);
 
     }
 

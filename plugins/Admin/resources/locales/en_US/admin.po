@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-20 16:18+0100\n"
-"PO-Revision-Date: 2021-12-20 16:22+0100\n"
+"POT-Creation-Date: 2022-02-12 17:25+0100\n"
+"PO-Revision-Date: 2022-02-12 17:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -258,36 +258,6 @@ msgstr "Manufacturers"
 msgid "Edit_settings"
 msgstr "Edit settings"
 
-msgid "Amount"
-msgstr "Amount"
-
-msgid "Product"
-msgstr "Product"
-
-msgid "Weight"
-msgstr "Weight"
-
-msgid "Unit"
-msgstr ""
-
-msgid "Tax_rate"
-msgstr "Tax rate"
-
-msgid "net"
-msgstr "net"
-
-msgid "VAT"
-msgstr "VAT"
-
-msgid "gross"
-msgstr "gross"
-
-msgid "Tax_rates_overview_table"
-msgstr "Tax overview total"
-
-msgid "Delivery_note"
-msgstr "Delivery note"
-
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr "The settings of manufacturer {0} have been changed."
 
@@ -341,6 +311,9 @@ msgstr "The reason for changing the member is mandatory."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
+
+msgid "Amount"
+msgstr "Amount"
 
 msgid "Reason"
 msgstr "Reason"
@@ -396,8 +369,11 @@ msgstr "Please enter why the pickup day is changed."
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "The pickup day of your order was changed to"
 
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
-msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1} and {2,plural,=1{one member was} other{# members were}} got an email."
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1}."
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "{0,plural,=1{1 member was} other{# members were}} got an email."
 
 msgid "{0}_has_written_a_feedback_to_product_{1}."
 msgstr "{0} has written a feedback to product {1}."
@@ -489,8 +465,8 @@ msgstr "Show order"
 msgid "of_{0}"
 msgstr "of {0}"
 
-msgid "Surcharge_needs_to_be_greater_than_0"
-msgstr ""
+msgid "Surcharge_needs_to_be_greater_than_0."
+msgstr "The surcharge needs to be greater than 0."
 
 msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
 msgstr "The selling price net was set to: {0} of purchase price net"
@@ -813,6 +789,9 @@ msgstr "Check and do not forget to click <b>Save</b> button."
 msgid "ID"
 msgstr "ID"
 
+msgid "Weight"
+msgstr "Weight"
+
 msgid "Associated_to_active_products?"
 msgstr "Associated with active products?"
 
@@ -870,8 +849,8 @@ msgstr "If the manufacturer is only shown for signed in members, this is also th
 msgid "Show_on_startpage_until"
 msgstr "Show on start page until"
 
-msgid "Leave_empty_to_never_show_blog_post_on_start_page."
-msgstr "Leave empty to never show blog post on start page."
+msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
+msgstr "After that date, the blog post is shown in the <a href=\"/news\">blog archive</a>. Leave empty to never show blog post on start page."
 
 msgid "Only_for_members"
 msgstr "Only for members"
@@ -1074,17 +1053,17 @@ msgstr "Invoices by email"
 msgid "Want_to_receive_invoices_per_email?"
 msgstr "Do you want to receive your invoices per e-mail?"
 
-msgid "Credit_upload_reminder"
-msgstr "Credit upload reminder"
-
-msgid "Want_to_receive_credit_upload_reminder?"
-msgstr "Do you want to receive an e-mail when your transaction is uploaded to the credit system?"
-
 msgid "Check_credit_reminder"
 msgstr "Check credit reminder"
 
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
 msgstr "Do you want to receive a weekly reminder e-mail when your credit is lower than {0}?"
+
+msgid "Credit_upload_reminder"
+msgstr "Credit upload reminder"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Do you want to receive an e-mail when your transaction is uploaded to the credit system?"
 
 msgid "Self_service_mode"
 msgstr "Self-service mode"
@@ -1108,7 +1087,7 @@ msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "How do I use the paying-with-time-module?"
 
 msgid "Superadmin_functions"
-msgstr ""
+msgstr "Superadmin functions"
 
 msgid "Prices"
 msgstr "Prices"
@@ -1255,7 +1234,7 @@ msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
 
 msgid "All_amounts_in_{0}."
-msgstr "All amounts in {0}."
+msgstr "All prices in {0}."
 
 msgid "Tax_overview_cash"
 msgstr "Tax overview cash"
@@ -1277,6 +1256,9 @@ msgstr "Invoice date"
 
 msgid "Net"
 msgstr "Net"
+
+msgid "VAT"
+msgstr "VAT"
 
 msgid "Gross"
 msgstr "Gross"
@@ -1473,6 +1455,12 @@ msgstr "Invoices by email"
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr "to receive his invoice every month by email."
 
+msgid "Delivery_notes_by_email"
+msgstr "Delivery notes by email"
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr "to receive his delivery note every month by email."
+
 msgid "Cancellations"
 msgstr "Cancellations"
 
@@ -1480,10 +1468,16 @@ msgid "to_receive_an_email_on_every_cancellation."
 msgstr "to receive an email on every cancellation."
 
 msgid "Adaptions_of_price_and_weight_of_ordered_products"
-msgstr "Adaptiosn of price and weight of ordered products"
+msgstr "Adaptions of price and weight of ordered products"
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
 msgstr "to receive an email on every adaptaion of price or weight"
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr "Adaptions of price of ordered products"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
+msgstr "to receive an email on every adaptaion of price"
 
 msgid "Adaptions_of_the_ordered_amount"
 msgstr "Adaptions of the ordered amount"
@@ -1587,14 +1581,23 @@ msgstr "Edit manufacturer settings"
 msgid "Test_order_list"
 msgstr "Test order list"
 
+msgid "Product"
+msgstr "Product"
+
 msgid "Test_invoice"
 msgstr "Test invoice"
+
+msgid "Delivery_note"
+msgstr "Delivery note"
 
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
 
 msgid "Copy_all_email_addresses"
 msgstr "Copy all e-mail adresses"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
 
 msgid "Purchase_price_tax_excl"
 msgstr "Purchase price tax excl."
@@ -1764,8 +1767,14 @@ msgstr "Product declaration"
 msgid "Stock_product"
 msgstr "Stock product"
 
+msgid "gross"
+msgstr "gross"
+
 msgid "Surcharge"
 msgstr "Surcharge"
+
+msgid "net"
+msgstr "net"
 
 msgid "Selling_price_abbreviation"
 msgstr "SP"
@@ -2265,6 +2274,9 @@ msgstr "PS"
 msgid "Your_current_credit_equals_{0}."
 msgstr "Your current credit equals {0}."
 
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "this delivery note contains all products that have been delivered in {0}."
+
 msgid "Please_find_your_invoice_attached."
 msgstr "Please find your invoice attached."
 
@@ -2357,6 +2369,18 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Leave_empty_to_never_show_blog_post_on_start_page._After_that_the_blog_post_is_shown_in_the_blog_archive."
+#~ msgstr "Leave empty to never show blog post on start page. After that the blog post is shown in the <a href=\"/news\">blog archive</a>."
+
+#~ msgid "net_per_piece_abbr"
+#~ msgstr "net/piece"
+
+#~ msgid "Unit"
+#~ msgstr "Unit"
+
+#~ msgid "Tax_rates_overview_table"
+#~ msgstr "Tax overview total"
 
 #, fuzzy
 #~ msgid "to_include_stock_products_in_order_lists."

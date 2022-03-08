@@ -55,11 +55,13 @@ class HelloCashTest extends AppCakeTestCase
 
     public function testGenerateReceipt()
     {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $invoice = $this->Invoice->find('all', [])->first();
 
@@ -71,7 +73,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
         $this->runAndAssertQueue();
-        $this->assertMailCount(2);
+        $this->assertMailCount(1);
     }
 
     public function testGenerateInvoiceSendPerEmailActivated()
@@ -237,6 +239,7 @@ class HelloCashTest extends AppCakeTestCase
 
     public function testCreatingUserThatDoesNotExistOnGeneratingReceipt()
     {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
@@ -244,10 +247,11 @@ class HelloCashTest extends AppCakeTestCase
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->get($customerId);
-        $customer->user_id_registrierkasse = 1;
+        $customer->user_id_registrierkasse = 1234567890;
         $this->Customer->save($customer);
 
         $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $invoiceA = $this->Invoice->find('all', [
             'contain' => [

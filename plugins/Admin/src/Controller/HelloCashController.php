@@ -33,8 +33,7 @@ class HelloCashController extends AdminAppController
     {
             $isAllowed = Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') &&
                 Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED') &&
-                ($this->AppAuth->isSuperadmin() || $this->AppAuth->isCustomer());
-
+                ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer());
 
             if ($this->AppAuth->isCustomer()) {
                 $invoiceId = $this->request->getParam('pass')[0];

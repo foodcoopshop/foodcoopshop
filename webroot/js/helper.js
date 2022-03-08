@@ -33,6 +33,15 @@ foodcoopshop.Helper = {
         }
     },
 
+    openPrintDialogForFile : function(file) {
+        var iframe = document.createElement('iframe');
+        iframe.style.visibility = 'hidden';
+        iframe.src = file;
+        document.body.appendChild(iframe);
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+    },
+
     initCookieBanner: function() {
         // IE breaks with GdprCookieConsentBanner
         if (window.document.documentMode) {
@@ -130,7 +139,7 @@ foodcoopshop.Helper = {
             }
             i++;
         });
-        var productsAvailable = $('#inner-content .product-wrapper').length > 0;
+        var productsAvailable = $('#inner-content .pw').length > 0;
         if (prevElement) {
             prevElement.attr('class', 'prev-next-button prev-button btn btn-outline-light');
             prevElement.html('<i class="fas fa-arrow-circle-left fa"></i> ' + prevElement.text());
@@ -172,14 +181,14 @@ foodcoopshop.Helper = {
     },
 
     initAmountSwitcher : function() {
-        $('.entity-wrapper a.amount-switcher').on('click', function() {
+        $('.ew a.as').on('click', function() {
             var inputField = $(this).closest('.amount-wrapper').find('input[name="amount"]');
             var currentValue = parseInt(inputField.val());
             if (isNaN(currentValue)) {
                 currentValue = 0;
             }
             var result = 0;
-            if ($(this).hasClass('amount-switcher-plus')) {
+            if ($(this).hasClass('as-plus')) {
                 result = currentValue + 1;
             } else {
                 result = currentValue - 1;
@@ -194,7 +203,7 @@ foodcoopshop.Helper = {
                     result = max;
                 }
             }
-            var amountSwitcherMinus = $(this).closest('.amount-wrapper').find('.amount-switcher-minus .fas');
+            var amountSwitcherMinus = $(this).closest('.amount-wrapper').find('.as-minus .fas');
             if (result > 1) {
                 amountSwitcherMinus.show();
             } else {
@@ -249,7 +258,7 @@ foodcoopshop.Helper = {
         $(selector).addClass('swiper');
 
         var slides = $(selector).find('.blog-post-wrapper');
-        if (slides.length > 4) {
+        if (slides.length > 3) {
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
             $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
         }
@@ -423,13 +432,6 @@ foodcoopshop.Helper = {
             }
         });
 
-        $('#scroll-to-top a').on('click', function () {
-            $('body,html').animate({
-                scrollTop: 0
-            }, 400);
-            return false;
-        });
-
         $('#scroll-to-top a').mouseenter(function () {
             $(this).children('i').removeClass('fas');
             $(this).children('i').addClass('far');
@@ -466,17 +468,21 @@ foodcoopshop.Helper = {
         }
 
         var difference = 0;
+        var shoppingPriceElement;
 
         // whole page is called in iframe in order-for-different-customer-mode
         var orderForDifferentCustomerIframe = window.parent.$('#order-for-different-customer-add .modal-body iframe');
 
         if (orderForDifferentCustomerIframe.length > 0) {
-            difference = 149;
+            difference = 130;
             difference += $('.order-for-different-customer-info').height();
-            difference += $('.shopping-price-info').height() + 1;
+            shoppingPriceElement = $('.shopping-price-info');
+            if (shoppingPriceElement.length > 0) {
+                difference += shoppingPriceElement.height() + 8;
+            }
             newCartHeight = orderForDifferentCustomerIframe.height();
         } else {
-            difference = 146;
+            difference = 120;
             var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
             if (loadLastOrderDetailsDropdown.length > 0) {
                 difference += loadLastOrderDetailsDropdown.closest('.input').height();
@@ -485,11 +491,16 @@ foodcoopshop.Helper = {
             if (globalNoDeliveryDayBox.length > 0) {
                 difference += globalNoDeliveryDayBox.height();
             }
+            shoppingPriceElement = $('.shopping-price-info');
+            if (shoppingPriceElement.length > 0) {
+                difference += shoppingPriceElement.height() + 8;
+            }
             var newCartHeight = $(window).height();
         }
 
-        var sumsWrapperHeight = $('#cart .sums-wrapper').height() - 30;
-        $('#cart .products').css('max-height', parseInt(newCartHeight) - difference - sumsWrapperHeight);
+        var sumsWrapperHeight = $('#cart .sums-wrapper').height();
+        var newMaxHeight = parseInt(newCartHeight) - difference - sumsWrapperHeight;
+        $('#cart .products').css('max-height', newMaxHeight);
 
     },
 
@@ -523,11 +534,11 @@ foodcoopshop.Helper = {
 
     initProductAttributesButtons: function () {
         $('.attribute-button').on('click', function () {
-            var entityWrappers = $(this).closest('.product-wrapper').find('.entity-wrapper');
+            var entityWrappers = $(this).closest('.pw').find('.ew');
             entityWrappers.hide();
             entityWrappers.removeClass('active');
             var id = $(this).attr('id').replace(/attribute-button-/, '');
-            var activeEntityWrapper = $('#entity-wrapper-' + id);
+            var activeEntityWrapper = $('#ew-' + id);
             activeEntityWrapper.addClass('active');
             activeEntityWrapper.show();
         });
@@ -651,7 +662,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-v3.3.jpg',
+            '/img/bg-v3.4.jpg',
             {
                 positionY: 'top',
                 transitionDuration: 400
@@ -708,7 +719,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.17.1';
+        CKEDITOR.timestamp = 'v4.17.2';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js',
             startupFocus : startupFocus
@@ -737,7 +748,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.17.1';
+        CKEDITOR.timestamp = 'v4.17.2';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
         });
@@ -752,7 +763,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.17.1';
+        CKEDITOR.timestamp = 'v4.17.2';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-small-with-upload.js'
         });
@@ -878,7 +889,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-        );
+            );
         $('#flashMessage.success .progress-bar.bg-white')
             .animate({
                 'width': '0%',
@@ -887,7 +898,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-        );
+            );
 
         setTimeout(function() {
             $('#flashMessage.success a.closer').trigger('click');

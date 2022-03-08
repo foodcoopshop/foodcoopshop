@@ -58,7 +58,7 @@ class InvoicesTable extends AppTable
                 'Invoices.id_customer' => $customerId,
             ],
             'order' => [
-                'Invoices.invoice_number' => 'DESC'
+                'Invoices.created' => 'DESC'
             ],
             'contain' => [
                 'InvoiceTaxes',

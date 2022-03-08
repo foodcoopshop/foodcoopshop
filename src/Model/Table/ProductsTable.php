@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\RemoteFile\RemoteFile;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
@@ -26,6 +27,8 @@ use Cake\Validation\Validator;
  */
 class ProductsTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
@@ -220,6 +223,15 @@ class ProductsTable extends AppTable
             return $pickupDay;
         }
 
+        if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
+            if ($product->delivery_rhythm_type == 'week' && $product->delivery_rhythm_count == 1) {
+                $regularPickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
+                if ($pickupDay != $regularPickupDay) {
+                    return 'delivery-rhythm-triggered-delivery-break';
+                }
+            }
+        }
+
         if ($product->delivery_rhythm_type == 'week') {
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
@@ -228,8 +240,10 @@ class ProductsTable extends AppTable
                     $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
                 }
 
-                if ($product->delivery_rhythm_count == 2 && $pickupDay != $calculatedPickupDay) {
-                    return 'delivery-rhythm-triggered-delivery-break';
+                if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
+                    if (in_array($product->delivery_rhythm_count, [1, 2]) && $pickupDay != $calculatedPickupDay) {
+                        return 'delivery-rhythm-triggered-delivery-break';
+                    }
                 }
 
                 $pickupDay = $calculatedPickupDay;
@@ -570,11 +584,18 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->StockAvailables->updateAll($product[$productId], [
-                    'id_product_attribute' => $ids['attributeId'],
-                    'id_product' => $ids['productId']
-                ]);
+                $entity = $this->StockAvailables->find('all', [
+                    'conditions' => [
+                        'id_product_attribute' => $ids['attributeId'],
+                        'id_product' => $ids['productId']
+                    ],
+                ])->first();
+                $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
+                $this->StockAvailables->setPrimaryKey('id_product_attribute');
+                $this->StockAvailables->save(
+                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                );
+                $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $entity = $this->StockAvailables->get($ids['productId']);
@@ -1341,7 +1362,7 @@ class ProductsTable extends AppTable
             'conditions' => [
                 'ProductAttributes.id_product' => $productId,
             ]
-        ])->toArray();
+        ]);
 
         $productAttributeIds = [];
         foreach ($productAttributes as $attribute) {
@@ -1356,11 +1377,11 @@ class ProductsTable extends AppTable
         ]);
 
         // then set the new one
-        $this->ProductAttributes->updateAll([
-            'default_on' => 1
-        ], [
-            'id_product_attribute' => $productAttributeId,
-        ]);
+        $productAttributeEntity = $productAttributes->where([
+            'ProductAttributes.id_product_attribute' => $productAttributeId,
+        ])->first();
+        $productAttributeEntity->default_on = APP_ON;
+        $this->ProductAttributes->save($productAttributeEntity);
     }
 
     public function changeImage($products)

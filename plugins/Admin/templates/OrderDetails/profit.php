@@ -95,7 +95,10 @@ echo '<table class="list profit-table">';
                     ]
                 );
                 echo '<span class="product-name">';
-                    echo $orderDetail->product_name;
+                    echo $this->Html->link(
+                        $orderDetail->product_name,
+                        $this->Slug->getProfit($dateFrom, $dateTo, $customerId, $manufacturerId, $orderDetail->product_id),
+                    );
                 echo '</span>';
             echo '</td>';
 
@@ -106,11 +109,21 @@ echo '<table class="list profit-table">';
             echo '</td>';
 
             echo '<td>';
-                echo $orderDetail->product->manufacturer->name;
+                echo $this->Html->link(
+                    $orderDetail->product->manufacturer->name,
+                    $this->Slug->getProfit($dateFrom, $dateTo, $customerId, $orderDetail->product->id_manufacturer, $productId),
+                    [
+                        'escape' => false
+                    ]);
             echo '</td>';
 
             echo '<td>';
-                echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
+                echo $this->Html->link(
+                    $this->Html->getNameRespectingIsDeleted($orderDetail->customer),
+                    $this->Slug->getProfit($dateFrom, $dateTo, $orderDetail->id_customer, $manufacturerId, $productId),
+                    [
+                        'escape' => false
+                    ]);
             echo '</td>';
 
             echo '<td style="text-align:right;">';
@@ -149,7 +162,14 @@ echo '<table class="list profit-table">';
 
     echo '<tr style="font-weight:bold;">';
 
-        echo '<td colspan="6" style="text-align:right;">';
+        echo '<td>';
+        echo '</td>';
+
+        echo '<td style="text-align:right;">';
+            echo $this->Number->formatAsDecimal($sums['amount'], 0);
+        echo '</td>';
+
+        echo '<td colspan="4" style="text-align:right;">';
             echo __d('admin', 'Total_sum');
         echo '</td>';
 

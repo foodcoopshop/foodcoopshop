@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-01-01 22:58+0100\n"
+"POT-Creation-Date: 2022-02-12 17:14+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -68,6 +68,9 @@ msgstr ""
 msgid "route_activate_new_password"
 msgstr ""
 
+msgid "route_news_list_old"
+msgstr ""
+
 msgid "route_news_list"
 msgstr ""
 
@@ -110,7 +113,7 @@ msgstr ""
 msgid "You_have_been_signed_out."
 msgstr ""
 
-msgid "News"
+msgid "Blog_archive"
 msgstr ""
 
 msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
@@ -920,6 +923,9 @@ msgstr ""
 msgid "back"
 msgstr ""
 
+msgid "Send_email_to_member"
+msgstr ""
+
 msgid "Were_the_products_picked_up?"
 msgstr ""
 
@@ -1190,6 +1196,27 @@ msgstr ""
 msgid "Your_shopping_bag_was_empty."
 msgstr ""
 
+msgid "net_per_piece_abbr"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "net"
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Tax_rates_overview_table"
+msgstr ""
+
+msgid "All_amounts_in_{0}."
+msgstr ""
+
+msgid "Delivery_note"
+msgstr ""
+
 msgid "Delivered_deposit"
 msgstr ""
 
@@ -1203,9 +1230,6 @@ msgid "ID"
 msgstr ""
 
 msgid "Price_excl."
-msgstr ""
-
-msgid "VAT"
 msgstr ""
 
 msgid "Price_incl."
@@ -1230,12 +1254,6 @@ msgid "Deleted_Member"
 msgstr ""
 
 msgid "Price_per_weight"
-msgstr ""
-
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "Tax_rate"
 msgstr ""
 
 msgid "Sum_price_excl."
@@ -1512,6 +1530,9 @@ msgid "Action_Log_Cronjob_order_lists_sent"
 msgstr ""
 
 msgid "Action_Log_Cronjob_invoices_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_delivery_notes_sent"
 msgstr ""
 
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
@@ -1865,6 +1886,9 @@ msgstr ""
 msgid "member"
 msgstr ""
 
+msgid "Delivery_note_for_{0}"
+msgstr ""
+
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr ""
 
@@ -1881,9 +1905,6 @@ msgid "Order_lists_for_the_day"
 msgstr ""
 
 msgid "Runtime"
-msgstr ""
-
-msgid "seconds"
 msgstr ""
 
 msgid "Database_backup_successful"
@@ -1908,6 +1929,9 @@ msgid "tomorrow"
 msgstr ""
 
 msgid "Pickup_reminder_for"
+msgstr ""
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
 msgstr ""
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
@@ -1941,6 +1965,9 @@ msgid "Payment_is_added_by_uploading_a_list"
 msgstr ""
 
 msgid "Members"
+msgstr ""
+
+msgid "News"
 msgstr ""
 
 msgid "Activities"
@@ -2078,6 +2105,12 @@ msgstr ""
 msgid "active_state_all"
 msgstr ""
 
+msgid "{0,plural,=1{1_minute} other{#_minutes}}"
+msgstr ""
+
+msgid "{0,plural,=1{1_second} other{#_seconds}}"
+msgstr ""
+
 msgid "midnight"
 msgstr ""
 
@@ -2103,9 +2136,6 @@ msgid "Paying_with_time_account_name_{0}"
 msgstr ""
 
 msgid "Modified_on"
-msgstr ""
-
-msgid "by"
 msgstr ""
 
 msgid "Edit"

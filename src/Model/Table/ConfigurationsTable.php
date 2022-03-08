@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use App\Lib\Error\Exception\ConfigFileMissingException;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Filesystem\File;
 use Cake\Validation\Validator;
 
@@ -22,6 +23,8 @@ use Cake\Validation\Validator;
  */
 class ConfigurationsTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
     public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
@@ -156,6 +159,11 @@ class ConfigurationsTable extends AppTable
     }
 
     public function validationFcsOrderCommentEnabled(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+
+    public function validationFcsAllowOrdersForDeliveryRhythmOneOrTwoWeeksOnlyInWeekBeforeDelivery(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }

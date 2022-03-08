@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-12-20 16:18+0100\n"
+"POT-Creation-Date: 2022-02-12 17:25+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -257,36 +257,6 @@ msgstr ""
 msgid "Edit_settings"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
-msgid "Product"
-msgstr ""
-
-msgid "Weight"
-msgstr ""
-
-msgid "Unit"
-msgstr ""
-
-msgid "Tax_rate"
-msgstr ""
-
-msgid "net"
-msgstr ""
-
-msgid "VAT"
-msgstr ""
-
-msgid "gross"
-msgstr ""
-
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "Delivery_note"
-msgstr ""
-
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr ""
 
@@ -339,6 +309,9 @@ msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr ""
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr ""
+
+msgid "Amount"
 msgstr ""
 
 msgid "Reason"
@@ -395,7 +368,10 @@ msgstr ""
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr ""
 
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr ""
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
 msgstr ""
 
 msgid "{0}_has_written_a_feedback_to_product_{1}."
@@ -488,7 +464,7 @@ msgstr ""
 msgid "of_{0}"
 msgstr ""
 
-msgid "Surcharge_needs_to_be_greater_than_0"
+msgid "Surcharge_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
@@ -812,6 +788,9 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
+msgid "Weight"
+msgstr ""
+
 msgid "Associated_to_active_products?"
 msgstr ""
 
@@ -869,7 +848,7 @@ msgstr ""
 msgid "Show_on_startpage_until"
 msgstr ""
 
-msgid "Leave_empty_to_never_show_blog_post_on_start_page."
+msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
 msgstr ""
 
 msgid "Only_for_members"
@@ -1073,16 +1052,16 @@ msgstr ""
 msgid "Want_to_receive_invoices_per_email?"
 msgstr ""
 
-msgid "Credit_upload_reminder"
-msgstr ""
-
-msgid "Want_to_receive_credit_upload_reminder?"
-msgstr ""
-
 msgid "Check_credit_reminder"
 msgstr ""
 
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
+msgstr ""
+
+msgid "Credit_upload_reminder"
+msgstr ""
+
+msgid "Want_to_receive_credit_upload_reminder?"
 msgstr ""
 
 msgid "Self_service_mode"
@@ -1275,6 +1254,9 @@ msgid "Invoice_date"
 msgstr ""
 
 msgid "Net"
+msgstr ""
+
+msgid "VAT"
 msgstr ""
 
 msgid "Gross"
@@ -1472,6 +1454,12 @@ msgstr ""
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr ""
 
+msgid "Delivery_notes_by_email"
+msgstr ""
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr ""
+
 msgid "Cancellations"
 msgstr ""
 
@@ -1482,6 +1470,12 @@ msgid "Adaptions_of_price_and_weight_of_ordered_products"
 msgstr ""
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
+msgstr ""
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr ""
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
 msgstr ""
 
 msgid "Adaptions_of_the_ordered_amount"
@@ -1586,13 +1580,22 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
+msgid "Product"
+msgstr ""
+
 msgid "Test_invoice"
+msgstr ""
+
+msgid "Delivery_note"
 msgstr ""
 
 msgid "Manufacturer_profile"
 msgstr ""
 
 msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "Tax_rate"
 msgstr ""
 
 msgid "Purchase_price_tax_excl"
@@ -1763,7 +1766,13 @@ msgstr ""
 msgid "Stock_product"
 msgstr ""
 
+msgid "gross"
+msgstr ""
+
 msgid "Surcharge"
+msgstr ""
+
+msgid "net"
 msgstr ""
 
 msgid "Selling_price_abbreviation"
@@ -2262,6 +2271,9 @@ msgid "Post_scriptum_abbreviation"
 msgstr ""
 
 msgid "Your_current_credit_equals_{0}."
+msgstr ""
+
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr ""
 
 msgid "Please_find_your_invoice_attached."

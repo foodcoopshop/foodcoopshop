@@ -132,7 +132,7 @@ INSERT INTO `fcs_configuration` VALUES
 (584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','0','boolean',3000,'de_DE','2019-04-17 20:01:59','2019-04-17 20:01:59'),
 (585,1,'FCS_APP_ADDITIONAL_DATA','Zusätzliche Infos zur Foodcoop<br /><div class=\"small\">Z.B. ZVR-Zahl</div>','','textarea',80,'de_DE','2019-08-03 20:07:04','2019-08-03 20:07:04'),
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','0','boolean',3100,'de_DE','2019-12-09 13:46:27','2019-12-09 13:46:27'),
-(587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',1450,'de_DE','2020-02-11 10:12:57','2020-02-11 10:12:57'),
+(587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','list-upload','dropdown',1450,'de_DE','2020-02-11 10:12:57','2020-02-11 10:12:57'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',3200,'de_DE','2020-06-19 09:02:46','2020-06-19 09:02:46'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',590,'de_DE','2020-07-06 10:34:35','2020-07-06 10:34:35'),
 (591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/dorfladen-online\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:34','2020-10-29 10:06:34'),
@@ -142,8 +142,9 @@ INSERT INTO `fcs_configuration` VALUES
 (595,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','50','number',1450,'de_DE','2021-01-19 11:23:34','2021-01-19 11:23:34'),
 (596,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',584,'de_DE','2021-05-10 11:27:38','2021-05-10 11:27:38'),
 (597,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:03','2021-07-07 10:55:03'),
-(598,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','0','boolean',3210,'de_DE','2021-08-02 11:28:29','2021-08-02 11:28:29'),
-(599,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:08','2021-09-10 21:23:08');
+(598,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','1','boolean',3210,'de_DE','2021-08-02 11:28:29','2021-08-02 11:28:29'),
+(599,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:08','2021-09-10 21:23:08'),
+(600,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich.','0','boolean',3210,'de_DE','2022-02-01 17:48:35','2022-02-01 17:48:35');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -157,7 +158,8 @@ INSERT INTO `fcs_cronjobs` VALUES
 (4,'PickupReminder','week',NULL,'Monday','09:00:00',1),
 (5,'SendInvoicesToManufacturers','month',11,NULL,'10:30:00',1),
 (6,'SendOrderLists','day',NULL,NULL,'04:30:00',1),
-(7,'SendInvoicesToCustomers','week',NULL,'Saturday','10:00:00',0);
+(7,'SendInvoicesToCustomers','week',NULL,'Saturday','10:00:00',0),
+(8,'SendDeliveryNotes','month',1,NULL,'18:00:00',0);
 /*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
@@ -282,7 +284,10 @@ INSERT INTO `phinxlog` VALUES
 (20211123095227,'DeactivateCheckCreditReminder','2021-11-23 10:00:54','2021-11-23 10:00:54',0),
 (20211213081433,'ImproveCustomerNotifications','2021-12-13 09:24:34','2021-12-13 09:24:34',0),
 (20211213081434,'ImproveCustomerNotifications','2021-12-13 10:44:45','2021-12-13 10:44:45',0),
-(20211215184633,'ManufacturerSettingIncludeStockProductsOnOrderList','2021-12-15 18:50:50','2021-12-15 18:50:50',0);
+(20211215184633,'ManufacturerSettingIncludeStockProductsOnOrderList','2021-12-15 18:50:50','2021-12-15 18:50:50',0),
+(20211229194617,'AddIndizesForBetterPerformance','2021-12-29 19:55:28','2021-12-29 19:55:28',0),
+(20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:31:51','2022-01-29 08:31:51',0),
+(20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:35','2022-02-01 16:48:35',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

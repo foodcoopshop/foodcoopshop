@@ -97,6 +97,7 @@ return [
     'Cache' => [
         'default' => [
             'className' => FileEngine::class,
+            'duration' => '+24 hours',
             'path' => CACHE,
             'url' => env('CACHE_DEFAULT_URL', null),
         ],

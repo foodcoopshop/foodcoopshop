@@ -13,6 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo $this->Html->script(['/js/localized-javascript.js']);
+use Cake\Core\Configure;
 
+if (Configure::read('debug')) {
+    echo $this->Html->script(['/js/localized-javascript.js']);
+}
 ?>

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-20 16:18+0100\n"
-"PO-Revision-Date: 2021-12-20 16:20+0100\n"
+"POT-Creation-Date: 2022-02-12 17:25+0100\n"
+"PO-Revision-Date: 2022-02-14 20:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -258,36 +258,6 @@ msgstr "Hersteller"
 msgid "Edit_settings"
 msgstr "Einstellungen bearbeiten"
 
-msgid "Amount"
-msgstr "Anzahl"
-
-msgid "Product"
-msgstr "Produkt"
-
-msgid "Weight"
-msgstr "Gewicht"
-
-msgid "Unit"
-msgstr ""
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
-
-msgid "net"
-msgstr "netto"
-
-msgid "VAT"
-msgstr "USt."
-
-msgid "gross"
-msgstr "brutto"
-
-msgid "Tax_rates_overview_table"
-msgstr "Steuerübersicht Gesamt"
-
-msgid "Delivery_note"
-msgstr "Lieferschein"
-
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
 
@@ -341,6 +311,9 @@ msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
+
+msgid "Amount"
+msgstr "Anzahl"
 
 msgid "Reason"
 msgstr "Grund"
@@ -396,8 +369,11 @@ msgstr "Bitte gib an, warum der Abholtag geändert wird."
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
 
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
-msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert und {2,plural,=1{ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert."
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "{0,plural,=1{Ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
 
 msgid "{0}_has_written_a_feedback_to_product_{1}."
 msgstr "{0} hat ein Feedback zum Produkt {1} verfasst."
@@ -489,8 +465,8 @@ msgstr "Bestellung anzeigen"
 msgid "of_{0}"
 msgstr "von {0}"
 
-msgid "Surcharge_needs_to_be_greater_than_0"
-msgstr ""
+msgid "Surcharge_needs_to_be_greater_than_0."
+msgstr "Der Aufschlag muss größer als 0 sein."
 
 msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
 msgstr "Der Netto-Verkaufspreis wurde erfolgreich berechnet: {0} vom Netto-Einkaufspreis"
@@ -813,6 +789,9 @@ msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
 msgid "ID"
 msgstr "ID"
 
+msgid "Weight"
+msgstr "Gewicht"
+
 msgid "Associated_to_active_products?"
 msgstr "Aktivierten Produkten zugewiesen?"
 
@@ -870,8 +849,8 @@ msgstr "Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch f
 msgid "Show_on_startpage_until"
 msgstr "Auf Startseite anzeigen bis"
 
-msgid "Leave_empty_to_never_show_blog_post_on_start_page."
-msgstr "Leeres Feld bedeutet: der Blog-Artikel wird nicht auf der Startseite angezeigt."
+msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
+msgstr "Nach dem Datum rutscht der Blog-Artikel automatisch ins <a href=\"/blog-archiv\">Blog-Archiv</a>. Leeres Feld: Blog-Artikel nicht auf der Startseite anzeigen."
 
 msgid "Only_for_members"
 msgstr "Nur für Mitglieder"
@@ -1074,17 +1053,17 @@ msgstr "Rechnungen per E-Mail"
 msgid "Want_to_receive_invoices_per_email?"
 msgstr "Ich möchte meine Rechnungen per E-Mail erhalten. Du findest deine Rechnungen immer unter <a href=\"/admin/invoices/myInvoices\">Meine Rechnungen</a>."
 
-msgid "Credit_upload_reminder"
-msgstr "Überweisung ins Guthaben-System übernommen"
-
-msgid "Want_to_receive_credit_upload_reminder?"
-msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
-
 msgid "Check_credit_reminder"
 msgstr "Guthaben-Aufladung-Erinnerung"
 
 msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
 msgstr "Ich möchte 1x wöchentlich per E-Mail benachrichtigt werden, wenn mein Guthaben weniger als {0} beträgt."
+
+msgid "Credit_upload_reminder"
+msgstr "Überweisung ins Guthaben-System übernommen"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
 
 msgid "Self_service_mode"
 msgstr "Selbstbedienungs-Modus"
@@ -1108,7 +1087,7 @@ msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
 
 msgid "Superadmin_functions"
-msgstr ""
+msgstr "Superadmin-Funktionen"
 
 msgid "Prices"
 msgstr "Preise"
@@ -1277,6 +1256,9 @@ msgstr "Rechnungsdatum"
 
 msgid "Net"
 msgstr "Netto"
+
+msgid "VAT"
+msgstr "USt."
 
 msgid "Gross"
 msgstr "Brutto"
@@ -1473,6 +1455,12 @@ msgstr "Rechnungen per E-Mail"
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr "monatlich per E-Mail die Rechnungen erhalten."
 
+msgid "Delivery_notes_by_email"
+msgstr "Lieferscheine per E-Mail"
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr "monatlich per E-Mail die Lieferscheine erhalten."
+
 msgid "Cancellations"
 msgstr "Stornierungen"
 
@@ -1484,6 +1472,12 @@ msgstr "Preis- und Gewichtsanpassungen von bestellten Produkten"
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
 msgstr "bei jeder Preis- und Gewichtsanpassung eines bereits bestellten Produktes eine Info-Mail erhalten."
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr "Preisanpassungen von bestellten Produkten"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
+msgstr "bei jeder Preisanpassung eines bereits bestellten Produktes eine Info-Mail erhalten."
 
 msgid "Adaptions_of_the_ordered_amount"
 msgstr "Änderungen der bestellten Anzahl"
@@ -1587,14 +1581,23 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
+msgid "Product"
+msgstr "Produkt"
+
 msgid "Test_invoice"
 msgstr "Rechnung prüfen"
+
+msgid "Delivery_note"
+msgstr "Lieferschein"
 
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
 
 msgid "Purchase_price_tax_excl"
 msgstr "Einkaufspreis netto"
@@ -1764,8 +1767,14 @@ msgstr "Produktdeklaration"
 msgid "Stock_product"
 msgstr "Lagerprodukt"
 
+msgid "gross"
+msgstr "brutto"
+
 msgid "Surcharge"
 msgstr "Aufschlag"
+
+msgid "net"
+msgstr "netto"
 
 msgid "Selling_price_abbreviation"
 msgstr "VP"
@@ -2265,6 +2274,9 @@ msgstr "PS"
 msgid "Your_current_credit_equals_{0}."
 msgstr "Dein aktuelles Guthaben beträgt {0}."
 
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "in diesem Lieferschein sind alle Produkte enthalten, die im {0} geliefert wurden."
+
 msgid "Please_find_your_invoice_attached."
 msgstr "Deine Rechnung befindet sich im Anhang."
 
@@ -2357,6 +2369,18 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Leave_empty_to_never_show_blog_post_on_start_page._After_that_the_blog_post_is_shown_in_the_blog_archive."
+#~ msgstr "Leeres Feld bedeutet: der Blog-Artikel wird nicht auf der Startseite angezeigt. Danach rutscht der Blog-Artikel ins <a href=\"/blog-archiv\">Blog-Archiv</a>."
+
+#~ msgid "net_per_piece_abbr"
+#~ msgstr "netto/St."
+
+#~ msgid "Unit"
+#~ msgstr "Einheit"
+
+#~ msgid "Tax_rates_overview_table"
+#~ msgstr "Steuerübersicht Gesamt"
 
 #~ msgid "to_include_stock_products_in_order_lists."
 #~ msgstr "in den Bestelllisten auch Lagerprodukte anzeigen."

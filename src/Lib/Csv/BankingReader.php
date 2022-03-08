@@ -23,12 +23,6 @@ use League\Csv\Reader;
 
 abstract class BankingReader extends Reader implements BankingReaderInterface {
 
-    public function __construct($document)
-    {
-        parent::__construct($document);
-        $this->configureType();
-    }
-
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = FactoryLocator::get('Table')->get('Customers');
@@ -56,6 +50,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
 
     public function getPreparedRecords(): array
     {
+        $this->configureType();
         if (!$this->checkStructure()) {
             throw new \Exception('structure of csv is not valid');
         }
@@ -93,6 +88,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
 
     public function checkStructure(): bool
     {
+        $this->configureType();
         $records = $this->getRecords();
         $records = iterator_to_array($records);
 

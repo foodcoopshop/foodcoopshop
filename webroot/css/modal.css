@@ -262,7 +262,8 @@ body.iframe_self_service_order {
     float: right;
 }
 #product-categories-edit-form input[type="checkbox"],
-#order-detail-product-quantity-edit-form input[type="checkbox"] {
+#order-detail-product-quantity-edit-form input[type="checkbox"],
+#order-detail-pickup-day-edit input[type="checkbox"] {
     float: left;
 }
 #modal-product-quantity-edit input[type="number"],

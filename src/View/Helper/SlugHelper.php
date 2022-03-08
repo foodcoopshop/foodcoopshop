@@ -331,9 +331,28 @@ class SlugHelper extends Helper
         return '/'.__('route_request_new_password');
     }
 
-    public function getProfit()
+    public function getProfit($dateFrom=null, $dateTo=null, $customerId=null, $manufacturerId=null, $productId=null)
     {
-        return '/admin/order-details/profit';
+        $url = '/admin/order-details/profit';
+        if ($dateFrom !== null) {
+            $urlParams['dateFrom'] = $dateFrom;
+        }
+        if ($dateTo !== null) {
+            $urlParams['dateTo'] = $dateTo;
+        }
+        if ($customerId !== null) {
+            $urlParams['customerId'] = $customerId;
+        }
+        if ($manufacturerId !== null) {
+            $urlParams['manufacturerId'] = $manufacturerId;
+        }
+        if ($productId !== null) {
+            $urlParams['productId'] = $productId;
+        }
+        if (!empty($urlParams)) {
+            $url .= '?' . http_build_query($urlParams);
+        }
+        return $url;
     }
 
     public function getInvoices()

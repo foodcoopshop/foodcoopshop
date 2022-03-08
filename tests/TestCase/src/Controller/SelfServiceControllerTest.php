@@ -254,6 +254,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
         $this->get('/admin/customers/changeStatus/' . Configure::read('test.selfServiceCustomerId'). '/1/0');
         $this->loginAsSelfServiceCustomer();
@@ -263,7 +264,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->finishSelfServiceCart(1, 1);
         $this->runAndAssertQueue();
-        $this->assertSessionHasKey('selfServiceInvoiceRoute');
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $cart = $this->Cart->find('all', [
             'order' => [
@@ -279,13 +280,10 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->order_state, ORDER_STATE_BILLED_CASHLESS);
         }
 
-        $this->assertMailCount(2);
+        $this->assertMailCount(1);
 
         $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSelfServiceCustomer'));
-
-        $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. ' . date('Y') .  '-000001');
-        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSelfServiceCustomer'));
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoices = $this->Invoice->find('all');

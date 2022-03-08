@@ -42,7 +42,6 @@ return [
             'username' => '',
             'password' => '',
             'database' => '',
-            'prefix' => 'fcs_'
         ]
     ],
 
@@ -51,6 +50,18 @@ return [
      */
     'Security' => [
         'salt' => ''
+    ],
+
+    'Cache' => [
+        'default' => [
+            'prefix' => 'example_com_',
+        ],
+        '_cake_core_' => [
+            'prefix' => 'example_com_',
+        ],
+        '_cake_model_' => [
+            'prefix' => 'example_com_',
+        ],
     ],
 
     'app' => [

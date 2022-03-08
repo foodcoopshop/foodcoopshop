@@ -17,8 +17,8 @@ use Cake\Routing\Router;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".SelfService.init();".
-    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.product-wrapper .toggle-content.description img');".
-    Configure::read('app.jsNamespace').".ModalImage.init('.product-wrapper a.open-with-modal');".
+    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
@@ -34,12 +34,7 @@ if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::rea
     ]);
 }
 
-if (!$isMobile && $this->request->getSession()->read('selfServiceInvoiceRoute') != '') {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".SelfService.printInvoice('".Configure::read('app.cakeServerName') . $this->request->getSession()->read('selfServiceInvoiceRoute') . "');"
-    ]);
-    $this->request->getSession()->delete('selfServiceInvoiceRoute');
-}
+echo $this->element('autoPrintInvoice');
 
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
@@ -116,7 +111,13 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'showProductDetailLink' => false,
             'showManufacturerDetailLink' => false,
             'showIsNewBadgeAsLink' => false
-        ]);
+        ],
+//         [
+//             'cache' => [
+//                 'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+//             ],
+//         ]
+        );
     }
 
 ?>

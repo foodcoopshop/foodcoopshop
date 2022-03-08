@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-01-01 22:58+0100\n"
-"PO-Revision-Date: 2022-01-01 23:00+0100\n"
+"POT-Creation-Date: 2022-02-12 17:14+0100\n"
+"PO-Revision-Date: 2022-02-12 17:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -69,8 +69,11 @@ msgstr "neues-passwort-anfordern"
 msgid "route_activate_new_password"
 msgstr "neues-passwort-aktivieren"
 
-msgid "route_news_list"
+msgid "route_news_list_old"
 msgstr "aktuelles"
+
+msgid "route_news_list"
+msgstr "blog-archiv"
 
 msgid "route_news_detail"
 msgstr "aktuelles"
@@ -111,8 +114,8 @@ msgstr "selbstbedienung"
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
 
-msgid "News"
-msgstr "Aktuelles"
+msgid "Blog_archive"
+msgstr "Blog-Archiv"
 
 msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
 msgstr "Zum Bestellen <a href=\"{0}\">bitte zuerst anmelden oder neu registrieren</a>."
@@ -921,6 +924,9 @@ msgstr "Überreichter Betrag"
 msgid "back"
 msgstr "zurück"
 
+msgid "Send_email_to_member"
+msgstr "E-Mail an Mitglied versenden"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
@@ -1191,6 +1197,27 @@ msgstr "Das Produkt {0} wurde in deine Einkaufstasche gelegt."
 msgid "Your_shopping_bag_was_empty."
 msgstr "Deine Einkaufstasche war leer."
 
+msgid "net_per_piece_abbr"
+msgstr "netto/St."
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "net"
+msgstr "netto"
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Tax_rates_overview_table"
+msgstr "Übersichtstabelle nach Steuersatz"
+
+msgid "All_amounts_in_{0}."
+msgstr "Alle Beträge in {0}."
+
+msgid "Delivery_note"
+msgstr "Lieferschein"
+
 msgid "Delivered_deposit"
 msgstr "Pfand geliefert"
 
@@ -1205,9 +1232,6 @@ msgstr ""
 
 msgid "Price_excl."
 msgstr "Preis exkl."
-
-msgid "VAT"
-msgstr "USt."
 
 msgid "Price_incl."
 msgstr "Preis inkl."
@@ -1232,12 +1256,6 @@ msgstr "Gelöschtes Mitglied"
 
 msgid "Price_per_weight"
 msgstr "Preis nach Gewicht"
-
-msgid "Tax_rates_overview_table"
-msgstr "Übersichtstabelle nach Steuersatz"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "Sum_price_excl."
 msgstr "Summe Preis exkl."
@@ -1514,6 +1532,9 @@ msgstr "Cronjob: Bestelllisten verschickt"
 
 msgid "Action_Log_Cronjob_invoices_sent"
 msgstr "Cronjob: Rechnungen verschickt"
+
+msgid "Action_Log_Cronjob_delivery_notes_sent"
+msgstr "Cronjob: Lieferscheine verschickt"
 
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr "Cronjob: Bestell-Erinnerung"
@@ -1866,6 +1887,9 @@ msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
 msgid "member"
 msgstr "Mitglied"
 
+msgid "Delivery_note_for_{0}"
+msgstr "Lieferschein für {0}"
+
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Rechnung Nr. {0}, {1}"
 
@@ -1883,9 +1907,6 @@ msgstr "Bestellungen für den"
 
 msgid "Runtime"
 msgstr "Laufzeit"
-
-msgid "seconds"
-msgstr "Sekunden"
 
 msgid "Database_backup_successful"
 msgstr "Datenbank-Backup erfolgreich"
@@ -1910,6 +1931,9 @@ msgstr "morgen"
 
 msgid "Pickup_reminder_for"
 msgstr "Abhol-Erinnerung für"
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 Lieferschein wurde} other{# Lieferscheine wurden}} erfolgreich erstellt."
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 Rechnung wurde} other{# Rechnungen wurden}} erfolgreich erstellt."
@@ -1943,6 +1967,9 @@ msgstr "Superadmins importieren die Guthaben-Aufladungen über eine CSV-Liste in
 
 msgid "Members"
 msgstr "Mitglieder"
+
+msgid "News"
+msgstr "Aktuelles"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -2079,6 +2106,12 @@ msgstr "deaktiviert"
 msgid "active_state_all"
 msgstr "alle"
 
+msgid "{0,plural,=1{1_minute} other{#_minutes}}"
+msgstr "{0,plural,=1{1 Minute} other{# Minuten}}"
+
+msgid "{0,plural,=1{1_second} other{#_seconds}}"
+msgstr "{0,plural,=1{1 Sekunde} other{# Sekunden}}"
+
 msgid "midnight"
 msgstr "Mitternacht"
 
@@ -2105,9 +2138,6 @@ msgstr "{0}konto"
 
 msgid "Modified_on"
 msgstr "Geändert am"
-
-msgid "by"
-msgstr "von"
 
 msgid "Edit"
 msgstr "Bearbeiten"
@@ -2344,7 +2374,7 @@ msgid "Comment"
 msgstr "Kommentar"
 
 msgid "You_can_sign_in_here_for_ordering"
-msgstr "Zum Bestellen kannst du dich hier einloggen"
+msgstr "Zum Bestellen musst du dich erstmal hier einloggen"
 
 msgid "E-mail_address"
 msgstr "E-Mail-Adresse"
@@ -2625,6 +2655,26 @@ msgstr "getätigt am"
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
+#~ msgid "by"
+#~ msgstr "von"
+
+#~ msgid "Archive"
+#~ msgstr "Archiv"
+
+#, fuzzy
+#~ msgid "route_blog_list"
+#~ msgstr "archiv"
+
+#, fuzzy
+#~ msgid "route_blog_detail"
+#~ msgstr "aktuelles"
+
+#~ msgid "route_news_detail_old"
+#~ msgstr "aktuelles"
+
+#~ msgid "seconds"
+#~ msgstr "Sekunden"
+
 #, fuzzy
 #~ msgid "Placeholder_message_pickup_day_comment_can_be_edited."
 #~ msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
@@ -2634,9 +2684,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "The_name_must_not_be_empty."
 #~ msgstr "Der Name darf nicht leer sein."
-
-#~ msgid "net"
-#~ msgstr "netto"
 
 #~ msgid "incl_vat"
 #~ msgstr "inkl. USt."

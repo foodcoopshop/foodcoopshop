@@ -604,7 +604,7 @@ class CartComponent extends Component
                     $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout(Configure::read('app.slugHelper')->getSelfService()) . '"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
                     $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fa fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
                     if (isset($invoiceRoute)) {
-                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.SelfService.printInvoice("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
+                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
                     }
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
 
@@ -733,12 +733,18 @@ class CartComponent extends Component
     {
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = 0;
-        foreach ($stockAvailable2saveData as &$data) {
-            $this->Product->StockAvailables->updateAll(
-                $stockAvailable2saveData[$i],
-                $stockAvailable2saveConditions[$i]
-                );
-            $this->Product->StockAvailables->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['id_product']);
+        foreach($stockAvailable2saveConditions as $condition) {
+            $stockAvailableEntity = $this->Product->StockAvailables->find('all', [
+                'conditions' => $condition,
+            ])->first();
+            $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
+            $originalPrimaryKey = $this->Product->StockAvailables->getPrimaryKey();
+            if ($condition['id_product_attribute'] > 0) {
+                $this->Product->StockAvailables->setPrimaryKey('id_product_attribute');
+            }
+            $this->Product->StockAvailables->save($stockAvailableEntity);
+            $this->Product->StockAvailables->setPrimaryKey($originalPrimaryKey);
+            $this->Product->StockAvailables->updateQuantityForMainProduct($condition['id_product']);
             $i++;
         }
     }
