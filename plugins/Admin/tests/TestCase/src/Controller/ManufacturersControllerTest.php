@@ -43,7 +43,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             'kammer' => '',
             'homepage' => '',
             'short_description' => '<i>Test Description</i>',
-            'description' => '<b>Text</b><script>alert("evil");</script><img src=n onerror=alert("evil")>',
+            'description' => '<b>Text</b><img src="data:image/jpg;base64,iVBORw0KGgoAAAANSUCYII=" /><script>alert("evil");</script><img src=n onerror=alert("evil")>',
             'address_manufacturer' => [
                 'firstname' => '',
                 'lastname' => '',
@@ -108,9 +108,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->doTestCustomerRecord($manufacturer);
 
-        $this->assertEquals($manufacturer->description, '<b>Text</b><img src="n" alt="n" />', 'tags must not be stripped');
-        $this->assertEquals($manufacturer->short_description, '<i>Test Description</i>', 'tags must not be stripped');
-        $this->assertEquals($manufacturer->firmenbuchnummer, 'number', 'tags must be stripped');
+        $this->assertEquals($manufacturer->description, '<b>Text</b><img src="invalid-image" alt="invalid-image" /><img src="n" alt="n" />');
+        $this->assertEquals($manufacturer->short_description, '<i>Test Description</i>');
+        $this->assertEquals($manufacturer->firmenbuchnummer, 'number');
         $this->assertEquals($manufacturer->is_private, true);
     }
 
