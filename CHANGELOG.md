@@ -17,6 +17,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Bugfixes
 - Produkt, das von Lieferrhythmus "Sammelbestellung - mit abgelaufenem Bestellschlusss" auf "Lagerprodukt" umgestellt wurde, war nicht bestellbar. [I#774](https://github.com/foodcoopshop/foodcoopshop/issues/774) / [PR#801](https://github.com/foodcoopshop/foodcoopshop/pull/801) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Manchmal wurden über den Editor Base64-codierte Bilder eingefügt und gespeichert, diese haben dann die Datenbank aufgebläht. Das ist jetzt systemweit unterbunden. [I#804](https://github.com/foodcoopshop/foodcoopshop/issues/804) / [PR#805](https://github.com/foodcoopshop/foodcoopshop/pull/805) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 
 # v3.4.1
 
