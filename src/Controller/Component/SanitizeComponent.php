@@ -33,6 +33,13 @@ class SanitizeComponent extends Component
         return $data;
     }
 
+    public static function stripBase64DataFromImageTag($item)
+    {
+        $item = preg_replace('/src="(data:image\/[^;]+;base64[^"]+)"/i', 'src="invalid-image"', $item);
+        return $item;
+    }
+
+
     /**
      * @param array $array
      * @return array
@@ -53,6 +60,7 @@ class SanitizeComponent extends Component
                     $item = strip_tags($item);
                 }
                 // avoid xss attacks
+                $item = self::stripBase64DataFromImageTag($item);
                 $item = $purifier->purify($item);
             }
         });
