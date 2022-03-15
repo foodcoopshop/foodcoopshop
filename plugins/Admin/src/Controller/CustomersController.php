@@ -131,9 +131,7 @@ class CustomersController extends AdminAppController
             'conditions' => [
                 'Customers.id_customer IN' => $customerIds
             ],
-            'order' => [
-                'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
-            ],
+            'order' => $this->Customer->getCustomerOrderClause(),
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
@@ -703,9 +701,7 @@ class CustomersController extends AdminAppController
             'sortableFields' => [
                 'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder_enabled', 'Customers.date_add', 'Customers.timebased_currency_enabled',
             ],
-            'order' => [
-                'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
-            ]
+            'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();
 
         $i = 0;
