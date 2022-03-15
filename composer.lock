@@ -171,16 +171,16 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "3.5.0",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "c161295d3eea60b30fc0d1c2c5353dd1b0a681ed"
+                "reference": "6b03a44bef94b99a24ab7d4c44cb292bb6f275c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/c161295d3eea60b30fc0d1c2c5353dd1b0a681ed",
-                "reference": "c161295d3eea60b30fc0d1c2c5353dd1b0a681ed",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/6b03a44bef94b99a24ab7d4c44cb292bb6f275c2",
+                "reference": "6b03a44bef94b99a24ab7d4c44cb292bb6f275c2",
                 "shasum": ""
             },
             "require": {
@@ -227,7 +227,7 @@
                 "issues": "https://github.com/cakephp/migrations/issues",
                 "source": "https://github.com/cakephp/migrations"
             },
-            "time": "2022-02-01T11:03:21+00:00"
+            "time": "2022-03-14T14:26:38+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -405,16 +405,16 @@
         },
         {
             "name": "dereuromark/cakephp-queue",
-            "version": "6.3.0",
+            "version": "6.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-queue.git",
-                "reference": "bf569751d67a371f1d4871665364ec57beabd5ea"
+                "reference": "43b4dd280df053d5aaa690725a18980a13832dfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/bf569751d67a371f1d4871665364ec57beabd5ea",
-                "reference": "bf569751d67a371f1d4871665364ec57beabd5ea",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/43b4dd280df053d5aaa690725a18980a13832dfb",
+                "reference": "43b4dd280df053d5aaa690725a18980a13832dfb",
                 "shasum": ""
             },
             "require": {
@@ -471,7 +471,7 @@
                 "issues": "https://github.com/dereuromark/cakephp-queue/issues",
                 "source": "https://github.com/dereuromark/cakephp-queue"
             },
-            "time": "2022-03-02T13:28:29+00:00"
+            "time": "2022-03-09T22:59:12+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2676,16 +2676,16 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.60",
+            "version": "2.1.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "e5ca28f04d37b98d82df92dbdd4ad7cb8ef76911"
+                "reference": "33bee2654615db62e9b722efb4fdd2a21844fbb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/e5ca28f04d37b98d82df92dbdd4ad7cb8ef76911",
-                "reference": "e5ca28f04d37b98d82df92dbdd4ad7cb8ef76911",
+                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/33bee2654615db62e9b722efb4fdd2a21844fbb2",
+                "reference": "33bee2654615db62e9b722efb4fdd2a21844fbb2",
                 "shasum": ""
             },
             "require": {
@@ -2732,7 +2732,7 @@
             "homepage": "http://elfinder.org",
             "support": {
                 "issues": "https://github.com/Studio-42/elFinder/issues",
-                "source": "https://github.com/Studio-42/elFinder/tree/2.1.60"
+                "source": "https://github.com/Studio-42/elFinder/tree/2.1.61"
             },
             "funding": [
                 {
@@ -2740,7 +2740,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-12T06:00:21+00:00"
+            "time": "2022-03-14T15:07:52+00:00"
         },
         {
             "name": "symfony/config",
@@ -4925,16 +4925,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.4.8",
+            "version": "1.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2a6d6704b17c4db6190cc3104056c0aad740cb15"
+                "reference": "898c479c39caa727bedf4311dd294a8f4e250e72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2a6d6704b17c4db6190cc3104056c0aad740cb15",
-                "reference": "2a6d6704b17c4db6190cc3104056c0aad740cb15",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/898c479c39caa727bedf4311dd294a8f4e250e72",
+                "reference": "898c479c39caa727bedf4311dd294a8f4e250e72",
                 "shasum": ""
             },
             "require": {
@@ -4948,11 +4948,6 @@
                 "phpstan.phar"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -4965,7 +4960,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.4.8"
+                "source": "https://github.com/phpstan/phpstan/tree/1.4.10"
             },
             "funding": [
                 {
@@ -4985,7 +4980,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-04T13:03:56+00:00"
+            "time": "2022-03-14T10:25:45+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

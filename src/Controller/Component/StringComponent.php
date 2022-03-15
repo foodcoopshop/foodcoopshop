@@ -63,6 +63,7 @@ class StringComponent extends Component
 
     public static function prepareWysiwygEditorHtml($string, $allowedTags): string
     {
+        $string = SanitizeComponent::stripBase64DataFromImageTag($string);
         return strip_tags(htmlspecialchars_decode(trim($string)), $allowedTags);
     }
 

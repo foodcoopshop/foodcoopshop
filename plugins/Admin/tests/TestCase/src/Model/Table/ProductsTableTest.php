@@ -602,7 +602,7 @@ class ProductsTableTest extends AppCakeTestCase
         $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
-            'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
+            'description' => '    <p>test <br /><strong><em>description</em></strong><img src="/test.jpg" /><img src="data:image/png;base64,iVBORw0KGgoAAAANSUCYII=" /></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>    ',
             'id_storage_location' => 2,
             'barcode' => '1234567890123',
@@ -617,7 +617,7 @@ class ProductsTableTest extends AppCakeTestCase
         $expectedResults = [
             'name' => 'test name',
             'unity' => 'test unity',
-            'description' => '<p>test <br /><strong><em>description</em></strong></p>',
+            'description' => '<p>test <br /><strong><em>description</em></strong><img src="/test.jpg" /><img src="invalid-image" /></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>',
             'id_storage_location' => 2,
             'barcode' => '1234567890123',
