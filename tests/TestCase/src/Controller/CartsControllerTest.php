@@ -549,12 +549,12 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
 
-        $objectA = $cart->cart_products[5]->order_detail; // Artischocke
+        $objectA = $cart->cart_products[0]->order_detail; // Artischocke
         $objectB = $cart->cart_products[1]->order_detail; // Forelle
-        $objectC = $cart->cart_products[0]->order_detail; // Rindfleisch
-        $objectD = $cart->cart_products[2]->order_detail; // Milch
+        $objectC = $cart->cart_products[2]->order_detail; // Rindfleisch
+        $objectD = $cart->cart_products[3]->order_detail; // Milch
         $objectE = $cart->cart_products[4]->order_detail; // Beuschl
-        $objectF = $cart->cart_products[3]->order_detail; // Mangold
+        $objectF = $cart->cart_products[5]->order_detail; // Mangold
 
         $this->assertEmpty($objectA->order_detail_unit);
         $this->assertEquals($objectB->order_detail_unit->purchase_price_incl_per_unit, 0.98);
@@ -627,13 +627,13 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
 
         // check order_details for product1 (index 2!)
-        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
 
         // check order_details for product2 (index 0!)
-        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.65, 1.86, 0.07, 0.21, 13, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.65, 1.86, 0.07, 0.21, 13, $pickupDay);
 
         // check order_details for product3 (index 1!)
-        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.64, 0.64, 0.000000, 0.000000, 0, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.64, 0.64, 0.000000, 0.000000, 0, $pickupDay);
 
         $this->checkStockAvailable($this->productId1, 95);
         $this->checkStockAvailable($this->productId2, 16); // product is NOT always available!
@@ -746,19 +746,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->placeOrderWithStockProducts();
 
         // check email to manufacturer
-        $this->assertMailSubjectContainsAt(0, 'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0');
-        $this->assertMailContainsHtmlAt(0, 'Lagerstand: <b>0</b>');
-        $this->assertMailContainsHtmlAt(0, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
-        $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
+        $this->assertMailSubjectContainsAt(2, 'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0');
+        $this->assertMailContainsHtmlAt(2, 'Lagerstand: <b>0</b>');
+        $this->assertMailContainsHtmlAt(2, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // check email to contact person
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailAdmin'));
 
         // check email to manufacturer
-        $this->assertMailSubjectContainsAt(2, 'Lagerstand für Produkt "Lagerprodukt": -1');
-        $this->assertMailContainsHtmlAt(2, 'Lagerstand: <b>-1</b>');
-        $this->assertMailContainsHtmlAt(2, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
-        $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
+        $this->assertMailSubjectContainsAt(0, 'Lagerstand für Produkt "Lagerprodukt": -1');
+        $this->assertMailContainsHtmlAt(0, 'Lagerstand: <b>-1</b>');
+        $this->assertMailContainsHtmlAt(0, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // check email to contact person
         $this->assertMailSentToAt(3, Configure::read('test.loginEmailAdmin'));
@@ -809,17 +809,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
-        $orderDetailA = $cart->cart_products[3]->order_detail;
-        $orderDetailB = $cart->cart_products[2]->order_detail;
-        $orderDetailC = $cart->cart_products[1]->order_detail;
-        $orderDetailD = $cart->cart_products[0]->order_detail;
+
+        $orderDetailA = $cart->cart_products[1]->order_detail;
+        $orderDetailB = $cart->cart_products[0]->order_detail;
+        $orderDetailC = $cart->cart_products[3]->order_detail;
+        $orderDetailD = $cart->cart_products[2]->order_detail;
 
         // check table order_detail
         $this->assertEquals($orderDetailB->total_price_tax_incl, 2.700000);
         $this->assertEquals($orderDetailB->total_price_tax_excl, 2.450000);
 
         $this->assertEquals($orderDetailC->total_price_tax_incl, 15.240000);
-        $this->assertEquals($orderDetailC->total_price_tax_excl,  13.850000);
+        $this->assertEquals($orderDetailC->total_price_tax_excl, 13.850000);
 
         $this->assertEquals($orderDetailD->total_price_tax_incl, 0.480000);
         $this->assertEquals($orderDetailD->total_price_tax_excl, 0.480000);
