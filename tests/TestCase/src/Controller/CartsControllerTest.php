@@ -459,7 +459,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
-        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
 
         $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $pickupDayEntity = $this->PickupDay->find('all')->toArray();
@@ -868,12 +868,12 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
 
         // check order_details
-        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
-        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 10, $pickupDay);
 
         // check order_details_units
-        $orderDetailA = $cart->cart_products[1]->order_detail;
-        $orderDetailB = $cart->cart_products[0]->order_detail;
+        $orderDetailA = $cart->cart_products[0]->order_detail;
+        $orderDetailB = $cart->cart_products[1]->order_detail;
 
         $this->assertEquals($orderDetailA->order_detail_unit->product_quantity_in_units, 700);
         $this->assertEquals($orderDetailA->order_detail_unit->price_incl_per_unit, 1.5);
@@ -915,8 +915,8 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $this->getCartById($cartId);
 
         $objectA = $cart->cart_products[1]->order_detail;
-        $objectB = $cart->cart_products[0]->order_detail;
-        $objectC = $cart->cart_products[2]->order_detail;
+        $objectB = $cart->cart_products[2]->order_detail;
+        $objectC = $cart->cart_products[0]->order_detail;
         $objectD = $cart->cart_products[3]->order_detail;
 
         $this->assertEquals($objectA->total_price_tax_incl, 0);

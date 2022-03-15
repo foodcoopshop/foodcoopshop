@@ -13,10 +13,10 @@
         "tmp_new_passwd": null,
         "activate_new_password_code": null,
         "auto_login_hash": null,
-        "email_order_reminder_enabled": false,
+        "email_order_reminder_enabled": 0,
         "terms_of_use_accepted_date": "2018-08-03",
         "activate_email_code": null,
-        "active": true,
+        "active": 1,
         "date_add": "2014-12-02T12:37:26+01:00",
         "date_upd": "2015-03-11T18:12:10+01:00",
         "timebased_currency_enabled": 0,
@@ -60,7 +60,7 @@
                 "quantity": 97,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -108,8 +108,8 @@
             "tax": {
                 "id_tax": 2,
                 "rate": "10.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": {
@@ -129,7 +129,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -182,7 +182,7 @@
                 "quantity": 2959,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -243,7 +243,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -296,7 +296,7 @@
                 "quantity": 78,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -357,7 +357,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -410,7 +410,7 @@
                 "quantity": 5,
                 "quantity_limit": -5,
                 "sold_out_limit": 0,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -468,8 +468,8 @@
             "tax": {
                 "id_tax": 2,
                 "rate": "10.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": null,
@@ -484,7 +484,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -547,7 +547,7 @@
                 "quantity": 999,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -605,8 +605,8 @@
             "tax": {
                 "id_tax": 1,
                 "rate": "20.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": null,
@@ -621,7 +621,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -681,7 +681,7 @@
                     "id_product_attribute": 13,
                     "id_product": 350,
                     "price": "1.818182",
-                    "default_on": true,
+                    "default_on": 1,
                     "product_attribute_combination": {
                         "id_attribute": 36,
                         "id_product_attribute": 13,
@@ -713,7 +713,7 @@
                         "quantity": 5,
                         "quantity_limit": -5,
                         "sold_out_limit": 0,
-                        "always_available": false,
+                        "always_available": 0,
                         "default_quantity_after_sending_order_lists": null
                     }
                 },
@@ -721,7 +721,7 @@
                     "id_product_attribute": 14,
                     "id_product": 350,
                     "price": "3.636364",
-                    "default_on": false,
+                    "default_on": 0,
                     "product_attribute_combination": {
                         "id_attribute": 35,
                         "id_product_attribute": 14,
@@ -753,7 +753,7 @@
                         "quantity": 999,
                         "quantity_limit": 0,
                         "sold_out_limit": null,
-                        "always_available": true,
+                        "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
                     }
                 },
@@ -761,7 +761,7 @@
                     "id_product_attribute": 15,
                     "id_product": 350,
                     "price": "0.000000",
-                    "default_on": false,
+                    "default_on": 0,
                     "product_attribute_combination": {
                         "id_attribute": 36,
                         "id_product_attribute": 15,
@@ -793,7 +793,7 @@
                         "quantity": 999,
                         "quantity_limit": 0,
                         "sold_out_limit": null,
-                        "always_available": true,
+                        "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
                     }
                 }
@@ -805,7 +805,7 @@
                 "quantity": 1004,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -853,8 +853,8 @@
             "tax": {
                 "id_tax": 2,
                 "rate": "10.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": null,
@@ -869,7 +869,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -910,12 +910,12 @@
                 "name": "Demo Gem\u00fcse-Hersteller",
                 "stock_management_enabled": 1
             },
-            "default_on": true,
+            "default_on": 1,
             "stock_available": {
                 "quantity": 5,
                 "quantity_limit": -5,
                 "sold_out_limit": 0,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
@@ -953,12 +953,12 @@
                 "name": "Demo Gem\u00fcse-Hersteller",
                 "stock_management_enabled": 1
             },
-            "default_on": false,
+            "default_on": 0,
             "stock_available": {
                 "quantity": 999,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
@@ -996,12 +996,12 @@
                 "name": "Demo Gem\u00fcse-Hersteller",
                 "stock_management_enabled": 1
             },
-            "default_on": false,
+            "default_on": 0,
             "stock_available": {
                 "quantity": 999,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
@@ -1052,7 +1052,7 @@
                 "quantity": 988,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -1113,7 +1113,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }

@@ -99,7 +99,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->changeProductPrice($this->productIdA, 0);
         $this->mockCart = $this->generateAndGetCart();
 
-        $mockOrderDetailId = $this->mockCart->cart_products[1]->order_detail->id_order_detail;
+        $mockOrderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailPrice($mockOrderDetailId, $this->newPrice, $this->editPriceReason);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$mockOrderDetailId]);
