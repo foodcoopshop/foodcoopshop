@@ -275,8 +275,8 @@ class OrderDetailsController extends AdminAppController
             $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
         }
         array_multisort(
-            $storageLocation, SORT_ASC,
             $customerName, SORT_ASC,
+            $storageLocation, SORT_ASC,
             $manufacturerName, SORT_ASC,
             $productName, SORT_ASC,
             $orderDetails,
