@@ -83,6 +83,9 @@ body {
     padding-top: 15px;
     width: 190px;
 }
+.sidebar.empty {
+    width: 100px;
+}
 body.categories.detail div.img-wrapper {
     width: 100%;
     text-align: center;

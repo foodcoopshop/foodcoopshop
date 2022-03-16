@@ -23,7 +23,7 @@ $this->element('addScript', ['script' =>
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
-    echo '<h1>'.__('News').'</h1>';
+    echo '<h1 class="news">'.__('News').'</h1>';
 }
 echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,
