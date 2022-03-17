@@ -86,6 +86,11 @@ class OrderDetailsController extends AdminAppController
                     return $this->checkOrderDetailIdAccess($this->getRequest()->getData('orderDetailId'));
                 }
                 return false;
+            case 'index':
+                if ($this->AppAuth->isCustomer() && !Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
+                    return false;
+                }
+                return true;
             default:
                 return parent::isAuthorized($user);
                 break;

@@ -176,6 +176,8 @@ return [
 
         'isCustomerAllowedToModifyOwnOrders' => true,
 
+        'isCustomerAllowedToViewOwnOrders' => true,
+
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
