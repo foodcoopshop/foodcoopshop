@@ -63,6 +63,7 @@ class FrontendController extends AppController
 
                 $products[$i]['gross_price'] = $grossPrice;
                 $products[$i]['tax'] = $grossPrice - $products[$i]['price'];
+                $products[$i]['tax_rate'] = $taxRate;
                 $products[$i]['is_new'] = $this->Product->isNew($products[$i]['created']);
 
                 if (!Configure::read('app.isDepositEnabled')) {

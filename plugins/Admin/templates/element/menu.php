@@ -103,8 +103,10 @@ $menu[] = [
 ];
 
 if ($appAuth->isCustomer()) {
-    $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
-    $menu[] = $orderDetailsGroupedByCustomerMenuElement;
+    if (Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
+        $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
+        $menu[] = $orderDetailsGroupedByCustomerMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
