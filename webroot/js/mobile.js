@@ -246,17 +246,20 @@ foodcoopshop.Mobile = {
         if (noGlobalDeliveryBreakElement.length > 0) {
             noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
         }
-        var infoBoxHtml = '<div id="right-info-box-text" class="hide">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>';
-        infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
-        $('#container').append(infoBoxHtml);
+        var infoBoxContent = (noGlobalDeliveryBreakHtml + $('#info-box').html()).trim();
+        if (infoBoxContent != '') {
+            var infoBoxHtml = '<div id="right-info-box-text" class="hide">' + infoBoxContent + '</div>';
+            infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
+            $('#container').append(infoBoxHtml);
 
-        var infoButton = $('<a/>');
-        infoButton.addClass('open-with-modal');
-        infoButton.attr('href', 'javascript:void(0);');
-        infoButton.data('element-selector', '#right-info-box-text');
-        infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
-        $('#' + headerId).append(infoButton);
-        foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
+            var infoButton = $('<a/>');
+            infoButton.addClass('open-with-modal');
+            infoButton.attr('href', 'javascript:void(0);');
+            infoButton.data('element-selector', '#right-info-box-text');
+            infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
+            $('#' + headerId).append(infoButton);
+            foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
+        }
         // END info box as modal
 
         var cartButton = $('#cart .inner .btn-success');
