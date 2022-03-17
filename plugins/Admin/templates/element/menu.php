@@ -237,11 +237,19 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             ]
         ];
         $reportSlug = null;
-        if (!$this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
-            $reportSlug = $this->Slug->getReport('deposit');
-        }
+
         if ($this->Html->paymentIsCashless()) {
             $reportSlug = $this->Slug->getReport('product');
+        } else {
+            if (Configure::read('app.isDepositPaymentCashless')) {
+                $reportSlug = $this->Slug->getReport('deposit');
+            }
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $reportSlug = $this->Slug->getProfit();
+            }
+            if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                $reportSlug = $this->Slug->getInvoices();
+            }
         }
         if ($reportSlug) {
             $homepageAdministrationElement['children'][] = [
