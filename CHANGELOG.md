@@ -6,6 +6,13 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+# v3.4.2
+
+### Security update
+Fixed security issue in CKEditor.
+
+Datum: 18.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/16) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.4.1...v3.4.2)
+
 # v3.4.1
 
 ### Bugfix
