@@ -30,6 +30,10 @@ use Cake\Core\Configure;
         "
     ]);
 
+    $this->element('highlightRowAfterEdit', [
+        'rowIdPrefix' => '#order-detail-'
+    ]);
+
     echo $this->element('autoPrintInvoice');
 
     if (Configure::read('app.isDepositEnabled')) {
@@ -180,7 +184,7 @@ foreach ($orderDetails as $orderDetail) {
         $rowClasses = $orderDetail['row_class'];
     }
 
-    echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
+    echo '<tr id="order-detail-' . $orderDetail->id_order_detail . '" class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo $this->element('rowMarker/rowMarker', [
         'show' => $editRecordAllowed,
