@@ -429,13 +429,13 @@ class InvoicesController extends AdminAppController
     public function index()
     {
 
-        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisMonth();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisMonth();
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
