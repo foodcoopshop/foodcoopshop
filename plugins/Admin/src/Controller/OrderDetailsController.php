@@ -1149,6 +1149,8 @@ class OrderDetailsController extends AdminAppController
             $this->Flash->success($message);
         }
 
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
+
         $this->set([
             'status' => 1,
             'msg' => 'ok',
@@ -1262,6 +1264,8 @@ class OrderDetailsController extends AdminAppController
 
         $this->Flash->success($message);
 
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
+
         $this->set([
             'status' => 1,
             'msg' => 'ok',
@@ -1306,6 +1310,8 @@ class OrderDetailsController extends AdminAppController
         ]);
 
         $this->Flash->success($message);
+
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
 
         $this->set([
             'status' => 1,
@@ -1397,6 +1403,8 @@ class OrderDetailsController extends AdminAppController
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
+
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
 
         $this->set([
             'status' => 1,
