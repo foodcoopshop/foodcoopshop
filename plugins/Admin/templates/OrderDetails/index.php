@@ -184,7 +184,11 @@ foreach ($orderDetails as $orderDetail) {
         $rowClasses = $orderDetail['row_class'];
     }
 
-    echo '<tr id="order-detail-' . $orderDetail->id_order_detail . '" class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
+    $rowIdHtml = '';
+    if ($groupBy == '') {
+        $rowIdHtml = ' id="order-detail-' . $orderDetail->id_order_detail . '"';
+    }
+    echo '<tr' . $rowIdHtml . ' class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo $this->element('rowMarker/rowMarker', [
         'show' => $editRecordAllowed,
