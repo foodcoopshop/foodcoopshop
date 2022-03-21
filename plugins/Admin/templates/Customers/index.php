@@ -192,7 +192,7 @@ foreach ($customers as $customer) {
         );
     }
 
-    if ($customer->active == '' && is_null($customer->activate_email_code)) {
+    if ($customer->active == 0 && is_null($customer->activate_email_code)) {
         echo $this->Html->link(
             '<i class="fas fa-minus-circle not-ok"></i>',
             'javascript:void(0);',
