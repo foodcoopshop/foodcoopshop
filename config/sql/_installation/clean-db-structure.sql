@@ -275,7 +275,7 @@ DROP TABLE IF EXISTS `fcs_invoices`;
 CREATE TABLE `fcs_invoices` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_manufacturer` int unsigned NOT NULL DEFAULT '0',
-  `invoice_number` varchar(14) NOT NULL DEFAULT '0',
+  `invoice_number` varchar(17) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_customer` int unsigned NOT NULL DEFAULT '0',
   `paid_in_cash` tinyint unsigned DEFAULT '0',
