@@ -20,7 +20,7 @@ jobs:
         experimental: [false]
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         ports:
           - 8888:3306
         env:

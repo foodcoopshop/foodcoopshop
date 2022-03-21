@@ -132,7 +132,7 @@ class CustomersController extends FrontendController
             $this->Flash->success(__('Your_email_address_was_already_activated_or_the_activation_code_was_not_valid.'));
         } else {
             $customer->activate_email_code = null;
-            $customer->active = true;
+            $customer->active = 1;
             $this->Customer->save($customer);
 
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);

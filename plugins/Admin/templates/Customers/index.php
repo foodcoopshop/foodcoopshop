@@ -267,7 +267,7 @@ foreach ($customers as $customer) {
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';
-        echo $customer->email_order_reminder_enabled;
+        echo $customer->email_order_reminder_enabled == 0 ? '' : 1;
         $sumEmailReminders += $customer->email_order_reminder_enabled;
         echo '</td>';
     }
