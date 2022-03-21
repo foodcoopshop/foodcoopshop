@@ -144,7 +144,8 @@ INSERT INTO `fcs_configuration` VALUES
 (597,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:03','2021-07-07 10:55:03'),
 (598,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','1','boolean',3210,'de_DE','2021-08-02 11:28:29','2021-08-02 11:28:29'),
 (599,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:08','2021-09-10 21:23:08'),
-(600,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich.','0','boolean',3210,'de_DE','2022-02-01 17:48:35','2022-02-01 17:48:35');
+(600,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich.','0','boolean',3210,'de_DE','2022-02-01 17:48:35','2022-02-01 17:48:35'),
+(601,1,'FCS_INVOICE_NUMBER_PREFIX','Präfix für Rechnungs-Nummernkreis','','readonly',583,'de_DE','2022-03-21 11:41:43','2022-03-21 11:41:43');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -287,7 +288,8 @@ INSERT INTO `phinxlog` VALUES
 (20211215184633,'ManufacturerSettingIncludeStockProductsOnOrderList','2021-12-15 18:50:50','2021-12-15 18:50:50',0),
 (20211229194617,'AddIndizesForBetterPerformance','2021-12-29 19:55:28','2021-12-29 19:55:28',0),
 (20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:31:51','2022-01-29 08:31:51',0),
-(20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:35','2022-02-01 16:48:35',0);
+(20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:35','2022-02-01 16:48:35',0),
+(20220321103059,'PrefixForInvoices','2022-03-21 10:41:43','2022-03-21 10:41:43',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
