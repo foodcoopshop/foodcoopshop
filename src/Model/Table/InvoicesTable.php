@@ -334,8 +334,16 @@ class InvoicesTable extends AppTable
 
         $increasingNumberOfLastInvoice = 1;
 
+        $invoicePrefix = Configure::read('appDb.FCS_INVOICE_NUMBER_PREFIX');
+
         if (! empty($lastInvoice)) {
-            $explodedInvoiceNumber = explode('-', $lastInvoice->invoice_number);
+
+            $lastInvoiceNumberWithoutPrefix = $lastInvoice->invoice_number;
+            if ($invoicePrefix != '') {
+                $lastInvoiceNumberWithoutPrefix = preg_replace('/^' . $invoicePrefix . '/', '', $lastInvoice->invoice_number);
+            }
+
+            $explodedInvoiceNumber = explode('-', $lastInvoiceNumberWithoutPrefix);
             $yearOfLastInvoice = $explodedInvoiceNumber[0];
             if ($currentYear == $yearOfLastInvoice) {
                 $increasingNumberOfLastInvoice = (int) $explodedInvoiceNumber[1] + 1;
@@ -344,7 +352,7 @@ class InvoicesTable extends AppTable
 
         $newIncreasingInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($increasingNumberOfLastInvoice, 6);
 
-        $newInvoiceNumber = $currentYear . '-' . $newIncreasingInvoiceNumber;
+        $newInvoiceNumber = $invoicePrefix . $currentYear . '-' . $newIncreasingInvoiceNumber;
         return $newInvoiceNumber;
 
     }

@@ -34,10 +34,28 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->Invoice = $this->getTableLocator()->get('Invoices');
     }
 
+    public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExistWithPrefix()
+    {
+        $invoicePrefix = 'ABC-';
+        $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
+        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2020', []);
+        $this->assertEquals($result, $invoicePrefix . '2020-000001');
+    }
+
     public function testGetNextInvoiceNumberForCustomerInvoicesDoNotExist()
     {
         $result = $this->Invoice->getNextInvoiceNumberForCustomer('2020', []);
         $this->assertEquals($result, '2020-000001');
+    }
+
+    public function testGetNextInvoiceNumberForCustomerDifferentYearAndInvoiceAlreadyExistsWithPrefix()
+    {
+        $invoicePrefix = 'ABC-';
+        $this->changeConfiguration('FCS_INVOICE_NUMBER_PREFIX', $invoicePrefix);
+        $invoice = $this->Invoice->newEmptyEntity();
+        $invoice->invoice_number = $invoicePrefix . '2020-000001';
+        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2021', $invoice);
+        $this->assertEquals($result, $invoicePrefix . '2021-000001');
     }
 
     public function testGetNextInvoiceNumberForCustomerDifferentYearAndInvoiceAlreadyExists()
