@@ -55,7 +55,8 @@ if ($this->request->getRequestTarget() != $this->Slug->getTaxAdd()) {
 }
 
 echo $this->Form->control('Taxes.active', [
-    'label' => __d('admin', 'Active').'?'
+    'label' => __d('admin', 'Active').'?',
+    'type' => 'checkbox',
 ]);
 
 echo $this->Form->end();
