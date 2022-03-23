@@ -78,7 +78,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTc
 
         // ordered deposit
         if ($result->ordered_deposit['deposit_incl'] != 0) {
-            $this->table .= '<tr style="font-weight:normal;font-style:italic;">';
+            $this->table .= '<tr style="font-weight:normal;">';
             $this->renderTableRow(
                 [
                     $result->ordered_deposit['deposit_amount'] . 'x',
@@ -105,12 +105,10 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTc
     private function renderSumRow($label, $value)
     {
         $this->table .= '<tr>';
-        $this->table .= '<td colspan="2" ></td>';
-        $this->table .= '<td colspan="2" align="right">' . $label . '</td>';
-        $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . $value . '</td>';
-        $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '"></td>';
+            $this->table .= '<td colspan="4" align="right">' . $label . '</td>';
+            $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . $value . '</td>';
+            $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '"></td>';
         $this->table .= '</tr>';
-
     }
 
 }
