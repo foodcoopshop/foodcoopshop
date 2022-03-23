@@ -178,6 +178,8 @@ return [
 
         'isCustomerAllowedToViewOwnOrders' => true,
 
+        'isZeroTaxEnabled' => true,
+
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,

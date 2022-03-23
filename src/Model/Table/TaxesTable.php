@@ -50,9 +50,13 @@ class TaxesTable extends AppTable
                 'Taxes.rate' => 'ASC'
             ]
         ]);
-        $preparedTaxes = [
-            0 => '0 %'
-        ];
+
+        $preparedTaxes = [];
+        if (Configure::read('app.isZeroTaxEnabled')) {
+            $preparedTaxes = [
+                0 => '0 %'
+            ];
+        }
         foreach ($taxes as $tax) {
             $value = Configure::read('app.numberHelper')->formatTaxRate($tax->rate) . '%';
             if ($useRateAsKey) {

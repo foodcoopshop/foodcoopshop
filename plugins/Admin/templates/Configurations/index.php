@@ -302,6 +302,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.isZeroTaxEnabled</td>
+            <td><?php echo Configure::read('app.isZeroTaxEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.showStatisticsForAdmins</td>
             <td><?php echo Configure::read('app.showStatisticsForAdmins') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
