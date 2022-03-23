@@ -184,12 +184,13 @@ INSERT INTO `fcs_configuration` VALUES
 (594,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','FoodCoop Test<br />Demostraße 4<br />A-4564 Demostadt<br />demo-foodcoop@maillinator.com','readonly',582,'de_DE','2020-11-03 15:24:12','2020-11-03 15:24:12'),
 (595,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:26','2020-12-20 19:26:26'),
 (596,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','0','number',1450,'de_DE','2021-01-19 11:23:49','2021-01-19 11:23:49'),
-(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',584,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17'),
+(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',587,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17'),
 (598,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:14','2021-07-07 10:55:14'),
 (599,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','0','boolean',3210,'de_DE','2021-08-02 11:28:40','2021-08-02 11:28:40'),
 (600,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:18','2021-09-10 21:23:18'),
 (601,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich.','0','boolean',3210,'de_DE','2022-02-01 17:48:46','2022-02-01 17:48:46'),
-(602,1,'FCS_INVOICE_NUMBER_PREFIX','Präfix für Rechnungs-Nummernkreis<br /><div class=\"small\">Max. 6 Zeichen inkl. Trennzeichen.</div>','','readonly',583,'de_DE','2022-03-21 12:03:07','2022-03-21 12:03:07');
+(602,1,'FCS_INVOICE_NUMBER_PREFIX','Präfix für Rechnungs-Nummernkreis<br /><div class=\"small\">Max. 6 Zeichen inkl. Trennzeichen.</div>','','readonly',586,'de_DE','2022-03-21 12:03:07','2022-03-21 12:03:07'),
+(603,1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','Rechnungslegung für pauschalierte Betriebe<br /><div class=\"small\">Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück.</div>','0','readonly',585,'de_DE','2022-03-23 09:12:43','2022-03-23 09:12:43');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -433,7 +434,8 @@ INSERT INTO `phinxlog` VALUES
 (20211229194617,'AddIndizesForBetterPerformance','2021-12-29 19:53:31','2021-12-29 19:53:31',0),
 (20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:32:01','2022-01-29 08:32:02',0),
 (20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:46','2022-02-01 16:48:46',0),
-(20220321103059,'PrefixForInvoices','2022-03-21 11:03:07','2022-03-21 11:03:07',0);
+(20220321103059,'PrefixForInvoices','2022-03-21 11:03:07','2022-03-21 11:03:07',0),
+(20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:43','2022-03-23 08:12:43',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
