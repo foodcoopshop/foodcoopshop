@@ -35,17 +35,22 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTc
             [
                 'name' => __('Product'),
                 'align' => 'left',
-                'width' => 200,
+                'width' => 185,
             ],
             [
                 'name' => __('Manufacturer'),
                 'align' => 'left',
-                'width' => 139,
+                'width' => 124,
             ],
             [
                 'name' => __('Price_net'),
                 'align' => 'right',
                 'width' => 58,
+            ],
+            [
+                'name' => __('Tax_rate'),
+                'align' => 'right',
+                'width' => 30,
             ],
             [
                 'name' => __('Delivery_day'),
@@ -69,12 +74,15 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTc
                     $orderDetail->product_name,
                     $this->textHelper->truncate($orderDetail->product->manufacturer->name, 28),
                     Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl),
+                    Configure::read('app.numberHelper')->formatTaxRate($orderDetail->tax_rate) . '%',
                     $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
                 ]
                 );
             $this->table .= '</tr>';
 
         }
+
+        $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
 
         // ordered deposit
         if ($result->ordered_deposit['deposit_incl'] != 0) {
@@ -86,6 +94,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTc
                     __('Delivered_deposit'),
                     '',
                     Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']),
+                    Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate) . '%',
                     '',
                 ]
                 );
@@ -93,7 +102,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTc
         }
 
         $this->table .= '<tr style="font-size:12px;">';
-            $this->table .= '<td colspan="6"></td>';
+            $this->table .= '<td colspan="7"></td>';
         $this->table .= '</tr>';
 
         $this->renderSumRow(__('Total_sum_net'), Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl));
@@ -107,7 +116,7 @@ class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTc
         $this->table .= '<tr>';
             $this->table .= '<td colspan="4" align="right">' . $label . '</td>';
             $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . $value . '</td>';
-            $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '"></td>';
+            $this->table .= '<td colspan="2"></td>';
         $this->table .= '</tr>';
     }
 
