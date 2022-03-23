@@ -57,6 +57,22 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertResponseContains($expectedResult);
     }
 
+    public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_TAX_BASED_ON_NET_INVOICE_SUM', 1);
+        $this->loginAsSuperadmin();
+
+        $customerId = Configure::read('test.superadminId');
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceWithTaxBasedOnInvoiceSum.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+    }
+
     public function testSendInvoicesWithExcludedFutureOrder()
     {
 
