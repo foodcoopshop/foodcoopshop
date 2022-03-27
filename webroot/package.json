@@ -15,14 +15,14 @@
   },
   "dependencies": {
     "@beyonk/gdpr-cookie-consent-banner": "^9.0.3",
-    "@ericblade/quagga2": "^1.5.0",
+    "@ericblade/quagga2": "^1.6.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "blueimp-file-upload": "^10.32.0",
     "bootstrap": "^4.6.0",
     "bootstrap-select": "^1.13.18",
     "chart.js": "^3.7.1",
     "chartjs-plugin-datalabels": "^2.0.0",
-    "ckeditor4": "^4.17.2",
+    "ckeditor4": "^4.18.0",
     "clipboard": "^2.0.10",
     "components-jqueryui": "~1.12",
     "jquery": "^3.6.0",
@@ -38,7 +38,7 @@
     "svelte": "^3.46.4",
     "swiper": "8.0.7",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.15.2",
+    "uglify-js": "^3.15.3",
     "webrtc-adapter": "^8.1.1"
   }
 }

@@ -23,7 +23,7 @@ If you plan to **collaborate more intensively**, please ask Mario (office@foodco
 * Under [projects](https://github.com/foodcoopshop/foodcoopshop/projects) there is a list of issues that are planned for the following release. If you can't find an issue that suits your interests, feel free to browse [all open issues](https://github.com/foodcoopshop/foodcoopshop/issues) and make your choice.
 
 ## Additional information
-* The branches "master" and "develop" are protected. Only admins can push to those branches.
+* The branches "main" and "develop" are protected. Only admins can push to those branches.
 * Good issues for your first PR are labelled with ["good first PR"](https://github.com/foodcoopshop/foodcoopshop/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+PR%22)
 
 ## Coding conventions

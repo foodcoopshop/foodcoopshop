@@ -30,7 +30,9 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
         }
         foreach($orderDetail['latestInvoices'] as $invoice) {
             $invoiceRow = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong2'));
-            $invoiceRow .=  ' / <b>' . ($invoice->paid_in_cash ? __d('admin', 'Paid_in_cash') : __d('admin', 'Credit')) . '</b>';
+            if ($this->Html->paymentIsCashless()) {
+                $invoiceRow .=  ' / <b>' . ($invoice->paid_in_cash ? __d('admin', 'Paid_in_cash') : __d('admin', 'Credit')) . '</b>';
+            }
             $invoiceRow .= ' / ' . $this->Number->formatAsCurrency($invoice->total_sum_price_incl);
             $invoiceRowClass = '';
             if ($invoice->total_sum_price_incl < 0) {
@@ -42,32 +44,34 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
             $invoicesForTitle .= '</ul>';
         }
 
-        $invoicesForTitle .= '<p class="credit-balance-wrapper">';
-        $invoicesForTitle .= '<span style="float:left;margin-top:6px;margin-right:5px;">' . __d('admin', 'Credit') . ': </span>';
-            $invoicesForTitle .= $this->Html->link(
-                '<span class="'.($orderDetail['creditBalance'] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($orderDetail['creditBalance']) . '</span>',
-                $this->Slug->getCreditBalance($orderDetail['customer_id']),
-                [
-                    'class' => 'btn btn-outline-light',
-                    'title' => __d('admin', 'Show_credit'),
-                    'style' => 'text-decoration:none ! important;',
-                    'escape' => false,
-                ]
-            );
-            $invoicesForTitle .= '<br /><span class="float:left;margin-right:10px;">' . __d('admin', 'Check_credit_reminder') . ': ';
-            $invoicesForTitle .= $this->Html->link(
-                $orderDetail['invoiceData']->check_credit_reminder_enabled ? '<i class="fas fa-check-circle ok"></i>' : '<i class="fas fa-minus-circle not-ok"></i>',
-                $this->Slug->getCustomerEdit($orderDetail['customer_id']),
-                [
-                    'class' => 'btn btn-outline-light',
-                    'title' => __d('admin', 'Check_credit_reminder'),
-                    'style' => 'text-decoration:none ! important;',
-                    'escape' => false,
-                ]
-            );
+        if ($this->Html->paymentIsCashless()) {
+            $invoicesForTitle .= '<p class="credit-balance-wrapper">';
+            $invoicesForTitle .= '<span style="float:left;margin-top:6px;margin-right:5px;">' . __d('admin', 'Credit') . ': </span>';
+                $invoicesForTitle .= $this->Html->link(
+                    '<span class="'.($orderDetail['creditBalance'] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($orderDetail['creditBalance']) . '</span>',
+                    $this->Slug->getCreditBalance($orderDetail['customer_id']),
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Show_credit'),
+                        'style' => 'text-decoration:none ! important;',
+                        'escape' => false,
+                    ]
+                );
+                $invoicesForTitle .= '<br /><span class="float:left;margin-right:10px;">' . __d('admin', 'Check_credit_reminder') . ': ';
+                $invoicesForTitle .= $this->Html->link(
+                    $orderDetail['invoiceData']->check_credit_reminder_enabled ? '<i class="fas fa-check-circle ok"></i>' : '<i class="fas fa-minus-circle not-ok"></i>',
+                    $this->Slug->getCustomerEdit($orderDetail['customer_id']),
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Check_credit_reminder'),
+                        'style' => 'text-decoration:none ! important;',
+                        'escape' => false,
+                    ]
+                );
 
-            $invoicesForTitle .= '</span>';
-        $invoicesForTitle .= '</p>';
+                $invoicesForTitle .= '</span>';
+            $invoicesForTitle .= '</p>';
+        }
 
         // use wrapper as tooltipster does not work on disabled elements
         echo '<span class="latest-invoices-tooltip-wrapper" title="' . h($invoicesForTitle) . '">';

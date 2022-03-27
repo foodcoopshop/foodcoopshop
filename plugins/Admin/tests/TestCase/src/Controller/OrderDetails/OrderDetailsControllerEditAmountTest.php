@@ -37,13 +37,13 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->mockCart = $this->generateAndGetCart(5, 2);
         $this->logout();
         $this->loginAsVegetableManufacturer();
-        $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
+        $this->editOrderDetailAmount($this->mockCart->cart_products[0]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
-        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[0]->order_detail->product_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[0]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);
@@ -78,8 +78,8 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
 
-        $this->editOrderDetailAmount($cart->cart_products[0]->order_detail->id_order_detail, 1, $this->editAmountReason);
-        $this->editOrderDetailAmount($cart->cart_products[1]->order_detail->id_order_detail, 2, $this->editAmountReason);
+        $this->editOrderDetailAmount($cart->cart_products[1]->order_detail->id_order_detail, 1, $this->editAmountReason);
+        $this->editOrderDetailAmount($cart->cart_products[0]->order_detail->id_order_detail, 2, $this->editAmountReason);
 
         $changedOrderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
@@ -111,13 +111,13 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
 
-        $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
+        $this->editOrderDetailAmount($this->mockCart->cart_products[0]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
-        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[0]->order_detail->product_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[0]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);
@@ -129,16 +129,16 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
     {
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
-        $orderDetailId = $this->mockCart->cart_products[1]->order_detail->id_order_detail;
+        $orderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
         $this->simulateSendOrderListsCronjob($orderDetailId);
 
         $this->editOrderDetailAmount($orderDetailId, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
-        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[0]->order_detail->product_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[0]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $expectedCcEmail = Configure::read('test.loginEmailVegetableManufacturer');
@@ -154,13 +154,13 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_amount_changed_notification', 0);
 
-        $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
+        $this->editOrderDetailAmount($this->mockCart->cart_products[0]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_unit_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->tax_total_amount);
-        $this->assertEquals(10, $changedOrder->cart_products[1]->order_detail->tax_rate);
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[0]->order_detail->product_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[0]->order_detail->tax_total_amount);
+        $this->assertEquals(10, $changedOrder->cart_products[0]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);

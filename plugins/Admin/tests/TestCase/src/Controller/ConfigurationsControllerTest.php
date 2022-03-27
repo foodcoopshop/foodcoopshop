@@ -124,7 +124,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $this->assertPagesForErrors($testUrls);
         foreach ($testUrls as $url) {
             $this->get($url);
-            $priceRegExp = '<div class="price">';
+            $priceRegExp = '<div class="price" title=';
             $priceAssertFunction = 'assertRegExpWithUnquotedString';
             if (!$expectPrice) {
                 $priceAssertFunction = 'assertDoesNotMatchRegularExpressionWithUnquotedString';

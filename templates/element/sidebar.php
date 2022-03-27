@@ -12,8 +12,14 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+$classes = ['sidebar'];
+if (empty($categoriesForMenu) && empty($manufacturersForMenu)) {
+    $classes[] = 'empty';
+}
+
 ?>
-<div class="sidebar">
+<div class="<?php echo join(' ', $classes); ?>">
     <?php
     if (!empty($categoriesForMenu)) {
         echo $this->Menu->render($categoriesForMenu, ['id' => 'categories-menu', 'class' => 'vertical menu', 'header' => __('Categories')]);

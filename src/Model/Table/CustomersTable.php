@@ -212,6 +212,21 @@ class CustomersTable extends AppTable
         ]);
     }
 
+    public function getCustomerOrderClause()
+    {
+        $result = [
+            'Customers.lastname' => 'ASC',
+            'Customers.firstname' => 'ASC',
+        ];
+        if (Configure::read('app.customerMainNamePart') == 'firstname') {
+            $result = [
+                'Customers.firstname' => 'ASC',
+                'Customers.lastname' => 'ASC',
+            ];
+        }
+        return $result;
+    }
+
     public function getModifiedProductPricesByShoppingPrice($appAuth, $productId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 

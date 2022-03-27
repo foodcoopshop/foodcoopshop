@@ -516,7 +516,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         $tabs = [];
         foreach($this->getPaymentTexts() as $key => $paymentText) {
-            if ($key == 'deposit' && !Configure::read('app.isDepositEnabled')) {
+            if ($key == 'deposit' && (!Configure::read('app.isDepositEnabled') || !Configure::read('app.isDepositPaymentCashless'))) {
                 continue;
             }
             $tabs[] = [

@@ -401,7 +401,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         $this->assertSession(Configure::read('test.superadminId'), 'Auth.User.id_customer');
         $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.email');
-        $this->assertSession(true, 'Auth.User.active');
+        $this->assertSession(1, 'Auth.User.active');
         $this->assertSession(null, 'Auth.User.auto_login_hash');
         $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.address_customer.email');
 

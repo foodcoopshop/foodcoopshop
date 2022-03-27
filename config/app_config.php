@@ -148,13 +148,13 @@ return [
 
         /**
          * if you work on windows, change to e.g
-         * 'C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe'
+         * '"C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe"'
          */
         'mysqlDumpCommand' => 'mysqldump',
 
         /**
          * if you work on windows, change to e.g
-         * 'C:\\Programme\\xampp\\mysql\\bin\\mysql.exe'
+         * '"C:\\Programme\\xampp\\mysql\\bin\\mysql.exe"'
          */
         'mysqlCommand' => 'mysql',
 
@@ -175,6 +175,8 @@ return [
         'applyPaymentsOkCheckOnDeletingCustomers' => true,
 
         'isCustomerAllowedToModifyOwnOrders' => true,
+
+        'isCustomerAllowedToViewOwnOrders' => true,
 
         'showStatisticsForAdmins' => true,
 

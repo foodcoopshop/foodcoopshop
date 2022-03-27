@@ -86,6 +86,11 @@ class OrderDetailsController extends AdminAppController
                     return $this->checkOrderDetailIdAccess($this->getRequest()->getData('orderDetailId'));
                 }
                 return false;
+            case 'index':
+                if ($this->AppAuth->isCustomer() && !Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
+                    return false;
+                }
+                return true;
             default:
                 return parent::isAuthorized($user);
                 break;
@@ -275,8 +280,8 @@ class OrderDetailsController extends AdminAppController
             $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
         }
         array_multisort(
-            $storageLocation, SORT_ASC,
             $customerName, SORT_ASC,
+            $storageLocation, SORT_ASC,
             $manufacturerName, SORT_ASC,
             $productName, SORT_ASC,
             $orderDetails,
@@ -1144,6 +1149,8 @@ class OrderDetailsController extends AdminAppController
             $this->Flash->success($message);
         }
 
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
+
         $this->set([
             'status' => 1,
             'msg' => 'ok',
@@ -1257,6 +1264,8 @@ class OrderDetailsController extends AdminAppController
 
         $this->Flash->success($message);
 
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
+
         $this->set([
             'status' => 1,
             'msg' => 'ok',
@@ -1301,6 +1310,8 @@ class OrderDetailsController extends AdminAppController
         ]);
 
         $this->Flash->success($message);
+
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
 
         $this->set([
             'status' => 1,
@@ -1392,6 +1403,8 @@ class OrderDetailsController extends AdminAppController
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
+
+        $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);
 
         $this->set([
             'status' => 1,

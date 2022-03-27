@@ -23,7 +23,7 @@ $this->element('addScript', ['script' =>
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
-    echo '<h1>'.__('News').'</h1>';
+    echo '<h1 class="news">'.__('News').'</h1>';
 }
 echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,
@@ -35,6 +35,7 @@ if (!empty($newProducts)) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
         Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal');".
+        Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price');".
         Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
         Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".

@@ -30,6 +30,10 @@ use Cake\Core\Configure;
         "
     ]);
 
+    $this->element('highlightRowAfterEdit', [
+        'rowIdPrefix' => '#order-detail-'
+    ]);
+
     echo $this->element('autoPrintInvoice');
 
     if (Configure::read('app.isDepositEnabled')) {
@@ -55,7 +59,7 @@ use Cake\Core\Configure;
     if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init();".
+            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init(" . ($this->MyHtml->paymentIsCashless() ? '1' : '0') . ");".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.latest-invoices-tooltip-wrapper');"
         ]);
     }
@@ -180,7 +184,11 @@ foreach ($orderDetails as $orderDetail) {
         $rowClasses = $orderDetail['row_class'];
     }
 
-    echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
+    $rowIdHtml = '';
+    if ($groupBy == '') {
+        $rowIdHtml = ' id="order-detail-' . $orderDetail->id_order_detail . '"';
+    }
+    echo '<tr' . $rowIdHtml . ' class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo $this->element('rowMarker/rowMarker', [
         'show' => $editRecordAllowed,
@@ -344,10 +352,6 @@ echo '<div class="bottom-button-container">';
     }
 
     echo $this->element('orderDetailList/button/multiplePickupDays', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/generateOrderDetailsAsPdfOrderByStorageLocation', [
         'pickupDay' => $pickupDay
     ]);
 

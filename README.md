@@ -51,7 +51,7 @@
 * PHP >= 8.0
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP ZipArchive class
-* MySQL >= 5.7.7 (to support utf8mb4)
+* MySQL >= 5.7.7 (since v3.5 >= MySQL 8.0)
 * Node.js and npm >= v7 ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer v2 ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
