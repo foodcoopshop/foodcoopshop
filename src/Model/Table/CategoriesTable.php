@@ -6,7 +6,6 @@ use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Utility\Text;
 use Cake\Validation\Validator;
 
 /**
