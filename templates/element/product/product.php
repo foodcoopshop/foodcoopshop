@@ -158,20 +158,6 @@ if ($product['description'] != '') {
         }
     }
 
-    if (!empty($product['future_order_details'])) {
-        echo '<p style="margin-top:5px;"><i><b>';
-        $futureOrderDetailData = [];
-        foreach($product['future_order_details'] as $futureOrderDetail) {
-            $futureOrderDetailData[] = __('You_have_already_ordered_{0}_{1}_times_for_{2}.', [
-                '"' . $futureOrderDetail['product_name'] . '"',
-                $this->Number->formatAsDecimal($futureOrderDetail['product_amount'], 0),
-                $futureOrderDetail['pickup_day']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
-            ]);
-        }
-        echo implode('<br />', $futureOrderDetailData);
-        echo '</b></i></p>';
-    }
-
     if (!$appAuth->isOrderForDifferentCustomerMode()) {
         if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
             echo $this->Html->link(

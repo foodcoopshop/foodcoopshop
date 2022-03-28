@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-02-12 17:14+0100\n"
+"POT-Creation-Date: 2022-03-28 11:07+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -504,6 +504,9 @@ msgid "Cookies_explaination_text"
 msgstr ""
 
 msgid "Accept_cookies"
+msgstr ""
+
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
 msgstr ""
 
 msgid "Empty_cart"
@@ -2454,9 +2457,6 @@ msgid "{0,plural,=1{1_week} other{#_weeks}}"
 msgstr ""
 
 msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr ""
-
-msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
 msgstr ""
 
 msgid "from_which_{0}_%"

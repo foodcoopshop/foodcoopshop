@@ -198,26 +198,8 @@ class FrontendController extends AppController
             $i++;
         }
 
-        // never cache user dependent future order details
-        if ($this->AppAuth->user()) {
-            $futureOrderDetails = $this->AppAuth->getFutureOrderDetails();
-        }
-
-        $i = 0;
-        foreach($products as $product) {
-            $products[$i]['future_order_details'] = [];
-            if (!empty($futureOrderDetails)) {
-                foreach($futureOrderDetails as $futureOrderDetail) {
-                    if ($futureOrderDetail['product_id'] == $products[$i]['id_product']) {
-                        $products[$i]['future_order_details'][] = $futureOrderDetail;
-                        continue;
-                    }
-                }
-            }
-            $i++;
-        }
-
         return $products;
+
     }
 
     protected function resetOriginalLoggedCustomer()

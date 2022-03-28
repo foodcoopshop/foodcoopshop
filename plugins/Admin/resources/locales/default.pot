@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-02-12 17:25+0100\n"
+"POT-Creation-Date: 2022-03-28 11:07+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1583,10 +1583,10 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-msgid "Test_invoice"
+msgid "Delivery_note"
 msgstr ""
 
-msgid "Delivery_note"
+msgid "Test_invoice"
 msgstr ""
 
 msgid "Manufacturer_profile"
@@ -1932,9 +1932,6 @@ msgid "Cancel_selected_products"
 msgstr ""
 
 msgid "Orders_as_pdf"
-msgstr ""
-
-msgid "Orders_as_pdf_order_by_storage_location"
 msgstr ""
 
 msgid "Multiple_pickup_days"
