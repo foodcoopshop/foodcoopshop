@@ -191,7 +191,7 @@ foodcoopshop.Cart = {
 
         // if delivery break is enabled, disable button
         $('.pw a.btn.btn-cart').each(function() {
-            if($(this).hasClass('fa-times')) {
+            if($(this).find('i').hasClass('fa-times')) {
                 foodcoopshop.Helper.disableButton($(this));
             }
         });
