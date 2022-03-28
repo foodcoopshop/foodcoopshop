@@ -305,20 +305,30 @@ class AppTable extends Table
         $i = 0;
 
         foreach($products as $product) {
+
             $attributes = $this->Product->ProductAttributes->find('all', [
                 'conditions' => [
                     'ProductAttributes.id_product' => $product['id_product'],
                 ],
-                'contain' => [
-                    'PurchasePriceProductAttributes',
-                    'UnitProductAttributes',
-                ],
             ]);
+
             $attributesCount = $attributes->count();
             foreach($attributes as $attribute) {
-                if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+
+                $attributesWithAssociations = $this->Product->ProductAttributes->find('all', [
+                    'conditions' => [
+                        'ProductAttributes.id_product_attribute' => $attribute->id_product_attribute,
+                    ],
+                    'contain' => [
+                        'PurchasePriceProductAttributes',
+                        'UnitProductAttributes',
+                    ],
+                ])->first();
+
+                if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attributesWithAssociations)) {
                     $attributesCount--;
                 }
+
             }
 
             if ($attributesCount == 0) {
