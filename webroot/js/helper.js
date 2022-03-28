@@ -33,6 +33,48 @@ foodcoopshop.Helper = {
         }
     },
 
+    setFutureOrderDetails: function(futureOrderDetails) {
+
+        futureOrderDetails = $.parseJSON(futureOrderDetails);
+
+        if (futureOrderDetails.length == 0) {
+            return;
+        }
+
+        var groupedOrderDetails = [];
+
+        for(var i=0;i<futureOrderDetails.length;i++) {
+            var productId = futureOrderDetails[i].product_id;
+            if (groupedOrderDetails[productId] === undefined) {
+                groupedOrderDetails[productId] = [];
+            }
+            groupedOrderDetails[productId].push(futureOrderDetails[i]);
+        }
+
+        var result = [];
+        var html = '';
+        var linesHtml = '';
+        var lines;
+
+        for(productId in groupedOrderDetails) {
+            html = '<p style="margin-top:5px;"><i><b>';
+            lines = [];
+            linesHtml = '';
+            for(i in groupedOrderDetails[productId]) {
+                linesHtml = foodcoopshop.LocalizedJs.helper.YouHaveAlredyOrdered01TimesFor2.replaceI18n(0, '"' + groupedOrderDetails[productId][i].product_name + '"');
+                linesHtml = linesHtml.replaceI18n(1, groupedOrderDetails[productId][i].product_amount);
+                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47, { year:"numeric", month:"2-digit", day:"2-digit"});
+                linesHtml = linesHtml.replaceI18n(2, formattedPickupDay);
+                lines.push(linesHtml);
+            }
+            html += lines.join('<br />');
+            html += '</b></i></p>';
+            result.push(html);
+            $('#pw-' + productId).find('.c2').append(html);
+        }
+
+    },
+
     openPrintDialogForFile : function(file) {
         var iframe = document.createElement('iframe');
         iframe.style.visibility = 'hidden';

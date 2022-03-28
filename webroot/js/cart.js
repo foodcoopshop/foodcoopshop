@@ -189,6 +189,13 @@ foodcoopshop.Cart = {
 
     initAddToCartButton: function () {
 
+        // if delivery break is enabled, disable button
+        $('.pw a.btn.btn-cart').each(function() {
+            if($(this).hasClass('disabled')) {
+                foodcoopshop.Helper.disableButton($(this));
+            }
+        });
+
         $('.pw a.btn.btn-cart').on('click', function () {
 
             foodcoopshop.Helper.removeFlashMessage();

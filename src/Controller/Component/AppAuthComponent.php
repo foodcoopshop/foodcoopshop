@@ -83,6 +83,9 @@ class AppAuthComponent extends AuthComponent
 
     public function getFutureOrderDetails()
     {
+        if (empty($this->user())) {
+            return [];
+        }
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $futureOrderDetails = $this->OrderDetail->getFutureOrdersByCustomerId($this->getUserId());
         return $futureOrderDetails;

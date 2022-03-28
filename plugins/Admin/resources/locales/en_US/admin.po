@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-02-12 17:25+0100\n"
+"POT-Creation-Date: 2022-03-28 11:07+0200\n"
 "PO-Revision-Date: 2022-02-12 17:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1584,11 +1584,11 @@ msgstr "Test order list"
 msgid "Product"
 msgstr "Product"
 
-msgid "Test_invoice"
-msgstr "Test invoice"
-
 msgid "Delivery_note"
 msgstr "Delivery note"
+
+msgid "Test_invoice"
+msgstr "Test invoice"
 
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
@@ -1934,9 +1934,6 @@ msgstr "Cancel selected products"
 
 msgid "Orders_as_pdf"
 msgstr "Orders as PDF"
-
-msgid "Orders_as_pdf_order_by_storage_location"
-msgstr "Orders as PDF (sort by storage location)"
 
 msgid "Multiple_pickup_days"
 msgstr "Multiple pickup days"
@@ -2369,6 +2366,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Orders_as_pdf_order_by_storage_location"
+#~ msgstr "Orders as PDF (sort by storage location)"
 
 #~ msgid "Leave_empty_to_never_show_blog_post_on_start_page._After_that_the_blog_post_is_shown_in_the_blog_archive."
 #~ msgstr "Leave empty to never show blog post on start page. After that the blog post is shown in the <a href=\"/news\">blog archive</a>."
