@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-03-28 11:07+0200\n"
-"PO-Revision-Date: 2022-03-28 11:07+0200\n"
+"PO-Revision-Date: 2022-03-28 14:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1242,6 +1242,18 @@ msgstr "Price incl."
 msgid "Total_sum"
 msgstr "Total sum"
 
+msgid "Price_net"
+msgstr "Price net"
+
+msgid "Total_sum_net"
+msgstr "Total sum net"
+
+msgid "Value_added_tax"
+msgstr "Value added tax"
+
+msgid "Total_sum_gross"
+msgstr "Total sum gross"
+
 msgid "Generated_on_{0}"
 msgstr "Generated on {0}"
 
@@ -2319,9 +2331,6 @@ msgstr "Load past orders"
 msgid "Your_credit_balance"
 msgstr "Your credit balance"
 
-msgid "Value_added_tax"
-msgstr "Value added tax"
-
 msgid "Show_cart_button"
 msgstr "Show cart"
 
@@ -2654,6 +2663,10 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "Total_sum_tax"
+#~ msgstr "Total sum"
 
 #~ msgid "by"
 #~ msgstr "by"

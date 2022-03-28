@@ -24,6 +24,7 @@ abstract class PdfWriter
     protected $data = [];
     protected $plugin = null;
     protected $filename = '';
+    public $templateFile = null;
 
     public function setPdfLibrary($pdfLibrary): PdfWriter
     {
@@ -59,10 +60,12 @@ abstract class PdfWriter
         if ($this->plugin) {
             $viewBuilder->setPlugin($this->plugin);
         }
-        $reflect = new \ReflectionClass($this);
-        $templateFile = Inflector::underscore(str_replace('PdfWriter', '', $reflect->getShortName()));
-        $templateFile = DS . 'pdf' . DS . $templateFile;
-        $viewBuilder->setLayout('ajax')->setVars($this->getData())->setTemplate($templateFile)->build()->render();
+        if (is_null($this->templateFile)) {
+            $reflect = new \ReflectionClass($this);
+            $this->templateFile = Inflector::underscore(str_replace('PdfWriter', '', $reflect->getShortName()));
+            $this->templateFile = DS . 'pdf' . DS . $this->templateFile;
+        }
+        $viewBuilder->setLayout('ajax')->setVars($this->getData())->setTemplate($this->templateFile)->build()->render();
     }
 
     private function setContent()

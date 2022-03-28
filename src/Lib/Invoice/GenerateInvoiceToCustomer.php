@@ -15,6 +15,7 @@
 namespace App\Lib\Invoice;
 
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
+use App\Lib\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Datasource\FactoryLocator;
@@ -50,7 +51,11 @@ class GenerateInvoiceToCustomer
             $data->name, $data->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay), $invoiceNumber
         );
 
-        $pdfWriter = new InvoiceToCustomerPdfWriter();
+        if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
+            $pdfWriter = new InvoiceToCustomerPdfWriter();
+        } else {
+            $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter();
+        }
         $pdfWriter->prepareAndSetData($data, $paidInCash, $invoiceNumber, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();

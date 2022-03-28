@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-03-28 11:07+0200\n"
-"PO-Revision-Date: 2022-02-12 17:28+0100\n"
+"PO-Revision-Date: 2022-03-23 10:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1242,6 +1242,18 @@ msgstr "Preis inkl."
 msgid "Total_sum"
 msgstr "Gesamtsumme"
 
+msgid "Price_net"
+msgstr "Nettopreis"
+
+msgid "Total_sum_net"
+msgstr "Nettosumme"
+
+msgid "Value_added_tax"
+msgstr "Umsatzsteuer"
+
+msgid "Total_sum_gross"
+msgstr "Bruttosumme"
+
 msgid "Generated_on_{0}"
 msgstr "Generiert am {0}"
 
@@ -2319,9 +2331,6 @@ msgstr "Vergangene Bestellungen laden"
 msgid "Your_credit_balance"
 msgstr "Dein Guthaben"
 
-msgid "Value_added_tax"
-msgstr "Umsatzsteuer"
-
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
 
@@ -2654,6 +2663,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Total_sum_tax"
+#~ msgstr "Summe USt."
 
 #~ msgid "by"
 #~ msgstr "von"

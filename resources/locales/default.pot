@@ -4,7 +4,6 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2022-03-28 11:07+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
@@ -1241,6 +1240,18 @@ msgstr ""
 msgid "Total_sum"
 msgstr ""
 
+msgid "Price_net"
+msgstr ""
+
+msgid "Total_sum_net"
+msgstr ""
+
+msgid "Value_added_tax"
+msgstr ""
+
+msgid "Total_sum_gross"
+msgstr ""
+
 msgid "Generated_on_{0}"
 msgstr ""
 
@@ -2316,9 +2327,6 @@ msgid "Load_past_orders"
 msgstr ""
 
 msgid "Your_credit_balance"
-msgstr ""
-
-msgid "Value_added_tax"
 msgstr ""
 
 msgid "Show_cart_button"

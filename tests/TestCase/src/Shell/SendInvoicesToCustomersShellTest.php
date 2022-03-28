@@ -57,6 +57,29 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertResponseContains($expectedResult);
     }
 
+    public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum()
+    {
+
+        $customerId = Configure::read('test.superadminId');
+
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Product->updateAll(['id_tax' => 2], ['active' => APP_ON]);
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 10);
+        $this->changeConfiguration('FCS_TAX_BASED_ON_NET_INVOICE_SUM', 1);
+        $this->loginAsSuperadmin();
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceWithTaxBasedOnInvoiceSum.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+    }
+
     public function testSendInvoicesWithExcludedFutureOrder()
     {
 

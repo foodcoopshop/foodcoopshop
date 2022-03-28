@@ -175,4 +175,71 @@ class InvoicesTableTest extends AppCakeTestCase
 
     }
 
+    public function testGetPreparedTaxRatesForSumTableWithTaxBasedOnNetInvoiceSum()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 10);
+        $this->changeConfiguration('FCS_TAX_BASED_ON_NET_INVOICE_SUM', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Product->updateAll(['id_tax' => 2], ['active' => APP_ON]);
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $paidInCash = 0;
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoices = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ]
+        ])->toArray();
+
+        $result = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
+
+        $expected = [
+            'taxRates' => [
+                'cash' => [],
+                'cashless' => [
+                    '10' => [
+                        'sum_price_excl' => 35.28,
+                        'sum_tax' => 3.53,
+                        'sum_price_incl' => 38.81,
+                    ],
+                ],
+                'total' => [
+                    '10' => [
+                        'sum_price_excl' => 35.28,
+                        'sum_tax' => 3.53,
+                        'sum_price_incl' => 38.81,
+                    ],
+                ]
+            ],
+            'taxRatesSums' => [
+                'cashless' => [
+                    'sum_price_excl' => 35.28,
+                    'sum_tax' => 3.53,
+                    'sum_price_incl' => 38.81,
+                ],
+                'total' => [
+                    'sum_price_excl' => 35.28,
+                    'sum_tax' => 3.53,
+                    'sum_price_incl' => 38.81,
+                ],
+            ],
+        ];
+
+        $this->assertEquals($result, $expected);
+
+    }
+
 }
