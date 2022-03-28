@@ -25,7 +25,8 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
-    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".json_encode($appAuth->getFutureOrderDetails())."');"
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
@@ -69,11 +70,11 @@ foreach ($products as $product) {
         'showManufacturerDetailLink' => true,
         'showIsNewBadgeAsLink' => true
     ],
-//     [
-//         'cache' => [
-//             'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
-//         ],
-//     ]
+    [
+        'cache' => [
+            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+        ],
+    ]
     );
 }
 

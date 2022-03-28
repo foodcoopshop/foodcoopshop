@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-03-23 10:24+0100\n"
+"POT-Creation-Date: 2022-03-28 11:07+0200\n"
 "PO-Revision-Date: 2022-03-23 10:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -506,6 +506,9 @@ msgstr "Die genaue Verwendung der Cookies kannst du in unserer <a href=\"/datens
 
 msgid "Accept_cookies"
 msgstr "Cookies akzeptieren"
+
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr "Du hast {0} bereits {1}x für den Abholtag {2} bestellt."
 
 msgid "Empty_cart"
 msgstr "Warenkorb leeren"
@@ -2465,9 +2468,6 @@ msgstr "{0,plural,=1{1 Woche} other{# Wochen}}"
 
 msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
 msgstr "{0,plural,=1{1 Woche} other{# Wochen}} {1,plural,=1{und 1 Tag} other{und # Tage}}"
-
-msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
-msgstr "Du hast {0} bereits {1}x für den Abholtag {2} bestellt."
 
 msgid "from_which_{0}_%"
 msgstr "davon {0} %"

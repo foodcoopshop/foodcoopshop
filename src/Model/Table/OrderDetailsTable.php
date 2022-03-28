@@ -293,6 +293,10 @@ class OrderDetailsTable extends AppTable
     {
         $futureOrders = $this->find('all', [
             'conditions' => $this->getFutureOrdersConditions($customerId),
+            'order' => [
+                'OrderDetails.product_id' => 'ASC',
+                'OrderDetails.pickup_day' => 'ASC',
+            ]
         ]);
         return $futureOrders;
     }

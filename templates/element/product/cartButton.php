@@ -13,24 +13,24 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 if ($hideButton) {
     return;
 }
 ?>
 
 <div class="line">
+
     <?php
     $availableQuantity = $stockAvailableQuantity;
+    $disabledClass = '';
+
     if ($product['is_stock_product'] && $product['stock_management_enabled']) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
     if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
         || $deliveryBreakEnabled) {
-        $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
-        ]);
+
+        $disabledClass = 'disabled ';
 
         if ($deliveryBreakEnabled) {
             $cartButtonIcon = 'fa-times';
@@ -40,7 +40,7 @@ if ($hideButton) {
     }
     ?>
 
-    <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-outline-light btn-cart" href="javascript:void(0);">
+    <a id="btn-cart-<?php echo $productId; ?>" class="<?php echo $disabledClass; ?>btn btn-outline-light btn-cart" href="javascript:void(0);">
         <i class="fa fa-fw fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
     </a>
 
