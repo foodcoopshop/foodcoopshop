@@ -313,20 +313,25 @@ class AppTable extends Table
             ]);
 
             $attributesCount = $attributes->count();
-            foreach($attributes as $attribute) {
 
-                $attributesWithAssociations = $this->Product->ProductAttributes->find('all', [
-                    'conditions' => [
-                        'ProductAttributes.id_product_attribute' => $attribute->id_product_attribute,
-                    ],
-                    'contain' => [
-                        'PurchasePriceProductAttributes',
-                        'UnitProductAttributes',
-                    ],
-                ])->first();
+            if ($attributesCount > 0) {
 
-                if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attributesWithAssociations)) {
-                    $attributesCount--;
+                foreach($attributes as $attribute) {
+
+                    $attributesWithAssociations = $this->Product->ProductAttributes->find('all', [
+                        'conditions' => [
+                            'ProductAttributes.id_product_attribute' => $attribute->id_product_attribute,
+                        ],
+                        'contain' => [
+                            'PurchasePriceProductAttributes',
+                            'UnitProductAttributes',
+                        ],
+                    ])->first();
+
+                    if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attributesWithAssociations)) {
+                        $attributesCount--;
+                    }
+
                 }
 
             }
