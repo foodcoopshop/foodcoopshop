@@ -28,9 +28,6 @@ if ($hideButton) {
     }
     if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
         || $deliveryBreakEnabled) {
-        $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
-        ]);
 
         if ($deliveryBreakEnabled) {
             $cartButtonIcon = 'fa-times';
