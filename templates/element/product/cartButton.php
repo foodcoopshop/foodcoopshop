@@ -13,8 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 if ($hideButton) {
     return;
 }
