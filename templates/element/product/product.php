@@ -176,14 +176,14 @@ if ($product->description != '') {
 
     echo '<div class="c3">';
 
-    if (!empty($product->attributes)) {
+    if (!empty($product->product_attributes)) {
         // PRODUCT WITH ATTRIBUTES
 
         // 1) kick attributes if not available
         $hasCheckedAttribute = false;
         $i = 0;
         $preparedProductAttributes = [];
-        foreach ($product->attributes as $attribute) {
+        foreach ($product->product_attributes as $attribute) {
             if ($attribute->stock_available->always_available || $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit > 0) {
                 $preparedProductAttributes[] = $attribute;
             }
@@ -194,7 +194,7 @@ if ($product->description != '') {
         $i = 0;
         foreach ($preparedProductAttributes as $attribute) {
             $preparedProductAttributes[$i]->checked = false;
-            if ($attribute->product_attribute->default_on == 1) {
+            if ($attribute->default_on == 1) {
                 $preparedProductAttributes[$i]->checked = true;
                 $hasCheckedAttribute = true;
             }
@@ -214,21 +214,22 @@ if ($product->description != '') {
 
         // render remaining attributes (with attribute "checked")
         foreach ($preparedProductAttributes as $attribute) {
+
             $entityClasses = ['ew'];
             if ($attribute->checked) {
                 $entityClasses[] = 'active';
             }
-            echo '<div class="'.join(' ', $entityClasses).'" id="ew-'.$attribute->product_attribute->id_product_attribute.'">';
+            echo '<div class="'.join(' ', $entityClasses).'" id="ew-'.$attribute->id_product_attribute.'">';
             if ($showProductPrice) {
                 echo '<div class="line">';
-                $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%">' . $this->Number->formatAsCurrency($attribute->product_attribute->gross_price) . '</div>';
+                $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%">' . $this->Number->formatAsCurrency($attribute->gross_price) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($attribute->unit_product_attribute->price_per_unit_enabled) {
-                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->unit_amount, $product->tax->rate);
+                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount, $product->tax->rate);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
                         $attribute->unit_product_attribute->price_incl_per_unit,
                         $attribute->unit_product_attribute->unit_name,
-                        $attribute->unit_product_attribute->unit_amount,
+                        $attribute->unit_product_attribute->amount,
                         !$appAuth->isSelfServiceModeByUrl()
                     );
                 }
@@ -247,22 +248,22 @@ if ($product->description != '') {
                     ]);
                 }
                 */
-                echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute->product_attribute->calculated_tax) . '</div>';
+                echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute->calculated_tax) . '</div>';
                 echo '</div>';
             } else {
                 // Cart.js::initAddToCartButton() needs the following elements!
                 echo '<div class="price hide">' . $this->Number->formatAsCurrency(0) . '</div>';
                 echo '<div class="tax hide">'. $this->Number->formatAsCurrency(0) . '</div>';
             }
-            echo $this->element('product/hiddenProductIdField', ['productId' => $product->id_product . '-' . $attribute->product_attribute->id_product_attribute]);
+            echo $this->element('product/hiddenProductIdField', ['productId' => $product->id_product . '-' . $attribute->id_product_attribute]);
             echo $this->element('product/amountWrapper', [
                 'product' => $product,
-                'stockAvailable' => $attribute->stock_vailable,
+                'stockAvailable' => $attribute->stock_available,
                 'hideAmountSelector' => $isStockProductOrderPossible
             ]);
             echo $this->element('product/cartButton', [
                 'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
-                'productId' => $product->id_product . '-' . $attribute->product_attribute->id_product_attribute,
+                'productId' => $product->id_product . '-' . $attribute->id_product_attribute,
                 'product' => $product,
                 'stockAvailableQuantity' => $attribute->stock_available->quantity,
                 'stockAvailableQuantityLimit' => $attribute->stock_available->quantity_limit,
@@ -304,7 +305,7 @@ if ($product->description != '') {
             );
 
             echo '<div class="radio">
-                      <label class="attribute-button" id="'.'attribute-button-'.$attribute->product_attribute->id_product_attribute.'">
+                      <label class="attribute-button" id="'.'attribute-button-'.$attribute->id_product_attribute.'">
                           <input type="radio" name="product-'.$product->id_product.'" '.($attribute->checked ? 'checked' : '').'>'.
                                $radioButtonLabel.'
                       </label>
@@ -318,12 +319,12 @@ if ($product->description != '') {
                 echo '<div class="line">';
                 $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%">' . $this->Number->formatAsCurrency($product->gross_price) . '</div>';
                 $pricePerUnitInfoText = '';
-                if ($product->price_per_unit_enabled) {
-                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product->price_incl_per_unit, $product->quantity_in_units, $product->unit_amount, $product->tax->rate);
+                if ($product->unit_product->price_per_unit_enabled) {
+                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product->unit_product->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount, $product->tax->rate);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
-                        $product->price_incl_per_unit,
-                        $product->unit_name,
-                        $product->unit_amount,
+                        $product->unit_product->price_incl_per_unit,
+                        $product->unit_product->unit_name,
+                        $product->unit_product->amount,
                         !$appAuth->isSelfServiceModeByUrl()
                     );
                 }
@@ -333,6 +334,7 @@ if ($product->description != '') {
                 }
                 echo '</div>';
                 if (!$this->request->getSession()->read('Auth.orderCustomer') && !empty($product->timebased_currency_money_incl)) {
+                    /*
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'manufacturerLimitReached' => $product->timebased_currency_manufacturer_limit_reached,
                         'class' => 'timebased-currency-product-info',
@@ -340,6 +342,7 @@ if ($product->description != '') {
                         'seconds' => $product->timebased_currency_seconds,
                         'labelPrefix' => __('from_which_{0}_%', [$product->timebased_currency_max_percentage]) . ' '
                     ]);
+                    */
                 }
                 echo '<div class="tax">'. $this->Number->formatAsCurrency($product->calculated_tax) . '</div>';
             } else {
@@ -358,9 +361,9 @@ if ($product->description != '') {
                 'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
                 'productId' => $product->id_product,
                 'product' => $product,
-                'stockAvailableQuantity' => $product->quantity,
-                'stockAvailableQuantityLimit' => $product->quantity_limit,
-                'stockAvailableAlwaysAvailable' => $product->always_available,
+                'stockAvailableQuantity' => $product->stock_available->quantity,
+                'stockAvailableQuantityLimit' => $product->stock_available->quantity_limit,
+                'stockAvailableAlwaysAvailable' => $product->stock_available->always_available,
                 'hideButton' => $isStockProductOrderPossible,
                 'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
                 'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
@@ -388,7 +391,7 @@ if ($product->description != '') {
         if ($product->unity != '') {
             $unityStrings[] = $product->unity;
         }
-        $unitString = $this->PricePerUnit->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_produc->unit_name);
+        $unitString = $this->PricePerUnit->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->unit_name);
         if ($unitString != '') {
             $unityStrings[] = $unitString;
         }

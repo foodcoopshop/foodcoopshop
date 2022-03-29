@@ -279,11 +279,16 @@ class CategoriesTable extends AppTable
             }
             */
 
+            //$products = $this->hideIfPurchasePriceNotSet($products);
+//             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+//                 $contain[] = 'PurchasePriceProductAttributes';
+//             }
+
+
             $products = $query->toArray();
 
             //$products = $this->hideMultipleAttributes($products);
             // implement in SQL
-            //$products = $this->hideIfPurchasePriceNotSet($products);
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
 
             Cache::write($cacheKey, $products);

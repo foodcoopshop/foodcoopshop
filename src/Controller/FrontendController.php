@@ -75,7 +75,7 @@ class FrontendController extends AppController
                 $products[$i]->gross_price = $grossPrice;
                 $products[$i]->calculated_tax = $grossPrice - $products[$i]->price;
                 $products[$i]->tax->rate = $taxRate;
-                $products[$i]->is_new = $this->Product->isNew($products[$i]->created);
+                $products[$i]->is_new = $this->Product->isNew($products[$i]->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
                 if (!Configure::read('app.isDepositEnabled')) {
                     $products[$i]['deposit'] = 0;
@@ -89,8 +89,6 @@ class FrontendController extends AppController
                     $products[$i]->next_delivery_day = $this->Product->calculatePickupDayRespectingDeliveryRhythm($products[$i]);
                 }
 
-                $products[$i]['attributes'] = [];
-
                 if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                     if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]['timebased_currency_enabled'])) {
                         $products[$i]['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($products[$i]['gross_price'], $products[$i]['timebased_currency_max_percentage']);
@@ -101,37 +99,7 @@ class FrontendController extends AppController
 
                 }
 
-                $conditions = [
-                    'ProductAttributes.id_product' => $product['id_product'],
-                ];
-                $contain = [
-                    'StockAvailables',
-                    'ProductAttributeCombinations.Attributes',
-                    'DepositProductAttributes',
-                    'UnitProductAttributes'
-                ];
-
-                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                    $contain[] = 'PurchasePriceProductAttributes';
-                }
-
-                $attributes = $this->ProductAttribute->find('all', [
-                    'conditions' => $conditions,
-                    'contain' => $contain,
-                ]);
-
-                $preparedAttributes = [];
-                foreach ($attributes as $attribute) {
-
-                    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                        if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
-                            continue;
-                        }
-                    }
-
-                    $preparedAttributes['ProductAttributes'] = [
-                        'id_product_attribute' => $attribute->id_product_attribute
-                    ];
+                foreach ($product->product_attributes as &$attribute) {
 
                     $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
                     $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
@@ -149,34 +117,9 @@ class FrontendController extends AppController
 
                     $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
 
-                    $preparedAttributes['ProductAttributes'] = [
-                        'gross_price' => $grossPrice,
-                        'calcluated_tax' => $grossPrice - $attribute->price,
-                        'default_on' => $attribute->default_on,
-                        'id_product_attribute' => $attribute->id_product_attribute
-                    ];
-                    $preparedAttributes['StockAvailables'] = [
-                        'quantity' => $attribute->stock_available->quantity,
-                        'quantity_limit' => $attribute->stock_available->quantity_limit,
-                        'always_available' => $attribute->stock_available->always_available,
-                    ];
-                    $preparedAttributes['DepositProductAttributes'] = [
-                        'deposit' => Configure::read('app.isDepositEnabled') && !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
-                    ];
-                    $preparedAttributes['ProductAttributeCombinations'] = [
-                        'Attributes' => [
-                            'name' => $attribute->product_attribute_combination->attribute->name,
-                            'can_be_used_as_unit' => $attribute->product_attribute_combination->attribute->can_be_used_as_unit
-                        ]
-                    ];
-                    $preparedAttributes['Units'] = [
-                        'price_per_unit_enabled' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_per_unit_enabled : 0,
-                        'price_incl_per_unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0,
-                        'unit_name' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->name : '',
-                        'unit_amount' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->amount : 0,
-                        'quantity_in_units' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->quantity_in_units : 0
-                    ];
-
+                    $attribute->gross_price = $grossPrice;
+                    $attribute->calcluated_tax = $grossPrice - $attribute->price;
+                    /*
                     if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                         if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]['timebased_currency_enabled'])) {
                             $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $products[$i]['timebased_currency_max_percentage']);
@@ -185,8 +128,7 @@ class FrontendController extends AppController
                             $preparedAttributes['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]['id_manufacturer']);
                         }
                     }
-
-                    $products[$i]['attributes'][] = $preparedAttributes;
+                    */
                 }
             } else {
                 $products[$i] = $cachedProduct;
