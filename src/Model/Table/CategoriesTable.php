@@ -207,7 +207,6 @@ class CategoriesTable extends AppTable
             }
 
             if (empty($appAuth->user())) {
-                $conditions['Products.is_private'] = APP_OFF;
                 $conditions['Manufacturers.is_private'] = APP_OFF;
             }
 
@@ -215,11 +214,49 @@ class CategoriesTable extends AppTable
                 $conditions['Products.id_product'] = $productId;
             }
 
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $contain[] = 'PurchasePriceProducts';
+                $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
+            }
+
             $query = $this->Product->find('all', [
                 'conditions' => $conditions,
                 'contain' => $contain,
                 'order' => $this->getOrdersForProductListQuery(),
             ]);
+
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+
+                $query->where(function (QueryExpression $exp, Query $q) {
+                    return $exp->or([
+                        $exp->and([
+                            $q->newExpr()->eq('UnitProducts.price_per_unit_enabled', APP_ON),
+                            $q->newExpr()->isNotNull('UnitProducts.purchase_price_incl_per_unit'),
+                        ]),
+                        $exp->and([
+                            $q->newExpr()->isNotNull('PurchasePriceProducts.price'),
+                        ]),
+                    ]);
+                });
+
+                $query->contain(['ProductAttributes.PurchasePriceProductAttributes']);
+                $query->contain([
+                    'ProductAttributes' => [
+                        'conditions' => function(QueryExpression $exp, Query $q) {
+                            return $exp->or([
+                                $exp->and([
+                                    $q->newExpr()->eq('UnitProductAttributes.price_per_unit_enabled', APP_ON),
+                                    $q->newExpr()->isNotNull('UnitProductAttributes.purchase_price_incl_per_unit'),
+                                ]),
+                                $exp->and([
+                                    $q->newExpr()->isNotNull('PurchasePriceProductAttributes.price'),
+                                ]),
+                            ]);
+                        }
+                    ],
+                ]);
+
+            }
 
             if (!$filterByNewProducts && $categoryId != '') {
                 $query->contain([
@@ -278,12 +315,6 @@ class CategoriesTable extends AppTable
 
             }
             */
-
-            //$products = $this->hideIfPurchasePriceNotSet($products);
-//             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-//                 $contain[] = 'PurchasePriceProductAttributes';
-//             }
-
 
             $products = $query->toArray();
 

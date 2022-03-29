@@ -12,7 +12,6 @@ use Cake\Utility\Hash;
 use Cake\Utility\Security;
 use Cake\Validation\Validation;
 use Cake\Validation\Validator;
-use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -239,30 +238,6 @@ class AppTable extends Table
         return $sql;
     }
 
-    /**
-     * @return string
-     */
-    protected function getConditionsForProductListQuery($appAuth)
-    {
-        $conditions = "WHERE 1
-                    AND StockAvailables.id_product_attribute = 0
-                    AND (Units.id_product_attribute = 0 OR Units.id_product_attribute IS NULL)
-                    AND Products.active = :active
-                    AND Manufacturers.active = :active ";
-
-        if (empty($appAuth->user())) {
-            $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
-        }
-
-        if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-            if ($appAuth->isOrderForDifferentCustomerMode()) {
-                $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
-            }
-        }
-
-        return $conditions;
-    }
-
     protected function getOrdersForProductListQuery(): array
     {
         return [
@@ -271,30 +246,7 @@ class AppTable extends Table
         ];
     }
 
-    /**
-     * remove multiple rows due to multiple attributes that were needed
-     * for custom attribute barcode search
-     */
-    protected function hideMultipleAttributes($products)
-    {
-        if (!Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            return $products;
-        }
 
-        $i = 0;
-        $containingProductIds = [];
-        foreach($products as $product) {
-            if (in_array($product['id_product'], $containingProductIds)) {
-                unset($products[$i]);
-            }
-            $containingProductIds[] = $product['id_product'];
-            $i++;
-        }
-
-        $products = $this->reindexArray($products);
-        return $products;
-
-    }
     protected function hideIfPurchasePriceNotSet($products)
     {
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
