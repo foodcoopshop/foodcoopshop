@@ -41,7 +41,7 @@ if (!empty($newProducts)) {
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
         Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
         Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
-        Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".json_encode($appAuth->getFutureOrderDetails())."');"
+        Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
     ]);
 
     echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
