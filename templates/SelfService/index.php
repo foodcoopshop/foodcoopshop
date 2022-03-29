@@ -26,7 +26,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();".
-    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".json_encode($appAuth->getFutureOrderDetails())."');"
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
 ]);
 
 if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
