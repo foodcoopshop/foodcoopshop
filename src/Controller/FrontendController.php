@@ -50,45 +50,43 @@ class FrontendController extends AppController
 
             if ($cachedProduct === null) {
 
-                $taxRate = is_null($products[$i]['taxRate']) ? 0 : $products[$i]['taxRate'];
+                $taxRate = $products[$i]->tax->rate ?? 0;
+
+                $products[$i]->deposit_product = $products[$i]->deposit_product ?? (object) ['deposit' => 0];
+                $products[$i]->tax = $products[$i]->tax ?? (object) ['rate' => 0];
+                $products[$i]->unit_product = $products[$i]->unit_product ?? (object) ['price_incl_per_unit' => 0];
 
                 // START: override shopping with purchase prices / zero prices
-                $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice($this->AppAuth, $products[$i]['id_product'], $products[$i]['price'], $products[$i]['price_incl_per_unit'], $products[$i]['deposit'], $taxRate);
-                $products[$i]['price'] = $modifiedProductPricesByShoppingPrice['price'];
-                $products[$i]['price_incl_per_unit'] = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
-                $products[$i]['deposit'] = $modifiedProductPricesByShoppingPrice['deposit'];
+                $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice(
+                    $this->AppAuth,
+                    $products[$i]->id_product,
+                    $products[$i]->price,
+                    $products[$i]->unit_product->price_incl_per_unit,
+                    $products[$i]->deposit_product->deposit,
+                    $taxRate,
+                );
+                $products[$i]->price = $modifiedProductPricesByShoppingPrice['price'];
+                $products[$i]->unit_product->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
+                $products[$i]->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
                 // END: override shopping with purchase prices / zero prices
 
-                $grossPrice = $this->Product->getGrossPrice($products[$i]['price'], $taxRate);
+                $grossPrice = $this->Product->getGrossPrice($products[$i]->price, $taxRate);
 
-                $products[$i]['gross_price'] = $grossPrice;
-                $products[$i]['tax'] = $grossPrice - $products[$i]['price'];
-                $products[$i]['tax_rate'] = $taxRate;
-                $products[$i]['is_new'] = $this->Product->isNew($products[$i]['created']);
+                $products[$i]->gross_price = $grossPrice;
+                $products[$i]->calculated_tax = $grossPrice - $products[$i]->price;
+                $products[$i]->tax->rate = $taxRate;
+                $products[$i]->is_new = $this->Product->isNew($products[$i]->created);
 
                 if (!Configure::read('app.isDepositEnabled')) {
                     $products[$i]['deposit'] = 0;
                 }
 
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                    $products[$i]['next_delivery_day'] = new FrozenDate('1970-01-01');
+                    $products[$i]->next_delivery_day = new FrozenDate('1970-01-01');
                 } elseif ($this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
-                    $products[$i]['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+                    $products[$i]->next_delivery_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
                 } else {
-                    $products[$i]['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
-                        $this->Product->newEntity([
-                            'delivery_rhythm_order_possible_until' => $products[$i]['delivery_rhythm_order_possible_until'] == '' ? null : new FrozenDate($products[$i]['delivery_rhythm_order_possible_until']),
-                            'delivery_rhythm_first_delivery_day' => $products[$i]['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($products[$i]['delivery_rhythm_first_delivery_day']),
-                            'delivery_rhythm_type' => $products[$i]['delivery_rhythm_type'],
-                            'delivery_rhythm_count' => $products[$i]['delivery_rhythm_count'],
-                            'delivery_rhythm_send_order_list_weekday' => $products[$i]['delivery_rhythm_send_order_list_weekday'],
-                            'delivery_rhythm_send_order_list_day' => $products[$i]['delivery_rhythm_send_order_list_day'],
-                            // convert database strings to boolean to && them and then re-convert to string
-                            'is_stock_product' => (string) (
-                                (boolean) $products[$i]['is_stock_product'] && (boolean) $products[$i]['stock_management_enabled']
-                            )
-                        ]
-                    ));
+                    $products[$i]->next_delivery_day = $this->Product->calculatePickupDayRespectingDeliveryRhythm($products[$i]);
                 }
 
                 $products[$i]['attributes'] = [];
@@ -153,7 +151,7 @@ class FrontendController extends AppController
 
                     $preparedAttributes['ProductAttributes'] = [
                         'gross_price' => $grossPrice,
-                        'tax' => $grossPrice - $attribute->price,
+                        'calcluated_tax' => $grossPrice - $attribute->price,
                         'default_on' => $attribute->default_on,
                         'id_product_attribute' => $attribute->id_product_attribute
                     ];
@@ -254,11 +252,13 @@ class FrontendController extends AppController
         $this->set('categoriesForMenu', $categoriesForMenu);
 
         $manufacturersForMenu = [];
+        /*
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
+        */
 
         $this->Page = $this->getTableLocator()->get('Pages');
         $conditions = [];

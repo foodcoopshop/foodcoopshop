@@ -263,12 +263,12 @@ class AppTable extends Table
         return $conditions;
     }
 
-    /**
-     * @return string
-     */
-    protected function getOrdersForProductListQuery()
+    protected function getOrdersForProductListQuery(): array
     {
-        return " ORDER BY Products.name ASC, Images.id_image DESC;";
+        return [
+            'Products.name' => 'ASC',
+            'Images.id_image' => 'DESC',
+        ];
     }
 
     /**
@@ -378,38 +378,27 @@ class AppTable extends Table
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
-                $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_first_delivery_day' => $product['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($product['delivery_rhythm_first_delivery_day']),
-                        'delivery_rhythm_type' => $product['delivery_rhythm_type'],
-                        'delivery_rhythm_count' => $product['delivery_rhythm_count'],
-                        'delivery_rhythm_send_order_list_weekday' => $product['delivery_rhythm_send_order_list_weekday'],
-                        'delivery_rhythm_send_order_list_day' => $product['delivery_rhythm_send_order_list_day'],
-                        'is_stock_product' => $product['is_stock_product']
-                    ]
-                )
-            );
+            $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm($product);
 
             // deactivates the product if it can not be ordered this week
             if ($deliveryDate == 'delivery-rhythm-triggered-delivery-break') {
-                $products[$i]['delivery_break_enabled'] = true;
+                $products[$i]->delivery_break_enabled = true;
             }
 
             // deactivates the product if manufacturer based delivery break is enabled
-            if ($this->Product->deliveryBreakEnabled($product['no_delivery_days'], $deliveryDate)) {
-                $products[$i]['delivery_break_enabled'] = true;
+            if ($this->Product->deliveryBreakEnabled($product->no_delivery_days, $deliveryDate)) {
+                $products[$i]->delivery_break_enabled = true;
             }
 
             // deactivates the product if global delivery break is enabled
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
-                $products[$i]['delivery_break_enabled'] = true;
+                $products[$i]->delivery_break_enabled = true;
             }
 
             // hides products when order_possible_until is reached (do not apply if product is stock product)
-            if (!($product['is_stock_product'] && $product['stock_management_enabled']) &&
-                $product['delivery_rhythm_type'] == 'individual' &&
-                $product['delivery_rhythm_order_possible_until'] < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+            if (!($product->is_stock_product && $product->stock_management_enabled) &&
+                $product->delivery_rhythm_type == 'individual' &&
+                $product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) > Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                     unset($products[$i]);
             }
 

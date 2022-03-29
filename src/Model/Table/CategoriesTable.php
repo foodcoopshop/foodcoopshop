@@ -6,6 +6,9 @@ use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
+use Cake\Datasource\FactoryLocator;
+use Cake\ORM\Query;
 use Cake\Validation\Validator;
 
 /**
@@ -169,36 +172,93 @@ class CategoriesTable extends AppTable
 
         if ($products === null) {
 
-            $params = [
-                'active' => APP_ON
+            $this->Product = FactoryLocator::get('Table')->get('Products');
+
+            $conditions = [
+                'Products.active' => APP_ON,
+                'Manufacturers.active' => APP_ON,
             ];
+            $contain = [
+                'Images',
+                'CategoryProducts',
+                'DepositProducts',
+                'Manufacturers',
+                'StockAvailables' => [
+                    'conditions' => [
+                        'StockAvailables.id_product_attribute' => 0
+                    ]
+                ],
+                'UnitProducts',
+                'Taxes',
+                'ProductAttributes',
+                'ProductAttributes.StockAvailables' => [
+                    'conditions' => [
+                        'StockAvailables.id_product_attribute > 0'
+                    ]
+                ],
+                'ProductAttributes.DepositProductAttributes',
+                'ProductAttributes.UnitProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
+            ];
+
+            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                $contain[] = 'BarcodeProducts';
+                $contain[] = 'ProductAttributes.BarcodeProductAttributes';
+            }
+
             if (empty($appAuth->user())) {
-                $params['isPrivate'] = APP_OFF;
+                $conditions['Products.is_private'] = APP_OFF;
+                $conditions['Manufacturers.is_private'] = APP_OFF;
             }
 
-            $sql = 'SELECT ';
-            $sql .= $this->getFieldsForProductListQuery();
-            $sql .= "FROM ".$this->tablePrefix."product Products ";
-
-            if (! $filterByNewProducts) {
-                $sql .= "LEFT JOIN ".$this->tablePrefix."category_product CategoryProducts ON CategoryProducts.id_product = Products.id_product
-                     LEFT JOIN ".$this->tablePrefix."category Categories ON CategoryProducts.id_category = Categories.id_category ";
+            if ($productId > 0) {
+                $conditions['Products.id_product'] = $productId;
             }
 
-            $sql .= $this->getJoinsForProductListQuery();
-            $sql .= $this->getConditionsForProductListQuery($appAuth);
+            $query = $this->Product->find('all', [
+                'conditions' => $conditions,
+                'contain' => $contain,
+                'order' => $this->getOrdersForProductListQuery(),
+            ]);
 
-            if (! $filterByNewProducts) {
-                $params['categoryId'] = $categoryId;
-                $sql .= " AND CategoryProducts.id_category = :categoryId ";
-                $sql .= " AND Categories.active = :active";
+            if (!$filterByNewProducts && $categoryId != '') {
+                $query->contain([
+                    'CategoryProducts' => [
+                        'Categories' => [
+                            'conditions' => [
+                                'Categories.active' => APP_ON,
+                            ],
+                        ],
+                    ],
+                ]);
+                $query->matching('CategoryProducts', function ($q) use ($categoryId) {
+                    return $q->where(['CategoryProducts.id_category IN' => $categoryId]);
+                });
+            }
+
+            if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
+                if ($appAuth->isOrderForDifferentCustomerMode()) {
+                    $getOnlyStockProducts = true;
+                }
+            }
+
+            if ($getOnlyStockProducts) {
+                $query->where(function (QueryExpression $exp, Query $q) {
+                    return $exp->and([
+                        $q->newExpr()->eq('Manufacturers.stock_management_enabled', APP_ON),
+                        $q->newExpr()->eq('Products.is_stock_product', APP_ON),
+                    ]);
+                });
             }
 
             if ($filterByNewProducts) {
-                $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
-                $sql .= " AND DATE_FORMAT(Products.created, '%Y-%m-%d') > :dateAdd";
+                $dateAdd = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
+                $query->where(function (QueryExpression $exp) use ($dateAdd) {
+                    return $exp->gt('DATE_FORMAT(Products.created, \'%Y-%m-%d\')', $dateAdd);
+                });
             }
 
+            /*
             if ($keyword != '') {
 
                 $params['keywordLike'] = '%' . $keyword . '%';
@@ -217,22 +277,13 @@ class CategoriesTable extends AppTable
                 $sql .= ")";
 
             }
+            */
 
-            if ($productId > 0) {
-                $params['productId'] = $productId;
-                $sql .= " AND Products.id_product = :productId ";
-            }
+            $products = $query->toArray();
 
-            if ($getOnlyStockProducts) {
-                $sql .= " AND (Products.is_stock_product = 1 AND Manufacturers.stock_management_enabled = 1) ";
-            }
-
-            $sql .= $this->getOrdersForProductListQuery();
-            $statement = $this->getConnection()->prepare($sql);
-            $statement->execute($params);
-            $products = $statement->fetchAll('assoc');
-            $products = $this->hideMultipleAttributes($products);
-            $products = $this->hideIfPurchasePriceNotSet($products);
+            //$products = $this->hideMultipleAttributes($products);
+            // implement in SQL
+            //$products = $this->hideIfPurchasePriceNotSet($products);
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
 
             Cache::write($cacheKey, $products);

@@ -799,7 +799,6 @@ class ProductsTable extends AppTable
 
     public function isNew($date)
     {
-
         $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
         if (strtotime($showAsNewExpirationDate) > strtotime(date('Y-m-d'))) {
             return true;

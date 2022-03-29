@@ -21,27 +21,27 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $appAuth->isOrderForDifferentCustomerMode(),
     $appAuth->isSelfServiceModeByUrl(),
     Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
-    (boolean) $product['stock_management_enabled'],
-    (boolean) $product['is_stock_product']
+    $product->stock_management_enabled,
+    $product->is_stock_product,
 );
 
-echo '<div class="pw" id="pw-' . $product['id_product'] . '">';
+echo '<div class="pw" id="pw-' . $product->id_product . '">';
 
     echo '<div class="c1">';
 
         $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback(
-            $product['id_image'],
-            $product['id_manufacturer'],
+            $product->id_image,
+            $product->id_manufacturer,
         );
 
         if ($productImageData['productImageLargeExists']) {
-            echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name'] . ', ' . $product['ManufacturersName']) . '" data-modal-image="'.$productImageData['productImageLargeSrc'].'">';
+            echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product->name) . ', ' . $product->manufacturer->name . '" data-modal-image="'.$productImageData['productImageLargeSrc'].'">';
         }
         echo '<img class="lazyload" data-src="' . $productImageData['productImageSrc']. '" />';
         if ($productImageData['productImageLargeExists']) {
             echo '</a>';
         }
-    if ($product['is_new']) {
+    if ($product->is_new) {
         $isNewSrc = 'javascript:void(0);';
         if ($showIsNewBadgeAsLink) {
             $isNewSrc = $this->Slug->getNewProducts();
@@ -57,45 +57,45 @@ echo '<div class="pw" id="pw-' . $product['id_product'] . '">';
     echo '<div class="heading">';
         echo '<h4>';
         if ($showProductDetailLink) {
-            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a>';
+            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product->id_product, $product->name).'">'.$product->name.'</a>';
         } else {
-            echo $product['name'];
+            echo $product->name;
         }
         echo '</h4>';
     echo '</div>';
 
-if ($product['description_short'] != '') {
-    echo $product['description_short'].'<br />';
+if ($product->description_short != '') {
+    echo $product->description_short.'<br />';
 }
 
-if ($product['description'] != '') {
+if ($product->description != '') {
     echo $this->Html->link(
         '<i class="fa"></i> '.__('Show_more'),
         'javascript:void(0);',
         [
         'class' => 'toggle-link',
-        'title' => __('More_infos_to_product_{0}', [h($product['name'])]),
+        'title' => __('More_infos_to_product_{0}', [h($product->name)]),
         'escape' => false
         ]
     );
-    echo '<div class="toggle-content description">'.$product['description'].'</div>';
+    echo '<div class="toggle-content description">'.$product->description.'</div>';
 }
 
     if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
-        if (!$appAuth->isOrderForDifferentCustomerMode() && !($product['stock_management_enabled'] && $product['is_stock_product'])) {
+        if (!$appAuth->isOrderForDifferentCustomerMode() && !($product->stock_management_enabled && $product->is_stock_product)) {
 
             $lastOrderDay = $this->Time->getLastOrderDay(
-                $product['next_delivery_day'],
-                $product['delivery_rhythm_type'],
-                $product['delivery_rhythm_count'],
-                $product['delivery_rhythm_send_order_list_weekday'],
-                $product['delivery_rhythm_order_possible_until'],
+                $product->next_delivery_day,
+                $product->delivery_rhythm_type,
+                $product->delivery_rhythm_count,
+                $product->delivery_rhythm_send_order_list_weekday,
+                $product->delivery_rhythm_order_possible_until,
             );
 
-            if (!($product['delivery_rhythm_type'] == 'week'
-                && $product['delivery_rhythm_count'] == 1
-                && $this->Time->getSendOrderListsWeekday() == $product['delivery_rhythm_send_order_list_weekday']
+            if (!($product->delivery_rhythm_type == 'week'
+                && $product->delivery_rhythm_count == 1
+                && $this->Time->getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
                 )
                 && $lastOrderDay != ''
                 ) {
@@ -114,13 +114,13 @@ if ($product['description'] != '') {
                 $pickupDayDetailText = __('Instant_order');
             } else {
                 $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
-                    $product['is_stock_product'] && $product['stock_management_enabled'],
-                    $product['delivery_rhythm_type'],
-                    $product['delivery_rhythm_count']
+                    $product->is_stock_product && $product->stock_management_enabled,
+                    $product->delivery_rhythm_type,
+                    $product->delivery_rhythm_count,
                 );
             }
-            if ($product['next_delivery_day'] != 'delivery-rhythm-triggered-delivery-break') {
-                echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
+            if ($product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break') {
+                echo $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
             }
         echo '</span>';
         if (!$appAuth->isSelfServiceModeByUrl()) {
@@ -128,10 +128,10 @@ if ($product['description'] != '') {
         }
         if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isOrderForDifferentCustomerMode()) {
             if (
-                $product['next_delivery_day'] != 'delivery-rhythm-triggered-delivery-break'
-                && strtotime($product['next_delivery_day']) != $this->Time->getDeliveryDayByCurrentDay()
+                $product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break'
+                && strtotime($product->next_delivery_day) != $this->Time->getDeliveryDayByCurrentDay()
             ) {
-                $weeksAsFloat = (strtotime($product['next_delivery_day']) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
+                $weeksAsFloat = (strtotime($product->next_delivery_day) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
                 $fullWeeks = (int) ($weeksAsFloat / 7);
                 $days = $weeksAsFloat % 7;
                 if ($days == 0) {
@@ -147,22 +147,22 @@ if ($product['description'] != '') {
         echo '<br />'.__('Manufacturer').': ';
         if ($showManufacturerDetailLink) {
             echo $this->Html->link(
-                $product['ManufacturersName'],
-                $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName']),
+                $product->manufacturer->name,
+                $this->Slug->getManufacturerDetail($product->id_manufacturer, $product->manufacturer->name),
                 [
                     'escape' => false
                 ]
             );
         } else {
-            echo $product['ManufacturersName'];
+            echo $product->manufacturer->name;
         }
     }
 
     if (!$appAuth->isOrderForDifferentCustomerMode()) {
-        if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
+        if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product->id_manufacturer == $appAuth->getManufacturerId())) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt"></i>',
-                $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product']),
+                $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
                 [
                     'class' => 'btn btn-outline-light edit-shortcut-button',
                     'title' => __('Edit'),
@@ -176,15 +176,15 @@ if ($product['description'] != '') {
 
     echo '<div class="c3">';
 
-    if (!empty($product['attributes'])) {
+    if (!empty($product->attributes)) {
         // PRODUCT WITH ATTRIBUTES
 
         // 1) kick attributes if not available
         $hasCheckedAttribute = false;
         $i = 0;
         $preparedProductAttributes = [];
-        foreach ($product['attributes'] as $attribute) {
-            if ($attribute['StockAvailables']['always_available'] || $attribute['StockAvailables']['quantity'] - $attribute['StockAvailables']['quantity_limit'] > 0) {
+        foreach ($product->attributes as $attribute) {
+            if ($attribute->stock_available->always_available || $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit > 0) {
                 $preparedProductAttributes[] = $attribute;
             }
             $i++;
@@ -193,9 +193,9 @@ if ($product['description'] != '') {
         // 2) try to define "default on" as checked radio button (if quantity is > 0)
         $i = 0;
         foreach ($preparedProductAttributes as $attribute) {
-            $preparedProductAttributes[$i]['checked'] = false;
-            if ($attribute['ProductAttributes']['default_on'] == 1) {
-                $preparedProductAttributes[$i]['checked'] = true;
+            $preparedProductAttributes[$i]->checked = false;
+            if ($attribute->product_attribute->default_on == 1) {
+                $preparedProductAttributes[$i]->checked = true;
                 $hasCheckedAttribute = true;
             }
             $i++;
@@ -204,7 +204,7 @@ if ($product['description'] != '') {
         // make first attribute checked if no attribute is checked
         // (usually if quantity of default attribute is 0)
         if (!$hasCheckedAttribute && !empty($preparedProductAttributes)) {
-            $preparedProductAttributes[0]['checked'] = true;
+            $preparedProductAttributes[0]->checked = true;
         }
 
         // every attribute has quantity = 0
@@ -215,67 +215,69 @@ if ($product['description'] != '') {
         // render remaining attributes (with attribute "checked")
         foreach ($preparedProductAttributes as $attribute) {
             $entityClasses = ['ew'];
-            if ($attribute['checked']) {
+            if ($attribute->checked) {
                 $entityClasses[] = 'active';
             }
-            echo '<div class="'.join(' ', $entityClasses).'" id="ew-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
+            echo '<div class="'.join(' ', $entityClasses).'" id="ew-'.$attribute->product_attribute->id_product_attribute.'">';
             if ($showProductPrice) {
                 echo '<div class="line">';
-                $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product['taxRate']) . '%">' . $this->Number->formatAsCurrency($attribute['ProductAttributes']['gross_price']) . '</div>';
+                $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%">' . $this->Number->formatAsCurrency($attribute->product_attribute->gross_price) . '</div>';
                 $pricePerUnitInfoText = '';
-                if ($attribute['Units']['price_per_unit_enabled']) {
-                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount'], $product['taxRate']);
+                if ($attribute->unit_product_attribute->price_per_unit_enabled) {
+                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->unit_amount, $product->tax->rate);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
-                        $attribute['Units']['price_incl_per_unit'],
-                        $attribute['Units']['unit_name'],
-                        $attribute['Units']['unit_amount'],
+                        $attribute->unit_product_attribute->price_incl_per_unit,
+                        $attribute->unit_product_attribute->unit_name,
+                        $attribute->unit_product_attribute->unit_amount,
                         !$appAuth->isSelfServiceModeByUrl()
                     );
                 }
                 echo $priceHtml;
-                if (!empty($attribute['DepositProductAttributes']['deposit'])) {
-                    echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
+                if (!empty($attribute->deposit_product_attribute->deposit)) {
+                    echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute->deposit_product_attribute->deposit) . '</b> '.__('deposit').'</div>';
                 }
-                if (!$appAuth->isOrderForDifferentCustomerMode() && !empty($attribute['timebased_currency_money_incl'])) {
+                /*
+                if (!$appAuth->isOrderForDifferentCustomerMode() && !empty($attribute->timebased_currency_money_incl)) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
-                        'manufacturerLimitReached' => $attribute['timebased_currency_manufacturer_limit_reached'],
+                        'manufacturerLimitReached' => $attribute->timebased_currency_manufacturer_limit_reached,
                         'class' => 'timebased-currency-product-info',
-                        'money' => $attribute['timebased_currency_money_incl'],
-                        'seconds' => $attribute['timebased_currency_seconds'],
-                        'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
+                        'money' => $attribute['timebased_currency_money_incl,
+                        'seconds' => $attribute['timebased_currency_seconds,
+                        'labelPrefix' => __('from_which_{0}_%', [$product->timebased_currency_max_percentage]]) . ' '
                     ]);
                 }
-                echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute['ProductAttributes']['tax']) . '</div>';
+                */
+                echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute->product_attribute->calculated_tax) . '</div>';
                 echo '</div>';
             } else {
                 // Cart.js::initAddToCartButton() needs the following elements!
                 echo '<div class="price hide">' . $this->Number->formatAsCurrency(0) . '</div>';
                 echo '<div class="tax hide">'. $this->Number->formatAsCurrency(0) . '</div>';
             }
-            echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
+            echo $this->element('product/hiddenProductIdField', ['productId' => $product->id_product . '-' . $attribute->product_attribute->id_product_attribute]);
             echo $this->element('product/amountWrapper', [
                 'product' => $product,
-                'stockAvailable' => $attribute['StockAvailables'],
+                'stockAvailable' => $attribute->stock_vailable,
                 'hideAmountSelector' => $isStockProductOrderPossible
             ]);
             echo $this->element('product/cartButton', [
-                'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
-                'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
+                'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
+                'productId' => $product->id_product . '-' . $attribute->product_attribute->id_product_attribute,
                 'product' => $product,
-                'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
-                'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
-                'stockAvailableAlwaysAvailable' => $attribute['StockAvailables']['always_available'],
+                'stockAvailableQuantity' => $attribute->stock_available->quantity,
+                'stockAvailableQuantityLimit' => $attribute->stock_available->quantity_limit,
+                'stockAvailableAlwaysAvailable' => $attribute->stock_available->always_available,
                 'hideButton' => $isStockProductOrderPossible,
                 'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
                 'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
             ]);
             echo $this->element('product/notAvailableInfo', [
                 'product' => $product,
-                'stockAvailable' => $attribute['StockAvailables']
+                'stockAvailable' => $attribute->stock_available
             ]);
             echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
                 'showInfoText' => $isStockProductOrderPossible,
-                'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
+                'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product->ProductIdentifier : null
             ]);
 
             if ($showProductPrice) {
@@ -283,8 +285,8 @@ if ($product['description'] != '') {
             }
 
             echo $this->element('product/quantityInUnitsInputFieldForSelfService', [
-                'pricePerUnitEnabled' => $attribute['Units']['price_per_unit_enabled'],
-                'unitName' => $attribute['Units']['unit_name']
+                'pricePerUnitEnabled' => $attribute->unit_product_attribute->price_per_unit_enabled,
+                'unitName' => $attribute->unit_product_attribute->unit_name
             ]);
 
             echo '</div>';
@@ -294,16 +296,16 @@ if ($product['description'] != '') {
         foreach ($preparedProductAttributes as $attribute) {
 
             $radioButtonLabel = $this->PricePerUnit->getQuantityInUnitsStringForAttributes(
-                $attribute['ProductAttributeCombinations']['Attributes']['name'],
-                $attribute['ProductAttributeCombinations']['Attributes']['can_be_used_as_unit'],
-                $attribute['Units']['price_per_unit_enabled'],
-                $attribute['Units']['quantity_in_units'],
-                $attribute['Units']['unit_name']
+                $attribute->product_attribute_combination->attribute->name,
+                $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
+                $attribute->unit_product_attribute->price_per_unit_enabled,
+                $attribute->unit_product_attribute->quantity_in_units,
+                $attribute->unit_product_attribute->unit_name,
             );
 
             echo '<div class="radio">
-                      <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
-                          <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
+                      <label class="attribute-button" id="'.'attribute-button-'.$attribute->product_attribute->id_product_attribute.'">
+                          <input type="radio" name="product-'.$product->id_product.'" '.($attribute->checked ? 'checked' : '').'>'.
                                $radioButtonLabel.'
                       </label>
                   </div>';
@@ -314,79 +316,79 @@ if ($product['description'] != '') {
         echo '<div class="ew active">';
             if ($showProductPrice) {
                 echo '<div class="line">';
-                $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product['taxRate']) . '%">' . $this->Number->formatAsCurrency($product['gross_price']) . '</div>';
+                $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%">' . $this->Number->formatAsCurrency($product->gross_price) . '</div>';
                 $pricePerUnitInfoText = '';
-                if ($product['price_per_unit_enabled']) {
-                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount'], $product['taxRate']);
+                if ($product->price_per_unit_enabled) {
+                    $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product->price_incl_per_unit, $product->quantity_in_units, $product->unit_amount, $product->tax->rate);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
-                        $product['price_incl_per_unit'],
-                        $product['unit_name'],
-                        $product['unit_amount'],
+                        $product->price_incl_per_unit,
+                        $product->unit_name,
+                        $product->unit_amount,
                         !$appAuth->isSelfServiceModeByUrl()
                     );
                 }
                 echo $priceHtml;
-                if ($product['deposit']) {
-                    echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
+                if ($product->deposit_product->deposit) {
+                    echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product->deposit_product->deposit).'</b> '.__('deposit').'</div>';
                 }
                 echo '</div>';
-                if (!$this->request->getSession()->read('Auth.orderCustomer') && !empty($product['timebased_currency_money_incl'])) {
+                if (!$this->request->getSession()->read('Auth.orderCustomer') && !empty($product->timebased_currency_money_incl)) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
-                        'manufacturerLimitReached' => $product['timebased_currency_manufacturer_limit_reached'],
+                        'manufacturerLimitReached' => $product->timebased_currency_manufacturer_limit_reached,
                         'class' => 'timebased-currency-product-info',
-                        'money' => $product['timebased_currency_money_incl'],
-                        'seconds' => $product['timebased_currency_seconds'],
-                        'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
+                        'money' => $product->timebased_currency_money_incl,
+                        'seconds' => $product->timebased_currency_seconds,
+                        'labelPrefix' => __('from_which_{0}_%', [$product->timebased_currency_max_percentage]) . ' '
                     ]);
                 }
-                echo '<div class="tax">'. $this->Number->formatAsCurrency($product['tax']) . '</div>';
+                echo '<div class="tax">'. $this->Number->formatAsCurrency($product->calculated_tax) . '</div>';
             } else {
                 // Cart.js::initAddToCartButton() needs the following elements!
                 echo '<div class="price hide">' . $this->Number->formatAsCurrency(0) . '</div>';
                 echo '<div class="tax hide">'. $this->Number->formatAsCurrency(0) . '</div>';
             }
 
-            echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
+            echo $this->element('product/hiddenProductIdField', ['productId' => $product->id_product]);
             echo $this->element('product/amountWrapper', [
                 'product' => $product,
-                'stockAvailable' => $product,
-                'hideAmountSelector' => $isStockProductOrderPossible
+                'stockAvailable' => $product->stock_available,
+                'hideAmountSelector' => $isStockProductOrderPossible,
             ]);
             echo $this->element('product/cartButton', [
-                'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
-                'productId' => $product['id_product'],
+                'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
+                'productId' => $product->id_product,
                 'product' => $product,
-                'stockAvailableQuantity' => $product['quantity'],
-                'stockAvailableQuantityLimit' => $product['quantity_limit'],
-                'stockAvailableAlwaysAvailable' => $product['always_available'],
+                'stockAvailableQuantity' => $product->quantity,
+                'stockAvailableQuantityLimit' => $product->quantity_limit,
+                'stockAvailableAlwaysAvailable' => $product->always_available,
                 'hideButton' => $isStockProductOrderPossible,
                 'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
                 'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
             ]);
             echo $this->element('product/notAvailableInfo', [
                 'product' => $product,
-                'stockAvailable' => $product
+                'stockAvailable' => $product->stock_available,
             ]);
             echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
                 'showInfoText' => $isStockProductOrderPossible,
-                'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
+                'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product->ProductIdentifier : null
             ]);
 
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
             }
             echo $this->element('product/quantityInUnitsInputFieldForSelfService', [
-                'pricePerUnitEnabled' => $product['price_per_unit_enabled'],
-                'unitName' => $product['unit_name']
+                'pricePerUnitEnabled' => $product->unit_product->price_per_unit_enabled,
+                'unitName' => $product->unit_product->unit_name,
             ]);
 
         echo '</div>';
 
         $unityStrings = [];
-        if ($product['unity'] != '') {
-            $unityStrings[] = $product['unity'];
+        if ($product->unity != '') {
+            $unityStrings[] = $product->unity;
         }
-        $unitString = $this->PricePerUnit->getQuantityInUnits($product['price_per_unit_enabled'], $product['quantity_in_units'], $product['unit_name']);
+        $unitString = $this->PricePerUnit->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_produc->unit_name);
         if ($unitString != '') {
             $unityStrings[] = $unitString;
         }
