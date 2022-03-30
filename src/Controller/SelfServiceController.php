@@ -74,7 +74,7 @@ class SelfServiceController extends FrontendController
             $attributeId = (int) substr($keyword, 4, 4);
 
             $customBarcodeFound = false;
-            if ($keyword == $products[0]['ProductBarcode']) {
+            if (!empty($products[0]->barcode_product) && $keyword == $products[0]->barcode_product->barcode) {
                 $customBarcodeFound = true;
                 $attributeId = 0;
             }
@@ -83,7 +83,7 @@ class SelfServiceController extends FrontendController
                 $attributeId = $products[0]['ProductAttributeId'];
             }
 
-            if ($hashedProductId == $products[0]['ProductIdentifier'] || $customBarcodeFound) {
+            if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
                 $this->CartProduct = $this->getTableLocator()->get('CartProducts');
                 $result = $this->CartProduct->add($this->AppAuth, $products[0]['id_product'], $attributeId, 1);
                 if (!empty($result['msg'])) {

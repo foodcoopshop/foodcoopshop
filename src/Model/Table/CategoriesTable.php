@@ -315,31 +315,44 @@ class CategoriesTable extends AppTable
                 });
             }
 
-            /*
             if ($keyword != '') {
 
-                $params['keywordLike'] = '%' . $keyword . '%';
-                $params['keyword'] = $keyword;
+                $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
+                    $or = [
+                        $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
+                        $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
+                        $q->newExpr()->eq('Products.id_product', (int) $keyword),
+                    ];
+                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                        $or[] = $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4)));
+                        $or[] = $q->newExpr()->eq('BarcodeProducts.barcode', $keyword);
+                    }
+                    return $exp->and([
+                        $exp->or($or),
+                    ]);
+                });
 
-                // use id_product LIKE and not = because barcode search "SELECT * FROM fcs_product WHERE id_product LIKE '1a1b0000'" would find product with ID 1
-                $sql .= " AND (Products.name LIKE :keywordLike OR Products.description_short LIKE :keywordLike OR Products.id_product LIKE :keyword ";
-
+                /*
+                 * only works if above where is commented
                 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                    $params['barcodeIdentifier'] = strtolower(substr($keyword, 0, 4));
-                    $sql .= " OR " . $this->getProductIdentifierField() . " = :barcodeIdentifier";
-                    $sql .= " OR ProductBarcodes.barcode = :keyword";
-                    $sql .= " OR ProductAttributeBarcodes.barcode = :keyword";
+                    $query->contain([
+                        'ProductAttributes' => [
+                            'conditions' => function(QueryExpression $exp, Query $q) use($keyword) {
+                                return $exp->and([
+                                    $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
+                                ]);
+                            }
+                        ],
+                    ]);
                 }
-
-                $sql .= ")";
-
+                */
             }
-            */
+
+
+
 
             $products = $query->toArray();
 
-            //$products = $this->hideMultipleAttributes($products);
-            // implement in SQL
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
 
             Cache::write($cacheKey, $products);
