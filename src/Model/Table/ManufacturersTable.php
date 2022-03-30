@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Lib\Catalog\Catalog;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
@@ -339,7 +340,8 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $this->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
+                $this->Catalog = new Catalog();
+                $additionalInfo = $this->Catalog->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
             if ($noDeliveryDaysString != '') {

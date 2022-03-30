@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Lib\Catalog\Catalog;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 
@@ -50,7 +51,9 @@ class SelfServiceController extends FrontendController
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->AppAuth, true);
-        $allProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true, true);
+
+        $this->Catalog = new Catalog();
+        $allProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true, true);
         $categoriesForSelect = [
             Configure::read('app.categoryAllProducts') => __('All_products') . ' (' . $allProductsCount . ')',
         ] + $categoriesForSelect;
@@ -60,8 +63,8 @@ class SelfServiceController extends FrontendController
         if ($categoryId == 0 && $keyword != '') {
             $categoryIdForSearch = Configure::read('app.categoryAllProducts');
         }
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, true);
-        $products = $this->prepareProductsForFrontend($products);
+        $products = $this->Catalog->getProducts($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, true);
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
 
         $this->set('products', $products);
 

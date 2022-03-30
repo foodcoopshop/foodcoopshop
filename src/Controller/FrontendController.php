@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use Cake\Cache\Cache;
+use App\Lib\Catalog\Catalog;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,131 +25,6 @@ class FrontendController extends AppController
     public function isAuthorized($user)
     {
         return true;
-    }
-
-    protected function prepareProductsForFrontend($products)
-    {
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
-        $this->Customer = $this->getTableLocator()->get('Customers');
-
-        $i = 0;
-        foreach ($products as $product) {
-
-            $productCacheKey = join('_', [
-                'FrontendController_prepareProductsForFrontend',
-                'productId' => $products[$i]['id_product'],
-                $this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl(),
-                $this->AppAuth->user('shopping_price'),
-                $this->AppAuth->isTimebasedCurrencyEnabledForCustomer(),
-                'date-' . date('Y-m-d'),
-            ]);
-            $cachedProduct = Cache::read($productCacheKey);
-
-            if ($cachedProduct === null) {
-
-                $taxRate = $products[$i]->tax->rate ?? 0;
-
-                $products[$i]->deposit_product = $products[$i]->deposit_product ?? (object) ['deposit' => 0];
-                $products[$i]->tax = $products[$i]->tax ?? (object) ['rate' => 0];
-                $products[$i]->unit_product = $products[$i]->unit_product ?? (object) [
-                    'price_per_unit_enabled' => 0,
-                    'price_incl_per_unit' => 0,
-                    'quantity_in_units' => 0,
-                    'name' => '',
-                ];
-
-                // START: override shopping with purchase prices / zero prices
-                $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice(
-                    $this->AppAuth,
-                    $products[$i]->id_product,
-                    $products[$i]->price,
-                    $products[$i]->unit_product->price_incl_per_unit,
-                    $products[$i]->deposit_product->deposit,
-                    $taxRate,
-                );
-                $products[$i]->price = $modifiedProductPricesByShoppingPrice['price'];
-                $products[$i]->unit_product->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
-                $products[$i]->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
-                // END: override shopping with purchase prices / zero prices
-
-                $grossPrice = $this->Product->getGrossPrice($products[$i]->price, $taxRate);
-
-                $products[$i]->gross_price = $grossPrice;
-                $products[$i]->calculated_tax = $grossPrice - $products[$i]->price;
-                $products[$i]->tax->rate = $taxRate;
-                $products[$i]->is_new = $this->Product->isNew($products[$i]->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
-
-                if (!Configure::read('app.isDepositEnabled')) {
-                    $products[$i]['deposit'] = 0;
-                }
-
-                if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                    $products[$i]->next_delivery_day = new FrozenDate('1970-01-01');
-                } elseif ($this->AppAuth->isOrderForDifferentCustomerMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
-                    $products[$i]->next_delivery_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-                } else {
-                    $products[$i]->next_delivery_day = $this->Product->calculatePickupDayRespectingDeliveryRhythm($products[$i]);
-                }
-
-                if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-                    if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]['timebased_currency_enabled'])) {
-                        $products[$i]['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($products[$i]['gross_price'], $products[$i]['timebased_currency_max_percentage']);
-                        $products[$i]['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($products[$i]['price'], $products[$i]['timebased_currency_max_percentage']);
-                        $products[$i]['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($products[$i]['gross_price'], $products[$i]['timebased_currency_max_percentage']);
-                        $products[$i]['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]['id_manufacturer']);
-                    }
-
-                }
-
-                foreach ($product->product_attributes as &$attribute) {
-
-                    $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
-                    $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
-
-                    $attribute->unit_product_attribute = $attribute->unit_product_attribute ?? (object) [
-                        'price_per_unit_enabled' => 0,
-                        'price_incl_per_unit' => 0,
-                        'quantity_in_units' => 0,
-                        'name' => '',
-                    ];
-
-                    // START: override shopping with purchase prices / zero prices
-                    $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
-                    $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
-                    $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
-                    if (!empty($attribute->deposit_product_attribute)) {
-                        $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
-                    }
-                    // END: override shopping with purchase prices / zero prices
-
-                    $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
-
-                    $attribute->gross_price = $grossPrice;
-                    $attribute->calculated_tax = $grossPrice - $attribute->price;
-
-                    /*
-                    if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-                        if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]['timebased_currency_enabled'])) {
-                            $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $products[$i]['timebased_currency_max_percentage']);
-                            $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->price, $products[$i]['timebased_currency_max_percentage']);
-                            $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $products[$i]['timebased_currency_max_percentage']);
-                            $preparedAttributes['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]['id_manufacturer']);
-                        }
-                    }
-                    */
-                }
-            } else {
-                $products[$i] = $cachedProduct;
-            }
-
-            Cache::write($productCacheKey, $products[$i]);
-            $i++;
-        }
-
-        return $products;
-
     }
 
     protected function resetOriginalLoggedCustomer()
@@ -184,8 +58,9 @@ class FrontendController extends AppController
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->Category = $this->getTableLocator()->get('Categories');
-            $allProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
-            $newProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
+            $this->Catalog = new Catalog();
+            $allProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
+            $newProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu($this->AppAuth);
             array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('app.slugHelper')->getNewProducts(),
@@ -205,13 +80,11 @@ class FrontendController extends AppController
         $this->set('categoriesForMenu', $categoriesForMenu);
 
         $manufacturersForMenu = [];
-        /*
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
-        */
 
         $this->Page = $this->getTableLocator()->get('Pages');
         $conditions = [];

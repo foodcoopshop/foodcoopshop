@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\Catalog\Catalog;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\RemoteFile\RemoteFile;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
@@ -929,7 +930,8 @@ class ProductsTable extends AppTable
         }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
+            $this->Catalog = new Catalog();
+            $query->select(['system_bar_code' => $this->Catalog->getProductIdentifierField()]);
             $query->select($this->BarcodeProducts);
         }
 

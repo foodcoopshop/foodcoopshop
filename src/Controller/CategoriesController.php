@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Lib\Catalog\Catalog;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
@@ -39,9 +40,9 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-        $products = $this->prepareProductsForFrontend($products);
+        $this->Catalog = new Catalog();
+        $products = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('New_products'));
@@ -66,9 +67,9 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
-        $products = $this->prepareProductsForFrontend($products);
+        $this->Catalog = new Catalog();
+        $products = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('Search') . ' "' . $keyword . '"');
@@ -102,8 +103,9 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryId);
-        $products = $this->prepareProductsForFrontend($products);
+        $this->Catalog = new Catalog();
+        $products = $this->Catalog->getProducts($this->AppAuth, $categoryId);
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
 
         $this->set('products', $products);
 
