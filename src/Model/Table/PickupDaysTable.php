@@ -54,7 +54,9 @@ class PickupDaysTable extends AppTable
     {
         $uniquePickupDays = [];
         foreach($cartProducts as $cartProduct) {
-            $uniquePickupDays[] = $cartProduct->pickup_day;
+            if ($cartProduct->pickup_day != 'delivery-rhythm-triggered-delivery-break') {
+                $uniquePickupDays[] = $cartProduct->pickup_day;
+            }
         }
         return array_unique($uniquePickupDays);
     }
