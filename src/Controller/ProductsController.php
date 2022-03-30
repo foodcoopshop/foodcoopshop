@@ -57,7 +57,7 @@ class ProductsController extends FrontendController
 
         $this->Catalog = new Catalog();
         $product = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
-        $product = $this->prepareProducts($this->AppAuth, $product);
+        $product = $this->Catalog->prepareProducts($this->AppAuth, $product);
 
         if (empty($product) || !isset($product[0])) {
             throw new RecordNotFoundException('product not found');

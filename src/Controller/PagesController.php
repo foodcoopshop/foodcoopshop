@@ -93,7 +93,7 @@ class PagesController extends FrontendController
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->Catalog = new Catalog();
             $products = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-            $products = $this->prepareProducts($this->AppAuth, $products);
+            $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
         }
         $this->set('newProducts', $products);
 

@@ -24,6 +24,11 @@ use Cake\Utility\Security;
 
 class Catalog {
 
+    protected $Customer;
+    protected $Manufacturer;
+    protected $Product;
+    protected $ProductAttribute;
+
     public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
     {
 

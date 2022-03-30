@@ -4,7 +4,6 @@ namespace App\Model\Table;
 
 use App\Lib\Catalog\Catalog;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
