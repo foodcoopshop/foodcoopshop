@@ -1,4 +1,4 @@
-f<?php
+<?php
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
