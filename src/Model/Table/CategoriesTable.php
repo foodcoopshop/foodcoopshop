@@ -174,11 +174,16 @@ class CategoriesTable extends AppTable
 
             $this->Product = FactoryLocator::get('Table')->get('Products');
 
-            $conditions = [
+            $query = $this->Product->find('all', [
+                'order' => $this->getOrdersForProductListQuery(),
+            ]);
+
+            $query->where([
                 'Products.active' => APP_ON,
                 'Manufacturers.active' => APP_ON,
-            ];
-            $contain = [
+            ]);
+
+            $query->contain([
                 'Images',
                 'CategoryProducts',
                 'DepositProducts',
@@ -199,35 +204,47 @@ class CategoriesTable extends AppTable
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.UnitProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
-            ];
-
-            // TODO: only add contains if called from self service controller
-            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                $contain[] = 'BarcodeProducts';
-                $contain[] = 'ProductAttributes.BarcodeProductAttributes';
-            }
+            ]);
 
             if (empty($appAuth->user())) {
-                $conditions['Manufacturers.is_private'] = APP_OFF;
+                $query->where([
+                    'Manufacturers.is_private' => APP_OFF,
+                ]);
             }
 
             if ($productId > 0) {
-                $conditions['Products.id_product'] = $productId;
+                $query->where([
+                    'Products.id_product' => $productId,
+                ]);
+            }
+
+            /*
+            $query
+            ->select('Products.id_product')->distinct()
+            ->select($this) // Products
+            ->select($this->DepositProducts)
+            ->select('Images.id_image')
+            ->select($this->Taxes)
+            ->select($this->Manufacturers)
+            ->select($this->UnitProducts)
+            ->select($this->StockAvailables);
+            */
+
+            // TODO: only add contains if called from self service controller
+            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                $query->contain([
+                    'BarcodeProducts',
+                    'ProductAttributes.BarcodeProductAttributes',
+                ]);
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $contain[] = 'ProductAttribute';
-                $contain[] = 'PurchasePriceProducts';
-                $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
-            }
 
-            $query = $this->Product->find('all', [
-                'conditions' => $conditions,
-                'contain' => $contain,
-                'order' => $this->getOrdersForProductListQuery(),
-            ]);
-
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $query->contain([
+                    'PurchasePriceProducts',
+                    'ProductAttribute',
+                    'ProductAttributes.PurchasePriceProductAttributes',
+                ]);
 
                 $query->where(function (QueryExpression $exp, Query $q) {
                     return $exp->or([
@@ -242,7 +259,6 @@ class CategoriesTable extends AppTable
                     ]);
                 });
 
-                $query->contain(['ProductAttributes.PurchasePriceProductAttributes']);
                 $query->contain([
                     'ProductAttributes' => [
                         'conditions' => function(QueryExpression $exp, Query $q) {
