@@ -218,20 +218,20 @@ class CategoriesTable extends AppTable
                 ]);
             }
 
-            /*
             $query
             ->select('Products.id_product')->distinct()
-            ->select($this) // Products
-            ->select($this->DepositProducts)
+            ->select($this->Product) // Products
+            ->select($this->Product->DepositProducts)
             ->select('Images.id_image')
-            ->select($this->Taxes)
-            ->select($this->Manufacturers)
-            ->select($this->UnitProducts)
-            ->select($this->StockAvailables);
-            */
+            ->select($this->Product->Taxes)
+            ->select($this->Product->Manufacturers)
+            ->select($this->Product->UnitProducts)
+            ->select($this->Product->StockAvailables);
 
             // TODO: only add contains if called from self service controller
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
+                $query->select($this->Product->BarcodeProducts);
                 $query->contain([
                     'BarcodeProducts',
                     'ProductAttributes.BarcodeProductAttributes',
@@ -239,7 +239,8 @@ class CategoriesTable extends AppTable
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-
+                $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
+                $query->select($this->Product->PurchasePriceProducts);
                 $query->contain([
                     'PurchasePriceProducts',
                     'ProductAttribute',
