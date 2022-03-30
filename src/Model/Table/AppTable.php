@@ -338,7 +338,7 @@ class AppTable extends Table
             }
 
             // deactivates the product if manufacturer based delivery break is enabled
-            if ($this->Product->deliveryBreakEnabled($product->no_delivery_days, $deliveryDate)) {
+            if ($this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $deliveryDate)) {
                 $products[$i]->delivery_break_enabled = true;
             }
 
