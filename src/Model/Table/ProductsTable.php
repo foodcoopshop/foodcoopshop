@@ -68,6 +68,9 @@ class ProductsTable extends AppTable
                 'Images.id_image' => 'DESC'
             ]
         ]);
+        $this->hasOne('ProductAttribute', [
+            'foreignKey' => 'id_product'
+        ]);
         $this->hasMany('ProductAttributes', [
             'foreignKey' => 'id_product'
         ]);

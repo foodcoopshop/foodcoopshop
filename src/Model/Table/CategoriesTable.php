@@ -201,6 +201,7 @@ class CategoriesTable extends AppTable
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
             ];
 
+            // TODO: only add contains if called from self service controller
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                 $contain[] = 'BarcodeProducts';
                 $contain[] = 'ProductAttributes.BarcodeProductAttributes';
@@ -215,6 +216,7 @@ class CategoriesTable extends AppTable
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $contain[] = 'ProductAttribute';
                 $contain[] = 'PurchasePriceProducts';
                 $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
             }
@@ -229,11 +231,12 @@ class CategoriesTable extends AppTable
 
                 $query->where(function (QueryExpression $exp, Query $q) {
                     return $exp->or([
-                        $exp->and([
-                            $q->newExpr()->eq('UnitProducts.price_per_unit_enabled', APP_ON),
-                            $q->newExpr()->isNotNull('UnitProducts.purchase_price_incl_per_unit'),
-                        ]),
-                        $exp->and([
+                        $q->newExpr()->isNotNull('ProductAttribute.id_product'),
+                        $exp->or([
+                            $exp->and([
+                                $q->newExpr()->eq('UnitProducts.price_per_unit_enabled', APP_ON),
+                                $q->newExpr()->isNotNull('UnitProducts.purchase_price_incl_per_unit'),
+                            ]),
                             $q->newExpr()->isNotNull('PurchasePriceProducts.price'),
                         ]),
                     ]);
