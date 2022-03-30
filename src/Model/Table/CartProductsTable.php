@@ -343,30 +343,33 @@ class CartProductsTable extends AppTable
             }
         }
 
+        $pickupDays = [];
         $uniquePickupDays = $pickupDayTable->getUniquePickupDays($cartProducts);
-        $pickupDays = $pickupDayTable->find('all', [
-            'conditions' => [
-                'PickupDays.customer_id' => $customerId,
-                'PickupDays.pickup_day IN' => $uniquePickupDays
-            ],
-            'order' => [
-                'PickupDays.pickup_day' => 'ASC'
-            ]
-        ]);
+        if (!empty($uniquePickupDays)) {
+            $pickupDays = $pickupDayTable->find('all', [
+                'conditions' => [
+                    'PickupDays.customer_id' => $customerId,
+                    'PickupDays.pickup_day IN' => $uniquePickupDays
+                ],
+                'order' => [
+                    'PickupDays.pickup_day' => 'ASC'
+                ]
+            ]);
 
-        $existingPickupDays = [];
-        foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
-            $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-        }
-        $missingPickupDays = array_diff($uniquePickupDays, $existingPickupDays);
-        $pickupDays = $pickupDays->toArray();
+            $existingPickupDays = [];
+            foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
+                $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            }
+            $missingPickupDays = array_diff($uniquePickupDays, $existingPickupDays);
+            $pickupDays = $pickupDays->toArray();
 
-        if (!empty($missingPickupDays)) {
-            foreach($missingPickupDays as $missingPickupDay) {
-                $pickupDays[] = $pickupDayTable->newEntity([
-                    'customer_id' => $customerId,
-                    'pickup_day' => $missingPickupDay
-                ]);
+            if (!empty($missingPickupDays)) {
+                foreach($missingPickupDays as $missingPickupDay) {
+                    $pickupDays[] = $pickupDayTable->newEntity([
+                        'customer_id' => $customerId,
+                        'pickup_day' => $missingPickupDay
+                    ]);
+                }
             }
         }
         return $pickupDays;
