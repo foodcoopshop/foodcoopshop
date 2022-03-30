@@ -54,7 +54,12 @@ class FrontendController extends AppController
 
                 $products[$i]->deposit_product = $products[$i]->deposit_product ?? (object) ['deposit' => 0];
                 $products[$i]->tax = $products[$i]->tax ?? (object) ['rate' => 0];
-                $products[$i]->unit_product = $products[$i]->unit_product ?? (object) ['price_incl_per_unit' => 0];
+                $products[$i]->unit_product = $products[$i]->unit_product ?? (object) [
+                    'price_per_unit_enabled' => 0,
+                    'price_incl_per_unit' => 0,
+                    'quantity_in_units' => 0,
+                    'name' => '',
+                ];
 
                 // START: override shopping with purchase prices / zero prices
                 $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice(
@@ -104,12 +109,17 @@ class FrontendController extends AppController
                     $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
                     $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
 
+                    $attribute->unit_product_attribute = $attribute->unit_product_attribute ?? (object) [
+                        'price_per_unit_enabled' => 0,
+                        'price_incl_per_unit' => 0,
+                        'quantity_in_units' => 0,
+                        'name' => '',
+                    ];
+
                     // START: override shopping with purchase prices / zero prices
                     $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($this->AppAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
                     $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
-                    if (!empty($attribute->unit_product_attribute)) {
-                        $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
-                    }
+                    $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
                     if (!empty($attribute->deposit_product_attribute)) {
                         $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
                     }
