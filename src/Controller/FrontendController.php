@@ -128,7 +128,8 @@ class FrontendController extends AppController
                     $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
 
                     $attribute->gross_price = $grossPrice;
-                    $attribute->calcluated_tax = $grossPrice - $attribute->price;
+                    $attribute->calculated_tax = $grossPrice - $attribute->price;
+
                     /*
                     if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                         if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]['timebased_currency_enabled'])) {
