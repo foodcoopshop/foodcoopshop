@@ -27,13 +27,42 @@ class Catalog {
     public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
     {
 
-        // to be implemented
-        // replace ManufacturersTable::getProductsByManufacturerId
+        $cacheKey = join('_', [
+            'ManufacturersController_getProductsByManufacturerId',
+            'manufacturerId-' . $manufacturerId,
+            'isLoggedIn-' . empty($appAuth->user()),
+            'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
+            'date-' . date('Y-m-d'),
+        ]);
+        $products = Cache::read($cacheKey);
+
+        if ($products === null) {
+            $query = $this->getQuery($appAuth, null, false, '', 0, $countMode, false);
+            $query->where([
+                'Manufacturers.id_manufacturer' => $manufacturerId,
+                'Manufacturers.active' => APP_ON,
+            ]);
+            if (empty($appAuth->user())) {
+                $query->where([
+                    'Manufacturers.is_private' => APP_OFF,
+                ]);
+            }
+            $products = $query->toArray();
+            $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
+            Cache::write($cacheKey, $products);
+        }
+
+        if (! $countMode) {
+            return $products;
+        } else {
+            return count($products);
+        }
 
     }
 
     public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
     {
+
         $cacheKey = join('_', [
             'Catalog_getProducts',
             'categoryId-' . $categoryId,
@@ -48,190 +77,9 @@ class Catalog {
         $products = Cache::read($cacheKey);
 
         if ($products === null) {
-
-            $this->Product = FactoryLocator::get('Table')->get('Products');
-
-            $query = $this->Product->find('all', [
-                'order' => [
-                    'Products.name' => 'ASC',
-                    'Images.id_image' => 'DESC',
-                ],
-            ]);
-
-            $query->where([
-                'Products.active' => APP_ON,
-                'Manufacturers.active' => APP_ON,
-            ]);
-
-            $query->contain([
-                'Images',
-                'CategoryProducts',
-                'DepositProducts',
-                'Manufacturers',
-                'StockAvailables' => [
-                    'conditions' => [
-                        'StockAvailables.id_product_attribute' => 0
-                    ]
-                ],
-                'UnitProducts',
-                'Taxes',
-                'ProductAttributes',
-                'ProductAttributes.StockAvailables' => [
-                    'conditions' => [
-                        'StockAvailables.id_product_attribute > 0'
-                    ]
-                ],
-                'ProductAttributes.DepositProductAttributes',
-                'ProductAttributes.UnitProductAttributes',
-                'ProductAttributes.ProductAttributeCombinations.Attributes',
-            ]);
-
-            if (empty($appAuth->user())) {
-                $query->where([
-                    'Manufacturers.is_private' => APP_OFF,
-                ]);
-            }
-
-            if ($productId > 0) {
-                $query->where([
-                    'Products.id_product' => $productId,
-                ]);
-            }
-
-            $query
-            ->select('Products.id_product')->distinct()
-            ->select($this->Product) // Products
-            ->select($this->Product->DepositProducts)
-            ->select('Images.id_image')
-            ->select($this->Product->Taxes)
-            ->select($this->Product->Manufacturers)
-            ->select($this->Product->UnitProducts)
-            ->select($this->Product->StockAvailables);
-
-            // TODO: only add contains if called from self service controller
-            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
-                $query->select($this->Product->BarcodeProducts);
-                $query->contain([
-                    'BarcodeProducts',
-                    'ProductAttributes.BarcodeProductAttributes',
-                ]);
-            }
-
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
-                $query->select($this->Product->PurchasePriceProducts);
-                $query->contain([
-                    'PurchasePriceProducts',
-                    'ProductAttribute',
-                    'ProductAttributes.PurchasePriceProductAttributes',
-                ]);
-
-                $query->where(function (QueryExpression $exp, Query $q) {
-                    return $exp->or([
-                        $q->newExpr()->isNotNull('ProductAttribute.id_product'),
-                        $exp->or([
-                            $exp->and([
-                                $q->newExpr()->eq('UnitProducts.price_per_unit_enabled', APP_ON),
-                                $q->newExpr()->isNotNull('UnitProducts.purchase_price_incl_per_unit'),
-                            ]),
-                            $q->newExpr()->isNotNull('PurchasePriceProducts.price'),
-                        ]),
-                    ]);
-                });
-
-                $query->contain([
-                    'ProductAttributes' => [
-                        'conditions' => function(QueryExpression $exp, Query $q) {
-                           return $exp->or([
-                                $exp->and([
-                                    $q->newExpr()->eq('UnitProductAttributes.price_per_unit_enabled', APP_ON),
-                                    $q->newExpr()->isNotNull('UnitProductAttributes.purchase_price_incl_per_unit'),
-                                ]),
-                                $exp->and([
-                                    $q->newExpr()->isNotNull('PurchasePriceProductAttributes.price'),
-                                ]),
-                            ]);
-                        }
-                    ],
-                ]);
-
-            }
-
-            if (!$filterByNewProducts && $categoryId != '') {
-                $query->contain([
-                    'CategoryProducts' => [
-                        'Categories' => [
-                            'conditions' => [
-                                'Categories.active' => APP_ON,
-                            ],
-                        ],
-                    ],
-                ]);
-                $query->matching('CategoryProducts', function ($q) use ($categoryId) {
-                    return $q->where(['CategoryProducts.id_category IN' => $categoryId]);
-                });
-            }
-
-            if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-                if ($appAuth->isOrderForDifferentCustomerMode()) {
-                    $getOnlyStockProducts = true;
-                }
-            }
-
-            if ($getOnlyStockProducts) {
-                $query->where(function (QueryExpression $exp, Query $q) {
-                    return $exp->and([
-                        $q->newExpr()->eq('Manufacturers.stock_management_enabled', APP_ON),
-                        $q->newExpr()->eq('Products.is_stock_product', APP_ON),
-                    ]);
-                });
-            }
-
-            if ($filterByNewProducts) {
-                $dateAdd = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
-                $query->where(function (QueryExpression $exp) use ($dateAdd) {
-                    return $exp->gt('DATE_FORMAT(Products.created, \'%Y-%m-%d\')', $dateAdd);
-                });
-            }
-
-            if ($keyword != '') {
-
-                $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
-                    $or = [
-                        $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
-                        $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
-                        $q->newExpr()->eq('Products.id_product', (int) $keyword),
-                    ];
-                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                        $or[] = $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4)));
-                        $or[] = $q->newExpr()->eq('BarcodeProducts.barcode', $keyword);
-                    }
-                    return $exp->and([
-                        $exp->or($or),
-                    ]);
-                });
-
-                    /*
-                     * only works if above where is commented
-                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                     $query->contain([
-                     'ProductAttributes' => [
-                     'conditions' => function(QueryExpression $exp, Query $q) use($keyword) {
-                     return $exp->and([
-                     $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
-                     ]);
-                     }
-                     ],
-                     ]);
-                     }
-                     */
-            }
-
+            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $countMode, $getOnlyStockProducts);
             $products = $query->toArray();
-
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-
             Cache::write($cacheKey, $products);
         }
 
@@ -240,6 +88,192 @@ class Catalog {
         } else {
             return count($products);
         }
+
+    }
+
+    protected function getQuery($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
+    {
+
+        $this->Product = FactoryLocator::get('Table')->get('Products');
+
+        $query = $this->Product->find('all', [
+            'order' => [
+                'Products.name' => 'ASC',
+                'Images.id_image' => 'DESC',
+            ],
+        ]);
+
+        $query->where([
+            'Products.active' => APP_ON,
+            'Manufacturers.active' => APP_ON,
+        ]);
+
+        $query->contain([
+            'Images',
+            'CategoryProducts',
+            'DepositProducts',
+            'Manufacturers',
+            'StockAvailables' => [
+                'conditions' => [
+                    'StockAvailables.id_product_attribute' => 0
+                ]
+            ],
+            'UnitProducts',
+            'Taxes',
+            'ProductAttributes',
+            'ProductAttributes.StockAvailables' => [
+                'conditions' => [
+                    'StockAvailables.id_product_attribute > 0'
+                ]
+            ],
+            'ProductAttributes.DepositProductAttributes',
+            'ProductAttributes.UnitProductAttributes',
+            'ProductAttributes.ProductAttributeCombinations.Attributes',
+        ]);
+
+        if (empty($appAuth->user())) {
+            $query->where([
+                'Manufacturers.is_private' => APP_OFF,
+            ]);
+        }
+
+        if ($productId > 0) {
+            $query->where([
+                'Products.id_product' => $productId,
+            ]);
+        }
+
+        $query
+        ->select('Products.id_product')->distinct()
+        ->select($this->Product) // Products
+        ->select($this->Product->DepositProducts)
+        ->select('Images.id_image')
+        ->select($this->Product->Taxes)
+        ->select($this->Product->Manufacturers)
+        ->select($this->Product->UnitProducts)
+        ->select($this->Product->StockAvailables);
+
+        // TODO: only add contains if called from self service controller
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
+            $query->select($this->Product->BarcodeProducts);
+            $query->contain([
+                'BarcodeProducts',
+                'ProductAttributes.BarcodeProductAttributes',
+            ]);
+        }
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
+            $query->select($this->Product->PurchasePriceProducts);
+            $query->contain([
+                'PurchasePriceProducts',
+                'ProductAttribute',
+                'ProductAttributes.PurchasePriceProductAttributes',
+            ]);
+
+            $query->where(function (QueryExpression $exp, Query $q) {
+                return $exp->or([
+                    $q->newExpr()->isNotNull('ProductAttribute.id_product'),
+                    $exp->or([
+                        $exp->and([
+                            $q->newExpr()->eq('UnitProducts.price_per_unit_enabled', APP_ON),
+                            $q->newExpr()->isNotNull('UnitProducts.purchase_price_incl_per_unit'),
+                        ]),
+                        $q->newExpr()->isNotNull('PurchasePriceProducts.price'),
+                    ]),
+                ]);
+            });
+
+            $query->contain([
+                'ProductAttributes' => [
+                    'conditions' => function(QueryExpression $exp, Query $q) {
+                       return $exp->or([
+                            $exp->and([
+                                $q->newExpr()->eq('UnitProductAttributes.price_per_unit_enabled', APP_ON),
+                                $q->newExpr()->isNotNull('UnitProductAttributes.purchase_price_incl_per_unit'),
+                            ]),
+                            $exp->and([
+                                $q->newExpr()->isNotNull('PurchasePriceProductAttributes.price'),
+                            ]),
+                        ]);
+                    }
+                ],
+            ]);
+
+        }
+
+        if (!$filterByNewProducts && $categoryId != '') {
+            $query->contain([
+                'CategoryProducts' => [
+                    'Categories' => [
+                        'conditions' => [
+                            'Categories.active' => APP_ON,
+                        ],
+                    ],
+                ],
+            ]);
+            $query->matching('CategoryProducts', function ($q) use ($categoryId) {
+                return $q->where(['CategoryProducts.id_category IN' => $categoryId]);
+            });
+        }
+
+        if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
+            if ($appAuth->isOrderForDifferentCustomerMode()) {
+                $getOnlyStockProducts = true;
+            }
+        }
+
+        if ($getOnlyStockProducts) {
+            $query->where(function (QueryExpression $exp, Query $q) {
+                return $exp->and([
+                    $q->newExpr()->eq('Manufacturers.stock_management_enabled', APP_ON),
+                    $q->newExpr()->eq('Products.is_stock_product', APP_ON),
+                ]);
+            });
+        }
+
+        if ($filterByNewProducts) {
+            $dateAdd = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
+            $query->where(function (QueryExpression $exp) use ($dateAdd) {
+                return $exp->gt('DATE_FORMAT(Products.created, \'%Y-%m-%d\')', $dateAdd);
+            });
+        }
+
+        if ($keyword != '') {
+
+            $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
+                $or = [
+                    $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
+                    $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
+                    $q->newExpr()->eq('Products.id_product', (int) $keyword),
+                ];
+                if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                    $or[] = $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4)));
+                    $or[] = $q->newExpr()->eq('BarcodeProducts.barcode', $keyword);
+                }
+                return $exp->and([
+                    $exp->or($or),
+                ]);
+            });
+
+                /*
+                 * only works if above where is commented
+                 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                 $query->contain([
+                 'ProductAttributes' => [
+                 'conditions' => function(QueryExpression $exp, Query $q) use($keyword) {
+                 return $exp->and([
+                 $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
+                 ]);
+                 }
+                 ],
+                 ]);
+                 }
+                 */
+        }
+
+        return $query;
 
     }
 

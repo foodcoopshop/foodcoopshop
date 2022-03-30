@@ -438,54 +438,6 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
-    {
-
-        $cacheKey = join('_', [
-            'ManufacturersController_getProductsByManufacturerId',
-            'manufacturerId-' . $manufacturerId,
-            'isLoggedIn-' . empty($appAuth->user()),
-            'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
-            'date-' . date('Y-m-d'),
-        ]);
-
-        $products = Cache::read($cacheKey);
-        if ($products === null) {
-
-            $sql = "SELECT ";
-            $sql .= $this->getFieldsForProductListQuery();
-            $sql .= "FROM ".$this->tablePrefix."product Products ";
-            $sql .= $this->getJoinsForProductListQuery();
-            $sql .= $this->getConditionsForProductListQuery($appAuth);
-            $sql .= "AND Manufacturers.id_manufacturer = :manufacturerId";
-            $sql .= $this->getOrdersForProductListQuery();
-
-            $params = [
-                'manufacturerId' => $manufacturerId,
-                'active' => APP_ON
-            ];
-            if (empty($appAuth->user())) {
-                $params['isPrivate'] = APP_OFF;
-            }
-
-            $statement = $this->getConnection()->prepare($sql);
-            $statement->execute($params);
-            $products = $statement->fetchAll('assoc');
-            $products = $this->hideMultipleAttributes($products);
-            $products = $this->hideIfPurchasePriceNotSet($products);
-            $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-
-            Cache::write($cacheKey, $products);
-        }
-
-        if (! $countMode) {
-            return $products;
-        } else {
-            return count($products);
-        }
-
-    }
-
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
         switch ($order) {
