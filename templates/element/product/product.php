@@ -1,4 +1,4 @@
-<?php
+f<?php
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -228,7 +228,7 @@ if ($product->description != '') {
                     $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount, $product->tax->rate);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
                         $attribute->unit_product_attribute->price_incl_per_unit,
-                        $attribute->unit_product_attribute->unit_name,
+                        $attribute->unit_product_attribute->name,
                         $attribute->unit_product_attribute->amount,
                         !$appAuth->isSelfServiceModeByUrl()
                     );
@@ -287,7 +287,7 @@ if ($product->description != '') {
 
             echo $this->element('product/quantityInUnitsInputFieldForSelfService', [
                 'pricePerUnitEnabled' => $attribute->unit_product_attribute->price_per_unit_enabled,
-                'unitName' => $attribute->unit_product_attribute->unit_name
+                'unitName' => $attribute->unit_product_attribute->name
             ]);
 
             echo '</div>';
@@ -301,7 +301,7 @@ if ($product->description != '') {
                 $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
                 $attribute->unit_product_attribute->price_per_unit_enabled,
                 $attribute->unit_product_attribute->quantity_in_units,
-                $attribute->unit_product_attribute->unit_name,
+                $attribute->unit_product_attribute->name,
             );
 
             echo '<div class="radio">
@@ -323,7 +323,7 @@ if ($product->description != '') {
                     $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product->unit_product->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount, $product->tax->rate);
                     $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
                         $product->unit_product->price_incl_per_unit,
-                        $product->unit_product->unit_name,
+                        $product->unit_product->name,
                         $product->unit_product->amount,
                         !$appAuth->isSelfServiceModeByUrl()
                     );
@@ -382,7 +382,7 @@ if ($product->description != '') {
             }
             echo $this->element('product/quantityInUnitsInputFieldForSelfService', [
                 'pricePerUnitEnabled' => $product->unit_product->price_per_unit_enabled,
-                'unitName' => $product->unit_product->unit_name,
+                'unitName' => $product->unit_product->name,
             ]);
 
         echo '</div>';
@@ -391,7 +391,7 @@ if ($product->description != '') {
         if ($product->unity != '') {
             $unityStrings[] = $product->unity;
         }
-        $unitString = $this->PricePerUnit->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->unit_name);
+        $unitString = $this->PricePerUnit->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->name);
         if ($unitString != '') {
             $unityStrings[] = $unitString;
         }
