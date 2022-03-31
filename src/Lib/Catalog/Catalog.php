@@ -29,37 +29,7 @@ class Catalog {
     protected $Product;
     protected $ProductAttribute;
 
-    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
-    {
-
-        $cacheKey = join('_', [
-            'ManufacturersController_getProductsByManufacturerId',
-            'manufacturerId-' . $manufacturerId,
-            'isLoggedIn-' . empty($appAuth->user()),
-            'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
-            'date-' . date('Y-m-d'),
-        ]);
-        $products = Cache::read($cacheKey);
-
-        if ($products === null) {
-            $query = $this->getQuery($appAuth, null, false, '', 0, $countMode, false);
-            $query->where([
-                'Manufacturers.id_manufacturer' => $manufacturerId,
-            ]);
-            $products = $query->toArray();
-            $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-            Cache::write($cacheKey, $products);
-        }
-
-        if (! $countMode) {
-            return $products;
-        } else {
-            return count($products);
-        }
-
-    }
-
-    public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
+    public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
 
         $cacheKey = join('_', [
@@ -70,27 +40,33 @@ class Catalog {
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
+            'manufacturerId-' . $manufacturerId,
             'getOnlyStockProducts-' . $getOnlyStockProducts,
             'date-' . date('Y-m-d'),
         ]);
         $products = Cache::read($cacheKey);
 
         if ($products === null) {
-            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $countMode, $getOnlyStockProducts);
+            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $countMode, $getOnlyStockProducts, $manufacturerId);
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
             Cache::write($cacheKey, $products);
         }
 
-        if (! $countMode) {
-            return $products;
-        } else {
-            return count($products);
+        $result = $products;
+        if ($countMode) {
+            $result = count($products);
         }
+        return $result;
 
     }
 
-    protected function getQuery($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
+    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
+    {
+        return $this->getProducts($appAuth, '', false, '', 0, $countMode, false, $manufacturerId);
+    }
+
+    protected function getQuery($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -103,6 +79,7 @@ class Catalog {
         $query = $this->addPurchasePriceIsSetFilter($query);
         $query = $this->addProductIdFilter($query, $productId);
         $query = $this->addCategoryIdFilter($query, $categoryId);
+        $query = $this->addManufacturerIdFilter($query, $manufacturerId);
 
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
             if ($appAuth->isOrderForDifferentCustomerMode()) {
@@ -184,6 +161,20 @@ class Catalog {
         ]);
 
         return $query;
+    }
+
+    protected function addManufacturerIdFilter($query, $manufacturerId)
+    {
+        if ($manufacturerId == 0) {
+            return $query;
+        }
+
+        $query->where([
+            'Manufacturers.id_manufacturer' => $manufacturerId,
+        ]);
+
+        return $query;
+
     }
 
     protected function addProductIdFilter($query, $productId)
