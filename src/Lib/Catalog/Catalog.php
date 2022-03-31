@@ -113,6 +113,7 @@ class Catalog {
         $query = $this->addGetOnlyStockProductsFilter($query, $getOnlyStockProducts);
         $query = $this->addNewProductsFilter($query, $filterByNewProducts);
         $query = $this->addKeywordFilter($query, $keyword);
+        //$query = $this->addBarcodeFilter($query, $keyword);
 
         return $query;
 
@@ -315,10 +316,13 @@ class Catalog {
             ]);
         });
 
-        // TODO TEMP RETURN
         return $query;
 
-        if (!Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+    }
+
+    protected function addBarcodeFilter($query, $keyword)
+    {
+        if (!Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') || $keyword == '') {
             return $query;
         }
 
@@ -336,16 +340,16 @@ class Catalog {
 
         $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
             return
-                $exp->and([
-                    $q->newExpr()->isNull('ProductAttribute.id_product'),
-                    $exp->or([
-                        $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
-                        $q->newExpr()->eq('BarcodeProducts.barcode', $keyword),
-                    ]),
-                ]);
-         });
+            $exp->and([
+                $q->newExpr()->isNull('ProductAttribute.id_product'),
+                $exp->or([
+                    $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
+                    $q->newExpr()->eq('BarcodeProducts.barcode', $keyword),
+                ]),
+            ]);
+        });
 
-         $query->matching('ProductAttributes.BarcodeProductAttributes', function ($query) use ($keyword) {
+        $query->matching('ProductAttributes.BarcodeProductAttributes', function ($query) use ($keyword) {
             return $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
                 return $exp->or([
                     $q->newExpr()->isNull('ProductAttributes.id_product'),
