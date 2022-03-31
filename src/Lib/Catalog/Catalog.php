@@ -20,6 +20,7 @@ use Cake\Database\Query;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenDate;
+use Cake\Utility\Hash;
 use Cake\Utility\Security;
 
 class Catalog {
@@ -50,6 +51,7 @@ class Catalog {
             $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $countMode, $getOnlyStockProducts, $manufacturerId);
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
+            $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
             Cache::write($cacheKey, $products);
         }
 
@@ -325,6 +327,26 @@ class Catalog {
 
         return $query;
 
+    }
+
+    protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products)
+    {
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            return $products;
+        }
+
+        $this->ProductAttributes = FactoryLocator::get('Table')->get('ProductAttributes');
+        $productAttributes = $this->ProductAttributes->find('all')->group('id_product')->toArray();
+        $productIdsWithAttributes = Hash::extract($productAttributes, '{n}.id_product');
+        $i = -1;
+        foreach($products as $product) {
+            $i++;
+            if (empty($product->product_attributes) && in_array($product->id_product, $productIdsWithAttributes)) {
+                unset($products[$i]);
+            }
+        }
+        $products = $this->reindexArray($products);
+        return $products;
     }
 
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
