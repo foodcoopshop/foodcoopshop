@@ -28,7 +28,7 @@ class Catalog {
     protected $Customer;
     protected $Manufacturer;
     protected $Product;
-    protected $ProductAttribute;
+    protected $ProductAttributes;
 
     public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
