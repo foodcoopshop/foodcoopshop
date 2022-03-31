@@ -336,7 +336,7 @@ class Catalog {
         }
 
         $this->ProductAttributes = FactoryLocator::get('Table')->get('ProductAttributes');
-        $productAttributes = $this->ProductAttributes->find('all')->group('id_product')->toArray();
+        $productAttributes = $this->ProductAttributes->find('all')->group('ProductAttributes.id_product')->toArray();
         $productIdsWithAttributes = Hash::extract($productAttributes, '{n}.id_product');
         $i = -1;
         foreach($products as $product) {
