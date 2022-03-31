@@ -237,17 +237,17 @@ if ($product->description != '') {
                 if (!empty($attribute->deposit_product_attribute->deposit)) {
                     echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute->deposit_product_attribute->deposit) . '</b> '.__('deposit').'</div>';
                 }
-                /*
+
                 if (!$appAuth->isOrderForDifferentCustomerMode() && !empty($attribute->timebased_currency_money_incl)) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'manufacturerLimitReached' => $attribute->timebased_currency_manufacturer_limit_reached,
                         'class' => 'timebased-currency-product-info',
-                        'money' => $attribute['timebased_currency_money_incl,
-                        'seconds' => $attribute['timebased_currency_seconds,
-                        'labelPrefix' => __('from_which_{0}_%', [$product->timebased_currency_max_percentage]]) . ' '
+                        'money' => $attribute->timebased_currency_money_incl,
+                        'seconds' => $attribute->timebased_currency_seconds,
+                        'labelPrefix' => __('from_which_{0}_%', [$product->manufacturer->timebased_currency_max_percentage]) . ' '
                     ]);
                 }
-                */
+
                 echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute->calculated_tax) . '</div>';
                 echo '</div>';
             } else {
@@ -334,15 +334,13 @@ if ($product->description != '') {
                 }
                 echo '</div>';
                 if (!$this->request->getSession()->read('Auth.orderCustomer') && !empty($product->timebased_currency_money_incl)) {
-                    /*
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'manufacturerLimitReached' => $product->timebased_currency_manufacturer_limit_reached,
                         'class' => 'timebased-currency-product-info',
                         'money' => $product->timebased_currency_money_incl,
                         'seconds' => $product->timebased_currency_seconds,
-                        'labelPrefix' => __('from_which_{0}_%', [$product->timebased_currency_max_percentage]) . ' '
+                        'labelPrefix' => __('from_which_{0}_%', [$product->manufacturer->timebased_currency_max_percentage]) . ' '
                     ]);
-                    */
                 }
                 echo '<div class="tax">'. $this->Number->formatAsCurrency($product->calculated_tax) . '</div>';
             } else {
