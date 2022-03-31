@@ -45,13 +45,7 @@ class Catalog {
             $query = $this->getQuery($appAuth, null, false, '', 0, $countMode, false);
             $query->where([
                 'Manufacturers.id_manufacturer' => $manufacturerId,
-                'Manufacturers.active' => APP_ON,
             ]);
-            if (empty($appAuth->user())) {
-                $query->where([
-                    'Manufacturers.is_private' => APP_OFF,
-                ]);
-            }
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
             Cache::write($cacheKey, $products);
