@@ -447,7 +447,7 @@ class Catalog {
                 $products[$i]->unit_product->price_incl_per_unit,
                 $products[$i]->deposit_product->deposit,
                 $taxRate,
-                );
+            );
             $products[$i]->price = $modifiedProductPricesByShoppingPrice['price'];
             $products[$i]->unit_product->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
             $products[$i]->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
@@ -461,7 +461,7 @@ class Catalog {
             $products[$i]->is_new = $this->Product->isNew($products[$i]->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
             if (!Configure::read('app.isDepositEnabled')) {
-                $products[$i]['deposit'] = 0;
+                $products[$i]->deposit_product->deposit = 0;
             }
 
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -479,13 +479,9 @@ class Catalog {
                     $products[$i]->timebased_currency_seconds = $this->Manufacturer->getCartTimebasedCurrencySeconds($products[$i]->gross_price, $products[$i]->manufacturer->timebased_currency_max_percentage);
                     $products[$i]->timebased_currency_manufacturer_limit_reached = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]->id_manufacturer);
                 }
-
             }
 
             foreach ($product->product_attributes as &$attribute) {
-
-                $attributePricePerUnit = !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0;
-                $attributeDeposit = !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0;
 
                 $attribute->unit_product_attribute = $attribute->unit_product_attribute ?? (object) [
                     'price_per_unit_enabled' => 0,
@@ -494,13 +490,19 @@ class Catalog {
                     'name' => '',
                 ];
 
+                $attribute->deposit_product_attribute = $attribute->deposit_product_attribute ?? (object) [
+                    'deposit' => 0,
+                ];
+
+                if (!Configure::read('app.isDepositEnabled')) {
+                    $attribute->deposit_product_attribute->deposit = 0;
+                }
+
                 // START: override shopping with purchase prices / zero prices
-                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($appAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attributePricePerUnit, $attributeDeposit, $taxRate);
+                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($appAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attribute->unit_product_attribute->price_incl_per_unit, $attribute->deposit_product_attribute->deposit, $taxRate);
                 $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
                 $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
-                if (!empty($attribute->deposit_product_attribute)) {
-                    $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
-                }
+                $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];
                 // END: override shopping with purchase prices / zero prices
 
                 $grossPrice = $this->Product->getGrossPrice($attribute->price, $taxRate);
