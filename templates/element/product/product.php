@@ -30,7 +30,7 @@ echo '<div class="pw" id="pw-' . $product->id_product . '">';
     echo '<div class="c1">';
 
         $productImageData = $this->Html->getProductImageSrcWithManufacturerImageFallback(
-            $product->id_image,
+            !empty($product->image) ? $product->image->id_image : 0,
             $product->id_manufacturer,
         );
 
