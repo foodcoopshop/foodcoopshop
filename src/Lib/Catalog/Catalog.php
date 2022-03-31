@@ -90,7 +90,6 @@ class Catalog {
         $query = $this->addGetOnlyStockProductsFilter($query, $getOnlyStockProducts);
         $query = $this->addNewProductsFilter($query, $filterByNewProducts);
         $query = $this->addKeywordFilter($query, $keyword);
-        //$query = $this->addBarcodeFilter($query, $keyword);
 
         return $query;
 
@@ -298,58 +297,34 @@ class Catalog {
             return $query;
         }
 
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
+            $query->select($this->Product->BarcodeProducts);
+            $query->contain([
+                'BarcodeProducts',
+                'ProductAttributes.BarcodeProductAttributes',
+            ]);
+            $query->leftJoinWith('ProductAttributes.BarcodeProductAttributes');
+        }
+
         $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
-            return
-            $exp->or([
+            $or = [
                 $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
                 $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
                 $q->newExpr()->eq('Products.id_product', (int) $keyword),
-            ]);
-        });
-
-        return $query;
-
-    }
-
-    protected function addBarcodeFilter($query, $keyword)
-    {
-        if (!Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') || $keyword == '') {
-            return $query;
-        }
-
-        // TODO: only add contains if called from self service controller
-        $query->select(['system_bar_code' => $this->getProductIdentifierField()]);
-        $query->select($this->Product->BarcodeProducts);
-        $query->contain([
-            'BarcodeProducts',
-            'ProductAttributes.BarcodeProductAttributes',
-        ]);
-
-        $query->contain([
-            'ProductAttribute',
-        ]);
-
-        $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
-            return
-            $exp->and([
-                $q->newExpr()->isNull('ProductAttribute.id_product'),
-                $exp->or([
+            ];
+            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                $or = array_merge($or, [
                     $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
                     $q->newExpr()->eq('BarcodeProducts.barcode', $keyword),
-                ]),
-            ]);
-        });
-
-        $query->matching('ProductAttributes.BarcodeProductAttributes', function ($query) use ($keyword) {
-            return $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
-                return $exp->or([
-                    $q->newExpr()->isNull('ProductAttributes.id_product'),
                     $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
                 ]);
-            });
+            }
+            return $exp->or($or);
         });
 
         return $query;
+
     }
 
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)

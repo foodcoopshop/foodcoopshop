@@ -209,7 +209,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchByCustomProductBarcode()
     {
-        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = '1234567890123';
@@ -220,7 +219,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchByCustomProductAttributeBarcode()
     {
-        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2345678901234';
@@ -231,7 +229,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
     {
-        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = 'b5320000';
@@ -242,7 +239,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchBySystemProductAttributeBarcodeWithMissingWeight()
     {
-        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = 'e05f0015';
