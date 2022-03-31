@@ -28,7 +28,7 @@ class Catalog {
     protected $Customer;
     protected $Manufacturer;
     protected $Product;
-    protected $ProductAttributes;
+    protected $ProductAttribute;
 
     public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
@@ -335,8 +335,8 @@ class Catalog {
             return $products;
         }
 
-        $this->ProductAttributes = FactoryLocator::get('Table')->get('ProductAttributes');
-        $productAttributes = $this->ProductAttributes->find('all')->group('ProductAttributes.id_product')->toArray();
+        $this->ProductAttribute = FactoryLocator::get('Table')->get('ProductAttributes');
+        $productAttributes = $this->ProductAttribute->find('all')->group('ProductAttributes.id_product')->toArray();
         $productIdsWithAttributes = Hash::extract($productAttributes, '{n}.id_product');
         $i = -1;
         foreach($products as $product) {
