@@ -248,34 +248,43 @@ class Catalog {
         if ($keyword != '') {
 
             $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
-                $or = [
-                    $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
-                    $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
-                    $q->newExpr()->eq('Products.id_product', (int) $keyword),
-                ];
-                if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                    $or[] = $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4)));
-                    $or[] = $q->newExpr()->eq('BarcodeProducts.barcode', $keyword);
-                }
-                return $exp->and([
-                    $exp->or($or),
-                ]);
+                return
+                    $exp->or([
+                        $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
+                        $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
+                        $q->newExpr()->eq('Products.id_product', (int) $keyword),
+                    ]);
             });
 
+            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+
                 /*
-                 * only works if above where is commented
-                 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                 $query->contain([
-                 'ProductAttributes' => [
-                 'conditions' => function(QueryExpression $exp, Query $q) use($keyword) {
-                 return $exp->and([
-                 $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
-                 ]);
-                 }
-                 ],
-                 ]);
-                 }
-                 */
+                $query->contain([
+                    'ProductAttribute',
+                ]);
+
+                $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
+                    return
+                        $exp->and([
+                            $q->newExpr()->isNull('ProductAttribute.id_product'),
+                            $exp->or([
+                                $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
+                                $q->newExpr()->eq('BarcodeProducts.barcode', $keyword),
+                            ]),
+                        ]);
+                });
+
+                $query->matching('ProductAttributes.BarcodeProductAttributes', function ($query) use ($keyword) {
+                    return $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
+                        return $exp->or([
+                            $q->newExpr()->isNull('ProductAttributes.id_product'),
+                            $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
+                        ]);
+                    });
+                });
+                */
+
+            }
         }
 
         return $query;

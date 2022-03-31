@@ -81,26 +81,30 @@ class SelfServiceController extends FrontendController
                 $customBarcodeFound = true;
                 $attributeId = 0;
             }
-            if ($keyword == $products[0]['ProductAttributeBarcode']) {
-                $customBarcodeFound = true;
-                $attributeId = $products[0]['ProductAttributeId'];
+
+            if (!empty($products[0]->product_attributes)) {
+                if ($keyword == $products[0]->product_attributes[0]->barcode_product_attribute->barcode) {
+                    $customBarcodeFound = true;
+                    $attributeId = $products[0]->product_attributes[0]->id_product_attribute;
+                }
             }
 
             if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
                 $this->CartProduct = $this->getTableLocator()->get('CartProducts');
-                $result = $this->CartProduct->add($this->AppAuth, $products[0]['id_product'], $attributeId, 1);
+                $result = $this->CartProduct->add($this->AppAuth, $products[0]->id_product, $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
-                    $this->request->getSession()->write('highlightedProductId', $products[0]['id_product']); // sic! no attributeId needed!
+                    $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
                     $redirectUrl = Configure::read('app.slugHelper')->getSelfService('', $keyword);
                 } else {
                     $imgString = '';
-                    $imgSrc = Configure::read('app.htmlHelper')->getProductImageSrc($products[0]['id_image'], 'home');
+                    $imageId = !empty($products[0]->Image) ? $products[0]->Image->id_image : 0;
+                    $imgSrc = Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home');
                     if ($imgSrc != '') {
                         $imgString .= '<br /><img src="'.$imgSrc.'" />';
                     }
                     $this->Flash->success(__('The_product_{0}_was_added_to_your_cart.', [
-                        '<b>' . $products[0]['name'] . '</b>'
+                        '<b>' . $products[0]->name . '</b>'
                     ]) . $imgString);
                     $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
                 }
