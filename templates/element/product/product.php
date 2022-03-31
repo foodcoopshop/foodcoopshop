@@ -21,7 +21,7 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $appAuth->isOrderForDifferentCustomerMode(),
     $appAuth->isSelfServiceModeByUrl(),
     Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
-    $product->stock_management_enabled,
+    $product->manufacturer->stock_management_enabled,
     $product->is_stock_product,
 );
 
@@ -83,7 +83,7 @@ if ($product->description != '') {
 
     if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
-        if (!$appAuth->isOrderForDifferentCustomerMode() && !($product->stock_management_enabled && $product->is_stock_product)) {
+        if (!$appAuth->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
 
             $lastOrderDay = $this->Time->getLastOrderDay(
                 $product->next_delivery_day,
@@ -114,7 +114,7 @@ if ($product->description != '') {
                 $pickupDayDetailText = __('Instant_order');
             } else {
                 $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
-                    $product->is_stock_product && $product->stock_management_enabled,
+                    $product->is_stock_product && $product->manufacturer->stock_management_enabled,
                     $product->delivery_rhythm_type,
                     $product->delivery_rhythm_count,
                 );

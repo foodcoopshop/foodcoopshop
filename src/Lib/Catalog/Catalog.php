@@ -390,7 +390,7 @@ class Catalog {
             }
 
             // hides products when order_possible_until is reached (do not apply if product is stock product)
-            if (!($product->is_stock_product && $product->stock_management_enabled) &&
+            if (!($product->is_stock_product && $product->manufacturer->stock_management_enabled) &&
                 $product->delivery_rhythm_type == 'individual' &&
                 !is_null($product->delivery_rhythm_order_possible_until) &&
                 $product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
