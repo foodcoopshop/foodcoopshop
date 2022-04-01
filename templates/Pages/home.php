@@ -52,7 +52,7 @@ if (!empty($newProducts)) {
     echo '</h2>';
 
     foreach ($newProducts as $product) {
-        echo $this->element('product/product', [
+        echo $this->element('catalog/product', [
             'product' => $product,
             'showProductDetailLink' => true,
             'showManufacturerDetailLink' => true,
