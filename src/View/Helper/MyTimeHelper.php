@@ -92,7 +92,7 @@ class MyTimeHelper extends TimeHelper
         }
 
         if ($deliveryRhythmType == 'individual') {
-            $result = strtotime($deliveryRhythmOrderPossibleUntil);
+            $result = strtotime($deliveryRhythmOrderPossibleUntil->i18nFormat(Configure::read('DateFormat.Database')));
         } else {
             $lastOrderWeekday = $this->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
             $tmpLocale = I18n::getLocale();
