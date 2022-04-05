@@ -35,7 +35,7 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "svelte": "^3.46.4",
+    "svelte": "^3.46.6",
     "swiper": "8.0.7",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.15.3",
