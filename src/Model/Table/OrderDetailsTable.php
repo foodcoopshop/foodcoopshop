@@ -242,10 +242,7 @@ class OrderDetailsTable extends AppTable
         return $depositNet;
     }
 
-    /**
-     * @param int $customerId
-     * @return array
-     */
+
     public function getLastOrderDetailsForDropdown($customerId)
     {
 
@@ -260,8 +257,8 @@ class OrderDetailsTable extends AppTable
             $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
             $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
-            // stop trying to search for valid orders if year is 2013
-            if (date('Y', $dateFrom) == '2013') {
+            // stop trying to search for valid orders if year is one year ago
+            if (date('Y', $dateFrom) == date('Y') - 1) {
                 break;
             }
 

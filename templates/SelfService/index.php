@@ -107,7 +107,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
     }
 
     foreach ($products as $product) {
-        echo $this->element('product/product', [
+        echo $this->element('catalog/product', [
             'product' => $product,
             'showProductDetailLink' => false,
             'showManufacturerDetailLink' => false,

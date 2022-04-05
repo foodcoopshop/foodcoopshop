@@ -56,6 +56,9 @@ return [
         'default' => [
             'prefix' => 'example_com_',
         ],
+        'short' => [
+            'prefix' => 'example_com_',
+        ],
         '_cake_core_' => [
             'prefix' => 'example_com_',
         ],

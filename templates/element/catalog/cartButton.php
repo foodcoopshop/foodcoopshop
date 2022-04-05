@@ -24,10 +24,10 @@ if ($hideButton) {
     $availableQuantity = $stockAvailableQuantity;
     $disabledClass = '';
 
-    if ($product['is_stock_product'] && $product['stock_management_enabled']) {
+    if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
-    if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
+    if (((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
         || $deliveryBreakEnabled) {
 
         $disabledClass = 'disabled ';

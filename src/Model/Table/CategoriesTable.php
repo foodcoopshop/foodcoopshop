@@ -2,9 +2,9 @@
 
 namespace App\Model\Table;
 
+use App\Lib\Catalog\Catalog;
 use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -139,111 +139,14 @@ class CategoriesTable extends AppTable
         }, $flattenedCategories);
 
         if ($showProductCount) {
+            $this->Catalog = new Catalog();
             foreach($flattenedCategories as $categoryId => $category) {
-                $productCount = $this->getProductsByCategoryId($appAuth, $categoryId, false, '', 0, true, true);
+                $productCount = $this->Catalog->getProducts($appAuth, $categoryId, false, '', 0, true, true);
                 $flattenedCategories[$categoryId] .= ' (' . $productCount . ')';
             }
         }
 
         return $flattenedCategories;
-    }
-
-    /**
-     * custom sql for best performance
-     * product attributes ARE NOT fetched in this query!
-     */
-    public function getProductsByCategoryId($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
-    {
-        $cacheKey = join('_', [
-            'CategoriesTable_getProductsByCategoryId',
-            'categoryId-' . $categoryId,
-            'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
-            'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
-            'filterByNewProducts-' . $filterByNewProducts,
-            'keywords-' . substr(md5($keyword), 0, 10),
-            'productId-' . $productId,
-            'getOnlyStockProducts-' . $getOnlyStockProducts,
-            'date-' . date('Y-m-d'),
-        ]);
-        $products = Cache::read($cacheKey);
-
-        if ($products === null) {
-
-            $params = [
-                'active' => APP_ON
-            ];
-            if (empty($appAuth->user())) {
-                $params['isPrivate'] = APP_OFF;
-            }
-
-            $sql = 'SELECT ';
-            $sql .= $this->getFieldsForProductListQuery();
-            $sql .= "FROM ".$this->tablePrefix."product Products ";
-
-            if (! $filterByNewProducts) {
-                $sql .= "LEFT JOIN ".$this->tablePrefix."category_product CategoryProducts ON CategoryProducts.id_product = Products.id_product
-                     LEFT JOIN ".$this->tablePrefix."category Categories ON CategoryProducts.id_category = Categories.id_category ";
-            }
-
-            $sql .= $this->getJoinsForProductListQuery();
-            $sql .= $this->getConditionsForProductListQuery($appAuth);
-
-            if (! $filterByNewProducts) {
-                $params['categoryId'] = $categoryId;
-                $sql .= " AND CategoryProducts.id_category = :categoryId ";
-                $sql .= " AND Categories.active = :active";
-            }
-
-            if ($filterByNewProducts) {
-                $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
-                $sql .= " AND DATE_FORMAT(Products.created, '%Y-%m-%d') > :dateAdd";
-            }
-
-            if ($keyword != '') {
-
-                $params['keywordLike'] = '%' . $keyword . '%';
-                $params['keyword'] = $keyword;
-
-                // use id_product LIKE and not = because barcode search "SELECT * FROM fcs_product WHERE id_product LIKE '1a1b0000'" would find product with ID 1
-                $sql .= " AND (Products.name LIKE :keywordLike OR Products.description_short LIKE :keywordLike OR Products.id_product LIKE :keyword ";
-
-                if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                    $params['barcodeIdentifier'] = strtolower(substr($keyword, 0, 4));
-                    $sql .= " OR " . $this->getProductIdentifierField() . " = :barcodeIdentifier";
-                    $sql .= " OR ProductBarcodes.barcode = :keyword";
-                    $sql .= " OR ProductAttributeBarcodes.barcode = :keyword";
-                }
-
-                $sql .= ")";
-
-            }
-
-            if ($productId > 0) {
-                $params['productId'] = $productId;
-                $sql .= " AND Products.id_product = :productId ";
-            }
-
-            if ($getOnlyStockProducts) {
-                $sql .= " AND (Products.is_stock_product = 1 AND Manufacturers.stock_management_enabled = 1) ";
-            }
-
-            $sql .= $this->getOrdersForProductListQuery();
-            $statement = $this->getConnection()->prepare($sql);
-            $statement->execute($params);
-            $products = $statement->fetchAll('assoc');
-            $products = $this->hideMultipleAttributes($products);
-            $products = $this->hideIfPurchasePriceNotSet($products);
-            $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-
-            Cache::write($cacheKey, $products);
-        }
-
-        if (! $countMode) {
-            return $products;
-        } else {
-            return count($products);
-        }
-
     }
 
     /**
@@ -261,7 +164,8 @@ class CategoriesTable extends AppTable
 
     private function buildItemForTree($appAuth, $item, $index)
     {
-        $productCount = $this->getProductsByCategoryId($appAuth, $item->id_category, false, '', 0, true);
+        $this->Catalog = new Catalog();
+        $productCount = $this->Catalog->getProducts($appAuth, $item->id_category, false, '', 0, true);
 
         $tmpMenuItem = [
             'name' => $item->name . ' <span class="additional-info">(' . $productCount . ')</span>',

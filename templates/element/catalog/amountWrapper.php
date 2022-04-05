@@ -12,6 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 use Cake\Core\Configure;
 
 ?>
@@ -28,8 +29,8 @@ use Cake\Core\Configure;
         </a>
     <?php } ?>
     <?php
-        $availableQuantity = $stockAvailable['quantity'] - $stockAvailable['quantity_limit'];
-        if ((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailable['always_available']) && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
+        $availableQuantity = $stockAvailable->quantity - $stockAvailable->quantity_limit;
+        if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailable->always_available) && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
             <span <?php echo !$hideAmountSelector ? 'class="right-of-input availibility"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
     <?php } ?>
 
