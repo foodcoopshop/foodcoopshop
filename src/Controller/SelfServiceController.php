@@ -82,7 +82,7 @@ class SelfServiceController extends FrontendController
                 $attributeId = 0;
             }
 
-            if (!empty($products[0]->product_attributes)) {
+            if (!empty($products[0]->product_attributes) && !empty($products[0]->product_attributes[0]->barcode_product_attribute)) {
                 if ($keyword == $products[0]->product_attributes[0]->barcode_product_attribute->barcode) {
                     $customBarcodeFound = true;
                     $attributeId = $products[0]->product_attributes[0]->id_product_attribute;
