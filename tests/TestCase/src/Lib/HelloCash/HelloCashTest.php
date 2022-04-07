@@ -76,6 +76,36 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertMailCount(1);
     }
 
+    public function testGenerateReceiptForCompany()
+    {
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'is_company', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'firstname', 'Company Name');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'lastname', 'Contact Name');
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
+
+        $invoice = $this->Invoice->find('all', [])->first();
+
+        $receiptHtml = $this->HelloCash->getReceipt($invoice->id, false);
+
+        $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Company Name', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Contact Name', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
+
+        $this->runAndAssertQueue();
+        $this->assertMailCount(1);
+    }
+
+
     public function testGenerateInvoiceSendPerEmailActivated()
     {
         $this->loginAsSuperadmin();
