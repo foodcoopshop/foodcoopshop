@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-03-28 11:07+0200\n"
+"POT-Creation-Date: 2022-04-07 11:56+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -986,6 +986,12 @@ msgstr ""
 msgid "docs_route_members"
 msgstr ""
 
+msgid "Company_name"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
 msgid "Firstname"
 msgstr ""
 
@@ -1527,9 +1533,6 @@ msgid "Stock_products_in_order_lists"
 msgstr ""
 
 msgid "Should_stock_products_be_included_in_order_lists?"
-msgstr ""
-
-msgid "Contact_person"
 msgstr ""
 
 msgid "Chose_member"

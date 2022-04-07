@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 10:32+0200\n"
+"POT-Creation-Date: 2022-04-07 11:56+0200\n"
 "PO-Revision-Date: 2022-04-07 10:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2223,17 +2223,14 @@ msgstr "Passwort vergessen?"
 msgid "Create_account"
 msgstr "Mitgliedskonto erstellen"
 
-msgid "Firstname_or_company_name"
-msgstr "Vorname (oder Firmenname)"
-
-msgid "Register_as_company?"
-msgstr "Als Firma registrieren?"
+msgid "Firstname"
+msgstr "Vorname"
 
 msgid "Lastname"
 msgstr "Nachname"
 
-msgid "Firstname"
-msgstr "Vorname"
+msgid "Register_as_company?"
+msgstr "Als Firma registrieren?"
 
 msgid "Street_and_number"
 msgstr "Straße + Nummer"
@@ -2669,6 +2666,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Firstname_or_company_name"
+#~ msgstr "Vorname (oder Firmenname)"
 
 #~ msgid "Company"
 #~ msgstr "Firma"

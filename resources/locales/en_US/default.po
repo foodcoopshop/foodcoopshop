@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 10:32+0200\n"
+"POT-Creation-Date: 2022-04-07 11:56+0200\n"
 "PO-Revision-Date: 2022-03-28 14:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2223,17 +2223,14 @@ msgstr "Forgot password?"
 msgid "Create_account"
 msgstr "Create account"
 
-msgid "Firstname_or_company_name"
-msgstr ""
-
-msgid "Register_as_company?"
-msgstr ""
+msgid "Firstname"
+msgstr "First name"
 
 msgid "Lastname"
 msgstr "Last name"
 
-msgid "Firstname"
-msgstr "First name"
+msgid "Register_as_company?"
+msgstr ""
 
 msgid "Street_and_number"
 msgstr "Street and nº"
