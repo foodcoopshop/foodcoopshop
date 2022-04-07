@@ -18,11 +18,11 @@
         <p>
             <?php
                 if ($data->is_company) {
-                    echo __('Hello') . ' ' . $data->firstname;
+                    echo __('Hello') . ' ' . $data->firstname . ',';
                 } else {
-                    echo __('Hello') . ' ' . $data->firstname . ' ' . $data->lastname;
+                    echo __('Hello') . ' ' . $data->firstname . ' ' . $data->lastname . ',';
                 }
             ?>
-        ,</p>
+        </p>
     </td>
 </tr>
