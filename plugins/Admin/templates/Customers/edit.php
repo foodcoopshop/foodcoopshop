@@ -53,7 +53,8 @@ if ($customer->is_company) {
         'required' => true
     ]);
     echo $this->Form->control('Customers.lastname', [
-        'label' => __d('admin', 'Contact_person'),
+        'label' => __d('admin', 'Contact_person') . '<span class="after small">'.__d('admin', 'Will_be_shown_on_invoices.').'</span>',
+        'escape' => false,
     ]);
 } else {
     echo $this->Form->control('Customers.firstname', [

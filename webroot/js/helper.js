@@ -41,20 +41,26 @@ foodcoopshop.Helper = {
             var lastnameElements = $('label[for="customers-lastname"], #customers-lastname-error');
             if ($(this).prop('checked')) {
                 firstnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Vorname/, 'Firmenname'));
+                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Firstname);
+                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.CompanyName));
                 });
                 lastnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Bitte gib deinen Nachnamen an/, 'Bitte gib die Ansprechperson an'));
-                    $(this).html($(this).html().replace(/Nachname/, 'Ansprechperson'));
+                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheLastname);
+                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson));
+                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Lastname);
+                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.ContactPerson));
                 });
                 $('label[for="customers-lastname"]').closest('.input').removeClass('required');
             } else {
                 firstnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Firmenname/, 'Vorname'));
+                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.CompanyName);
+                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Firstname));
                 });
                 lastnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Bitte gib die Ansprechperson an/, 'Bitte gib deinen Nachnamen an'));
-                    $(this).html($(this).html().replace(/Ansprechperson/, 'Nachname'));
+                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheLastname));
+                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Lastname));
                 });
                 $('label[for="customers-lastname"]').closest('.input').addClass('required');
             }

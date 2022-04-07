@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 11:56+0200\n"
-"PO-Revision-Date: 2022-03-28 14:49+0200\n"
+"POT-Creation-Date: 2022-04-07 21:46+0200\n"
+"PO-Revision-Date: 2022-04-07 21:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -509,6 +509,24 @@ msgstr "Accept cookies"
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
 msgstr "You have already ordered {0} {1}x for {2}."
+
+msgid "Firstname"
+msgstr "First name"
+
+msgid "Lastname"
+msgstr "Last name"
+
+msgid "Contact_person"
+msgstr "Contact person"
+
+msgid "Company_name"
+msgstr "Company name"
+
+msgid "Please_enter_the_contact_person"
+msgstr "Please enter the contact person"
+
+msgid "Please_enter_the_lastname"
+msgstr "Please enter the last name"
 
 msgid "Empty_cart"
 msgstr "Remove products from cart"
@@ -2223,12 +2241,6 @@ msgstr "Forgot password?"
 msgid "Create_account"
 msgstr "Create account"
 
-msgid "Firstname"
-msgstr "First name"
-
-msgid "Lastname"
-msgstr "Last name"
-
 msgid "Register_as_company?"
 msgstr ""
 
@@ -2666,10 +2678,6 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
-
-#, fuzzy
-#~ msgid "Company"
-#~ msgstr "Company court"
 
 #, fuzzy
 #~ msgid "Total_sum_tax"

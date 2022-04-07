@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 11:56+0200\n"
-"PO-Revision-Date: 2022-04-07 10:32+0200\n"
+"POT-Creation-Date: 2022-04-07 21:46+0200\n"
+"PO-Revision-Date: 2022-04-07 21:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -509,6 +509,24 @@ msgstr "Cookies akzeptieren"
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
 msgstr "Du hast {0} bereits {1}x für den Abholtag {2} bestellt."
+
+msgid "Firstname"
+msgstr "Vorname"
+
+msgid "Lastname"
+msgstr "Nachname"
+
+msgid "Contact_person"
+msgstr "Ansprechperson"
+
+msgid "Company_name"
+msgstr "Firmenname"
+
+msgid "Please_enter_the_contact_person"
+msgstr "Bitte gib die Ansprechperson an"
+
+msgid "Please_enter_the_lastname"
+msgstr "Bitte gib den Nachnamen an"
 
 msgid "Empty_cart"
 msgstr "Warenkorb leeren"
@@ -2223,12 +2241,6 @@ msgstr "Passwort vergessen?"
 msgid "Create_account"
 msgstr "Mitgliedskonto erstellen"
 
-msgid "Firstname"
-msgstr "Vorname"
-
-msgid "Lastname"
-msgstr "Nachname"
-
 msgid "Register_as_company?"
 msgstr "Als Firma registrieren?"
 
@@ -2669,9 +2681,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Firstname_or_company_name"
 #~ msgstr "Vorname (oder Firmenname)"
-
-#~ msgid "Company"
-#~ msgstr "Firma"
 
 #~ msgid "Total_sum_tax"
 #~ msgstr "Summe USt."

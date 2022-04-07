@@ -95,6 +95,12 @@ class LocalizedController extends Controller
                 'CookiesExplainationText' => __('Cookies_explaination_text'),
                 'AcceptCookies' => __('Accept_cookies'),
                 'YouHaveAlredyOrdered01TimesFor2' => __('You_have_already_ordered_{0}_{1}_times_for_{2}.'),
+                'Firstname' => __('Firstname'),
+                'Lastname' => __('Lastname'),
+                'ContactPerson' => __('Contact_person'),
+                'CompanyName' => __('Company_name'),
+                'PleaseEnterTheContactPerson' => __('Please_enter_the_contact_person'),
+                'PleaseEnterTheLastname' => __('Please_enter_the_lastname'),
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),

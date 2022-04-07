@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-04-07 11:56+0200\n"
+"POT-Creation-Date: 2022-04-07 21:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -507,6 +507,24 @@ msgid "Accept_cookies"
 msgstr ""
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
+msgid "Company_name"
+msgstr ""
+
+msgid "Please_enter_the_contact_person"
+msgstr ""
+
+msgid "Please_enter_the_lastname"
 msgstr ""
 
 msgid "Empty_cart"
@@ -2220,12 +2238,6 @@ msgid "Forgot_password?"
 msgstr ""
 
 msgid "Create_account"
-msgstr ""
-
-msgid "Firstname"
-msgstr ""
-
-msgid "Lastname"
 msgstr ""
 
 msgid "Register_as_company?"
