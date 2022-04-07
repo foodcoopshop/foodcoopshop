@@ -208,6 +208,7 @@ DROP TABLE IF EXISTS `fcs_customer`;
 CREATE TABLE `fcs_customer` (
   `id_customer` int unsigned NOT NULL AUTO_INCREMENT,
   `id_default_group` int unsigned NOT NULL DEFAULT '1',
+  `is_company` tinyint NOT NULL DEFAULT '0',
   `firstname` varchar(32) NOT NULL DEFAULT '',
   `lastname` varchar(32) NOT NULL DEFAULT '',
   `email` varchar(128) NOT NULL DEFAULT '',
