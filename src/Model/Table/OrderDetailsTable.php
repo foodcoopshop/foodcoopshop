@@ -658,9 +658,8 @@ class OrderDetailsTable extends AppTable
 
     /**
      * $param $orderDetails is already grouped!
-     * @return array|boolean
      */
-    public function prepareOrderDetailsGroupedByCustomer($orderDetails)
+    public function prepareOrderDetailsGroupedByCustomer($orderDetails): array
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
