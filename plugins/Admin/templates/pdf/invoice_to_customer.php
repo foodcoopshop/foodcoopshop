@@ -33,6 +33,9 @@ $html = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 $html .= '<td width="272">';
     $html .= '<p>';
         $html .= $result->name . '<br />';
+        if ($result->is_company && $result->lastname != '') {
+            $html .= $result->lastname . '<br />';
+        }
         $html .= strip_tags($this->Html->getCustomerAddress($result), '<br>') . '<br />';
     $html .= '</p>';
 $html .= '</td>';

@@ -42,7 +42,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
-    public function testContentOfInvoice()
+    public function testContentOfInvoiceForPerson()
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -52,9 +52,29 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForPerson.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
+
+    }
+
+    public function testContentOfInvoiceForCompany()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'is_company', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'firstname', 'Company Name');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'lastname', 'Contact Name');
+        $this->loginAsSuperadmin();
+
+        $customerId = Configure::read('test.superadminId');
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForCompany.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+
     }
 
     public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum()
