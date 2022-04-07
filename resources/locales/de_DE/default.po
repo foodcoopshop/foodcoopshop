@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 21:46+0200\n"
-"PO-Revision-Date: 2022-04-07 21:46+0200\n"
+"POT-Creation-Date: 2022-04-07 22:01+0200\n"
+"PO-Revision-Date: 2022-04-07 22:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -525,8 +525,8 @@ msgstr "Firmenname"
 msgid "Please_enter_the_contact_person"
 msgstr "Bitte gib die Ansprechperson an"
 
-msgid "Please_enter_the_lastname"
-msgstr "Bitte gib den Nachnamen an"
+msgid "Please_enter_your_lastname"
+msgstr "Bitte gib deinen Nachnamen an"
 
 msgid "Empty_cart"
 msgstr "Warenkorb leeren"
@@ -2678,6 +2678,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Please_enter_the_lastname"
+#~ msgstr "Bitte gib den Nachnamen an"
 
 #~ msgid "Firstname_or_company_name"
 #~ msgstr "Vorname (oder Firmenname)"

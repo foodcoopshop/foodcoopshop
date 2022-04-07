@@ -39,30 +39,39 @@ foodcoopshop.Helper = {
         isCompanyCheckbox.on('change', function() {
             var firstnameElements = $('label[for="customers-firstname"], #customers-firstname-error');
             var lastnameElements = $('label[for="customers-lastname"], #customers-lastname-error');
+            var lastnameWrapper = $('label[for="customers-lastname"]').closest('.input');
+            var regExp;
+            var newHtml;
             if ($(this).prop('checked')) {
                 firstnameElements.each(function() {
-                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Firstname);
-                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.CompanyName));
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Firstname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.CompanyName);
+                    $(this).html(newHtml);
                 });
                 lastnameElements.each(function() {
-                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheLastname);
-                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson));
-                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Lastname);
-                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.ContactPerson));
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    $(this).html(newHtml);
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Lastname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    $(this).html(newHtml);
                 });
-                $('label[for="customers-lastname"]').closest('.input').removeClass('required');
+                lastnameWrapper.removeClass('required');
             } else {
                 firstnameElements.each(function() {
-                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.CompanyName);
-                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Firstname));
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.CompanyName);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Firstname);
+                    $(this).html(newHtml);
                 });
                 lastnameElements.each(function() {
-                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
-                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheLastname));
-                    var regExp = new RegExp(foodcoopshop.LocalizedJs.helper.ContactPerson);
-                    $(this).html($(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Lastname));
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
+                    $(this).html(newHtml);
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Lastname);
+                    $(this).html(newHtml);
                 });
-                $('label[for="customers-lastname"]').closest('.input').addClass('required');
+                lastnameWrapper.addClass('required');
             }
         });
 

@@ -100,7 +100,7 @@ class LocalizedController extends Controller
                 'ContactPerson' => __('Contact_person'),
                 'CompanyName' => __('Company_name'),
                 'PleaseEnterTheContactPerson' => __('Please_enter_the_contact_person'),
-                'PleaseEnterTheLastname' => __('Please_enter_the_lastname'),
+                'PleaseEnterYourLastname' => __('Please_enter_your_lastname'),
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),
