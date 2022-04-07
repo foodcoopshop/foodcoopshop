@@ -662,7 +662,7 @@ class OrderDetailsController extends AdminAppController
             case 'customer':
                 $query = $this->addSelectGroupFields($query);
                 $query->select(['OrderDetails.id_customer']);
-                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email']);
+                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email', 'Customers.is_company']);
                 if (count($pickupDay) == 1) {
                     $query->select(['PickupDayEntities.comment', 'PickupDayEntities.products_picked_up']);
                 }

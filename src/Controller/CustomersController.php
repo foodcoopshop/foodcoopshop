@@ -398,6 +398,9 @@ class CustomersController extends FrontendController
                     if (Configure::read('app.customerMainNamePart') == 'lastname') {
                         $fullname = $this->getRequest()->getData('Customers.lastname') . ' ' . $this->getRequest()->getData('Customers.firstname');
                     }
+                    if ($this->getRequest()->getData('Customers.is_company')) {
+                        $fullname = $this->getRequest()->getData('Customers.firstname');
+                    }
                     $message = __('{0}_created_an_account.', [$fullname]);
 
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);

@@ -15,6 +15,14 @@
 ?>
 <tr>
     <td style="font-weight:bold;font-size:18px;padding-bottom:10px;">
-        <p><?php echo __('Hello'); ?> <?php echo $data->firstname . ' ' . $data->lastname; ?>,</p>
+        <p>
+            <?php
+                if ($data->is_company) {
+                    echo __('Hello') . ' ' . $data->firstname;
+                } else {
+                    echo __('Hello') . ' ' . $data->firstname . ' ' . $data->lastname;
+                }
+            ?>
+        ,</p>
     </td>
 </tr>
