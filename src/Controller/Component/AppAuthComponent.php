@@ -66,7 +66,11 @@ class AppAuthComponent extends AuthComponent
 
     public function getAbbreviatedUserName()
     {
-        return $this->user('firstname') . ' ' . substr($this->user('lastname'), 0, 1) . '.';
+        $result = $this->user('firstname') . ' ' . substr($this->user('lastname'), 0, 1) . '.';
+        if ($this->user('is_company')) {
+            $result = $this->user('firstname');
+        }
+        return $result;
     }
 
     public function getGroupId()
