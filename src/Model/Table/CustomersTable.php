@@ -81,7 +81,17 @@ class CustomersTable extends AppTable
     public function validationEdit(Validator $validator)
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
-        $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
+        $validator
+        ->add('lastname', 'custom', [
+            'rule'=>  function ($value, $context) {
+                if ((isset($context['data']['is_company']) && $context['data']['is_company'])
+                    || strlen($value) >= 2) {
+                    return true;
+                }
+                return false;
+            },
+            'message' => __('Please_enter_your_last_name.'),
+        ]);
         $validator->inList('shopping_price', array_keys(Configure::read('app.htmlHelper')->getShoppingPricesForDropdown()), __('The_shopping_price_is_not_valid.'));
         return $validator;
     }
