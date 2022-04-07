@@ -33,39 +33,6 @@ foodcoopshop.Helper = {
         }
     },
 
-    initRegistrationAsCompany: function() {
-
-        var isCompanyCheckbox = $('#customers-is-company');
-        isCompanyCheckbox.on('change', function() {
-            var firstnameElements = $('label[for="customers-firstname"], #customers-firstname-error');
-            var lastnameElements = $('label[for="customers-lastname"], #customers-lastname-error');
-            if ($(this).prop('checked')) {
-                firstnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Vorname/, 'Firmenname'));
-                });
-                lastnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Bitte gib deinen Nachnamen an/, 'Bitte gib die Ansprechperson an'));
-                    $(this).html($(this).html().replace(/Nachname/, 'Ansprechperson'));
-                });
-                $('label[for="customers-lastname"]').closest('.input').removeClass('required');
-            } else {
-                firstnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Firmenname/, 'Vorname'));
-                });
-                lastnameElements.each(function() {
-                    $(this).html($(this).html().replace(/Bitte gib die Ansprechperson an/, 'Bitte gib deinen Nachnamen an'));
-                    $(this).html($(this).html().replace(/Ansprechperson/, 'Nachname'));
-                });
-                $('label[for="customers-lastname"]').closest('.input').addClass('required');
-            }
-        });
-
-        if (isCompanyCheckbox.prop('checked')) {
-            isCompanyCheckbox.trigger('change');
-        }
-
-    },
-
     setFutureOrderDetails: function(futureOrderDetails) {
 
         futureOrderDetails = $.parseJSON(futureOrderDetails);

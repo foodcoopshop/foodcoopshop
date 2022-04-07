@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 10:32+0200\n"
-"PO-Revision-Date: 2022-04-07 10:32+0200\n"
+"POT-Creation-Date: 2022-03-28 11:07+0200\n"
+"PO-Revision-Date: 2022-03-23 10:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2223,17 +2223,11 @@ msgstr "Passwort vergessen?"
 msgid "Create_account"
 msgstr "Mitgliedskonto erstellen"
 
-msgid "Firstname_or_company_name"
-msgstr "Vorname (oder Firmenname)"
-
-msgid "Register_as_company?"
-msgstr "Als Firma registrieren?"
+msgid "Firstname"
+msgstr "Vorname"
 
 msgid "Lastname"
 msgstr "Nachname"
-
-msgid "Firstname"
-msgstr "Vorname"
 
 msgid "Street_and_number"
 msgstr "Straße + Nummer"
@@ -2388,45 +2382,6 @@ msgstr "Keine Bestellung möglich"
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "Wieviel davon möchtest du in {0} bezahlen?"
 
-msgid "available"
-msgstr "verfügbar"
-
-msgid "New"
-msgstr "Neu"
-
-msgid "More_infos_to_product_{0}"
-msgstr "Mehr Infos zu {0}"
-
-msgid "Instant_order"
-msgstr "Sofort-Bestellung"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr "{0,plural,=1{1 Woche} other{# Wochen}}"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr "{0,plural,=1{1 Woche} other{# Wochen}} {1,plural,=1{und 1 Tag} other{und # Tage}}"
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr "Lagerprodukt: nur über {0} bestellbar."
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
-
-msgid "Currently_not_on_stock"
-msgstr "Derzeit leider nicht verfügbar"
-
-msgid "from_which_{0}_%"
-msgstr "davon {0} %"
-
-msgid "Move_in_shopping_bag"
-msgstr "In die Einkaufstasche"
-
-msgid "Move_in_cart"
-msgstr "In den Warenkorb"
-
-msgid "Weight_in"
-msgstr "Gewicht in"
-
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -2486,6 +2441,45 @@ msgstr "Kategorie auswählen..."
 
 msgid "Reset_search"
 msgstr "Suche zurücksetzen"
+
+msgid "available"
+msgstr "verfügbar"
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Lagerprodukt: nur über {0} bestellbar."
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
+
+msgid "Currently_not_on_stock"
+msgstr "Derzeit leider nicht verfügbar"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "More_infos_to_product_{0}"
+msgstr "Mehr Infos zu {0}"
+
+msgid "Instant_order"
+msgstr "Sofort-Bestellung"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 Woche} other{# Wochen}}"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 Woche} other{# Wochen}} {1,plural,=1{und 1 Tag} other{und # Tage}}"
+
+msgid "from_which_{0}_%"
+msgstr "davon {0} %"
+
+msgid "Move_in_shopping_bag"
+msgstr "In die Einkaufstasche"
+
+msgid "Move_in_cart"
+msgstr "In den Warenkorb"
+
+msgid "Weight_in"
+msgstr "Gewicht in"
 
 msgid "Add_deposit"
 msgstr "Pfand eintragen"
@@ -2669,9 +2663,6 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
-
-#~ msgid "Company"
-#~ msgstr "Firma"
 
 #~ msgid "Total_sum_tax"
 #~ msgstr "Summe USt."
