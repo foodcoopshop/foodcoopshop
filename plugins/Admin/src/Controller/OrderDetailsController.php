@@ -271,7 +271,7 @@ class OrderDetailsController extends AdminAppController
         $productName = [];
         foreach($orderDetails as $orderDetail) {
             $storageLocationValue = 0;
-            if (!is_null($order)) {
+            if (!is_null($order) && !is_null($orderDetail->product->storage_location)) {
                 $storageLocationValue = $orderDetail->product->storage_location->rank;
             }
             $storageLocation[] = $storageLocationValue;
