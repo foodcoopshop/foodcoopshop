@@ -80,8 +80,10 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $product->delivery_rhythm_count,
             );
     }
-    if ($product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break') {
-        echo $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
+    if (!$appAuth->isSelfServiceModeByUrl()) {
+        if ($product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break') {
+            echo $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
+        }
     }
     echo '</span>';
     if (!$appAuth->isSelfServiceModeByUrl()) {
