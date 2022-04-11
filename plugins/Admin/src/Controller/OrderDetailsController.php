@@ -683,10 +683,12 @@ class OrderDetailsController extends AdminAppController
                 $query->select($this->OrderDetail);
                 $query->select($this->OrderDetail->OrderDetailUnits);
                 $query->select($this->OrderDetail->OrderDetailFeedbacks);
+                $query->select($this->OrderDetail->TimebasedCurrencyOrderDetails);
                 $query->select($this->Customer);
                 $query->select($this->OrderDetail->Products);
                 $query->select($this->OrderDetail->Products->Manufacturers);
                 $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
+                $query->select($this->OrderDetail->Products->StorageLocations);
                 break;
         }
 
