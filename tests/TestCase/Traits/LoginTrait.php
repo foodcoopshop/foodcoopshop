@@ -20,6 +20,8 @@ use Cake\Core\Configure;
 trait LoginTrait
 {
 
+    public $isSelfServiceModeByUrl = false;
+
     public function login($userId)
     {
 
@@ -95,6 +97,24 @@ trait LoginTrait
             return [];
         }
         return $loggedUser['id_customer'];
+    }
+
+    /**
+     * used in CartsControllerTest::checkCartStatus
+     * mocks AppAuthComponent
+     */
+    public function isOrderForDifferentCustomerMode()
+    {
+        return $this->getSession()->read('Auth.orderCustomer');
+    }
+
+    /**
+     * used in CartsControllerTest::checkCartStatus
+     * mocks AppAuthComponent
+     */
+    public function isSelfServiceModeByUrl()
+    {
+        return $this->isSelfServiceModeByUrl;
     }
 
     public function user()

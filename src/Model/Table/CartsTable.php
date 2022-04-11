@@ -123,13 +123,10 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    /**
-     * @param int $customerId
-     * @return array
-     */
-    public function getCart($appAuth, $cartType)
+    public function getCart($appAuth, $cartType): array
     {
 
+        $this->Product = FactoryLocator::get('Table')->get('Products');
         $customerId = $appAuth->getUserId();
 
         $cart = $this->find('all', [
@@ -172,7 +169,7 @@ class CartsTable extends AppTable
         ])->toArray();
 
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType);
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType, $appAuth);
         }
 
         $preparedCart = [
@@ -204,17 +201,8 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            switch($cartType) {
-                case self::CART_TYPE_WEEKLY_RHYTHM:
-                    $nextDeliveryDay = strtotime($cartProduct->product->next_delivery_day);
-                    break;
-                case self::CART_TYPE_INSTANT_ORDER:
-                case self::CART_TYPE_SELF_SERVICE:
-                    $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDay();
-                    break;
-            }
-
-            $productData['nextDeliveryDayAsTimestamp'] = $nextDeliveryDay;
+            $nextDeliveryDay = $this->Product->getNextDeliveryDay($cartProduct->product, $appAuth);
+            $nextDeliveryDay = strtotime($nextDeliveryDay);
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
 
             $preparedCart['CartProducts'][] = $productData;
@@ -224,7 +212,7 @@ class CartsTable extends AppTable
         $productName = [];
         $deliveryDay = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
-            $deliveryDay[] = $cartProduct['nextDeliveryDayAsTimestamp'];
+            $deliveryDay[] = $cartProduct['nextDeliveryDay'];
             $productName[] = mb_strtolower(StringComponent::slugify($cartProduct['productName']));
         }
 

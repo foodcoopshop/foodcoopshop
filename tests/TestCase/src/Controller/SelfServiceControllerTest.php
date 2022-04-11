@@ -354,6 +354,17 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
     }
 
+    public function testProductDetailHtmlProductCatalogSelfServiceOrder()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->isSelfServiceModeByUrl = true;
+        $productId = 349;
+        $this->get($this->Slug->getSelfService($productId));
+        $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
+        $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
+    }
 
     private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
     {

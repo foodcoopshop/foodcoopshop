@@ -203,6 +203,18 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
+    public function getNextDeliveryDay($product, $appAuth)
+    {
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $nextDeliveryDay = '1970-01-01';
+        } elseif ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
+            $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        } else {
+            $nextDeliveryDay = $this->calculatePickupDayRespectingDeliveryRhythm($product);
+        }
+        return $nextDeliveryDay;
+    }
+
     public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
     {
         return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
