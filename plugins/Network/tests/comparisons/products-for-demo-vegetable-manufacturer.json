@@ -150,8 +150,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Artischocke",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 339,
@@ -264,8 +263,7 @@
             "price_is_zero": true,
             "unit": null,
             "unchanged_name": "Kartoffel",
-            "row_class": "main-product",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product"
         },
         {
             "id_product": 344,
@@ -378,8 +376,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Knoblauch",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 349,
@@ -515,8 +512,7 @@
                 "quantity_in_units": "0.000"
             },
             "unchanged_name": "Lagerprodukt",
-            "row_class": "main-product",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product"
         },
         {
             "id_product": 351,
@@ -652,8 +648,7 @@
                 "quantity_in_units": "1.000"
             },
             "unchanged_name": "Lagerprodukt 2",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 350,
@@ -891,8 +886,7 @@
             "unit": null,
             "unchanged_name": "Lagerprodukt mit Varianten",
             "row_class": "main-product",
-            "AttributesRemoved": 0,
-            "next_delivery_day": "2020-01-17"
+            "AttributesRemoved": 0
         },
         {
             "id_product": "350-13",
@@ -1134,8 +1128,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Mangold",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         }
     ]
 }
