@@ -19,7 +19,6 @@ use Cake\Core\Configure;
 use Cake\Database\Query;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenDate;
 use Cake\Utility\Hash;
 use Cake\Utility\Security;
 
