@@ -123,11 +123,7 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    /**
-     * @param int $customerId
-     * @return array
-     */
-    public function getCart($appAuth, $cartType)
+    public function getCart($appAuth, $cartType): array
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -173,7 +169,7 @@ class CartsTable extends AppTable
         ])->toArray();
 
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType);
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType, $appAuth);
         }
 
         $preparedCart = [

@@ -97,6 +97,24 @@ trait LoginTrait
         return $loggedUser['id_customer'];
     }
 
+    /**
+     * used in CartsControllerTest::checkCartStatus
+     * mocks AppAuthComponent
+     */
+    public function isOrderForDifferentCustomerMode()
+    {
+        return false;
+    }
+
+    /**
+     * used in CartsControllerTest::checkCartStatus
+     * mocks AppAuthComponent
+     */
+    public function isSelfServiceModeByUrl()
+    {
+        return false;
+    }
+
     public function user()
     {
         if (empty($this->_session)) {
