@@ -331,16 +331,13 @@ class CartProductsTable extends AppTable
 
     }
 
-    public function setPickupDays($cartProducts, $customerId, $cartType)
+    public function setPickupDays($cartProducts, $customerId, $cartType, $appAuth)
     {
         $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
-        $cartTable = FactoryLocator::get('Table')->get('Carts');
+        $productTable = FactoryLocator::get('Table')->get('Products');
 
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-            if ($cartType == $cartTable::CART_TYPE_WEEKLY_RHYTHM) {
-                $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
-            }
+            $cartProduct->pickup_day = $productTable->getNextDeliveryDay($cartProduct->product, $appAuth);
         }
 
         $pickupDays = [];

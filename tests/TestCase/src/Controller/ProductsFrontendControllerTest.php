@@ -166,6 +166,33 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
+    public function testProductDetailHtmlProductCatalogWeekly()
+    {
+        $this->loginAsCustomer();
+        $productId = 60;
+        $this->get($this->Slug->getProductDetail($productId, 'Milch'));
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'id_product' => $productId,
+            ],
+        ])->first();
+        $nextDeliveryDay = $this->Product->getNextDeliveryDay($product, $this);
+        $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
+        $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
+    }
+
+    public function testProductDetailHtmlProductCatalogInstantOrder()
+    {
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
+        $productId = 60;
+        $this->get($this->Slug->getProductDetail($productId, 'Milch'));
+        $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
+        $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
+    }
+
     protected function changeProductStatus($productId, $active)
     {
         $query = 'UPDATE ' . $this->Product->getTable().' SET active = :active WHERE id_product = :productId;';
