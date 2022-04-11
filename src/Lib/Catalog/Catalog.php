@@ -457,13 +457,7 @@ class Catalog {
                 $products[$i]->deposit_product->deposit = 0;
             }
 
-            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                $products[$i]->next_delivery_day = new FrozenDate('1970-01-01');
-            } elseif ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
-                $products[$i]->next_delivery_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-            } else {
-                $products[$i]->next_delivery_day = $this->Product->calculatePickupDayRespectingDeliveryRhythm($products[$i]);
-            }
+            $products[$i]->next_delivery_day = $this->Product->getNextDeliveryDay($product, $appAuth);
 
             if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
                 if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]->manufacturer->timebased_currency_enabled)) {

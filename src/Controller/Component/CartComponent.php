@@ -252,6 +252,8 @@ class CartComponent extends Component
                 ],
                 'contain' => $contain,
             ])->first();
+
+            $product->next_delivery_day = $this->Product->getNextDeliveryDay($product, $this->AppAuth);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;

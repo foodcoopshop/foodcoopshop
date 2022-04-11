@@ -130,6 +130,7 @@ class CartsTable extends AppTable
     public function getCart($appAuth, $cartType)
     {
 
+        $this->Product = FactoryLocator::get('Table')->get('Products');
         $customerId = $appAuth->getUserId();
 
         $cart = $this->find('all', [
@@ -204,16 +205,7 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            switch($cartType) {
-                case self::CART_TYPE_WEEKLY_RHYTHM:
-                    $nextDeliveryDay = strtotime($cartProduct->product->next_delivery_day);
-                    break;
-                case self::CART_TYPE_INSTANT_ORDER:
-                case self::CART_TYPE_SELF_SERVICE:
-                    $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDay();
-                    break;
-            }
-
+            $nextDeliveryDay = $this->Product->getNextDeliveryDay($cartProduct->product, $appAuth);
             $productData['nextDeliveryDayAsTimestamp'] = $nextDeliveryDay;
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
 
