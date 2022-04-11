@@ -688,7 +688,9 @@ class OrderDetailsController extends AdminAppController
                 $query->select($this->OrderDetail->Products);
                 $query->select($this->OrderDetail->Products->Manufacturers);
                 $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
-                $query->select($this->OrderDetail->Products->StorageLocations);
+                if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+                    $query->select($this->OrderDetail->Products->StorageLocations);
+                }
                 break;
         }
 
