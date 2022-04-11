@@ -226,7 +226,7 @@ class CustomersTable extends AppTable
     {
         $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            $concat = $tableName . '.lastname, " ", ' . $tableName . '.fistname';
+            $concat = $tableName . '.lastname, " ", ' . $tableName . '.firstname';
         }
         $sql = 'IF(' . $tableName . '.is_company,' . $tableName . '.firstname,CONCAT('.$concat.'))';
         return $sql;

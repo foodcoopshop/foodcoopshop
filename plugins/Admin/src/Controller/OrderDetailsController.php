@@ -678,6 +678,16 @@ class OrderDetailsController extends AdminAppController
                 $query->select(['Products.name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
                 break;
+            default:
+                $query = $this->Customer->addCustomersNameForOrderSelect($query);
+                $query->select($this->OrderDetail);
+                $query->select($this->OrderDetail->OrderDetailUnits);
+                $query->select($this->OrderDetail->OrderDetailFeedbacks);
+                $query->select($this->Customer);
+                $query->select($this->OrderDetail->Products);
+                $query->select($this->OrderDetail->Products->Manufacturers);
+                $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
+                break;
         }
 
         $orderDetails = $this->paginate($query, [
@@ -689,12 +699,12 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.order_state',
                 'OrderDetails.pickup_day',
                 'Manufacturers.name',
-                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'CustomerNameForOrder',
                 'OrderDetailUnits.product_quantity_in_units',
                 'sum_price',
                 'sum_amount',
                 'sum_deposit',
-                'Products.name'
+                'Products.name',
             ]
         ])->toArray();
 
