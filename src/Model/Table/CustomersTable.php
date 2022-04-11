@@ -222,18 +222,27 @@ class CustomersTable extends AppTable
         ]);
     }
 
+    public function getCustomerName($tableName = 'Customers')
+    {
+        $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
+        if (Configure::read('app.customerMainNamePart') == 'lastname') {
+            $concat = $tableName . '.lastname, " ", ' . $tableName . '.fistname';
+        }
+        $sql = 'IF(' . $tableName . '.is_company,' . $tableName . '.firstname,CONCAT('.$concat.'))';
+        return $sql;
+    }
+
+    public function addCustomersNameForOrderSelect($query)
+    {
+        $sql = $this->getCustomerName();
+        return $query->select(['CustomerNameForOrder' => $sql]);
+    }
+
     public function getCustomerOrderClause()
     {
         $result = [
-            'Customers.lastname' => 'ASC',
-            'Customers.firstname' => 'ASC',
+            'CustomerNameForOrder' => 'ASC',
         ];
-        if (Configure::read('app.customerMainNamePart') == 'firstname') {
-            $result = [
-                'Customers.firstname' => 'ASC',
-                'Customers.lastname' => 'ASC',
-            ];
-        }
         return $result;
     }
 
@@ -589,9 +598,14 @@ class CustomersTable extends AppTable
 
         $customers = $this->find('all', [
             'conditions' => $conditions,
-            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
+            'order' => $this->getCustomerOrderClause(),
             'contain' => $contain
-        ])->toArray();
+        ]);
+        $customers = $this->addCustomersNameForOrderSelect($customers);
+        $customers->select($this);
+        $customers->select($this->AddressCustomers);
+
+        $customers = $customers->toArray();
 
         if (! $includeManufacturers) {
             $validOrderDetails = $this->getAssociation('ValidOrderDetails');
