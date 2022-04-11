@@ -103,7 +103,7 @@ trait LoginTrait
      */
     public function isOrderForDifferentCustomerMode()
     {
-        return false;
+        return $this->getSession()->read('Auth.orderCustomer');
     }
 
     /**
@@ -112,7 +112,7 @@ trait LoginTrait
      */
     public function isSelfServiceModeByUrl()
     {
-        return false;
+        return $this->isSelfServiceModeByUrl;
     }
 
     public function user()
