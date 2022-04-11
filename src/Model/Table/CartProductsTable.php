@@ -126,6 +126,8 @@ class CartProductsTable extends AppTable
             ];
         }
 
+        $product->next_delivery_day = $this->Products->getNextDeliveryDay($product, $appAuth);
+
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
