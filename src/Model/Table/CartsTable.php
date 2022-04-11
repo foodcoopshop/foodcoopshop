@@ -206,7 +206,7 @@ class CartsTable extends AppTable
             $productData['manufacturerLink'] = $manufacturerLink;
 
             $nextDeliveryDay = $this->Product->getNextDeliveryDay($cartProduct->product, $appAuth);
-            $productData['nextDeliveryDayAsTimestamp'] = $nextDeliveryDay;
+            $nextDeliveryDay = strtotime($nextDeliveryDay);
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
 
             $preparedCart['CartProducts'][] = $productData;
@@ -216,7 +216,7 @@ class CartsTable extends AppTable
         $productName = [];
         $deliveryDay = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
-            $deliveryDay[] = $cartProduct['nextDeliveryDayAsTimestamp'];
+            $deliveryDay[] = $cartProduct['nextDeliveryDay'];
             $productName[] = mb_strtolower(StringComponent::slugify($cartProduct['productName']));
         }
 

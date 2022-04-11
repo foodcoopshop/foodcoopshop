@@ -10,7 +10,6 @@ use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenDate;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
