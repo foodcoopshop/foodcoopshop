@@ -20,6 +20,8 @@ use Cake\Core\Configure;
 trait LoginTrait
 {
 
+    public $isSelfServiceModeByUrl = false;
+
     public function login($userId)
     {
 
