@@ -52,8 +52,9 @@ use Cake\Core\Configure;
                         <?php
                             if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') != '' && !$appAuth->user('newsletter_enabled') && !$appAuth->isManufacturer()) {
                                 echo __('You_can_subscribe_our_newsletter_<a href="{0}">in_your_personal_profile</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getCustomerProfile()]);
+                                echo '<br /><br />';
                             }
-                        ?><br /><br />
+                        ?>
                     --<br />
                     <?php
                         echo Configure::read('appDb.FCS_APP_NAME').'<br />';
