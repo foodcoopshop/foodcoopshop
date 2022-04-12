@@ -146,7 +146,8 @@ INSERT INTO `fcs_configuration` VALUES
 (599,1,'FCS_INSTAGRAM_URL','Instagram url for embedding in footer','','text',920,'en_US','2021-09-10 21:23:13','2021-09-10 21:23:13'),
 (600,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Ordering products with delivery rhythm one or two weeks is only possible in the week before delivery.','0','boolean',3210,'en_US','2022-02-01 17:48:40','2022-02-01 17:48:40'),
 (601,1,'FCS_INVOICE_NUMBER_PREFIX','Prefix for invoice numbers<br /><div class=\"small\">Max. 6 chars incl. separator.</div>','','readonly',586,'en_US','2022-03-21 12:02:57','2022-03-21 12:02:57'),
-(602,1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','Invoices for companies with fixed tax rate<br /><div class=\"small\">Vat is calculated based on the sum of net price of the invoice.</div>','0','readonly',585,'en_US','2022-03-23 09:12:33','2022-03-23 09:12:33');
+(602,1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','Invoices for companies with fixed tax rate<br /><div class=\"small\">Vat is calculated based on the sum of net price of the invoice.</div>','0','readonly',585,'en_US','2022-03-23 09:12:33','2022-03-23 09:12:33'),
+(603,1,'FCS_NEWSLETTER_ENABLED','Newsletter enabled?<br /><div class=\"small\">Shows newsletter checkbox on registration.</div>','0','boolean',3400,'en_US','2022-04-12 15:28:56','2022-04-12 15:28:56');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -292,7 +293,8 @@ INSERT INTO `phinxlog` VALUES
 (20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:40','2022-02-01 16:48:40',0),
 (20220321103059,'PrefixForInvoices','2022-03-21 11:02:57','2022-03-21 11:02:57',0),
 (20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:33','2022-03-23 08:12:33',0),
-(20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:35','2022-04-07 09:37:35',0);
+(20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:35','2022-04-07 09:37:35',0),
+(20220412131842,'Newsletter','2022-04-12 13:28:56','2022-04-12 13:28:56',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
