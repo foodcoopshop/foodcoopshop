@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 22:01+0200\n"
-"PO-Revision-Date: 2022-04-07 22:02+0200\n"
+"POT-Creation-Date: 2022-04-12 15:58+0200\n"
+"PO-Revision-Date: 2022-04-12 15:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2258,6 +2258,9 @@ msgstr "City"
 
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Do you want to receive an order reminder e-mail every week?"
+
+msgid "Want_to_receive_the_newsletter?"
+msgstr "Do you want to receive the newsletter via email?"
 
 msgid "terms_of_use"
 msgstr "terms of use"

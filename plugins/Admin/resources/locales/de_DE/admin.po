@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 21:34+0200\n"
-"PO-Revision-Date: 2022-04-07 21:36+0200\n"
+"POT-Creation-Date: 2022-04-12 15:58+0200\n"
+"PO-Revision-Date: 2022-04-12 15:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1073,6 +1073,12 @@ msgstr "Überweisung ins Guthaben-System übernommen"
 
 msgid "Want_to_receive_credit_upload_reminder?"
 msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Want_to_receive_the_newsletter_per_email?"
+msgstr "Ich möchte den Newsletter per E-Mail erhalten?"
 
 msgid "Self_service_mode"
 msgstr "Selbstbedienungs-Modus"

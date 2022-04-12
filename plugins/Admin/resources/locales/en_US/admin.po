@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 21:34+0200\n"
-"PO-Revision-Date: 2022-04-07 21:35+0200\n"
+"POT-Creation-Date: 2022-04-12 15:58+0200\n"
+"PO-Revision-Date: 2022-04-12 16:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1073,6 +1073,12 @@ msgstr "Credit upload reminder"
 
 msgid "Want_to_receive_credit_upload_reminder?"
 msgstr "Do you want to receive an e-mail when your transaction is uploaded to the credit system?"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Want_to_receive_the_newsletter_per_email?"
+msgstr "Do you want to receive the newsletter via e-mail?"
 
 msgid "Self_service_mode"
 msgstr "Self-service mode"
