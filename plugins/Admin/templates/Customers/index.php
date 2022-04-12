@@ -41,7 +41,16 @@ use Cake\Core\Configure;
                         'default' => $year != '' ? $year : ''
                     ]);
                 }
-                ?>
+                if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+                    echo $this->Form->control('newsletter', [
+                        'type' => 'select',
+                        'label' => '',
+                        'empty' => __d('admin', 'Newsletter'),
+                        'options' => $this->Html->getYesNoArray(),
+                        'default' => $newsletter,
+                    ]);
+                }
+            ?>
             <div class="right">
                 <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
@@ -70,6 +79,9 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Reminder')) . '</th>';
 }
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
+}
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
@@ -84,6 +96,7 @@ echo '</tr>';
 $i = 0;
 $sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
+$sumNewsletter = 0;
 $sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
     $i ++;
@@ -266,9 +279,20 @@ foreach ($customers as $customer) {
 
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
-        echo '<td>';
-        echo $customer->email_order_reminder_enabled == 0 ? '' : 1;
-        $sumEmailReminders += $customer->email_order_reminder_enabled;
+        echo '<td align="center">';
+        if ($customer->email_order_reminder_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumEmailReminders++;
+        }
+        echo '</td>';
+    }
+
+    if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+        echo '<td align="center">';
+        if ($customer->newsletter_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumNewsletter++;
+        }
         echo '</td>';
     }
 
@@ -326,7 +350,10 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<td><b>' . $sumEmailReminders . '</b></td>';
+    echo '<td align="center"><b>' . $sumEmailReminders . '</b></td>';
+}
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') != '') {
+    echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
 $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
