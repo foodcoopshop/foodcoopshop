@@ -603,7 +603,9 @@ class CustomersTable extends AppTable
         ]);
         $customers = $this->addCustomersNameForOrderSelect($customers);
         $customers->select($this);
-        $customers->select($this->AddressCustomers);
+        if (! $includeManufacturers) {
+            $customers->select($this->AddressCustomers);
+        }
 
         $customers = $customers->toArray();
 
