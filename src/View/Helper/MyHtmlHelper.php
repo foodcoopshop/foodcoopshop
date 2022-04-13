@@ -482,34 +482,10 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getGroups()[$groupId];
     }
 
-    public function getCustomerOrderBy()
-    {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            return [
-                'Customers.lastname' => 'ASC',
-                'Customers.firstname' => 'ASC'
-            ];
-        } else {
-            return [
-                'Customers.firstname' => 'ASC',
-                'Customers.lastname' => 'ASC'
-            ];
-        }
-    }
-
     public function getCartIdFromCartFinishedUrl($url)
     {
         $cartId = explode('/', $url);
         return (int) $cartId[5];
-    }
-
-    public function getCustomerNameForSql()
-    {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            return "CONCAT(c.lastname, ' ', c.firstname)";
-        } else {
-            return "CONCAT(c.firstname, ' ', c.lastname)";
-        }
     }
 
     public function getReportTabs()

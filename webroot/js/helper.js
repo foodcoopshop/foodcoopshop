@@ -33,6 +33,54 @@ foodcoopshop.Helper = {
         }
     },
 
+    initRegistrationAsCompany: function() {
+
+        var isCompanyCheckbox = $('#customers-is-company');
+        isCompanyCheckbox.on('change', function() {
+            var firstnameElements = $('label[for="customers-firstname"], #customers-firstname-error');
+            var lastnameElements = $('label[for="customers-lastname"], #customers-lastname-error');
+            var lastnameWrapper = $('label[for="customers-lastname"]').closest('.input');
+            var regExp;
+            var newHtml;
+            if ($(this).prop('checked')) {
+                firstnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Firstname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.CompanyName);
+                    $(this).html(newHtml);
+                });
+                lastnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    $(this).html(newHtml);
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Lastname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    $(this).html(newHtml);
+                });
+                lastnameWrapper.removeClass('required');
+            } else {
+                firstnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.CompanyName);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Firstname);
+                    $(this).html(newHtml);
+                });
+                lastnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
+                    $(this).html(newHtml);
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Lastname);
+                    $(this).html(newHtml);
+                });
+                lastnameWrapper.addClass('required');
+            }
+        });
+
+        if (isCompanyCheckbox.prop('checked')) {
+            isCompanyCheckbox.trigger('change');
+        }
+
+    },
+
     setFutureOrderDetails: function(futureOrderDetails) {
 
         futureOrderDetails = $.parseJSON(futureOrderDetails);

@@ -441,10 +441,10 @@ class ManufacturersTable extends AppTable
     {
         switch ($order) {
             case 'product':
-                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC';
+                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC';
                 break;
             case 'customer':
-                $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
+                $orderClause = $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC';
                 break;
         }
 
@@ -477,7 +477,7 @@ class ManufacturersTable extends AppTable
             $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
         }
 
-        $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
+        $customerNameAsSql = $this->Customers->getCustomerName('c');
 
         $sql = "SELECT
         m.id_manufacturer ManufacturerId,

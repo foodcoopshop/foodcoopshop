@@ -47,14 +47,26 @@ echo $this->Form->create($customer, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo $this->Form->control('Customers.firstname', [
-    'label' => __d('admin', 'Firstname'),
-    'required' => true
-]);
-echo $this->Form->control('Customers.lastname', [
-    'label' => __d('admin', 'Lastname'),
-    'required' => true
-]);
+if ($customer->is_company) {
+    echo $this->Form->control('Customers.firstname', [
+        'label' => __d('admin', 'Company_name'),
+        'required' => true
+    ]);
+    echo $this->Form->control('Customers.lastname', [
+        'label' => __d('admin', 'Contact_person') . '<span class="after small">'.__d('admin', 'Will_be_shown_on_invoices.').'</span>',
+        'escape' => false,
+    ]);
+} else {
+    echo $this->Form->control('Customers.firstname', [
+        'label' => __d('admin', 'Firstname'),
+        'required' => true
+    ]);
+    echo $this->Form->control('Customers.lastname', [
+        'label' => __d('admin', 'Lastname'),
+        'required' => true
+    ]);
+}
+echo $this->Form->hidden('Customers.is_company');
 
 $imageSrc = $this->Html->getCustomerImageSrc($customer->id_customer, 'large');
 if (!empty($customer->tmp_image) && $customer->tmp_image != '') {

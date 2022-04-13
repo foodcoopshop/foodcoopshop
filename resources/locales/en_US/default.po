@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-03-28 11:07+0200\n"
-"PO-Revision-Date: 2022-03-28 14:49+0200\n"
+"POT-Creation-Date: 2022-04-07 22:01+0200\n"
+"PO-Revision-Date: 2022-04-07 22:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -509,6 +509,24 @@ msgstr "Accept cookies"
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
 msgstr "You have already ordered {0} {1}x for {2}."
+
+msgid "Firstname"
+msgstr "First name"
+
+msgid "Lastname"
+msgstr "Last name"
+
+msgid "Contact_person"
+msgstr "Contact person"
+
+msgid "Company_name"
+msgstr "Company name"
+
+msgid "Please_enter_the_contact_person"
+msgstr "Please enter the contact person"
+
+msgid "Please_enter_your_lastname"
+msgstr "Please enter your last name"
 
 msgid "Empty_cart"
 msgstr "Remove products from cart"
@@ -2223,11 +2241,8 @@ msgstr "Forgot password?"
 msgid "Create_account"
 msgstr "Create account"
 
-msgid "Firstname"
-msgstr "First name"
-
-msgid "Lastname"
-msgstr "Last name"
+msgid "Register_as_company?"
+msgstr ""
 
 msgid "Street_and_number"
 msgstr "Street and nº"
@@ -2382,6 +2397,45 @@ msgstr "No order possible"
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "How much of it do I want to pay in {0}?"
 
+msgid "available"
+msgstr "available"
+
+msgid "New"
+msgstr "New"
+
+msgid "More_infos_to_product_{0}"
+msgstr "More infos to product {0}"
+
+msgid "Instant_order"
+msgstr "Instant order"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 week} other{# week}}"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Stock product: order possible only by {0}."
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr "Stock product: order possible only with instant order when picking it up."
+
+msgid "Currently_not_on_stock"
+msgstr "Currently not on stock"
+
+msgid "from_which_{0}_%"
+msgstr "from which {0} %"
+
+msgid "Move_in_shopping_bag"
+msgstr "Move in shopping bag"
+
+msgid "Move_in_cart"
+msgstr "Add to cart"
+
+msgid "Weight_in"
+msgstr "Weight in"
+
 msgid "Comment"
 msgstr "Comment"
 
@@ -2441,45 +2495,6 @@ msgstr "chose category..."
 
 msgid "Reset_search"
 msgstr "Reset search"
-
-msgid "available"
-msgstr "available"
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr "Stock product: order possible only by {0}."
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr "Stock product: order possible only with instant order when picking it up."
-
-msgid "Currently_not_on_stock"
-msgstr "Currently not on stock"
-
-msgid "New"
-msgstr "New"
-
-msgid "More_infos_to_product_{0}"
-msgstr "More infos to product {0}"
-
-msgid "Instant_order"
-msgstr "Instant order"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr "{0,plural,=1{1 week} other{# week}}"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
-
-msgid "from_which_{0}_%"
-msgstr "from which {0} %"
-
-msgid "Move_in_shopping_bag"
-msgstr "Move in shopping bag"
-
-msgid "Move_in_cart"
-msgstr "Add to cart"
-
-msgid "Weight_in"
-msgstr "Weight in"
 
 msgid "Add_deposit"
 msgstr "Add deposit"
@@ -2663,6 +2678,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Please_enter_the_lastname"
+#~ msgstr "Please enter the last name"
 
 #, fuzzy
 #~ msgid "Total_sum_tax"

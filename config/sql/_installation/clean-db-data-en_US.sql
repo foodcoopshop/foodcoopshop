@@ -291,7 +291,8 @@ INSERT INTO `phinxlog` VALUES
 (20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:31:56','2022-01-29 08:31:56',0),
 (20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:40','2022-02-01 16:48:40',0),
 (20220321103059,'PrefixForInvoices','2022-03-21 11:02:57','2022-03-21 11:02:57',0),
-(20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:33','2022-03-23 08:12:33',0);
+(20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:33','2022-03-23 08:12:33',0),
+(20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:35','2022-04-07 09:37:35',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

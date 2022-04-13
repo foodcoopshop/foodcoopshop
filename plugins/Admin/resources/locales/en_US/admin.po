@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-03-28 11:07+0200\n"
-"PO-Revision-Date: 2022-02-12 17:27+0100\n"
+"POT-Creation-Date: 2022-04-07 21:34+0200\n"
+"PO-Revision-Date: 2022-04-07 21:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -987,6 +987,15 @@ msgstr "Included deposit"
 msgid "docs_route_members"
 msgstr "members"
 
+msgid "Company_name"
+msgstr "Company name"
+
+msgid "Contact_person"
+msgstr "Contact person"
+
+msgid "Will_be_shown_on_invoices."
+msgstr "Will be shown on invoices."
+
 msgid "Firstname"
 msgstr "First name"
 
@@ -1529,9 +1538,6 @@ msgstr "Stock products in order lists"
 
 msgid "Should_stock_products_be_included_in_order_lists?"
 msgstr "Should stock products be included in order lists?"
-
-msgid "Contact_person"
-msgstr "Contact person"
 
 msgid "Chose_member"
 msgstr "Chose member..."

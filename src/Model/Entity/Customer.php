@@ -28,6 +28,9 @@ class Customer extends Entity
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
             $virtualNameFields = $this->lastname . ' ' . $this->firstname;
         }
+        if ($this->is_company) {
+            $virtualNameFields = $this->firstname;
+        }
         return $virtualNameFields;
     }
 

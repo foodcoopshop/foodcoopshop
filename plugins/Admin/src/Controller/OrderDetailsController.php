@@ -662,7 +662,7 @@ class OrderDetailsController extends AdminAppController
             case 'customer':
                 $query = $this->addSelectGroupFields($query);
                 $query->select(['OrderDetails.id_customer']);
-                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email']);
+                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email', 'Customers.is_company']);
                 if (count($pickupDay) == 1) {
                     $query->select(['PickupDayEntities.comment', 'PickupDayEntities.products_picked_up']);
                 }
@@ -678,6 +678,20 @@ class OrderDetailsController extends AdminAppController
                 $query->select(['Products.name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
                 break;
+            default:
+                $query = $this->Customer->addCustomersNameForOrderSelect($query);
+                $query->select($this->OrderDetail);
+                $query->select($this->OrderDetail->OrderDetailUnits);
+                $query->select($this->OrderDetail->OrderDetailFeedbacks);
+                $query->select($this->OrderDetail->TimebasedCurrencyOrderDetails);
+                $query->select($this->Customer);
+                $query->select($this->OrderDetail->Products);
+                $query->select($this->OrderDetail->Products->Manufacturers);
+                $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
+                if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+                    $query->select($this->OrderDetail->Products->StorageLocations);
+                }
+                break;
         }
 
         $orderDetails = $this->paginate($query, [
@@ -689,12 +703,12 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.order_state',
                 'OrderDetails.pickup_day',
                 'Manufacturers.name',
-                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'CustomerNameForOrder',
                 'OrderDetailUnits.product_quantity_in_units',
                 'sum_price',
                 'sum_amount',
                 'sum_deposit',
-                'Products.name'
+                'Products.name',
             ]
         ])->toArray();
 

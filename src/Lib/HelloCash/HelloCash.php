@@ -326,6 +326,15 @@ class HelloCash
             'user_street' => $customer->address_customer->address1,
         ];
 
+        if ($customer->is_company) {
+            $data['user_company'] = $customer->firstname;
+            $data['user_firstname'] = '';
+            $data['user_lastname'] = '';
+            if ($customer->lastname != '') {
+                $data['lastname'] = $customer->lastname;
+            }
+        }
+
         // updating user needs user_id in post data
         if ($customer->user_id_registrierkasse > 0) {
 

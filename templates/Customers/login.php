@@ -20,6 +20,11 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".ModalText.init('#RegistrationForm .input.checkbox label a');".
     Configure::read('app.jsNamespace').".Helper.initLoginForm();"
 ]);
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Helper.initRegistrationAsCompany();"
+    ]);
+}
 ?>
 <div id="login-form" class="form">
 
@@ -99,9 +104,9 @@ $this->element('addScript', ['script' =>
 
                   echo '<div class="detail-form">';
 
-                if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
-                    echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
-                }
+                      if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
+                          echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
+                      }
 
                       echo $this->Form->control('Customers.firstname', [
                           'label' => __('Firstname'),
@@ -109,8 +114,15 @@ $this->element('addScript', ['script' =>
                       ]);
                       echo $this->Form->control('Customers.lastname', [
                           'label' => __('Lastname'),
-                          'required' => true, // required should not be necessary here
+                          'required' => true,
                       ]);
+
+                      if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                          echo $this->Form->control('Customers.is_company', [
+                              'label' => __('Register_as_company?'),
+                              'type' => 'checkbox',
+                          ]);
+                      }
 
                       echo $this->Form->control('Customers.address_customer.address1', [
                           'label' => __('Street_and_number'),

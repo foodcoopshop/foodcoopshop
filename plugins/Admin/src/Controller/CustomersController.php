@@ -129,13 +129,14 @@ class CustomersController extends AdminAppController
                 'system_bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
             ],
             'conditions' => [
-                'Customers.id_customer IN' => $customerIds
+                'Customers.id_customer IN' => $customerIds,
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
+        $customers = $this->Customer->addCustomersNameForOrderSelect($customers);
         $customers->select($this->Customer);
         $customers->select($this->Customer->AddressCustomers);
         return $customers;
@@ -694,12 +695,15 @@ class CustomersController extends AdminAppController
             'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ]
+            ],
         ]);
+        $query = $this->Customer->addCustomersNameForOrderSelect($query);
+        $query->select($this->Customer);
+        $query->select($this->Customer->AddressCustomers);
 
         $customers = $this->paginate($query, [
             'sortableFields' => [
-                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder_enabled', 'Customers.date_add', 'Customers.timebased_currency_enabled',
+                'CustomerNameForOrder', 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder_enabled', 'Customers.date_add', 'Customers.timebased_currency_enabled',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();

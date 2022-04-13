@@ -4,7 +4,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-03-28 11:07+0200\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2022-04-07 22:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -506,6 +507,24 @@ msgid "Accept_cookies"
 msgstr ""
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
+msgid "Company_name"
+msgstr ""
+
+msgid "Please_enter_the_contact_person"
+msgstr ""
+
+msgid "Please_enter_your_lastname"
 msgstr ""
 
 msgid "Empty_cart"
@@ -2221,10 +2240,7 @@ msgstr ""
 msgid "Create_account"
 msgstr ""
 
-msgid "Firstname"
-msgstr ""
-
-msgid "Lastname"
+msgid "Register_as_company?"
 msgstr ""
 
 msgid "Street_and_number"
@@ -2380,6 +2396,45 @@ msgstr ""
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr ""
 
+msgid "available"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "More_infos_to_product_{0}"
+msgstr ""
+
+msgid "Instant_order"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr ""
+
+msgid "Currently_not_on_stock"
+msgstr ""
+
+msgid "from_which_{0}_%"
+msgstr ""
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+msgid "Move_in_cart"
+msgstr ""
+
+msgid "Weight_in"
+msgstr ""
+
 msgid "Comment"
 msgstr ""
 
@@ -2438,45 +2493,6 @@ msgid "chose_category..."
 msgstr ""
 
 msgid "Reset_search"
-msgstr ""
-
-msgid "available"
-msgstr ""
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr ""
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr ""
-
-msgid "Currently_not_on_stock"
-msgstr ""
-
-msgid "New"
-msgstr ""
-
-msgid "More_infos_to_product_{0}"
-msgstr ""
-
-msgid "Instant_order"
-msgstr ""
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr ""
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr ""
-
-msgid "from_which_{0}_%"
-msgstr ""
-
-msgid "Move_in_shopping_bag"
-msgstr ""
-
-msgid "Move_in_cart"
-msgstr ""
-
-msgid "Weight_in"
 msgstr ""
 
 msgid "Add_deposit"

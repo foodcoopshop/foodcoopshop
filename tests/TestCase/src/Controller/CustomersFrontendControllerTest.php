@@ -200,6 +200,36 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
     }
 
+    public function testRegistrationValidationWithCompanyWrongDataA()
+    {
+        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+        $this->addCustomer($this->registrationDataEmpty);
+        $this->assertResponseContains('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.');
+        $this->assertResponseContains('Bitte gib deinen Vornamen an.');
+        $this->assertResponseNotContains('Bitte gib deinen Nachnamen an.');
+        $this->assertResponseContains('Die PLZ ist nicht gültig.');
+        $this->assertResponseContains('Die Handynummer ist nicht gültig.');
+        $this->assertResponseContains('Die Telefonnummer ist nicht gültig.');
+        $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
+    }
+
+    public function testRegistrationWithCompanyUserActive()
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $email = 'new-foodcoopshop-member-1@mailinator.com';
+        $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.email' => $email,
+            ],
+        ])->first();
+        $this->assertTrue((boolean) $customer->is_company);
+    }
+
     public function testRegistrationUserNotActive()
     {
         $this->registrationDataEmpty['antiSpam'] = 4;

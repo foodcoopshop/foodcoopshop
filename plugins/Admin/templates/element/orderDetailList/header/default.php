@@ -41,7 +41,7 @@ echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
 echo '</th>';
 
-echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
+echo '<th>'.$this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Member')).'</th>';
 
 if (count($pickupDay) == 2) {
     echo '<th>'.$this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
