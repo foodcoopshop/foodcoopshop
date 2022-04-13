@@ -18,6 +18,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -608,6 +609,27 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart(1, 1);
         $this->checkStockAvailable($productA, 4);
         $this->checkStockAvailable('350-14', 999); // must be same as before fnishing order
+    }
+
+    public function testIsSubscribeNewsletterLinkAddedToMail()
+    {
+        $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->finishCart(1, 1);
+        $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('app.cakeServerName') . '/admin/customers/profile">in deinen Einstellungen</a> abonnieren.');
+    }
+
+    public function testIsSubscribeNewsletterLinkNotAddedToMail()
+    {
+        $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 1);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->finishCart(1, 1);
+        // assertMailNotContainsAt not available!
+        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Du kannst unseren Newsletter', TestEmailTransport::getMessages()[0]->getBodyHtml());
     }
 
     public function testFinishOrderWithComment()
