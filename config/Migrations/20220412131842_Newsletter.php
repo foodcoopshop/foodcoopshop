@@ -11,7 +11,7 @@ class Newsletter extends AbstractMigration
 
         switch(I18n::getLocale()) {
             case 'de_DE':
-                $text = 'Newsletter-Funktion aktiv?<br /><div class="small">Mitglieder können sich bei der Registrierung für den Newsletter anmelden.</div>';
+                $text = 'Newsletter-Funktion aktiv?<br /><div class="small">Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href="https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion" target="_blank">Mehr Infos</a></div>';
                 break;
             default:
                 $text = 'Newsletter enabled?<br /><div class="small">Shows newsletter checkbox on registration.</div>';
