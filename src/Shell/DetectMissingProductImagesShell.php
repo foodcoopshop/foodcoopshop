@@ -33,6 +33,7 @@ class DetectMissingProductImagesShell extends AppShell
                 'Products.active' => APP_ON,
             ],
             'contain' => [
+                'Manufacturers',
                 'Images',
             ],
             'order' => [
@@ -52,7 +53,7 @@ class DetectMissingProductImagesShell extends AppShell
 
                 if (!file_exists($src)) {
                     $i++;
-                    $this->out('Product modified: ' . $product->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseWithTime')) . ' / Product id: ' . $product->id_product);
+                    $this->out('modified: ' . $product->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseWithTime')) . ' / id: ' . $product->id_product . ' / ' . $product->name . ' / ' . $product->manufacturer->name);
                 }
             }
         }
