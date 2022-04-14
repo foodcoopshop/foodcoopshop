@@ -9,6 +9,7 @@ use App\Lib\RemoteFile\RemoteFile;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
+use Cake\Log\Log;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
@@ -1468,6 +1469,7 @@ class ProductsTable extends AppTable
             if ($imageFromRemoteServer != 'no-image') {
 
                 // recursively create path
+                Log::error('ProductsTable::changeImage:1472 / productId: ' . $ids['productId'] . ' / imageId: ' . $image->id_image . ' / thumbsPath: ' . $thumbsPath);
                 $dir = new Folder();
                 $dir->delete($thumbsPath);
                 $dir->create($thumbsPath);
@@ -1487,6 +1489,7 @@ class ProductsTable extends AppTable
                 ]);
 
                 // delete physical files
+                Log::error('ProductsTable::changeImage:1492 / productId: ' . $productId . ' / imageId: ' . $image->id_image . ' / thumbsPath: ' . $thumbsPath);
                 $dir = new Folder();
                 $dir->delete($thumbsPath);
 
