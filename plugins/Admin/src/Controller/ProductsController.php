@@ -103,29 +103,8 @@ class ProductsController extends AdminAppController
                 'Images.id_image' => 'ASC',
             ],
         ]);
-
-        $i = 0;
-        $outputHtml = '';
-        foreach($products as $product) {
-            if (!empty($product->image)) {
-                $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product->image->id_image);
-                $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
-                $size = 'home';
-                $imageFilename = Configure::read('app.htmlHelper')->getImageFile($thumbsPath, $product->image->id_image . '-' . $size . '_default');
-                $src = $thumbsPath . DS . $imageFilename;
-
-                if (!file_exists($src)) {
-                    $i++;
-                    $outputHtml .= 'modified: ' . $product->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseWithTime')) . ' / id: ' . $product->id_product . ' / ' . $product->name . ' / ' . $product->manufacturer->name . '<br />';
-                }
-            }
-        }
-
-        $outputHtml = 'Sum: ' . $i . '<br />' . $outputHtml;
-        echo $outputHtml;
-
-        $this->disableAutoRender();
-
+        $this->set('products', $products);
+        $this->set('title_for_layout', 'DetectMissingProductImages');
     }
 
     protected function productExists()
