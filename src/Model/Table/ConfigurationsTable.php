@@ -128,6 +128,11 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    public function validationFcsNewsletterEnabled(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+
     public function validationFcsShowProductsForGuests(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);

@@ -172,6 +172,14 @@ if ($this->Html->paymentIsCashless()) {
     }
 }
 
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+    echo $this->Form->control('Customers.newsletter_enabled', [
+        'label' => __d('admin', 'Newsletter').'<span class="after small">'.__d('admin', 'Want_to_receive_the_newsletter_per_email?').'</span>',
+        'type' => 'checkbox',
+        'escape' => false,
+    ]);
+}
+
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     && (
         !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') || $appAuth->isSuperadmin())

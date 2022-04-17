@@ -230,6 +230,7 @@ CREATE TABLE `fcs_customer` (
   `invoices_per_email_enabled` tinyint unsigned DEFAULT '1',
   `pickup_day_reminder_enabled` tinyint unsigned DEFAULT '1',
   `credit_upload_reminder_enabled` tinyint unsigned DEFAULT '1',
+  `newsletter_enabled` tinyint unsigned DEFAULT '0',
   PRIMARY KEY (`id_customer`),
   KEY `customer_email` (`email`),
   KEY `customer_login` (`email`,`passwd`),

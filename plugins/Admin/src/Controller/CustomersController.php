@@ -680,9 +680,18 @@ class CustomersController extends AdminAppController
 
         $conditions = [];
         if ($active != 'all') {
-            $conditions = [
-                'Customers.active' => $active
-            ];
+            $conditions['Customers.active'] = $active;
+        }
+
+        if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+            $newsletter = h($this->getRequest()->getQuery('newsletter'));
+            if (!in_array('newsletter', array_keys($this->getRequest()->getQueryParams()))) {
+                $newsletter = '';
+            }
+            $this->set('newsletter', $newsletter);
+            if ($newsletter != '') {
+                $conditions['Customers.newsletter_enabled'] = $newsletter;
+            }
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
