@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-04-07 22:01+0200\n"
+"POT-Creation-Date: 2022-04-17 21:19+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2258,6 +2258,9 @@ msgstr ""
 msgid "Want_to_receive_reminder_emails?"
 msgstr ""
 
+msgid "Want_to_receive_the_newsletter?"
+msgstr ""
+
 msgid "terms_of_use"
 msgstr ""
 
@@ -2616,6 +2619,9 @@ msgid "This_email_was_created_automatically."
 msgstr ""
 
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr ""
+
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
 msgstr ""
 
 msgid "homepage"

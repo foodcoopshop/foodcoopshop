@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-07 22:01+0200\n"
-"PO-Revision-Date: 2022-04-07 22:02+0200\n"
+"POT-Creation-Date: 2022-04-17 21:19+0200\n"
+"PO-Revision-Date: 2022-04-17 21:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2259,6 +2259,9 @@ msgstr "City"
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Do you want to receive an order reminder e-mail every week?"
 
+msgid "Want_to_receive_the_newsletter?"
+msgstr "Do you want to receive the newsletter via email?"
+
 msgid "terms_of_use"
 msgstr "terms of use"
 
@@ -2618,6 +2621,9 @@ msgstr "This e-mail was automatically created."
 
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
 msgstr "You can unsubscribe it <a href=\"{0}\">in your settings</a>."
+
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
+msgstr "You can unsubscribe our newsletter <a href=\"{0}\">in the admin area's menu point \"My data\"</a>."
 
 msgid "homepage"
 msgstr "homepage"

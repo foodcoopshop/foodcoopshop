@@ -146,7 +146,8 @@ INSERT INTO `fcs_configuration` VALUES
 (599,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:08','2021-09-10 21:23:08'),
 (600,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich.','0','boolean',3210,'de_DE','2022-02-01 17:48:35','2022-02-01 17:48:35'),
 (601,1,'FCS_INVOICE_NUMBER_PREFIX','Präfix für Rechnungs-Nummernkreis<br /><div class=\"small\">Max. 6 Zeichen inkl. Trennzeichen.</div>','','readonly',586,'de_DE','2022-03-21 12:02:48','2022-03-21 12:02:48'),
-(602,1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','Rechnungslegung für pauschalierte Betriebe<br /><div class=\"small\">Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück.</div>','0','readonly',585,'de_DE','2022-03-23 09:12:23','2022-03-23 09:12:23');
+(602,1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','Rechnungslegung für pauschalierte Betriebe<br /><div class=\"small\">Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück.</div>','0','readonly',585,'de_DE','2022-03-23 09:12:23','2022-03-23 09:12:23'),
+(603,1,'FCS_NEWSLETTER_ENABLED','Newsletter-Funktion aktiv?<br /><div class=\"small\">Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a></div>','0','boolean',3400,'de_DE','2022-04-12 15:28:47','2022-04-12 15:28:47');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -292,7 +293,8 @@ INSERT INTO `phinxlog` VALUES
 (20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:35','2022-02-01 16:48:35',0),
 (20220321103059,'PrefixForInvoices','2022-03-21 11:02:48','2022-03-21 11:02:48',0),
 (20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:23','2022-03-23 08:12:23',0),
-(20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:26','2022-04-07 09:37:26',0);
+(20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:26','2022-04-07 09:37:26',0),
+(20220412131842,'Newsletter','2022-04-12 13:28:47','2022-04-12 13:28:47',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

@@ -142,6 +142,10 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                           echo $this->Form->control('Customers.email_order_reminder_enabled', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
                       }
 
+                      if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+                          echo $this->Form->control('Customers.newsletter_enabled', ['label' => __('Want_to_receive_the_newsletter?'), 'type' => 'checkbox']);
+                      }
+
                       if (Configure::read('app.termsOfUseEnabled')) {
                           echo '<div id="terms-of-use" class="hide">';
                             echo $this->element('legal/' . I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');
