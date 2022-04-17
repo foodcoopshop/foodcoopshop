@@ -641,16 +641,16 @@
         },
         {
             "name": "hisorange/browser-detect",
-            "version": "4.4.1",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hisorange/browser-detect.git",
-                "reference": "c36da007d43f310e49506ac47b7fd1fd4cd77611"
+                "reference": "f5749fcbeeeb0130abab15ffaeb2094dc0d561fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hisorange/browser-detect/zipball/c36da007d43f310e49506ac47b7fd1fd4cd77611",
-                "reference": "c36da007d43f310e49506ac47b7fd1fd4cd77611",
+                "url": "https://api.github.com/repos/hisorange/browser-detect/zipball/f5749fcbeeeb0130abab15ffaeb2094dc0d561fc",
+                "reference": "f5749fcbeeeb0130abab15ffaeb2094dc0d561fc",
                 "shasum": ""
             },
             "require": {
@@ -662,7 +662,7 @@
                 "ua-parser/uap-php": "~3.9"
             },
             "require-dev": {
-                "orchestra/testbench": "~4.0 || ~5.0 || ~6.0",
+                "orchestra/testbench": "~4.0 || ~5.0 || ~6.0 || ~7.0",
                 "php-coveralls/php-coveralls": "~1.0 || ~2.0",
                 "phpstan/phpstan": "^0.12.11",
                 "phpunit/phpunit": "~5.0 || ~6.0 || ~7.0 || ~8.0 || ~9.0",
@@ -709,9 +709,9 @@
             ],
             "support": {
                 "issues": "https://github.com/hisorange/browser-detect/issues",
-                "source": "https://github.com/hisorange/browser-detect/tree/4.4.1"
+                "source": "https://github.com/hisorange/browser-detect/tree/4.5.0"
             },
-            "time": "2021-11-02T16:36:05+00:00"
+            "time": "2022-04-14T22:20:46+00:00"
         },
         {
             "name": "intervention/image",
@@ -851,16 +851,16 @@
         },
         {
             "name": "laminas/laminas-diactoros",
-            "version": "2.9.0",
+            "version": "2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-diactoros.git",
-                "reference": "954e2dcfb1607681be44599faac10fc63bb6925a"
+                "reference": "07475df6b4bf6277ae8b9cbbc94d0ac6fee5e726"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/954e2dcfb1607681be44599faac10fc63bb6925a",
-                "reference": "954e2dcfb1607681be44599faac10fc63bb6925a",
+                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/07475df6b4bf6277ae8b9cbbc94d0ac6fee5e726",
+                "reference": "07475df6b4bf6277ae8b9cbbc94d0ac6fee5e726",
                 "shasum": ""
             },
             "require": {
@@ -946,7 +946,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-03-29T20:12:16+00:00"
+            "time": "2022-04-06T17:37:15+00:00"
         },
         {
             "name": "laminas/laminas-httphandlerrunner",
@@ -3688,16 +3688,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.2.11",
+            "version": "2.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "2f5bcf0480c13b4fa1ac490aa9344e4402507538"
+                "reference": "ba61e768b410736efe61df01b61f1ec44f51474f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/2f5bcf0480c13b4fa1ac490aa9344e4402507538",
-                "reference": "2f5bcf0480c13b4fa1ac490aa9344e4402507538",
+                "url": "https://api.github.com/repos/composer/composer/zipball/ba61e768b410736efe61df01b61f1ec44f51474f",
+                "reference": "ba61e768b410736efe61df01b61f1ec44f51474f",
                 "shasum": ""
             },
             "require": {
@@ -3767,7 +3767,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.2.11"
+                "source": "https://github.com/composer/composer/tree/2.2.12"
             },
             "funding": [
                 {
@@ -3783,7 +3783,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-01T20:00:52+00:00"
+            "time": "2022-04-13T14:42:25+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -4353,16 +4353,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "5.2.11",
+            "version": "5.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "2ab6744b7296ded80f8cc4f9509abbff393399aa"
+                "reference": "ad87d5a5ca981228e0e205c2bc7dfb8e24559b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/2ab6744b7296ded80f8cc4f9509abbff393399aa",
-                "reference": "2ab6744b7296ded80f8cc4f9509abbff393399aa",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/ad87d5a5ca981228e0e205c2bc7dfb8e24559b60",
+                "reference": "ad87d5a5ca981228e0e205c2bc7dfb8e24559b60",
                 "shasum": ""
             },
             "require": {
@@ -4417,9 +4417,9 @@
             ],
             "support": {
                 "issues": "https://github.com/justinrainbow/json-schema/issues",
-                "source": "https://github.com/justinrainbow/json-schema/tree/5.2.11"
+                "source": "https://github.com/justinrainbow/json-schema/tree/5.2.12"
             },
-            "time": "2021-07-22T09:24:00+00:00"
+            "time": "2022-04-13T08:02:27+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4876,16 +4876,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.4.2",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "4cb3021a4e10ffe3d5f94a4c34cf4b3f6de2fa3d"
+                "reference": "d8e9fd97ca11f2f24fc1aafbcfb1f78bce762267"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/4cb3021a4e10ffe3d5f94a4c34cf4b3f6de2fa3d",
-                "reference": "4cb3021a4e10ffe3d5f94a4c34cf4b3f6de2fa3d",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/d8e9fd97ca11f2f24fc1aafbcfb1f78bce762267",
+                "reference": "d8e9fd97ca11f2f24fc1aafbcfb1f78bce762267",
                 "shasum": ""
             },
             "require": {
@@ -4914,22 +4914,22 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.4.2"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.4.4"
             },
-            "time": "2022-03-30T13:33:37+00:00"
+            "time": "2022-04-14T12:24:06+00:00"
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.5.4",
+            "version": "1.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "bbf68cae24f6dc023c607ea0f87da55dd9d55c2b"
+                "reference": "799dd8c2d2c9c704bb55d2078078cb970cf0f6d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/bbf68cae24f6dc023c607ea0f87da55dd9d55c2b",
-                "reference": "bbf68cae24f6dc023c607ea0f87da55dd9d55c2b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/799dd8c2d2c9c704bb55d2078078cb970cf0f6d1",
+                "reference": "799dd8c2d2c9c704bb55d2078078cb970cf0f6d1",
                 "shasum": ""
             },
             "require": {
@@ -4955,7 +4955,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.5.4"
+                "source": "https://github.com/phpstan/phpstan/tree/1.5.6"
             },
             "funding": [
                 {
@@ -4975,7 +4975,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-03T12:39:00+00:00"
+            "time": "2022-04-15T11:13:37+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
