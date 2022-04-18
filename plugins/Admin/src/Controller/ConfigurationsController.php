@@ -132,6 +132,7 @@ class ConfigurationsController extends AdminAppController
                 $data = (object) [
                     'firstname' => 'Vorname',
                     'lastname' => 'Nachname',
+                    'is_company' => false,
                 ];
                 $data->address_customer = (object) [
                     'email' => 'vorname.nachname@example.com'
