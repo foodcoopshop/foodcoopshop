@@ -712,7 +712,15 @@ class CustomersController extends AdminAppController
 
         $customers = $this->paginate($query, [
             'sortableFields' => [
-                'CustomerNameForOrder', 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder_enabled', 'Customers.date_add', 'Customers.timebased_currency_enabled',
+                'CustomerNameForOrder',
+                'Customers.id_default_group',
+                'Customers.id_customer',
+                'Customers.email',
+                'Customers.active',
+                'Customers.email_order_reminder_enabled',
+                'Customers.date_add',
+                'Customers.timebased_currency_enabled',
+                'Customers.newsletter_enabled',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();
