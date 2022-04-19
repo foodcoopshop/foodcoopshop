@@ -352,7 +352,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td align="center"><b>' . $sumEmailReminders . '</b></td>';
 }
-if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') != '') {
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
 $colspan = 3;
