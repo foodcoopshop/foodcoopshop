@@ -133,14 +133,14 @@ class CartsTable extends AppTable
             'conditions' => [
                 'Carts.status' => APP_ON,
                 'Carts.id_customer' => $customerId,
-                'Carts.cart_type' => $cartType
+                'Carts.cart_type' => $cartType,
             ]
         ])->first();
 
         if (empty($cart)) {
             $cart2save = [
                 'id_customer' => $customerId,
-                'cart_type' => $cartType
+                'cart_type' => $cartType,
             ];
             $cart = $this->save($this->newEntity($cart2save));
         }
@@ -148,7 +148,7 @@ class CartsTable extends AppTable
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
-                'CartProducts.id_cart' => $cart['id_cart'],
+                'CartProducts.id_cart' => $cart->id_cart,
                 'CartProducts.amount > 0',
             ],
             'order' => [
