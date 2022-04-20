@@ -86,7 +86,7 @@ class ConfigurationHelper extends Helper
     {
         switch($name) {
             case 'FCS_MEMBER_FEE_PRODUCTS':
-                return __('All_products');
+                return null;
                 break;
             default:
                 return null;
