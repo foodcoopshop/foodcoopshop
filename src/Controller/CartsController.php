@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -258,6 +259,7 @@ class CartsController extends FrontendController
     public function addOrderToCart()
     {
         $deliveryDate = h($this->getRequest()->getQuery('deliveryDate'));
+        Log::error('addOrderToCart: ' + $deliveryDate);
         $this->doAddOrderToCart($deliveryDate);
         $this->redirect($this->referer());
     }
@@ -320,6 +322,7 @@ class CartsController extends FrontendController
         } else {
             reset($orderDetails);
             $lastOrderDate = key($orderDetails);
+            Log::error('addLastOrderToCart');
             $this->doAddOrderToCart($lastOrderDate);
         }
         $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
