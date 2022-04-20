@@ -50,7 +50,7 @@ use Cake\Core\Configure;
                            <?php echo __('You_can_unsubscribe_it_<a href="{0}">in_your_settings</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getManufacturerMyOptions()]); ?>
                         <?php } ?><br /><br />
                         <?php
-                            if (isset($appAuth) && Configure::read('appDb.FCS_NEWSLETTER_ENABLED') && !$appAuth->user('newsletter_enabled') && !$appAuth->isManufacturer()) {
+                            if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') && isset($data->newsletter_enabled) && !$data->newsletter_enabled) {
                                 echo __('You_can_subscribe_our_newsletter_<a href="{0}">in_the_admin_areas_menu_point_my_data</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getCustomerProfile()]);
                                 echo '<br /><br />';
                             }
