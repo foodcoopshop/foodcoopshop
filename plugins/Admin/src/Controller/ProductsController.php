@@ -11,6 +11,7 @@ use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
+use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -85,6 +86,25 @@ class ProductsController extends AdminAppController
                 return true;
                 break;
         }
+    }
+
+    public function detectMissingProductImages()
+    {
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.active' => APP_ON,
+            ],
+            'contain' => [
+                'Manufacturers',
+                'Images',
+            ],
+            'order' => [
+                'Products.modified' => 'DESC',
+                'Images.id_image' => 'ASC',
+            ],
+        ]);
+        $this->set('products', $products);
+        $this->set('title_for_layout', 'DetectMissingProductImages');
     }
 
     protected function productExists()
@@ -423,6 +443,7 @@ class ProductsController extends AdminAppController
 
         // recursively create path
         $dir = new Folder();
+        Log::error('ProductsController::saveUploadedImageProduct / productId: ' . $productId . ' / imageId: ' . $image->id_image . ' / thumbsPath: ' . $thumbsPath);
         $dir->delete($thumbsPath);
         $dir->create($thumbsPath);
         $dir->chmod($thumbsPath, 0755);
