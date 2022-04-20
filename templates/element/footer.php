@@ -19,9 +19,9 @@ use Cake\Core\Configure;
 <div class="c1">
     <?php
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
-        $menu[] = [
-            'name' => __('Blog_archive'), 'slug' => $this->Slug->getBlogList(),
-        ];
+        if (Configure::read('app.isBlogFeatureEnabled')) {
+            $menu[] = ['name' => __('Blog_archive'), 'slug' => $this->Slug->getBlogList()];
+        }
         if (Configure::read('app.termsOfUseEnabled')) {
             $menu[] = ['name' => __('Terms_of_use'), 'slug' => $this->Slug->getTermsOfUse()];
         }
