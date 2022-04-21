@@ -56,6 +56,9 @@ h4 {
 select {
     background-color: #fff;
 }
+label {
+    margin-bottom: 0.5rem;
+}
 button,
 :focus {
     outline: none ! important;
