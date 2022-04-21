@@ -418,6 +418,7 @@ class CustomersController extends FrontendController
                         ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $newCustomer,
+                        'newsletterCustomer' => $newCustomer,
                         'newPassword' => $newPassword
                         ]);
                     $email->send();

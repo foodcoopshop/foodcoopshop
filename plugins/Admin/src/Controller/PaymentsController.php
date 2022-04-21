@@ -168,6 +168,7 @@ class PaymentsController extends AdminAppController
                     ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $payment->customer,
+                        'newsletterCustomer' => $payment->customer,
                         'newStatusAsString' => $newStatusAsString,
                         'payment' => $payment
                     ]);

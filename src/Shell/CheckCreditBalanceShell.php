@@ -89,6 +89,7 @@ class CheckCreditBalanceShell extends AppShell
                     ->setSubject(__('Please_add_credit'))
                     ->setViewVars([
                     'customer' => $customer,
+                    'newsletterCustomer' => $customer,
                     'delta' => $delta,
                     'lastCsvUploadDate' => $lastCsvUploadDate,
                     'personalTransactionCode' => $personalTransactionCode,

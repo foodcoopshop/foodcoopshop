@@ -1024,6 +1024,7 @@ class OrderDetailsController extends AdminAppController
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
                 'customer' => $recipient['customer'],
+                'newsletterCustomer' => $recipient['customer'],
                 'newCustomer' => $newCustomer,
                 'editCustomerReason' => $editCustomerReason,
                 'amountString' => $amountString,
@@ -1133,6 +1134,7 @@ class OrderDetailsController extends AdminAppController
             ->setSubject(__d('admin', 'Weight_adapted_for_"0":', [$oldOrderDetail->product_name]) . ' ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
+                'newsletterCustomer' => $oldOrderDetail->customer,
                 'newProductQuantityInUnits' => $productQuantity,
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth
@@ -1241,6 +1243,7 @@ class OrderDetailsController extends AdminAppController
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
+            'newsletterCustomer' => $oldOrderDetail->customer,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
             'editAmountReason' => $editAmountReason
@@ -1389,6 +1392,7 @@ class OrderDetailsController extends AdminAppController
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
+            'newsletterCustomer' => $oldOrderDetail->customer,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
             'editPriceReason' => $editPriceReason
@@ -1503,6 +1507,7 @@ class OrderDetailsController extends AdminAppController
                         ->setViewVars([
                             'orderDetails' => $orderDetails,
                             'customer' => $orderDetails[0]->customer,
+                            'newsletterCustomer' => $orderDetails[0]->customer,
                             'appAuth' => $this->AppAuth,
                             'oldPickupDay' => $oldPickupDay,
                             'newPickupDay' => $newPickupDay,
@@ -1804,6 +1809,7 @@ class OrderDetailsController extends AdminAppController
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,
+                'newsletterCustomer' => $orderDetail->customer,
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ]);

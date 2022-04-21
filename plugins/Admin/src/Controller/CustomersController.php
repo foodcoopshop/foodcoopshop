@@ -537,6 +537,7 @@ class CustomersController extends AdminAppController
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
+                'newsletterCustomer' => $customer,
                 'newPassword' => $newPassword,
             ]);
 

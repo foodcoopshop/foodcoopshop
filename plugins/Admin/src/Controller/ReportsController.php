@@ -149,6 +149,7 @@ class ReportsController extends AdminAppController
                                     ]))
                                     ->setViewVars([
                                         'customer' => $customer,
+                                        'newsletterCustomer' => $customer,
                                         'csvPayment' => $csvPayment,
                                         'appAuth' => $this->AppAuth,
                                     ]);

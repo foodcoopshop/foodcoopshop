@@ -56,6 +56,17 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertMailSubjectContainsAt(0, 'Der Abholtag deiner Bestellung wurde geändert auf: Freitag, 07.09.2018');
     }
 
+    public function testEditPickupDayAsSuperadminOkIsSubscribeNewsletterLinkAddedToMail()
+    {
+        $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
+        $this->loginAsSuperadmin();
+        $reason = 'this is the reason';
+        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
+        $this->assertJsonOk();
+        $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('app.cakeServerName') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
+    }
+
     public function testEditPickupDayAsSuperadminWithoutEmailsOk()
     {
         $this->loginAsSuperadmin();

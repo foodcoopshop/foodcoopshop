@@ -87,6 +87,7 @@ class PickupReminderShell extends AppShell
             $email->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)
             ->setViewVars([
                 'customer' => $customer,
+                'newsletterCustomer' => $customer,
                 'diffOrderAndPickupInDays' => $diffOrderAndPickupInDays,
                 'formattedPickupDay' => $formattedPickupDay,
                 'futureOrderDetails' => $futureOrderDetails
