@@ -55,6 +55,7 @@ class AssetsProvider
             'bootstrap/dist/js/bootstrap.min.js',
             'bootstrap-select/dist/js/bootstrap-select.js',
             'components-jqueryui/jquery-ui.min.js',
+            'blueimp-file-upload/js/jquery.fileupload.js',
             'bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js',
             'jquery-backstretch/jquery.backstretch.js',
             'tooltipster/dist/js/tooltipster.bundle.js',
