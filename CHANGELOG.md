@@ -26,6 +26,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Produkt, das von Lieferrhythmus "Sammelbestellung - mit abgelaufenem Bestellschlusss" auf "Lagerprodukt" umgestellt wurde, war nicht bestellbar. [I#774](https://github.com/foodcoopshop/foodcoopshop/issues/774) / [PR#801](https://github.com/foodcoopshop/foodcoopshop/pull/801) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Manchmal wurden über den Editor Base64-codierte Bilder eingefügt und gespeichert, diese haben dann die Datenbank aufgebläht. Das ist jetzt systemweit unterbunden. [I#804](https://github.com/foodcoopshop/foodcoopshop/issues/804) / [PR#805](https://github.com/foodcoopshop/foodcoopshop/pull/805) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Support für MySQL 8.0 [I#803](https://github.com/foodcoopshop/foodcoopshop/issues/803) / [PR#806](https://github.com/foodcoopshop/foodcoopshop/pull/806) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Updates to Bootstrap v5 and Bootstrap Select v1.14 [I#679](https://github.com/foodcoopshop/foodcoopshop/issues/679) / [PR#828](https://github.com/foodcoopshop/foodcoopshop/pull/828) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 # v3.4.2
 
