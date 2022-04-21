@@ -347,7 +347,7 @@ class ProductsController extends AdminAppController
             }
             $productsForDropdown[] = '</optgroup>';
         }
-        
+
         $this->set([
             'status' => 1,
             'dropdownData' => join('', $productsForDropdown),
