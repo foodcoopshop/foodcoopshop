@@ -180,7 +180,10 @@ foodcoopshop.Admin = {
         $(selector).each(function () {
             var val = $(this).data('val');
             if (val) {
-                $(this).selectpicker('val', val.toString().split(','));
+                var valAsArray = val.toString().split(',');
+                $(this).selectpicker().val(valAsArray);
+                $(this).selectpicker('refresh');
+                $(this).selectpicker('render');
             }
         });
     },
@@ -560,12 +563,13 @@ foodcoopshop.Admin = {
                         });
                     }
                     if (selectedIndex) {
-                        select.selectpicker('val', selectedIndex);
+                        select.selectpicker().val(selectedIndex);
                         if (onChange) {
                             select.trigger('change');
                         }
                     }
                     select.selectpicker('refresh');
+                    select.selectpicker('render');
                     select.find('i.fa-circle-notch').remove();
                 },
                 onError: function (data) {

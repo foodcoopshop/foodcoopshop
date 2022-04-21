@@ -77,7 +77,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
         $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
-            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember
+            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember,
         });
 
         // always preselect user if there is a dropdown called #customerId (for call from order detail)

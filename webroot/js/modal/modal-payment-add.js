@@ -70,7 +70,7 @@ foodcoopshop.ModalPaymentAdd = {
             $(customerDropdownSelector).selectpicker({
                 liveSearch: true,
                 size: 7,
-                title: foodcoopshop.LocalizedJs.admin.PleaseMember
+                title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember,
             });
             foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
         }

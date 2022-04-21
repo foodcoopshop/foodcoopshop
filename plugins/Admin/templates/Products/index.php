@@ -67,8 +67,8 @@ use Cake\Core\Configure;
                 echo $this->Form->control('productId', [
                     'type' => 'select',
                     'label' => '',
-                    'empty' => __d('admin', 'all_products'),
-                    'options' => []
+                    'placeholder' => __d('admin', 'all_products'),
+                    'options' => [],
                 ]);
             }
             if (! $appAuth->isManufacturer()) {
