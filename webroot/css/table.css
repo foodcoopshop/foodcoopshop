@@ -55,7 +55,7 @@ div:not(.product-list) > table.list tr:nth-child(odd) {
     background-color: #EBEBEB;
 }
 table.list tr.deactivated {
-    opacity: 0.6;
+    opacity: 0.7;
 }
 table.list tr.line-through {
     text-decoration: line-through;
