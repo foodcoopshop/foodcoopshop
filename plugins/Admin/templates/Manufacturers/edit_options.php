@@ -74,6 +74,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
             'data-val' => $manufacturer->no_delivery_days,
             'label' => __d('admin', 'Delivery_break').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_function_delivery_break?').'</a></span>',
             'options' => $noDeliveryBreakOptions,
+            'placeholder' => __d('admin', 'Please_select...'),
             'escape' => false
         ]);
         echo '<div class="sc"></div>';
@@ -216,7 +217,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         echo $this->Form->control('Manufacturers.id_customer', [
         'type' => 'select',
         'label' => __d('admin', 'Contact_person'),
-        'empty' => __d('admin', 'Chose_member'),
+        'placeholder' => __d('admin', 'Chose_member'),
         'options' => []
         ]);
     }

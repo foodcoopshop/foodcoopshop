@@ -182,7 +182,7 @@ foodcoopshop.Admin = {
             if (val) {
                 var valAsArray = val.toString().split(',');
                 $(this).selectpicker().val(valAsArray);
-                $(this).selectpicker('refresh');
+                $(this).selectpicker('destroy');
                 $(this).selectpicker('render');
             }
         });
