@@ -40,7 +40,7 @@ class TaxesTable extends AppTable
         return $validator;
     }
 
-    public function getForDropdown()
+    public function getForDropdown($useRateAsKey = false)
     {
         $taxes = $this->find('all', [
             'conditions' => [
@@ -50,11 +50,20 @@ class TaxesTable extends AppTable
                 'Taxes.rate' => 'ASC'
             ]
         ]);
-        $preparedTaxes = [
-            0 => '0 %'
-        ];
+
+        $preparedTaxes = [];
+        if (Configure::read('app.isZeroTaxEnabled')) {
+            $preparedTaxes = [
+                0 => '0 %'
+            ];
+        }
         foreach ($taxes as $tax) {
-            $preparedTaxes[$tax->id_tax] = Configure::read('app.numberHelper')->formatTaxRate($tax->rate) . '%';
+            $value = Configure::read('app.numberHelper')->formatTaxRate($tax->rate) . '%';
+            if ($useRateAsKey) {
+                $preparedTaxes[$tax->rate] = $value;
+            } else {
+                $preparedTaxes[$tax->id_tax] = $value;
+            }
         }
         return $preparedTaxes;
     }

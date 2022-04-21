@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
-if (! $appAuth->user() || $this->request->getParam('action') == 'iframeStartPage') {
+if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
     return;
 }
 
@@ -66,6 +66,13 @@ $changePasswordMenuElement = [
         'fa-icon' => 'fa-fw ok fa-key'
     ]
 ];
+$myInvoicesMenuElement = [
+    'slug' => $this->Slug->getMyInvoices(),
+    'name' => __d('admin', 'My_invoices'),
+    'options' => [
+        'fa-icon' => 'fa-fw ok fa-file-invoice'
+    ]
+];
 $blogPostsMenuElement = [
     'slug' => $this->Slug->getBlogPostListAdmin(),
     'name' => __d('admin', 'Blog_posts'),
@@ -96,14 +103,19 @@ $menu[] = [
 ];
 
 if ($appAuth->isCustomer()) {
-    $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
-    $menu[] = $orderDetailsGroupedByCustomerMenuElement;
+    if (Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
+        $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
+        $menu[] = $orderDetailsGroupedByCustomerMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
     }
     if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
         $menu[]= $timebasedCurrencyPaymentForCustomersMenuElement;
+    }
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $menu[] = $myInvoicesMenuElement;
     }
     $menu[] = $changePasswordMenuElement;
     $menu[] = $actionLogsMenuElement;
@@ -112,6 +124,18 @@ if ($appAuth->isCustomer()) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $orderListsMenuElement;
+
+    if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $invoicesMenuElement = [
+            'slug' => Configure::read('app.slugHelper')->getInvoices(),
+            'name' => __d('admin', 'Invoices'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-file-invoice',
+            ],
+        ];
+        $orderDetailsGroupedByCustomerMenuElement['children'][] = $invoicesMenuElement;
+    }
+
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $manufacturerMenu = [
         'slug' => '/admin/manufacturers',
@@ -164,7 +188,11 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
         $customerProfileMenuElement['children'][] = $timebasedCurrencyPaymentForCustomersMenuElement;
     }
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $customerProfileMenuElement['children'][] = $myInvoicesMenuElement;
+    }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
+
     $menu[] = $customerProfileMenuElement;
     if (Configure::read('app.isBlogFeatureEnabled')) {
         $menu[] = $blogPostsMenuElement;
@@ -209,11 +237,19 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             ]
         ];
         $reportSlug = null;
-        if (!$this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
-            $reportSlug = $this->Slug->getReport('deposit');
-        }
+
         if ($this->Html->paymentIsCashless()) {
             $reportSlug = $this->Slug->getReport('product');
+        } else {
+            if (Configure::read('app.isDepositPaymentCashless')) {
+                $reportSlug = $this->Slug->getReport('deposit');
+            }
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $reportSlug = $this->Slug->getProfit();
+            }
+            if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                $reportSlug = $this->Slug->getInvoices();
+            }
         }
         if ($reportSlug) {
             $homepageAdministrationElement['children'][] = [
@@ -293,13 +329,15 @@ if ($appAuth->isManufacturer()) {
     }
     $menu[] = $actionLogsMenuElement;
 
-    $menu[] = [
-        'slug' => $this->Slug->getMyStatistics(),
-        'name' => __d('admin', 'Turnover_statistics'),
-        'options' => [
-            'fa-icon' => 'fa-fw ok fa-chart-bar'
-        ]
-    ];
+    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $menu[] = [
+            'slug' => $this->Slug->getMyStatistics(),
+            'name' => __d('admin', 'Turnover_statistics'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-chart-bar'
+            ]
+        ];
+    }
 }
 
 // for all users

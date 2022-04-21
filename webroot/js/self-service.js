@@ -49,7 +49,10 @@ foodcoopshop.SelfService = {
             },
             numOfWorkers: navigator.hardwareConcurrency,
             decoder : {
-                readers : ['code_39_reader']
+                readers : [
+                    'code_39_reader',
+                    'ean_reader',
+                ],
             },
         }, function(err) {
             if (err) {
@@ -175,14 +178,14 @@ foodcoopshop.SelfService = {
 
     initHighlightedProductIdForMobileBarcodeScanning: function(productId) {
         $('#products').show();
-        $('.product-wrapper').hide();
-        var rowId = '#product-wrapper-' + productId;
+        $('.pw').hide();
+        var rowId = '#pw-' + productId;
         $(rowId).show();
         this.initHighlightedProductId(productId);
     },
 
     initHighlightedProductId: function(productId) {
-        var rowId = '#product-wrapper-' + productId;
+        var rowId = '#pw-' + productId;
         $.scrollTo(rowId, 1000, {
             offset: {
                 top: -100
@@ -190,7 +193,9 @@ foodcoopshop.SelfService = {
         });
         $(rowId).css('background-color', '#f3515c');
         $(rowId).css('color', 'white');
+        $(rowId).find('.line *').css('color', 'white');
         $(rowId).one('mouseover', function () {
+            $(this).find('.line *').removeAttr('style');
             $(this).removeAttr('style');
         });
         $(rowId).find('.quantity-in-units-input-field-wrapper input').focus();
@@ -199,7 +204,7 @@ foodcoopshop.SelfService = {
     bindQuantityInUnitsInputFields: function(){
         $('.quantity-in-units-input-field-wrapper input').on('keypress', function(e) {
             if (e.which === 13) {
-                $(this).closest('.entity-wrapper').find('.btn-cart').trigger('click');
+                $(this).closest('.ew').find('.btn-cart').trigger('click');
                 $(this).val('');
             }
         });

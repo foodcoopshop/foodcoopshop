@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,6 +20,8 @@ namespace App\Model\Table;
 class CategoryProductsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveTrait;
+
     public function initialize(array $config): void
     {
         $this->setTable('category_product');
@@ -27,4 +31,5 @@ class CategoryProductsTable extends AppTable
             'foreignKey' => 'id_category'
         ]);
     }
+
 }

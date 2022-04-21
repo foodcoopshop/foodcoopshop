@@ -27,10 +27,10 @@ $html = $this->Html->link(
 $html .= '<table class="list tax-sum-table">';
 
 $html .= '<tr>';
-    $html .= '<th>'.__d('admin', 'Tax_rate').'</th>';
-    $html .= '<th>'.__d('admin', 'Sum_price_excl.').'</th>';
-    $html .= '<th>'.__d('admin', 'Sum_tax').'</th>';
-    $html .= '<th>'.__d('admin', 'Sum_price_incl.').'</th>';
+    $html .= '<th>' . __d('admin', 'Tax_rate').'</th>';
+    $html .= '<th>' . __d('admin', 'Sum') . ' ' . __d('admin', 'Net') . '</th>';
+    $html .= '<th>' . __d('admin', 'Sum') . ' ' . __d('admin', 'VAT').'</th>';
+    $html .= '<th>' . __d('admin', 'Sum') . ' ' . __d('admin', 'Gross') .'</th>';
 $html .= '</tr>';
 
 foreach($taxRates as $taxRate => $data) {

@@ -17,22 +17,25 @@ use Cake\Routing\Router;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".SelfService.init();".
-    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.product-wrapper .toggle-content.description img');".
-    Configure::read('app.jsNamespace').".ModalImage.init('.product-wrapper a.open-with-modal');".
+    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
-    Configure::read('app.jsNamespace').".Cart.initCartFinish();"
+    Configure::read('app.jsNamespace').".Cart.initCartFinish();".
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
 ]);
 
-if (!$isMobile && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
+if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
     ]);
 }
+
+echo $this->element('autoPrintInvoice');
 
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
@@ -68,7 +71,15 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 ?>
 
 <div class="header">
-    <h2><?php echo __('Self_service_mode'); ?></h2>
+    <h2>
+    <?php
+        if ($appAuth->isOrderForDifferentCustomerMode()) {
+            echo __('Stock_products');
+        } else {
+            echo __('Self_service');
+        }
+    ?>
+    </h2>
     <?php if (!$isMobile) { ?>
         <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
     <?php } ?>
@@ -82,15 +93,34 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 </div>
 
 <div id="products">
-    <?php
+
+<?php
+
+    if (count($products) == 0) {
+        echo '<p class="info">';
+        if (!isset($keyword) && $categoryId == 0) {
+            echo __('Please_search_or_scan_a_product_or_chose_a_category.');
+        } else {
+            echo __('No_products_found.');
+        }
+        echo '</p>';
+    }
+
     foreach ($products as $product) {
-        echo $this->element('product/product', [
+        echo $this->element('catalog/product', [
             'product' => $product,
             'showProductDetailLink' => false,
             'showManufacturerDetailLink' => false,
             'showIsNewBadgeAsLink' => false
-        ]);
+        ],
+        [
+            'cache' => [
+                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+            ],
+        ]
+        );
     }
+
 ?>
 </div>
 
@@ -113,8 +143,11 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        echo $this->element('cart/generalTermsAndConditionsCheckbox');
-        echo $this->element('cart/cancellationTermsCheckbox');
+        if (!$appAuth->isOrderForDifferentCustomerMode()) {
+            echo $this->element('cart/generalTermsAndConditionsCheckbox');
+            echo $this->element('cart/cancellationTermsCheckbox');
+        }
+        echo $this->element('selfService/paymentType');
     ?>
     <button type="submit" class="btn btn-success btn-order">
         <i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>

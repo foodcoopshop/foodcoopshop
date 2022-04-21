@@ -12,6 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+use Cake\Core\Configure;
+
 ?>
 
 <?php echo $this->element('email/tableHead'); ?>
@@ -26,15 +29,22 @@
     <tr>
         <td>
 
+            <p><?php echo __d('admin', 'Please_find_your_cancellation_invoice_attached.'); ?></p>
+
             <p>
-                <?php
-                    echo __d('admin', 'your_current_credit_equals_{0}.', [
-                        '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
-                    ]);
-                ?>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
             </p>
 
-            <p><?php echo __d('admin', 'Please_find_your_cancellation_invoice_attached.'); ?></p>
+            <?php if (!$paidInCash) { ?>
+                <p><br />
+                    <?php
+                        echo __d('admin', 'Post_scriptum_abbreviation') . ': ';
+                        echo __d('admin', 'Your_current_credit_equals_{0}.', [
+                            '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
+                        ]);
+                    ?>
+                </p>
+            <?php } ?>
 
         </td>
 

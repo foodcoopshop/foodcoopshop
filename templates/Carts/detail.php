@@ -17,7 +17,8 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".ModalText.init('.cart .input.checkbox label a.open-with-modal');".
-    Configure::read('app.jsNamespace').".Cart.initCartFinish();"
+    Configure::read('app.jsNamespace').".Cart.initCartFinish();".
+    Configure::read('app.jsNamespace').".Cart.scrollToCartFinishButton();"
 ]);
 if (!$appAuth->termsOfUseAccepted()) {
     $this->element('addScript', ['script' =>
@@ -38,16 +39,21 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
 
     <p class="no-products"><?php echo __('Your_cart_is_empty'); ?>.</p>
     <p class="products"></p>
-    <p class="sum-wrapper"><b><?php echo __('Product_sum_including_vat');?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-    <?php if ($appAuth->Cart->getDepositSum() > 0) { ?>
-        <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-    <?php } ?>
-
-    <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
-        <p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
-    <?php } ?>
 
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
+
+        <div class="sums-wrapper">
+            <?php if ($appAuth->Cart->getDepositSum() > 0) { ?>
+                <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods');?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+                <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <?php } ?>
+            <p class="total-sum-wrapper"><b><?php echo __('Total'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+                <p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
+            <?php } ?>
+        </div>
+        <div class="sc"></div>
+
         <p class="tax-sum-wrapper"><?php echo __('Including_vat'); ?>: <span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
 
         <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>

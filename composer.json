@@ -11,15 +11,18 @@
     ],
     "config": {
         "platform": {
-            "php": "7.4"
+            "php": "8.0"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "cakephp/plugin-installer": true
         }
     },
     "require": {
-        "php": ">=7.4",
-        "cakephp/cakephp": "4.2.*",
+        "php": ">=8.0",
+        "cakephp/cakephp": "4.3.*",
         "cakephp/migrations": "^3.0",
         "cakephp/plugin-installer": "^1.0",
-        "mobiledetect/mobiledetectlib": "2.*",
         "markstory/asset_compress": "4.*",
         "intervention/image": "2.*",
         "natxet/cssmin": "3.*",
@@ -28,14 +31,16 @@
         "ezyang/htmlpurifier": "^4.11",
         "league/csv": "^9.5",
         "dereuromark/cakephp-queue": "^6.0",
-        "tecnickcom/tcpdf": "^6.4"
+        "tecnickcom/tcpdf": "^6.4",
+        "hisorange/browser-detect": "^4.4",
+        "phpoffice/phpspreadsheet": "^1.19"
     },
     "require-dev": {
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "^4.0",
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^9.0",
-        "phpstan/phpstan": "0.*"
+        "phpstan/phpstan": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -56,6 +61,13 @@
         ],
         "post-update-cmd": [
             "bash devtools/composer-post-install.sh"
+        ],
+        "build": [
+            "bash bin/cake asset_compress build"
+        ],
+        "migrate": [
+            "bash bin/cake migrations migrate",
+            "bash bin/cake migrations migrate -p Queue"
         ],
         "check": [
             "@test",

@@ -34,6 +34,32 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function buildElementProductCacheKey($product, $appAuth)
+    {
+        $elementCacheKey = join('_', [
+            'product',
+            'productId' => $product['id_product'],
+            'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
+            'isManufacturer-' . ($appAuth->isManufacturer() ? 1 : 0),
+            'isSuperadmin-' . ($appAuth->isSuperadmin() ? 1 : 0),
+            'isSelfServiceModeByUrl-' . ($appAuth->isSelfServiceModeByUrl() ? 1 : 0),
+            'isOrderForDifferentCustomerMode-' . ($appAuth->isOrderForDifferentCustomerMode() ? 1 : 0),
+            $appAuth->user('shopping_price'),
+            'date-' . date('Y-m-d'),
+        ]);
+        return $elementCacheKey;
+    }
+
+    public function getShoppingPricesForDropdown()
+    {
+        $options = [
+            'SP' => __('Shopping_with_selling_price'),
+            'PP' => __('Shopping_with_purchase_price'),
+            'ZP' => __('Shopping_with_zero_price'),
+        ];
+        return $options;
+    }
+
     public function getLegalTextsSubfolder()
     {
         $subfolder = 'directSelling';
@@ -396,14 +422,6 @@ class MyHtmlHelper extends HtmlHelper
         return Configure::read('appDb.FCS_APP_ADDRESS');
     }
 
-    /**
-     * @return string
-     */
-    public function getEmailFromAddressConfiguration()
-    {
-        return Configure::read('appDb.FCS_APP_EMAIL');
-    }
-
     public function getMenuTypes()
     {
         return [
@@ -449,31 +467,19 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getGroups()
     {
-        return [
-            CUSTOMER_GROUP_MEMBER => __('Member'),
-            CUSTOMER_GROUP_ADMIN => __('Admin'),
-            CUSTOMER_GROUP_SUPERADMIN => __('Superadmin')
-        ];
+        $groups = [];
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $groups[CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER] = __('Self_service_customer');
+        }
+        $groups[CUSTOMER_GROUP_MEMBER] = __('Member');
+        $groups[CUSTOMER_GROUP_ADMIN] = __('Admin');
+        $groups[CUSTOMER_GROUP_SUPERADMIN] = __('Superadmin');
+        return $groups;
     }
 
     public function getGroupName($groupId)
     {
         return $this->getGroups()[$groupId];
-    }
-
-    public function getCustomerOrderBy()
-    {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            return [
-                'Customers.lastname' => 'ASC',
-                'Customers.firstname' => 'ASC'
-            ];
-        } else {
-            return [
-                'Customers.firstname' => 'ASC',
-                'Customers.lastname' => 'ASC'
-            ];
-        }
     }
 
     public function getCartIdFromCartFinishedUrl($url)
@@ -482,20 +488,11 @@ class MyHtmlHelper extends HtmlHelper
         return (int) $cartId[5];
     }
 
-    public function getCustomerNameForSql()
-    {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            return "CONCAT(c.lastname, ' ', c.firstname)";
-        } else {
-            return "CONCAT(c.firstname, ' ', c.lastname)";
-        }
-    }
-
     public function getReportTabs()
     {
         $tabs = [];
         foreach($this->getPaymentTexts() as $key => $paymentText) {
-            if ($key == 'deposit' && !Configure::read('app.isDepositEnabled')) {
+            if ($key == 'deposit' && (!Configure::read('app.isDepositEnabled') || !Configure::read('app.isDepositPaymentCashless'))) {
                 continue;
             }
             $tabs[] = [
@@ -521,6 +518,13 @@ class MyHtmlHelper extends HtmlHelper
                 'name' => __('Journal'),
                 'url' => Configure::read('app.slugHelper')->getInvoices(),
                 'key' => 'invoices',
+            ];
+        }
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $tabs[] = [
+                'name' => __('Profit'),
+                'url' => Configure::read('app.slugHelper')->getProfit(),
+                'key' => 'profit',
             ];
         }
         return $tabs;
@@ -620,6 +624,19 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($urlPrefix . $sliderImage);
     }
 
+    public function getImageFile($thumbsPath, $filenameWithoutExtension)
+    {
+        $imageFilename = null;
+        foreach(Configure::read('app.allowedImageMimeTypes') as $allowedImageExtension => $allowedImageMimeType) {
+            $imageFilenameWithExtension = $filenameWithoutExtension . '.' . strtolower($allowedImageExtension);
+            $imageFilename = $thumbsPath . DS . $imageFilenameWithExtension;
+            if (file_exists($imageFilename)) {
+                return $imageFilenameWithExtension;
+            }
+        }
+        return $imageFilename;
+    }
+
     /**
      * Returns a blogpost's image with desired size
      * If the blogpost has no image, but a manufacturer was specified, the manufacturer's image will be returned
@@ -634,12 +651,12 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
-        $imageFilename = $blogPost->id_blog_post . '-' . $size . '-default.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
+        $imageFilename = $this->getImageFile($thumbsPath, $blogPost->id_blog_post . '-' . $size . '-default');
+        if (is_null($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
 
-            $manufacturerSize = "medium";
-            if($size == "single") {
-                $manufacturerSize = "large";
+            $manufacturerSize = 'medium';
+            if($size == 'single') {
+                $manufacturerSize = 'large';
             }
 
             $imageFilenameAndPath = $urlPrefix . 'no-' . $size . '-default.jpg';
@@ -673,12 +690,12 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getManufacturerThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
 
-        $imageFilename = $manufacturerId . '-' . $size . '_default.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
-            $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
-        } else {
-            $imageFilenameAndPath = $urlPrefix . $imageFilename;
+
+        $imageFilename = $this->getImageFile($thumbsPath, $manufacturerId . '-' . $size . '_default');
+        if (is_null($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
+            $imageFilename = 'de-default-' . $size . '_default.jpg';
         }
+        $imageFilenameAndPath = $urlPrefix . $imageFilename;
 
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
@@ -688,14 +705,14 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getCustomerThumbsPath();
         $urlPrefix = 'profile-images/customers/';
 
-        $imageFilename = $customerId . '-' . $size . '.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
-            $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
-        } else {
-            $imageFilenameAndPath = $urlPrefix . $imageFilename;
+        $imageFilename = $this->getImageFile($thumbsPath, $customerId . '-' . $size);
+        if (is_null($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
+            $imageFilename = 'de-default-' . $size . '_default.jpg';
         }
 
-        $physicalFile = Configure::read('app.customerImagesDir') . DS . $imageFilename;
+        $imageFilenameAndPath = $urlPrefix . $imageFilename;
+
+        $physicalFile = $thumbsPath . DS . $imageFilename;
         if (file_exists($physicalFile)) {
             $imageFilenameAndPath .= '?' . filemtime($physicalFile);
         }
@@ -708,8 +725,8 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getCategoryThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
 
-        $imageFilename = $categoryId . '-category_default.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
+        $imageFilename = $this->getImageFile($thumbsPath, $categoryId .'-category_default');
+        if (is_null($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
             return false; // do not show any image if image does not exist
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
@@ -724,14 +741,44 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getProductThumbsPath($imageIdAsPath);
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'products' . DS;
 
-        $imageFilename = $imageId . '-' . $size . '_default.jpg';
-        if (! file_exists($thumbsPath . DS . $imageFilename)) {
+        $imageFilename = $this->getImageFile($thumbsPath, $imageId . '-' . $size . '_default');
+        if (is_null($imageFilename) || !file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageIdAsPath . DS . $imageFilename;
         }
 
         return $this->prepareAsUrl($imageFilenameAndPath);
+    }
+
+
+    public function getProductImageSrcWithManufacturerImageFallback($productImageId, $manufacturerId)
+    {
+
+        $productImageLargeSrc = $this->getProductImageSrc($productImageId, 'thickbox');
+        $productImageLargeExists = $this->largeImageExists($productImageLargeSrc);
+        $productImageSrc = $this->getProductImageSrc($productImageId, 'home');
+        if (!$productImageLargeExists) {
+            $productImageLargeSrc = $this->getManufacturerImageSrc($manufacturerId, 'large');
+            $productImageLargeExists = $this->largeImageExists($productImageLargeSrc);
+            $productImageSrc = $this->getManufacturerImageSrc($manufacturerId, 'medium');
+            if (!$productImageLargeExists) {
+                $productImageSrc = $this->getProductImageSrc($productImageId, 'home');
+            }
+        }
+
+        $result = [
+            'productImageLargeSrc' => $productImageLargeSrc,
+            'productImageLargeExists' => $productImageLargeExists,
+            'productImageSrc' => $productImageSrc,
+        ];
+
+        return $result;
+    }
+
+    public function largeImageExists($imgSrc): bool
+    {
+        return !preg_match('/de-default/', $imgSrc);
     }
 
     public function prepareAsUrl($string)

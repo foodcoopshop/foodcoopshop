@@ -3,8 +3,9 @@ namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
 use App\Lib\HelloCash\HelloCash;
+use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Queue\Queue\Task;
 
 /**
@@ -39,6 +40,7 @@ class SendInvoiceToCustomerTask extends Task {
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
         $invoiceId = $data['invoiceId'];
+        $paidInCash = $data['paidInCash'];
         $isCancellationInvoice = (bool) $data['isCancellationInvoice'];
         $originalInvoiceId = $data['originalInvoiceId'] ?? $invoiceId;
 
@@ -55,6 +57,7 @@ class SendInvoiceToCustomerTask extends Task {
         $email->setTo($customerEmail)
         ->setSubject($subject)
         ->setViewVars([
+            'paidInCash' => $paidInCash,
             'customerName' => $customerName,
             'creditBalance' => $creditBalance,
         ]);
@@ -80,7 +83,7 @@ class SendInvoiceToCustomerTask extends Task {
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
         $invoiceEntity = $this->Invoice->patchEntity(
             $this->Invoice->get($invoiceId), [
-            'email_status' => Time::now(),
+                'email_status' => FrozenTime::now(),
         ]);
         $this->Invoice->save($invoiceEntity);
 

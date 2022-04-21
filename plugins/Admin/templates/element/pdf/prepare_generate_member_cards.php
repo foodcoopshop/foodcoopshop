@@ -56,7 +56,7 @@ foreach($customers as $customer) {
         // START ROW barcode and customer image
         $pdf->table .= '<tr>';
             $pdf->table .= '<td style="width:120px;">';
-            $barcodeObject = new TCPDFBarcode($customer->bar_code, 'C39');
+            $barcodeObject = new TCPDFBarcode($customer->system_bar_code, 'C39');
             //https://stackoverflow.com/a/54520065/2100184
             $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 102));
             // move barcode to bottom
@@ -66,7 +66,7 @@ foreach($customers as $customer) {
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
             // move user image to bottom
             $pdf->table .= '<td style="width:100px;" align="right">';
-                $customerImage = Configure::read('app.customerImagesDir') . DS . $customer->id_customer . '-large.jpg';
+            $customerImage = Configure::read('app.customerImagesDir') . DS . Configure::read('app.htmlHelper')->getImageFile(Configure::read('app.customerImagesDir'), $customer->id_customer . '-large');
                 if (file_exists($customerImage)) {
                     $fileinfos = getimagesize($customerImage);
                     $ratio = $fileinfos[1] / $fileinfos[0];

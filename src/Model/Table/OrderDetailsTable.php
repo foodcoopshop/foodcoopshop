@@ -69,6 +69,47 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
 
+    public function validationName(Validator $validator)
+    {
+        $validator->notEmptyString('product_name', __('Please_enter_a_name.'));
+        return $validator;
+    }
+
+    public function getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'Products.id_manufacturer' => $manufacturerId,
+            ],
+            'contain' => [
+                'Products.Manufacturers.AddressManufacturers',
+                'OrderDetailPurchasePrices',
+                'OrderDetailUnits',
+            ],
+        ]);
+        $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
+            $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
+            $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
+            return $exp;
+        });
+        $query->select([
+            'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
+            'ProductName' => 'OrderDetails.product_name',
+            'SumWeight' => $query->func()->sum('OrderDetailUnits.product_quantity_in_units'),
+            'Unit' => 'OrderDetailUnits.unit_name',
+            'SumPurchasePriceNet' => $query->func()->sum('ROUND(OrderDetailPurchasePrices.total_price_tax_excl, 2)'),
+            'SumPurchasePriceTax' => $query->func()->sum('OrderDetailPurchasePrices.tax_total_amount'),
+            'PurchasePriceTaxRate' => 'OrderDetailPurchasePrices.tax_rate',
+            'SumPurchasePriceGross' => $query->func()->sum('OrderDetailPurchasePrices.total_price_tax_incl'),
+        ]);
+        $query->group([
+            'OrderDetails.product_name',
+            'OrderDetailPurchasePrices.tax_rate',
+            'OrderDetailUnits.unit_name',
+        ]);
+        return $query;
+    }
+
     public function getLastOrderDate($customerId)
     {
         $query = $this->find('all', [
@@ -134,12 +175,13 @@ class OrderDetailsTable extends AppTable
     {
         $query = $this->find('all', [
             'contain' => [
-                'Products',
+                'Products.Manufacturers',
                 'Products.StockAvailables',
                 'ProductAttributes.StockAvailables'
             ]
         ]);
         $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
+        $query->where(['IF(Manufacturers.include_stock_products_in_order_lists = 0, (Products.is_stock_product = 0 OR Manufacturers.stock_management_enabled = 0), 1)']);
 
         if ($customerCanSelectPickupDay) {
             $query->where(['OrderDetails.pickup_day' => $pickupDay]);
@@ -200,10 +242,7 @@ class OrderDetailsTable extends AppTable
         return $depositNet;
     }
 
-    /**
-     * @param int $customerId
-     * @return array
-     */
+
     public function getLastOrderDetailsForDropdown($customerId)
     {
 
@@ -218,8 +257,8 @@ class OrderDetailsTable extends AppTable
             $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
             $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
-            // stop trying to search for valid orders if year is 2013
-            if (date('Y', $dateFrom) == '2013') {
+            // stop trying to search for valid orders if year is one year ago
+            if (date('Y', $dateFrom) == date('Y') - 1) {
                 break;
             }
 
@@ -239,14 +278,31 @@ class OrderDetailsTable extends AppTable
 
     }
 
+    private function getFutureOrdersConditions($customerId)
+    {
+        return [
+            'OrderDetails.id_customer' => $customerId,
+            'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') > DATE_FORMAT(NOW(), \'%Y-%m-%d\')'
+        ];
+    }
+
+    public function getFutureOrdersByCustomerId($customerId)
+    {
+        $futureOrders = $this->find('all', [
+            'conditions' => $this->getFutureOrdersConditions($customerId),
+            'order' => [
+                'OrderDetails.product_id' => 'ASC',
+                'OrderDetails.pickup_day' => 'ASC',
+            ]
+        ]);
+        return $futureOrders;
+    }
+
     public function getGroupedFutureOrdersByCustomerId($customerId)
     {
         $query = $this->find('all', [
             'fields' => ['OrderDetails.pickup_day'],
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') > DATE_FORMAT(NOW(), \'%Y-%m-%d\')'
-            ],
+            'conditions' => $this->getFutureOrdersConditions($customerId),
             'order' => [
                 'OrderDetails.pickup_day' => 'ASC'
             ]
@@ -441,6 +497,19 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
+    public function getDifferentPickupDayCountByCustomerId($customerId)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+            ],
+        ]);
+        $query->select([
+            'different_pickup_day_count' => $query->func()->count('DISTINCT(OrderDetails.pickup_day)'),
+        ]);
+        return $query->toArray()[0]['different_pickup_day_count'];
+    }
+
     public function getCountByCustomerId($customerId)
     {
         $query = $this->find('all', [
@@ -589,9 +658,8 @@ class OrderDetailsTable extends AppTable
 
     /**
      * $param $orderDetails is already grouped!
-     * @return array|boolean
      */
-    public function prepareOrderDetailsGroupedByCustomer($orderDetails)
+    public function prepareOrderDetailsGroupedByCustomer($orderDetails): array
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
@@ -624,7 +692,7 @@ class OrderDetailsTable extends AppTable
         }
 
         foreach($preparedOrderDetails as &$orderDetail) {
-            $orderDetail['order_detail_count'] = $this->getCountByCustomerId($orderDetail['customer_id']);
+            $orderDetail['different_pickup_day_count'] = $this->getDifferentPickupDayCountByCustomerId($orderDetail['customer_id']);
         }
         return $preparedOrderDetails;
     }

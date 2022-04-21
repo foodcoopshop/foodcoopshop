@@ -25,6 +25,10 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    hasProductAttributes: function(row) {
+        return row.next().hasClass('sub-row');
+    },
+
     initKeepSelectedCheckbox : function() {
 
         var cookieName = 'SelectedOrderDetailIds';
@@ -32,11 +36,13 @@ foodcoopshop.Admin = {
 
         if (preselectedOrderDetailIds) {
             preselectedOrderDetailIds = preselectedOrderDetailIds.split(',');
+            if (preselectedOrderDetailIds.length > 0) {
+                for (var i in preselectedOrderDetailIds) {
+                    $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
+                }
+            }
         }
-        for (var i in preselectedOrderDetailIds) {
-            console.log(preselectedOrderDetailIds[1]);
-            $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
-        }
+
 
         $('.row-marker').on('click', function() {
 

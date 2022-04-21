@@ -165,7 +165,7 @@ foodcoopshop.Mobile = {
         });
 
         // button renaming
-        $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-fw fa-shopping-bag"></i>');
+        $('.ew .btn').html('<i class="fa fa-lg fa-fw fa-shopping-bag"></i>');
 
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));
@@ -209,12 +209,6 @@ foodcoopshop.Mobile = {
             }
         });
 
-        $('#main-menu > li > a').each(function () {
-            if ($(this).html().replace(/<i class="fas "><\/i>/, '') == foodcoopshop.LocalizedJs.mobile.news) {
-                menuItems.push('<li><a href="/' + foodcoopshop.LocalizedJs.mobile.routeNewsList + '"><i class="fa"></i>' + foodcoopshop.LocalizedJs.mobile.news + '</a></li>');
-            }
-        });
-
         $('.sidebar ul#categories-menu > li').each(function () {
             menuItems.push($(this).clone());
         });
@@ -252,17 +246,20 @@ foodcoopshop.Mobile = {
         if (noGlobalDeliveryBreakElement.length > 0) {
             noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
         }
-        var infoBoxHtml = '<div id="right-info-box-text" class="hide">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>';
-        infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
-        $('#container').append(infoBoxHtml);
+        var infoBoxContent = (noGlobalDeliveryBreakHtml + $('#info-box').html()).trim();
+        if (infoBoxContent != '') {
+            var infoBoxHtml = '<div id="right-info-box-text" class="hide">' + infoBoxContent + '</div>';
+            infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
+            $('#container').append(infoBoxHtml);
 
-        var infoButton = $('<a/>');
-        infoButton.addClass('open-with-modal');
-        infoButton.attr('href', 'javascript:void(0);');
-        infoButton.data('element-selector', '#right-info-box-text');
-        infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
-        $('#' + headerId).append(infoButton);
-        foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
+            var infoButton = $('<a/>');
+            infoButton.addClass('open-with-modal');
+            infoButton.attr('href', 'javascript:void(0);');
+            infoButton.data('element-selector', '#right-info-box-text');
+            infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
+            $('#' + headerId).append(infoButton);
+            foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
+        }
         // END info box as modal
 
         var cartButton = $('#cart .inner .btn-success');
@@ -275,18 +272,20 @@ foodcoopshop.Mobile = {
 
         // button renamings
         var regexp = new RegExp(foodcoopshop.LocalizedJs.mobile.showAllProducts);
-        $('.manufacturer-wrapper div.third-column a.btn').each(function (btn) {
+        $('.manufacturer-wrapper div.c3 a.btn').each(function () {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });
-        $('.blog-post-wrapper div.third-column a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
-        $('.entity-wrapper .btn').each(function() {
-            $(this).html($(this).find('i').after($(this).text()));
+        $('.blog-post-wrapper div.c3 a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
+        $('.ew .btn').each(function() {
+            if (!$(this).find('i').hasClass('fa-times')) { // delivery break?
+                $(this).html($(this).find('i').after($(this).text()));
+            }
         });
         $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
         // add special infos to cart page
-        var cartPage = $('body.carts.detail #inner-content h1:first');
-        cartPage.after($('#cart p.instant-order-customer-info'));
+        var cartPage = $('body.carts #inner-content h1:first');
+        cartPage.after($('#cart p.cart-extra-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
         cartPage.after($('#cart p.future-orders'));
 

@@ -51,7 +51,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailSubjectContainsAt(1, 'Gewicht angepasst für "Forelle : Stück": 800,584 g');
         $this->assertMailContainsHtmlAt(1, '800,584 g');
         $this->assertMailContainsHtmlAt(1, 'Demo Superadmin');
-        $this->assertMailContainsHtmlAt(1, 'Der Basis-Preis beträgt 1,50 € / 100 g');
+        $this->assertMailContainsHtmlAt(1, 'Der Grundpreis beträgt 1,50 € / 100 g');
 
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSentWithAt(1, Configure::read('test.loginEmailMeatManufacturer'), 'cc');
@@ -132,7 +132,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
     public function testEditOrderDetailQuantityAsSuperadminEmailDisabledWithConfig()
     {
-        Configure::write('app.sendEmailWhenOrderDetailQuantityOrPriceChanged', false);
+        Configure::write('app.sendEmailWhenOrderDetailQuantityChanged', false);
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;

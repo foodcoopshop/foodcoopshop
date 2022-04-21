@@ -14,7 +14,7 @@
 CKEDITOR.editorConfig = function ( config ) {
 
     config.width = 413;
-    config.height = 250;
+    config.height = 343;
     config.format_tags = 'p';
     config.language = foodcoopshop.LocalizedJs.helper.defaultLocale;
 
@@ -37,5 +37,4 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = 'v4.16.1'; // change this string if version is updated in package.json
-
+CKEDITOR.timestamp = 'v4.18.0'; // change this string if version is updated in package.json

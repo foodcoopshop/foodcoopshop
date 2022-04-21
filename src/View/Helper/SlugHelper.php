@@ -22,6 +22,11 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
+    public function getInvoiceDownloadRoute($invoiceFilename)
+    {
+        return '/admin/lists/getInvoice?file=' . $invoiceFilename;
+    }
+
     public function getHelloCashInvoice($invoiceId, $cancellation=0)
     {
         return '/admin/hello-cash/getInvoice/' . $invoiceId . '/' . $cancellation;
@@ -32,11 +37,18 @@ class SlugHelper extends Helper
         return '/admin/hello-cash/getReceipt/' . $invoiceId . '/' . $cancellation;
     }
 
-    public function getSelfService($keyword = '')
+    public function getSelfService($keyword = '', $productWithError = '')
     {
         $url = '/'.__('route_self_service');
+        $queryParams = [];
         if ($keyword != '') {
-            $url .= '?keyword=' . $keyword;
+            $queryParams['keyword'] = $keyword;
+        }
+        if ($productWithError != '') {
+            $queryParams['productWithError'] = $productWithError;
+        }
+        if (!empty($queryParams)) {
+            $url .= '?' . http_build_query($queryParams);
         }
         return $url;
     }
@@ -49,6 +61,11 @@ class SlugHelper extends Helper
     public function getActionLogsList()
     {
         return $this->getAdminHome().'/action-logs';
+    }
+
+    public function getOrderDetailPurchasePriceEdit($orderDetailId)
+    {
+        return $this->getAdminHome().'/order-details/edit-purchase-price/' . $orderDetailId;
     }
 
     public function getOrderDetailsList()
@@ -203,9 +220,13 @@ class SlugHelper extends Helper
         return $url;
     }
 
-    public function getLogout()
+    public function getLogout($redirect='')
     {
-        return '/'.__('route_sign_out');
+        $url = '/'.__('route_sign_out');
+        if ($redirect != '') {
+            $url .= '?redirect=' . urlencode($redirect);
+        }
+        return $url;
     }
 
     public function getRegistrationSuccessful()
@@ -310,9 +331,38 @@ class SlugHelper extends Helper
         return '/'.__('route_request_new_password');
     }
 
+    public function getProfit($dateFrom=null, $dateTo=null, $customerId=null, $manufacturerId=null, $productId=null)
+    {
+        $url = '/admin/order-details/profit';
+        if ($dateFrom !== null) {
+            $urlParams['dateFrom'] = $dateFrom;
+        }
+        if ($dateTo !== null) {
+            $urlParams['dateTo'] = $dateTo;
+        }
+        if ($customerId !== null) {
+            $urlParams['customerId'] = $customerId;
+        }
+        if ($manufacturerId !== null) {
+            $urlParams['manufacturerId'] = $manufacturerId;
+        }
+        if ($productId !== null) {
+            $urlParams['productId'] = $productId;
+        }
+        if (!empty($urlParams)) {
+            $url .= '?' . http_build_query($urlParams);
+        }
+        return $url;
+    }
+
     public function getInvoices()
     {
         return '/admin/invoices';
+    }
+
+    public function getMyInvoices()
+    {
+        return '/admin/invoices/myInvoices';
     }
 
     public function getReport($paymentType)

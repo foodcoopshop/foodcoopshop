@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,7 +35,7 @@ class CartsController extends FrontendController
             'generateRightOfWithdrawalInformationPdf',
             'ajaxAdd',
             'ajaxRemove',
-            'ajaxDeleteInstantOrderCustomer',
+            'ajaxDeleteOrderForDifferentCustomer',
             'ajaxGetTimebasedCurrencyHoursDropdown',
         ]);
     }
@@ -128,7 +129,8 @@ class CartsController extends FrontendController
             return;
         }
 
-        $this->setAction('detail');
+        $this->detail();
+        $this->render('detail');
     }
 
     public function orderSuccessful($cartId)
@@ -155,10 +157,10 @@ class CartsController extends FrontendController
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
 
         $this->resetOriginalLoggedCustomer();
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
     }
 
-    public function ajaxDeleteInstantOrderCustomer()
+    public function ajaxDeleteOrderForDifferentCustomer()
     {
         try {
             $this->ajaxIsAuthorized();
@@ -170,7 +172,7 @@ class CartsController extends FrontendController
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
 
         $this->set([
             'status' => 1,
@@ -257,6 +259,7 @@ class CartsController extends FrontendController
     public function addOrderToCart()
     {
         $deliveryDate = h($this->getRequest()->getQuery('deliveryDate'));
+        Log::error('addOrderToCart: ' . $deliveryDate);
         $this->doAddOrderToCart($deliveryDate);
         $this->redirect($this->referer());
     }
@@ -319,6 +322,7 @@ class CartsController extends FrontendController
         } else {
             reset($orderDetails);
             $lastOrderDate = key($orderDetails);
+            Log::error('addLastOrderToCart');
             $this->doAddOrderToCart($lastOrderDate);
         }
         $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
@@ -356,9 +360,10 @@ class CartsController extends FrontendController
                 'status' => 1,
                 'msg' => 'ok'
             ];
-            if ($orderedQuantityInUnits > 0 && $this->AppAuth->isSelfServiceModeByReferer()) {
-                $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
-            }
+        }
+
+        if ($this->AppAuth->isSelfServiceModeByReferer()) {
+            $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
         }
 
         $this->set($result);

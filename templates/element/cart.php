@@ -37,7 +37,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             Configure::read('app.jsNamespace').".".$javascriptClass.".initCartErrors('".addslashes(json_encode($cartErrors))."');"
         ]);
     }
-    if ($this->name == 'Carts' && $this->request->getParam('action') == 'detail') {
+    if ($this->name == 'Carts' && in_array($this->request->getParam('action'), ['finish', 'detail'])) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
             Configure::read('app.jsNamespace').".Cart.initChangeAmountLinks();"
@@ -57,7 +57,26 @@ if ($appAuth->Cart->getProducts() !== null) {
     <div class="inner">
 
         <?php
-        if ($showLoadLastOrderDetailsDropdown && !$appAuth->isInstantOrderMode()) {
+        if ($appAuth->isOrderForDifferentCustomerMode()) {
+            $this->element('addScript', ['script' =>
+                Configure::read('app.jsNamespace').".ModalOrderForDifferentCustomerCancel.init();"
+            ]);
+            echo '<p class="cart-extra-info order-for-different-customer-info">';
+                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.orderCustomer')->name.'</b>']);
+                if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
+                    echo ' ' . __('Only_stock_products_are_shown.');
+                }
+            echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel').'</a></b>';
+            echo '</p>';
+        }
+
+        if (isset($shoppingPrice) && in_array($shoppingPrice, ['PP', 'ZP'])) {
+            echo '<p class="cart-extra-info shopping-price-info">';
+                echo $this->Html->getShoppingPricesForDropdown()[$shoppingPrice] . ' ' . __('activated');
+            echo '</p>';
+        }
+
+        if ($showLoadLastOrderDetailsDropdown && !$appAuth->isOrderForDifferentCustomerMode()) {
             $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
             if (!empty($lastOrderDetails)) {
                 $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
@@ -73,19 +92,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             }
         }
 
-        if ($appAuth->isInstantOrderMode()) {
-            $this->element('addScript', ['script' =>
-                Configure::read('app.jsNamespace').".ModalInstantOrderCancel.init();"
-            ]);
-            echo '<p class="instant-order-customer-info">';
-                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
-                if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-                    echo ' ' . __('Only_stock_products_are_shown.');
-                }
-            echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
-            echo '</p>';
-        }
-        if ($appAuth->user() && $this->Html->paymentIsCashless()) {
+        if ($appAuth->user() && $this->Html->paymentIsCashless() && !$appAuth->isSelfServiceCustomer()) {
             $class = ['payment'];
             if ($creditBalance < 0) {
                 $class[] = 'negative';
@@ -98,13 +105,16 @@ if ($appAuth->Cart->getProducts() !== null) {
 
         <p class="no-products"><?php echo $cartEmptyMessage; ?></p>
         <p class="products"></p>
-        <p class="sum-wrapper"><b><?php echo __('Sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-        <p class="deposit-sum-wrapper"><b><?php echo __('Deposit'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-        <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
 
-        <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
-            <p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
-        <?php } ?>
+        <div class="sums-wrapper">
+            <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <p class="total-sum-wrapper"><b><?php echo __('Total'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+                <p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
+            <?php } ?>
+            <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+        </div>
 
         <p class="tmp-wrapper"></p>
 

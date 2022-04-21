@@ -68,19 +68,13 @@ body {
 }
 
 #header .logo-wrapper {
-    margin: 5px 10px 5px 0;
+    margin: 5px 0;
     float: left;
-    width: 220px;
-    height: 120px;
     padding: 10px;
     padding-top: 0;
 }
 #header .logo-wrapper a {
     display: block;
-}
-#header .logo {
-    max-height: 120px;
-    max-width: 220px;
 }
 .sidebar {
     float: left;
@@ -88,6 +82,9 @@ body {
     background: #fff;
     padding-top: 15px;
     width: 190px;
+}
+.sidebar.empty {
+    width: 100px;
 }
 body.categories.detail div.img-wrapper {
     width: 100%;
@@ -136,11 +133,12 @@ body.categories.detail div.description-wrapper {
     width: 180px;
 }
 .vertical.menu li.header {
-    padding: 10px;
-    font-size: 16px;
+    padding: 8px 10px;
+    font-size: 18px;
     padding-left: 10px;
     color: #fff;
     border-bottom: 1px solid #dfdfdf;
+    font-weight: 600;
 }
 .vertical.menu a {
     padding: 4px 10px;
@@ -157,8 +155,7 @@ body.categories.detail div.description-wrapper {
 }
 
 #main-menu {
-    margin: 70px 0 20px 10px;
-    width: 660px;
+    margin: 100px 0 20px 25px;
     float: left;
 }
 #main-menu > li {
@@ -223,7 +220,9 @@ body.categories.detail div.description-wrapper {
 }
 
 #user-menu {
-    float: right;
+    position: absolute;
+    top: 5px;
+    right: 0;
     line-height: 26px;
     margin-bottom: 2px;
 }
@@ -371,7 +370,7 @@ a[disabled] {
     opacity: 0.5;
 }
 
-.product-wrapper,
+.pw,
 .manufacturer-wrapper {
     margin-bottom: 0px;
     padding: 15px 0px;
@@ -380,18 +379,21 @@ a[disabled] {
     width: 100%;
     position: relative;
 }
-.product-wrapper .heading {
+.pw .c1 a img {
+    max-width: 150px;
+    height: auto;
+}
+.pw .heading {
     width: 100%;
     float: left;
 }
-.product-wrapper .heading h4 {
+.pw .heading h4 {
     float: left;
-    font-weight: 600;
     margin-top: 0;
     margin-right: 10px;
     line-height: 23px;
 }
-body.superadmin .product-wrapper .heading h4 {
+body.superadmin .pw .heading h4 {
     max-width: 95%;
 }
 .blog-post-wrapper h4 {
@@ -399,35 +401,35 @@ body.superadmin .product-wrapper .heading h4 {
     margin-top: 0;
     line-height: 23px;
 }
-.product-wrapper div.first-column,
-.manufacturer-wrapper div.first-column {
+.pw div.c1,
+.manufacturer-wrapper div.c1 {
     text-align: center;
     float: left;
     margin-right: 15px;
     width: 150px;
     position: relative;
 }
-.manufacturer-wrapper div.first-column img {
+.manufacturer-wrapper div.c1 img {
     width: 148px;
 }
-.product-wrapper div.first-column span.fa-stack i.fa-star {
+.pw div.c1 span.fa-stack i.fa-star {
     color: #fff;
 }
-.product-wrapper div.third-column .unity,
-.product-wrapper .radio label {
+.pw div.c3 .unity,
+.pw .radio label {
     word-break: break-word;
 }
-.product-wrapper .toggle-link {
+.pw .toggle-link {
     margin-top: 5px;
 }
-.product-wrapper .toggle-content {
+.pw .toggle-content {
     margin-bottom: 5px;
 }
-.product-wrapper .toggle-content.description img {
+.pw .toggle-content.description img {
   margin-bottom: 3px;
 }
-.product-wrapper div.second-column,
-.manufacturer-wrapper div.second-column {
+.pw div.c2,
+.manufacturer-wrapper div.c2 {
     float: left;
     width: 355px;
     min-height: 170px;
@@ -435,16 +437,16 @@ body.superadmin .product-wrapper .heading h4 {
     margin-right: 15px;
     border-right: 1px solid #d6d4d4;
 }
-.product-wrapper div.second-column {
+.pw div.c2 {
     overflow: hidden;
     word-wrap: break-word;
     position: relative;
 }
-.product-wrapper div.second-column .toggle-content img {
+.pw div.c2 .toggle-content img {
     max-width: 100%;
     height: auto ! important;
 }
-.blog-post-wrapper div.second-column {
+.blog-post-wrapper div.c2 {
     min-height: 148px;
     position: relative;
 }
@@ -453,71 +455,71 @@ body.superadmin .product-wrapper .heading h4 {
     right: -10px;
     top: -10px;
 }
-.product-wrapper div.third-column,
-.manufacturer-wrapper div.third-column {
+.pw div.c3,
+.manufacturer-wrapper div.c3 {
     float: left;
     width: 195px;
     margin-left: -16px;
     padding-left: 16px;
     border-left: 1px solid #d6d4d4;
 }
-.manufacturer-wrapper div.third-column {
+.manufacturer-wrapper div.c3 {
     text-align: center;
 }
-.manufacturer-wrapper div.third-column a.btn {
+.manufacturer-wrapper div.c3 a.btn {
     margin-top: 65px;
 }
-.product-wrapper .entity-wrapper {
+.pw .ew {
     float: left;
     margin-bottom: 5px;
     width: 100%;
 }
-.product-wrapper .entity-wrapper:not(.active),
-.product-wrapper .entity-wrapper div.tax,
-.product-wrapper .entity-wrapper .timebasedCurrencySeconds {
+.pw .ew:not(.active),
+.pw .ew div.tax,
+.pw .ew .timebasedCurrencySeconds {
     display: none;
 }
-.product-wrapper .line {
+.pw .line {
     float: left;
     width: 100%;
 }
-.product-wrapper .line p {
+.pw .line p {
     margin-bottom: 0px;
 }
-.product-wrapper label.attribute-button input {
+.pw label.attribute-button input {
     margin-right: 3px;
     margin-top: 3px;
     float: left;
 }
-.entity-wrapper .btn-cart {
+.ew .btn-cart {
     width: 100%;
     float: left;
 }
-.product-wrapper .price,
-.product-wrapper .price-asterisk {
+.pw .price,
+.pw .price-asterisk {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 5px;
     float: left;
 }
-.product-wrapper .price-asterisk {
+.pw .price-asterisk {
     margin-bottom: 0;
     margin-left: 5px;
 }
-.product-wrapper .additional-price-info {
+.pw .p-info {
     float: left;
     line-height: 17px;
     color: #969696;
 }
-.product-wrapper .additional-price-info .unit-amount {
+.pw .p-info .unit-amount {
     display: none;
 }
-.product-wrapper .deposit {
+.pw .deposit {
     float: right;
     margin-left: 10px;
     line-height: 20px;
 }
-.product-wrapper .timebased-currency-product-info {
+.pw .timebased-currency-product-info {
     float: left;
     margin-top: -5px;
     margin-bottom: 5px;
@@ -527,44 +529,44 @@ body.superadmin .product-wrapper .heading h4 {
     float: right;
     margin-left: 5px;
 }
-.product-wrapper .amount-wrapper {
+.pw .amount-wrapper {
     line-height: 28px;
     margin-top: 5px;
     margin-bottom: 10px;
     float: left;
 }
-.product-wrapper .amount-wrapper .left-of-input {
+.pw .amount-wrapper .loi {
     float: left;
     margin-right: 3px;
 }
-.product-wrapper .amount-switcher-minus .fas {
+.pw .as-minus .fas {
     margin-left: 3px;
     display: none;
 }
-.product-wrapper .amount-switcher-plus .fas {
+.pw .as-plus .fas {
     margin-left: 4px;
 }
-.product-wrapper .amount-wrapper .fas {
+.pw .amount-wrapper .fas {
    color: #ccc;
    float: left;
    margin-top: 6px;
    font-size: 17px;
 }
-.product-wrapper .amount-wrapper .fas:hover {
+.pw .amount-wrapper .fas:hover {
     color: #d6d4d4 ! important;
 }
-.product-wrapper .amount-wrapper input {
+.pw .amount-wrapper input {
     float:left;
     text-align: center;
     height: 28px;
     border: 1px solid #d6d4d4;
     width: 28px;
 }
-.product-wrapper .amount-wrapper .right-of-input {
+.pw .amount-wrapper .right-of-input {
     float: left;
     clear: both;
 }
-.product-wrapper span.not-available-info {
+.pw span.not-available-info {
     display: block;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -588,6 +590,7 @@ body.manufacturers.detail #inner-content h2 {
     padding-top: 15px;
     float: left;
     width: 100%;
+    font-weight: 600;
 }
 body.manufacturers.detail img.manufacturer-logo {
     text-align: center;
@@ -600,6 +603,9 @@ body.manufacturers.detail .imprint {
     width: 100%;
     text-align: right;
 }
+body.manufacturers.index h2.info {
+    margin-top: 5px;
+}
 #footer {
     background-color: #dfdfdf;
     width: 928px;
@@ -610,34 +616,25 @@ body.manufacturers.detail .imprint {
     padding: 20px;
     text-align: center;
 }
-#footer #facebook-wrapper {
-    float: right;
-    margin-top: 10px;
-}
-#footer .fcs-backlink {
-    float: right;
-    clear: both;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-#footer .first-column {
-    width: 250px;
+#footer .c1 {
+    width: 45%;
     float: left;
     text-align: left;
     font-size: 14px;
     margin-bottom: 5px;
     margin-left: 10px;
 }
-#footer .second-column {
+#footer .c2 {
     float: right;
     margin-right: 75px;
     text-align: left;
+    margin-bottom: 10px;
     font-size: 14px;
     border-left: 1px solid #777;
     padding-left: 20px;
-    max-width: 500px;
+    width: 45%;
 }
-#footer .second-column p i {
+#footer .c2 p i {
     margin-right: 5px;
     vertical-align: middle;
 }
@@ -663,6 +660,30 @@ body.manufacturers.detail .imprint {
     font-size: 20px;
     margin-bottom: 15px;
     margin-top: 0;
+    font-weight: 600;
+}
+#footer .bottom {
+    margin: 20px -20px -20px -20px;
+    padding: 8px 0 5px 0;
+    position: relative;
+    clear: both;
+    min-height: 42px;
+}
+#footer .bottom a {
+    color: #fff;
+}
+#footer .bottom a i.fab,
+#footer .bottom a i.fas {
+    color: #fff;
+}
+#footer .bottom a.fcs-backlink {
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+}
+#footer .bottom a:hover i.fab,
+#footer .bottom a:hover i.fas {
+    opacity: .8;
 }
 #right {
     float: left;
@@ -678,9 +699,10 @@ body.manufacturers.detail .imprint {
 }
 .box h3 {
     color: #fff;
-    padding: 10px;
-    font-size: 16px;
+    padding: 8px 10px;
+    font-size: 18px;
     margin: 0;
+    font-weight: 600;
 }
 .box h3 i {
     padding-right: 10px;
@@ -719,18 +741,28 @@ body.carts p.pickup-day-header {
 #cart p.pickup-day-header:first-of-type {
     margin-top: -5px;
 }
-#cart .instant-order-customer-info {
+#cart .cart-extra-info,
+body.carts .cart-extra-info {
     color: #fff;
     background-color: #f3515c;
     padding-bottom: 5px ! important;
+    text-align: center;
 }
-#cart .instant-order-customer-info a {
+body.carts .cart-extra-info {
+    padding-top: 5px;
+}
+#cart .cart-extra-info a,
+body.carts .cart-extra-info a {
     margin-top: 3px;
+}
+#cart .cart-extra-info:not(:first-child),
+body.carts .cart-extra-info:not(:first-child) {
+    border-top: 1px solid #d6d4d4;
 }
 #cart p.products span.product span:not(:first-of-type) {
     margin-right: 3px;
 }
-body.carts.detail #load-last-order-details,
+body.carts #load-last-order-details,
 #cart #load-last-order-details {
     width: 100%;
     border: none;
@@ -738,6 +770,7 @@ body.carts.detail #load-last-order-details,
 }
 .cart p.no-products {
     margin-bottom: 20px;
+    padding-bottom: 3px;
 }
 .cart p.products {
     display: none;
@@ -751,8 +784,25 @@ body.carts.detail #load-last-order-details,
     width: 100%;
     float: left;
 }
-.cart p.sum-wrapper span.sum,
+.cart p.product-sum-wrapper,
+.cart p.deposit-sum-wrapper,
+.cart p.total-sum-wrapper,
+.cart p.timebased-currency-sum-wrapper {
+    padding-top: 0;
+}
+#cart p.product-sum-wrapper,
+.cart p.deposit-sum-wrapper {
+    display: none;
+}
+#cart p.product-sum-wrapper,
+#cart p.total-sum-wrapper {
+    margin-top: 5px;
+    padding-top: 3px;
+    border-top: 1px dotted #d6d4d4;
+}
+.cart p.product-sum-wrapper span.sum,
 .cart p.deposit-sum-wrapper span.sum,
+.cart p.total-sum-wrapper span.sum,
 .cart p.timebased-currency-sum-wrapper span.sum,
 .cart b.payment {
     font-weight: 600;
@@ -778,7 +828,6 @@ body.carts.detail #load-last-order-details,
 .cart span.manufacturer-link,
 .cart .image,
 .cart span.deposit,
-.cart p.deposit-sum-wrapper,
 .cart p.tax-sum-wrapper,
 .cart span.tax,
 .cart span.timebasedCurrencyMoney,
@@ -812,7 +861,7 @@ body.carts.detail #load-last-order-details,
 .edit-shortcut-button {
     padding: 0px 4px;
 }
-.entity-wrapper .btn,
+.ew .btn,
 #cart .btn-success {
     padding-top: 6px;
     padding-bottom: 6px;
@@ -823,7 +872,7 @@ body.carts.detail #load-last-order-details,
 .cart .delete a.btn {
     padding: 0;
     color: #f3515c;
-    margin-top: -2px;
+    margin-top: -3px;
 }
 .cart .delete a.btn:hover,
 .cart span.amount .btn:hover {
@@ -832,20 +881,20 @@ body.carts.detail #load-last-order-details,
 .cart .price-per-unit {
     display: none;
 }
-body.carts.detail .cart:not(#cart) span.product-name-wrapper {
+body.carts .cart:not(#cart) span.product-name-wrapper {
     width: 210px;
 }
-body.carts.detail .cart:not(#cart) span.amount {
+body.carts .cart:not(#cart) span.amount {
     margin-right: 15px;
     margin-top: -5px;
 }
-body.carts.detail .cart:not(#cart) span.product-name-wrapper span.product-name {
+body.carts .cart:not(#cart) span.product-name-wrapper span.product-name {
     float: left;
 }
-body.carts.detail .cart:not(#cart) a.btn {
+body.carts .cart:not(#cart) a.btn {
     font-size: 17px;
 }
-body.carts.detail #CartsDetailForm {
+body.carts #CartsDetailForm {
     float: left;
     margin-top: 10px;
 }
@@ -921,58 +970,67 @@ body.carts.detail #CartsDetailForm {
 #inner-content .next-button {
     float: right;
 }
-body.carts.detail .cart:not(#cart) span.right .delete {
+body.carts .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;
 }
-body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
+body.carts .cart:not(#cart) span.product-name-wrapper span.unity {
     float: left;
     font-size: 13px;
     margin-top: 1px;
 }
-body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
-body.carts.detail .cart:not(#cart) p.tax-sum-wrapper,
-body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
+body.carts .cart:not(#cart) p.deposit-sum-wrapper,
+body.carts .cart:not(#cart) p.tax-sum-wrapper,
+body.carts .cart:not(#cart) p.timebased-currency-sum-wrapper {
     display: block;
     float: left;
     width: 100%;
 }
-body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
+body.carts .cart:not(#cart) p.deposit-sum-wrapper {
+    border-bottom: 1px dotted #d6d4d4;
+    padding-bottom: 15px;
+}
+body.carts .cart:not(#cart) p.timebased-currency-sum-wrapper {
     margin-top: 20px;
 }
-body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
-body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
+body.carts .cart:not(#cart) p.product-sum-wrapper span.sum,
+body.carts .cart:not(#cart) p.deposit-sum-wrapper span.sum {
     font-weight: 600;
     float: right;
     margin-right: 17px;
 }
-body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
+body.carts .cart:not(#cart) p.tax-sum-wrapper {
     margin-top: 20px;
 }
-body.carts.detail .cart .manufacturer-link {
+body.carts .cart:not(#cart) .sums-wrapper {
+    float: right;
+    margin-right: 17px;
+    width: 300px;
+}
+body.carts .cart .manufacturer-link {
     display: none;
 }
-body.carts.detail .cart.showManufacturerListAndDetailPage .manufacturer-link {
+body.carts .cart.showManufacturerListAndDetailPage .manufacturer-link {
     display: inline;
     width: 150px;
 }
-body.carts.detail .cart:not(#cart) span.deposit {
+body.carts .cart:not(#cart) span.deposit {
     display: inline;
     clear: both;
     margin-right: 22px;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds {
+body.carts .cart:not(#cart) span.timebasedCurrencySeconds {
     display: inline;
     clear: both;
     text-align: right;
     padding-right: 25px;
     width: 100%;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds span {
+body.carts .cart:not(#cart) span.timebasedCurrencySeconds span {
     float: right;
     clear: both;
 }
-body.carts.detail .cart:not(#cart) .image {
+body.carts .cart:not(#cart) .image {
     display: inline;
     text-align: center;
     float: left;
@@ -980,57 +1038,56 @@ body.carts.detail .cart:not(#cart) .image {
     width: 110px;
     margin-top: -30px;
 }
-body.carts.detail .cart:not(#cart) .image img {
+body.carts .cart:not(#cart) .image img {
     width: 100px;
 }
-body.carts.detail .cart:not(#cart) {
+body.carts .cart:not(#cart) {
     font-size: 15px;
 }
-body.carts.detail .cart:not(#cart) span.right {
+body.carts .cart:not(#cart) span.right {
     position: absolute;
     right: 10px;
     top: 40px;
 }
-body.carts.detail .cart:not(#cart) .product {
+body.carts .cart:not(#cart) .product {
     max-height: none;
     padding: 10px;
     border-bottom: 1px solid #d6d4d4;
     position: relative;
     padding-top: 40px;
 }
-body.carts.detail .cart:not(#cart) .products {
+body.carts .cart:not(#cart) .products {
     max-height: none;
     overflow-x: hidden; /* error wrapper tricky to style */
     margin-bottom: 20px;
 }
-body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
-body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
+body.carts .cart:not(#cart) p.total-sum-wrapper {
     font-size: 20px;
 }
-body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
+body.carts .cart:not(#cart) p.sum-deposit-wrapper span.sum {
     font-weight: normal;
 }
-body.carts.detail .cart:not(#cart) .product.error,
-body.carts.detail .cart:not(#cart) .error-message {
+body.carts .cart:not(#cart) .product.error,
+body.carts .cart:not(#cart) .error-message {
     background: #f3515c;
     color: #fff;
 }
-body.carts.detail .cart:not(#cart) .product.error span ,
-body.carts.detail .cart:not(#cart) .product.error a {
+body.carts .cart:not(#cart) .product.error span ,
+body.carts .cart:not(#cart) .product.error a {
     color: #fff;
 }
-body.carts.detail .cart:not(#cart) ul.error-message.global {
+body.carts .cart:not(#cart) ul.error-message.global {
     padding: 10px;
     margin: 0;
 }
-body.carts.detail .cart:not(#cart) ul.error-message:not(.global) {
+body.carts .cart:not(#cart) ul.error-message:not(.global) {
     width: 102%;
     float: left;
     padding: 15px 10px 10px 40px;
     margin-left: -10px;
     margin-top: -10px;
 }
-body.carts.detail .cart:not(#cart) .btn-success.btn-order {
+body.carts .cart:not(#cart) .btn-success.btn-order {
     font-size: 18px;
     float: right;
     padding: 5px 10px;
@@ -1065,7 +1122,7 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
 }
 .blog-wrapper {
     margin-bottom: 20px;
-    height: 320px;
+    height: 300px;
 }
 body.carts.order_successful h2 {
     margin-top: 20px;
@@ -1160,7 +1217,7 @@ body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
 body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
     top: -16px;
 }
-.product-wrapper .second-column a.edit-shortcut-button {
+.pw .c2 a.edit-shortcut-button {
   position: absolute;
   top: 0;
   right: 5px;
@@ -1195,7 +1252,7 @@ body.categories.detail .description-wrapper h3 {
     padding-top: 10px;
     font-size: 16px;
 }
-body.products.detail .product-wrapper {
+body.products.detail .pw {
     border-bottom: 1px solid #d6d4d4;
     margin-bottom: 20px;
 }
@@ -1204,6 +1261,7 @@ body.customers.registration_successful #inner-content h2.further-news {
     border-bottom: 1px solid #d6d4d4;
     padding-bottom: 10px;
     margin-bottom: 0;
+    font-weight: 600;
 }
 #inner-content ul,
 #info-box ul {

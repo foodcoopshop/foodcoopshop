@@ -14,8 +14,14 @@
  */
 
 return [
+
+    'Mitgliedsbeitrag' => 'DO_NOT_REPLACE_A',
+    'Mitgliedschaft' => 'DO_NOT_REPLACE_B',
+
     'Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar\.' => '',
-    'Bitte wähle ein Mitglied aus.' => 'Bitte wähle einen Kunden aus.',
+    'wähle ein Mitglied aus.' => 'wähle einen Kunden aus.',
+    'wähle links oben das Mitglied aus' => 'wähle links oben den Kunden aus',
+    'E-Mail an Mitglied' => 'E-Mail an Kunden',
     'uf welches Mitglied' => 'uf welchen Kunden',
     'uf das Mitglied' => 'uf den Kunden',
     'uf ein anderes Mitglied' => 'uf einen anderen Kunden',
@@ -29,11 +35,17 @@ return [
     'für das Mitglied' => 'für den Kunden',
     's Mitgliedskontos' => 's Kundenkontos',
     'Mitgliedskonto' => 'Kundenkonto',
+    'Mitgliedskarte' => 'Kundenkarte',
     'chtest du das Mitglied' => 'chtest du den Kunden',
     'Das Mitglied' => 'Der Kunde',
     'das Mitglied' => 'der Kunde',
+    'des Mitglieds' => 'des Kundens',
     's Mitglied' => 'r Kunde',
     'Mitglieder' => 'Kunden',
     'Mitglieds' => 'Kunden',
     'Mitglied' => 'Kunde',
+
+    'DO_NOT_REPLACE_A' => 'Mitgliedsbeitrag',
+    'DO_NOT_REPLACE_B' => 'Mitgliedschaft',
+
 ];

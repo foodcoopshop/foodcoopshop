@@ -81,7 +81,18 @@ class CustomersTable extends AppTable
     public function validationEdit(Validator $validator)
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
-        $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
+        $validator
+        ->add('lastname', 'custom', [
+            'rule'=>  function ($value, $context) {
+                if ((isset($context['data']['is_company']) && $context['data']['is_company'])
+                    || strlen($value) >= 2) {
+                    return true;
+                }
+                return false;
+            },
+            'message' => __('Please_enter_your_last_name.'),
+        ]);
+        $validator->inList('shopping_price', array_keys(Configure::read('app.htmlHelper')->getShoppingPricesForDropdown()), __('The_shopping_price_is_not_valid.'));
         return $validator;
     }
 
@@ -209,6 +220,129 @@ class CustomersTable extends AppTable
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
             (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless()),
         ]);
+    }
+
+    public function getCustomerName($tableName = 'Customers')
+    {
+        $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
+        if (Configure::read('app.customerMainNamePart') == 'lastname') {
+            $concat = $tableName . '.lastname, " ", ' . $tableName . '.firstname';
+        }
+        $sql = 'IF(' . $tableName . '.is_company,' . $tableName . '.firstname,CONCAT('.$concat.'))';
+        return $sql;
+    }
+
+    public function addCustomersNameForOrderSelect($query)
+    {
+        $sql = $this->getCustomerName();
+        return $query->select(['CustomerNameForOrder' => $sql]);
+    }
+
+    public function getCustomerOrderClause()
+    {
+        $result = [
+            'CustomerNameForOrder' => 'ASC',
+        ];
+        return $result;
+    }
+
+    public function getModifiedProductPricesByShoppingPrice($appAuth, $productId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    {
+
+        $result = [
+            'price' => $price,
+            'price_incl_per_unit' => $priceInclPerUnit,
+            'deposit' => $deposit,
+        ];
+
+        if ($appAuth->user('shopping_price') == 'PP') {
+            $this->Product = FactoryLocator::get('Table')->get('Products');
+            $purchasePrices = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId,
+                ],
+                'contain' => [
+                    'PurchasePriceProducts.Taxes',
+                    'UnitProducts',
+                ]
+            ])->first();
+
+            if (!empty($purchasePrices->purchase_price_product)) {
+                $result['price'] = $purchasePrices->purchase_price_product->price;
+            }
+
+            if (!empty($purchasePrices->unit_product) && !is_null($purchasePrices->unit_product->purchase_price_incl_per_unit)) {
+                $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
+                $priceInclPerUnitNet = $this->Product->getNetPrice($purchasePrices->unit_product->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
+            }
+
+        }
+
+        if ($appAuth->user('shopping_price') == 'ZP') {
+            $result['price'] = 0;
+            $result['price_incl_per_unit'] = 0;
+            $result['deposit'] = 0;
+        }
+
+        return $result;
+
+    }
+
+    public function getModifiedAttributePricesByShoppingPrice($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    {
+
+        $result = [
+            'price' => $price,
+            'price_incl_per_unit' => $priceInclPerUnit,
+            'deposit' => $deposit,
+        ];
+
+        if ($appAuth->user('shopping_price') == 'PP') {
+
+            $this->Product = FactoryLocator::get('Table')->get('Products');
+            $purchasePrices = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId,
+                ],
+                'contain' => [
+                    'PurchasePriceProducts.Taxes',
+                    'ProductAttributes.PurchasePriceProductAttributes',
+                    'ProductAttributes.UnitProductAttributes',
+                ]
+            ])->first();
+
+            $foundPurchasePriceProductAttribute = null;
+            foreach ($purchasePrices->product_attributes as $purchasePriceProductAttribute) {
+                if ($purchasePriceProductAttribute->id_product_attribute == $productAttributeId) {
+                    $foundPurchasePriceProductAttribute = $purchasePriceProductAttribute;
+                    continue;
+                }
+            }
+
+            if (!empty($foundPurchasePriceProductAttribute)) {
+                if (!empty($foundPurchasePriceProductAttribute->purchase_price_product_attribute)) {
+                    $result['price'] = $foundPurchasePriceProductAttribute->purchase_price_product_attribute->price;
+                }
+                if (!empty($foundPurchasePriceProductAttribute->unit_product_attribute) && !is_null($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit)) {
+                    $purchasePriceTaxRate = !empty($purchasePrices->purchase_price_product->tax) ? $purchasePrices->purchase_price_product->tax->rate : 0;
+                    $priceInclPerUnitNet = $this->Product->getNetPrice($foundPurchasePriceProductAttribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate);
+                    $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
+                    $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
+                }
+            }
+
+        }
+
+        if ($appAuth->user('shopping_price') == 'ZP') {
+            $result['price'] = 0;
+            $result['price_incl_per_unit'] = 0;
+            $result['deposit'] = 0;
+        }
+
+        return $result;
+
     }
 
     public function getPersonalTransactionCode($customerId): string
@@ -464,9 +598,16 @@ class CustomersTable extends AppTable
 
         $customers = $this->find('all', [
             'conditions' => $conditions,
-            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
+            'order' => $this->getCustomerOrderClause(),
             'contain' => $contain
-        ])->toArray();
+        ]);
+        $customers = $this->addCustomersNameForOrderSelect($customers);
+        $customers->select($this);
+        if (! $includeManufacturers) {
+            $customers->select($this->AddressCustomers);
+        }
+
+        $customers = $customers->toArray();
 
         if (! $includeManufacturers) {
             $validOrderDetails = $this->getAssociation('ValidOrderDetails');

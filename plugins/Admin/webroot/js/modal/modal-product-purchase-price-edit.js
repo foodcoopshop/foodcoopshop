@@ -40,7 +40,7 @@ foodcoopshop.ModalProductPurchasePriceEdit = {
     getHtml : function() {
         var html = '<label for="dialogPurchasePricePrice"><b></b></label><br />';
         html += '<input type="number" step="0.01" name="dialogPurchasePricePrice" id="dialogPurchasePricePrice" value="" />';
-        html += '<b class="currency-symbol">' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.inclVAT + ')';
+        html += '<b class="currency-symbol">' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.gross + ')';
         html += '<input type="hidden" name="dialogPurchasePriceProductId" id="dialogPurchasePriceProductId" value="" />';
         return html;
     },

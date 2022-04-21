@@ -53,12 +53,17 @@ class BackupDatabaseShell extends AppShell
         $configFileContent = '[mysqldump]
 host=%host%
 user=%user%
-password="%password%"';
+password="%password%"
+';
         $configFileContent = str_replace(['%host%', '%user%', '%password%'], [$dbConfig['host'], $dbConfig['username'], $dbConfig['password']], $configFileContent);
+        if (isset($dbConfig['port'])) {
+            $configFileContent .= 'port=' . $dbConfig['port'];
+        }
+
         $configFileObject->write($configFileContent);
 
         $cmdString = Configure::read('app.mysqlDumpCommand');
-        $cmdString .= " --defaults-file=" . $configFile . " --allow-keywords --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
+        $cmdString .= " --defaults-file=" . $configFile . " --allow-keywords --add-drop-table --complete-insert --no-tablespaces --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
         exec($cmdString);
 
         $configFileObject->delete();

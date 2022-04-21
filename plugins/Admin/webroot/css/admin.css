@@ -167,7 +167,9 @@ span.product-quantity-for-dialog,
 span.delivery-rhythm-for-dialog,
 span.quantity-in-units,
 span.customer-name-for-dialog,
-i.always-available {
+i.always-available,
+span.purchase-price,
+span.product-name {
     line-height: 21px;
     margin-left: 3px;
 }
@@ -261,8 +263,10 @@ body.products.index .bootstrap-select {
 }
 body.products.index td.status {
     text-align: center;
-    padding-left: 10px;
-    width: 42px;
+    width: 49px;
+}
+body.products.index td.status .fa-exclamation {
+    margin-left: 3px;
 }
 #filter-loader {
   position: fixed;
@@ -284,6 +288,7 @@ th.center {
     text-align: center;
 }
 
+td span.barcode-for-dialog,
 td span.description-short-for-dialog,
 td span.description-for-dialog,
 td span.storage-location-for-dialog {
@@ -314,6 +319,20 @@ input.datepicker {
     font-family: 'Open Sans';
 }
 
+.tooltipster-content ul {
+    margin-bottom: 0;
+}
+.tooltipster-content li.negative {
+    color: red;
+}
+.tooltipster-content .credit-balance-wrapper {
+    margin-top: 10px;
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-bottom: 0;
+}
+.tooltipster-content li,
 #content ul.help-text-wrapper li {
     margin-left: 20px;
     margin-top: 0px;
@@ -341,7 +360,8 @@ body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
 }
-body.order_details.index .product-feedback-button {
+body.order_details.index .product-feedback-button,
+body.order_details.index .order-detail-product-name-edit-button {
     margin-right: 3px;
 }
 body.order_details.index i.product-feedback-button {
@@ -450,7 +470,8 @@ body.payments.product #add-payment-button-wrapper {
 body.order_details #add-instant-order-button-wrapper.bottom {
     float: left;
 }
-body.order_details #add-instant-order-button-wrapper div.select {
+body.order_details #add-instant-order-button-wrapper div.select,
+body.order_details #add-self-service-order-button-wrapper div.select {
     display: none;
 }
 body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,
@@ -536,6 +557,9 @@ body.order_details.index .table-cell-wrapper.price {
 }
 .table-cell-wrapper.group span {
     margin-left: 3px;
+}
+.cell-surcharge {
+    text-align: center;
 }
 table.list td.amount > .has-separator:after {
     content: ' / ';
@@ -631,6 +655,7 @@ h2 {
 h2 span {
     font-size: 12px;
     color: #333;
+    font-weight: normal;
 }
 .fcs-form h2:not(:nth-of-type(1)) {
     margin-top: 25px;
@@ -668,7 +693,7 @@ form.fcs-form input[type="checkbox"] {
     left: 200px;
 }
 body.customers .delete-customer-button {
-    float: right;
+    float: left;
     clear: both;
     margin-bottom: 15px;
     margin-top: 15px;
@@ -893,7 +918,8 @@ body.payments.edit form {
     width: 100%;
     float: left;
 }
-body.payments.edit form p {
+body.payments.edit form p,
+body.order_details.edit_purchase_price form p {
     float: left;
     clear: both;
     margin-bottom: 0;
@@ -928,31 +954,31 @@ body.deposits.overview_diagram table th,
 body.deposits.overview_diagram table td {
     text-align: right;
 }
-body.invoices.index table.invoices-table {
+body.invoices table.invoices-table {
     width: 1008px;
     margin-bottom: 15px;
 }
-body.invoices.index table.invoices-table th:nth-child(1) {
+body.invoices table.invoices-table th:nth-child(1) {
     width: 98px;
 }
-body.invoices.index table.invoices-table th:nth-child(8) {
-    width: 105px;
+body.invoices table.invoices-table th:nth-child(8) {
+    width: 110px;
 }
-body.invoices.index table.invoices-table th {
+body.invoices table.invoices-table th {
     word-break: normal;
 }
-body.invoices.index table.tax-sum-table {
+body.invoices table.tax-sum-table {
     width: 600px;
 }
-body.invoices.index table.tax-sum-table th,
-body.invoices.index table.tax-sum-table td {
+body.invoices table.tax-sum-table th,
+body.invoices table.tax-sum-table td {
     text-align: right;
     width: 150px;
 }
-body.invoices.index h4 {
+body.invoices h4 {
     margin-top: 20px;
 }
-body.invoices.index tr.data.cancelled {
+body.invoices tr.data.cancelled {
     text-decoration: line-through;
 }
 body.action_logs.index tr.data div.changed img {

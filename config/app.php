@@ -97,8 +97,16 @@ return [
     'Cache' => [
         'default' => [
             'className' => FileEngine::class,
+            'duration' => '+24 hours',
             'path' => CACHE,
             'url' => env('CACHE_DEFAULT_URL', null),
+        ],
+
+        'short' => [
+            'className' => FileEngine::class,
+            'duration' => '+2 seconds',
+            'path' => CACHE,
+            'prefix' => 'myapp_cake_short_'
         ],
 
         /*
@@ -144,6 +152,7 @@ return [
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEROUTES_URL', null),
         ],
+
     ],
 
     /*

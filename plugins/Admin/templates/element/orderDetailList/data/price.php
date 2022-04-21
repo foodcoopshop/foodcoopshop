@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl == 0 ? ' not-available' : '') . '">';
+echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl <= 0 ? ' not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if ($groupBy == '') {
         if ($editRecordAllowed) {

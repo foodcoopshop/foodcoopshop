@@ -36,11 +36,27 @@ class PickupDaysTable extends AppTable
         return $validator;
     }
 
+    public function changeState($customerId, $pickupDay, $state)
+    {
+        $result = $this->insertOrUpdate(
+            [
+                'customer_id' => $customerId,
+                'pickup_day' => $pickupDay,
+            ],
+            [
+                'products_picked_up' => $state,
+            ],
+        );
+        return $result;
+    }
+
     public function getUniquePickupDays($cartProducts)
     {
         $uniquePickupDays = [];
         foreach($cartProducts as $cartProduct) {
-            $uniquePickupDays[] = $cartProduct->pickup_day;
+            if ($cartProduct->pickup_day != 'delivery-rhythm-triggered-delivery-break') {
+                $uniquePickupDays[] = $cartProduct->pickup_day;
+            }
         }
         return array_unique($uniquePickupDays);
     }

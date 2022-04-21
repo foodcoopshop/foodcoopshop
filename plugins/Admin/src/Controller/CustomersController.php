@@ -126,18 +126,17 @@ class CustomersController extends AdminAppController
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
             'fields' => [
-                'bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
+                'system_bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
             ],
             'conditions' => [
-                'Customers.id_customer IN' => $customerIds
+                'Customers.id_customer IN' => $customerIds,
             ],
-            'order' => [
-                'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
-            ],
+            'order' => $this->Customer->getCustomerOrderClause(),
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
+        $customers = $this->Customer->addCustomersNameForOrderSelect($customers);
         $customers->select($this->Customer);
         $customers->select($this->Customer->AddressCustomers);
         return $customers;
@@ -247,7 +246,7 @@ class CustomersController extends AdminAppController
                 $actionLogId = $this->AppAuth->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = __d('admin', 'The_member_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getUsername() . '</b>']);
+                $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->AppAuth->getUsername() . '</b>']);
                 $actionLogType = 'customer_password_changed';
                 $actionLogId = $this->AppAuth->getUserId();
                 $actionLogModel = 'customers';
@@ -308,17 +307,19 @@ class CustomersController extends AdminAppController
                 }
             }
 
-            $notApprovedPaymentsCount = $this->Payment->find('all', [
-                'conditions' => [
-                    'id_customer' => $customerId,
-                    'approval < ' => APP_ON,
-                    'status' => APP_ON,
-                    'type' => 'product',
-                    'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
-                ]
-            ])->count();
-            if ($notApprovedPaymentsCount > 0) {
-                $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
+            if (Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers')) {
+                $notApprovedPaymentsCount = $this->Payment->find('all', [
+                    'conditions' => [
+                        'id_customer' => $customerId,
+                        'approval < ' => APP_ON,
+                        'status' => APP_ON,
+                        'type' => 'product',
+                        'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
+                    ]
+                ])->count();
+                if ($notApprovedPaymentsCount > 0) {
+                    $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
+                }
             }
 
             $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
@@ -351,7 +352,7 @@ class CustomersController extends AdminAppController
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
         $this->ActionLog->removeCustomerEmailFromAllActionLogs($customer->email);
 
-        $this->deleteUploadedImage($customerId, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
+        $this->deleteUploadedImage($customerId, Configure::read('app.htmlHelper')->getCustomerThumbsPath());
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
@@ -536,6 +537,7 @@ class CustomersController extends AdminAppController
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
+                'newsletterCustomer' => $customer,
                 'newPassword' => $newPassword,
             ]);
 
@@ -679,9 +681,18 @@ class CustomersController extends AdminAppController
 
         $conditions = [];
         if ($active != 'all') {
-            $conditions = [
-                'Customers.active' => $active
-            ];
+            $conditions['Customers.active'] = $active;
+        }
+
+        if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+            $newsletter = h($this->getRequest()->getQuery('newsletter'));
+            if (!in_array('newsletter', array_keys($this->getRequest()->getQueryParams()))) {
+                $newsletter = '';
+            }
+            $this->set('newsletter', $newsletter);
+            if ($newsletter != '') {
+                $conditions['Customers.newsletter_enabled'] = $newsletter;
+            }
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
@@ -694,16 +705,25 @@ class CustomersController extends AdminAppController
             'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ]
+            ],
         ]);
+        $query = $this->Customer->addCustomersNameForOrderSelect($query);
+        $query->select($this->Customer);
+        $query->select($this->Customer->AddressCustomers);
 
         $customers = $this->paginate($query, [
             'sortableFields' => [
-                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder', 'Customers.date_add', 'Customers.timebased_currency_enabled',
+                'CustomerNameForOrder',
+                'Customers.id_default_group',
+                'Customers.id_customer',
+                'Customers.email',
+                'Customers.active',
+                'Customers.email_order_reminder_enabled',
+                'Customers.date_add',
+                'Customers.timebased_currency_enabled',
+                'Customers.newsletter_enabled',
             ],
-            'order' => [
-                'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
-            ]
+            'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();
 
         $i = 0;
@@ -722,13 +742,17 @@ class CustomersController extends AdminAppController
                 }
             }
             $customer->order_detail_count = $this->OrderDetail->getCountByCustomerId($customer->id_customer);
+            $customer->different_pickup_day_count = $this->OrderDetail->getDifferentPickupDayCountByCustomerId($customer->id_customer);
             $customer->last_order_date = $this->OrderDetail->getLastOrderDate($customer->id_customer);
             $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
             $i ++;
         }
 
         if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) && $this->getRequest()->getQuery('sort') == 'Customers.member_fee') {
-            $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'));
+            $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'), [
+                'type' => 'locale',
+                'ignoreCase' => true,
+            ]);
         }
 
         $this->set('customers', $customers);

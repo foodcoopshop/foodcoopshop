@@ -45,41 +45,44 @@
     margin-right: auto;
     margin-left: auto;
 }
-#instant-order-add .modal-dialog {
+#order-for-different-customer-add .modal-dialog {
     max-width: 95vw;
     height: 90vh;
 }
-#instant-order-add .modal-content {
+#order-for-different-customer-add .modal-content {
     height: 100%;
 }
-#instant-order-add .modal-body {
+#order-for-different-customer-add .modal-body {
     padding: 0;
 }
-#instant-order-add .modal-footer,
+#order-for-different-customer-add .modal-footer,
 #modal-image .modal-footer {
     display: none;
 }
-#instant-order-add .bootstrap-select {
+#order-for-different-customer-add .bootstrap-select {
     width: 300px ! important;
-    margin-top: -5px;
 }
-#instant-order-add .modal-header .start {
-    line-height: 35px;
+#order-for-different-customer-add .modal-header .start span.title {
+    float: left;
+    line-height: 30px;
+    margin-right: 5px;
 }
-#instant-order-add .bootstrap-select div.filter-option-inner-inner i.fas {
+#order-for-different-customer-add .bootstrap-select div.filter-option-inner-inner i.fas {
     top: 10px;
 }
-#instant-order-add .message-container select#customersDropdown {
+#order-for-different-customer-add .message-container select#customersDropdown {
     width: 400px;
 }
-#instant-order-add .modal-header .close {
+#order-for-different-customer-add .modal-header .close {
     padding: 10px;
     padding-left: 0;
 }
-body.iframe_start_page {
+body.iframe_instant_order,
+body.iframe_self_service_order {
     margin: 0;
 }
-.iframe_start_page #content {
+.iframe_instant_order #content,
+.iframe_self_service_order #content {
     width: 100%;
     height: 1000px;
     text-align: center;
@@ -120,6 +123,21 @@ body.iframe_start_page {
     width: 100% ! important;
     float: none;
 }
+#modal-product-add .modal-dialog,
+#modal-product-name-edit .modal-dialog {
+    max-width: 900px;
+}
+.modal-dialog .block {
+    width: 49%;
+    float: left;
+}
+.modal-dialog .block-a {
+    margin-right: 2%;
+}
+.modal-dialog .block hr:last-of-type {
+    display: none;
+}
+
 #modal-product-add .textarea-wrapper,
 #modal-product-name-edit .textarea-wrapper {
     width: 100%;
@@ -181,7 +199,8 @@ body.iframe_start_page {
     max-height: calc(100vh - 154px);
 }
 #modal-product-add input[type="text"],
-#modal-product-name-edit input[type="text"] {
+#modal-product-name-edit input[type="text"],
+#order-detail-product-name-edit-form #dialogOrderDetailProductNameName {
     width: 100%;
     margin-bottom: 5px;
 }
@@ -243,13 +262,16 @@ body.iframe_start_page {
     float: right;
 }
 #product-categories-edit-form input[type="checkbox"],
-#order-detail-product-quantity-edit-form input[type="checkbox"] {
+#order-detail-product-quantity-edit-form input[type="checkbox"],
+#order-detail-pickup-day-edit input[type="checkbox"] {
     float: left;
 }
-#modal-product-quantity-edit input[type="number"] {
+#modal-product-quantity-edit input[type="number"],
+#modal-product-calculate-selling-price-with-surcharge input[type="number"] {
     width: 20%;
 }
-#modal-product-quantity-edit .field-wrapper label:not(.checkbox) {
+#modal-product-quantity-edit .field-wrapper label:not(.checkbox),
+#modal-product-calculate-selling-price-with-surcharge .field-wrapper label:not(.checkbox) {
     width: 75%;
 }
 #modal-product-price-edit .deactivated {

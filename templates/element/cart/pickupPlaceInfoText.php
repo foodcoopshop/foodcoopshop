@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if ($appAuth->isInstantOrderMode()) {
+if ($appAuth->isOrderForDifferentCustomerMode()) {
     return false;
 }
 

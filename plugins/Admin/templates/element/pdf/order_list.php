@@ -50,13 +50,21 @@ $headers = [
     __d('admin', 'Member')
 ];
 
+if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+    $widths[1] += $widths[2];
+    array_splice($widths, 2, 1);
+    array_splice($headers, 2, 1);
+}
 $pdf->renderDetailedOrderList($results, $widths, $headers, $groupType, false);
+
 $pdf->addLastSumRow(
     $headers,
+    $this->MyNumber->formatAsDecimal($sumAmount, 0),
     null,
     null,
-    $this->MyNumber->formatAsDecimal($sumPriceIncl)
+    (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? null : $this->MyNumber->formatAsDecimal($sumPriceIncl)),
 );
+
 $pdf->renderTable();
 
 $pdf->Ln(5);

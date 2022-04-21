@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-04 10:59+0200\n"
+"POT-Creation-Date: 2022-04-17 21:19+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -68,6 +68,9 @@ msgstr ""
 msgid "route_activate_new_password"
 msgstr ""
 
+msgid "route_news_list_old"
+msgstr ""
+
 msgid "route_news_list"
 msgstr ""
 
@@ -110,7 +113,7 @@ msgstr ""
 msgid "You_have_been_signed_out."
 msgstr ""
 
-msgid "News"
+msgid "Blog_archive"
 msgstr ""
 
 msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
@@ -167,16 +170,25 @@ msgstr ""
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr ""
 
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr ""
-
-msgid "The_attribute_does_not_exist."
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
 msgstr ""
 
 msgid "Please_delete_product_from_cart_to_place_order."
 msgstr ""
 
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr ""
+
+msgid "The_attribute_does_not_exist."
+msgstr ""
+
 msgid "The_product_{0}_is_not_activated_any_more."
+msgstr ""
+
+msgid "{0}_can_be_ordered_next_week."
 msgstr ""
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
@@ -221,7 +233,13 @@ msgstr ""
 msgid "Sign_out"
 msgstr ""
 
-msgid "Continue_shopping?"
+msgid "Continue_shopping"
+msgstr ""
+
+msgid "Print_receipt"
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
 msgstr ""
 
 msgid "Notification_about_instant_order_order"
@@ -296,7 +314,7 @@ msgstr ""
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
 msgstr ""
 
-msgid "Member_{0}_created_an_account."
+msgid "{0}_created_an_account."
 msgstr ""
 
 msgid "Welcome"
@@ -350,10 +368,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-msgid "Cancel_instant_order?"
+msgid "Cancel_order?"
 msgstr ""
 
-msgid "Really_cancel_instant_order?"
+msgid "Really_cancel_order?"
 msgstr ""
 
 msgid "January"
@@ -488,6 +506,27 @@ msgstr ""
 msgid "Accept_cookies"
 msgstr ""
 
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
+msgid "Company_name"
+msgstr ""
+
+msgid "Please_enter_the_contact_person"
+msgstr ""
+
+msgid "Please_enter_your_lastname"
+msgstr ""
+
 msgid "Empty_cart"
 msgstr ""
 
@@ -527,7 +566,7 @@ msgstr ""
 msgid "Show_all_products"
 msgstr ""
 
-msgid "Place_instant_order_for"
+msgid "Place_order_for"
 msgstr ""
 
 msgid "Close_all_orders?"
@@ -701,10 +740,13 @@ msgstr ""
 msgid "Really_deactivate_product_{0}?"
 msgstr ""
 
-msgid "Delete_attribute"
+msgid "Edit_attribute"
 msgstr ""
 
-msgid "Really_delete_attribute_{0}?"
+msgid "Delete_attribute_{0}?"
+msgstr ""
+
+msgid "Check_and_do_not_forget_to_click_save_button."
 msgstr ""
 
 msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
@@ -878,6 +920,33 @@ msgstr ""
 msgid "Cancel_invoice"
 msgstr ""
 
+msgid "The_order_was_placed_successfully."
+msgstr ""
+
+msgid "Errors_occurred_while_calculating_selling_price."
+msgstr ""
+
+msgid "Calculate_selling_price"
+msgstr ""
+
+msgid "Surcharge_in_percent_from_purchase_price_net"
+msgstr ""
+
+msgid "Calculate_selling_price_explanation_text."
+msgstr ""
+
+msgid "Change_product_name"
+msgstr ""
+
+msgid "Given_amount"
+msgstr ""
+
+msgid "back"
+msgstr ""
+
+msgid "Send_email_to_member"
+msgstr ""
+
 msgid "Were_the_products_picked_up?"
 msgstr ""
 
@@ -905,7 +974,7 @@ msgstr ""
 msgid "Price_per_unit"
 msgstr ""
 
-msgid "incl_vat"
+msgid "gross"
 msgstr ""
 
 msgid "Price_per_weight_(for_adaption_after_delivery)"
@@ -1046,6 +1115,9 @@ msgstr ""
 msgid "Storage_location"
 msgstr ""
 
+msgid "EAN_13_code"
+msgstr ""
+
 msgid "delete"
 msgstr ""
 
@@ -1145,6 +1217,27 @@ msgstr ""
 msgid "Your_shopping_bag_was_empty."
 msgstr ""
 
+msgid "net_per_piece_abbr"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "net"
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Tax_rates_overview_table"
+msgstr ""
+
+msgid "All_amounts_in_{0}."
+msgstr ""
+
+msgid "Delivery_note"
+msgstr ""
+
 msgid "Delivered_deposit"
 msgstr ""
 
@@ -1160,13 +1253,22 @@ msgstr ""
 msgid "Price_excl."
 msgstr ""
 
-msgid "VAT"
-msgstr ""
-
 msgid "Price_incl."
 msgstr ""
 
 msgid "Total_sum"
+msgstr ""
+
+msgid "Price_net"
+msgstr ""
+
+msgid "Total_sum_net"
+msgstr ""
+
+msgid "Value_added_tax"
+msgstr ""
+
+msgid "Total_sum_gross"
 msgstr ""
 
 msgid "Generated_on_{0}"
@@ -1185,12 +1287,6 @@ msgid "Deleted_Member"
 msgstr ""
 
 msgid "Price_per_weight"
-msgstr ""
-
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "Tax_rate"
 msgstr ""
 
 msgid "Sum_price_excl."
@@ -1215,6 +1311,9 @@ msgid "Action_Log_Product_added"
 msgstr ""
 
 msgid "Action_Log_Product_attribute_added"
+msgstr ""
+
+msgid "Action_Log_Product_attribute_changed"
 msgstr ""
 
 msgid "Action_Log_Product_image_uploaded"
@@ -1466,6 +1565,9 @@ msgstr ""
 msgid "Action_Log_Cronjob_invoices_sent"
 msgstr ""
 
+msgid "Action_Log_Cronjob_delivery_notes_sent"
+msgstr ""
+
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr ""
 
@@ -1499,7 +1601,7 @@ msgstr ""
 msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
 msgstr ""
 
-msgid "Please_enter_your_street."
+msgid "Please_enter_your_street_and_number."
 msgstr ""
 
 msgid "Please_enter_your_city."
@@ -1544,6 +1646,9 @@ msgstr ""
 msgid "An_attribute_with_this_name_already_exists."
 msgstr ""
 
+msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
+msgstr ""
+
 msgid "Please_enter_a_title."
 msgstr ""
 
@@ -1575,6 +1680,9 @@ msgid "Please_accept_the_general_terms_and_conditions."
 msgstr ""
 
 msgid "Please_promise_to_pick_up_the_ordered_products."
+msgstr ""
+
+msgid "Please_select_your_payment_type."
 msgstr ""
 
 msgid "Please_select_a_pickup_day."
@@ -1625,6 +1733,9 @@ msgstr ""
 msgid "Please_enter_your_last_name."
 msgstr ""
 
+msgid "The_shopping_price_is_not_valid."
+msgstr ""
+
 msgid "Please_enter_your_old_password."
 msgstr ""
 
@@ -1664,6 +1775,9 @@ msgstr ""
 msgid "Members:_inactive"
 msgstr ""
 
+msgid "deactivated"
+msgstr ""
+
 msgid "Please_enter_between_{0}_and_{1}_characters."
 msgstr ""
 
@@ -1682,10 +1796,10 @@ msgstr ""
 msgid "Please_enter_your_feedback."
 msgstr ""
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
+msgid "Please_enter_a_correct_number."
 msgstr ""
 
-msgid "Please_enter_a_correct_number."
+msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
@@ -1799,10 +1913,13 @@ msgstr ""
 msgid "The_approximate_weight_needs_to_be_a_number."
 msgstr ""
 
-msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
+msgid "The_approximate_weight_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "member"
+msgstr ""
+
+msgid "Delivery_note_for_{0}"
 msgstr ""
 
 msgid "Invoice_number_abbreviataion_{0}_{1}"
@@ -1821,9 +1938,6 @@ msgid "Order_lists_for_the_day"
 msgstr ""
 
 msgid "Runtime"
-msgstr ""
-
-msgid "seconds"
 msgstr ""
 
 msgid "Database_backup_successful"
@@ -1848,6 +1962,9 @@ msgid "tomorrow"
 msgstr ""
 
 msgid "Pickup_reminder_for"
+msgstr ""
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
 msgstr ""
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
@@ -1883,10 +2000,22 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
+msgid "News"
+msgstr ""
+
 msgid "Activities"
 msgstr ""
 
 msgid "Credit"
+msgstr ""
+
+msgid "Shopping_with_selling_price"
+msgstr ""
+
+msgid "Shopping_with_purchase_price"
+msgstr ""
+
+msgid "Shopping_with_zero_price"
 msgstr ""
 
 msgid "weekly"
@@ -1952,6 +2081,9 @@ msgstr ""
 msgid "Footer_(bottom)"
 msgstr ""
 
+msgid "Self_service_customer"
+msgstr ""
+
 msgid "Admin"
 msgstr ""
 
@@ -1965,6 +2097,9 @@ msgid "Deposit_overview"
 msgstr ""
 
 msgid "Journal"
+msgstr ""
+
+msgid "Profit"
 msgstr ""
 
 msgid "Payment_type_credit_upload"
@@ -2003,6 +2138,12 @@ msgstr ""
 msgid "active_state_all"
 msgstr ""
 
+msgid "{0,plural,=1{1_minute} other{#_minutes}}"
+msgstr ""
+
+msgid "{0,plural,=1{1_second} other{#_seconds}}"
+msgstr ""
+
 msgid "midnight"
 msgstr ""
 
@@ -2030,9 +2171,6 @@ msgstr ""
 msgid "Modified_on"
 msgstr ""
 
-msgid "by"
-msgstr ""
-
 msgid "Edit"
 msgstr ""
 
@@ -2048,10 +2186,13 @@ msgstr ""
 msgid "Your_cart_is_empty"
 msgstr ""
 
-msgid "Product_sum_including_vat"
+msgid "Value_of_goods"
 msgstr ""
 
 msgid "Deposit_sum"
+msgstr ""
+
+msgid "Total"
 msgstr ""
 
 msgid "From_which_in"
@@ -2099,13 +2240,10 @@ msgstr ""
 msgid "Create_account"
 msgstr ""
 
-msgid "Firstname"
+msgid "Register_as_company?"
 msgstr ""
 
-msgid "Lastname"
-msgstr ""
-
-msgid "Street"
+msgid "Street_and_number"
 msgstr ""
 
 msgid "Additional_address_information"
@@ -2118,6 +2256,9 @@ msgid "City"
 msgstr ""
 
 msgid "Want_to_receive_reminder_emails?"
+msgstr ""
+
+msgid "Want_to_receive_the_newsletter?"
 msgstr ""
 
 msgid "terms_of_use"
@@ -2135,6 +2276,9 @@ msgstr ""
 msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
 msgstr ""
 
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
+msgstr ""
+
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr ""
 
@@ -2144,7 +2288,25 @@ msgstr ""
 msgid "Imprint"
 msgstr ""
 
+msgid "Show_manufacturer_profile"
+msgstr ""
+
+msgid "Show_products"
+msgstr ""
+
+msgid "Stock_products"
+msgstr ""
+
+msgid "Self_service"
+msgstr ""
+
 msgid "Search:_name_id_or_barcode"
+msgstr ""
+
+msgid "Please_search_or_scan_a_product_or_chose_a_category."
+msgstr ""
+
+msgid "No_products_found."
 msgstr ""
 
 msgid "Shopping_bag"
@@ -2159,6 +2321,9 @@ msgstr ""
 msgid "Finish_pickup"
 msgstr ""
 
+msgid "Continue_shopping?"
+msgstr ""
+
 msgid "terms_and_conditions"
 msgstr ""
 
@@ -2168,19 +2333,19 @@ msgstr ""
 msgid "I_accept_the_{0}."
 msgstr ""
 
-msgid "Load_past_orders"
-msgstr ""
-
 msgid "This_order_will_be_placed_for_{0}."
 msgstr ""
 
 msgid "Only_stock_products_are_shown."
 msgstr ""
 
-msgid "Your_credit_balance"
+msgid "activated"
 msgstr ""
 
-msgid "Value_added_tax"
+msgid "Load_past_orders"
+msgstr ""
+
+msgid "Your_credit_balance"
 msgstr ""
 
 msgid "Show_cart_button"
@@ -2213,6 +2378,9 @@ msgstr ""
 msgid "Write_message_to_pick_up_team_for_{0}?"
 msgstr ""
 
+msgid "Write_message_to_{0}_for_{1}?"
+msgstr ""
+
 msgid "Write_message_to_your_order."
 msgstr ""
 
@@ -2231,10 +2399,46 @@ msgstr ""
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr ""
 
-msgid "Comment"
+msgid "available"
 msgstr ""
 
-msgid "Total"
+msgid "New"
+msgstr ""
+
+msgid "More_infos_to_product_{0}"
+msgstr ""
+
+msgid "Instant_order"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr ""
+
+msgid "Currently_not_on_stock"
+msgstr ""
+
+msgid "from_which_{0}_%"
+msgstr ""
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+msgid "Move_in_cart"
+msgstr ""
+
+msgid "Weight_in"
+msgstr ""
+
+msgid "Comment"
 msgstr ""
 
 msgid "You_can_sign_in_here_for_ordering"
@@ -2270,9 +2474,6 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-msgid "Bank_account_credit_balance"
-msgstr ""
-
 msgid "Attention_delivery_break!"
 msgstr ""
 
@@ -2291,49 +2492,10 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
+msgid "chose_category..."
+msgstr ""
+
 msgid "Reset_search"
-msgstr ""
-
-msgid "available"
-msgstr ""
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr ""
-
-msgid "Self_service"
-msgstr ""
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr ""
-
-msgid "Currently_not_on_stock"
-msgstr ""
-
-msgid "New"
-msgstr ""
-
-msgid "More_infos_to_product_{0}"
-msgstr ""
-
-msgid "Instant_order"
-msgstr ""
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr ""
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr ""
-
-msgid "from_which_{0}_%"
-msgstr ""
-
-msgid "Move_in_shopping_bag"
-msgstr ""
-
-msgid "Move_in_cart"
-msgstr ""
-
-msgid "Weight_in"
 msgstr ""
 
 msgid "Add_deposit"
@@ -2342,7 +2504,16 @@ msgstr ""
 msgid "Add_deposit_amount_for_{0}"
 msgstr ""
 
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr ""
+
 msgid "Amount_in_{0}"
+msgstr ""
+
+msgid "Cash"
+msgstr ""
+
+msgid "Payment_type"
 msgstr ""
 
 msgid "Categories"
@@ -2448,6 +2619,9 @@ msgid "This_email_was_created_automatically."
 msgstr ""
 
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr ""
+
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
 msgstr ""
 
 msgid "homepage"

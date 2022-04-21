@@ -18,13 +18,15 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".Helper.addPrevAndNextManufacturerLinks();".
-    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.product-wrapper .toggle-content.description img');".
-    Configure::read('app.jsNamespace').".ModalImage.init('.product-wrapper a.open-with-modal, .manufacturer-infos a.open-with-modal');".
+    Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price');".
+    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal, .manufacturer-infos a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
-    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
@@ -41,12 +43,12 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
 <div class="manufacturer-infos">
     <?php
         $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
-        $largeImageExists = preg_match('/de-default/', $srcLargeImage);
-    if (!$largeImageExists) {
-        echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
-        echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
-        echo '</a>';
-    }
+        $largeImageExists = $this->Html->largeImageExists($srcLargeImage);
+        if ($largeImageExists) {
+            echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
+            echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
+            echo '</a>';
+        }
 
         echo $manufacturer->description;
 
@@ -82,7 +84,7 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
     ]);
 }
 
-if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByUrl()) {
+if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl()) {
     $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
     if ($manufacturerNoDeliveryDaysString != '') {
         echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
@@ -93,12 +95,18 @@ echo $this->element('stockProductInListInfo');
 
 if (!empty($manufacturer['Products'])) {
     foreach ($manufacturer['Products'] as $product) {
-        echo $this->element('product/product', [
+        echo $this->element('catalog/product', [
             'product' => $product,
             'showProductDetailLink' => true,
             'showManufacturerDetailLink' => true,
             'showIsNewBadgeAsLink' => true
-        ]);
+        ],
+        [
+            'cache' => [
+                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+            ],
+        ]
+        );
     }
 }
 

@@ -7,6 +7,7 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
+use hisorange\BrowserDetect\Parser as Browser;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -109,15 +110,11 @@ class AppController extends Controller
 
         $this->validateAuthentication();
 
-        if (!$this->getRequest()->is('json') && !$this->AppAuth->isInstantOrderMode()) {
+        if (!$this->getRequest()->is('json') && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
 
-        $isMobile = false;
-        if ($this->getRequest()->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
-            $isMobile = true;
-        }
-        $this->set('isMobile', $isMobile);
+        $this->set('isMobile', Browser::isMobile() && !Browser::isTablet());
 
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {

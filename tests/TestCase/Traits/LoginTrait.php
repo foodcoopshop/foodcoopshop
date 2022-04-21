@@ -20,6 +20,8 @@ use Cake\Core\Configure;
 trait LoginTrait
 {
 
+    public $isSelfServiceModeByUrl = false;
+
     public function login($userId)
     {
 
@@ -38,6 +40,12 @@ trait LoginTrait
                 'User' => $loggedUser
             ]
         ];
+    }
+
+    public function loginAsSelfServiceCustomer()
+    {
+        $sessionData =  $this->login(Configure::read('test.selfServiceCustomerId'));
+        $this->session($sessionData);
     }
 
     public function loginAsSuperadmin()
@@ -75,10 +83,10 @@ trait LoginTrait
         $this->get($this->Slug->getLogout());
     }
 
-    public function loginAsSuperadminAddInstantOrderCustomerToSession($session)
+    public function loginAsSuperadminAddOrderCustomerToSession($session)
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
-        $sessionData['Auth']['instantOrderCustomer'] = $session['Auth']['instantOrderCustomer'];
+        $sessionData['Auth']['orderCustomer'] = $session['Auth']['orderCustomer'];
         $this->session($sessionData);
     }
 
@@ -89,6 +97,24 @@ trait LoginTrait
             return [];
         }
         return $loggedUser['id_customer'];
+    }
+
+    /**
+     * used in CartsControllerTest::checkCartStatus
+     * mocks AppAuthComponent
+     */
+    public function isOrderForDifferentCustomerMode()
+    {
+        return $this->getSession()->read('Auth.orderCustomer');
+    }
+
+    /**
+     * used in CartsControllerTest::checkCartStatus
+     * mocks AppAuthComponent
+     */
+    public function isSelfServiceModeByUrl()
+    {
+        return $this->isSelfServiceModeByUrl;
     }
 
     public function user()

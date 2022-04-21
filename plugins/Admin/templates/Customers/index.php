@@ -41,7 +41,16 @@ use Cake\Core\Configure;
                         'default' => $year != '' ? $year : ''
                     ]);
                 }
-                ?>
+                if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+                    echo $this->Form->control('newsletter', [
+                        'type' => 'select',
+                        'label' => '',
+                        'empty' => __d('admin', 'Newsletter'),
+                        'options' => $this->Html->getYesNoArray(),
+                        'default' => $newsletter,
+                    ]);
+                }
+            ?>
             <div class="right">
                 <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
@@ -56,7 +65,7 @@ echo $this->element('rowMarker/rowMarkerAll', [
     'enabled' => true
 ]);
 echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
+echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
@@ -68,12 +77,18 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder',  __d('admin', 'Reminder')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Reminder')) . '</th>';
+}
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
+}
+if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
 }
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
@@ -81,6 +96,7 @@ echo '</tr>';
 $i = 0;
 $sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
+$sumNewsletter = 0;
 $sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
     $i ++;
@@ -110,9 +126,9 @@ foreach ($customers as $customer) {
                 ]
             );
         }
-        if ($customer->order_detail_count <= 25) {
-            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
-                $customer->order_detail_count
+        if ($customer->different_pickup_day_count <= 2) {
+            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_has_{0}_orders.', [
+                $customer->different_pickup_day_count,
             ]).'"></i> ' . $customerName;
         }
 
@@ -189,7 +205,7 @@ foreach ($customers as $customer) {
         );
     }
 
-    if ($customer->active == '' && is_null($customer->activate_email_code)) {
+    if ($customer->active == 0 && is_null($customer->activate_email_code)) {
         echo $this->Html->link(
             '<i class="fas fa-minus-circle not-ok"></i>',
             'javascript:void(0);',
@@ -263,9 +279,20 @@ foreach ($customers as $customer) {
 
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
-        echo '<td>';
-        echo $customer->email_order_reminder;
-        $sumEmailReminders += $customer->email_order_reminder;
+        echo '<td align="center">';
+        if ($customer->email_order_reminder_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumEmailReminders++;
+        }
+        echo '</td>';
+    }
+
+    if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+        echo '<td align="center">';
+        if ($customer->newsletter_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumNewsletter++;
+        }
         echo '</td>';
     }
 
@@ -282,6 +309,17 @@ foreach ($customers as $customer) {
     if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
         echo '<td style="text-align:right;">';
             echo $this->Number->formatAsCurrency($customer->member_fee);
+        echo '</td>';
+    }
+
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo '<td style="text-align:right;">';
+            if ($customer->shopping_price == 'PP') {
+                echo __d('admin', 'Purchase_price_abbreviation');
+            }
+            if ($customer->shopping_price == 'ZP') {
+                echo __d('admin', 'Zero_price_abbreviation');
+            }
         echo '</td>';
     }
 
@@ -312,11 +350,17 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<td><b>' . $sumEmailReminders . '</b></td>';
+    echo '<td align="center"><b>' . $sumEmailReminders . '</b></td>';
+}
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+    echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
 $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    $colspan = 4;
+    $colspan++;
+}
+if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+    $colspan++;
 }
 echo '<td colspan="'.$colspan.'"></td>';
 echo '</tr>';

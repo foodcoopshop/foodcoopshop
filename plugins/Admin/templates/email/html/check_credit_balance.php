@@ -52,6 +52,9 @@ use Cake\Core\Configure;
                     echo '<p><b>'.__d('admin', 'Bank_account_data').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
                 }
             ?>
+            <p>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+            </p>
         </td>
 
     </tr>

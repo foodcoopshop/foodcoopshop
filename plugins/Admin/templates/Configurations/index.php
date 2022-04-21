@@ -14,6 +14,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
@@ -63,7 +64,7 @@ $this->element('addScript', [
                 continue;
             }
 
-            if (in_array($configuration->name, ['FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 'FCS_SHOW_NEW_PRODUCTS_ON_HOME']) && !Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            if (in_array($configuration->name, ['FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS']) && !Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 continue;
             }
 
@@ -243,6 +244,16 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.emailOrderReminderEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
+
+        <?php
+        $ct = FactoryLocator::get('Table')->get('Configurations');
+        if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == $ct::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD) { ?>
+        <tr>
+            <td>app.bankNameForCreditSystem</td>
+            <td><?php echo Configure::read('app.bankNameForCreditSystem'); ?></td>
+        </tr>
+        <?php } ?>
+
         <tr>
             <td>app.paymentMethods</td>
             <td><?php echo join(', ', Configure::read('app.paymentMethods')); ?></td>
@@ -286,6 +297,16 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.isCustomerAllowedToViewOwnOrders</td>
+            <td><?php echo Configure::read('app.isCustomerAllowedToViewOwnOrders') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.isZeroTaxEnabled</td>
+            <td><?php echo Configure::read('app.isZeroTaxEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.showStatisticsForAdmins</td>
             <td><?php echo Configure::read('app.showStatisticsForAdmins') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
@@ -296,8 +317,18 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.sendEmailWhenOrderDetailQuantityOrPriceChanged</td>
-            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td>app.applyOrdersNotYetBilledCheckOnDeletingCustomers</td>
+            <td><?php echo Configure::read('app.applyOrdersNotYetBilledCheckOnDeletingCustomers') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.applyPaymentsOkCheckOnDeletingCustomers</td>
+            <td><?php echo Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.sendEmailWhenOrderDetailQuantityChanged</td>
+            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <tr>

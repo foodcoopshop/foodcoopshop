@@ -17,7 +17,7 @@ namespace App\Shell;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 class SendInvoicesToManufacturersShell extends AppShell
 {
@@ -108,7 +108,7 @@ class SendInvoicesToManufacturersShell extends AppShell
             $outString .= __('Generated_invoices') . ': 0';
         }
         $outString .= $actionLogDatas;
-        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new Time($this->cronjobRunDay));
+        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new FrozenTime($this->cronjobRunDay));
         $this->out($outString);
 
         // 6) trigger queue invoice generation
@@ -161,7 +161,7 @@ class SendInvoicesToManufacturersShell extends AppShell
             $manufacturer->invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
                 $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $manufacturer->invoiceNumber
             );
-            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(Configure::read('app.folder_invoices'), '', $manufacturer->invoicePdfFile);
+            $invoiceLink = Configure::read('app.slugHelper')->getInvoiceDownloadRoute(str_replace(Configure::read('app.folder_invoices'), '', $manufacturer->invoicePdfFile));
 
             if (!empty($manufacturer->current_order_count)) {
 

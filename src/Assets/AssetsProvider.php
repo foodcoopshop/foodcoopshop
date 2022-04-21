@@ -1,6 +1,7 @@
 <?php
 namespace App\Assets;
 
+use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
 /**
@@ -39,7 +40,16 @@ class AssetsProvider
 
     public static function getJsFilesBase()
     {
-        return [
+
+        $result = [];
+
+        // if file does not exist, run `bin/cake SavedLocalizedJsAsStaticFile`
+        // and then run `bin/cake asset_compress build`
+        if (!Configure::read('debug')) {
+            $result[] = 'localized-javascript-static.js';
+        }
+
+        $result = array_merge($result, [
             'jquery/dist/jquery.js',
             '@popperjs/core/dist/umd/popper.js',
             'bootstrap/dist/js/bootstrap.min.js',
@@ -51,13 +61,16 @@ class AssetsProvider
             'jquery.scrollto/jquery.scrollTo.js',
             'modal/modal.js',
             'modal/modal-logout.js',
-            'modal/modal-instant-order-cancel.js',
+            'modal/modal-order-for-different-customer-cancel.js',
             'modal/modal-payment-add.js',
             'modal/modal-image.js',
             'modal/modal-text.js',
             'modal/modal-load-last-order-details.js',
             'mobile.js',
-        ];
+        ]);
+
+        return $result;
+
     }
 
 }

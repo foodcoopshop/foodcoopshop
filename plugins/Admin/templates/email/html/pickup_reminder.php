@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
@@ -21,7 +23,9 @@
 
     <tr>
         <td>
+
             <p><?php echo __d('admin', 'Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}.', ['<b>' . $formattedPickupDay . '</b>']); ?></p>
+
             <ul style="padding-left:10px;">
                 <?php
                      foreach($futureOrderDetails as $orderDetail) {
@@ -29,7 +33,12 @@
                      }
                 ?>
             </ul>
+
             <p><?php echo __d('admin', 'As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder.', [$diffOrderAndPickupInDays]); ?></p>
+
+            <p>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+            </p>
 
         </td>
     </tr>

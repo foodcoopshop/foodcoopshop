@@ -167,11 +167,6 @@ if (!is_null(Configure::read('Security.salt'))) {
     Security::setSalt(Configure::consume('Security.salt'));
 }
 
-if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
-    || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
-        Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
-    }
-
 /*
  * Setup detectors for mobile and tablet.
  */
@@ -233,6 +228,7 @@ if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.i
     I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
     setlocale(LC_CTYPE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
+    setlocale(LC_COLLATE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
 }
 
 // Number::config(Configure::read('appDb.FCS_DEFAULT_LOCALE'), NumberFormatter::DECIMAL);

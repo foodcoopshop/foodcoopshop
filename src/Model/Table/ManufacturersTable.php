@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Lib\Catalog\Catalog;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
@@ -22,6 +24,8 @@ use Cake\Validation\Validator;
 
 class ManufacturersTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {
@@ -335,7 +339,8 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $this->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
+                $this->Catalog = new Catalog();
+                $additionalInfo = $this->Catalog->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
             if ($noDeliveryDaysString != '') {
@@ -432,53 +437,20 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
-    {
-        $sql = "SELECT ";
-        $sql .= $this->getFieldsForProductListQuery();
-        $sql .= "FROM ".$this->tablePrefix."product Products ";
-        $sql .= $this->getJoinsForProductListQuery();
-        $sql .= $this->getConditionsForProductListQuery($appAuth);
-        $sql .= "AND Manufacturers.id_manufacturer = :manufacturerId";
-        $sql .= $this->getOrdersForProductListQuery();
-
-        $params = [
-            'manufacturerId' => $manufacturerId,
-            'active' => APP_ON
-        ];
-        if (empty($appAuth->user())) {
-            $params['isPrivate'] = APP_OFF;
-        }
-
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->execute($params);
-        $products = $statement->fetchAll('assoc');
-        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-
-        if (! $countMode) {
-            return $products;
-        } else {
-            return count($products);
-        }
-
-    }
-
-    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProductsInInvoices, $orderDetailIds = [])
+    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
         switch ($order) {
             case 'product':
-                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC';
+                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC';
                 break;
             case 'customer':
-                $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
+                $orderClause = $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC';
                 break;
         }
 
         $params = [
             'manufacturerId' => $manufacturerId
         ];
-
-        $includeStockProductCondition = '';
 
         if (is_null($dateTo)) {
             // order list
@@ -491,10 +463,12 @@ class ManufacturersTable extends AppTable
             $dateConditions .= "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') <= :dateTo" ;
             $params['dateFrom'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom);
             $params['dateTo'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo);
-            if (!$includeStockProductsInInvoices) {
-                $includeStockProductCondition = "AND (p.is_stock_product = 0 OR m.stock_management_enabled = 0)";
-            }
             $orderDetailCondition = "";
+        }
+
+        $includeStockProductCondition = '';
+        if (!$includeStockProducts) {
+            $includeStockProductCondition = "AND (p.is_stock_product = 0 OR m.stock_management_enabled = 0)";
         }
 
         $orderStateCondition = "";
@@ -503,7 +477,7 @@ class ManufacturersTable extends AppTable
             $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
         }
 
-        $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
+        $customerNameAsSql = $this->Customers->getCustomerName('c');
 
         $sql = "SELECT
         m.id_manufacturer ManufacturerId,
@@ -539,7 +513,7 @@ class ManufacturersTable extends AppTable
             {$orderStateCondition}
             {$includeStockProductCondition}
             {$orderDetailCondition}
-            ORDER BY {$orderClause}, DATE_FORMAT (od.created, '%d.%m.%Y, %H:%i') DESC;";
+            ORDER BY {$orderClause}, DATE_FORMAT(od.created, '%d.%m.%Y, %H:%i') DESC;";
 
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);

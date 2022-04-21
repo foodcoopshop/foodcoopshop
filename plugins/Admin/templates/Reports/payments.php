@@ -62,18 +62,18 @@ $colspan = 3;
 if ($useCsvUpload) {
     $colspan++;
 }
-if ($paymentType == 'product') {
+if (in_array($paymentType, ['product', 'payback'])) {
     echo '<th style="width:25px;"></th>';
     echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', __d('admin', 'Status')) . '</th>';
     $colspan = $colspan + 2;
 }
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Payments.date_add', __d('admin', 'Added_on')) . '</th>';
-echo '<th>' . $this->Paginator->sort('CreatedBy.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Added_by')) . '</th>';
+echo '<th>' . $this->Paginator->sort('CreatedByCustomers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Added_by')) . '</th>';
 if ($useCsvUpload) {
     echo '<th>' . $this->Paginator->sort('Payments.date_transaction_add', __d('admin', 'Transaction_added_on')) . '</th>';
 }
-echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
+echo '<th style="text-align:right;">' . $this->Paginator->sort('Payments.amount', $this->Html->getPaymentText($paymentType)) . '</th>';
 if ($showTextColumn) {
     echo '<th>' . $this->Paginator->sort('Payments.text', __d('admin', 'Text')) . '</th>';
 }
@@ -84,10 +84,8 @@ $paymentSum = 0;
 
 foreach ($payments as $payment) {
     $rowClass = '';
-    $additionalText = '';
     if ($payment->status == APP_DEL) {
         $rowClass = 'deactivated line-through';
-        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' '.__d('admin', 'deleted_on').' ' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' - '.__d('admin', 'does_not_appear_in_sum.').')';
     } else {
         $i ++;
         $paymentSum += $payment->amount;
@@ -95,8 +93,9 @@ foreach ($payments as $payment) {
 
     echo '<tr id="payment-'.$payment->id.'" class="data ' . $rowClass . '">';
 
-    if ($paymentType == 'product') {
+    if (in_array($paymentType, ['product', 'payback'])) {
         echo '<td>';
+        if ($payment->status > APP_DEL) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 $this->Slug->getPaymentEdit($payment->id),
@@ -106,6 +105,7 @@ foreach ($payments as $payment) {
                     'escape' => false
                 ]
             );
+        }
         echo '</td>';
         echo '<td style="text-align:right;width:51px;">';
         switch ($payment->approval) {
@@ -129,6 +129,10 @@ foreach ($payments as $payment) {
                 ]
             );
         }
+        if ($payment->status == APP_DEL) {
+            $infoText = $this->Html->getPaymentText($paymentType) . ' '.__d('admin', 'deleted_on').' ' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' - '.__d('admin', 'does_not_appear_in_sum.');
+            echo '<i class="fas fa-minus-circle not-ok" title="' . h($infoText) . '"></i>';
+        }
         echo '</td>';
     }
 
@@ -138,7 +142,6 @@ foreach ($payments as $payment) {
     } else {
         echo $this->Html->getNameRespectingIsDeleted($payment->customer);
     }
-        echo $additionalText;
     echo '</td>';
 
     echo '<td style="text-align:right;width:140px;">';

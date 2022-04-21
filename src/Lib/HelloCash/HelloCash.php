@@ -90,10 +90,13 @@ class HelloCash
             '',
             $currentDay,
             $paidInCash,
+            $customer->invoices_per_email_enabled,
         );
 
         $newInvoice->original_invoice_id = $originalInvoiceId;
-        $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
+        if ($customer->invoices_per_email_enabled) {
+            $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
+        }
 
         return $responseObject;
     }
@@ -109,7 +112,7 @@ class HelloCash
             'cashier_id' => Configure::read('app.helloCashAtCredentials')['cashier_id'],
             'invoice_user_id' => $userId,
             'invoice_testMode' => $isPreview,
-            'invoice_paymentMethod' => $paidInCash ? 'Bar' : 'Kreditrechnung',
+            'invoice_paymentMethod' => $paidInCash ? Configure::read('app.helloCashAtCredentials')['payment_type_cash'] : Configure::read('app.helloCashAtCredentials')['payment_type_cashless'],
             'signature_mandatory' => 0,
         ];
 
@@ -244,9 +247,20 @@ class HelloCash
         $taxRates = $this->prepareTaxesFromResponse($responseObject, false);
 
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $newInvoice = $this->Invoice->saveInvoice($responseObject->invoice_id, $data->id_customer, $taxRates, $responseObject->invoice_number, '', $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice(
+            $responseObject->invoice_id,
+            $data->id_customer,
+            $taxRates,
+            $responseObject->invoice_number,
+            '',
+            $currentDay,
+            $paidInCash,
+            $data->invoices_per_email_enabled,
+        );
 
-        $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
+        if ($data->invoices_per_email_enabled) {
+            $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
+        }
 
         return $responseObject;
 
@@ -254,10 +268,6 @@ class HelloCash
 
     protected function setSendInvoiceToCustomerQueue($customer, $invoice, $isCancellationInvoice, $paidInCash)
     {
-        if ($paidInCash) {
-            return;
-        }
-
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
         $this->Customer = FactoryLocator::get('Table')->get('Customers');
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
@@ -270,8 +280,8 @@ class HelloCash
             'invoiceId' => $invoice->id,
             'originalInvoiceId' => $invoice->original_invoice_id ?? null,
             'creditBalance' => $this->Customer->getCreditBalance($customer->id_customer),
+            'paidInCash' => $paidInCash,
         ]);
-
     }
 
     protected function prepareTaxesFromResponse($responseObject, $cancellation)
@@ -315,6 +325,15 @@ class HelloCash
             'user_city' => $customer->address_customer->city,
             'user_street' => $customer->address_customer->address1,
         ];
+
+        if ($customer->is_company) {
+            $data['user_company'] = $customer->firstname;
+            $data['user_firstname'] = '';
+            $data['user_lastname'] = '';
+            if ($customer->lastname != '') {
+                $data['lastname'] = $customer->lastname;
+            }
+        }
 
         // updating user needs user_id in post data
         if ($customer->user_id_registrierkasse > 0) {

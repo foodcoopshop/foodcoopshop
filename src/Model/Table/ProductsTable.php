@@ -3,8 +3,10 @@
 namespace App\Model\Table;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\Catalog\Catalog;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\RemoteFile\RemoteFile;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
@@ -27,6 +29,8 @@ use Cake\Validation\Validator;
 class ProductsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveTrait;
+
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
 
@@ -47,6 +51,12 @@ class ProductsTable extends AppTable
                 'PurchasePriceProducts.product_attribute_id = 0',
             ],
         ]);
+        $this->belongsTo('BarcodeProducts', [
+            'foreignKey' => 'id_product',
+            'conditions' => [
+                'BarcodeProducts.product_attribute_id = 0',
+            ],
+        ]);
         $this->belongsTo('Taxes', [
             'foreignKey' => 'id_tax'
         ]);
@@ -58,6 +68,9 @@ class ProductsTable extends AppTable
             'order' => [
                 'Images.id_image' => 'DESC'
             ]
+        ]);
+        $this->hasOne('ProductAttribute', [
+            'foreignKey' => 'id_product'
         ]);
         $this->hasMany('ProductAttributes', [
             'foreignKey' => 'id_product'
@@ -190,6 +203,18 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
+    public function getNextDeliveryDay($product, $appAuth)
+    {
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $nextDeliveryDay = '1970-01-01';
+        } elseif ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
+            $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        } else {
+            $nextDeliveryDay = $this->calculatePickupDayRespectingDeliveryRhythm($product);
+        }
+        return $nextDeliveryDay;
+    }
+
     public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
     {
         return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
@@ -214,6 +239,15 @@ class ProductsTable extends AppTable
             return $pickupDay;
         }
 
+        if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
+            if ($product->delivery_rhythm_type == 'week' && $product->delivery_rhythm_count == 1) {
+                $regularPickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
+                if ($pickupDay != $regularPickupDay) {
+                    return 'delivery-rhythm-triggered-delivery-break';
+                }
+            }
+        }
+
         if ($product->delivery_rhythm_type == 'week') {
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
@@ -221,6 +255,13 @@ class ProductsTable extends AppTable
                     $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
                     $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
                 }
+
+                if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
+                    if (in_array($product->delivery_rhythm_count, [1, 2]) && $pickupDay != $calculatedPickupDay) {
+                        return 'delivery-rhythm-triggered-delivery-break';
+                    }
+                }
+
                 $pickupDay = $calculatedPickupDay;
             }
         }
@@ -559,11 +600,18 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->StockAvailables->updateAll($product[$productId], [
-                    'id_product_attribute' => $ids['attributeId'],
-                    'id_product' => $ids['productId']
-                ]);
+                $entity = $this->StockAvailables->find('all', [
+                    'conditions' => [
+                        'id_product_attribute' => $ids['attributeId'],
+                        'id_product' => $ids['productId']
+                    ],
+                ])->first();
+                $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
+                $this->StockAvailables->setPrimaryKey('id_product_attribute');
+                $this->StockAvailables->save(
+                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                );
+                $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $entity = $this->StockAvailables->get($ids['productId']);
@@ -679,6 +727,7 @@ class ProductsTable extends AppTable
      *                      [unity] => ca. 0,4 kg-1
      *                      [is_declaration_ok] => 1
      *                      [id_storage_location] => 1
+     *                      [barcode] => '1234567890123'
      *                  )
      *          )
      *  )
@@ -700,35 +749,63 @@ class ProductsTable extends AppTable
 
             $productEntity = $this->newEntity(
                 [
-                    'name' => $newName
+                    'name' => $newName,
                 ],
                 [
-                    'validate' => 'name'
+                    'validate' => 'name',
                 ]
             );
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($productEntity)));
-            } else {
-                $tmpProduct2Save = [
-                    'id_product' => $ids['productId'],
-                    'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
-                    'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
-                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
-                ];
-                if (isset($name['is_declaration_ok'])) {
-                    $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
-                }
-                if (isset($name['id_storage_location'])) {
-                    $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
-                }
-                $products2save[] = $tmpProduct2Save;
             }
+
+            if (isset($name['barcode'])) {
+                $barcode = StringComponent::removeSpecialChars(strip_tags(trim($name['barcode'])));
+                $barcodeProductEntity = $this->BarcodeProducts->newEntity(
+                    [
+                        'barcode' => $barcode,
+                    ],
+                    [
+                        'validate' => true
+                    ]
+                );
+                if ($barcodeProductEntity->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($barcodeProductEntity)));
+                }
+            }
+
+            $tmpProduct2Save = [
+                'id_product' => $ids['productId'],
+                'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
+                'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
+                'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity']))),
+            ];
+            if (isset($name['is_declaration_ok'])) {
+                $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
+            }
+            if (isset($name['id_storage_location']) && $name['id_storage_location'] > 0) {
+                $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
+            }
+
+            if (isset($name['barcode'])) {
+                $tmpProduct2Save['barcode_product'] = [
+                    'product_id' => $ids['productId'],
+                    'barcode' => $barcode,
+                ];
+            }
+            $products2save[] = $tmpProduct2Save;
+
         }
 
         $success = false;
+
         if (!empty($products2save)) {
-            $entities = $this->newEntities($products2save);
+            $entities = $this->newEntities($products2save, [
+                'associated' => [
+                    'BarcodeProducts',
+                ],
+            ]);
             $result = $this->saveMany($entities);
             $success = !empty($result);
         }
@@ -738,7 +815,6 @@ class ProductsTable extends AppTable
 
     public function isNew($date)
     {
-
         $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
         if (strtotime($showAsNewExpirationDate) > strtotime(date('Y-m-d'))) {
             return true;
@@ -829,6 +905,11 @@ class ProductsTable extends AppTable
             $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
         }
 
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $contain[] = 'BarcodeProducts';
+            $contain[] = 'ProductAttributes.BarcodeProductAttributes';
+        }
+
         $order = [
             'Products.active' => 'DESC',
             'Products.name' => 'ASC'
@@ -861,7 +942,9 @@ class ProductsTable extends AppTable
         }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $query->select(['bar_code' => $this->getProductIdentifierField()]);
+            $this->Catalog = new Catalog();
+            $query->select(['system_bar_code' => $this->Catalog->getProductIdentifierField()]);
+            $query->select($this->BarcodeProducts);
         }
 
         if ($controller) {
@@ -970,6 +1053,10 @@ class ProductsTable extends AppTable
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+
+                $product->purchase_price_is_zero = true;
+                $product->purchase_price_is_set = $this->PurchasePriceProducts->isPurchasePriceSet($product);
+
                 if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
                     $product->purchase_price_product = (object) [
                         'tax_id' => null,
@@ -980,13 +1067,43 @@ class ProductsTable extends AppTable
                     ];
                 }
                 if (!empty($product->purchase_price_product)) {
+
                     $purchasePriceTaxRate = $product->purchase_price_product->tax->rate ?? 0;
                     $purchasePrice = $product->purchase_price_product->price ?? null;
                     if ($purchasePrice === null) {
                         $product->purchase_gross_price = $purchasePrice;
                     } else {
                         $product->purchase_gross_price = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                        if ($product->purchase_gross_price > 0) {
+                            $product->purchase_price_is_zero = false;
+                        }
                     }
+
+                    if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
+                        if (!is_null($product->unit->purchase_price_incl_per_unit)) {
+                            $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                                Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
+                                $taxRate,
+                                Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->purchase_price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
+                                $purchasePriceTaxRate,
+                            );
+                            $priceInclPerUnitAndAmount = $this->getNetPrice($product->unit->price_incl_per_unit, $taxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                            $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($product->unit->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $product->unit_product->quantity_in_units / $product->unit_product->amount;
+                            $product->surcharge_price = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                            if ($purchasePriceInclPerUnitAndAmount > 0) {
+                                $product->purchase_price_is_zero = false;
+                            }
+                        }
+                    } else {
+                        $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                            $product->gross_price,
+                            $taxRate,
+                            $product->purchase_gross_price,
+                            $purchasePriceTaxRate,
+                        );
+                        $product->surcharge_price = $product->price - $purchasePrice;
+                    }
+
                 }
             }
 
@@ -1077,11 +1194,12 @@ class ProductsTable extends AppTable
                             'names' => [],
                             'all_products_found' => true
                         ],
-                        'image' => null
+                        'image' => null,
+                        'barcode_product' => $attribute->barcode_product_attribute,
                     ];
 
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                        $preparedProduct['bar_code'] = $product->bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attribute->id_product_attribute, 4);
+                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attribute->id_product_attribute, 4);
                         $preparedProduct['image'] = $product->image;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                             $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;
@@ -1089,12 +1207,46 @@ class ProductsTable extends AppTable
                     }
 
                     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+
+                        $preparedProduct['purchase_price_is_set'] = $this->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute);
+                        $preparedProduct['purchase_price_is_zero'] = true;
+
                         $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
                         if ($purchasePrice === null) {
                             $preparedProduct['purchase_gross_price'] = $purchasePrice;
                         } else {
                             $preparedProduct['purchase_gross_price'] = $this->getGrossPrice($purchasePrice, $purchasePriceTaxRate);
+                            if ($preparedProduct['purchase_gross_price'] > 0) {
+                                $preparedProduct['purchase_price_is_zero'] = false;
+                            }
                         }
+
+                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                            if (!is_null($attribute->unit_product_attribute->purchase_price_incl_per_unit)) {
+                                $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
+                                    $taxRate,
+                                    Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->purchase_price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
+                                    $purchasePriceTaxRate,
+                                );
+                                $priceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->price_incl_per_unit, $taxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                                $purchasePriceInclPerUnitAndAmount = $this->getNetPrice($attribute->unit_product_attribute->purchase_price_incl_per_unit, $purchasePriceTaxRate) * $attribute->unit_product_attribute->quantity_in_units / $attribute->unit_product_attribute->amount;
+                                $preparedProduct['surcharge_price'] = $priceInclPerUnitAndAmount - $purchasePriceInclPerUnitAndAmount;
+                                if ($purchasePriceInclPerUnitAndAmount > 0) {
+                                    $preparedProduct['purchase_price_is_zero'] = false;
+                                }
+                            }
+                        } else {
+                            $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                                $grossPrice,
+                                $taxRate,
+                                $preparedProduct['purchase_gross_price'],
+                                $purchasePriceTaxRate,
+                            );
+                            $preparedProduct['surcharge_price'] = $attribute->price - $purchasePrice;
+                        }
+
+
                     }
                     $preparedProducts[] = $preparedProduct;
                 }
@@ -1226,7 +1378,7 @@ class ProductsTable extends AppTable
             'conditions' => [
                 'ProductAttributes.id_product' => $productId,
             ]
-        ])->toArray();
+        ]);
 
         $productAttributeIds = [];
         foreach ($productAttributes as $attribute) {
@@ -1241,44 +1393,11 @@ class ProductsTable extends AppTable
         ]);
 
         // then set the new one
-        $this->ProductAttributes->updateAll([
-            'default_on' => 1
-        ], [
-            'id_product_attribute' => $productAttributeId,
-        ]);
-    }
-
-    public function deleteProductAttribute($productId, $attributeId)
-    {
-
-        $pac = $this->ProductAttributes->ProductAttributeCombinations->find('all', [
-            'conditions' => [
-                'ProductAttributeCombinations.id_product_attribute' => $attributeId,
-            ]
-        ])->first();
-        $productAttributeId = $pac->id_product_attribute;
-
-        $this->ProductAttributes->deleteAll([
+        $productAttributeEntity = $productAttributes->where([
             'ProductAttributes.id_product_attribute' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->ProductAttributeCombinations->deleteAll([
-            'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
-        ]);
-
-        $this->ProductAttributes->UnitProductAttributes->deleteAll([
-            'UnitProductAttributes.id_product_attribute' => $productAttributeId,
-        ]);
-
-        // deleteAll can only get primary key as condition
-        $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
-        $this->StockAvailables->setPrimaryKey('id_product_attribute');
-        $this->StockAvailables->deleteAll([
-            'StockAvailables.id_product_attribute' => $attributeId,
-        ]);
-        $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
-
-        $this->StockAvailables->updateQuantityForMainProduct($productId);
+        ])->first();
+        $productAttributeEntity->default_on = APP_ON;
+        $this->ProductAttributes->save($productAttributeEntity);
     }
 
     public function changeImage($products)
@@ -1321,6 +1440,7 @@ class ProductsTable extends AppTable
 
             $imageFromRemoteServer = $product[$productId];
             $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
+            $extension = strtolower(pathinfo($imageFromRemoteServer, PATHINFO_EXTENSION));
 
             $product = $this->find('all', [
                 'conditions' => [
@@ -1349,11 +1469,12 @@ class ProductsTable extends AppTable
 
                 // recursively create path
                 $dir = new Folder();
+                $dir->delete($thumbsPath);
                 $dir->create($thumbsPath);
                 $dir->chmod($thumbsPath, 0755);
 
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
                     $remoteFileName = preg_replace('/-home_default/', $options['suffix'], $imageFromRemoteServer);
                     copy($remoteFileName, $thumbsFileName);
                 }
@@ -1366,12 +1487,8 @@ class ProductsTable extends AppTable
                 ]);
 
                 // delete physical files
-                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
-                    if (file_exists($thumbsFileName)) {
-                        unlink($thumbsFileName);
-                    }
-                }
+                $dir = new Folder();
+                $dir->delete($thumbsPath);
 
             }
         }
@@ -1379,13 +1496,12 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation)
+    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode)
     {
         $defaultQuantity = 0;
 
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
 
-        // INSERT PRODUCT
         $productEntity = $this->newEntity(
             [
                 'id_manufacturer' => $manufacturer->id_manufacturer,
@@ -1407,8 +1523,23 @@ class ProductsTable extends AppTable
             return $productEntity;
         }
 
+        if ($barcode != '') {
+            $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
+            $barcodeEntity2Save = $this->BarcodeProducts->newEntity([
+                'barcode' => $barcode,
+            ], ['validate' => true]);
+            if ($barcodeEntity2Save->hasErrors()) {
+                return $barcodeEntity2Save;
+            }
+        }
+
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
+
+        if ($barcode != '') {
+            $barcodeEntity2Save->product_id = $newProductId;
+            $this->BarcodeProducts->save($barcodeEntity2Save);
+        }
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $entity2Save = $this->PurchasePriceProducts->getEntityToSaveByProductId($newProductId);

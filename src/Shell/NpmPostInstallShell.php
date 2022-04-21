@@ -33,7 +33,6 @@ class NpmPostInstallShell extends AppShell
         $this->fontawesomePath = $this->vendorDir . DS . '@fortawesome' . DS . 'fontawesome-free' . DS;
         $this->jqueryBackstretchPath = $this->vendorDir . DS . 'jquery-backstretch' . DS;
         $this->jqueryUiPath = $this->vendorDir . DS . 'components-jqueryui' . DS;
-        $this->owlCarouselPath = $this->vendorDir . DS . 'owl.carousel' . DS;
         $this->tooltipsterPath = $this->vendorDir . DS . 'tooltipster' . DS;
 
         $this->cleanOverheadFromDependencies();
@@ -69,11 +68,6 @@ class NpmPostInstallShell extends AppShell
         $folder->delete($this->jqueryUiPath . 'themes');
         $folder = new Folder($this->jqueryUiPath . 'theme-backup');
         $folder->move($this->jqueryUiPath . 'themes' . DS . $activeThemeFolder);
-
-        $folder->delete($this->owlCarouselPath . 'docs');
-        $folder->delete($this->owlCarouselPath . 'docs_src');
-        $folder->delete($this->owlCarouselPath . 'src');
-        $folder->delete($this->owlCarouselPath . 'test');
 
         $folder->delete($this->tooltipsterPath . 'demo');
         $folder->delete($this->tooltipsterPath . 'doc');

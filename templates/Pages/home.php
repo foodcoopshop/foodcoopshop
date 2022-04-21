@@ -23,7 +23,7 @@ $this->element('addScript', ['script' =>
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
-    echo '<h1>'.__('News').'</h1>';
+    echo '<h1 class="news">'.__('News').'</h1>';
 }
 echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,
@@ -33,29 +33,37 @@ echo $this->element('blogPosts', [
 if (!empty($newProducts)) {
 
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.product-wrapper .toggle-content.description img');".
-        Configure::read('app.jsNamespace').".ModalImage.init('.product-wrapper a.open-with-modal');".
+        Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
+        Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal');".
+        Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price');".
         Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
         Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
         Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
-        Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
+        Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+        Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
     ]);
 
     echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
     $isFirstElement = empty($blogPosts) || $blogPosts->count() == 0;
-    echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:20px;' : '') . '">';
+    echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:10px;' : '') . '">';
         echo __('New_products');
     echo '</h2>';
 
     foreach ($newProducts as $product) {
-        echo $this->element('product/product', [
+        echo $this->element('catalog/product', [
             'product' => $product,
             'showProductDetailLink' => true,
             'showManufacturerDetailLink' => true,
             'showIsNewBadgeAsLink' => true
-        ]);
+        ],
+        [
+            'cache' => [
+                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+            ],
+        ]
+        );
     }
 
 }

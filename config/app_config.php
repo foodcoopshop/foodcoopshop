@@ -25,6 +25,7 @@ define('ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER', 10);
 define('ORDER_STATE_BILLED_CASHLESS', 11);
 define('ORDER_STATE_BILLED_CASH', 12);
 
+define('CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER', 2);
 define('CUSTOMER_GROUP_MEMBER', 3);
 define('CUSTOMER_GROUP_ADMIN', 4);
 define('CUSTOMER_GROUP_SUPERADMIN', 5);
@@ -53,6 +54,11 @@ return [
         'jsNamespace' => 'foodcoopshop',
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS . 'tmp',
+        'allowedImageMimeTypes' => [
+            'JPG' => 'image/jpeg', // keep jpg as first element for best performance
+            'PNG' => 'image/png',
+            'GIF'=> 'image/gif',
+        ],
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
         'uploadedFilesDir' => DS . 'files' . DS . 'files',
         'customerImagesDir' => ROOT . DS . 'files_private'. DS . 'customers',
@@ -76,11 +82,9 @@ return [
         'depositForManufacturersStartDate' => '2016-01-01',
 
         /**
-         * not used since v2.4
-         * sendOrderListsWeekday is replaced by the new database setting FCS_WEEKLY_PICKUP_DAY
-         * and can be removed after successful migration of 20190218101915_IndividualSendOrderListDay.php
+         * 'Raiffeisen' or 'Volksbank'
          */
-        'sendOrderListsWeekday' => 3,
+        'bankNameForCreditSystem' => 'Raiffeisen',
 
         /**
          * should names of members be shown as "John Doe" or "Doe John"
@@ -107,6 +111,8 @@ return [
         'categoryAllProducts' => 20,
 
         'logoFileName' => 'logo.png',
+        'logoWidth' => 220, //int
+        'logoMaxHeight' => 120,  // int or string 'auto'
 
         /**
          * image upload sizes and suffixes
@@ -142,13 +148,13 @@ return [
 
         /**
          * if you work on windows, change to e.g
-         * 'C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe'
+         * '"C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe"'
          */
         'mysqlDumpCommand' => 'mysqldump',
 
         /**
          * if you work on windows, change to e.g
-         * 'C:\\Programme\\xampp\\mysql\\bin\\mysql.exe'
+         * '"C:\\Programme\\xampp\\mysql\\bin\\mysql.exe"'
          */
         'mysqlCommand' => 'mysql',
 
@@ -166,11 +172,17 @@ return [
 
         'applyOrdersNotYetBilledCheckOnDeletingCustomers' => true,
 
+        'applyPaymentsOkCheckOnDeletingCustomers' => true,
+
         'isCustomerAllowedToModifyOwnOrders' => true,
+
+        'isCustomerAllowedToViewOwnOrders' => true,
+
+        'isZeroTaxEnabled' => true,
 
         'showStatisticsForAdmins' => true,
 
-        'sendEmailWhenOrderDetailQuantityOrPriceChanged' => true,
+        'sendEmailWhenOrderDetailQuantityChanged' => true,
 
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 
@@ -178,6 +190,8 @@ return [
             'username' => '',
             'password' => '',
             'cashier_id' => 0,
+            'payment_type_cash' => 'Bar',
+            'payment_type_cashless' => 'Guthaben-System',
         ],
 
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
@@ -194,6 +208,6 @@ return [
         'DatabaseAlt' => 'Y-m-d',
         'DatabaseWithTimeAlt' => 'Y-m-d H:i:s',
         'DatabaseWithTimeAndMicrosecondsAlt' => 'Y-m-d H:i:s.u',
-        'DateWithTimeForFilename' => 'Y-m-d_H-i-s'
-    ]
+        'DateWithTimeForFilename' => 'Y-m-d_H-i-s',
+    ],
 ];

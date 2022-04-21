@@ -3,6 +3,8 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\Catalog\Catalog;
+use App\Lib\DeliveryNote\GenerateDeliveryNote;
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
@@ -44,6 +46,12 @@ class ManufacturersController extends AdminAppController
             case 'editOptions':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
+            case 'getDeliveryNote':
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
+                break;
+            case 'getInvoice':
+                return !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
             default:
                 return $this->AppAuth->user();
                 break;
@@ -71,7 +79,7 @@ class ManufacturersController extends AdminAppController
         $manufacturer = $this->Manufacturer->newEntity(
             [
                 'active' => APP_ON,
-                'is_private' => APP_ON
+                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
             ],
             ['validate' => false]
         );
@@ -177,7 +185,7 @@ class ManufacturersController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('Manufacturers.delete_image'))) {
-                $this->deleteUploadedImage($manufacturer->id_manufacturer, Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
+                $this->deleteUploadedImage($manufacturer->id_manufacturer, Configure::read('app.htmlHelper')->getManufacturerThumbsPath());
             }
 
             if (!empty($this->getRequest()->getData('Manufacturers.tmp_general_terms_and_conditions'))) {
@@ -330,7 +338,8 @@ class ManufacturersController extends AdminAppController
         }
 
         foreach ($manufacturers as $manufacturer) {
-            $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
+            $this->Catalog = new Catalog();
+            $manufacturer->product_count = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
@@ -368,6 +377,37 @@ class ManufacturersController extends AdminAppController
         }
     }
 
+    public function getDeliveryNote()
+    {
+
+        $this->disableAutoRender();
+
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        $dateTo = h($this->getRequest()->getQuery('dateTo'));
+
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId
+            ],
+        ])->first();
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo);
+
+        $generateDeliverNotes = new GenerateDeliveryNote();
+        $spreadsheet = $generateDeliverNotes->getSpreadsheet($orderDetails);
+
+        $filename = $generateDeliverNotes->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
+
+        $this->response = $this->response->withHeader('Content-Disposition', 'inline;filename="'.$filename.'"');
+        $this->response = $this->response->withFile(TMP . $filename);
+
+        $generateDeliverNotes->deleteTmpFile($filename);
+
+        return $this->response;
+
+    }
     public function editOptions($manufacturerId)
     {
         if ($manufacturerId === null) {
@@ -432,7 +472,7 @@ class ManufacturersController extends AdminAppController
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
-            $this->viewBuilder()->setHelpers(['Network.Network']);
+            $this->viewBuilder()->addHelper('Network.Network');
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);

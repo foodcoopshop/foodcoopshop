@@ -29,7 +29,7 @@ class AddressCustomersTable extends AddressesTable
             'provider' => 'table',
             'message' => __('The_email_address_is_already_used_by_another_member_or_manufacturer.')
         ]);
-        $validator->notEmptyString('address1', __('Please_enter_your_street.'));
+        $validator->notEmptyString('address1', __('Please_enter_your_street_and_number.'));
         $validator->notEmptyString('city', __('Please_enter_your_city.'));
         $validator->notEmptyString('postcode', __('Please_enter_your_zip.'));
         $validator->add('postcode', 'validFormat', [

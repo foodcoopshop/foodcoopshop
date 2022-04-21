@@ -19,6 +19,21 @@ use Cake\Core\Configure;
 
 <style>
 
+    #header .logo-wrapper {
+        width: <?php echo Configure::read('app.logoWidth'); ?>px;
+    }
+    #header .logo {
+        max-width: <?php echo Configure::read('app.logoWidth'); ?>px;
+    }
+    #main-menu {
+        width: calc(100% - <?php echo Configure::read('app.logoWidth'); ?>px - 34px);
+    }
+    <?php if (Configure::read('app.logoMaxHeight') != 'auto') { ?>
+        #header .logo {
+            max-height: <?php echo Configure::read('app.logoMaxHeight'); ?>px;
+        }
+    <?php } ?>
+
     ::selection {
       background: <?php echo Configure::read('app.customThemeMainColor'); ?>;
       color: #fff;
@@ -45,25 +60,25 @@ use Cake\Core\Configure;
     #flashMessage.success,
     .modal-header,
     .cookieConsentWrapper,
-    .drop a.upload-button {
+    .drop a.upload-button,
+    #footer .bottom {
         background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
     h1,
     h2,
     a.blog-post-wrapper h3,
-    .product-wrapper .price,
+    .pw .price,
     #scroll-to-top a,
     #scroll-to-top a i,
     .vertical.menu a i.fas,
     .vertical.menu span.additional-info,
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
-    #footer i.fab, #footer i.far, #footer i.fas,
     a.btn.edit-shortcut-button,
     a.btn.prev-button i, a.btn.next-button i,
-    .product-wrapper .price-asterisk,
+    .pw .price-asterisk,
     i.fa.ok, i.fas.ok, i.far.ok,
-    body.carts.detail .cart:not(#cart) span.amount .btn,
+    body.carts .cart:not(#cart) span.amount .btn,
     #filter-loader i,
     .btn-cart i.fa-cart-plus,
     .btn-cart i.fa-shopping-bag {
@@ -82,7 +97,7 @@ use Cake\Core\Configure;
     .btn-success:active:hover,
     #flashMessage.success,
     hr,
-    .product-wrapper, .manufacturer-wrapper,
+    .pw, .manufacturer-wrapper,
     body.manufacturers.detail #inner-content h2,
     h1.middle-line span.middle {
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
@@ -96,6 +111,7 @@ use Cake\Core\Configure;
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
     .btn-success:focus:active,
+    #flashMessage.success .progress-bar.bg-success,
     .bootstrap-select .dropdown-item.active,
     .bootstrap-select .dropdown-item:active,
     table.list tr.selected {
@@ -131,8 +147,8 @@ use Cake\Core\Configure;
             :not(.fa-plus-circle) {
                 color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
-            body.self_services #responsive-header a.btn,
-            body.self_services #responsive-header i.ok {
+            body.self_services #responsive-header a.btn:not(.btn-flash-message),
+            body.self_services #responsive-header a.btn:not(.btn-flash-message) i.ok {
                 color: #fff ! important;
             }
             body:not(.admin) .sb-right h3 {

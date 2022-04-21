@@ -13,16 +13,15 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 
-Router::plugin(
-    'Admin',
-    ['path' => '/admin'],
-    function (RouteBuilder $builder) {
-        $builder->setExtensions(['pdf']);
-        $builder->connect('/', ['plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home']);
-        $builder->redirect('/orders', '/admin/order-details?groupBy=customer');
-        $builder->fallbacks(DashedRoute::class);
-    }
-);
+return function (RouteBuilder $builder) {
+    $builder->plugin('Admin',
+        function (RouteBuilder $builder) {
+            $builder->setExtensions(['pdf', 'xlsx']);
+            $builder->connect('/', ['plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home']);
+            $builder->redirect('/orders', '/admin/order-details?groupBy=customer');
+            $builder->fallbacks(DashedRoute::class);
+        }
+    );
+};

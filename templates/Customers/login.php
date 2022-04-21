@@ -20,6 +20,11 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".ModalText.init('#RegistrationForm .input.checkbox label a');".
     Configure::read('app.jsNamespace').".Helper.initLoginForm();"
 ]);
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Helper.initRegistrationAsCompany();"
+    ]);
+}
 ?>
 <div id="login-form" class="form">
 
@@ -46,20 +51,19 @@ $this->element('addScript', ['script' =>
         echo $this->Form->control('barCode', ['type' => 'text', 'label' => __('Scan_member_card')]);
         echo '<h2><span>'.__('or').'</span></h2>';
     }
+
     echo $this->Form->control('email', ['label' => __('Email')]);
     echo $this->Form->control('passwd', ['label' => __('Password')]);
 
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".ModalText.init('.remember-me-wrapper a');"
-    ]);
-
-    echo '<div class="remember-me-wrapper">';
-        echo $this->Form->control('remember_me', [
-            'type' => 'checkbox',
-            'label' => __('Stay_signed_in'),
-            'escape' => false
-        ]);
-    echo '</div>';
+    if (!$enableBarCodeLogin) {
+        echo '<div class="remember-me-wrapper">';
+            echo $this->Form->control('remember_me', [
+                'type' => 'checkbox',
+                'label' => __('Stay_signed_in'),
+                'escape' => false
+            ]);
+        echo '</div>';
+    }
 
     ?>
 
@@ -100,9 +104,9 @@ $this->element('addScript', ['script' =>
 
                   echo '<div class="detail-form">';
 
-                if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
-                    echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
-                }
+                      if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
+                          echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
+                      }
 
                       echo $this->Form->control('Customers.firstname', [
                           'label' => __('Firstname'),
@@ -110,11 +114,18 @@ $this->element('addScript', ['script' =>
                       ]);
                       echo $this->Form->control('Customers.lastname', [
                           'label' => __('Lastname'),
-                          'required' => true, // required should not be necessary here
+                          'required' => true,
                       ]);
 
+                      if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                          echo $this->Form->control('Customers.is_company', [
+                              'label' => __('Register_as_company?'),
+                              'type' => 'checkbox',
+                          ]);
+                      }
+
                       echo $this->Form->control('Customers.address_customer.address1', [
-                          'label' => __('Street'),
+                          'label' => __('Street_and_number'),
                       ]);
                       echo $this->Form->control('Customers.address_customer.address2', [
                           'label' => __('Additional_address_information'),
@@ -128,7 +139,11 @@ $this->element('addScript', ['script' =>
                       echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
 
                       if (Configure::read('app.emailOrderReminderEnabled')) {
-                          echo $this->Form->control('Customers.email_order_reminder', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
+                          echo $this->Form->control('Customers.email_order_reminder_enabled', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
+                      }
+
+                      if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+                          echo $this->Form->control('Customers.newsletter_enabled', ['label' => __('Want_to_receive_the_newsletter?'), 'type' => 'checkbox']);
                       }
 
                       if (Configure::read('app.termsOfUseEnabled')) {

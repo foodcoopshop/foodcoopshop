@@ -140,7 +140,6 @@ class PagesControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-
     public function test404PagesLoggedOut()
     {
         $testUrls = [
@@ -204,10 +203,6 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertResponseCode(404);
     }
 
-    /**
-     * array $testPages
-     * @return void
-     */
     protected function assertPagesFor404($testPages)
     {
         foreach ($testPages as $url) {

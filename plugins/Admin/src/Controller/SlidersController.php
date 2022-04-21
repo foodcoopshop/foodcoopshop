@@ -26,7 +26,7 @@ class SlidersController extends AdminAppController
         $this->Slider = $this->getTableLocator()->get('Sliders');
         $slider = $this->Slider->newEntity(
             [
-                'is_private' => APP_ON,
+                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'active' => APP_ON,
                 'position' => 10,
             ],
@@ -97,12 +97,9 @@ class SlidersController extends AdminAppController
                 $this->Slider->save($slider);
             }
 
-            if (!empty($this->getRequest()->getData('Sliders.delete_image'))) {
-                $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
-            }
-
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Sliders.delete_slider'))) {
+                $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath());
                 $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
                 $this->Slider->save($slider);
                 $messageSuffix = __d('admin', 'deleted');

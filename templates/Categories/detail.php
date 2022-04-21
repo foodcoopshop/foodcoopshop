@@ -18,13 +18,15 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".Helper.addPrevAndNextCategoryLinks();".
-    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.product-wrapper .toggle-content.description img');".
-    Configure::read('app.jsNamespace').".ModalImage.init('.product-wrapper a.open-with-modal');".
+    Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price');".
+    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
-    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
@@ -62,12 +64,18 @@ if (!empty($category)) {
 echo $this->element('stockProductInListInfo');
 
 foreach ($products as $product) {
-    echo $this->element('product/product', [
+    echo $this->element('catalog/product', [
         'product' => $product,
         'showProductDetailLink' => true,
         'showManufacturerDetailLink' => true,
         'showIsNewBadgeAsLink' => true
-    ]);
+    ],
+    [
+        'cache' => [
+            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+        ],
+    ]
+    );
 }
 
 ?>

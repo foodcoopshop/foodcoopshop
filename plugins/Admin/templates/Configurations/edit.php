@@ -102,7 +102,8 @@ switch ($configuration->type) {
             'data-val' => $value,
             'label' => $label,
             'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name, $appAuth),
-            'escape' => false
+            'escape' => false,
+            'empty' => $this->Configuration->getConfigurationDropdownEmpty($configuration->name),
         ]);
         break;
 }

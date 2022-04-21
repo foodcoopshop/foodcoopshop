@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-04 10:59+0200\n"
-"PO-Revision-Date: 2021-08-04 11:00+0200\n"
+"POT-Creation-Date: 2022-04-17 21:19+0200\n"
+"PO-Revision-Date: 2022-04-17 21:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -69,8 +69,11 @@ msgstr "request-new-password"
 msgid "route_activate_new_password"
 msgstr "activate-new-password"
 
-msgid "route_news_list"
+msgid "route_news_list_old"
 msgstr "news"
+
+msgid "route_news_list"
+msgstr "blog-archive"
 
 msgid "route_news_detail"
 msgstr "news"
@@ -111,8 +114,8 @@ msgstr "self-service"
 msgid "You_have_been_signed_out."
 msgstr "You have been signed out."
 
-msgid "News"
-msgstr "News"
+msgid "Blog_archive"
+msgstr "Blog archive"
 
 msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
 msgstr "For placing an order <a href=\"{0}\">please sign in or register</a>."
@@ -168,17 +171,26 @@ msgstr "The desired amount {0} of the product {1} is not available any more. Ava
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr "Please change the amout or remove product from cart to place order."
 
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
-
-msgid "The_attribute_does_not_exist."
-msgstr "The attribute does not exist."
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "The product {0} cannot be ordered any more due to interal reasons."
 
 msgid "Please_delete_product_from_cart_to_place_order."
 msgstr "Please remove product from cart to place order."
 
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "The attribute {0} of the product {1} cannot be ordered any more due to interal reasons."
+
+msgid "The_attribute_does_not_exist."
+msgstr "The attribute does not exist."
+
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "The product {0} is not activated any more."
+
+msgid "{0}_can_be_ordered_next_week."
+msgstr "{0} can be ordered next week."
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
@@ -222,8 +234,14 @@ msgstr "Thank you for your purchase!"
 msgid "Sign_out"
 msgstr "Sign out"
 
-msgid "Continue_shopping?"
-msgstr "Continue shopping?"
+msgid "Continue_shopping"
+msgstr "Continue shopping"
+
+msgid "Print_receipt"
+msgstr "Print receipt"
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} has placed a new order for {1} ({2})."
 
 msgid "Notification_about_instant_order_order"
 msgstr "Notification about instant order"
@@ -297,8 +315,8 @@ msgstr "You are already signed in."
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
 msgstr "Signing in failed. Accout inactive or password wrong?"
 
-msgid "Member_{0}_created_an_account."
-msgstr "Member {0} created an account."
+msgid "{0}_created_an_account."
+msgstr "{0} created an account."
 
 msgid "Welcome"
 msgstr "Welcome"
@@ -351,11 +369,11 @@ msgstr "Save"
 msgid "Cancel"
 msgstr "Cancel"
 
-msgid "Cancel_instant_order?"
-msgstr "Cancel instant order?"
+msgid "Cancel_order?"
+msgstr "Cancel order?"
 
-msgid "Really_cancel_instant_order?"
-msgstr "Do you really want to cancel the instant order?"
+msgid "Really_cancel_order?"
+msgstr "Do you really want to cancel the order?"
 
 msgid "January"
 msgstr "January"
@@ -489,6 +507,27 @@ msgstr "Please accept the cookies. Read more about it in our <a href=\"/privacy-
 msgid "Accept_cookies"
 msgstr "Accept cookies"
 
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr "You have already ordered {0} {1}x for {2}."
+
+msgid "Firstname"
+msgstr "First name"
+
+msgid "Lastname"
+msgstr "Last name"
+
+msgid "Contact_person"
+msgstr "Contact person"
+
+msgid "Company_name"
+msgstr "Company name"
+
+msgid "Please_enter_the_contact_person"
+msgstr "Please enter the contact person"
+
+msgid "Please_enter_your_lastname"
+msgstr "Please enter your last name"
+
 msgid "Empty_cart"
 msgstr "Remove products from cart"
 
@@ -528,8 +567,8 @@ msgstr "Show"
 msgid "Show_all_products"
 msgstr "Show all products"
 
-msgid "Place_instant_order_for"
-msgstr "Place instant order for"
+msgid "Place_order_for"
+msgstr "Place order for"
 
 msgid "Close_all_orders?"
 msgstr "Close all orders?"
@@ -702,11 +741,14 @@ msgstr "Do you really want to activate product {0}?"
 msgid "Really_deactivate_product_{0}?"
 msgstr "Do you really want to deactivate product {0}?"
 
-msgid "Delete_attribute"
-msgstr "Delete attribute"
+msgid "Edit_attribute"
+msgstr "Edit attribute"
 
-msgid "Really_delete_attribute_{0}?"
-msgstr "Do you really want to delete the attribute {0}?"
+msgid "Delete_attribute_{0}?"
+msgstr "Delete attribute {0}?"
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Check and do not forget to click save button."
 
 msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
 msgstr "Please chose if you want to add a payback or a credit upload."
@@ -879,6 +921,33 @@ msgstr "Really cancel invoice {0} of {1}?"
 msgid "Cancel_invoice"
 msgstr "Cancel invoice"
 
+msgid "The_order_was_placed_successfully."
+msgstr "The order was placed successfully."
+
+msgid "Errors_occurred_while_calculating_selling_price."
+msgstr "Errors occurred while calculating selling price."
+
+msgid "Calculate_selling_price"
+msgstr "Calculate selling price"
+
+msgid "Surcharge_in_percent_from_purchase_price_net"
+msgstr "Surcharge in % from purchase price net"
+
+msgid "Calculate_selling_price_explanation_text."
+msgstr "Calculate selling price."
+
+msgid "Change_product_name"
+msgstr "Change product name"
+
+msgid "Given_amount"
+msgstr "Given amount"
+
+msgid "back"
+msgstr "back"
+
+msgid "Send_email_to_member"
+msgstr "Send email to member"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
 
@@ -906,8 +975,8 @@ msgstr "Change price"
 msgid "Price_per_unit"
 msgstr "Price per unit"
 
-msgid "incl_vat"
-msgstr "incl. VAT"
+msgid "gross"
+msgstr "gross"
 
 msgid "Price_per_weight_(for_adaption_after_delivery)"
 msgstr "Price per weight (for adapting the weight after delivery)"
@@ -1045,7 +1114,10 @@ msgid "Enter_purchase_price"
 msgstr "Enter purchase price"
 
 msgid "Storage_location"
-msgstr ""
+msgstr "Storage location"
+
+msgid "EAN_13_code"
+msgstr "EAN13 barcode"
 
 msgid "delete"
 msgstr "delete"
@@ -1146,6 +1218,27 @@ msgstr "The product {0} was added to your cart."
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
 
+msgid "net_per_piece_abbr"
+msgstr "net/piece"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "net"
+msgstr "net"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Tax_rates_overview_table"
+msgstr "Tax rates overview table"
+
+msgid "All_amounts_in_{0}."
+msgstr "All prices in {0}."
+
+msgid "Delivery_note"
+msgstr "Delivery note"
+
 msgid "Delivered_deposit"
 msgstr "Delivered deposit"
 
@@ -1161,14 +1254,23 @@ msgstr ""
 msgid "Price_excl."
 msgstr "Price excl."
 
-msgid "VAT"
-msgstr "VAT"
-
 msgid "Price_incl."
 msgstr "Price incl."
 
 msgid "Total_sum"
 msgstr "Total sum"
+
+msgid "Price_net"
+msgstr "Price net"
+
+msgid "Total_sum_net"
+msgstr "Total sum net"
+
+msgid "Value_added_tax"
+msgstr "Value added tax"
+
+msgid "Total_sum_gross"
+msgstr "Total sum gross"
 
 msgid "Generated_on_{0}"
 msgstr "Generated on {0}"
@@ -1187,12 +1289,6 @@ msgstr "Deleted member"
 
 msgid "Price_per_weight"
 msgstr "Price per weight"
-
-msgid "Tax_rates_overview_table"
-msgstr "Tax rates overview table"
-
-msgid "Tax_rate"
-msgstr "Tax rate"
 
 msgid "Sum_price_excl."
 msgstr "Sum price excl."
@@ -1217,6 +1313,9 @@ msgstr "Product: Added"
 
 msgid "Action_Log_Product_attribute_added"
 msgstr "Product: Attribute added"
+
+msgid "Action_Log_Product_attribute_changed"
+msgstr "Product: Attribute changed"
 
 msgid "Action_Log_Product_image_uploaded"
 msgstr "Product: Image uploaded"
@@ -1467,6 +1566,9 @@ msgstr "Cronjob: Order lists sent"
 msgid "Action_Log_Cronjob_invoices_sent"
 msgstr "Cronjob: Invoices sent"
 
+msgid "Action_Log_Cronjob_delivery_notes_sent"
+msgstr "Cronjob: Delivery notes sent"
+
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr "Cronjob: Email order reminder sent"
 
@@ -1500,8 +1602,8 @@ msgstr "The email address is not valid."
 msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
 msgstr "The email address is already used by another member or manufacturer."
 
-msgid "Please_enter_your_street."
-msgstr "Please enter your street."
+msgid "Please_enter_your_street_and_number."
+msgstr "Please enter your street and nº."
 
 msgid "Please_enter_your_city."
 msgstr "Please enter your city."
@@ -1545,6 +1647,9 @@ msgstr "Please enter a name."
 msgid "An_attribute_with_this_name_already_exists."
 msgstr "An attribute with this name already exists."
 
+msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
+msgstr "The length of the barcode needs to be exactly {0}."
+
 msgid "Please_enter_a_title."
 msgstr "Please enter a title."
 
@@ -1577,6 +1682,9 @@ msgstr "Please accept the general terms and conditions."
 
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr "Please promise to pick up the ordered products."
+
+msgid "Please_select_your_payment_type."
+msgstr "Please select your payment type."
 
 msgid "Please_select_a_pickup_day."
 msgstr "Please select a pickup day."
@@ -1626,6 +1734,9 @@ msgstr "Please enter your first name."
 msgid "Please_enter_your_last_name."
 msgstr "Please enter your last name."
 
+msgid "The_shopping_price_is_not_valid."
+msgstr "The price type is not valid."
+
 msgid "Please_enter_your_old_password."
 msgstr "Please enter your old password."
 
@@ -1665,6 +1776,9 @@ msgstr "Manufacturers: inactive"
 msgid "Members:_inactive"
 msgstr "Members: inactive"
 
+msgid "deactivated"
+msgstr "deactivated"
+
 msgid "Please_enter_between_{0}_and_{1}_characters."
 msgstr "Please enter between {0} and {1} characters."
 
@@ -1683,11 +1797,11 @@ msgstr "online"
 msgid "Please_enter_your_feedback."
 msgstr "Please enter your feedback."
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 product} other{# products}}"
-
 msgid "Please_enter_a_correct_number."
 msgstr "Please enter a correct number."
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 product} other{# products}}"
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "The amount needs to be greater than 0."
@@ -1800,11 +1914,14 @@ msgstr "The amount needs to be greater than 0."
 msgid "The_approximate_weight_needs_to_be_a_number."
 msgstr "The approximate weight needs to be a number."
 
-msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
-msgstr "The approximate weight needs to be greater or equal than 0."
+msgid "The_approximate_weight_needs_to_be_greater_than_0."
+msgstr "The approximate weight needs to be greater than 0."
 
 msgid "member"
 msgstr "Member"
+
+msgid "Delivery_note_for_{0}"
+msgstr "Delivery note for {0}"
 
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Invoice nº {0}, {1}"
@@ -1823,9 +1940,6 @@ msgstr "Order lists for"
 
 msgid "Runtime"
 msgstr "Runtime"
-
-msgid "seconds"
-msgstr "seconds"
 
 msgid "Database_backup_successful"
 msgstr "Database backup successful"
@@ -1850,6 +1964,9 @@ msgstr "tomorrow"
 
 msgid "Pickup_reminder_for"
 msgstr "Pickup reminder for"
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 delivery note was} other{# delivery notes were}} generated successfully."
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 invoice was} other{# invoices were}} generated successfully."
@@ -1884,11 +2001,23 @@ msgstr "Payments are added by a superadmin by uploading a CSV list"
 msgid "Members"
 msgstr "Members"
 
+msgid "News"
+msgstr "News"
+
 msgid "Activities"
 msgstr "Activities"
 
 msgid "Credit"
 msgstr "Credit"
+
+msgid "Shopping_with_selling_price"
+msgstr "User selling price for shopping"
+
+msgid "Shopping_with_purchase_price"
+msgstr "Use purchase price for shopping"
+
+msgid "Shopping_with_zero_price"
+msgstr "Use zero price for shopping"
 
 msgid "weekly"
 msgstr "weekly"
@@ -1953,6 +2082,9 @@ msgstr "Header (top)"
 msgid "Footer_(bottom)"
 msgstr "Footer (bottom)"
 
+msgid "Self_service_customer"
+msgstr "Self-service customer"
+
 msgid "Admin"
 msgstr "Admin"
 
@@ -1967,6 +2099,9 @@ msgstr "Deposit overview"
 
 msgid "Journal"
 msgstr "Journal"
+
+msgid "Profit"
+msgstr "Profit"
 
 msgid "Payment_type_credit_upload"
 msgstr "Credit upload"
@@ -2004,6 +2139,12 @@ msgstr "inactive"
 msgid "active_state_all"
 msgstr "all"
 
+msgid "{0,plural,=1{1_minute} other{#_minutes}}"
+msgstr "{0,plural,=1{1 minute} other{# minutes}}"
+
+msgid "{0,plural,=1{1_second} other{#_seconds}}"
+msgstr "{0,plural,=1{1 second} other{# seconds}}"
+
 msgid "midnight"
 msgstr "midnight"
 
@@ -2031,9 +2172,6 @@ msgstr "Account of {0}"
 msgid "Modified_on"
 msgstr "Modified on"
 
-msgid "by"
-msgstr "by"
-
 msgid "Edit"
 msgstr "Edit"
 
@@ -2049,11 +2187,14 @@ msgstr "found"
 msgid "Your_cart_is_empty"
 msgstr "Your cart is empty"
 
-msgid "Product_sum_including_vat"
-msgstr "Product sum including VAT"
+msgid "Value_of_goods"
+msgstr "Value of goods"
 
 msgid "Deposit_sum"
 msgstr "Deposit sum"
+
+msgid "Total"
+msgstr "Total"
 
 msgid "From_which_in"
 msgstr "From which in"
@@ -2100,14 +2241,11 @@ msgstr "Forgot password?"
 msgid "Create_account"
 msgstr "Create account"
 
-msgid "Firstname"
-msgstr "First name"
+msgid "Register_as_company?"
+msgstr ""
 
-msgid "Lastname"
-msgstr "Last name"
-
-msgid "Street"
-msgstr "Street"
+msgid "Street_and_number"
+msgstr "Street and nº"
 
 msgid "Additional_address_information"
 msgstr "Additional information"
@@ -2120,6 +2258,9 @@ msgstr "City"
 
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Do you want to receive an order reminder e-mail every week?"
+
+msgid "Want_to_receive_the_newsletter?"
+msgstr "Do you want to receive the newsletter via email?"
 
 msgid "terms_of_use"
 msgstr "terms of use"
@@ -2136,6 +2277,9 @@ msgstr "Send"
 msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
 msgstr "The confirmation of your registration was sent to you by email."
 
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
+msgstr "Please also check the spam folder of your inbox and be aware that receiving the mail might last up to a several minutes!"
+
 msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
 msgstr "Your account was created but not activated yet. This means, you can't login yet!"
 
@@ -2145,8 +2289,26 @@ msgstr "You will get an e-mail as soon as we activate you."
 msgid "Imprint"
 msgstr "Imprint"
 
+msgid "Show_manufacturer_profile"
+msgstr "Show manufacturer"
+
+msgid "Show_products"
+msgstr "Show products"
+
+msgid "Stock_products"
+msgstr "Stock products"
+
+msgid "Self_service"
+msgstr "Self-service"
+
 msgid "Search:_name_id_or_barcode"
 msgstr "Search: name, ID or barcode"
+
+msgid "Please_search_or_scan_a_product_or_chose_a_category."
+msgstr "Please search or scan a product or chose a categoey."
+
+msgid "No_products_found."
+msgstr "No products found."
 
 msgid "Shopping_bag"
 msgstr "Shopping bag"
@@ -2160,6 +2322,9 @@ msgstr "Your shopping bag is empty."
 msgid "Finish_pickup"
 msgstr "Finish pickup"
 
+msgid "Continue_shopping?"
+msgstr "Continue shopping?"
+
 msgid "terms_and_conditions"
 msgstr "terms and conditions"
 
@@ -2169,20 +2334,20 @@ msgstr "if you want to continue to use this platform, please read the changed {0
 msgid "I_accept_the_{0}."
 msgstr "I accept the {0}."
 
-msgid "Load_past_orders"
-msgstr "Load past orders"
-
 msgid "This_order_will_be_placed_for_{0}."
 msgstr "This order will be placed for {0}."
 
 msgid "Only_stock_products_are_shown."
 msgstr "Only stock products are shown."
 
+msgid "activated"
+msgstr "activated"
+
+msgid "Load_past_orders"
+msgstr "Load past orders"
+
 msgid "Your_credit_balance"
 msgstr "Your credit balance"
-
-msgid "Value_added_tax"
-msgstr "Value added tax"
 
 msgid "Show_cart_button"
 msgstr "Show cart"
@@ -2212,7 +2377,10 @@ msgid "Please_pay_when_picking_up_products."
 msgstr "Please pay when picking up your products."
 
 msgid "Write_message_to_pick_up_team_for_{0}?"
-msgstr "Want to write a message to the pick up team on {0}?"
+msgstr "Want to write a message to the pick up team for {0}?"
+
+msgid "Write_message_to_{0}_for_{1}?"
+msgstr "Want to write a message to {0} for {1}?"
 
 msgid "Write_message_to_your_order."
 msgstr "Add message to your order?"
@@ -2232,11 +2400,47 @@ msgstr "No order possible"
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "How much of it do I want to pay in {0}?"
 
+msgid "available"
+msgstr "available"
+
+msgid "New"
+msgstr "New"
+
+msgid "More_infos_to_product_{0}"
+msgstr "More infos to product {0}"
+
+msgid "Instant_order"
+msgstr "Instant order"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 week} other{# week}}"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Stock product: order possible only by {0}."
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr "Stock product: order possible only with instant order when picking it up."
+
+msgid "Currently_not_on_stock"
+msgstr "Currently not on stock"
+
+msgid "from_which_{0}_%"
+msgstr "from which {0} %"
+
+msgid "Move_in_shopping_bag"
+msgstr "Move in shopping bag"
+
+msgid "Move_in_cart"
+msgstr "Add to cart"
+
+msgid "Weight_in"
+msgstr "Weight in"
+
 msgid "Comment"
 msgstr "Comment"
-
-msgid "Total"
-msgstr "Total"
 
 msgid "You_can_sign_in_here_for_ordering"
 msgstr "You can sign in here for placing a new order"
@@ -2271,9 +2475,6 @@ msgstr "Information"
 msgid "Contact"
 msgstr "Contact"
 
-msgid "Bank_account_credit_balance"
-msgstr "Bank account (credit)"
-
 msgid "Attention_delivery_break!"
 msgstr "Attention, delivery break!"
 
@@ -2292,50 +2493,11 @@ msgstr "Please upload images only if you have the rights to use!"
 msgid "Print"
 msgstr "Print"
 
+msgid "chose_category..."
+msgstr "chose category..."
+
 msgid "Reset_search"
 msgstr "Reset search"
-
-msgid "available"
-msgstr "available"
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr "Stock product: order possible only by {0}."
-
-msgid "Self_service"
-msgstr "Self-service"
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr "Stock product: order possible only with instant order when picking it up."
-
-msgid "Currently_not_on_stock"
-msgstr "Currently not on stock"
-
-msgid "New"
-msgstr "New"
-
-msgid "More_infos_to_product_{0}"
-msgstr "More infos to product {0}"
-
-msgid "Instant_order"
-msgstr "Instant order"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr "{0,plural,=1{1 week} other{# week}}"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
-
-msgid "from_which_{0}_%"
-msgstr "from which {0} %"
-
-msgid "Move_in_shopping_bag"
-msgstr "Move in shopping bag"
-
-msgid "Move_in_cart"
-msgstr "Add to cart"
-
-msgid "Weight_in"
-msgstr "Weight in"
 
 msgid "Add_deposit"
 msgstr "Add deposit"
@@ -2343,8 +2505,17 @@ msgstr "Add deposit"
 msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
 
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr "The entered deposit will not show up in the cart but added to your credit."
+
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
+
+msgid "Cash"
+msgstr "Cash"
+
+msgid "Payment_type"
+msgstr "Payment"
 
 msgid "Categories"
 msgstr "Categories"
@@ -2451,6 +2622,9 @@ msgstr "This e-mail was automatically created."
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
 msgstr "You can unsubscribe it <a href=\"{0}\">in your settings</a>."
 
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
+msgstr "You can unsubscribe our newsletter <a href=\"{0}\">in the admin area's menu point \"My data\"</a>."
+
 msgid "homepage"
 msgstr "homepage"
 
@@ -2510,6 +2684,76 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Please_enter_the_lastname"
+#~ msgstr "Please enter the last name"
+
+#, fuzzy
+#~ msgid "Total_sum_tax"
+#~ msgstr "Total sum"
+
+#~ msgid "by"
+#~ msgstr "by"
+
+#~ msgid "Archive"
+#~ msgstr "Archive"
+
+#, fuzzy
+#~ msgid "route_blog_list"
+#~ msgstr "archive"
+
+#, fuzzy
+#~ msgid "route_blog_detail"
+#~ msgstr "news"
+
+#, fuzzy
+#~ msgid "route_news_detail_old"
+#~ msgstr "news"
+
+#~ msgid "seconds"
+#~ msgstr "seconds"
+
+#, fuzzy
+#~ msgid "Placeholder_message_pickup_day_comment_can_be_edited."
+#~ msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
+
+#~ msgid "Please_also_check_the_spam_folder_of_your_inbox!"
+#~ msgstr "Please also check the spam folder of your inbox!"
+
+#, fuzzy
+#~ msgid "The_name_must_not_be_empty."
+#~ msgstr "The date must not be a future date."
+
+#~ msgid "incl_vat"
+#~ msgstr "incl. VAT"
+
+#~ msgid "Street"
+#~ msgstr "Street"
+
+#~ msgid "Really_delete_attribute_{0}?"
+#~ msgstr "Do you really want to delete the attribute {0}?"
+
+#~ msgid "Surcharge"
+#~ msgstr "Surcharge"
+
+#~ msgid "The_discount_is_not_valid."
+#~ msgstr "The discount is not valid."
+
+#~ msgid "No_discount_normal_selling_prices_are_used"
+#~ msgstr "No discount - normal selling prices are used for shopping"
+
+#~ msgid "Bank_account_credit_balance"
+#~ msgstr "Bank account (credit)"
+
+#~ msgid "Product_sum_including_vat"
+#~ msgstr "Product sum including VAT"
+
+#~ msgid "Self_service_client"
+#~ msgstr "Self-service client"
+
+#, fuzzy
+#~ msgid "Credit_system"
+#~ msgstr "Credit"
 
 #~ msgid "Action_Log_Member_member_fee_added"
 #~ msgstr "Member: Member fee added"
@@ -2595,9 +2839,6 @@ msgstr "The prices include the VAT."
 #~ msgid "VAT_rate"
 #~ msgstr "Tax rate"
 
-#~ msgid "Shopping_limit_reached"
-#~ msgstr "Shopping limit reached"
-
 #~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
 #~ msgstr "You reached the order limit of {0}. Please add credit."
 
@@ -2633,9 +2874,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "Maximum_{0}_characters_please."
 #~ msgstr "Maximum {0} characters please."
-
-#~ msgid "New_product_of"
-#~ msgstr "New product of"
 
 #~ msgid "Do_not_cancel_button"
 #~ msgstr "Close"

@@ -15,19 +15,20 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
-    Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".ModalImage.init('a.open-with-modal');"
+    Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 ?>
 
 <h1><?php echo $title_for_layout; ?>
+
+<?php if (is_array($blogPosts)); //app.isBlogFeatureEnabled false ?>
+
 <?php if (isset($manufacturer->name)) {
     echo ' ' . __('of_{0}', [$manufacturer->name]);
 } ?>
 <span><?php echo $blogPosts->count(); ?> <?php echo __('found'); ?></span></h1>
 
 <?php
-
 
 echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,

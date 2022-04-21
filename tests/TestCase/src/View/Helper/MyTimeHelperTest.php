@@ -14,6 +14,7 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\View\Helper\MyTimeHelper;
+use Cake\I18n\FrozenDate;
 use Cake\View\View;
 
 class MyTimeHelperTest extends AppCakeTestCase
@@ -275,7 +276,7 @@ class MyTimeHelperTest extends AppCakeTestCase
             'delivery_rhythm_type' => 'individual',
             'delivery_rhythm_count' => 0,
             'delivery_rhythm_send_order_list_weekday' => 3,
-            'delivery_rhythm_order_possible_until' => '2020-12-12',
+            'delivery_rhythm_order_possible_until' => new FrozenDate('2020-12-12'),
         ];
         $this->assertGetLastOrderDay($product, '2020-12-12');
     }

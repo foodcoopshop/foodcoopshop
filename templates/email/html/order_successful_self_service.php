@@ -71,5 +71,13 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             </b></td></tr>
         <?php } ?>
 
+        <?php
+            if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') && isset($appAuth) && !$appAuth->user('newsletter_enabled')) {
+                echo '<tr><td style="font-size:12px;">';
+                    echo __('You_can_subscribe_our_newsletter_<a href="{0}">in_the_admin_areas_menu_point_my_data</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getCustomerProfile()]);
+                echo '</td></tr>';
+            }
+        ?>
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>

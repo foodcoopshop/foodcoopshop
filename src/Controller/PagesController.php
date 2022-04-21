@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
+use App\Lib\Catalog\Catalog;
 use Cake\Core\Configure;
 use Cake\Utility\Security;
 use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
@@ -79,7 +80,7 @@ class PagesController extends FrontendController
          */
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findForStartPage($this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
@@ -88,13 +89,13 @@ class PagesController extends FrontendController
         $sliders = $this->Slider->getForHome($this->AppAuth);
         $this->set('sliders', $sliders);
 
-        $newProducts = [];
-        if (Configure::read('appDb.FCS_SHOW_NEW_PRODUCTS_ON_HOME') && (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
-            $this->Category = $this->getTableLocator()->get('Categories');
-            $newProducts = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-            $newProducts = $this->prepareProductsForFrontend($newProducts);
+        $products = [];
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+            $this->Catalog = new Catalog();
+            $products = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
+            $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
         }
-        $this->set('newProducts', $newProducts);
+        $this->set('newProducts', $products);
 
     }
 

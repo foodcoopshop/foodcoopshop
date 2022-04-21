@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-08-02 21:27+0200\n"
-"PO-Revision-Date: 2021-08-02 21:29+0200\n"
+"POT-Creation-Date: 2022-04-12 15:58+0200\n"
+"PO-Revision-Date: 2022-04-12 15:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -99,8 +99,8 @@ msgstr "Passwort ändern"
 msgid "The_manufacturer_{0}_has_changed_his_password."
 msgstr "Der Hersteller {0} hat sein Passwort geändert."
 
-msgid "The_member_{0}_has_changed_his_password."
-msgstr "Das Mitglied {0} hat sein Passwort geändert."
+msgid "{0}_has_changed_the_password."
+msgstr "{0} hat das Passwort geändert."
 
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr "Dein neues Passwort wurde erfolgreich gespeichert."
@@ -195,11 +195,20 @@ msgstr "Rechnungen"
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
 
+msgid "Paid_in_cash"
+msgstr "Bar bezahlt"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Rechnung Nr."
+
 msgid "Print_receipt"
 msgstr "Beleg drucken"
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich erstellt."
+
+msgid "Invoice_cancelled"
+msgstr "Rechnung storniert"
 
 msgid "Download"
 msgstr "Download"
@@ -209,6 +218,9 @@ msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich storniert."
 
 msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
 msgstr "Die Storno-Rechnung Nr. {0} wurde erfolgreich erstellt."
+
+msgid "My_invoices"
+msgstr "Meine Rechnungen"
 
 msgid "Journal"
 msgstr "Journal"
@@ -227,6 +239,9 @@ msgstr "Mitglied"
 
 msgid "Order_lists"
 msgstr "Bestelllisten"
+
+msgid "Invoice"
+msgstr "Rechnung"
 
 msgid "Add_manufacturer"
 msgstr "Neuen Hersteller erstellen"
@@ -257,6 +272,18 @@ msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
 
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
+
+msgid "Self_service_order"
+msgstr "Bestellung über SB-Modus"
+
+msgid "Edit_purchase_price"
+msgstr "Einkaufspreis bearbeiten"
+
+msgid "Purchase_price_has_been_saved_successfully."
+msgstr "Der Einkaufspreis wurde erfolgreich gespeichert."
+
+msgid "Profit"
+msgstr "Gewinn"
 
 msgid "Group_by_product"
 msgstr "Gruppieren nach Produkt"
@@ -324,6 +351,9 @@ msgstr "Bestellte Anzahl angepasst"
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Der Lagerstand wurde auf {0} erhöht."
 
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr "Der Name des bestellten Produktes {0} wurde erfolgreich auf {1} geändert."
+
 msgid "The_price_is_not_valid."
 msgstr "Der Preis ist nicht gültig."
 
@@ -339,8 +369,11 @@ msgstr "Bitte gib an, warum der Abholtag geändert wird."
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
 
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
-msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert und {2,plural,=1{ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert."
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "{0,plural,=1{Ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
 
 msgid "{0}_has_written_a_feedback_to_product_{1}."
 msgstr "{0} hat ein Feedback zum Produkt {1} verfasst."
@@ -432,6 +465,12 @@ msgstr "Bestellung anzeigen"
 msgid "of_{0}"
 msgstr "von {0}"
 
+msgid "Surcharge_needs_to_be_greater_than_0."
+msgstr "Der Aufschlag muss größer als 0 sein."
+
+msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
+msgstr "Der Netto-Verkaufspreis wurde erfolgreich berechnet: {0} vom Netto-Einkaufspreis"
+
 msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
 msgstr "Das Produkt {0} hat {1,plural,=1{1 offene Bestellung} other{# offene Bestellungen}}."
 
@@ -452,6 +491,9 @@ msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
 
 msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
 msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich gelöscht."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
+msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich geändert."
 
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
 msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgreich erstellt."
@@ -807,8 +849,8 @@ msgstr "Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch f
 msgid "Show_on_startpage_until"
 msgstr "Auf Startseite anzeigen bis"
 
-msgid "Leave_empty_to_never_show_blog_post_on_start_page."
-msgstr "Leeres Feld bedeutet: der Blog-Artikel wird nicht auf der Startseite angezeigt."
+msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
+msgstr "Nach dem Datum rutscht der Blog-Artikel automatisch ins <a href=\"/blog-archiv\">Blog-Archiv</a>. Leeres Feld: Blog-Artikel nicht auf der Startseite anzeigen."
 
 msgid "Only_for_members"
 msgstr "Nur für Mitglieder"
@@ -945,6 +987,15 @@ msgstr "Davon Pfand"
 msgid "docs_route_members"
 msgstr "mitglieder"
 
+msgid "Company_name"
+msgstr "Firmenname"
+
+msgid "Contact_person"
+msgstr "Ansprechperson"
+
+msgid "Will_be_shown_on_invoices."
+msgstr "Wird auf den Rechnungen angezeigt."
+
 msgid "Firstname"
 msgstr "Vorname"
 
@@ -961,7 +1012,7 @@ msgid "Only_visible_for_other_membes_in_the_member_list."
 msgstr "Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar."
 
 msgid "Is_shown_on_member_card."
-msgstr "Wird auf der Mitgliedkarte angezeigt."
+msgstr "Wird auf der Mitgliedskarte angezeigt."
 
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Neues Profilbild hochladen bzw. austauschen"
@@ -972,8 +1023,8 @@ msgstr "Profilbild löschen?"
 msgid "Email"
 msgstr "E-Mail"
 
-msgid "Street"
-msgstr "Straße"
+msgid "Street_and_number"
+msgstr "Straße + Nummer"
 
 msgid "Additional_address_information"
 msgstr "Adresszusatz"
@@ -990,11 +1041,53 @@ msgstr "Handy"
 msgid "Phone"
 msgstr "Telefon"
 
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
 msgid "Order_reminder"
 msgstr "Bestell-Erinnerung"
 
-msgid "Want_to_receive_reminder_emails?"
-msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
+msgid "Want_to_receive_order_reminder_emails?"
+msgstr "Ich möchte 1x wöchentlich per E-Mail ans Bestellen erinnert werden."
+
+msgid "Pickup_day_reminder"
+msgstr "Abholtag-Erinnerung"
+
+msgid "Want_to_receive_pickup_day_reminder_emails?"
+msgstr "Ich möchte bei Sammelbestellungen an das Abholen meiner Produkte erinnert werden."
+
+msgid "Invoices_per_email"
+msgstr "Rechnungen per E-Mail"
+
+msgid "Want_to_receive_invoices_per_email?"
+msgstr "Ich möchte meine Rechnungen per E-Mail erhalten. Du findest deine Rechnungen immer unter <a href=\"/admin/invoices/myInvoices\">Meine Rechnungen</a>."
+
+msgid "Check_credit_reminder"
+msgstr "Guthaben-Aufladung-Erinnerung"
+
+msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
+msgstr "Ich möchte 1x wöchentlich per E-Mail benachrichtigt werden, wenn mein Guthaben weniger als {0} beträgt."
+
+msgid "Credit_upload_reminder"
+msgstr "Überweisung ins Guthaben-System übernommen"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Want_to_receive_the_newsletter_per_email?"
+msgstr "Ich möchte den Newsletter per E-Mail erhalten?"
+
+msgid "Self_service_mode"
+msgstr "Selbstbedienungs-Modus"
+
+msgid "Generate_my_member_card"
+msgstr "Meine Mitgliedskarte generieren"
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgstr "Ich möchte die Kamera meines Smartphones zum Scannen der Barcodes benutzen."
 
 msgid "Paying_with_time_module_active?"
 msgstr "Stundenabrechnungs-Modul aktiv?"
@@ -1008,14 +1101,11 @@ msgstr "stundenabrechnungs-modul"
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
 
-msgid "Self_service_mode"
-msgstr "Selbstbedienungs-Modus"
+msgid "Superadmin_functions"
+msgstr "Superadmin-Funktionen"
 
-msgid "Generate_my_member_card"
-msgstr "Meine Mitgliedskarte generieren"
-
-msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
-msgstr "Ich möchte die Kamera meines Smartphones zum Scannen der Barcodes benutzen."
+msgid "Prices"
+msgstr "Preise"
 
 msgid "Delete_member_irrevocably?"
 msgstr "Mitgliedskonto unwiderruflich löschen?"
@@ -1044,8 +1134,8 @@ msgstr "Letzter Abholtag"
 msgid "Comment_abbreviation"
 msgstr "Komm."
 
-msgid "Newbie_only_{0}_products_ordered."
-msgstr "Neuling: Erst {0} Produkte bestellt."
+msgid "Newbie_has_{0}_orders."
+msgstr "Neuling: Hat erst {0}x bestellt."
 
 msgid "Show_all_orders_from_{0}"
 msgstr "Alle Bestellungen von {0} anzeigen"
@@ -1067,6 +1157,12 @@ msgstr "Guthaben anzeigen"
 
 msgid "Show_{0}"
 msgstr "{0} anzeigen"
+
+msgid "Purchase_price_abbreviation"
+msgstr "EP"
+
+msgid "Zero_price_abbreviation"
+msgstr "NP"
 
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
@@ -1170,32 +1266,23 @@ msgstr "Rechnungen downloaden"
 msgid "Copy_to_clipboard"
 msgstr "In die Zwischenablage kopieren"
 
-msgid "Invoice_number_abbreviation"
-msgstr "Rechnung Nr."
-
 msgid "Invoice_date"
 msgstr "Rechnungsdatum"
 
-msgid "Sum_excl_tax"
-msgstr "Summe exkl. USt."
+msgid "Net"
+msgstr "Netto"
 
-msgid "Sum_tax"
-msgstr "Summe USt."
+msgid "VAT"
+msgstr "USt."
 
-msgid "Sum_incl_tax"
-msgstr "Summe inkl. USt."
-
-msgid "Paid_in_cash"
-msgstr "Bar bezahlt"
+msgid "Gross"
+msgstr "Brutto"
 
 msgid "Email_sent"
 msgstr "E-Mail versendet"
 
 msgid "Receipt"
 msgstr "Beleg"
-
-msgid "Invoice"
-msgstr "Rechnung"
 
 msgid "Cancellation"
 msgstr "Stornierung"
@@ -1356,9 +1443,6 @@ msgstr "Wie verwende ich die Funktion \"Lieferpause\"?"
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Hersteller-Profil und Produkte werden <b>nur für eingeloggte Mitglieder</b> angezeigt."
 
-msgid "Notifications"
-msgstr "Benachrichtigungen"
-
 msgid "Order_lists_by_email"
 msgstr "Bestelllisten per E-Mail"
 
@@ -1386,6 +1470,12 @@ msgstr "Rechnungen per E-Mail"
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr "monatlich per E-Mail die Rechnungen erhalten."
 
+msgid "Delivery_notes_by_email"
+msgstr "Lieferscheine per E-Mail"
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr "monatlich per E-Mail die Lieferscheine erhalten."
+
 msgid "Cancellations"
 msgstr "Stornierungen"
 
@@ -1397,6 +1487,12 @@ msgstr "Preis- und Gewichtsanpassungen von bestellten Produkten"
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
 msgstr "bei jeder Preis- und Gewichtsanpassung eines bereits bestellten Produktes eine Info-Mail erhalten."
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr "Preisanpassungen von bestellten Produkten"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
+msgstr "bei jeder Preisanpassung eines bereits bestellten Produktes eine Info-Mail erhalten."
 
 msgid "Adaptions_of_the_ordered_amount"
 msgstr "Änderungen der bestellten Anzahl"
@@ -1443,8 +1539,11 @@ msgstr "Geringer Lagerstand: Benachrichtigung für Ansprechperson?"
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr "Die Ansprechperson möchte eine E-Mail bekommen, sobald der Lagerstand eines Produktes zu Ende geht."
 
-msgid "Contact_person"
-msgstr "Ansprechperson"
+msgid "Stock_products_in_order_lists"
+msgstr "Lagerprodukte in Bestelllisten"
+
+msgid "Should_stock_products_be_included_in_order_lists?"
+msgstr "Sollen die Bestelllisten auch Lagerprodukte enthalten?"
 
 msgid "Chose_member"
 msgstr "Mitglied auswählen..."
@@ -1497,6 +1596,9 @@ msgstr "Bestellliste prüfen"
 msgid "Product"
 msgstr "Produkt"
 
+msgid "Delivery_note"
+msgstr "Lieferschein"
+
 msgid "Test_invoice"
 msgstr "Rechnung prüfen"
 
@@ -1506,7 +1608,13 @@ msgstr "Hersteller-Profil"
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "Purchase_price_tax_excl"
+msgstr "Einkaufspreis netto"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_order."
 msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
@@ -1529,6 +1637,9 @@ msgstr "Alle Produkte"
 
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
+
+msgid "Profit / all prices are net prices"
+msgstr "Gewinn / Netto-Preise"
 
 msgid "Page_title"
 msgstr "Seitentitel"
@@ -1668,20 +1779,20 @@ msgstr "Produktdeklaration"
 msgid "Stock_product"
 msgstr "Lagerprodukt"
 
-msgid "Purchase_price_abbreviation"
-msgstr "EP"
+msgid "gross"
+msgstr "brutto"
 
-msgid "incl_vat"
-msgstr "inkl. USt."
+msgid "Surcharge"
+msgstr "Aufschlag"
+
+msgid "net"
+msgstr "netto"
 
 msgid "Selling_price_abbreviation"
 msgstr "VP"
 
 msgid "Price"
 msgstr "Preis"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "New?"
 msgstr "Neu?"
@@ -1690,7 +1801,7 @@ msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
 
 msgid "Storage_location"
-msgstr ""
+msgstr "Lagerort"
 
 msgid "Added_on"
 msgstr "Eingetragen am"
@@ -1773,6 +1884,9 @@ msgstr "Sofort-Bestellung für heute"
 msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
+msgid "Order_stock_products"
+msgstr "Lagerprodukte bestellen"
+
 msgid "Copy_email_addresses_of_selected_customers"
 msgstr "E-Mail-Adressen der ausgewählten Mitglieder kopieren"
 
@@ -1787,12 +1901,6 @@ msgstr "1 Tag vor"
 
 msgid "to"
 msgstr "bis"
-
-msgid "Sum_price_excl."
-msgstr "Summe Preis exkl."
-
-msgid "Sum_price_incl."
-msgstr "Summe Preis inkl."
 
 msgid "Bank_account_data"
 msgstr "Bankdaten"
@@ -1839,9 +1947,6 @@ msgstr "Ausgewählte Produkte stornieren"
 msgid "Orders_as_pdf"
 msgstr "Bestellungen als PDF"
 
-msgid "Orders_as_pdf_order_by_storage_location"
-msgstr "Bestellungen als PDF (nach Lagerort)"
-
 msgid "Multiple_pickup_days"
 msgstr "Mehrere Abholtage"
 
@@ -1857,8 +1962,14 @@ msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
 msgid "Invoice_cannot_be_generated"
 msgstr "Keine Rechnung erstellbar"
 
+msgid "No_invoices_available."
+msgstr "Keine Rechnungen vorhanden."
+
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
+
+msgid "Click_to_change_name"
+msgstr "Zum Ändern des Namens anklicken"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
@@ -1932,6 +2043,9 @@ msgstr "Vielen Dank, dass du uns belieferst!"
 msgid "Customer_ID"
 msgstr "Mitglieds-Nr."
 
+msgid "Calculate_selling_price_with_surcharge_for_selected_products"
+msgstr "Verkaufspreis mit Aufschlag für ausgewählte Produkte berechnen"
+
 msgid "Delete_selected_products"
 msgstr "Ausgewählte Produkte löschen"
 
@@ -1972,7 +2086,7 @@ msgid "New"
 msgstr "Neu"
 
 msgid "Mark_product_as_new_for_the_next_{0}_days?"
-msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
+msgstr "Produkt die nächsten {0} Tage als neu anzeigen?"
 
 msgid "Do_not_mark_product_as_new_any_more?"
 msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
@@ -1980,8 +2094,8 @@ msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
 msgid "Is_stock_product"
 msgstr "Produkt ist ein Lagerprodukt"
 
-msgid "Delete_attribute_for_product_{0}"
-msgstr "Variante für Produkt {0} löschen"
+msgid "Edit_attribute_for_product_{0}"
+msgstr "Variante {0} bearbeiten"
 
 msgid "This_attribute_is_the_default_attribute."
 msgstr "Diese Variante ist die Standardvariante."
@@ -2000,6 +2114,9 @@ msgstr "Produkt-Vorschau"
 
 msgid "change_price"
 msgstr "Preis ändern"
+
+msgid "Purchase_price_not_set_and_therefore_never_active."
+msgstr "Das Produkt kann erst bestellt werden, sobald der Einkaufspreis hinterlegt wurde."
 
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"
@@ -2040,6 +2157,9 @@ msgstr "Bitte überweise bald wieder ein neues Guthaben auf unser Konto und verg
 msgid "Transactions_were_checked_until_{0}."
 msgstr "Es wurden alle Überweisungen bis zum {0} berücksichtigt."
 
+msgid "Here_you_can_unsubscribe_this_email_reminder"
+msgstr "Hier kannst du diese E-Mail abbestellen"
+
 msgid "Amount_(Money)"
 msgstr "Betrag"
 
@@ -2057,9 +2177,6 @@ msgstr "warenkorb"
 
 msgid "Click_here_to_open_the"
 msgstr "Hier geht's zur"
-
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr "Und hier kannst du diese E-Mail abbestellen"
 
 msgid "The_amount_of_the_product_{0}_has_been_adapted."
 msgstr "Die Anzahl des Produktes {0} wurde angepasst."
@@ -2143,7 +2260,7 @@ msgid "New_price_for"
 msgstr "Neuer Preis für"
 
 msgid "The_base_price_is_{0}."
-msgstr "Der Basis-Preis beträgt {0}."
+msgstr "Der Grundpreis beträgt {0}."
 
 msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
 msgstr "Der Status deiner Guthaben-Aufladung vom {0} über {1} wurde auf {2} geändert."
@@ -2160,8 +2277,17 @@ msgstr "Du bekommst diese E-Mail, weil deine Bestellung länger als {0} Tage her
 msgid "Please_find_your_cancellation_invoice_attached."
 msgstr "Deine Storno-Rechnung befindet sich im Anhang."
 
-msgid "Please_find_your_current_invoice_attached."
-msgstr "Die aktuelle Rechnung befindet sich im Anhang."
+msgid "Post_scriptum_abbreviation"
+msgstr "PS"
+
+msgid "Your_current_credit_equals_{0}."
+msgstr "Dein aktuelles Guthaben beträgt {0}."
+
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "in diesem Lieferschein sind alle Produkte enthalten, die im {0} geliefert wurden."
+
+msgid "Please_find_your_invoice_attached."
+msgstr "Deine Rechnung befindet sich im Anhang."
 
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "{0} sagt Danke für Deinen Einkauf!"
@@ -2214,9 +2340,6 @@ msgstr "Bestellungen vom"
 msgid "Price_excl."
 msgstr "Preis exkl."
 
-msgid "VAT"
-msgstr "USt."
-
 msgid "Price_incl."
 msgstr "Preis inkl."
 
@@ -2255,6 +2378,73 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Orders_as_pdf_order_by_storage_location"
+#~ msgstr "Bestellungen als PDF (nach Lagerort)"
+
+#~ msgid "Leave_empty_to_never_show_blog_post_on_start_page._After_that_the_blog_post_is_shown_in_the_blog_archive."
+#~ msgstr "Leeres Feld bedeutet: der Blog-Artikel wird nicht auf der Startseite angezeigt. Danach rutscht der Blog-Artikel ins <a href=\"/blog-archiv\">Blog-Archiv</a>."
+
+#~ msgid "net_per_piece_abbr"
+#~ msgstr "netto/St."
+
+#~ msgid "Unit"
+#~ msgstr "Einheit"
+
+#~ msgid "Tax_rates_overview_table"
+#~ msgstr "Steuerübersicht Gesamt"
+
+#~ msgid "to_include_stock_products_in_order_lists."
+#~ msgstr "in den Bestelllisten auch Lagerprodukte anzeigen."
+
+#~ msgid "Sum_excl_tax"
+#~ msgstr "Summe exkl. USt."
+
+#~ msgid "Sum_tax"
+#~ msgstr "Summe USt."
+
+#~ msgid "Sum_incl_tax"
+#~ msgstr "Summe inkl. USt."
+
+#~ msgid "Sum_price_excl."
+#~ msgstr "Summe Preis exkl."
+
+#~ msgid "Sum_price_incl."
+#~ msgstr "Summe Preis inkl."
+
+#~ msgid "Latest_invoices"
+#~ msgstr "Letzte Rechnungen"
+
+#, fuzzy
+#~ msgid "Newbie_has_max_{0}_orders."
+#~ msgstr "Neuling: Erst {0} Produkte bestellt."
+
+#~ msgid "Latest_invoices_for_{0}"
+#~ msgstr "Letzte Rechnungen für {0}"
+
+#~ msgid "incl_vat"
+#~ msgstr "inkl. USt."
+
+#~ msgid "excl_vat"
+#~ msgstr "exkl. USt."
+
+#~ msgid "Street"
+#~ msgstr "Straße"
+
+#~ msgid "The_product_attribute_{0}_was_changed_successfully."
+#~ msgstr "Die Variante {0} wurde erfolgreich geändert."
+
+#~ msgid "Please_chose_member_in_above_dropdown_for_placing_self_service_order."
+#~ msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+
+#~ msgid "The_pickup_day_of_the_self_service_order_will_be_today_{0}."
+#~ msgstr "Der Abholtag der Bestellung im SB-Modus wird automatisch auf <b>heute, {0}</b> gesetzt."
+
+#~ msgid "Self_service_order_for_member"
+#~ msgstr "Bestellung über SB-Modus"
+
+#~ msgid "Discount"
+#~ msgstr "Rabatt"
 
 #~ msgid "Print"
 #~ msgstr "Drucken"
@@ -2326,10 +2516,6 @@ msgstr "Produkt-Nr."
 #, fuzzy
 #~ msgid "Feedback_to_product"
 #~ msgstr "produkte"
-
-#, fuzzy
-#~ msgid "Delivery_date"
-#~ msgstr "Liefertag"
 
 #~ msgid "Quantity"
 #~ msgstr "Verfügbare Menge"

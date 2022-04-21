@@ -66,7 +66,11 @@ class AppAuthComponent extends AuthComponent
 
     public function getAbbreviatedUserName()
     {
-        return $this->user('firstname') . ' ' . substr($this->user('lastname'), 0, 1) . '.';
+        $result = $this->user('firstname') . ' ' . substr($this->user('lastname'), 0, 1) . '.';
+        if ($this->user('is_company')) {
+            $result = $this->user('firstname');
+        }
+        return $result;
     }
 
     public function getGroupId()
@@ -79,6 +83,16 @@ class AppAuthComponent extends AuthComponent
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $dropdownData = $this->OrderDetail->getLastOrderDetailsForDropdown($this->getUserId());
         return $dropdownData;
+    }
+
+    public function getFutureOrderDetails()
+    {
+        if (empty($this->user())) {
+            return [];
+        }
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $futureOrderDetails = $this->OrderDetail->getFutureOrdersByCustomerId($this->getUserId());
+        return $futureOrderDetails;
     }
 
     public function getCreditBalanceMinusCurrentCartSum()
@@ -116,7 +130,7 @@ class AppAuthComponent extends AuthComponent
         }
     }
 
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
         if ($this->isManufacturer()) {
             return false;
@@ -127,11 +141,7 @@ class AppAuthComponent extends AuthComponent
         return false;
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    public function isManufacturer()
+    public function isManufacturer(): bool
     {
         $this->setManufacturer();
         if (! empty($this->manufacturer)) {
@@ -167,11 +177,7 @@ class AppAuthComponent extends AuthComponent
         return '';
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         if ($this->isManufacturer()) {
             return false;
@@ -182,16 +188,28 @@ class AppAuthComponent extends AuthComponent
         return false;
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    public function isCustomer()
+    public function isCustomer(): bool
     {
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->user('id_default_group') == CUSTOMER_GROUP_MEMBER) {
+        if (in_array($this->user('id_default_group'), [
+            CUSTOMER_GROUP_MEMBER,
+            CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER,
+            ],
+            )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isSelfServiceCustomer(): bool
+    {
+        if ($this->isManufacturer()) {
+            return false;
+        }
+        if ($this->user('id_default_group') == CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER) {
             return true;
         }
         return false;
@@ -203,9 +221,9 @@ class AppAuthComponent extends AuthComponent
         return $c->getCreditBalance($this->getUserId());
     }
 
-    public function isInstantOrderMode()
+    public function isOrderForDifferentCustomerMode()
     {
-        return $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer');
+        return $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer');
     }
 
     public function isSelfServiceModeByUrl()
@@ -238,7 +256,7 @@ class AppAuthComponent extends AuthComponent
     {
         $cart = FactoryLocator::get('Table')->get('Carts');
         $cartType = $cart::CART_TYPE_WEEKLY_RHYTHM;
-        if ($this->isInstantOrderMode()) {
+        if ($this->isOrderForDifferentCustomerMode()) {
             $cartType = $cart::CART_TYPE_INSTANT_ORDER;
         }
         if ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer()) {
@@ -264,12 +282,12 @@ class AppAuthComponent extends AuthComponent
         return $cart->getCart($this, $cartType);
     }
 
-    public function isTimebasedCurrencyEnabledForManufacturer()
+    public function isTimebasedCurrencyEnabledForManufacturer(): bool
     {
         return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->manufacturer->timebased_currency_enabled;
     }
 
-    public function isTimebasedCurrencyEnabledForCustomer()
+    public function isTimebasedCurrencyEnabledForCustomer(): bool
     {
         return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->user('timebased_currency_enabled');
     }

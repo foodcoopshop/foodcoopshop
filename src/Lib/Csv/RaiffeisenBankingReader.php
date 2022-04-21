@@ -18,6 +18,8 @@ use Cake\Core\Configure;
 
 class RaiffeisenBankingReader extends BankingReader {
 
+    public $dataContainsHeadline = false;
+
     public function configureType(): void
     {
         $this->setDelimiter(';');
@@ -55,7 +57,8 @@ class RaiffeisenBankingReader extends BankingReader {
 
             $record['amount'] = $record[3];
 
-            // create a valid date format: 01.02.2019 02:51:14:563 replaces last : to . (microseconds)
+            // 01.02.2019 02:51:14:563 =>
+            // 01.02.2019 02:51:14.563
             $record['date'] =  substr_replace($record[5], '.', 19, 1);
 
             $preparedRecords[] = $record;

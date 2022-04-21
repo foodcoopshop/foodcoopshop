@@ -2,19 +2,21 @@
   <a href="https://www.foodcoopshop.com"><img src="https://raw.githubusercontent.com/foodcoopshop/foodcoopshop/develop/webroot/files/images/logo.png" alt="FoodCoopShop"></a>
 </h1>
 
-<h4 align="center">User-friendly open source software for food-coops.</h4>
+<h4 align="center">User-friendly open source software for <a href="https://www.foodcoopshop.com">food-coops</a> and <a href="https://dorfladen-online.at">local shops</a>.</h4>
 
 <p align="center">
   <a href="https://www.foodcoopshop.com/download">
-    <img src="https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable&style=flat-square"
-         alt="Latest stable version">
+    <img src="https://img.shields.io/github/v/release/foodcoopshop/foodcoopshop?label=stable&style=for-the-badge" alt="Latest stable version">
   </a>
   <a href="https://github.com/foodcoopshop/foodcoopshop/actions">
-    <img src="https://img.shields.io/github/workflow/status/foodcoopshop/foodcoopshop/FoodCoopShop%20CI/develop?style=flat-square"
+    <img src="https://img.shields.io/github/workflow/status/foodcoopshop/foodcoopshop/FoodCoopShop%20CI/develop?style=for-the-badge"
         alt="Build status">
   </a>
+  <a href="https://github.com/foodcoopshop/foodcoopshop/stargazers">
+      <img src="https://img.shields.io/github/stars/foodcoopshop/foodcoopshop?style=for-the-badge" />
+  </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop?style=flat-square"
+    <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop?style=for-the-badge"
          alt="Software license">
   </a>
 </p>
@@ -46,10 +48,10 @@
 ## ✔ Requirements
 * Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
-* PHP >= 7.4
+* PHP >= 8.0
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP ZipArchive class
-* MySQL >= 5.7.7 (to support utf8mb4)
+* MySQL >= 5.7.7 (since v3.5 >= MySQL 8.0)
 * Node.js and npm >= v7 ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer v2 ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration

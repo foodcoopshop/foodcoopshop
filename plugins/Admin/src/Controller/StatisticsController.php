@@ -28,7 +28,7 @@ class StatisticsController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || ($this->AppAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'));
                 break;
             case 'myIndex':
-                return $this->AppAuth->isManufacturer();
+                return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isManufacturer();
                 break;
             default:
                 return $this->AppAuth->isManufacturer();
@@ -123,8 +123,8 @@ class StatisticsController extends AdminAppController
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2014);
 
-        $monthsWithTurnoverMonthAndYear = $monthlySumProducts->extract('MonthAndYear')->toArray();
-        $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->extract('SumTotalPaid')->toArray();
+        $monthsWithTurnoverMonthAndYear = $monthlySumProducts->all()->extract('MonthAndYear')->toArray();
+        $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray();
 
         $xAxisData = array_values($monthsAndYear);
         $yAxisData = [];

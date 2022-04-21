@@ -39,10 +39,41 @@ class InvoicesControllerTest extends AppCakeTestCase
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
 
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
+
+        $this->generateInvoice($customerId, $paidInCash);
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        $this->assertEquals($invoice->paid_in_cash, $paidInCash);
+
+        // assert that payment was automatically added
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $credit = $this->Customer->getCreditBalance($customerId);
+        $this->assertEquals(100, $credit);
+
+    }
+
+    public function testGenerateInvoiceSendPerEmailDeactivated()
+    {
+
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 0;
 
         $this->generateInvoice($customerId, $paidInCash);
 
@@ -53,7 +84,11 @@ class InvoicesControllerTest extends AppCakeTestCase
             ],
         ])->first();
 
-        $this->assertEquals($invoice->paid_in_cash, $paidInCash);
+        $this->commandRunner->run(['cake', 'send_invoices_to_customers']);
+        $this->runAndAssertQueue();
+
+        $this->assertEquals($invoice->email_status, 'deaktiviert');
+        $this->assertMailCount(0);
 
     }
 
@@ -121,7 +156,6 @@ class InvoicesControllerTest extends AppCakeTestCase
         $currentYear = date('Y', strtotime($currentDay));
         $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. ' . $currentYear . '-000001, ' . $formattedCurrentDay);
         $this->assertMailSubjectContainsAt(2, 'Storno-Rechnung Nr. ' . $currentYear . '-000002, ' . $formattedCurrentDay);
-        $this->assertMailContainsHtmlAt(1, 'Guthaben beträgt <b>61,97 €</b>');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
 
@@ -131,6 +165,31 @@ class InvoicesControllerTest extends AppCakeTestCase
             ],
         ])->first();
         $this->assertNotNull($invoice->email_status);
+
+        // assert that automatically added payment was removed
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $credit = $this->Customer->getCreditBalance($customerId);
+        $this->assertEquals(61.97, $credit);
+
+    }
+
+    public function testCancelInvoiceEmailDisabled()
+    {
+
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $this->assertSessionHasKey('invoiceRouteForAutoPrint');
+
+        $this->assertMailCount(1);
 
     }
 

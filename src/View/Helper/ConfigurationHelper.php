@@ -37,9 +37,10 @@ class ConfigurationHelper extends Helper
             case 'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS':
             case 'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED':
             case 'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED':
-            case 'FCS_SHOW_NEW_PRODUCTS_ON_HOME':
             case 'FCS_FEEDBACK_TO_PRODUCTS_ENABLED':
             case 'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS':
+            case 'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY':
+            case 'FCS_NEWSLETTER_ENABLED':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
                 break;
             case 'FCS_LOCALE':
@@ -79,6 +80,18 @@ class ConfigurationHelper extends Helper
     public function getConfigurationDropdownOption($name, $value, $appAuth)
     {
         return self::getConfigurationDropdownOptions($name, $appAuth)[$value];
+    }
+
+    public function getConfigurationDropdownEmpty($name)
+    {
+        switch($name) {
+            case 'FCS_MEMBER_FEE_PRODUCTS':
+                return null;
+                break;
+            default:
+                return null;
+                break;
+        }
     }
 
     public function getConfigurationMultipleDropdownOptions($name, $value)

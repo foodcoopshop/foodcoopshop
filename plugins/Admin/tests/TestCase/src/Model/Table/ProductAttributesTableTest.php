@@ -1,6 +1,8 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 
 /**
  * ProductTest
@@ -20,6 +22,9 @@ use App\Test\TestCase\AppCakeTestCase;
 class ProductAttributesTableTest extends AppCakeTestCase
 {
 
+    use AppIntegrationTestTrait;
+    use LoginTrait;
+
     public $ProductAttribute;
 
     public function setUp(): void
@@ -38,7 +43,7 @@ class ProductAttributesTableTest extends AppCakeTestCase
 
         $product = $this->Product->find('all', [
             'conditions' => [
-                'Products.id_product' => $productId
+                'Products.id_product' => $productId,
             ],
             'contain' => [
                 'ProductAttributes.StockAvailables',
@@ -50,4 +55,61 @@ class ProductAttributesTableTest extends AppCakeTestCase
         $this->assertEquals($product->product_attributes[0]->stock_available->quantity, 0);
         $this->assertEquals($product->price, 0);
     }
+
+    public function testEditProductAttribute()
+    {
+        $productId = 350;
+        $productAttributeId = 13;
+        $barcode = '1234567890123';
+
+        $this->loginAsSuperadmin();
+        $this->ajaxPost('/admin/products/editProductAttribute', [
+            'productId' => $productId,
+            'productAttributeId' => $productAttributeId,
+            'barcode' => $barcode,
+            'deleteProductAttribute' => 0,
+        ]);
+        $this->assertJsonOk();
+
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ],
+            'contain' => [
+                'ProductAttributes.BarcodeProductAttributes',
+            ]
+        ])->first();
+
+        $this->assertEquals($product->product_attributes[0]->barcode_product_attribute->barcode, $barcode);
+
+    }
+
+    public function testDeleteProductAttribute()
+    {
+        $productId = 350;
+        $productAttributeId = 13;
+
+        $this->loginAsSuperadmin();
+        $this->ajaxPost('/admin/products/editProductAttribute', [
+            'productId' => $productId,
+            'productAttributeId' => $productAttributeId,
+            'deleteProductAttribute' => 1,
+        ]);
+        $this->assertJsonOk();
+
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ],
+            'contain' => [
+                'ProductAttributes.BarcodeProductAttributes',
+            ]
+        ])->first();
+
+        $this->assertEquals(count($product->product_attributes), 2);
+        $this->assertEmpty($product->product_attributes[0]->barcode_product_attribute);
+
+    }
+
+
 }

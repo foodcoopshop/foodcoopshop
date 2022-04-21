@@ -7,21 +7,28 @@
     "loggedUser": {
         "id_customer": 89,
         "id_default_group": 4,
+        "is_company": 0,
         "firstname": "Demo",
         "lastname": "Gem\u00fcse-Hersteller",
         "email": "fcs-demo-gemuese-hersteller@mailinator.com",
         "tmp_new_passwd": null,
         "activate_new_password_code": null,
         "auto_login_hash": null,
-        "email_order_reminder": false,
+        "email_order_reminder_enabled": 0,
         "terms_of_use_accepted_date": "2018-08-03",
         "activate_email_code": null,
-        "active": true,
+        "active": 1,
         "date_add": "2014-12-02T12:37:26+01:00",
         "date_upd": "2015-03-11T18:12:10+01:00",
         "timebased_currency_enabled": 0,
         "use_camera_for_barcode_scanning": 0,
         "user_id_registrierkasse": 0,
+        "shopping_price": "SP",
+        "check_credit_reminder_enabled": 1,
+        "invoices_per_email_enabled": 1,
+        "pickup_day_reminder_enabled": 1,
+        "credit_upload_reminder_enabled": 1,
+        "newsletter_enabled": 0,
         "address_customer": null,
         "name": "Demo Gem\u00fcse-Hersteller"
     },
@@ -55,7 +62,7 @@
                 "quantity": 97,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -92,17 +99,19 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0
             },
             "unit_product": null,
             "tax": {
                 "id_tax": 2,
                 "rate": "10.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": {
@@ -122,7 +131,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -143,8 +152,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Artischocke",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 339,
@@ -175,7 +183,7 @@
                 "quantity": 2959,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -212,10 +220,12 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0
             },
             "unit_product": null,
             "tax": {
@@ -234,7 +244,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -255,8 +265,7 @@
             "price_is_zero": true,
             "unit": null,
             "unchanged_name": "Kartoffel",
-            "row_class": "main-product",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product"
         },
         {
             "id_product": 344,
@@ -287,7 +296,7 @@
                 "quantity": 78,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -324,10 +333,12 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0
             },
             "unit_product": null,
             "tax": {
@@ -346,7 +357,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -367,8 +378,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Knoblauch",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 349,
@@ -399,7 +409,7 @@
                 "quantity": 5,
                 "quantity_limit": -5,
                 "sold_out_limit": 0,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -436,10 +446,12 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0
             },
             "unit_product": {
                 "id": 4,
@@ -455,8 +467,8 @@
             "tax": {
                 "id_tax": 2,
                 "rate": "10.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": null,
@@ -471,7 +483,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -502,8 +514,7 @@
                 "quantity_in_units": "0.000"
             },
             "unchanged_name": "Lagerprodukt",
-            "row_class": "main-product",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product"
         },
         {
             "id_product": 351,
@@ -534,7 +545,7 @@
                 "quantity": 999,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -571,10 +582,12 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0
             },
             "unit_product": {
                 "id": 8,
@@ -590,8 +603,8 @@
             "tax": {
                 "id_tax": 1,
                 "rate": "20.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": null,
@@ -606,7 +619,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -637,8 +650,7 @@
                 "quantity_in_units": "1.000"
             },
             "unchanged_name": "Lagerprodukt 2",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 350,
@@ -666,7 +678,7 @@
                     "id_product_attribute": 13,
                     "id_product": 350,
                     "price": "1.818182",
-                    "default_on": true,
+                    "default_on": 1,
                     "product_attribute_combination": {
                         "id_attribute": 36,
                         "id_product_attribute": 13,
@@ -698,7 +710,7 @@
                         "quantity": 5,
                         "quantity_limit": -5,
                         "sold_out_limit": 0,
-                        "always_available": false,
+                        "always_available": 0,
                         "default_quantity_after_sending_order_lists": null
                     }
                 },
@@ -706,7 +718,7 @@
                     "id_product_attribute": 14,
                     "id_product": 350,
                     "price": "3.636364",
-                    "default_on": false,
+                    "default_on": 0,
                     "product_attribute_combination": {
                         "id_attribute": 35,
                         "id_product_attribute": 14,
@@ -738,7 +750,7 @@
                         "quantity": 999,
                         "quantity_limit": 0,
                         "sold_out_limit": null,
-                        "always_available": true,
+                        "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
                     }
                 },
@@ -746,7 +758,7 @@
                     "id_product_attribute": 15,
                     "id_product": 350,
                     "price": "0.000000",
-                    "default_on": false,
+                    "default_on": 0,
                     "product_attribute_combination": {
                         "id_attribute": 36,
                         "id_product_attribute": 15,
@@ -778,7 +790,7 @@
                         "quantity": 999,
                         "quantity_limit": 0,
                         "sold_out_limit": null,
-                        "always_available": true,
+                        "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
                     }
                 }
@@ -790,7 +802,7 @@
                 "quantity": 1004,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -827,17 +839,19 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0
             },
             "unit_product": null,
             "tax": {
                 "id_tax": 2,
                 "rate": "10.000",
-                "active": true,
-                "deleted": false
+                "active": 1,
+                "deleted": 0
             },
             "image": null,
             "deposit_product": null,
@@ -852,7 +866,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -874,8 +888,7 @@
             "unit": null,
             "unchanged_name": "Lagerprodukt mit Varianten",
             "row_class": "main-product",
-            "AttributesRemoved": 0,
-            "next_delivery_day": "2020-01-17"
+            "AttributesRemoved": 0
         },
         {
             "id_product": "350-13",
@@ -891,14 +904,14 @@
             "unity": "",
             "manufacturer": {
                 "name": "Demo Gem\u00fcse-Hersteller",
-                "stock_management_enabled": 0
+                "stock_management_enabled": 1
             },
-            "default_on": true,
+            "default_on": 1,
             "stock_available": {
                 "quantity": 5,
                 "quantity_limit": -5,
                 "sold_out_limit": 0,
-                "always_available": false,
+                "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
@@ -917,7 +930,8 @@
                 "names": [],
                 "all_products_found": true
             },
-            "image": null
+            "image": null,
+            "barcode_product": null
         },
         {
             "id_product": "350-14",
@@ -933,14 +947,14 @@
             "unity": "",
             "manufacturer": {
                 "name": "Demo Gem\u00fcse-Hersteller",
-                "stock_management_enabled": 0
+                "stock_management_enabled": 1
             },
-            "default_on": false,
+            "default_on": 0,
             "stock_available": {
                 "quantity": 999,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
@@ -959,7 +973,8 @@
                 "names": [],
                 "all_products_found": true
             },
-            "image": null
+            "image": null,
+            "barcode_product": null
         },
         {
             "id_product": "350-15",
@@ -975,14 +990,14 @@
             "unity": "",
             "manufacturer": {
                 "name": "Demo Gem\u00fcse-Hersteller",
-                "stock_management_enabled": 0
+                "stock_management_enabled": 1
             },
-            "default_on": false,
+            "default_on": 0,
             "stock_available": {
                 "quantity": 999,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
@@ -1001,7 +1016,8 @@
                 "names": [],
                 "all_products_found": true
             },
-            "image": null
+            "image": null,
+            "barcode_product": null
         },
         {
             "id_product": 163,
@@ -1032,7 +1048,7 @@
                 "quantity": 988,
                 "quantity_limit": 0,
                 "sold_out_limit": null,
-                "always_available": true,
+                "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
@@ -1069,10 +1085,12 @@
                 "timebased_currency_enabled": 0,
                 "timebased_currency_max_percentage": 30,
                 "timebased_currency_max_credit_balance": 100,
-                "stock_management_enabled": 0,
+                "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
-                "no_delivery_days": ""
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0
             },
             "unit_product": null,
             "tax": {
@@ -1091,7 +1109,7 @@
                         "description": "",
                         "nleft": 3,
                         "nright": 4,
-                        "active": true,
+                        "active": 1,
                         "created": "2014-05-14T21:53:52+02:00",
                         "modified": "2014-05-17T13:14:22+02:00"
                     }
@@ -1112,8 +1130,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Mangold",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         }
     ]
 }

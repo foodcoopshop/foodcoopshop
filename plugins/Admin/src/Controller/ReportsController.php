@@ -2,7 +2,6 @@
 
 namespace Admin\Controller;
 
-use App\Lib\Csv\RaiffeisenBankingReader;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
@@ -56,7 +55,8 @@ class ReportsController extends AdminAppController
         if (!empty($this->getRequest()->getData('upload'))) {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
-            $reader = RaiffeisenBankingReader::createFromString($content);
+            $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
+            $reader = $bankClassName::createFromString($content);
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
                 $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
@@ -139,18 +139,22 @@ class ReportsController extends AdminAppController
                                     ]
                                 ])->first();
                                 $sumAmount += $csvPayment->amount;
-                                $email = new AppMailer();
-                                $email->viewBuilder()->setTemplate('Admin.credit_csv_upload_successful');
-                                $email->setTo($customer->email)
-                                ->setSubject(__d('admin', 'Your_transaction_({0})_was_added_to_the_credit_system.', [
-                                    Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount),
-                                ]))
-                                ->setViewVars([
-                                    'customer' => $customer,
-                                    'csvPayment' => $csvPayment,
-                                    'appAuth' => $this->AppAuth,
-                                ]);
-                                $email->send();
+
+                                if ($customer->credit_upload_reminder_enabled) {
+                                    $email = new AppMailer();
+                                    $email->viewBuilder()->setTemplate('Admin.credit_csv_upload_successful');
+                                    $email->setTo($customer->email)
+                                    ->setSubject(__d('admin', 'Your_transaction_({0})_was_added_to_the_credit_system.', [
+                                        Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount),
+                                    ]))
+                                    ->setViewVars([
+                                        'customer' => $customer,
+                                        'newsletterCustomer' => $customer,
+                                        'csvPayment' => $csvPayment,
+                                        'appAuth' => $this->AppAuth,
+                                    ]);
+                                    $email->send();
+                                }
                             }
                             $i++;
                         }
@@ -235,9 +239,17 @@ class ReportsController extends AdminAppController
         });
 
         $payments = $this->paginate($query, [
+            'sortableFields' => [
+                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'Payments.approval',
+                'Payments.date_add',
+                'CreatedByCustomers.' . Configure::read('app.customerMainNamePart'),
+                'Payments.date_transaction_add',
+                'Payments.amount',
+            ],
             'order' => [
                 'Payments.date_add' => 'DESC'
-            ]
+            ],
         ]);
         $this->set('payments', $payments);
 

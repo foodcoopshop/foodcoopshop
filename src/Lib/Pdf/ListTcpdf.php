@@ -169,8 +169,10 @@ class ListTcpdf extends AppTcpdf
                     $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)</td>';
                 }
 
-                $indexForWidth ++;
-                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . ($showPricePerUnitSign ? '*' : '') . '</td>';
+                if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    $indexForWidth ++;
+                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . ($showPricePerUnitSign ? '*' : '') . '</td>';
+                }
 
                 if (in_array(__('Order_day'), $headers)) {
                     $indexForWidth ++;
@@ -264,7 +266,9 @@ class ListTcpdf extends AppTcpdf
             $indexForWidth ++;
         }
 
-        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceInclSum) . '</td>';
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceInclSum) . '</td>';
+        }
         $indexForWidth ++;
 
         if ($colspan > 0) {
@@ -286,6 +290,9 @@ class ListTcpdf extends AppTcpdf
     public function getCorrectColspan($headers)
     {
         $diff = 2;
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $diff = 1;
+        }
         // first page of invoices does not contain column "member"
         if (! in_array(__('Member'), $headers)) {
             $diff = 3;
@@ -294,7 +301,7 @@ class ListTcpdf extends AppTcpdf
         return $colspan;
     }
 
-    public function addLastSumRow($headers, $sumPriceExcl, $sumTax, $sumPriceIncl)
+    public function addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl)
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -310,7 +317,11 @@ class ListTcpdf extends AppTcpdf
 
         $this->table .= '<tr style="font-size:12px;font-weight:bold;">';
 
-        $this->table .= '<td></td>';
+        if (in_array(__('Amount'), $headers)) {
+            $colspan --;
+            $this->table .= '<td align="right">' . $sumAmount . 'x</td>';
+        }
+
         $this->table .= '<td>' . __('Total_sum') . '</td>';
 
         if (in_array(__('Price_excl.'), $headers)) {
@@ -323,7 +334,11 @@ class ListTcpdf extends AppTcpdf
             $this->table .= '<td align="right">' . $sumTax . '</td>';
         }
 
-        $this->table .= '<td align="right">' . $sumPriceIncl . '</td>';
+        if (is_null($sumPriceIncl)) {
+            $colspan++;
+        } else {
+            $this->table .= '<td align="right">' . $sumPriceIncl . '</td>';
+        }
 
         if ($colspan > 0) {
             $this->table .= '<td colspan="' . $colspan . '"></td>';

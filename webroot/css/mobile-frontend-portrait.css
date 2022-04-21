@@ -22,21 +22,15 @@
         width: 98% ! important;
         max-width: 450px ! important;
     }
-    body.blog_posts.detail .blog-post-wrapper {
-        width: 100% ! important;
-    }
     body.categories .blog-post-wrapper,
     body.manufacturers.detail .blog-post-wrapper,
     body.pages.home .blog-post-wrapper,
-    body.blog_posts.index .blog-post-wrapper {
+    body.blog_posts.index .blog-post-wrapper,
+    body.carts.order_successful .blog-post-wrapper {
         width: 46% ! important;
         margin-right: 2% ! important;
         margin-left: 2%;
         height: 234px;
-    }
-    body.blog_posts.detail .blog-wrapper {
-        width: 48%;
-        margin-left: 1%;
     }
     body.categories .blog-wrapper,
     body.manufacturers.detail .blog-wrapper {
@@ -46,33 +40,29 @@
     body.blog_posts.detail .blog-post-wrapper {
         height: 234px;
     }
-    body.blog_posts.detail .blog-post-wrapper img.blog-post-image,
-    body.categories img.blog-post-image,
-    body.manufacturers.detail img.blog-post-image,
-    body.pages.home .blog-post-wrapper img,
-    body.blog_posts .blog-post-wrapper img {
+    .blog-post-wrapper img.blog-post-image {
         height: 100px;
     }
     .blog-post-wrapper span.date {
         display: none;
     }
-    .product-wrapper .price {
+    .pw .price {
         margin-bottom: 5px ! important;
     }
-    .product-wrapper .deposit {
+    .pw .deposit {
         margin-left: 0 ! important;
         float: left ! important;
         font-size: 12px ! important;
         margin-bottom: 5px ! important;
     }
-    div.second-column {
+    div.c2 {
         padding-right: 6px ! important;
     }
-    div.third-column {
+    div.c3 {
         padding-left: 6px ! important;
         padding-right: 0px ! important;
     }
-    .product-wrapper .amount-wrapper {
+    .pw .amount-wrapper {
         margin-bottom: 5px ! important;
     }
     body.blog_posts.detail p.neighbors a {
@@ -82,23 +72,23 @@
     a.blog-post-wrapper .img-wrapper {
         min-height: 100px ! important;
     }
-    .carts.detail span.product-name-wrapper {
+    .carts span.product-name-wrapper {
         width: 190px ! important;
     }
-    body.carts.detail .cart:not(#cart) .product {
+    body.carts .cart:not(#cart) .product {
         padding-top: 10px;
     }
-    body.carts.detail .cart:not(#cart) span.amount {
+    body.carts .cart:not(#cart) span.amount {
         margin-left: -8px;
         padding-right: 100px; /* to move short products names to next row */
     }
-    body.carts.detail .cart:not(#cart) span.right {
+    body.carts .cart:not(#cart) span.right {
         position: static;
     }
-    body.carts.detail .cart:not(#cart) .image {
+    body.carts .cart:not(#cart) .image {
         margin-top: 0;
     }
-    body.carts.detail .cart:not(#cart) .input.checkbox label {
+    body.carts .cart:not(#cart) .input.checkbox label {
         font-size: 13px;
     }
  }

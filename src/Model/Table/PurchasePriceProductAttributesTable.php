@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Validation\Validator;
 
 /**
@@ -20,6 +21,8 @@ use Cake\Validation\Validator;
 class PurchasePriceProductAttributesTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveTrait;
+
     public function initialize(array $config): void
     {
         $this->setTable('purchase_prices');
@@ -33,4 +36,18 @@ class PurchasePriceProductAttributesTable extends AppTable
         return $validator;
     }
 
+    public function isPurchasePriceSet($entity): bool
+    {
+        $result = true;
+        if (!empty($entity->unit_product_attribute) && $entity->unit_product_attribute->price_per_unit_enabled) {
+            if (is_null($entity->unit_product_attribute->purchase_price_incl_per_unit)) {
+                $result = false;
+            }
+        } else {
+            if (empty($entity->purchase_price_product_attribute) || is_null($entity->purchase_price_product_attribute->price)) {
+                $result = false;
+            }
+        }
+        return $result;
+    }
 }

@@ -71,21 +71,22 @@ body.self_services #content {
     margin-top: -5px;
     margin-bottom: 50px;
     padding-top: 10px;
+    min-height: calc(100vh - 100px - 66px - 2px);
 }
-.self-service .product-wrapper {
+.self-service .pw {
     background: #fff;
     border-right: 1px solid #d6d4d4;
 }
-.self-service .product-wrapper div.first-column {
+.self-service .pw div.c1 {
     width: 100px;
 }
-.self-service .product-wrapper div.first-column img {
+.self-service .pw div.c1 img {
     width: 80px;
 }
-.self-service .product-wrapper div.second-column {
+.self-service .pw div.c2 {
     width: 260px;
 }
-.self-service .product-wrapper div.third-column {
+.self-service .pw div.c3 {
     width: 215px;
 }
 .self-service #flashMessage {
@@ -154,7 +155,7 @@ body.self_services #content {
     margin-bottom: 10px;
     border-color: #d6d4d4;
 }
-.product-wrapper {
+.pw {
     border-top: none;
     padding-top: 10px;
 }
@@ -194,17 +195,22 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service #cart {
     position: static;
+    padding-bottom: 3px;
     border: 1px solid #ccc;
     border-top: none;
     border-right: none;
 }
-.self-service .product-wrapper .pickup-day {
+.self-service .pw .pickup-day {
     display: none;
 }
 .self-service #SelfServiceForm {
     padding-top: 10px;
     padding-bottom: 80px;
     border-left: 1px solid #d6d4d4;
+}
+.self-service #SelfServiceForm p.payment-type {
+    padding-left: 5px;
+    width: 100%;
 }
 .self-service .product.error,
 .self-service .error-message {
@@ -227,7 +233,23 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 .self-service #general-terms-and-conditions {
     display: none;
 }
-.self-service .right-box .input.checkbox {
+.self-service input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 3px;
+}
+.self-service #SelfServiceForm .radio label:first-child {
+    margin-left: 17px;
+    margin-right: 15px;
+}
+.self-service .radio label[for="carts-self-service-payment-type-1"],
+.self-service .radio label[for="carts-self-service-payment-type-2"] {
+    line-height: 20px;
+    margin-right: 10px;
+}
+.self-service .right-box .input.checkbox,
+.self-service .right-box .input.radio {
     width: 295px;
     margin-left: 5px;
 }
@@ -243,25 +265,25 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     width: auto;
     line-height: 16px;
 }
-.self-service .product-wrapper .unit-amount {
+.self-service .pw .unit-amount {
     display: none;
 }
-.self-service .product-wrapper .quantity-in-units-input-field-wrapper {
+.self-service .pw .quantity-in-units-input-field-wrapper {
     float: left;
     margin-top: 5px;
     margin-left: -5px;
     padding: 0 5px;
     width: 100%;
 }
-.self-service .product-wrapper .quantity-in-units-input-field-wrapper.error {
+.self-service .pw .quantity-in-units-input-field-wrapper.error {
     background: #f3515c;
     color: #fff;
 }
-.self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
+.self-service .pw .quantity-in-units-input-field-wrapper input {
     width: 50px;
     text-align: right;
 }
-.self-service .product-wrapper .amount-wrapper .fas {
+.self-service .pw .amount-wrapper .fas {
     font-size: 30px;
     margin-top: -1px;
 }
@@ -269,7 +291,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     display: none;
 }
 body.self_services .btn-flash-message-continue {
-    float: right;
+    float: right ! important;
 }
 body.self_services #categoryid {
     width: 193px;

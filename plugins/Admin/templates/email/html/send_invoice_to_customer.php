@@ -27,17 +27,24 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
-            <p>
-                <?php
-                    echo __d('admin', 'your_current_credit_equals_{0}.', [
-                        '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
-                    ]);
-                ?>
-            </p>
-
-            <p><?php echo __d('admin', 'Please_find_your_current_invoice_attached.'); ?></p>
+            <p><?php echo __d('admin', 'Please_find_your_invoice_attached.'); ?></p>
 
             <p><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></p>
+
+            <p>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+            </p>
+
+            <?php if (!$paidInCash) { ?>
+                <p><br />
+                    <?php
+                        echo __d('admin', 'Post_scriptum_abbreviation') . ': ';
+                        echo __d('admin', 'Your_current_credit_equals_{0}.', [
+                            '<b>'.$this->MyNumber->formatAsCurrency($creditBalance).'</b>',
+                        ]);
+                    ?>
+                </p>
+            <?php } ?>
 
         </td>
 

@@ -2,6 +2,8 @@
 
 namespace App\Controller\Component;
 
+use App\Lib\HelloCash\HelloCash;
+use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
 use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
@@ -211,7 +213,7 @@ class CartComponent extends Component
 
         $cartErrors = [];
 
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$this->AppAuth->isInstantOrderMode()) {
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
             if ($this->AppAuth->getCreditBalanceMinusCurrentCartSum() < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')) {
                 $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
@@ -250,6 +252,8 @@ class CartComponent extends Component
                 ],
                 'contain' => $contain,
             ])->first();
+
+            $product->next_delivery_day = $this->Product->getNextDeliveryDay($product, $this->AppAuth);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;
@@ -262,6 +266,15 @@ class CartComponent extends Component
                 $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
+            }
+
+            // purchase price check for product
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                if ($ids['attributeId'] == 0 && !$this->Product->PurchasePriceProducts->isPurchasePriceSet($product)) {
+                    $message = __('The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $product->name . '</b>']);
+                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                    $cartErrors[$cartProduct['productId']][] = $message;
+                }
             }
 
             $attribute = null;
@@ -280,15 +293,31 @@ class CartComponent extends Component
                         // stock available check for attribute
                         if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available) && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
-                            $attribute = $this->Attribute->find('all', [
+                            $attributeEntity = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
-                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
+                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                             $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
+
+                        // purchase price check for attribute
+                        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                            if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
+                                $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
+                                $attributeEntity = $this->Attribute->find('all', [
+                                    'conditions' => [
+                                        'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
+                                    ]
+                                ])->first();
+                                $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>']);
+                                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                                $cartErrors[$cartProduct['productId']][] = $message;
+                            }
+                        }
+
                         break;
                     }
                 }
@@ -305,13 +334,22 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (! $product->manufacturer->active || (!$this->AppAuth->isInstantOrderMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
+                $message = __('{0}_can_be_ordered_next_week.',
+                    [
+                        '<b>' . $product->name . '</b>'
+                    ]
+                );
+                $cartErrors[$cartProduct['productId']][] = $message;
+            }
+
+            if (! $product->manufacturer->active || (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
                 $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (!$this->AppAuth->isInstantOrderMode()) {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
                 if ( !($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
                     if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                         $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
@@ -321,7 +359,7 @@ class CartComponent extends Component
                 }
             }
 
-            if (!$this->AppAuth->isInstantOrderMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
                 $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                     [
                         Configure::read('appDb.FCS_APP_NAME'),
@@ -363,16 +401,22 @@ class CartComponent extends Component
                 $orderDetail2save['order_detail_unit'] = [
                     'unit_name' => $cartProduct['unitName'],
                     'unit_amount' => $cartProduct['unitAmount'],
+                    'mark_as_saved' => $cartProduct['markAsSaved'],
                     'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
                     'quantity_in_units' => $cartProduct['quantityInUnits'],
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
-                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && isset($cartProduct['purchasePriceInclPerUnit'])) {
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
+                    && in_array($this->AppAuth->user('shopping_price'), ['PP', 'SP'])
+                    && isset($cartProduct['purchasePriceInclPerUnit'])
+                    ) {
                     $orderDetail2save['order_detail_unit']['purchase_price_incl_per_unit'] = $cartProduct['purchasePriceInclPerUnit'];
                 }
             }
 
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
+                && in_array($this->AppAuth->user('shopping_price'), ['PP', 'SP'])
+                ) {
                 $orderDetailPurchasePrices = $this->prepareOrderDetailPurchasePrices($ids, $product, $cartProduct);
                 $orderDetail2save['order_detail_purchase_price'] = $orderDetailPurchasePrices;
             }
@@ -513,28 +557,69 @@ class CartComponent extends Component
                     if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>'
                         ]);
                     } else {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
                             '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                         ]);
                     }
                     $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                     $messageForActionLog = $message;
                     $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
-                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
+                    if (!($this->AppAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
+                        $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
+                    }
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
+
+                    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+                        $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+                        $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
+
+                        if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
+                            $paidInCash = 0;
+                            if ($this->AppAuth->isSelfServiceCustomer()) {
+                                $paidInCash = 1;
+                            }
+                            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                                $helloCash = new HelloCash();
+                                $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+                                $invoiceId = $responseObject->invoice_id;
+                                $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                            } else {
+                                $invoiceToCustomer = new GenerateInvoiceToCustomer();
+                                $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+                                $invoiceId = $newInvoice->id;
+                                $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
+                            }
+                            $cart['invoice_id'] = $invoiceId;
+                        }
+                    }
+
                     $actionLogType = 'self_service_order_added';
                     $message = __('Thank_you_for_your_purchase!');
                     $message .= '<br />';
-                    $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout().'">'.__('Sign_out').'?</a>';
-                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'">'.__('Continue_shopping?').'</a>';
+                    $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout(Configure::read('app.slugHelper')->getSelfService()) . '"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
+                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fa fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
+                    if (isset($invoiceRoute)) {
+                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
+                    }
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
-                    $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
+
+                    if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
+                        $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                        $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
+                            $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['name'],
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        ]);
+                    } else {
+                        $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
+                    }
                     break;
             }
 
@@ -567,8 +652,10 @@ class CartComponent extends Component
                         $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
                         $totalPurchasePriceTaxIncl = round($totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
                         $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                        $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                     } else {
                         $totalPurchasePriceTaxExcl = $attribute->purchase_price_product_attribute->price ?? 0;
+                        $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                         $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxIncl *= $amount;
                         $totalPurchasePriceTaxExcl *= $amount;
@@ -582,8 +669,10 @@ class CartComponent extends Component
                 $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
                 $totalPurchasePriceTaxIncl = round($totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
                 $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
+                $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
             } else {
                 $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
+                $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                 $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxIncl *= $amount;
                 $totalPurchasePriceTaxExcl *= $amount;
@@ -646,12 +735,18 @@ class CartComponent extends Component
     {
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = 0;
-        foreach ($stockAvailable2saveData as &$data) {
-            $this->Product->StockAvailables->updateAll(
-                $stockAvailable2saveData[$i],
-                $stockAvailable2saveConditions[$i]
-                );
-            $this->Product->StockAvailables->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['id_product']);
+        foreach($stockAvailable2saveConditions as $condition) {
+            $stockAvailableEntity = $this->Product->StockAvailables->find('all', [
+                'conditions' => $condition,
+            ])->first();
+            $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
+            $originalPrimaryKey = $this->Product->StockAvailables->getPrimaryKey();
+            if ($condition['id_product_attribute'] > 0) {
+                $this->Product->StockAvailables->setPrimaryKey('id_product_attribute');
+            }
+            $this->Product->StockAvailables->save($stockAvailableEntity);
+            $this->Product->StockAvailables->setPrimaryKey($originalPrimaryKey);
+            $this->Product->StockAvailables->updateQuantityForMainProduct($condition['id_product']);
             $i++;
         }
     }
@@ -663,7 +758,7 @@ class CartComponent extends Component
     private function sendInstantOrderNotificationToManufacturers($cartProducts)
     {
 
-        if (!$this->AppAuth->isInstantOrderMode()) {
+        if (!$this->AppAuth->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             return [];
         }
 

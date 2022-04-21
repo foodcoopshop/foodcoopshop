@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-08-02 21:27+0200\n"
+"POT-Creation-Date: 2022-04-12 15:58+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "The_manufacturer_{0}_has_changed_his_password."
 msgstr ""
 
-msgid "The_member_{0}_has_changed_his_password."
+msgid "{0}_has_changed_the_password."
 msgstr ""
 
 msgid "Your_new_password_has_been_saved_successfully."
@@ -194,10 +194,19 @@ msgstr ""
 msgid "No_data_available_to_generate_an_invoice."
 msgstr ""
 
+msgid "Paid_in_cash"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
 msgid "Print_receipt"
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr ""
+
+msgid "Invoice_cancelled"
 msgstr ""
 
 msgid "Download"
@@ -207,6 +216,9 @@ msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
 msgstr ""
 
 msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
+msgstr ""
+
+msgid "My_invoices"
 msgstr ""
 
 msgid "Journal"
@@ -225,6 +237,9 @@ msgid "member"
 msgstr ""
 
 msgid "Order_lists"
+msgstr ""
+
+msgid "Invoice"
 msgstr ""
 
 msgid "Add_manufacturer"
@@ -255,6 +270,18 @@ msgid "No_member_found_with_id_{0}."
 msgstr ""
 
 msgid "Instant_order"
+msgstr ""
+
+msgid "Self_service_order"
+msgstr ""
+
+msgid "Edit_purchase_price"
+msgstr ""
+
+msgid "Purchase_price_has_been_saved_successfully."
+msgstr ""
+
+msgid "Profit"
 msgstr ""
 
 msgid "Group_by_product"
@@ -323,6 +350,9 @@ msgstr ""
 msgid "The_stock_was_increased_to_{0}."
 msgstr ""
 
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr ""
+
 msgid "The_price_is_not_valid."
 msgstr ""
 
@@ -338,7 +368,10 @@ msgstr ""
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr ""
 
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr ""
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
 msgstr ""
 
 msgid "{0}_has_written_a_feedback_to_product_{1}."
@@ -431,6 +464,12 @@ msgstr ""
 msgid "of_{0}"
 msgstr ""
 
+msgid "Surcharge_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
+msgstr ""
+
 msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
 msgstr ""
 
@@ -450,6 +489,9 @@ msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr ""
 
 msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr ""
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
 msgstr ""
 
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
@@ -806,7 +848,7 @@ msgstr ""
 msgid "Show_on_startpage_until"
 msgstr ""
 
-msgid "Leave_empty_to_never_show_blog_post_on_start_page."
+msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
 msgstr ""
 
 msgid "Only_for_members"
@@ -944,6 +986,15 @@ msgstr ""
 msgid "docs_route_members"
 msgstr ""
 
+msgid "Company_name"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
+msgid "Will_be_shown_on_invoices."
+msgstr ""
+
 msgid "Firstname"
 msgstr ""
 
@@ -971,7 +1022,7 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-msgid "Street"
+msgid "Street_and_number"
 msgstr ""
 
 msgid "Additional_address_information"
@@ -989,10 +1040,52 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
+msgid "Notifications"
+msgstr ""
+
 msgid "Order_reminder"
 msgstr ""
 
-msgid "Want_to_receive_reminder_emails?"
+msgid "Want_to_receive_order_reminder_emails?"
+msgstr ""
+
+msgid "Pickup_day_reminder"
+msgstr ""
+
+msgid "Want_to_receive_pickup_day_reminder_emails?"
+msgstr ""
+
+msgid "Invoices_per_email"
+msgstr ""
+
+msgid "Want_to_receive_invoices_per_email?"
+msgstr ""
+
+msgid "Check_credit_reminder"
+msgstr ""
+
+msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
+msgstr ""
+
+msgid "Credit_upload_reminder"
+msgstr ""
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr ""
+
+msgid "Newsletter"
+msgstr ""
+
+msgid "Want_to_receive_the_newsletter_per_email?"
+msgstr ""
+
+msgid "Self_service_mode"
+msgstr ""
+
+msgid "Generate_my_member_card"
+msgstr ""
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
 msgstr ""
 
 msgid "Paying_with_time_module_active?"
@@ -1007,13 +1100,10 @@ msgstr ""
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr ""
 
-msgid "Self_service_mode"
+msgid "Superadmin_functions"
 msgstr ""
 
-msgid "Generate_my_member_card"
-msgstr ""
-
-msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgid "Prices"
 msgstr ""
 
 msgid "Delete_member_irrevocably?"
@@ -1043,7 +1133,7 @@ msgstr ""
 msgid "Comment_abbreviation"
 msgstr ""
 
-msgid "Newbie_only_{0}_products_ordered."
+msgid "Newbie_has_{0}_orders."
 msgstr ""
 
 msgid "Show_all_orders_from_{0}"
@@ -1065,6 +1155,12 @@ msgid "Show_credit"
 msgstr ""
 
 msgid "Show_{0}"
+msgstr ""
+
+msgid "Purchase_price_abbreviation"
+msgstr ""
+
+msgid "Zero_price_abbreviation"
 msgstr ""
 
 msgid "Add_comment"
@@ -1169,31 +1265,22 @@ msgstr ""
 msgid "Copy_to_clipboard"
 msgstr ""
 
-msgid "Invoice_number_abbreviation"
-msgstr ""
-
 msgid "Invoice_date"
 msgstr ""
 
-msgid "Sum_excl_tax"
+msgid "Net"
 msgstr ""
 
-msgid "Sum_tax"
+msgid "VAT"
 msgstr ""
 
-msgid "Sum_incl_tax"
-msgstr ""
-
-msgid "Paid_in_cash"
+msgid "Gross"
 msgstr ""
 
 msgid "Email_sent"
 msgstr ""
 
 msgid "Receipt"
-msgstr ""
-
-msgid "Invoice"
 msgstr ""
 
 msgid "Cancellation"
@@ -1355,9 +1442,6 @@ msgstr ""
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr ""
 
-msgid "Notifications"
-msgstr ""
-
 msgid "Order_lists_by_email"
 msgstr ""
 
@@ -1385,6 +1469,12 @@ msgstr ""
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr ""
 
+msgid "Delivery_notes_by_email"
+msgstr ""
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr ""
+
 msgid "Cancellations"
 msgstr ""
 
@@ -1395,6 +1485,12 @@ msgid "Adaptions_of_price_and_weight_of_ordered_products"
 msgstr ""
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
+msgstr ""
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr ""
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
 msgstr ""
 
 msgid "Adaptions_of_the_ordered_amount"
@@ -1442,7 +1538,10 @@ msgstr ""
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr ""
 
-msgid "Contact_person"
+msgid "Stock_products_in_order_lists"
+msgstr ""
+
+msgid "Should_stock_products_be_included_in_order_lists?"
 msgstr ""
 
 msgid "Chose_member"
@@ -1496,6 +1595,9 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
+msgid "Delivery_note"
+msgstr ""
+
 msgid "Test_invoice"
 msgstr ""
 
@@ -1505,7 +1607,13 @@ msgstr ""
 msgid "Copy_all_email_addresses"
 msgstr ""
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgid "Tax_rate"
+msgstr ""
+
+msgid "Purchase_price_tax_excl"
+msgstr ""
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_order."
 msgstr ""
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
@@ -1527,6 +1635,9 @@ msgid "All_products"
 msgstr ""
 
 msgid "Show_all_ordered_products"
+msgstr ""
+
+msgid "Profit / all prices are net prices"
 msgstr ""
 
 msgid "Page_title"
@@ -1667,19 +1778,19 @@ msgstr ""
 msgid "Stock_product"
 msgstr ""
 
-msgid "Purchase_price_abbreviation"
+msgid "gross"
 msgstr ""
 
-msgid "incl_vat"
+msgid "Surcharge"
+msgstr ""
+
+msgid "net"
 msgstr ""
 
 msgid "Selling_price_abbreviation"
 msgstr ""
 
 msgid "Price"
-msgstr ""
-
-msgid "Tax_rate"
 msgstr ""
 
 msgid "New?"
@@ -1772,6 +1883,9 @@ msgstr ""
 msgid "chose_member..."
 msgstr ""
 
+msgid "Order_stock_products"
+msgstr ""
+
 msgid "Copy_email_addresses_of_selected_customers"
 msgstr ""
 
@@ -1785,12 +1899,6 @@ msgid "1_day_back"
 msgstr ""
 
 msgid "to"
-msgstr ""
-
-msgid "Sum_price_excl."
-msgstr ""
-
-msgid "Sum_price_incl."
 msgstr ""
 
 msgid "Bank_account_data"
@@ -1838,9 +1946,6 @@ msgstr ""
 msgid "Orders_as_pdf"
 msgstr ""
 
-msgid "Orders_as_pdf_order_by_storage_location"
-msgstr ""
-
 msgid "Multiple_pickup_days"
 msgstr ""
 
@@ -1856,7 +1961,13 @@ msgstr ""
 msgid "Invoice_cannot_be_generated"
 msgstr ""
 
+msgid "No_invoices_available."
+msgstr ""
+
 msgid "Add_product_feedback"
+msgstr ""
+
+msgid "Click_to_change_name"
 msgstr ""
 
 msgid "Show_all_ordered_products_from_{0}"
@@ -1931,6 +2042,9 @@ msgstr ""
 msgid "Customer_ID"
 msgstr ""
 
+msgid "Calculate_selling_price_with_surcharge_for_selected_products"
+msgstr ""
+
 msgid "Delete_selected_products"
 msgstr ""
 
@@ -1979,7 +2093,7 @@ msgstr ""
 msgid "Is_stock_product"
 msgstr ""
 
-msgid "Delete_attribute_for_product_{0}"
+msgid "Edit_attribute_for_product_{0}"
 msgstr ""
 
 msgid "This_attribute_is_the_default_attribute."
@@ -1998,6 +2112,9 @@ msgid "product_preview"
 msgstr ""
 
 msgid "change_price"
+msgstr ""
+
+msgid "Purchase_price_not_set_and_therefore_never_active."
 msgstr ""
 
 msgid "change_tax_rate"
@@ -2039,6 +2156,9 @@ msgstr ""
 msgid "Transactions_were_checked_until_{0}."
 msgstr ""
 
+msgid "Here_you_can_unsubscribe_this_email_reminder"
+msgstr ""
+
 msgid "Amount_(Money)"
 msgstr ""
 
@@ -2055,9 +2175,6 @@ msgid "route_cart"
 msgstr ""
 
 msgid "Click_here_to_open_the"
-msgstr ""
-
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
 msgstr ""
 
 msgid "The_amount_of_the_product_{0}_has_been_adapted."
@@ -2159,7 +2276,16 @@ msgstr ""
 msgid "Please_find_your_cancellation_invoice_attached."
 msgstr ""
 
-msgid "Please_find_your_current_invoice_attached."
+msgid "Post_scriptum_abbreviation"
+msgstr ""
+
+msgid "Your_current_credit_equals_{0}."
+msgstr ""
+
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr ""
+
+msgid "Please_find_your_invoice_attached."
 msgstr ""
 
 msgid "{0}_thanks_you_for_your_purchase!"
@@ -2211,9 +2337,6 @@ msgid "Orders_from"
 msgstr ""
 
 msgid "Price_excl."
-msgstr ""
-
-msgid "VAT"
 msgstr ""
 
 msgid "Price_incl."

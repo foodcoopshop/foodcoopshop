@@ -104,7 +104,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $jsonDecodedContent->msg);
     }
 
-    public function testAddProductPaymentForOneself()
+    public function testAddProductPaymentAsCustomerForOneself()
     {
         $this->loginAsCustomer();
         $this->addPaymentAndAssertIncreasedCreditBalance(
@@ -122,8 +122,10 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddProductPaymentAsSuperadminForAnotherUser()
+    public function testAddProductPaymentAsSuperadminRetailModeEnabled()
     {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
@@ -138,6 +140,38 @@ class PaymentsControllerTest extends AppCakeTestCase
             'payments',
             'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>20,50 €'
         );
+
+        $payment = $this->Payment->find('all', [
+            'order' => [
+                'Payments.id' => 'DESC' ,
+            ]
+        ])->first();
+        $this->assertEquals(APP_ON, $payment->approval);
+    }
+
+    public function testAddProductPaymentAsSuperadminRetailModeDisabled()
+    {
+        $this->loginAsSuperadmin();
+        $this->addPaymentAndAssertIncreasedCreditBalance(
+            Configure::read('test.superadminId'),
+            '20,5',
+            'product'
+            );
+        $this->logout();
+
+        $this->assertActionLogRecord(
+            Configure::read('test.superadminId'),
+            'payment_product_added',
+            'payments',
+            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>20,50 €'
+        );
+
+        $payment = $this->Payment->find('all', [
+            'order' => [
+                'Payments.id' => 'DESC' ,
+            ]
+        ])->first();
+        $this->assertEquals(APP_OFF, $payment->approval);
     }
 
     public function testAddDepositPaymentToCustomer()
@@ -252,7 +286,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
-        $uploadFile = TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv';
+        $uploadFile = TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv';
         $this->post(
             Configure::read('app.slugHelper')->getReport('product'),
             [

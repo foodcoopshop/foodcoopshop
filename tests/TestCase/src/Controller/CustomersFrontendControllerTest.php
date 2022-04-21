@@ -146,7 +146,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         'Customers' => [
             'firstname' => '',
             'lastname' => '',
-            'email_order_reminder' => 1,
+            'email_order_reminder_enabled' => 1,
             'terms_of_use_accepted_date_checkbox' => 0,
             'id_default_group' => CUSTOMER_GROUP_SUPERADMIN, //must not be applied!
             'active' => APP_ON, // must not be applied!
@@ -183,7 +183,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte gib deine E-Mail-Adresse an.');
         $this->assertResponseContains('Bitte gib deinen Vornamen an.');
         $this->assertResponseContains('Bitte gib deinen Nachnamen an.');
-        $this->assertResponseContains('Bitte gib deine Straße an.');
+        $this->assertResponseContains('Bitte gib deine Straße und Nummer an.');
         $this->assertResponseContains('Bitte gib deinen Ort an.');
         $this->assertResponseContains('Bitte gib deine Handynummer an.');
     }
@@ -198,6 +198,36 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Die Handynummer ist nicht gültig.');
         $this->assertResponseContains('Die Telefonnummer ist nicht gültig.');
         $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
+    }
+
+    public function testRegistrationValidationWithCompanyWrongDataA()
+    {
+        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+        $this->addCustomer($this->registrationDataEmpty);
+        $this->assertResponseContains('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.');
+        $this->assertResponseContains('Bitte gib deinen Vornamen an.');
+        $this->assertResponseNotContains('Bitte gib deinen Nachnamen an.');
+        $this->assertResponseContains('Die PLZ ist nicht gültig.');
+        $this->assertResponseContains('Die Handynummer ist nicht gültig.');
+        $this->assertResponseContains('Die Telefonnummer ist nicht gültig.');
+        $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
+    }
+
+    public function testRegistrationWithCompanyUserActive()
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $email = 'new-foodcoopshop-member-1@mailinator.com';
+        $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.email' => $email,
+            ],
+        ])->first();
+        $this->assertTrue((boolean) $customer->is_company);
     }
 
     public function testRegistrationUserNotActive()
@@ -311,7 +341,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertEquals($customerAddressEmail, $customer->email);
         $this->assertEquals('John', $customer->firstname);
         $this->assertEquals('Doe', $customer->lastname);
-        $this->assertEquals(1, $customer->email_order_reminder);
+        $this->assertEquals(1, $customer->email_order_reminder_enabled);
         $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')));
 
         // check address record
@@ -401,7 +431,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         $this->assertSession(Configure::read('test.superadminId'), 'Auth.User.id_customer');
         $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.email');
-        $this->assertSession(true, 'Auth.User.active');
+        $this->assertSession(1, 'Auth.User.active');
         $this->assertSession(null, 'Auth.User.auto_login_hash');
         $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.address_customer.email');
 

@@ -50,6 +50,33 @@ class InvoicesTable extends AppTable
         ]);
     }
 
+    public function getLatestInvoicesForCustomer($customerId)
+    {
+
+        $invoices = $this->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+            'order' => [
+                'Invoices.created' => 'DESC'
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ],
+            'limit' => 5,
+        ])->toArray();
+
+        foreach($invoices as &$invoice) {
+            foreach($invoice->invoice_taxes as $invoiceTax) {
+                $invoice->total_sum_price_excl += $invoiceTax->total_price_tax_excl;
+                $invoice->total_sum_tax += $invoiceTax->total_price_tax;
+                $invoice->total_sum_price_incl += $invoiceTax->total_price_tax_incl;
+            }
+        }
+
+        return $invoices;
+    }
+
     public function getPreparedTaxRatesForSumTable($invoices)
     {
 
@@ -155,8 +182,8 @@ class InvoicesTable extends AppTable
 
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
         foreach($orderDetails as $orderDetail) {
-            $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
-            $productName[] = StringComponent::slugify($orderDetail->product_name);
+            $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
+            $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
             $deliveryDay[] = $orderDetail->pickup_day;
         }
 
@@ -201,6 +228,7 @@ class InvoicesTable extends AppTable
 
         $taxRates = [];
         if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+
             $defaultArray = [
                 'sum_price_excl' => 0,
                 'sum_tax' => 0,
@@ -211,49 +239,94 @@ class InvoicesTable extends AppTable
             $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
             $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
 
-            if (!isset($taxRates[$depositVatRate])) {
-                $taxRates[$depositVatRate] = $defaultArray;
+            if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
+                if (!isset($taxRates[$depositVatRate])) {
+                    $taxRates[$depositVatRate] = $defaultArray;
+                }
+                $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
+                $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
+                $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
+                ksort($taxRates);
+                $taxRates = $this->clearZeroArray($taxRates);
             }
-            $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
-            $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
-            $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
 
-            ksort($taxRates);
-
-            $taxRates = $this->clearZeroArray($taxRates);
         }
 
-        // prepare sums
-        $sumPriceIncl = 0;
-        $sumPriceExcl = 0;
-        $sumTax = 0;
-        foreach ($orderDetails as $orderDetail) {
-            $sumPriceIncl += $orderDetail->total_price_tax_incl;
-            $sumPriceExcl += $orderDetail->total_price_tax_excl;
-            $sumTax += $orderDetail->tax_total_amount;
+        if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
+            $sums = $this->getSums($orderDetails, $orderedDeposit, $returnedDeposit);
+        } else {
+            $sums = $this->getSumsTaxBasedOnNetInvoiceSum($orderDetails, $orderedDeposit, $returnedDeposit);
+            $taxRates[$depositVatRate] = [
+                'sum_price_excl' => $sums['priceExcl'],
+                'sum_tax' => $sums['tax'],
+                'sum_price_incl' => $sums['priceIncl'],
+            ];
         }
-
-        $sumPriceIncl += $orderedDeposit['deposit_incl'];
-        $sumPriceExcl += $orderedDeposit['deposit_excl'];
-        $sumTax += $orderedDeposit['deposit_tax'];
-
-        $sumPriceIncl += $returnedDeposit['deposit_incl'];
-        $sumPriceExcl += $returnedDeposit['deposit_excl'];
-        $sumTax += $returnedDeposit['deposit_tax'];
 
         $preparedData = [
             'active_order_details' => $orderDetails,
             'ordered_deposit' => $orderedDeposit,
             'returned_deposit' => $returnedDeposit,
             'tax_rates' => $taxRates,
-            'sumPriceIncl' => $sumPriceIncl,
-            'sumPriceExcl' => $sumPriceExcl,
-            'sumTax' => $sumTax,
+            'sumPriceIncl' => $sums['priceIncl'],
+            'sumPriceExcl' => $sums['priceExcl'],
+            'sumTax' => $sums['tax'],
             'cancelledInvoice' => $cancelledInvoice,
             'new_invoice_necessary' => !empty($orderDetails) || $orderedDeposit['deposit_amount'] < 0 || $returnedDeposit['deposit_amount'] > 0,
         ];
 
         return $preparedData;
+    }
+
+    private function getSumsTaxBasedOnNetInvoiceSum($orderDetails, $orderedDeposit, $returnedDeposit)
+    {
+
+        $result = [
+            'priceIncl' => 0,
+            'priceExcl' => 0,
+            'tax' => 0,
+        ];
+
+        foreach ($orderDetails as $orderDetail) {
+            $result['priceExcl'] += $orderDetail->total_price_tax_excl;
+        }
+
+        $result['priceExcl'] += $orderedDeposit['deposit_excl'];
+        $result['priceExcl'] += $returnedDeposit['deposit_excl'];
+
+        // q&d: taxRate for priceIncl (also contains orderDetails) is taken from FCS_DEPOSIT_TAX_RATE
+        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+        $result['priceIncl'] = round($result['priceExcl'] * (1 + $depositVatRate / 100), 2);
+        $result['tax'] = round($result['priceExcl'] * ($depositVatRate / 100), 2);
+
+        return $result;
+
+    }
+
+    private function getSums($orderDetails, $orderedDeposit, $returnedDeposit)
+    {
+
+        $result = [
+            'priceIncl' => 0,
+            'priceExcl' => 0,
+            'tax' => 0,
+        ];
+        foreach ($orderDetails as $orderDetail) {
+            $result['priceIncl'] += $orderDetail->total_price_tax_incl;
+            $result['priceExcl'] += $orderDetail->total_price_tax_excl;
+            $result['tax'] += $orderDetail->tax_total_amount;
+        }
+
+        $result['priceIncl'] += $orderedDeposit['deposit_incl'];
+        $result['priceExcl'] += $orderedDeposit['deposit_excl'];
+        $result['tax'] += $orderedDeposit['deposit_tax'];
+
+        $result['priceIncl'] += $returnedDeposit['deposit_incl'];
+        $result['priceExcl'] += $returnedDeposit['deposit_excl'];
+        $result['tax'] += $returnedDeposit['deposit_tax'];
+
+        return $result;
+
     }
 
     public function getLastInvoiceForCustomer()
@@ -269,7 +342,7 @@ class InvoicesTable extends AppTable
         return $lastInvoice;
     }
 
-    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)
+    public function saveInvoice($invoiceId, $customerId, $taxRates, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash, $invoicesPerEmailEnabled)
     {
 
         $invoiceData = [
@@ -280,6 +353,7 @@ class InvoicesTable extends AppTable
             'created' => new FrozenTime($currentDay),
             'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
+            'email_status' => $invoicesPerEmailEnabled ? null : __('deactivated'),
         ];
         foreach($taxRates as $taxRate => $values) {
             $invoiceData['invoice_taxes'][] = [
@@ -306,8 +380,16 @@ class InvoicesTable extends AppTable
 
         $increasingNumberOfLastInvoice = 1;
 
+        $invoicePrefix = Configure::read('appDb.FCS_INVOICE_NUMBER_PREFIX');
+
         if (! empty($lastInvoice)) {
-            $explodedInvoiceNumber = explode('-', $lastInvoice->invoice_number);
+
+            $lastInvoiceNumberWithoutPrefix = $lastInvoice->invoice_number;
+            if ($invoicePrefix != '') {
+                $lastInvoiceNumberWithoutPrefix = preg_replace('/^' . $invoicePrefix . '/', '', $lastInvoice->invoice_number);
+            }
+
+            $explodedInvoiceNumber = explode('-', $lastInvoiceNumberWithoutPrefix);
             $yearOfLastInvoice = $explodedInvoiceNumber[0];
             if ($currentYear == $yearOfLastInvoice) {
                 $increasingNumberOfLastInvoice = (int) $explodedInvoiceNumber[1] + 1;
@@ -316,7 +398,7 @@ class InvoicesTable extends AppTable
 
         $newIncreasingInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($increasingNumberOfLastInvoice, 6);
 
-        $newInvoiceNumber = $currentYear . '-' . $newIncreasingInvoiceNumber;
+        $newInvoiceNumber = $invoicePrefix . $currentYear . '-' . $newIncreasingInvoiceNumber;
         return $newInvoiceNumber;
 
     }

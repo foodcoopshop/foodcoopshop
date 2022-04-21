@@ -39,7 +39,8 @@ class PickupReminderShell extends AppShell
         $this->startTimeLogging();
 
         $conditions = [
-            'Customers.active' => 1
+            'Customers.pickup_day_reminder_enabled' => 1,
+            'Customers.active' => 1,
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
@@ -86,6 +87,7 @@ class PickupReminderShell extends AppShell
             $email->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)
             ->setViewVars([
                 'customer' => $customer,
+                'newsletterCustomer' => $customer,
                 'diffOrderAndPickupInDays' => $diffOrderAndPickupInDays,
                 'formattedPickupDay' => $formattedPickupDay,
                 'futureOrderDetails' => $futureOrderDetails

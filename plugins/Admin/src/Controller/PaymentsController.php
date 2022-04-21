@@ -6,7 +6,7 @@ use App\Mailer\AppMailer;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use App\Lib\Error\Exception\InvalidParameterException;
@@ -105,7 +105,7 @@ class PaymentsController extends AdminAppController
         $payment = $this->Payment->find('all', [
             'conditions' => [
                 'Payments.id' => $paymentId,
-                'Payments.type' => 'product'
+                'Payments.type IN' => ['product', 'payback'],
             ],
             'contain' => [
                 'Customers',
@@ -137,7 +137,7 @@ class PaymentsController extends AdminAppController
             $payment = $this->Payment->patchEntity(
                 $payment,
                 [
-                    'date_changed' => Time::now(),
+                    'date_changed' => FrozenTime::now(),
                     'changed_by' => $this->AppAuth->getUserId()
                 ]
             );
@@ -168,6 +168,7 @@ class PaymentsController extends AdminAppController
                     ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $payment->customer,
+                        'newsletterCustomer' => $payment->customer,
                         'newStatusAsString' => $newStatusAsString,
                         'payment' => $payment
                     ]);
@@ -326,7 +327,7 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        $dateAddForEntity = Time::now();
+        $dateAddForEntity = FrozenTime::now();
         $paymentPastDate = false;
         if ($dateAdd > 0) {
             $dateAddForEntity = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
@@ -334,9 +335,8 @@ class PaymentsController extends AdminAppController
         }
         if ($dateAddForEntity->isToday()) {
             $paymentPastDate = false;
-            $dateAddForEntity = Time::now(); // always save time for today, even if it's explicitely passed
+            $dateAddForEntity = FrozenTime::now(); // always save time for today, even if it's explicitely passed
         }
-
 
         // add entry in table payments
         $entity = $this->Payment->newEntity(
@@ -346,12 +346,16 @@ class PaymentsController extends AdminAppController
                 'id_customer' => $customerId,
                 'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
                 'date_add' => $dateAddForEntity,
-                'date_changed' => Time::now(),
+                'date_changed' => FrozenTime::now(),
                 'amount' => $amount,
                 'text' => $text,
                 'created_by' => $this->AppAuth->getUserId(),
             ]
         );
+
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $type == 'product' && $this->AppAuth->isSuperadmin()) {
+            $entity->approval = APP_ON;
+        }
 
         $newPayment = $this->Payment->save($entity);
 
@@ -425,7 +429,7 @@ class PaymentsController extends AdminAppController
                 $payment,
                 [
                     'status' => APP_DEL,
-                    'date_changed' => Time::now()
+                    'date_changed' => FrozenTime::now()
                 ]
             )
         );

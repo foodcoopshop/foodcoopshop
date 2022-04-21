@@ -30,6 +30,9 @@ foodcoopshop.ModalProductAdd = {
             infoText = foodcoopshop.LocalizedJs.dialogProduct.Manufacturer + ': <b>' + manufacturerName + '</b>';
         }
         var html = '<p>' + infoText + '</p>';
+
+        html = '<div class="block block-a">';
+
         html += '<label for="dialogName"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
         html += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
         html += '<hr />';
@@ -37,22 +40,36 @@ foodcoopshop.ModalProductAdd = {
         html += '<label id="dialogLabelUnity" for="dialogUnity"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Unit + '</b> <span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.UnitDescriptionExample + '</span></label><br />';
         html += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
         html += '<span class="small">' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>';
-        html += '<hr />';
         html += '</div>';
 
         if ($('.storage-location-dropdown-wrapper').length > 0) {
+            html += '<hr />';
             html += '<div class="field-wrapper storage-location-wrapper">';
                 html += '<label for="dialogStorageLocation"><b>' + foodcoopshop.LocalizedJs.dialogProduct.StorageLocation + '</b></label>';
                 html += '<select name="dialogStorageLoation" id="dialogStorageLocation"></select><br />';
-                html += '<hr />';
             html += '</div>';
         }
+
+        if (foodcoopshop.Helper.isSelfServiceModeEnabled) {
+            html += '<hr />';
+            html += '<div class="dialog-barcode-wrapper">';
+            html += '<label id="dialogLabelBarcode" for="dialogBarcode"><b>' + foodcoopshop.LocalizedJs.dialogProduct.BarcodeDescription + '</b></label><br />';
+            html += '<input type="text" name="dialogBarcode" id="dialogBarcode" value="" /><br />';
+            html += '</div>';
+        }
+
+        html += '<hr />';
 
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
         html += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
-        html += '<hr />';
         html += '</div>';
+        html += '<hr />';
+
+        html += '</div>';
+
+        html += '<div class="block block-b">';
+
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
         html += '<div class="declaration-wrapper">';
@@ -60,6 +77,9 @@ foodcoopshop.ModalProductAdd = {
         html += '<textarea class="ckeditor hide" name="dialogDescription" id="dialogDescription"></textarea>';
         html += '</div>';
         html += '</div>';
+
+        html += '</div>';
+
         html += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
         return html;
     },
@@ -79,7 +99,8 @@ foodcoopshop.ModalProductAdd = {
                 descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData().trim(),
                 description: CKEDITOR.instances['dialogDescription'].getData().trim(),
                 isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0,
-                idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0
+                idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0,
+                barcode: $('#dialogBarcode').length > 0 ? $('#dialogBarcode').val() : '',
             },
             {
                 onOk: function (data) {

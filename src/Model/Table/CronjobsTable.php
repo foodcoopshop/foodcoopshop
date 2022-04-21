@@ -6,7 +6,7 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -55,18 +55,19 @@ class CronjobsTable extends AppTable
                 continue;
             }
 
-            $cronjobRunDayObject = new Time($this->cronjobRunDay);
+            $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
             $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');
 
-            $cronjobNotBeforeTimeWithCronjobRunDay = new Time($cronjob->not_before_time);
-            $cronjobNotBeforeTimeWithCronjobRunDay->setDate(
-                $cronjobRunDayObject->year,
-                $cronjobRunDayObject->month,
-                $cronjobRunDayObject->day
-            );
+            $cronjobNotBeforeTimeWithCronjobRunDay = FrozenTime::createFromArray([
+                'year' => $cronjobRunDayObject->year,
+                'month' => $cronjobRunDayObject->month,
+                'day' => $cronjobRunDayObject->day,
+                'hour' => $cronjob->not_before_time->i18nFormat('H'),
+                'minute' => $cronjob->not_before_time->i18nFormat('mm'),
+                'timezone' => 'UTC',
+            ]);
             $cronjobNotBeforeTimeWithCronjobRunDay->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($cronjobNotBeforeTimeWithCronjobRunDay->getTimestamp()) . ' seconds');
-            $cronjobNotBeforeTimeWithCronjobRunDay->setTimezone('UTC');
 
             $cronjobLog = $this->CronjobLogs->find('all', [
                 'conditions' => [
@@ -81,8 +82,8 @@ class CronjobsTable extends AppTable
             })->first();
 
             $executeCronjob = true;
-
             $timeIntervalObject = $cronjobNotBeforeTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
+
             if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lt($timeIntervalObject))) {
                 $executeCronjob = false;
             }
@@ -123,11 +124,14 @@ class CronjobsTable extends AppTable
             }
         }
 
+        $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(
+            $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')
+        ));
         $entity = $this->CronjobLogs->newEntity(
             [
                 'cronjob_id' => $cronjob->id,
-                'created' => $cronjobRunDayObject,
-                'success' => $success
+                'created' => $databasePreparedCronjobRunDay,
+                'success' => $success,
             ]
         );
         $this->CronjobLogs->save($entity);
@@ -135,7 +139,8 @@ class CronjobsTable extends AppTable
         return [
             'name' => $cronjob->name,
             'time_interval' => $cronjob->time_interval,
-            'success' => $success
+            'created' => $entity->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+            'success' => $success,
         ];
     }
 

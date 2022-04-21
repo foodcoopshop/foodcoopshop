@@ -4,7 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\View\Helper\TimeHelper;
 
 /**
@@ -22,6 +22,19 @@ use Cake\View\Helper\TimeHelper;
  */
 class MyTimeHelper extends TimeHelper
 {
+
+    public function convertSecondsInMinutesAndSeconds($seconds)
+    {
+        $decimals = round($seconds, 2) - (int) $seconds;
+        $minutes = floor(($seconds / 60) % 60);
+        $seconds = $seconds % 60;
+        $result = [];
+        if ($minutes > 0) {
+            $result[] = __('{0,plural,=1{1_minute} other{#_minutes}}', [$minutes]);
+        }
+        $result[] = __('{0,plural,=1{1_second} other{#_seconds}}', [$seconds + $decimals]);
+        return join(' ', $result);
+    }
 
     public function getAllYearsUntilThisYear($thisYear, $firstYear, $labelPrefix='')
     {
@@ -56,14 +69,8 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC($time)
     {
-        $timeObject = new Time($time);
-        $timeObject->setTimezone('UTC');
+        $timeObject = FrozenTime::createFromTimestamp(strtotime($time), 'UTC');
         return $timeObject;
-    }
-
-    public function correctTimezone($timeObject)
-    {
-        return $timeObject->modify($this->getTimezoneDiffInSeconds($timeObject->toUnixString()) . ' seconds');
     }
 
     public function getTimezoneDiffInSeconds($timestamp)
@@ -80,8 +87,12 @@ class MyTimeHelper extends TimeHelper
     public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
     {
 
+        if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
+            return '';
+        }
+
         if ($deliveryRhythmType == 'individual') {
-            $result = strtotime($deliveryRhythmOrderPossibleUntil);
+            $result = strtotime($deliveryRhythmOrderPossibleUntil->i18nFormat(Configure::read('DateFormat.Database')));
         } else {
             $lastOrderWeekday = $this->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
             $tmpLocale = I18n::getLocale();
@@ -170,7 +181,7 @@ class MyTimeHelper extends TimeHelper
         return self::getDeliveryDay($this->getCurrentDay());
     }
 
-    public function getNextWeeklyDeliveryDays($maxDays=30)
+    public function getNextWeeklyDeliveryDays($maxDays=52)
     {
         $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
         return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 7);
@@ -292,6 +303,7 @@ class MyTimeHelper extends TimeHelper
         $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
 
         $weekdayOrderDay = $this->formatAsWeekday($orderDay);
+        $weekdayOrderDay = $weekdayOrderDay % 7;
 
         if (is_null($sendOrderListsWeekday)) {
             $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
@@ -506,6 +518,16 @@ class MyTimeHelper extends TimeHelper
         $previousMonthModifier = strtotime('first day of previous month');
         $lastMonthAndYearString = $this->getMonthName(date('n', $previousMonthModifier)) . ' ' . date('Y', $previousMonthModifier);
         return $lastMonthAndYearString;
+    }
+
+    public function getFirstDayOfThisMonth()
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime('first day of this month'));
+    }
+
+    public function getLastDayOfThisMonth()
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime('last day of this month'));
     }
 
     public function getFirstDayOfLastMonth($date)

@@ -10,7 +10,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Cookie\Cookie;
-use Cake\I18n\Date;
+use Cake\I18n\FrozenDate;
 use Cake\Log\Log;
 use Cake\Utility\Security;
 use DateTime;
@@ -49,6 +49,8 @@ class CustomersController extends FrontendController
         // customer exists check (if customer was deleted and somehow files were not deleted)
         $customerId = explode('-', $this->request->getParam('imageSrc'));
         $customerId = $customerId[0];
+        $extension = strtolower(pathinfo($this->request->getParam('imageSrc'), PATHINFO_EXTENSION));
+
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -56,11 +58,12 @@ class CustomersController extends FrontendController
             ],
         ])->first();
         if (empty($customer)) {
-            throw new NotFoundException('image not found');
+            throw new NotFoundException('customer not found');
         }
 
-        $this->RequestHandler->renderAs($this, 'jpg');
-        $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc') . '.jpg';
+        $this->RequestHandler->renderAs($this, $extension);
+        $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc');
+
         if (!file_exists($imagePath)) {
             throw new NotFoundException('image not found');
         }
@@ -88,7 +91,7 @@ class CustomersController extends FrontendController
             [
                 'Customers' => [
                     'terms_of_use_accepted_date_checkbox' => $this->getRequest()->getData('Customers.terms_of_use_accepted_date_checkbox'),
-                    'terms_of_use_accepted_date' => Date::now()
+                    'terms_of_use_accepted_date' => FrozenDate::now()
                 ]
             ],
             ['validate' => 'termsOfUse']
@@ -129,7 +132,7 @@ class CustomersController extends FrontendController
             $this->Flash->success(__('Your_email_address_was_already_activated_or_the_activation_code_was_not_valid.'));
         } else {
             $customer->activate_email_code = null;
-            $customer->active = true;
+            $customer->active = 1;
             $this->Customer->save($customer);
 
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
@@ -329,7 +332,7 @@ class CustomersController extends FrontendController
                 'Customers' => [
                     'active' => 0,
                     'id_default_group' => CUSTOMER_GROUP_MEMBER,
-                    'terms_of_use_accepted_date' => Date::now(),
+                    'terms_of_use_accepted_date' => FrozenDate::now(),
                     'passwd' => $ph->hash($newPassword)
                 ]
             ]
@@ -391,7 +394,14 @@ class CustomersController extends FrontendController
 
                     // write action log
                     $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-                    $message = __('Member_{0}_created_an_account.', [$this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname')]);
+                    $fullname = $this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname');
+                    if (Configure::read('app.customerMainNamePart') == 'lastname') {
+                        $fullname = $this->getRequest()->getData('Customers.lastname') . ' ' . $this->getRequest()->getData('Customers.firstname');
+                    }
+                    if ($this->getRequest()->getData('Customers.is_company')) {
+                        $fullname = $this->getRequest()->getData('Customers.firstname');
+                    }
+                    $message = __('{0}_created_an_account.', [$fullname]);
 
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
@@ -408,6 +418,7 @@ class CustomersController extends FrontendController
                         ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $newCustomer,
+                        'newsletterCustomer' => $newCustomer,
                         'newPassword' => $newPassword
                         ]);
                     $email->send();
@@ -440,7 +451,7 @@ class CustomersController extends FrontendController
         $this->set('title_for_layout', __('Account_created_successfully'));
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
     }
 
@@ -448,7 +459,7 @@ class CustomersController extends FrontendController
     {
         $this->Flash->success(__('You_have_been_signed_out.'));
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
-        $this->destroyInstantOrderCustomer();
+        $this->destroyOrderCustomer();
 
         $this->AppAuth->logout();
         $redirectUrl = '/';

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\Catalog\Catalog;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
@@ -76,8 +77,9 @@ class ManufacturersController extends FrontendController
         }
 
         if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            $this->Catalog = new Catalog();
             foreach ($manufacturers as $manufacturer) {
-                $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
+                $manufacturer->product_count = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
             }
         }
 
@@ -116,12 +118,13 @@ class ManufacturersController extends FrontendController
         }
 
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $products = $this->Manufacturer->getProductsByManufacturerId($this->AppAuth, $manufacturerId);
-            $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
+            $this->Catalog = new Catalog();
+            $products = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturerId);
+            $manufacturer['Products'] = $this->Catalog->prepareProducts($this->AppAuth, $products);
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, $manufacturerId, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('manufacturer', $manufacturer);

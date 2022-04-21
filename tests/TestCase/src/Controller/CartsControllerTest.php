@@ -18,6 +18,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -459,7 +460,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
-        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
 
         $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $pickupDayEntity = $this->PickupDay->find('all')->toArray();
@@ -502,56 +503,133 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
-    public function testFinishWithPurchasePrice()
+    public function testFinishWithPurchasePriceIncludingProductsWithoutPurchasePrice()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsAdmin();
-        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
-        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
-        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
-        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
 
+        $this->addProductToCart('350-14', 1); // add lagerprodukt mit variante
+        $this->addProductToCart(340, 1); // add beuschl
+        $this->Unit = $this->getTableLocator()->get('Units');
+        $this->Unit->saveUnits(346, 12, false, 1, 'kg', 1, 0.4); // artischocke
+        $this->Unit->saveUnits(347, 0, false, 1, 'kg', 1, 0.4); // forelle
+
+        $this->addAllDifferentProductTypesToCart();
+        $this->finishCart(1,1);
+        // product and missing pp per piece
+        $this->assertMatchesRegularExpression('/Das Produkt (.*)Beuschl(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        // product and missing pp per unit
+        $this->assertMatchesRegularExpression('/Das Produkt (.*)Forelle(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        // attribute and missing pp per piece
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Lagerprodukt mit Varianten(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        // attribute and missing pp per unit
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+    }
+
+    public function testFinishWithPurchasePriceOk()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->loginAsAdmin();
+        $this->addAllDifferentProductTypesToCart();
+
+        $productId = 340;
+        $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
+        $entity = $this->PurchasePriceProduct->newEntity(
+            [
+                'product_id' => $productId,
+                'tax_id' => 2,
+                'price' => 1.072727,
+            ],
+        );
+        $this->PurchasePriceProduct->save($entity);
+        $this->addProductToCart($productId, 2);
+        $this->addProductToCart(163, 1); //mangold
         $this->finishCart(1,1);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
 
-        $objectA = $cart->cart_products[3]->order_detail;
-        $objectB = $cart->cart_products[1]->order_detail;
-        $objectC = $cart->cart_products[0]->order_detail;
-        $objectD = $cart->cart_products[2]->order_detail;
+        $objectA = $cart->cart_products[0]->order_detail; // Artischocke
+        $objectB = $cart->cart_products[1]->order_detail; // Forelle
+        $objectC = $cart->cart_products[2]->order_detail; // Rindfleisch
+        $objectD = $cart->cart_products[3]->order_detail; // Milch
+        $objectE = $cart->cart_products[4]->order_detail; // Beuschl
+        $objectF = $cart->cart_products[5]->order_detail; // Mangold
 
         $this->assertEmpty($objectA->order_detail_unit);
         $this->assertEquals($objectB->order_detail_unit->purchase_price_incl_per_unit, 0.98);
         $this->assertEquals($objectC->order_detail_unit->purchase_price_incl_per_unit, 14);
         $this->assertEmpty($objectD->order_detail_unit);
+        $this->assertEmpty($objectE->order_detail_unit);
+        $this->assertEmpty($objectF->order_detail_unit);
 
         $this->assertEquals($objectA->order_detail_purchase_price->tax_rate, 20);
         $this->assertEquals($objectB->order_detail_purchase_price->tax_rate, 13);
         $this->assertEquals($objectC->order_detail_purchase_price->tax_rate, 13);
         $this->assertEquals($objectD->order_detail_purchase_price->tax_rate, 10);
+        $this->assertEquals($objectE->order_detail_purchase_price->tax_rate, 10);
+        $this->assertEquals($objectF->order_detail_purchase_price->tax_rate, 0);
 
         $this->assertEquals($objectA->order_detail_purchase_price->total_price_tax_incl, 2.88);
         $this->assertEquals($objectB->order_detail_purchase_price->total_price_tax_incl, 10.29);
         $this->assertEquals($objectC->order_detail_purchase_price->total_price_tax_incl, 25.2);
         $this->assertEquals($objectD->order_detail_purchase_price->total_price_tax_incl, 0.28);
+        $this->assertEquals($objectE->order_detail_purchase_price->total_price_tax_incl, 2.36);
+        $this->assertEquals($objectF->order_detail_purchase_price->total_price_tax_incl, 1.07);
 
         $this->assertEquals($objectA->order_detail_purchase_price->total_price_tax_excl, 2.40);
-        $this->assertEquals($objectB->order_detail_purchase_price->total_price_tax_excl, 9.106195);
-        $this->assertEquals($objectC->order_detail_purchase_price->total_price_tax_excl, 22.300885);
+        $this->assertEquals($objectB->order_detail_purchase_price->total_price_tax_excl, 9.11);
+        $this->assertEquals($objectC->order_detail_purchase_price->total_price_tax_excl, 22.30);
         $this->assertEquals($objectD->order_detail_purchase_price->total_price_tax_excl, 0.25);
+        $this->assertEquals($objectE->order_detail_purchase_price->total_price_tax_excl, 2.14);
+        $this->assertEquals($objectF->order_detail_purchase_price->total_price_tax_excl, 1.07);
 
         $this->assertEquals($objectA->order_detail_purchase_price->tax_unit_amount, 0.24);
         $this->assertEquals($objectB->order_detail_purchase_price->tax_unit_amount, 0.39);
         $this->assertEquals($objectC->order_detail_purchase_price->tax_unit_amount, 0.97);
         $this->assertEquals($objectD->order_detail_purchase_price->tax_unit_amount, 0.03);
+        $this->assertEquals($objectE->order_detail_purchase_price->tax_unit_amount, 0.11);
+        $this->assertEquals($objectF->order_detail_purchase_price->tax_unit_amount, 0);
 
         $this->assertEquals($objectA->order_detail_purchase_price->tax_total_amount, 0.48);
         $this->assertEquals($objectB->order_detail_purchase_price->tax_total_amount, 1.17);
         $this->assertEquals($objectC->order_detail_purchase_price->tax_total_amount, 2.91);
         $this->assertEquals($objectD->order_detail_purchase_price->tax_total_amount, 0.03);
+        $this->assertEquals($objectE->order_detail_purchase_price->tax_total_amount, 0.22);
+        $this->assertEquals($objectF->order_detail_purchase_price->tax_total_amount, 0);
 
+    }
+
+    public function testDecreaseStockAvailableForMultipleAttributesOfOneProduct()
+    {
+        $productA = '350-13';
+        $this->loginAsSuperadmin();
+        $this->addProductToCart($productA, 1);
+        $this->finishCart(1, 1);
+        $this->checkStockAvailable($productA, 4);
+        $this->checkStockAvailable('350-14', 999); // must be same as before fnishing order
+    }
+
+    public function testIsSubscribeNewsletterLinkAddedToMail()
+    {
+        $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->finishCart(1, 1);
+        $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('app.cakeServerName') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
+    }
+
+    public function testIsSubscribeNewsletterLinkNotAddedToMail()
+    {
+        $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 1);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->finishCart(1, 1);
+        // assertMailNotContainsAt not available!
+        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Du kannst unseren Newsletter', TestEmailTransport::getMessages()[0]->getBodyHtml());
     }
 
     public function testFinishOrderWithComment()
@@ -571,13 +649,13 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
 
         // check order_details for product1 (index 2!)
-        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
 
         // check order_details for product2 (index 0!)
-        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.65, 1.86, 0.07, 0.21, 13, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.65, 1.86, 0.07, 0.21, 13, $pickupDay);
 
         // check order_details for product3 (index 1!)
-        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.64, 0.64, 0.000000, 0.000000, 0, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.64, 0.64, 0.000000, 0.000000, 0, $pickupDay);
 
         $this->checkStockAvailable($this->productId1, 95);
         $this->checkStockAvailable($this->productId2, 16); // product is NOT always available!
@@ -665,6 +743,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishOrderStockNotificationsStockManagementDisabled()
     {
         $this->loginAsSuperadmin();
+        $this->changeManufacturer(5, 'stock_management_enabled', 0);
         $this->placeOrderWithStockProducts();
         $this->assertMailCount(1);
     }
@@ -689,19 +768,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->placeOrderWithStockProducts();
 
         // check email to manufacturer
-        $this->assertMailSubjectContainsAt(0, 'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0');
-        $this->assertMailContainsHtmlAt(0, 'Lagerstand: <b>0</b>');
-        $this->assertMailContainsHtmlAt(0, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
-        $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
+        $this->assertMailSubjectContainsAt(2, 'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0');
+        $this->assertMailContainsHtmlAt(2, 'Lagerstand: <b>0</b>');
+        $this->assertMailContainsHtmlAt(2, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // check email to contact person
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailAdmin'));
 
         // check email to manufacturer
-        $this->assertMailSubjectContainsAt(2, 'Lagerstand für Produkt "Lagerprodukt": -1');
-        $this->assertMailContainsHtmlAt(2, 'Lagerstand: <b>-1</b>');
-        $this->assertMailContainsHtmlAt(2, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
-        $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
+        $this->assertMailSubjectContainsAt(0, 'Lagerstand für Produkt "Lagerprodukt": -1');
+        $this->assertMailContainsHtmlAt(0, 'Lagerstand: <b>-1</b>');
+        $this->assertMailContainsHtmlAt(0, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // check email to contact person
         $this->assertMailSentToAt(3, Configure::read('test.loginEmailAdmin'));
@@ -752,17 +831,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
-        $orderDetailA = $cart->cart_products[3]->order_detail;
-        $orderDetailB = $cart->cart_products[2]->order_detail;
-        $orderDetailC = $cart->cart_products[1]->order_detail;
-        $orderDetailD = $cart->cart_products[0]->order_detail;
+
+        $orderDetailA = $cart->cart_products[1]->order_detail;
+        $orderDetailB = $cart->cart_products[0]->order_detail;
+        $orderDetailC = $cart->cart_products[3]->order_detail;
+        $orderDetailD = $cart->cart_products[2]->order_detail;
 
         // check table order_detail
         $this->assertEquals($orderDetailB->total_price_tax_incl, 2.700000);
         $this->assertEquals($orderDetailB->total_price_tax_excl, 2.450000);
 
         $this->assertEquals($orderDetailC->total_price_tax_incl, 15.240000);
-        $this->assertEquals($orderDetailC->total_price_tax_excl,  13.850000);
+        $this->assertEquals($orderDetailC->total_price_tax_excl, 13.850000);
 
         $this->assertEquals($orderDetailD->total_price_tax_incl, 0.480000);
         $this->assertEquals($orderDetailD->total_price_tax_excl, 0.480000);
@@ -811,24 +891,26 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
 
         // check order_details
-        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
-        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 10, $pickupDay);
 
         // check order_details_units
-        $orderDetailA = $cart->cart_products[1]->order_detail;
-        $orderDetailB = $cart->cart_products[0]->order_detail;
+        $orderDetailA = $cart->cart_products[0]->order_detail;
+        $orderDetailB = $cart->cart_products[1]->order_detail;
 
         $this->assertEquals($orderDetailA->order_detail_unit->product_quantity_in_units, 700);
         $this->assertEquals($orderDetailA->order_detail_unit->price_incl_per_unit, 1.5);
         $this->assertEquals($orderDetailA->order_detail_unit->quantity_in_units, 350);
         $this->assertEquals($orderDetailA->order_detail_unit->unit_name, 'g');
         $this->assertEquals($orderDetailA->order_detail_unit->unit_amount, 100);
+        $this->assertEquals($orderDetailA->order_detail_unit->mark_as_saved, 0);
 
         $this->assertEquals($orderDetailB->order_detail_unit->product_quantity_in_units, 1.5);
         $this->assertEquals($orderDetailB->order_detail_unit->price_incl_per_unit, 20);
         $this->assertEquals($orderDetailB->order_detail_unit->quantity_in_units, 0.5);
         $this->assertEquals($orderDetailB->order_detail_unit->unit_name, 'kg');
         $this->assertEquals($orderDetailB->order_detail_unit->unit_amount, 1);
+        $this->assertEquals($orderDetailB->order_detail_unit->mark_as_saved, 0);
 
         $this->assertEquals($orderDetailA->tax_rate, 10);
         $this->assertEquals($orderDetailA->tax_unit_amount, 0.48);
@@ -840,6 +922,107 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->assertMailContainsHtmlAt(0, 'Forelle : Stück, je ca. 350 g');
         $this->assertMailContainsHtmlAt(0, 'Rindfleisch : je ca. 0,5 kg');
+
+    }
+
+    public function testFinishCartWithShoppingPricesAreZeroPrices()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
+        $this->loginAsSuperadmin();
+        $this->addAllDifferentProductTypesToCart();
+        $this->finishCart(1,1);
+
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $this->checkCartStatusAfterFinish();
+        $cart = $this->getCartById($cartId);
+
+        $objectA = $cart->cart_products[1]->order_detail;
+        $objectB = $cart->cart_products[2]->order_detail;
+        $objectC = $cart->cart_products[0]->order_detail;
+        $objectD = $cart->cart_products[3]->order_detail;
+
+        $this->assertEquals($objectA->total_price_tax_incl, 0);
+        $this->assertEquals($objectA->total_price_tax_excl, 0);
+        $this->assertEquals($objectA->tax_unit_amount, 0);
+        $this->assertEquals($objectA->tax_total_amount, 0);
+        $this->assertEquals($objectA->deposit, 0);
+        $this->assertEquals($objectA->order_detail_unit->price_incl_per_unit, 0);
+        $this->assertNull($objectA->order_detail_unit->purchase_price_incl_per_unit);
+        $this->assertEmpty($objectA->order_detail_purchase_price);
+
+        $this->assertEquals($objectB->total_price_tax_incl, 0);
+        $this->assertEquals($objectB->total_price_tax_excl, 0);
+        $this->assertEquals($objectB->tax_unit_amount, 0);
+        $this->assertEquals($objectB->tax_total_amount, 0);
+        $this->assertEquals($objectB->deposit, 0);
+        $this->assertEquals($objectB->order_detail_unit->price_incl_per_unit, 0);
+        $this->assertNull($objectB->order_detail_unit->purchase_price_incl_per_unit);
+        $this->assertEmpty($objectB->order_detail_purchase_price);
+
+        $this->assertEquals($objectC->total_price_tax_incl, 0);
+        $this->assertEquals($objectC->total_price_tax_excl, 0);
+        $this->assertEquals($objectC->tax_unit_amount, 0);
+        $this->assertEquals($objectC->tax_total_amount, 0);
+        $this->assertEquals($objectC->deposit, 0);
+        $this->assertEmpty($objectC->order_detail_unit);
+        $this->assertEmpty($objectC->order_detail_purchase_price);
+
+        $this->assertEquals($objectD->total_price_tax_incl, 0);
+        $this->assertEquals($objectD->total_price_tax_excl, 0);
+        $this->assertEquals($objectD->tax_unit_amount, 0);
+        $this->assertEquals($objectD->tax_total_amount, 0);
+        $this->assertEquals($objectD->deposit, 0);
+        $this->assertEmpty($objectD->order_detail_unit);
+        $this->assertEmpty($objectD->order_detail_purchase_price);
+
+    }
+
+    public function testFinishCartWithShoppingPricesArePurchasePrices()
+    {
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'PP');
+        $this->loginAsSuperadmin();
+        $this->addAllDifferentProductTypesToCart();
+        return;
+        $this->finishCart(1,1);
+
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $this->checkCartStatusAfterFinish();
+        $cart = $this->getCartById($cartId);
+
+        $objectA = $cart->cart_products[1]->order_detail;
+        $objectB = $cart->cart_products[0]->order_detail;
+        $objectC = $cart->cart_products[2]->order_detail;
+        $objectD = $cart->cart_products[3]->order_detail;
+
+        $this->assertEquals($objectA->total_price_tax_incl, 9.99);
+        $this->assertEquals($objectA->total_price_tax_excl, 9.09);
+        $this->assertEquals($objectA->tax_unit_amount, 0.30);
+        $this->assertEquals($objectA->tax_total_amount, 0.90);
+        $this->assertEquals($objectA->deposit, 0.00);
+        $this->assertEquals($objectA->order_detail_unit->price_incl_per_unit, 0.95);
+
+        $this->assertEquals($objectB->total_price_tax_incl, 24.54);
+        $this->assertEquals($objectB->total_price_tax_excl, 22.32);
+        $this->assertEquals($objectB->tax_unit_amount, 0.74);
+        $this->assertEquals($objectB->tax_total_amount, 2.22);
+        $this->assertEquals($objectB->deposit, 0.00);
+        $this->assertEquals($objectB->order_detail_unit->price_incl_per_unit, 13.63);
+
+        $this->assertEquals($objectC->total_price_tax_incl, 0.28);
+        $this->assertEquals($objectC->total_price_tax_excl, 0.25);
+        $this->assertEquals($objectC->tax_unit_amount, 0.03);
+        $this->assertEquals($objectC->tax_total_amount, 0.03);
+        $this->assertEquals($objectC->deposit, 0.50);
+        $this->assertEmpty($objectC->order_detail_unit);
+
+        $this->assertEquals($objectD->total_price_tax_incl, 2.64);
+        $this->assertEquals($objectD->total_price_tax_excl, 2.40);
+        $this->assertEquals($objectD->tax_unit_amount, 0.12);
+        $this->assertEquals($objectD->tax_total_amount, 0.24);
+        $this->assertEquals($objectD->deposit, 1);
+        $this->assertEmpty($objectD->order_detail_unit);
 
     }
 
@@ -858,7 +1041,7 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->loginAsSuperadminAddInstantOrderCustomerToSession($_SESSION);
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->assertResponseContains('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.');
 
@@ -897,7 +1080,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->loginAsSuperadminAddInstantOrderCustomerToSession($_SESSION);
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
@@ -922,7 +1105,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->loginAsSuperadminAddInstantOrderCustomerToSession($_SESSION);
+        $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
@@ -960,6 +1143,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, count($cart->cart_products));
         $this->assertEquals(1, $cart->cart_products[0]->order_detail->product_amount);
 
+    }
+
+    protected function addAllDifferentProductTypesToCart()
+    {
+        $this->addProductToCart(346, 2);      // Artischocke: main product with normal price
+        $this->addProductToCart(347, 3);      // Forelle: main product with price per unit
+        $this->addProductToCart('348-12', 3); // Rindfleisch: attribute with price per unit
+        $this->addProductToCart('60-10', 1);  // Milch: attribute with normal price
     }
 
     private function fillCart()

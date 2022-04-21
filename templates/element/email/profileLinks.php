@@ -22,12 +22,12 @@ use Cake\Core\Configure;
     <?php echo __('Password'); ?>: <?php echo $newPassword; ?>
 </p>
 
-<p>
+<p style="font-size:12px;padding-top:15px;">
     <?php echo __('You_can_change_your_password_here'); ?>:<br />
     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
 </p>
 
-<p>
+<p style="font-size:12px;">
     <?php echo __('You_can_change_your_profile_here'); ?>:<br />
     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
 </p>

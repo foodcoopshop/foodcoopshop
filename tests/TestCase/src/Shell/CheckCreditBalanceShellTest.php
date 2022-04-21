@@ -64,6 +64,17 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
     }
 
+    public function testEmailSentWithIsCashlessPaymentTypeManualReminderDisabled() {
+        $this->changeCustomer(Configure::read('test.customerId'), 'check_credit_reminder_enabled', 0);
+        $this->loginAsCustomer();
+        $this->addProductToCart(346, 20);
+        $this->finishCart();
+        $this->logout();
+        $this->resetCustomerCreditBalance();
+        $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->assertMailCount(1);
+    }
+
     public function testEmailSentWithIsCashlessPaymentTypeListUpload() {
 
         $this->loginAsCustomer();

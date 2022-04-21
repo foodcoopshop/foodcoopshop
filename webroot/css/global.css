@@ -51,6 +51,7 @@ a:not(.btn):hover {
 }
 h4 {
     font-size: 20px;
+    font-weight: 600;
 }
 select {
     background-color: #fff;
@@ -134,7 +135,7 @@ h1 {
     font-size: 26px;
     margin-bottom: 10px;
     margin-top: 0;
-    font-weight: normal;
+    font-weight: 600;
 }
 h1.middle-line {
     display: flex;
@@ -146,6 +147,7 @@ h1:not(.middle-line) span {
     letter-spacing: 0;
     float: right;
     line-height: 34px;
+    font-weight: normal;
 }
 h1.middle-line span.left {
     margin-bottom: -5px;
@@ -163,12 +165,13 @@ h1.middle-line span.right {
     align-self: flex-end;
     margin-bottom: -2px;
     text-align: right;
+    font-weight: normal;
 }
 h2 {
     font-size: 26px;
     margin-bottom: 10px;
     margin-top: 0;
-    font-weight: normal;
+    font-weight: 600;
 }
 h2.warning,
 h2.info,
@@ -181,6 +184,7 @@ h2.info2 {
     color: #fff;
     line-height: 19px;
     clear: both;
+    font-weight: normal ! important;
 }
 h2.warning {
     background-color: #f3515c;
@@ -231,10 +235,23 @@ h2.warning {
     text-decoration: underline ! important;
     color: #fff ! important;
 }
+#flashMessage.error .progress-bar.bg-success {
+    background-color: #f3515c ! important;
+}
+#flashMessage .progress {
+    clear: both;
+    margin-top: 3px;
+    background-color: transparent;
+}
+#flashMessage .progress,
+#flashMessage .progress .progress-bar {
+    height: 2px;
+}
 #flashMessage img {
     height: 200px;
     float: left;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 #flashMessage .btn-flash-message {
     float: left;
@@ -476,6 +493,9 @@ tr.selected > td > a.toggle-link > i.far, table:not(.no-hover) tr:hover > td > a
 tr.selected > td > div > i.fas, table:not(.no-hover) tr:hover > td > div > i.fas,
 tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far {
     color: #fff;
+}
+.tooltipster-box .tooltipster-content {
+    color: #333 ! important;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {
     background: #fff ! important;

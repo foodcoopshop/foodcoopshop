@@ -5,9 +5,11 @@ namespace Admin\Controller;
 use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
+use App\Lib\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,7 +29,14 @@ class InvoicesController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+        switch ($this->getRequest()->getParam('action')) {
+            case 'myInvoices':
+                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !$this->AppAuth->isManufacturer();
+                break;
+            default:
+                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+                break;
+        }
     }
 
     public function downloadAsZipFile()
@@ -105,21 +114,56 @@ class InvoicesController extends AdminAppController
             $helloCash = new HelloCash();
             $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
             $invoiceId = $responseObject->invoice_id;
-            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
             $invoiceNumber = $responseObject->invoice_number;
 
         } else {
 
             $invoiceToCustomer = new GenerateInvoiceToCustomer();
             $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
-            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
             $invoiceNumber = $newInvoice->invoice_number;
             $invoiceId = $newInvoice->id;
         }
 
+        if ($paidInCash && $invoiceData->sumPriceIncl != 0) {
+
+            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+                $this->Payment = $this->getTableLocator()->get('Payments');
+                $paymentEntity = $this->Payment->newEntity(
+                    [
+                        'status' => APP_ON,
+                        'approval' => APP_ON,
+                        'type' => $invoiceData->sumPriceIncl > 0 ? 'product' : 'payback',
+                        'id_customer' => $customerId,
+                        'id_manufacturer' => 0,
+                        'date_add' => FrozenTime::now(),
+                        'date_changed' => FrozenTime::now(),
+                        'amount' => abs($invoiceData->sumPriceIncl),
+                        'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
+                        'created_by' => $this->AppAuth->getUserId(),
+                    ]
+                );
+                $this->Payment->save($paymentEntity);
+            }
+
+            // mark row as picked up
+            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
+            $this->PickupDay->changeState(
+                $customerId,
+                Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
+                APP_ON,
+            );
+
+            if (!$customer->invoices_per_email_enabled) {
+                $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
+            }
+
+        }
+
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Print_receipt'),
-            $invoiceFilename,
+            $invoiceRoute,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',
@@ -178,7 +222,11 @@ class InvoicesController extends AdminAppController
             $newInvoiceNumber = 'xxx';
             $newInvoiceDate = 'xx.xx.xxxx';
 
-            $pdfWriter = new InvoiceToCustomerPdfWriter();
+            if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
+                $pdfWriter = new InvoiceToCustomerPdfWriter();
+            } else {
+                $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter();
+            }
             $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
 
             if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
@@ -238,7 +286,7 @@ class InvoicesController extends AdminAppController
             $cancelledInvoiceNumber = $responseObject->invoice_number;
             $invoiceId = $responseObject->cancellation_details->cancellation_number;
             $cancellationInvoiceNumber = $responseObject->cancellation_details->cancellation_number;
-            $invoiceFilename = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
+            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($responseObject->invoice_id, true);
 
         } else {
 
@@ -283,16 +331,47 @@ class InvoicesController extends AdminAppController
             $invoiceId = $newInvoice->id;
             $cancelledInvoiceNumber = $invoice->invoice_number;
             $cancellationInvoiceNumber = $newInvoice->invoice_number;
-            $invoiceFilename = '/admin/lists/getInvoice?file=' . $newInvoice->filename;
+            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
 
         }
 
         $invoice->cancellation_invoice_id = $invoiceId;
         $this->Invoice->save($invoice);
 
+        // cancel automatically added payment
+        if ($invoice->paid_in_cash) {
+
+            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+                $this->Payment = $this->getTableLocator()->get('Payments');
+                $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
+                $this->Payment->updateAll([
+                    'status' => APP_DEL,
+                    'date_changed' => FrozenTime::now(),
+                    'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
+                ], [
+                    'type IN' => ['product', 'payback'],
+                    'id_customer' => $invoice->customer->id_customer,
+                    'approval_comment' => $approvalString,
+                ]);
+            }
+
+            // remove "mark row as picked up"
+            $this->PickupDay = $this->getTableLocator()->get('PickupDays');
+            $this->PickupDay->changeState(
+                $invoice->customer->id_customer,
+                Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay),
+                APP_OFF,
+            );
+
+            if (!$invoice->customer->invoices_per_email_enabled) {
+                $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
+            }
+
+        }
+
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),
-            $invoiceFilename,
+            $invoiceRoute,
             [
                 'class' => 'btn btn-outline-light btn-flash-message',
                 'target' => '_blank',
@@ -323,7 +402,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function index()
+    public function myInvoices()
     {
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
@@ -338,11 +417,50 @@ class InvoicesController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
+        $customerId = $this->AppAuth->getUserId();
+
+        $this->set('customerId', $customerId);
+
+        $this->processIndex($dateFrom, $dateTo, $customerId);
+
+        $this->set('isOverviewMode', false);
+
+        $this->set('title_for_layout', __d('admin', 'My_invoices'));
+
+        $this->render('index');
+
+    }
+
+    public function index()
+    {
+
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisMonth();
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        }
+        $this->set('dateFrom', $dateFrom);
+
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisMonth();
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        }
+        $this->set('dateTo', $dateTo);
+
         $customerId = '';
         if (! empty($this->getRequest()->getQuery('customerId'))) {
             $customerId = h($this->getRequest()->getQuery('customerId'));
         }
         $this->set('customerId', $customerId);
+
+        $this->processIndex($dateFrom, $dateTo, $customerId);
+
+        $this->set('title_for_layout', __d('admin', 'Journal'));
+        $this->set('isOverviewMode', true);
+
+    }
+
+    protected function processIndex($dateFrom, $dateTo, $customerId)
+    {
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
@@ -390,7 +508,6 @@ class InvoicesController extends AdminAppController
         $this->set('invoiceSums', $invoiceSums);
 
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
-        $this->set('title_for_layout', __d('admin', 'Journal'));
 
         $preparedTaxRates = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
         $this->set('taxRates', $preparedTaxRates['taxRates']);
@@ -398,7 +515,7 @@ class InvoicesController extends AdminAppController
 
     }
 
-    private function setInvoiceConditions($query, $dateFrom, $dateTo, $customerId)
+    protected function setInvoiceConditions($query, $dateFrom, $dateTo, $customerId)
     {
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

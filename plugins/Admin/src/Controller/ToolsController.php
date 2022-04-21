@@ -71,8 +71,8 @@ class ToolsController extends AdminAppController
         $upload = $this->getRequest()->getData('upload');
 
         // non-image files will return false
-        if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'image/jpeg') {
-            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['JPG']);
+        if (!in_array(mime_content_type($upload->getStream()->getMetadata('uri')), Configure::read('app.allowedImageMimeTypes'))) {
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -132,8 +132,8 @@ class ToolsController extends AdminAppController
         $formatInfo = getimagesize($uploadedFile);
 
         // non-image files will return false
-        if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
-            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['JPG']);
+        if ($formatInfo === false || !in_array($formatInfo['mime'], Configure::read('app.allowedImageMimeTypes'))) {
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', [join(', ', array_keys(Configure::read('app.allowedImageMimeTypes')))]);
             $this->set([
                 'status' => 0,
                 'msg' => $message,

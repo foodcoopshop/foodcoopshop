@@ -22,7 +22,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
     public function testEditPickupDayAsSuperadminEmptyReason()
     {
         $this->loginAsSuperadmin();
-        $response = $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-01-01', '');
+        $response = $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-01-01', '', true);
         $this->assertRegExpWithUnquotedString('Bitte gib an, warum der Abholtag geändert wird.', $response->msg);
         $this->assertJsonError();
     }
@@ -30,7 +30,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
     public function testEditPickupDayAsSuperadminNoOrderDetailIds()
     {
         $this->loginAsSuperadmin();
-        $response = $this->editPickupDayOfOrderDetails([], '2018-01-01', 'asdf');
+        $response = $this->editPickupDayOfOrderDetails([], '2018-01-01', 'asdf', true);
         $this->assertRegExpWithUnquotedString('error - no order detail id passed', $response->msg);
         $this->assertJsonError();
     }
@@ -38,7 +38,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
     public function testEditPickupDayAsSuperadminWrongOrderDetailIds()
     {
         $this->loginAsSuperadmin();
-        $response = $this->editPickupDayOfOrderDetails([200,40], '2018-01-01', 'asdf');
+        $response = $this->editPickupDayOfOrderDetails([200,40], '2018-01-01', 'asdf', true);
         $this->assertRegExpWithUnquotedString('error - order details wrong', $response->msg);
         $this->assertJsonError();
     }
@@ -47,7 +47,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
     {
         $this->loginAsSuperadmin();
         $reason = 'this is the reason';
-        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason);
+        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
         $this->assertJsonOk();
         $this->assertMailContainsHtmlAt(0, $reason);
         $this->assertMailContainsHtmlAt(0, 'Neuer Abholtag : <b>Freitag, 07.09.2018</b>');
@@ -56,14 +56,35 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertMailSubjectContainsAt(0, 'Der Abholtag deiner Bestellung wurde geändert auf: Freitag, 07.09.2018');
     }
 
-    private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason)
+    public function testEditPickupDayAsSuperadminOkIsSubscribeNewsletterLinkAddedToMail()
+    {
+        $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
+        $this->loginAsSuperadmin();
+        $reason = 'this is the reason';
+        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
+        $this->assertJsonOk();
+        $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('app.cakeServerName') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
+    }
+
+    public function testEditPickupDayAsSuperadminWithoutEmailsOk()
+    {
+        $this->loginAsSuperadmin();
+        $reason = 'this is the reason';
+        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, false);
+        $this->assertJsonOk();
+        $this->assertMailCount(0);
+    }
+
+    private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason, $sendEmail)
     {
         $this->ajaxPost(
             '/admin/order-details/editPickupDay/',
             [
                 'orderDetailIds' => $orderDetailIds,
                 'pickupDay' => $pickupDay,
-                'editPickupDayReason' => $reason
+                'editPickupDayReason' => $reason,
+                'sendEmail' => $sendEmail,
             ]
         );
         return $this->getJsonDecodedContent();

@@ -61,7 +61,7 @@ class BlogPostsController extends AdminAppController
         $blogPost = $this->BlogPost->newEntity(
             [
                 'active' => APP_ON,
-                'is_private' => APP_ON,
+                'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
                 'show_on_start_page_until' => Configure::read('app.timeHelper')->getInXDaysForDatabase(30),
             ],
             ['validate' => false]
@@ -162,11 +162,12 @@ class BlogPostsController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('BlogPosts.delete_image'))) {
-                $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
+                $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath());
             }
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('BlogPosts.delete_blog_post'))) {
+                $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath());
                 $blogPost = $this->BlogPost->patchEntity($blogPost, ['active' => APP_DEL]);
                 $this->BlogPost->save($blogPost);
                 $messageSuffix = __d('admin', 'deleted');

@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\OutputFilter\OutputFilter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
@@ -32,7 +33,7 @@ class ConfigurationsController extends AdminAppController
     public function edit($configurationId)
     {
 
-        $this->viewBuilder()->setHelpers(['Configuration']);
+        $this->viewBuilder()->addHelper('Configuration');
 
         if ($configurationId === null) {
             throw new NotFoundException;
@@ -70,7 +71,7 @@ class ConfigurationsController extends AdminAppController
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
             $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         }
-        if ($configuration->name == 'FCS_FACEBOOK_URL') {
+        if (in_array($configuration->name, ['FCS_FACEBOOK_URL', 'FCS_INSTAGRAM_URL'])) {
             $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
         }
         if (in_array($configuration->type, ['multiple_dropdown'])) {
@@ -109,6 +110,9 @@ class ConfigurationsController extends AdminAppController
 
     public function previewEmail($configurationName)
     {
+
+        $this->disableAutoRender();
+
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->Configuration->getConfigurations();
         $email = new AppMailer();
@@ -128,6 +132,7 @@ class ConfigurationsController extends AdminAppController
                 $data = (object) [
                     'firstname' => 'Vorname',
                     'lastname' => 'Nachname',
+                    'is_company' => false,
                 ];
                 $data->address_customer = (object) [
                     'email' => 'vorname.nachname@example.com'
@@ -138,13 +143,19 @@ class ConfigurationsController extends AdminAppController
                 ]);
                 break;
         }
-        echo $email->render()->getMessage()->getBodyString();
-        exit;
+
+        $output = $email->render()->getMessage()->getBodyString();
+
+        if (Configure::check('app.outputStringReplacements')) {
+            $output = OutputFilter::replace($output, Configure::read('app.outputStringReplacements'));
+        }
+
+        echo $output;
     }
 
     public function index()
     {
-        $this->viewBuilder()->setHelpers(['Configuration']);
+        $this->viewBuilder()->addHelper('Configuration');
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations(['type != "hidden"']));
         $this->Tax = $this->getTableLocator()->get('Taxes');
@@ -156,7 +167,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->viewBuilder()->setHelpers(['Network.Network']);
+            $this->viewBuilder()->addHelper('Network.Network');
             $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);

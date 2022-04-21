@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Validation\Validator;
 
 /**
@@ -19,6 +20,8 @@ use Cake\Validation\Validator;
  */
 class StockAvailablesTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public function initialize(array $config): void
     {

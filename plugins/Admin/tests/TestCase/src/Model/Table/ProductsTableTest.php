@@ -3,7 +3,8 @@
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,6 +21,9 @@ use Cake\I18n\FrozenDate;
  */
 class ProductsTableTest extends AppCakeTestCase
 {
+
+    use AppIntegrationTestTrait;
+    use LoginTrait;
 
     public $Product;
 
@@ -115,380 +119,6 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithFirstDeliveryDay()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '1',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-11-02'),
-                    'is_stock_product' => '0'
-                ]
-            ),
-            'currentDay' => '2018-10-07',
-            'result' => '2018-11-02'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmWeekNoFirstDeliveryDay()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '1',
-                    'is_stock_product' => '0'
-                ]
-            ),
-            'currentDay' => '2018-10-07',
-            'result' => '2018-10-12'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmWeekNormal()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '1',
-                    'is_stock_product' => '0'
-                ]
-            ),
-            'currentDay' => '2018-08-14',
-            'result' => '2018-08-17'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDayOneDayBeforeDefault()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '1',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_send_order_list_weekday' => 2
-                ]
-            ),
-            'currentDay' => '2017-08-08',
-            'result' => '2017-08-18'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDayTwoDaysBeforeDefault()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '1',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_send_order_list_weekday' => 1
-                ]
-            ),
-            'currentDay' => '2020-04-05',
-            'result' => '2020-04-10'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayMonday()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '2',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_send_order_list_weekday' => 1,
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01')
-                ]
-            ),
-            'currentDay' => '2019-02-25',
-            'result' => '2019-03-15'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayThursday()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '2',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_send_order_list_weekday' => 4,
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01')
-                ]
-            ),
-            'currentDay' => '2019-03-08',
-            'result' => '2019-03-15'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmFirstFridayWithSendOrderListDaySunday()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '1',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_send_order_list_weekday' => 1,
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2020-10-02')
-                ]
-            ),
-            'currentDay' => '2020-09-28',
-            'result' => '2020-11-06'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekA()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '2',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-10')
-                ]
-            ),
-            'currentDay' => '2018-08-14',
-            'result' => '2018-08-24'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekB()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '2',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
-                ]
-            ),
-            'currentDay' => '2018-08-14',
-            'result' => '2018-08-17'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekC()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '2',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06')
-                ]
-            ),
-            'currentDay' => '2018-09-15',
-            'result' => '2018-09-28'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekD()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '2',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-22')
-                ]
-            ),
-            'currentDay' => '2019-03-15',
-            'result' => '2019-03-22'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythm4Week()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'week',
-                    'delivery_rhythm_count' => '4',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
-                ]
-            ),
-            'currentDay' => '2018-08-07',
-            'result' => '2018-08-31'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmFirstWeekdayOfMonthA()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '1',
-                    'is_stock_product' => '0',
-                ]
-            ),
-            'currentDay' => '2017-08-07',
-            'result' => '2017-09-01'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmFirstWeekdayOfMonthB()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '1',
-                    'is_stock_product' => '1',
-                ]
-            ),
-            'currentDay' => '2017-08-07',
-            'result' => '2017-08-11'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmLastWeekdayOfMonthA()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '0',
-                    'is_stock_product' => '0',
-                ]
-            ),
-            'currentDay' => '2018-09-13',
-            'result' => '2018-09-28'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmLastWeekdayOfMonthB()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '0',
-                    'is_stock_product' => '0',
-                ]
-            ),
-            'currentDay' => '2018-08-07',
-            'result' => '2018-08-31'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmLastWeekdayOfMonthC()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2021-02-26'),
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '0',
-                    'is_stock_product' => '0',
-                ]
-            ),
-            'currentDay' => '2021-01-20',
-            'result' => '2021-02-26'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmSecondWeekdayOfMonth()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '2',
-                    'is_stock_product' => '0',
-                ]
-            ),
-            'currentDay' => '2020-11-20',
-            'result' => '2020-12-11'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmThirdWeekdayOfMonth()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '3',
-                    'is_stock_product' => '0',
-                ]
-                ),
-            'currentDay' => '2020-11-20',
-            'result' => '2020-12-18'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmFourthWeekdayOfMonth()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'month',
-                    'delivery_rhythm_count' => '4',
-                    'is_stock_product' => '0',
-                ]
-                ),
-            'currentDay' => '2020-11-30',
-            'result' => '2020-12-25'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    public function testCalculatePickupDayRespectingDeliveryRhythmIndividual()
-    {
-        $data = [
-            'product' => $this->Product->newEntity(
-                [
-                    'delivery_rhythm_type' => 'individual',
-                    'delivery_rhythm_count' => '0',
-                    'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
-                ]
-            ),
-            'currentDay' => '2017-08-07',
-            'result' => '2018-08-03'
-        ];
-        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
-    }
-
-    private function assertPickupDay($product, $currentDay, $expectedResult)
-    {
-        $result = $this->Product->calculatePickupDayRespectingDeliveryRhythm($product, $currentDay);
-        $this->assertEquals($expectedResult, $result);
-    }
-
     public function testGetCompositeProductIdAndAttributeId()
     {
         $tests = [
@@ -568,7 +198,8 @@ class ProductsTableTest extends AppCakeTestCase
         $unity = '<b>piece</b>';
         $isDeclarationOk = 0;
         $idStorageLocation = 1;
-        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
+        $barcode = '1234567890123';
+        $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -576,7 +207,8 @@ class ProductsTableTest extends AppCakeTestCase
             ],
             'contain' => [
                 'CategoryProducts',
-                'StockAvailables'
+                'StockAvailables',
+                'BarcodeProducts',
             ]
         ])->first();
 
@@ -592,6 +224,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 0);
         $this->assertEquals($product->id_storage_location, $idStorageLocation);
+        $this->assertEquals($product->barcode_product->barcode, $barcode);
     }
 
     /**
@@ -966,13 +599,13 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeNameWithMultipleProducts()
     {
-
         $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
-            'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
+            'description' => '    <p>test <br /><strong><em>description</em></strong><img src="/test.jpg" /><img src="data:image/png;base64,iVBORw0KGgoAAAANSUCYII=" /></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>    ',
             'id_storage_location' => 2,
+            'barcode' => '1234567890123',
         ];
 
         $products = [
@@ -984,16 +617,13 @@ class ProductsTableTest extends AppCakeTestCase
         $expectedResults = [
             'name' => 'test name',
             'unity' => 'test unity',
-            'description' => '<p>test <br /><strong><em>description</em></strong></p>',
+            'description' => '<p>test <br /><strong><em>description</em></strong><img src="/test.jpg" /><img src="invalid-image" /></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>',
             'id_storage_location' => 2,
+            'barcode' => '1234567890123',
         ];
         $this->assertProductName($products, $expectedResults);
     }
-
-    /**
-     * START helper methods
-     */
 
     private function assertProductName($products, $expectedResults)
     {
@@ -1003,6 +633,9 @@ class ProductsTableTest extends AppCakeTestCase
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productId,
+                ],
+                'contain' => [
+                    'BarcodeProducts',
                 ]
             ])->first();
             $this->assertEquals($expectedResults['name'], $changedProduct->name);
@@ -1012,6 +645,10 @@ class ProductsTableTest extends AppCakeTestCase
 
             if (isset($expectedResults['id_storage_location'])) {
                 $this->assertEquals($expectedResults['id_storage_location'], $changedProduct->id_storage_location);
+            }
+
+            if (isset($expectedResults['barcode'])) {
+                $this->assertEquals($expectedResults['barcode'], $changedProduct->barcode_product->barcode);
             }
 
         }

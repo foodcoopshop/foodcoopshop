@@ -30,6 +30,12 @@ use Cake\Core\Configure;
         "
     ]);
 
+    $this->element('highlightRowAfterEdit', [
+        'rowIdPrefix' => '#order-detail-'
+    ]);
+
+    echo $this->element('autoPrintInvoice');
+
     if (Configure::read('app.isDepositEnabled')) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace').".ModalPaymentAdd.initDepositInList();"
@@ -42,6 +48,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button, i.order-state-icon');" .
             Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailFeedbackAdd.init();" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailProductNameEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductCustomerEdit.init();" .
@@ -51,7 +58,9 @@ use Cake\Core\Configure;
 
     if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init();"
+            'script' =>
+            Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init(" . ($this->MyHtml->paymentIsCashless() ? '1' : '0') . ");".
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.latest-invoices-tooltip-wrapper');"
         ]);
     }
 
@@ -119,11 +128,15 @@ use Cake\Core\Configure;
                         ]);
                     echo '</div>';
             }
+            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+                    echo $this->element('addSelfServiceOrderButton');
+                }
+            }
+
             if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED'))) {
                 if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
-                    echo $this->element('addInstantOrderButton', [
-                        'customers' => $customersForInstantOrderDropdown
-                    ]);
+                    echo $this->element('addInstantOrderButton');
                 }
             }
             echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
@@ -171,7 +184,11 @@ foreach ($orderDetails as $orderDetail) {
         $rowClasses = $orderDetail['row_class'];
     }
 
-    echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
+    $rowIdHtml = '';
+    if ($groupBy == '') {
+        $rowIdHtml = ' id="order-detail-' . $orderDetail->id_order_detail . '"';
+    }
+    echo '<tr' . $rowIdHtml . ' class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo $this->element('rowMarker/rowMarker', [
         'show' => $editRecordAllowed,
@@ -191,6 +208,7 @@ foreach ($orderDetails as $orderDetail) {
 
     echo $this->element('orderDetailList/data/mainObject', [
         'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
         'groupBy' => $groupBy
     ]);
 
@@ -292,7 +310,9 @@ if ($groupBy != 'customer') {
     if ($sums['deposit']> 0) {
         $sumDepositString = $this->Number->formatAsCurrency($sums['deposit']);
     }
-    echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+    if (Configure::read('app.isDepositEnabled')) {
+        echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+    }
 } else {
     if (Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless')) {
         echo '<td></td>';
@@ -327,16 +347,11 @@ echo '<div class="bottom-button-container">';
 
     if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
         echo $this->element('addInstantOrderButton', [
-            'customers' => $customersForInstantOrderDropdown,
-            'additionalClass' => 'bottom'
+            'additionalClass' => 'bottom',
         ]);
     }
 
     echo $this->element('orderDetailList/button/multiplePickupDays', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/generateOrderDetailsAsPdfOrderByStorageLocation', [
         'pickupDay' => $pickupDay
     ]);
 

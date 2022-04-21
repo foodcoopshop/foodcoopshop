@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -20,6 +22,9 @@ use Cake\Datasource\FactoryLocator;
 class ProductAttributesTable extends AppTable
 {
 
+    use ProductCacheClearAfterDeleteTrait;
+    use ProductCacheClearAfterSaveTrait;
+
     public function initialize(array $config): void
     {
         $this->setTable('product_attribute');
@@ -36,9 +41,9 @@ class ProductAttributesTable extends AppTable
         ]);
         $this->hasOne('PurchasePriceProductAttributes', [
             'foreignKey' => 'product_attribute_id',
-            'conditions' => [
-                'PurchasePriceProductAttributes.product_attribute_id > 0',
-            ],
+        ]);
+        $this->hasOne('BarcodeProductAttributes', [
+            'foreignKey' => 'product_attribute_id',
         ]);
         $this->hasOne('DepositProductAttributes', [
             'foreignKey' => 'id_product_attribute'
@@ -47,6 +52,48 @@ class ProductAttributesTable extends AppTable
             'foreignKey' => 'id_product_attribute'
         ]);
     }
+
+    public function deleteProductAttribute($productId, $productAttributeId)
+    {
+
+        $pac = $this->ProductAttributeCombinations->find('all', [
+            'conditions' => [
+                'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
+            ]
+        ])->first();
+        $productAttributeId = $pac->id_product_attribute;
+
+        $this->deleteAll([
+            'ProductAttributes.id_product_attribute' => $productAttributeId,
+        ]);
+
+        $this->ProductAttributeCombinations->deleteAll([
+            'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
+        ]);
+
+        $this->UnitProductAttributes->deleteAll([
+            'UnitProductAttributes.id_product_attribute' => $productAttributeId,
+        ]);
+
+        $this->PurchasePriceProductAttributes->deleteAll([
+            'PurchasePriceProductAttributes.product_attribute_id' => $productAttributeId,
+        ]);
+
+        $this->BarcodeProductAttributes->deleteAll([
+            'BarcodeProductAttributes.product_attribute_id' => $productAttributeId,
+        ]);
+
+        // deleteAll can only get primary key as condition
+        $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
+        $this->StockAvailables->setPrimaryKey('id_product_attribute');
+        $this->StockAvailables->deleteAll([
+            'StockAvailables.id_product_attribute' => $productAttributeId,
+        ]);
+        $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
+
+        $this->StockAvailables->updateQuantityForMainProduct($productId);
+    }
+
 
     public function add($productId, $attributeId)
     {
@@ -87,6 +134,11 @@ class ProductAttributesTable extends AppTable
                 ]
             )
         );
+
+        $this->BarcodeProduct = FactoryLocator::get('Table')->get('BarcodeProducts');
+        $this->BarcodeProduct->deleteAll([
+            'BarcodeProducts.product_id' => $productId,
+        ]);
 
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock' with custom sql
         $sql = 'INSERT INTO ' . $this->tablePrefix . 'stock_available (id_product, id_product_attribute, quantity) VALUES (:productId, :productAttributeId, :quantity)';

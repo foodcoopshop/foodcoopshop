@@ -15,6 +15,7 @@
 namespace App\Lib\Invoice;
 
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
+use App\Lib\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Datasource\FactoryLocator;
@@ -50,31 +51,47 @@ class GenerateInvoiceToCustomer
             $data->name, $data->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay), $invoiceNumber
         );
 
-        $pdfWriter = new InvoiceToCustomerPdfWriter();
+        if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
+            $pdfWriter = new InvoiceToCustomerPdfWriter();
+        } else {
+            $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter();
+        }
         $pdfWriter->prepareAndSetData($data, $paidInCash, $invoiceNumber, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
         $invoicePdfFileForDatabase = str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
         $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
-        $newInvoice = $this->Invoice->saveInvoice(null, $data->id_customer, $data->tax_rates, $invoiceNumber, $invoicePdfFileForDatabase, $currentDay, $paidInCash);
+        $newInvoice = $this->Invoice->saveInvoice(
+            null,
+            $data->id_customer,
+            $data->tax_rates,
+            $invoiceNumber,
+            $invoicePdfFileForDatabase,
+            $currentDay,
+            $paidInCash,
+            $data->invoices_per_email_enabled,
+        );
 
         if (!$data->is_cancellation_invoice) {
             $this->Payment->linkReturnedDepositWithInvoice($data, $newInvoice->id);
             $this->OrderDetail->updateOrderDetails($data, $newInvoice->id);
         }
 
-        $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
-            'isCancellationInvoice' => $data->is_cancellation_invoice,
-            'customerName' => $data->name,
-            'customerEmail' => $data->email,
-            'invoicePdfFile' => $invoicePdfFile,
-            'invoiceNumber' => $invoiceNumber,
-            'invoiceDate' => $invoiceDate,
-            'invoiceId' => $newInvoice->id,
-            'originalInvoiceId' => null,
-            'creditBalance' => $this->Customer->getCreditBalance($data->id_customer),
-        ]);
+        if ($data->invoices_per_email_enabled) {
+            $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
+                'isCancellationInvoice' => $data->is_cancellation_invoice,
+                'customerName' => $data->name,
+                'customerEmail' => $data->email,
+                'invoicePdfFile' => $invoicePdfFile,
+                'invoiceNumber' => $invoiceNumber,
+                'invoiceDate' => $invoiceDate,
+                'invoiceId' => $newInvoice->id,
+                'originalInvoiceId' => null,
+                'creditBalance' => $this->Customer->getCreditBalance($data->id_customer),
+                'paidInCash' => $paidInCash,
+            ]);
+        }
 
         return $newInvoice;
 

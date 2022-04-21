@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -81,6 +81,12 @@ class ActionLogsTable extends AppTable
             ],
             'product_attribute_added' => [
                 'name' => __('Action_Log_Product_attribute_added'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
+            'product_attribute_changed' => [
+                'name' => __('Action_Log_Product_attribute_changed'),
                 'access' => [
                     'manufacturer'
                 ]
@@ -444,6 +450,9 @@ class ActionLogsTable extends AppTable
             'cronjob_send_invoices' => [
                 'name' => __('Action_Log_Cronjob_invoices_sent')
             ],
+            'cronjob_send_delivery_notes' => [
+                'name' => __('Action_Log_Cronjob_delivery_notes_sent')
+            ],
             'cronjob_email_order_reminder' => [
                 'name' => __('Action_Log_Cronjob_email_order_reminder_sent')
             ],
@@ -494,7 +503,7 @@ class ActionLogsTable extends AppTable
             'object_id' => $objectId,
             'object_type' => $objectType,
             'text' => $text,
-            'date' => is_null($time) ? Time::now() : $time
+            'date' => is_null($time) ? FrozenTime::now() : $time
         ];
         return $this->save($this->newEntity($data2save));
     }

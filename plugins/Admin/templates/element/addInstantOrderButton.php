@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
-        Configure::read('app.jsNamespace') . ".ModalInstantOrderAdd.init('#add-instant-order-button-wrapper .btn');"
+        Configure::read('app.jsNamespace') . ".ModalIOrderForDifferentCustomerAdd.init('#add-instant-order-button-wrapper .btn');"
 ]);
 echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
     $options = [
@@ -28,9 +28,8 @@ echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(is
     echo $this->Form->control('', [
         'type' => 'select',
         'label' => '',
-        'id' => 'instantOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
+        'id' => 'orderCustomerId', //null as first param and id removes attribute name => field is not submitted
         'class' => 'do-not-submit',
         'empty' => __d('admin', 'chose_member...'),
-        'options' => $customers
     ]);
 echo '</div>';

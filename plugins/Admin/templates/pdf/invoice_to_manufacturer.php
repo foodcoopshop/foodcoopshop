@@ -62,10 +62,11 @@ $headers = [
 $pdf->renderDetailedOrderList($productResults, $widths, $headers, 'product', true);
 $pdf->addLastSumRow(
     $headers,
+    $this->MyNumber->formatAsDecimal($sumAmount, 0),
     $this->MyNumber->formatAsDecimal($sumPriceExcl),
     $this->MyNumber->formatAsDecimal($sumTax),
-    $this->MyNumber->formatAsDecimal($sumPriceIncl)
-    );
+    $this->MyNumber->formatAsDecimal($sumPriceIncl),
+);
 $pdf->renderTable();
 // product list end
 

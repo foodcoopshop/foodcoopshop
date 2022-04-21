@@ -31,6 +31,7 @@ class SendInvoicesToCustomersShell extends AppShell
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             throw new ForbiddenException();
         }
+        $this->startTimeLogging();
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
@@ -68,6 +69,7 @@ class SendInvoicesToCustomersShell extends AppShell
 
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
                 $helloCash->generateInvoice($data, $this->cronjobRunDay, false, false);
+                sleep(5); // the Hello Cash API handels max 60 requests per minute, one generateInvoice call uses up to 5 requests
             } else {
                 $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
             }
@@ -75,9 +77,11 @@ class SendInvoicesToCustomersShell extends AppShell
 
         }
 
+        $this->stopTimeLogging();
+
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $message = __('{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully.', [$i]);
-        $this->ActionLog->customSave('invoice_added', 0, 0, 'invoices', $message);
+        $this->ActionLog->customSave('invoice_added', 0, 0, 'invoices', $message . '<br />' . $this->getRuntime());
 
         return true;
 

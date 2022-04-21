@@ -27,6 +27,9 @@ class CartsTable extends AppTable
     public const CART_TYPE_INSTANT_ORDER = 2;
     public const CART_TYPE_SELF_SERVICE  = 3;
 
+    public const CART_SELF_SERVICE_PAYMENT_TYPE_CASH   = 1;
+    public const CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT = 2;
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -54,6 +57,7 @@ class CartsTable extends AppTable
         $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
         $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
         $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+        $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
         return $validator;
     }
 
@@ -119,27 +123,24 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    /**
-     * @param int $customerId
-     * @return array
-     */
-    public function getCart($appAuth, $cartType)
+    public function getCart($appAuth, $cartType): array
     {
 
+        $this->Product = FactoryLocator::get('Table')->get('Products');
         $customerId = $appAuth->getUserId();
 
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
                 'Carts.id_customer' => $customerId,
-                'Carts.cart_type' => $cartType
+                'Carts.cart_type' => $cartType,
             ]
         ])->first();
 
         if (empty($cart)) {
             $cart2save = [
                 'id_customer' => $customerId,
-                'cart_type' => $cartType
+                'cart_type' => $cartType,
             ];
             $cart = $this->save($this->newEntity($cart2save));
         }
@@ -147,7 +148,7 @@ class CartsTable extends AppTable
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
-                'CartProducts.id_cart' => $cart['id_cart'],
+                'CartProducts.id_cart' => $cart->id_cart,
                 'CartProducts.amount > 0',
             ],
             'order' => [
@@ -168,7 +169,7 @@ class CartsTable extends AppTable
         ])->toArray();
 
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType);
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType, $appAuth);
         }
 
         $preparedCart = [
@@ -189,23 +190,19 @@ class CartsTable extends AppTable
                 $productData = $this->prepareMainProduct($appAuth, $cartProduct);
             }
 
-            $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
+            $productImageData = Configure::read('app.htmlHelper')->getProductImageSrcWithManufacturerImageFallback(
+                $imageId,
+                $cartProduct->product->id_manufacturer,
+            );
+            $productImage = Configure::read('app.htmlHelper')->image($productImageData['productImageLargeSrc']);
+
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
             $productData['image'] = $productImage;
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            switch($cartType) {
-                case self::CART_TYPE_WEEKLY_RHYTHM:
-                    $nextDeliveryDay = strtotime($cartProduct->product->next_delivery_day);
-                    break;
-                case self::CART_TYPE_INSTANT_ORDER:
-                case self::CART_TYPE_SELF_SERVICE:
-                    $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDay();
-                    break;
-            }
-
-            $productData['nextDeliveryDayAsTimestamp'] = $nextDeliveryDay;
+            $nextDeliveryDay = $this->Product->getNextDeliveryDay($cartProduct->product, $appAuth);
+            $nextDeliveryDay = strtotime($nextDeliveryDay);
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
 
             $preparedCart['CartProducts'][] = $productData;
@@ -215,8 +212,8 @@ class CartsTable extends AppTable
         $productName = [];
         $deliveryDay = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
-            $deliveryDay[] = $cartProduct['nextDeliveryDayAsTimestamp'];
-            $productName[] = StringComponent::slugify($cartProduct['productName']);
+            $deliveryDay[] = $cartProduct['nextDeliveryDay'];
+            $productName[] = mb_strtolower(StringComponent::slugify($cartProduct['productName']));
         }
 
         array_multisort(
@@ -385,22 +382,38 @@ class CartsTable extends AppTable
         return $prices;
     }
 
-    /**
-     * @param CartProductsTable $cartProduct
-     * @return array
-     */
-    private function prepareMainProduct($appAuth, $cartProduct)
+    private function prepareMainProduct($appAuth, $cartProduct): array
     {
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
+        $taxRate = $cartProduct->product->tax->rate ?? 0;
+        $unitProduct = $cartProduct->product->unit_product;
+        $deposit = !empty($cartProduct->product->deposit_product) ? $cartProduct->product->deposit_product->deposit : 0;
+
+        // START: override shopping with purchase prices / zero prices
+        $cm = FactoryLocator::get('Table')->get('Customers');
+        $priceInclPerUnit = null;
+        if (!empty($unitProduct)) {
+            $priceInclPerUnit = $unitProduct->price_incl_per_unit;
+        }
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedProductPricesByShoppingPrice($appAuth, $cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
+        $cartProduct->product->price = $modifiedProductPricesByShoppingPrice['price'];
+        if (!empty($unitProduct)) {
+            $unitProduct->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
+        }
+        if (!empty($cartProduct->product->deposit_product->deposit)) {
+            $cartProduct->product->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
+        }
+        // END override shopping with purchase prices / zero prices
+
         $prices = $this->getPricesRespectingPricePerUnit(
             $cartProduct->id_product,
             $cartProduct->product->price,
-            $cartProduct->product->unit_product,
+            $unitProduct,
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product->deposit_product,
-            $cartProduct->product->tax->rate ?? 0,
+            $taxRate,
         );
 
         $productData = [
@@ -430,11 +443,11 @@ class CartsTable extends AppTable
         $unity = $cartProduct->product->unity;
         $productData['unity'] = $unity;
 
-        if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
+        if (!empty($unitProduct) && $unitProduct->price_per_unit_enabled) {
 
-            $unitName = $cartProduct->product->unit_product->name;
-            $unitAmount = $cartProduct->product->unit_product->amount;
-            $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
+            $unitName = $unitProduct->name;
+            $unitAmount = $unitProduct->amount;
+            $priceInclPerUnit = $unitProduct->price_incl_per_unit;
 
             if (!is_null($orderedQuantityInUnits)) {
                 $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits;
@@ -444,20 +457,23 @@ class CartsTable extends AppTable
                 $unity .= ', ';
             }
             $unity .=  Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
-                $cartProduct->product->unit_product->price_per_unit_enabled,
-                $cartProduct->product->unit_product->quantity_in_units,
+                $unitProduct->price_per_unit_enabled,
+                $unitProduct->quantity_in_units,
                 $unitName,
                 $cartProduct->amount
             );
             $productData['usesQuantityInUnits'] = true;
 
-            $productData['quantityInUnits'] = isset($cartProduct->product->unit_product) ? $cartProduct->product->unit_product->quantity_in_units : 0;
-            $productQuantityInUnits = $cartProduct->product->unit_product->quantity_in_units * $cartProduct->amount;
+            $productData['quantityInUnits'] = isset($unitProduct) ? $unitProduct->quantity_in_units : 0;
+            $productQuantityInUnits = $unitProduct->quantity_in_units * $cartProduct->amount;
+            $markAsSaved = APP_OFF;
             if (!is_null($orderedQuantityInUnits)) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
+                $markAsSaved = APP_ON;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
-            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product->unit_product);
+            $productData['markAsSaved'] = $markAsSaved;
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProduct);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -471,22 +487,38 @@ class CartsTable extends AppTable
 
     }
 
-    /**
-     * @param CartProductsTable $cartProduct
-     * @return array
-     */
-    private function prepareProductAttribute($appAuth, $cartProduct)
+    private function prepareProductAttribute($appAuth, $cartProduct): array
     {
+
+        $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
+        $taxRate = $cartProduct->product->tax->rate ?? 0;
+        $deposit = !empty($cartProduct->product_attribute->deposit_product_attribute) ? $cartProduct->product_attribute->deposit_product_attribute->deposit : 0;
+
+        // START: override shopping with purchase prices / zero prices
+        $cm = FactoryLocator::get('Table')->get('Customers');
+        $priceInclPerUnit = null;
+        if (!empty($unitProductAttribute)) {
+            $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
+        }
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedAttributePricesByShoppingPrice($appAuth, $cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
+        $cartProduct->product_attribute->price = $modifiedProductPricesByShoppingPrice['price'];
+        if (!empty($unitProductAttribute)) {
+            $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
+        }
+        if (!empty(!empty($cartProduct->product_attribute->deposit_product_attribute))) {
+            $cartProduct->product_attribute->deposit_product_attribute->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
+        }
+        // END: override shopping with purchase prices / zero prices
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
         $prices = $this->getPricesRespectingPricePerUnit(
             $cartProduct->id_product,
             $cartProduct->product_attribute->price,
-            $cartProduct->product_attribute->unit_product_attribute ? $cartProduct->product_attribute->unit_product_attribute : null,
+            $unitProductAttribute,
             $cartProduct->amount,
             $orderedQuantityInUnits,
             $cartProduct->product_attribute->deposit_product_attribute,
-            $cartProduct->product->tax->rate ?? 0,
+            $taxRate,
         );
 
         $productData = [
@@ -515,14 +547,14 @@ class CartsTable extends AppTable
         $unitAmount = 0;
         $priceInclPerUnit = 0;
 
-        if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
+        if (!empty($unitProductAttribute) && $unitProductAttribute->price_per_unit_enabled) {
 
-            $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
+            $unitName = $unitProductAttribute->name;
             if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
                 $unityName = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
             }
-            $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
-            $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
+            $unitAmount = $unitProductAttribute->amount;
+            $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
 
             if (!is_null($orderedQuantityInUnits)) {
                 $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits;
@@ -531,20 +563,23 @@ class CartsTable extends AppTable
             $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
                 $cartProduct->product_attribute->product_attribute_combination->attribute->name,
                 $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,
-                $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled,
-                $cartProduct->product_attribute->unit_product_attribute->quantity_in_units,
+                $unitProductAttribute->price_per_unit_enabled,
+                $unitProductAttribute->quantity_in_units,
                 $unitName,
                 $cartProduct->amount
             );
             $productData['usesQuantityInUnits'] = true;
 
-            $productData['quantityInUnits'] = isset($cartProduct->product_attribute->unit_product_attribute->quantity_in_units) ? $cartProduct->product_attribute->unit_product_attribute->quantity_in_units : 0;
-            $productQuantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units * $cartProduct->amount;
+            $productData['quantityInUnits'] = isset($unitProductAttribute->quantity_in_units) ? $unitProductAttribute->quantity_in_units : 0;
+            $productQuantityInUnits = $unitProductAttribute->quantity_in_units * $cartProduct->amount;
+            $markAsSaved = APP_OFF;
             if (!is_null($orderedQuantityInUnits)) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
+                $markAsSaved = APP_ON;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
-            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $cartProduct->product_attribute->unit_product_attribute);
+            $productData['markAsSaved'] = $markAsSaved;
+            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProductAttribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

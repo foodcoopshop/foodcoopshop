@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\ProductCardsPdfWriter;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -9,9 +10,9 @@ use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
-use Intervention\Image\ImageManagerStatic as Image;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,7 +37,33 @@ class ProductsController extends AdminAppController
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
             case 'editPurchasePrice':
-                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED');
+            case 'calculateSellingPriceWithSurcharge':
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
+            case 'editPrice':
+            case 'editDeposit':
+            case 'editTax':
+                if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                    if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                        if ((!empty($this->getRequest()->getData('productId')) && !$this->productExists())
+                            || !$this->manufacturerIsProductOwner()) {
+                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                            return false;
+                        }
+                        return true;
+                    }
+                } else {
+                    if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()) {
+                        if ((!empty($this->getRequest()->getData('productId')) && !$this->productExists())
+                            || !$this->manufacturerIsProductOwner()) {
+                            $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                return false;
                 break;
             case 'index':
             case 'add':
@@ -44,68 +71,98 @@ class ProductsController extends AdminAppController
                 return $this->AppAuth->user();
                 break;
             default:
-                if (!empty($this->getRequest()->getData('productId'))) {
-                    $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
-                    $productId = $ids['productId'];
-                    $product = $this->Product->find('all', [
-                        'conditions' => [
-                            'Products.id_product' => $productId
-                        ]
-                    ])->first();
-                    if (empty($product)) {
-                        $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
-                        return false;
-                    }
+                if (!empty($this->getRequest()->getData('productId')) && !$this->productExists()) {
+                    $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                    return false;
                 }
-
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
                 }
-                /*
-                 * START manufacturer OWNER check
-                 */
-                if ($this->AppAuth->isManufacturer()) {
-                    // param productIds is passed via ajaxCall
-                    if (!empty($this->getRequest()->getData('productIds'))) {
-                        $productIds = $this->getRequest()->getData('productIds');
-                    }
-                    // param productId is passed via ajaxCall
-                    if (!empty($this->getRequest()->getData('productId'))) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
-                        $productIds = [$ids['productId']];
-                    }
-                    // param objectId is passed via ajaxCall
-                    if (!empty($this->getRequest()->getData('objectId'))) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('objectId'));
-                        $productIds = [$ids['productId']];
-                    }
-                    // param productId is passed as first argument of url
-                    if (!empty($this->getRequest()->getParam('pass')[0])) {
-                        $productIds = [$this->getRequest()->getParam('pass')[0]];
-                    }
-                    if (!isset($productIds)) {
-                        return false;
-                    }
-                    $result = true;
-                    foreach($productIds as $productId) {
-                        $product = $this->Product->find('all', [
-                            'conditions' => [
-                                'Products.id_product' => $productId
-                            ]
-                        ])->first();
-                        if (empty($product) || $product->id_manufacturer != $this->AppAuth->getManufacturerId()) {
-                            $result = false;
-                            break;
-                        }
-                    }
-                    if ($result) {
-                        return true;
-                    }
+                if (!$this->manufacturerIsProductOwner()) {
+                    $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                    return false;
                 }
-                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
-                return false;
+                return true;
                 break;
         }
+    }
+
+    public function detectMissingProductImages()
+    {
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.active' => APP_ON,
+            ],
+            'contain' => [
+                'Manufacturers',
+                'Images',
+            ],
+            'order' => [
+                'Products.modified' => 'DESC',
+                'Images.id_image' => 'ASC',
+            ],
+        ]);
+        $this->set('products', $products);
+        $this->set('title_for_layout', 'DetectMissingProductImages');
+    }
+
+    protected function productExists()
+    {
+        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
+        $productId = $ids['productId'];
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId,
+            ]
+        ])->first();
+        return !empty($product);
+    }
+
+    protected function manufacturerIsProductOwner()
+    {
+        if (!$this->AppAuth->isManufacturer()) {
+            return true;
+        }
+
+        // param productIds is passed via ajaxCall
+        if (!empty($this->getRequest()->getData('productIds'))) {
+            $productIds = $this->getRequest()->getData('productIds');
+        }
+        // param productId is passed via ajaxCall
+        if (!empty($this->getRequest()->getData('productId'))) {
+            $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
+            $productIds = [$ids['productId']];
+        }
+        // param objectId is passed via ajaxCall
+        if (!empty($this->getRequest()->getData('objectId'))) {
+            $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('objectId'));
+            $productIds = [$ids['productId']];
+        }
+        // param productId is passed as first argument of url
+        if (!empty($this->getRequest()->getParam('pass')[0])) {
+            $productIds = [$this->getRequest()->getParam('pass')[0]];
+        }
+        if (!isset($productIds)) {
+            return false;
+        }
+        $result = true;
+        foreach($productIds as $productId) {
+            $product = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId
+                ]
+            ])->first();
+            if (empty($product) || $product->id_manufacturer != $this->AppAuth->getManufacturerId()) {
+                $result = false;
+                break;
+            }
+        }
+        if ($result) {
+            return true;
+        }
+
+        return $result;
+
     }
 
     public function beforeFilter(EventInterface $event)
@@ -113,6 +170,38 @@ class ProductsController extends AdminAppController
         parent::beforeFilter($event);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Product = $this->getTableLocator()->get('Products');
+    }
+
+    public function calculateSellingPriceWithSurcharge()
+    {
+
+        $this->RequestHandler->renderAs($this, 'json');
+        $productIds = $this->getRequest()->getData('productIds');
+
+        $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
+        if ($surcharge < 0) {
+            throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0.'));
+        }
+
+        try {
+            $result = $this->Product->PurchasePriceProducts->getSellingPricesWithSurcharge($productIds, $surcharge);
+            $this->Product->changePrice($result['pricesToChange']);
+        } catch (\Exception $e) {
+            return $this->sendAjaxError($e);
+        }
+
+        $message = __d('admin', 'The_selling_price_net_was_set_to:_{0}_of_purchase_price_net', [
+            '<b>' . Configure::read('app.numberHelper')->formatAsPercent($surcharge) . '</b>',
+        ]);
+        $this->Flash->success($message);
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $result['preparedProductsForActionLog']));
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
     }
 
     public function delete()
@@ -230,7 +319,7 @@ class ProductsController extends AdminAppController
                }
             }
             if (preg_match('/main-product/', $product->row_class)) {
-                $product->bar_code .= '0000';
+                $product->system_bar_code .= '0000';
             }
             $product->prepared_price = $price;
             $preparedProducts[] = $product;
@@ -353,10 +442,12 @@ class ProductsController extends AdminAppController
 
         // recursively create path
         $dir = new Folder();
+        $dir->delete($thumbsPath);
         $dir->create($thumbsPath);
         $dir->chmod($thumbsPath, 0755);
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+
             $physicalImage = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($physicalImage->getHeight() > $physicalImage->getWidth()) {
@@ -383,18 +474,24 @@ class ProductsController extends AdminAppController
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
-    public function deleteProductAttribute($productId, $productAttributeId)
+    public function editProductAttribute()
     {
 
-        // get new data
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $productId = h($this->getRequest()->getData('productId'));
+        $productAttributeId = h($this->getRequest()->getData('productAttributeId'));
+        $deleteProductAttribute = h($this->getRequest()->getData('deleteProductAttribute'));
+        $barcode = StringComponent::removeSpecialChars(strip_tags(trim($this->getRequest()->getData('barcode'))));
+
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
-                'Products.id_product' => $productId
+                'Products.id_product' => $productId,
             ],
             'contain' => [
                 'Manufacturers',
                 'ProductAttributes',
-                'ProductAttributes.ProductAttributeCombinations.Attributes'
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
             ]
         ])->first();
 
@@ -406,17 +503,46 @@ class ProductsController extends AdminAppController
             }
         }
 
-        $this->Product->deleteProductAttribute($productId, $productAttributeId);
-
-        $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
-            '<b>' . $attributeName . '</b>',
-            '<b>' . $oldProduct->name . '</b>',
-            '<b>' . $oldProduct->manufacturer->name . '</b>'
-        ]);
+        if ($deleteProductAttribute) {
+            $this->Product->ProductAttributes->deleteProductAttribute($productId, $productAttributeId);
+            $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
+                '<b>' . $attributeName . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+            ]);
+            $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+        } else {
+            try {
+                $entity2Save = $this->Product->ProductAttributes->BarcodeProductAttributes->getEntityToSaveByProductAttributeId($productAttributeId);
+                $entity2Save = $this->Product->ProductAttributes->BarcodeProductAttributes->patchEntity(
+                    $entity2Save,
+                    [
+                        'barcode' => $barcode,
+                        'product_attribute_id' => $productAttributeId,
+                    ],
+                    [
+                        'validate' => true,
+                    ]);
+                if ($entity2Save->hasErrors()) {
+                    throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($entity2Save)));
+                }
+                $this->Product->ProductAttributes->BarcodeProductAttributes->save($entity2Save);
+            } catch (\Exception $e) {
+                return $this->sendAjaxError($e);
+            }
+            $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully.', [
+                '<b>' . $attributeName . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+            ]);
+            $this->ActionLog->customSave('product_attribute_changed', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+        }
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $actionLogMessage);
-
-        $this->redirect($this->referer());
+        $this->set([
+            'status' => 1,
+            'msg' => 'success',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function addProductAttribute($productId, $productAttributeId)
@@ -474,6 +600,7 @@ class ProductsController extends AdminAppController
         $unity = $this->getRequest()->getData('unity');
         $isDeclarationOk = $this->getRequest()->getData('isDeclarationOk');
         $idStorageLocation = $this->getRequest()->getData('idStorageLocation');
+        $barcode = $this->getRequest()->getData('barcode');
 
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
@@ -492,7 +619,16 @@ class ProductsController extends AdminAppController
             if (empty($manufacturer)) {
                 throw new RecordNotFoundException('manufacturer not existing');
             }
-            $productEntity = $this->Product->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation);
+            $productEntity = $this->Product->add(
+                $manufacturer,
+                $productName,
+                $descriptionShort,
+                $description,
+                $unity,
+                $isDeclarationOk,
+                $idStorageLocation,
+                $barcode,
+            );
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($productEntity)));
             }
@@ -825,26 +961,36 @@ class ProductsController extends AdminAppController
 
         $this->CategoryProduct = $this->getTableLocator()->get('CategoryProducts');
         $this->CategoryProduct->deleteAll([
-            'id_product' => $productId
+            'id_product' => $productId,
         ]);
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $selectedCategoryNames = [];
-        foreach ($selectedCategories as $selectedCategory) {
+        $data = [];
+        foreach ($selectedCategories as $selectedCategoryId) {
             // only add if entry of passed id exists in category table
             $oldCategory = $this->Category->find('all', [
                 'conditions' => [
-                    'Categories.id_category' => $selectedCategory
+                    'Categories.id_category' => $selectedCategoryId
                 ]
             ])->first();
             if (! empty($oldCategory)) {
                 // do not track "all-products"
-                if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
+                if ($selectedCategoryId != Configure::read('app.categoryAllProducts')) {
                     $selectedCategoryNames[] = $oldCategory->name;
                 }
-                $sql = 'INSERT INTO ' . $this->CategoryProduct->getTable() . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
-                $this->CategoryProduct->getConnection()->query($sql);
+                $data[] = [
+                    'id_product' => $productId,
+                    'id_category' => $selectedCategoryId,
+                ];
             }
+        }
+        if (!empty($data)) {
+            $tmpPrimaryKey = $this->CategoryProduct->getPrimaryKey();
+            $this->CategoryProduct->setPrimaryKey(null);
+            $categoryProducts = $this->CategoryProduct->newEntities($data);
+            $this->CategoryProduct->saveMany($categoryProducts);
+            $this->CategoryProduct->setPrimaryKey($tmpPrimaryKey);
         }
 
         $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
@@ -1060,6 +1206,7 @@ class ProductsController extends AdminAppController
 
             $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductId($ids['productId']);
             $purchaseTable = $this->Product->PurchasePriceProducts;
+            $unitTable = $this->Product->UnitProducts;
 
             if ($ids['attributeId'] > 0) {
                 // override values
@@ -1076,21 +1223,22 @@ class ProductsController extends AdminAppController
                     $oldProduct->unit_product = $attribute->unit_product_attribute;
                     $purchasePriceEntity2Save = $this->Product->PurchasePriceProducts->getEntityToSaveByProductAttributeId($ids['attributeId']);
                     $purchaseTable = $this->Product->ProductAttributes->PurchasePriceProductAttributes;
+                    $unitTable = $this->Product->ProductAttributes->UnitProductAttributes;
                 }
             }
 
             if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
                 $entity2Save = clone $oldProduct->unit_product;
-                $patchedEntity = $this->Product->UnitProducts->patchEntity(
+                $patchedEntity = $unitTable->patchEntity(
                     $entity2Save,
                     [
                         'purchase_price_incl_per_unit' => $purchaseGrossPrice,
                     ],
                 );
                 if ($patchedEntity->hasErrors()) {
-                    throw new InvalidParameterException(join(' ', $this->Product->UnitProducts->getAllValidationErrors($patchedEntity)));
+                    throw new InvalidParameterException(join(' ', $unitTable->getAllValidationErrors($patchedEntity)));
                 }
-                $this->Product->UnitProducts->save($patchedEntity);
+                $unitTable->save($patchedEntity);
                 $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
                 $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
             } else {
@@ -1320,6 +1468,7 @@ class ProductsController extends AdminAppController
                         'unity' => $this->getRequest()->getData('unity'),
                         'is_declaration_ok' => $this->getRequest()->getData('isDeclarationOk'),
                         'id_storage_location' => $this->getRequest()->getData('idStorageLocation'),
+                        'barcode' => $this->getRequest()->getData('barcode'),
                     ]]
                 ]
             );
@@ -1463,7 +1612,7 @@ class ProductsController extends AdminAppController
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
             $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
-            $this->viewBuilder()->setHelpers(['Network.Network']);
+            $this->viewBuilder()->addHelper('Network.Network');
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
             $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
@@ -1518,20 +1667,7 @@ class ProductsController extends AdminAppController
             throw new InvalidParameterException('New status needs to be 0 or 1: ' . $status);
         }
 
-        $newCreated = 'NOW()';
-        if ($status == 0) {
-            $newCreated = 'DATE_ADD(NOW(), INTERVAL -'.((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1).' DAY)';
-        }
-
         $this->Product = $this->getTableLocator()->get('Products');
-        // newCreated can't be set as param because of mysql function DATE_ADD
-        $sql = "UPDATE " . $this->Product->getTable() . " p SET p.created = " . $newCreated . " WHERE p.id_product = :productId;";
-        $params = [
-            'productId' => $productId,
-        ];
-        $statement = $this->Product->getConnection()->prepare($sql);
-        $statement->execute($params);
-
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -1540,6 +1676,12 @@ class ProductsController extends AdminAppController
                 'Manufacturers'
             ]
         ])->first();
+
+        $product->created = FrozenTime::now();
+        if ($status == APP_OFF) {
+            $product->created = FrozenTime::now()->subDay((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
+        }
+        $this->Product->save($product);
 
         $actionLogType = 'product_set_to_old';
         $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more.', [

@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use App\Lib\Error\Exception\ConfigFileMissingException;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Filesystem\File;
 use Cake\Validation\Validator;
 
@@ -22,6 +23,8 @@ use Cake\Validation\Validator;
  */
 class ConfigurationsTable extends AppTable
 {
+
+    use ProductCacheClearAfterSaveTrait;
 
     public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
     public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
@@ -52,6 +55,13 @@ class ConfigurationsTable extends AppTable
     }
 
     public function validationFcsFacebookUrl(Validator $validator)
+    {
+        $validator->allowEmptyString('value');
+        $validator->urlWithProtocol('value', __('Please_enter_a_valid_internet_address.'));
+        return $validator;
+    }
+
+    public function validationFcsInstagramUrl(Validator $validator)
     {
         $validator->allowEmptyString('value');
         $validator->urlWithProtocol('value', __('Please_enter_a_valid_internet_address.'));
@@ -118,6 +128,11 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    public function validationFcsNewsletterEnabled(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+
     public function validationFcsShowProductsForGuests(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
@@ -153,7 +168,7 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsShowNewProductsOnHome(Validator $validator)
+    public function validationFcsAllowOrdersForDeliveryRhythmOneOrTwoWeeksOnlyInWeekBeforeDelivery(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }

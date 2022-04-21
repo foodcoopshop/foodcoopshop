@@ -3,6 +3,7 @@ namespace App\Model\Table;
 
 use Cake\Validation\Validator;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,6 +21,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
 class UnitsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveTrait;
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator->numeric('price_incl_per_unit', __('The_price_per_unit_needs_to_be_a_number.'));
@@ -34,7 +37,7 @@ class UnitsTable extends AppTable
         $validator->numeric('amount', __('The_amount_(quantity)_needs_to_be_a_number.'));
         $validator->greaterThan('amount', 0, __('The_amount_(quantity)_needs_to_be_greater_than_0.'));
         $validator->numeric('quantity_in_units', __('The_approximate_weight_needs_to_be_a_number.'));
-        $validator->greaterThanOrEqual('quantity_in_units', 0, __('The_approximate_weight_needs_to_be_greater_or_equal_than_0.'));
+        $validator->greaterThan('quantity_in_units', 0, __('The_approximate_weight_needs_to_be_greater_than_0.'));
         return $validator;
     }
 
