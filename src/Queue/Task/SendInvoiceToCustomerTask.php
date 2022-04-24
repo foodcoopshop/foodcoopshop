@@ -3,7 +3,6 @@ namespace App\Queue\Task;
 
 use App\Mailer\AppMailer;
 use App\Lib\HelloCash\HelloCash;
-use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenTime;
 use Queue\Queue\Task;
