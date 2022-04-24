@@ -17,11 +17,7 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-        <tr>
-            <td style="font-weight:bold;font-size:18px;padding-bottom:20px;">
-                <?php echo __('Hello'); ?> <?php echo $appAuth->getUsername(); ?>,
-            </td>
-        </tr>
+        <?php echo $this->element('email/greeting', ['data' => $customer]); ?>
         <tr>
             <td>
                 <?php
@@ -55,6 +51,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
 
+        <?php /* ?>
         <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
             <tr><td style="padding-top:20px;">
                 * <?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
@@ -64,6 +61,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
         <tr><td style="padding-top:20px;">
             <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
+        <?php */ ?>
 
         <tr><td>
             <?php
@@ -104,14 +102,6 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
                 ?>
             </td></tr>
         <?php } ?>
-
-        <?php
-            if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') && isset($appAuth) && !$appAuth->user('newsletter_enabled')) {
-                echo '<tr><td style="font-size:12px;">';
-                    echo __('You_can_subscribe_our_newsletter_<a href="{0}">in_the_admin_areas_menu_point_my_data</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getCustomerProfile()]);
-                echo '</td></tr>';
-            }
-        ?>
 
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>

@@ -265,6 +265,9 @@ abstract class AppCakeTestCase extends TestCase
             $this->Slug->getCartFinish(),
             $data,
         );
+
+        $this->runAndAssertQueue();
+
     }
 
     protected function getCartById($cartId)

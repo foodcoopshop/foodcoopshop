@@ -12,9 +12,13 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\QueueTrait;
+use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
@@ -26,6 +30,7 @@ class CartsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
+    use QueueTrait;
 
     // artischocke, 0,5 deposit, manufacturerId 5
     public $productId1 = '346';
@@ -42,12 +47,15 @@ class CartsControllerTest extends AppCakeTestCase
 
     public $StockAvailable;
 
+    public $commandRunner;
+
     public function setUp(): void
     {
         parent::setUp();
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->Product = $this->getTableLocator()->get('Products');
         $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testAddLoggedOut()

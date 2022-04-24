@@ -911,47 +911,16 @@ class CartComponent extends Component
             return false;
         }
 
-        $email = new AppMailer();
-        $email->viewBuilder()->setTemplate('order_successful');
-        $email->setTo($this->AppAuth->getEmail())
-        ->setSubject(__('Order_confirmation'))
-        ->setViewVars([
-            'cart' => $cartGroupedByPickupDay,
+        $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
+        $this->QueuedJobs->createJob('SendOrderConfirmationEmailToCustomer', [
+            'cart' => $cart,
+            'cartGroupedByPickupDay' => $cartGroupedByPickupDay,
+            'products' => $products,
             'pickupDayEntities' => $pickupDayEntities,
-            'appAuth' => $this->AppAuth,
-            'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
+            'loggedUser' => $this->AppAuth->user(),
+            'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null,
         ]);
 
-        if (Configure::read('app.rightOfWithdrawalEnabled')) {
-            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
-        }
-
-        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
-        }
-        if (Configure::read('app.generalTermsAndConditionsEnabled')) {
-            $generalTermsAndConditionsFiles = [];
-            $uniqueManufacturers = $this->getUniqueManufacturers();
-            foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
-                $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
-                if ($src !== false) {
-                    $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions') . '-' . StringComponent::slugify($manufacturer['name']) . '.pdf'] = [
-                        'file' => WWW_ROOT . Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId), // avoid timestamp
-                        'mimetype' => 'application/pdf'
-                    ];
-                }
-            }
-            if (count($uniqueManufacturers) > count($generalTermsAndConditionsFiles)) {
-                $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions').'.pdf'] = [
-                    'data' => $this->generateGeneralTermsAndConditions(),
-                    'mimetype' => 'application/pdf'
-                ];
-            }
-
-            $email->addAttachments($generalTermsAndConditionsFiles);
-        }
-
-        $email->send();
     }
 
     /**
