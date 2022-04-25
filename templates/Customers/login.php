@@ -121,6 +121,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                           echo $this->Form->control('Customers.is_company', [
                               'label' => __('Register_as_company?'),
                               'type' => 'checkbox',
+                              'class' => 'one-line',
                           ]);
                       }
 
