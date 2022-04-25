@@ -30,7 +30,7 @@ class SendOrderConfirmationEmailToCustomerTask extends Task {
 
     public $retries = 2;
 
-    public $Invoice;
+    public $Cart;
 
     public function run(array $data, $jobId) : void
     {
