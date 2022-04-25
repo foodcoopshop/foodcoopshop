@@ -4,9 +4,6 @@ namespace App\Controller\Component;
 
 use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
-use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
-use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
-use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
@@ -921,76 +918,6 @@ class CartComponent extends Component
             'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null,
         ]);
 
-    }
-
-    /**
-     * called from finish context
-     * saves pdf as file
-     * @param array $cart
-     * @param array $orderDetails
-     */
-    private function generateRightOfWithdrawalInformationAndForm($cart, $products)
-    {
-        $manufacturers = [];
-        foreach ($products as $product) {
-            $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
-        }
-
-        $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
-        $pdfWriter->setData([
-            'products' => $products,
-            'appAuth' => $this->AppAuth,
-            'cart' => $cart,
-            'manufacturers' => $manufacturers,
-        ]);
-        return $pdfWriter->writeAttachment();
-    }
-
-    /**
-     * called from finish context
-     * saves pdf as file
-     */
-    private function generateGeneralTermsAndConditions()
-    {
-        $pdfWriter = new GeneralTermsAndConditionsPdfWriter();
-        return $pdfWriter->writeAttachment();
-    }
-
-    /**
-     * called from finish context
-     * saves pdf as file
-     * @param array $cart
-     */
-    private function generateOrderConfirmation($cart)
-    {
-
-        $manufacturers = [];
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => $cart['Cart']->id_cart,
-            ],
-            'contain' => [
-                'CartProducts.OrderDetails',
-                'CartProducts.Products',
-                'CartProducts.Products.Manufacturers.AddressManufacturers'
-            ]
-        ])->first();
-
-        foreach ($cart->cart_products as $cartProduct) {
-            $manufacturers[$cartProduct->product->id_manufacturer] = [
-                'CartProducts' => $cart->cart_products,
-                'Manufacturer' => $cartProduct->product->manufacturer
-            ];
-        }
-
-        $pdfWriter = new OrderConfirmationPdfWriter();
-        $pdfWriter->setData([
-            'appAuth' => $this->AppAuth,
-            'cart' => $cart,
-            'manufacturers' => $manufacturers,
-        ]);
-        return $pdfWriter->writeAttachment();
     }
 
 }

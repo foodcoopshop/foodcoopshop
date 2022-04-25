@@ -1,8 +1,13 @@
 <?php
 namespace App\Queue\Task;
 
+use App\Controller\Component\StringComponent;
+use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
+use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
+use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 use Queue\Queue\Task;
 
 /**
@@ -34,30 +39,31 @@ class SendOrderConfirmationEmailToCustomerTask extends Task {
         $cartGroupedByPickupDay = $data['cartGroupedByPickupDay'];
         $products = $data['products'];
         $pickupDayEntities = $data['pickupDayEntities'];
-        $loggedUser = $data['loggedUser'];
-        $originalLoggedCustomer = $data['originalLoggedCustomer'];
+        $loggedUser = json_decode(json_encode($data['loggedUser']), false); // convert array recursively into object
+        $originalLoggedCustomer = json_decode(json_encode($data['originalLoggedCustomer']), false); // convert array recursively into object
 
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful');
-        $email->setTo($loggedUser['email'])
+        $email->setTo($loggedUser->email)
         ->setSubject(__('Order_confirmation'))
         ->setViewVars([
             'cart' => $cartGroupedByPickupDay,
             'pickupDayEntities' => $pickupDayEntities,
             'customer' => $loggedUser,
+            'newsletterCustomer' => $loggedUser,
             'originalLoggedCustomer' => $originalLoggedCustomer,
         ]);
 
         if (Configure::read('app.rightOfWithdrawalEnabled')) {
-            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products, $loggedUser), 'mimetype' => 'application/pdf']]);
         }
 
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart, $loggedUser), 'mimetype' => 'application/pdf']]);
         }
         if (Configure::read('app.generalTermsAndConditionsEnabled')) {
             $generalTermsAndConditionsFiles = [];
-            $uniqueManufacturers = $this->getUniqueManufacturers();
+            $uniqueManufacturers = $this->getUniqueManufacturers($products);
             foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
                 $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
                 if ($src !== false) {
@@ -79,6 +85,72 @@ class SendOrderConfirmationEmailToCustomerTask extends Task {
 
         $email->send();
 
+    }
+
+    protected function generateRightOfWithdrawalInformationAndForm($cart, $products, $customer)
+    {
+        $manufacturers = [];
+        foreach ($products as $product) {
+            $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
+        }
+
+        $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
+        $pdfWriter->setData([
+            'products' => $products,
+            'customer' => $customer,
+            'cart' => $cart,
+            'manufacturers' => $manufacturers,
+        ]);
+        return $pdfWriter->writeAttachment();
+    }
+
+    protected function generateGeneralTermsAndConditions()
+    {
+        $pdfWriter = new GeneralTermsAndConditionsPdfWriter();
+        return $pdfWriter->writeAttachment();
+    }
+
+    protected function generateOrderConfirmation($cart, $customer)
+    {
+
+        $manufacturers = [];
+        $this->Cart = FactoryLocator::get('Table')->get('Carts');
+        $cart = $this->Cart->find('all', [
+            'conditions' => [
+                'Carts.id_cart' => $cart['Cart']->id_cart,
+            ],
+            'contain' => [
+                'CartProducts.OrderDetails',
+                'CartProducts.Products',
+                'CartProducts.Products.Manufacturers.AddressManufacturers'
+            ]
+        ])->first();
+
+        foreach ($cart->cart_products as $cartProduct) {
+            $manufacturers[$cartProduct->product->id_manufacturer] = [
+                'CartProducts' => $cart->cart_products,
+                'Manufacturer' => $cartProduct->product->manufacturer
+            ];
+        }
+
+        $pdfWriter = new OrderConfirmationPdfWriter();
+        $pdfWriter->setData([
+            'customer' => $customer,
+            'cart' => $cart,
+            'manufacturers' => $manufacturers,
+        ]);
+        return $pdfWriter->writeAttachment();
+    }
+
+    protected function getUniqueManufacturers($products)
+    {
+        $manufactures = [];
+        foreach ($products as $product) {
+            $manufactures[$product['manufacturerId']] = [
+                'name' => $product['manufacturerName']
+            ];
+        }
+        return $manufactures;
     }
 
 }
