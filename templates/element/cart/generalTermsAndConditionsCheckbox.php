@@ -45,7 +45,8 @@ $label = __('I_accept_the_{0}', [join(', ', $generalTermsAndConditionsLinks)]);
 echo $this->Form->control('Carts.general_terms_and_conditions_accepted', [
     'label' => $label,
     'type' => 'checkbox',
-    'escape' => false
+    'escape' => false,
+    'class' => 'one-line',
 ]);
 
 ?>

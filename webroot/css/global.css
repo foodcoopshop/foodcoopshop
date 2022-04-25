@@ -413,6 +413,9 @@ span.new {
     float:right;
     margin-right: -3px;
 }
+form input[type="checkbox"].one-line {
+    margin-top: -2px ! important;
+}
 form .required label:after {
     color: #f3515c;
     content: '*';
