@@ -40,6 +40,11 @@ class ProductsController extends AdminAppController
             case 'calculateSellingPriceWithSurcharge':
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
+            case 'detectMissingProductImages':
+                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                    return true;
+                }
+                return false;
             case 'editPrice':
             case 'editDeposit':
             case 'editTax':
