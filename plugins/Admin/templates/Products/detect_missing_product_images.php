@@ -19,6 +19,9 @@ $this->element('addScript', [
     Configure::read('app.jsNamespace') . ".Admin.init();"
 ]);
 
+echo '<div class="filter-container">';
+echo '</div>';
+
 $i = 0;
 $outputHtml = '';
 foreach($products as $product) {
@@ -30,15 +33,19 @@ foreach($products as $product) {
         $src = $thumbsPath . DS . $imageFilename;
         if (!file_exists($src)) {
             $i++;
-            $outputHtml .= 'Geändert am: ' . $product->modified->i18nFormat($this->Time->getI18Format('DateNTimeLong'));
-            $outputHtml .= ' / ID: ' . $product->id_product;
-            $outputHtml .= ' / ' . $this->Html->link($product->name, $this->Slug->getProductDetail($product->id_product, $product->name));
+            $outputHtml .= $this->Html->link($product->name, $this->Slug->getProductDetail($product->id_product, $product->name));
             $outputHtml .= ' / ' . $this->Html->link('Admin',  $this->Slug->getProductAdmin($product->id_manufacturer, $product->id_product));
             $outputHtml .= ' / ' . $product->manufacturer->name . '<br />';
         }
     }
 }
 
-$outputHtml = '<b>Anzahl: ' . $i . '</b><br />' . $outputHtml;
+if ($i == 0) {
+    $outputHtml = Configure::read('appDb.FCS_APP_NAME') . ' ist vom Bug nicht betroffen! Alle Produkt-Bilder sind ok. 👍';
+} else {
+    $introText = '<b>Aufgrund eines Bugs sind die Bilder zu folgenden Produkten leider nicht mehr vorhanden. Trotz intensiver Suche habe ich den Fehler bisher noch nicht eingrenzen können (Stand: 27.04.2022), dh. auch nach einem erneuten Upload kann es sein, dass das Bild wieder verschwindet. Das Fehlen der Bilder fällt nicht sofort auf, da im Produkt-Admin das fehlende Bild nicht rot hinterlegt ist. Hinweise bitte per Mail an office@foodcoopshop.com.<br />Danke für die Mithilfe, Mario<br /><br /></b>';
+    $outputHtml = $introText . '<b>Anzahl: ' . $i . '</b><br />' . $outputHtml;
+}
+
 echo $outputHtml;
 ?>
