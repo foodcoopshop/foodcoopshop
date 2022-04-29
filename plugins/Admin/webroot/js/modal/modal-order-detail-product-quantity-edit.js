@@ -133,7 +133,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         var pricePerUnitBaseInfo = row.find('td.quantity-field span.price-per-unit-base-info').html();
         $(modalSelector + ' li.price-per-unit-base-info').html(foodcoopshop.LocalizedJs.admin.BasePrice + ': ' + pricePerUnitBaseInfo);
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $('#dialogOrderDetailProductQuantityQuantity').focus().select();
 

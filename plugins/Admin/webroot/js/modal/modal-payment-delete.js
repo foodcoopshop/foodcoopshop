@@ -67,7 +67,7 @@ foodcoopshop.ModalPaymentDelete = {
 
     getOpenHandler : function(modalSelector, dataRow) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeletePayment + '</p>';
         html += '<p>' + foodcoopshop.LocalizedJs.admin.Date + ': <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';

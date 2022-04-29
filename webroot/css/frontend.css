@@ -187,7 +187,7 @@ body.categories.detail div.description-wrapper {
     float: left;
     line-height: 17px;
     width: 201px;
-    margin-right: 11px;
+    margin-left: 16px;
 }
 #main-menu li ul li a {
     margin-top: 0px;
@@ -343,7 +343,7 @@ body.customers.new_password_request .input input {
 #login-form #LoginForm button {
     float: right;
     margin-right: 5px;
-    margin-top: -65px;
+    margin-top: -54px;
 }
 form div.error-message {
     margin-left: 70px;

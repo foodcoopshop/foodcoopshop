@@ -61,7 +61,7 @@ foodcoopshop.ModalCustomerStatusEdit = {
             buttons
         );
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalCustomerStatusEdit.getSuccessHandler(customerId, newState, sendMail);

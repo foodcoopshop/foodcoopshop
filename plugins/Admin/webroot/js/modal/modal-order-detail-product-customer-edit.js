@@ -129,7 +129,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
             select.val('');
         }
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
     }
 

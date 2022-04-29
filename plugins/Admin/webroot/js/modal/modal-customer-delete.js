@@ -72,7 +72,7 @@ foodcoopshop.ModalCustomerDelete = {
         var html = '<p style="margin-top: 10px;">' + foodcoopshop.LocalizedJs.admin.ReallyDeleteMember + '</p>';
         html += '<p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p>';
         $(modalSelector).find('.modal-body').html(html);
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }
 
 };

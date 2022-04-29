@@ -84,6 +84,9 @@ class CustomersController extends AdminAppController
             $customersForDropdown[] = '</optgroup>';
         }
 
+        $emptyElement = ['<option value="0">' . __d('admin', 'all_members') . '</option>'];
+        $customersForDropdown = array_merge($emptyElement, $customersForDropdown);
+
         $this->set([
             'status' => 1,
             'dropdownData' => join('', $customersForDropdown),

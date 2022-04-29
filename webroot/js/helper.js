@@ -962,7 +962,7 @@ foodcoopshop.Helper = {
 
         var progressBarHtml = '<div class="progress">';
         progressBarHtml += '<div class="progress-bar bg-success" style="width:0%;"></div>';
-        progressBarHtml += '<div class="progress-bar bg-white" style="width:100%;"></div>';
+        progressBarHtml += '<div class="progress-bar bg-white" style="background-color:#fff;width:100%;"></div>';
         progressBarHtml += '</div>';
         $('#flashMessage.success').append(progressBarHtml);
 
@@ -979,7 +979,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-            );
+        );
         $('#flashMessage.success .progress-bar.bg-white')
             .animate({
                 'width': '0%',
@@ -988,7 +988,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-            );
+        );
 
         setTimeout(function() {
             $('#flashMessage.success a.closer').trigger('click');

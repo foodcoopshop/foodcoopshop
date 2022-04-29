@@ -2,6 +2,7 @@
 namespace App\Assets;
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -50,7 +51,12 @@ class AssetsProvider
 
         $result = array_merge($result, [
             'jquery/dist/jquery.js',
-            'popper.js/dist/umd/popper.js',
+            '@popperjs/core/dist/umd/popper.js',
+            'bootstrap/dist/js/bootstrap.min.js',
+            'bootstrap-select/dist/js/bootstrap-select.js',
+            'components-jqueryui/jquery-ui.min.js',
+            'blueimp-file-upload/js/jquery.fileupload.js',
+            'bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js',
             'jquery-backstretch/jquery.backstretch.js',
             'tooltipster/dist/js/tooltipster.bundle.js',
             'jquery.scrollto/jquery.scrollTo.js',

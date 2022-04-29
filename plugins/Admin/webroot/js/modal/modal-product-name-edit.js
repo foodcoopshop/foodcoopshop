@@ -128,7 +128,7 @@ foodcoopshop.ModalProductNameEdit = {
 
         foodcoopshop.Modal.removeTooltipster();
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 

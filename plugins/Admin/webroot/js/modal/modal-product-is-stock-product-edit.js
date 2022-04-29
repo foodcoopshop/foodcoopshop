@@ -81,7 +81,7 @@ foodcoopshop.ModalProductIsStockProductEdit = {
     },
 
     getOpenHandler : function(button, modalSelector) {
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
         var dataRow = button.closest('tr');
         $(modalSelector + ' #dialogIsStockProductIsStockProduct').prop('checked', dataRow.find('td.is-stock-product').html().match('fa-check'));
         $(modalSelector + ' #dialogIsStockProductProductId').val(dataRow.find('td.cell-id').html());

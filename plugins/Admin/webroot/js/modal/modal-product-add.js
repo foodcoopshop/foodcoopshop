@@ -149,7 +149,7 @@ foodcoopshop.ModalProductAdd = {
                 }
             }
         );
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
         $('#dialogName').focus();
     }
 

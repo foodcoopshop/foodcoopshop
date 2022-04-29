@@ -73,7 +73,7 @@ foodcoopshop.ModalProductDepositEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var row = button.closest('tr');
         var depositContainer = row.find('span.deposit-for-dialog');

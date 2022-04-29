@@ -56,6 +56,9 @@ h4 {
 select {
     background-color: #fff;
 }
+label {
+    margin-bottom: 0.5rem;
+}
 button,
 :focus {
     outline: none ! important;
@@ -348,6 +351,7 @@ a.toggle-link.collapsed i:before {
   font-size: 34px;
   text-align: center;
   background: #fff;
+  line-height: 1.5;
 }
 #scroll-to-top a i {
   font-size: 41px;

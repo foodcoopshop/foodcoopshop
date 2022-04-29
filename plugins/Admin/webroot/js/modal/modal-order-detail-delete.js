@@ -118,7 +118,7 @@ foodcoopshop.ModalOrderDetailDelete = {
 
     getOpenHandler : function(button, modalSelector, orderDetailIds, infoText, textareaLabel) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var modalHtml = infoText;
 

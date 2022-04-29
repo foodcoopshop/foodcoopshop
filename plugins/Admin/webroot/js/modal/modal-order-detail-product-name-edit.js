@@ -85,7 +85,7 @@ foodcoopshop.ModalOrderDetailProductNameEdit = {
 
         $(modalSelector + ' #dialogOrderDetailProductNameOrderDetailId').val(orderDetailId);
         $(modalSelector + ' #dialogOrderDetailProductNameName').val(productName);
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $('#dialogOrderDetailProductNameName').focus();
 

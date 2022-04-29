@@ -70,7 +70,7 @@ foodcoopshop.ModalPaymentAdd = {
             $(customerDropdownSelector).selectpicker({
                 liveSearch: true,
                 size: 7,
-                title: foodcoopshop.LocalizedJs.admin.PleaseMember
+                title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember,
             });
             foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
         }
@@ -178,7 +178,7 @@ foodcoopshop.ModalPaymentAdd = {
 
     getOpenHandler : function(modalSelector, form) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
         $(modalSelector).addClass('add-payment-form');
         $(modalSelector + ' .modal-body').append(form.html());
 

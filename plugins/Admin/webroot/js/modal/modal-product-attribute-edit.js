@@ -101,7 +101,7 @@ foodcoopshop.ModalProductAttributeEdit = {
     },
 
     getOpenHandler : function(modalSelector) {
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }
 
 };

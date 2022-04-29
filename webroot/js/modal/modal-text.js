@@ -37,7 +37,7 @@ foodcoopshop.ModalText = {
         );
 
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalText.getCloseHandler(modalSelector);

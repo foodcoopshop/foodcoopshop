@@ -65,11 +65,11 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
     getOpenHandler : function(modalSelector, iframeSrcInit, iframeSrc, isInstantOrder) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         // START DROPDOWN
         var customerDropdownId = 'customerDropdown';
-        var header = $('<div class="message-container"><span class="start"><span class="title">' + foodcoopshop.LocalizedJs.admin.PlaceOrderFor + ': </span><select id="' + customerDropdownId + '"><option value="0">' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '</option></select></span></div>');
+        var header = $('<div class="message-container"><span class="start"><span class="title">' + foodcoopshop.LocalizedJs.admin.PlaceOrderFor + ': </span><select id="' + customerDropdownId + '" placeholder="' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '"></select></span></div>');
         $(modalSelector + ' .modal-title').append(header);
 
         var customerDropdownSelector = '#' + customerDropdownId;
@@ -77,7 +77,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
         $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
-            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember
+            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember,
         });
 
         // always preselect user if there is a dropdown called #customerId (for call from order detail)

@@ -55,7 +55,7 @@ foodcoopshop.Modal = {
     createButton: function(classes, title, faIcon, isCloseButton) {
         var buttonHtml = '<button type="button" class="btn ' + classes.join(' ') + '"';
         if (isCloseButton) {
-            buttonHtml += ' data-dismiss="modal"';
+            buttonHtml += ' data-bs-dismiss="modal"';
         }
         buttonHtml += '>';
         if (faIcon) {
@@ -79,9 +79,7 @@ foodcoopshop.Modal = {
         html += '<div class="modal-content">';
         html += '<div class="modal-header">';
         html += '<h5 class="modal-title">' + title + '</h5>';
-        html += '<button type="button" class="close" data-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '">';
-        html += '<span aria-hidden="true">&times;</span>';
-        html += '</button>';
+        html += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '"></button>';
         html += '</div>';
         html += '<div class="modal-body">' + body + '</div>';
         html += '<div class="modal-footer">';
