@@ -86,6 +86,9 @@ class OrderDetailsTable extends AppTable
                 'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
             ],
+            'order' => [
+                'ProductName' => 'ASC',
+            ],
         ]);
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
