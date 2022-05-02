@@ -19,11 +19,6 @@ use Cake\Core\Configure;
 class RaiffeisenBankingReaderTest extends AppCakeTestCase
 {
 
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function tearDown(): void
     {
         $this->assertLogFilesForErrors();
