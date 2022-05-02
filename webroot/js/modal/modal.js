@@ -102,6 +102,7 @@ foodcoopshop.Modal = {
         $(modalId, parentDocument).remove();
         $('.modal-backdrop', parentDocument).remove();
         $('body', parentDocument).removeClass('modal-open');
+        $('body', parentDocument).css('overflow', 'auto');
     },
 
     makeDraggable : function(elementId) {
