@@ -216,7 +216,7 @@ if ($appAuth->isSuperadmin()) {
     echo '<div class="sc"></div>';
     echo '<h2>'.__d('admin', 'Superadmin_functions').'</h2>';
 
-    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
         echo $this->Form->control('Customers.shopping_price', [
             'type' => 'select',
             'label' => __d('admin', 'Prices'),
