@@ -24,9 +24,8 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace') . ".ModalImage.init('a.open-with-modal');" .
-            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" .
-            Configure::read('app.cakeServerName') . "');".
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
+            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');".
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button, .manufacturer-email-button, .test-order-list');"
     ]);
     $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#manufacturer-'
@@ -57,6 +56,9 @@ use Cake\Core\Configure;
 
 echo '<table class="list">';
 echo '<tr class="sort">';
+    echo $this->element('rowMarker/rowMarkerAll', [
+        'enabled' => true,
+    ]);
     echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
     echo '<th>Logo</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Name')) . '</th>';
@@ -64,12 +66,13 @@ echo '<tr class="sort">';
     if (Configure::read('app.isDepositEnabled')) {
         echo '<th>'.__d('admin', 'Deposit').'</th>';
     }
+    echo '<th>' . __d('admin', 'Email') . '</th>';
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<th>' . $this->Paginator->sort('Manufacturers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
     }
     echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __d('admin', 'Stock_products')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __d('admin', 'Delivery_break')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', __d('admin', 'Only_for_members')) . '</th>';
+    echo '<th style="width:40px;">' . $this->Paginator->sort('Manufacturers.is_private', __d('admin', 'Only_for_members')) . '</th>';
     echo '<th title="'.__d('admin', 'Sum_of_open_orders_in_given_time_range').'">'.__d('admin', 'Open_orders_abbreviation').'</th>';
     echo '<th>'.__d('admin', 'Settings_abbreviation').'</th>';
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
@@ -85,8 +88,14 @@ $i = 0;
 $sumProductCount = 0;
 $sumTimebasedCurrency = null;
 foreach ($manufacturers as $manufacturer) {
+
     $i ++;
-    echo '<tr id="manufacturer-' . $manufacturer->id_manufacturer . '" class="data">';
+    echo '<tr id="manufacturer-' . $manufacturer->id_manufacturer . '" data-manufacturer-id="' . $manufacturer->id_manufacturer . '" class="data">';
+
+    echo $this->element('rowMarker/rowMarker', [
+        'show' => true,
+    ]);
+
     echo '<td class="hide">';
         echo $manufacturer->id_manufacturer;
     echo '</td>';
@@ -126,13 +135,13 @@ foreach ($manufacturers as $manufacturer) {
         );
 
         echo '<span class="name">';
-        echo '<b>' . $manufacturer->name . '</b><br />';
-        echo $manufacturer->address_manufacturer->city;
-        echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
-
-        if (!empty($manufacturer->customer)) {
-            echo '<br /><i class="fas fa-fw fa-user" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
-        }
+            echo '<b>' . $manufacturer->name . '</b>';
+            if ($manufacturer->address_manufacturer->city != '') {
+                echo '<br />' . $manufacturer->address_manufacturer->city;
+            }
+            if (!empty($manufacturer->customer)) {
+                echo '<br /><i class="fas fa-fw fa-user" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
+            }
         echo '</span>';
 
     echo '</td>';
@@ -173,6 +182,11 @@ foreach ($manufacturers as $manufacturer) {
         }
         echo '</td>';
     }
+
+    echo '<td style="text-align:center;">';
+        $classes = ['far fa-envelope ok fa-lg manufacturer-email-button'];
+        echo '<i class="'.join(' ', $classes).'" title="'.h($manufacturer->address_manufacturer->email).'" data-email="'.h($manufacturer->address_manufacturer->email).'"></i>';
+    echo '</td>';
 
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<td>';
@@ -243,14 +257,14 @@ foreach ($manufacturers as $manufacturer) {
     }
 
     echo '<td style="width:140px;">';
-    echo __d('admin', 'Test_order_list').'<br />';
-    echo $this->Html->link(__d('admin', 'Product'), '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom, [
+        $testOrderListLinks = $this->Html->link(__d('admin', 'Product'), '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom, [
             'target' => '_blank'
         ]);
-    echo ' / ';
-    echo $this->Html->link(__d('admin', 'Member'), '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom, [
-        'target' => '_blank'
-    ]);
+        $testOrderListLinks .= ' / ';
+        $testOrderListLinks .= $this->Html->link(__d('admin', 'Member'), '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom, [
+            'target' => '_blank'
+        ]);
+        echo '<span class="test-order-list" title="' . h($testOrderListLinks) . '">' . __d('admin', 'Test_order_list').'</span>';
     echo '</td>';
 
 
@@ -297,7 +311,7 @@ foreach ($manufacturers as $manufacturer) {
 }
 
 echo '<tr>';
-echo '<td colspan="2"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="3"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td><b>' . $sumProductCount . '</b></td>';
 $colspan = 8;
 echo '<td></td>';
@@ -312,8 +326,11 @@ echo '<td colspan="' . $colspan . '"></td>';
 echo '</tr>';
 echo '</table>';
 echo '<div class="sc"></div>';
+
 echo '<div class="bottom-button-container">';
-echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+    echo $this->element('copyEmailButton', [
+        'object' => 'manufacturer',
+    ]);
 echo '</div>';
 echo '<div class="sc"></div>';
 

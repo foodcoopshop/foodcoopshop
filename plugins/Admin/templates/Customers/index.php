@@ -370,7 +370,9 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-    echo $this->element('customerList/button/email');
+    echo $this->element('copyEmailButton', [
+        'object' => 'customer',
+    ]);
     echo $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
 echo '</div>';
 echo '<div class="sc"></div>';

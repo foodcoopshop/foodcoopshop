@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-17 21:19+0200\n"
+"POT-Creation-Date: 2022-05-03 15:00+0200\n"
 "PO-Revision-Date: 2022-04-17 21:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2589,6 +2589,9 @@ msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehä
 msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
 msgstr "Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
 
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
+msgstr "Du kannst unseren Newsletter <a href=\"{0}\">im Admin-Bereich unter \"Meine Daten\"</a> abonnieren."
+
 msgid "thank_you_for_your_purchase."
 msgstr "Danke für deinen Einkauf."
 
@@ -2621,9 +2624,6 @@ msgstr "Diese E-Mail wurde automatisch erstellt."
 
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
 msgstr "Du kannst sie <a href=\"{0}\">in deinen Einstellungen abbestellen.</a>."
-
-msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
-msgstr "Du kannst unseren Newsletter <a href=\"{0}\">im Admin-Bereich unter \"Meine Daten\"</a> abonnieren."
 
 msgid "homepage"
 msgstr "Startseite"

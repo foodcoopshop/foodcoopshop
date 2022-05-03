@@ -828,6 +828,9 @@ body.manufacturers.index td.name {
     position: relative;
     min-width: 260px; /* width does not work on mobile */
 }
+body.manufacturers.index td.name {
+    vertical-align: top;
+}
 body.customers.index span.name,
 body.manufacturers.index span.name {
     float: left;

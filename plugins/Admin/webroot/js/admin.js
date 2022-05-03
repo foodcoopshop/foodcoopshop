@@ -136,13 +136,13 @@ foodcoopshop.Admin = {
         return productIds;
     },
 
-    getSelectedCustomerIds : function() {
-        var customerIds = [];
+    getSelectedIds : function() {
+        var ids = [];
         $('table.list').find('input.row-marker[type="checkbox"]:checked').each(function () {
-            var customerId = $(this).closest('tr').find('td:nth-child(2)').html();
-            customerIds.push(customerId);
+            var id = $(this).closest('tr').find('td:nth-child(2)').html();
+            ids.push(id);
         });
-        return customerIds;
+        return ids;
     },
 
     updateObjectSelectionActionButton : function (button) {
@@ -289,7 +289,7 @@ foodcoopshop.Admin = {
 
     },
 
-    initCopySelectedCustomerEmailsToClipboard: function() {
+    initCopySelectedEmailsToClipboard: function(object) {
 
         var btnSelector = '.btn-clipboard';
         var button = $(btnSelector);
@@ -303,10 +303,10 @@ foodcoopshop.Admin = {
             btnSelector,
             {
                 text: function(trigger) {
-                    var customerIds = foodcoopshop.Admin.getSelectedCustomerIds();
+                    var ids = foodcoopshop.Admin.getSelectedIds();
                     var emails = [];
-                    for(var i=0; i < customerIds.length; i++) {
-                        var email = $('tr.data[data-customer-id="'+customerIds[i]+'"]').find('i.customer-email-button').data('email');
+                    for(var i=0; i < ids.length; i++) {
+                        var email = $('tr.data[data-' + object + '-id="'+ids[i]+'"]').find('i.' + object + '-email-button').data('email');
                         emails.push(email);
                     }
                     return emails.join(',');
@@ -466,7 +466,7 @@ foodcoopshop.Admin = {
         });
 
         button.on('click', function () {
-            var customerIds = foodcoopshop.Admin.getSelectedCustomerIds();
+            var customerIds = foodcoopshop.Admin.getSelectedIds();
             window.open('/admin/customers/generateMemberCards.pdf?customerIds=' + customerIds.join(','));
         });
     },
