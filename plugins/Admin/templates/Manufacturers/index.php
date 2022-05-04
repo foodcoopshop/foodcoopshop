@@ -171,7 +171,7 @@ foreach ($manufacturers as $manufacturer) {
             }
             $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Number->formatAsCurrency($manufacturer->deposit_credit_balance);
             echo $this->Html->link(
-                __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
+                $depositCreditBalanceHtml,
                 $this->Slug->getDepositList($manufacturer->id_manufacturer),
                 [
                     'class' => 'btn btn-outline-light',
