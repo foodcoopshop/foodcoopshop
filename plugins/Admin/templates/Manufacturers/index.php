@@ -257,12 +257,23 @@ foreach ($manufacturers as $manufacturer) {
     }
 
     echo '<td style="width:140px;">';
-        $testOrderListLinks = $this->Html->link(__d('admin', 'Product'), '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom, [
-            'target' => '_blank'
+        $testOrderListLinks = '<b style="margin-bottom:5px;float:left;">' . h($manufacturer->name) . '</b><br />';
+        $testOrderListLinks .= $this->Html->link(
+            __d('admin', 'Order_list_by_product'),
+            '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom,
+            [
+                'class' => 'btn btn-outline-light',
+                'style' => 'margin-bottom:5px;text-decoration:none ! important;',
+                'target' => '_blank',
         ]);
-        $testOrderListLinks .= ' / ';
-        $testOrderListLinks .= $this->Html->link(__d('admin', 'Member'), '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom, [
-            'target' => '_blank'
+        $testOrderListLinks .= '<br />';
+        $testOrderListLinks .= $this->Html->link(
+            __d('admin', 'Order_list_by_member'),
+            '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom,
+            [
+                'class' => 'btn btn-outline-light',
+                'style' => 'text-decoration:none ! important;',
+                'target' => '_blank',
         ]);
         echo '<span class="test-order-list" title="' . h($testOrderListLinks) . '">' . __d('admin', 'Test_order_list').'</span>';
     echo '</td>';
