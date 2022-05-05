@@ -1111,6 +1111,7 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     width: 190px;
     padding: 6px;
     background: #fbfbfb;
+    line-height: 1.5;
 }
 #product-search .btn {
     padding: 6px 10px;
