@@ -770,9 +770,10 @@ foodcoopshop.Helper = {
                 contentAsHTML: true,
                 interactive: true,
                 maxWidth: 400,
+                distance: 0,
                 trigger: trigger,
                 animationDuration: 0,
-                delay: 30,
+                delay: 20,
                 theme: ['tooltipster-light']
             });
         });
