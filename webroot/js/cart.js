@@ -15,6 +15,8 @@ foodcoopshop.Cart = {
 
     orderButtons: '.cart .btn-success.btn-order, .responsive-cart',
 
+    showOrFinishCartButtons: '.btn-cart-detail, .btn-order',
+
     cartButtonIcon : '',
 
     getPickupDayHeaderSelector : function(pickupDay) {
@@ -319,6 +321,9 @@ foodcoopshop.Cart = {
             foodcoopshop.Cart.updateCartTimebasedCurrencySum(timebasedCurrencyHours * amount);
             var button = productWrapper.find('.ew.active .btn-cart');
 
+            var showOrFinishCartButtons = $(foodcoopshop.Cart.showOrFinishCartButtons);
+            foodcoopshop.Helper.disableButton(showOrFinishCartButtons);
+
             foodcoopshop.Helper.ajaxCall(
                 '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
                 {
@@ -331,6 +336,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
+                        foodcoopshop.Helper.enableButton(showOrFinishCartButtons);
                         if (data.callback) {
                             eval(data.callback);
                         }
@@ -340,6 +346,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
+                        foodcoopshop.Helper.enableButton(showOrFinishCartButtons);
                         foodcoopshop.Cart.initRemoveFromCartLinks();
                         foodcoopshop.Cart.restoreOldStateOfProductAndSum(data.productId, data.msg);
                         if (data.callback) {
@@ -628,6 +635,9 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.disableButton(button);
             foodcoopshop.Helper.addSpinnerToButton(button, 'fa-times-circle');
 
+            var showOrFinishCartButtons = $(foodcoopshop.Cart.showOrFinishCartButtons);
+            foodcoopshop.Helper.disableButton(showOrFinishCartButtons);
+
             foodcoopshop.Helper.ajaxCall(
                 '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxRemove/',
                 {
@@ -638,6 +648,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.removeSpinnerFromButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
+                        foodcoopshop.Helper.enableButton(showOrFinishCartButtons);
                     },
                     onError: function (data) {
                         $('.cart p.products .product.' + productId).addClass('error').remove();
@@ -646,6 +657,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.removeSpinnerFromButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.showErrorMessage(data.msg);
+                        foodcoopshop.Helper.enableButton(showOrFinishCartButtons);
                     }
                 }
             );
