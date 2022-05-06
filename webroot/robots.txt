@@ -1,2 +1,14 @@
 User-agent: *
 Disallow: /admin
+User-agent: AhrefsBot
+Disallow: /
+User-agent: DotBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: seoscanners.net
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
+User-agent: SEOkicks-Robot
+Disallow: /
