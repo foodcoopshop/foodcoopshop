@@ -45,7 +45,7 @@ if (count($payments) == 0) {
         echo '<th>'.__d('admin', 'Text').'</th>';
         echo '<th style="text-align:right;">' . $column_title . '</th>';
         echo '<th style="text-align:right;">'.__d('admin', 'Order_value').'</th>';
-        echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</th>';
+        echo '<th ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</th>';
         echo '<th style="width:25px;"></th>';
     echo '</tr>';
 
@@ -132,7 +132,7 @@ if (count($payments) == 0) {
         }
         echo '</td>';
 
-        echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClass . '>';
+        echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClass . '>';
         if ($payment['deposit'] < 0) {
             if ($payment['type'] == 'order') {
                 $sumDeposits += $payment['deposit'];
@@ -176,7 +176,7 @@ if (count($payments) == 0) {
     echo '<td>Text</td>';
     echo '<td style="text-align:right;">'.__d('admin', 'Credit').'</td>';
     echo '<td style="text-align:right;">'.__d('admin', 'Order_value').'</td>';
-    echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</td>';
+    echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</td>';
     echo '<td style="width:25px;"></td>';
     echo '</tr>';
 
@@ -188,7 +188,7 @@ if (count($payments) == 0) {
     if ($sumDeposits < 0) {
         $sumDepositsClass = ' class="negative"';
     }
-    if (! Configure::read('app.isDepositPaymentCashless')) {
+    if (! $this->Html->paymentIsCashless()) {
         $sumDepositsClass = ' class="hide"';
     }
     echo '<td ' . $sumDepositsClass . 'align="right"><b>' . $this->Number->formatAsCurrency($sumDeposits) . '</b></td>';
@@ -205,7 +205,7 @@ if (count($payments) == 0) {
     echo '<td></td>';
     echo '<td></td>';
     echo '<td></td>';
-    if (Configure::read('app.isDepositPaymentCashless')) {
+    if ($this->Html->paymentIsCashless()) {
         echo '<td></td>';
     }
 

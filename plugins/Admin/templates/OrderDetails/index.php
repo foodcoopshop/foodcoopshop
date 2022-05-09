@@ -105,7 +105,7 @@ use Cake\Core\Configure;
             <?php
             if (
                 Configure::read('app.isDepositEnabled') &&
-                Configure::read('app.isDepositPaymentCashless') &&
+                $this->Html->paymentIsCashless() &&
                 !$appAuth->isManufacturer() &&
                 (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                     $showCustomerDropdown = false;
@@ -314,7 +314,7 @@ if ($groupBy != 'customer') {
         echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
     }
 } else {
-    if (Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless')) {
+    if (Configure::read('app.isDepositEnabled') && $this->Html->paymentIsCashless()) {
         echo '<td></td>';
     }
     if (count($pickupDay) == 1) {

@@ -23,7 +23,7 @@ use Cake\Core\Configure;
         if ($tab['key'] == $key) {
             $btnClass = 'active';
         }
-        if (($this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) || in_array($tab['key'], ['deposit', 'credit-balance-sum'])) {
+        if ($this->Html->paymentIsCashless() || in_array($tab['key'], ['deposit', 'credit-balance-sum'])) {
 
             $dateParams = '?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
             if (in_array($tab['key'], ['profit'])) {

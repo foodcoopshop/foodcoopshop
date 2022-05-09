@@ -493,7 +493,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         $tabs = [];
         foreach($this->getPaymentTexts() as $key => $paymentText) {
-            if ($key == 'deposit' && (!Configure::read('app.isDepositEnabled') || !Configure::read('app.isDepositPaymentCashless'))) {
+            if ($key == 'deposit' && (!Configure::read('app.isDepositEnabled') || !$this->paymentIsCashless())) {
                 continue;
             }
             $tabs[] = [
@@ -507,7 +507,7 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum',
         ];
-        if (Configure::read('app.isDepositEnabled') && $this->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
+        if (Configure::read('app.isDepositEnabled') && $this->paymentIsCashless()) {
             $tabs[] = [
                 'name' => __('Deposit_overview'),
                 'url' => Configure::read('app.slugHelper')->getDepositOverviewDiagram(),
