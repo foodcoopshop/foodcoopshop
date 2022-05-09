@@ -110,7 +110,7 @@ class AppAuthComponent extends AuthComponent
     private function setManufacturer()
     {
         if (!empty($this->user()) &&
-            array_key_exists('manufacturer', $this->getController()->getRequest()->getSession()->read('Auth'))) {
+            array_key_exists('Manufacturer', $this->getController()->getRequest()->getSession()->read('Auth'))) {
             return;
         }
 
@@ -273,7 +273,7 @@ class AppAuthComponent extends AuthComponent
 
     public function isTimebasedCurrencyEnabledForManufacturer(): bool
     {
-        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->manufacturer->timebased_currency_enabled;
+        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.timebased_currency_enabled');
     }
 
     public function isTimebasedCurrencyEnabledForCustomer(): bool
