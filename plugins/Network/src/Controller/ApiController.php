@@ -191,7 +191,7 @@ class ApiController extends Controller
             }
             if (isset($product['price'])) {
 
-                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->AppAuth->manufacturer->variable_member_fee);
+                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->AppAuth->getManufacturerVariableMemberFee());
 
                 if ($variableMemberFee > 0) {
 

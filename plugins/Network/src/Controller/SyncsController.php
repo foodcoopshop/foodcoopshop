@@ -32,7 +32,9 @@ class SyncsController extends AppController
         $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
         $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
         $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
+        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains(
+            $this->AppAuth->getManufacturerEnabledSyncDomains()
+        );
         return $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
     }
 
@@ -123,7 +125,7 @@ class SyncsController extends AppController
     public function products()
     {
 
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
+        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->getManufacturerEnabledSyncDomains());
         $this->set('syncDomains', $syncDomains);
 
         $matchedProducts = $this->getLocalSyncProducts($syncDomains);
@@ -197,7 +199,7 @@ class SyncsController extends AppController
     public function productData()
     {
 
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
+        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->getManufacturerEnabledSyncDomains());
         $this->set('syncDomains', $syncDomains);
 
         $this->SyncProduct = $this->getTableLocator()->get('Network.SyncProducts');

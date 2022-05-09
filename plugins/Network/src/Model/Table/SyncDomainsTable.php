@@ -76,7 +76,7 @@ class SyncDomainsTable extends AppTable
         if ($appAuth->isManufacturer()) {
             $manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
             $isAllowed = $manufacturer->getOptionVariableMemberFee(
-                $appAuth->manufacturer->variable_member_fee
+                $appAuth->getManufacturerVariableMemberFee()
             ) == 0;
         }
 

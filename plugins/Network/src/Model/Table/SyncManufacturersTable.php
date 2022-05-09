@@ -25,7 +25,7 @@ class SyncManufacturersTable extends ManufacturersTable
         $isAllowed =
             $appAuth->isManufacturer() &&
             $this->getOptionVariableMemberFee(
-                $appAuth->manufacturer->variable_member_fee
+                $appAuth->getManufacturerVariableMemberFee()
             ) == 0;
         return $isAllowed;
     }

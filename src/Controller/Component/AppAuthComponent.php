@@ -166,6 +166,22 @@ class AppAuthComponent extends AuthComponent
         return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.name');
     }
 
+    public function getManufacturerVariableMemberFee()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.variable_member_fee');
+    }
+
+    public function getManufacturerEnabledSyncDomains()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.enabled_sync_domains');
+    }
+
     public function isAdmin(): bool
     {
         if ($this->isManufacturer()) {
