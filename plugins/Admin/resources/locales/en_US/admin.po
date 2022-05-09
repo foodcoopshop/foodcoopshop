@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-04-12 15:58+0200\n"
-"PO-Revision-Date: 2022-04-12 16:00+0200\n"
+"POT-Creation-Date: 2022-05-03 15:01+0200\n"
+"PO-Revision-Date: 2022-05-03 15:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -83,6 +83,9 @@ msgstr "Send test email"
 
 msgid "Test_email"
 msgstr "Test email"
+
+msgid "all_members"
+msgstr "all members"
 
 msgid "Member_card"
 msgstr "Member card"
@@ -483,6 +486,9 @@ msgstr "{0,plural,=1{One product was} other{# products were}} deleted successful
 msgid "Products"
 msgstr "Products"
 
+msgid "All_products"
+msgstr "All products"
+
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."
 
@@ -872,9 +878,6 @@ msgstr "wysiwyg-editor"
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "How do I use the editor?"
-
-msgid "all_members"
-msgstr "all members"
 
 msgid "all_manufacturers"
 msgstr "all manufacturers"
@@ -1440,6 +1443,9 @@ msgstr "Delivery break"
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "How do I use the function \"delivery break\"?"
 
+msgid "Please_select..."
+msgstr "Please select..."
+
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Manufacturer provile and products are only visible for signed in members."
 
@@ -1605,9 +1611,6 @@ msgstr "Test invoice"
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
 
-msgid "Copy_all_email_addresses"
-msgstr "Copy all e-mail adresses"
-
 msgid "Tax_rate"
 msgstr "Tax rate"
 
@@ -1631,9 +1634,6 @@ msgstr "No orders found for the pickup day {0}."
 
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "No orders found for the delivery period {0} to {1}."
-
-msgid "All_products"
-msgstr "All products"
 
 msgid "Show_all_ordered_products"
 msgstr "Show all ordered products"
@@ -1887,8 +1887,8 @@ msgstr "chose member..."
 msgid "Order_stock_products"
 msgstr "Order stock products"
 
-msgid "Copy_email_addresses_of_selected_customers"
-msgstr "Copy e-mail adresses of selected customers"
+msgid "Copy_selected_email_addresses"
+msgstr "Copy selected e-mail adresses"
 
 msgid "Generate_member_cards"
 msgstr "Generate member cards"
@@ -1943,6 +1943,9 @@ msgstr "Change pickup day"
 
 msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
 
 msgid "Orders_as_pdf"
 msgstr "Orders as PDF"
@@ -2378,6 +2381,13 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Copy_email_addresses_of_selected_customers"
+#~ msgstr "Copy e-mail adresses of selected customers"
+
+#, fuzzy
+#~ msgid "Copy_email_addresses_of_selected_manufacturers"
+#~ msgstr "Copy e-mail adresses of selected customers"
 
 #~ msgid "Orders_as_pdf_order_by_storage_location"
 #~ msgstr "Orders as PDF (sort by storage location)"

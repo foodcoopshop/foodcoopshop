@@ -24,6 +24,7 @@
 
     body {
         margin: 0 ! important;
+        overflow: scroll; /* prevents jumping to top when bootstrap 5 modal is opened */
     }
     .btn-outline-light:hover {
         background-color: #fff ! important;

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-04-12 15:58+0200\n"
+"POT-Creation-Date: 2022-05-03 15:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -81,6 +81,9 @@ msgid "Send_test_email"
 msgstr ""
 
 msgid "Test_email"
+msgstr ""
+
+msgid "all_members"
 msgstr ""
 
 msgid "Member_card"
@@ -482,6 +485,9 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
+msgid "All_products"
+msgstr ""
+
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr ""
 
@@ -870,9 +876,6 @@ msgid "docs_route_wysiwyg_editor"
 msgstr ""
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
-msgstr ""
-
-msgid "all_members"
 msgstr ""
 
 msgid "all_manufacturers"
@@ -1439,6 +1442,9 @@ msgstr ""
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr ""
 
+msgid "Please_select..."
+msgstr ""
+
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr ""
 
@@ -1604,9 +1610,6 @@ msgstr ""
 msgid "Manufacturer_profile"
 msgstr ""
 
-msgid "Copy_all_email_addresses"
-msgstr ""
-
 msgid "Tax_rate"
 msgstr ""
 
@@ -1629,9 +1632,6 @@ msgid "No_orders_found_for_pickup_day_{0}."
 msgstr ""
 
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
-msgstr ""
-
-msgid "All_products"
 msgstr ""
 
 msgid "Show_all_ordered_products"
@@ -1886,7 +1886,7 @@ msgstr ""
 msgid "Order_stock_products"
 msgstr ""
 
-msgid "Copy_email_addresses_of_selected_customers"
+msgid "Copy_selected_email_addresses"
 msgstr ""
 
 msgid "Generate_member_cards"
@@ -1941,6 +1941,9 @@ msgid "Change_pickup_day"
 msgstr ""
 
 msgid "Cancel_selected_products"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "Orders_as_pdf"

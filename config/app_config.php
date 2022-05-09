@@ -82,7 +82,7 @@ return [
         'depositForManufacturersStartDate' => '2016-01-01',
 
         /**
-         * 'Raiffeisen' or 'Volksbank'
+         * 'Raiffeisen' OR 'Volksbank' OR 'Sparkasse' OR 'GlsBank'
          */
         'bankNameForCreditSystem' => 'Raiffeisen',
 
@@ -183,6 +183,8 @@ return [
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
+
+        'sendEmailWhenOrderDetailCustomerChanged' => true,
 
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 

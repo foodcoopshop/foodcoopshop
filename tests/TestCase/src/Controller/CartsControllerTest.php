@@ -513,6 +513,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishWithPurchasePriceIncludingProductsWithoutPurchasePrice()
     {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsAdmin();
 
@@ -536,6 +537,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishWithPurchasePriceOk()
     {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsAdmin();
         $this->addAllDifferentProductTypesToCart();
@@ -935,7 +937,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishCartWithShoppingPricesAreZeroPrices()
     {
-        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
