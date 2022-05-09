@@ -125,7 +125,10 @@ class AppAuthComponent extends AuthComponent
                     'AddressManufacturers',
                     'Customers.AddressCustomers',
                 ]
-            ])->first()->toArray();
+            ])->first();
+            if (!is_null($manufacturer)) {
+                $manufacturer = $manufacturer->toArray();
+            }
             $this->getController()->getRequest()->getSession()->write('Auth.Manufacturer', $manufacturer);
         }
     }
