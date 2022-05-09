@@ -184,6 +184,8 @@ return [
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
 
+        'sendEmailWhenOrderDetailCustomerChanged' => true,
+
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 
         'helloCashAtCredentials' => [

@@ -1005,38 +1005,40 @@ class OrderDetailsController extends AdminAppController
 
         $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
 
-        $recipients = [
-            [
-                'email' => $newCustomer->email,
-                'customer' => $newCustomer
-            ],
-            [
-                'email' => $oldOrderDetail->customer->email,
-                'customer' => $oldOrderDetail->customer
-            ]
-        ];
-        // send email to customers
-        foreach($recipients as $recipient) {
-            $email = new AppMailer();
-            $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
-            $email->setTo($recipient['email'])
-            ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
-            ->setViewVars([
-                'oldOrderDetail' => $oldOrderDetail,
-                'customer' => $recipient['customer'],
-                'newsletterCustomer' => $recipient['customer'],
-                'newCustomer' => $newCustomer,
-                'editCustomerReason' => $editCustomerReason,
-                'amountString' => $amountString,
-                'appAuth' => $this->AppAuth
-            ]);
-            $email->send();
-        }
+        if (Configure::read('app.sendEmailWhenOrderDetailCustomerChanged')) {
+            $recipients = [
+                [
+                    'email' => $newCustomer->email,
+                    'customer' => $newCustomer
+                ],
+                [
+                    'email' => $oldOrderDetail->customer->email,
+                    'customer' => $oldOrderDetail->customer
+                ]
+            ];
+            // send email to customers
+            foreach($recipients as $recipient) {
+                $email = new AppMailer();
+                $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
+                $email->setTo($recipient['email'])
+                ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
+                ->setViewVars([
+                    'oldOrderDetail' => $oldOrderDetail,
+                    'customer' => $recipient['customer'],
+                    'newsletterCustomer' => $recipient['customer'],
+                    'newCustomer' => $newCustomer,
+                    'editCustomerReason' => $editCustomerReason,
+                    'amountString' => $amountString,
+                    'appAuth' => $this->AppAuth
+                ]);
+                $email->send();
+            }
 
-        $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
-            '<b>' . $oldOrderDetail->customer->name . '</b>',
-            '<b>' . $newCustomer->name . '</b>'
-        ]);
+            $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
+                '<b>' . $newCustomer->name . '</b>'
+            ]);
+        }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_customer_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
