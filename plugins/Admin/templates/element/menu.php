@@ -341,8 +341,8 @@ if ($appAuth->isManufacturer()) {
 $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 
 $footerHtml = '';
-if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer->customer) && !empty($appAuth->manufacturer->customer->address_customer)) {
-    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->manufacturer->customer->name . ', ' . $appAuth->manufacturer->customer->email. ', ' . $appAuth->manufacturer->customer->address_customer->phone_mobile;
+if ($appAuth->isManufacturer() && !empty($appAuth->getManufacturerCustomer()) && !empty($appAuth->getManufacturerCustomer()['address_customer'])) {
+    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->getManufacturerCustomer()['name'] . ', ' . $appAuth->getManufacturerCustomer()['email']. ', ' . $appAuth->getManufacturerCustomer()['address_customer']['phone_mobile'];
 }
 
 echo $this->Menu->render($menu, [

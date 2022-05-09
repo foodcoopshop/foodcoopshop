@@ -409,7 +409,7 @@ class ApiController extends Controller
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
-            $this->AppAuth->manufacturer->variable_member_fee
+            $this->AppAuth->getManufacturerVariableMemberFee()
         );
         $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
 

@@ -110,6 +110,7 @@ class AppAuthComponent extends AuthComponent
     private function setManufacturer()
     {
         if (!empty($this->user()) &&
+            !is_null($this->getController()->getRequest()->getSession()->read('Auth')) &&
             array_key_exists('Manufacturer', $this->getController()->getRequest()->getSession()->read('Auth'))) {
             return;
         }
@@ -180,6 +181,14 @@ class AppAuthComponent extends AuthComponent
             throw new \Exception('logged user is no manufacturer');
         }
         return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.enabled_sync_domains');
+    }
+
+    public function getManufacturerCustomer()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.customer');
     }
 
     public function isAdmin(): bool
