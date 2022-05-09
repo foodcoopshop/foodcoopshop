@@ -513,7 +513,7 @@ class PaymentsController extends AdminAppController
             'payback',
             'deposit'
         ];
-        if (! Configure::read('app.isDepositPaymentCashless')) {
+        if (!Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $this->allowedPaymentTypes = [
                 'product',
                 'payback'

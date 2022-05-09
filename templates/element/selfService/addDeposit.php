@@ -2,7 +2,7 @@
 
 use Cake\Core\Configure;
 
-if (!Configure::read('app.isDepositPaymentCashless') || !$appAuth->user() || $appAuth->isSelfServiceCustomer()) {
+if (!$this->Html->paymentIsCashless() || !$appAuth->user() || $appAuth->isSelfServiceCustomer()) {
     return;
 }
 ?>

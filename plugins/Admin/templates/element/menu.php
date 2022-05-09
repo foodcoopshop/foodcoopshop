@@ -241,9 +241,6 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         if ($this->Html->paymentIsCashless()) {
             $reportSlug = $this->Slug->getReport('product');
         } else {
-            if (Configure::read('app.isDepositPaymentCashless')) {
-                $reportSlug = $this->Slug->getReport('deposit');
-            }
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                 $reportSlug = $this->Slug->getProfit();
             }

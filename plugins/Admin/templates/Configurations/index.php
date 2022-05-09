@@ -269,12 +269,7 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.isDepositEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
-        <tr>
-            <td>app.isDepositPaymentCashless</td>
-            <td><?php echo Configure::read('app.isDepositPaymentCashless') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
-        </tr>
-
-        <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
+        <?php if ($this->Html->paymentIsCashless()) { ?>
             <tr>
                 <td>app.depositPaymentCashlessStartDate</td>
                 <td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
