@@ -28,8 +28,6 @@ class AppAuthComponent extends AuthComponent
         'Cart'
     ];
 
-    public $manufacturer;
-
     public function flash($message): void
     {
         $this->Flash->error($message);
@@ -111,13 +109,14 @@ class AppAuthComponent extends AuthComponent
 
     private function setManufacturer()
     {
-        if (!empty($this->manufacturer)) {
+        if (!empty($this->user()) &&
+            array_key_exists('manufacturer', $this->getController()->getRequest()->getSession()->read('Auth'))) {
             return;
         }
 
         if (!empty($this->user())) {
             $mm = FactoryLocator::get('Table')->get('Manufacturers');
-            $this->manufacturer = $mm->find('all', [
+            $manufacturer = $mm->find('all', [
                 'conditions' => [
                     'AddressManufacturers.email' => $this->user('email'),
                     'AddressManufacturers.id_manufacturer > ' . APP_OFF
@@ -126,7 +125,8 @@ class AppAuthComponent extends AuthComponent
                     'AddressManufacturers',
                     'Customers.AddressCustomers',
                 ]
-            ])->first();
+            ])->first()->toArray();
+            $this->getController()->getRequest()->getSession()->write('Auth.Manufacturer', $manufacturer);
         }
     }
 
@@ -144,11 +144,7 @@ class AppAuthComponent extends AuthComponent
     public function isManufacturer(): bool
     {
         $this->setManufacturer();
-        if (! empty($this->manufacturer)) {
-            return true;
-        }
-
-        return false;
+        return !empty($this->getController()->getRequest()->getSession()->read('Auth.Manufacturer'));
     }
 
     public function getManufacturerId()
@@ -156,12 +152,7 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-
-        if (! empty($this->manufacturer)) {
-            return $this->manufacturer->id_manufacturer;
-        }
-
-        return 0;
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.id_manufacturer');
     }
 
     public function getManufacturerName()
@@ -169,12 +160,7 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-
-        if (! empty($this->manufacturer)) {
-            return $this->manufacturer->name;
-        }
-
-        return '';
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.name');
     }
 
     public function isAdmin(): bool
