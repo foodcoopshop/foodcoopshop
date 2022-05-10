@@ -170,6 +170,8 @@ class CustomersController extends FrontendController
 
         if (!empty($this->getRequest()->getData())) {
 
+            Log::error('newPasswordRequest');
+
             $this->loadComponent('Sanitize');
             $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
             $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
