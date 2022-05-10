@@ -28,8 +28,6 @@ class AppAuthComponent extends AuthComponent
         'Cart'
     ];
 
-    public $manufacturer;
-
     public function flash($message): void
     {
         $this->Flash->error($message);
@@ -111,13 +109,15 @@ class AppAuthComponent extends AuthComponent
 
     private function setManufacturer()
     {
-        if (!empty($this->manufacturer)) {
+        if (!empty($this->user()) &&
+            !is_null($this->getController()->getRequest()->getSession()->read('Auth')) &&
+            array_key_exists('Manufacturer', $this->getController()->getRequest()->getSession()->read('Auth'))) {
             return;
         }
 
         if (!empty($this->user())) {
             $mm = FactoryLocator::get('Table')->get('Manufacturers');
-            $this->manufacturer = $mm->find('all', [
+            $manufacturer = $mm->find('all', [
                 'conditions' => [
                     'AddressManufacturers.email' => $this->user('email'),
                     'AddressManufacturers.id_manufacturer > ' . APP_OFF
@@ -127,6 +127,10 @@ class AppAuthComponent extends AuthComponent
                     'Customers.AddressCustomers',
                 ]
             ])->first();
+            if (!is_null($manufacturer)) {
+                $manufacturer = $manufacturer->toArray();
+            }
+            $this->getController()->getRequest()->getSession()->write('Auth.Manufacturer', $manufacturer);
         }
     }
 
@@ -144,11 +148,7 @@ class AppAuthComponent extends AuthComponent
     public function isManufacturer(): bool
     {
         $this->setManufacturer();
-        if (! empty($this->manufacturer)) {
-            return true;
-        }
-
-        return false;
+        return !empty($this->getController()->getRequest()->getSession()->read('Auth.Manufacturer'));
     }
 
     public function getManufacturerId()
@@ -156,12 +156,7 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-
-        if (! empty($this->manufacturer)) {
-            return $this->manufacturer->id_manufacturer;
-        }
-
-        return 0;
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.id_manufacturer');
     }
 
     public function getManufacturerName()
@@ -169,12 +164,31 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.name');
+    }
 
-        if (! empty($this->manufacturer)) {
-            return $this->manufacturer->name;
+    public function getManufacturerVariableMemberFee()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
         }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.variable_member_fee');
+    }
 
-        return '';
+    public function getManufacturerEnabledSyncDomains()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.enabled_sync_domains');
+    }
+
+    public function getManufacturerCustomer()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.customer');
     }
 
     public function isAdmin(): bool
@@ -284,7 +298,7 @@ class AppAuthComponent extends AuthComponent
 
     public function isTimebasedCurrencyEnabledForManufacturer(): bool
     {
-        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->manufacturer->timebased_currency_enabled;
+        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.timebased_currency_enabled');
     }
 
     public function isTimebasedCurrencyEnabledForCustomer(): bool

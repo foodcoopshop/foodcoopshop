@@ -1622,7 +1622,7 @@ class ProductsController extends AdminAppController
             $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->addHelper('Network.Network');
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
-            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
+            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->getManufacturerEnabledSyncDomains());
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
             $this->set('showSyncProductsButton', $showSyncProductsButton);
         }
