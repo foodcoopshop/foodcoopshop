@@ -15,7 +15,7 @@
 
 
 $html = $this->Html->link(
-    '<i class="far fa-fw fa-clipboard"></i>',
+    '<i class="far fa-fw fa-clone"></i>',
     'javascript:void(0)',
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',

@@ -23,7 +23,7 @@ $this->element('addScript', [
 <h2 class="info personal-transaction-code"><?php echo __d('admin', 'Please_add_this_code_to_your_transaction:_{0}', ['<b>' . $personalTransactionCode . '</b>']); ?>
 <?php
     echo $this->Html->link(
-        '<i class="far fa-fw fa-clipboard"></i>',
+        '<i class="far fa-fw fa-clone"></i>',
         'javascript:void(0)',
         [
             'data-clipboard-text' => $personalTransactionCode,

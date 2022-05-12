@@ -104,7 +104,7 @@ if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
     );
 }
 echo $this->Html->link(
-    '<i class="far fa-fw fa-clipboard"></i>',
+    '<i class="far fa-fw fa-clone"></i>',
     'javascript:void(0)',
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',
