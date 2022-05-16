@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "4.3.8",
+            "version": "4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "34aae68e91e6834aa6711c3e435a3f220bf56c0b"
+                "reference": "6548d1141fc8311d0fd4d6acdd18446d4279fe32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/34aae68e91e6834aa6711c3e435a3f220bf56c0b",
-                "reference": "34aae68e91e6834aa6711c3e435a3f220bf56c0b",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/6548d1141fc8311d0fd4d6acdd18446d4279fe32",
+                "reference": "6548d1141fc8311d0fd4d6acdd18446d4279fe32",
                 "shasum": ""
             },
             "require": {
@@ -108,7 +108,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/cakephp"
             },
-            "time": "2022-04-23T01:23:23+00:00"
+            "time": "2022-05-14T01:25:15+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -171,16 +171,16 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "3.5.1",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "6b03a44bef94b99a24ab7d4c44cb292bb6f275c2"
+                "reference": "e1b03bfef53ce41feabbf2120021ad5187e80289"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/6b03a44bef94b99a24ab7d4c44cb292bb6f275c2",
-                "reference": "6b03a44bef94b99a24ab7d4c44cb292bb6f275c2",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/e1b03bfef53ce41feabbf2120021ad5187e80289",
+                "reference": "e1b03bfef53ce41feabbf2120021ad5187e80289",
                 "shasum": ""
             },
             "require": {
@@ -227,7 +227,7 @@
                 "issues": "https://github.com/cakephp/migrations/issues",
                 "source": "https://github.com/cakephp/migrations"
             },
-            "time": "2022-03-14T14:26:38+00:00"
+            "time": "2022-05-10T15:01:58+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -4920,16 +4920,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.6.7",
+            "version": "1.6.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d41c39cb2e487663bce9bbd97c660e244b73abad"
+                "reference": "d76498c5531232cb8386ceb6004f7e013138d3ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d41c39cb2e487663bce9bbd97c660e244b73abad",
-                "reference": "d41c39cb2e487663bce9bbd97c660e244b73abad",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d76498c5531232cb8386ceb6004f7e013138d3ba",
+                "reference": "d76498c5531232cb8386ceb6004f7e013138d3ba",
                 "shasum": ""
             },
             "require": {
@@ -4955,7 +4955,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.6.7"
+                "source": "https://github.com/phpstan/phpstan/tree/1.6.8"
             },
             "funding": [
                 {
@@ -4975,7 +4975,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-04T22:55:41+00:00"
+            "time": "2022-05-10T06:54:21+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5400,16 +5400,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.3",
+            "version": "v0.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "6833626ee48ef9bcc8aca8f9f166760441c12573"
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/6833626ee48ef9bcc8aca8f9f166760441c12573",
-                "reference": "6833626ee48ef9bcc8aca8f9f166760441c12573",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/05c544b339b112226ad14803e1e5b09a61957454",
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454",
                 "shasum": ""
             },
             "require": {
@@ -5470,9 +5470,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.3"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.4"
             },
-            "time": "2022-05-05T02:19:43+00:00"
+            "time": "2022-05-06T12:49:14+00:00"
         },
         {
             "name": "react/promise",
@@ -6628,32 +6628,32 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "7.1",
+            "version": "7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "b521bd358b5f7a7d69e9637fd139e036d8adeb6f"
+                "reference": "b4f96a8beea515d2d89141b7b9ad72f526d84071"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/b521bd358b5f7a7d69e9637fd139e036d8adeb6f",
-                "reference": "b521bd358b5f7a7d69e9637fd139e036d8adeb6f",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/b4f96a8beea515d2d89141b7b9ad72f526d84071",
+                "reference": "b4f96a8beea515d2d89141b7b9ad72f526d84071",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7",
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpdoc-parser": "^1.4.1",
+                "phpstan/phpdoc-parser": "^1.5.1",
                 "squizlabs/php_codesniffer": "^3.6.2"
             },
             "require-dev": {
-                "phing/phing": "2.17.2",
+                "phing/phing": "2.17.3",
                 "php-parallel-lint/php-parallel-lint": "1.3.2",
-                "phpstan/phpstan": "1.4.10|1.5.2",
+                "phpstan/phpstan": "1.4.10|1.6.7",
                 "phpstan/phpstan-deprecation-rules": "1.0.0",
-                "phpstan/phpstan-phpunit": "1.0.0|1.1.0",
-                "phpstan/phpstan-strict-rules": "1.1.0",
-                "phpunit/phpunit": "7.5.20|8.5.21|9.5.19"
+                "phpstan/phpstan-phpunit": "1.0.0|1.1.1",
+                "phpstan/phpstan-strict-rules": "1.2.3",
+                "phpunit/phpunit": "7.5.20|8.5.21|9.5.20"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
@@ -6673,7 +6673,7 @@
             "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/7.1"
+                "source": "https://github.com/slevomat/coding-standard/tree/7.2.0"
             },
             "funding": [
                 {
@@ -6685,7 +6685,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-29T12:44:16+00:00"
+            "time": "2022-05-06T10:58:42+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
