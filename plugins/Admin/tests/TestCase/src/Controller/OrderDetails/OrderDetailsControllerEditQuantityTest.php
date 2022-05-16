@@ -151,6 +151,31 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>12.000,00 €</b> für <b>800.000 g</b>. Bitte überprüfe die Einheit.');
     }
 
+    public function testEditOrderDetailQuantityAsSuperadminWithHugeQuantity()
+    {
+        $this->loginAsSuperadmin();
+        $this->OrderDetail->deleteAll([]);
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
+        $productId = '348-11';
+        $this->changeProductPrice($productId, 0, true, '25,2', 'g', 1000, 80);
+        $this->addProductToCart($productId, 99);
+        $this->finishCart(1, 1, '', null);
+        $orderDetailId = 4;
+        $newQuantity = 8000;
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
+
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
+
+        $this->assertEquals(201.56, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(183.24, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
+        $this->assertEquals(1, $changedOrderDetails[0]->order_detail_unit->mark_as_saved);
+
+        $this->assertEquals(18.32, $changedOrderDetails[0]->tax_unit_amount);
+        $this->assertEquals(18.32, $changedOrderDetails[0]->tax_total_amount);
+
+    }
+
     private function preparePricePerUnitOrder()
     {
         $productIdA = 347; // forelle
