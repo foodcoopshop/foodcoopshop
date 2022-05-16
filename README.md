@@ -32,7 +32,7 @@
   <span> · </span>
   <a href="https://demo-en.foodcoopshop.com">English Demo</a>
   <span> · </span>
-  <a href="https://foodcoopshop.github.io/en/foodcoops">Users</a>
+  <a href="https://foodcoopshop.github.io/en/users.html">Users</a>
 </h3>
 
 ## ✨ Features
