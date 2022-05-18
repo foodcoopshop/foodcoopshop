@@ -25,7 +25,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace') . ".ModalImage.init('a.open-with-modal');" .
             Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');".
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button, .manufacturer-email-button, .test-order-list');"
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button, .manufacturer-email-button, .test-order-list, .no-delivery-days-button');"
     ]);
     $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#manufacturer-'
@@ -222,8 +222,11 @@ foreach ($manufacturers as $manufacturer) {
         }
     echo '</td>';
 
-    echo '<td>';
-        echo $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
+    echo '<td style="text-align:center;">';
+        $noDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
+        if ($noDeliveryDaysString != '') {
+            echo '<i class="fas fa-ban not-ok no-delivery-days-button" title="' . __d('admin', 'Delivery_break') . ': ' . h($noDeliveryDaysString) . '"><i>';
+        }
     echo '</td>';
 
     echo '<td align="center">';
