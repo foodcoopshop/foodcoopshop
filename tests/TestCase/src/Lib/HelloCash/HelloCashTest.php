@@ -133,8 +133,8 @@ class HelloCashTest extends AppCakeTestCase
         ])->first();
         $this->assertGreaterThan(1, $invoice->id);
 
-        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
-        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 33.69, 3.38, 37.07);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 10, 33.69, 3.38, 37.07);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 0, 4.54, 0, 4.54);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.5, -0.7, -4.2);
 

@@ -188,12 +188,19 @@ class InvoicesTable extends AppTable
         }
 
         if (!empty($orderDetails)) {
-            array_multisort(
-                $manufacturerName, SORT_ASC,
-                $productName, SORT_ASC,
-                $deliveryDay, SORT_ASC,
-                $orderDetails,
-            );
+            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                array_multisort(
+                    $productName, SORT_ASC,
+                    $orderDetails,
+                );
+            } else {
+                array_multisort(
+                    $manufacturerName, SORT_ASC,
+                    $productName, SORT_ASC,
+                    $deliveryDay, SORT_ASC,
+                    $orderDetails,
+                );
+            }
         }
 
         // prepare correct weight if price per unit was used
