@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-03 15:01+0200\n"
-"PO-Revision-Date: 2022-05-03 15:01+0200\n"
+"POT-Creation-Date: 2022-05-23 17:44+0200\n"
+"PO-Revision-Date: 2022-05-23 17:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1599,9 +1599,6 @@ msgstr "Edit manufacturer settings"
 msgid "Test_order_list"
 msgstr "Test order list"
 
-msgid "Product"
-msgstr "Product"
-
 msgid "Delivery_note"
 msgstr "Delivery note"
 
@@ -1610,6 +1607,9 @@ msgstr "Test invoice"
 
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
+
+msgid "Product"
+msgstr "Product"
 
 msgid "Tax_rate"
 msgstr "Tax rate"
@@ -1833,11 +1833,14 @@ msgstr "Delete slider image?"
 msgid "No_turnover_available."
 msgstr "No turnover available."
 
-msgid "Total_turnover:_{0}"
-msgstr "Total turnover: {0}"
+msgid "Gross_turnover:_{0}"
+msgstr "Gross turnover: {0}"
 
 msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
 msgstr "Average turnover for months where products were delivered: {0}"
+
+msgid "Net_profit:_{0}"
+msgstr "Net profit: {0}"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "The variable member fee is included in turnover."
@@ -1922,6 +1925,9 @@ msgstr "Order adaptions"
 
 msgid "My_data"
 msgstr "My data"
+
+msgid "Turnover_and_profit_statistics"
+msgstr "Turnover and profit statistics"
 
 msgid "Configurations"
 msgstr "Settings"

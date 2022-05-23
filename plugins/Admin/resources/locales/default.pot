@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-05-03 15:01+0200\n"
+"POT-Creation-Date: 2022-05-23 17:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1598,9 +1598,6 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
-msgid "Product"
-msgstr ""
-
 msgid "Delivery_note"
 msgstr ""
 
@@ -1608,6 +1605,9 @@ msgid "Test_invoice"
 msgstr ""
 
 msgid "Manufacturer_profile"
+msgstr ""
+
+msgid "Product"
 msgstr ""
 
 msgid "Tax_rate"
@@ -1832,10 +1832,13 @@ msgstr ""
 msgid "No_turnover_available."
 msgstr ""
 
-msgid "Total_turnover:_{0}"
+msgid "Gross_turnover:_{0}"
 msgstr ""
 
 msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
+msgstr ""
+
+msgid "Net_profit:_{0}"
 msgstr ""
 
 msgid "Variable_member_fee_is_included_in_turnover."
@@ -1920,6 +1923,9 @@ msgid "Order_adaptions"
 msgstr ""
 
 msgid "My_data"
+msgstr ""
+
+msgid "Turnover_and_profit_statistics"
 msgstr ""
 
 msgid "Configurations"

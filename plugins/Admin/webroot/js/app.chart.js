@@ -144,7 +144,8 @@ foodcoopshop.AppChart = {
                 pointBorderColor: this.color,
                 pointBackgroundColor: this.color,
                 pointRadius: 5
-            }]
+            }],
+
         };
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
@@ -211,7 +212,7 @@ foodcoopshop.AppChart = {
 
     },
 
-    initBarChart : function(xAxisData, yAxisData) {
+    initBarChart : function(xAxisData, yAxisData, yAxisData2) {
 
         var barChartData = {
             labels: xAxisData,
@@ -222,6 +223,17 @@ foodcoopshop.AppChart = {
                 hoverBackgroundColor: this.color + '80' //.5 alpha
             }]
         };
+
+        if (yAxisData2 != 0) {
+            barChartData.datasets.push(
+                {
+                    data: yAxisData2,
+                    maxBarThickness: 40,
+                    backgroundColor: this.color + '80', //.5 alpha
+                    hoverBackgroundColor: this.color + '4C' //.3 alpha
+                }
+            );
+        }
 
         var ctx = $('#myBarChart').get(0).getContext('2d');
         new Chart(ctx, {

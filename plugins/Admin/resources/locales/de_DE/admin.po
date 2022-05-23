@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-03 15:01+0200\n"
-"PO-Revision-Date: 2022-05-03 15:02+0200\n"
+"POT-Creation-Date: 2022-05-23 17:44+0200\n"
+"PO-Revision-Date: 2022-05-23 17:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1599,9 +1599,6 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
-msgid "Product"
-msgstr "Produkt"
-
 msgid "Delivery_note"
 msgstr "Lieferschein"
 
@@ -1610,6 +1607,9 @@ msgstr "Rechnung prüfen"
 
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
+
+msgid "Product"
+msgstr "Produkt"
 
 msgid "Tax_rate"
 msgstr "Steuersatz"
@@ -1833,11 +1833,14 @@ msgstr "Slideshow-Bild löschen?"
 msgid "No_turnover_available."
 msgstr "Kein Umsatz vorhanden."
 
-msgid "Total_turnover:_{0}"
-msgstr "Gesamtumsatz: {0}"
+msgid "Gross_turnover:_{0}"
+msgstr "Brutto-Umsatz: {0}"
 
 msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
 msgstr "Durschnittlicher Umsatz für Monate, in denen geliefert wurde: {0}"
+
+msgid "Net_profit:_{0}"
+msgstr "Netto-Gewinn: {0}"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "Der variable Mitgliedsbeitrag ist vom Umsatz <b>nicht</b> abgezogen."
@@ -1922,6 +1925,9 @@ msgstr "Bestelländerungen"
 
 msgid "My_data"
 msgstr "Meine Daten"
+
+msgid "Turnover_and_profit_statistics"
+msgstr "Umsatz- und Gewinnstatistik"
 
 msgid "Configurations"
 msgstr "Einstellungen"
