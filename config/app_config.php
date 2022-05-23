@@ -103,6 +103,7 @@ return [
         'showPickupPlaceInfo' => true,
         'showTaxSumTableOnOrderDetailPdf' => false,
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
+        'selfServiceModeShowOnlyStockProducts' => true,
 
         /**
          * id of the category "all products"

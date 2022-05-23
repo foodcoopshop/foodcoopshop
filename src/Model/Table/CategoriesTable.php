@@ -141,7 +141,7 @@ class CategoriesTable extends AppTable
         if ($showProductCount) {
             $this->Catalog = new Catalog();
             foreach($flattenedCategories as $categoryId => $category) {
-                $productCount = $this->Catalog->getProducts($appAuth, $categoryId, false, '', 0, true, true);
+                $productCount = $this->Catalog->getProducts($appAuth, $categoryId, false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));	
                 $flattenedCategories[$categoryId] .= ' (' . $productCount . ')';
             }
         }

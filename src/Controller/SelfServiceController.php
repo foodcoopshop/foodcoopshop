@@ -53,7 +53,7 @@ class SelfServiceController extends FrontendController
         $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->AppAuth, true);
 
         $this->Catalog = new Catalog();
-        $allProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true, true);
+        $allProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
         $categoriesForSelect = [
             Configure::read('app.categoryAllProducts') => __('All_products') . ' (' . $allProductsCount . ')',
         ] + $categoriesForSelect;
@@ -63,7 +63,7 @@ class SelfServiceController extends FrontendController
         if ($categoryId == 0 && $keyword != '') {
             $categoryIdForSearch = Configure::read('app.categoryAllProducts');
         }
-        $products = $this->Catalog->getProducts($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, true);
+        $products = $this->Catalog->getProducts($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
         $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
 
         $this->set('products', $products);
