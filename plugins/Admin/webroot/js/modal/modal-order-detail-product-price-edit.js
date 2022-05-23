@@ -45,6 +45,10 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         html += '<label for="dialogEditPriceReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPriceAdapted + '</label>';
         html += '<textarea class="ckeditor" name="dialogEditPriceReason" id="dialogEditPriceReason"></textarea>';
         html += '</div>';
+        html += '<label class="checkbox">';
+        html += '<input type="checkbox" name="dialogEditPriceSendEmailToCustomer" id="dialogEditPriceSendEmailToCustomer" checked="checked" />';
+        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToMember + '</span>';
+        html += '</label>';
         html += '<input type="hidden" name="dialogOrderDetailProductPriceOrderDetailId" id="dialogOrderDetailProductPriceOrderDetailId" value="" />';
         return html;
 
@@ -81,7 +85,8 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
             {
                 orderDetailId: $('#dialogOrderDetailProductPriceOrderDetailId').val(),
                 productPrice: productPrice,
-                editPriceReason: ckeditorData
+                editPriceReason: ckeditorData,
+                sendEmailToCustomer: $('#dialogEditPriceSendEmailToCustomer:checked').length > 0 ? 1 : 0,
             },
             {
                 onOk: function (data) {

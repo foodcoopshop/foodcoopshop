@@ -11,6 +11,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use App\Model\Table\OrderDetailsTable;
 
 /**
@@ -1345,6 +1346,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $editPriceReason = strip_tags(html_entity_decode($this->getRequest()->getData('editPriceReason')));
+        $sendEmailToCustomer = (bool) $this->getRequest()->getData('sendEmailToCustomer');
 
         $productPrice = trim($this->getRequest()->getData('productPrice'));
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
@@ -1387,37 +1389,47 @@ class OrderDetailsController extends AdminAppController
 
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
 
-        // send email to customer
-        $email = new AppMailer();
-        $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
-        $email->setTo($oldOrderDetail->customer->email)
-        ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
-        ->setViewVars([
-            'oldOrderDetail' => $oldOrderDetail,
-            'newsletterCustomer' => $oldOrderDetail->customer,
-            'newOrderDetail' => $newOrderDetail,
-            'appAuth' => $this->AppAuth,
-            'editPriceReason' => $editPriceReason
-        ]);
+        $emailRecipients = [];
 
-        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+        if ($sendEmailToCustomer) {
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
+            $email->setTo($oldOrderDetail->customer->email)
+            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+            ->setViewVars([
+                'oldOrderDetail' => $oldOrderDetail,
+                'newsletterCustomer' => $oldOrderDetail->customer,
+                'newOrderDetail' => $newOrderDetail,
+                'appAuth' => $this->AppAuth,
+                'editPriceReason' => $editPriceReason,
+            ]);
+            $email->send();
+            $emailRecipients[] = $oldOrderDetail->customer->name;
+        }
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                '<b>' . $oldOrderDetail->customer->name . '</b>',
-                '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
+            $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email)
+            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+            ->setViewVars([
+                'oldOrderDetail' => $oldOrderDetail,
+                'newOrderDetail' => $newOrderDetail,
+                'appAuth' => $this->AppAuth,
+                'editPriceReason' => $editPriceReason,
             ]);
-            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            $email->send();
+            $emailRecipients[] = $oldOrderDetail->product->manufacturer->name;
         }
 
-        $email->send();
-
-        $message .= $emailMessage;
-
         if ($editPriceReason != '') {
-            $message .= ' '.__d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
+            $message .= ' ' . __d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
+        }
+
+        if (!empty($emailRecipients)) {
+            $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . Text::toList($emailRecipients) . '</b>']);
         }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -1441,7 +1453,7 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $editPickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('editPickupDayReason')), '<strong><b>'));
-        $sendEmail = $this->getRequest()->getData('sendEmail');
+        $sendEmail = (bool) $this->getRequest()->getData('sendEmail');
 
         try {
             if (empty($orderDetailIds)) {
