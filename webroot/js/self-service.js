@@ -116,13 +116,6 @@ foodcoopshop.SelfService = {
             }
             formIsSubmitted = true;
         });
-
-        barcodeInputField.on('keypress', foodcoopshop.Helper.debounce(
-            function() {
-                foodcoopshop.SelfService.submitForm(loginForm, 'fa-sign-in-alt');
-            }, 1000)
-        );
-
         barcodeInputField.focus();
 
         var cameraButton = $('<a/>').
@@ -160,13 +153,10 @@ foodcoopshop.SelfService = {
         searchForm.find('select, input[type="text"]').on('change', function() {
             foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
         });
-        searchForm.find('select, input[type="text"]').on('keypress', foodcoopshop.Helper.debounce(
-            function() {
-                foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
-            }, 1000)
-        );
-
-        searchForm.find('input[type="text"]').focus();
+        var inputField = searchForm.find('input[type="text"]');
+        var length = inputField.val().length;
+        inputField[0].setSelectionRange(length, length);
+        inputField.focus();
     },
 
     submitForm : function(searchForm, icon) {
