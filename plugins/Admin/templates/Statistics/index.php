@@ -85,6 +85,7 @@ if ($manufacturerId == 'all') {
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
         echo '<br />' . __d('admin', 'Net_profit:_{0}', ['<b>'.$this->Number->formatAsCurrency($totalNetProfit).'</b>']);
         echo '<br />' . __d('admin', 'Average_profit_for_months_where_products_were_delivered:_{0}', ['<b>'.$this->Number->formatAsCurrency($averageNetProfit).'</b>']);
+        echo '<br />' . __d('admin', 'Surcharge') . ': ' .  '<b>' . $this->Number->formatAsPercent($averageSurcharge).'</b>';
     }
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<br />' . __d('admin', 'Variable_member_fee_is_included_in_turnover.');

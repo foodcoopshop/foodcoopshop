@@ -119,6 +119,7 @@ class StatisticsController extends AdminAppController
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $monthlySumProducts->contain(['OrderDetailPurchasePrices']);
             $monthlySumProducts->select(['SumNetProfit' => 'SUM(OrderDetails.total_price_tax_excl) - SUM(OrderDetailPurchasePrices.total_price_tax_excl)']);
+            $monthlySumProducts->select(['Surcharge' => '(SUM(OrderDetails.total_price_tax_excl) / SUM(OrderDetailPurchasePrices.total_price_tax_excl) * 100) - 100']);
         }
 
         if (empty($monthlySumProducts->toArray())) {
@@ -132,8 +133,11 @@ class StatisticsController extends AdminAppController
         $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray();
 
         $monthsWithTurnoverSumNetProfit = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray(); // dummy data which is not used
+        $monthsWithTurnoverSurcharge = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray(); // dummy data which is not used
+
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $monthsWithTurnoverSumNetProfit = $monthlySumProducts->all()->extract('SumNetProfit')->toArray();
+            $monthsWithTurnoverSurcharge = $monthlySumProducts->all()->extract('Surcharge')->toArray();
         }
 
         $xAxisData = array_values($monthsAndYear);
@@ -197,6 +201,7 @@ class StatisticsController extends AdminAppController
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
         $this->set('totalNetProfit', array_sum($monthsWithTurnoverSumNetProfit));
         $this->set('averageNetProfit', array_sum($monthsWithTurnoverSumNetProfit) / count($monthsWithTurnoverMonthAndYear));
+        $this->set('averageSurcharge', array_sum($monthsWithTurnoverSurcharge) / count($monthsWithTurnoverMonthAndYear));
 
         // START prepare line chart
         if ($year == '') {
