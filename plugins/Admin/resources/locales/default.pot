@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-05-23 17:44+0200\n"
+"POT-Creation-Date: 2022-05-23 20:59+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -663,6 +663,9 @@ msgid "The_slider_{0}_has_been_{1}."
 msgstr ""
 
 msgid "Slideshow"
+msgstr ""
+
+msgid "Turnover_and_profit_statistics"
 msgstr ""
 
 msgid "Turnover_statistics"
@@ -1841,6 +1844,9 @@ msgstr ""
 msgid "Net_profit:_{0}"
 msgstr ""
 
+msgid "Average_profit_for_months_where_products_were_delivered:_{0}"
+msgstr ""
+
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr ""
 
@@ -1923,9 +1929,6 @@ msgid "Order_adaptions"
 msgstr ""
 
 msgid "My_data"
-msgstr ""
-
-msgid "Turnover_and_profit_statistics"
 msgstr ""
 
 msgid "Configurations"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-23 17:44+0200\n"
-"PO-Revision-Date: 2022-05-23 17:44+0200\n"
+"POT-Creation-Date: 2022-05-23 20:59+0200\n"
+"PO-Revision-Date: 2022-05-23 21:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -665,6 +665,9 @@ msgstr "Das Slideshow-Bild {0} wurde {1}."
 
 msgid "Slideshow"
 msgstr "Slideshow"
+
+msgid "Turnover_and_profit_statistics"
+msgstr "Umsatz- und Gewinnstatistik"
 
 msgid "Turnover_statistics"
 msgstr "Umsatzstatistik"
@@ -1837,10 +1840,13 @@ msgid "Gross_turnover:_{0}"
 msgstr "Brutto-Umsatz: {0}"
 
 msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
-msgstr "Durschnittlicher Umsatz für Monate, in denen geliefert wurde: {0}"
+msgstr "Durchschnittlicher Brutto-Umsatz für Monate, in denen geliefert wurde: {0}"
 
 msgid "Net_profit:_{0}"
 msgstr "Netto-Gewinn: {0}"
+
+msgid "Average_profit_for_months_where_products_were_delivered:_{0}"
+msgstr "Durchschnittlicher Netto-Gewinn für Monate, in denen geliefert wurde: {0}"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "Der variable Mitgliedsbeitrag ist vom Umsatz <b>nicht</b> abgezogen."
@@ -1925,9 +1931,6 @@ msgstr "Bestelländerungen"
 
 msgid "My_data"
 msgstr "Meine Daten"
-
-msgid "Turnover_and_profit_statistics"
-msgstr "Umsatz- und Gewinnstatistik"
 
 msgid "Configurations"
 msgstr "Einstellungen"

@@ -194,8 +194,9 @@ class StatisticsController extends AdminAppController
         }
         $this->set('yAxisData2BarChart', $yAxisData2WithYearSeparators);
         $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
-        $this->set('totalNetProfit', array_sum($monthsWithTurnoverSumNetProfit));
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
+        $this->set('totalNetProfit', array_sum($monthsWithTurnoverSumNetProfit));
+        $this->set('averageNetProfit', array_sum($monthsWithTurnoverSumNetProfit) / count($monthsWithTurnoverMonthAndYear));
 
         // START prepare line chart
         if ($year == '') {
