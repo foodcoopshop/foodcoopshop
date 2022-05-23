@@ -8,6 +8,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
+use League\Csv\Reader;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -53,10 +54,18 @@ class ReportsController extends AdminAppController
         $csvRecords = [];
         $saveRecords = false;
         if (!empty($this->getRequest()->getData('upload'))) {
+
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
             $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
             $reader = $bankClassName::createFromString($content);
+
+            // change uploaded file charset from UTF16 to UTF8
+            $inputBom = $reader->getInputBOM();
+            if ($inputBom === Reader::BOM_UTF16_LE || $inputBom === Reader::BOM_UTF16_BE) {
+                $reader->addStreamFilter('convert.iconv.UTF-16/UTF-8');
+            }
+
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
                 $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));

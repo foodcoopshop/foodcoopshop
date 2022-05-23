@@ -32,8 +32,8 @@ class SparkasseBankingReaderTest extends AppCakeTestCase
             $this->assertEquals(4, count($record));
         }
 
-        $this->assertEquals('2022-04-13 00:00:00.000000', $records[0]['date']);
-        $this->assertEquals(18, $records[0]['amount']);
+        $this->assertEquals('2022-05-02 00:00:00.000000', $records[0]['date']);
+        $this->assertEquals(100, $records[0]['amount']);
         $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_id_customer']);
 
         $this->assertEquals(1, count($records));

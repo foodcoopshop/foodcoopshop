@@ -28,12 +28,14 @@ class SparkasseBankingReader extends BankingReader {
     {
 
         $result = false;
-
-        if (count($record) == 11 &&
-            strlen($record['Buchungsdatum']) == 10 &&
+        if (strlen($record['Buchungsdatum']) == 10 &&
             $record['Währung'] == 'EUR' &&
             is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record['Betrag'])) &&
-            !empty($record['Buchungs-Info'])
+            isset($record['Partnername']) &&
+            isset($record['Partner IBAN']) &&
+            isset($record['Buchungs-Info']) &&
+            isset($record['Buchungsreferenz']) &&
+            isset($record['Zahlungsreferenz'])
             ) {
             $result = true;
         }
@@ -45,16 +47,20 @@ class SparkasseBankingReader extends BankingReader {
     {
 
         $preparedRecords = [];
-        foreach($records as $record){
+
+        foreach($records as $record) {
 
             $contentFields = [
                 $record['Buchungs-Info'],
+                $record['Zahlungsreferenz'],
                 $record['Partnername'],
                 $record['Partner IBAN'],
                 $record['Buchungsreferenz'],
             ];
 
-            $record['content'] = join(' ', $contentFields);
+            $contentFields = array_filter($contentFields);
+
+            $record['content'] = join('<br />', $contentFields);
             $record['amount'] = $record['Betrag'];
             $record['date'] =  $record['Buchungsdatum'];
 

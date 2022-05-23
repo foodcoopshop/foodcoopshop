@@ -1,2 +1,2 @@
-"Buchungsdatum";"Betrag";"Buchungs-Info";"Partnername";"Partner IBAN";"BIC/SWIFT";"Partner Kontonummer";"Bankleitzahl";"Währung";"Buchungsreferenz";"Notiz"
-"13.04.2022";"18,00";"E-COMM 18,00 DE K1 12.04. 08:20 TEDXTEXT 2022... 280 838B34A3";"TEDXTEXT 2022...";"";"";"77319989";"20320";"EUR";"203202204132ALB-006CCQ7BI8W8";""
+"Buchungsdatum";"Betrag";"Buchungs-Info";"Partnername";"Partner IBAN";"BIC/SWIFT";"Partner Kontonummer";"Bankleitzahl";"Währung";"Buchungsreferenz";"Valutadatum";"Eigener Kontoname";"Eigene IBAN";"Notiz";"Highlight";"Virtuelle Kartennummer";"Bezahlt mit";"App";"Zahlungsreferenz";"Mandats ID";"Creditor ID"
+"02.05.2022";"100,00";"";"Test User";"AT301500000721373439";"OBKLAT2LXXX";"";"15000";"EUR";"1500022050112212180806782627";"02.05.2022";"d`Speis - unsere FoodCoop in Andorf";"AT742032032100633811";"";"0";"";"";"";"838B34A3";"";""
