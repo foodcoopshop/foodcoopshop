@@ -1952,8 +1952,13 @@ class OrderDetailsController extends AdminAppController
 
         $quantity = $stockAvailableObject->quantity;
 
-        if (!($stockAvailableObject->is_stock_product && $orderDetail->product->manufacturer->is_stock_management_enabled) && $stockAvailableObject->always_available) {
-            return false;
+        if (!($stockAvailableObject->is_stock_product && $orderDetail->product->manufacturer->is_stock_management_enabled)) {
+            if ($stockAvailableObject->always_available) {
+                return false;
+            }
+            if (!$stockAvailableObject->always_available && $stockAvailableObject->default_quantity_after_sending_order_lists > 0) {
+                return false;
+            }
         }
 
         // do the acutal updates for increasing quantity
