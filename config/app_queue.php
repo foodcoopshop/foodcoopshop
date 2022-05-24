@@ -24,7 +24,7 @@ return [
         'defaultworkerretries' => 2,
         'workermaxruntime' => 300,
         'sleeptime' => 5,
-        'cleanuptimeout' => 259200, // 3 days
+        'cleanuptimeout' => 518400, // 6 days
         'gcprob' => 100,
         'connection' => $connection,
         'exitwhennothingtodo' => false,
