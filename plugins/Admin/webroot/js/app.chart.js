@@ -23,7 +23,13 @@ foodcoopshop.AppChart = {
             tooltip: {
                 callbacks: {
                     label: function(ctx) {
-                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed.y);
+                        var formattedValue;
+                        if (ctx.datasetIndex == 2) {
+                            formattedValue = foodcoopshop.Helper.formatFloatAsString(ctx.parsed.y) + '%';
+                        } else {
+                            formattedValue = foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed.y);
+                        }
+                        return formattedValue;
                     }
                 }
             }
@@ -53,7 +59,7 @@ foodcoopshop.AppChart = {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
                 }
-            }
+            },
         }
     },
 
@@ -214,7 +220,7 @@ foodcoopshop.AppChart = {
 
     },
 
-    initBarChart : function(xAxisData, yAxisData, yAxisData2, yAxisLabel, yAxisLabel2) {
+    initBarChart : function(xAxisData, yAxisData, yAxisData2, yAxisData3, yAxisLabel, yAxisLabel2, yAxisLabel3) {
 
         var barChartData = {
             labels: xAxisData,
@@ -237,6 +243,39 @@ foodcoopshop.AppChart = {
                     hoverBackgroundColor: this.color + '4C' //.3 alpha
                 }
             );
+        }
+
+        if (yAxisData3 != 0) {
+            barChartData.datasets.push(
+                {
+                    label: yAxisLabel3,
+                    data: yAxisData3,
+                    lineTension : 0.15,
+                    borderDash: [5, 5],
+                    borderWidth: 1,
+                    pointBorderColor: this.color,
+                    pointBackgroundColor: this.color,
+                    pointRadius: 5,
+                    backgroundColor: this.color,
+                    borderColor: this.color,
+                    hoverBackgroundColor: this.color + '4C', //.3 alpha
+                    yAxisID: 'y1',
+                    type: 'line',
+                }
+            );
+            this.barChartOptions.scales.y1 = {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                ticks: {
+                    callback: function(value, index, values) {
+                        return foodcoopshop.Helper.formatFloatAsString(value) + '%';
+                    }
+                },
+                grid: {
+                  display: false,
+                },
+            };
         }
 
         var ctx = $('#myBarChart').get(0).getContext('2d');

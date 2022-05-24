@@ -66,8 +66,10 @@ $this->element('addScript', [
         json_encode($xAxisDataBarChart).", ".
         json_encode($yAxisDataBarChart).", ".
         json_encode($yAxisData2BarChart).", ".
-    "'" . (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Net_purchase_price') : __d('admin', 'Gross_turnover')) . "', ".
-        "'" . __d('admin', 'Net_profit') . "'".
+        json_encode($yAxisData3BarChart).", ".
+        "'" . (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Net_purchase_price') : __d('admin', 'Gross_turnover')) . "', ".
+        "'" . __d('admin', 'Net_profit') . "', ".
+        "'" . __d('admin', 'Surcharge') . " %'".
     ");"
 ]);
 if ($year == '' && count($xAxisDataLineChart) > 1) {
