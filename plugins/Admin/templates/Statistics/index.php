@@ -93,8 +93,8 @@ if ($manufacturerId == 'all') {
         echo ' / ' . __d('admin', 'Net_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover + $averageNetProfit) . '</b>';
         echo '<br />' . __d('admin', 'Net_profit') . ': <b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b>';
         echo ' / ' . __d('admin', 'Net_profit') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageNetProfit) . '</b>';
-        echo '<br />' . __d('admin', 'Surcharge') . ': <b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b>';
-        echo ' / ' . $this->Html->link(__d('admin', 'Go_to_profit_detail_page'), $this->Slug->getProfit());
+        //echo '<br />' . __d('admin', 'Surcharge') . ': <b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b>';
+        echo '<br />' . $this->Html->link(__d('admin', 'Go_to_profit_detail_page'), $this->Slug->getProfit());
     } else {
         echo __d('admin', 'Gross_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover) . '</b>';
         echo ' / ' . __d('admin', 'Gross_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover) . '</b>';
