@@ -223,7 +223,7 @@ foodcoopshop.AppChart = {
                 data: yAxisData,
                 maxBarThickness: 40,
                 backgroundColor: this.color + 'B3', //.7 alpha
-                hoverBackgroundColor: this.color + '80' //.5 alpha
+                hoverBackgroundColor: this.color + '4C' //.5 alpha
             }]
         };
 
