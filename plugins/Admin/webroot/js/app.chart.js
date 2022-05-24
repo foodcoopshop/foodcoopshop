@@ -34,6 +34,7 @@ foodcoopshop.AppChart = {
         scaleGridLineColor: 'rgba(0,0,0,.15)',
         scales: {
             x: {
+                stacked: true,
                 grid: {
                     display: false
                 },
@@ -45,6 +46,7 @@ foodcoopshop.AppChart = {
                 }
             },
             y: {
+                stacked: true,
                 beginAtZero: true,
                 ticks: {
                     callback: function(value, index, values) {

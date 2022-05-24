@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-05-24 08:24+0200\n"
+"POT-Creation-Date: 2022-05-24 08:58+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1835,7 +1835,13 @@ msgstr ""
 msgid "No_turnover_available."
 msgstr ""
 
+msgid "Net_purchase_price"
+msgstr ""
+
 msgid "Gross_turnover"
+msgstr ""
+
+msgid "Net_turnover"
 msgstr ""
 
 msgid "per_month"

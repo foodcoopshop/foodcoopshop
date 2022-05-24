@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-24 08:24+0200\n"
-"PO-Revision-Date: 2022-05-24 08:25+0200\n"
+"POT-Creation-Date: 2022-05-24 08:58+0200\n"
+"PO-Revision-Date: 2022-05-24 08:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1836,8 +1836,14 @@ msgstr "Slideshow-Bild löschen?"
 msgid "No_turnover_available."
 msgstr "Kein Umsatz vorhanden."
 
+msgid "Net_purchase_price"
+msgstr "Netto-Einkaufspreis"
+
 msgid "Gross_turnover"
 msgstr "Brutto-Umsatz"
+
+msgid "Net_turnover"
+msgstr "Netto-Umsatz"
 
 msgid "per_month"
 msgstr "pro Monat"

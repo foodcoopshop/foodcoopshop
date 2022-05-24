@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-24 08:24+0200\n"
+"POT-Creation-Date: 2022-05-24 08:58+0200\n"
 "PO-Revision-Date: 2022-05-24 08:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1836,7 +1836,15 @@ msgstr "Delete slider image?"
 msgid "No_turnover_available."
 msgstr "No turnover available."
 
+#, fuzzy
+msgid "Net_purchase_price"
+msgstr "Edit purchase price"
+
 msgid "Gross_turnover"
+msgstr "Gross turnover"
+
+#, fuzzy
+msgid "Net_turnover"
 msgstr "Gross turnover"
 
 msgid "per_month"

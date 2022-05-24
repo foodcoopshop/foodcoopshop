@@ -120,6 +120,7 @@ class StatisticsController extends AdminAppController
             $monthlySumProducts->contain(['OrderDetailPurchasePrices']);
             $monthlySumProducts->select(['SumNetProfit' => 'SUM(OrderDetails.total_price_tax_excl) - SUM(OrderDetailPurchasePrices.total_price_tax_excl)']);
             $monthlySumProducts->select(['Surcharge' => '(SUM(OrderDetails.total_price_tax_excl) / SUM(OrderDetailPurchasePrices.total_price_tax_excl) * 100) - 100']);
+            $monthlySumProducts->select(['SumTotalPaid' => $monthlySumProducts->func()->sum('OrderDetailPurchasePrices.total_price_tax_excl')]);
         }
 
         if (empty($monthlySumProducts->toArray())) {

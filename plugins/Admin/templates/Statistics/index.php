@@ -66,7 +66,7 @@ $this->element('addScript', [
         json_encode($xAxisDataBarChart).", ".
         json_encode($yAxisDataBarChart).", ".
         json_encode($yAxisData2BarChart).", ".
-        "'" . __d('admin', 'Gross_turnover')."', ".
+    "'" . (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Net_purchase_price') : __d('admin', 'Gross_turnover')) . "', ".
         "'" . __d('admin', 'Net_profit') . "'".
     ");"
 ]);
@@ -86,12 +86,15 @@ if ($manufacturerId == 'all') {
 ?>
 
 <p><?php
-    echo __d('admin', 'Gross_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover) . '</b>';
-    echo ' / ' . __d('admin', 'Gross_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover) . '</b>';
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo __d('admin', 'Net_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover + $totalNetProfit) . '</b>';
+        echo ' / ' . __d('admin', 'Net_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover + $averageNetProfit) . '</b>';
         echo '<br />' . __d('admin', 'Net_profit') . ': <b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b>';
         echo ' / ' . __d('admin', 'Net_profit') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageNetProfit) . '</b>';
         echo '<br />' . __d('admin', 'Surcharge') . ': <b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b>';
+    } else {
+        echo __d('admin', 'Gross_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover) . '</b>';
+        echo ' / ' . __d('admin', 'Gross_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover) . '</b>';
     }
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<br />' . __d('admin', 'Variable_member_fee_is_included_in_turnover.');
