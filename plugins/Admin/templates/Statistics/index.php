@@ -22,7 +22,7 @@ $this->element('addScript', [
 
 <div class="filter-container">
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-        <h1><?php echo $title_for_layout; ?></h1>
+        <h1 style="width:100%;margin-bottom:5px;"><?php echo $title_for_layout; ?></h1>
         <?php
         if (!$appAuth->isManufacturer()) {
             echo $this->Form->control('manufacturerId', [
@@ -62,7 +62,15 @@ if (empty($xAxisDataBarChart)) {
 $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".AppChart.setColor('" . Configure::read('app.customThemeMainColor') . "');" .
-    Configure::read('app.jsNamespace') . ".AppChart.initBarChart(".json_encode($xAxisDataBarChart).", ".json_encode($yAxisDataBarChart).");"
+    Configure::read('app.jsNamespace') . ".AppChart.initBarChart(".
+        json_encode($xAxisDataBarChart).", ".
+        json_encode($yAxisDataBarChart).", ".
+        json_encode($yAxisData2BarChart).", ".
+        json_encode($yAxisData3BarChart).", ".
+        "'" . (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Net_purchase_price') : __d('admin', 'Gross_turnover')) . "', ".
+        "'" . __d('admin', 'Net_profit') . "', ".
+        "'" . __d('admin', 'Surcharge') . " %'".
+    ");"
 ]);
 if ($year == '' && count($xAxisDataLineChart) > 1) {
     $this->element('addScript', [
@@ -80,8 +88,17 @@ if ($manufacturerId == 'all') {
 ?>
 
 <p><?php
-    echo __d('admin', 'Total_turnover:_{0}', ['<b>'.$this->Number->formatAsCurrency($totalTurnover).'</b>']);
-    echo '<br />' . __d('admin', 'Average_turnover_for_months_where_products_were_delivered:_{0}', ['<b>'.$this->Number->formatAsCurrency($averageTurnover).'</b>']);
+    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+        echo __d('admin', 'Net_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover + $totalNetProfit) . '</b>';
+        echo ' / ' . __d('admin', 'Net_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover + $averageNetProfit) . '</b>';
+        echo '<br />' . __d('admin', 'Net_profit') . ': <b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b>';
+        echo ' / ' . __d('admin', 'Net_profit') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageNetProfit) . '</b>';
+        echo '<br />' . __d('admin', 'Surcharge') . ': <b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b>';
+        echo ' / ' . $this->Html->link(__d('admin', 'Go_to_profit_detail_page'), $this->Slug->getProfit());
+    } else {
+        echo __d('admin', 'Gross_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover) . '</b>';
+        echo ' / ' . __d('admin', 'Gross_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover) . '</b>';
+    }
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<br />' . __d('admin', 'Variable_member_fee_is_included_in_turnover.');
     }

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-03 15:01+0200\n"
-"PO-Revision-Date: 2022-05-03 15:02+0200\n"
+"POT-Creation-Date: 2022-05-24 09:55+0200\n"
+"PO-Revision-Date: 2022-05-24 09:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -665,6 +665,9 @@ msgstr "Das Slideshow-Bild {0} wurde {1}."
 
 msgid "Slideshow"
 msgstr "Slideshow"
+
+msgid "Turnover_and_profit_statistics"
+msgstr "Umsatz- und Gewinnstatistik"
 
 msgid "Turnover_statistics"
 msgstr "Umsatzstatistik"
@@ -1599,9 +1602,6 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
-msgid "Product"
-msgstr "Produkt"
-
 msgid "Delivery_note"
 msgstr "Lieferschein"
 
@@ -1610,6 +1610,9 @@ msgstr "Rechnung prüfen"
 
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
+
+msgid "Product"
+msgstr "Produkt"
 
 msgid "Tax_rate"
 msgstr "Steuersatz"
@@ -1638,8 +1641,8 @@ msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunde
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
 
-msgid "Profit / all prices are net prices"
-msgstr "Gewinn / Netto-Preise"
+msgid "Net_profit"
+msgstr "Netto-Gewinn"
 
 msgid "Page_title"
 msgstr "Seitentitel"
@@ -1833,11 +1836,20 @@ msgstr "Slideshow-Bild löschen?"
 msgid "No_turnover_available."
 msgstr "Kein Umsatz vorhanden."
 
-msgid "Total_turnover:_{0}"
-msgstr "Gesamtumsatz: {0}"
+msgid "Net_purchase_price"
+msgstr "Netto-Einkaufspreis"
 
-msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
-msgstr "Durschnittlicher Umsatz für Monate, in denen geliefert wurde: {0}"
+msgid "Gross_turnover"
+msgstr "Brutto-Umsatz"
+
+msgid "Net_turnover"
+msgstr "Netto-Umsatz"
+
+msgid "per_month"
+msgstr "pro Monat"
+
+msgid "Go_to_profit_detail_page"
+msgstr "Zur Gewinn-Detailansicht"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "Der variable Mitgliedsbeitrag ist vom Umsatz <b>nicht</b> abgezogen."
@@ -2381,6 +2393,21 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Average_turnover_per_month"
+#~ msgstr "Durchschnitts-Bruttoumsatz pro Monat"
+
+#~ msgid "Average_profit_per_month"
+#~ msgstr "Durchschnitts-Netto-Gewinn pro Monat"
+
+#~ msgid "Profit / all prices are net prices"
+#~ msgstr "Gewinn / Netto-Preise"
+
+#~ msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
+#~ msgstr "Durchschnittlicher Brutto-Umsatz für Monate, in denen geliefert wurde: {0}"
+
+#~ msgid "Average_profit_for_months_where_products_were_delivered:_{0}"
+#~ msgstr "Durchschnittlicher Netto-Gewinn für Monate, in denen geliefert wurde: {0}"
 
 #~ msgid "Copy_email_addresses_of_selected_customers"
 #~ msgstr "E-Mail-Adressen der ausgewählten Mitglieder kopieren"

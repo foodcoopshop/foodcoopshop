@@ -165,7 +165,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if ($appAuth->isSuperadmin() || ($appAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'))) {
         $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getStatistics(),
-            'name' => __d('admin', 'Turnover_statistics'),
+            'name' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Turnover_and_profit_statistics') : __d('admin', 'Turnover_statistics'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-chart-bar'
             ]

@@ -78,8 +78,9 @@ class StatisticsController extends AdminAppController
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->set('manufacturerId', $manufacturerId);
 
+        $titleForLayout = Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Turnover_and_profit_statistics') : __d('admin', 'Turnover_statistics');
         if ($manufacturerId == '') {
-            $this->set('title_for_layout', __d('admin', 'Turnover_statistics'));
+            $this->set('title_for_layout', $titleForLayout);
             return;
         }
 
@@ -96,9 +97,8 @@ class StatisticsController extends AdminAppController
         ])->toArray();
         $this->set('manufacturers', $manufacturers);
 
-        $titleForLayout = __d('admin', 'Turnover_statistics');
         if ($manufacturerId != 'all') {
-            $titleForLayout .=  ' ' . $manufacturers[0]->name;
+            $titleForLayout .=  ': ' . $manufacturers[0]->name;
         }
         $this->set('title_for_layout', $titleForLayout);
 
@@ -116,6 +116,13 @@ class StatisticsController extends AdminAppController
         if (!empty($excludeMemberFeeCondition)) {
             $monthlySumProducts->where($excludeMemberFeeCondition);
         }
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $monthlySumProducts->contain(['OrderDetailPurchasePrices']);
+            $monthlySumProducts->select(['SumNetProfit' => 'SUM(OrderDetails.total_price_tax_excl) - SUM(OrderDetailPurchasePrices.total_price_tax_excl)']);
+            $monthlySumProducts->select(['Surcharge' => '(SUM(OrderDetails.total_price_tax_excl) / SUM(OrderDetailPurchasePrices.total_price_tax_excl) * 100) - 100']);
+            $monthlySumProducts->select(['SumTotalPaid' => $monthlySumProducts->func()->sum('OrderDetailPurchasePrices.total_price_tax_excl')]);
+        }
+
         if (empty($monthlySumProducts->toArray())) {
             $this->set('xAxisData', []);
             return;
@@ -126,26 +133,46 @@ class StatisticsController extends AdminAppController
         $monthsWithTurnoverMonthAndYear = $monthlySumProducts->all()->extract('MonthAndYear')->toArray();
         $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray();
 
+        $monthsWithTurnoverSumNetProfit = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray(); // dummy data which is not used
+        $monthsWithTurnoverSurcharge = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray(); // dummy data which is not used
+
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $monthsWithTurnoverSumNetProfit = $monthlySumProducts->all()->extract('SumNetProfit')->toArray();
+            $monthsWithTurnoverSurcharge = $monthlySumProducts->all()->extract('Surcharge')->toArray();
+        }
+
         $xAxisData = array_values($monthsAndYear);
         $yAxisData = [];
+        $yAxisData2 = [];
+        $yAxisData3 = [];
 
         foreach($monthsAndYear as $monthKey => $monthString) {
             $foundIndex = array_search($monthKey, $monthsWithTurnoverMonthAndYear);
             if ($foundIndex !== false) {
                 $yAxisData[] = $monthsWithTurnoverSumTotalPaid[$foundIndex];
+                $yAxisData2[] = $monthsWithTurnoverSumNetProfit[$foundIndex];
+                $yAxisData3[] = $monthsWithTurnoverSurcharge[$foundIndex];
             } else {
                 $yAxisData[] = 0;
+                $yAxisData2[] = 0;
+                $yAxisData3[] = 'NaN';
             }
         }
 
         $xAxisDataWithYearSeparators = [];
         $yAxisDataWithYearSeparators = [];
+        $yAxisData2WithYearSeparators = [];
+        $yAxisData3WithYearSeparators = [];
         foreach($xAxisData as $i => $x) {
             $xAxisDataWithYearSeparators[] = $x;
             $yAxisDataWithYearSeparators[] = $yAxisData[$i];
+            $yAxisData2WithYearSeparators[] = $yAxisData2[$i];
+            $yAxisData3WithYearSeparators[] = $yAxisData3[$i];
             if (preg_match('/'.__d('admin', 'December').'/', $x)) {
                 $xAxisDataWithYearSeparators[] = '';
                 $yAxisDataWithYearSeparators[] = 0;
+                $yAxisData2WithYearSeparators[] = 0;
+                $yAxisData3WithYearSeparators[] = 'NaN';
             }
         }
 
@@ -168,11 +195,22 @@ class StatisticsController extends AdminAppController
 
         $xAxisDataWithYearSeparators = array_splice($xAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         $yAxisDataWithYearSeparators = array_splice($yAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
-
+        $yAxisData2WithYearSeparators = array_splice($yAxisData2WithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
+        $yAxisData3WithYearSeparators = array_splice($yAxisData3WithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         $this->set('xAxisDataBarChart', $xAxisDataWithYearSeparators);
         $this->set('yAxisDataBarChart', $yAxisDataWithYearSeparators);
+
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $yAxisData2WithYearSeparators = 0;
+            $yAxisData3WithYearSeparators = 0;
+        }
+        $this->set('yAxisData2BarChart', $yAxisData2WithYearSeparators);
+        $this->set('yAxisData3BarChart', $yAxisData3WithYearSeparators);
         $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
+        $this->set('totalNetProfit', array_sum($monthsWithTurnoverSumNetProfit));
+        $this->set('averageNetProfit', array_sum($monthsWithTurnoverSumNetProfit) / count($monthsWithTurnoverMonthAndYear));
+        $this->set('averageSurcharge', array_sum($monthsWithTurnoverSurcharge) / count($monthsWithTurnoverMonthAndYear));
 
         // START prepare line chart
         if ($year == '') {
