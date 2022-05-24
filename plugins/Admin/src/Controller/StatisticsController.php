@@ -155,7 +155,7 @@ class StatisticsController extends AdminAppController
             } else {
                 $yAxisData[] = 0;
                 $yAxisData2[] = 0;
-                $yAxisData3[] = 0;
+                $yAxisData3[] = 'NaN';
             }
         }
 
