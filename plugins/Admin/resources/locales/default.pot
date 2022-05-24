@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-05-23 20:59+0200\n"
+"POT-Creation-Date: 2022-05-24 08:24+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1640,7 +1640,7 @@ msgstr ""
 msgid "Show_all_ordered_products"
 msgstr ""
 
-msgid "Profit / all prices are net prices"
+msgid "Net_profit"
 msgstr ""
 
 msgid "Page_title"
@@ -1835,16 +1835,10 @@ msgstr ""
 msgid "No_turnover_available."
 msgstr ""
 
-msgid "Gross_turnover:_{0}"
+msgid "Gross_turnover"
 msgstr ""
 
-msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
-msgstr ""
-
-msgid "Net_profit:_{0}"
-msgstr ""
-
-msgid "Average_profit_for_months_where_products_were_delivered:_{0}"
+msgid "per_month"
 msgstr ""
 
 msgid "Variable_member_fee_is_included_in_turnover."

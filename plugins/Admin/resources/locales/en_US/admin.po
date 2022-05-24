@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-23 20:59+0200\n"
-"PO-Revision-Date: 2022-05-23 17:45+0200\n"
+"POT-Creation-Date: 2022-05-24 08:24+0200\n"
+"PO-Revision-Date: 2022-05-24 08:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1641,8 +1641,8 @@ msgstr "No orders found for the delivery period {0} to {1}."
 msgid "Show_all_ordered_products"
 msgstr "Show all ordered products"
 
-msgid "Profit / all prices are net prices"
-msgstr "Profit / all prices are net prices"
+msgid "Net_profit"
+msgstr "Net profit"
 
 msgid "Page_title"
 msgstr "Page title"
@@ -1836,18 +1836,11 @@ msgstr "Delete slider image?"
 msgid "No_turnover_available."
 msgstr "No turnover available."
 
-msgid "Gross_turnover:_{0}"
-msgstr "Gross turnover: {0}"
+msgid "Gross_turnover"
+msgstr "Gross turnover"
 
-msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
-msgstr "Average turnover for months where products were delivered: {0}"
-
-msgid "Net_profit:_{0}"
-msgstr "Net profit: {0}"
-
-#, fuzzy
-msgid "Average_profit_for_months_where_products_were_delivered:_{0}"
-msgstr "Average turnover for months where products were delivered: {0}"
+msgid "per_month"
+msgstr "per month"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "The variable member fee is included in turnover."
@@ -2391,6 +2384,16 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Profit / all prices are net prices"
+#~ msgstr "Profit / all prices are net prices"
+
+#~ msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
+#~ msgstr "Average turnover for months where products were delivered: {0}"
+
+#, fuzzy
+#~ msgid "Average_profit_for_months_where_products_were_delivered:_{0}"
+#~ msgstr "Average turnover for months where products were delivered: {0}"
 
 #~ msgid "Copy_email_addresses_of_selected_customers"
 #~ msgstr "Copy e-mail adresses of selected customers"

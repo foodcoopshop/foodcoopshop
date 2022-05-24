@@ -22,7 +22,7 @@ $this->element('addScript', [
 
 <div class="filter-container">
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-        <h1><?php echo $title_for_layout; ?></h1>
+        <h1 style="width:100%;margin-bottom:5px;"><?php echo $title_for_layout; ?></h1>
         <?php
         if (!$appAuth->isManufacturer()) {
             echo $this->Form->control('manufacturerId', [
@@ -80,12 +80,12 @@ if ($manufacturerId == 'all') {
 ?>
 
 <p><?php
-    echo __d('admin', 'Gross_turnover:_{0}', ['<b>'.$this->Number->formatAsCurrency($totalTurnover).'</b>']);
-    echo '<br />' . __d('admin', 'Average_turnover_for_months_where_products_were_delivered:_{0}', ['<b>'.$this->Number->formatAsCurrency($averageTurnover).'</b>']);
+    echo __d('admin', 'Gross_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover) . '</b>';
+    echo ' / ' . __d('admin', 'Gross_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover) . '</b>';
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-        echo '<br />' . __d('admin', 'Net_profit:_{0}', ['<b>'.$this->Number->formatAsCurrency($totalNetProfit).'</b>']);
-        echo '<br />' . __d('admin', 'Average_profit_for_months_where_products_were_delivered:_{0}', ['<b>'.$this->Number->formatAsCurrency($averageNetProfit).'</b>']);
-        echo '<br />' . __d('admin', 'Surcharge') . ': ' .  '<b>' . $this->Number->formatAsPercent($averageSurcharge).'</b>';
+        echo '<br />' . __d('admin', 'Net_profit') . ': <b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b>';
+        echo ' / ' . __d('admin', 'Net_profit') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageNetProfit) . '</b>';
+        echo '<br />' . __d('admin', 'Surcharge') . ': <b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b>';
     }
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<br />' . __d('admin', 'Variable_member_fee_is_included_in_turnover.');

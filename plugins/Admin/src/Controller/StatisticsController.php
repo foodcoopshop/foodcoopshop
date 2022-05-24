@@ -98,7 +98,7 @@ class StatisticsController extends AdminAppController
         $this->set('manufacturers', $manufacturers);
 
         if ($manufacturerId != 'all') {
-            $titleForLayout .=  ' ' . $manufacturers[0]->name;
+            $titleForLayout .=  ': ' . $manufacturers[0]->name;
         }
         $this->set('title_for_layout', $titleForLayout);
 
