@@ -23,7 +23,7 @@ return [
         'maxworkers' => 1,
         'defaultworkerretries' => 2,
         'workermaxruntime' => 300,
-        'sleeptime' => 20,
+        'sleeptime' => 5,
         'cleanuptimeout' => 259200, // 3 days
         'gcprob' => 100,
         'connection' => $connection,
