@@ -1,10 +1,13 @@
 <?php
 namespace App\Test\TestCase;
 
+use App\Application;
+use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
 use App\View\Helper\SlugHelper;
+use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\Folder;
@@ -48,6 +51,8 @@ abstract class AppCakeTestCase extends TestCase
 
     public $Manufacturer;
 
+    use QueueTrait;
+
     /**
      * called before every test method
      */
@@ -73,6 +78,8 @@ abstract class AppCakeTestCase extends TestCase
         if (method_exists($this, 'enableSecurityToken')) {
             $this->enableSecurityToken();
         }
+
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
 
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();
@@ -265,6 +272,8 @@ abstract class AppCakeTestCase extends TestCase
             $this->Slug->getCartFinish(),
             $data,
         );
+
+        $this->runAndAssertQueue();
     }
 
     protected function getCartById($cartId)
