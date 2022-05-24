@@ -189,7 +189,6 @@ class StatisticsController extends AdminAppController
         $xAxisDataWithYearSeparators = array_splice($xAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         $yAxisDataWithYearSeparators = array_splice($yAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         $yAxisData2WithYearSeparators = array_splice($yAxisData2WithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
-
         $this->set('xAxisDataBarChart', $xAxisDataWithYearSeparators);
         $this->set('yAxisDataBarChart', $yAxisDataWithYearSeparators);
 

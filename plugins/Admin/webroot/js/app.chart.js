@@ -18,7 +18,7 @@ foodcoopshop.AppChart = {
     barChartOptions : {
         plugins: {
             legend: {
-                display: false
+                display: true
             },
             tooltip: {
                 callbacks: {
@@ -212,11 +212,12 @@ foodcoopshop.AppChart = {
 
     },
 
-    initBarChart : function(xAxisData, yAxisData, yAxisData2) {
+    initBarChart : function(xAxisData, yAxisData, yAxisData2, yAxisLabel, yAxisLabel2) {
 
         var barChartData = {
             labels: xAxisData,
             datasets: [{
+                label: yAxisLabel,
                 data: yAxisData,
                 maxBarThickness: 40,
                 backgroundColor: this.color + 'B3', //.7 alpha
@@ -227,6 +228,7 @@ foodcoopshop.AppChart = {
         if (yAxisData2 != 0) {
             barChartData.datasets.push(
                 {
+                    label: yAxisLabel2,
                     data: yAxisData2,
                     maxBarThickness: 40,
                     backgroundColor: this.color + '80', //.5 alpha

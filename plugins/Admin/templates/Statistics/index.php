@@ -62,7 +62,13 @@ if (empty($xAxisDataBarChart)) {
 $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".AppChart.setColor('" . Configure::read('app.customThemeMainColor') . "');" .
-    Configure::read('app.jsNamespace') . ".AppChart.initBarChart(".json_encode($xAxisDataBarChart).", ".json_encode($yAxisDataBarChart).", ".json_encode($yAxisData2BarChart).");"
+    Configure::read('app.jsNamespace') . ".AppChart.initBarChart(".
+        json_encode($xAxisDataBarChart).", ".
+        json_encode($yAxisDataBarChart).", ".
+        json_encode($yAxisData2BarChart).", ".
+        "'" . __d('admin', 'Gross_turnover')."', ".
+        "'" . __d('admin', 'Net_profit') . "'".
+    ");"
 ]);
 if ($year == '' && count($xAxisDataLineChart) > 1) {
     $this->element('addScript', [
