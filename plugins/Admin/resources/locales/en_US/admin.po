@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-24 08:58+0200\n"
-"PO-Revision-Date: 2022-05-24 08:28+0200\n"
+"POT-Creation-Date: 2022-05-24 09:55+0200\n"
+"PO-Revision-Date: 2022-05-24 09:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1836,19 +1836,20 @@ msgstr "Delete slider image?"
 msgid "No_turnover_available."
 msgstr "No turnover available."
 
-#, fuzzy
 msgid "Net_purchase_price"
-msgstr "Edit purchase price"
+msgstr "Net purchase price"
 
 msgid "Gross_turnover"
 msgstr "Gross turnover"
 
-#, fuzzy
 msgid "Net_turnover"
-msgstr "Gross turnover"
+msgstr "Net turnover"
 
 msgid "per_month"
 msgstr "per month"
+
+msgid "Go_to_profit_detail_page"
+msgstr "Go to profit detail page"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "The variable member fee is included in turnover."

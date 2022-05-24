@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-24 08:58+0200\n"
-"PO-Revision-Date: 2022-05-24 08:58+0200\n"
+"POT-Creation-Date: 2022-05-24 09:55+0200\n"
+"PO-Revision-Date: 2022-05-24 09:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1847,6 +1847,9 @@ msgstr "Netto-Umsatz"
 
 msgid "per_month"
 msgstr "pro Monat"
+
+msgid "Go_to_profit_detail_page"
+msgstr "Zur Gewinn-Detailansicht"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "Der variable Mitgliedsbeitrag ist vom Umsatz <b>nicht</b> abgezogen."
