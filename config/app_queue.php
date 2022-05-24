@@ -22,12 +22,12 @@ return [
     'Queue' => [
         'maxworkers' => 1,
         'defaultworkerretries' => 2,
-        'workermaxruntime' => 180,
+        'workermaxruntime' => 300,
         'sleeptime' => 20,
-        'cleanuptimeout' => 2592000, // 30 days
+        'cleanuptimeout' => 259200, // 3 days
         'gcprob' => 100,
         'connection' => $connection,
-        'exitwhennothingtodo' => true,
+        'exitwhennothingtodo' => false,
     ],
 ];
 
