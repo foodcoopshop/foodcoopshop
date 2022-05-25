@@ -56,18 +56,7 @@ class AppMailer extends Mailer
         }
 
         $queuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
-
-        $message = new Message();
-        $message->setEmailFormat($this->getEmailFormat());
-        $message->setFrom($this->getFrom());
-        $message->setCc($this->getCc());
-        $message->setBcc($this->getBcc());
-        $message->setTo($this->getTo());
-        $message->setSubject($this->getOriginalSubject());
-        $message->setAttachments($this->getAttachments());
-        $message->setBodyHtml($this->getBodyHtml());
-
-        $queuedJobs->createJob('Queue.Email', ['settings' => $message]);
+        $queuedJobs->createJob('Queue.Email', ['settings' => $this->getMessage()]);
 
         return [];
 
