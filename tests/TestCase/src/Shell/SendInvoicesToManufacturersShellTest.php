@@ -13,13 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\QueueTrait;
 use Cake\Core\Configure;
-use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
 
 class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
@@ -28,10 +25,8 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use QueueTrait;
 
     public $Order;
-    public $commandRunner;
 
     public function setUp(): void
     {
@@ -39,7 +34,6 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
         $this->prepareSendingInvoices();
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testContentOfInvoice()

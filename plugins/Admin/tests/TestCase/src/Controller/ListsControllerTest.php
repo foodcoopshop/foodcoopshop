@@ -1,14 +1,11 @@
 <?php
 
-use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use App\Test\TestCase\Traits\QueueTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,15 +26,11 @@ class ListsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
-    use QueueTrait;
-
-    public $commandRunner;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->prepareSendingOrderLists();
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testAccessDownloadableInvoice()
@@ -85,7 +78,7 @@ class ListsControllerTest extends AppCakeTestCase
 
     /**
      * this method is not split up into separated test methods because
-     * generating the pdfs (commandRunner) for the test needs a lot of time
+     * generating the pdfs for the test needs a lot of time
      */
     public function testAccessOrderListPageAndDownloadableFile()
     {

@@ -35,6 +35,8 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 abstract class AppCakeTestCase extends TestCase
 {
 
+    use QueueTrait;
+
     protected $dbConnection;
 
     protected $testDumpDir;
@@ -51,7 +53,8 @@ abstract class AppCakeTestCase extends TestCase
 
     public $Manufacturer;
 
-    use QueueTrait;
+    public $commandRunner;
+
 
     /**
      * called before every test method
