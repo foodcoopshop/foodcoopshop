@@ -24,6 +24,7 @@ return [
     'Queue' => [
         'maxworkers' => 1,
         'defaultworkerretries' => 2,
+        'workertimeout' => 300, // cron starts new worker every 5 min (=300 sec)
         'workermaxruntime' => 300,
         'sleeptime' => 5,
         'cleanuptimeout' => 518400, // 6 days
