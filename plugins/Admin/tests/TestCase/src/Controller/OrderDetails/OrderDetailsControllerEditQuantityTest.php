@@ -171,6 +171,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
                 'doNotChangePrice' => $doNotChangePrice
             ]
         );
+        $this->runAndAssertQueue();
     }
 
 

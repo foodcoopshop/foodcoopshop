@@ -413,6 +413,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->Slug->getSelfService(),
             $data,
         );
+        $this->runAndAssertQueue();
     }
 
     private function doBarCodeLogin()

@@ -40,6 +40,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
             Configure::read('test.loginEmailSuperadmin')
         ];
         $i = 0;
+        $this->runAndAssertQueue();
         foreach($recipients as $recipient) {
             $this->assertMailContainsHtmlAt($i, 'Das bestellte Produkt <b>Artischocke : Stück</b> wurde erfolgreich von Demo Superadmin auf das Mitglied <b>Demo Admin</b> umgebucht.');
             $this->assertMailContainsHtmlAt($i, $this->editCustomerReason);

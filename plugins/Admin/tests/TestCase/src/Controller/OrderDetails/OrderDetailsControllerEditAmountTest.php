@@ -170,6 +170,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
     private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail, $expectedCcEmail = null)
     {
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Anzahl angepasst: Artischocke : Stück');
         $this->assertMailContainsHtmlAt($emailIndex, 'Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde angepasst');
         $this->assertMailContainsHtmlAt($emailIndex, $this->editAmountReason);

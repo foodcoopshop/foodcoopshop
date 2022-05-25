@@ -13,11 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
@@ -27,17 +25,10 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public $commandRunner;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
-    }
-
     public function testNoActiveOrder()
     {
         $this->commandRunner->run(['cake', 'email_order_reminder']);
+        $this->runAndAssertQueue();
 
         $this->assertMailCount(3);
 
@@ -62,6 +53,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-01');
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 
@@ -69,6 +61,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-08');
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(3);
     }
 
@@ -86,6 +79,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
             )
         );
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-11-05']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(2);
         $this->assertMailContainsHtmlAt(0, 'heute');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailAdmin'));
@@ -96,6 +90,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $query = 'UPDATE '.$this->Customer->getTable().' SET email_order_reminder_enabled = 0;';
         $this->dbConnection->query($query);
         $this->commandRunner->run(['cake', 'email_order_reminder']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 

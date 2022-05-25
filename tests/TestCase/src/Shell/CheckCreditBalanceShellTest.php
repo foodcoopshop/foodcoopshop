@@ -6,7 +6,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\I18n\FrozenTime;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
@@ -30,14 +29,6 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-
-    public $commandRunner;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
-    }
 
     public function testNoEmailsSent()
     {

@@ -82,6 +82,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         ]);
         $this->assertFlashMessage('Die Zeiteintragung für den ' . date('d.m.Y', $date) . ' <b>(0,25 h)</b> von Demo Mitglied wurde geändert und eine E-Mail an Demo Mitglied verschickt.');
 
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Wichtige Informationen zu deiner Zeit-Eintragung vom ' . date('d.m.Y H:i', $date));
         $this->assertMailContainsHtmlAt(0, 'Hallo Demo Mitglied,');
         $this->assertMailContainsHtmlAt(0, 'Die eingetragene Zeit wurde von <b>0,50 h</b> auf <b>0,25 h</b> angepasst.');

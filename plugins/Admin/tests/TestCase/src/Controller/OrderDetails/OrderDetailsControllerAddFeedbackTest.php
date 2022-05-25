@@ -44,6 +44,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->loginAsSuperadmin();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
         $this->assertJsonOk();
+        $this->runAndAssertQueue();
         $this->assertMailCount(1);
         $mailIndex = 0;
         $this->assertMailSentToAt($mailIndex, Configure::read('test.loginEmailVegetableManufacturer'));
@@ -81,6 +82,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
         $this->assertJsonOk();
 
+        $this->runAndAssertQueue();
         $this->assertMailCount(1);
         $mailIndex = 0;
         $this->assertMailSentToAt($mailIndex, Configure::read('test.loginEmailVegetableManufacturer'));
