@@ -27,7 +27,7 @@ return [
         'cleanuptimeout' => 518400, // 6 days
         'gcprob' => 100,
         'connection' => $connection,
-        'exitwhennothingtodo' => false,
+        'exitwhennothingtodo' => true,
     ],
 ];
 
