@@ -219,10 +219,9 @@ class CustomersController extends FrontendController
                         'tmpNewPassword' => $tmpNewPassword,
                         'customer' => $oldEntity
                     ]);
+                $email->send();
 
-                if ($email->send()) {
-                    $this->Flash->success(__('We_sent_your_new_password_to_you_it_needs_to_be_activated.'));
-                }
+                $this->Flash->success(__('We_sent_your_new_password_to_you_it_needs_to_be_activated.'));
 
                 $this->redirect('/');
             }
