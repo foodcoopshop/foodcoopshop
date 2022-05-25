@@ -63,7 +63,7 @@ password="%password%"
         $configFileObject->write($configFileContent);
 
         $cmdString = Configure::read('app.mysqlDumpCommand');
-        $cmdString .= " --defaults-file=" . $configFile . " --allow-keywords --add-drop-table --ignore-table=queued_jobs --complete-insert --no-tablespaces --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
+        $cmdString .= " --defaults-file=" . $configFile . " --allow-keywords --add-drop-table --ignore-table=" . $dbConfig['database'] . ".queued_jobs --complete-insert --no-tablespaces --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
         exec($cmdString);
 
         $configFileObject->delete();
