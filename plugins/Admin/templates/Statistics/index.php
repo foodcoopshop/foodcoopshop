@@ -89,12 +89,34 @@ if ($manufacturerId == 'all') {
 
 <p><?php
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-        echo __d('admin', 'Net_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover + $totalNetProfit) . '</b>';
-        echo ' / ' . __d('admin', 'Net_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover + $averageNetProfit) . '</b>';
-        echo '<br />' . __d('admin', 'Net_profit') . ': <b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b>';
-        echo ' / ' . __d('admin', 'Net_profit') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageNetProfit) . '</b>';
-        echo '<br />' . __d('admin', 'Surcharge') . ': <b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b>';
-        echo ' / ' . $this->Html->link(__d('admin', 'Go_to_profit_detail_page'), $this->Slug->getProfit());
+        echo '<table class="list no-clone-last-row" style="width:350px;margin-bottom:5px;"><tr>';
+
+            echo '<td><b>' . __d('admin', 'Net_turnover') . '</b></td>';
+            echo '<td>'. __d('admin', 'total') . '</td>';
+            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalTurnover + $totalNetProfit) . '</b></td>';
+            echo '</tr><tr>';
+            echo '<td></td>';
+            echo '<td>'. __d('admin', 'per_month') . '</td>';
+            echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($averageTurnover + $averageNetProfit) . '</td>';
+            echo '</tr>';
+
+            echo '<td><b>' . __d('admin', 'Net_profit') . '</b></td>';
+            echo '<td>'. __d('admin', 'total') . '</td>';
+            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalNetProfit) . '</b></td>';
+            echo '</tr><tr>';
+            echo '<td></td>';
+            echo '<td>'. __d('admin', 'per_month') . '</td>';
+            echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($averageNetProfit) . '</td>';
+            echo '</tr>';
+
+        echo '</table>';
+
+        echo $this->Html->link(__d('admin', 'Go_to_profit_detail_page'), $this->Slug->getProfit());
+        echo '<i class="fa fas fa-question-circle" style="position:absolute;top:10px;right:10px;" title="' . h(__d('admin', 'For_filtering_data_click_on_legend_on_top_of_chart.')) . '"></i>';
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.fa-question-circle');"
+        ]);
+
     } else {
         echo __d('admin', 'Gross_turnover') . ': <b>' . $this->Number->formatAsCurrency($totalTurnover) . '</b>';
         echo ' / ' . __d('admin', 'Gross_turnover') . ' ' . __d('admin', 'per_month') . ': <b>' . $this->Number->formatAsCurrency($averageTurnover) . '</b>';
