@@ -5,7 +5,6 @@ namespace App\Mailer;
 use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use Cake\Mailer\Mailer;
-use Cake\Mailer\Message;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -40,12 +39,9 @@ class AppMailer extends Mailer
         }
     }
 
-    /**
-     * uses fallback transport config if default email transport config is wrong (e.g. password changed party)
-     * @see credentials.php
-     */
     public function send(?string $action = null, array $args = [], array $headers = []): array
     {
+
         $this->render();
 
         if (Configure::check('app.outputStringReplacements')) {
@@ -61,4 +57,5 @@ class AppMailer extends Mailer
         return [];
 
     }
+
 }

@@ -39,34 +39,6 @@ return [
          */
         'hostingEmail' => 'mail@example.com',
 
-        /**
-         * FALLBACK email config
-         * when the main email config in custom_config.php is wrong, you can define this fallback email config
-         * to send the emails despite a wrong main config
-         * if you don't want to use the email fallback, leave it commented
-         */
-//         'EmailTransport' => [
-//             'fallback' => [
-//                 'emailFormat' => 'html',
-//                 'className' => 'Smtp',
-//                 'host' => 'mail.example.com',
-//                 'port' => 25,
-//                 'timeout' => 30,
-//                 'username' => 'example@example.com',
-//                 'password' => 'my-password',
-//                 'client' => null,
-//                 'tls' => null,
-//             ],
-//         ],
-
-//         'Email' => [
-//             'fallback' => [
-//                 'from' => ['example@example.com'], // only use email address here (no [mail => name] syntax!)
-//                 'charset' => 'utf-8',
-//                 'headerCharset' => 'utf-8',
-//             ],
-//         ],
-
     ],
 
     /**
