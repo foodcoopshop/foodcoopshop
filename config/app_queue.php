@@ -22,10 +22,10 @@ if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $
 
 return [
     'Queue' => [
-        'maxworkers' => 1,
+        'maxworkers' => 3,
         'defaultworkerretries' => 2,
-        'workertimeout' => 300, // cron starts new worker every 5 min (=300 sec)
-        'workermaxruntime' => 300,
+        'workertimeout' => 360, // cron starts new worker every 5 min (=300 sec), overlap
+        'workermaxruntime' => 360,
         'sleeptime' => 5,
         'cleanuptimeout' => 518400, // 6 days
         'gcprob' => 100,
