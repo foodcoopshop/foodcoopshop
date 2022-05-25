@@ -47,7 +47,6 @@ class SendOrderListTask extends Task {
         $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
         $email = new AppMailer();
-        $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate('Admin.send_order_list');
         $email->setTo($manufacturer->address_manufacturer->email)
         ->setAttachments([

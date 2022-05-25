@@ -43,7 +43,6 @@ class SendInvoiceToManufacturerTask extends Task {
         $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
         $email = new AppMailer();
-        $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate('Admin.send_invoice_to_manufacturer');
         $email->setTo($manufacturer->address_manufacturer->email)
         ->setAttachments([

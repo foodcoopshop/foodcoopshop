@@ -43,7 +43,6 @@ class SendDeliveryNoteTask extends Task {
         $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
         $email = new AppMailer();
-        $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate('Admin.send_delivery_note');
         $email->setTo($manufacturer->address_manufacturer->email)
         ->setAttachments([

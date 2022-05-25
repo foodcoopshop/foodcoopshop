@@ -23,8 +23,6 @@ use Cake\Datasource\FactoryLocator;
 class AppMailer extends Mailer
 {
 
-    public $fallbackEnabled = true;
-
     public function __construct($addBccBackupAddress = true)
     {
         parent::__construct(null);

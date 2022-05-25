@@ -52,7 +52,6 @@ class SendInvoiceToCustomerTask extends Task {
         }
 
         $email = new AppMailer();
-        $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate($emailTemplate);
         $email->setTo($customerEmail)
         ->setSubject($subject)
