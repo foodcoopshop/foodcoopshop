@@ -51,6 +51,7 @@ class AppMailer extends Mailer
             $this->getMessage()->setBodyHtml($replacedBody);
         }
 
+        // due to queue_jobs.text field datatype "mediumtext" the limit of emails is 16MB (including attachments)
         $queuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
         $queuedJobs->createJob('Queue.Email', ['settings' => $this->getMessage()]);
 
