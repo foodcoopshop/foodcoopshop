@@ -210,7 +210,6 @@ class StatisticsController extends AdminAppController
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
         $this->set('totalNetProfit', array_sum($monthsWithTurnoverSumNetProfit));
         $this->set('averageNetProfit', array_sum($monthsWithTurnoverSumNetProfit) / count($monthsWithTurnoverMonthAndYear));
-        $this->set('averageSurcharge', array_sum($monthsWithTurnoverSurcharge) / count($monthsWithTurnoverMonthAndYear));
 
         // START prepare line chart
         if ($year == '') {

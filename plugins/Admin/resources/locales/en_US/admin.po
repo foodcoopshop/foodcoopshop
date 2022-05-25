@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-24 09:55+0200\n"
-"PO-Revision-Date: 2022-05-24 09:55+0200\n"
+"POT-Creation-Date: 2022-05-25 08:41+0200\n"
+"PO-Revision-Date: 2022-05-25 08:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1845,11 +1845,17 @@ msgstr "Gross turnover"
 msgid "Net_turnover"
 msgstr "Net turnover"
 
+msgid "total"
+msgstr "total"
+
 msgid "per_month"
 msgstr "per month"
 
 msgid "Go_to_profit_detail_page"
 msgstr "Go to profit detail page"
+
+msgid "For_filtering_data_click_on_legend_on_top_of_chart."
+msgstr "Data can be filtered by clicking on the legend on top of chart."
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "The variable member fee is included in turnover."
