@@ -33,6 +33,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
     public function testNoEmailsSent()
     {
         $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 
@@ -45,6 +46,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
         $this->resetCustomerCreditBalance();
         $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->runAndAssertQueue();
 
         $this->assertMailCount(2);
         $this->assertMailSubjectContainsAt(1, 'Bitte lade dein Guthaben auf');
@@ -63,6 +65,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         $this->logout();
         $this->resetCustomerCreditBalance();
         $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(1);
     }
 
@@ -87,6 +90,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         );
 
         $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->runAndAssertQueue();
         $this->assertMailCount(2);
         $this->assertMailSubjectContainsAt(1, 'Bitte lade dein Guthaben auf');
         $this->assertMailContainsHtmlAt(1, 'Es wurden alle Überweisungen bis zum 03.07.2018 20:00 berücksichtigt.');
