@@ -14,8 +14,10 @@
  */
 
 $connection = 'default';
+$exitwhennothingtodo = false;
 if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
     $connection = 'test';
+    $exitwhennothingtodo = true;
 }
 
 return [
@@ -27,7 +29,7 @@ return [
         'cleanuptimeout' => 518400, // 6 days
         'gcprob' => 100,
         'connection' => $connection,
-        'exitwhennothingtodo' => true,
+        'exitwhennothingtodo' => $exitwhennothingtodo,
     ],
 ];
 
