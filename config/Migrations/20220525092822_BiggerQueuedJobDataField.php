@@ -14,6 +14,6 @@ class BiggerQueuedJobDataField extends AbstractMigration
      */
     public function change()
     {
-        $this->execute("ALTER TABLE `queued_jobs` CHANGE `data` `data` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;");
+        $this->execute("ALTER TABLE `queued_jobs` CHANGE `data` `data` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;");
     }
 }
