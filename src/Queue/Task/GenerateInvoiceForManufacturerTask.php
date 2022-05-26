@@ -2,6 +2,7 @@
 namespace App\Queue\Task;
 
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Queue\Queue\Task;
 
@@ -52,10 +53,10 @@ class GenerateInvoiceForManufacturerTask extends Task {
         ];
 
         $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
-        $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
         $pdfWriter = new InvoiceToManufacturerPdfWriter();
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriodMonthAndYear, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
@@ -73,14 +74,25 @@ class GenerateInvoiceForManufacturerTask extends Task {
 
         $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
         if ($sendInvoice) {
-            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
-            $this->QueuedJobs->createJob('SendInvoiceToManufacturer', [
-                'invoiceNumber' => $invoiceNumber,
-                'invoicePdfFile' => $invoicePdfFile,
-                'manufacturerId' => $manufacturer->id_manufacturer,
-                'manufactuerName' => $manufacturer->name,
-                'actionLogId' => $actionLogId,
+
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.send_invoice_to_manufacturer');
+            $email->setTo($manufacturer->address_manufacturer->email)
+            ->setAttachments([
+                $invoicePdfFile,
+            ])
+            ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
+            ->setViewVars([
+                'manufacturer' => $manufacturer,
+                'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
+                'showManufacturerUnsubscribeLink' => true
             ]);
+            $email->afterRunParams = [
+                'actionLogIdentifier' => 'send-invoice-' . $manufacturer->id_manufacturer,
+                'actionLogId' => $actionLogId,
+            ];
+            $email->send();
+
         }
 
         $actionLogIdentifier = 'generate-invoice-' . $manufacturer->id_manufacturer;
