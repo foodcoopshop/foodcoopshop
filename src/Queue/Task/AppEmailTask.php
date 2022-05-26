@@ -34,11 +34,10 @@ class AppEmailTask extends EmailTask
                 $this->updateActionLog($afterRunParams['actionLogId'], $afterRunParams['actionLogIdentifier'], $jobId);
             }
             if (isset($afterRunParams['manufacturerId']) && isset($afterRunParams['orderDetailIds'])) {
-                $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-                $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
+                $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+                $orderDetailTable->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
             }
         }
-
 
     }
 
