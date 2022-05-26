@@ -433,7 +433,7 @@ class CustomersController extends FrontendController
                             'appAuth' => $this->AppAuth,
                                 'data' => $newCustomer
                             ])
-                            addToQueue();
+                            ->addToQueue();
                     }
                     // END
 
