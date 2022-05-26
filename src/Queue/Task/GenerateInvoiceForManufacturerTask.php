@@ -91,7 +91,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
                 'actionLogIdentifier' => 'send-invoice-' . $manufacturer->id_manufacturer,
                 'actionLogId' => $actionLogId,
             ];
-            $email->send();
+            $email->addToQueue();
 
         }
 

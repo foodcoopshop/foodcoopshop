@@ -110,7 +110,7 @@ class SendDeliveryNotesShell extends AppShell
                 'actionLogIdentifier' => 'send-delivery-note-' . $manufacturer->id_manufacturer,
                 'actionLogId' => $actionLog->id,
             ];
-            $email->send();
+            $email->addToQueue();
 
         }
 

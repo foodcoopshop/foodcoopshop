@@ -194,7 +194,7 @@ class ConfigurationsController extends AdminAppController
         $email->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS . Configure::read('app.logoFileName'),
             ])
-            ->send();
+        ->addToQueue();
         $this->set('success', $success);
     }
 }

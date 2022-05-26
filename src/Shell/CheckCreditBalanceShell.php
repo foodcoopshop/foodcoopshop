@@ -94,7 +94,7 @@ class CheckCreditBalanceShell extends AppShell
                     'lastCsvUploadDate' => $lastCsvUploadDate,
                     'personalTransactionCode' => $personalTransactionCode,
                     ])
-                    ->send();
+                    ->addToQueue();
             }
         }
 

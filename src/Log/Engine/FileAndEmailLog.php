@@ -98,7 +98,7 @@ class FileAndEmailLog extends FileLog
                 'message' => $message,
                 'loggedUser' => $loggedUser
             ])
-            ->send();
+            ->addToQueue();
         } catch (SocketException $e) {
             return false;
         }

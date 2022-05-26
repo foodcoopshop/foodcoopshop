@@ -807,7 +807,7 @@ class CartComponent extends Component
                     'productAndDepositSum' => $depositSum + $productSum,
                     'showManufacturerUnsubscribeLink' => true
                 ]);
-                $email->send();
+                $email->addToQueue();
             }
         }
 
@@ -859,7 +859,7 @@ class CartComponent extends Component
                     'manufacturer' => $cartProduct->product->manufacturer,
                     'showManufacturerUnsubscribeLink' => true
                 ]);
-                $email->send();
+                $email->addToQueue();
             }
 
             // send email to contact person
@@ -881,7 +881,7 @@ class CartComponent extends Component
                     'showManufacturerName' => true,
                     'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('app.cakeServerName') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
                 ]);
-                $email->send();
+                $email->addToQueue();
             }
 
         }
@@ -898,7 +898,7 @@ class CartComponent extends Component
             'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
             'appAuth' => $this->AppAuth
         ]);
-        $email->send();
+        $email->addToQueue();
     }
 
     /**
@@ -951,7 +951,7 @@ class CartComponent extends Component
             $email->addAttachments($generalTermsAndConditionsFiles);
         }
 
-        $email->send();
+        $email->addToQueue();
     }
 
     /**

@@ -39,7 +39,7 @@ class AppMailer extends Mailer
         }
     }
 
-    public function send(?string $action = null, array $args = [], array $headers = []): array
+    public function addToQueue(): void
     {
 
         $this->render();
@@ -57,8 +57,6 @@ class AppMailer extends Mailer
             'settings' => $this->getMessage(),
             'afterRunParams' => $this->afterRunParams,
         ]);
-
-        return [];
 
     }
 

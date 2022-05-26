@@ -139,7 +139,7 @@ class SendInvoicesToManufacturersShell extends AppShell
                 'dateTo' => $dateTo,
                 'cronjobRunDay' => $this->cronjobRunDay
                 ])
-                ->send();
+                ->addToQueue();
         }
 
         return true;

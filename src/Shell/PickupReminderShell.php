@@ -92,7 +92,7 @@ class PickupReminderShell extends AppShell
                 'formattedPickupDay' => $formattedPickupDay,
                 'futureOrderDetails' => $futureOrderDetails
             ])
-            ->send();
+            ->addToQueue();
 
             $outString .= $customer->name . '<br />';
 

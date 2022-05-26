@@ -97,7 +97,7 @@ class GenerateOrderListTask extends Task {
                 'manufacturerId' => $manufacturerId,
                 'orderDetailIds' => $orderDetailIds,
             ];
-            $email->send();
+            $email->addToQueue();
 
         }
 

@@ -81,7 +81,7 @@ class SendInvoiceToCustomer
         $email->afterRunParams = [
             'invoiceId' => $invoiceId,
         ];
-        $email->send();
+        $email->addToQueue();
 
     }
 

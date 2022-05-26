@@ -162,7 +162,7 @@ class ReportsController extends AdminAppController
                                         'csvPayment' => $csvPayment,
                                         'appAuth' => $this->AppAuth,
                                     ]);
-                                    $email->send();
+                                    $email->addToQueue();
                                 }
                             }
                             $i++;
