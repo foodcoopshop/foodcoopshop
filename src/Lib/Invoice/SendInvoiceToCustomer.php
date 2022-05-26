@@ -17,11 +17,20 @@ namespace App\Lib\Invoice;
 
 use App\Lib\HelloCash\HelloCash;
 use App\Mailer\AppMailer;
-use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenTime;
 
 class SendInvoiceToCustomer
 {
+
+    public $customerName;
+    public $customerEmail;
+    public $creditBalance;
+    public $invoicePdfFile;
+    public $invoiceNumber;
+    public $invoiceDate;
+    public $invoiceId;
+    public $paidInCash;
+    public $isCancellationInvoice;
+    public $originalInvoiceId;
 
     public function run()
     {

@@ -57,14 +57,14 @@ class AppEmailTask extends EmailTask
         }
 
         if (isset($afterRunParams['invoiceId'])) {
-            $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+            $invoiceTable = FactoryLocator::get('Table')->get('Invoices');
             $invoiceId = $afterRunParams['invoiceId'];
-            $invoiceEntity = $this->Invoice->patchEntity(
-                $this->Invoice->get($invoiceId), [
+            $invoiceEntity = $invoiceTable->patchEntity(
+                $invoiceTable->get($invoiceId), [
                     'email_status' => FrozenTime::now(),
                 ]
             );
-            $this->Invoice->save($invoiceEntity);
+            $invoiceTable->save($invoiceEntity);
         }
 
     }
