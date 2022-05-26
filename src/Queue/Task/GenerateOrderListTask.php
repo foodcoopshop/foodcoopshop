@@ -1,6 +1,7 @@
 <?php
 namespace App\Queue\Task;
 
+use App\Mailer\AppMailer;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use Cake\Core\Configure;
@@ -70,21 +71,39 @@ class GenerateOrderListTask extends Task {
 
         if ($sendEmail) {
 
-            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
-            $this->QueuedJobs->createJob('SendOrderList', [
-                'productPdfFile' => $productPdfFile,
-                'customerPdfFile' => $customerPdfFile,
-                'pickupDayFormated' => $pickupDayFormated,
-                'orderDetailIds' => $orderDetailIds,
-                'manufacturerId' => $manufacturer->id_manufacturer,
-                'manufactuerName' => $manufacturer->name,
-                'actionLogId' => $actionLogId,
+            $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
+
+            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
+
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.send_order_list');
+            $email->setTo($manufacturer->address_manufacturer->email)
+            ->setAttachments([
+                $productPdfFile,
+                $customerPdfFile,
+            ])
+            ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
+            ->setViewVars([
+                'manufacturer' => $manufacturer,
+                'showManufacturerUnsubscribeLink' => true,
             ]);
+            if (!empty($ccRecipients)) {
+                $email->setCc($ccRecipients);
+            }
+
+            $actionLogIdentifier = 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormated;
+            $email->afterRunParams = [
+                'actionLogIdentifier' => $actionLogIdentifier,
+                'actionLogId' => $actionLogId,
+                'manufacturerId' => $manufacturerId,
+                'orderDetailIds' => $orderDetailIds,
+            ];
+            $email->send();
 
         }
 
-        $identifier = 'generate-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
-        $this->updateActionLog($actionLogId, $identifier, $jobId);
+        $actionLogIdentifier = 'generate-order-list-' . $manufacturerId . '-' . $pickupDayFormated;
+        $this->updateActionLog($actionLogId, $actionLogIdentifier, $jobId);
 
     }
 

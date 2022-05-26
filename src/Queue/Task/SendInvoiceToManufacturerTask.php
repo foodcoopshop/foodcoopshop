@@ -56,8 +56,8 @@ class SendInvoiceToManufacturerTask extends Task {
         ]);
         $email->send();
 
-        $identifier = 'send-invoice-' . $manufacturer->id_manufacturer;
-        $this->updateActionLog($actionLogId, $identifier, $jobId);
+        $actionLogIdentifier = 'send-invoice-' . $manufacturer->id_manufacturer;
+        $this->updateActionLog($actionLogId, $actionLogIdentifier, $jobId);
 
     }
 

@@ -23,6 +23,8 @@ use Cake\Datasource\FactoryLocator;
 class AppMailer extends Mailer
 {
 
+    public $afterRunParams = [];
+
     public function __construct($addBccBackupAddress = true)
     {
         parent::__construct(null);
@@ -51,7 +53,10 @@ class AppMailer extends Mailer
 
         // due to queue_jobs.text field datatype "mediumtext" the limit of emails is 16MB (including attachments)
         $queuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
-        $queuedJobs->createJob('Queue.Email', ['settings' => $this->getMessage()]);
+        $queuedJobs->createJob('AppEmail', [
+            'settings' => $this->getMessage(),
+            'afterRunParams' => $this->afterRunParams,
+        ]);
 
         return [];
 
