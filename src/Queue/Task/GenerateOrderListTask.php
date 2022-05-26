@@ -102,7 +102,7 @@ class GenerateOrderListTask extends Task {
         }
 
         $actionLogIdentifier = 'generate-order-list-' . $manufacturerId . '-' . $pickupDayFormated;
-        $this->updateActionLog($actionLogId, $actionLogIdentifier, $jobId);
+        $this->updateActionLogSuccess($actionLogId, $actionLogIdentifier, $jobId);
 
     }
 

@@ -84,7 +84,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
         }
 
         $actionLogIdentifier = 'generate-invoice-' . $manufacturer->id_manufacturer;
-        $this->updateActionLog($actionLogId, $actionLogIdentifier, $jobId);
+        $this->updateActionLogSuccess($actionLogId, $actionLogIdentifier, $jobId);
 
     }
 

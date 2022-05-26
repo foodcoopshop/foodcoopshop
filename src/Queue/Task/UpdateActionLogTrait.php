@@ -22,7 +22,27 @@ trait UpdateActionLogTrait
 {
     public $ActionLog;
 
-    public function updateActionLog($actionLogId, $identifier, $jobId)
+    public function updateActionLogFailure($actionLogId, $identifier, $jobId, $errorMessage)
+    {
+
+        $this->ActionLog = $this->loadModel('ActionLogs');
+
+        $search = 'data-identifier="'.$identifier.'"';
+        $now = new FrozenTime();
+        $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
+        $replace = 'title="' . $now . ' / JobId: ' . $jobId . ' / ' . h($errorMessage) . '"';
+
+        $query = 'UPDATE ' . $this->ActionLog->getTable() . ' SET text = REPLACE(text, :search, :replace) WHERE id = :actionLogId';
+        $params = [
+            'actionLogId' => $actionLogId,
+            'search' => $search,
+            'replace' => $search . $replace,
+        ];
+        $this->ActionLog->getConnection()->prepare($query)->execute($params);
+
+    }
+
+    public function updateActionLogSuccess($actionLogId, $identifier, $jobId)
     {
 
         $this->ActionLog = $this->loadModel('ActionLogs');

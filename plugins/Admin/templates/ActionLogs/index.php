@@ -23,6 +23,7 @@ use Cake\Core\Configure;
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" .
             Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('i.fa-envelope');" .
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");" .
             Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 1);
         "

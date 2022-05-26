@@ -26,16 +26,30 @@ class AppEmailTask extends EmailTask
 
     public function run(array $data, int $jobId): void {
 
-        parent::run($data, $jobId);
+        try {
+            $afterRunParams = $data['afterRunParams'];
+            parent::run($data, $jobId);
+        } catch(\Exception $e) {
+            if (!empty($data['afterRunParams'])) {
+                if (isset($afterRunParams['actionLogId']) && isset($afterRunParams['actionLogIdentifier']) ) {
+                    $this->updateActionLogFailure($afterRunParams['actionLogId'], $afterRunParams['actionLogIdentifier'], $jobId, $e->getMessage());
+                }
+            }
+            throw $e;
+        }
+
+        // if no exception is triggered, this part is reached
+        // afterRunParams can be directly set to Mailer instance like
+        // $email->afterRunParams['foo' => 'bar'];
 
         if (empty($data['afterRunParams'])) {
             return;
         }
 
-        $afterRunParams = $data['afterRunParams'];
         if (isset($afterRunParams['actionLogId']) && isset($afterRunParams['actionLogIdentifier']) ) {
-            $this->updateActionLog($afterRunParams['actionLogId'], $afterRunParams['actionLogIdentifier'], $jobId);
+            $this->updateActionLogSuccess($afterRunParams['actionLogId'], $afterRunParams['actionLogIdentifier'], $jobId);
         }
+
         if (isset($afterRunParams['manufacturerId']) && isset($afterRunParams['orderDetailIds'])) {
             $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
             $orderDetailTable->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
