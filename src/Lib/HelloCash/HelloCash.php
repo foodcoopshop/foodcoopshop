@@ -18,6 +18,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\Datasource\FactoryLocator;
+use App\Lib\Invoice\SendInvoiceToCustomer;
 
 class HelloCash
 {
@@ -95,7 +96,7 @@ class HelloCash
 
         $newInvoice->original_invoice_id = $originalInvoiceId;
         if ($customer->invoices_per_email_enabled) {
-            $this->setSendInvoiceToCustomerQueue($customer, $newInvoice, true, $paidInCash);
+            $this->sendInvoiceToCustomer($customer, $newInvoice, true, $paidInCash);
         }
 
         return $responseObject;
@@ -259,29 +260,28 @@ class HelloCash
         );
 
         if ($data->invoices_per_email_enabled) {
-            $this->setSendInvoiceToCustomerQueue($data, $newInvoice, false, $paidInCash);
+            $this->sendInvoiceToCustomer($data, $newInvoice, false, $paidInCash);
         }
 
         return $responseObject;
 
     }
 
-    protected function setSendInvoiceToCustomerQueue($customer, $invoice, $isCancellationInvoice, $paidInCash)
+    protected function sendInvoiceToCustomer($customer, $invoice, $isCancellationInvoice, $paidInCash)
     {
-        $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
         $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
-            'isCancellationInvoice' => $isCancellationInvoice,
-            'customerName' => $customer->name,
-            'customerEmail' => $customer->email,
-            'invoicePdfFile' => '',
-            'invoiceNumber' => $invoice->invoice_number,
-            'invoiceDate' => $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
-            'invoiceId' => $invoice->id,
-            'originalInvoiceId' => $invoice->original_invoice_id ?? null,
-            'creditBalance' => $this->Customer->getCreditBalance($customer->id_customer),
-            'paidInCash' => $paidInCash,
-        ]);
+        $sendInvoiceToCustomer = new SendInvoiceToCustomer();
+        $sendInvoiceToCustomer->isCancellationInvoice = $isCancellationInvoice;
+        $sendInvoiceToCustomer->customerName = $customer->name;
+        $sendInvoiceToCustomer->customerEmail = $customer->email;
+        $sendInvoiceToCustomer->invoicePdfFile = '';
+        $sendInvoiceToCustomer->invoiceNumber = $invoice->invoice_number;
+        $sendInvoiceToCustomer->invoiceDate = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        $sendInvoiceToCustomer->invoiceId = $invoice->id;
+        $sendInvoiceToCustomer->originalInvoiceId = $invoice->original_invoice_id ?? null;
+        $sendInvoiceToCustomer->creditBalance = $this->Customer->getCreditBalance($customer->id_customer);
+        $sendInvoiceToCustomer->paidInCash = $paidInCash;
+        $sendInvoiceToCustomer->run();
     }
 
     protected function prepareTaxesFromResponse($responseObject, $cancellation)

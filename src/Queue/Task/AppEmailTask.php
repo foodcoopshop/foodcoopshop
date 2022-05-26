@@ -18,6 +18,7 @@ namespace App\Queue\Task;
 
 use Queue\Queue\Task\EmailTask;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\FrozenTime;
 
 class AppEmailTask extends EmailTask
 {
@@ -53,6 +54,17 @@ class AppEmailTask extends EmailTask
         if (isset($afterRunParams['manufacturerId']) && isset($afterRunParams['orderDetailIds'])) {
             $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
             $orderDetailTable->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
+        }
+
+        if (isset($afterRunParams['invoiceId'])) {
+            $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+            $invoiceId = $afterRunParams['invoiceId'];
+            $invoiceEntity = $this->Invoice->patchEntity(
+                $this->Invoice->get($invoiceId), [
+                    'email_status' => FrozenTime::now(),
+                ]
+            );
+            $this->Invoice->save($invoiceEntity);
         }
 
     }

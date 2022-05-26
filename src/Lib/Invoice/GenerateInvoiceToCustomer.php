@@ -79,18 +79,19 @@ class GenerateInvoiceToCustomer
         }
 
         if ($data->invoices_per_email_enabled) {
-            $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
-                'isCancellationInvoice' => $data->is_cancellation_invoice,
-                'customerName' => $data->name,
-                'customerEmail' => $data->email,
-                'invoicePdfFile' => $invoicePdfFile,
-                'invoiceNumber' => $invoiceNumber,
-                'invoiceDate' => $invoiceDate,
-                'invoiceId' => $newInvoice->id,
-                'originalInvoiceId' => null,
-                'creditBalance' => $this->Customer->getCreditBalance($data->id_customer),
-                'paidInCash' => $paidInCash,
-            ]);
+            $this->Customer = FactoryLocator::get('Table')->get('Customers');
+            $sendInvoiceToCustomer = new SendInvoiceToCustomer();
+            $sendInvoiceToCustomer->isCancellationInvoice = $data->is_cancellation_invoice;
+            $sendInvoiceToCustomer->customerName = $data->name;
+            $sendInvoiceToCustomer->customerEmail = $data->email;
+            $sendInvoiceToCustomer->invoicePdfFile = $invoicePdfFile;
+            $sendInvoiceToCustomer->invoiceNumber = $invoiceNumber;
+            $sendInvoiceToCustomer->invoiceDate = $invoiceDate;
+            $sendInvoiceToCustomer->invoiceId = $newInvoice->id;
+            $sendInvoiceToCustomer->originalInvoiceId = null;
+            $sendInvoiceToCustomer->creditBalance = $this->Customer->getCreditBalance($data->id_customer);
+            $sendInvoiceToCustomer->paidInCash = $paidInCash;
+            $sendInvoiceToCustomer->run();
         }
 
         return $newInvoice;
