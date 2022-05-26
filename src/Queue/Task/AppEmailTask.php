@@ -28,15 +28,17 @@ class AppEmailTask extends EmailTask
 
         parent::run($data, $jobId);
 
-        if (!empty($data['afterRunParams'])) {
-            $afterRunParams = $data['afterRunParams'];
-            if (isset($afterRunParams['actionLogId']) && isset($afterRunParams['actionLogIdentifier']) ) {
-                $this->updateActionLog($afterRunParams['actionLogId'], $afterRunParams['actionLogIdentifier'], $jobId);
-            }
-            if (isset($afterRunParams['manufacturerId']) && isset($afterRunParams['orderDetailIds'])) {
-                $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-                $orderDetailTable->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
-            }
+        if (empty($data['afterRunParams'])) {
+            return;
+        }
+
+        $afterRunParams = $data['afterRunParams'];
+        if (isset($afterRunParams['actionLogId']) && isset($afterRunParams['actionLogIdentifier']) ) {
+            $this->updateActionLog($afterRunParams['actionLogId'], $afterRunParams['actionLogIdentifier'], $jobId);
+        }
+        if (isset($afterRunParams['manufacturerId']) && isset($afterRunParams['orderDetailIds'])) {
+            $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+            $orderDetailTable->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
         }
 
     }
