@@ -91,9 +91,8 @@ class GenerateOrderListTask extends Task {
                 $email->setCc($ccRecipients);
             }
 
-            $actionLogIdentifier = 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormated;
             $email->afterRunParams = [
-                'actionLogIdentifier' => $actionLogIdentifier,
+                'actionLogIdentifier' => 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormated,
                 'actionLogId' => $actionLogId,
                 'manufacturerId' => $manufacturerId,
                 'orderDetailIds' => $orderDetailIds,
