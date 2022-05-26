@@ -19,6 +19,7 @@ namespace App\Queue\Task;
 use Queue\Queue\Task\EmailTask;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenTime;
+use Throwable;
 
 class AppEmailTask extends EmailTask
 {
@@ -30,7 +31,7 @@ class AppEmailTask extends EmailTask
         try {
             $afterRunParams = $data['afterRunParams'];
             parent::run($data, $jobId);
-        } catch(\Exception $e) {
+        } catch(Throwable $e) {
             if (!empty($data['afterRunParams'])) {
                 if (isset($afterRunParams['actionLogId']) && isset($afterRunParams['actionLogIdentifier']) ) {
                     $this->updateActionLogFailure($afterRunParams['actionLogId'], $afterRunParams['actionLogIdentifier'], $jobId, $e->getMessage());
