@@ -15,9 +15,9 @@
 
 namespace App\Lib\Error\Exception;
 
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 
-class InvalidParameterException extends Exception
+class InvalidParameterException extends CakeException
 {
 
 }

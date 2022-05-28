@@ -17,7 +17,6 @@ namespace App\Lib\Invoice;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use App\Lib\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenDate;
 
@@ -40,7 +39,7 @@ class GenerateInvoiceToCustomer
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
 
         if (!$data->new_invoice_necessary) {
-            throw new Exception('safety check if data available - should always be checked before triggering this queue');
+            throw new \Exception('safety check if data available - should always be checked before triggering this queue');
         }
 
         $invoiceDate = (new FrozenDate($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
