@@ -15,9 +15,9 @@
 
 namespace App\Lib\Error\Exception;
 
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 
-class ConfigFileMissingException extends Exception
+class ConfigFileMissingException extends CakeException
 {
 
 }

@@ -15,9 +15,9 @@
 
 namespace App\Lib\Error\Exception;
 
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 
-class NotCompatibleException extends Exception
+class NotCompatibleException extends CakeException
 {
 
 }
