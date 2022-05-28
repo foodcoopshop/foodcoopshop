@@ -48,7 +48,6 @@ return [
      */
 //     'EmailTransport' => [
 //         'debug' => [
-//             'emailFormat' => 'html',
 //             'className' => 'Smtp',
 //             'host' => 'mail.example.com',
 //             'port' => 25,
@@ -61,6 +60,8 @@ return [
 //     ],
 //     'Email' => [
 //         'debug' => [
+//             'emailFormat' => 'html',
+//             'transport' => 'debug',
 //             'from' => ['example@example.com' => 'Example'],
 //             'charset' => 'utf-8',
 //             'headerCharset' => 'utf-8',

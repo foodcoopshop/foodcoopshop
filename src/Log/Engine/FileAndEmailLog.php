@@ -90,7 +90,6 @@ class FileAndEmailLog extends FileLog
         try {
             $email = new Mailer(false);
             $email->setProfile('debug');
-            $email->setTransport('debug');
             $email->setTo(Configure::read('app.debugEmail'))
             ->viewBuilder()->setTemplate('debug');
             $email->setSubject($subject)

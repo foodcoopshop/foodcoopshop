@@ -82,7 +82,6 @@ password="%password%"
         // email zipped file via Mailer (to avoid queue's max 16MB mediumtext limit of AppMailer)
         $email = new Mailer(false);
         $email->setProfile('debug');
-        $email->setTransport('debug');
         $email->setTo(Configure::read('app.hostingEmail'))
             ->setSubject($message . ': ' . Configure::read('app.cakeServerName'))
             ->setAttachments([
