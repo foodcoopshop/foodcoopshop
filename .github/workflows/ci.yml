@@ -75,4 +75,4 @@ jobs:
         
       - name: PHPUnit
         if: always()
-        run: vendor/bin/phpunit --disallow-test-output
+        run: vendor/bin/phpunit
