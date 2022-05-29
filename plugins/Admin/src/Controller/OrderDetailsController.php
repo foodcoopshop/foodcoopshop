@@ -1511,24 +1511,24 @@ class OrderDetailsController extends AdminAppController
                     $customers[$orderDetail->id_customer] = [];
                 }
                 $customers[$orderDetail->id_customer][] = $orderDetail;
+            }
 
-                if ($sendEmail) {
-                    foreach($customers as $orderDetails) {
-                        $email = new AppMailer();
-                        $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
-                        $email->setTo($orderDetails[0]->customer->email)
-                        ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
-                        ->setViewVars([
-                            'orderDetails' => $orderDetails,
-                            'customer' => $orderDetails[0]->customer,
-                            'newsletterCustomer' => $orderDetails[0]->customer,
-                            'appAuth' => $this->AppAuth,
-                            'oldPickupDay' => $oldPickupDay,
-                            'newPickupDay' => $newPickupDay,
-                            'editPickupDayReason' => $editPickupDayReason
-                        ]);
-                        $email->send();
-                    }
+            if ($sendEmail) {
+                foreach($customers as $orderDetails) {
+                    $email = new AppMailer();
+                    $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
+                    $email->setTo($orderDetails[0]->customer->email)
+                    ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
+                    ->setViewVars([
+                        'orderDetails' => $orderDetails,
+                        'customer' => $orderDetails[0]->customer,
+                        'newsletterCustomer' => $orderDetails[0]->customer,
+                        'appAuth' => $this->AppAuth,
+                        'oldPickupDay' => $oldPickupDay,
+                        'newPickupDay' => $newPickupDay,
+                        'editPickupDayReason' => $editPickupDayReason
+                    ]);
+                    $email->send();
                 }
             }
 
