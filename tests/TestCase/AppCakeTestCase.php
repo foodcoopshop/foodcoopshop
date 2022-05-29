@@ -82,7 +82,7 @@ abstract class AppCakeTestCase extends TestCase
             $this->enableSecurityToken();
         }
 
-        $this->commandRunner = new CommandRunner(new Application(TESTS));
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
 
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();
