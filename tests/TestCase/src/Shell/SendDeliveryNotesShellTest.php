@@ -31,7 +31,7 @@ class SendDeliveryNotesShellTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $cronjobRunDay = '2018-03-01';
-        $this->commandRunner->run(['cake', 'send_delivery_notes', $cronjobRunDay]);
+        $this->exec('send_delivery_notes ' . $cronjobRunDay);
         $this->runAndAssertQueue();
         $this->assertMailCount(1);
         $this->assertEquals(1, count(TestEmailTransport::getMessages()[0]->getAttachments()));

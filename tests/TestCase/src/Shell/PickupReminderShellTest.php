@@ -26,7 +26,7 @@ class PickupReminderShellTest extends AppCakeTestCase
 
     public function testCustomersDoNotHaveFutureOrders()
     {
-        $this->commandRunner->run(['cake', 'pickup_reminder']);
+        $this->exec('pickup_reminder');
         $this->assertMailCount(0);
     }
 
@@ -34,7 +34,7 @@ class PickupReminderShellTest extends AppCakeTestCase
     {
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
-        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
+        $this->exec('pickup_reminder 2018-03-10');
         $this->assertMailCount(0);
     }
 
@@ -51,7 +51,7 @@ class PickupReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
+        $this->exec('pickup_reminder 2018-03-10');
         $this->runAndAssertQueue();
 
         $this->assertMailCount(1);
@@ -75,7 +75,7 @@ class PickupReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
+        $this->exec('pickup_reminder 2018-03-10');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }

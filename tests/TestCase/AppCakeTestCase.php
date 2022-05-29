@@ -1,19 +1,18 @@
 <?php
 namespace App\Test\TestCase;
 
-use App\Application;
 use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
 use App\View\Helper\SlugHelper;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
+use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
 
@@ -35,6 +34,7 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 abstract class AppCakeTestCase extends TestCase
 {
 
+    use ConsoleIntegrationTestTrait;
     use QueueTrait;
 
     protected $dbConnection;
@@ -52,8 +52,6 @@ abstract class AppCakeTestCase extends TestCase
     public $Customer;
 
     public $Manufacturer;
-
-    public $commandRunner;
 
 
     /**
@@ -82,7 +80,7 @@ abstract class AppCakeTestCase extends TestCase
             $this->enableSecurityToken();
         }
 
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
+        $this->useCommandRunner();
 
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();

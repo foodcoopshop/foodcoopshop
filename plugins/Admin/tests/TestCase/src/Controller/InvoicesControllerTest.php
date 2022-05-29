@@ -77,7 +77,7 @@ class InvoicesControllerTest extends AppCakeTestCase
             ],
         ])->first();
 
-        $this->commandRunner->run(['cake', 'send_invoices_to_customers']);
+        $this->exec('send_invoices_to_customers');
         $this->runAndAssertQueue();
 
         $this->assertEquals($invoice->email_status, 'deaktiviert');

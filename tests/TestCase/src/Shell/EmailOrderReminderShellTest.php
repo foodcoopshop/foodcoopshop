@@ -27,7 +27,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
 
     public function testNoActiveOrder()
     {
-        $this->commandRunner->run(['cake', 'email_order_reminder']);
+        $this->exec('email_order_reminder');
         $this->runAndAssertQueue();
 
         $this->assertMailCount(3);
@@ -52,7 +52,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     public function testGlobalDeliveryBreakEnabledAndNextDeliveryDay()
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-01');
-        $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
+        $this->exec('email_order_reminder 2019-10-27');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
@@ -60,7 +60,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     public function testGlobalDeliveryBreakEnabledAndNotNextDeliveryDay()
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-08');
-        $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
+        $this->exec('email_order_reminder 2019-10-27');
         $this->runAndAssertQueue();
         $this->assertMailCount(3);
     }
@@ -78,7 +78,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->commandRunner->run(['cake', 'email_order_reminder', '2019-11-05']);
+        $this->exec('email_order_reminder 2019-11-05');
         $this->runAndAssertQueue();
         $this->assertMailCount(2);
         $this->assertMailContainsHtmlAt(0, 'heute');
@@ -89,7 +89,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     {
         $query = 'UPDATE '.$this->Customer->getTable().' SET email_order_reminder_enabled = 0;';
         $this->dbConnection->query($query);
-        $this->commandRunner->run(['cake', 'email_order_reminder']);
+        $this->exec('email_order_reminder');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }

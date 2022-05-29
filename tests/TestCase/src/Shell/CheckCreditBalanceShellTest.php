@@ -32,7 +32,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
     public function testNoEmailsSent()
     {
-        $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->exec('check_credit_balance');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
@@ -45,7 +45,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         $this->logout();
 
         $this->resetCustomerCreditBalance();
-        $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->exec('check_credit_balance');
         $this->runAndAssertQueue();
 
         $this->assertMailCount(2);
@@ -64,7 +64,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         $this->finishCart();
         $this->logout();
         $this->resetCustomerCreditBalance();
-        $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->exec('check_credit_balance');
         $this->runAndAssertQueue();
         $this->assertMailCount(1);
     }
@@ -89,7 +89,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
             )
         );
 
-        $this->commandRunner->run(['cake', 'check_credit_balance']);
+        $this->exec('check_credit_balance');
         $this->runAndAssertQueue();
         $this->assertMailCount(2);
         $this->assertMailSubjectContainsAt(1, 'Bitte lade dein Guthaben auf');
