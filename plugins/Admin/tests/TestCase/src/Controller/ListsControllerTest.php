@@ -69,9 +69,7 @@ class ListsControllerTest extends AppCakeTestCase
         $this->Customer->save($customerEntity);
 
         $this->loginAsAdmin();
-        Configure::write('Error.log', false);
         $this->get($downloadUrl);
-        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
 
     }
@@ -107,9 +105,7 @@ class ListsControllerTest extends AppCakeTestCase
 
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
-        Configure::write('Error.log', false);
         $this->get($orderListDownloadUrl);
-        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
 
         // check downloadable file as admin
