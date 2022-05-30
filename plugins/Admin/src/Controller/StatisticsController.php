@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Cake\Core\Configure;
+use Cake\ORM\Locator\TableLocator;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -200,15 +201,25 @@ class StatisticsController extends AdminAppController
         $this->set('xAxisDataBarChart', $xAxisDataWithYearSeparators);
         $this->set('yAxisDataBarChart', $yAxisDataWithYearSeparators);
 
+        $totalNetProfit = array_sum($monthsWithTurnoverSumNetProfit);
+        $totalTurnover = array_sum($monthsWithTurnoverSumTotalPaid);
+
         if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             $yAxisData2WithYearSeparators = 0;
             $yAxisData3WithYearSeparators = 0;
+        } else {
+            $totalNetTurnover = $totalTurnover + $totalNetProfit;
+            $this->set('totalNetTurnover', $totalNetTurnover);
+            $this->PurchasePrice = $this->getTableLocator()->get('PurchasePriceProducts');
+            $averageSurcharge = $this->PurchasePrice->calculateSurchargeBySellingPriceNet($totalNetTurnover, $totalTurnover);
+            $this->set('averageSurcharge', $averageSurcharge);
         }
+
         $this->set('yAxisData2BarChart', $yAxisData2WithYearSeparators);
         $this->set('yAxisData3BarChart', $yAxisData3WithYearSeparators);
-        $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
+        $this->set('totalTurnover', $totalTurnover);
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
-        $this->set('totalNetProfit', array_sum($monthsWithTurnoverSumNetProfit));
+        $this->set('totalNetProfit', $totalNetProfit);
         $this->set('averageNetProfit', array_sum($monthsWithTurnoverSumNetProfit) / count($monthsWithTurnoverMonthAndYear));
 
         // START prepare line chart
