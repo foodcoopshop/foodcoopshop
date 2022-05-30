@@ -66,6 +66,12 @@ class PurchasePriceProductsTable extends AppTable
         return $sellingPriceGross;
     }
 
+    public function calculateSurchargeBySellingPriceNet($sellingPriceNet, $purchasePriceNet)
+    {
+        $surcharge = ($sellingPriceNet / $purchasePriceNet * 100) - 100;
+        return $surcharge;
+    }
+
     public function calculateSurchargeBySellingPriceGross($sellingPriceGross, $sellingPriceTaxRate, $purchasePriceGross, $purchasePriceTaxRate)
     {
 
@@ -77,7 +83,7 @@ class PurchasePriceProductsTable extends AppTable
             return false;
         }
 
-        $surcharge = ($sellingPriceNet / $purchasePriceNet * 100) - 100;
+        $surcharge = $this->calculateSurchargeBySellingPriceNet($sellingPriceNet, $purchasePriceNet);
         return $surcharge;
 
     }

@@ -93,7 +93,7 @@ if ($manufacturerId == 'all') {
 
             echo '<td><b>' . __d('admin', 'Net_turnover') . '</b></td>';
             echo '<td>'. __d('admin', 'total') . '</td>';
-            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalTurnover + $totalNetProfit) . '</b></td>';
+            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalNetTurnover) . '</b></td>';
             echo '</tr><tr>';
             echo '<td></td>';
             echo '<td>'. __d('admin', 'per_month') . '</td>';
@@ -107,6 +107,10 @@ if ($manufacturerId == 'all') {
             echo '<td></td>';
             echo '<td>'. __d('admin', 'per_month') . '</td>';
             echo '<td style="text-align:right;">' . $this->Number->formatAsCurrency($averageNetProfit) . '</td>';
+            echo '</tr><tr>';
+            echo '<td><b>' . __d('admin', 'Surcharge') . '</b></td>';
+            echo '<td></td>';
+            echo '<td style="text-align:right;"><b>' . $this->Number->formatAsPercent($averageSurcharge) . '</b></td>';
             echo '</tr>';
 
         echo '</table>';
