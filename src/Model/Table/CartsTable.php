@@ -193,7 +193,7 @@ class CartsTable extends AppTable
                 $imageId,
                 $cartProduct->product->id_manufacturer,
             );
-            $productImage = Configure::read('app.htmlHelper')->image($productImageData['productImageLargeSrc']);
+            $productImage = Configure::read('app.htmlHelper')->image($productImageData['productImageSrc']);
 
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
             $productData['image'] = $productImage;
