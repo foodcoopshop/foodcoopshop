@@ -2,7 +2,7 @@
     "name": "foodcoopshop/foodcoopshop",
     "description": "The open source software for your foodcoop",
     "homepage": "https://www.foodcoopshop.com",
-    "license": "MIT",
+    "license": "AGPL-3.0",
     "authors": [
         {
             "name": "FoodCoopShop Community",
