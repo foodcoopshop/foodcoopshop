@@ -4,8 +4,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
-use App\Application;
-use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
 
 /**
@@ -26,17 +24,9 @@ class PickupReminderShellTest extends AppCakeTestCase
 {
     use EmailTrait;
 
-    public $commandRunner;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
-    }
-
     public function testCustomersDoNotHaveFutureOrders()
     {
-        $this->commandRunner->run(['cake', 'pickup_reminder']);
+        $this->exec('pickup_reminder');
         $this->assertMailCount(0);
     }
 
@@ -44,7 +34,7 @@ class PickupReminderShellTest extends AppCakeTestCase
     {
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
-        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
+        $this->exec('pickup_reminder 2018-03-10');
         $this->assertMailCount(0);
     }
 
@@ -61,7 +51,8 @@ class PickupReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
+        $this->exec('pickup_reminder 2018-03-10');
+        $this->runAndAssertQueue();
 
         $this->assertMailCount(1);
         $this->assertMailSubjectContainsAt(0, 'Abhol-Erinnerung für Freitag, 16.03.2018');
@@ -84,7 +75,8 @@ class PickupReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
+        $this->exec('pickup_reminder 2018-03-10');
+        $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 

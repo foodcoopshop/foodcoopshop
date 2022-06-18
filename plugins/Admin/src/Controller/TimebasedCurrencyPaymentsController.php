@@ -133,7 +133,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'data' => $payment->customer,
                 'payment' => $payment
             ]);
-            $email->send();
+            $email->addToQueue();
             $message .= __d('admin', 'and_an_email_was_sent_to_{0}', [$payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')), $payment->customer->name]);
         }
         $message .= '.';
@@ -234,7 +234,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                     'unchangedPaymentApproval' => $unchangedPaymentApproval,
                     'payment' => $payment
                 ]);
-                $email->send();
+                $email->addToQueue();
                 $message .= ' und eine E-Mail an '.$payment->customer->name.' verschickt';
             }
             $message .= '.';

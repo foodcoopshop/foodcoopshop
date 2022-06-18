@@ -2,10 +2,10 @@
 
 namespace App\Log\Engine;
 
-use App\Mailer\AppMailer;
 use App\Network\AppSession;
 use Cake\Core\Configure;
 use Cake\Log\Engine\FileLog;
+use Cake\Mailer\Mailer;
 use Cake\Network\Exception\SocketException;
 use Cake\Utility\Text;
 
@@ -89,15 +89,14 @@ class FileAndEmailLog extends FileLog
 
         $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
-            $email = new AppMailer(false);
+            $email = new Mailer(false);
             $email->setProfile('debug');
-            $email->setTransport('debug');
             $email->setTo(Configure::read('app.debugEmail'))
             ->viewBuilder()->setTemplate('debug');
             $email->setSubject($subject)
             ->setViewVars([
                 'message' => $message,
-                'loggedUser' => $loggedUser
+                'loggedUser' => $loggedUser,
             ])
             ->send();
         } catch (SocketException $e) {

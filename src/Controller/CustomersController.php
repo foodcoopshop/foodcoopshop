@@ -150,7 +150,7 @@ class CustomersController extends FrontendController
             if (Configure::read('app.termsOfUseEnabled')) {
                 $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             }
-            $email->send();
+            $email->addToQueue();
 
             $this->Flash->success(__('Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you.'));
         }
@@ -219,10 +219,9 @@ class CustomersController extends FrontendController
                         'tmpNewPassword' => $tmpNewPassword,
                         'customer' => $oldEntity
                     ]);
+                $email->addToQueue();
 
-                if ($email->send()) {
-                    $this->Flash->success(__('We_sent_your_new_password_to_you_it_needs_to_be_activated.'));
-                }
+                $this->Flash->success(__('We_sent_your_new_password_to_you_it_needs_to_be_activated.'));
 
                 $this->redirect('/');
             }
@@ -421,7 +420,7 @@ class CustomersController extends FrontendController
                         'newsletterCustomer' => $newCustomer,
                         'newPassword' => $newPassword
                         ]);
-                    $email->send();
+                    $email->addToQueue();
                     // END send confirmation email to customer
 
                     // START send notification email
@@ -434,7 +433,7 @@ class CustomersController extends FrontendController
                             'appAuth' => $this->AppAuth,
                                 'data' => $newCustomer
                             ])
-                            ->send();
+                            ->addToQueue();
                     }
                     // END
 

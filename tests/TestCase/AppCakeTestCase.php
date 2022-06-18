@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase;
 
+use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
@@ -11,6 +12,7 @@ use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
+use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
 
@@ -32,6 +34,9 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 abstract class AppCakeTestCase extends TestCase
 {
 
+    use ConsoleIntegrationTestTrait;
+    use QueueTrait;
+
     protected $dbConnection;
 
     protected $testDumpDir;
@@ -47,6 +52,7 @@ abstract class AppCakeTestCase extends TestCase
     public $Customer;
 
     public $Manufacturer;
+
 
     /**
      * called before every test method
@@ -73,6 +79,8 @@ abstract class AppCakeTestCase extends TestCase
         if (method_exists($this, 'enableSecurityToken')) {
             $this->enableSecurityToken();
         }
+
+        $this->useCommandRunner();
 
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();
@@ -265,6 +273,8 @@ abstract class AppCakeTestCase extends TestCase
             $this->Slug->getCartFinish(),
             $data,
         );
+
+        $this->runAndAssertQueue();
     }
 
     protected function getCartById($cartId)

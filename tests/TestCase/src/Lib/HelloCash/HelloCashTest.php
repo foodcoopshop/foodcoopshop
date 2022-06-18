@@ -12,14 +12,11 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Application;
 use App\Lib\HelloCash\HelloCash;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
-use App\Test\TestCase\Traits\QueueTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Utility\Hash;
@@ -30,11 +27,9 @@ class HelloCashTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
-    use QueueTrait;
 
     protected $HelloCash;
     protected $Invoice;
-    protected $commandRunner;
 
     public function setUp(): void
     {
@@ -50,7 +45,6 @@ class HelloCashTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
         $this->HelloCash = new HelloCash();
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testGenerateReceipt()

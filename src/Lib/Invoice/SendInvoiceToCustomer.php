@@ -1,13 +1,4 @@
 <?php
-namespace App\Queue\Task;
-
-use App\Mailer\AppMailer;
-use App\Lib\HelloCash\HelloCash;
-use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenTime;
-use Queue\Queue\Task;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -15,34 +6,45 @@ use Queue\Queue\Task;
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.2.0
+ * @since         FoodCoopShop 3.5.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-class SendInvoiceToCustomerTask extends Task {
+namespace App\Lib\Invoice;
 
-    public $timeout = 30;
+use App\Lib\HelloCash\HelloCash;
+use App\Mailer\AppMailer;
 
-    public $retries = 2;
+class SendInvoiceToCustomer
+{
 
-    public $Invoice;
+    public $customerName;
+    public $customerEmail;
+    public $creditBalance;
+    public $invoicePdfFile;
+    public $invoiceNumber;
+    public $invoiceDate;
+    public $invoiceId;
+    public $paidInCash;
+    public $isCancellationInvoice;
+    public $originalInvoiceId;
 
-    public function run(array $data, $jobId) : void
+    public function run()
     {
 
-        $customerName = $data['customerName'];
-        $customerEmail = $data['customerEmail'];
-        $creditBalance = $data['creditBalance'];
-        $invoicePdfFile = $data['invoicePdfFile'];
-        $invoiceNumber = $data['invoiceNumber'];
-        $invoiceDate = $data['invoiceDate'];
-        $invoiceId = $data['invoiceId'];
-        $paidInCash = $data['paidInCash'];
-        $isCancellationInvoice = (bool) $data['isCancellationInvoice'];
-        $originalInvoiceId = $data['originalInvoiceId'] ?? $invoiceId;
+        $customerName = $this->customerName;
+        $customerEmail = $this->customerEmail;
+        $creditBalance = $this->creditBalance;
+        $invoicePdfFile = $this->invoicePdfFile;
+        $invoiceNumber = $this->invoiceNumber;
+        $invoiceDate = $this->invoiceDate;
+        $invoiceId = $this->invoiceId;
+        $paidInCash = $this->paidInCash;
+        $isCancellationInvoice = (bool) $this->isCancellationInvoice;
+        $originalInvoiceId = $this->originalInvoiceId ?? $invoiceId;
 
         $subject = __('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]);
         $emailTemplate = 'Admin.send_invoice_to_customer';
@@ -52,7 +54,6 @@ class SendInvoiceToCustomerTask extends Task {
         }
 
         $email = new AppMailer();
-        $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate($emailTemplate);
         $email->setTo($customerEmail)
         ->setSubject($subject)
@@ -77,17 +78,11 @@ class SendInvoiceToCustomerTask extends Task {
                 ],
             ]);
         }
-
-        $email->send();
-
-        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $invoiceEntity = $this->Invoice->patchEntity(
-            $this->Invoice->get($invoiceId), [
-                'email_status' => FrozenTime::now(),
-        ]);
-        $this->Invoice->save($invoiceEntity);
+        $email->afterRunParams = [
+            'invoiceId' => $invoiceId,
+        ];
+        $email->addToQueue();
 
     }
 
 }
-?>

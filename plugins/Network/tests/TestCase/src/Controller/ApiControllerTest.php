@@ -28,9 +28,7 @@ class ApiControllerTest extends AppCakeTestCase
 
     public function testGetProductsLoggedOut()
     {
-        Configure::write('Error.log', false);
         $this->get('/api/getProducts.json');
-        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
     }
 
@@ -42,9 +40,7 @@ class ApiControllerTest extends AppCakeTestCase
                 'PHP_AUTH_PW' => Configure::read('test.loginPassword'),
             ]
         ]);
-        Configure::write('Error.log', false);
         $this->get('/api/getProducts.json');
-        Configure::write('Error.log', true);
         $this->assertResponseCode(403);
     }
 

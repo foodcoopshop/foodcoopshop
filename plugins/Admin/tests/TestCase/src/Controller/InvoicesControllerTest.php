@@ -1,15 +1,12 @@
 <?php
 
-use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Utility\Hash;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
-use App\Test\TestCase\Traits\QueueTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,9 +28,6 @@ class InvoicesControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
-    use QueueTrait;
-
-    public $commandRunner;
 
     public function testGeneratePaidInCashSavedCorrectly()
     {
@@ -67,7 +61,6 @@ class InvoicesControllerTest extends AppCakeTestCase
     public function testGenerateInvoiceSendPerEmailDeactivated()
     {
 
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
@@ -84,7 +77,7 @@ class InvoicesControllerTest extends AppCakeTestCase
             ],
         ])->first();
 
-        $this->commandRunner->run(['cake', 'send_invoices_to_customers']);
+        $this->exec('send_invoices_to_customers');
         $this->runAndAssertQueue();
 
         $this->assertEquals($invoice->email_status, 'deaktiviert');
@@ -95,7 +88,6 @@ class InvoicesControllerTest extends AppCakeTestCase
     public function testCancel()
     {
 
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
         $this->loginAsSuperadmin();
@@ -176,7 +168,6 @@ class InvoicesControllerTest extends AppCakeTestCase
     public function testCancelInvoiceEmailDisabled()
     {
 
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
 

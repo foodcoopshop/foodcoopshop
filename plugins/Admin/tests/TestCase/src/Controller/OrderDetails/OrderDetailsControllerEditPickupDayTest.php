@@ -49,6 +49,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $reason = 'this is the reason';
         $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
         $this->assertJsonOk();
+        $this->runAndAssertQueue();
         $this->assertMailContainsHtmlAt(0, $reason);
         $this->assertMailContainsHtmlAt(0, 'Neuer Abholtag : <b>Freitag, 07.09.2018</b>');
         $this->assertMailContainsHtmlAt(0, 'Alter Abholtag: Freitag, 02.02.2018');
@@ -64,6 +65,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $reason = 'this is the reason';
         $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
         $this->assertJsonOk();
+        $this->runAndAssertQueue();
         $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('app.cakeServerName') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
     }
 
@@ -73,6 +75,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $reason = 'this is the reason';
         $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, false);
         $this->assertJsonOk();
+        $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 

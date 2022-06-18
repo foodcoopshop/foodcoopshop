@@ -178,6 +178,9 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
     {
+
+        $this->runAndAssertQueue();
+
         $this->assertMailSubjectContainsAt($emailIndex, 'Produkt storniert: Artischocke : Stück');
 
         foreach($expectedToEmails as $expectedToEmail) {

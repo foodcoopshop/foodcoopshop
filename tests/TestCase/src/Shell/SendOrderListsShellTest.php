@@ -1,15 +1,12 @@
 <?php
 
-use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
-use App\Test\TestCase\Traits\QueueTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,10 +28,8 @@ class SendOrderListsShellTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use QueueTrait;
 
     public $Order;
-    public $commandRunner;
 
     public function setUp(): void
     {
@@ -43,13 +38,12 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Product = $this->getTableLocator()->get('Products');
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
     {
         $this->OrderDetail->deleteAll([]);
-        $this->commandRunner->run(['cake', 'send_order_lists']);
+        $this->exec('send_order_lists');
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
@@ -79,7 +73,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             )
         );
 
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
@@ -107,7 +101,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $cronjobRunDay = '2018-01-31';
         $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($cronjobRunDay));
 
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
@@ -136,7 +130,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->changeManufacturer(4, 'send_order_list', 0);
         $this->runAndAssertQueue();
 
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
@@ -165,7 +159,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $orderDetailId = 1;
 
         // 1) run cronjob and assert no changings
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
@@ -181,7 +175,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             )
         );
 
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
@@ -246,7 +240,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
 
         // 1) run cronjob and assert changings
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailIdIndividualDate, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
@@ -276,7 +270,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 11.10.2019<br />Verschickte Bestelllisten: 2', $actionLog->text);
 
         // 3) run cronjob again - no additional emails must be sent
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertMailCount(3);
@@ -293,7 +287,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $orderDetailId = 1;
 
         // run cronjob and assert no changings
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
@@ -316,7 +310,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             [$productId2 => $newProductData]
         ]);
         $cronjobRunDay = '2018-01-31';
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $product1 = $this->Product->find('all', [
@@ -352,7 +346,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->Product->changeIsStockProduct([[$stockProductId => true]]);
 
         $cronjobRunDay = '2018-01-31';
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState(1, ORDER_STATE_ORDER_PLACED);
@@ -413,7 +407,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
 
         $cronjobRunDay = '2020-08-05';
-        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);

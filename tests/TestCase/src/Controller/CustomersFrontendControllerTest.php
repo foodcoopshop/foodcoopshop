@@ -120,6 +120,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
         $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert.');
 
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Neues Passwort für FoodCoop Test');
         $this->assertMailContainsHtmlAt(0, 'Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
@@ -239,6 +240,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
 
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
         $this->assertMailContainsHtmlAt(0, 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.');
@@ -259,6 +261,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $email = 'new-foodcoopshop-member-2@mailinator.com';
         $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
 
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
         $this->assertMailContainsHtmlAt(0, 'Bitte bestätige deine E-Mail-Adresse:');
@@ -276,6 +279,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         // try to activate user with correct activation code
         $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
+        $this->runAndAssertQueue();
 
         $customer = $this->Customer->find('all', [
             'conditions' => [

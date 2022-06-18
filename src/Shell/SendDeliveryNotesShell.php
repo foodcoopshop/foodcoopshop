@@ -15,6 +15,7 @@
 namespace App\Shell;
 
 use App\Lib\DeliveryNote\GenerateDeliveryNote;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 
@@ -47,6 +48,10 @@ class SendDeliveryNotesShell extends AppShell
         $manufacturers = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.send_delivery_notes' => APP_ON,
+            ],
+            'contain' => [
+                'AddressManufacturers',
+                'Customers.AddressCustomers',
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC',
@@ -84,14 +89,28 @@ class SendDeliveryNotesShell extends AppShell
         $message .=  __('{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully.', [count($manufacturersWithData)]);
         $actionLog = $this->ActionLog->customSave('cronjob_send_delivery_notes', 0, 0, 'manufacturers', $message . '<br />' . $this->getRuntime());
 
+        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
         foreach($manufacturersWithData as $manufacturer) {
 
-            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
-            $this->QueuedJobs->createJob('SendDeliveryNote', [
-                'deliveryNoteFile' => $manufacturer->deliverNotesFilename,
-                'manufacturerId' => $manufacturer->id_manufacturer,
-                'actionLogId' => $actionLog->id,
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.send_delivery_note');
+            $email->setTo($manufacturer->address_manufacturer->email)
+            ->setAttachments([
+                TMP . $manufacturer->deliverNotesFilename,
+            ])
+            ->setSubject(__('Delivery_note_for_{0}', [$invoicePeriodMonthAndYear]))
+            ->setViewVars([
+                'manufacturer' => $manufacturer,
+                'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
+                'showManufacturerUnsubscribeLink' => true,
             ]);
+
+            $email->afterRunParams = [
+                'actionLogIdentifier' => 'send-delivery-note-' . $manufacturer->id_manufacturer,
+                'actionLogId' => $actionLog->id,
+            ];
+            $email->addToQueue();
 
         }
 

@@ -88,7 +88,7 @@ class EmailOrderReminderShell extends AppShell
                 'newsletterCustomer' => $customer,
                 'lastOrderDayAsString' => (Configure::read('app.timeHelper')->getSendOrderListsWeekday() - date('N', strtotime($this->cronjobRunDay))) == 1 ? __('today') : __('tomorrow')
             ])
-            ->send();
+            ->addToQueue();
 
             $outString .= $customer->name . '<br />';
 

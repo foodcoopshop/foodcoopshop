@@ -18,8 +18,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\QueueTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
@@ -30,9 +28,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use AssertPagesForErrorsTrait;
     use LoginTrait;
     use EmailTrait;
-    use QueueTrait;
-
-    public $commandRunner;
 
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
@@ -250,8 +245,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
 
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
-
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
@@ -420,6 +413,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->Slug->getSelfService(),
             $data,
         );
+        $this->runAndAssertQueue();
     }
 
     private function doBarCodeLogin()

@@ -24,7 +24,7 @@ trait QueueTrait
 
     protected function runAndAssertQueue()
     {
-        $this->commandRunner->run(['cake', 'queue', 'run', '-q']);
+        $this->exec('queue run -q');
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
         $queuedJobs = $this->QueuedJobs->find('all');
         foreach($queuedJobs as $queuedJob) {

@@ -1032,7 +1032,7 @@ class OrderDetailsController extends AdminAppController
                     'amountString' => $amountString,
                     'appAuth' => $this->AppAuth
                 ]);
-                $email->send();
+                $email->addToQueue();
             }
 
             $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
@@ -1156,7 +1156,7 @@ class OrderDetailsController extends AdminAppController
                 $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
             }
 
-            $email->send();
+            $email->addToQueue();
 
             $message .= $emailMessage;
 
@@ -1265,7 +1265,7 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
         }
 
-        $email->send();
+        $email->addToQueue();
 
         $message .= $emailMessage;
 
@@ -1403,7 +1403,7 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth,
                 'editPriceReason' => $editPriceReason,
             ]);
-            $email->send();
+            $email->addToQueue();
             $emailRecipients[] = $oldOrderDetail->customer->name;
         }
 
@@ -1420,7 +1420,7 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth,
                 'editPriceReason' => $editPriceReason,
             ]);
-            $email->send();
+            $email->addToQueue();
             $emailRecipients[] = $oldOrderDetail->product->manufacturer->name;
         }
 
@@ -1528,7 +1528,7 @@ class OrderDetailsController extends AdminAppController
                         'newPickupDay' => $newPickupDay,
                         'editPickupDayReason' => $editPickupDayReason
                     ]);
-                    $email->send();
+                    $email->addToQueue();
                 }
             }
 
@@ -1621,7 +1621,7 @@ class OrderDetailsController extends AdminAppController
             'orderDetailFeedback' => $orderDetailFeedback,
         ]);
 
-        $email->send();
+        $email->addToQueue();
 
         $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
 
@@ -1841,7 +1841,7 @@ class OrderDetailsController extends AdminAppController
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
             }
 
-            $email->send();
+            $email->addToQueue();
 
             $message .= $emailMessage;
 
