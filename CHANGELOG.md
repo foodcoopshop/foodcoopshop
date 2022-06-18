@@ -11,6 +11,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
+### Änderung der Open-Source-Lizenz
+- Ab v3.5 wird der FoodCoopShop unter der GNU Affero General Public License v3.0 (AGPL) veröffentlicht. [I#837](https://github.com/foodcoopshop/foodcoopshop/issues/837) / [PR#845](https://github.com/foodcoopshop/foodcoopshop/pull/845)
+
 ### Neue Funktionen / Verbesserungen
 - Verbesserte Darstellung der Blog-Artikel: Der Menüpunkt "Aktuelles" wandert in den Footer, heißt jetzt "Blog-Archiv"und zeigt nur noch jene Blog-Artikel an, die nicht auf der Startseite angezeigt werden. Im Blog-Archiv-Slider über den Produkten werden nur noch die Blog-Artikel von der Startseite angezeigt. [I#790](https://github.com/foodcoopshop/foodcoopshop/issues/790) / [PR#795](https://github.com/foodcoopshop/foodcoopshop/pull/795) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Über eine neue Einstellung kann die Newsletter-Funktion aktiviert werden. [Zur Online-Doku](https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion). [I#818](https://github.com/foodcoopshop/foodcoopshop/issues/818) / [PR#823](https://github.com/foodcoopshop/foodcoopshop/pull/823) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
