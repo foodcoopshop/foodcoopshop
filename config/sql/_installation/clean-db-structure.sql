@@ -222,7 +222,6 @@ CREATE TABLE `fcs_customer` (
   `active` tinyint unsigned NOT NULL DEFAULT '0',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `timebased_currency_enabled` tinyint unsigned NOT NULL DEFAULT '0',
   `use_camera_for_barcode_scanning` tinyint unsigned DEFAULT '0',
   `user_id_registrierkasse` int unsigned DEFAULT '0',
   `shopping_price` varchar(2) DEFAULT 'SP',
@@ -321,9 +320,6 @@ CREATE TABLE `fcs_manufacturer` (
   `send_ordered_product_price_changed_notification` int unsigned DEFAULT NULL,
   `send_ordered_product_amount_changed_notification` int unsigned DEFAULT NULL,
   `enabled_sync_domains` varchar(50) DEFAULT NULL,
-  `timebased_currency_enabled` tinyint unsigned NOT NULL DEFAULT '0',
-  `timebased_currency_max_percentage` tinyint unsigned NOT NULL DEFAULT '30',
-  `timebased_currency_max_credit_balance` int unsigned DEFAULT '360000',
   `stock_management_enabled` tinyint unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_manufacturer` tinyint unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_contact_person` tinyint unsigned NOT NULL DEFAULT '0',
@@ -604,39 +600,6 @@ CREATE TABLE `fcs_tax` (
   `deleted` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_tax`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_timebased_currency_order_detail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fcs_timebased_currency_order_detail` (
-  `id_order_detail` int NOT NULL DEFAULT '0',
-  `money_excl` decimal(10,6) unsigned DEFAULT NULL,
-  `money_incl` decimal(10,6) unsigned DEFAULT NULL,
-  `seconds` int unsigned DEFAULT NULL,
-  `max_percentage` int unsigned DEFAULT NULL,
-  `exchange_rate` decimal(6,2) unsigned DEFAULT NULL,
-  UNIQUE KEY `id_order_detail` (`id_order_detail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_timebased_currency_payments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fcs_timebased_currency_payments` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_customer` int unsigned DEFAULT NULL,
-  `id_manufacturer` int unsigned DEFAULT NULL,
-  `seconds` int NOT NULL DEFAULT '0',
-  `text` varchar(255) NOT NULL DEFAULT '',
-  `working_day` date DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `status` tinyint NOT NULL DEFAULT '1',
-  `approval` tinyint NOT NULL DEFAULT '0',
-  `approval_comment` mediumtext,
-  `modified_by` int unsigned DEFAULT NULL,
-  `created_by` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_units`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

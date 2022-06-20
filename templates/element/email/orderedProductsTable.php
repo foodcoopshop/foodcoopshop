@@ -30,10 +30,6 @@ if ($depositSum > 0) {
     $columns[] = __('Deposit');
 }
 
-if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-    $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
-}
-
 ?>
   <tbody>
 
@@ -124,16 +120,6 @@ if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrenc
                 </td>
             <?php } ?>
 
-            <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
-                <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
-                    <?php
-                        if (isset($product['timebasedCurrencySeconds'])) {
-                            echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($product['timebasedCurrencySeconds']);
-                        }
-                    ?>
-                </td>
-            <?php } ?>
-
         </tr>
 
     <?php } ?>
@@ -142,7 +128,6 @@ if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrenc
         <tr>
             <td style="border:1px solid #d6d4d4;" colspan="<?php echo $priceColspan; ?>"></td>
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyNumber->formatAsCurrency($productSum); ?></td>
-
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                 <?php
                 if ($depositSum > 0) {
@@ -150,15 +135,6 @@ if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrenc
                 }
                 ?>
             </td>
-
-            <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
-                <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
-                    <?php
-                        echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum());
-                    ?>
-                </td>
-            <?php } ?>
-
         </tr>
     <?php } ?>
 
@@ -170,9 +146,6 @@ if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrenc
                 echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
             ?>
         </td>
-        <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
-            <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
-        <?php } ?>
     </tr>
 
 </tbody>

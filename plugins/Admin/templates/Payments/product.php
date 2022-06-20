@@ -33,12 +33,6 @@ if (count($payments) == 0) {
         'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');"
     ]);
 
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
-        ]);
-    }
-
     echo '<table class="list">';
     echo '<tr class="sort">';
         echo '<th>'.__d('admin', 'Date').'</th>';
@@ -126,9 +120,6 @@ if (count($payments) == 0) {
         if ($payment['type'] == 'order') {
             $sumOrders += $payment['amount'];
             echo $this->Number->formatAsCurrency($payment['amount']);
-            if (!empty($payment['timebased_currency_sum_seconds'])) {
-                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['timebased_currency_sum_seconds']).'"> *</b>';
-            }
         }
         echo '</td>';
 
@@ -219,10 +210,8 @@ if ($this->request->getParam('action') == 'product') {
     echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fas fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
     echo '</div>';
 }
-
-echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDetailInList);
-
 ?>
+
 <div class="sc"></div>
 
 </div>

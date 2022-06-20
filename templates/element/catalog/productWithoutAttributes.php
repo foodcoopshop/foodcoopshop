@@ -32,15 +32,6 @@ if ($showProductPrice) {
         echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product->deposit_product->deposit).'</b> '.__('deposit').'</div>';
     }
     echo '</div>';
-    if (!$this->request->getSession()->read('Auth.orderCustomer') && !empty($product->timebased_currency_money_incl)) {
-        echo $this->element('timebasedCurrency/addProductInfo', [
-            'manufacturerLimitReached' => $product->timebased_currency_manufacturer_limit_reached,
-            'class' => 'timebased-currency-product-info',
-            'money' => $product->timebased_currency_money_incl,
-            'seconds' => $product->timebased_currency_seconds,
-            'labelPrefix' => __('from_which_{0}_%', [$product->manufacturer->timebased_currency_max_percentage]) . ' '
-        ]);
-    }
     echo '<div class="tax">'. $this->Number->formatAsCurrency($product->calculated_tax) . '</div>';
 } else {
     // Cart.js::initAddToCartButton() needs the following elements!

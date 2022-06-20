@@ -261,10 +261,6 @@ abstract class AppCakeTestCase extends TestCase
             ];
         }
 
-        if ($timebaseCurrencyTimeSum !== null) {
-            $data['Carts']['timebased_currency_seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
-        }
-
         if ($pickupDay !== null) {
             $data['Carts']['pickup_day'] = $pickupDay;
         }
@@ -281,7 +277,6 @@ abstract class AppCakeTestCase extends TestCase
     {
         $contain = [
             'CartProducts.OrderDetails.OrderDetailUnits',
-            'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails',
         ];
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -378,17 +373,6 @@ abstract class AppCakeTestCase extends TestCase
         ];
         $statement = $this->dbConnection->prepare($query);
         return $statement->execute($params);
-    }
-
-    protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)
-    {
-        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
-        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE', '10,50');
-        $this->changeCustomer(Configure::read('test.superadminId'), 'timebased_currency_enabled', 1);
-        $this->changeCustomer(Configure::read('test.customerId'), 'timebased_currency_enabled', 1);
-        $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
-        $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
-        $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
     }
 
     protected function getCorrectedLogoPathInHtmlForPdfs($html)

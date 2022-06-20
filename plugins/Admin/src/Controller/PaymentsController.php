@@ -598,15 +598,9 @@ class PaymentsController extends AdminAppController
                             ]
                         ),
                         'payment_id' => null,
-                        'timebased_currency_sum_seconds' => $orderDetail['SumTimebasedCurrencySeconds']
                     ];
                 }
             }
-
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-            $timebasedCurrencySum = $this->TimebasedCurrencyOrderDetail->getSum(null, $this->getCustomerId());
-            $timebasedCurrencyOrderDetailInList = $timebasedCurrencySum > 0;
-            $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);
         }
 
         $payments = Hash::sort($payments, '{n}.date', 'desc');

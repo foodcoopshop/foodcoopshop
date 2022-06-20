@@ -21,13 +21,6 @@ if ($groupBy == 'customer') {
 
 echo '<td class="right">';
 
-    if (!empty($orderDetail->timebased_currency_order_detail)) {
-        echo '<span id="timebased-currency-object-'.$orderDetail->id_order_detail.'" class="timebased-currency-object"></span>';
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Admin.setOrderDetailTimebasedCurrencyData($('#timebased-currency-object-".$orderDetail->id_order_detail."'),'".json_encode($orderDetail->timebased_currency_order_detail)."');"
-        ]);
-    }
-
     echo '<div class="table-cell-wrapper amount">';
 
         if ($groupBy == '') {

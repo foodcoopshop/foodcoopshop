@@ -67,9 +67,6 @@ echo '<tr class="sort">';
         echo '<th>'.__d('admin', 'Deposit').'</th>';
     }
     echo '<th>' . __d('admin', 'Email') . '</th>';
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo '<th>' . $this->Paginator->sort('Manufacturers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
-    }
     echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __d('admin', 'Stock_products')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __d('admin', 'Delivery_break')) . '</th>';
     echo '<th style="width:40px;">' . $this->Paginator->sort('Manufacturers.is_private', __d('admin', 'Only_for_members')) . '</th>';
@@ -86,7 +83,6 @@ echo '<tr class="sort">';
 echo '</tr>';
 $i = 0;
 $sumProductCount = 0;
-$sumTimebasedCurrency = null;
 foreach ($manufacturers as $manufacturer) {
 
     $i ++;
@@ -187,34 +183,6 @@ foreach ($manufacturers as $manufacturer) {
         $classes = ['far fa-envelope ok fa-lg manufacturer-email-button'];
         echo '<i class="'.join(' ', $classes).'" title="'.h($manufacturer->address_manufacturer->email).'" data-email="'.h($manufacturer->address_manufacturer->email).'"></i>';
     echo '</td>';
-
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo '<td>';
-            if ($manufacturer->timebased_currency_enabled) {
-                $sumTimebasedCurrency += $manufacturer->timebased_currency_credit_balance;
-
-                $timebasedCurrencyCreditBalanceClasses = [];
-                if ($manufacturer->timebased_currency_credit_balance < 0) {
-                    $timebasedCurrencyCreditBalanceClasses[] = 'negative';
-                }
-                $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($manufacturer->timebased_currency_credit_balance);
-
-                if ($appAuth->isSuperadmin()) {
-                    echo $this->Html->link(
-                        $timebasedCurrencyCreditBalanceHtml,
-                        $this->Slug->getTimebasedCurrencyBalanceForManufacturers($manufacturer->id_manufacturer),
-                        [
-                            'class' => 'btn btn-outline-light',
-                            'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()]),
-                            'escape' => false
-                        ]
-                    );
-                } else {
-                    echo $timebasedCurrencyCreditBalanceHtml;
-                }
-            }
-        echo '</td>';
-    }
 
     echo '<td style="text-align:center;width:42px;">';
         if ($manufacturer->stock_management_enabled == 1) {
@@ -332,9 +300,6 @@ echo '<td></td>';
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
-}
-if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
 }
 echo '<td colspan="' . $colspan . '"></td>';
 echo '</tr>';

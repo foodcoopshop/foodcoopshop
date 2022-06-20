@@ -47,8 +47,6 @@ TRUNCATE TABLE `fcs_storage_locations`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
-TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
-TRUNCATE TABLE `fcs_timebased_currency_payments`;
 TRUNCATE TABLE `fcs_units`;
 TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
@@ -113,12 +111,6 @@ INSERT INTO `fcs_configuration` VALUES
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Use variable member fee?<br /><div class=\"small\">Reduce the variable member fee in the manufacturer\'s invoices? Therefore the prices need to be increased.</div>','0','readonly',400,'en_US','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Default value for variable member fee<br /><div class=\"small\">The percentage can be changed in the manufacturer\'s settings.</div>','0','readonly',500,'en_US','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (567,1,'FCS_NETWORK_PLUGIN_ENABLED','Network module activated?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/en/network-module\" target=\"_blank\">Infos to the network module</a></div>','0','readonly',500,'en_US','2017-09-14 00:00:00','2017-09-14 00:00:00'),
-(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Paying-with-time module activated?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/en/paying-with-time-module\" target=\"_blank\">Infos th the paying-with-time module</a></div>','0','boolean',2000,'en_US','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Paying-with-time: Unit name<br /><div class=\"small\">max. 10 characters</div>','hours','text',2100,'en_US','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Paying-with-time: Abbreviation<br /><div class=\"small\">max. 3 characters</div>','h','text',2200,'en_US','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Paying-with-time: Exchange rate<br /><div class=\"small\">in €, 2 decimals</div>','10.00','number',2300,'en_US','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(572,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER','Paying-with-time: Overdraft frame for members<br /><div class=\"small\">How many negative hours are allowed maximal for members?</div>','10','number',2400,'en_US','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Paying-with-time: Overdraft frame for manufacturers<br /><div class=\"small\">How many positive hours are allowed maximal for manufacturers?</div>','100','number',2500,'en_US','2018-03-16 15:23:34','2018-03-16 15:23:34'),
 (574,1,'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS','Shop product price for guests?','0','boolean',210,'en_US','2018-05-28 18:05:54','2018-05-28 18:05:54'),
 (575,1,'FCS_CURRENCY_SYMBOL','Currency symbol','$','readonly',520,'en_US','2018-06-13 19:53:14','2018-06-13 19:53:14'),
 (576,1,'FCS_DEFAULT_LOCALE','Language','en_US','readonly',550,'en_US','2018-06-26 10:18:55','2018-06-26 10:18:55'),
@@ -244,12 +236,6 @@ INSERT INTO `fcs_tax` VALUES
 (3,13.000,1,0);
 /*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_timebased_currency_payments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_payments` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
@@ -295,7 +281,8 @@ INSERT INTO `phinxlog` VALUES
 (20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:33','2022-03-23 08:12:33',0),
 (20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:35','2022-04-07 09:37:35',0),
 (20220412131842,'Newsletter','2022-04-12 13:28:56','2022-04-12 13:28:56',0),
-(20220525092822,'BiggerQueuedJobDataField','2022-05-25 09:32:00','2022-05-25 09:32:00',0);
+(20220525092822,'BiggerQueuedJobDataField','2022-05-25 09:32:00','2022-05-25 09:32:00',0),
+(20220620091755,'RemoveTimebasedCurrencyModule','2022-06-20 09:30:29','2022-06-20 09:30:29',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

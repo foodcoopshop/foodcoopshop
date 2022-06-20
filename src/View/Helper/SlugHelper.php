@@ -239,48 +239,6 @@ class SlugHelper extends Helper
         return '/'.__('route_registration');
     }
 
-    public function getMyTimebasedCurrencyBalanceForManufacturers()
-    {
-        return '/admin/timebased-currency-payments/my-payments-manufacturer';
-    }
-
-    public function getTimebasedCurrencyBalanceForManufacturers($manufacturerId)
-    {
-        return '/admin/timebased-currency-payments/payments-manufacturer/' . $manufacturerId;
-    }
-
-    public function getMyTimebasedCurrencyBalanceForCustomers($manufacturerId = null)
-    {
-        $url = '/admin/timebased-currency-payments/my-payments-customer';
-        if (!is_null($manufacturerId)){
-            $url .= '?manufacturerId='.$manufacturerId;
-        }
-        return $url;
-    }
-
-    public function getTimebasedCurrencyPaymentDetailsForManufacturers($customerId)
-    {
-        return '/admin/timebased-currency-payments/my-payment-details-manufacturer/'.$customerId;
-    }
-
-    public function getTimebasedCurrencyPaymentDetailsForSuperadmins($manufacturerId, $customerId)
-    {
-        $url = '/admin/timebased-currency-payments/payment-details-superadmin/' . $customerId;
-        if (!is_null($manufacturerId)){
-            $url .= '?manufacturerId='.$manufacturerId;
-        }
-        return $url;
-    }
-
-    public function getTimebasedCurrencyPaymentEdit($paymentId)
-    {
-        return '/admin/timebased-currency-payments/edit/'.$paymentId;
-    }
-    public function getTimebasedCurrencyPaymentAdd($customerId)
-    {
-        return '/admin/timebased-currency-payments/add/' . $customerId;
-    }
-
     public function getMyCreditBalance()
     {
         return '/admin/payments/overview';

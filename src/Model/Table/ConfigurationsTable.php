@@ -198,48 +198,6 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function validationFcsTimebasedCurrencyEnabled(Validator $validator)
-    {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
-    }
-
-    public function validationFcsTimebasedCurrencyName(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_enter_the_paying_with_time_module_name.'));
-        $validator = $this->getLengthBetweenValidator($validator, 'value', 2, 10);
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyShortcode(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_enter_the_abbreviation_of_the_paying_with_time_module.'));
-        $validator = $this->getLengthBetweenValidator($validator, 'value', 1, 3);
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}.',[Configure::read('appDb.FCS_CURRENCY_SYMBOL')]));
-        $validator->decimal('value', 2, __('Please_enter_exactly_2_decimals.'));
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyMaxCreditBalanceCustomer(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_provide_a_value.'));
-        $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 50);
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyMaxCreditBalanceManufacturer(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_provide_a_value.'));
-        $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 200);
-        return $validator;
-    }
-
     private function getLengthBetweenValidator($validator, $field, $min, $max)
     {
         $message = __('The_amount_of_characters_needs_to_be_between_{0}_and_{1}.', [$min, $max]);

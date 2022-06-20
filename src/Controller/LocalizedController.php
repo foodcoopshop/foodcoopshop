@@ -123,9 +123,6 @@ class LocalizedController extends Controller
                 'show' => __('Show'),
                 'showAllProducts' => __('Show_all_products')
             ],
-            'timebasedCurrency' => [
-                'routeCart' => __('route_cart')
-            ],
             'admin' => [
                 'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
                 'PlaceOrderFor' => __('Place_order_for'),

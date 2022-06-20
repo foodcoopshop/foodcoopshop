@@ -51,22 +51,6 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    public function testEditOrderDetailAmountWithTimebasedCurrency()
-    {
-
-        $cart = $this->prepareTimebasedCurrencyCart();
-        $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
-        $this->editOrderDetailAmount($orderDetailId, $this->newAmount, $this->editAmountReason);
-
-        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
-
-        $this->assertEquals($this->newAmount, $changedOrderDetails[0]->product_amount);
-        $this->assertEquals('1,40', Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
-
-        $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 0.55, 0.6, 216);
-    }
-
-
     public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationPurchasePrice()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);

@@ -296,14 +296,4 @@ class AppAuthComponent extends AuthComponent
         return $cart->getCart($this, $cartType);
     }
 
-    public function isTimebasedCurrencyEnabledForManufacturer(): bool
-    {
-        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.timebased_currency_enabled');
-    }
-
-    public function isTimebasedCurrencyEnabledForCustomer(): bool
-    {
-        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->user('timebased_currency_enabled');
-    }
-
 }

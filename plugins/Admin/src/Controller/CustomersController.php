@@ -325,12 +325,6 @@ class CustomersController extends AdminAppController
                 }
             }
 
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-            $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId);
-            if ($timebasedCurrencyCreditBalance != 0) {
-                $errors[] = __d('admin', 'The_credit_of_the_paying_with_time_account_is:') . ' ' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'. ' . __d('admin', 'It_needs_to_be_zero.');
-            }
-
             if (!empty($customer->manufacturers)) {
                 $manufacturerNames = [];
                 foreach($customer->manufacturers as $manufacturer) {
@@ -417,11 +411,6 @@ class CustomersController extends AdminAppController
                 'AddressCustomers'
             ]
         ])->first();
-
-        $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId) * -1;
-        $this->set('timebasedCurrencyCreditBalance', $timebasedCurrencyCreditBalance);
-        $this->set('timebasedCurrencyDisableOptionAllowed', $timebasedCurrencyCreditBalance >= 0);
 
         $this->setFormReferer();
 
@@ -723,7 +712,6 @@ class CustomersController extends AdminAppController
                 'Customers.active',
                 'Customers.email_order_reminder_enabled',
                 'Customers.date_add',
-                'Customers.timebased_currency_enabled',
                 'Customers.newsletter_enabled',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
@@ -733,16 +721,9 @@ class CustomersController extends AdminAppController
         $this->Payment = $this->getTableLocator()->get('Payments');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        }
-
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $customer->credit_balance = $this->Customer->getCreditBalance($customer->id_customer);
-                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                    $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
-                }
             }
             $customer->order_detail_count = $this->OrderDetail->getCountByCustomerId($customer->id_customer);
             $customer->different_pickup_day_count = $this->OrderDetail->getDifferentPickupDayCountByCustomerId($customer->id_customer);

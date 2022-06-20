@@ -31,7 +31,6 @@ class ConfigurationHelper extends Helper
             case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
             case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
             case 'FCS_ORDER_COMMENT_ENABLED':
-            case 'FCS_TIMEBASED_CURRENCY_ENABLED':
             case 'FCS_FOODCOOPS_MAP_ENABLED':
             case 'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM':
             case 'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS':

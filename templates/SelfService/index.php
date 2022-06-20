@@ -37,8 +37,6 @@ if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::rea
 
 echo $this->element('autoPrintInvoice');
 
-echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
-
 if ($isMobile) {
     if ($appAuth->user('use_camera_for_barcode_scanning')) {
         $this->element('addScript', ['script' =>

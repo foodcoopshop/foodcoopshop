@@ -48,9 +48,6 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
                 <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             <?php } ?>
             <p class="total-sum-wrapper"><b><?php echo __('Total'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
-            <?php if (!$appAuth->isOrderForDifferentCustomerMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
-                <p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
-            <?php } ?>
         </div>
         <div class="sc"></div>
 
@@ -69,7 +66,6 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
                 'novalidate' => 'novalidate',
                 'url' => $this->Slug->getCartFinish()
             ]);
-            echo $this->element('cart/timebasedCurrencyDropdown');
             echo $this->element('cart/variableMemberFeeInfoText');
         ?>
 

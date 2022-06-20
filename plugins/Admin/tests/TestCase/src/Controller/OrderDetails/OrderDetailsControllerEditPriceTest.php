@@ -65,18 +65,6 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails);
     }
 
-    public function testEditOrderDetailPriceWithTimebasedCurrency()
-    {
-        $cart = $this->prepareTimebasedCurrencyCart();
-        $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
-        $this->editOrderDetailPrice($orderDetailId, $this->newPrice, $this->editPriceReason, true);
-
-        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
-        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
-
-        $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 1.38, 1.52, 544);
-    }
-
     public function testEditOrderDetailPriceAsSuperadminWithEnabledNotification()
     {
         $this->loginAsSuperadmin();

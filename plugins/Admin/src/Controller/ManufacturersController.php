@@ -316,7 +316,7 @@ class ManufacturersController extends AdminAppController
 
         $manufacturers = $this->paginate($query, [
             'sortableFields' => [
-                'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
+                'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'),
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
@@ -333,10 +333,6 @@ class ManufacturersController extends AdminAppController
         $this->Payment = $this->getTableLocator()->get('Payments');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        }
-
         foreach ($manufacturers as $manufacturer) {
             $this->Catalog = new Catalog();
             $manufacturer->product_count = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
@@ -344,9 +340,6 @@ class ManufacturersController extends AdminAppController
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
             $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                $manufacturer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance($manufacturer->id_manufacturer);
-            }
             if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturer->variable_member_fee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             }
@@ -462,8 +455,6 @@ class ManufacturersController extends AdminAppController
             $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
 
-        $manufacturer->timebased_currency_max_credit_balance /= 3600;
-
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = $this->getTableLocator()->get('Customers');
         }
@@ -500,15 +491,9 @@ class ManufacturersController extends AdminAppController
                 'validate' => 'editOptions'
             ]
         );
-        if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
-            $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') * 3600));
-        }
 
         if ($manufacturer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
-            if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') / 3600));
-            }
             $this->set('manufacturer', $manufacturer);
             $this->render('edit_options');
         } else {

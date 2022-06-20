@@ -75,10 +75,6 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         }
 
         var productPrice = $('#dialogOrderDetailProductPricePrice').val();
-        var timebasedCurrencyPriceObject = $('#dialogOrderDetailProductPriceTimebasedCurrencyPrice');
-        if (timebasedCurrencyPriceObject.length > 0) {
-            productPrice = timebasedCurrencyPriceObject.val();
-        }
 
         foodcoopshop.Helper.ajaxCall(
             '/admin/order-details/editProductPrice/',
@@ -114,37 +110,8 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         $(modalSelector + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
         $(modalSelector + ' label[for="dialogOrderDetailProductPricePrice"]').html('<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b> <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td.customer-field span.customer-name-for-dialog').text() + ')');
 
-        var productTimebasedCurrencyPriceField;
-
         $(modalSelector + ' .price-per-unit-info-text').remove();
-        if (row.find('td.quantity-field').html() != '') {
-            productTimebasedCurrencyPriceField = $(modalSelector + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">' + foodcoopshop.LocalizedJs.admin.ExplainationTextApdaptPriceFormApaptWeight + '</b>');
-        }
-
-        $(modalSelector + ' span.timebased-currency-wrapper').remove();
-        var timebasedCurrencyObject = $('#timebased-currency-object-' + orderDetailId);
-        if (timebasedCurrencyObject.length > 0
-           && $(modalSelector + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice').length == 0) {
-            var timebasedCurrencyData = timebasedCurrencyObject.data('timebased-currency-object');
-            var additionalDialogHtml = '<span class="timebased-currency-wrapper">';
-            additionalDialogHtml += '<span class="small"> (' + foodcoopshop.LocalizedJs.admin.OriginalPriceWithoutReductionOfPriceInTime + ')</span>';
-            additionalDialogHtml += '<label for="dialogOrderDetailProductPriceTimebasedCurrency"></label><br />';
-            additionalDialogHtml += '<input type="number" step="0.01" min="0.01" name="dialogOrderDetailProductPriceTimebasedCurrencyPrice" id="dialogOrderDetailProductPriceTimebasedCurrencyPrice" value="" />';
-            additionalDialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b><span class="small"> (' + foodcoopshop.LocalizedJs.admin.FromWhichReallyPaidIn + ' ' + foodcoopshop.LocalizedJs.helper.CurrencyName + ')</span>';
-            additionalDialogHtml += '</span>';
-            $(modalSelector + ' .textarea-wrapper').before(additionalDialogHtml);
-        }
-
-        if (timebasedCurrencyObject.length > 0) {
-            var newPrice = (price + Number(timebasedCurrencyData.money_incl)).toFixed(2);
-            productPriceField.val(newPrice);
-            productTimebasedCurrencyPriceField = $(modalSelector + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice');
-            productTimebasedCurrencyPriceField.val(price);
-            foodcoopshop.TimebasedCurrency.bindOrderDetailProductPriceField(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField);
-            foodcoopshop.TimebasedCurrency.bindOrderDetailProductTimebasedCurrencyPriceField(productTimebasedCurrencyPriceField, timebasedCurrencyData, productPriceField);
-        } else {
-            productPriceField.val(price);
-        }
+        productPriceField.val(price);
 
         $('#dialogOrderDetailProductQuantityPrice').focus();
 

@@ -60,9 +60,6 @@ $this->element('addScript', [
             ])) {
                 continue;
             }
-            if (! Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED' && substr($configuration->name, 0, 23) == 'FCS_TIMEBASED_CURRENCY_') {
-                continue;
-            }
 
             if (in_array($configuration->name, ['FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS']) && !Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 continue;
