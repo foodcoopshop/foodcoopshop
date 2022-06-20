@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-05-25 08:41+0200\n"
+"POT-Creation-Date: 2022-06-20 12:06+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -117,9 +117,6 @@ msgid "It_needs_to_be_zero."
 msgstr ""
 
 msgid "Amount_of_not_approved_payments_within_the_last_2_years:"
-msgstr ""
-
-msgid "The_credit_of_the_paying_with_time_account_is:"
 msgstr ""
 
 msgid "The_member_is_still_associated_to_the_following_manufacturers:"
@@ -686,39 +683,6 @@ msgstr ""
 msgid "Tax_rates"
 msgstr ""
 
-msgid "The_time_entry_has_been_deleted"
-msgstr ""
-
-msgid "The_time_entry_for_the_{0}_has_been_deleted"
-msgstr ""
-
-msgid "Member"
-msgstr ""
-
-msgid "Your_time_entry_from_{0}_has_been_deleted."
-msgstr ""
-
-msgid "and_an_email_was_sent_to_{0}"
-msgstr ""
-
-msgid "Add_time_entry"
-msgstr ""
-
-msgid "Edit_time_entry"
-msgstr ""
-
-msgid "Credit_balance_of_{0}"
-msgstr ""
-
-msgid "of"
-msgstr ""
-
-msgid "My_{0}_(time_account)"
-msgstr ""
-
-msgid "My_credit_balance"
-msgstr ""
-
 msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
 msgstr ""
 
@@ -1094,18 +1058,6 @@ msgstr ""
 msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
 msgstr ""
 
-msgid "Paying_with_time_module_active?"
-msgstr ""
-
-msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
-msgstr ""
-
-msgid "docs_route_paying_with_time_module"
-msgstr ""
-
-msgid "How_do_I_use_the_paying_with_time_module?"
-msgstr ""
-
 msgid "Superadmin_functions"
 msgstr ""
 
@@ -1158,9 +1110,6 @@ msgid "activate"
 msgstr ""
 
 msgid "Show_credit"
-msgstr ""
-
-msgid "Show_{0}"
 msgstr ""
 
 msgid "Purchase_price_abbreviation"
@@ -1556,24 +1505,6 @@ msgstr ""
 msgid "Chose_member"
 msgstr ""
 
-msgid "Paying_with_time"
-msgstr ""
-
-msgid "Max_part_of_{0}_in_percent"
-msgstr ""
-
-msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
-msgstr ""
-
-msgid "Maximum_credit_balance_in_{0}"
-msgstr ""
-
-msgid "up_to_which_it_can_be_paid_in_{0}."
-msgstr ""
-
-msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
-msgstr ""
-
 msgid "Pickup_days"
 msgstr ""
 
@@ -1608,6 +1539,9 @@ msgid "Test_invoice"
 msgstr ""
 
 msgid "Manufacturer_profile"
+msgstr ""
+
+msgid "Member"
 msgstr ""
 
 msgid "Product"
@@ -1871,9 +1805,6 @@ msgstr ""
 msgid "Tax_rates_can_not_be_changed_later."
 msgstr ""
 
-msgid "Delete"
-msgstr ""
-
 msgid "Add_deposit_amount"
 msgstr ""
 
@@ -2004,9 +1935,6 @@ msgid "products_picked_up"
 msgstr ""
 
 msgid "Click_to_change_price"
-msgstr ""
-
-msgid "Additional_in_{0}"
 msgstr ""
 
 msgid "Yes"
@@ -2373,18 +2301,6 @@ msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_trans
 msgstr ""
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-
-msgid "Paid_by_members_in_{0}"
-msgstr ""
-
-msgid "Paid_by_members_in"
-msgstr ""
-
-msgid "Kept_variable_member_fee"
-msgstr ""
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
 msgstr ""
 
 msgid "Detail_view"

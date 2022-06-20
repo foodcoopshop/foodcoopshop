@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-03 15:00+0200\n"
-"PO-Revision-Date: 2022-06-20 10:48+0200\n"
+"POT-Creation-Date: 2022-06-20 12:06+0200\n"
+"PO-Revision-Date: 2022-06-20 12:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -200,15 +200,6 @@ msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
 
 msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
 msgstr "{0} hat die Lieferpause aktiviert und das Produkt {1} ist nicht mehr bestellbar."
-
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
-
-msgid "Please_enter_a_number."
-msgstr "Bitte gib eine Zahl ein."
-
-msgid "Your_overdraft_frame_of_{0}_is_reached."
-msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
 
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
@@ -674,6 +665,9 @@ msgstr "Bitte gib an, warum der Preis angepasst wird."
 
 msgid "Cancellation_reason_is_mandatory."
 msgstr "Bitte gib an, warum storniert wird."
+
+msgid "Please_enter_a_number."
+msgstr "Bitte gib eine Zahl ein."
 
 msgid "Add_new_attribute_for_product"
 msgstr "Neue Variante für Produkt erstellen"
@@ -1245,6 +1239,18 @@ msgstr "Pfand geliefert"
 msgid "Payment_type_deposit_return"
 msgstr "Pfand-Rückgabe"
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Rechnung Nr. {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Storno-Rechnung Nr. {0}, {1}"
+
+msgid "Invoice"
+msgstr "Rechnung"
+
+msgid "Cancellation_invoice"
+msgstr "Storno-Rechnung"
+
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
@@ -1548,15 +1554,6 @@ msgstr "Hersteller: erstellt"
 msgid "Action_Log_Manufacturer_changed"
 msgstr "Hersteller: Profil geändert"
 
-msgid "Action_Log_Paying_with_time_time_upload_added"
-msgstr "Stundenabrechnung: Zeit-Eintragung erstellt"
-
-msgid "Action_Log_Paying_with_time_time_upload_changed"
-msgstr "Stundenabrechnung: Zeit-Eintragung geändert"
-
-msgid "Action_Log_Paying_with_time_time_upload_deleted"
-msgstr "Stundenabrechnung: Zeit-Eintragung gelöscht"
-
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Datenbank gebackupt"
 
@@ -1709,21 +1706,6 @@ msgstr "Folgende Werte sind gültig:"
 
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr "Bitte gib den Namen der Foodcoop an."
-
-msgid "Please_enter_the_paying_with_time_module_name."
-msgstr "Bitte gib den Namen der Stundenabrechnung an."
-
-msgid "Please_enter_the_abbreviation_of_the_paying_with_time_module."
-msgstr "Bitte gib die Abkürzung des Namens der Stundenabrechnung an."
-
-msgid "Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}."
-msgstr "Bitte gib den Umrechnungskurs für die Stundenabrechnung in {0} an."
-
-msgid "Please_enter_exactly_2_decimals."
-msgstr "Bitte trage genau 2 Kommastellen ein."
-
-msgid "Please_provide_a_value."
-msgstr "Bitte gib einen Wert an."
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "Die Anzahl der Zeichen muss zwischen {0} und {1} liegen."
@@ -1920,21 +1902,6 @@ msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
 msgid "member"
 msgstr "Mitglied"
 
-msgid "Delivery_note_for_{0}"
-msgstr "Lieferschein für {0}"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Rechnung Nr. {0}, {1}"
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr "Storno-Rechnung Nr. {0}, {1}"
-
-msgid "Invoice"
-msgstr "Rechnung"
-
-msgid "Cancellation_invoice"
-msgstr "Storno-Rechnung"
-
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
 
@@ -1967,6 +1934,9 @@ msgstr "Abhol-Erinnerung für"
 
 msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 Lieferschein wurde} other{# Lieferscheine wurden}} erfolgreich erstellt."
+
+msgid "Delivery_note_for_{0}"
+msgstr "Lieferschein für {0}"
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 Rechnung wurde} other{# Rechnungen wurden}} erfolgreich erstellt."
@@ -2160,15 +2130,6 @@ msgstr "Alle-Produkte"
 msgid "routes_product"
 msgstr "produkt"
 
-msgid "Mouseover_shows_the_paid_amont_in_{0}."
-msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
-
-msgid "Order_contains_amount_in_{0}."
-msgstr "Bestellung wurde teilweise in {0} bezahlt."
-
-msgid "Paying_with_time_account_name_{0}"
-msgstr "{0}konto"
-
 msgid "Modified_on"
 msgstr "Geändert am"
 
@@ -2195,9 +2156,6 @@ msgstr "Pfandsumme"
 
 msgid "Total"
 msgstr "Gesamt"
-
-msgid "From_which_in"
-msgstr "Davon in"
 
 msgid "Including_vat"
 msgstr "Enthaltene Umsatzsteuer"
@@ -2397,9 +2355,6 @@ msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle de
 msgid "No_order_possible"
 msgstr "Keine Bestellung möglich"
 
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr "Wieviel davon möchtest du in {0} bezahlen?"
-
 msgid "available"
 msgstr "verfügbar"
 
@@ -2426,9 +2381,6 @@ msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
 
 msgid "Currently_not_on_stock"
 msgstr "Derzeit leider nicht verfügbar"
-
-msgid "from_which_{0}_%"
-msgstr "davon {0} %"
 
 msgid "Move_in_shopping_bag"
 msgstr "In die Einkaufstasche"
@@ -2522,15 +2474,6 @@ msgstr "Kategorien"
 
 msgid "There_are_only_stock_products_shown_in_this_list."
 msgstr "In dieser Liste werden nur Lagerprodukte angezeigt."
-
-msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
-msgstr "Der Hersteller hat das Limit für die Bezahlung in Stunden erreicht."
-
-msgid "Part_in_{0}"
-msgstr "Anteil in {0}"
-
-msgid "in"
-msgstr "in"
 
 msgid "Admin_area"
 msgstr "Admin-Bereich"
@@ -2684,6 +2627,63 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+#~ msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
+
+#~ msgid "Your_overdraft_frame_of_{0}_is_reached."
+#~ msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
+
+#~ msgid "Action_Log_Paying_with_time_time_upload_added"
+#~ msgstr "Stundenabrechnung: Zeit-Eintragung erstellt"
+
+#~ msgid "Action_Log_Paying_with_time_time_upload_changed"
+#~ msgstr "Stundenabrechnung: Zeit-Eintragung geändert"
+
+#~ msgid "Action_Log_Paying_with_time_time_upload_deleted"
+#~ msgstr "Stundenabrechnung: Zeit-Eintragung gelöscht"
+
+#~ msgid "Please_enter_the_paying_with_time_module_name."
+#~ msgstr "Bitte gib den Namen der Stundenabrechnung an."
+
+#~ msgid "Please_enter_the_abbreviation_of_the_paying_with_time_module."
+#~ msgstr "Bitte gib die Abkürzung des Namens der Stundenabrechnung an."
+
+#~ msgid "Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}."
+#~ msgstr "Bitte gib den Umrechnungskurs für die Stundenabrechnung in {0} an."
+
+#~ msgid "Please_enter_exactly_2_decimals."
+#~ msgstr "Bitte trage genau 2 Kommastellen ein."
+
+#~ msgid "Please_provide_a_value."
+#~ msgstr "Bitte gib einen Wert an."
+
+#~ msgid "Mouseover_shows_the_paid_amont_in_{0}."
+#~ msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
+
+#~ msgid "Order_contains_amount_in_{0}."
+#~ msgstr "Bestellung wurde teilweise in {0} bezahlt."
+
+#~ msgid "Paying_with_time_account_name_{0}"
+#~ msgstr "{0}konto"
+
+#~ msgid "From_which_in"
+#~ msgstr "Davon in"
+
+#~ msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+#~ msgstr "Wieviel davon möchtest du in {0} bezahlen?"
+
+#~ msgid "from_which_{0}_%"
+#~ msgstr "davon {0} %"
+
+#~ msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+#~ msgstr "Der Hersteller hat das Limit für die Bezahlung in Stunden erreicht."
+
+#~ msgid "Part_in_{0}"
+#~ msgstr "Anteil in {0}"
+
+#~ msgid "in"
+#~ msgstr "in"
 
 #~ msgid "Please_enter_the_lastname"
 #~ msgstr "Bitte gib den Nachnamen an"

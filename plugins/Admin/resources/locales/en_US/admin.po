@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-05-25 08:41+0200\n"
-"PO-Revision-Date: 2022-05-25 08:50+0200\n"
+"POT-Creation-Date: 2022-06-20 12:06+0200\n"
+"PO-Revision-Date: 2022-06-20 12:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -119,9 +119,6 @@ msgstr "It needs to be 0."
 
 msgid "Amount_of_not_approved_payments_within_the_last_2_years:"
 msgstr "Amount of not approved payments within the last 2 years:"
-
-msgid "The_credit_of_the_paying_with_time_account_is:"
-msgstr "The credit of the paying-with-time-module is:"
 
 msgid "The_member_is_still_associated_to_the_following_manufacturers:"
 msgstr "The member is still associated to the following manufacturers:"
@@ -687,39 +684,6 @@ msgstr "The tax rate {0} has been {1}."
 msgid "Tax_rates"
 msgstr "Tax rates"
 
-msgid "The_time_entry_has_been_deleted"
-msgstr "The time entry has been deleted"
-
-msgid "The_time_entry_for_the_{0}_has_been_deleted"
-msgstr "The time entry for the {0} has been deleted"
-
-msgid "Member"
-msgstr "Member"
-
-msgid "Your_time_entry_from_{0}_has_been_deleted."
-msgstr "Your time entry from {0} has been deleted."
-
-msgid "and_an_email_was_sent_to_{0}"
-msgstr "and an email was sent to {0}"
-
-msgid "Add_time_entry"
-msgstr "Add time entry"
-
-msgid "Edit_time_entry"
-msgstr "Edit time entry"
-
-msgid "Credit_balance_of_{0}"
-msgstr "Credit balance of {0}"
-
-msgid "of"
-msgstr "of"
-
-msgid "My_{0}_(time_account)"
-msgstr "My {0}"
-
-msgid "My_credit_balance"
-msgstr "My credit balance"
-
 msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
 msgstr "The uploaded file needs to have the format: {0}"
 
@@ -1095,18 +1059,6 @@ msgstr "Generate my member card"
 msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
 msgstr "I want to use my smartphone's camera for barcode scanning."
 
-msgid "Paying_with_time_module_active?"
-msgstr "Paying-with-time-module active?"
-
-msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
-msgstr "I want to bea able to pay my products also in {0}."
-
-msgid "docs_route_paying_with_time_module"
-msgstr "paying-with-time-module"
-
-msgid "How_do_I_use_the_paying_with_time_module?"
-msgstr "How do I use the paying-with-time-module?"
-
 msgid "Superadmin_functions"
 msgstr "Superadmin functions"
 
@@ -1160,9 +1112,6 @@ msgstr "activate"
 
 msgid "Show_credit"
 msgstr "Show credit"
-
-msgid "Show_{0}"
-msgstr "Show {0}"
 
 msgid "Purchase_price_abbreviation"
 msgstr "PP"
@@ -1557,24 +1506,6 @@ msgstr "Should stock products be included in order lists?"
 msgid "Chose_member"
 msgstr "Chose member..."
 
-msgid "Paying_with_time"
-msgstr "Paying with time"
-
-msgid "Max_part_of_{0}_in_percent"
-msgstr "Maximal part of {0} in percent"
-
-msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
-msgstr "valid for all products. 0 means that the paying-with-time-module is deactivated in the shop."
-
-msgid "Maximum_credit_balance_in_{0}"
-msgstr "Maximum credit balance in {0}"
-
-msgid "up_to_which_it_can_be_paid_in_{0}."
-msgstr "up to which the member can pay in {0}."
-
-msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
-msgstr "0 means: global limit of {0} is used."
-
 msgid "Pickup_days"
 msgstr "Pickup days"
 
@@ -1610,6 +1541,9 @@ msgstr "Test invoice"
 
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
+
+msgid "Member"
+msgstr "Member"
 
 msgid "Product"
 msgstr "Product"
@@ -1872,9 +1806,6 @@ msgstr "e.g. 10 for 10%"
 msgid "Tax_rates_can_not_be_changed_later."
 msgstr "Tax rates can not be changed later."
 
-msgid "Delete"
-msgstr "Delete"
-
 msgid "Add_deposit_amount"
 msgstr "Add deposit amount"
 
@@ -2006,9 +1937,6 @@ msgstr "Products picked up"
 
 msgid "Click_to_change_price"
 msgstr "Click to change price"
-
-msgid "Additional_in_{0}"
-msgstr "Additional in {0}"
 
 msgid "Yes"
 msgstr "Yes"
@@ -2376,18 +2304,6 @@ msgstr "The total sum below right (minus {0}% variable member fee) will be trans
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr "The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
 
-msgid "Paid_by_members_in_{0}"
-msgstr "Paid by all members in {0}"
-
-msgid "Paid_by_members_in"
-msgstr "Paid by all members in"
-
-msgid "Kept_variable_member_fee"
-msgstr "Kept variable member fee"
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
-msgstr "Amount that will be transferred to your bank account"
-
 msgid "Detail_view"
 msgstr "Detail view"
 
@@ -2399,6 +2315,90 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "The_credit_of_the_paying_with_time_account_is:"
+#~ msgstr "The credit of the paying-with-time-module is:"
+
+#~ msgid "The_time_entry_has_been_deleted"
+#~ msgstr "The time entry has been deleted"
+
+#~ msgid "The_time_entry_for_the_{0}_has_been_deleted"
+#~ msgstr "The time entry for the {0} has been deleted"
+
+#~ msgid "Your_time_entry_from_{0}_has_been_deleted."
+#~ msgstr "Your time entry from {0} has been deleted."
+
+#~ msgid "and_an_email_was_sent_to_{0}"
+#~ msgstr "and an email was sent to {0}"
+
+#~ msgid "Add_time_entry"
+#~ msgstr "Add time entry"
+
+#~ msgid "Edit_time_entry"
+#~ msgstr "Edit time entry"
+
+#~ msgid "Credit_balance_of_{0}"
+#~ msgstr "Credit balance of {0}"
+
+#~ msgid "of"
+#~ msgstr "of"
+
+#~ msgid "My_{0}_(time_account)"
+#~ msgstr "My {0}"
+
+#~ msgid "My_credit_balance"
+#~ msgstr "My credit balance"
+
+#~ msgid "Paying_with_time_module_active?"
+#~ msgstr "Paying-with-time-module active?"
+
+#~ msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
+#~ msgstr "I want to bea able to pay my products also in {0}."
+
+#~ msgid "docs_route_paying_with_time_module"
+#~ msgstr "paying-with-time-module"
+
+#~ msgid "How_do_I_use_the_paying_with_time_module?"
+#~ msgstr "How do I use the paying-with-time-module?"
+
+#~ msgid "Show_{0}"
+#~ msgstr "Show {0}"
+
+#~ msgid "Paying_with_time"
+#~ msgstr "Paying with time"
+
+#~ msgid "Max_part_of_{0}_in_percent"
+#~ msgstr "Maximal part of {0} in percent"
+
+#~ msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
+#~ msgstr "valid for all products. 0 means that the paying-with-time-module is deactivated in the shop."
+
+#~ msgid "Maximum_credit_balance_in_{0}"
+#~ msgstr "Maximum credit balance in {0}"
+
+#~ msgid "up_to_which_it_can_be_paid_in_{0}."
+#~ msgstr "up to which the member can pay in {0}."
+
+#~ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
+#~ msgstr "0 means: global limit of {0} is used."
+
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgid "Additional_in_{0}"
+#~ msgstr "Additional in {0}"
+
+#~ msgid "Paid_by_members_in_{0}"
+#~ msgstr "Paid by all members in {0}"
+
+#~ msgid "Paid_by_members_in"
+#~ msgstr "Paid by all members in"
+
+#~ msgid "Kept_variable_member_fee"
+#~ msgstr "Kept variable member fee"
+
+#~ msgid "Amount_that_will_be_transferred_to_your_bank_account"
+#~ msgstr "Amount that will be transferred to your bank account"
 
 #~ msgid "Profit / all prices are net prices"
 #~ msgstr "Profit / all prices are net prices"
