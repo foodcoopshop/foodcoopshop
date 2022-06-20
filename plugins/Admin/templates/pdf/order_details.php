@@ -68,7 +68,6 @@ foreach ($orderDetails as $od) {
     $sumPrice = 0;
     $sumDeposit = 0;
     $usesQuantityInUnits = 0;
-    $timebasedCurrencyOrderDetailInList = false;
     $oldStorageLocation = 0;
     $i = 1;
 
@@ -113,11 +112,6 @@ foreach ($orderDetails as $od) {
 
         $pdf->table .= '<td style="' . $priceStyle . 'text-align:right"; width="' . $widths[3] . '">';
         $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
-
-        if (!empty($orderDetail->timebased_currency_order_detail)) {
-            $pdf->table .= ' *';
-            $timebasedCurrencyOrderDetailInList = true;
-        }
 
         if (!empty($orderDetail->order_detail_unit) && !$orderDetail->order_detail_unit->mark_as_saved) {
             $pdf->table .= ' *';
@@ -171,8 +165,6 @@ foreach ($orderDetails as $od) {
     }
 
     $pdf->renderTable();
-
-    $pdf->writeHTML($this->TimebasedCurrency->getOrderInformationTextForPdf($timebasedCurrencyOrderDetailInList, true, false, true, false, ''));
 
     if ($usesQuantityInUnits > 0) {
         $html = '<p>* '.__d('admin', 'The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';

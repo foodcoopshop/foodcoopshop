@@ -153,22 +153,6 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdC, 10);
     }
 
-    public function testCancellationWithTimebasedCurrency()
-    {
-        $cart = $this->prepareTimebasedCurrencyCart();
-        $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
-        $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);
-
-        // assert if record TimebasedCurrencyOrderDetail was removed
-        $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        $timebasedCurrencyOrderDetail = $this->TimebasedCurrencyOrderDetail->find('all', [
-            'conditions' => [
-                'TimebasedCurrencyOrderDetails.id_order_detail' => $orderDetailId
-            ]
-        ]);
-        $this->assertEquals(0, $timebasedCurrencyOrderDetail->count());
-    }
-
     private function deleteAndAssertRemoveFromDatabase($orderDetailIds)
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);

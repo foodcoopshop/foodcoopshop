@@ -45,19 +45,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
-    protected function prepareTimebasedCurrencyCart()
-    {
-        $reducedMaxPercentage = 15;
-        $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
-        $this->loginAsSuperadmin();
-        $this->addProductToCart(344, 1);
-        $this->addProductToCart(346, 2);
-        $this->finishCart(1, 1, '', '352');
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
-        $cart = $this->getCartById($cartId);
-        return $cart;
-    }
-
     protected function simulateSendOrderListsCronjob($orderDetailId)
     {
         $this->OrderDetail->save(
@@ -68,13 +55,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
                 ]
             )
         );
-    }
-
-    protected function assertTimebasedCurrencyOrderDetail($changedOrderDetail, $moneyExcl, $moneyIncl, $seconds)
-    {
-        $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->money_excl, $moneyExcl);
-        $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->money_incl, $moneyIncl);
-        $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->seconds, $seconds);
     }
 
     protected function getChangedMockCartFromDatabase()
@@ -115,7 +95,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
             ],
             'contain' => [
                 'OrderDetailUnits',
-                'TimebasedCurrencyOrderDetails'
             ]
         ])->toArray();
         return $orderDetails;

@@ -431,16 +431,6 @@ class ActionLogsTable extends AppTable
                 ]
             ],
 
-            'timebased_currency_payment_added' => [
-                'name' => __('Action_Log_Paying_with_time_time_upload_added')
-            ],
-            'timebased_currency_payment_changed' => [
-                'name' => __('Action_Log_Paying_with_time_time_upload_changed')
-            ],
-            'timebased_currency_payment_deleted' => [
-                'name' => __('Action_Log_Paying_with_time_time_upload_deleted')
-            ],
-
             'cronjob_backup_database' => [
                 'name' => __('Action_Log_Cronjob_database_backup_done')
             ],

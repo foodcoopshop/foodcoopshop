@@ -24,15 +24,11 @@ trait SetSumTrait
         $sumPriceExcl = 0;
         $sumTax = 0;
         $sumAmount = 0;
-        $sumTimebasedCurrencyPriceIncl = 0;
         foreach ($results as $result) {
             $sumPriceIncl += $result['OrderDetailPriceIncl'];
             $sumPriceExcl += $result['OrderDetailPriceExcl'];
             $sumTax += $result['OrderDetailTaxAmount'];
             $sumAmount += $result['OrderDetailAmount'];
-            if (isset($result['OrderDetailTimebasedCurrencyPriceInclAmount'])) {
-                $sumTimebasedCurrencyPriceIncl += $result['OrderDetailTimebasedCurrencyPriceInclAmount'];
-            }
         }
 
         $this->setData([
@@ -40,7 +36,6 @@ trait SetSumTrait
             'sumPriceExcl' => $sumPriceExcl,
             'sumTax' => $sumTax,
             'sumAmount' => $sumAmount,
-            'sumTimebasedCurrencyPriceIncl' => $sumTimebasedCurrencyPriceIncl,
         ]);
 
     }

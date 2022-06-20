@@ -22,7 +22,6 @@ if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeI
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
-$timebasedCurrencyPaymentForCustomersMenuElement = $this->Menu->getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth);
 
 $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),
@@ -111,9 +110,6 @@ if ($appAuth->isCustomer()) {
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
     }
-    if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
-        $menu[]= $timebasedCurrencyPaymentForCustomersMenuElement;
-    }
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $menu[] = $myInvoicesMenuElement;
     }
@@ -184,9 +180,6 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $actionLogsMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $customerProfileMenuElement['children'][] = $paymentProductMenuElement;
-    }
-    if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
-        $customerProfileMenuElement['children'][] = $timebasedCurrencyPaymentForCustomersMenuElement;
     }
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $customerProfileMenuElement['children'][] = $myInvoicesMenuElement;
@@ -313,10 +306,6 @@ if ($appAuth->isManufacturer()) {
                 ]
             ];
         }
-    }
-    $timebasedCurrencyPaymentForManufacturersMenuElement = $this->Menu->getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth);
-    if (! empty($timebasedCurrencyPaymentForManufacturersMenuElement)) {
-        $menu[]= $timebasedCurrencyPaymentForManufacturersMenuElement;
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;

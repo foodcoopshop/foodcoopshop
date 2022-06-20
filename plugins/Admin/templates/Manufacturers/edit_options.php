@@ -240,31 +240,6 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         echo '<div class="sc"></div>';
     }
 
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo '<h2>'.__d('admin', 'Paying_with_time').'</h2>';
-        echo $this->Form->control('Manufacturers.timebased_currency_enabled', [
-            'label' => __d('admin', 'Paying_with_time_module_active?').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a></span>',
-            'type' => 'checkbox',
-            'escape' => false
-        ]);
-        if ($manufacturer->timebased_currency_enabled) {
-            echo $this->Form->control('Manufacturers.timebased_currency_max_percentage', [
-                'label' => __d('admin', 'Max_part_of_{0}_in_percent', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop.').'</span>',
-                'type' => 'text',
-                'class' => 'short',
-                'escape' => false
-            ]);
-            echo $this->Form->control('Manufacturers.timebased_currency_max_credit_balance', [
-                'label' => __d('admin', 'Maximum_credit_balance_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'up_to_which_it_can_be_paid_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).
-                ' ' . __d('admin', 'Zero_means_no_limit_and_global_limit_of_{0}_is_used.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') . ' ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) .
-                '</span>',
-                'type' => 'text',
-                'class' => 'short',
-                'escape' => false
-            ]);
-        }
-    }
-
     echo $this->Form->end();
 
 ?>

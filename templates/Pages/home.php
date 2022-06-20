@@ -44,8 +44,6 @@ if (!empty($newProducts)) {
         Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
     ]);
 
-    echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
-
     $isFirstElement = empty($blogPosts) || $blogPosts->count() == 0;
     echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:10px;' : '') . '">';
         echo __('New_products');

@@ -458,15 +458,6 @@ class Catalog {
 
             $products[$i]->next_delivery_day = $this->Product->getNextDeliveryDay($product, $appAuth);
 
-            if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-                if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]->manufacturer->timebased_currency_enabled)) {
-                    $products[$i]->timebased_currency_money_incl = $this->Manufacturer->getTimebasedCurrencyMoney($products[$i]->gross_price, $products[$i]->manufacturer->timebased_currency_max_percentage);
-                    $products[$i]->timebased_currency_money_excl = $this->Manufacturer->getTimebasedCurrencyMoney($products[$i]->price, $products[$i]->manufacturer->timebased_currency_max_percentage);
-                    $products[$i]->timebased_currency_seconds = $this->Manufacturer->getCartTimebasedCurrencySeconds($products[$i]->gross_price, $products[$i]->manufacturer->timebased_currency_max_percentage);
-                    $products[$i]->timebased_currency_manufacturer_limit_reached = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]->id_manufacturer);
-                }
-            }
-
             foreach ($product->product_attributes as &$attribute) {
 
                 $attribute->unit_product_attribute = $attribute->unit_product_attribute ?? (object) [
@@ -496,14 +487,6 @@ class Catalog {
                 $attribute->gross_price = $grossPrice;
                 $attribute->calculated_tax = $grossPrice - $attribute->price;
 
-                 if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-                     if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($products[$i]->manufacturer->timebased_currency_enabled)) {
-                         $attribute->timebased_currency_money_incl = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $products[$i]->manufacturer->timebased_currency_max_percentage);
-                         $attribute->timebased_currency_money_excl = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->price, $products[$i]->manufacturer->timebased_currency_max_percentage);
-                         $attribute->timebased_currency_seconds = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $products[$i]->manufacturer->timebased_currency_max_percentage);
-                         $attribute->timebased_currency_manufacturer_limit_reached = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($products[$i]->id_manufacturer);
-                     }
-                 }
             }
 
             $i++;

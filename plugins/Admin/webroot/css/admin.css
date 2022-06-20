@@ -376,9 +376,6 @@ body.order_details.index a.change-products-picked-up-button {
     width: 64px;
     text-align: left;
 }
-body.order_details.index .timebased-currency-object {
-    display: none;
-}
 .product-attributes-dropdown {
     width: 400px;
 }
@@ -455,8 +452,7 @@ form div.error-message {
     font-weight: normal;
     font-size: 12px;
 }
-#add-payment-button-wrapper,
-#add-timebased-currency-payment-button-wrapper {
+#add-payment-button-wrapper {
     margin-bottom: 10px;
     clear: both;
 }
@@ -504,19 +500,6 @@ body.order_details.index td a.pickup-day-comment-edit-button {
 }
 .add-payment-form .checkbox label {
     margin-left: 3px;
-}
-#timebasedCurrencyPaymentEditForm a.btn-arrow {
-    top: 5px;
-}
-#timebasedCurrencyPaymentEditForm h3 {
-    margin-bottom: 20px;
-}
-#timebasedCurrencyPaymentEditForm .textarea label {
-    vertical-align: top;
-}
-#timebasedCurrencyPaymentEditForm select,
-#timebasedCurrencyPaymentEditForm textarea {
-    width: 250px;
 }
 #blogPostEditForm .blog-post-image-wrapper {
     float: left;
@@ -598,9 +581,6 @@ body.payments h2 {
 }
 body.payments.product h2.personal-transaction-code {
     margin-top: 10px;
-}
-body.timebased_currency_payments table.list {
-    width: 850px;
 }
 body.payments .bottom-button-container {
     float: left;

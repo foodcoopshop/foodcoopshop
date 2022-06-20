@@ -423,10 +423,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    setOrderDetailTimebasedCurrencyData : function(elementToAttach, timebasedCurrencyObject) {
-        elementToAttach.data('timebased-currency-object', $.parseJSON(timebasedCurrencyObject));
-    },
-
     setProductUnitData : function(elementToAttach, productUnitObject) {
         elementToAttach.data('product-unit-object', $.parseJSON(productUnitObject));
     },

@@ -684,7 +684,6 @@ class OrderDetailsController extends AdminAppController
                 $query->select($this->OrderDetail);
                 $query->select($this->OrderDetail->OrderDetailUnits);
                 $query->select($this->OrderDetail->OrderDetailFeedbacks);
-                $query->select($this->OrderDetail->TimebasedCurrencyOrderDetails);
                 $query->select($this->Customer);
                 $query->select($this->OrderDetail->Products);
                 $query->select($this->OrderDetail->Products->Manufacturers);
@@ -717,7 +716,6 @@ class OrderDetailsController extends AdminAppController
         $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
         $this->set('orderDetails', $orderDetails);
 
-        $timebasedCurrencyOrderDetailInList = false;
         $sums = [
             'records_count' => 0,
             'amount' => 0,
@@ -748,11 +746,7 @@ class OrderDetailsController extends AdminAppController
             if (!empty($orderDetail->order_detail_unit)) {
                 $sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
             }
-            if (!empty($orderDetail->timebased_currency_order_detail) || !empty($orderDetail['timebased_currency_order_detail_seconds_sum'])) {
-                $timebasedCurrencyOrderDetailInList = true;
-            }
         }
-        $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);
         $this->set('sums', $sums);
 
         // extract all email addresses for button
@@ -784,7 +778,6 @@ class OrderDetailsController extends AdminAppController
             'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
             'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
-            'timebased_currency_order_detail_seconds_sum' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')
         ]);
         return $query;
     }
@@ -1086,7 +1079,6 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
-                'TimebasedCurrencyOrderDetails',
             ]
         ])->first();
 
@@ -1116,7 +1108,6 @@ class OrderDetailsController extends AdminAppController
                 $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
             }
             $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
-            $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
@@ -1208,7 +1199,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'TimebasedCurrencyOrderDetails',
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
             ]
@@ -1230,8 +1220,6 @@ class OrderDetailsController extends AdminAppController
             $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $oldOrderDetail->product_amount * $productAmount;
             $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
         }
-
-        $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $productAmount);
 
         $message = __d('admin', 'The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
@@ -1373,7 +1361,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'TimebasedCurrencyOrderDetails',
             ]
         ])->first();
 
@@ -1386,8 +1373,6 @@ class OrderDetailsController extends AdminAppController
             Configure::read('app.numberHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl),
             Configure::read('app.numberHelper')->formatAsDecimal($productPrice)
         ]);
-
-        $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
 
         $emailRecipients = [];
 
@@ -1799,7 +1784,6 @@ class OrderDetailsController extends AdminAppController
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
-                    'TimebasedCurrencyOrderDetails',
                     'OrderDetailUnits',
                     'OrderDetailPurchasePrices',
                 ]
@@ -1942,14 +1926,6 @@ class OrderDetailsController extends AdminAppController
         ])->first();
 
         return $newOrderDetail;
-    }
-
-    private function changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newPrice, $amount)
-    {
-        if (!empty($object->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-            $this->TimebasedCurrencyOrderDetail->changePrice($object, $newPrice, $amount);
-        }
     }
 
     private function increaseQuantityForProduct($orderDetail, $orderDetailAmountBeforeAmountChange)

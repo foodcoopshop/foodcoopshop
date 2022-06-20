@@ -48,9 +48,6 @@ class OrderDetailsTable extends AppTable
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'product_attribute_id'
         ]);
-        $this->hasOne('TimebasedCurrencyOrderDetails', [
-            'foreignKey' => 'id_order_detail'
-        ]);
         $this->hasOne('OrderDetailUnits', [
             'foreignKey' => 'id_order_detail'
         ]);
@@ -385,10 +382,6 @@ class OrderDetailsTable extends AppTable
     {
         $this->delete($orderDetail);
 
-        if (!empty($orderDetail->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetails->delete($orderDetail->timebased_currency_order_detail);
-        }
-
         if (!empty($orderDetail->order_detail_unit)) {
             $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
         }
@@ -526,12 +519,10 @@ class OrderDetailsTable extends AppTable
     public function getMonthlySumProductByCustomer($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
-        $query->contain('TimebasedCurrencyOrderDetails');
         $query->group('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
-            'SumTimebasedCurrencySeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
         ]);
         return $query->toArray();
@@ -625,10 +616,6 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
             $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;
             $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
-            if (!isset($preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'])) {
-                $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = 0;
-            }
-            $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
         return $preparedOrderDetails;
     }
@@ -646,10 +633,6 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
             $preparedOrderDetails[$key]['manufacturer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
-            if (!isset($preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'])) {
-                $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = 0;
-            }
-            $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
 
         foreach($preparedOrderDetails as &$pod) {
@@ -682,10 +665,6 @@ class OrderDetailsTable extends AppTable
                 $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
                 $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
-            if (!isset($preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'])) {
-                $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = 0;
-            }
-            $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
             if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
                 $productsPickedUp = true;
                 $preparedOrderDetails[$key]['row_class'] = ['selected'];
@@ -747,7 +726,6 @@ class OrderDetailsTable extends AppTable
         $contain = [
             'Customers',
             'Products.Manufacturers.AddressManufacturers',
-            'TimebasedCurrencyOrderDetails',
             'OrderDetailUnits',
             'OrderDetailFeedbacks',
         ];

@@ -64,12 +64,6 @@ use Cake\Core\Configure;
         ]);
     }
 
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
-        ]);
-    }
-
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
         $this->element('addScript', [
             'script' =>
@@ -381,11 +375,8 @@ echo '<div class="bottom-button-container">';
 
 echo '</div>';
 echo '<div class="sc"></div>';
-
-
-echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDetailInList);
-
 ?>
+
     <div class="sc"></div>
 
 </div>

@@ -24,14 +24,12 @@ class InvoiceToManufacturerPdfWriter extends PdfWriter
     use SetSumTrait;
 
     public $Manufacturer;
-    public $TimebasedCurrencyOrderDetail;
 
     public function __construct()
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new ListTcpdf());
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
-        $this->TimebasedCurrencyOrderDetail = FactoryLocator::get('Table')->get('TimebasedCurrencyOrderDetails');
     }
 
     public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate)
@@ -48,9 +46,6 @@ class InvoiceToManufacturerPdfWriter extends PdfWriter
 
         $productResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         $customerResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
-
-        $productResults = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($productResults);
-        $customerResults = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($customerResults);
 
         $this->setSums($productResults);
 

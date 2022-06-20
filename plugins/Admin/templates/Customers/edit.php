@@ -196,21 +196,6 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     ]);
 }
 
-if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    $label = __d('admin', 'Paying_with_time_module_active?') . ' ';
-    $label .= '<span class="after small">'.__d('admin', 'I_want_to_be_able_to_pay_my_products_also_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a>';
-    if (!$timebasedCurrencyDisableOptionAllowed) {
-        $label .= ' Zum Deaktivieren der Option muss dein ' . $this->TimebasedCurrency->getName() . ' ausgeglichen sein, derzeit beträgt es '.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'.';
-    }
-    $label .= '</span>';
-    echo $this->Form->control('Customers.timebased_currency_enabled', [
-        'label' => $label,
-        'type' => 'checkbox',
-        'disabled' => (!$timebasedCurrencyDisableOptionAllowed ? 'disabled' : ''),
-        'escape' => false
-    ]);
-}
-
 if ($appAuth->isSuperadmin()) {
 
     echo '<div class="sc"></div>';

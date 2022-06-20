@@ -18,15 +18,6 @@ use Cake\I18n\I18n;
     echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
 
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo $this->Html->scriptBlock(
-            $this->Html->wrapJavascriptBlock(
-                Configure::read('app.jsNamespace').".TimebasedCurrency.setShortcode('".Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')."');"
-            ),
-            ['inline' => true]
-        );
-    }
-
     if ($isMobile) {
         echo '<div class="is-mobile-detector"></div>';
         echo $this->Html->script(['/node_modules/slidebars/dist/slidebars.min']);

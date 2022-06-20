@@ -82,10 +82,6 @@ class ManufacturersTable extends AppTable
             'rule' => 'noDeliveryDaysOrdersExist'
         ]);
 
-        $validator->numeric('timebased_currency_max_percentage', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
-        $validator->numeric('timebased_currency_max_credit_balance', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
 
@@ -104,41 +100,6 @@ class ManufacturersTable extends AppTable
             ],
         ])->first();
         return $manufacturer;
-    }
-
-    public function hasManufacturerReachedTimebasedCurrencyLimit($manufacturerId)
-    {
-        $manufacturer = $this->find('all', [
-            'conditions' => ['id_manufacturer' => $manufacturerId]
-        ])->first();
-
-        $timebasedCurrencyOrderDetailsTable = FactoryLocator::get('Table')->get('TimebasedCurrencyOrderDetails');
-        $creditBalance = $timebasedCurrencyOrderDetailsTable->getCreditBalance($manufacturerId, null);
-
-        $activeLimit = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') * 3600;
-
-        if ($manufacturer->timebased_currency_max_credit_balance > 0) {
-            $activeLimit = $manufacturer->timebased_currency_max_credit_balance;
-        }
-
-        if ($activeLimit > $creditBalance) {
-            return false;
-        }
-
-        return true;
-
-    }
-
-    public function getTimebasedCurrencyMoney($price, $percentage)
-    {
-        return $price * $percentage / 100;
-    }
-
-    public function getCartTimebasedCurrencySeconds($price, $percentage)
-    {
-        $result = $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100 * 3600;
-        $result = round($result, 0);
-        return $result;
     }
 
     /**
@@ -206,18 +167,6 @@ class ManufacturersTable extends AppTable
         return (boolean) $result;
     }
 
-    /**
-     * @param int $defaultTaxId
-     * @return int
-     */
-    public function getOptionTimebasedCurrencyEnabled($timebasedCurrencyEnabled)
-    {
-        $result = false;
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $timebasedCurrencyEnabled) {
-            $result = true;
-        }
-        return $result;
-    }
     /**
      * @param int $defaultTaxId
      * @return int
@@ -389,23 +338,6 @@ class ManufacturersTable extends AppTable
     public function getVariableMemberFeeAsFloat($price, $variableMemberFee)
     {
         return round($price * $variableMemberFee / 100, 2);
-    }
-
-    public function getTimebasedCurrencyManufacturersForDropdown()
-    {
-        $manufacturers = $this->find('all', [
-            'order' => [
-                'Manufacturers.name' => 'ASC'
-            ],
-            'conditions' => [
-                'Manufacturers.timebased_currency_enabled' => APP_ON
-            ]
-        ]);
-        $result = [];
-        foreach ($manufacturers as $manufacturer) {
-            $result[$manufacturer->id_manufacturer] = $manufacturer->name;
-        }
-        return $result;
     }
 
     public function getForDropdown()
