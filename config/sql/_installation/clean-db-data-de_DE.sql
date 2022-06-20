@@ -47,8 +47,6 @@ TRUNCATE TABLE `fcs_storage_locations`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
-TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
-TRUNCATE TABLE `fcs_timebased_currency_payments`;
 TRUNCATE TABLE `fcs_units`;
 TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
@@ -113,12 +111,6 @@ INSERT INTO `fcs_configuration` VALUES
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',400,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',500,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (567,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','0','readonly',500,'de_DE','2017-09-14 00:00:00','2017-09-14 00:00:00'),
-(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Stundenabrechnungs-Modul aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/stundenabrechnungs-modul\" target=\"_blank\">Infos zum Stundenabrechnung-Modul</a></div>','0','boolean',2000,'de_DE','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Stundenabrechnung: Name der Einheit<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',2100,'de_DE','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Stundenabrechnung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',2200,'de_DE','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Stundenabrechnung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',2300,'de_DE','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(572,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER','Stundenabrechnung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','10','number',2400,'de_DE','2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Stundenabrechnung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','100','number',2500,'de_DE','2018-03-16 15:23:34','2018-03-16 15:23:34'),
 (574,1,'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS','Produktpreis für nicht eingeloggte Mitglieder anzeigen?','0','boolean',210,'de_DE','2018-05-28 18:05:54','2018-05-28 18:05:54'),
 (575,1,'FCS_CURRENCY_SYMBOL','Währungssymbol','€','readonly',520,'de_DE','2018-06-13 19:53:14','2018-06-13 19:53:14'),
 (576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',550,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55'),
@@ -244,12 +236,6 @@ INSERT INTO `fcs_tax` VALUES
 (3,13.000,1,0);
 /*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_timebased_currency_payments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_payments` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
@@ -295,7 +281,8 @@ INSERT INTO `phinxlog` VALUES
 (20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:23','2022-03-23 08:12:23',0),
 (20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:26','2022-04-07 09:37:26',0),
 (20220412131842,'Newsletter','2022-04-12 13:28:47','2022-04-12 13:28:47',0),
-(20220525092822,'BiggerQueuedJobDataField','2022-05-25 09:31:51','2022-05-25 09:31:51',0);
+(20220525092822,'BiggerQueuedJobDataField','2022-05-25 09:31:51','2022-05-25 09:31:51',0),
+(20220620091755,'RemoveTimebasedCurrencyModule','2022-06-20 09:30:19','2022-06-20 09:30:19',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
