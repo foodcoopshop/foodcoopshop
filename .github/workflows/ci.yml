@@ -64,7 +64,7 @@ jobs:
           npm --prefix ./webroot install ./webroot
           bash bin/cake asset_compress build
           
-      - name: Upload Files to Server
+      - name: Upload files to server
         if: ${{ github.event_name == 'push' }}
         uses: up9cloud/action-rsync@master
         env:
