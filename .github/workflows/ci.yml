@@ -62,6 +62,7 @@ jobs:
           composer install --optimize-autoloader  --no-progress
           cp ./.github/workflows/*.php ./config/
           npm --prefix ./webroot install ./webroot
+          bin/cake asset_compress build
           
       - name: Upload Files to Server
         if: ${{ github.event_name == 'push' }}
@@ -70,7 +71,7 @@ jobs:
           HOST: ${{secrets.DEPLOY_HOST}}
           USER: ${{secrets.DEPLOY_USER}}
           KEY: ${{secrets.DEPLOY_SSH_KEY}}
-          SOURCE: ./webroot/node_modules
+          SOURCE: ./webroot
           TARGET: ${{secrets.DEPLOY_PATH}}/builds/${GITHUB_REF_NAME}/webroot
           PRE_SCRIPT: mkdir -p ${{secrets.DEPLOY_PATH}}/builds/${GITHUB_REF_NAME}/webroot
           SSH_ARGS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
