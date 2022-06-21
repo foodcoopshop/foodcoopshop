@@ -72,11 +72,11 @@ jobs:
           USER: ${{secrets.DEPLOY_USER}}
           KEY: ${{secrets.DEPLOY_SSH_KEY}}
           SOURCE: ./webroot
-          TARGET: ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}/webroot
+          TARGET: ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
           RUN_SCRIPT_ON: remote
           PRE_SCRIPT: |
-              echo ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}/webroot
-              mkdir -p ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}/webroot
+              echo ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
+              mkdir -p ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
           SSH_ARGS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
           
       - name: PHPStan
