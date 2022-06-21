@@ -62,6 +62,7 @@ jobs:
           composer install --optimize-autoloader  --no-progress
           cp ./.github/workflows/*.php ./config/
           npm --prefix ./webroot install ./webroot
+          bash bin/cake SavedLocalizedJsAsStaticFile
           bash bin/cake asset_compress build
           
       - name: Upload files to server
