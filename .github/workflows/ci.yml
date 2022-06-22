@@ -13,7 +13,7 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-20.04
-    continue-on-error: ${{ matrix.experimental }}
+    continue-on-error: ${{matrix.experimental}}
     strategy:
       matrix:
         php-version: ['8.0']
@@ -27,14 +27,14 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: foodcoopshop_test
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    name: PHP ${{ matrix.php-version }}
+    name: PHP ${{matrix.php-version}}
              
     steps:
     
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: ${{matrix.php-version}}
         env:
           update: true #forces minor release update
           
@@ -47,9 +47,9 @@ jobs:
       
       - name: Apply secrets
         run: |
-          sed -i 's/HELLO_CASH_USERNAME/${{ secrets.HELLO_CASH_USERNAME }}/' ./.github/workflows/custom_config.php
-          sed -i 's/HELLO_CASH_PASSWORD/${{ secrets.HELLO_CASH_PASSWORD }}/' ./.github/workflows/custom_config.php
-          sed -i 's/HELLO_CASH_CASHIER_ID/${{ secrets.HELLO_CASH_CASHIER_ID }}/' ./.github/workflows/custom_config.php
+          sed -i 's/HELLO_CASH_USERNAME/${{secrets.HELLO_CASH_USERNAME}}/' ./.github/workflows/custom_config.php
+          sed -i 's/HELLO_CASH_PASSWORD/${{secrets.HELLO_CASH_PASSWORD}}/' ./.github/workflows/custom_config.php
+          sed -i 's/HELLO_CASH_CASHIER_ID/${{secrets.HELLO_CASH_CASHIER_ID}}/' ./.github/workflows/custom_config.php
    
       - name: Setup DB
         run: |
@@ -68,7 +68,7 @@ jobs:
           sed -i "s/'debug' => false,/'debug' => true,/" ./config/custom_config.php
           
       - name: Upload files to server
-        if: ${{ github.event_name == 'push' }}
+        if: ${{github.event_name == 'push'}}
         uses: up9cloud/action-rsync@master
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
