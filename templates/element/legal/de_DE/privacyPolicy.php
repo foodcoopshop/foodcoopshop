@@ -116,7 +116,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
     <li>
         fcs-cookie-banner<br />
         Dauer: 1 Jahr<br />
-        Zweck: Speichert, ob die Cookies aktzeptiert wurden.
+        Zweck: Speichert, ob die Cookies akzeptiert wurden.
     </li>
 </ul>
 
