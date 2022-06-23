@@ -48,7 +48,9 @@ class MyBasicWidget extends BasicWidget
 
         // since HtmlPurifier converts all database updates to htmlspecialchars (eg. & => &amp;, > => &lt;)
         // they need to be reconverted for being displayed properly in form inputs
-        $data['value'] = html_entity_decode($data['value']);
+        if (!is_null($data['value'])) {
+            $data['value'] = html_entity_decode($data['value']);
+        }
 
         return $this->_templates->format('input', [
             'name' => $data['name'],
