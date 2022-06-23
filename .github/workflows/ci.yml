@@ -68,7 +68,7 @@ jobs:
           sed -i "s/'debug' => false,/'debug' => true,/" ./config/custom_config.php
           
       - name: Upload files to server
-        if: ${{github.event_name == 'push'}}
+        if: ${{github.event_name == 'push' && matrix.php-version == '8.1'}}
         uses: up9cloud/action-rsync@master
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
