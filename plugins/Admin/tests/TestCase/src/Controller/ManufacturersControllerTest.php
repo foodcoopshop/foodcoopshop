@@ -169,7 +169,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     // althouth the following property is not tested, it needs to be included in the request to avoid
                     // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
                     'send_ordered_product_deleted_notification' => 1,
-                ]
+                ],
+                'referer' => '/'
             ]
         );
 
