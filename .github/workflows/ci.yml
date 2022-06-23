@@ -12,11 +12,11 @@ on:
   
 jobs:
   ci:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     continue-on-error: ${{matrix.experimental}}
     strategy:
       matrix:
-        php-version: ['8.0', '8.1']
+        php-version: ['8.1']
         experimental: [false]
     services:
       mysql:
@@ -68,7 +68,7 @@ jobs:
           sed -i "s/'debug' => false,/'debug' => true,/" ./config/custom_config.php
           
       - name: Upload files to server
-        if: ${{github.event_name == 'push' && matrix.php-version == '8.1'}}
+        if: ${{github.event_name == 'push'}}
         uses: up9cloud/action-rsync@master
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
