@@ -25,9 +25,10 @@ class MyTimeHelper extends TimeHelper
 
     public function convertSecondsInMinutesAndSeconds($seconds)
     {
-        $decimals = round($seconds, 2) - (int) $seconds;
-        $minutes = floor(($seconds / 60) % 60);
-        $seconds = $seconds % 60;
+        $secondsAsInteger = (int) $seconds;
+        $decimals = round($seconds, 2) - $secondsAsInteger;
+        $minutes = floor(($secondsAsInteger / 60) % 60);
+        $seconds = $secondsAsInteger % 60;
         $result = [];
         if ($minutes > 0) {
             $result[] = __('{0,plural,=1{1_minute} other{#_minutes}}', [$minutes]);
