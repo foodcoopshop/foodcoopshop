@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -127,20 +127,30 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 10);
     }
 
-    public function testCancellationWithTimebasedCurrency()
+    public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminProduct()
     {
-        $cart = $this->prepareTimebasedCurrencyCart();
-        $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
-        $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Product->changeQuantity([[$this->productIdA => [
+            'always_available' => 0,
+            'quantity' => 10,
+            'default_quantity_after_sending_order_lists' => 10,
+        ]]]);
+        $this->loginAsSuperadmin();
+        $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
+        $this->assertChangedStockAvailable($this->productIdA, 10);
+    }
 
-        // assert if record TimebasedCurrencyOrderDetail was removed
-        $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        $timebasedCurrencyOrderDetail = $this->TimebasedCurrencyOrderDetail->find('all', [
-            'conditions' => [
-                'TimebasedCurrencyOrderDetails.id_order_detail' => $orderDetailId
-            ]
-        ]);
-        $this->assertEquals(0, $timebasedCurrencyOrderDetail->count());
+    public function testCancellationStockAvailableDefaultQuantityAfterSendingOrderListsAsSuperadminAttribute()
+    {
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Product->changeQuantity([[$this->productIdC => [
+            'always_available' => 0,
+            'quantity' => 10,
+            'default_quantity_after_sending_order_lists' => 10,
+        ]]]);
+        $this->loginAsSuperadmin();
+        $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdC]);
+        $this->assertChangedStockAvailable($this->productIdC, 10);
     }
 
     private function deleteAndAssertRemoveFromDatabase($orderDetailIds)
@@ -152,6 +162,9 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
     {
+
+        $this->runAndAssertQueue();
+
         $this->assertMailSubjectContainsAt($emailIndex, 'Produkt storniert: Artischocke : Stück');
 
         foreach($expectedToEmails as $expectedToEmail) {

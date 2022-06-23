@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 3.4.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -65,11 +65,11 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
     getOpenHandler : function(modalSelector, iframeSrcInit, iframeSrc, isInstantOrder) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         // START DROPDOWN
         var customerDropdownId = 'customerDropdown';
-        var header = $('<div class="message-container"><span class="start"><span class="title">' + foodcoopshop.LocalizedJs.admin.PlaceOrderFor + ': </span><select id="' + customerDropdownId + '"><option value="0">' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '</option></select></span></div>');
+        var header = $('<div class="message-container"><span class="start"><span class="title">' + foodcoopshop.LocalizedJs.admin.PlaceOrderFor + ': </span><select id="' + customerDropdownId + '" placeholder="' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '"></select></span></div>');
         $(modalSelector + ' .modal-title').append(header);
 
         var customerDropdownSelector = '#' + customerDropdownId;
@@ -77,7 +77,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
         $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
-            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember
+            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember,
         });
 
         // always preselect user if there is a dropdown called #customerId (for call from order detail)

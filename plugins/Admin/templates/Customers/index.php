@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -41,7 +41,16 @@ use Cake\Core\Configure;
                         'default' => $year != '' ? $year : ''
                     ]);
                 }
-                ?>
+                if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+                    echo $this->Form->control('newsletter', [
+                        'type' => 'select',
+                        'label' => '',
+                        'empty' => __d('admin', 'Newsletter'),
+                        'options' => $this->Html->getYesNoArray(),
+                        'default' => $newsletter,
+                    ]);
+                }
+            ?>
             <div class="right">
                 <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
@@ -56,7 +65,7 @@ echo $this->element('rowMarker/rowMarkerAll', [
     'enabled' => true
 ]);
 echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
+echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
@@ -64,18 +73,18 @@ echo '<th style="text-align:right">'.__d('admin', 'Ordered_products').'</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>'.__d('admin', 'Credit').'</th>';
 }
-if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    echo '<th>' . $this->Paginator->sort('Customers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
-}
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Reminder')) . '</th>';
+}
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
-if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
 }
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
@@ -84,7 +93,7 @@ echo '</tr>';
 $i = 0;
 $sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
-$sumTimebasedCurrency = null;
+$sumNewsletter = 0;
 foreach ($customers as $customer) {
     $i ++;
 
@@ -236,39 +245,21 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo '<td>';
-        if ($customer->timebased_currency_enabled) {
-            $sumTimebasedCurrency += $customer->timebased_currency_credit_balance;
-
-            $timebasedCurrencyCreditBalanceClasses = [];
-            if ($customer->timebased_currency_credit_balance < 0) {
-                $timebasedCurrencyCreditBalanceClasses[] = 'negative';
-            }
-            $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($customer->timebased_currency_credit_balance);
-
-            if ($appAuth->isSuperadmin()) {
-                echo $this->Html->link(
-                    $timebasedCurrencyCreditBalanceHtml,
-                    $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins(0, $customer->id_customer),
-                    [
-                        'class' => 'btn btn-outline-light',
-                        'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()]),
-                        'escape' => false
-                    ]
-                );
-            } else {
-                echo $timebasedCurrencyCreditBalanceHtml;
-            }
+    if (Configure::read('app.emailOrderReminderEnabled')) {
+        echo '<td align="center">';
+        if ($customer->email_order_reminder_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumEmailReminders++;
         }
         echo '</td>';
     }
 
-
-    if (Configure::read('app.emailOrderReminderEnabled')) {
-        echo '<td>';
-        echo $customer->email_order_reminder_enabled == 0 ? '' : 1;
-        $sumEmailReminders += $customer->email_order_reminder_enabled;
+    if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+        echo '<td align="center">';
+        if ($customer->newsletter_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumNewsletter++;
+        }
         echo '</td>';
     }
 
@@ -288,7 +279,7 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo '<td style="text-align:right;">';
             if ($customer->shopping_price == 'PP') {
                 echo __d('admin', 'Purchase_price_abbreviation');
@@ -322,17 +313,17 @@ echo '<td style="text-align:right"><b>' . $this->Number->formatAsDecimal($sumOrd
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
 }
-if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
-}
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<td><b>' . $sumEmailReminders . '</b></td>';
+    echo '<td align="center"><b>' . $sumEmailReminders . '</b></td>';
+}
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+    echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
 $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     $colspan++;
 }
-if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     $colspan++;
 }
 echo '<td colspan="'.$colspan.'"></td>';
@@ -343,7 +334,9 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-    echo $this->element('customerList/button/email');
+    echo $this->element('copyEmailButton', [
+        'object' => 'customer',
+    ]);
     echo $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
 echo '</div>';
 echo '<div class="sc"></div>';

@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -68,7 +68,6 @@ foreach ($orderDetails as $od) {
     $sumPrice = 0;
     $sumDeposit = 0;
     $usesQuantityInUnits = 0;
-    $timebasedCurrencyOrderDetailInList = false;
     $oldStorageLocation = 0;
     $i = 1;
 
@@ -113,11 +112,6 @@ foreach ($orderDetails as $od) {
 
         $pdf->table .= '<td style="' . $priceStyle . 'text-align:right"; width="' . $widths[3] . '">';
         $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
-
-        if (!empty($orderDetail->timebased_currency_order_detail)) {
-            $pdf->table .= ' *';
-            $timebasedCurrencyOrderDetailInList = true;
-        }
 
         if (!empty($orderDetail->order_detail_unit) && !$orderDetail->order_detail_unit->mark_as_saved) {
             $pdf->table .= ' *';
@@ -171,8 +165,6 @@ foreach ($orderDetails as $od) {
     }
 
     $pdf->renderTable();
-
-    $pdf->writeHTML($this->TimebasedCurrency->getOrderInformationTextForPdf($timebasedCurrencyOrderDetailInList, true, false, true, false, ''));
 
     if ($usesQuantityInUnits > 0) {
         $html = '<p>* '.__d('admin', 'The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';

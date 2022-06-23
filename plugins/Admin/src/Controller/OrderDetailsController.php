@@ -11,17 +11,18 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use App\Model\Table\OrderDetailsTable;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
 *
-* Licensed under The MIT License
-* For full copyright and license information, please see the LICENSE.txt
+* Licensed under the GNU Affero General Public License version 3
+* For full copyright and license information, please see LICENSE
 * Redistributions of files must retain the above copyright notice.
 *
 * @since         FoodCoopShop 1.0.0
-* @license       https://opensource.org/licenses/mit-license.php MIT License
+* @license       https://opensource.org/licenses/AGPL-3.0
 * @author        Mario Rothauer <office@foodcoopshop.com>
 * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
 * @link          https://www.foodcoopshop.com
@@ -271,7 +272,7 @@ class OrderDetailsController extends AdminAppController
         $productName = [];
         foreach($orderDetails as $orderDetail) {
             $storageLocationValue = 0;
-            if (!is_null($order)) {
+            if (!is_null($order) && !is_null($orderDetail->product->storage_location)) {
                 $storageLocationValue = $orderDetail->product->storage_location->rank;
             }
             $storageLocation[] = $storageLocationValue;
@@ -662,7 +663,7 @@ class OrderDetailsController extends AdminAppController
             case 'customer':
                 $query = $this->addSelectGroupFields($query);
                 $query->select(['OrderDetails.id_customer']);
-                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email']);
+                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email', 'Customers.is_company']);
                 if (count($pickupDay) == 1) {
                     $query->select(['PickupDayEntities.comment', 'PickupDayEntities.products_picked_up']);
                 }
@@ -678,6 +679,19 @@ class OrderDetailsController extends AdminAppController
                 $query->select(['Products.name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
                 break;
+            default:
+                $query = $this->Customer->addCustomersNameForOrderSelect($query);
+                $query->select($this->OrderDetail);
+                $query->select($this->OrderDetail->OrderDetailUnits);
+                $query->select($this->OrderDetail->OrderDetailFeedbacks);
+                $query->select($this->Customer);
+                $query->select($this->OrderDetail->Products);
+                $query->select($this->OrderDetail->Products->Manufacturers);
+                $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
+                if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+                    $query->select($this->OrderDetail->Products->StorageLocations);
+                }
+                break;
         }
 
         $orderDetails = $this->paginate($query, [
@@ -689,12 +703,12 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.order_state',
                 'OrderDetails.pickup_day',
                 'Manufacturers.name',
-                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'CustomerNameForOrder',
                 'OrderDetailUnits.product_quantity_in_units',
                 'sum_price',
                 'sum_amount',
                 'sum_deposit',
-                'Products.name'
+                'Products.name',
             ]
         ])->toArray();
 
@@ -702,7 +716,6 @@ class OrderDetailsController extends AdminAppController
         $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
         $this->set('orderDetails', $orderDetails);
 
-        $timebasedCurrencyOrderDetailInList = false;
         $sums = [
             'records_count' => 0,
             'amount' => 0,
@@ -733,11 +746,7 @@ class OrderDetailsController extends AdminAppController
             if (!empty($orderDetail->order_detail_unit)) {
                 $sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
             }
-            if (!empty($orderDetail->timebased_currency_order_detail) || !empty($orderDetail['timebased_currency_order_detail_seconds_sum'])) {
-                $timebasedCurrencyOrderDetailInList = true;
-            }
         }
-        $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);
         $this->set('sums', $sums);
 
         // extract all email addresses for button
@@ -769,7 +778,6 @@ class OrderDetailsController extends AdminAppController
             'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
             'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
-            'timebased_currency_order_detail_seconds_sum' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')
         ]);
         return $query;
     }
@@ -991,37 +999,40 @@ class OrderDetailsController extends AdminAppController
 
         $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
 
-        $recipients = [
-            [
-                'email' => $newCustomer->email,
-                'customer' => $newCustomer
-            ],
-            [
-                'email' => $oldOrderDetail->customer->email,
-                'customer' => $oldOrderDetail->customer
-            ]
-        ];
-        // send email to customers
-        foreach($recipients as $recipient) {
-            $email = new AppMailer();
-            $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
-            $email->setTo($recipient['email'])
-            ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
-            ->setViewVars([
-                'oldOrderDetail' => $oldOrderDetail,
-                'customer' => $recipient['customer'],
-                'newCustomer' => $newCustomer,
-                'editCustomerReason' => $editCustomerReason,
-                'amountString' => $amountString,
-                'appAuth' => $this->AppAuth
-            ]);
-            $email->send();
-        }
+        if (Configure::read('app.sendEmailWhenOrderDetailCustomerChanged')) {
+            $recipients = [
+                [
+                    'email' => $newCustomer->email,
+                    'customer' => $newCustomer
+                ],
+                [
+                    'email' => $oldOrderDetail->customer->email,
+                    'customer' => $oldOrderDetail->customer
+                ]
+            ];
+            // send email to customers
+            foreach($recipients as $recipient) {
+                $email = new AppMailer();
+                $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
+                $email->setTo($recipient['email'])
+                ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
+                ->setViewVars([
+                    'oldOrderDetail' => $oldOrderDetail,
+                    'customer' => $recipient['customer'],
+                    'newsletterCustomer' => $recipient['customer'],
+                    'newCustomer' => $newCustomer,
+                    'editCustomerReason' => $editCustomerReason,
+                    'amountString' => $amountString,
+                    'appAuth' => $this->AppAuth
+                ]);
+                $email->addToQueue();
+            }
 
-        $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
-            '<b>' . $oldOrderDetail->customer->name . '</b>',
-            '<b>' . $newCustomer->name . '</b>'
-        ]);
+            $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
+                '<b>' . $newCustomer->name . '</b>'
+            ]);
+        }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_customer_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
@@ -1068,7 +1079,6 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
-                'TimebasedCurrencyOrderDetails',
             ]
         ])->first();
 
@@ -1098,7 +1108,6 @@ class OrderDetailsController extends AdminAppController
                 $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
             }
             $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
-            $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
@@ -1119,6 +1128,7 @@ class OrderDetailsController extends AdminAppController
             ->setSubject(__d('admin', 'Weight_adapted_for_"0":', [$oldOrderDetail->product_name]) . ' ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
+                'newsletterCustomer' => $oldOrderDetail->customer,
                 'newProductQuantityInUnits' => $productQuantity,
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth
@@ -1137,7 +1147,7 @@ class OrderDetailsController extends AdminAppController
                 $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
             }
 
-            $email->send();
+            $email->addToQueue();
 
             $message .= $emailMessage;
 
@@ -1189,7 +1199,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'TimebasedCurrencyOrderDetails',
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
             ]
@@ -1212,8 +1221,6 @@ class OrderDetailsController extends AdminAppController
             $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
         }
 
-        $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $productAmount);
-
         $message = __d('admin', 'The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
             $oldOrderDetail->product_amount,
@@ -1227,6 +1234,7 @@ class OrderDetailsController extends AdminAppController
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
+            'newsletterCustomer' => $oldOrderDetail->customer,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
             'editAmountReason' => $editAmountReason
@@ -1245,7 +1253,7 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
         }
 
-        $email->send();
+        $email->addToQueue();
 
         $message .= $emailMessage;
 
@@ -1326,6 +1334,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $editPriceReason = strip_tags(html_entity_decode($this->getRequest()->getData('editPriceReason')));
+        $sendEmailToCustomer = (bool) $this->getRequest()->getData('sendEmailToCustomer');
 
         $productPrice = trim($this->getRequest()->getData('productPrice'));
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
@@ -1352,7 +1361,6 @@ class OrderDetailsController extends AdminAppController
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'TimebasedCurrencyOrderDetails',
             ]
         ])->first();
 
@@ -1366,38 +1374,47 @@ class OrderDetailsController extends AdminAppController
             Configure::read('app.numberHelper')->formatAsDecimal($productPrice)
         ]);
 
-        $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
+        $emailRecipients = [];
 
-        // send email to customer
-        $email = new AppMailer();
-        $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
-        $email->setTo($oldOrderDetail->customer->email)
-        ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
-        ->setViewVars([
-            'oldOrderDetail' => $oldOrderDetail,
-            'newOrderDetail' => $newOrderDetail,
-            'appAuth' => $this->AppAuth,
-            'editPriceReason' => $editPriceReason
-        ]);
-
-        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+        if ($sendEmailToCustomer) {
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
+            $email->setTo($oldOrderDetail->customer->email)
+            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+            ->setViewVars([
+                'oldOrderDetail' => $oldOrderDetail,
+                'newsletterCustomer' => $oldOrderDetail->customer,
+                'newOrderDetail' => $newOrderDetail,
+                'appAuth' => $this->AppAuth,
+                'editPriceReason' => $editPriceReason,
+            ]);
+            $email->addToQueue();
+            $emailRecipients[] = $oldOrderDetail->customer->name;
+        }
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                '<b>' . $oldOrderDetail->customer->name . '</b>',
-                '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
+            $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email)
+            ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
+            ->setViewVars([
+                'oldOrderDetail' => $oldOrderDetail,
+                'newOrderDetail' => $newOrderDetail,
+                'appAuth' => $this->AppAuth,
+                'editPriceReason' => $editPriceReason,
             ]);
-            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            $email->addToQueue();
+            $emailRecipients[] = $oldOrderDetail->product->manufacturer->name;
         }
 
-        $email->send();
-
-        $message .= $emailMessage;
-
         if ($editPriceReason != '') {
-            $message .= ' '.__d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
+            $message .= ' ' . __d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
+        }
+
+        if (!empty($emailRecipients)) {
+            $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . Text::toList($emailRecipients) . '</b>']);
         }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -1421,7 +1438,7 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $editPickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('editPickupDayReason')), '<strong><b>'));
-        $sendEmail = $this->getRequest()->getData('sendEmail');
+        $sendEmail = (bool) $this->getRequest()->getData('sendEmail');
 
         try {
             if (empty($orderDetailIds)) {
@@ -1479,23 +1496,24 @@ class OrderDetailsController extends AdminAppController
                     $customers[$orderDetail->id_customer] = [];
                 }
                 $customers[$orderDetail->id_customer][] = $orderDetail;
+            }
 
-                if ($sendEmail) {
-                    foreach($customers as $orderDetails) {
-                        $email = new AppMailer();
-                        $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
-                        $email->setTo($orderDetails[0]->customer->email)
-                        ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
-                        ->setViewVars([
-                            'orderDetails' => $orderDetails,
-                            'customer' => $orderDetails[0]->customer,
-                            'appAuth' => $this->AppAuth,
-                            'oldPickupDay' => $oldPickupDay,
-                            'newPickupDay' => $newPickupDay,
-                            'editPickupDayReason' => $editPickupDayReason
-                        ]);
-                        $email->send();
-                    }
+            if ($sendEmail) {
+                foreach($customers as $orderDetails) {
+                    $email = new AppMailer();
+                    $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
+                    $email->setTo($orderDetails[0]->customer->email)
+                    ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
+                    ->setViewVars([
+                        'orderDetails' => $orderDetails,
+                        'customer' => $orderDetails[0]->customer,
+                        'newsletterCustomer' => $orderDetails[0]->customer,
+                        'appAuth' => $this->AppAuth,
+                        'oldPickupDay' => $oldPickupDay,
+                        'newPickupDay' => $newPickupDay,
+                        'editPickupDayReason' => $editPickupDayReason
+                    ]);
+                    $email->addToQueue();
                 }
             }
 
@@ -1588,7 +1606,7 @@ class OrderDetailsController extends AdminAppController
             'orderDetailFeedback' => $orderDetailFeedback,
         ]);
 
-        $email->send();
+        $email->addToQueue();
 
         $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
 
@@ -1766,7 +1784,6 @@ class OrderDetailsController extends AdminAppController
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
-                    'TimebasedCurrencyOrderDetails',
                     'OrderDetailUnits',
                     'OrderDetailPurchasePrices',
                 ]
@@ -1790,6 +1807,7 @@ class OrderDetailsController extends AdminAppController
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,
+                'newsletterCustomer' => $orderDetail->customer,
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ]);
@@ -1807,7 +1825,7 @@ class OrderDetailsController extends AdminAppController
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
             }
 
-            $email->send();
+            $email->addToQueue();
 
             $message .= $emailMessage;
 
@@ -1910,14 +1928,6 @@ class OrderDetailsController extends AdminAppController
         return $newOrderDetail;
     }
 
-    private function changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newPrice, $amount)
-    {
-        if (!empty($object->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-            $this->TimebasedCurrencyOrderDetail->changePrice($object, $newPrice, $amount);
-        }
-    }
-
     private function increaseQuantityForProduct($orderDetail, $orderDetailAmountBeforeAmountChange)
     {
 
@@ -1930,8 +1940,13 @@ class OrderDetailsController extends AdminAppController
 
         $quantity = $stockAvailableObject->quantity;
 
-        if (!($stockAvailableObject->is_stock_product && $orderDetail->product->manufacturer->is_stock_management_enabled) && $stockAvailableObject->always_available) {
-            return false;
+        if (!($stockAvailableObject->is_stock_product && $orderDetail->product->manufacturer->is_stock_management_enabled)) {
+            if ($stockAvailableObject->always_available) {
+                return false;
+            }
+            if (!$stockAvailableObject->always_available && $stockAvailableObject->default_quantity_after_sending_order_lists > 0) {
+                return false;
+            }
         }
 
         // do the acutal updates for increasing quantity

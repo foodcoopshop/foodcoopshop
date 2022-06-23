@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -64,12 +64,6 @@ use Cake\Core\Configure;
         ]);
     }
 
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
-        ]);
-    }
-
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
         $this->element('addScript', [
             'script' =>
@@ -87,12 +81,12 @@ use Cake\Core\Configure;
                     'pickupDay' => $pickupDay
                 ]);
             ?>
-            <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
+            <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
             <?php } ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]); ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
             <?php } ?>
             <?php if ($appAuth->isCustomer()) { ?>
                 <?php // for preselecting customer in shop order dropdown ?>
@@ -105,7 +99,7 @@ use Cake\Core\Configure;
             <?php
             if (
                 Configure::read('app.isDepositEnabled') &&
-                Configure::read('app.isDepositPaymentCashless') &&
+                $this->Html->paymentIsCashless() &&
                 !$appAuth->isManufacturer() &&
                 (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                     $showCustomerDropdown = false;
@@ -314,7 +308,7 @@ if ($groupBy != 'customer') {
         echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
     }
 } else {
-    if (Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless')) {
+    if (Configure::read('app.isDepositEnabled') && $this->Html->paymentIsCashless()) {
         echo '<td></td>';
     }
     if (count($pickupDay) == 1) {
@@ -381,11 +375,8 @@ echo '<div class="bottom-button-container">';
 
 echo '</div>';
 echo '<div class="sc"></div>';
-
-
-echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDetailInList);
-
 ?>
+
     <div class="sc"></div>
 
 </div>

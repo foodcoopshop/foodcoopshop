@@ -2,18 +2,19 @@
 
 namespace App\Controller;
 
+use App\Lib\Catalog\Catalog;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -50,7 +51,9 @@ class SelfServiceController extends FrontendController
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->AppAuth, true);
-        $allProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true, true);
+
+        $this->Catalog = new Catalog();
+        $allProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
         $categoriesForSelect = [
             Configure::read('app.categoryAllProducts') => __('All_products') . ' (' . $allProductsCount . ')',
         ] + $categoriesForSelect;
@@ -60,8 +63,8 @@ class SelfServiceController extends FrontendController
         if ($categoryId == 0 && $keyword != '') {
             $categoryIdForSearch = Configure::read('app.categoryAllProducts');
         }
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, true);
-        $products = $this->prepareProductsForFrontend($products);
+        $products = $this->Catalog->getProducts($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
 
         $this->set('products', $products);
 
@@ -74,30 +77,34 @@ class SelfServiceController extends FrontendController
             $attributeId = (int) substr($keyword, 4, 4);
 
             $customBarcodeFound = false;
-            if ($keyword == $products[0]['ProductBarcode']) {
+            if (!empty($products[0]->barcode_product) && $keyword == $products[0]->barcode_product->barcode) {
                 $customBarcodeFound = true;
                 $attributeId = 0;
             }
-            if ($keyword == $products[0]['ProductAttributeBarcode']) {
-                $customBarcodeFound = true;
-                $attributeId = $products[0]['ProductAttributeId'];
+
+            if (!empty($products[0]->product_attributes) && !empty($products[0]->product_attributes[0]->barcode_product_attribute)) {
+                if ($keyword == $products[0]->product_attributes[0]->barcode_product_attribute->barcode) {
+                    $customBarcodeFound = true;
+                    $attributeId = $products[0]->product_attributes[0]->id_product_attribute;
+                }
             }
 
-            if ($hashedProductId == $products[0]['ProductIdentifier'] || $customBarcodeFound) {
+            if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
                 $this->CartProduct = $this->getTableLocator()->get('CartProducts');
-                $result = $this->CartProduct->add($this->AppAuth, $products[0]['id_product'], $attributeId, 1);
+                $result = $this->CartProduct->add($this->AppAuth, $products[0]->id_product, $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
-                    $this->request->getSession()->write('highlightedProductId', $products[0]['id_product']); // sic! no attributeId needed!
+                    $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
                     $redirectUrl = Configure::read('app.slugHelper')->getSelfService('', $keyword);
                 } else {
                     $imgString = '';
-                    $imgSrc = Configure::read('app.htmlHelper')->getProductImageSrc($products[0]['id_image'], 'home');
+                    $imageId = !empty($products[0]->Image) ? $products[0]->Image->id_image : 0;
+                    $imgSrc = Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home');
                     if ($imgSrc != '') {
                         $imgString .= '<br /><img src="'.$imgSrc.'" />';
                     }
                     $this->Flash->success(__('The_product_{0}_was_added_to_your_cart.', [
-                        '<b>' . $products[0]['name'] . '</b>'
+                        '<b>' . $products[0]->name . '</b>'
                     ]) . $imgString);
                     $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
                 }

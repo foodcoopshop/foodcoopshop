@@ -5,12 +5,12 @@
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -39,34 +39,6 @@ return [
          */
         'hostingEmail' => 'mail@example.com',
 
-        /**
-         * FALLBACK email config
-         * when the main email config in custom_config.php is wrong, you can define this fallback email config
-         * to send the emails despite a wrong main config
-         * if you don't want to use the email fallback, leave it commented
-         */
-//         'EmailTransport' => [
-//             'fallback' => [
-//                 'emailFormat' => 'html',
-//                 'className' => 'Smtp',
-//                 'host' => 'mail.example.com',
-//                 'port' => 25,
-//                 'timeout' => 30,
-//                 'username' => 'example@example.com',
-//                 'password' => 'my-password',
-//                 'client' => null,
-//                 'tls' => null,
-//             ],
-//         ],
-
-//         'Email' => [
-//             'fallback' => [
-//                 'from' => ['example@example.com'], // only use email address here (no [mail => name] syntax!)
-//                 'charset' => 'utf-8',
-//                 'headerCharset' => 'utf-8',
-//             ],
-//         ],
-
     ],
 
     /**
@@ -76,7 +48,6 @@ return [
      */
 //     'EmailTransport' => [
 //         'debug' => [
-//             'emailFormat' => 'html',
 //             'className' => 'Smtp',
 //             'host' => 'mail.example.com',
 //             'port' => 25,
@@ -89,6 +60,8 @@ return [
 //     ],
 //     'Email' => [
 //         'debug' => [
+//             'emailFormat' => 'html',
+//             'transport' => 'debug',
 //             'from' => ['example@example.com' => 'Example'],
 //             'charset' => 'utf-8',
 //             'headerCharset' => 'utf-8',

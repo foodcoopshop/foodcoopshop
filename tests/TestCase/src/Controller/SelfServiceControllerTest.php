@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -18,8 +18,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use App\Test\TestCase\Traits\QueueTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
@@ -30,9 +28,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use AssertPagesForErrorsTrait;
     use LoginTrait;
     use EmailTrait;
-    use QueueTrait;
-
-    public $commandRunner;
 
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
@@ -250,8 +245,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
 
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
-
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
@@ -354,6 +347,17 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
     }
 
+    public function testProductDetailHtmlProductCatalogSelfServiceOrder()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->isSelfServiceModeByUrl = true;
+        $productId = 349;
+        $this->get($this->Slug->getSelfService($productId));
+        $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
+        $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
+    }
 
     private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
     {
@@ -409,6 +413,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->Slug->getSelfService(),
             $data,
         );
+        $this->runAndAssertQueue();
     }
 
     private function doBarCodeLogin()

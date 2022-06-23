@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 3.1.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -61,11 +61,11 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogEditPickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
         html += '<textarea class="ckeditor" name="dialogEditPickupDayReason" id="dialogEditPickupDayReason"></textarea>';
+        html += '</div>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogEditPickupdaySendEmail" id="dialogEditPickupdaySendEmail" value="" />';
         html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToMember + '</span>';
         html += '</label>';
-        html += '</div>';
         return html;
     },
 
@@ -115,7 +115,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
 
     getOpenHandler : function(modalSelector) {
 
-        $(modalSelector).modal();
+        new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var datepickerInput = $('#dialogChangePickupDay');
         datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());

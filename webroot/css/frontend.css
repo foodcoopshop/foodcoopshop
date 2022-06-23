@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -187,7 +187,7 @@ body.categories.detail div.description-wrapper {
     float: left;
     line-height: 17px;
     width: 201px;
-    margin-right: 11px;
+    margin-left: 16px;
 }
 #main-menu li ul li a {
     margin-top: 0px;
@@ -343,7 +343,7 @@ body.customers.new_password_request .input input {
 #login-form #LoginForm button {
     float: right;
     margin-right: 5px;
-    margin-top: -65px;
+    margin-top: -54px;
 }
 form div.error-message {
     margin-left: 70px;
@@ -475,8 +475,7 @@ body.superadmin .pw .heading h4 {
     width: 100%;
 }
 .pw .ew:not(.active),
-.pw .ew div.tax,
-.pw .ew .timebasedCurrencySeconds {
+.pw .ew div.tax {
     display: none;
 }
 .pw .line {
@@ -518,11 +517,6 @@ body.superadmin .pw .heading h4 {
     float: right;
     margin-left: 10px;
     line-height: 20px;
-}
-.pw .timebased-currency-product-info {
-    float: left;
-    margin-top: -5px;
-    margin-bottom: 5px;
 }
 .tooltipster-content span.money,
 .tooltipster-content span.seconds {
@@ -786,8 +780,7 @@ body.carts #load-last-order-details,
 }
 .cart p.product-sum-wrapper,
 .cart p.deposit-sum-wrapper,
-.cart p.total-sum-wrapper,
-.cart p.timebased-currency-sum-wrapper {
+.cart p.total-sum-wrapper {
     padding-top: 0;
 }
 #cart p.product-sum-wrapper,
@@ -803,7 +796,6 @@ body.carts #load-last-order-details,
 .cart p.product-sum-wrapper span.sum,
 .cart p.deposit-sum-wrapper span.sum,
 .cart p.total-sum-wrapper span.sum,
-.cart p.timebased-currency-sum-wrapper span.sum,
 .cart b.payment {
     font-weight: 600;
     float: right;
@@ -829,9 +821,7 @@ body.carts #load-last-order-details,
 .cart .image,
 .cart span.deposit,
 .cart p.tax-sum-wrapper,
-.cart span.tax,
-.cart span.timebasedCurrencyMoney,
-.cart span.timebasedCurrencySeconds {
+.cart span.tax {
     float: left;
     display: none;
 }
@@ -907,12 +897,6 @@ body.carts #CartsDetailForm {
 #CartsDetailForm .input.checkbox {
     margin-left: 10px;
 }
-#CartsDetailForm #carts-timebased-currency-seconds-sum-tmp {
-    width: 170px;
-}
-#CartsDetailForm label[for="carts-timebased-currency-seconds-sum-tmp"] {
-    margin-right: 10px;
-}
 #RegistrationForm .input.checkbox {
     margin-top: 0;
     margin-left: 58px;
@@ -952,7 +936,7 @@ body.carts #CartsDetailForm {
 #RegistrationForm .input.checkbox input[type="checkbox"] {
     margin-left: -10px;
     margin-top: 1px;
-    margin-right: 5px;
+    margin-right: 7px;
     float: left;
 }
 #CartsDetailForm .pickup-day-comment textarea {
@@ -980,8 +964,7 @@ body.carts .cart:not(#cart) span.product-name-wrapper span.unity {
     margin-top: 1px;
 }
 body.carts .cart:not(#cart) p.deposit-sum-wrapper,
-body.carts .cart:not(#cart) p.tax-sum-wrapper,
-body.carts .cart:not(#cart) p.timebased-currency-sum-wrapper {
+body.carts .cart:not(#cart) p.tax-sum-wrapper  {
     display: block;
     float: left;
     width: 100%;
@@ -989,9 +972,6 @@ body.carts .cart:not(#cart) p.timebased-currency-sum-wrapper {
 body.carts .cart:not(#cart) p.deposit-sum-wrapper {
     border-bottom: 1px dotted #d6d4d4;
     padding-bottom: 15px;
-}
-body.carts .cart:not(#cart) p.timebased-currency-sum-wrapper {
-    margin-top: 20px;
 }
 body.carts .cart:not(#cart) p.product-sum-wrapper span.sum,
 body.carts .cart:not(#cart) p.deposit-sum-wrapper span.sum {
@@ -1018,17 +998,6 @@ body.carts .cart:not(#cart) span.deposit {
     display: inline;
     clear: both;
     margin-right: 22px;
-}
-body.carts .cart:not(#cart) span.timebasedCurrencySeconds {
-    display: inline;
-    clear: both;
-    text-align: right;
-    padding-right: 25px;
-    width: 100%;
-}
-body.carts .cart:not(#cart) span.timebasedCurrencySeconds span {
-    float: right;
-    clear: both;
 }
 body.carts .cart:not(#cart) .image {
     display: inline;
@@ -1084,8 +1053,11 @@ body.carts .cart:not(#cart) ul.error-message:not(.global) {
     width: 102%;
     float: left;
     padding: 15px 10px 10px 40px;
-    margin-left: -10px;
-    margin-top: -10px;
+    margin-left: -7px;
+    margin-top: -7px;
+}
+body.carts .cart:not(#cart) ul.error-message:not(.global) li {
+    padding-left: 20px;
 }
 body.carts .cart:not(#cart) .btn-success.btn-order {
     font-size: 18px;
@@ -1111,6 +1083,7 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     width: 190px;
     padding: 6px;
     background: #fbfbfb;
+    line-height: 1.5;
 }
 #product-search .btn {
     padding: 6px 10px;

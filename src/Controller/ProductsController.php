@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\Catalog\Catalog;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
@@ -10,12 +11,12 @@ use Cake\Core\Configure;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -54,9 +55,9 @@ class ProductsController extends FrontendController
     {
         $productId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $product = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
-        $product = $this->prepareProductsForFrontend($product);
+        $this->Catalog = new Catalog();
+        $product = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
+        $product = $this->Catalog->prepareProducts($this->AppAuth, $product);
 
         if (empty($product) || !isset($product[0])) {
             throw new RecordNotFoundException('product not found');
@@ -64,13 +65,12 @@ class ProductsController extends FrontendController
 
         $this->set('product', $product[0]);
 
-        $correctSlug = StringComponent::slugify($product[0]['name']);
+        $correctSlug = StringComponent::slugify($product[0]->name);
         $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
         if ($correctSlug != $givenSlug) {
-            $this->redirect(Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]['name']));
+            $this->redirect(Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]->name));
         }
 
-
-        $this->set('title_for_layout', $product[0]['name']);
+        $this->set('title_for_layout', $product[0]->name);
     }
 }

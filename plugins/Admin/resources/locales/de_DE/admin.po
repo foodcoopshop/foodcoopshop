@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-02-12 17:25+0100\n"
-"PO-Revision-Date: 2022-02-14 20:31+0100\n"
+"POT-Creation-Date: 2022-06-20 12:06+0200\n"
+"PO-Revision-Date: 2022-06-20 12:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -84,6 +84,9 @@ msgstr "Test E-Mail versenden"
 msgid "Test_email"
 msgstr "Test E-Mail"
 
+msgid "all_members"
+msgstr "alle Mitglieder"
+
 msgid "Member_card"
 msgstr "Mitgliedskarte"
 
@@ -116,9 +119,6 @@ msgstr "Es muss 0 betragen."
 
 msgid "Amount_of_not_approved_payments_within_the_last_2_years:"
 msgstr "Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten 2 Jahren:"
-
-msgid "The_credit_of_the_paying_with_time_account_is:"
-msgstr "Das Guthaben des Stundenkontos beträgt"
 
 msgid "The_member_is_still_associated_to_the_following_manufacturers:"
 msgstr "Das Mitglied ist noch folgenden Herstellern als Ansprechperson zugeordnet:"
@@ -483,6 +483,9 @@ msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} erfolgreich ge
 msgid "Products"
 msgstr "Produkte"
 
+msgid "All_products"
+msgstr "Alle Produkte"
+
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Bild (ID: {0}) wurde erfolgreich gelöscht. Produkt: {1}, Hersteller: {2}"
 
@@ -660,6 +663,9 @@ msgstr "Das Slideshow-Bild {0} wurde {1}."
 msgid "Slideshow"
 msgstr "Slideshow"
 
+msgid "Turnover_and_profit_statistics"
+msgstr "Umsatz- und Gewinnstatistik"
+
 msgid "Turnover_statistics"
 msgstr "Umsatzstatistik"
 
@@ -677,39 +683,6 @@ msgstr "Der Steuersatz {0} wurde {1}."
 
 msgid "Tax_rates"
 msgstr "Steuersätze"
-
-msgid "The_time_entry_has_been_deleted"
-msgstr "Die Zeit-Eintragung wurde gelöscht."
-
-msgid "The_time_entry_for_the_{0}_has_been_deleted"
-msgstr "Die Zeit-Eintragung für den {0} wurde gelöscht"
-
-msgid "Member"
-msgstr "Mitglied"
-
-msgid "Your_time_entry_from_{0}_has_been_deleted."
-msgstr "Deine Zeit-Eintragung vom {0} wurde gelöscht."
-
-msgid "and_an_email_was_sent_to_{0}"
-msgstr "und eine E-Mail wurde an {0} verschickt"
-
-msgid "Add_time_entry"
-msgstr "Zeit-Eintragung erstellen"
-
-msgid "Edit_time_entry"
-msgstr "Zeit-Eintragung bearbeiten"
-
-msgid "Credit_balance_of_{0}"
-msgstr "Kontostand von {0}"
-
-msgid "of"
-msgstr "von"
-
-msgid "My_{0}_(time_account)"
-msgstr "Mein {0}"
-
-msgid "My_credit_balance"
-msgstr "Mein Kontostand"
 
 msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
 msgstr "Die hochgeladene Datei muss folgendes Format haben: {0}"
@@ -873,9 +846,6 @@ msgstr "wysiwyg-editor"
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "Wie verwende ich den Editor?"
 
-msgid "all_members"
-msgstr "alle Mitglieder"
-
 msgid "all_manufacturers"
 msgstr "alle Hersteller"
 
@@ -987,6 +957,15 @@ msgstr "Davon Pfand"
 msgid "docs_route_members"
 msgstr "mitglieder"
 
+msgid "Company_name"
+msgstr "Firmenname"
+
+msgid "Contact_person"
+msgstr "Ansprechperson"
+
+msgid "Will_be_shown_on_invoices."
+msgstr "Wird auf den Rechnungen angezeigt."
+
 msgid "Firstname"
 msgstr "Vorname"
 
@@ -1065,6 +1044,12 @@ msgstr "Überweisung ins Guthaben-System übernommen"
 msgid "Want_to_receive_credit_upload_reminder?"
 msgstr "Ich möchte benachrichtigt werden, sobald meine Überweisung ins Guthaben-System übernommen wurde."
 
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Want_to_receive_the_newsletter_per_email?"
+msgstr "Ich möchte den Newsletter per E-Mail erhalten?"
+
 msgid "Self_service_mode"
 msgstr "Selbstbedienungs-Modus"
 
@@ -1073,18 +1058,6 @@ msgstr "Meine Mitgliedskarte generieren"
 
 msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
 msgstr "Ich möchte die Kamera meines Smartphones zum Scannen der Barcodes benutzen."
-
-msgid "Paying_with_time_module_active?"
-msgstr "Stundenabrechnungs-Modul aktiv?"
-
-msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
-msgstr "Ich möchte meine Produkte (auch) in {0} bezahlen."
-
-msgid "docs_route_paying_with_time_module"
-msgstr "stundenabrechnungs-modul"
-
-msgid "How_do_I_use_the_paying_with_time_module?"
-msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
 
 msgid "Superadmin_functions"
 msgstr "Superadmin-Funktionen"
@@ -1139,9 +1112,6 @@ msgstr "aktivieren"
 
 msgid "Show_credit"
 msgstr "Guthaben anzeigen"
-
-msgid "Show_{0}"
-msgstr "{0} anzeigen"
 
 msgid "Purchase_price_abbreviation"
 msgstr "EP"
@@ -1425,6 +1395,9 @@ msgstr "Lieferpause"
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "Wie verwende ich die Funktion \"Lieferpause\"?"
 
+msgid "Please_select..."
+msgstr "Bitte auswählen..."
+
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Hersteller-Profil und Produkte werden <b>nur für eingeloggte Mitglieder</b> angezeigt."
 
@@ -1530,29 +1503,8 @@ msgstr "Lagerprodukte in Bestelllisten"
 msgid "Should_stock_products_be_included_in_order_lists?"
 msgstr "Sollen die Bestelllisten auch Lagerprodukte enthalten?"
 
-msgid "Contact_person"
-msgstr "Ansprechperson"
-
 msgid "Chose_member"
 msgstr "Mitglied auswählen..."
-
-msgid "Paying_with_time"
-msgstr "Stundenabrechnung"
-
-msgid "Max_part_of_{0}_in_percent"
-msgstr "Maximaler Anteil der {0} in Prozent"
-
-msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
-msgstr "gültig für alle Produkte - bei 0 ist das Stundenabrechnungs-Modul im Shop deaktiviert."
-
-msgid "Maximum_credit_balance_in_{0}"
-msgstr "Maximaler Kontostand in {0}"
-
-msgid "up_to_which_it_can_be_paid_in_{0}."
-msgstr "bis zu dem in {0} bezahlt werden kann."
-
-msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
-msgstr "0 bedeutet: globales Limit von {0} wird verwendet."
 
 msgid "Pickup_days"
 msgstr "Abholtage"
@@ -1581,20 +1533,20 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
-msgid "Product"
-msgstr "Produkt"
+msgid "Delivery_note"
+msgstr "Lieferschein"
 
 msgid "Test_invoice"
 msgstr "Rechnung prüfen"
 
-msgid "Delivery_note"
-msgstr "Lieferschein"
-
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
 
-msgid "Copy_all_email_addresses"
-msgstr "Alle E-Mail-Adressen kopieren"
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Product"
+msgstr "Produkt"
 
 msgid "Tax_rate"
 msgstr "Steuersatz"
@@ -1620,14 +1572,11 @@ msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
 
-msgid "All_products"
-msgstr "Alle Produkte"
-
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
 
-msgid "Profit / all prices are net prices"
-msgstr "Gewinn / Netto-Preise"
+msgid "Net_profit"
+msgstr "Netto-Gewinn"
 
 msgid "Page_title"
 msgstr "Seitentitel"
@@ -1821,11 +1770,26 @@ msgstr "Slideshow-Bild löschen?"
 msgid "No_turnover_available."
 msgstr "Kein Umsatz vorhanden."
 
-msgid "Total_turnover:_{0}"
-msgstr "Gesamtumsatz: {0}"
+msgid "Net_purchase_price"
+msgstr "Netto-Einkaufspreis"
 
-msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
-msgstr "Durschnittlicher Umsatz für Monate, in denen geliefert wurde: {0}"
+msgid "Gross_turnover"
+msgstr "Brutto-Umsatz"
+
+msgid "Net_turnover"
+msgstr "Netto-Umsatz"
+
+msgid "total"
+msgstr "gesamt"
+
+msgid "per_month"
+msgstr "pro Monat"
+
+msgid "Go_to_profit_detail_page"
+msgstr "Zur Gewinn-Detailansicht"
+
+msgid "For_filtering_data_click_on_legend_on_top_of_chart."
+msgstr "Die Daten können durch Klick auf die Legende im oberen Bereich des Diagrammes gefiltert werden."
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "Der variable Mitgliedsbeitrag ist vom Umsatz <b>nicht</b> abgezogen."
@@ -1841,9 +1805,6 @@ msgstr "z.B. \"10\" für 10%"
 
 msgid "Tax_rates_can_not_be_changed_later."
 msgstr "Steuersätze sind später nicht änderbar."
-
-msgid "Delete"
-msgstr "Löschen"
 
 msgid "Add_deposit_amount"
 msgstr "Pfand eintragen"
@@ -1875,8 +1836,8 @@ msgstr "Mitglied auswählen..."
 msgid "Order_stock_products"
 msgstr "Lagerprodukte bestellen"
 
-msgid "Copy_email_addresses_of_selected_customers"
-msgstr "E-Mail-Adressen der ausgewählten Mitglieder kopieren"
+msgid "Copy_selected_email_addresses"
+msgstr "Ausgewählte E-Mail-Adressen kopieren"
 
 msgid "Generate_member_cards"
 msgstr "Mitgliedskarten generieren"
@@ -1932,11 +1893,11 @@ msgstr "Abholtag ändern"
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
 
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
 msgid "Orders_as_pdf"
 msgstr "Bestellungen als PDF"
-
-msgid "Orders_as_pdf_order_by_storage_location"
-msgstr "Bestellungen als PDF (nach Lagerort)"
 
 msgid "Multiple_pickup_days"
 msgstr "Mehrere Abholtage"
@@ -1976,9 +1937,6 @@ msgstr "Produkte abgeholt"
 
 msgid "Click_to_change_price"
 msgstr "Zum Ändern des Preises anklicken"
-
-msgid "Additional_in_{0}"
-msgstr "Zusätzlich in {0}"
 
 msgid "Yes"
 msgstr "Ja"
@@ -2346,18 +2304,6 @@ msgstr "Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsb
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
 
-msgid "Paid_by_members_in_{0}"
-msgstr "Von Mitgliedern bezahlt in {0}"
-
-msgid "Paid_by_members_in"
-msgstr "Von Mitgliedern bezahlt in"
-
-msgid "Kept_variable_member_fee"
-msgstr "Einbehaltener variabler Mitgliedsbeitrag"
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
-msgstr "Betrag, der auf dein Konto überwiesen wird"
-
 msgid "Detail_view"
 msgstr "Detailübersicht"
 
@@ -2369,6 +2315,115 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "The_credit_of_the_paying_with_time_account_is:"
+#~ msgstr "Das Guthaben des Stundenkontos beträgt"
+
+#~ msgid "The_time_entry_has_been_deleted"
+#~ msgstr "Die Zeit-Eintragung wurde gelöscht."
+
+#~ msgid "The_time_entry_for_the_{0}_has_been_deleted"
+#~ msgstr "Die Zeit-Eintragung für den {0} wurde gelöscht"
+
+#~ msgid "Your_time_entry_from_{0}_has_been_deleted."
+#~ msgstr "Deine Zeit-Eintragung vom {0} wurde gelöscht."
+
+#~ msgid "and_an_email_was_sent_to_{0}"
+#~ msgstr "und eine E-Mail wurde an {0} verschickt"
+
+#~ msgid "Add_time_entry"
+#~ msgstr "Zeit-Eintragung erstellen"
+
+#~ msgid "Edit_time_entry"
+#~ msgstr "Zeit-Eintragung bearbeiten"
+
+#~ msgid "Credit_balance_of_{0}"
+#~ msgstr "Kontostand von {0}"
+
+#~ msgid "of"
+#~ msgstr "von"
+
+#~ msgid "My_{0}_(time_account)"
+#~ msgstr "Mein {0}"
+
+#~ msgid "My_credit_balance"
+#~ msgstr "Mein Kontostand"
+
+#~ msgid "Paying_with_time_module_active?"
+#~ msgstr "Stundenabrechnungs-Modul aktiv?"
+
+#~ msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
+#~ msgstr "Ich möchte meine Produkte (auch) in {0} bezahlen."
+
+#~ msgid "docs_route_paying_with_time_module"
+#~ msgstr "stundenabrechnungs-modul"
+
+#~ msgid "How_do_I_use_the_paying_with_time_module?"
+#~ msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
+
+#~ msgid "Show_{0}"
+#~ msgstr "{0} anzeigen"
+
+#~ msgid "Paying_with_time"
+#~ msgstr "Stundenabrechnung"
+
+#~ msgid "Max_part_of_{0}_in_percent"
+#~ msgstr "Maximaler Anteil der {0} in Prozent"
+
+#~ msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
+#~ msgstr "gültig für alle Produkte - bei 0 ist das Stundenabrechnungs-Modul im Shop deaktiviert."
+
+#~ msgid "Maximum_credit_balance_in_{0}"
+#~ msgstr "Maximaler Kontostand in {0}"
+
+#~ msgid "up_to_which_it_can_be_paid_in_{0}."
+#~ msgstr "bis zu dem in {0} bezahlt werden kann."
+
+#~ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
+#~ msgstr "0 bedeutet: globales Limit von {0} wird verwendet."
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid "Additional_in_{0}"
+#~ msgstr "Zusätzlich in {0}"
+
+#~ msgid "Paid_by_members_in_{0}"
+#~ msgstr "Von Mitgliedern bezahlt in {0}"
+
+#~ msgid "Paid_by_members_in"
+#~ msgstr "Von Mitgliedern bezahlt in"
+
+#~ msgid "Kept_variable_member_fee"
+#~ msgstr "Einbehaltener variabler Mitgliedsbeitrag"
+
+#~ msgid "Amount_that_will_be_transferred_to_your_bank_account"
+#~ msgstr "Betrag, der auf dein Konto überwiesen wird"
+
+#~ msgid "Average_turnover_per_month"
+#~ msgstr "Durchschnitts-Bruttoumsatz pro Monat"
+
+#~ msgid "Average_profit_per_month"
+#~ msgstr "Durchschnitts-Netto-Gewinn pro Monat"
+
+#~ msgid "Profit / all prices are net prices"
+#~ msgstr "Gewinn / Netto-Preise"
+
+#~ msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
+#~ msgstr "Durchschnittlicher Brutto-Umsatz für Monate, in denen geliefert wurde: {0}"
+
+#~ msgid "Average_profit_for_months_where_products_were_delivered:_{0}"
+#~ msgstr "Durchschnittlicher Netto-Gewinn für Monate, in denen geliefert wurde: {0}"
+
+#~ msgid "Copy_email_addresses_of_selected_customers"
+#~ msgstr "E-Mail-Adressen der ausgewählten Mitglieder kopieren"
+
+#, fuzzy
+#~ msgid "Copy_email_addresses_of_selected_manufacturers"
+#~ msgstr "E-Mail-Adressen der ausgewählten Mitglieder kopieren"
+
+#~ msgid "Orders_as_pdf_order_by_storage_location"
+#~ msgstr "Bestellungen als PDF (nach Lagerort)"
 
 #~ msgid "Leave_empty_to_never_show_blog_post_on_start_page._After_that_the_blog_post_is_shown_in_the_blog_archive."
 #~ msgstr "Leeres Feld bedeutet: der Blog-Artikel wird nicht auf der Startseite angezeigt. Danach rutscht der Blog-Artikel ins <a href=\"/blog-archiv\">Blog-Archiv</a>."

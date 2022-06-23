@@ -2,18 +2,19 @@
 namespace App\Queue\Task;
 
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Queue\Queue\Task;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 3.2.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -52,10 +53,10 @@ class GenerateInvoiceForManufacturerTask extends Task {
         ];
 
         $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
-        $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
         $pdfWriter = new InvoiceToManufacturerPdfWriter();
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriodMonthAndYear, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
@@ -73,18 +74,29 @@ class GenerateInvoiceForManufacturerTask extends Task {
 
         $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
         if ($sendInvoice) {
-            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
-            $this->QueuedJobs->createJob('SendInvoiceToManufacturer', [
-                'invoiceNumber' => $invoiceNumber,
-                'invoicePdfFile' => $invoicePdfFile,
-                'manufacturerId' => $manufacturer->id_manufacturer,
-                'manufactuerName' => $manufacturer->name,
-                'actionLogId' => $actionLogId,
+
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.send_invoice_to_manufacturer');
+            $email->setTo($manufacturer->address_manufacturer->email)
+            ->setAttachments([
+                $invoicePdfFile,
+            ])
+            ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
+            ->setViewVars([
+                'manufacturer' => $manufacturer,
+                'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
+                'showManufacturerUnsubscribeLink' => true
             ]);
+            $email->afterRunParams = [
+                'actionLogIdentifier' => 'send-invoice-' . $manufacturer->id_manufacturer,
+                'actionLogId' => $actionLogId,
+            ];
+            $email->addToQueue();
+
         }
 
-        $identifier = 'generate-invoice-' . $manufacturer->id_manufacturer;
-        $this->updateActionLog($actionLogId, $identifier, $jobId);
+        $actionLogIdentifier = 'generate-invoice-' . $manufacturer->id_manufacturer;
+        $this->updateActionLogSuccess($actionLogId, $actionLogIdentifier, $jobId);
 
     }
 

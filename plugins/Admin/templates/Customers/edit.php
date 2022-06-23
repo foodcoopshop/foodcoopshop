@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -47,14 +47,26 @@ echo $this->Form->create($customer, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo $this->Form->control('Customers.firstname', [
-    'label' => __d('admin', 'Firstname'),
-    'required' => true
-]);
-echo $this->Form->control('Customers.lastname', [
-    'label' => __d('admin', 'Lastname'),
-    'required' => true
-]);
+if ($customer->is_company) {
+    echo $this->Form->control('Customers.firstname', [
+        'label' => __d('admin', 'Company_name'),
+        'required' => true
+    ]);
+    echo $this->Form->control('Customers.lastname', [
+        'label' => __d('admin', 'Contact_person') . '<span class="after small">'.__d('admin', 'Will_be_shown_on_invoices.').'</span>',
+        'escape' => false,
+    ]);
+} else {
+    echo $this->Form->control('Customers.firstname', [
+        'label' => __d('admin', 'Firstname'),
+        'required' => true
+    ]);
+    echo $this->Form->control('Customers.lastname', [
+        'label' => __d('admin', 'Lastname'),
+        'required' => true
+    ]);
+}
+echo $this->Form->hidden('Customers.is_company');
 
 $imageSrc = $this->Html->getCustomerImageSrc($customer->id_customer, 'large');
 if (!empty($customer->tmp_image) && $customer->tmp_image != '') {
@@ -160,6 +172,14 @@ if ($this->Html->paymentIsCashless()) {
     }
 }
 
+if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+    echo $this->Form->control('Customers.newsletter_enabled', [
+        'label' => __d('admin', 'Newsletter').'<span class="after small">'.__d('admin', 'Want_to_receive_the_newsletter_per_email?').'</span>',
+        'type' => 'checkbox',
+        'escape' => false,
+    ]);
+}
+
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     && (
         !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') || $appAuth->isSuperadmin())
@@ -176,27 +196,12 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     ]);
 }
 
-if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    $label = __d('admin', 'Paying_with_time_module_active?') . ' ';
-    $label .= '<span class="after small">'.__d('admin', 'I_want_to_be_able_to_pay_my_products_also_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a>';
-    if (!$timebasedCurrencyDisableOptionAllowed) {
-        $label .= ' Zum Deaktivieren der Option muss dein ' . $this->TimebasedCurrency->getName() . ' ausgeglichen sein, derzeit beträgt es '.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'.';
-    }
-    $label .= '</span>';
-    echo $this->Form->control('Customers.timebased_currency_enabled', [
-        'label' => $label,
-        'type' => 'checkbox',
-        'disabled' => (!$timebasedCurrencyDisableOptionAllowed ? 'disabled' : ''),
-        'escape' => false
-    ]);
-}
-
 if ($appAuth->isSuperadmin()) {
 
     echo '<div class="sc"></div>';
     echo '<h2>'.__d('admin', 'Superadmin_functions').'</h2>';
 
-    if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
         echo $this->Form->control('Customers.shopping_price', [
             'type' => 'select',
             'label' => __d('admin', 'Prices'),

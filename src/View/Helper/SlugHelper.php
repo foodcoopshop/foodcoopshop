@@ -9,12 +9,12 @@ use Cake\View\Helper;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -237,48 +237,6 @@ class SlugHelper extends Helper
     public function getRegistration()
     {
         return '/'.__('route_registration');
-    }
-
-    public function getMyTimebasedCurrencyBalanceForManufacturers()
-    {
-        return '/admin/timebased-currency-payments/my-payments-manufacturer';
-    }
-
-    public function getTimebasedCurrencyBalanceForManufacturers($manufacturerId)
-    {
-        return '/admin/timebased-currency-payments/payments-manufacturer/' . $manufacturerId;
-    }
-
-    public function getMyTimebasedCurrencyBalanceForCustomers($manufacturerId = null)
-    {
-        $url = '/admin/timebased-currency-payments/my-payments-customer';
-        if (!is_null($manufacturerId)){
-            $url .= '?manufacturerId='.$manufacturerId;
-        }
-        return $url;
-    }
-
-    public function getTimebasedCurrencyPaymentDetailsForManufacturers($customerId)
-    {
-        return '/admin/timebased-currency-payments/my-payment-details-manufacturer/'.$customerId;
-    }
-
-    public function getTimebasedCurrencyPaymentDetailsForSuperadmins($manufacturerId, $customerId)
-    {
-        $url = '/admin/timebased-currency-payments/payment-details-superadmin/' . $customerId;
-        if (!is_null($manufacturerId)){
-            $url .= '?manufacturerId='.$manufacturerId;
-        }
-        return $url;
-    }
-
-    public function getTimebasedCurrencyPaymentEdit($paymentId)
-    {
-        return '/admin/timebased-currency-payments/edit/'.$paymentId;
-    }
-    public function getTimebasedCurrencyPaymentAdd($customerId)
-    {
-        return '/admin/timebased-currency-payments/add/' . $customerId;
     }
 
     public function getMyCreditBalance()

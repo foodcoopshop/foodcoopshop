@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -25,7 +25,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     public function testEditOrderDetailPriceNotValid()
     {
         $this->loginAsVegetableManufacturer();
-        $this->editOrderDetailPrice($this->orderDetailIdA, 'not-valid-price', $this->editPriceReason);
+        $this->editOrderDetailPrice($this->orderDetailIdA, 'not-valid-price', $this->editPriceReason, true);
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der Preis ist nicht gültig.');
     }
 
@@ -33,7 +33,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     {
         $this->loginAsVegetableManufacturer();
         $this->newPrice = '-10,50';
-        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason);
+        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
     }
@@ -41,14 +41,13 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     public function testEditOrderDetailPriceAsManufacturer()
     {
         $this->loginAsVegetableManufacturer();
-        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason);
+        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails);
     }
 
     public function testEditOrderDetailPriceAsSuperadminWithDisabledNotification()
@@ -57,40 +56,29 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_price_changed_notification', 0);
 
-        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason);
+        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
-    }
-
-    public function testEditOrderDetailPriceWithTimebasedCurrency()
-    {
-        $cart = $this->prepareTimebasedCurrencyCart();
-        $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
-        $this->editOrderDetailPrice($orderDetailId, $this->newPrice, $this->editPriceReason);
-
-        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
-        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
-
-        $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 1.38, 1.52, 544);
+        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails);
     }
 
     public function testEditOrderDetailPriceAsSuperadminWithEnabledNotification()
     {
         $this->loginAsSuperadmin();
 
-        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason);
+        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
-        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails);
+
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
+
     }
 
     public function testEditOrderDetailPriceIfPriceWasZero()
@@ -100,18 +88,32 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->mockCart = $this->generateAndGetCart();
 
         $mockOrderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
-        $this->editOrderDetailPrice($mockOrderDetailId, $this->newPrice, $this->editPriceReason);
+        $this->editOrderDetailPrice($mockOrderDetailId, $this->newPrice, $this->editPriceReason, true);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$mockOrderDetailId]);
         $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails(1, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(1, $expectedToEmails);
     }
 
-    private function assertOrderDetailProductPriceChangedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
+    public function testEditOrderDetailPriceNoEmailToCustomer()
     {
+        $this->loginAsSuperadmin();
+        $this->mockCart = $this->generateAndGetCart();
+
+        $mockOrderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailPrice($mockOrderDetailId, $this->newPrice, $this->editPriceReason, false);
+
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$mockOrderDetailId]);
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
+
+        $this->assertOrderDetailProductPriceChangedEmails(1, []);
+    }
+
+    private function assertOrderDetailProductPriceChangedEmails($emailIndex, $expectedToEmails)
+    {
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Preis angepasst: Artischocke : Stück');
         $this->assertMailContainsHtmlAt($emailIndex, 'Der Preis des Produktes <b>Artischocke : Stück</b> wurde erfolgreich angepasst.');
         $this->assertMailContainsHtmlAt($emailIndex, $this->editPriceReason);
@@ -121,19 +123,17 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         foreach($expectedToEmails as $expectedToEmail) {
             $this->assertMailSentToAt($emailIndex, $expectedToEmail);
         }
-        foreach($expectedCcEmails as $expectedCcEmail) {
-            $this->assertMailSentWithAt($emailIndex, $expectedCcEmail, 'cc');
-        }
     }
 
-    private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason)
+    private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason, $sendEmailToCustomer)
     {
         $this->post(
             '/admin/order-details/editProductPrice/',
             [
                 'orderDetailId' => $orderDetailId,
                 'productPrice' => $productPrice,
-                'editPriceReason' => $editPriceReason
+                'editPriceReason' => $editPriceReason,
+                'sendEmailToCustomer' => $sendEmailToCustomer,
             ]
         );
     }

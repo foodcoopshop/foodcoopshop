@@ -7,6 +7,7 @@
     "loggedUser": {
         "id_customer": 89,
         "id_default_group": 4,
+        "is_company": 0,
         "firstname": "Demo",
         "lastname": "Gem\u00fcse-Hersteller",
         "email": "fcs-demo-gemuese-hersteller@mailinator.com",
@@ -19,7 +20,6 @@
         "active": 1,
         "date_add": "2014-12-02T12:37:26+01:00",
         "date_upd": "2015-03-11T18:12:10+01:00",
-        "timebased_currency_enabled": 0,
         "use_camera_for_barcode_scanning": 0,
         "user_id_registrierkasse": 0,
         "shopping_price": "SP",
@@ -27,6 +27,7 @@
         "invoices_per_email_enabled": 1,
         "pickup_day_reminder_enabled": 1,
         "credit_upload_reminder_enabled": 1,
+        "newsletter_enabled": 0,
         "address_customer": null,
         "name": "Demo Gem\u00fcse-Hersteller"
     },
@@ -94,9 +95,6 @@
                 "send_ordered_product_price_changed_notification": null,
                 "send_ordered_product_amount_changed_notification": null,
                 "enabled_sync_domains": "1",
-                "timebased_currency_enabled": 0,
-                "timebased_currency_max_percentage": 30,
-                "timebased_currency_max_credit_balance": 100,
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
@@ -150,8 +148,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Artischocke",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 339,
@@ -216,9 +213,6 @@
                 "send_ordered_product_price_changed_notification": null,
                 "send_ordered_product_amount_changed_notification": null,
                 "enabled_sync_domains": "1",
-                "timebased_currency_enabled": 0,
-                "timebased_currency_max_percentage": 30,
-                "timebased_currency_max_credit_balance": 100,
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
@@ -264,8 +258,7 @@
             "price_is_zero": true,
             "unit": null,
             "unchanged_name": "Kartoffel",
-            "row_class": "main-product",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product"
         },
         {
             "id_product": 344,
@@ -330,9 +323,6 @@
                 "send_ordered_product_price_changed_notification": null,
                 "send_ordered_product_amount_changed_notification": null,
                 "enabled_sync_domains": "1",
-                "timebased_currency_enabled": 0,
-                "timebased_currency_max_percentage": 30,
-                "timebased_currency_max_credit_balance": 100,
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
@@ -378,8 +368,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Knoblauch",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 349,
@@ -444,9 +433,6 @@
                 "send_ordered_product_price_changed_notification": null,
                 "send_ordered_product_amount_changed_notification": null,
                 "enabled_sync_domains": "1",
-                "timebased_currency_enabled": 0,
-                "timebased_currency_max_percentage": 30,
-                "timebased_currency_max_credit_balance": 100,
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
@@ -515,8 +501,7 @@
                 "quantity_in_units": "0.000"
             },
             "unchanged_name": "Lagerprodukt",
-            "row_class": "main-product",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product"
         },
         {
             "id_product": 351,
@@ -581,9 +566,6 @@
                 "send_ordered_product_price_changed_notification": null,
                 "send_ordered_product_amount_changed_notification": null,
                 "enabled_sync_domains": "1",
-                "timebased_currency_enabled": 0,
-                "timebased_currency_max_percentage": 30,
-                "timebased_currency_max_credit_balance": 100,
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
@@ -652,8 +634,7 @@
                 "quantity_in_units": "1.000"
             },
             "unchanged_name": "Lagerprodukt 2",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": 350,
@@ -839,9 +820,6 @@
                 "send_ordered_product_price_changed_notification": null,
                 "send_ordered_product_amount_changed_notification": null,
                 "enabled_sync_domains": "1",
-                "timebased_currency_enabled": 0,
-                "timebased_currency_max_percentage": 30,
-                "timebased_currency_max_credit_balance": 100,
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
@@ -891,8 +869,7 @@
             "unit": null,
             "unchanged_name": "Lagerprodukt mit Varianten",
             "row_class": "main-product",
-            "AttributesRemoved": 0,
-            "next_delivery_day": "2020-01-17"
+            "AttributesRemoved": 0
         },
         {
             "id_product": "350-13",
@@ -1086,9 +1063,6 @@
                 "send_ordered_product_price_changed_notification": null,
                 "send_ordered_product_amount_changed_notification": null,
                 "enabled_sync_domains": "1",
-                "timebased_currency_enabled": 0,
-                "timebased_currency_max_percentage": 30,
-                "timebased_currency_max_credit_balance": 100,
                 "stock_management_enabled": 1,
                 "send_product_sold_out_limit_reached_for_manufacturer": 1,
                 "send_product_sold_out_limit_reached_for_contact_person": 1,
@@ -1134,8 +1108,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Mangold",
-            "row_class": "main-product custom-odd",
-            "next_delivery_day": "2020-01-17"
+            "row_class": "main-product custom-odd"
         }
     ]
 }

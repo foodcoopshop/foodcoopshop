@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -116,13 +116,6 @@ foodcoopshop.SelfService = {
             }
             formIsSubmitted = true;
         });
-
-        barcodeInputField.on('keypress', foodcoopshop.Helper.debounce(
-            function() {
-                foodcoopshop.SelfService.submitForm(loginForm, 'fa-sign-in-alt');
-            }, 1000)
-        );
-
         barcodeInputField.focus();
 
         var cameraButton = $('<a/>').
@@ -160,13 +153,10 @@ foodcoopshop.SelfService = {
         searchForm.find('select, input[type="text"]').on('change', function() {
             foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
         });
-        searchForm.find('select, input[type="text"]').on('keypress', foodcoopshop.Helper.debounce(
-            function() {
-                foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
-            }, 1000)
-        );
-
-        searchForm.find('input[type="text"]').focus();
+        var inputField = searchForm.find('input[type="text"]');
+        var length = inputField.val().length;
+        inputField[0].setSelectionRange(length, length);
+        inputField.focus();
     },
 
     submitForm : function(searchForm, icon) {

@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.4.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -74,6 +74,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
             'data-val' => $manufacturer->no_delivery_days,
             'label' => __d('admin', 'Delivery_break').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_function_delivery_break?').'</a></span>',
             'options' => $noDeliveryBreakOptions,
+            'placeholder' => __d('admin', 'Please_select...'),
             'escape' => false
         ]);
         echo '<div class="sc"></div>';
@@ -216,7 +217,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         echo $this->Form->control('Manufacturers.id_customer', [
         'type' => 'select',
         'label' => __d('admin', 'Contact_person'),
-        'empty' => __d('admin', 'Chose_member'),
+        'placeholder' => __d('admin', 'Chose_member'),
         'options' => []
         ]);
     }
@@ -237,31 +238,6 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
             'escape' => false
         ]);
         echo '<div class="sc"></div>';
-    }
-
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo '<h2>'.__d('admin', 'Paying_with_time').'</h2>';
-        echo $this->Form->control('Manufacturers.timebased_currency_enabled', [
-            'label' => __d('admin', 'Paying_with_time_module_active?').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a></span>',
-            'type' => 'checkbox',
-            'escape' => false
-        ]);
-        if ($manufacturer->timebased_currency_enabled) {
-            echo $this->Form->control('Manufacturers.timebased_currency_max_percentage', [
-                'label' => __d('admin', 'Max_part_of_{0}_in_percent', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop.').'</span>',
-                'type' => 'text',
-                'class' => 'short',
-                'escape' => false
-            ]);
-            echo $this->Form->control('Manufacturers.timebased_currency_max_credit_balance', [
-                'label' => __d('admin', 'Maximum_credit_balance_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'up_to_which_it_can_be_paid_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).
-                ' ' . __d('admin', 'Zero_means_no_limit_and_global_limit_of_{0}_is_used.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') . ' ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) .
-                '</span>',
-                'type' => 'text',
-                'class' => 'short',
-                'escape' => false
-            ]);
-        }
     }
 
     echo $this->Form->end();

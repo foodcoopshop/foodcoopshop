@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-02-12 17:14+0100\n"
-"PO-Revision-Date: 2022-02-12 17:28+0100\n"
+"POT-Creation-Date: 2022-06-20 12:06+0200\n"
+"PO-Revision-Date: 2022-06-20 12:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -200,15 +200,6 @@ msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
 
 msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
 msgstr "{0} hat die Lieferpause aktiviert und das Produkt {1} ist nicht mehr bestellbar."
-
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
-
-msgid "Please_enter_a_number."
-msgstr "Bitte gib eine Zahl ein."
-
-msgid "Your_overdraft_frame_of_{0}_is_reached."
-msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
 
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
@@ -507,6 +498,27 @@ msgstr "Die genaue Verwendung der Cookies kannst du in unserer <a href=\"/datens
 msgid "Accept_cookies"
 msgstr "Cookies akzeptieren"
 
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr "Du hast {0} bereits {1}x für den Abholtag {2} bestellt."
+
+msgid "Firstname"
+msgstr "Vorname"
+
+msgid "Lastname"
+msgstr "Nachname"
+
+msgid "Contact_person"
+msgstr "Ansprechperson"
+
+msgid "Company_name"
+msgstr "Firmenname"
+
+msgid "Please_enter_the_contact_person"
+msgstr "Bitte gib die Ansprechperson an"
+
+msgid "Please_enter_your_lastname"
+msgstr "Bitte gib deinen Nachnamen an"
+
 msgid "Empty_cart"
 msgstr "Warenkorb leeren"
 
@@ -653,6 +665,9 @@ msgstr "Bitte gib an, warum der Preis angepasst wird."
 
 msgid "Cancellation_reason_is_mandatory."
 msgstr "Bitte gib an, warum storniert wird."
+
+msgid "Please_enter_a_number."
+msgstr "Bitte gib eine Zahl ein."
 
 msgid "Add_new_attribute_for_product"
 msgstr "Neue Variante für Produkt erstellen"
@@ -1087,7 +1102,7 @@ msgid "Default_quantity_after_sending_order_lists"
 msgstr "Standard-Anzahl pro Lieferrhythmus"
 
 msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
-msgstr "Nach jedem Bestelllisten-Versand wird die verfügbare Anzahl automatisch wieder auf diesen Wert gesetzt. Zum Deaktivieren leer lassen."
+msgstr "Nach jedem Bestelllisten-Versand wird die verfügbare Anzahl automatisch wieder auf diesen Wert gesetzt. Zum Deaktivieren leer lassen.<br /><b>Der Bestelllisten-Versand muss aktiviert sein (in den Hersteller-Einstellungen)!</b>"
 
 msgid "Enter_purchase_price"
 msgstr "Einkaufspreis eintragen"
@@ -1224,6 +1239,18 @@ msgstr "Pfand geliefert"
 msgid "Payment_type_deposit_return"
 msgstr "Pfand-Rückgabe"
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Rechnung Nr. {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Storno-Rechnung Nr. {0}, {1}"
+
+msgid "Invoice"
+msgstr "Rechnung"
+
+msgid "Cancellation_invoice"
+msgstr "Storno-Rechnung"
+
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
@@ -1238,6 +1265,18 @@ msgstr "Preis inkl."
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
+
+msgid "Price_net"
+msgstr "Nettopreis"
+
+msgid "Total_sum_net"
+msgstr "Nettosumme"
+
+msgid "Value_added_tax"
+msgstr "Umsatzsteuer"
+
+msgid "Total_sum_gross"
+msgstr "Bruttosumme"
 
 msgid "Generated_on_{0}"
 msgstr "Generiert am {0}"
@@ -1515,15 +1554,6 @@ msgstr "Hersteller: erstellt"
 msgid "Action_Log_Manufacturer_changed"
 msgstr "Hersteller: Profil geändert"
 
-msgid "Action_Log_Paying_with_time_time_upload_added"
-msgstr "Stundenabrechnung: Zeit-Eintragung erstellt"
-
-msgid "Action_Log_Paying_with_time_time_upload_changed"
-msgstr "Stundenabrechnung: Zeit-Eintragung geändert"
-
-msgid "Action_Log_Paying_with_time_time_upload_deleted"
-msgstr "Stundenabrechnung: Zeit-Eintragung gelöscht"
-
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Datenbank gebackupt"
 
@@ -1676,21 +1706,6 @@ msgstr "Folgende Werte sind gültig:"
 
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr "Bitte gib den Namen der Foodcoop an."
-
-msgid "Please_enter_the_paying_with_time_module_name."
-msgstr "Bitte gib den Namen der Stundenabrechnung an."
-
-msgid "Please_enter_the_abbreviation_of_the_paying_with_time_module."
-msgstr "Bitte gib die Abkürzung des Namens der Stundenabrechnung an."
-
-msgid "Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}."
-msgstr "Bitte gib den Umrechnungskurs für die Stundenabrechnung in {0} an."
-
-msgid "Please_enter_exactly_2_decimals."
-msgstr "Bitte trage genau 2 Kommastellen ein."
-
-msgid "Please_provide_a_value."
-msgstr "Bitte gib einen Wert an."
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "Die Anzahl der Zeichen muss zwischen {0} und {1} liegen."
@@ -1887,21 +1902,6 @@ msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
 msgid "member"
 msgstr "Mitglied"
 
-msgid "Delivery_note_for_{0}"
-msgstr "Lieferschein für {0}"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Rechnung Nr. {0}, {1}"
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr "Storno-Rechnung Nr. {0}, {1}"
-
-msgid "Invoice"
-msgstr "Rechnung"
-
-msgid "Cancellation_invoice"
-msgstr "Storno-Rechnung"
-
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
 
@@ -1934,6 +1934,9 @@ msgstr "Abhol-Erinnerung für"
 
 msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 Lieferschein wurde} other{# Lieferscheine wurden}} erfolgreich erstellt."
+
+msgid "Delivery_note_for_{0}"
+msgstr "Lieferschein für {0}"
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr "{0,plural,=1{1 Rechnung wurde} other{# Rechnungen wurden}} erfolgreich erstellt."
@@ -2127,15 +2130,6 @@ msgstr "Alle-Produkte"
 msgid "routes_product"
 msgstr "produkt"
 
-msgid "Mouseover_shows_the_paid_amont_in_{0}."
-msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
-
-msgid "Order_contains_amount_in_{0}."
-msgstr "Bestellung wurde teilweise in {0} bezahlt."
-
-msgid "Paying_with_time_account_name_{0}"
-msgstr "{0}konto"
-
 msgid "Modified_on"
 msgstr "Geändert am"
 
@@ -2162,9 +2156,6 @@ msgstr "Pfandsumme"
 
 msgid "Total"
 msgstr "Gesamt"
-
-msgid "From_which_in"
-msgstr "Davon in"
 
 msgid "Including_vat"
 msgstr "Enthaltene Umsatzsteuer"
@@ -2208,11 +2199,8 @@ msgstr "Passwort vergessen?"
 msgid "Create_account"
 msgstr "Mitgliedskonto erstellen"
 
-msgid "Firstname"
-msgstr "Vorname"
-
-msgid "Lastname"
-msgstr "Nachname"
+msgid "Register_as_company?"
+msgstr "Als Firma registrieren?"
 
 msgid "Street_and_number"
 msgstr "Straße + Nummer"
@@ -2228,6 +2216,9 @@ msgstr "Ort"
 
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
+
+msgid "Want_to_receive_the_newsletter?"
+msgstr "Ich möchte den Newsletter per E-Mail erhalten?"
 
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
@@ -2316,9 +2307,6 @@ msgstr "Vergangene Bestellungen laden"
 msgid "Your_credit_balance"
 msgstr "Dein Guthaben"
 
-msgid "Value_added_tax"
-msgstr "Umsatzsteuer"
-
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
 
@@ -2367,8 +2355,41 @@ msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle de
 msgid "No_order_possible"
 msgstr "Keine Bestellung möglich"
 
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr "Wieviel davon möchtest du in {0} bezahlen?"
+msgid "available"
+msgstr "verfügbar"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "More_infos_to_product_{0}"
+msgstr "Mehr Infos zu {0}"
+
+msgid "Instant_order"
+msgstr "Sofort-Bestellung"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 Woche} other{# Wochen}}"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 Woche} other{# Wochen}} {1,plural,=1{und 1 Tag} other{und # Tage}}"
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Lagerprodukt: nur über {0} bestellbar."
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
+
+msgid "Currently_not_on_stock"
+msgstr "Derzeit leider nicht verfügbar"
+
+msgid "Move_in_shopping_bag"
+msgstr "In die Einkaufstasche"
+
+msgid "Move_in_cart"
+msgstr "In den Warenkorb"
+
+msgid "Weight_in"
+msgstr "Gewicht in"
 
 msgid "Comment"
 msgstr "Kommentar"
@@ -2430,48 +2451,6 @@ msgstr "Kategorie auswählen..."
 msgid "Reset_search"
 msgstr "Suche zurücksetzen"
 
-msgid "available"
-msgstr "verfügbar"
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr "Lagerprodukt: nur über {0} bestellbar."
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
-
-msgid "Currently_not_on_stock"
-msgstr "Derzeit leider nicht verfügbar"
-
-msgid "New"
-msgstr "Neu"
-
-msgid "More_infos_to_product_{0}"
-msgstr "Mehr Infos zu {0}"
-
-msgid "Instant_order"
-msgstr "Sofort-Bestellung"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr "{0,plural,=1{1 Woche} other{# Wochen}}"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr "{0,plural,=1{1 Woche} other{# Wochen}} {1,plural,=1{und 1 Tag} other{und # Tage}}"
-
-msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
-msgstr "Du hast {0} bereits {1}x für den Abholtag {2} bestellt."
-
-msgid "from_which_{0}_%"
-msgstr "davon {0} %"
-
-msgid "Move_in_shopping_bag"
-msgstr "In die Einkaufstasche"
-
-msgid "Move_in_cart"
-msgstr "In den Warenkorb"
-
-msgid "Weight_in"
-msgstr "Gewicht in"
-
 msgid "Add_deposit"
 msgstr "Pfand eintragen"
 
@@ -2495,15 +2474,6 @@ msgstr "Kategorien"
 
 msgid "There_are_only_stock_products_shown_in_this_list."
 msgstr "In dieser Liste werden nur Lagerprodukte angezeigt."
-
-msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
-msgstr "Der Hersteller hat das Limit für die Bezahlung in Stunden erreicht."
-
-msgid "Part_in_{0}"
-msgstr "Anteil in {0}"
-
-msgid "in"
-msgstr "in"
 
 msgid "Admin_area"
 msgstr "Admin-Bereich"
@@ -2561,6 +2531,9 @@ msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehä
 
 msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
 msgstr "Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
+
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
+msgstr "Du kannst unseren Newsletter <a href=\"{0}\">im Admin-Bereich unter \"Meine Daten\"</a> abonnieren."
 
 msgid "thank_you_for_your_purchase."
 msgstr "Danke für deinen Einkauf."
@@ -2654,6 +2627,72 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+#~ msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
+
+#~ msgid "Your_overdraft_frame_of_{0}_is_reached."
+#~ msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
+
+#~ msgid "Action_Log_Paying_with_time_time_upload_added"
+#~ msgstr "Stundenabrechnung: Zeit-Eintragung erstellt"
+
+#~ msgid "Action_Log_Paying_with_time_time_upload_changed"
+#~ msgstr "Stundenabrechnung: Zeit-Eintragung geändert"
+
+#~ msgid "Action_Log_Paying_with_time_time_upload_deleted"
+#~ msgstr "Stundenabrechnung: Zeit-Eintragung gelöscht"
+
+#~ msgid "Please_enter_the_paying_with_time_module_name."
+#~ msgstr "Bitte gib den Namen der Stundenabrechnung an."
+
+#~ msgid "Please_enter_the_abbreviation_of_the_paying_with_time_module."
+#~ msgstr "Bitte gib die Abkürzung des Namens der Stundenabrechnung an."
+
+#~ msgid "Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}."
+#~ msgstr "Bitte gib den Umrechnungskurs für die Stundenabrechnung in {0} an."
+
+#~ msgid "Please_enter_exactly_2_decimals."
+#~ msgstr "Bitte trage genau 2 Kommastellen ein."
+
+#~ msgid "Please_provide_a_value."
+#~ msgstr "Bitte gib einen Wert an."
+
+#~ msgid "Mouseover_shows_the_paid_amont_in_{0}."
+#~ msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
+
+#~ msgid "Order_contains_amount_in_{0}."
+#~ msgstr "Bestellung wurde teilweise in {0} bezahlt."
+
+#~ msgid "Paying_with_time_account_name_{0}"
+#~ msgstr "{0}konto"
+
+#~ msgid "From_which_in"
+#~ msgstr "Davon in"
+
+#~ msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+#~ msgstr "Wieviel davon möchtest du in {0} bezahlen?"
+
+#~ msgid "from_which_{0}_%"
+#~ msgstr "davon {0} %"
+
+#~ msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+#~ msgstr "Der Hersteller hat das Limit für die Bezahlung in Stunden erreicht."
+
+#~ msgid "Part_in_{0}"
+#~ msgstr "Anteil in {0}"
+
+#~ msgid "in"
+#~ msgstr "in"
+
+#~ msgid "Please_enter_the_lastname"
+#~ msgstr "Bitte gib den Nachnamen an"
+
+#~ msgid "Firstname_or_company_name"
+#~ msgstr "Vorname (oder Firmenname)"
+
+#~ msgid "Total_sum_tax"
+#~ msgstr "Summe USt."
 
 #~ msgid "by"
 #~ msgstr "von"

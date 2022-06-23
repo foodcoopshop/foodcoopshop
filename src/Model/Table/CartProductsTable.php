@@ -9,12 +9,12 @@ use App\Lib\Error\Exception\InvalidParameterException;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -125,6 +125,8 @@ class CartProductsTable extends AppTable
                 'productId' => $initialProductId
             ];
         }
+
+        $product->next_delivery_day = $this->Products->getNextDeliveryDay($product, $appAuth);
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
@@ -331,42 +333,42 @@ class CartProductsTable extends AppTable
 
     }
 
-    public function setPickupDays($cartProducts, $customerId, $cartType)
+    public function setPickupDays($cartProducts, $customerId, $cartType, $appAuth)
     {
         $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
-        $cartTable = FactoryLocator::get('Table')->get('Carts');
+        $productTable = FactoryLocator::get('Table')->get('Products');
 
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-            if ($cartType == $cartTable::CART_TYPE_WEEKLY_RHYTHM) {
-                $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
-            }
+            $cartProduct->pickup_day = $productTable->getNextDeliveryDay($cartProduct->product, $appAuth);
         }
 
+        $pickupDays = [];
         $uniquePickupDays = $pickupDayTable->getUniquePickupDays($cartProducts);
-        $pickupDays = $pickupDayTable->find('all', [
-            'conditions' => [
-                'PickupDays.customer_id' => $customerId,
-                'PickupDays.pickup_day IN' => $uniquePickupDays
-            ],
-            'order' => [
-                'PickupDays.pickup_day' => 'ASC'
-            ]
-        ]);
+        if (!empty($uniquePickupDays)) {
+            $pickupDays = $pickupDayTable->find('all', [
+                'conditions' => [
+                    'PickupDays.customer_id' => $customerId,
+                    'PickupDays.pickup_day IN' => $uniquePickupDays
+                ],
+                'order' => [
+                    'PickupDays.pickup_day' => 'ASC'
+                ]
+            ]);
 
-        $existingPickupDays = [];
-        foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
-            $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-        }
-        $missingPickupDays = array_diff($uniquePickupDays, $existingPickupDays);
-        $pickupDays = $pickupDays->toArray();
+            $existingPickupDays = [];
+            foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
+                $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            }
+            $missingPickupDays = array_diff($uniquePickupDays, $existingPickupDays);
+            $pickupDays = $pickupDays->toArray();
 
-        if (!empty($missingPickupDays)) {
-            foreach($missingPickupDays as $missingPickupDay) {
-                $pickupDays[] = $pickupDayTable->newEntity([
-                    'customer_id' => $customerId,
-                    'pickup_day' => $missingPickupDay
-                ]);
+            if (!empty($missingPickupDays)) {
+                foreach($missingPickupDays as $missingPickupDay) {
+                    $pickupDays[] = $pickupDayTable->newEntity([
+                        'customer_id' => $customerId,
+                        'pickup_day' => $missingPickupDay
+                    ]);
+                }
             }
         }
         return $pickupDays;

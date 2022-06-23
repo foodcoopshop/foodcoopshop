@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -70,7 +70,7 @@ $pdf->addLastSumRow(
 $pdf->renderTable();
 // product list end
 
-if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0 && $sumTimebasedCurrencyPriceIncl == 0) {
+if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
 
     $m = FactoryLocator::get('Table')->get('Manufacturers');
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
@@ -114,67 +114,6 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
 
 $taxRates = $pdf->prepareTaxSumData($productResults);
 $pdf->renderTaxSumTable($taxRates);
-
-if ($sumTimebasedCurrencyPriceIncl > 0) {
-
-    $sumPriceForTimebasedCurrency = $sumPriceIncl;
-    if (isset($newSumPriceIncl)) {
-        $sumPriceForTimebasedCurrency = $newSumPriceIncl;
-    }
-    $sumPriceForTimebasedCurrency -= $sumTimebasedCurrencyPriceIncl;
-
-    $firstColumnWidth = 200;
-    $secondColumnWidth = 60;
-
-    $html = '<table border="0" cellspacing="0" cellpadding="1">';
-
-        $html .= '<tr>';
-            $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= __d('admin', 'Paid_by_members_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . ':';
-            $html .= '</td>';
-            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumTimebasedCurrencyPriceIncl) . '</b>';
-            $html .= '</td>';
-        $html .= '</tr>';
-
-        $html .= '<tr>';
-            $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= __d('admin', 'Paid_by_members_in') . ' ' . Configure::read('app.currencyName') . ':';
-            $html .= '</td>';
-            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrency) . '</b>';
-            $html .= '</td>';
-        $html .= '</tr>';
-
-        if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
-            $m = FactoryLocator::get('Table')->get('Manufacturers');
-            $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
-            $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
-
-            $html .= '<tr>';
-            $html .= '<td width="' . $firstColumnWidth . '">';
-            $html .= __d('admin', 'Kept_variable_member_fee') . ':';
-            $html .= '</td>';
-            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-            $html .= '<b>'.$this->MyNumber->formatAsCurrency($compensatedPrice).'</b>';
-            $html .= '</td>';
-            $html .= '</tr>';
-
-            $html .= '<tr>';
-                $html .= '<td width="' . $firstColumnWidth . '">';
-                    $html .= __d('admin', 'Amount_that_will_be_transferred_to_your_bank_account') . ':';
-                $html .= '</td>';
-                $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                    $html .= '<b>'.$this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
-                $html .= '</td>';
-            $html .= '</tr>';
-        }
-
-    $html .= '</table>';
-
-    $pdf->Ln(3);
-    $pdf->writeHTML($html, true, false, true, false, '');
-}
 
 if ($productResults[0]['ManufacturerAdditionalTextForInvoice'] != '') {
     $html = '<p>' . nl2br($productResults[0]['ManufacturerAdditionalTextForInvoice']) . '</p>';

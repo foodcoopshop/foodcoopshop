@@ -1,24 +1,21 @@
 <?php
 
-use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use App\Test\TestCase\Traits\QueueTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -29,15 +26,11 @@ class ListsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
-    use QueueTrait;
-
-    public $commandRunner;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->prepareSendingOrderLists();
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testAccessDownloadableInvoice()
@@ -76,20 +69,18 @@ class ListsControllerTest extends AppCakeTestCase
         $this->Customer->save($customerEntity);
 
         $this->loginAsAdmin();
-        Configure::write('Error.log', false);
         $this->get($downloadUrl);
-        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
 
     }
 
     /**
      * this method is not split up into separated test methods because
-     * generating the pdfs (commandRunner) for the test needs a lot of time
+     * generating the pdfs for the test needs a lot of time
      */
     public function testAccessOrderListPageAndDownloadableFile()
     {
-        $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
+        $this->exec('send_order_lists 2018-01-31');
         $this->runAndAssertQueue();
 
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
@@ -114,9 +105,7 @@ class ListsControllerTest extends AppCakeTestCase
 
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
-        Configure::write('Error.log', false);
         $this->get($orderListDownloadUrl);
-        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
 
         // check downloadable file as admin

@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -136,13 +136,13 @@ foodcoopshop.Admin = {
         return productIds;
     },
 
-    getSelectedCustomerIds : function() {
-        var customerIds = [];
+    getSelectedIds : function() {
+        var ids = [];
         $('table.list').find('input.row-marker[type="checkbox"]:checked').each(function () {
-            var customerId = $(this).closest('tr').find('td:nth-child(2)').html();
-            customerIds.push(customerId);
+            var id = $(this).closest('tr').find('td:nth-child(2)').html();
+            ids.push(id);
         });
-        return customerIds;
+        return ids;
     },
 
     updateObjectSelectionActionButton : function (button) {
@@ -180,7 +180,10 @@ foodcoopshop.Admin = {
         $(selector).each(function () {
             var val = $(this).data('val');
             if (val) {
-                $(this).selectpicker('val', val.toString().split(','));
+                var valAsArray = val.toString().split(',');
+                $(this).selectpicker().val(valAsArray);
+                $(this).selectpicker('destroy');
+                $(this).selectpicker('render');
             }
         });
     },
@@ -286,7 +289,7 @@ foodcoopshop.Admin = {
 
     },
 
-    initCopySelectedCustomerEmailsToClipboard: function() {
+    initCopySelectedEmailsToClipboard: function(object) {
 
         var btnSelector = '.btn-clipboard';
         var button = $(btnSelector);
@@ -300,10 +303,10 @@ foodcoopshop.Admin = {
             btnSelector,
             {
                 text: function(trigger) {
-                    var customerIds = foodcoopshop.Admin.getSelectedCustomerIds();
+                    var ids = foodcoopshop.Admin.getSelectedIds();
                     var emails = [];
-                    for(var i=0; i < customerIds.length; i++) {
-                        var email = $('tr.data[data-customer-id="'+customerIds[i]+'"]').find('i.customer-email-button').data('email');
+                    for(var i=0; i < ids.length; i++) {
+                        var email = $('tr.data[data-' + object + '-id="'+ids[i]+'"]').find('i.' + object + '-email-button').data('email');
                         emails.push(email);
                     }
                     return emails.join(',');
@@ -420,10 +423,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    setOrderDetailTimebasedCurrencyData : function(elementToAttach, timebasedCurrencyObject) {
-        elementToAttach.data('timebased-currency-object', $.parseJSON(timebasedCurrencyObject));
-    },
-
     setProductUnitData : function(elementToAttach, productUnitObject) {
         elementToAttach.data('product-unit-object', $.parseJSON(productUnitObject));
     },
@@ -463,7 +462,7 @@ foodcoopshop.Admin = {
         });
 
         button.on('click', function () {
-            var customerIds = foodcoopshop.Admin.getSelectedCustomerIds();
+            var customerIds = foodcoopshop.Admin.getSelectedIds();
             window.open('/admin/customers/generateMemberCards.pdf?customerIds=' + customerIds.join(','));
         });
     },
@@ -560,12 +559,13 @@ foodcoopshop.Admin = {
                         });
                     }
                     if (selectedIndex) {
-                        select.selectpicker('val', selectedIndex);
+                        select.selectpicker().val(selectedIndex);
                         if (onChange) {
                             select.trigger('change');
                         }
                     }
                     select.selectpicker('refresh');
+                    select.selectpicker('render');
                     select.find('i.fa-circle-notch').remove();
                 },
                 onError: function (data) {

@@ -47,8 +47,6 @@ TRUNCATE TABLE `fcs_storage_locations`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
-TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
-TRUNCATE TABLE `fcs_timebased_currency_payments`;
 TRUNCATE TABLE `fcs_units`;
 TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
@@ -157,12 +155,6 @@ INSERT INTO `fcs_configuration` VALUES
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',400,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',500,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (567,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','1','readonly',500,'de_DE','2017-09-14 00:00:00','2017-09-14 00:00:00'),
-(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Stundenabrechnungs-Modul aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/stundenabrechnungs-modul\" target=\"_blank\">Infos zum Stundenabrechnungs-Modul</a></div>','0','boolean',2000,'de_DE','2018-03-16 15:23:31','2018-03-16 15:23:31'),
-(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Stundenabrechnung: Name der Einheit<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',2100,'de_DE','2018-03-16 15:23:31','2018-03-16 15:23:31'),
-(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Stundenabrechnung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',2200,'de_DE','2018-03-16 15:23:31','2018-03-16 15:23:31'),
-(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Stundenabrechnung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',2300,'de_DE','2018-03-16 15:23:31','2018-03-16 15:23:31'),
-(572,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER','Stundenabrechnung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','10','number',2400,'de_DE','2018-03-16 15:23:31','2018-03-16 15:23:31'),
-(573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Stundenabrechnung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','100','number',2500,'de_DE','2018-03-16 15:23:31','2018-03-16 15:23:31'),
 (574,1,'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS','Produktpreis für nicht eingeloggte Mitglieder anzeigen?','0','boolean',210,'de_DE','2018-05-28 18:05:57','2018-05-28 18:05:57'),
 (575,1,'FCS_CURRENCY_SYMBOL','Währungssymbol','€','readonly',520,'de_DE','2018-06-13 19:53:14','2018-06-13 19:53:14'),
 (576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',550,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55'),
@@ -184,12 +176,14 @@ INSERT INTO `fcs_configuration` VALUES
 (594,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','FoodCoop Test<br />Demostraße 4<br />A-4564 Demostadt<br />demo-foodcoop@maillinator.com','readonly',582,'de_DE','2020-11-03 15:24:12','2020-11-03 15:24:12'),
 (595,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?<div class=\"small\">Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt.</div>','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:26','2020-12-20 19:26:26'),
 (596,1,'FCS_CHECK_CREDIT_BALANCE_LIMIT','Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?','0','number',1450,'de_DE','2021-01-19 11:23:49','2021-01-19 11:23:49'),
-(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',584,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17'),
+(597,1,'FCS_PURCHASE_PRICE_ENABLED','Einkaufspreis für Produkte erfassen?<div class=\"small\">Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller.</div>','0','readonly',587,'de_DE','2021-05-12 15:24:17','2021-05-12 15:24:17'),
 (598,1,'FCS_HELLO_CASH_API_ENABLED','Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?<div class=\"small\">Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen.</div>','0','readonly',583,'de_DE','2021-07-07 10:55:14','2021-07-07 10:55:14'),
 (599,1,'FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS','Lagerort für Produkte erfassen und in Bestelllisten anzeigen?<div class=\"small\">Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\"</div>','0','boolean',3210,'de_DE','2021-08-02 11:28:40','2021-08-02 11:28:40'),
 (600,1,'FCS_INSTAGRAM_URL','Instagram-Url für die Einbindung im Footer','','text',920,'de_DE','2021-09-10 21:23:18','2021-09-10 21:23:18'),
 (601,1,'FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY','Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich.','0','boolean',3210,'de_DE','2022-02-01 17:48:46','2022-02-01 17:48:46'),
-(602,1,'FCS_INVOICE_NUMBER_PREFIX','Präfix für Rechnungs-Nummernkreis<br /><div class=\"small\">Max. 6 Zeichen inkl. Trennzeichen.</div>','','readonly',583,'de_DE','2022-03-21 12:03:07','2022-03-21 12:03:07');
+(602,1,'FCS_INVOICE_NUMBER_PREFIX','Präfix für Rechnungs-Nummernkreis<br /><div class=\"small\">Max. 6 Zeichen inkl. Trennzeichen.</div>','','readonly',586,'de_DE','2022-03-21 12:03:07','2022-03-21 12:03:07'),
+(603,1,'FCS_TAX_BASED_ON_NET_INVOICE_SUM','Rechnungslegung für pauschalierte Betriebe<br /><div class=\"small\">Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück.</div>','0','readonly',585,'de_DE','2022-03-23 09:12:43','2022-03-23 09:12:43'),
+(604,1,'FCS_NEWSLETTER_ENABLED','Newsletter-Funktion aktiv?<br /><div class=\"small\">Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a></div>','0','boolean',3400,'de_DE','2022-04-12 15:28:47','2022-04-12 15:28:47');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -204,13 +198,13 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
-(87,3,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0,0,0,'SP',1,1,1,1),
-(88,4,'Demo','Admin','fcs-demo-admin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0,0,0,'SP',1,1,1,1),
-(89,4,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0,0,0,'SP',1,1,1,1),
-(90,4,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0,0,0,'SP',1,1,1,1),
-(91,4,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0,0,'SP',1,1,1,1),
-(92,5,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,0,'SP',1,1,1,1),
-(93,2,'Demo','SB-Kunde','fcs-demo-sb-kunde@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,0,'SP',1,1,1,1);
+(87,3,0,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0,0,'SP',1,1,1,1,0),
+(88,4,0,'Demo','Admin','fcs-demo-admin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0,0,'SP',1,1,1,1,0),
+(89,4,0,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0,0,'SP',1,1,1,1,0),
+(90,4,0,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0,0,'SP',1,1,1,1,0),
+(91,4,0,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0,'SP',1,1,1,1,0),
+(92,5,0,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0),
+(93,2,0,'Demo','SB-Kunde','fcs-demo-sb-kunde@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0);
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
@@ -235,10 +229,10 @@ INSERT INTO `fcs_images` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,NULL,'testfcs1@mailinator.com,testfcs2@mailinator.com',NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,'',1,0),
-(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,NULL,'',NULL,NULL,NULL,NULL,'1',0,30,100,1,1,1,'',1,0),
-(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,NULL,'test@test.at',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'',1,1),
-(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,NULL,'',NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'',1,0);
+(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,NULL,'testfcs1@mailinator.com,testfcs2@mailinator.com',NULL,NULL,NULL,1,NULL,0,0,0,'',1,0),
+(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,NULL,'',NULL,NULL,NULL,NULL,'1',1,1,1,'',1,0),
+(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,NULL,'test@test.at',NULL,NULL,NULL,NULL,NULL,0,0,0,'',1,1),
+(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,NULL,'',NULL,NULL,NULL,NULL,NULL,0,0,0,'',1,0);
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
@@ -375,12 +369,6 @@ INSERT INTO `fcs_tax` VALUES
 (3,13.000,1,0);
 /*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_timebased_currency_payments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_payments` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_units` DISABLE KEYS */;
 INSERT INTO `fcs_units` VALUES
 (1,347,0,1.50,0.98,'g',100,1,350.000),
@@ -433,7 +421,12 @@ INSERT INTO `phinxlog` VALUES
 (20211229194617,'AddIndizesForBetterPerformance','2021-12-29 19:53:31','2021-12-29 19:53:31',0),
 (20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:32:01','2022-01-29 08:32:02',0),
 (20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:46','2022-02-01 16:48:46',0),
-(20220321103059,'PrefixForInvoices','2022-03-21 11:03:07','2022-03-21 11:03:07',0);
+(20220321103059,'PrefixForInvoices','2022-03-21 11:03:07','2022-03-21 11:03:07',0),
+(20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:43','2022-03-23 08:12:43',0),
+(20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:45','2022-04-07 09:37:45',0),
+(20220412131842,'Newsletter','2022-04-12 13:29:05','2022-04-12 13:29:05',0),
+(20220525092822,'BiggerQueuedJobDataField','2022-05-25 09:32:10','2022-05-25 09:32:10',0),
+(20220620091755,'RemoveTimebasedCurrencyModule','2022-06-20 09:30:39','2022-06-20 09:30:39',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

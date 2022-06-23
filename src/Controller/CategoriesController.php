@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Lib\Catalog\Catalog;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
@@ -10,12 +11,12 @@ use Cake\Event\EventInterface;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -39,9 +40,9 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-        $products = $this->prepareProductsForFrontend($products);
+        $this->Catalog = new Catalog();
+        $products = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('New_products'));
@@ -66,9 +67,9 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = $this->getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
-        $products = $this->prepareProductsForFrontend($products);
+        $this->Catalog = new Catalog();
+        $products = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('Search') . ' "' . $keyword . '"');
@@ -102,8 +103,9 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
-        $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryId);
-        $products = $this->prepareProductsForFrontend($products);
+        $this->Catalog = new Catalog();
+        $products = $this->Catalog->getProducts($this->AppAuth, $categoryId);
+        $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
 
         $this->set('products', $products);
 

@@ -8,16 +8,17 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
+use League\Csv\Reader;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -53,10 +54,18 @@ class ReportsController extends AdminAppController
         $csvRecords = [];
         $saveRecords = false;
         if (!empty($this->getRequest()->getData('upload'))) {
+
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
             $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
             $reader = $bankClassName::createFromString($content);
+
+            // change uploaded file charset from UTF16 to UTF8
+            $inputBom = $reader->getInputBOM();
+            if ($inputBom === Reader::BOM_UTF16_LE || $inputBom === Reader::BOM_UTF16_BE) {
+                $reader->addStreamFilter('convert.iconv.UTF-16/UTF-8');
+            }
+
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
                 $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
@@ -149,10 +158,11 @@ class ReportsController extends AdminAppController
                                     ]))
                                     ->setViewVars([
                                         'customer' => $customer,
+                                        'newsletterCustomer' => $customer,
                                         'csvPayment' => $csvPayment,
                                         'appAuth' => $this->AppAuth,
                                     ]);
-                                    $email->send();
+                                    $email->addToQueue();
                                 }
                             }
                             $i++;

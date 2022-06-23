@@ -13,12 +13,12 @@ use App\Lib\OutputFilter\OutputFilter;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since FoodCoopShop 1.0.0
- * @license https://opensource.org/licenses/mit-license.php MIT License
+ * @license https://opensource.org/licenses/AGPL-3.0
  * @author Mario Rothauer <office@foodcoopshop.com>
  * @copyright Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link https://www.foodcoopshop.com
@@ -52,11 +52,12 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getShoppingPricesForDropdown()
     {
-        $options = [
-            'SP' => __('Shopping_with_selling_price'),
-            'PP' => __('Shopping_with_purchase_price'),
-            'ZP' => __('Shopping_with_zero_price'),
-        ];
+        $options = [];
+        $options['SP'] = __('Shopping_with_selling_price');
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $options['PP'] = __('Shopping_with_purchase_price');
+        }
+        $options['ZP'] = __('Shopping_with_zero_price');
         return $options;
     }
 
@@ -482,41 +483,17 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getGroups()[$groupId];
     }
 
-    public function getCustomerOrderBy()
-    {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            return [
-                'Customers.lastname' => 'ASC',
-                'Customers.firstname' => 'ASC'
-            ];
-        } else {
-            return [
-                'Customers.firstname' => 'ASC',
-                'Customers.lastname' => 'ASC'
-            ];
-        }
-    }
-
     public function getCartIdFromCartFinishedUrl($url)
     {
         $cartId = explode('/', $url);
         return (int) $cartId[5];
     }
 
-    public function getCustomerNameForSql()
-    {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            return "CONCAT(c.lastname, ' ', c.firstname)";
-        } else {
-            return "CONCAT(c.firstname, ' ', c.lastname)";
-        }
-    }
-
     public function getReportTabs()
     {
         $tabs = [];
         foreach($this->getPaymentTexts() as $key => $paymentText) {
-            if ($key == 'deposit' && (!Configure::read('app.isDepositEnabled') || !Configure::read('app.isDepositPaymentCashless'))) {
+            if ($key == 'deposit' && (!Configure::read('app.isDepositEnabled') || !$this->paymentIsCashless())) {
                 continue;
             }
             $tabs[] = [
@@ -530,7 +507,7 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum',
         ];
-        if (Configure::read('app.isDepositEnabled') && $this->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
+        if (Configure::read('app.isDepositEnabled') && $this->paymentIsCashless()) {
             $tabs[] = [
                 'name' => __('Deposit_overview'),
                 'url' => Configure::read('app.slugHelper')->getDepositOverviewDiagram(),

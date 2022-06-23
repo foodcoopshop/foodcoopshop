@@ -2,27 +2,24 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 3.2.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
-use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\EmailTrait;
-use App\Test\TestCase\Traits\QueueTrait;
 
 class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 {
@@ -31,18 +28,14 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
-    use QueueTrait;
-
-    public $commandRunner;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->prepareSendingInvoices();
-        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
-    public function testContentOfInvoice()
+    public function testContentOfInvoiceForPerson()
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -52,7 +45,50 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForPerson.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+
+    }
+
+    public function testContentOfInvoiceForCompany()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'is_company', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'firstname', 'Company Name');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'lastname', 'Contact Name');
+        $this->loginAsSuperadmin();
+
+        $customerId = Configure::read('test.superadminId');
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceForCompany.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+
+    }
+
+    public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum()
+    {
+
+        $customerId = Configure::read('test.superadminId');
+
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Product->updateAll(['id_tax' => 2], ['active' => APP_ON]);
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 10);
+        $this->changeConfiguration('FCS_TAX_BASED_ON_NET_INVOICE_SUM', 1);
+        $this->loginAsSuperadmin();
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoiceWithTaxBasedOnInvoiceSum.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
     }
@@ -77,7 +113,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
 
-        $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
+        $this->exec('send_invoices_to_customers "' . $cronjobRunDay . '"');
         $this->runAndAssertQueue();
 
         $pdfFilenameWithoutPath = '2018-02-02_Demo-Superadmin_92_Rechnung_2018-000001_FoodCoop-Test.pdf';
@@ -115,7 +151,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->getAndAssertPaymentsAfterInvoiceGeneration($customerId);
 
         // call again
-        $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
+        $this->exec('send_invoices_to_customers ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
         $this->assertEquals(1, count($this->Invoice->find('all')->toArray()));

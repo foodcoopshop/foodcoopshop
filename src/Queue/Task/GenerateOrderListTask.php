@@ -1,6 +1,7 @@
 <?php
 namespace App\Queue\Task;
 
+use App\Mailer\AppMailer;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use Cake\Core\Configure;
@@ -9,12 +10,12 @@ use Queue\Queue\Task;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 3.2.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -70,21 +71,38 @@ class GenerateOrderListTask extends Task {
 
         if ($sendEmail) {
 
-            $this->QueuedJobs = $this->loadModel('Queue.QueuedJobs');
-            $this->QueuedJobs->createJob('SendOrderList', [
-                'productPdfFile' => $productPdfFile,
-                'customerPdfFile' => $customerPdfFile,
-                'pickupDayFormated' => $pickupDayFormated,
-                'orderDetailIds' => $orderDetailIds,
-                'manufacturerId' => $manufacturer->id_manufacturer,
-                'manufactuerName' => $manufacturer->name,
-                'actionLogId' => $actionLogId,
+            $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
+
+            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
+
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.send_order_list');
+            $email->setTo($manufacturer->address_manufacturer->email)
+            ->setAttachments([
+                $productPdfFile,
+                $customerPdfFile,
+            ])
+            ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
+            ->setViewVars([
+                'manufacturer' => $manufacturer,
+                'showManufacturerUnsubscribeLink' => true,
             ]);
+            if (!empty($ccRecipients)) {
+                $email->setCc($ccRecipients);
+            }
+
+            $email->afterRunParams = [
+                'actionLogIdentifier' => 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormated,
+                'actionLogId' => $actionLogId,
+                'manufacturerId' => $manufacturerId,
+                'orderDetailIds' => $orderDetailIds,
+            ];
+            $email->addToQueue();
 
         }
 
-        $identifier = 'generate-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
-        $this->updateActionLog($actionLogId, $identifier, $jobId);
+        $actionLogIdentifier = 'generate-order-list-' . $manufacturerId . '-' . $pickupDayFormated;
+        $this->updateActionLogSuccess($actionLogId, $actionLogIdentifier, $jobId);
 
     }
 

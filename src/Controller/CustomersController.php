@@ -19,12 +19,12 @@ use Cake\Http\Exception\NotFoundException;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -150,7 +150,7 @@ class CustomersController extends FrontendController
             if (Configure::read('app.termsOfUseEnabled')) {
                 $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             }
-            $email->send();
+            $email->addToQueue();
 
             $this->Flash->success(__('Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you.'));
         }
@@ -219,10 +219,9 @@ class CustomersController extends FrontendController
                         'tmpNewPassword' => $tmpNewPassword,
                         'customer' => $oldEntity
                     ]);
+                $email->addToQueue();
 
-                if ($email->send()) {
-                    $this->Flash->success(__('We_sent_your_new_password_to_you_it_needs_to_be_activated.'));
-                }
+                $this->Flash->success(__('We_sent_your_new_password_to_you_it_needs_to_be_activated.'));
 
                 $this->redirect('/');
             }
@@ -398,6 +397,9 @@ class CustomersController extends FrontendController
                     if (Configure::read('app.customerMainNamePart') == 'lastname') {
                         $fullname = $this->getRequest()->getData('Customers.lastname') . ' ' . $this->getRequest()->getData('Customers.firstname');
                     }
+                    if ($this->getRequest()->getData('Customers.is_company')) {
+                        $fullname = $this->getRequest()->getData('Customers.firstname');
+                    }
                     $message = __('{0}_created_an_account.', [$fullname]);
 
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
@@ -415,9 +417,10 @@ class CustomersController extends FrontendController
                         ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $newCustomer,
+                        'newsletterCustomer' => $newCustomer,
                         'newPassword' => $newPassword
                         ]);
-                    $email->send();
+                    $email->addToQueue();
                     // END send confirmation email to customer
 
                     // START send notification email
@@ -430,7 +433,7 @@ class CustomersController extends FrontendController
                             'appAuth' => $this->AppAuth,
                                 'data' => $newCustomer
                             ])
-                            ->send();
+                            ->addToQueue();
                     }
                     // END
 
@@ -453,9 +456,9 @@ class CustomersController extends FrontendController
 
     public function logout()
     {
+        $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
-        $this->destroyOrderCustomer();
 
         $this->AppAuth->logout();
         $redirectUrl = '/';

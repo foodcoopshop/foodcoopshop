@@ -10,12 +10,12 @@ use Cake\Validation\Validator;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -90,60 +90,24 @@ class CartsTable extends AppTable
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
 
-    public function adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor)
+    public function getCart($appAuth, $cartType): array
     {
 
-        $cartProductSum = 0;
-        $cartProductSumExcl = 0;
-        $cartProductSecondsSum = 0;
-        foreach($cart['CartProducts'] as &$cartProduct) {
-            if (isset($cartProduct['timebasedCurrencySeconds'])) {
-                $calculatedSeconds = round($cartProduct['timebasedCurrencySeconds'] * $selectedTimeAdaptionFactor, 0);
-                $cartProduct['timebasedCurrencySeconds'] = $calculatedSeconds;
-                $cartProductSecondsSum += $cartProduct['timebasedCurrencySeconds'];
-                $cartProduct['isTimebasedCurrencyUsed'] = true;
-            }
-            if (isset($cartProduct['timebasedCurrencyMoneyIncl'])) {
-                $cartProduct['timebasedCurrencyMoneyIncl'] = round($cartProduct['timebasedCurrencyMoneyIncl'] * $selectedTimeAdaptionFactor, 2);
-                $cartProduct['price'] -= $cartProduct['timebasedCurrencyMoneyIncl'];
-                $cartProductSum += $cartProduct['price'];
-            }
-            if (isset($cartProduct['timebasedCurrencyMoneyExcl'])) {
-                $cartProduct['timebasedCurrencyMoneyExcl'] = round($cartProduct['timebasedCurrencyMoneyExcl'] *  $selectedTimeAdaptionFactor, 2);
-                $cartProduct['priceExcl'] -= $cartProduct['timebasedCurrencyMoneyExcl'];
-                $cartProductSumExcl += $cartProduct['priceExcl'];
-            }
-        }
-
-        $cart['CartTimebasedCurrencyUsed'] = true;
-        $cart['CartTimebasedCurrencySecondsSum'] = $cartProductSecondsSum;
-        $cart['CartProductSum'] = $cartProductSum;
-        $cart['CartProductSumExcl'] = $cartProductSumExcl;
-
-        return $cart;
-    }
-
-    /**
-     * @param int $customerId
-     * @return array
-     */
-    public function getCart($appAuth, $cartType)
-    {
-
+        $this->Product = FactoryLocator::get('Table')->get('Products');
         $customerId = $appAuth->getUserId();
 
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
                 'Carts.id_customer' => $customerId,
-                'Carts.cart_type' => $cartType
+                'Carts.cart_type' => $cartType,
             ]
         ])->first();
 
         if (empty($cart)) {
             $cart2save = [
                 'id_customer' => $customerId,
-                'cart_type' => $cartType
+                'cart_type' => $cartType,
             ];
             $cart = $this->save($this->newEntity($cart2save));
         }
@@ -151,14 +115,13 @@ class CartsTable extends AppTable
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
-                'CartProducts.id_cart' => $cart['id_cart'],
+                'CartProducts.id_cart' => $cart->id_cart,
                 'CartProducts.amount > 0',
             ],
             'order' => [
                 'Products.name',
             ],
             'contain' => [
-                'OrderDetails',
                 'CartProductUnits',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
@@ -172,7 +135,7 @@ class CartsTable extends AppTable
         ])->toArray();
 
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType);
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType, $appAuth);
         }
 
         $preparedCart = [
@@ -197,24 +160,15 @@ class CartsTable extends AppTable
                 $imageId,
                 $cartProduct->product->id_manufacturer,
             );
-            $productImage = Configure::read('app.htmlHelper')->image($productImageData['productImageLargeSrc']);
+            $productImage = Configure::read('app.htmlHelper')->image($productImageData['productImageSrc']);
 
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
             $productData['image'] = $productImage;
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            switch($cartType) {
-                case self::CART_TYPE_WEEKLY_RHYTHM:
-                    $nextDeliveryDay = strtotime($cartProduct->product->next_delivery_day);
-                    break;
-                case self::CART_TYPE_INSTANT_ORDER:
-                case self::CART_TYPE_SELF_SERVICE:
-                    $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDay();
-                    break;
-            }
-
-            $productData['nextDeliveryDayAsTimestamp'] = $nextDeliveryDay;
+            $nextDeliveryDay = $this->Product->getNextDeliveryDay($cartProduct->product, $appAuth);
+            $nextDeliveryDay = strtotime($nextDeliveryDay);
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
 
             $preparedCart['CartProducts'][] = $productData;
@@ -224,7 +178,7 @@ class CartsTable extends AppTable
         $productName = [];
         $deliveryDay = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
-            $deliveryDay[] = $cartProduct['nextDeliveryDayAsTimestamp'];
+            $deliveryDay[] = $cartProduct['nextDeliveryDay'];
             $productName[] = mb_strtolower(StringComponent::slugify($cartProduct['productName']));
         }
 
@@ -240,23 +194,11 @@ class CartsTable extends AppTable
         $preparedCart['CartProductSum'] = 0;
         $preparedCart['CartProductSumExcl'] = 0;
         $preparedCart['CartTaxSum'] = 0;
-        $preparedCart['CartTimebasedCurrencyMoneyExclSum'] = 0;
-        $preparedCart['CartTimebasedCurrencyMoneyInclSum'] = 0;
-        $preparedCart['CartTimebasedCurrencySecondsSum'] = 0;
         foreach ($preparedCart['CartProducts'] as $p) {
             $preparedCart['CartDepositSum'] += $p['deposit'];
             $preparedCart['CartProductSum'] += $p['price'];
             $preparedCart['CartTaxSum'] += $p['tax'];
             $preparedCart['CartProductSumExcl'] += $p['priceExcl'];
-            if (!empty($p['timebasedCurrencyMoneyExcl'])) {
-                $preparedCart['CartTimebasedCurrencyMoneyExclSum'] += $p['timebasedCurrencyMoneyExcl'];
-            }
-            if (!empty($p['timebasedCurrencyMoneyIncl'])) {
-                $preparedCart['CartTimebasedCurrencyMoneyInclSum'] += $p['timebasedCurrencyMoneyIncl'];
-            }
-            if (!empty($p['timebasedCurrencySeconds'])) {
-                $preparedCart['CartTimebasedCurrencySecondsSum'] += $p['timebasedCurrencySeconds'];
-            }
         }
         return $preparedCart;
     }
@@ -305,23 +247,6 @@ class CartsTable extends AppTable
             }
         }
         return $productData;
-    }
-
-    private function addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
-    {
-        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && !empty($appAuth->user()) && $appAuth->user('timebased_currency_enabled')) {
-            if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
-                $manufacturerLimitReached = $manufacturersTable->hasManufacturerReachedTimebasedCurrencyLimit($cartProduct->product->id_manufacturer);
-                if (!$manufacturerLimitReached) {
-                    $productData['timebasedCurrencyMoneyIncl'] = round($manufacturersTable->getTimebasedCurrencyMoney($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
-                    $productData['timebasedCurrencyMoneyExcl'] = round($manufacturersTable->getTimebasedCurrencyMoney($netPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
-                    $productData['timebasedCurrencySeconds'] = $manufacturersTable->getCartTimebasedCurrencySeconds($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage) * $cartProduct->amount;
-                }
-            }
-        }
-        return $productData;
-
     }
 
     /**
@@ -493,8 +418,6 @@ class CartsTable extends AppTable
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
 
-        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $prices['gross_per_piece'], $prices['net_per_piece']);
-
         return $productData;
 
     }
@@ -602,8 +525,6 @@ class CartsTable extends AppTable
         $productData['unitName'] = $unitName;
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
-
-        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $prices['gross_per_piece'], $prices['net_per_piece']);
 
         return $productData;
 

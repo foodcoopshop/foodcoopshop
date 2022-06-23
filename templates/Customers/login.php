@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -20,6 +20,11 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".ModalText.init('#RegistrationForm .input.checkbox label a');".
     Configure::read('app.jsNamespace').".Helper.initLoginForm();"
 ]);
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Helper.initRegistrationAsCompany();"
+    ]);
+}
 ?>
 <div id="login-form" class="form">
 
@@ -99,9 +104,9 @@ $this->element('addScript', ['script' =>
 
                   echo '<div class="detail-form">';
 
-                if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
-                    echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
-                }
+                      if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
+                          echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
+                      }
 
                       echo $this->Form->control('Customers.firstname', [
                           'label' => __('Firstname'),
@@ -109,8 +114,16 @@ $this->element('addScript', ['script' =>
                       ]);
                       echo $this->Form->control('Customers.lastname', [
                           'label' => __('Lastname'),
-                          'required' => true, // required should not be necessary here
+                          'required' => true,
                       ]);
+
+                      if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                          echo $this->Form->control('Customers.is_company', [
+                              'label' => __('Register_as_company?'),
+                              'type' => 'checkbox',
+                              'class' => 'one-line',
+                          ]);
+                      }
 
                       echo $this->Form->control('Customers.address_customer.address1', [
                           'label' => __('Street_and_number'),
@@ -128,6 +141,10 @@ $this->element('addScript', ['script' =>
 
                       if (Configure::read('app.emailOrderReminderEnabled')) {
                           echo $this->Form->control('Customers.email_order_reminder_enabled', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
+                      }
+
+                      if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+                          echo $this->Form->control('Customers.newsletter_enabled', ['label' => __('Want_to_receive_the_newsletter?'), 'type' => 'checkbox']);
                       }
 
                       if (Configure::read('app.termsOfUseEnabled')) {

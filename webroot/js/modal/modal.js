@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 3.1.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -55,7 +55,7 @@ foodcoopshop.Modal = {
     createButton: function(classes, title, faIcon, isCloseButton) {
         var buttonHtml = '<button type="button" class="btn ' + classes.join(' ') + '"';
         if (isCloseButton) {
-            buttonHtml += ' data-dismiss="modal"';
+            buttonHtml += ' data-bs-dismiss="modal"';
         }
         buttonHtml += '>';
         if (faIcon) {
@@ -79,9 +79,7 @@ foodcoopshop.Modal = {
         html += '<div class="modal-content">';
         html += '<div class="modal-header">';
         html += '<h5 class="modal-title">' + title + '</h5>';
-        html += '<button type="button" class="close" data-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '">';
-        html += '<span aria-hidden="true">&times;</span>';
-        html += '</button>';
+        html += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '"></button>';
         html += '</div>';
         html += '<div class="modal-body">' + body + '</div>';
         html += '<div class="modal-footer">';
@@ -104,6 +102,7 @@ foodcoopshop.Modal = {
         $(modalId, parentDocument).remove();
         $('.modal-backdrop', parentDocument).remove();
         $('body', parentDocument).removeClass('modal-open');
+        $('body', parentDocument).css('overflow', 'auto');
     },
 
     makeDraggable : function(elementId) {

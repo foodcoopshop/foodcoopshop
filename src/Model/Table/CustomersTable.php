@@ -13,12 +13,12 @@ use Cake\Database\Expression\QueryExpression;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -81,7 +81,17 @@ class CustomersTable extends AppTable
     public function validationEdit(Validator $validator)
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
-        $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
+        $validator
+        ->add('lastname', 'custom', [
+            'rule'=>  function ($value, $context) {
+                if ((isset($context['data']['is_company']) && $context['data']['is_company'])
+                    || strlen($value) >= 2) {
+                    return true;
+                }
+                return false;
+            },
+            'message' => __('Please_enter_your_last_name.'),
+        ]);
         $validator->inList('shopping_price', array_keys(Configure::read('app.htmlHelper')->getShoppingPricesForDropdown()), __('The_shopping_price_is_not_valid.'));
         return $validator;
     }
@@ -212,18 +222,27 @@ class CustomersTable extends AppTable
         ]);
     }
 
+    public function getCustomerName($tableName = 'Customers')
+    {
+        $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';
+        if (Configure::read('app.customerMainNamePart') == 'lastname') {
+            $concat = $tableName . '.lastname, " ", ' . $tableName . '.firstname';
+        }
+        $sql = 'IF(' . $tableName . '.is_company,' . $tableName . '.firstname,CONCAT('.$concat.'))';
+        return $sql;
+    }
+
+    public function addCustomersNameForOrderSelect($query)
+    {
+        $sql = $this->getCustomerName();
+        return $query->select(['CustomerNameForOrder' => $sql]);
+    }
+
     public function getCustomerOrderClause()
     {
         $result = [
-            'Customers.lastname' => 'ASC',
-            'Customers.firstname' => 'ASC',
+            'CustomerNameForOrder' => 'ASC',
         ];
-        if (Configure::read('app.customerMainNamePart') == 'firstname') {
-            $result = [
-                'Customers.firstname' => 'ASC',
-                'Customers.lastname' => 'ASC',
-            ];
-        }
         return $result;
     }
 
@@ -579,9 +598,16 @@ class CustomersTable extends AppTable
 
         $customers = $this->find('all', [
             'conditions' => $conditions,
-            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
+            'order' => $this->getCustomerOrderClause(),
             'contain' => $contain
-        ])->toArray();
+        ]);
+        $customers = $this->addCustomersNameForOrderSelect($customers);
+        $customers->select($this);
+        if (! $includeManufacturers) {
+            $customers->select($this->AddressCustomers);
+        }
+
+        $customers = $customers->toArray();
 
         if (! $includeManufacturers) {
             $validOrderDetails = $this->getAssociation('ValidOrderDetails');

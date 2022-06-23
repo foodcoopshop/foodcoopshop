@@ -10,12 +10,12 @@ use Cake\Validation\Validator;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -47,9 +47,6 @@ class OrderDetailsTable extends AppTable
         ]);
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'product_attribute_id'
-        ]);
-        $this->hasOne('TimebasedCurrencyOrderDetails', [
-            'foreignKey' => 'id_order_detail'
         ]);
         $this->hasOne('OrderDetailUnits', [
             'foreignKey' => 'id_order_detail'
@@ -85,6 +82,9 @@ class OrderDetailsTable extends AppTable
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
+            ],
+            'order' => [
+                'ProductName' => 'ASC',
             ],
         ]);
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
@@ -242,10 +242,7 @@ class OrderDetailsTable extends AppTable
         return $depositNet;
     }
 
-    /**
-     * @param int $customerId
-     * @return array
-     */
+
     public function getLastOrderDetailsForDropdown($customerId)
     {
 
@@ -260,8 +257,8 @@ class OrderDetailsTable extends AppTable
             $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
             $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
-            // stop trying to search for valid orders if year is 2013
-            if (date('Y', $dateFrom) == '2013') {
+            // stop trying to search for valid orders if year is one year ago
+            if (date('Y', $dateFrom) == date('Y') - 1) {
                 break;
             }
 
@@ -293,6 +290,10 @@ class OrderDetailsTable extends AppTable
     {
         $futureOrders = $this->find('all', [
             'conditions' => $this->getFutureOrdersConditions($customerId),
+            'order' => [
+                'OrderDetails.product_id' => 'ASC',
+                'OrderDetails.pickup_day' => 'ASC',
+            ]
         ]);
         return $futureOrders;
     }
@@ -380,10 +381,6 @@ class OrderDetailsTable extends AppTable
     public function deleteOrderDetail($orderDetail)
     {
         $this->delete($orderDetail);
-
-        if (!empty($orderDetail->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetails->delete($orderDetail->timebased_currency_order_detail);
-        }
 
         if (!empty($orderDetail->order_detail_unit)) {
             $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
@@ -522,12 +519,10 @@ class OrderDetailsTable extends AppTable
     public function getMonthlySumProductByCustomer($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
-        $query->contain('TimebasedCurrencyOrderDetails');
         $query->group('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
-            'SumTimebasedCurrencySeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
         ]);
         return $query->toArray();
@@ -621,10 +616,6 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
             $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;
             $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
-            if (!isset($preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'])) {
-                $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = 0;
-            }
-            $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
         return $preparedOrderDetails;
     }
@@ -642,10 +633,6 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
             $preparedOrderDetails[$key]['manufacturer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
-            if (!isset($preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'])) {
-                $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = 0;
-            }
-            $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
 
         foreach($preparedOrderDetails as &$pod) {
@@ -657,9 +644,8 @@ class OrderDetailsTable extends AppTable
 
     /**
      * $param $orderDetails is already grouped!
-     * @return array|boolean
      */
-    public function prepareOrderDetailsGroupedByCustomer($orderDetails)
+    public function prepareOrderDetailsGroupedByCustomer($orderDetails): array
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
@@ -679,10 +665,6 @@ class OrderDetailsTable extends AppTable
                 $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
                 $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
-            if (!isset($preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'])) {
-                $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = 0;
-            }
-            $preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
             if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
                 $productsPickedUp = true;
                 $preparedOrderDetails[$key]['row_class'] = ['selected'];
@@ -744,7 +726,6 @@ class OrderDetailsTable extends AppTable
         $contain = [
             'Customers',
             'Products.Manufacturers.AddressManufacturers',
-            'TimebasedCurrencyOrderDetails',
             'OrderDetailUnits',
             'OrderDetailFeedbacks',
         ];

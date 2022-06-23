@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -24,24 +24,24 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
-    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
 ]);
-echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>
 
 <?php
-    echo $this->element('product/product', [
+    echo $this->element('catalog/product', [
         'product' => $product,
         'showProductDetailLink' => true,
         'showManufacturerDetailLink' => true,
         'showIsNewBadgeAsLink' => true
     ],
-//     [
-//         'cache' => [
-//             'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
-//         ],
-//     ]
+    [
+        'cache' => [
+            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+        ],
+    ]
     );
 ?>

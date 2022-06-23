@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\Catalog\Catalog;
 use App\Lib\DeliveryNote\GenerateDeliveryNote;
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
@@ -16,12 +17,12 @@ use Cake\Http\Exception\NotFoundException;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -315,7 +316,7 @@ class ManufacturersController extends AdminAppController
 
         $manufacturers = $this->paginate($query, [
             'sortableFields' => [
-                'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
+                'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'),
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
@@ -332,19 +333,13 @@ class ManufacturersController extends AdminAppController
         $this->Payment = $this->getTableLocator()->get('Payments');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        }
-
         foreach ($manufacturers as $manufacturer) {
-            $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
+            $this->Catalog = new Catalog();
+            $manufacturer->product_count = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
             $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                $manufacturer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance($manufacturer->id_manufacturer);
-            }
             if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturer->variable_member_fee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             }
@@ -460,8 +455,6 @@ class ManufacturersController extends AdminAppController
             $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
 
-        $manufacturer->timebased_currency_max_credit_balance /= 3600;
-
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = $this->getTableLocator()->get('Customers');
         }
@@ -498,15 +491,9 @@ class ManufacturersController extends AdminAppController
                 'validate' => 'editOptions'
             ]
         );
-        if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
-            $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') * 3600));
-        }
 
         if ($manufacturer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
-            if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') / 3600));
-            }
             $this->set('manufacturer', $manufacturer);
             $this->render('edit_options');
         } else {

@@ -11,12 +11,12 @@ use Cake\Validation\Validator;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -128,6 +128,11 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    public function validationFcsNewsletterEnabled(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+
     public function validationFcsShowProductsForGuests(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
@@ -190,48 +195,6 @@ class ConfigurationsTable extends AppTable
     {
         $validator->notEmptyString('value', __('Please_enter_the_name_of_the_foodcoop.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 5, 255);
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyEnabled(Validator $validator)
-    {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
-    }
-
-    public function validationFcsTimebasedCurrencyName(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_enter_the_paying_with_time_module_name.'));
-        $validator = $this->getLengthBetweenValidator($validator, 'value', 2, 10);
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyShortcode(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_enter_the_abbreviation_of_the_paying_with_time_module.'));
-        $validator = $this->getLengthBetweenValidator($validator, 'value', 1, 3);
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}.',[Configure::read('appDb.FCS_CURRENCY_SYMBOL')]));
-        $validator->decimal('value', 2, __('Please_enter_exactly_2_decimals.'));
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyMaxCreditBalanceCustomer(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_provide_a_value.'));
-        $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 50);
-        return $validator;
-    }
-
-    public function validationFcsTimebasedCurrencyMaxCreditBalanceManufacturer(Validator $validator)
-    {
-        $validator->notEmptyString('value', __('Please_provide_a_value.'));
-        $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 200);
         return $validator;
     }
 

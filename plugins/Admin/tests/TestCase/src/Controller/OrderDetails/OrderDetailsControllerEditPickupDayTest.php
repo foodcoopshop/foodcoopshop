@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -49,11 +49,24 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $reason = 'this is the reason';
         $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
         $this->assertJsonOk();
+        $this->runAndAssertQueue();
         $this->assertMailContainsHtmlAt(0, $reason);
         $this->assertMailContainsHtmlAt(0, 'Neuer Abholtag : <b>Freitag, 07.09.2018</b>');
         $this->assertMailContainsHtmlAt(0, 'Alter Abholtag: Freitag, 02.02.2018');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSubjectContainsAt(0, 'Der Abholtag deiner Bestellung wurde geändert auf: Freitag, 07.09.2018');
+    }
+
+    public function testEditPickupDayAsSuperadminOkIsSubscribeNewsletterLinkAddedToMail()
+    {
+        $this->changeConfiguration('FCS_NEWSLETTER_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'newsletter_enabled', 0);
+        $this->loginAsSuperadmin();
+        $reason = 'this is the reason';
+        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
+        $this->assertJsonOk();
+        $this->runAndAssertQueue();
+        $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('app.cakeServerName') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
     }
 
     public function testEditPickupDayAsSuperadminWithoutEmailsOk()
@@ -62,6 +75,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $reason = 'this is the reason';
         $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, false);
         $this->assertJsonOk();
+        $this->runAndAssertQueue();
         $this->assertMailCount(0);
     }
 

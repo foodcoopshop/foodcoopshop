@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-02-12 17:25+0100\n"
+"POT-Creation-Date: 2022-06-20 12:06+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -83,6 +83,9 @@ msgstr ""
 msgid "Test_email"
 msgstr ""
 
+msgid "all_members"
+msgstr ""
+
 msgid "Member_card"
 msgstr ""
 
@@ -114,9 +117,6 @@ msgid "It_needs_to_be_zero."
 msgstr ""
 
 msgid "Amount_of_not_approved_payments_within_the_last_2_years:"
-msgstr ""
-
-msgid "The_credit_of_the_paying_with_time_account_is:"
 msgstr ""
 
 msgid "The_member_is_still_associated_to_the_following_manufacturers:"
@@ -482,6 +482,9 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
+msgid "All_products"
+msgstr ""
+
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr ""
 
@@ -659,6 +662,9 @@ msgstr ""
 msgid "Slideshow"
 msgstr ""
 
+msgid "Turnover_and_profit_statistics"
+msgstr ""
+
 msgid "Turnover_statistics"
 msgstr ""
 
@@ -675,39 +681,6 @@ msgid "The_tax_rate_{0}_has_been_{1}."
 msgstr ""
 
 msgid "Tax_rates"
-msgstr ""
-
-msgid "The_time_entry_has_been_deleted"
-msgstr ""
-
-msgid "The_time_entry_for_the_{0}_has_been_deleted"
-msgstr ""
-
-msgid "Member"
-msgstr ""
-
-msgid "Your_time_entry_from_{0}_has_been_deleted."
-msgstr ""
-
-msgid "and_an_email_was_sent_to_{0}"
-msgstr ""
-
-msgid "Add_time_entry"
-msgstr ""
-
-msgid "Edit_time_entry"
-msgstr ""
-
-msgid "Credit_balance_of_{0}"
-msgstr ""
-
-msgid "of"
-msgstr ""
-
-msgid "My_{0}_(time_account)"
-msgstr ""
-
-msgid "My_credit_balance"
 msgstr ""
 
 msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
@@ -872,9 +845,6 @@ msgstr ""
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr ""
 
-msgid "all_members"
-msgstr ""
-
 msgid "all_manufacturers"
 msgstr ""
 
@@ -986,6 +956,15 @@ msgstr ""
 msgid "docs_route_members"
 msgstr ""
 
+msgid "Company_name"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
+msgid "Will_be_shown_on_invoices."
+msgstr ""
+
 msgid "Firstname"
 msgstr ""
 
@@ -1064,6 +1043,12 @@ msgstr ""
 msgid "Want_to_receive_credit_upload_reminder?"
 msgstr ""
 
+msgid "Newsletter"
+msgstr ""
+
+msgid "Want_to_receive_the_newsletter_per_email?"
+msgstr ""
+
 msgid "Self_service_mode"
 msgstr ""
 
@@ -1071,18 +1056,6 @@ msgid "Generate_my_member_card"
 msgstr ""
 
 msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
-msgstr ""
-
-msgid "Paying_with_time_module_active?"
-msgstr ""
-
-msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
-msgstr ""
-
-msgid "docs_route_paying_with_time_module"
-msgstr ""
-
-msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr ""
 
 msgid "Superadmin_functions"
@@ -1137,9 +1110,6 @@ msgid "activate"
 msgstr ""
 
 msgid "Show_credit"
-msgstr ""
-
-msgid "Show_{0}"
 msgstr ""
 
 msgid "Purchase_price_abbreviation"
@@ -1424,6 +1394,9 @@ msgstr ""
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr ""
 
+msgid "Please_select..."
+msgstr ""
+
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr ""
 
@@ -1529,28 +1502,7 @@ msgstr ""
 msgid "Should_stock_products_be_included_in_order_lists?"
 msgstr ""
 
-msgid "Contact_person"
-msgstr ""
-
 msgid "Chose_member"
-msgstr ""
-
-msgid "Paying_with_time"
-msgstr ""
-
-msgid "Max_part_of_{0}_in_percent"
-msgstr ""
-
-msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
-msgstr ""
-
-msgid "Maximum_credit_balance_in_{0}"
-msgstr ""
-
-msgid "up_to_which_it_can_be_paid_in_{0}."
-msgstr ""
-
-msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 msgstr ""
 
 msgid "Pickup_days"
@@ -1580,19 +1532,19 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
-msgid "Product"
+msgid "Delivery_note"
 msgstr ""
 
 msgid "Test_invoice"
 msgstr ""
 
-msgid "Delivery_note"
-msgstr ""
-
 msgid "Manufacturer_profile"
 msgstr ""
 
-msgid "Copy_all_email_addresses"
+msgid "Member"
+msgstr ""
+
+msgid "Product"
 msgstr ""
 
 msgid "Tax_rate"
@@ -1619,13 +1571,10 @@ msgstr ""
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr ""
 
-msgid "All_products"
-msgstr ""
-
 msgid "Show_all_ordered_products"
 msgstr ""
 
-msgid "Profit / all prices are net prices"
+msgid "Net_profit"
 msgstr ""
 
 msgid "Page_title"
@@ -1820,10 +1769,25 @@ msgstr ""
 msgid "No_turnover_available."
 msgstr ""
 
-msgid "Total_turnover:_{0}"
+msgid "Net_purchase_price"
 msgstr ""
 
-msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
+msgid "Gross_turnover"
+msgstr ""
+
+msgid "Net_turnover"
+msgstr ""
+
+msgid "total"
+msgstr ""
+
+msgid "per_month"
+msgstr ""
+
+msgid "Go_to_profit_detail_page"
+msgstr ""
+
+msgid "For_filtering_data_click_on_legend_on_top_of_chart."
 msgstr ""
 
 msgid "Variable_member_fee_is_included_in_turnover."
@@ -1839,9 +1803,6 @@ msgid "e.g._10_for_10%"
 msgstr ""
 
 msgid "Tax_rates_can_not_be_changed_later."
-msgstr ""
-
-msgid "Delete"
 msgstr ""
 
 msgid "Add_deposit_amount"
@@ -1874,7 +1835,7 @@ msgstr ""
 msgid "Order_stock_products"
 msgstr ""
 
-msgid "Copy_email_addresses_of_selected_customers"
+msgid "Copy_selected_email_addresses"
 msgstr ""
 
 msgid "Generate_member_cards"
@@ -1931,10 +1892,10 @@ msgstr ""
 msgid "Cancel_selected_products"
 msgstr ""
 
-msgid "Orders_as_pdf"
+msgid "Copy_all_email_addresses"
 msgstr ""
 
-msgid "Orders_as_pdf_order_by_storage_location"
+msgid "Orders_as_pdf"
 msgstr ""
 
 msgid "Multiple_pickup_days"
@@ -1974,9 +1935,6 @@ msgid "products_picked_up"
 msgstr ""
 
 msgid "Click_to_change_price"
-msgstr ""
-
-msgid "Additional_in_{0}"
 msgstr ""
 
 msgid "Yes"
@@ -2343,18 +2301,6 @@ msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_trans
 msgstr ""
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-
-msgid "Paid_by_members_in_{0}"
-msgstr ""
-
-msgid "Paid_by_members_in"
-msgstr ""
-
-msgid "Kept_variable_member_fee"
-msgstr ""
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
 msgstr ""
 
 msgid "Detail_view"

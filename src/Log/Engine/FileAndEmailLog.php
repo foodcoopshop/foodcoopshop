@@ -2,22 +2,22 @@
 
 namespace App\Log\Engine;
 
-use App\Mailer\AppMailer;
 use App\Network\AppSession;
 use Cake\Core\Configure;
 use Cake\Log\Engine\FileLog;
+use Cake\Mailer\Mailer;
 use Cake\Network\Exception\SocketException;
 use Cake\Utility\Text;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -61,7 +61,6 @@ class FileAndEmailLog extends FileLog
             '{"name":{"lengthBetween":',
             __('You_are_not_signed_in.'),
             '{"default_quantity_after_sending_order_lists":{"greaterThanOrEqual":',
-            '{"quantity_limit":{"lessThanOrEqual":',
             '{"phone_mobile":{"_empty":',
             '{"promise_to_pickup_products":{"equals":',
             '{"id_customer":{"_required":',
@@ -69,6 +68,8 @@ class FileAndEmailLog extends FileLog
             '{"id_customer":{"greaterThan":',
             '{"name":{"_empty":"Bitte gib einen Namen ein."',
             '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000',
+            '{"quantity_limit":{"_empty":',
+            '{"quantity_limit":{"lessThanOrEqual":',
             '{"amount":{"greaterThanOrEqual":',
             '{"amount":{"numeric":"Bitte gib eine korrekte Zahl ein.',
             '{"no_delivery_days":',
@@ -88,15 +89,14 @@ class FileAndEmailLog extends FileLog
 
         $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
-            $email = new AppMailer(false);
+            $email = new Mailer(false);
             $email->setProfile('debug');
-            $email->setTransport('debug');
             $email->setTo(Configure::read('app.debugEmail'))
             ->viewBuilder()->setTemplate('debug');
             $email->setSubject($subject)
             ->setViewVars([
                 'message' => $message,
-                'loggedUser' => $loggedUser
+                'loggedUser' => $loggedUser,
             ])
             ->send();
         } catch (SocketException $e) {

@@ -9,12 +9,12 @@ use Cake\Core\Configure;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 3.2.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -167,6 +167,73 @@ class InvoicesTableTest extends AppCakeTestCase
                     'sum_price_excl' => 7.58,
                     'sum_tax' => 0.4,
                     'sum_price_incl' => 7.98,
+                ],
+            ],
+        ];
+
+        $this->assertEquals($result, $expected);
+
+    }
+
+    public function testGetPreparedTaxRatesForSumTableWithTaxBasedOnNetInvoiceSum()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 10);
+        $this->changeConfiguration('FCS_TAX_BASED_ON_NET_INVOICE_SUM', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Product->updateAll(['id_tax' => 2], ['active' => APP_ON]);
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->updateAll(['tax_rate' => 10], ['id_customer' => $customerId]);
+
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $paidInCash = 0;
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoices = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ]
+        ])->toArray();
+
+        $result = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
+
+        $expected = [
+            'taxRates' => [
+                'cash' => [],
+                'cashless' => [
+                    '10' => [
+                        'sum_price_excl' => 35.28,
+                        'sum_tax' => 3.53,
+                        'sum_price_incl' => 38.81,
+                    ],
+                ],
+                'total' => [
+                    '10' => [
+                        'sum_price_excl' => 35.28,
+                        'sum_tax' => 3.53,
+                        'sum_price_incl' => 38.81,
+                    ],
+                ]
+            ],
+            'taxRatesSums' => [
+                'cashless' => [
+                    'sum_price_excl' => 35.28,
+                    'sum_tax' => 3.53,
+                    'sum_price_incl' => 38.81,
+                ],
+                'total' => [
+                    'sum_price_excl' => 35.28,
+                    'sum_tax' => 3.53,
+                    'sum_price_incl' => 38.81,
                 ],
             ],
         ];

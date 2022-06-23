@@ -9,12 +9,12 @@ use Cake\Datasource\FactoryLocator;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -27,8 +27,6 @@ class AppAuthComponent extends AuthComponent
         'RequestHandler',
         'Cart'
     ];
-
-    public $manufacturer;
 
     public function flash($message): void
     {
@@ -66,7 +64,11 @@ class AppAuthComponent extends AuthComponent
 
     public function getAbbreviatedUserName()
     {
-        return $this->user('firstname') . ' ' . substr($this->user('lastname'), 0, 1) . '.';
+        $result = $this->user('firstname') . ' ' . substr($this->user('lastname'), 0, 1) . '.';
+        if ($this->user('is_company')) {
+            $result = $this->user('firstname');
+        }
+        return $result;
     }
 
     public function getGroupId()
@@ -83,6 +85,9 @@ class AppAuthComponent extends AuthComponent
 
     public function getFutureOrderDetails()
     {
+        if (empty($this->user())) {
+            return [];
+        }
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $futureOrderDetails = $this->OrderDetail->getFutureOrdersByCustomerId($this->getUserId());
         return $futureOrderDetails;
@@ -104,13 +109,15 @@ class AppAuthComponent extends AuthComponent
 
     private function setManufacturer()
     {
-        if (!empty($this->manufacturer)) {
+        if (!empty($this->user()) &&
+            !is_null($this->getController()->getRequest()->getSession()->read('Auth')) &&
+            array_key_exists('Manufacturer', $this->getController()->getRequest()->getSession()->read('Auth'))) {
             return;
         }
 
         if (!empty($this->user())) {
             $mm = FactoryLocator::get('Table')->get('Manufacturers');
-            $this->manufacturer = $mm->find('all', [
+            $manufacturer = $mm->find('all', [
                 'conditions' => [
                     'AddressManufacturers.email' => $this->user('email'),
                     'AddressManufacturers.id_manufacturer > ' . APP_OFF
@@ -120,6 +127,10 @@ class AppAuthComponent extends AuthComponent
                     'Customers.AddressCustomers',
                 ]
             ])->first();
+            if (!is_null($manufacturer)) {
+                $manufacturer = $manufacturer->toArray();
+            }
+            $this->getController()->getRequest()->getSession()->write('Auth.Manufacturer', $manufacturer);
         }
     }
 
@@ -137,11 +148,7 @@ class AppAuthComponent extends AuthComponent
     public function isManufacturer(): bool
     {
         $this->setManufacturer();
-        if (! empty($this->manufacturer)) {
-            return true;
-        }
-
-        return false;
+        return !empty($this->getController()->getRequest()->getSession()->read('Auth.Manufacturer'));
     }
 
     public function getManufacturerId()
@@ -149,12 +156,7 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-
-        if (! empty($this->manufacturer)) {
-            return $this->manufacturer->id_manufacturer;
-        }
-
-        return 0;
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.id_manufacturer');
     }
 
     public function getManufacturerName()
@@ -162,12 +164,31 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.name');
+    }
 
-        if (! empty($this->manufacturer)) {
-            return $this->manufacturer->name;
+    public function getManufacturerVariableMemberFee()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
         }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.variable_member_fee');
+    }
 
-        return '';
+    public function getManufacturerEnabledSyncDomains()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.enabled_sync_domains');
+    }
+
+    public function getManufacturerCustomer()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.customer');
     }
 
     public function isAdmin(): bool
@@ -273,16 +294,6 @@ class AppAuthComponent extends AuthComponent
 
         $cart = FactoryLocator::get('Table')->get('Carts');
         return $cart->getCart($this, $cartType);
-    }
-
-    public function isTimebasedCurrencyEnabledForManufacturer(): bool
-    {
-        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->manufacturer->timebased_currency_enabled;
-    }
-
-    public function isTimebasedCurrencyEnabledForCustomer(): bool
-    {
-        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->user('timebased_currency_enabled');
     }
 
 }

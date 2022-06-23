@@ -16,12 +16,12 @@ use Cake\Datasource\FactoryLocator;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -56,44 +56,6 @@ class CartComponent extends Component
     public function getProductAndDepositSum()
     {
         return $this->getProductSum() + $this->getDepositSum();
-    }
-
-    public function getTimebasedCurrencyMoneyInclSum()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartTimebasedCurrencyMoneyInclSum'];
-        }
-        return 0;
-    }
-
-    public function isTimebasedCurrencyUsed()
-    {
-        return isset($this->cart['CartTimebasedCurrencyUsed']) && $this->cart['CartTimebasedCurrencyUsed'];
-    }
-
-    public function getTimebasedCurrencyMoneyExclSum()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartTimebasedCurrencyMoneyExclSum'];
-        }
-        return 0;
-    }
-
-    /**
-     * avoids rounding errors
-     * @return number
-     */
-    public function getTimebasedCurrencySecondsSumRoundedUp()
-    {
-        return round($this->getTimebasedCurrencySecondsSum() * 1.05, 0);
-    }
-
-    public function getTimebasedCurrencySecondsSum()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartTimebasedCurrencySecondsSum'];
-        }
-        return 0;
     }
 
     public function getTaxSum()
@@ -252,6 +214,8 @@ class CartComponent extends Component
                 ],
                 'contain' => $contain,
             ])->first();
+
+            $product->next_delivery_day = $this->Product->getNextDeliveryDay($product, $this->AppAuth);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;
@@ -439,35 +403,6 @@ class CartComponent extends Component
         }
 
         $this->getController()->set('cartErrors', $cartErrors);
-
-        if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            $validator = $this->Cart->getValidator('default');
-            $validator->notEmptyString(
-                'timebased_currency_seconds_sum_tmp',
-                __('Please_enter_how_much_you_want_to_pay_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')])
-                );
-            $validator->numeric('timebased_currency_seconds_sum_tmp',
-                __('Please_enter_a_number.')
-                );
-            $maxValue = $this->getTimebasedCurrencySecondsSumRoundedUp();
-            $this->TimebasedCurrencyOrderDetail = FactoryLocator::get('Table')->get('TimebasedCurrencyOrderDetails');
-            $customerCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $this->AppAuth->getUserId());
-            $maxValueForCustomers = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER') * 3600 + $customerCreditBalance;
-            if ($maxValueForCustomers <= $maxValue) {
-                $validator = $this->Cart->getNumberRangeValidator(
-                    $validator,
-                    'timebased_currency_seconds_sum_tmp',
-                    0,
-                    $maxValueForCustomers,
-                    __('Your_overdraft_frame_of_{0}_is_reached.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER') . ' ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')]),
-                    false
-                    );
-            } else {
-                $validator = $this->Cart->getNumberRangeValidator($validator, 'timebased_currency_seconds_sum_tmp', 0, $maxValue);
-            }
-            $this->Cart->setValidator('default', $validator);
-        }
-
         $options = [];
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
@@ -509,18 +444,6 @@ class CartComponent extends Component
         if (!empty($cartErrors) || !empty($formErrors)) {
             $this->getController()->Flash->error(__('Errors_occurred.'));
         } else {
-
-            $selectedTimebasedCurrencySeconds = 0;
-            $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp')) && $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp') > 0) {
-                $selectedTimebasedCurrencySeconds = $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp');
-                $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->getTimebasedCurrencySecondsSum();
-            }
-
-            if ($selectedTimeAdaptionFactor > 0) {
-                $cart = $this->Cart->adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor);
-                $this->AppAuth->setCart($cart);
-            }
 
             $this->saveOrderDetails($orderDetails2save);
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
@@ -696,34 +619,6 @@ class CartComponent extends Component
     private function saveOrderDetails($orderDetails2save)
     {
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        foreach ($orderDetails2save as &$orderDetail) {
-
-            // timebased_currency: ORDER_DETAILS
-            if ($this->isTimebasedCurrencyUsed()) {
-
-                foreach($this->getProducts() as $cartProduct) {
-                    if ($cartProduct['cartProductId'] == $orderDetail['cartProductId']) {
-
-                        if (isset($cartProduct['isTimebasedCurrencyUsed'])) {
-
-                            $orderDetail['timebased_currency_order_detail']['money_excl'] = $cartProduct['timebasedCurrencyMoneyExcl'];
-                            $orderDetail['timebased_currency_order_detail']['money_incl'] = $cartProduct['timebasedCurrencyMoneyIncl'];
-                            $orderDetail['timebased_currency_order_detail']['seconds'] = $cartProduct['timebasedCurrencySeconds'];
-                            $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
-                            $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
-
-                            // override prices from timebased_currency adapted cart
-                            $orderDetail['total_price_tax_excl'] = $cartProduct['priceExcl'];
-                            $orderDetail['total_price_tax_incl'] = $cartProduct['price'];
-                        }
-
-                        continue;
-                    }
-                }
-
-            }
-        }
-
         $this->OrderDetail->saveMany(
             $this->OrderDetail->newEntities($orderDetails2save)
         );
@@ -805,7 +700,7 @@ class CartComponent extends Component
                     'productAndDepositSum' => $depositSum + $productSum,
                     'showManufacturerUnsubscribeLink' => true
                 ]);
-                $email->send();
+                $email->addToQueue();
             }
         }
 
@@ -857,7 +752,7 @@ class CartComponent extends Component
                     'manufacturer' => $cartProduct->product->manufacturer,
                     'showManufacturerUnsubscribeLink' => true
                 ]);
-                $email->send();
+                $email->addToQueue();
             }
 
             // send email to contact person
@@ -879,7 +774,7 @@ class CartComponent extends Component
                     'showManufacturerName' => true,
                     'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('app.cakeServerName') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
                 ]);
-                $email->send();
+                $email->addToQueue();
             }
 
         }
@@ -896,7 +791,7 @@ class CartComponent extends Component
             'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
             'appAuth' => $this->AppAuth
         ]);
-        $email->send();
+        $email->addToQueue();
     }
 
     /**
@@ -949,7 +844,7 @@ class CartComponent extends Component
             $email->addAttachments($generalTermsAndConditionsFiles);
         }
 
-        $email->send();
+        $email->addToQueue();
     }
 
     /**

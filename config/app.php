@@ -4,7 +4,6 @@ use App\Log\Engine\FileAndEmailLog;
 use Cake\Cache\Engine\FileEngine;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
-use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
 
 return [
@@ -102,6 +101,13 @@ return [
             'url' => env('CACHE_DEFAULT_URL', null),
         ],
 
+        'short' => [
+            'className' => FileEngine::class,
+            'duration' => '+2 seconds',
+            'path' => CACHE,
+            'prefix' => 'myapp_cake_short_'
+        ],
+
         /*
          * Configure the cache used for general framework caching.
          * Translation cache files are stored with this configuration.
@@ -145,6 +151,7 @@ return [
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEROUTES_URL', null),
         ],
+
     ],
 
     /*
@@ -178,7 +185,6 @@ return [
      */
     'Error' => [
         'errorLevel' => E_ALL,
-        'exceptionRenderer' => ExceptionRenderer::class,
         'skipLog' => [],
         'log' => true,
         'trace' => true,

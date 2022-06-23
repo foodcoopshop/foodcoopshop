@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -23,6 +23,7 @@ use Cake\Core\Configure;
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" .
             Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('i.fa-envelope');" .
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");" .
             Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 1);
         "
@@ -33,8 +34,8 @@ use Cake\Core\Configure;
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
                 <?php echo $this->Form->control('types', ['type' => 'select', 'multiple' => true, 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'data-val' => join(',', $types)]); ?>
-                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_users'), 'options' => []]); ?>
-                <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_users'), 'options' => []]); ?>
+                <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">

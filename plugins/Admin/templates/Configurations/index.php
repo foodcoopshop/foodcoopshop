@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -58,9 +58,6 @@ $this->element('addScript', [
                 'FCS_CASHLESS_PAYMENT_ADD_TYPE',
                 'FCS_CHECK_CREDIT_BALANCE_LIMIT',
             ])) {
-                continue;
-            }
-            if (! Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED' && substr($configuration->name, 0, 23) == 'FCS_TIMEBASED_CURRENCY_') {
                 continue;
             }
 
@@ -269,12 +266,7 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.isDepositEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
-        <tr>
-            <td>app.isDepositPaymentCashless</td>
-            <td><?php echo Configure::read('app.isDepositPaymentCashless') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
-        </tr>
-
-        <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
+        <?php if ($this->Html->paymentIsCashless()) { ?>
             <tr>
                 <td>app.depositPaymentCashlessStartDate</td>
                 <td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
@@ -299,6 +291,11 @@ $this->element('addScript', [
         <tr>
             <td>app.isCustomerAllowedToViewOwnOrders</td>
             <td><?php echo Configure::read('app.isCustomerAllowedToViewOwnOrders') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.isZeroTaxEnabled</td>
+            <td><?php echo Configure::read('app.isZeroTaxEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <tr>
@@ -327,6 +324,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.sendEmailWhenOrderDetailCustomerChanged</td>
+            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailCustomerChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.showTaxSumTableOnOrderDetailPdf</td>
             <td><?php echo Configure::read('app.showTaxSumTableOnOrderDetailPdf') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
@@ -334,6 +336,11 @@ $this->element('addScript', [
         <tr>
             <td>app.selfServiceModeAutoLogoutDesktopEnabled</td>
             <td><?php echo Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.selfServiceModeShowOnlyStockProducts</td>
+            <td><?php echo Configure::read('app.selfServiceModeShowOnlyStockProducts') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <?php

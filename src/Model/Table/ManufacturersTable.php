@@ -2,8 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Lib\Catalog\Catalog;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
@@ -11,12 +11,12 @@ use Cake\Validation\Validator;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -82,10 +82,6 @@ class ManufacturersTable extends AppTable
             'rule' => 'noDeliveryDaysOrdersExist'
         ]);
 
-        $validator->numeric('timebased_currency_max_percentage', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
-        $validator->numeric('timebased_currency_max_credit_balance', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
 
@@ -104,41 +100,6 @@ class ManufacturersTable extends AppTable
             ],
         ])->first();
         return $manufacturer;
-    }
-
-    public function hasManufacturerReachedTimebasedCurrencyLimit($manufacturerId)
-    {
-        $manufacturer = $this->find('all', [
-            'conditions' => ['id_manufacturer' => $manufacturerId]
-        ])->first();
-
-        $timebasedCurrencyOrderDetailsTable = FactoryLocator::get('Table')->get('TimebasedCurrencyOrderDetails');
-        $creditBalance = $timebasedCurrencyOrderDetailsTable->getCreditBalance($manufacturerId, null);
-
-        $activeLimit = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') * 3600;
-
-        if ($manufacturer->timebased_currency_max_credit_balance > 0) {
-            $activeLimit = $manufacturer->timebased_currency_max_credit_balance;
-        }
-
-        if ($activeLimit > $creditBalance) {
-            return false;
-        }
-
-        return true;
-
-    }
-
-    public function getTimebasedCurrencyMoney($price, $percentage)
-    {
-        return $price * $percentage / 100;
-    }
-
-    public function getCartTimebasedCurrencySeconds($price, $percentage)
-    {
-        $result = $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100 * 3600;
-        $result = round($result, 0);
-        return $result;
     }
 
     /**
@@ -206,18 +167,6 @@ class ManufacturersTable extends AppTable
         return (boolean) $result;
     }
 
-    /**
-     * @param int $defaultTaxId
-     * @return int
-     */
-    public function getOptionTimebasedCurrencyEnabled($timebasedCurrencyEnabled)
-    {
-        $result = false;
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $timebasedCurrencyEnabled) {
-            $result = true;
-        }
-        return $result;
-    }
     /**
      * @param int $defaultTaxId
      * @return int
@@ -339,7 +288,8 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $this->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
+                $this->Catalog = new Catalog();
+                $additionalInfo = $this->Catalog->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
             if ($noDeliveryDaysString != '') {
@@ -390,23 +340,6 @@ class ManufacturersTable extends AppTable
         return round($price * $variableMemberFee / 100, 2);
     }
 
-    public function getTimebasedCurrencyManufacturersForDropdown()
-    {
-        $manufacturers = $this->find('all', [
-            'order' => [
-                'Manufacturers.name' => 'ASC'
-            ],
-            'conditions' => [
-                'Manufacturers.timebased_currency_enabled' => APP_ON
-            ]
-        ]);
-        $result = [];
-        foreach ($manufacturers as $manufacturer) {
-            $result[$manufacturer->id_manufacturer] = $manufacturer->name;
-        }
-        return $result;
-    }
-
     public function getForDropdown()
     {
         $manufacturers = $this->find('all', [
@@ -436,62 +369,14 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
-    {
-
-        $cacheKey = join('_', [
-            'ManufacturersController_getProductsByManufacturerId',
-            'manufacturerId-' . $manufacturerId,
-            'isLoggedIn-' . empty($appAuth->user()),
-            'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
-            'date-' . date('Y-m-d'),
-        ]);
-
-        $products = Cache::read($cacheKey);
-        if ($products === null) {
-
-            $sql = "SELECT ";
-            $sql .= $this->getFieldsForProductListQuery();
-            $sql .= "FROM ".$this->tablePrefix."product Products ";
-            $sql .= $this->getJoinsForProductListQuery();
-            $sql .= $this->getConditionsForProductListQuery($appAuth);
-            $sql .= "AND Manufacturers.id_manufacturer = :manufacturerId";
-            $sql .= $this->getOrdersForProductListQuery();
-
-            $params = [
-                'manufacturerId' => $manufacturerId,
-                'active' => APP_ON
-            ];
-            if (empty($appAuth->user())) {
-                $params['isPrivate'] = APP_OFF;
-            }
-
-            $statement = $this->getConnection()->prepare($sql);
-            $statement->execute($params);
-            $products = $statement->fetchAll('assoc');
-            $products = $this->hideMultipleAttributes($products);
-            $products = $this->hideIfPurchasePriceNotSet($products);
-            $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-
-            Cache::write($cacheKey, $products);
-        }
-
-        if (! $countMode) {
-            return $products;
-        } else {
-            return count($products);
-        }
-
-    }
-
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
         switch ($order) {
             case 'product':
-                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC';
+                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC';
                 break;
             case 'customer':
-                $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
+                $orderClause = $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC';
                 break;
         }
 
@@ -524,7 +409,7 @@ class ManufacturersTable extends AppTable
             $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
         }
 
-        $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
+        $customerNameAsSql = $this->Customers->getCustomerName('c');
 
         $sql = "SELECT
         m.id_manufacturer ManufacturerId,

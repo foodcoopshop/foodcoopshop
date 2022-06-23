@@ -11,12 +11,12 @@ use Cake\TestSuite\TestEmailTransport;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -120,6 +120,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
         $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert.');
 
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Neues Passwort für FoodCoop Test');
         $this->assertMailContainsHtmlAt(0, 'Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
@@ -200,6 +201,36 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
     }
 
+    public function testRegistrationValidationWithCompanyWrongDataA()
+    {
+        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+        $this->addCustomer($this->registrationDataEmpty);
+        $this->assertResponseContains('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.');
+        $this->assertResponseContains('Bitte gib deinen Vornamen an.');
+        $this->assertResponseNotContains('Bitte gib deinen Nachnamen an.');
+        $this->assertResponseContains('Die PLZ ist nicht gültig.');
+        $this->assertResponseContains('Die Handynummer ist nicht gültig.');
+        $this->assertResponseContains('Die Telefonnummer ist nicht gültig.');
+        $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
+    }
+
+    public function testRegistrationWithCompanyUserActive()
+    {
+        $this->registrationDataEmpty['antiSpam'] = 4;
+        $this->addValidRegistrationData();
+        $this->registrationDataEmpty['Customers']['is_company'] = true;
+        $email = 'new-foodcoopshop-member-1@mailinator.com';
+        $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.email' => $email,
+            ],
+        ])->first();
+        $this->assertTrue((boolean) $customer->is_company);
+    }
+
     public function testRegistrationUserNotActive()
     {
         $this->registrationDataEmpty['antiSpam'] = 4;
@@ -209,6 +240,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
 
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
         $this->assertMailContainsHtmlAt(0, 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.');
@@ -229,6 +261,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $email = 'new-foodcoopshop-member-2@mailinator.com';
         $customer = $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
 
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
         $this->assertMailContainsHtmlAt(0, 'Bitte bestätige deine E-Mail-Adresse:');
@@ -246,6 +279,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         // try to activate user with correct activation code
         $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
+        $this->runAndAssertQueue();
 
         $customer = $this->Customer->find('all', [
             'conditions' => [

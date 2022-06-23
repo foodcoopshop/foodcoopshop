@@ -5,12 +5,12 @@
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -77,12 +77,11 @@ return [
         'defaultSendOrderedProductPriceChangedNotification' => 1,
         'defaultSendOrderedProductAmountChangedNotification' => 1,
         'isDepositEnabled' => true,
-        'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
 
         /**
-         * 'Raiffeisen' or 'Volksbank'
+         * 'Raiffeisen' OR 'Volksbank' OR 'Sparkasse' OR 'GlsBank'
          */
         'bankNameForCreditSystem' => 'Raiffeisen',
 
@@ -104,6 +103,7 @@ return [
         'showPickupPlaceInfo' => true,
         'showTaxSumTableOnOrderDetailPdf' => false,
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
+        'selfServiceModeShowOnlyStockProducts' => true,
 
         /**
          * id of the category "all products"
@@ -178,9 +178,13 @@ return [
 
         'isCustomerAllowedToViewOwnOrders' => true,
 
+        'isZeroTaxEnabled' => true,
+
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
+
+        'sendEmailWhenOrderDetailCustomerChanged' => true,
 
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 
@@ -197,7 +201,6 @@ return [
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
         'numberHelper' => new App\View\Helper\MyNumberHelper(new Cake\View\View()),
         'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View()),
-        'timebasedCurrencyHelper' => new App\View\Helper\TimebasedCurrencyHelper(new Cake\View\View()),
         'pricePerUnitHelper' => new App\View\Helper\PricePerUnitHelper(new Cake\View\View())
     ],
     'DateFormat' => [

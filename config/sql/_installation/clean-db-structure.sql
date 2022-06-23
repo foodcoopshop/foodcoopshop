@@ -30,8 +30,8 @@ CREATE TABLE `fcs_address` (
   `id_address` int unsigned NOT NULL AUTO_INCREMENT,
   `id_customer` int unsigned NOT NULL DEFAULT '0',
   `id_manufacturer` int unsigned NOT NULL DEFAULT '0',
-  `lastname` varchar(32) NOT NULL DEFAULT '',
-  `firstname` varchar(32) NOT NULL DEFAULT '',
+  `lastname` varchar(50) NOT NULL DEFAULT '',
+  `firstname` varchar(50) NOT NULL DEFAULT '',
   `address1` varchar(128) NOT NULL DEFAULT '',
   `address2` varchar(128) DEFAULT NULL,
   `postcode` varchar(12) DEFAULT NULL,
@@ -208,8 +208,9 @@ DROP TABLE IF EXISTS `fcs_customer`;
 CREATE TABLE `fcs_customer` (
   `id_customer` int unsigned NOT NULL AUTO_INCREMENT,
   `id_default_group` int unsigned NOT NULL DEFAULT '1',
-  `firstname` varchar(32) NOT NULL DEFAULT '',
-  `lastname` varchar(32) NOT NULL DEFAULT '',
+  `is_company` tinyint NOT NULL DEFAULT '0',
+  `firstname` varchar(50) NOT NULL DEFAULT '',
+  `lastname` varchar(50) NOT NULL DEFAULT '',
   `email` varchar(128) NOT NULL DEFAULT '',
   `passwd` char(60) DEFAULT NULL,
   `tmp_new_passwd` char(60) DEFAULT NULL,
@@ -221,7 +222,6 @@ CREATE TABLE `fcs_customer` (
   `active` tinyint unsigned NOT NULL DEFAULT '0',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `timebased_currency_enabled` tinyint unsigned NOT NULL DEFAULT '0',
   `use_camera_for_barcode_scanning` tinyint unsigned DEFAULT '0',
   `user_id_registrierkasse` int unsigned DEFAULT '0',
   `shopping_price` varchar(2) DEFAULT 'SP',
@@ -229,6 +229,7 @@ CREATE TABLE `fcs_customer` (
   `invoices_per_email_enabled` tinyint unsigned DEFAULT '1',
   `pickup_day_reminder_enabled` tinyint unsigned DEFAULT '1',
   `credit_upload_reminder_enabled` tinyint unsigned DEFAULT '1',
+  `newsletter_enabled` tinyint unsigned DEFAULT '0',
   PRIMARY KEY (`id_customer`),
   KEY `customer_email` (`email`),
   KEY `customer_login` (`email`,`passwd`),
@@ -319,9 +320,6 @@ CREATE TABLE `fcs_manufacturer` (
   `send_ordered_product_price_changed_notification` int unsigned DEFAULT NULL,
   `send_ordered_product_amount_changed_notification` int unsigned DEFAULT NULL,
   `enabled_sync_domains` varchar(50) DEFAULT NULL,
-  `timebased_currency_enabled` tinyint unsigned NOT NULL DEFAULT '0',
-  `timebased_currency_max_percentage` tinyint unsigned NOT NULL DEFAULT '30',
-  `timebased_currency_max_credit_balance` int unsigned DEFAULT '360000',
   `stock_management_enabled` tinyint unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_manufacturer` tinyint unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_contact_person` tinyint unsigned NOT NULL DEFAULT '0',
@@ -603,39 +601,6 @@ CREATE TABLE `fcs_tax` (
   PRIMARY KEY (`id_tax`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_timebased_currency_order_detail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fcs_timebased_currency_order_detail` (
-  `id_order_detail` int NOT NULL DEFAULT '0',
-  `money_excl` decimal(10,6) unsigned DEFAULT NULL,
-  `money_incl` decimal(10,6) unsigned DEFAULT NULL,
-  `seconds` int unsigned DEFAULT NULL,
-  `max_percentage` int unsigned DEFAULT NULL,
-  `exchange_rate` decimal(6,2) unsigned DEFAULT NULL,
-  UNIQUE KEY `id_order_detail` (`id_order_detail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_timebased_currency_payments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fcs_timebased_currency_payments` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_customer` int unsigned DEFAULT NULL,
-  `id_manufacturer` int unsigned DEFAULT NULL,
-  `seconds` int NOT NULL DEFAULT '0',
-  `text` varchar(255) NOT NULL DEFAULT '',
-  `working_day` date DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `status` tinyint NOT NULL DEFAULT '1',
-  `approval` tinyint NOT NULL DEFAULT '0',
-  `approval_comment` mediumtext,
-  `modified_by` int unsigned DEFAULT NULL,
-  `created_by` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_units`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -699,7 +664,7 @@ DROP TABLE IF EXISTS `queued_jobs`;
 CREATE TABLE `queued_jobs` (
   `id` int NOT NULL AUTO_INCREMENT,
   `job_task` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` text,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `job_group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `reference` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created` datetime NOT NULL,

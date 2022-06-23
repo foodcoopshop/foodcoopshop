@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -31,6 +31,96 @@ foodcoopshop.Helper = {
             this.adaptionsForHorizontalScrolling();
             this.showContent();
         }
+    },
+
+    initRegistrationAsCompany: function() {
+
+        var isCompanyCheckbox = $('#customers-is-company');
+        isCompanyCheckbox.on('change', function() {
+            var firstnameElements = $('label[for="customers-firstname"], #customers-firstname-error');
+            var lastnameElements = $('label[for="customers-lastname"], #customers-lastname-error');
+            var lastnameWrapper = $('label[for="customers-lastname"]').closest('.input');
+            var regExp;
+            var newHtml;
+            if ($(this).prop('checked')) {
+                firstnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Firstname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.CompanyName);
+                    $(this).html(newHtml);
+                });
+                lastnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    $(this).html(newHtml);
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.Lastname);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    $(this).html(newHtml);
+                });
+                lastnameWrapper.removeClass('required');
+            } else {
+                firstnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.CompanyName);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Firstname);
+                    $(this).html(newHtml);
+                });
+                lastnameElements.each(function() {
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.PleaseEnterTheContactPerson);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.PleaseEnterYourLastname);
+                    $(this).html(newHtml);
+                    regExp = new RegExp(foodcoopshop.LocalizedJs.helper.ContactPerson);
+                    newHtml = $(this).html().replace(regExp, foodcoopshop.LocalizedJs.helper.Lastname);
+                    $(this).html(newHtml);
+                });
+                lastnameWrapper.addClass('required');
+            }
+        });
+
+        if (isCompanyCheckbox.prop('checked')) {
+            isCompanyCheckbox.trigger('change');
+        }
+
+    },
+
+    setFutureOrderDetails: function(futureOrderDetails) {
+
+        futureOrderDetails = $.parseJSON(futureOrderDetails);
+
+        if (futureOrderDetails.length == 0) {
+            return;
+        }
+
+        var groupedOrderDetails = [];
+
+        for(var i=0;i<futureOrderDetails.length;i++) {
+            var productId = futureOrderDetails[i].product_id;
+            if (groupedOrderDetails[productId] === undefined) {
+                groupedOrderDetails[productId] = [];
+            }
+            groupedOrderDetails[productId].push(futureOrderDetails[i]);
+        }
+
+        var result = [];
+        var html = '';
+        var linesHtml = '';
+        var lines;
+
+        for(productId in groupedOrderDetails) {
+            html = '<p style="margin-top:5px;"><i><b>';
+            lines = [];
+            linesHtml = '';
+            for(i in groupedOrderDetails[productId]) {
+                linesHtml = foodcoopshop.LocalizedJs.helper.YouHaveAlredyOrdered01TimesFor2.replaceI18n(0, '"' + groupedOrderDetails[productId][i].product_name + '"');
+                linesHtml = linesHtml.replaceI18n(1, groupedOrderDetails[productId][i].product_amount);
+                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47, { year:"numeric", month:"2-digit", day:"2-digit"});
+                linesHtml = linesHtml.replaceI18n(2, formattedPickupDay);
+                lines.push(linesHtml);
+            }
+            html += lines.join('<br />');
+            html += '</b></i></p>';
+            result.push(html);
+            $('#pw-' + productId).find('.c2').append(html);
+        }
+
     },
 
     openPrintDialogForFile : function(file) {
@@ -680,9 +770,10 @@ foodcoopshop.Helper = {
                 contentAsHTML: true,
                 interactive: true,
                 maxWidth: 400,
+                distance: 0,
                 trigger: trigger,
-                animationDuration: 150,
-                delay: 100,
+                animationDuration: 0,
+                delay: 20,
                 theme: ['tooltipster-light']
             });
         });
@@ -719,7 +810,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.18.0';
+        CKEDITOR.timestamp = 'v4.19.0';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js',
             startupFocus : startupFocus
@@ -748,7 +839,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.18.0';
+        CKEDITOR.timestamp = 'v4.19.0';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
         });
@@ -763,7 +854,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.18.0';
+        CKEDITOR.timestamp = 'v4.19.0';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-small-with-upload.js'
         });
@@ -872,7 +963,7 @@ foodcoopshop.Helper = {
 
         var progressBarHtml = '<div class="progress">';
         progressBarHtml += '<div class="progress-bar bg-success" style="width:0%;"></div>';
-        progressBarHtml += '<div class="progress-bar bg-white" style="width:100%;"></div>';
+        progressBarHtml += '<div class="progress-bar bg-white" style="background-color:#fff;width:100%;"></div>';
         progressBarHtml += '</div>';
         $('#flashMessage.success').append(progressBarHtml);
 
@@ -889,7 +980,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-            );
+        );
         $('#flashMessage.success .progress-bar.bg-white')
             .animate({
                 'width': '0%',
@@ -898,7 +989,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-            );
+        );
 
         setTimeout(function() {
             $('#flashMessage.success a.closer').trigger('click');

@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -22,7 +22,6 @@ if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeI
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
-$timebasedCurrencyPaymentForCustomersMenuElement = $this->Menu->getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth);
 
 $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),
@@ -111,9 +110,6 @@ if ($appAuth->isCustomer()) {
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
     }
-    if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
-        $menu[]= $timebasedCurrencyPaymentForCustomersMenuElement;
-    }
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $menu[] = $myInvoicesMenuElement;
     }
@@ -165,7 +161,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if ($appAuth->isSuperadmin() || ($appAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'))) {
         $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getStatistics(),
-            'name' => __d('admin', 'Turnover_statistics'),
+            'name' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Turnover_and_profit_statistics') : __d('admin', 'Turnover_statistics'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-chart-bar'
             ]
@@ -184,9 +180,6 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $actionLogsMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $customerProfileMenuElement['children'][] = $paymentProductMenuElement;
-    }
-    if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
-        $customerProfileMenuElement['children'][] = $timebasedCurrencyPaymentForCustomersMenuElement;
     }
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $customerProfileMenuElement['children'][] = $myInvoicesMenuElement;
@@ -241,9 +234,6 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         if ($this->Html->paymentIsCashless()) {
             $reportSlug = $this->Slug->getReport('product');
         } else {
-            if (Configure::read('app.isDepositPaymentCashless')) {
-                $reportSlug = $this->Slug->getReport('deposit');
-            }
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                 $reportSlug = $this->Slug->getProfit();
             }
@@ -317,10 +307,6 @@ if ($appAuth->isManufacturer()) {
             ];
         }
     }
-    $timebasedCurrencyPaymentForManufacturersMenuElement = $this->Menu->getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth);
-    if (! empty($timebasedCurrencyPaymentForManufacturersMenuElement)) {
-        $menu[]= $timebasedCurrencyPaymentForManufacturersMenuElement;
-    }
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;
     $menu[] = $optionsMenu;
@@ -344,8 +330,8 @@ if ($appAuth->isManufacturer()) {
 $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 
 $footerHtml = '';
-if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer->customer) && !empty($appAuth->manufacturer->customer->address_customer)) {
-    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->manufacturer->customer->name . ', ' . $appAuth->manufacturer->customer->email. ', ' . $appAuth->manufacturer->customer->address_customer->phone_mobile;
+if ($appAuth->isManufacturer() && !empty($appAuth->getManufacturerCustomer()) && !empty($appAuth->getManufacturerCustomer()['address_customer'])) {
+    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->getManufacturerCustomer()['name'] . ', ' . $appAuth->getManufacturerCustomer()['email']. ', ' . $appAuth->getManufacturerCustomer()['address_customer']['phone_mobile'];
 }
 
 echo $this->Menu->render($menu, [

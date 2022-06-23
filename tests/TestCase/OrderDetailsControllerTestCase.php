@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.4.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -45,19 +45,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
-    protected function prepareTimebasedCurrencyCart()
-    {
-        $reducedMaxPercentage = 15;
-        $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
-        $this->loginAsSuperadmin();
-        $this->addProductToCart(344, 1);
-        $this->addProductToCart(346, 2);
-        $this->finishCart(1, 1, '', '352');
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
-        $cart = $this->getCartById($cartId);
-        return $cart;
-    }
-
     protected function simulateSendOrderListsCronjob($orderDetailId)
     {
         $this->OrderDetail->save(
@@ -68,13 +55,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
                 ]
             )
         );
-    }
-
-    protected function assertTimebasedCurrencyOrderDetail($changedOrderDetail, $moneyExcl, $moneyIncl, $seconds)
-    {
-        $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->money_excl, $moneyExcl);
-        $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->money_incl, $moneyIncl);
-        $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->seconds, $seconds);
     }
 
     protected function getChangedMockCartFromDatabase()
@@ -115,7 +95,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
             ],
             'contain' => [
                 'OrderDetailUnits',
-                'TimebasedCurrencyOrderDetails'
             ]
         ])->toArray();
         return $orderDetails;

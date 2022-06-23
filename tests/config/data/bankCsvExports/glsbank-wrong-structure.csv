@@ -1,0 +1,2 @@
+Bezeichnung Auftragskonto;IBAN Auftragskonto;BIC Auftragskonto;Bankname Auftragskonto;Buchungstag;Valutadatum;Name Zahlungsbeteiligter;IBAN Zahlungsbeteiligter;BIC (SWIFT-Code) Zahlungsbeteiligter;Buchungstext;Verwendungszweck;Betrag;Waehrung;Saldo nach Buchung;Bemerkung;Kategorie;Steuerrelevant;Glaeubiger ID;Mandatsreferenz
+asdf;GLS Geschäftskonto;DExxxxx;GENODEM1GLS;GLS Gemeinschaftsbank eG;09.03.2022;09.03.2022;Admin, Demo;DEyyyyyy;GENODED1SPK;Überweisungsgutschr.;838B34A3 Guthaben-Aufladung;200;EUR;2420;;;;;

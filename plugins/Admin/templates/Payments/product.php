@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -33,19 +33,13 @@ if (count($payments) == 0) {
         'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');"
     ]);
 
-    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
-        ]);
-    }
-
     echo '<table class="list">';
     echo '<tr class="sort">';
         echo '<th>'.__d('admin', 'Date').'</th>';
         echo '<th>'.__d('admin', 'Text').'</th>';
         echo '<th style="text-align:right;">' . $column_title . '</th>';
         echo '<th style="text-align:right;">'.__d('admin', 'Order_value').'</th>';
-        echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</th>';
+        echo '<th ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</th>';
         echo '<th style="width:25px;"></th>';
     echo '</tr>';
 
@@ -126,13 +120,10 @@ if (count($payments) == 0) {
         if ($payment['type'] == 'order') {
             $sumOrders += $payment['amount'];
             echo $this->Number->formatAsCurrency($payment['amount']);
-            if (!empty($payment['timebased_currency_sum_seconds'])) {
-                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['timebased_currency_sum_seconds']).'"> *</b>';
-            }
         }
         echo '</td>';
 
-        echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClass . '>';
+        echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClass . '>';
         if ($payment['deposit'] < 0) {
             if ($payment['type'] == 'order') {
                 $sumDeposits += $payment['deposit'];
@@ -176,7 +167,7 @@ if (count($payments) == 0) {
     echo '<td>Text</td>';
     echo '<td style="text-align:right;">'.__d('admin', 'Credit').'</td>';
     echo '<td style="text-align:right;">'.__d('admin', 'Order_value').'</td>';
-    echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</td>';
+    echo '<td ' . (! $this->Html->paymentIsCashless() ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</td>';
     echo '<td style="width:25px;"></td>';
     echo '</tr>';
 
@@ -188,7 +179,7 @@ if (count($payments) == 0) {
     if ($sumDeposits < 0) {
         $sumDepositsClass = ' class="negative"';
     }
-    if (! Configure::read('app.isDepositPaymentCashless')) {
+    if (! $this->Html->paymentIsCashless()) {
         $sumDepositsClass = ' class="hide"';
     }
     echo '<td ' . $sumDepositsClass . 'align="right"><b>' . $this->Number->formatAsCurrency($sumDeposits) . '</b></td>';
@@ -205,7 +196,7 @@ if (count($payments) == 0) {
     echo '<td></td>';
     echo '<td></td>';
     echo '<td></td>';
-    if (Configure::read('app.isDepositPaymentCashless')) {
+    if ($this->Html->paymentIsCashless()) {
         echo '<td></td>';
     }
 
@@ -219,10 +210,8 @@ if ($this->request->getParam('action') == 'product') {
     echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fas fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
     echo '</div>';
 }
-
-echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDetailInList);
-
 ?>
+
 <div class="sc"></div>
 
 </div>

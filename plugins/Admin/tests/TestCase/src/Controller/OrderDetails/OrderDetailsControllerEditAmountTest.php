@@ -2,12 +2,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.5.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -50,22 +50,6 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
-
-    public function testEditOrderDetailAmountWithTimebasedCurrency()
-    {
-
-        $cart = $this->prepareTimebasedCurrencyCart();
-        $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
-        $this->editOrderDetailAmount($orderDetailId, $this->newAmount, $this->editAmountReason);
-
-        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
-
-        $this->assertEquals($this->newAmount, $changedOrderDetails[0]->product_amount);
-        $this->assertEquals('1,40', Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
-
-        $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 0.55, 0.6, 216);
-    }
-
 
     public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationPurchasePrice()
     {
@@ -170,6 +154,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
     private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail, $expectedCcEmail = null)
     {
+        $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Anzahl angepasst: Artischocke : Stück');
         $this->assertMailContainsHtmlAt($emailIndex, 'Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde angepasst');
         $this->assertMailContainsHtmlAt($emailIndex, $this->editAmountReason);

@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase;
 
+use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
@@ -11,6 +12,7 @@ use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
+use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
 
@@ -19,18 +21,21 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 abstract class AppCakeTestCase extends TestCase
 {
+
+    use ConsoleIntegrationTestTrait;
+    use QueueTrait;
 
     protected $dbConnection;
 
@@ -47,6 +52,7 @@ abstract class AppCakeTestCase extends TestCase
     public $Customer;
 
     public $Manufacturer;
+
 
     /**
      * called before every test method
@@ -73,6 +79,8 @@ abstract class AppCakeTestCase extends TestCase
         if (method_exists($this, 'enableSecurityToken')) {
             $this->enableSecurityToken();
         }
+
+        $this->useCommandRunner();
 
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();
@@ -253,10 +261,6 @@ abstract class AppCakeTestCase extends TestCase
             ];
         }
 
-        if ($timebaseCurrencyTimeSum !== null) {
-            $data['Carts']['timebased_currency_seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
-        }
-
         if ($pickupDay !== null) {
             $data['Carts']['pickup_day'] = $pickupDay;
         }
@@ -265,13 +269,14 @@ abstract class AppCakeTestCase extends TestCase
             $this->Slug->getCartFinish(),
             $data,
         );
+
+        $this->runAndAssertQueue();
     }
 
     protected function getCartById($cartId)
     {
         $contain = [
             'CartProducts.OrderDetails.OrderDetailUnits',
-            'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails',
         ];
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
@@ -368,17 +373,6 @@ abstract class AppCakeTestCase extends TestCase
         ];
         $statement = $this->dbConnection->prepare($query);
         return $statement->execute($params);
-    }
-
-    protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)
-    {
-        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
-        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE', '10,50');
-        $this->changeCustomer(Configure::read('test.superadminId'), 'timebased_currency_enabled', 1);
-        $this->changeCustomer(Configure::read('test.customerId'), 'timebased_currency_enabled', 1);
-        $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
-        $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
-        $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
     }
 
     protected function getCorrectedLogoPathInHtmlForPdfs($html)

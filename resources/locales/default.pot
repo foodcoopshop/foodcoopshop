@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-02-12 17:14+0100\n"
+"POT-Creation-Date: 2022-06-20 12:06+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -198,15 +198,6 @@ msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
 msgstr ""
 
 msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
-msgstr ""
-
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr ""
-
-msgid "Please_enter_a_number."
-msgstr ""
-
-msgid "Your_overdraft_frame_of_{0}_is_reached."
 msgstr ""
 
 msgid "Errors_occurred."
@@ -506,6 +497,27 @@ msgstr ""
 msgid "Accept_cookies"
 msgstr ""
 
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
+msgid "Company_name"
+msgstr ""
+
+msgid "Please_enter_the_contact_person"
+msgstr ""
+
+msgid "Please_enter_your_lastname"
+msgstr ""
+
 msgid "Empty_cart"
 msgstr ""
 
@@ -651,6 +663,9 @@ msgid "Adapt_price_reason_is_mandatory."
 msgstr ""
 
 msgid "Cancellation_reason_is_mandatory."
+msgstr ""
+
+msgid "Please_enter_a_number."
 msgstr ""
 
 msgid "Add_new_attribute_for_product"
@@ -1223,6 +1238,18 @@ msgstr ""
 msgid "Payment_type_deposit_return"
 msgstr ""
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr ""
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr ""
+
+msgid "Invoice"
+msgstr ""
+
+msgid "Cancellation_invoice"
+msgstr ""
+
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
@@ -1236,6 +1263,18 @@ msgid "Price_incl."
 msgstr ""
 
 msgid "Total_sum"
+msgstr ""
+
+msgid "Price_net"
+msgstr ""
+
+msgid "Total_sum_net"
+msgstr ""
+
+msgid "Value_added_tax"
+msgstr ""
+
+msgid "Total_sum_gross"
 msgstr ""
 
 msgid "Generated_on_{0}"
@@ -1514,15 +1553,6 @@ msgstr ""
 msgid "Action_Log_Manufacturer_changed"
 msgstr ""
 
-msgid "Action_Log_Paying_with_time_time_upload_added"
-msgstr ""
-
-msgid "Action_Log_Paying_with_time_time_upload_changed"
-msgstr ""
-
-msgid "Action_Log_Paying_with_time_time_upload_deleted"
-msgstr ""
-
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr ""
 
@@ -1674,21 +1704,6 @@ msgid "The_following_values_are_valid:"
 msgstr ""
 
 msgid "Please_enter_the_name_of_the_foodcoop."
-msgstr ""
-
-msgid "Please_enter_the_paying_with_time_module_name."
-msgstr ""
-
-msgid "Please_enter_the_abbreviation_of_the_paying_with_time_module."
-msgstr ""
-
-msgid "Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}."
-msgstr ""
-
-msgid "Please_enter_exactly_2_decimals."
-msgstr ""
-
-msgid "Please_provide_a_value."
 msgstr ""
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
@@ -1886,21 +1901,6 @@ msgstr ""
 msgid "member"
 msgstr ""
 
-msgid "Delivery_note_for_{0}"
-msgstr ""
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr ""
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr ""
-
-msgid "Invoice"
-msgstr ""
-
-msgid "Cancellation_invoice"
-msgstr ""
-
 msgid "Order_lists_for_the_day"
 msgstr ""
 
@@ -1932,6 +1932,9 @@ msgid "Pickup_reminder_for"
 msgstr ""
 
 msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr ""
+
+msgid "Delivery_note_for_{0}"
 msgstr ""
 
 msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
@@ -2126,15 +2129,6 @@ msgstr ""
 msgid "routes_product"
 msgstr ""
 
-msgid "Mouseover_shows_the_paid_amont_in_{0}."
-msgstr ""
-
-msgid "Order_contains_amount_in_{0}."
-msgstr ""
-
-msgid "Paying_with_time_account_name_{0}"
-msgstr ""
-
 msgid "Modified_on"
 msgstr ""
 
@@ -2160,9 +2154,6 @@ msgid "Deposit_sum"
 msgstr ""
 
 msgid "Total"
-msgstr ""
-
-msgid "From_which_in"
 msgstr ""
 
 msgid "Including_vat"
@@ -2207,10 +2198,7 @@ msgstr ""
 msgid "Create_account"
 msgstr ""
 
-msgid "Firstname"
-msgstr ""
-
-msgid "Lastname"
+msgid "Register_as_company?"
 msgstr ""
 
 msgid "Street_and_number"
@@ -2226,6 +2214,9 @@ msgid "City"
 msgstr ""
 
 msgid "Want_to_receive_reminder_emails?"
+msgstr ""
+
+msgid "Want_to_receive_the_newsletter?"
 msgstr ""
 
 msgid "terms_of_use"
@@ -2315,9 +2306,6 @@ msgstr ""
 msgid "Your_credit_balance"
 msgstr ""
 
-msgid "Value_added_tax"
-msgstr ""
-
 msgid "Show_cart_button"
 msgstr ""
 
@@ -2366,7 +2354,40 @@ msgstr ""
 msgid "No_order_possible"
 msgstr ""
 
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+msgid "available"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "More_infos_to_product_{0}"
+msgstr ""
+
+msgid "Instant_order"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr ""
+
+msgid "Currently_not_on_stock"
+msgstr ""
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+msgid "Move_in_cart"
+msgstr ""
+
+msgid "Weight_in"
 msgstr ""
 
 msgid "Comment"
@@ -2429,48 +2450,6 @@ msgstr ""
 msgid "Reset_search"
 msgstr ""
 
-msgid "available"
-msgstr ""
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr ""
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr ""
-
-msgid "Currently_not_on_stock"
-msgstr ""
-
-msgid "New"
-msgstr ""
-
-msgid "More_infos_to_product_{0}"
-msgstr ""
-
-msgid "Instant_order"
-msgstr ""
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr ""
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr ""
-
-msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
-msgstr ""
-
-msgid "from_which_{0}_%"
-msgstr ""
-
-msgid "Move_in_shopping_bag"
-msgstr ""
-
-msgid "Move_in_cart"
-msgstr ""
-
-msgid "Weight_in"
-msgstr ""
-
 msgid "Add_deposit"
 msgstr ""
 
@@ -2493,15 +2472,6 @@ msgid "Categories"
 msgstr ""
 
 msgid "There_are_only_stock_products_shown_in_this_list."
-msgstr ""
-
-msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
-msgstr ""
-
-msgid "Part_in_{0}"
-msgstr ""
-
-msgid "in"
 msgstr ""
 
 msgid "Admin_area"
@@ -2559,6 +2529,9 @@ msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirma
 msgstr ""
 
 msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
+msgstr ""
+
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
 msgstr ""
 
 msgid "thank_you_for_your_purchase."

@@ -16,12 +16,12 @@ use Cake\Utility\Hash;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -84,6 +84,9 @@ class CustomersController extends AdminAppController
             $customersForDropdown[] = '</optgroup>';
         }
 
+        $emptyElement = ['<option value="0">' . __d('admin', 'all_members') . '</option>'];
+        $customersForDropdown = array_merge($emptyElement, $customersForDropdown);
+
         $this->set([
             'status' => 1,
             'dropdownData' => join('', $customersForDropdown),
@@ -129,13 +132,14 @@ class CustomersController extends AdminAppController
                 'system_bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
             ],
             'conditions' => [
-                'Customers.id_customer IN' => $customerIds
+                'Customers.id_customer IN' => $customerIds,
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
+        $customers = $this->Customer->addCustomersNameForOrderSelect($customers);
         $customers->select($this->Customer);
         $customers->select($this->Customer->AddressCustomers);
         return $customers;
@@ -321,12 +325,6 @@ class CustomersController extends AdminAppController
                 }
             }
 
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-            $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId);
-            if ($timebasedCurrencyCreditBalance != 0) {
-                $errors[] = __d('admin', 'The_credit_of_the_paying_with_time_account_is:') . ' ' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'. ' . __d('admin', 'It_needs_to_be_zero.');
-            }
-
             if (!empty($customer->manufacturers)) {
                 $manufacturerNames = [];
                 foreach($customer->manufacturers as $manufacturer) {
@@ -413,11 +411,6 @@ class CustomersController extends AdminAppController
                 'AddressCustomers'
             ]
         ])->first();
-
-        $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId) * -1;
-        $this->set('timebasedCurrencyCreditBalance', $timebasedCurrencyCreditBalance);
-        $this->set('timebasedCurrencyDisableOptionAllowed', $timebasedCurrencyCreditBalance >= 0);
 
         $this->setFormReferer();
 
@@ -536,13 +529,14 @@ class CustomersController extends AdminAppController
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
+                'newsletterCustomer' => $customer,
                 'newPassword' => $newPassword,
             ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
                 $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             }
-            $email->send();
+            $email->addToQueue();
 
             $message = __d('admin', 'The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email.', ['<b>' . $customer->name . '</b>']);
         }
@@ -679,9 +673,18 @@ class CustomersController extends AdminAppController
 
         $conditions = [];
         if ($active != 'all') {
-            $conditions = [
-                'Customers.active' => $active
-            ];
+            $conditions['Customers.active'] = $active;
+        }
+
+        if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+            $newsletter = h($this->getRequest()->getQuery('newsletter'));
+            if (!in_array('newsletter', array_keys($this->getRequest()->getQueryParams()))) {
+                $newsletter = '';
+            }
+            $this->set('newsletter', $newsletter);
+            if ($newsletter != '') {
+                $conditions['Customers.newsletter_enabled'] = $newsletter;
+            }
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
@@ -694,12 +697,22 @@ class CustomersController extends AdminAppController
             'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ]
+            ],
         ]);
+        $query = $this->Customer->addCustomersNameForOrderSelect($query);
+        $query->select($this->Customer);
+        $query->select($this->Customer->AddressCustomers);
 
         $customers = $this->paginate($query, [
             'sortableFields' => [
-                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder_enabled', 'Customers.date_add', 'Customers.timebased_currency_enabled',
+                'CustomerNameForOrder',
+                'Customers.id_default_group',
+                'Customers.id_customer',
+                'Customers.email',
+                'Customers.active',
+                'Customers.email_order_reminder_enabled',
+                'Customers.date_add',
+                'Customers.newsletter_enabled',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();
@@ -708,16 +721,9 @@ class CustomersController extends AdminAppController
         $this->Payment = $this->getTableLocator()->get('Payments');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        }
-
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $customer->credit_balance = $this->Customer->getCreditBalance($customer->id_customer);
-                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                    $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
-                }
             }
             $customer->order_detail_count = $this->OrderDetail->getCountByCustomerId($customer->id_customer);
             $customer->different_pickup_day_count = $this->OrderDetail->getDifferentPickupDayCountByCustomerId($customer->id_customer);

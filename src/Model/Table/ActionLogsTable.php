@@ -8,12 +8,12 @@ use Cake\I18n\FrozenTime;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -429,16 +429,6 @@ class ActionLogsTable extends AppTable
                 'access' => [
                     'manufacturer'
                 ]
-            ],
-
-            'timebased_currency_payment_added' => [
-                'name' => __('Action_Log_Paying_with_time_time_upload_added')
-            ],
-            'timebased_currency_payment_changed' => [
-                'name' => __('Action_Log_Paying_with_time_time_upload_changed')
-            ],
-            'timebased_currency_payment_deleted' => [
-                'name' => __('Action_Log_Paying_with_time_time_upload_deleted')
             ],
 
             'cronjob_backup_database' => [

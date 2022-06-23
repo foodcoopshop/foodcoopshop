@@ -1,12 +1,12 @@
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 1.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
@@ -376,9 +376,6 @@ body.order_details.index a.change-products-picked-up-button {
     width: 64px;
     text-align: left;
 }
-body.order_details.index .timebased-currency-object {
-    display: none;
-}
 .product-attributes-dropdown {
     width: 400px;
 }
@@ -455,8 +452,7 @@ form div.error-message {
     font-weight: normal;
     font-size: 12px;
 }
-#add-payment-button-wrapper,
-#add-timebased-currency-payment-button-wrapper {
+#add-payment-button-wrapper {
     margin-bottom: 10px;
     clear: both;
 }
@@ -504,19 +500,6 @@ body.order_details.index td a.pickup-day-comment-edit-button {
 }
 .add-payment-form .checkbox label {
     margin-left: 3px;
-}
-#timebasedCurrencyPaymentEditForm a.btn-arrow {
-    top: 5px;
-}
-#timebasedCurrencyPaymentEditForm h3 {
-    margin-bottom: 20px;
-}
-#timebasedCurrencyPaymentEditForm .textarea label {
-    vertical-align: top;
-}
-#timebasedCurrencyPaymentEditForm select,
-#timebasedCurrencyPaymentEditForm textarea {
-    width: 250px;
 }
 #blogPostEditForm .blog-post-image-wrapper {
     float: left;
@@ -598,9 +581,6 @@ body.payments h2 {
 }
 body.payments.product h2.personal-transaction-code {
     margin-top: 10px;
-}
-body.timebased_currency_payments table.list {
-    width: 850px;
 }
 body.payments .bottom-button-container {
     float: left;
@@ -827,6 +807,9 @@ body.customers.index td.name,
 body.manufacturers.index td.name {
     position: relative;
     min-width: 260px; /* width does not work on mobile */
+}
+body.manufacturers.index td.name {
+    vertical-align: top;
 }
 body.customers.index span.name,
 body.manufacturers.index span.name {
