@@ -490,7 +490,8 @@ class ProductsController extends AdminAppController
         $productId = h($this->getRequest()->getData('productId'));
         $productAttributeId = h($this->getRequest()->getData('productAttributeId'));
         $deleteProductAttribute = h($this->getRequest()->getData('deleteProductAttribute'));
-        $barcode = StringComponent::removeSpecialChars(strip_tags(trim($this->getRequest()->getData('barcode'))));
+        $barcode = $this->getRequest()->getData('barcode') ?? '';
+        $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
 
         $oldProduct = $this->Product->find('all', [
             'conditions' => [

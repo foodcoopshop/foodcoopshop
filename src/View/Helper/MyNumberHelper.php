@@ -36,6 +36,11 @@ class MyNumberHelper extends NumberHelper
      */
     public function getStringAsFloat($string)
     {
+
+        if (is_null($string)) {
+            return -1;
+        }
+
         $float = trim($string);
         $float = $this->parseFloatRespectingLocale($float);
 
