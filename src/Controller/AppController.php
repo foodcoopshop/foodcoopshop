@@ -114,7 +114,11 @@ class AppController extends Controller
             $this->loadComponent('FormProtection');
         }
 
-        $this->set('isMobile', Browser::isMobile() && !Browser::isTablet());
+        $isMobile = false;
+        if (PHP_SAPI !== 'cli') {
+            $isMobile = Browser::isMobile() && !Browser::isTablet();
+        }
+        $this->set('isMobile', $isMobile);
 
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {

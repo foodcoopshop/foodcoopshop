@@ -126,15 +126,15 @@ class StringComponent extends Component
      * @param string $string
      * @return string
      */
-    public static function createRandomString($length = 6)
+    public static function createRandomString($n = 6)
     {
-        $salt = "abcdefghijkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // salt to select chars from
-        srand((double) microtime() * 1000000); // start the random generator
-        $string = "";
-        for ($i = 0; $i < $length; $i ++) {
-            $string .= substr($salt, rand() % strlen($salt), 1);
+        $characters = "abcdefghijkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $randomString = '';
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
         }
-        return $string;
+        return $randomString;
     }
 
     /**

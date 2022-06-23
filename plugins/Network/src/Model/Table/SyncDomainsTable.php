@@ -93,6 +93,11 @@ class SyncDomainsTable extends AppTable
      */
     public function getActiveManufacturerSyncDomains($enabledSyncDomains)
     {
+
+        if (is_null($enabledSyncDomains)) {
+            return [];
+        }
+
         $activeSyncDomains = $this->getActiveSyncDomains();
         $preparedDomains = [];
         $enabledSyncDomainsAsArray = explode(',', $enabledSyncDomains);
@@ -101,7 +106,9 @@ class SyncDomainsTable extends AppTable
                 $preparedDomains[] = $activeSyncDomain;
             }
         }
+
         return $preparedDomains;
+
     }
 
     public function getForDropdown()

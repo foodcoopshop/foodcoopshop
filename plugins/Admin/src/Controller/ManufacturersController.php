@@ -131,8 +131,10 @@ class ManufacturersController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['description', 'short_description'])));
 
-        $this->setRequest($this->getRequest()->withData('Manufacturers.iban', str_replace(' ', '', $this->getRequest()->getData('Manufacturers.iban'))));
-        $this->setRequest($this->getRequest()->withData('Manufacturers.bic', str_replace(' ', '', $this->getRequest()->getData('Manufacturers.bic'))));
+        $iban = $this->getRequest()->getData('Manufacturers.iban') ?? '';
+        $this->setRequest($this->getRequest()->withData('Manufacturers.iban', str_replace(' ', '', $iban)));
+        $bic = $this->getRequest()->getData('Manufacturers.bic') ?? '';
+        $this->setRequest($this->getRequest()->withData('Manufacturers.bic', str_replace(' ', '', $bic)));
         $this->setRequest($this->getRequest()->withData('Manufacturers.homepage', StringComponent::addHttpToUrl($this->getRequest()->getData('Manufacturers.homepage'))));
 
         if ($isEditMode) {

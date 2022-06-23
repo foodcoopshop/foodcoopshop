@@ -48,7 +48,7 @@
 ## ✔ Requirements
 * Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
-* PHP >= 8.0
+* PHP >= 8.1
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP ZipArchive class
 * MySQL >= 5.7.7 (since v3.5 >= MySQL 8.0)

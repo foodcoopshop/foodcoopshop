@@ -1199,7 +1199,8 @@ class ProductsTable extends AppTable
                     ];
 
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attribute->id_product_attribute, 4);
+                        $attributeId = $attribute->id_product_attribute ?? 0;
+                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attributeId, 4);
                         $preparedProduct['image'] = $product->image;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                             $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;

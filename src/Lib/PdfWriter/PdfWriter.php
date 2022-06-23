@@ -82,7 +82,7 @@ abstract class PdfWriter
     public function writeAttachment()
     {
         $this->setContent();
-        return $this->pdfLibrary->Output(null, 'S');
+        return $this->pdfLibrary->Output('', 'S');
     }
 
     /**
