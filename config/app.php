@@ -184,7 +184,7 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL ^ E_USER_DEPRECATED,
+        'errorLevel' => E_ALL,
         'skipLog' => [],
         'log' => true,
         'trace' => true,
