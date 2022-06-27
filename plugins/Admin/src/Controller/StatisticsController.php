@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\Locator\TableLocator;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -286,7 +285,7 @@ class StatisticsController extends AdminAppController
                 if ($opacity < 20) {
                     $opacity = 20;
                 }
-                $backgroundColorPieChart[] = Configure::read('app.customThemeMainColor') . dechex($opacity * 2.56);
+                $backgroundColorPieChart[] = Configure::read('app.customThemeMainColor') . dechex((int) ($opacity * 2.56));
             }
 
             // start retrieving data for pie chart
