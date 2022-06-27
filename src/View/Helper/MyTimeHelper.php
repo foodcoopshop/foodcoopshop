@@ -27,7 +27,9 @@ class MyTimeHelper extends TimeHelper
     {
         $secondsAsInteger = (int) $seconds;
         $decimals = round($seconds, 2) - $secondsAsInteger;
-        $minutes = floor(($secondsAsInteger / 60) % 60);
+        $minutesAsDecimal = $secondsAsInteger / 60;
+        $minutesAsModulo = (int) $minutesAsDecimal % 60;
+        $minutes = floor($minutesAsModulo);
         $seconds = $secondsAsInteger % 60;
         $result = [];
         if ($minutes > 0) {
