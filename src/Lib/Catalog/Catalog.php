@@ -74,7 +74,11 @@ class Catalog {
 
         $query = $this->Product->find('all');
         $query = $this->addContains($query);
-        $query = $this->addOrder($query);
+        if ($keyword == '') {
+            $query = $this->addOrder($query);
+        } else {
+            $query = $this->addOrderKeyword($query, $keyword);
+        }
         $query = $this->addDefaultConditions($query, $appAuth);
         $query = $this->addSelectFields($query);
         $query = $this->addPurchasePriceIsSetFilter($query);
@@ -91,6 +95,24 @@ class Catalog {
         $query = $this->addGetOnlyStockProductsFilter($query, $getOnlyStockProducts);
         $query = $this->addNewProductsFilter($query, $filterByNewProducts);
         $query = $this->addKeywordFilter($query, $keyword);
+
+        return $query;
+
+    }
+
+    protected function addOrderKeyword($query, $keyword)
+    {
+
+        $query->orderDesc(function (QueryExpression $exp, Query $query) use ($keyword) {
+            return $exp->case()
+                ->when($exp->like('Products.name', '%'.$keyword.'%'))->then('10')
+                ->else('0');
+            }
+        );
+
+        $query->order([
+            'Products.name' => 'ASC',
+        ]);
 
         return $query;
 
