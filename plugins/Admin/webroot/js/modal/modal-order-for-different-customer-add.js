@@ -104,23 +104,20 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
         $(modalSelector + ' iframe').on('load', function () {
             // called after each url change in iframe
-            var message = '';
+            var orderFinished = false;
             if (isInstantOrder) {
                 var currentUrl = $(this).get(0).contentWindow.document.URL;
                 var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
                 if (currentUrl.match(cartFinishedRegExp)) {
-                    message = $(this).contents().find('#flashMessage').html().replace(/<(a|i)[^>]*>/g,'');
+                    orderFinished = true;
                 }
             } else {
                 if ($(this).contents().find('.btn-flash-message-continue').length == 1) {
-                    message = foodcoopshop.LocalizedJs.admin.TheOrderWasPlacedSuccessfully;
+                    orderFinished = true;
                 }
             }
-            if (message != '') {
-                document.location.href = foodcoopshop.Admin.addParameterToURL(
-                    foodcoopshop.Admin.getParentLocation(),
-                    'message=' + encodeURIComponent(message)
-                );
+            if (orderFinished) {
+                document.location.href = foodcoopshop.Admin.getParentLocation();
             }
         });
 

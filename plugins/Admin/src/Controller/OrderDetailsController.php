@@ -547,11 +547,6 @@ class OrderDetailsController extends AdminAppController
     public function index()
     {
 
-        if (!empty($this->getRequest()->getQuery('message'))) {
-            $this->Flash->success(htmlspecialchars_decode($this->getRequest()->getQuery('message')));
-            $this->redirect($this->referer());
-        }
-
         // for filter from action logs page
         $orderDetailId = '';
         if (! empty($this->getRequest()->getQuery('orderDetailId'))) {
