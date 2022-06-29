@@ -219,7 +219,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service .product.error span,
 .self-service .product.error a {
-    color: #fff;
+    color: #fff ! important;
 }
 .self-service ul.error-message {
     padding: 5px;
