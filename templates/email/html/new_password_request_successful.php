@@ -35,6 +35,10 @@ use Cake\Core\Configure;
                     <b><?php echo $tmpNewPassword; ?></b>
                 </p>
 
+                <p>
+                    <?php echo __('Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it.'); ?>
+                </p>
+
             </td>
 
         </tr>

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-06-20 12:06+0200\n"
-"PO-Revision-Date: 2022-06-20 12:06+0200\n"
+"POT-Creation-Date: 2022-06-30 09:21+0200\n"
+"PO-Revision-Date: 2022-06-30 09:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2519,6 +2519,9 @@ msgstr "Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren"
 
 msgid "your_new_password_is:"
 msgstr "dein neues Passwort lautet:"
+
+msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
+msgstr "Falls du das Passwort zum Kopieren mit einem Doppelklick markierst, pass bitte auf, dass am Ende kein Leerzeichen mitkopiert wird."
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "vielen Dank für deine Bestellung vom {0}."

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-06-20 12:06+0200\n"
+"POT-Creation-Date: 2022-06-30 09:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2517,6 +2517,9 @@ msgid "Please_click_on_this_link_to_activate_your_new_password"
 msgstr ""
 
 msgid "your_new_password_is:"
+msgstr ""
+
+msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
 msgstr ""
 
 msgid "thank_you_for_your_order_from_{0}."
