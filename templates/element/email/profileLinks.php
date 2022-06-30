@@ -22,6 +22,10 @@ use Cake\Core\Configure;
     <?php echo __('Password'); ?>: <?php echo $newPassword; ?>
 </p>
 
+<p>
+    <?php echo __('Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it.'); ?>
+</p>
+
 <p style="font-size:12px;padding-top:15px;">
     <?php echo __('You_can_change_your_password_here'); ?>:<br />
     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
