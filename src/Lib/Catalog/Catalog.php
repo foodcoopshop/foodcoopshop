@@ -105,7 +105,8 @@ class Catalog {
 
         $query->orderDesc(function (QueryExpression $exp, Query $query) use ($keyword) {
             return $exp->case()
-                ->when($exp->like('Products.name', '%'.$keyword.'%'))->then('10')
+                ->when($query->newExpr()->like('Products.name', $keyword.'%'))->then('20') //list product "Birnensaft" before "Apfel-Birnesaft" for keyword "Birnensaft"
+                ->when($query->newExpr()->like('Products.name', '%'.$keyword.'%'))->then('10')
                 ->else('0');
             }
         );
