@@ -17,4 +17,9 @@ namespace App\Model\Table;
  */
 class CronjobLogsTable extends AppTable
 {
+
+    public const RUNNING = 2;
+    public const SUCCESS = 1;
+    public const FAILURE = 0;
+
 }

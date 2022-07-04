@@ -43,7 +43,7 @@ class CronjobsTable extends AppTable
 
         $cronjobs = $this->find('all', [
             'conditions' => [
-                'Cronjobs.active' => APP_ON
+                'Cronjobs.active' => APP_ON,
             ]
         ])->all();
 
@@ -84,11 +84,11 @@ class CronjobsTable extends AppTable
             $executeCronjob = true;
             $timeIntervalObject = $cronjobNotBeforeTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
 
-            if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lt($timeIntervalObject))) {
+            if (!(empty($cronjobLog) || $cronjobLog->success == CronjobLogsTable::FAILURE || $cronjobLog->created->lt($timeIntervalObject))) {
                 $executeCronjob = false;
             }
 
-            if (!empty($cronjobLog) && $cronjobLog->success == APP_ON && $cronjobLog->created->gt($cronjobNotBeforeTimeWithCronjobRunDay)) {
+            if (!empty($cronjobLog) && (in_array($cronjobLog->success, [CronjobLogsTable::SUCCESS, CronjobLogsTable::RUNNING])) && $cronjobLog->created->gt($cronjobNotBeforeTimeWithCronjobRunDay)) {
                 $executeCronjob = false;
             }
 
@@ -114,15 +114,6 @@ class CronjobsTable extends AppTable
         }
         $shellClass = '\\App\\Shell\\' . $shellName;
         $shell = new $shellClass();
-        try {
-            $success = $shell->main();
-            $success = $success !== true ? 0 : 1;
-        } catch (\Exception $e) {
-            $success = 1;
-            if (get_class($e) != 'Cake\Network\Exception\SocketException') {
-                $success = 0;
-            }
-        }
 
         $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(
             $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')
@@ -131,9 +122,22 @@ class CronjobsTable extends AppTable
             [
                 'cronjob_id' => $cronjob->id,
                 'created' => $databasePreparedCronjobRunDay,
-                'success' => $success,
+                'success' => CronjobLogsTable::RUNNING,
             ]
         );
+        $this->CronjobLogs->save($entity);
+
+        try {
+            $success = $shell->main();
+            $success = $success !== true ? CronjobLogsTable::FAILURE : CronjobLogsTable::SUCCESS;
+        } catch (\Exception $e) {
+            $success = CronjobLogsTable::SUCCESS;
+            if (get_class($e) != 'Cake\Network\Exception\SocketException') {
+                $success = CronjobLogsTable::FAILURE;
+            }
+        }
+
+        $entity->success = $success;
         $this->CronjobLogs->save($entity);
 
         return [

@@ -1,6 +1,7 @@
 <?php
 
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Model\Table\CronjobLogsTable;
 use App\Test\TestCase\AppCakeTestCase;
 
 /**
@@ -31,7 +32,6 @@ class CronjobsTableTest extends AppCakeTestCase
         $time = '2018-10-21 23:00:00';
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
         $executedCronjobs = $this->Cronjob->run();
-//         $this->assertEquals(1, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['created'], $time);
 
         // run again, no cronjobs called
@@ -50,7 +50,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    public function testPreviousCronjobLogError()
+    public function testPreviousCronjobLogFailure()
     {
         $time = '2018-10-22 23:00:00';
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
@@ -60,14 +60,34 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC($time),
                     'cronjob_id' => 1,
-                    'success' => 0
-                ]
+                    'success' => CronjobLogsTable::FAILURE,
+                ],
             )
         );
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(2, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
         $this->assertEquals($executedCronjobs[1]['time_interval'], 'week');
+        $this->assertEquals($executedCronjobs[0]['created'], $time);
+    }
+
+    public function testPreviousCronjobLogRunning()
+    {
+        $time = '2018-10-22 23:00:00';
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = strtotime($time);
+        $this->Cronjob->CronjobLogs->save(
+            $this->Cronjob->CronjobLogs->newEntity(
+                [
+                    'created' => $this->Time->getTimeObjectUTC($time),
+                    'cronjob_id' => 1,
+                    'success' => CronjobLogsTable::RUNNING,
+                ],
+            )
+        );
+        $executedCronjobs = $this->Cronjob->run();
+        $this->assertEquals(1, count($executedCronjobs));
+        $this->assertEquals($executedCronjobs[0]['time_interval'], 'week');
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
@@ -80,8 +100,8 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC('2018-10-22 22:30:00'),
                     'cronjob_id' => 1,
-                    'success' => 1
-                ]
+                    'success' => CronjobLogsTable::SUCCESS,
+                ],
             )
         );
         $executedCronjobs = $this->Cronjob->run();
@@ -98,8 +118,8 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC('2018-10-22 22:30:01'),
                     'cronjob_id' => 1,
-                    'success' => 1
-                ]
+                    'success' => CronjobLogsTable::SUCCESS,
+                ],
             )
         );
         $executedCronjobs = $this->Cronjob->run();
@@ -115,7 +135,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 $this->Cronjob->get(1),
                 [
                     'name' => 'TestCronjobWithInvalidParameterException'
-                ]
+                ],
             )
         );
         $executedCronjobs = $this->Cronjob->run();
@@ -137,7 +157,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 $this->Cronjob->get(1),
                 [
                     'name' => 'TestCronjobWithSocketException'
-                ]
+                ],
             )
         );
         $executedCronjobs = $this->Cronjob->run();
@@ -154,7 +174,7 @@ class CronjobsTableTest extends AppCakeTestCase
                 [
                     'created' => $this->Time->getTimeObjectUTC('2018-10-25 22:30:01'),
                     'cronjob_id' => 1,
-                    'success' => 1
+                    'success' => CronjobLogsTable::SUCCESS,
                 ]
             )
         );
@@ -169,8 +189,8 @@ class CronjobsTableTest extends AppCakeTestCase
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
                 [
-                    'active' => APP_OFF
-                ]
+                    'active' => APP_OFF,
+                ],
             )
         );
         $executedCronjobs = $this->Cronjob->run();
@@ -185,8 +205,8 @@ class CronjobsTableTest extends AppCakeTestCase
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
                 [
-                    'active' => APP_OFF
-                ]
+                    'active' => APP_OFF,
+                ],
             )
         );
         $executedCronjobs = $this->Cronjob->run();
@@ -200,7 +220,7 @@ class CronjobsTableTest extends AppCakeTestCase
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(2),
                 [
-                    'weekday' => ''
+                    'weekday' => '',
                 ]
             )
         );
@@ -217,7 +237,7 @@ class CronjobsTableTest extends AppCakeTestCase
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(3),
                 [
-                    'day_of_month' => ''
+                    'day_of_month' => '',
                 ]
             )
         );
