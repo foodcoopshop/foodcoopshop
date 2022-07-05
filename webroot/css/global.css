@@ -301,7 +301,7 @@ h2.warning {
     font-size: 15px;
     position: absolute;
     left: 5px;
-    top: 7px;
+    top: 8px;
 }
 .vertical.menu li.has-icon a,
 .vertical.menu li a.has-icon,
@@ -313,11 +313,11 @@ h2.warning {
 }
 .vertical.menu li.has-children > a:not(.active) i:before,
 a.toggle-link:not(.collapsed) i:before  {
-    content: "\f055"; /* fa-icon-plus-sign */
+    content: "\f0fe"; /* fa-plus-square */
 }
 .vertical.menu li.has-children > a.active i:before,
 a.toggle-link.collapsed i:before {
-    content: "\f056" /* fa-icon-minus-sign */
+    content: "\f146" /* fa-minus-square */
 }
 .vertical.menu li.has-children a.active + ul {
     display: block;

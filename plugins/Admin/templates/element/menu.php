@@ -163,7 +163,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'slug' => $this->Slug->getStatistics(),
             'name' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Turnover_and_profit_statistics') : __d('admin', 'Turnover_statistics'),
             'options' => [
-                'fa-icon' => 'fa-fw ok fa-chart-bar'
+                'fa-icon' => 'fa-fw ok fa-chart-line'
             ]
         ];
     }
@@ -174,7 +174,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => $this->Slug->getCustomerListAdmin(),
         'name' => __d('admin', 'Members'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-user'
+            'fa-icon' => 'fa-fw ok fa-user-group'
         ]
     ];
     $menu[] = $actionLogsMenuElement;
