@@ -30,8 +30,6 @@
         background-color: #fff ! important;
         border-color: #ccc ! important;
     }
-    ul.sb-slidebar a:hover,
-    ul.sb-slidebar a:visited,
     a.sb-toggle-left:hover,
     a.sb-toggle-left:visited {
         text-decoration: none ! important;
