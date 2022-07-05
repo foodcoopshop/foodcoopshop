@@ -30,6 +30,12 @@
         background-color: #fff ! important;
         border-color: #ccc ! important;
     }
+    ul.sb-slidebar a:hover,
+    ul.sb-slidebar a:visited,
+    a.sb-toggle-left:hover,
+    a.sb-toggle-left:visited {
+        text-decoration: none ! important;
+    }
     #container {
         overflow: hidden ! important; /* avoids iphone scrolling bug */
         min-height: initial ! important;
@@ -74,7 +80,7 @@
     .sb-left li.header,
     .sb-left li.footer {
         color: #fff ! important;
-        padding: 5px;
+        padding: 4px 5px;
         display: block;
         border-bottom: 1px solid #fff;
     }
