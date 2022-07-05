@@ -70,7 +70,7 @@ foodcoopshop.Modal = {
 
         buttons = buttons ||
             [
-                this.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.save, 'fa fa-check'),
+                this.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.save, 'fas fa-check'),
                 this.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
             ];
 
