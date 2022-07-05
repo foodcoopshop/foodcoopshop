@@ -136,8 +136,8 @@
         top: 0;
         left: 0;
     }
-    body.customers.login #responsive-header i.fa-circle-notch,
-    body.self_services #responsive-header i.fa-circle-notch {
+    body.customers.login #responsive-header i.fa-spinner,
+    body.self_services #responsive-header i.fa-spinner {
         margin-top: 12px;
         margin-left: 5px;
     }

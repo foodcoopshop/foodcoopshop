@@ -90,11 +90,11 @@ foodcoopshop.SelfService = {
     },
 
     showLoader : function(afterElementForLoader) {
-        $('#responsive-header ' + afterElementForLoader).after($('<i />').addClass('fa fa-circle-notch fa-spin fa-2x'));
+        $('#responsive-header ' + afterElementForLoader).after($('<i />').addClass('fa fa-spinner fa-spin fa-2x'));
     },
 
     hideLoader: function() {
-        $('#responsive-header i.fa-circle-notch').remove();
+        $('#responsive-header i.fa-spinner').remove();
     },
 
     isMobileBarcodeScanningSupported : function() {
