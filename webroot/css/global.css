@@ -45,7 +45,7 @@ body.admin h2 span a:hover,
 .btn-success:active {
     border-color: transparent;
 }
-a:not(.btn):hover {
+a:not(.btn):hover:not(.btn-arrow):hover {
   text-decoration: underline ! important;
 }
 ul.menu:not(#user-menu):not(#footer-menu) a:hover {
