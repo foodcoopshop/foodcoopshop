@@ -58,6 +58,7 @@ jobs:
       - name: Install vendors 
         run: |
           composer install --optimize-autoloader  --no-progress
+          whereis cleancss
           cp ./.github/workflows/*.php ./config/
           npm --prefix ./webroot install ./webroot
           bash bin/cake SavedLocalizedJsAsStaticFile

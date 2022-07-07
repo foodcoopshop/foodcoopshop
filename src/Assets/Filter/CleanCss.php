@@ -30,7 +30,7 @@ class CleanCss extends AssetFilter
      */
     protected $_settings = array(
         'node' => '/usr/local/bin/node',
-        'cleancss' => '/usr/local/bin/clean-css-cli/bin/cleancss',
+        'cleancss' => '/usr/local/bin/cleancss',
         'node_path' => '/usr/local/lib/node_modules',
         'options' => '',
     );
