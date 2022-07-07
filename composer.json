@@ -25,7 +25,6 @@
         "cakephp/plugin-installer": "^1.0",
         "markstory/asset_compress": "4.*",
         "intervention/image": "2.*",
-        "natxet/cssmin": "3.*",
         "cviebrock/discourse-php": "^0.9.3",
         "studio-42/elfinder": "^2.1",
         "ezyang/htmlpurifier": "^4.11",
