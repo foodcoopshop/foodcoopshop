@@ -9,6 +9,8 @@ rm -Rf vendor/tecnickcom/tcpdf/fonts/dejavu-fonts-ttf-2.33
 rm -Rf vendor/tecnickcom/tcpdf/fonts/free*
 rm -Rf vendor/tecnickcom/tcpdf/fonts/dejavu-fonts-ttf-2.34/status.txt
 
+cp src/Assets/Filter/CleanCss.php vendor/markstory/mini-asset/src/Filter/
+
 rm -Rf vendor/studio-42/elfinder/.git
 mkdir -p webroot/js/elfinder
 cp -Rp vendor/studio-42/elfinder/* webroot/js/elfinder
