@@ -47,6 +47,7 @@ class CleanCss extends AssetFilter
         $tmpFile = tempnam(sys_get_temp_dir(), 'CLEANCSS');
         file_put_contents($tmpFile, $content);
         $cmd = $this->_settings['node'] . ' ' . $this->_settings['cleancss'] . $this->_settings['options'] . ' ' . escapeshellarg($target) . ' ' . escapeshellarg($tmpFile);
+        die($cmd);
         $env = array('NODE_PATH' => $this->_settings['node_path']);
         $result = $this->_runCmd($cmd, '', $env);
         unlink($tmpFile);
