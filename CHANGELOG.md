@@ -42,7 +42,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Software ist kompatibel mit PHP 8.1. [I#750](https://github.com/foodcoopshop/foodcoopshop/issues/750) / [PR#851](https://github.com/foodcoopshop/foodcoopshop/pull/851) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Doppelte Aufrufe von lang andauerenden Cronjobs ist jetzt nicht mehr möglich. Das kam sehr selten vor, aber eben doch. [PR#853](https://github.com/foodcoopshop/foodcoopshop/pull/853) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Fontawesome v6 Update. [PR#855](https://github.com/foodcoopshop/foodcoopshop/pull/855) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Neuer CSS-Compressor: CssMin mit CleanCss ersetzen. [PR#856] <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>(https://github.com/foodcoopshop/foodcoopshop/pull/856)
+- Neuer CSS-Compressor: CssMin mit CleanCss ersetzen. [PR#856](https://github.com/foodcoopshop/foodcoopshop/pull/856) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 # v3.4.2
 
