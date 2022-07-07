@@ -41,7 +41,7 @@ if ($hideButton) {
     ?>
 
     <a id="btn-cart-<?php echo $productId; ?>" class="<?php echo $disabledClass; ?>btn btn-outline-light btn-cart" href="javascript:void(0);">
-        <i class="fa fa-fw fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
+        <i class="fas fa-fw fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
     </a>
 
 </div>

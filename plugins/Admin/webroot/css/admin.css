@@ -135,7 +135,7 @@ form.fcs-form .bootstrap-select {
 .vertical.menu li.has-children ul a i.fas {
     font-size: 13px;
     left: 13px;
-    top: 5px;
+    top: 6px;
 }
 .vertical.menu a {
     border-right: none;
@@ -273,11 +273,6 @@ body.products.index td.status .fa-exclamation {
   top: 10px;
   left: 590px;
   font-size: 150px;
-}
-#filter-loader i {
-  animation:10s infinite, fa-spin 2s infinite linear;
-  -moz-animation:10s infinite, fa-spin 2s infinite linear; /* Firefox */
-  -webkit-animation:10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
 }
 td.right,
 th.right {

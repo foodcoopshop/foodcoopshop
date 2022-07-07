@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 echo $this->Html->link(
-    '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')) . '"></i>' . $buttonText,
+    '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')) . '"></i> ' . $buttonText,
     'javascript:void(0);',
     [
         'data-object-id' => $objectId,

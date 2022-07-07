@@ -45,7 +45,7 @@ body.admin h2 span a:hover,
 .btn-success:active {
     border-color: transparent;
 }
-a:not(.btn):hover {
+a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):hover {
   text-decoration: underline ! important;
 }
 ul.menu:not(#user-menu):not(#footer-menu) a:hover {
@@ -301,7 +301,7 @@ h2.warning {
     font-size: 15px;
     position: absolute;
     left: 5px;
-    top: 7px;
+    top: 8px;
 }
 .vertical.menu li.has-icon a,
 .vertical.menu li a.has-icon,
@@ -313,11 +313,11 @@ h2.warning {
 }
 .vertical.menu li.has-children > a:not(.active) i:before,
 a.toggle-link:not(.collapsed) i:before  {
-    content: "\f055"; /* fa-icon-plus-sign */
+    content: "\f0fe"; /* fa-plus-square */
 }
 .vertical.menu li.has-children > a.active i:before,
 a.toggle-link.collapsed i:before {
-    content: "\f056" /* fa-icon-minus-sign */
+    content: "\f146" /* fa-minus-square */
 }
 .vertical.menu li.has-children a.active + ul {
     display: block;
@@ -604,4 +604,9 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     margin-left: 0;
     margin-bottom: 0;
     font-size: 14px;
+}
+.fa-spin {
+  animation:10s infinite, fa-spin 2s infinite linear;
+  -moz-animation:10s infinite, fa-spin 2s infinite linear; /* Firefox */
+  -webkit-animation:10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
 }

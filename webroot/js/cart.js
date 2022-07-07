@@ -485,7 +485,7 @@ foodcoopshop.Cart = {
             '</span>' +
             '<span class="manufacturer-link">' + manufacturerLink + '</span>' +
             '<span class="right">' +
-                '<span class="delete"><a class="btn" title="' + foodcoopshop.LocalizedJs.cart.removeFromCart + '" href="javascript:void(0);"><i class="fas fa-times-circle"></i></a></span>' +
+                '<span class="delete"><a class="btn" title="' + foodcoopshop.LocalizedJs.cart.removeFromCart + '" href="javascript:void(0);"><i class="fa-fw fas fa-times-circle"></i></a></span>' +
                 '<span class="price">' + foodcoopshop.Helper.formatFloatAsCurrency(price) + '</span>' +
                 (deposit > 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsCurrency(deposit) + '</span></span>' : '') +
                 '<span class="tax">' + foodcoopshop.Helper.formatFloatAsCurrency(tax) + '</span>' +

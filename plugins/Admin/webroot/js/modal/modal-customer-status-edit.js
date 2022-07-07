@@ -48,7 +48,7 @@ foodcoopshop.ModalCustomerStatusEdit = {
         var dataRow = $('#change-active-state-' + customerId).closest('tr');
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], yesButtonText, 'fa fa-check'),
+            foodcoopshop.Modal.createButton(['btn-success'], yesButtonText, 'fas fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
         ];
 

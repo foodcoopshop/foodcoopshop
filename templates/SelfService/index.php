@@ -148,7 +148,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         echo $this->element('selfService/paymentType');
     ?>
     <button type="submit" class="btn btn-success btn-order">
-        <i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+        <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
     </button>
     <?php echo $this->Form->end(); ?>
     <?php if ($isMobile && !$appAuth->user('use_camera_for_barcode_scanning')) { ?>

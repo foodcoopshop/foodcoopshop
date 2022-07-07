@@ -32,10 +32,10 @@ $idForUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufa
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
+            class="fa-fw fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerProfile()) { ?>
             <a href="javascript:void(0);" class="btn btn-outline-light cancel"><i
-            class="fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fa-fw fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php } ?>
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
     </div>

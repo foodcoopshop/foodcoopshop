@@ -18,7 +18,7 @@ foodcoopshop.ModalLogout = {
         var modalSelector = '#logout-form';
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa fa-check'),
+            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
         ];
 
