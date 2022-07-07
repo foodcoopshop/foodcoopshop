@@ -79,7 +79,9 @@ echo '<tr class="sort">';
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo '<th></th>';
     }
-    echo '<th></th>';
+    if (Configure::read('app.showManufacturerListAndDetailPage')) {
+        echo '<th></th>';
+    }
 echo '</tr>';
 $i = 0;
 $sumProductCount = 0;
@@ -274,21 +276,23 @@ foreach ($manufacturers as $manufacturer) {
         }
     }
 
-    echo '<td style="width: 29px;">';
-    if ($manufacturer->active) {
-        $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
-        echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i>',
-            $manufacturerLink,
-            [
-                'class' => 'btn btn-outline-light',
-                'title' => __d('admin', 'Manufacturer_profile'),
-                'target' => '_blank',
-                'escape' => false
-            ]
-        );
+    if (Configure::read('app.showManufacturerListAndDetailPage')) {
+        echo '<td style="width: 29px;">';
+        if ($manufacturer->active) {
+            $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
+            echo $this->Html->link(
+                '<i class="fas fa-arrow-right ok"></i>',
+                $manufacturerLink,
+                [
+                    'class' => 'btn btn-outline-light',
+                    'title' => __d('admin', 'Manufacturer_profile'),
+                    'target' => '_blank',
+                    'escape' => false
+                ]
+            );
+        }
+        echo '</td>';
     }
-    echo '</td>';
     echo '</tr>';
 }
 
