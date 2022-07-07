@@ -14,12 +14,11 @@
  */
 namespace MiniAsset\Filter;
 
-use Cake\Log\Log;
-
 /**
  * CleanCssFilter.
  *
  * Allows you to filter Css files through CleanCss. You need to install CleanCssCli with composer.
+ * ´npm install clean-css-cli´
  */
 class CleanCss extends AssetFilter
 {
@@ -28,7 +27,7 @@ class CleanCss extends AssetFilter
      * Settings for CleanCss
      *
      * - `node` Path to nodejs on your machine
-     * - `node_path` The path to the node_modules directory where uglify is installed.
+     * - `node_path` The path to the node_modules directory where clean-css-cli is installed.
      */
     protected $_settings = array(
         'node' => '/usr/local/bin/node',
