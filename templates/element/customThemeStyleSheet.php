@@ -135,12 +135,12 @@ use Cake\Core\Configure;
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 850px) {
             #responsive-header a:not(.btn-camera),
-            body.self_services #responsive-header i.fa-spinner,
+            body.self_services #responsive-header i.fa-circle-notch,
             :not(button)> i.fas
             :not(.fa-arrow-cycle-right)
             :not(.fa-arrow-cycle-left)
             :not(.fa-star)
-            :not(.fa-spinner)
+            :not(.fa-circle-notch)
             :not(.fa-tags)
             :not(.fa-shopping-bag)
             :not(.fa-minus-circle)

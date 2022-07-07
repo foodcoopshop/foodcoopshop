@@ -396,7 +396,7 @@ foodcoopshop.Admin = {
     triggerFilter : function () {
         $('#filter-loader').remove();
         $('#content').css('opacity', '.3');
-        $('#container').prepend('<div id="filter-loader"><i class="fas fa-spinner fa-spin"></i></div>');
+        $('#container').prepend('<div id="filter-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');
         var marginTop = $('.filter-container').outerHeight();
         $('#filter-loader').css('top', marginTop + 20);
         foodcoopshop.Admin.submitFilterForm();
@@ -546,7 +546,7 @@ foodcoopshop.Admin = {
     },
 
     populateDropdownWithData : function(ajaxMethod, selector, dropdown, selectedIndex, onChange) {
-        dropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-spinner fa-spin"></i>');
+        dropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
         foodcoopshop.Helper.ajaxCall(
             ajaxMethod, {}, {
                 onOk: function (data) {
@@ -566,7 +566,7 @@ foodcoopshop.Admin = {
                     }
                     select.selectpicker('refresh');
                     select.selectpicker('render');
-                    select.find('i.fa-spinner').remove();
+                    select.find('i.fa-circle-notch').remove();
                 },
                 onError: function (data) {
                     console.log(data.msg);
