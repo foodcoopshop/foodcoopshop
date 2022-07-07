@@ -122,10 +122,6 @@ body.categories.detail div.description-wrapper {
 #slider .swiper-button-prev {
     left: 20px ! important;
 }
-.swiper-button-next,
-.swiper-button-prev {
-    top: 44%; /* when css is packed, the vertical centering does not work with default 50% */
-}
 .vertical.menu {
     float: left;
     margin-bottom: 10px;
