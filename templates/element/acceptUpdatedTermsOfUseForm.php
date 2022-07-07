@@ -53,6 +53,6 @@ $this->element('addScript', ['script' =>
             ]);
         ?>
         <br />
-        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> <?php echo __('Save'); ?></button>
+        <button type="submit" class="btn btn-success"><i class="fa-fw fas fa-check"></i> <?php echo __('Save'); ?></button>
     <?php echo $this->Form->end(); ?>
 </div>

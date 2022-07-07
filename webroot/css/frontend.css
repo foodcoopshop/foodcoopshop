@@ -489,6 +489,10 @@ body.superadmin .pw .heading h4 {
     width: 100%;
     float: left;
 }
+.ew .btn-cart i.fa-spin,
+.btn-cart-detail i.fa-spin {
+    padding-top: 2px;
+}
 .pw .price,
 .pw .price-asterisk {
     font-size: 20px;
