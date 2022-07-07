@@ -32,7 +32,7 @@ class CleanCss extends AssetFilter
         'node' => '/usr/local/bin/node',
         'cleancss' => '/usr/local/bin/cleancss',
         'node_path' => '/usr/local/lib/node_modules',
-        'options' => '',
+        'options' => ' -o',
     );
 
     /**
@@ -46,7 +46,7 @@ class CleanCss extends AssetFilter
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'CLEANCSS');
         file_put_contents($tmpFile, $content);
-        $cmd = $this->_settings['node'] . ' ' . $this->_settings['cleancss'] . $this->_settings['options'] . ' ' . $target . ' ' . $tmpFile;
+        $cmd = $this->_settings['node'] . ' ' . $this->_settings['cleancss'] . $this->_settings['options'] . ' ' . escapeshellarg($target) . ' ' . escapeshellarg($tmpFile);
         $env = array('NODE_PATH' => $this->_settings['node_path']);
         $result = $this->_runCmd($cmd, '', $env);
         unlink($tmpFile);
