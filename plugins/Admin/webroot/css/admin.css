@@ -274,11 +274,6 @@ body.products.index td.status .fa-exclamation {
   left: 590px;
   font-size: 150px;
 }
-#filter-loader i {
-  animation:10s infinite, fa-spin 2s infinite linear;
-  -moz-animation:10s infinite, fa-spin 2s infinite linear; /* Firefox */
-  -webkit-animation:10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
-}
 td.right,
 th.right {
     text-align: right;
