@@ -120,7 +120,7 @@ foreach($csvPayments as $csvPayment) {
 echo '</table>';
 
 echo '<button type="submit" class="btn btn-success">
-        <i class="fa fa-check"></i> ' . __d('admin', 'Save') . '
+        <i class="fas fa-check"></i> ' . __d('admin', 'Save') . '
     </button>';
 
 echo $this->Form->end();

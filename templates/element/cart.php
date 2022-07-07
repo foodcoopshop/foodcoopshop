@@ -49,7 +49,7 @@ if ($appAuth->Cart->getProducts() !== null) {
 <div id="cart" class="box cart">
 
     <h3>
-        <i class="fa <?php echo $icon; ?>"></i>
+        <i class="fas <?php echo $icon; ?>"></i>
         <?php echo $name; ?>
         <a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
     </h3>

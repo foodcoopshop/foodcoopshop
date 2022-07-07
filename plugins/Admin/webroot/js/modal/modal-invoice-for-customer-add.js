@@ -63,7 +63,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         var row = button.closest('tr');
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-outline-light preview-invoice-button'], foodcoopshop.LocalizedJs.admin.ShowPreview, 'fa fa-check'),
+            foodcoopshop.Modal.createButton(['btn-outline-light preview-invoice-button'], foodcoopshop.LocalizedJs.admin.ShowPreview, 'fas fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light generate-invoice-button'], foodcoopshop.LocalizedJs.admin.GenerateInvoice, 'fas fa-exclamation-triangle not-ok'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
         ];

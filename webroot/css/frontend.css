@@ -142,7 +142,6 @@ body.categories.detail div.description-wrapper {
 .vertical.menu a i.fas {
     font-size: 13px;
     width: auto;
-    top: 7px;
     left: 10px;
 }
 
@@ -489,6 +488,10 @@ body.superadmin .pw .heading h4 {
 .ew .btn-cart {
     width: 100%;
     float: left;
+}
+.ew .btn-cart i.fa-spin,
+.btn-cart-detail i.fa-spin {
+    padding-top: 2px; /* fix for non-centered spinner */
 }
 .pw .price,
 .pw .price-asterisk {
@@ -1267,7 +1270,7 @@ body.blog_posts.detail p.neighbors a {
 }
 .swiper-button-prev:after,
 .swiper-button-next:after {
-    font-family: "Font Awesome 5 Free" ! important;
+    font-family: "Font Awesome 6 Free" ! important;
     font-size: 3em ! important;
 }
 .swiper-button-next:after {

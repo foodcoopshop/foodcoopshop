@@ -525,7 +525,7 @@ class CartComponent extends Component
                     $message = __('Thank_you_for_your_purchase!');
                     $message .= '<br />';
                     $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout(Configure::read('app.slugHelper')->getSelfService()) . '"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
-                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fa fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
+                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fas fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
                     if (isset($invoiceRoute)) {
                         $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
                     }
