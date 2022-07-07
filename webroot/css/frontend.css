@@ -491,7 +491,7 @@ body.superadmin .pw .heading h4 {
 }
 .ew .btn-cart i.fa-spin,
 .btn-cart-detail i.fa-spin {
-    padding-top: 2px;
+    padding-top: 2px; /* fix for non-centered spinner */
 }
 .pw .price,
 .pw .price-asterisk {

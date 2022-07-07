@@ -214,6 +214,11 @@
         height: 50px ! important;
         float: left ! important;
     }
+    #responsive-header .fa-spin,
+    .ew .btn-cart i.fa-spin,
+    .btn-cart-detail i.fa-spin {
+        padding-top: 0px;
+    }
     #responsive-header .sb-toggle-left {
         float: left ! important;
         margin: 13px 5px 5px 3px ! important;
