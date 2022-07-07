@@ -61,7 +61,7 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
         var modalSelector = '#modal-order-detail-pickup-day-edit';
 
         var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fas fa-check'),
+            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa-fw fas fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light no-button'], foodcoopshop.LocalizedJs.helper.no),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
         ];
