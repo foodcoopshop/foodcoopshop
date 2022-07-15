@@ -190,7 +190,11 @@ class PaymentsController extends AdminAppController
     public function add()
     {
         $this->RequestHandler->renderAs($this, 'json');
-        $type = trim($this->getRequest()->getData('type'));
+        $type = $this->getRequest()->getData('type');
+        if (!is_null($type)) {
+            $type = trim($type);
+        }
+
         if (! in_array($type, [
             'product',
             'deposit',
