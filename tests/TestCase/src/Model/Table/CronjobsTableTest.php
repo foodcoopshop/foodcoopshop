@@ -214,6 +214,30 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
+    public function testRunMonthlyLastDayOfMonthAfterNotBeforeTime()
+    {
+        $time = '2018-11-30 07:31:00';
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->updateAll(
+            [
+                'active' => APP_OFF,
+            ],
+            [],
+        );
+        $this->Cronjob->save(
+            $this->Cronjob->patchEntity(
+                $this->Cronjob->get(3),
+                [
+                    'day_of_month' => 0,
+                    'active' => APP_ON,
+                ],
+            ),
+        );
+        $executedCronjobs = $this->Cronjob->run();
+        $this->assertEquals(1, count($executedCronjobs));
+        $this->assertEquals($executedCronjobs[0]['created'], $time);
+    }
+
     public function testInvalidWeekday()
     {
         $this->Cronjob->save(
