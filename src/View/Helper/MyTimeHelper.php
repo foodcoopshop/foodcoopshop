@@ -543,6 +543,11 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), strtotime($date . ' last day of previous month'));
     }
 
+    public function getNumberOfDays($timestamp)
+    {
+        return date('t', $timestamp);
+    }
+
     /**
      * considers windows and unix
      * @return boolean

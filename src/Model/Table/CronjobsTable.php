@@ -176,6 +176,9 @@ class CronjobsTable extends AppTable
                 if ($cronjob->day_of_month == '' || $cronjob->day_of_month > 31) {
                     throw new InvalidParameterException('day of month not available or not valid');
                 }
+                if ($cronjob->day_of_month == 0) {
+                    $cronjob->day_of_month = Configure::read('app.timeHelper')->getNumberOfDays($this->cronjobRunDay);
+                }
                 $cronjobDayOfMonthIsCurrentDayOfMonth = $cronjob->day_of_month == $currentDayOfMonth;
                 if ($cronjobDayOfMonthIsCurrentDayOfMonth) {
                     $result = true;
