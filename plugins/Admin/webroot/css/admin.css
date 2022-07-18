@@ -146,7 +146,7 @@ form.fcs-form .bootstrap-select {
   word-break: break-word;
 }
 .vertical.menu i.fa-heart {
-    color: #B31A1A ! important;
+    color: red ! important;
 }
 #logo {
     position: absolute;

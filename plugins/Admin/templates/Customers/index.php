@@ -79,6 +79,9 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
 }
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
+}
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
@@ -94,6 +97,7 @@ $i = 0;
 $sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
 $sumNewsletter = 0;
+$sumFeedback = 0;
 foreach ($customers as $customer) {
     $i ++;
 
@@ -263,6 +267,26 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+        echo '<td align="center">';
+        if (!empty($customer->feedback)) {
+
+            $approvedDate = $customer->feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            $notApproved = $this->Time->isDatabaseDateNotSet($approvedDate);
+
+            echo $this->Html->link(
+                '<i class="fas fa-heart '.($notApproved ? 'not-ok' : 'ok').'"></i>',
+                $this->Slug->getFeedbackForm($customer->id_customer),
+                [
+                    'class' => 'btn btn-outline-light',
+                    'escape' => false,
+                ]
+            );
+            $sumFeedback++;
+        }
+        echo '</td>';
+    }
+
     echo '<td>';
     echo $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
     echo '</td>';
@@ -318,6 +342,9 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
+}
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+    echo '<td align="center"><b>' . $sumFeedback . '</b></td>';
 }
 $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {

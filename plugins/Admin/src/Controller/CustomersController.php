@@ -693,16 +693,24 @@ class CustomersController extends AdminAppController
 
         $this->Customer->dropManufacturersInNextFind();
 
+        $contain = [
+            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+        ];
+
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+            $contain[] = 'Feedbacks';
+        }
+
         $query = $this->Customer->find('all', [
             'conditions' => $conditions,
-            'contain' => [
-                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ],
+            'contain' => $contain,
         ]);
         $query = $this->Customer->addCustomersNameForOrderSelect($query);
         $query->select($this->Customer);
         $query->select($this->Customer->AddressCustomers);
-
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+            $query->select($this->Customer->Feedbacks);
+        }
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',
