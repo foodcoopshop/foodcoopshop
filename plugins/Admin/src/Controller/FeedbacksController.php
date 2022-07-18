@@ -52,7 +52,10 @@ class FeedbacksController extends AdminAppController
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->customerId,
-            ]
+            ],
+            'contain' => [
+                'AddressCustomers',
+            ],
         ])->first();
         return $customer;
     }

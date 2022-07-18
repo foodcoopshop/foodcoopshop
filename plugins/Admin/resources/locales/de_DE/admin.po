@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-18 11:55+0200\n"
+"POT-Creation-Date: 2022-07-18 16:30+0200\n"
 "PO-Revision-Date: 2022-07-18 11:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -194,9 +194,6 @@ msgstr "Mein Feedback"
 
 msgid "Feedback"
 msgstr "Feedback"
-
-msgid "Feedback_form"
-msgstr "Feedback Formular"
 
 msgid "Invoices"
 msgstr "Rechnungen"
@@ -1214,6 +1211,9 @@ msgstr "Pfand-Rückgaben (Mitglieder)"
 
 msgid "docs_route_user_feedback"
 msgstr "user-feedback"
+
+msgid "Privacy_type"
+msgstr ""
 
 msgid "All_amounts_in_{0}."
 msgstr "Alle Beträge in {0}."
@@ -2324,6 +2324,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Feedback_form"
+#~ msgstr "Feedback Formular"
 
 #~ msgid "The_credit_of_the_paying_with_time_account_is:"
 #~ msgstr "Das Guthaben des Stundenkontos beträgt"

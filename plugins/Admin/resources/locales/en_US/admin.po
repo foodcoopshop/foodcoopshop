@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-18 11:55+0200\n"
+"POT-Creation-Date: 2022-07-18 16:30+0200\n"
 "PO-Revision-Date: 2022-07-18 11:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -194,9 +194,6 @@ msgstr "My feedback"
 
 msgid "Feedback"
 msgstr "Feedback"
-
-msgid "Feedback_form"
-msgstr "Feedback form"
 
 msgid "Invoices"
 msgstr "Invoices"
@@ -1213,6 +1210,9 @@ msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
 
 msgid "docs_route_user_feedback"
+msgstr ""
+
+msgid "Privacy_type"
 msgstr ""
 
 msgid "All_amounts_in_{0}."
@@ -2324,6 +2324,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Feedback_form"
+#~ msgstr "Feedback form"
 
 #~ msgid "The_credit_of_the_paying_with_time_account_is:"
 #~ msgstr "The credit of the paying-with-time-module is:"

@@ -20,9 +20,12 @@ use Cake\Validation\Validator;
 class FeedbacksTable extends AppTable
 {
 
-    public const PRIVACY_TYPE_NO_PRIVACY = 1;
-    public const PRIVACY_TYPE_PARTIAL_PRIVACY = 2;
-    public const PRIVACY_TYPE_FULL_PRIVACY = 3;
+    public const PRIVACY_TYPE_NO_PRIVACY_WITH_CITY = 10;
+    public const PRIVACY_TYPE_NO_PRIVACY = 20;
+    public const PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY = 30;
+    public const PRIVACY_TYPE_PARTIAL_PRIVACY = 40;
+    public const PRIVACY_TYPE_FULL_PRIVACY_WITH_CITY = 50;
+    public const PRIVACY_TYPE_FULL_PRIVACY = 60;
 
     public function initialize(array $config): void
     {
@@ -37,8 +40,11 @@ class FeedbacksTable extends AppTable
     {
         $validator->notEmptyString('text', __('Please_enter_your_feedback.'));
         $values = [
+            self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY,
             self::PRIVACY_TYPE_NO_PRIVACY,
+            self::PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY,
             self::PRIVACY_TYPE_PARTIAL_PRIVACY,
+            self::PRIVACY_TYPE_FULL_PRIVACY_WITH_CITY,
             self::PRIVACY_TYPE_FULL_PRIVACY,
         ];
         $validator->inList('privacy_type', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values)
@@ -49,9 +55,12 @@ class FeedbacksTable extends AppTable
     public function getPrivacyTypesForDropdown($customer)
     {
         $values = [
+            self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $customer->name . ', ' . $customer->address_customer->city,
             self::PRIVACY_TYPE_NO_PRIVACY => $customer->name,
+            self::PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY => $customer->firstname . ', ' . $customer->address_customer->city,
             self::PRIVACY_TYPE_PARTIAL_PRIVACY => $customer->firstname,
-            self::PRIVACY_TYPE_FULL_PRIVACY => __('Your_name_will_not_be_shown.'),
+            self::PRIVACY_TYPE_FULL_PRIVACY_WITH_CITY => __('Member') . ', ' . $customer->address_customer->city,
+            self::PRIVACY_TYPE_FULL_PRIVACY => __('Member'),
         ];
         return $values;
     }

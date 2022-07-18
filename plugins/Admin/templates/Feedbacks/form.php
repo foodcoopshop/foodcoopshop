@@ -47,7 +47,7 @@ echo $this->Form->create($feedback, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('Feedbacks.text', [
-    'label' => __d('admin', 'Feedback'),
+    'label' => $title_for_layout,
     'class' => 'ckeditor',
     'type' => 'textarea',
 ]);
