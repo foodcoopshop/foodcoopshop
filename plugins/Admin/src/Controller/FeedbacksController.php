@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -72,7 +73,10 @@ class FeedbacksController extends AdminAppController
     public function form($customerId)
     {
         $this->customerId = $customerId;
-        $this->set('title_for_layout', __d('admin', 'Feedback'));
+        $customer = $this->getCustomer();
+        $this->set('title_for_layout', __d('admin', 'Feedback_from_{0}', [
+            $customer->name,
+        ]));
         $this->isOwnForm = false;
         $this->_processForm();
         $this->render('form');
@@ -87,6 +91,8 @@ class FeedbacksController extends AdminAppController
         $this->Feedback = $this->getTableLocator()->get('Feedbacks');
 
         $customer = $this->getCustomer();
+        $this->set('customer', $customer);
+
         $privacyTypes = $this->Feedback->getPrivacyTypesForDropdown($customer);
         $this->set('privacyTypes', $privacyTypes);
 
@@ -132,6 +138,10 @@ class FeedbacksController extends AdminAppController
             $this->set('feedback', $feedback);
         } else {
             $feedback->customer_id = $this->getCustomerId();
+            $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
+            if (!empty($this->getRequest()->getData('Feedbacks.approved_checkbox'))) {
+                $feedback->approved = FrozenTime::now();
+            }
             $this->Feedback->save($feedback);
             $this->redirect($this->getPreparedReferer());
         }

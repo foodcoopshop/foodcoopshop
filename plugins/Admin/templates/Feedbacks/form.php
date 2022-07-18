@@ -41,8 +41,23 @@ $this->element('addScript', [
 echo $this->Form->create($feedback, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
-    'url' => $isOwnForm ? $this->Slug->getMyFeedbackForm() : $this->Slug->getFeedbackForm($feedback->customer_id),
+    'url' => $isOwnForm ? $this->Slug->getMyFeedbackForm() : $this->Slug->getFeedbackForm($customer->id_customer),
 ]);
+
+
+if ($appAuth->isCustomer() || $appAuth->isManufacturer()) {
+    if (isset($feedback->approved)) {
+        $approvedDate = $feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        $notApproved = $this->Time->isDatabaseDateNotSet($approvedDate);
+        if ($notApproved) {
+            $approvalWarning = __d('admin', 'Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published.');
+            echo '<h2 class="warning">'.$approvalWarning.'</h2>';
+        } else {
+            $approvalInfo = __d('admin', 'Your_feedback_has_been_reviewed_and_is_published._Thank_you.');
+            echo '<h2 class="info">'.$approvalInfo.'</h2>';
+        }
+    }
+}
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
@@ -56,6 +71,13 @@ echo $this->Form->control('Feedbacks.privacy_type', [
     'label' => __d('admin', 'Privacy_type'),
     'options' => $privacyTypes,
 ]);
+
+if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+    echo $this->Form->control('Feedbacks.approved_checkbox', [
+        'label' => __d('admin', 'Approved'),
+        'type' => 'checkbox',
+    ]);
+}
 
 echo '<div class="sc"></div>';
 

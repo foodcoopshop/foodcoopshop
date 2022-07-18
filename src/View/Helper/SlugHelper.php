@@ -29,7 +29,7 @@ class SlugHelper extends Helper
 
     public function getFeedbackForm($customerId)
     {
-        return '/admin/feedbacks/edit/' . $customerId;
+        return '/admin/feedbacks/form/' . $customerId;
     }
 
     public function getInvoiceDownloadRoute($invoiceFilename)

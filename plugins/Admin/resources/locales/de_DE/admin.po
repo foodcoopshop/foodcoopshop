@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-18 16:30+0200\n"
-"PO-Revision-Date: 2022-07-18 11:59+0200\n"
+"POT-Creation-Date: 2022-07-18 17:23+0200\n"
+"PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -192,8 +192,8 @@ msgstr "Pfand-Rücknahme Detail für"
 msgid "My_feedback"
 msgstr "Mein Feedback"
 
-msgid "Feedback"
-msgstr "Feedback"
+msgid "Feedback_from_{0}"
+msgstr "Feedback von {0}"
 
 msgid "Invoices"
 msgstr "Rechnungen"
@@ -1212,8 +1212,17 @@ msgstr "Pfand-Rückgaben (Mitglieder)"
 msgid "docs_route_user_feedback"
 msgstr "user-feedback"
 
+msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
+msgstr "Dein Feedback wurde noch nicht freigeschaltet und ist daher noch nicht öffentlich sichtbar."
+
+msgid "Your_feedback_has_been_reviewed_and_is_published._Thank_you."
+msgstr "Dein Feedback ist freigeschaltet und öffentlich sichtbar. Vielen Dank."
+
 msgid "Privacy_type"
-msgstr ""
+msgstr "Datenschutz"
+
+msgid "Approved"
+msgstr "Freigeschaltet"
 
 msgid "All_amounts_in_{0}."
 msgstr "Alle Beträge in {0}."
@@ -2175,6 +2184,9 @@ msgstr "Vielen Dank für dein Verständnis!"
 msgid "Hello"
 msgstr "Hallo"
 
+msgid "Feedback"
+msgstr "Feedback"
+
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
 msgstr "Zum Antworten schreibe bitte eine E-Mail an {0} und <b>antworte nicht auf diese E-Mail</b>!"
 
@@ -2324,9 +2336,6 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
-
-#~ msgid "Feedback_form"
-#~ msgstr "Feedback Formular"
 
 #~ msgid "The_credit_of_the_paying_with_time_account_is:"
 #~ msgstr "Das Guthaben des Stundenkontos beträgt"

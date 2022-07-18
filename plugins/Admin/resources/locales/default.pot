@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-07-18 16:30+0200\n"
+"POT-Creation-Date: 2022-07-18 17:23+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -191,7 +191,7 @@ msgstr ""
 msgid "My_feedback"
 msgstr ""
 
-msgid "Feedback"
+msgid "Feedback_from_{0}"
 msgstr ""
 
 msgid "Invoices"
@@ -1211,7 +1211,16 @@ msgstr ""
 msgid "docs_route_user_feedback"
 msgstr ""
 
+msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
+msgstr ""
+
+msgid "Your_feedback_has_been_reviewed_and_is_published._Thank_you."
+msgstr ""
+
 msgid "Privacy_type"
+msgstr ""
+
+msgid "Approved"
 msgstr ""
 
 msgid "All_amounts_in_{0}."
@@ -2172,6 +2181,9 @@ msgid "Thanks_for_respecting_that!"
 msgstr ""
 
 msgid "Hello"
+msgstr ""
+
+msgid "Feedback"
 msgstr ""
 
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
