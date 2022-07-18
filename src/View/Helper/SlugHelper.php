@@ -22,6 +22,16 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
+    public function getMyFeedbackForm()
+    {
+        return '/admin/feedbacks/myFeedback';
+    }
+
+    public function getFeedbackForm($customerId)
+    {
+        return '/admin/feedbacks/edit/' . $customerId;
+    }
+
     public function getInvoiceDownloadRoute($invoiceFilename)
     {
         return '/admin/lists/getInvoice?file=' . $invoiceFilename;

@@ -22,6 +22,7 @@ if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeI
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
+$myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement();
 
 $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),
@@ -106,6 +107,9 @@ if ($appAuth->isCustomer()) {
         $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
         $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     }
+    if (! empty($myFeedbackMenuElement)) {
+        $menu[]= $myFeedbackMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
@@ -186,6 +190,9 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
 
+    if (! empty($myFeedbackMenuElement)) {
+        $menu[]= $myFeedbackMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
     if (Configure::read('app.isBlogFeatureEnabled')) {
         $menu[] = $blogPostsMenuElement;
@@ -280,6 +287,9 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw ok fa-tags'
         ]
     ];
+    if (! empty($myFeedbackMenuElement)) {
+        $menu[]= $myFeedbackMenuElement;
+    }
     $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
         'name' => __d('admin', 'My_profile'),

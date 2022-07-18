@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-06-20 12:06+0200\n"
-"PO-Revision-Date: 2022-06-20 12:06+0200\n"
+"POT-Creation-Date: 2022-07-18 11:55+0200\n"
+"PO-Revision-Date: 2022-07-18 11:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -188,6 +188,15 @@ msgstr "Deposit account"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Deposit take back detail for"
+
+msgid "My_feedback"
+msgstr "My feedback"
+
+msgid "Feedback"
+msgstr "Feedback"
+
+msgid "Feedback_form"
+msgstr "Feedback form"
 
 msgid "Invoices"
 msgstr "Invoices"
@@ -1203,6 +1212,9 @@ msgstr "Empty glasses returned by manufacturer"
 msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
 
+msgid "docs_route_user_feedback"
+msgstr ""
+
 msgid "All_amounts_in_{0}."
 msgstr "All prices in {0}."
 
@@ -2162,9 +2174,6 @@ msgstr "Thanks for respecting that!"
 
 msgid "Hello"
 msgstr "Hello"
-
-msgid "Feedback"
-msgstr "Feedback"
 
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
 msgstr "If you want to answer, please write an email to {0} and <b>do not reply to this email</b>!"

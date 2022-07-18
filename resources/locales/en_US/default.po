@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-06-30 09:21+0200\n"
+"POT-Creation-Date: 2022-07-18 11:55+0200\n"
 "PO-Revision-Date: 2022-06-30 09:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1980,6 +1980,9 @@ msgstr "Activities"
 msgid "Credit"
 msgstr "Credit"
 
+msgid "My_feedback"
+msgstr ""
+
 msgid "Shopping_with_selling_price"
 msgstr "User selling price for shopping"
 
@@ -2400,6 +2403,9 @@ msgstr "You can sign in here for placing a new order"
 msgid "E-mail_address"
 msgstr "E-mail address"
 
+msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
+msgstr "Please be careful that there is no empty space at the end of the password when you double click and copy it."
+
 msgid "You_can_change_your_password_here"
 msgstr "You can change your password here"
 
@@ -2519,9 +2525,6 @@ msgstr "Please click on this link to activate your new password"
 
 msgid "your_new_password_is:"
 msgstr "your new password:"
-
-msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
-msgstr "Please be careful that there is no empty space at the end of the password when you double click and copy it."
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "thank you for order from {0}."

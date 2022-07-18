@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-06-20 12:06+0200\n"
+"POT-Creation-Date: 2022-07-18 11:55+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -186,6 +186,15 @@ msgid "Deposit_account"
 msgstr ""
 
 msgid "Deposit_take_back_detail_for"
+msgstr ""
+
+msgid "My_feedback"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Feedback_form"
 msgstr ""
 
 msgid "Invoices"
@@ -1202,6 +1211,9 @@ msgstr ""
 msgid "Returned_deposit_by_member"
 msgstr ""
 
+msgid "docs_route_user_feedback"
+msgstr ""
+
 msgid "All_amounts_in_{0}."
 msgstr ""
 
@@ -2160,9 +2172,6 @@ msgid "Thanks_for_respecting_that!"
 msgstr ""
 
 msgid "Hello"
-msgstr ""
-
-msgid "Feedback"
 msgstr ""
 
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
