@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,10 +20,40 @@ namespace App\Model\Table;
 class FeedbacksTable extends AppTable
 {
 
+    public const PRIVACY_TYPE_NO_PRIVACY = 1;
+    public const PRIVACY_TYPE_PARTIAL_PRIVACY = 2;
+    public const PRIVACY_TYPE_FULL_PRIVACY = 3;
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->addBehavior('Timestamp');
+        $this->belongsTo('Customers', [
+            'foreignKey' => 'customer_id',
+        ]);
+    }
+
+    public function validationEdit(Validator $validator)
+    {
+        $validator->notEmptyString('text', __('Please_enter_your_feedback.'));
+        $values = [
+            self::PRIVACY_TYPE_NO_PRIVACY,
+            self::PRIVACY_TYPE_PARTIAL_PRIVACY,
+            self::PRIVACY_TYPE_FULL_PRIVACY,
+        ];
+        $validator->inList('privacy_type', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values)
+        );
+        return $validator;
+    }
+
+    public function getPrivacyTypesForDropdown($customer)
+    {
+        $values = [
+            self::PRIVACY_TYPE_NO_PRIVACY => $customer->name,
+            self::PRIVACY_TYPE_PARTIAL_PRIVACY => $customer->firstname,
+            self::PRIVACY_TYPE_FULL_PRIVACY => __('Your_name_will_not_be_shown.'),
+        ];
+        return $values;
     }
 
 }

@@ -18,6 +18,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('feedbacks-text');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
@@ -37,16 +38,23 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->Form->create($customer, [
+echo $this->Form->create($feedback, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
-    'url' => $isOwnForm ? $this->Slug->getMyFeedbackForm() : $this->Slug->getFeedbackForm($customer->id_customer),
+    'url' => $isOwnForm ? $this->Slug->getMyFeedbackForm() : $this->Slug->getFeedbackForm($feedback->customer_id),
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo $this->Form->control('Customers.feedback.text', [
-    'label' => __d('admin', 'Feedback')
+echo $this->Form->control('Feedbacks.text', [
+    'label' => __d('admin', 'Feedback'),
+    'class' => 'ckeditor',
+    'type' => 'textarea',
+]);
+
+echo $this->Form->control('Feedbacks.privacy_type', [
+    'label' => __d('admin', 'Privacy_type'),
+    'options' => $privacyTypes,
 ]);
 
 echo '<div class="sc"></div>';

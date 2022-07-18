@@ -46,6 +46,17 @@ class FeedbacksController extends AdminAppController
         return $customerId;
     }
 
+    private function getCustomer()
+    {
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $this->customerId,
+            ]
+        ])->first();
+        return $customer;
+    }
+
     public function myFeedback()
     {
         $this->customerId = $this->AppAuth->getUserId();
@@ -70,25 +81,60 @@ class FeedbacksController extends AdminAppController
         $customerId = $this->getCustomerId();
         $this->set('isOwnForm', $this->isOwnForm);
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
+        $this->Feedback = $this->getTableLocator()->get('Feedbacks');
+
+        $customer = $this->getCustomer();
+        $privacyTypes = $this->Feedback->getPrivacyTypesForDropdown($customer);
+        $this->set('privacyTypes', $privacyTypes);
+
+        $feedback = $this->Feedback->find('all', [
             'conditions' => [
-                'Customers.id_customer' => $customerId,
+                'Feedbacks.customer_id' => $customerId,
             ],
             'contain' => [
-                'Feedbacks',
-                'Manufacturers',
+                'Customers',
             ]
         ])->first();
 
         $this->setFormReferer();
 
         if (empty($this->getRequest()->getData())) {
-            $this->set('customer', $customer);
+            $this->set('feedback', $feedback);
             return;
         }
 
-        $this->set('title_for_layout', __d('admin', 'Feedback_form'));
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['text'])));
+
+        if (empty($feedback)) {
+            $feedback = $this->Feedback->newEntity(
+                $this->getRequest()->getData(),
+                [
+                    'validate' => 'edit',
+                ],
+            );
+        } else {
+            $feedback = $this->Feedback->patchEntity(
+                $feedback,
+                $this->getRequest()->getData(),
+                [
+                    'validate' => 'edit',
+                ],
+            );
+        }
+
+        if ($feedback->hasErrors()) {
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+            $this->set('feedback', $feedback);
+        } else {
+            $feedback->customer_id = $this->getCustomerId();
+            $this->Feedback->save($feedback);
+            $this->redirect($this->getPreparedReferer());
+        }
+
+        $this->set('feedback', $feedback);
+
     }
 
 
