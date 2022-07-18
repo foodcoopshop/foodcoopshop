@@ -1,6 +1,5 @@
 <?php
 namespace Admin\Controller;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 
