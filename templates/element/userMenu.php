@@ -47,7 +47,7 @@ if ($appAuth->user()) {
 
 if ($appAuth->user() && !$appAuth->isOrderForDifferentCustomerMode()) {
     $myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($appAuth);
-    if (preg_match('/not-ok/', $myFeedbackMenuElement['options']['fa-icon'])) {
+    if (!empty($myFeedbackMenuElement) && preg_match('/not-ok/', $myFeedbackMenuElement['options']['fa-icon'])) {
         $menu[] = $myFeedbackMenuElement;
     }
 }
