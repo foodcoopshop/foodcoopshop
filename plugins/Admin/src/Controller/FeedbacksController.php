@@ -143,7 +143,7 @@ class FeedbacksController extends AdminAppController
             }
             $this->Feedback->save($feedback);
             $message = __d('admin', 'Your_feedback_was_saved.');
-            $this->Flash->success($message . '<br /><i>' . __d('admin', 'We_might_change_the_text_a_bit.') . '</i>');
+            $this->Flash->success($message);
         }
 
         $this->set('feedback', $feedback);

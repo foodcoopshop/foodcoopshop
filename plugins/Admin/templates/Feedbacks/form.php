@@ -48,6 +48,7 @@ if (isset($feedback->approved)) {
     $notApproved = $this->Time->isDatabaseDateNotSet($approvedDate);
     if ($notApproved) {
         $approvalWarning = __d('admin', 'Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published.');
+        $approvalWarning .= '<br />' . __d('admin', 'We_might_change_the_text_a_bit.');
         echo '<h2 class="warning" style="margin-bottom:10px;">'.$approvalWarning.'</h2>';
     } else {
         $approvalInfo = __d('admin', 'Your_feedback_has_been_reviewed_and_is_published._Thank_you.');
