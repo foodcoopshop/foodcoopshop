@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 14:22+0200\n"
+"POT-Creation-Date: 2022-07-19 15:28+0200\n"
 "PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1251,15 +1251,15 @@ msgstr "Privacy type"
 msgid "Privacy_type_explanatin_text."
 msgstr "This is the explanation text."
 
-#, fuzzy
-msgid "Delete_feedback?"
-msgstr "Delete deposit take back?"
-
 msgid "Approved"
 msgstr "Approved"
 
 msgid "Only_superadmins_can_approve_feedbacks."
 msgstr ""
+
+#, fuzzy
+msgid "Delete_feedback?"
+msgstr "Delete deposit take back?"
 
 msgid "All_amounts_in_{0}."
 msgstr "All prices in {0}."

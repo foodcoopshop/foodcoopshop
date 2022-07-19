@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 11:25+0200\n"
+"POT-Creation-Date: 2022-07-19 15:28+0200\n"
 "PO-Revision-Date: 2022-07-18 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -320,6 +320,10 @@ msgstr "Your registration was successful."
 
 msgid "Account_created_successfully"
 msgstr "Account created successfully"
+
+#, fuzzy
+msgid "Feedbacks"
+msgstr "My feedback"
 
 msgid "All_products"
 msgstr "All products"

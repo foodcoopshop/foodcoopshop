@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-07-19 14:22+0200\n"
+"POT-Creation-Date: 2022-07-19 15:28+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1244,13 +1244,13 @@ msgstr ""
 msgid "Privacy_type_explanatin_text."
 msgstr ""
 
-msgid "Delete_feedback?"
-msgstr ""
-
 msgid "Approved"
 msgstr ""
 
 msgid "Only_superadmins_can_approve_feedbacks."
+msgstr ""
+
+msgid "Delete_feedback?"
 msgstr ""
 
 msgid "All_amounts_in_{0}."

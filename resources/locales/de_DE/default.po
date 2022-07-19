@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 11:25+0200\n"
-"PO-Revision-Date: 2022-07-18 12:05+0200\n"
+"POT-Creation-Date: 2022-07-19 15:28+0200\n"
+"PO-Revision-Date: 2022-07-19 15:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -320,6 +320,9 @@ msgstr "Deine Registrierung war erfolgreich."
 
 msgid "Account_created_successfully"
 msgstr "Mitgliedskonto erfolgreich erstellt"
+
+msgid "Feedbacks"
+msgstr "Feedbacks"
 
 msgid "All_products"
 msgstr "Alle Produkte"
@@ -1980,9 +1983,8 @@ msgstr "Aktivitäten"
 msgid "Credit"
 msgstr "Guthaben"
 
-#, fuzzy
 msgid "Feedback"
-msgstr "Mein Feedback"
+msgstr "Feedback"
 
 msgid "Shopping_with_selling_price"
 msgstr "Einkaufen zum Verkaufspreis"
