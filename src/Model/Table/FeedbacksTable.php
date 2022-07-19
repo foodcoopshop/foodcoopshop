@@ -59,14 +59,21 @@ class FeedbacksTable extends AppTable
 
     public function getPrivacyTypesForDropdown($customer)
     {
-        $values = [
-            self::PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY => $customer->firstname . ', ' . $customer->address_customer->city,
-            self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $customer->name . ', ' . $customer->address_customer->city,
-            self::PRIVACY_TYPE_NO_PRIVACY => $customer->name,
-            self::PRIVACY_TYPE_PARTIAL_PRIVACY => $customer->firstname,
-            self::PRIVACY_TYPE_FULL_PRIVACY_WITH_CITY => __('Member') . ', ' . $customer->address_customer->city,
-            self::PRIVACY_TYPE_FULL_PRIVACY => __('Member'),
-        ];
+        if ($customer->is_company) {
+            $values = [
+                self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $customer->name . ', ' . $customer->address_customer->city,
+                self::PRIVACY_TYPE_NO_PRIVACY => $customer->name,
+            ];
+        } else {
+            $values = [
+                self::PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY => $customer->firstname . ', ' . $customer->address_customer->city,
+                self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $customer->name . ', ' . $customer->address_customer->city,
+                self::PRIVACY_TYPE_NO_PRIVACY => $customer->name,
+                self::PRIVACY_TYPE_PARTIAL_PRIVACY => $customer->firstname,
+            ];
+        }
+        $values[self::PRIVACY_TYPE_FULL_PRIVACY_WITH_CITY] = __('Member') . ', ' . $customer->address_customer->city;
+        $values[self::PRIVACY_TYPE_FULL_PRIVACY] = __('Member');
         return $values;
     }
 
