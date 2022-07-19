@@ -57,6 +57,13 @@ class FeedbacksTable extends AppTable
         return $validator;
     }
 
+    public function getPrivacyType($feedback)
+    {
+        $privacyTypes = self::getPrivacyTypesForDropdown($feedback->customer);
+        $privacyType = $privacyTypes[$feedback->privacy_type];
+        return $privacyType;
+    }
+
     public function getPrivacyTypesForDropdown($customer)
     {
         if ($customer->is_company) {

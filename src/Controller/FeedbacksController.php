@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Controller;
+
+use Cake\Core\Configure;
+use Cake\Http\Exception\NotFoundException;
+
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 3.5.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+class FeedbacksController extends FrontendController
+{
+
+    public function index()
+    {
+
+        if (!Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+            throw new NotFoundException('feedbacks not found');
+        }
+
+        $this->Feedback = $this->getTableLocator()->get('Feedbacks');
+        $feedbacks = $this->Feedback->find('all', [
+            'conditions' => [
+                'DATE_FORMAT(Feedbacks.approved, \'%Y-%m-%d\') <> \'1970-01-01\'',
+            ],
+            'contain' => [
+                'Customers.AddressCustomers',
+            ],
+            'order' => [
+                'Feedbacks.approved' => 'DESC',
+            ],
+        ])->toArray();
+
+        foreach($feedbacks as &$feedback) {
+            $feedback->privatized_name = $this->Feedback->getPrivacyType($feedback);
+            unset($feedback->customer);
+        }
+        $this->set('feedbacks', $feedbacks);
+
+        $this->set('title_for_layout', __('Feedbacks'));
+    }
+
+}

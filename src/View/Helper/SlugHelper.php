@@ -22,6 +22,11 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
+    public function getFeedbackList()
+    {
+        return '/feedbacks';
+    }
+
     public function getMyFeedbackForm()
     {
         return '/admin/feedbacks/myFeedback';
