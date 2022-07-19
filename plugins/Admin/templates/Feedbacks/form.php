@@ -18,7 +18,6 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('feedbacks-text');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
@@ -61,8 +60,8 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('Feedbacks.text', [
     'label' => $title_for_layout,
-    'class' => 'ckeditor',
     'type' => 'textarea',
+    'maxlength' => 999,
 ]);
 
 echo $this->Form->control('Feedbacks.privacy_type', [

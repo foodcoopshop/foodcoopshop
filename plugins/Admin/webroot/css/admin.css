@@ -964,3 +964,11 @@ body.invoices tr.data.cancelled {
 body.action_logs.index tr.data div.changed img {
     max-width: 100%;
 }
+body.feedbacks textarea {
+    width: 500px;
+    height: 250px;
+}
+body.feedbacks form div.error-message {
+    width: 500px;
+    margin-top: -5px;
+}

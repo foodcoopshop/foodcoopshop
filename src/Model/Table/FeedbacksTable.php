@@ -38,7 +38,6 @@ class FeedbacksTable extends AppTable
 
     public function validationEdit(Validator $validator)
     {
-        $validator->notEmptyString('text', __('Please_enter_your_feedback.'));
         $values = [
             self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY,
             self::PRIVACY_TYPE_NO_PRIVACY,
@@ -47,8 +46,9 @@ class FeedbacksTable extends AppTable
             self::PRIVACY_TYPE_FULL_PRIVACY_WITH_CITY,
             self::PRIVACY_TYPE_FULL_PRIVACY,
         ];
-        $validator->inList('privacy_type', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values)
-        );
+        $validator->inList('privacy_type', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
+        $range = [10, 999];
+        $validator->lengthBetween('text', $range, __('Please_enter_between_{0}_and_{1}_characters.', $range));
         return $validator;
     }
 
