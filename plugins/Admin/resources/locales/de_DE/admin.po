@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 11:25+0200\n"
-"PO-Revision-Date: 2022-07-19 11:32+0200\n"
+"POT-Creation-Date: 2022-07-19 11:40+0200\n"
+"PO-Revision-Date: 2022-07-19 11:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -194,6 +194,9 @@ msgstr "Mein Feedback"
 
 msgid "Feedback_from_{0}"
 msgstr "Feedback von {0}"
+
+msgid "Your_feedback_was_deleted."
+msgstr "Dein Feedack wurde gelöscht."
 
 msgid "Your_feedback_was_saved."
 msgstr "Dein Feedack wurde gespeichert."
@@ -1246,6 +1249,9 @@ msgstr "Datenschutz"
 
 msgid "Privacy_type_explanatin_text."
 msgstr "Sollen dein Name und dein Wohnort angezeigt werden?"
+
+msgid "Delete_feedback?"
+msgstr "Feedback löschen?"
 
 msgid "Approved"
 msgstr "Freigeschaltet"

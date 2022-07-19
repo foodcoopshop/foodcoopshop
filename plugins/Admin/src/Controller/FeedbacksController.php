@@ -104,6 +104,9 @@ class FeedbacksController extends AdminAppController
             ]
         ])->first();
 
+        $isEditMode = !empty($feedback);
+        $this->set('isEditMode', $isEditMode);
+
         $this->setCurrentFormAsFormReferer();
 
         if (empty($this->getRequest()->getData())) {
@@ -115,7 +118,7 @@ class FeedbacksController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['text'])));
 
-        if (empty($feedback)) {
+        if (!$isEditMode) {
             $feedback = $this->Feedback->newEntity(
                 $this->getRequest()->getData(),
                 [
@@ -136,6 +139,14 @@ class FeedbacksController extends AdminAppController
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('feedback', $feedback);
         } else {
+
+            if (!empty($this->getRequest()->getData('Feedbacks.delete_feedback'))) {
+                $this->Feedback->delete($feedback);
+                $message = __d('admin', 'Your_feedback_was_deleted.');
+                $this->Flash->success($message);
+                $this->redirect($this->getPreparedReferer());
+            }
+
             $feedback->customer_id = $this->getCustomerId();
             $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
             if (!empty($this->getRequest()->getData('Feedbacks.approved_checkbox'))) {
@@ -144,6 +155,7 @@ class FeedbacksController extends AdminAppController
             $this->Feedback->save($feedback);
             $message = __d('admin', 'Your_feedback_was_saved.');
             $this->Flash->success($message);
+            $this->redirect($this->getPreparedReferer());
         }
 
         $this->set('feedback', $feedback);

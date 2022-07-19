@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 11:25+0200\n"
+"POT-Creation-Date: 2022-07-19 11:40+0200\n"
 "PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -194,6 +194,10 @@ msgstr "My feedback"
 
 msgid "Feedback_from_{0}"
 msgstr "Feedback from {0}"
+
+#, fuzzy
+msgid "Your_feedback_was_deleted."
+msgstr "Your profile was changed."
 
 #, fuzzy
 msgid "Your_feedback_was_saved."
@@ -1246,6 +1250,10 @@ msgstr "Privacy type"
 #, fuzzy
 msgid "Privacy_type_explanatin_text."
 msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Delete_feedback?"
+msgstr "Delete deposit take back?"
 
 msgid "Approved"
 msgstr "Approved"
