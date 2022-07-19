@@ -412,7 +412,7 @@ class CustomersController extends AdminAppController
             ]
         ])->first();
 
-        $this->setCurrentFormAsFormReferer();
+        $this->setFormReferer();
 
         if (empty($this->getRequest()->getData())) {
             $this->set('customer', $customer);
