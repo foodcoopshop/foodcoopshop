@@ -70,4 +70,11 @@ class FeedbacksTable extends AppTable
         return $values;
     }
 
+    public function isApproved($feedback)
+    {
+        $approvedDate = $feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        $notApproved = Configure::read('app.timeHelper')->isDatabaseDateNotSet($approvedDate);
+        return !$notApproved;
+    }
+
 }

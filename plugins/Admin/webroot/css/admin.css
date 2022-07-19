@@ -145,9 +145,6 @@ form.fcs-form .bootstrap-select {
   font-size: 12px;
   word-break: break-word;
 }
-.vertical.menu i.fa-heart {
-    color: red ! important;
-}
 #logo {
     position: absolute;
     right: 20px;

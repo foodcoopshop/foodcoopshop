@@ -44,6 +44,14 @@ if ($appAuth->user()) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
     }
 }
+
+if ($appAuth->user() && !$appAuth->isOrderForDifferentCustomerMode()) {
+    $myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($appAuth);
+    if (preg_match('/not-ok/', $myFeedbackMenuElement['options']['fa-icon'])) {
+        $menu[] = $myFeedbackMenuElement;
+    }
+}
+
 if (!$appAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
     $menu[] = [
         'slug' => $this->Slug->getSelfService(),
@@ -57,4 +65,5 @@ if (!$appAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_S
 if (!$appAuth->isOrderForDifferentCustomerMode()) {
     $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 }
+
 echo $this->Menu->render($menu, ['id' => 'user-menu', 'class' => 'horizontal menu']);

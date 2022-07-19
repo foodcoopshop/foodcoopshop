@@ -22,7 +22,7 @@ if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeI
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
-$myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement();
+$myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($appAuth);
 
 $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),

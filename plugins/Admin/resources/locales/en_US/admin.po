@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 09:47+0200\n"
+"POT-Creation-Date: 2022-07-19 11:25+0200\n"
 "PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -198,9 +198,6 @@ msgstr "Feedback from {0}"
 #, fuzzy
 msgid "Your_feedback_was_saved."
 msgstr "Your profile was changed."
-
-msgid "We_might_change_the_text_a_bit."
-msgstr ""
 
 msgid "Invoices"
 msgstr "Invoices"
@@ -1225,6 +1222,9 @@ msgstr ""
 msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
 msgstr "Your feedback has not yet been reviewed by an admin and is therefore not yet published."
 
+msgid "We_might_change_the_text_a_bit."
+msgstr ""
+
 msgid "Your_feedback_has_been_reviewed_and_is_published._Thank_you."
 msgstr "Your feedback has reviewed is published. Thank you."
 
@@ -1233,12 +1233,12 @@ msgid "Feedback_intro_text_{0}."
 msgstr "This is the explanation text."
 
 #, fuzzy
-msgid "Max._{0}_characters."
-msgstr "min 8 characters"
-
-#, fuzzy
 msgid "Feedback_field_explanation_text."
 msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Max._{0}_characters."
+msgstr "min 8 characters"
 
 msgid "Privacy_type"
 msgstr "Privacy type"

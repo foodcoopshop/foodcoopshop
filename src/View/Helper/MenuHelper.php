@@ -4,6 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -178,14 +179,20 @@ class MenuHelper extends Helper
     }
 
 
-    public function getMyFeedbackMenuElement()
+    public function getMyFeedbackMenuElement($appAuth)
     {
-        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->user()) {
+            $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
+            $feedback = $feedbackTable->find('all', [
+                'conditions' => [
+                    'Feedbacks.customer_id' => $appAuth->getUserId(),
+                ],
+            ])->first();
             return [
                 'slug' => Configure::read('app.slugHelper')->getMyFeedbackForm(),
-                'name' => __('My_feedback'),
+                'name' => __('Feedback'),
                 'options' => [
-                    'fa-icon' => 'fa-heart',
+                    'fa-icon' => 'fa-heart' . (empty($feedback) ? ' not-ok' : ''),
                 ],
             ];
         }

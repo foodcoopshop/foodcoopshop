@@ -14,6 +14,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 $this->element('addScript', [
     'script' =>
@@ -44,9 +45,9 @@ echo $this->Form->create($feedback, [
 ]);
 
 if (isset($feedback->approved)) {
-    $approvedDate = $feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-    $notApproved = $this->Time->isDatabaseDateNotSet($approvedDate);
-    if ($notApproved) {
+    $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
+    $approved = $feedbackTable->isApproved($feedback);
+    if (!$approved) {
         $approvalWarning = __d('admin', 'Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published.');
         $approvalWarning .= '<br />' . __d('admin', 'We_might_change_the_text_a_bit.');
         echo '<h2 class="warning" style="margin-bottom:10px;">'.$approvalWarning.'</h2>';
@@ -64,7 +65,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 
 $maxChars = 1000;
 echo $this->Form->control('Feedbacks.text', [
-    'label' => $title_for_layout . '<br /><br /><span class="small">'.__d('admin', 'Feedback_field_explanation_text.') . '<br /><br /><i>' . __d('admin', 'Max._{0}_characters.', [
+    'label' => '<span class="small">'.__d('admin', 'Feedback_field_explanation_text.') . '<br /><br /><i>' . __d('admin', 'Max._{0}_characters.', [
         $this->Number->formatAsDecimal($maxChars, 0),
     ]) . '</i>',
     'type' => 'textarea',
