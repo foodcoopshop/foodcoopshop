@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
 /**
@@ -47,17 +48,21 @@ class FeedbacksTable extends AppTable
             self::PRIVACY_TYPE_FULL_PRIVACY,
         ];
         $validator->inList('privacy_type', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
-        $range = [10, 999];
-        $validator->lengthBetween('text', $range, __('Please_enter_between_{0}_and_{1}_characters.', $range));
+        $range = [10, 1000];
+        $formattedRange = [
+            Configure::read('app.numberHelper')->formatAsDecimal($range[0], 0),
+            Configure::read('app.numberHelper')->formatAsDecimal($range[1], 0),
+        ];
+        $validator->lengthBetween('text', $range, __('Please_enter_between_{0}_and_{1}_characters.', $formattedRange));
         return $validator;
     }
 
     public function getPrivacyTypesForDropdown($customer)
     {
         $values = [
+            self::PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY => $customer->firstname . ', ' . $customer->address_customer->city,
             self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $customer->name . ', ' . $customer->address_customer->city,
             self::PRIVACY_TYPE_NO_PRIVACY => $customer->name,
-            self::PRIVACY_TYPE_PARTIAL_PRIVACY_WITH_CITY => $customer->firstname . ', ' . $customer->address_customer->city,
             self::PRIVACY_TYPE_PARTIAL_PRIVACY => $customer->firstname,
             self::PRIVACY_TYPE_FULL_PRIVACY_WITH_CITY => __('Member') . ', ' . $customer->address_customer->city,
             self::PRIVACY_TYPE_FULL_PRIVACY => __('Member'),

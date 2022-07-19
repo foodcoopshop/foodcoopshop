@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-18 17:23+0200\n"
-"PO-Revision-Date: 2022-07-18 17:24+0200\n"
+"POT-Creation-Date: 2022-07-19 09:47+0200\n"
+"PO-Revision-Date: 2022-07-19 09:53+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -194,6 +194,12 @@ msgstr "Mein Feedback"
 
 msgid "Feedback_from_{0}"
 msgstr "Feedback von {0}"
+
+msgid "Your_feedback_was_saved."
+msgstr "Dein Feedack wurde geändert."
+
+msgid "We_might_change_the_text_a_bit."
+msgstr "Ggfs. korrigieren wir vor dem Veröffentlichen kleinere Rechtschreibfehler und erhöhen die Leserlichkeit. Die Kernaussage wird aber natürlich nicht verändert."
 
 msgid "Invoices"
 msgstr "Rechnungen"
@@ -1089,6 +1095,9 @@ msgstr "Bestellte Produkte"
 msgid "Reminder"
 msgstr "Erinnerung"
 
+msgid "Feedback"
+msgstr "Feedback"
+
 msgid "Register_date"
 msgstr "Reg.-Datum"
 
@@ -1218,8 +1227,24 @@ msgstr "Dein Feedback wurde noch nicht freigeschaltet und ist daher noch nicht �
 msgid "Your_feedback_has_been_reviewed_and_is_published._Thank_you."
 msgstr "Dein Feedback ist freigeschaltet und öffentlich sichtbar. Vielen Dank."
 
+msgid "Feedback_intro_text_{0}."
+msgstr "Hier hast du die Möglichkeit, anderen Leuten zu berichten, warum du bei {0} einkaufst."
+
+msgid "Max._{0}_characters."
+msgstr "Max. {0} Zeichen."
+
+msgid "Feedback_field_explanation_text."
+msgstr ""
+"<b>Beispiele</b><br />\n"
+"• <i>Durch das Vorbestellen wird fast nichts weggeworfen!</i><br />\n"
+"• <i>Ich kann so meinen Wocheneinkauf perfekt planen.</i><br />\n"
+"• <i>Endlich kann ich ohne schlechtes Gewissen einkaufen.</i>"
+
 msgid "Privacy_type"
 msgstr "Datenschutz"
+
+msgid "Privacy_type_explanatin_text."
+msgstr "Sollen dein Name und dein Wohnort angezeigt werden?"
 
 msgid "Approved"
 msgstr "Freigeschaltet"
@@ -2183,9 +2208,6 @@ msgstr "Vielen Dank für dein Verständnis!"
 
 msgid "Hello"
 msgstr "Hallo"
-
-msgid "Feedback"
-msgstr "Feedback"
 
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
 msgstr "Zum Antworten schreibe bitte eine E-Mail an {0} und <b>antworte nicht auf diese E-Mail</b>!"

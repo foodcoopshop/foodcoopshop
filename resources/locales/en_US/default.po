@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-18 16:32+0200\n"
+"POT-Creation-Date: 2022-07-19 09:19+0200\n"
 "PO-Revision-Date: 2022-07-18 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1758,14 +1758,11 @@ msgstr "Manufacturers: inactive"
 msgid "Members:_inactive"
 msgstr "Members: inactive"
 
-msgid "Please_enter_your_feedback."
-msgstr "Please enter your feedback."
+msgid "Please_enter_between_{0}_and_{1}_characters."
+msgstr "Please enter between {0} and {1} characters."
 
 msgid "deactivated"
 msgstr "deactivated"
-
-msgid "Please_enter_between_{0}_and_{1}_characters."
-msgstr "Please enter between {0} and {1} characters."
 
 msgid "Please_enter_a_valid_IBAN."
 msgstr "Please enter a valid IBAN."
@@ -1778,6 +1775,9 @@ msgstr "Delivery break"
 
 msgid "online"
 msgstr "online"
+
+msgid "Please_enter_your_feedback."
+msgstr "Please enter your feedback."
 
 msgid "Please_enter_a_correct_number."
 msgstr "Please enter a correct number."

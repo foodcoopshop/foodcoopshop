@@ -738,7 +738,7 @@ form.fcs-form .input.select .after.small,
 form.fcs-form .input.fcs-upload .after.small {
     float: right;
     line-height: 28px;
-    margin-left: 3px;
+    margin-left: 5px;
 }
 div.date-field-wrapper {
     position: relative;
@@ -967,6 +967,7 @@ body.action_logs.index tr.data div.changed img {
 body.feedbacks textarea {
     width: 500px;
     height: 250px;
+    padding: 5px;
 }
 body.feedbacks form div.error-message {
     width: 500px;

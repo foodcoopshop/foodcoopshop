@@ -43,7 +43,6 @@ echo $this->Form->create($feedback, [
     'url' => $isOwnForm ? $this->Slug->getMyFeedbackForm() : $this->Slug->getFeedbackForm($customer->id_customer),
 ]);
 
-
 if (isset($feedback->approved)) {
     $approvedDate = $feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
     $notApproved = $this->Time->isDatabaseDateNotSet($approvedDate);
@@ -56,17 +55,26 @@ if (isset($feedback->approved)) {
     }
 }
 
+echo '<p>' . __d('admin', 'Feedback_intro_text_{0}.', [
+    '<b>' . Configure::read('appDb.FCS_APP_NAME') . '</b>',
+]) . '</p>';
+
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
+$maxChars = 1000;
 echo $this->Form->control('Feedbacks.text', [
-    'label' => $title_for_layout,
+    'label' => $title_for_layout . '<br /><br /><span class="small">'.__d('admin', 'Feedback_field_explanation_text.') . '<br /><br /><i>' . __d('admin', 'Max._{0}_characters.', [
+        $this->Number->formatAsDecimal($maxChars, 0),
+    ]) . '</i>',
     'type' => 'textarea',
-    'maxlength' => 999,
+    'maxlength' => $maxChars,
+    'escape' => false,
 ]);
 
 echo $this->Form->control('Feedbacks.privacy_type', [
-    'label' => __d('admin', 'Privacy_type'),
+    'label' => __d('admin', 'Privacy_type') .' <span class="after small">'.__d('admin', 'Privacy_type_explanatin_text.').'</span>',
     'options' => $privacyTypes,
+    'escape' => false,
 ]);
 
 if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
