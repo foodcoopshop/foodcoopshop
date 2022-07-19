@@ -20,7 +20,7 @@ class UserFeedback extends AbstractMigration
         $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_USER_FEEDBACK_ENABLED', '".$text."', '0', 'boolean', '3500', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
         $this->execute($sql);
 
-        $sql = "CREATE TABLE fcs_feedbacks ( `id` INT NOT NULL AUTO_INCREMENT , `customer_id` INT NULL DEFAULT NULL , `manufacturer_id` INT NULL DEFAULT NULL , `text` TEXT NULL, `approved` DATETIME NOT NULL DEFAULT '1970-01-01' , `status` TINYINT NOT NULL DEFAULT '0' , `modified` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `privacy_type` TINYINT NULL DEFAULT '0' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+        $sql = "CREATE TABLE fcs_feedbacks ( `id` INT NOT NULL AUTO_INCREMENT , `customer_id` INT NULL DEFAULT NULL , `text` TEXT NULL, `approved` DATETIME NOT NULL DEFAULT '1970-01-01' , `modified` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `privacy_type` TINYINT NULL DEFAULT '0' , PRIMARY KEY (`id`)) ENGINE = InnoDB;";
         $this->execute($sql);
 
     }
