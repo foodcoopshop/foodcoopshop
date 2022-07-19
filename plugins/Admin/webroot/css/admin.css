@@ -961,12 +961,14 @@ body.invoices tr.data.cancelled {
 body.action_logs.index tr.data div.changed img {
     max-width: 100%;
 }
-body.feedbacks textarea {
+body.feedbacks textarea,
+body.feedbacks form div.error-message {
     width: 500px;
-    height: 250px;
+}
+body.feedbacks textarea {
+    height: 190px;
     padding: 5px;
 }
 body.feedbacks form div.error-message {
-    width: 500px;
     margin-top: -5px;
 }
