@@ -187,6 +187,11 @@ class AppController extends Controller
         return htmlspecialchars_decode($this->getRequest()->getData('referer'));
     }
 
+    public function setCurrentFormAsFormReferer()
+    {
+        $this->set('referer', $this->getRequest()->getUri()->getPath());
+    }
+
     public function setFormReferer()
     {
         $this->set('referer', !empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());

@@ -104,7 +104,7 @@ class FeedbacksController extends AdminAppController
             ]
         ])->first();
 
-        $this->setFormReferer();
+        $this->setCurrentFormAsFormReferer();
 
         if (empty($this->getRequest()->getData())) {
             $this->set('feedback', $feedback);
