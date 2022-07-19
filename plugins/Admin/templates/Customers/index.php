@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 ?>
 <div id="customers-list">
@@ -270,12 +271,10 @@ foreach ($customers as $customer) {
     if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
         echo '<td align="center">';
         if (!empty($customer->feedback)) {
-
-            $approvedDate = $customer->feedback->approved->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-            $notApproved = $this->Time->isDatabaseDateNotSet($approvedDate);
-
+            $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
+            $approved = $feedbackTable->isApproved($customer->feedback);
             echo $this->Html->link(
-                '<i class="fas fa-heart '.($notApproved ? 'not-ok' : 'ok').'"></i>',
+                '<i class="fas fa-heart '.(!$approved ? 'not-ok' : '').'"></i>',
                 $this->Slug->getFeedbackForm($customer->id_customer),
                 [
                     'class' => 'btn btn-outline-light',
