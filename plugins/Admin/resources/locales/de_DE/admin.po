@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 11:40+0200\n"
-"PO-Revision-Date: 2022-07-19 11:54+0200\n"
+"POT-Creation-Date: 2022-07-19 14:22+0200\n"
+"PO-Revision-Date: 2022-07-19 14:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1255,6 +1255,9 @@ msgstr "Feedback löschen?"
 
 msgid "Approved"
 msgstr "Freigeschaltet"
+
+msgid "Only_superadmins_can_approve_feedbacks."
+msgstr "Nur Superadmins können Feedbacks freischalten."
 
 msgid "All_amounts_in_{0}."
 msgstr "Alle Beträge in {0}."

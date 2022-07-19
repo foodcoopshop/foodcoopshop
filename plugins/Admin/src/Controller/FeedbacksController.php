@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -73,6 +74,9 @@ class FeedbacksController extends AdminAppController
     {
         $this->customerId = $customerId;
         $customer = $this->getCustomer();
+        if (empty($customer)) {
+            throw new RecordNotFoundException('customer ' . $customerId . ' not found');
+        }
         $this->set('title_for_layout', __d('admin', 'Feedback_from_{0}', [
             $customer->name,
         ]));
@@ -103,6 +107,10 @@ class FeedbacksController extends AdminAppController
                 'Customers',
             ]
         ])->first();
+
+        if (!empty($feedback) && $this->AppAuth->isSuperadmin()) {
+            $feedback->approved_checkbox = $this->Feedback->isApproved($feedback);
+        }
 
         $isEditMode = !empty($feedback);
         $this->set('isEditMode', $isEditMode);
@@ -140,6 +148,10 @@ class FeedbacksController extends AdminAppController
             $this->set('feedback', $feedback);
         } else {
 
+            if ($isEditMode) {
+                $feedback->customer_id = $this->getCustomerId();
+            }
+
             if (!empty($this->getRequest()->getData('Feedbacks.delete_feedback'))) {
                 $this->Feedback->delete($feedback);
                 $message = __d('admin', 'Your_feedback_was_deleted.');
@@ -147,11 +159,18 @@ class FeedbacksController extends AdminAppController
                 $this->redirect($this->getPreparedReferer());
             }
 
-            $feedback->customer_id = $this->getCustomerId();
-            $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
-            if (!empty($this->getRequest()->getData('Feedbacks.approved_checkbox'))) {
-                $feedback->approved = FrozenTime::now();
+            if ($feedback->isDirty('text') && !($this->AppAuth->isAdmin() || $this->AppAuth->isSuperadmin())) {
+                $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
             }
+
+            if ($this->AppAuth->isSuperadmin()) {
+                if ($feedback->approved_checkbox) {
+                    $feedback->approved = FrozenTime::now();
+                } else {
+                    $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
+                }
+            }
+
             $this->Feedback->save($feedback);
             $message = __d('admin', 'Your_feedback_was_saved.');
             $this->Flash->success($message);
