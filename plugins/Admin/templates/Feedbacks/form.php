@@ -79,17 +79,17 @@ echo $this->Form->control('Feedbacks.privacy_type', [
     'escape' => false,
 ]);
 
-if ($isEditMode) {
-    echo $this->Form->control('Feedbacks.delete_feedback', [
-        'label' => __d('admin', 'Delete_feedback?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+if (isset($feedback->approved_checkbox) && $appAuth->isSuperadmin()) {
+    echo $this->Form->control('Feedbacks.approved_checkbox', [
+        'label' => __d('admin', 'Approved') . ' <span class="after small">'.__d('admin', 'Only_superadmins_can_approve_feedbacks.').'</span>',
         'type' => 'checkbox',
         'escape' => false,
     ]);
 }
 
-if (isset($feedback->approved_checkbox) && $appAuth->isSuperadmin()) {
-    echo $this->Form->control('Feedbacks.approved_checkbox', [
-        'label' => __d('admin', 'Approved') . ' <span class="after small">'.__d('admin', 'Only_superadmins_can_approve_feedbacks.').'</span>',
+if ($isEditMode) {
+    echo $this->Form->control('Feedbacks.delete_feedback', [
+        'label' => __d('admin', 'Delete_feedback?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
         'type' => 'checkbox',
         'escape' => false,
     ]);

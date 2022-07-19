@@ -148,7 +148,7 @@ class FeedbacksController extends AdminAppController
             $this->set('feedback', $feedback);
         } else {
 
-            if ($isEditMode) {
+            if (!$isEditMode) {
                 $feedback->customer_id = $this->getCustomerId();
             }
 
@@ -159,15 +159,15 @@ class FeedbacksController extends AdminAppController
                 $this->redirect($this->getPreparedReferer());
             }
 
+            $feedback->approved = FrozenTime::now();
             if ($feedback->isDirty('text') && !($this->AppAuth->isAdmin() || $this->AppAuth->isSuperadmin())) {
                 $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
             }
 
-            if ($this->AppAuth->isSuperadmin()) {
+            if ($isEditMode && $this->AppAuth->isSuperadmin()) {
+                $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
                 if ($feedback->approved_checkbox) {
                     $feedback->approved = FrozenTime::now();
-                } else {
-                    $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
                 }
             }
 
