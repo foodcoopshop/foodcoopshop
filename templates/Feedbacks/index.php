@@ -20,13 +20,22 @@ $this->element('addScript', ['script' =>
 ]);
 ?>
 
-<h1><?php echo $title_for_layout; ?></h1>
+<h1 style="margin-bottom:40px;"><?php echo $title_for_layout; ?></h1>
 
 <?php
 foreach($feedbacks as $feedback) {
-    echo '<div class="feedback-wrapper" style="margin-bottom:10px;">';
-        echo '"' . StringComponent::nl2br2($feedback->text) . '"<br />';
-        echo '<i>' . $feedback->privatized_name . ', ' . $feedback->modified->i18nFormat($this->Time->getI18Format('DateLong2')) . '</i>';
-    echo '</div>';
-}
 ?>
+    <div class="testimonial-quote group">
+        <div class="quote-container">
+            <blockquote>
+                <p><?php echo StringComponent::nl2br2($feedback->text); ?>”</p>
+            </blockquote>
+            <cite><span><?php echo $feedback->privatized_name; ?></span><br>
+                <?php echo $feedback->modified->i18nFormat($this->Time->getI18Format('DateLong2')); ?>
+            </cite>
+        </div>
+    </div>
+
+    <hr style="margin: 50px auto; opacity: .5;">
+
+<?php } ?>
