@@ -102,11 +102,13 @@ if (isset($feedback->approved_checkbox) && $appAuth->isSuperadmin()) {
 }
 
 if ($isEditMode) {
-    echo $this->Form->control('Feedbacks.delete_feedback', [
-        'label' => __d('admin', 'Delete_feedback?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
-        'type' => 'checkbox',
-        'escape' => false,
-    ]);
+    echo '<div class="warning">';
+        echo $this->Form->control('Feedbacks.delete_feedback', [
+            'label' => __d('admin', 'Delete_feedback?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false,
+        ]);
+    echo '</div>';
 }
 
 echo '<div class="sc"></div>';
