@@ -32,6 +32,7 @@ class FeedbacksController extends FrontendController
         $feedbacks = $this->Feedback->find('all', [
             'conditions' => [
                 'DATE_FORMAT(Feedbacks.approved, \'%Y-%m-%d\') <> \'1970-01-01\'',
+                'Customers.active' => APP_ON,
             ],
             'contain' => [
                 'Customers.AddressCustomers',
