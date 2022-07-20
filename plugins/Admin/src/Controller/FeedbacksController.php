@@ -67,7 +67,9 @@ class FeedbacksController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'My_feedback'));
         $this->isOwnForm = true;
         $this->_processForm();
-        $this->render('form');
+        if (empty($this->getRequest()->getData())) {
+            $this->render('form');
+        }
     }
 
     public function form($customerId)
@@ -82,7 +84,9 @@ class FeedbacksController extends AdminAppController
         ]));
         $this->isOwnForm = false;
         $this->_processForm();
-        $this->render('form');
+        if (empty($this->getRequest()->getData())) {
+            $this->render('form');
+        }
     }
 
     public function _processForm()
