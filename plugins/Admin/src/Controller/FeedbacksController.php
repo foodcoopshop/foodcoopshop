@@ -159,15 +159,18 @@ class FeedbacksController extends AdminAppController
                 $this->redirect($this->getPreparedReferer());
             }
 
-            $feedback->approved = FrozenTime::now();
+            $valueForApproved = FrozenTime::now();
+            $valueForNotApproved = FrozenTime::createFromDate(1970, 01, 01);
+
+            $feedback->approved = $valueForApproved;
             if ($feedback->isDirty('text') && !($this->AppAuth->isAdmin() || $this->AppAuth->isSuperadmin())) {
-                $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
+                $feedback->approved = $valueForNotApproved;
             }
 
             if ($isEditMode && $this->AppAuth->isSuperadmin()) {
-                $feedback->approved = FrozenTime::createFromDate(1970, 01, 01);
+                $feedback->approved = $valueForNotApproved;
                 if ($feedback->approved_checkbox) {
-                    $feedback->approved = FrozenTime::now();
+                    $feedback->approved = $valueForApproved
                 }
             }
 
