@@ -107,7 +107,9 @@ if ($appAuth->isCustomer()) {
         $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
         $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     }
-    $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
+    if (!empty($myFeedbackMenuElement)) {
+        $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
@@ -187,7 +189,9 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $customerProfileMenuElement['children'][] = $myInvoicesMenuElement;
     }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
-    $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
+    if (!empty($myFeedbackMenuElement)) {
+        $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
 
     if (Configure::read('app.isBlogFeatureEnabled')) {
@@ -311,7 +315,9 @@ if ($appAuth->isManufacturer()) {
         }
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
-    //$profileMenu['children'][] = $myFeedbackMenuElement;
+    //if (!empty($myFeedbackMenuElement)) {
+        // $profileMenu['children'][] = $myFeedbackMenuElement;
+    //}
     $menu[] = $profileMenu;
     $menu[] = $optionsMenu;
     if (Configure::read('app.isBlogFeatureEnabled')) {
