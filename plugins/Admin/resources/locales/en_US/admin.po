@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 15:28+0200\n"
+"POT-Creation-Date: 2022-07-20 09:06+0200\n"
 "PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1226,11 +1226,12 @@ msgstr ""
 msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
 msgstr "Your feedback has not yet been reviewed by an admin and is therefore not yet published."
 
-msgid "We_might_change_the_text_a_bit."
-msgstr ""
-
-msgid "Your_feedback_has_been_reviewed_and_is_published._Thank_you."
+#, fuzzy
+msgid "Your_feedback_has_been_reviewed_and_is_published_on_this_site_{0}._Thank_you."
 msgstr "Your feedback has reviewed is published. Thank you."
+
+msgid "Approval_info_text_{0}."
+msgstr ""
 
 #, fuzzy
 msgid "Feedback_intro_text_{0}."
@@ -1244,8 +1245,13 @@ msgstr "This is the explanation text."
 msgid "Max._{0}_characters."
 msgstr "min 8 characters"
 
-msgid "Privacy_type"
-msgstr "Privacy type"
+#, fuzzy
+msgid "Please_enter_your_feedback_here."
+msgstr "Please enter why the pickup day is changed."
+
+#, fuzzy
+msgid "Show_name?"
+msgstr "Show page"
 
 #, fuzzy
 msgid "Privacy_type_explanatin_text."
@@ -2370,6 +2376,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Privacy_type"
+#~ msgstr "Privacy type"
 
 #~ msgid "The_credit_of_the_paying_with_time_account_is:"
 #~ msgstr "The credit of the paying-with-time-module is:"

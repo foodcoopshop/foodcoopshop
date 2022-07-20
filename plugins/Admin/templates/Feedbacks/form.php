@@ -44,22 +44,35 @@ echo $this->Form->create($feedback, [
     'url' => $isOwnForm ? $this->Slug->getMyFeedbackForm() : $this->Slug->getFeedbackForm($customer->id_customer),
 ]);
 
+$approvalInfoText = '';
 if (isset($feedback->approved)) {
     $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
     $approved = $feedbackTable->isApproved($feedback);
     if (!$approved) {
         $approvalWarning = __d('admin', 'Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published.');
-        $approvalWarning .= '<br />' . __d('admin', 'We_might_change_the_text_a_bit.');
         echo '<h2 class="warning" style="margin-bottom:10px;">'.$approvalWarning.'</h2>';
     } else {
-        $approvalInfo = __d('admin', 'Your_feedback_has_been_reviewed_and_is_published._Thank_you.');
+        $approvalInfo = __d('admin', 'Your_feedback_has_been_reviewed_and_is_published_on_this_site_{0}._Thank_you.', [
+            $this->Slug->getFeedbackList(),
+        ]);
         echo '<h2 class="info" style="margin-bottom:10px;">'.$approvalInfo.'</h2>';
     }
+}
+
+if (!$isEditMode || (isset($feedback->approved) && !$approved)) {
+    $approvalInfoText = '<p>' . __d('admin', 'Approval_info_text_{0}.', [
+        $this->Slug->getFeedbackList(),
+    ]) . '</p>';
 }
 
 echo '<p>' . __d('admin', 'Feedback_intro_text_{0}.', [
     '<b>' . Configure::read('appDb.FCS_APP_NAME') . '</b>',
 ]) . '</p>';
+
+if ($approvalInfoText != '') {
+    echo $approvalInfoText;
+}
+
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
@@ -69,12 +82,13 @@ echo $this->Form->control('Feedbacks.text', [
         $this->Number->formatAsDecimal($maxChars, 0),
     ]) . '</i>',
     'type' => 'textarea',
+    'placeholder' => __d('admin', 'Please_enter_your_feedback_here.'),
     'maxlength' => $maxChars,
     'escape' => false,
 ]);
 
 echo $this->Form->control('Feedbacks.privacy_type', [
-    'label' => __d('admin', 'Privacy_type') .' <span class="after small">'.__d('admin', 'Privacy_type_explanatin_text.').'</span>',
+    'label' => __d('admin', 'Show_name?') .' <span class="after small">'.__d('admin', 'Privacy_type_explanatin_text.').'</span>',
     'options' => $privacyTypes,
     'escape' => false,
 ]);
