@@ -80,7 +80,7 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
 }
-if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
     echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
@@ -99,6 +99,7 @@ $sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
 $sumNewsletter = 0;
 $sumFeedback = 0;
+$sumFeedbackNotApproved = 0;
 foreach ($customers as $customer) {
     $i ++;
 
@@ -268,13 +269,13 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
         echo '<td align="center">';
         if (!empty($customer->feedback)) {
             $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
             $approved = $feedbackTable->isApproved($customer->feedback);
             echo $this->Html->link(
-                '<i class="fas fa-heart '.(!$approved ? 'not-ok' : '').'"></i>',
+                '<i class="fas fa-heart '.(!$approved ? 'not-ok' : 'ok').'"></i>',
                 $this->Slug->getFeedbackForm($customer->id_customer),
                 [
                     'class' => 'btn btn-outline-light',
@@ -282,6 +283,9 @@ foreach ($customers as $customer) {
                 ]
             );
             $sumFeedback++;
+            if (!$approved) {
+                $sumFeedbackNotApproved++;
+            }
         }
         echo '</td>';
     }
@@ -343,7 +347,7 @@ if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
-    echo '<td align="center"><b>' . $sumFeedback . '</b></td>';
+    echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';
 }
 $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
