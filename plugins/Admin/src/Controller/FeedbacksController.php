@@ -170,7 +170,7 @@ class FeedbacksController extends AdminAppController
             if ($isEditMode && $this->AppAuth->isSuperadmin()) {
                 $feedback->approved = $valueForNotApproved;
                 if ($feedback->approved_checkbox) {
-                    $feedback->approved = $valueForApproved
+                    $feedback->approved = $valueForApproved;
                 }
             }
 
