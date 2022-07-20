@@ -185,7 +185,7 @@ class MenuHelper extends Helper
                 'slug' => Configure::read('app.slugHelper')->getMyFeedbackForm(),
                 'name' => __('Feedback'),
                 'options' => [
-                    'fa-icon' => 'fa-heart',
+                    'fa-icon' => 'fa-heart ok',
                 ],
             ];
         }
