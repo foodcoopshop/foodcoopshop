@@ -22,9 +22,6 @@ use Cake\Core\Configure;
         if (Configure::read('app.isBlogFeatureEnabled')) {
             $menu[] = ['name' => __('Blog_archive'), 'slug' => $this->Slug->getBlogList()];
         }
-        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
-            $menu[] = ['name' => '<i class="fas fa-heart"></i> ' . __('Feedbacks'), 'slug' => $this->Slug->getFeedbackList()];
-        }
         if (Configure::read('app.termsOfUseEnabled')) {
             $menu[] = ['name' => __('Terms_of_use'), 'slug' => $this->Slug->getTermsOfUse()];
         }
