@@ -234,9 +234,6 @@ body.categories.detail div.description-wrapper {
 #user-menu > li:not(:last-of-type):after {
     padding-left: 5px;
 }
-#user-menu i.fa-heart {
-    padding: 5px;
-}
 #login-form {
     width: 440px;
     margin: 0 auto;

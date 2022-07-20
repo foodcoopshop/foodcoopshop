@@ -45,13 +45,6 @@ if ($appAuth->user()) {
     }
 }
 
-if ($appAuth->user() && !$appAuth->isOrderForDifferentCustomerMode()) {
-    $myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($appAuth);
-    if (!empty($myFeedbackMenuElement) && preg_match('/not-ok/', $myFeedbackMenuElement['options']['fa-icon'])) {
-        $menu[] = $myFeedbackMenuElement;
-    }
-}
-
 if (!$appAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
     $menu[] = [
         'slug' => $this->Slug->getSelfService(),
