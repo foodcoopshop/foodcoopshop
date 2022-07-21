@@ -36,6 +36,6 @@ foreach($feedbacks as $feedback) {
         </div>
     </div>
 
-    <hr style="margin: 50px auto; opacity: .5;">
+    <hr style="margin: 40px auto 60px auto; opacity: .5;">
 
 <?php } ?>
