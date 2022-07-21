@@ -341,8 +341,10 @@ class CustomersController extends AdminAppController
             return $this->sendAjaxError($e);
         }
 
+
         $this->Customer->deleteAll(['id_customer' => $customerId]);
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
+        $this->Customer->Feedbacks->deleteAll(['customer_id' => $customerId]);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
