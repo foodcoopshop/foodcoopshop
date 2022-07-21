@@ -30,8 +30,8 @@ foreach($feedbacks as $feedback) {
             <blockquote>
                 <p><?php echo StringComponent::nl2br2($feedback->text); ?>”</p>
             </blockquote>
-            <cite><span><?php echo $feedback->privatized_name; ?></span><br>
-                <?php echo $feedback->modified->i18nFormat($this->Time->getI18Format('DateLong2')); ?>
+            <cite>
+                <span><?php echo $feedback->privatized_name; ?></span>
             </cite>
         </div>
     </div>
