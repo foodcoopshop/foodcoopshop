@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 15:28+0200\n"
-"PO-Revision-Date: 2022-07-19 15:29+0200\n"
+"POT-Creation-Date: 2022-07-21 08:48+0200\n"
+"PO-Revision-Date: 2022-07-21 08:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2250,6 +2250,12 @@ msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das he
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
 
+msgid "Members_feedback"
+msgstr "Feedback von Mitgliedern"
+
+msgid "Manufacturers_feedback"
+msgstr "Feedback von Herstellern"
+
 msgid "Imprint"
 msgstr "Impressum"
 
@@ -2771,9 +2777,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Action_Log_Member_member_fee_deleted"
 #~ msgstr "Mitglied: Mitgliedsbeitrag gelöscht"
-
-#~ msgid "Member_fee"
-#~ msgstr "Mitgliedsbeitrag"
 
 #~ msgid "Payment_type_member_fee"
 #~ msgstr "Mitgliedsbeitrag"

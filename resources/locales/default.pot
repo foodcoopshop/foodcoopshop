@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-07-19 15:28+0200\n"
+"POT-Creation-Date: 2022-07-21 08:48+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2247,6 +2247,12 @@ msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_ye
 msgstr ""
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr ""
+
+msgid "Members_feedback"
+msgstr ""
+
+msgid "Manufacturers_feedback"
 msgstr ""
 
 msgid "Imprint"

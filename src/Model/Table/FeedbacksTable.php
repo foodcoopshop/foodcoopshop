@@ -51,14 +51,30 @@ class FeedbacksTable extends AppTable
         return $validator;
     }
 
-    public function getPrivacyType($feedback)
+    public function getManufacturerPrivacyType($feedback)
     {
-        $privacyTypes = self::getPrivacyTypesForDropdown($feedback->customer);
+        $privacyTypes = self::getManufacturerPrivacyTypes($feedback->manufacturer);
         $privacyType = $privacyTypes[$feedback->privacy_type];
         return $privacyType;
     }
 
-    public function getPrivacyTypesForDropdown($customer)
+    public function getManufacturerPrivacyTypes($manufacturer)
+    {
+        $values = [
+            self::PRIVACY_TYPE_NO_PRIVACY_WITH_CITY => $manufacturer->name . ', ' . $manufacturer->address_manufacturer->city,
+            self::PRIVACY_TYPE_FULL_PRIVACY => __('Manufacturer'),
+        ];
+        return $values;
+    }
+
+    public function getCustomerPrivacyType($feedback)
+    {
+        $privacyTypes = self::getCustomerPrivacyTypes($feedback->customer);
+        $privacyType = $privacyTypes[$feedback->privacy_type];
+        return $privacyType;
+    }
+
+    public function getCustomerPrivacyTypes($customer)
     {
         if ($customer->is_company) {
             $values = [

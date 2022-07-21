@@ -28,7 +28,7 @@ class FeedbacksController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'myFeedback':
-                return Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->user() && !$this->AppAuth->isManufacturer();
+                return Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->user();
                 break;
             default:
                 return Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->isSuperadmin();
@@ -79,9 +79,12 @@ class FeedbacksController extends AdminAppController
         if (empty($customer)) {
             throw new RecordNotFoundException('customer ' . $customerId . ' not found');
         }
-        $this->set('title_for_layout', __d('admin', 'Feedback_from_{0}', [
-            $customer->name,
-        ]));
+        $name = $customer->name;
+        $manufacturer = $this->Customer->getManufacturerByCustomerId($this->customerId);
+        if (!empty($manufacturer)) {
+            $name = $manufacturer->name;
+        }
+        $this->set('title_for_layout', __d('admin', 'Feedback_from_{0}', [$name]));
         $this->isOwnForm = false;
         $this->_processForm();
         if (empty($this->getRequest()->getData())) {
@@ -100,8 +103,16 @@ class FeedbacksController extends AdminAppController
         $customer = $this->getCustomer();
         $this->set('customer', $customer);
 
-        $privacyTypes = $this->Feedback->getPrivacyTypesForDropdown($customer);
+        $manufacturer = $this->Customer->getManufacturerByCustomerId($this->customerId);
+        $isManufacturer = false;
+        if (!empty($manufacturer)) {
+            $isManufacturer = true;
+            $privacyTypes = $this->Feedback->getManufacturerPrivacyTypes($manufacturer);
+        } else {
+            $privacyTypes = $this->Feedback->getCustomerPrivacyTypes($customer);
+        }
         $this->set('privacyTypes', $privacyTypes);
+        $this->set('isManufacturer', $isManufacturer);
 
         $feedback = $this->Feedback->find('all', [
             'conditions' => [

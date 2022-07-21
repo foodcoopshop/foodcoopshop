@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 ?>
 <div id="manufacturers-list">
@@ -79,12 +80,17 @@ echo '<tr class="sort">';
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo '<th></th>';
     }
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+        echo '<th>'.__d('admin', 'Feedback').'</th>';
+    }
     if (Configure::read('app.showManufacturerListAndDetailPage')) {
         echo '<th></th>';
     }
 echo '</tr>';
 $i = 0;
 $sumProductCount = 0;
+$sumFeedback = 0;
+$sumFeedbackNotApproved = 0;
 foreach ($manufacturers as $manufacturer) {
 
     $i ++;
@@ -276,6 +282,27 @@ foreach ($manufacturers as $manufacturer) {
         }
     }
 
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+        echo '<td align="center">';
+        if (!empty($manufacturer->feedback)) {
+            $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
+            $approved = $feedbackTable->isApproved($manufacturer->feedback);
+            echo $this->Html->link(
+                '<i class="fas fa-heart '.(!$approved ? 'not-ok' : 'ok').'"></i>',
+                $this->Slug->getFeedbackForm($manufacturer->feedback->customer_id),
+                [
+                    'class' => 'btn btn-outline-light',
+                    'escape' => false,
+                ]
+                );
+            $sumFeedback++;
+            if (!$approved) {
+                $sumFeedbackNotApproved++;
+            }
+        }
+        echo '</td>';
+    }
+
     if (Configure::read('app.showManufacturerListAndDetailPage')) {
         echo '<td style="width: 29px;">';
         if ($manufacturer->active) {
@@ -306,6 +333,12 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
 }
 echo '<td colspan="' . $colspan . '"></td>';
+
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+    echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';
+}
+echo '<td></td>';
+
 echo '</tr>';
 echo '</table>';
 echo '<div class="sc"></div>';

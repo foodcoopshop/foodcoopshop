@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-19 15:28+0200\n"
+"POT-Creation-Date: 2022-07-21 08:48+0200\n"
 "PO-Revision-Date: 2022-07-18 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2252,6 +2252,14 @@ msgstr "Your account was created but not activated yet. This means, you can't lo
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "You will get an e-mail as soon as we activate you."
 
+#, fuzzy
+msgid "Members_feedback"
+msgstr "Member fee"
+
+#, fuzzy
+msgid "Manufacturers_feedback"
+msgstr "Manufacturer panel"
+
 msgid "Imprint"
 msgstr "Imprint"
 
@@ -2771,9 +2779,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "Action_Log_Member_member_fee_deleted"
 #~ msgstr "Member: Member fee deleted"
-
-#~ msgid "Member_fee"
-#~ msgstr "Member fee"
 
 #~ msgid "Payment_type_member_fee"
 #~ msgstr "Member fee"

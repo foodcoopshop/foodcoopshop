@@ -29,6 +29,8 @@ class FeedbacksController extends FrontendController
         }
 
         $this->Feedback = $this->getTableLocator()->get('Feedbacks');
+        $this->Customer = $this->getTableLocator()->get('Customers');
+
         $feedbacks = $this->Feedback->find('all', [
             'conditions' => [
                 'DATE_FORMAT(Feedbacks.approved, \'%Y-%m-%d\') <> \'1970-01-01\'',
@@ -42,11 +44,24 @@ class FeedbacksController extends FrontendController
             ],
         ])->toArray();
 
+        $preparedFeedbacks = [
+            'customers' => [],
+            'manufacturers' => [],
+        ];
         foreach($feedbacks as &$feedback) {
-            $feedback->privatized_name = $this->Feedback->getPrivacyType($feedback);
-            unset($feedback->customer);
+            $manufacturer = $this->Customer->getManufacturerByCustomerId($feedback->customer_id);
+            if (!empty($manufacturer)) {
+                $feedback->manufacturer = $manufacturer;
+                $feedback->privatized_name = $this->Feedback->getManufacturerPrivacyType($feedback);
+                if ($manufacturer->active == APP_ON) {
+                    $preparedFeedbacks['manufacturers'][] = $feedback;
+                }
+            } else {
+                $feedback->privatized_name = $this->Feedback->getCustomerPrivacyType($feedback);
+                $preparedFeedbacks['customers'][] = $feedback;
+            }
         }
-        $this->set('feedbacks', $feedbacks);
+        $this->set('feedbacks', $preparedFeedbacks);
 
         $this->set('title_for_layout', __('Feedbacks'));
     }

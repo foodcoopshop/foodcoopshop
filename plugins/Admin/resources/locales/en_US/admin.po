@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-20 09:06+0200\n"
+"POT-Creation-Date: 2022-07-21 08:56+0200\n"
 "PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1234,11 +1234,19 @@ msgid "Approval_info_text_{0}."
 msgstr ""
 
 #, fuzzy
-msgid "Feedback_intro_text_{0}."
+msgid "Feedback_intro_text_customer_{0}."
 msgstr "This is the explanation text."
 
 #, fuzzy
-msgid "Feedback_field_explanation_text."
+msgid "Feedback_intro_text_manufacturer_{0}."
+msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Feedback_field_explanation_text_customer."
+msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Feedback_field_explanation_text_manufacturer."
 msgstr "This is the explanation text."
 
 #, fuzzy

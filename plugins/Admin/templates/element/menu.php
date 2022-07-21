@@ -315,9 +315,9 @@ if ($appAuth->isManufacturer()) {
         }
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
-    //if (!empty($myFeedbackMenuElement)) {
-        // $profileMenu['children'][] = $myFeedbackMenuElement;
-    //}
+    if (!empty($myFeedbackMenuElement)) {
+        $profileMenu['children'][] = $myFeedbackMenuElement;
+    }
     $menu[] = $profileMenu;
     $menu[] = $optionsMenu;
     if (Configure::read('app.isBlogFeatureEnabled')) {

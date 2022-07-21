@@ -334,6 +334,7 @@ class ManufacturersController extends AdminAppController
         $this->Product = $this->getTableLocator()->get('Products');
         $this->Payment = $this->getTableLocator()->get('Payments');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Feedback = $this->getTableLocator()->get('Feedbacks');
 
         foreach ($manufacturers as $manufacturer) {
             $this->Catalog = new Catalog();
@@ -344,6 +345,14 @@ class ManufacturersController extends AdminAppController
             $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
             if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturer->variable_member_fee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
+            }
+            if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+                $customer = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
+                $manufacturer->feedback = $this->Feedback->find('all', [
+                    'conditions' => [
+                        'Feedbacks.customer_id' => $customer->id_customer,
+                    ]
+                ])->first();
             }
             $manufacturer->sum_open_order_detail = $this->OrderDetail->getOpenOrderDetailSum($manufacturer->id_manufacturer, $dateFrom);
         }

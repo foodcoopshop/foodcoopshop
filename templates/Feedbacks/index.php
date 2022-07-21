@@ -12,30 +12,36 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ]);
+
+if (empty($feedbacks['customers']) && empty($feedbacks['manufacturers'])) {
+    echo '<h1 style="margin-bottom:40px;">' . $title_for_layout . '</h1>';
+}
+
+if (!empty($feedbacks['customers'])) {
+    echo '<h1 style="margin-bottom:40px;">' . __('Members_feedback') . '</h1>';
+    foreach($feedbacks['customers'] as $feedback) {
+        echo $this->element('feedback/quote', [
+            'quote' => $feedback->text,
+            'metaData' => $feedback->privatized_name,
+        ]);
+    }
+}
+
+if (!empty($feedbacks['manufacturers'])) {
+    echo '<h1 style="margin-bottom:40px;">' . __('Manufacturers_feedback') . '</h1>';
+    foreach($feedbacks['manufacturers'] as $feedback) {
+        echo $this->element('feedback/quote', [
+            'quote' => $feedback->text,
+            'metaData' => $feedback->privatized_name,
+        ]);
+    }
+}
+
+
 ?>
 
-<h1 style="margin-bottom:40px;"><?php echo $title_for_layout; ?></h1>
-
-<?php
-foreach($feedbacks as $feedback) {
-?>
-    <div class="testimonial-quote group">
-        <div class="quote-container">
-            <blockquote>
-                <p><?php echo StringComponent::nl2br2($feedback->text); ?>”</p>
-            </blockquote>
-            <cite>
-                <span><?php echo $feedback->privatized_name; ?></span>
-            </cite>
-        </div>
-    </div>
-
-    <hr style="margin: 40px auto 60px auto; opacity: .5;">
-
-<?php } ?>

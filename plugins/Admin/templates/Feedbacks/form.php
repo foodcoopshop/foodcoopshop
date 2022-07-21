@@ -65,20 +65,29 @@ if (!$isEditMode || (isset($feedback->approved) && !$approved)) {
     ]) . '</p>';
 }
 
-echo '<p>' . __d('admin', 'Feedback_intro_text_{0}.', [
+$feedbackIntroText = __d('admin', 'Feedback_intro_text_customer_{0}.', [
     '<b>' . Configure::read('appDb.FCS_APP_NAME') . '</b>',
-]) . '</p>';
+]);
+if ($isManufacturer) {
+    $feedbackIntroText = __d('admin', 'Feedback_intro_text_manufacturer_{0}.', [
+        '<b>' . Configure::read('appDb.FCS_APP_NAME') . '</b>',
+    ]);
+}
+echo '<p>' . $feedbackIntroText . '</p>';
 
 if ($approvalInfoText != '') {
     echo $approvalInfoText;
 }
 
-
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 $maxChars = 1000;
+$feedbackFieldExplanationText = __d('admin', 'Feedback_field_explanation_text_customer.');
+if ($isManufacturer) {
+    $feedbackFieldExplanationText = __d('admin', 'Feedback_field_explanation_text_manufacturer.');
+}
 echo $this->Form->control('Feedbacks.text', [
-    'label' => '<span class="small">'.__d('admin', 'Feedback_field_explanation_text.') . '<br /><br /><i>' . __d('admin', 'Max._{0}_characters.', [
+    'label' => '<span class="small">'. $feedbackFieldExplanationText . '<br /><br /><i>' . __d('admin', 'Max._{0}_characters.', [
         $this->Number->formatAsDecimal($maxChars, 0),
     ]) . '</i>',
     'type' => 'textarea',
