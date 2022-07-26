@@ -63,6 +63,11 @@ if (!$result->cancelledInvoice) {
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
+if (Configure::read('app.additionalTextForInvoice') != '') {
+    $pdf->Ln(3);
+    $pdf->writeHTML('<p>' . Configure::read('app.additionalTextForInvoice') . '</p>', true, false, true, false, '');
+}
+
 if (!$result->cancelledInvoice && $paidInCash) {
     $pdf->Ln(3);
     $html = '<p>'.__d('admin', 'Paid_in_cash_on_{0}.', [$invoiceDate]).'</p>';
