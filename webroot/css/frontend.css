@@ -517,11 +517,6 @@ body.superadmin .pw .heading h4 {
     margin-left: 10px;
     line-height: 20px;
 }
-.tooltipster-content span.money,
-.tooltipster-content span.seconds {
-    float: right;
-    margin-left: 5px;
-}
 .pw .amount-wrapper {
     line-height: 28px;
     margin-top: 5px;
