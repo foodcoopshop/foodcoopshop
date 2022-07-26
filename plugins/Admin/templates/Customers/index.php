@@ -346,7 +346,7 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
-if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $sumFeedback > 0) {
     echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';
 }
 $colspan = 3;

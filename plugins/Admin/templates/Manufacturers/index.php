@@ -334,7 +334,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
 }
 echo '<td colspan="' . $colspan . '"></td>';
 
-if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $sumFeedback > 0) {
     echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';
 }
 echo '<td></td>';
