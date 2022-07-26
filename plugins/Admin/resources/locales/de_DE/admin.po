@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-06-20 12:06+0200\n"
-"PO-Revision-Date: 2022-06-20 12:06+0200\n"
+"POT-Creation-Date: 2022-07-21 08:56+0200\n"
+"PO-Revision-Date: 2022-07-21 09:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -188,6 +188,18 @@ msgstr "Pfandkonto"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Pfand-Rücknahme Detail für"
+
+msgid "My_feedback"
+msgstr "Mein Feedback"
+
+msgid "Feedback_from_{0}"
+msgstr "Feedback von {0}"
+
+msgid "Your_feedback_was_deleted."
+msgstr "Dein Feedback wurde gelöscht."
+
+msgid "Your_feedback_was_saved."
+msgstr "Dein Feedback wurde gespeichert."
 
 msgid "Invoices"
 msgstr "Rechnungen"
@@ -1083,6 +1095,9 @@ msgstr "Bestellte Produkte"
 msgid "Reminder"
 msgstr "Erinnerung"
 
+msgid "Feedback"
+msgstr "Feedback"
+
 msgid "Register_date"
 msgstr "Reg.-Datum"
 
@@ -1202,6 +1217,60 @@ msgstr "Pfand-Rücknahmen (Hersteller)"
 
 msgid "Returned_deposit_by_member"
 msgstr "Pfand-Rückgaben (Mitglieder)"
+
+msgid "docs_route_user_feedback"
+msgstr "user-feedback"
+
+msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
+msgstr "Dein Feedback ist noch nicht freigeschaltet und daher noch nicht öffentlich sichtbar. Wir bitten um ein wenig Geduld."
+
+msgid "Your_feedback_has_been_reviewed_and_is_published_on_this_site_{0}._Thank_you."
+msgstr "Dein Feedback ist freigeschaltet und öffentlich <a href=\"{0}\" target=\"_blank\">auf dieser Seite</a> sichtbar. Vielen Dank."
+
+msgid "Approval_info_text_{0}."
+msgstr "Nachdem dein Feedback freigeschaltet wurde, <b>wird es öffentlich <a href=\"{0}\" target=\"_blank\">auf dieser Seite</a> sichtbar sein</b>."
+
+msgid "Feedback_intro_text_customer_{0}."
+msgstr "Teile anderen Menschen mit, warum du bei {0} einkaufst."
+
+msgid "Feedback_intro_text_manufacturer_{0}."
+msgstr "Teile anderen Menschen mit, warum du {0} mit deinen Produkten belieferst."
+
+msgid "Feedback_field_explanation_text_customer."
+msgstr ""
+"<b>Beispiele</b><br />\n"
+"• <i>Durch das Vorbestellen wird fast nichts weggeworfen.</i><br />\n"
+"• <i>Ich kann so meinen Wocheneinkauf perfekt planen.</i><br />\n"
+"• <i>Endlich kann ich ohne schlechtes Gewissen einkaufen.</i><br />\n"
+"• <i>Eine gute Möglichkeit, die Bauern in meiner Region zu stärken.</i>"
+
+msgid "Feedback_field_explanation_text_manufacturer."
+msgstr ""
+"<b>Beispiele</b><br />\n"
+"• <i>Ich erhalte jede Woche pünktlich die Bestellungen und kann so perfekt planen.</i><br />\n"
+"• <i>Ein praktische Möglichkeit, meinen Absatz zu erhöhen.</i><br />\n"
+"• <i>Die Abrechnung ist sehr einfach für mich, das spart Zeit.</i>"
+
+msgid "Max._{0}_characters."
+msgstr "Max. {0} Zeichen."
+
+msgid "Please_enter_your_feedback_here."
+msgstr "Hier ist Platz für dein Feedback."
+
+msgid "Show_name?"
+msgstr "Name anzeigen?"
+
+msgid "Privacy_type_explanatin_text."
+msgstr "Sollen dein Name und dein Ort angezeigt werden?"
+
+msgid "Approved"
+msgstr "Freigeschaltet"
+
+msgid "Only_superadmins_can_approve_feedbacks."
+msgstr "Nur Superadmins können Feedbacks freischalten."
+
+msgid "Delete_feedback?"
+msgstr "Feedback löschen?"
 
 msgid "All_amounts_in_{0}."
 msgstr "Alle Beträge in {0}."
@@ -2163,9 +2232,6 @@ msgstr "Vielen Dank für dein Verständnis!"
 msgid "Hello"
 msgstr "Hallo"
 
-msgid "Feedback"
-msgstr "Feedback"
-
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
 msgstr "Zum Antworten schreibe bitte eine E-Mail an {0} und <b>antworte nicht auf diese E-Mail</b>!"
 
@@ -2315,6 +2381,12 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Privacy_type"
+#~ msgstr "Datenschutz"
+
+#~ msgid "We_might_change_the_text_a_bit."
+#~ msgstr "Ggfs. korrigieren wir vor dem Veröffentlichen kleinere Rechtschreibfehler und erhöhen die Leserlichkeit. Die Kernaussage wird aber natürlich nicht verändert."
 
 #~ msgid "The_credit_of_the_paying_with_time_account_is:"
 #~ msgstr "Das Guthaben des Stundenkontos beträgt"

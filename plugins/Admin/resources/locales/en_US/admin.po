@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-06-20 12:06+0200\n"
-"PO-Revision-Date: 2022-06-20 12:06+0200\n"
+"POT-Creation-Date: 2022-07-21 08:56+0200\n"
+"PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -188,6 +188,20 @@ msgstr "Deposit account"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Deposit take back detail for"
+
+msgid "My_feedback"
+msgstr "My feedback"
+
+msgid "Feedback_from_{0}"
+msgstr "Feedback from {0}"
+
+#, fuzzy
+msgid "Your_feedback_was_deleted."
+msgstr "Your profile was changed."
+
+#, fuzzy
+msgid "Your_feedback_was_saved."
+msgstr "Your profile was changed."
 
 msgid "Invoices"
 msgstr "Invoices"
@@ -1083,6 +1097,9 @@ msgstr "Ordered products"
 msgid "Reminder"
 msgstr "Reminder"
 
+msgid "Feedback"
+msgstr "Feedback"
+
 msgid "Register_date"
 msgstr "Register date"
 
@@ -1202,6 +1219,61 @@ msgstr "Empty glasses returned by manufacturer"
 
 msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
+
+msgid "docs_route_user_feedback"
+msgstr ""
+
+msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
+msgstr "Your feedback has not yet been reviewed by an admin and is therefore not yet published."
+
+#, fuzzy
+msgid "Your_feedback_has_been_reviewed_and_is_published_on_this_site_{0}._Thank_you."
+msgstr "Your feedback has reviewed is published. Thank you."
+
+msgid "Approval_info_text_{0}."
+msgstr ""
+
+#, fuzzy
+msgid "Feedback_intro_text_customer_{0}."
+msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Feedback_intro_text_manufacturer_{0}."
+msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Feedback_field_explanation_text_customer."
+msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Feedback_field_explanation_text_manufacturer."
+msgstr "This is the explanation text."
+
+#, fuzzy
+msgid "Max._{0}_characters."
+msgstr "min 8 characters"
+
+#, fuzzy
+msgid "Please_enter_your_feedback_here."
+msgstr "Please enter why the pickup day is changed."
+
+#, fuzzy
+msgid "Show_name?"
+msgstr "Show page"
+
+#, fuzzy
+msgid "Privacy_type_explanatin_text."
+msgstr "This is the explanation text."
+
+msgid "Approved"
+msgstr "Approved"
+
+msgid "Only_superadmins_can_approve_feedbacks."
+msgstr ""
+
+#, fuzzy
+msgid "Delete_feedback?"
+msgstr "Delete deposit take back?"
 
 msgid "All_amounts_in_{0}."
 msgstr "All prices in {0}."
@@ -2163,9 +2235,6 @@ msgstr "Thanks for respecting that!"
 msgid "Hello"
 msgstr "Hello"
 
-msgid "Feedback"
-msgstr "Feedback"
-
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
 msgstr "If you want to answer, please write an email to {0} and <b>do not reply to this email</b>!"
 
@@ -2315,6 +2384,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Privacy_type"
+#~ msgstr "Privacy type"
 
 #~ msgid "The_credit_of_the_paying_with_time_account_is:"
 #~ msgstr "The credit of the paying-with-time-module is:"

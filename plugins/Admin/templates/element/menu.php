@@ -22,6 +22,7 @@ if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeI
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
+$myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($appAuth);
 
 $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),
@@ -106,6 +107,9 @@ if ($appAuth->isCustomer()) {
         $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
         $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     }
+    if (!empty($myFeedbackMenuElement)) {
+        $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
@@ -185,8 +189,11 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $customerProfileMenuElement['children'][] = $myInvoicesMenuElement;
     }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
-
+    if (!empty($myFeedbackMenuElement)) {
+        $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
+    }
     $menu[] = $customerProfileMenuElement;
+
     if (Configure::read('app.isBlogFeatureEnabled')) {
         $menu[] = $blogPostsMenuElement;
     }
@@ -308,6 +315,9 @@ if ($appAuth->isManufacturer()) {
         }
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
+    if (!empty($myFeedbackMenuElement)) {
+        $profileMenu['children'][] = $myFeedbackMenuElement;
+    }
     $menu[] = $profileMenu;
     $menu[] = $optionsMenu;
     if (Configure::read('app.isBlogFeatureEnabled')) {

@@ -154,3 +154,6 @@ table.list tr.fake-th td {
 #order-for-different-customer-add .bootstrap-select {
     width: 100% ! important;
 }
+body.feedbacks textarea {
+    width: 100%;
+}

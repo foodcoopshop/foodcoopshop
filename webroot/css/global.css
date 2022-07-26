@@ -194,6 +194,13 @@ h2.info2 {
 h2.warning {
     background-color: #f3515c;
 }
+div.warning {
+    color: #f3515c;
+}
+h2.info a {
+    color: #fff ! important;
+    text-decoration: underline ! important;
+}
 #installation-logo {
     border-radius: 10px;
 }

@@ -341,8 +341,10 @@ class CustomersController extends AdminAppController
             return $this->sendAjaxError($e);
         }
 
+
         $this->Customer->deleteAll(['id_customer' => $customerId]);
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
+        $this->Customer->Feedbacks->deleteAll(['customer_id' => $customerId]);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
@@ -693,16 +695,24 @@ class CustomersController extends AdminAppController
 
         $this->Customer->dropManufacturersInNextFind();
 
+        $contain = [
+            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+        ];
+
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+            $contain[] = 'Feedbacks';
+        }
+
         $query = $this->Customer->find('all', [
             'conditions' => $conditions,
-            'contain' => [
-                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ],
+            'contain' => $contain,
         ]);
         $query = $this->Customer->addCustomersNameForOrderSelect($query);
         $query->select($this->Customer);
         $query->select($this->Customer->AddressCustomers);
-
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
+            $query->select($this->Customer->Feedbacks);
+        }
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',

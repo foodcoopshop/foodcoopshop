@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-06-30 09:21+0200\n"
+"POT-Creation-Date: 2022-07-21 08:48+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -318,6 +318,9 @@ msgid "Your_registration_was_successful."
 msgstr ""
 
 msgid "Account_created_successfully"
+msgstr ""
+
+msgid "Feedbacks"
 msgstr ""
 
 msgid "All_products"
@@ -1757,10 +1760,10 @@ msgstr ""
 msgid "Members:_inactive"
 msgstr ""
 
-msgid "deactivated"
+msgid "Please_enter_between_{0}_and_{1}_characters."
 msgstr ""
 
-msgid "Please_enter_between_{0}_and_{1}_characters."
+msgid "deactivated"
 msgstr ""
 
 msgid "Please_enter_a_valid_IBAN."
@@ -1977,6 +1980,9 @@ msgid "Activities"
 msgstr ""
 
 msgid "Credit"
+msgstr ""
+
+msgid "Feedback"
 msgstr ""
 
 msgid "Shopping_with_selling_price"
@@ -2243,6 +2249,12 @@ msgstr ""
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr ""
 
+msgid "Members_feedback"
+msgstr ""
+
+msgid "Manufacturers_feedback"
+msgstr ""
+
 msgid "Imprint"
 msgstr ""
 
@@ -2399,6 +2411,9 @@ msgstr ""
 msgid "E-mail_address"
 msgstr ""
 
+msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
+msgstr ""
+
 msgid "You_can_change_your_password_here"
 msgstr ""
 
@@ -2517,9 +2532,6 @@ msgid "Please_click_on_this_link_to_activate_your_new_password"
 msgstr ""
 
 msgid "your_new_password_is:"
-msgstr ""
-
-msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
 msgstr ""
 
 msgid "thank_you_for_your_order_from_{0}."

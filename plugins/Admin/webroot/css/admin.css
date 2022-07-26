@@ -145,7 +145,6 @@ form.fcs-form .bootstrap-select {
   font-size: 12px;
   word-break: break-word;
 }
-
 #logo {
     position: absolute;
     right: 20px;
@@ -736,7 +735,7 @@ form.fcs-form .input.select .after.small,
 form.fcs-form .input.fcs-upload .after.small {
     float: right;
     line-height: 28px;
-    margin-left: 3px;
+    margin-left: 5px;
 }
 div.date-field-wrapper {
     position: relative;
@@ -961,4 +960,15 @@ body.invoices tr.data.cancelled {
 }
 body.action_logs.index tr.data div.changed img {
     max-width: 100%;
+}
+body.feedbacks textarea,
+body.feedbacks form div.error-message {
+    width: 500px;
+}
+body.feedbacks textarea {
+    height: 190px;
+    padding: 5px;
+}
+body.feedbacks form div.error-message {
+    margin-top: -10px;
 }

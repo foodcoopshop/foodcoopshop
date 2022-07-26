@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-06-30 09:21+0200\n"
-"PO-Revision-Date: 2022-06-30 09:21+0200\n"
+"POT-Creation-Date: 2022-07-21 08:48+0200\n"
+"PO-Revision-Date: 2022-07-21 08:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -320,6 +320,9 @@ msgstr "Deine Registrierung war erfolgreich."
 
 msgid "Account_created_successfully"
 msgstr "Mitgliedskonto erfolgreich erstellt"
+
+msgid "Feedbacks"
+msgstr "Feedbacks"
 
 msgid "All_products"
 msgstr "Alle Produkte"
@@ -1758,11 +1761,11 @@ msgstr "Hersteller: inaktiv"
 msgid "Members:_inactive"
 msgstr "Mitglieder: inaktiv"
 
-msgid "deactivated"
-msgstr "deaktiviert"
-
 msgid "Please_enter_between_{0}_and_{1}_characters."
 msgstr "Bitte gib zwischen {0} und {1} Zeichen ein."
+
+msgid "deactivated"
+msgstr "deaktiviert"
 
 msgid "Please_enter_a_valid_IBAN."
 msgstr "Bitte gib einen gültigen IBAN ein."
@@ -1979,6 +1982,9 @@ msgstr "Aktivitäten"
 
 msgid "Credit"
 msgstr "Guthaben"
+
+msgid "Feedback"
+msgstr "Feedback"
 
 msgid "Shopping_with_selling_price"
 msgstr "Einkaufen zum Verkaufspreis"
@@ -2244,6 +2250,12 @@ msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das he
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
 
+msgid "Members_feedback"
+msgstr "Feedback von Mitgliedern"
+
+msgid "Manufacturers_feedback"
+msgstr "Feedback von Herstellern"
+
 msgid "Imprint"
 msgstr "Impressum"
 
@@ -2400,6 +2412,9 @@ msgstr "Zum Bestellen musst du dich erstmal hier einloggen"
 msgid "E-mail_address"
 msgstr "E-Mail-Adresse"
 
+msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
+msgstr "Falls du das Passwort zum Kopieren mit einem Doppelklick markierst, pass bitte auf, dass am Ende kein Leerzeichen mitkopiert wird."
+
 msgid "You_can_change_your_password_here"
 msgstr "Hier kannst du dein Passwort ändern"
 
@@ -2519,9 +2534,6 @@ msgstr "Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren"
 
 msgid "your_new_password_is:"
 msgstr "dein neues Passwort lautet:"
-
-msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
-msgstr "Falls du das Passwort zum Kopieren mit einem Doppelklick markierst, pass bitte auf, dass am Ende kein Leerzeichen mitkopiert wird."
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "vielen Dank für deine Bestellung vom {0}."
@@ -2765,9 +2777,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Action_Log_Member_member_fee_deleted"
 #~ msgstr "Mitglied: Mitgliedsbeitrag gelöscht"
-
-#~ msgid "Member_fee"
-#~ msgstr "Mitgliedsbeitrag"
 
 #~ msgid "Payment_type_member_fee"
 #~ msgstr "Mitgliedsbeitrag"

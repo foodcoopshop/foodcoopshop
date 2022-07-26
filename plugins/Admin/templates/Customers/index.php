@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 ?>
 <div id="customers-list">
@@ -23,7 +24,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".ModalCustomerStatusEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalCustomerGroupEdit.init();" .
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button, .customer-email-button');" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button, .customer-email-button, .feedback-button');" .
             Configure::read('app.jsNamespace') . ".ModalCustomerCommentEdit.init();"
     ]);
     ?>
@@ -79,6 +80,9 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
 }
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+    echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
+}
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
@@ -94,6 +98,8 @@ $i = 0;
 $sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
 $sumNewsletter = 0;
+$sumFeedback = 0;
+$sumFeedbackNotApproved = 0;
 foreach ($customers as $customer) {
     $i ++;
 
@@ -263,6 +269,30 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+        echo '<td align="center">';
+        if (!empty($customer->feedback)) {
+            $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
+            $approved = $feedbackTable->isApproved($customer->feedback);
+            $tooltipContent = __d('admin', 'created') . ': ' . $customer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
+            $tooltipContent .= __d('admin', 'changed') . ': ' . $customer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
+            echo $this->Html->link(
+                '<i class="fas fa-heart '.(!$approved ? 'not-ok' : 'ok').'"></i>',
+                $this->Slug->getFeedbackForm($customer->id_customer),
+                [
+                    'class' => 'btn btn-outline-light feedback-button',
+                    'escape' => false,
+                    'title' => $tooltipContent,
+                ]
+            );
+            $sumFeedback++;
+            if (!$approved) {
+                $sumFeedbackNotApproved++;
+            }
+        }
+        echo '</td>';
+    }
+
     echo '<td>';
     echo $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
     echo '</td>';
@@ -318,6 +348,9 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
+}
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $sumFeedback > 0) {
+    echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';
 }
 $colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {

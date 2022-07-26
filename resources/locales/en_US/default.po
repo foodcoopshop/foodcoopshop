@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-06-30 09:21+0200\n"
-"PO-Revision-Date: 2022-06-30 09:21+0200\n"
+"POT-Creation-Date: 2022-07-21 08:48+0200\n"
+"PO-Revision-Date: 2022-07-18 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -320,6 +320,10 @@ msgstr "Your registration was successful."
 
 msgid "Account_created_successfully"
 msgstr "Account created successfully"
+
+#, fuzzy
+msgid "Feedbacks"
+msgstr "My feedback"
 
 msgid "All_products"
 msgstr "All products"
@@ -1758,11 +1762,11 @@ msgstr "Manufacturers: inactive"
 msgid "Members:_inactive"
 msgstr "Members: inactive"
 
-msgid "deactivated"
-msgstr "deactivated"
-
 msgid "Please_enter_between_{0}_and_{1}_characters."
 msgstr "Please enter between {0} and {1} characters."
+
+msgid "deactivated"
+msgstr "deactivated"
 
 msgid "Please_enter_a_valid_IBAN."
 msgstr "Please enter a valid IBAN."
@@ -1979,6 +1983,10 @@ msgstr "Activities"
 
 msgid "Credit"
 msgstr "Credit"
+
+#, fuzzy
+msgid "Feedback"
+msgstr "My feedback"
 
 msgid "Shopping_with_selling_price"
 msgstr "User selling price for shopping"
@@ -2200,7 +2208,7 @@ msgid "Create_account"
 msgstr "Create account"
 
 msgid "Register_as_company?"
-msgstr ""
+msgstr "Register as company?"
 
 msgid "Street_and_number"
 msgstr "Street and nº"
@@ -2243,6 +2251,14 @@ msgstr "Your account was created but not activated yet. This means, you can't lo
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "You will get an e-mail as soon as we activate you."
+
+#, fuzzy
+msgid "Members_feedback"
+msgstr "Member fee"
+
+#, fuzzy
+msgid "Manufacturers_feedback"
+msgstr "Manufacturer panel"
 
 msgid "Imprint"
 msgstr "Imprint"
@@ -2400,6 +2416,9 @@ msgstr "You can sign in here for placing a new order"
 msgid "E-mail_address"
 msgstr "E-mail address"
 
+msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
+msgstr "Please be careful that there is no empty space at the end of the password when you double click and copy it."
+
 msgid "You_can_change_your_password_here"
 msgstr "You can change your password here"
 
@@ -2519,9 +2538,6 @@ msgstr "Please click on this link to activate your new password"
 
 msgid "your_new_password_is:"
 msgstr "your new password:"
-
-msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
-msgstr "Please be careful that there is no empty space at the end of the password when you double click and copy it."
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "thank you for order from {0}."
@@ -2763,9 +2779,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "Action_Log_Member_member_fee_deleted"
 #~ msgstr "Member: Member fee deleted"
-
-#~ msgid "Member_fee"
-#~ msgstr "Member fee"
 
 #~ msgid "Payment_type_member_fee"
 #~ msgstr "Member fee"

@@ -33,6 +33,9 @@ class CustomersTable extends AppTable
         $this->hasOne('AddressCustomers', [
             'foreignKey' => 'id_customer'
         ]);
+        $this->hasOne('Feedbacks', [
+            'foreignKey' => 'customer_id',
+        ]);
         $this->hasMany('ActiveOrderDetails', [
             'className' => 'OrderDetails',
             'foreignKey' => 'id_customer',

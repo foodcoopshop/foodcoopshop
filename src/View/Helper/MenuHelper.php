@@ -164,7 +164,30 @@ class MenuHelper extends Helper
     public function getPaymentProductMenuElement()
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => __('Credit'), 'options' => ['fa-icon' => Configure::read('app.htmlHelper')->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))]];
+            return [
+                'slug' => Configure::read('app.slugHelper')->getMyCreditBalance(),
+                'name' => __('Credit'),
+                'options' => [
+                    'fa-icon' => Configure::read('app.htmlHelper')->getFontAwesomeIconForCurrencyName(
+                        Configure::read('app.currencyName'),
+                    ),
+                ],
+            ];
+        }
+        return [];
+    }
+
+
+    public function getMyFeedbackMenuElement($appAuth)
+    {
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->user()) {
+            return [
+                'slug' => Configure::read('app.slugHelper')->getMyFeedbackForm(),
+                'name' => __('Feedback'),
+                'options' => [
+                    'fa-icon' => 'fa-heart ok',
+                ],
+            ];
         }
         return [];
     }

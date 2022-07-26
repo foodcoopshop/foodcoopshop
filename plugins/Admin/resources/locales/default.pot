@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-06-20 12:06+0200\n"
+"POT-Creation-Date: 2022-07-21 08:56+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -186,6 +186,18 @@ msgid "Deposit_account"
 msgstr ""
 
 msgid "Deposit_take_back_detail_for"
+msgstr ""
+
+msgid "My_feedback"
+msgstr ""
+
+msgid "Feedback_from_{0}"
+msgstr ""
+
+msgid "Your_feedback_was_deleted."
+msgstr ""
+
+msgid "Your_feedback_was_saved."
 msgstr ""
 
 msgid "Invoices"
@@ -1082,6 +1094,9 @@ msgstr ""
 msgid "Reminder"
 msgstr ""
 
+msgid "Feedback"
+msgstr ""
+
 msgid "Register_date"
 msgstr ""
 
@@ -1200,6 +1215,51 @@ msgid "Empty_glasses_returned_by_manufacturer"
 msgstr ""
 
 msgid "Returned_deposit_by_member"
+msgstr ""
+
+msgid "docs_route_user_feedback"
+msgstr ""
+
+msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
+msgstr ""
+
+msgid "Your_feedback_has_been_reviewed_and_is_published_on_this_site_{0}._Thank_you."
+msgstr ""
+
+msgid "Approval_info_text_{0}."
+msgstr ""
+
+msgid "Feedback_intro_text_customer_{0}."
+msgstr ""
+
+msgid "Feedback_intro_text_manufacturer_{0}."
+msgstr ""
+
+msgid "Feedback_field_explanation_text_customer."
+msgstr ""
+
+msgid "Feedback_field_explanation_text_manufacturer."
+msgstr ""
+
+msgid "Max._{0}_characters."
+msgstr ""
+
+msgid "Please_enter_your_feedback_here."
+msgstr ""
+
+msgid "Show_name?"
+msgstr ""
+
+msgid "Privacy_type_explanatin_text."
+msgstr ""
+
+msgid "Approved"
+msgstr ""
+
+msgid "Only_superadmins_can_approve_feedbacks."
+msgstr ""
+
+msgid "Delete_feedback?"
 msgstr ""
 
 msgid "All_amounts_in_{0}."
@@ -2160,9 +2220,6 @@ msgid "Thanks_for_respecting_that!"
 msgstr ""
 
 msgid "Hello"
-msgstr ""
-
-msgid "Feedback"
 msgstr ""
 
 msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
