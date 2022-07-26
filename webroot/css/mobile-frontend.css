@@ -244,11 +244,8 @@
         width: 60% ! important;
     }
     body.customers.new_password_request .btn-success {
-        float: right;
-        margin-right: 10%;
-    }
-    body.customers.new_password_request .input label {
-        width: 30% ! important;
+        float: left;
+        margin-left: 73px;
     }
     #LoginForm .input.checkbox label {
         width: 140px ! important;
