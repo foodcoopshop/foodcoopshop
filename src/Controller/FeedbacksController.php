@@ -28,6 +28,10 @@ class FeedbacksController extends FrontendController
             throw new NotFoundException('feedbacks not found');
         }
 
+        if ($this->request->getUri()->getPath() == '/feedbacks') {
+            $this->redirect(Configure::read('app.slugHelper')->getFeedbackList());
+        }
+
         $this->Feedback = $this->getTableLocator()->get('Feedbacks');
         $this->Customer = $this->getTableLocator()->get('Customers');
 

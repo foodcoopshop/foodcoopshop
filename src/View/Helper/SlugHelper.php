@@ -24,7 +24,7 @@ class SlugHelper extends Helper
 
     public function getFeedbackList()
     {
-        return '/feedbacks';
+        return '/feedback';
     }
 
     public function getMyFeedbackForm()
