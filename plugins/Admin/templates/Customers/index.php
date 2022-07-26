@@ -24,7 +24,7 @@ use Cake\Datasource\FactoryLocator;
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".ModalCustomerStatusEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalCustomerGroupEdit.init();" .
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button, .customer-email-button');" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button, .customer-email-button, .feedback-button');" .
             Configure::read('app.jsNamespace') . ".ModalCustomerCommentEdit.init();"
     ]);
     ?>
@@ -274,12 +274,15 @@ foreach ($customers as $customer) {
         if (!empty($customer->feedback)) {
             $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
             $approved = $feedbackTable->isApproved($customer->feedback);
+            $tooltipContent = __d('admin', 'created') . ': ' . $customer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
+            $tooltipContent .= __d('admin', 'changed') . ': ' . $customer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
             echo $this->Html->link(
                 '<i class="fas fa-heart '.(!$approved ? 'not-ok' : 'ok').'"></i>',
                 $this->Slug->getFeedbackForm($customer->id_customer),
                 [
-                    'class' => 'btn btn-outline-light',
+                    'class' => 'btn btn-outline-light feedback-button',
                     'escape' => false,
+                    'title' => $tooltipContent,
                 ]
             );
             $sumFeedback++;

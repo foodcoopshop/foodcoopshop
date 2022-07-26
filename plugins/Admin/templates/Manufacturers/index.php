@@ -26,7 +26,7 @@ use Cake\Datasource\FactoryLocator;
             Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace') . ".ModalImage.init('a.open-with-modal');" .
             Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');".
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button, .manufacturer-email-button, .test-order-list, .no-delivery-days-button');"
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button, .manufacturer-email-button, .test-order-list, .no-delivery-days-button, .feedback-button');"
     ]);
     $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#manufacturer-'
@@ -287,12 +287,15 @@ foreach ($manufacturers as $manufacturer) {
         if (!empty($manufacturer->feedback)) {
             $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
             $approved = $feedbackTable->isApproved($manufacturer->feedback);
+            $tooltipContent = __d('admin', 'created') . ': ' . $manufacturer->feedback->created->i18nFormat($this->Time->getI18Format('DateNTimeShort2')) . '<br />';
+            $tooltipContent .= __d('admin', 'changed') . ': ' . $manufacturer->feedback->modified->i18nFormat($this->Time->getI18Format('DateNTimeShort2'));
             echo $this->Html->link(
                 '<i class="fas fa-heart '.(!$approved ? 'not-ok' : 'ok').'"></i>',
                 $this->Slug->getFeedbackForm($manufacturer->feedback->customer_id),
                 [
-                    'class' => 'btn btn-outline-light',
+                    'class' => 'btn btn-outline-light feedback-button',
                     'escape' => false,
+                    'title' => $tooltipContent,
                 ]
                 );
             $sumFeedback++;
