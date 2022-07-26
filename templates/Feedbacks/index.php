@@ -22,12 +22,39 @@ if (empty($feedbacks['customers']) && empty($feedbacks['manufacturers'])) {
     echo '<h1 style="margin-bottom:40px;">' . $title_for_layout . '</h1>';
 }
 
+$myEditLink = $this->Html->link(
+    '<i class="fas fa-pencil-alt"></i>',
+    $this->Slug->getMyFeedbackForm(),
+    [
+        'class' => 'btn btn-outline-light edit-shortcut-button',
+        'title' => __('Edit'),
+        'escape' => false,
+    ],
+);
+
 if (!empty($feedbacks['customers'])) {
     echo '<h1 style="margin-bottom:40px;">' . __('Members_feedback') . '</h1>';
     foreach($feedbacks['customers'] as $feedback) {
+
+        $additionalMetaData = '';
+        if ($appAuth->isSuperadmin()) {
+            $additionalMetaData = $this->Html->link(
+                '<i class="fas fa-pencil-alt"></i>',
+                $this->Slug->getFeedbackForm($feedback->customer_id),
+                [
+                    'class' => 'btn btn-outline-light edit-shortcut-button',
+                    'title' => __('Edit'),
+                    'escape' => false,
+                ],
+            );
+        }
+        if ($appAuth->user() && $feedback->customer_id == $appAuth->getUserId()) {
+            $additionalMetaData = $myEditLink;
+        }
+
         echo $this->element('feedback/quote', [
             'quote' => $feedback->text,
-            'metaData' => $feedback->privatized_name,
+            'metaData' => $feedback->privatized_name . $additionalMetaData,
         ]);
     }
 }
@@ -35,9 +62,26 @@ if (!empty($feedbacks['customers'])) {
 if (!empty($feedbacks['manufacturers'])) {
     echo '<h1 style="margin-bottom:40px;">' . __('Manufacturers_feedback') . '</h1>';
     foreach($feedbacks['manufacturers'] as $feedback) {
+
+        $additionalMetaData = '';
+        if ($appAuth->isSuperadmin()) {
+            $additionalMetaData = $this->Html->link(
+                '<i class="fas fa-pencil-alt"></i>',
+                $this->Slug->getFeedbackForm($feedback->customer_id),
+                [
+                    'class' => 'btn btn-outline-light edit-shortcut-button',
+                    'title' => __('Edit'),
+                    'escape' => false,
+                ],
+            );
+        }
+        if ($appAuth->user() && $feedback->customer_id == $appAuth->getUserId()) {
+            $additionalMetaData = $myEditLink;
+        }
+
         echo $this->element('feedback/quote', [
             'quote' => $feedback->text,
-            'metaData' => $feedback->privatized_name,
+            'metaData' => $feedback->privatized_name . $additionalMetaData,
         ]);
     }
 }

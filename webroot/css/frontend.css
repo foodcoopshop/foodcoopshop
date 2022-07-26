@@ -1284,3 +1284,7 @@ body.blog_posts.detail p.neighbors a {
     background-color: #fff;
     border-radius: 22px;
 }
+body.feedbacks.index .edit-shortcut-button {
+    position: absolute;
+    right: 10px;
+}
