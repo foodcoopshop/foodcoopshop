@@ -13,11 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 if (count($pickupDay) == 2 && $groupBy == '') {
     echo '<td class="date-short2">';
-        echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        echo $orderDetail->pickup_day->i18nFormat($this->Time->getI18Format('DateLong2'));
     echo '</td>';
 }
 
