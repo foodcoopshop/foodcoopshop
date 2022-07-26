@@ -322,7 +322,7 @@ body.customers.new_password_request .input {
     margin-right: 10px;
 }
 body.customers.new_password_request .input input {
-    width: 250px;
+    width: 270px;
     margin-top: -2px;
 }
 #login-form div.error-message {
