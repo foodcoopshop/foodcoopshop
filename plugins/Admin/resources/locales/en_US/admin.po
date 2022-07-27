@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-21 08:56+0200\n"
+"POT-Creation-Date: 2022-07-27 09:38+0200\n"
 "PO-Revision-Date: 2022-07-18 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -196,12 +196,16 @@ msgid "Feedback_from_{0}"
 msgstr "Feedback from {0}"
 
 #, fuzzy
-msgid "Your_feedback_was_deleted."
+msgid "Your_feedback_has_been_{0}."
 msgstr "Your profile was changed."
 
 #, fuzzy
-msgid "Your_feedback_was_saved."
-msgstr "Your profile was changed."
+msgid "The_feedback_of_{0}_has_been_{1}."
+msgstr "The blog post {0} has been {1}."
+
+#, fuzzy
+msgid "approved"
+msgstr "Approved"
 
 msgid "Invoices"
 msgstr "Invoices"
@@ -2384,6 +2388,10 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "Your_feedback_was_saved."
+#~ msgstr "Your profile was changed."
 
 #~ msgid "Privacy_type"
 #~ msgstr "Privacy type"

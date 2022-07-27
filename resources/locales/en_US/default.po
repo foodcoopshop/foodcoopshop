@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-21 08:48+0200\n"
+"POT-Creation-Date: 2022-07-27 09:38+0200\n"
 "PO-Revision-Date: 2022-07-18 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -322,7 +322,7 @@ msgid "Account_created_successfully"
 msgstr "Account created successfully"
 
 #, fuzzy
-msgid "Feedbacks"
+msgid "Feedback"
 msgstr "My feedback"
 
 msgid "All_products"
@@ -1558,6 +1558,22 @@ msgstr "Manufacturer: Added"
 msgid "Action_Log_Manufacturer_changed"
 msgstr "Manufacturer: Profile changed"
 
+#, fuzzy
+msgid "Action_Log_Feedback_created"
+msgstr "Member: Account created"
+
+#, fuzzy
+msgid "Action_Log_Feedback_changed"
+msgstr "Blog post: Changed"
+
+#, fuzzy
+msgid "Action_Log_Feedback_approved"
+msgstr "Member: Payback added"
+
+#, fuzzy
+msgid "Action_Log_Feedback_deleted"
+msgstr "Member: Payback deleted"
+
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Database backup done"
 
@@ -1983,10 +1999,6 @@ msgstr "Activities"
 
 msgid "Credit"
 msgstr "Credit"
-
-#, fuzzy
-msgid "Feedback"
-msgstr "My feedback"
 
 msgid "Shopping_with_selling_price"
 msgstr "User selling price for shopping"
@@ -2646,6 +2658,10 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "Feedbacks"
+#~ msgstr "My feedback"
 
 #~ msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 #~ msgstr "Please enter how much you want to pay in {0}."

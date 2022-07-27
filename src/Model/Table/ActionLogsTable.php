@@ -431,6 +431,31 @@ class ActionLogsTable extends AppTable
                 ]
             ],
 
+            'user_feedback_added' => [
+                'name' => __('Action_Log_Feedback_created'),
+                'access' => [
+                    'manufacturer',
+                ],
+            ],
+            'user_feedback_changed' => [
+                'name' => __('Action_Log_Feedback_changed'),
+                'access' => [
+                    'manufacturer',
+                ],
+            ],
+            'user_feedback_approved' => [
+                'name' => __('Action_Log_Feedback_approved'),
+                'access' => [
+                    'manufacturer',
+                ],
+            ],
+            'user_feedback_deleted' => [
+                'name' => __('Action_Log_Feedback_deleted'),
+                'access' => [
+                    'manufacturer',
+                ],
+            ],
+
             'cronjob_backup_database' => [
                 'name' => __('Action_Log_Cronjob_database_backup_done')
             ],

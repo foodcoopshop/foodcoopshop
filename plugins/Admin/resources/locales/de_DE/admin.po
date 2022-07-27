@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-21 08:56+0200\n"
-"PO-Revision-Date: 2022-07-21 09:31+0200\n"
+"POT-Creation-Date: 2022-07-27 09:38+0200\n"
+"PO-Revision-Date: 2022-07-27 09:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -195,11 +195,14 @@ msgstr "Mein Feedback"
 msgid "Feedback_from_{0}"
 msgstr "Feedback von {0}"
 
-msgid "Your_feedback_was_deleted."
-msgstr "Dein Feedback wurde gelöscht."
+msgid "Your_feedback_has_been_{0}."
+msgstr "Dein Feedback wurde {0}."
 
-msgid "Your_feedback_was_saved."
-msgstr "Dein Feedback wurde gespeichert."
+msgid "The_feedback_of_{0}_has_been_{1}."
+msgstr "Das Feedback von {0} wurde {1}."
+
+msgid "approved"
+msgstr "freigeschaltet"
 
 msgid "Invoices"
 msgstr "Rechnungen"
@@ -2381,6 +2384,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Your_feedback_was_saved."
+#~ msgstr "Dein Feedback wurde gespeichert."
 
 #~ msgid "Privacy_type"
 #~ msgstr "Datenschutz"

@@ -163,15 +163,30 @@ class FeedbacksController extends AdminAppController
             $this->set('feedback', $feedback);
         } else {
 
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+            $userNameForActionLog = !empty($manufacturer) ? $manufacturer->name : $customer->name;
+
             if (!$isEditMode) {
                 $feedback->customer_id = $this->getCustomerId();
             }
 
             if (!empty($this->getRequest()->getData('Feedbacks.delete_feedback'))) {
                 $this->Feedback->delete($feedback);
-                $message = __d('admin', 'Your_feedback_was_deleted.');
+                $actionLogType = 'user_feedback_deleted';
+                if ($this->isOwnForm) {
+                    $message = __d('admin', 'Your_feedback_has_been_{0}.', [
+                        __d('admin', 'deleted'),
+                    ]);
+                } else {
+                    $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
+                        '<b>' . $userNameForActionLog . '</b>',
+                        __d('admin', 'deleted'),
+                    ]);
+                }
+                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
                 $this->Flash->success($message);
                 $this->redirect($this->getPreparedReferer());
+                return;
             }
 
             $valueForApproved = FrozenTime::now();
@@ -186,11 +201,37 @@ class FeedbacksController extends AdminAppController
                 $feedback->approved = $valueForNotApproved;
                 if ($feedback->approved_checkbox) {
                     $feedback->approved = $valueForApproved;
+                    $actionLogType = 'user_feedback_approved';
+                    $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
+                        '<b>' . $userNameForActionLog . '</b>',
+                        __d('admin', 'approved'),
+                    ]);
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
                 }
             }
 
-            $this->Feedback->save($feedback);
-            $message = __d('admin', 'Your_feedback_was_saved.');
+            if (!$isEditMode) {
+                $messageSuffix = __d('admin', 'created');
+                $actionLogType = 'user_feedback_added';
+            } else {
+                $messageSuffix = __d('admin', 'changed');
+                $actionLogType = 'user_feedback_changed';
+            }
+
+            if ($this->isOwnForm) {
+                $message = __d('admin', 'Your_feedback_has_been_{0}.', [
+                    $messageSuffix,
+                ]);
+            } else {
+                $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
+                    '<b>' . $userNameForActionLog . '</b>',
+                    $messageSuffix,
+                ]);
+            }
+
+            $feedback = $this->Feedback->save($feedback);
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+
             $this->Flash->success($message);
             $this->redirect($this->getPreparedReferer());
         }

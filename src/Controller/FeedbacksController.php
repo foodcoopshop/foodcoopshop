@@ -67,7 +67,7 @@ class FeedbacksController extends FrontendController
         }
         $this->set('feedbacks', $preparedFeedbacks);
 
-        $this->set('title_for_layout', __('Feedbacks'));
+        $this->set('title_for_layout', __('Feedback'));
     }
 
 }

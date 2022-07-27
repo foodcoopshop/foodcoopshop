@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-07-21 08:48+0200\n"
+"POT-Creation-Date: 2022-07-27 09:38+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -320,7 +320,7 @@ msgstr ""
 msgid "Account_created_successfully"
 msgstr ""
 
-msgid "Feedbacks"
+msgid "Feedback"
 msgstr ""
 
 msgid "All_products"
@@ -1556,6 +1556,18 @@ msgstr ""
 msgid "Action_Log_Manufacturer_changed"
 msgstr ""
 
+msgid "Action_Log_Feedback_created"
+msgstr ""
+
+msgid "Action_Log_Feedback_changed"
+msgstr ""
+
+msgid "Action_Log_Feedback_approved"
+msgstr ""
+
+msgid "Action_Log_Feedback_deleted"
+msgstr ""
+
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr ""
 
@@ -1980,9 +1992,6 @@ msgid "Activities"
 msgstr ""
 
 msgid "Credit"
-msgstr ""
-
-msgid "Feedback"
 msgstr ""
 
 msgid "Shopping_with_selling_price"

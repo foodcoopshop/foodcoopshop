@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-21 08:48+0200\n"
-"PO-Revision-Date: 2022-07-21 08:48+0200\n"
+"POT-Creation-Date: 2022-07-27 09:38+0200\n"
+"PO-Revision-Date: 2022-07-27 09:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -321,8 +321,8 @@ msgstr "Deine Registrierung war erfolgreich."
 msgid "Account_created_successfully"
 msgstr "Mitgliedskonto erfolgreich erstellt"
 
-msgid "Feedbacks"
-msgstr "Feedbacks"
+msgid "Feedback"
+msgstr "Feedback"
 
 msgid "All_products"
 msgstr "Alle Produkte"
@@ -1557,6 +1557,18 @@ msgstr "Hersteller: erstellt"
 msgid "Action_Log_Manufacturer_changed"
 msgstr "Hersteller: Profil geändert"
 
+msgid "Action_Log_Feedback_created"
+msgstr "Feedback erstellt"
+
+msgid "Action_Log_Feedback_changed"
+msgstr "Feedback geändert"
+
+msgid "Action_Log_Feedback_approved"
+msgstr "Feedback freigeschaltet"
+
+msgid "Action_Log_Feedback_deleted"
+msgstr "Feedback gelöscht"
+
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Datenbank gebackupt"
 
@@ -1982,9 +1994,6 @@ msgstr "Aktivitäten"
 
 msgid "Credit"
 msgstr "Guthaben"
-
-msgid "Feedback"
-msgstr "Feedback"
 
 msgid "Shopping_with_selling_price"
 msgstr "Einkaufen zum Verkaufspreis"
@@ -2642,6 +2651,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Feedbacks"
+#~ msgstr "Feedbacks"
 
 #~ msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 #~ msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
