@@ -229,8 +229,11 @@ class FeedbacksController extends AdminAppController
                 ]);
             }
 
+            $isDirty = $feedback->isDirty('text') || $feedback->isDirty('privacy_type');
             $feedback = $this->Feedback->save($feedback);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+            if (!$isEditMode || $isDirty) {
+                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+            }
 
             $this->Flash->success($message);
             $this->redirect($this->getPreparedReferer());
