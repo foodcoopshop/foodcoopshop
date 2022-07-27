@@ -190,6 +190,7 @@ class FeedbacksController extends AdminAppController
                 return;
             }
 
+            $oldFeedback = clone $feedback;
             $valueForApproved = FrozenTime::now();
             $valueForNotApproved = FrozenTime::createFromDate(1970, 01, 01);
 
@@ -201,13 +202,16 @@ class FeedbacksController extends AdminAppController
             if ($isEditMode && $this->AppAuth->isSuperadmin()) {
                 $feedback->approved = $valueForNotApproved;
                 if ($feedback->approved_checkbox) {
+                    $wasApproved = $this->Feedback->isApproved($oldFeedback);
                     $feedback->approved = $valueForApproved;
-                    $actionLogType = 'user_feedback_approved';
-                    $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
-                        '<b>' . $userNameForActionLog . '</b>',
-                        __d('admin', 'approved'),
-                    ]);
-                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+                    if (!$wasApproved) {
+                        $actionLogType = 'user_feedback_approved';
+                        $message = __d('admin', 'The_feedback_of_{0}_has_been_{1}.', [
+                            '<b>' . $userNameForActionLog . '</b>',
+                            __d('admin', 'approved'),
+                        ]);
+                        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+                    }
                 }
             }
 
