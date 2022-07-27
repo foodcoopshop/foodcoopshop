@@ -161,6 +161,7 @@ class FeedbacksController extends AdminAppController
         if ($feedback->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('feedback', $feedback);
+            $this->render('form');
         } else {
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
