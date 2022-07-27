@@ -24,6 +24,7 @@ foodcoopshop.ModalProductAttributeAdd = {
             productId = productId[productId.length - 1];
 
             var html = '<p>' + foodcoopshop.LocalizedJs.admin.PleaseChoseTheNewAttributeForProduct0.replaceI18n(0, '<b> ' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p>';
+            html += '<p>' + foodcoopshop.LocalizedJs.admin.AttentionAttributesAreShownInSameOrderAsAddedAndThisCannotBeChangedAfterwards + '</p>';
             var productAttributesDropdown = $('#productattributeid').clone(true);
 
             if (productAttributesDropdown.find('option').length == 0) {

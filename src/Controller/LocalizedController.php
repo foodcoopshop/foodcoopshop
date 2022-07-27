@@ -164,6 +164,7 @@ class LocalizedController extends Controller
                 'PleaseEnterANumber' => __('Please_enter_a_number.'),
                 'AddNewAttributeForProduct' => __('Add_new_attribute_for_product'),
                 'PleaseChoseTheNewAttributeForProduct0' => __('Please_chose_the_new_attribute_for_product_{0}.'),
+                'AttentionAttributesAreShownInSameOrderAsAddedAndThisCannotBeChangedAfterwards' => __('Attention_attributes_are_shown_in_same_order_as_added_and_this_cannot_be_changed_afterwards.'),
                 'ThisFunctionCanOnlyBeUsedIfAttributesExist' => __('This_function_can_only_be_used_if_attributes_exist.'),
                 'ChangingDefaultAttributeInfoText0Html' => __('Changing_default_attribute_info_text_{0}_html'),
                 'ChangeDefaultAttribute' => __('Change_default_attribute'),

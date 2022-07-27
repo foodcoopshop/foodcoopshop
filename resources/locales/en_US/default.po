@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-27 09:38+0200\n"
-"PO-Revision-Date: 2022-07-27 09:42+0200\n"
+"POT-Creation-Date: 2022-07-27 11:35+0200\n"
+"PO-Revision-Date: 2022-07-27 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -677,6 +677,9 @@ msgstr "Add new attribute for product"
 
 msgid "Please_chose_the_new_attribute_for_product_{0}."
 msgstr "Please chose the new attribute for product {0}."
+
+msgid "Attention_attributes_are_shown_in_same_order_as_added_and_this_cannot_be_changed_afterwards."
+msgstr "<b>Attention:</b> Attributes are shown in the same order as they are added. This cannot be changed afterwards."
 
 msgid "This_function_can_only_be_used_if_attributes_exist."
 msgstr "This function can only be used if attributes exist."
