@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-07-27 09:38+0200\n"
-"PO-Revision-Date: 2022-07-18 17:24+0200\n"
+"PO-Revision-Date: 2022-07-27 09:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -195,17 +195,14 @@ msgstr "My feedback"
 msgid "Feedback_from_{0}"
 msgstr "Feedback from {0}"
 
-#, fuzzy
 msgid "Your_feedback_has_been_{0}."
-msgstr "Your profile was changed."
+msgstr "Your feedback has been {0}."
 
-#, fuzzy
 msgid "The_feedback_of_{0}_has_been_{1}."
-msgstr "The blog post {0} has been {1}."
+msgstr "The feedback of {0} has been {1}."
 
-#, fuzzy
 msgid "approved"
-msgstr "Approved"
+msgstr "approved"
 
 msgid "Invoices"
 msgstr "Invoices"
@@ -1230,54 +1227,50 @@ msgstr ""
 msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
 msgstr "Your feedback has not yet been reviewed by an admin and is therefore not yet published."
 
-#, fuzzy
 msgid "Your_feedback_has_been_reviewed_and_is_published_on_this_site_{0}._Thank_you."
-msgstr "Your feedback has reviewed is published. Thank you."
+msgstr "Your feedback has been reviewed and is published on <a href=\"{0}\" target=\"_blank\">this site</a>. Thank you."
 
 msgid "Approval_info_text_{0}."
-msgstr ""
+msgstr "Your feedback will be visible for everybody."
 
-#, fuzzy
 msgid "Feedback_intro_text_customer_{0}."
-msgstr "This is the explanation text."
+msgstr "Tell other people why you buy at {0}."
 
-#, fuzzy
 msgid "Feedback_intro_text_manufacturer_{0}."
-msgstr "This is the explanation text."
+msgstr "Tell other people why you sell your products to {0}."
 
-#, fuzzy
 msgid "Feedback_field_explanation_text_customer."
-msgstr "This is the explanation text."
+msgstr ""
+"<b>Examples</b>\n"
+"• Only very little waste\n"
+"• I can support local farmers"
 
-#, fuzzy
 msgid "Feedback_field_explanation_text_manufacturer."
-msgstr "This is the explanation text."
+msgstr ""
+"<b>Examples</b>\n"
+"• Pre-ordering allows a very good planning\n"
+"• No waste"
 
-#, fuzzy
 msgid "Max._{0}_characters."
-msgstr "min 8 characters"
+msgstr "Max. {0} characters."
 
-#, fuzzy
 msgid "Please_enter_your_feedback_here."
-msgstr "Please enter why the pickup day is changed."
+msgstr "Please enter your feedback here."
 
-#, fuzzy
 msgid "Show_name?"
-msgstr "Show page"
+msgstr "Show name?"
 
-#, fuzzy
 msgid "Privacy_type_explanatin_text."
-msgstr "This is the explanation text."
+msgstr "Should your name and your city be shown?"
 
 msgid "Approved"
 msgstr "Approved"
 
 msgid "Only_superadmins_can_approve_feedbacks."
-msgstr ""
+msgstr "Only superadmins can approve feedbacks."
 
-#, fuzzy
 msgid "Delete_feedback?"
-msgstr "Delete deposit take back?"
+msgstr "Delete feedback?"
 
 msgid "All_amounts_in_{0}."
 msgstr "All prices in {0}."
@@ -2123,7 +2116,7 @@ msgid "Edit_attribute_for_product_{0}"
 msgstr "Edit attribute for product {0}"
 
 msgid "This_attribute_is_the_default_attribute."
-msgstr "This attribute is the default attribute"
+msgstr "This attribute is the default attribute."
 
 msgid "Define_as_new_default_attribute"
 msgstr "Define as new default attribute"

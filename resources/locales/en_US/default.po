@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-07-27 09:38+0200\n"
-"PO-Revision-Date: 2022-07-18 12:05+0200\n"
+"PO-Revision-Date: 2022-07-27 09:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -321,9 +321,8 @@ msgstr "Your registration was successful."
 msgid "Account_created_successfully"
 msgstr "Account created successfully"
 
-#, fuzzy
 msgid "Feedback"
-msgstr "My feedback"
+msgstr "Feedback"
 
 msgid "All_products"
 msgstr "All products"
@@ -1558,21 +1557,17 @@ msgstr "Manufacturer: Added"
 msgid "Action_Log_Manufacturer_changed"
 msgstr "Manufacturer: Profile changed"
 
-#, fuzzy
 msgid "Action_Log_Feedback_created"
-msgstr "Member: Account created"
+msgstr "Feedback created"
 
-#, fuzzy
 msgid "Action_Log_Feedback_changed"
-msgstr "Blog post: Changed"
+msgstr "Feedback changed"
 
-#, fuzzy
 msgid "Action_Log_Feedback_approved"
-msgstr "Member: Payback added"
+msgstr "Feedback approved"
 
-#, fuzzy
 msgid "Action_Log_Feedback_deleted"
-msgstr "Member: Payback deleted"
+msgstr "Feedback deleted"
 
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Database backup done"
@@ -2264,13 +2259,11 @@ msgstr "Your account was created but not activated yet. This means, you can't lo
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "You will get an e-mail as soon as we activate you."
 
-#, fuzzy
 msgid "Members_feedback"
-msgstr "Member fee"
+msgstr "Member feedback"
 
-#, fuzzy
 msgid "Manufacturers_feedback"
-msgstr "Manufacturer panel"
+msgstr "Manufacturer feedback"
 
 msgid "Imprint"
 msgstr "Imprint"
