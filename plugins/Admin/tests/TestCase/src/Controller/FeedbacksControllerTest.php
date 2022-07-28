@@ -59,6 +59,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
 
         $this->get($this->Slug->getFeedbackList());
         $this->assertResponseContains($text);
+        $this->assertResponseContains('Demo, Scharnstein');
         $this->assertResponseContains('Feedback von Mitgliedern');
 
     }
@@ -81,6 +82,7 @@ class FeedbacksControllerTest extends AppCakeTestCase
 
         $this->get($this->Slug->getFeedbackList());
         $this->assertResponseContains($text);
+        $this->assertResponseContains('Demo Fleisch-Hersteller, Scharnstein');
         $this->assertResponseContains('Feedback von Herstellern');
 
     }
