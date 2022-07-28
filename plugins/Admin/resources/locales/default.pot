@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-07-27 09:38+0200\n"
+"POT-Creation-Date: 2022-07-28 10:58+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1128,6 +1128,9 @@ msgid "activate"
 msgstr ""
 
 msgid "Show_credit"
+msgstr ""
+
+msgid "Create_feedback_for_{0}."
 msgstr ""
 
 msgid "Purchase_price_abbreviation"

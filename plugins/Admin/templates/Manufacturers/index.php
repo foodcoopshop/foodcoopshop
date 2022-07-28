@@ -302,6 +302,19 @@ foreach ($manufacturers as $manufacturer) {
             if (!$approved) {
                 $sumFeedbackNotApproved++;
             }
+        } else {
+            $tooltipContent = __d('admin', 'Create_feedback_for_{0}.', [
+                $manufacturer->name,
+            ]);
+            echo $this->Html->link(
+                '<i class="far fa-heart ok"></i>',
+                $this->Slug->getFeedbackForm($manufacturer->customer_record_id),
+                [
+                    'class' => 'btn btn-outline-light feedback-button',
+                    'escape' => false,
+                    'title' => $tooltipContent,
+                ],
+            );
         }
         echo '</td>';
     }

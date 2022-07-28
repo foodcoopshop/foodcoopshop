@@ -283,12 +283,25 @@ foreach ($customers as $customer) {
                     'class' => 'btn btn-outline-light feedback-button',
                     'escape' => false,
                     'title' => $tooltipContent,
-                ]
+                ],
             );
             $sumFeedback++;
             if (!$approved) {
                 $sumFeedbackNotApproved++;
             }
+        } else {
+            $tooltipContent = __d('admin', 'Create_feedback_for_{0}.', [
+                $customer->name,
+            ]);
+            echo $this->Html->link(
+                '<i class="far fa-heart ok"></i>',
+                $this->Slug->getFeedbackForm($customer->id_customer),
+                [
+                    'class' => 'btn btn-outline-light feedback-button',
+                    'escape' => false,
+                    'title' => $tooltipContent,
+                ],
+            );
         }
         echo '</td>';
     }
