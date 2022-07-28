@@ -19,7 +19,7 @@
     margin: 0;
     position: relative;
     text-shadow: 0 1px white;
-    z-index: 600;
+    z-index: 50;
 }
 
 .testimonial-quote blockquote * {
