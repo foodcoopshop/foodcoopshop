@@ -53,6 +53,11 @@ class FeedbacksControllerTest extends AppCakeTestCase
         $this->get($this->Slug->getFeedbackList());
         $this->assertResponseNotContains($text);
 
+        // never approve, even if feedback is edited
+        $this->doPostMyFeedbackForm($text, 10, false);
+        $this->get($this->Slug->getFeedbackList());
+        $this->assertResponseNotContains($text);
+
         $this->loginAsSuperadmin();
         $this->doPostFeedbackForm(Configure::read('test.customerId'), $text, $privacyType, true);
         $this->assertFlashMessage('Das Feedback von <b>Demo Mitglied</b> wurde geändert.');

@@ -215,6 +215,10 @@ class FeedbacksController extends AdminAppController
                 }
             }
 
+            if (!($this->AppAuth->isAdmin() || $this->AppAuth->isSuperadmin())) {
+                $feedback->approved = $valueForNotApproved;
+            }
+
             if (!$isEditMode) {
                 $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'user_feedback_added';
