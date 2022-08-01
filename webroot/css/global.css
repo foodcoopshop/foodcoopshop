@@ -201,7 +201,7 @@ h2.warning {
 div.warning {
     color: #f3515c;
 }
-h2.info a {
+h2.info a:not(.btn) {
     color: #fff ! important;
     text-decoration: underline ! important;
 }
