@@ -1025,7 +1025,7 @@ class ProductsTable extends AppTable
                 $product->price_is_zero = true;
             }
             $product->unit = null;
-            if (!empty($product->unit_product)) {
+            if (empty($product->product_attributes) && !empty($product->unit_product)) {
 
                 $product->unit = $product->unit_product;
 
