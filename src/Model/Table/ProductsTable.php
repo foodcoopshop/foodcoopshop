@@ -822,10 +822,6 @@ class ProductsTable extends AppTable
         return false;
     }
 
-    /**
-     * @param array $products
-     * @return array $preparedProducts
-     */
     public function getProductsForBackend($appAuth, $productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
     {
 
