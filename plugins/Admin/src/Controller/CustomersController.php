@@ -723,6 +723,7 @@ class CustomersController extends AdminAppController
                 'Customers.email_order_reminder_enabled',
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
+                'Feedbacks.modified',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();
