@@ -12,13 +12,8 @@
  * @link          https://www.foodcoopshop.com
  */
 body {
-    font-family: 'Open Sans';
     margin: 0px 5px 15px 0px;
-    color: #333333;
     font-size: 11pt;
-    background: #efefef;
-    background-image: url(/admin/img/bg.jpg);
-    background-attachment: fixed;
 }
 
 #container {
