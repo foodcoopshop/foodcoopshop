@@ -520,6 +520,7 @@ class ProductsController extends AdminAppController
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
             $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+            $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         } else {
             try {
                 $entity2Save = $this->Product->ProductAttributes->BarcodeProductAttributes->getEntityToSaveByProductAttributeId($productAttributeId);
@@ -545,6 +546,7 @@ class ProductsController extends AdminAppController
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
             $this->ActionLog->customSave('product_attribute_changed', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+            $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeId);
         }
         $this->Flash->success($actionLogMessage);
         $this->set([
