@@ -215,6 +215,9 @@ body.categories.detail div.description-wrapper {
     right: 10px;
     top: 5px;
 }
+#user-menu li > a {
+    color: #333;
+}
 #user-menu i.fa-user {
     padding-right: 5px;
 }
