@@ -151,7 +151,7 @@ class MenuHelper extends Helper
             if ($this->getView()->getPlugin() != '') {
                 $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             } else {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             }
         } else {
             if ($this->getView()->getPlugin() == '') {
@@ -177,7 +177,6 @@ class MenuHelper extends Helper
         return [];
     }
 
-
     public function getMyFeedbackMenuElement($appAuth)
     {
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->user()) {
@@ -190,6 +189,106 @@ class MenuHelper extends Helper
             ];
         }
         return [];
+    }
+
+    public function getOrderDetailsGroupByCustomerMenuElement()
+    {
+        return [
+            'slug' => Configure::read('app.slugHelper')->getOrderDetailsList().'?groupBy=customer',
+            'name' => __d('admin', 'Orders'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-shopping-cart',
+            ],
+        ];
+    }
+
+    public function getChangedOrderedProductsMenuElement()
+    {
+        return [
+            'slug' => Configure::read('app.slugHelper')->getActionLogsList().'/index/?types[]=order_detail_cancelled&types[]=order_detail_product_price_changed&types[]=order_detail_product_quantity_changed&types[]=order_detail_product_amount_changed&types[]=order_detail_customer_changed',
+            'name' => __d('admin', 'Order_adaptions'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-times',
+            ],
+        ];
+    }
+
+    public function getCustomerProfileMenuElement()
+    {
+        return [
+            'slug' => Configure::read('app.slugHelper')->getCustomerProfile(),
+            'name' => __d('admin', 'My_data'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-home',
+            ],
+        ];
+    }
+
+    public function getActionLogsMenuElement()
+    {
+        return [
+            'slug' => Configure::read('app.slugHelper')->getActionLogsList(),
+            'name' => __d('admin', 'Activities'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-eye',
+            ],
+        ];
+    }
+
+    public function getChangePasswordMenuElement()
+    {
+        return [
+            'slug' => Configure::read('app.slugHelper')->getChangePassword(),
+            'name' => __d('admin', 'Change_password'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-key',
+            ],
+        ];
+    }
+
+    public function getMyInvoicesMenuElement()
+    {
+        return [
+            'slug' => Configure::read('app.slugHelper')->getMyInvoices(),
+            'name' => __d('admin', 'My_invoices'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-file-invoice',
+            ],
+        ];
+    }
+
+    public function getCustomerMenuElements($appAuth) {
+
+        $menu = [];
+
+        $paymentProductMenuElement = $this->getPaymentProductMenuElement();
+        $orderDetailsGroupedByCustomerMenuElement = $this->getOrderDetailsGroupByCustomerMenuElement();
+        $changedOrderedProductsMenuElement = $this->getChangedOrderedProductsMenuElement();
+        $myFeedbackMenuElement = $this->getMyFeedbackMenuElement($appAuth);
+        $customerProfileMenuElement = $this->getCustomerProfileMenuElement();
+        $actionLogsMenuElement = $this->getActionLogsMenuElement();
+        $changePasswordMenuElement = $this->getChangePasswordMenuElement();
+        $myInvoicesMenuElement = $this->getMyInvoicesMenuElement();
+
+        if (Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
+            $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
+            $menu[] = $orderDetailsGroupedByCustomerMenuElement;
+        }
+        if (!empty($myFeedbackMenuElement)) {
+            $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
+        }
+        $menu[] = $customerProfileMenuElement;
+        if (! empty($paymentProductMenuElement)) {
+            $menu[]= $paymentProductMenuElement;
+        }
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $menu[] = $myInvoicesMenuElement;
+        }
+        $menu[] = $changePasswordMenuElement;
+        $menu[] = $actionLogsMenuElement;
+
+        return $menu;
+
     }
 
 }
