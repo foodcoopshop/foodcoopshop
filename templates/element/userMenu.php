@@ -34,7 +34,7 @@ if ($appAuth->isManufacturer()) {
 
 if ($appAuth->user()) {
     if (!$appAuth->isOrderForDifferentCustomerMode()) {
-        $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'fa-fw fa-user']];
+        $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
     }
     if ($appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
@@ -42,7 +42,7 @@ if ($appAuth->user()) {
 }
 
 if ($appAuth->user() && !$appAuth->isCustomer() && !$appAuth->isOrderForDifferentCustomerMode()) {
-    $menu[0]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'fa-fw fa-gear']];
+    $menu[0]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
 }
 
 if ($appAuth->isCustomer()) {
@@ -57,7 +57,7 @@ if (!$appAuth->isOrderForDifferentCustomerMode()) {
             'slug' => $this->Slug->getSelfService(),
             'name' => __('Self_service'),
             'options' => [
-                'fa-icon' => 'fa-fw fa-shopping-bag',
+                'fa-icon' => 'ok fa-fw fa-shopping-bag',
             ],
         ];
     }
