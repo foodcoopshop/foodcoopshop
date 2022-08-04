@@ -101,7 +101,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         ]
     ];
 
-    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+    if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getDepositList(),
             'name' => __d('admin', 'Deposit_account'),
@@ -250,7 +250,7 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw ok fa-cogs'
         ]
     ];
-    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+    if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $od = FactoryLocator::get('Table')->get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
