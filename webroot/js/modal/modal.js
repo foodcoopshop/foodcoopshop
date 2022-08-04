@@ -79,7 +79,9 @@ foodcoopshop.Modal = {
         html += '<div class="modal-content">';
         html += '<div class="modal-header">';
         html += '<h5 class="modal-title">' + title + '</h5>';
-        html += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '"></button>';
+        html += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '">';
+        html += '<i class="fas fa-2x fa-times"></i>';
+        html += '</button>';
         html += '</div>';
         html += '<div class="modal-body">' + body + '</div>';
         html += '<div class="modal-footer">';

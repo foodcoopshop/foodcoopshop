@@ -31,11 +31,8 @@
     right: 25px;
     opacity: 1;
 }
-.modal-header .btn-close::after {
-    font-family: 'Font Awesome 6 Free';
-    content: "\58" ! important;
+.modal-header .btn-close i {
     color: #fff;
-    font-size: 20px;
 }
 .modal-header .btn-close:hover {
     opacity: .7;
