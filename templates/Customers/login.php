@@ -28,10 +28,6 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 ?>
 <div id="login-form" class="form">
 
-    <?php
-    $btnClass = 'btn-success';
-    ?>
-
   <h1><?php echo $title_for_layout; ?></h1>
 
     <?php
@@ -73,7 +69,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     ?>
 
     <div class="sc"></div>
-    <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in'); ?></button>
+    <button type="submit" class="btn btn-outline-light"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in'); ?></button>
 
     <?php echo $this->Form->end(); ?>
 

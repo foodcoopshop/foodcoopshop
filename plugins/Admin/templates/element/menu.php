@@ -23,54 +23,18 @@ if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeI
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
 $myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($appAuth);
+$orderDetailsGroupedByCustomerMenuElement = $this->Menu->getOrderDetailsGroupByCustomerMenuElement();
+$changedOrderedProductsMenuElement = $this->Menu->getChangedOrderedProductsMenuElement();
+$customerProfileMenuElement = $this->Menu->getCustomerProfileMenuElement();
+$actionLogsMenuElement = $this->Menu->getActionLogsMenuElement();
+$changePasswordMenuElement = $this->Menu->getChangePasswordMenuElement();
+$myInvoicesMenuElement = $this->Menu->getMyInvoicesMenuElement();
 
-$actionLogsMenuElement = [
-    'slug' => $this->Slug->getActionLogsList(),
-    'name' => __d('admin', 'Activities'),
-    'options' => [
-        'fa-icon' => 'fa-fw ok fa-eye'
-    ]
-];
-$changedOrderedProductsMenuElement = [
-    'slug' => $this->Slug->getActionLogsList().'/index/?types[]=order_detail_cancelled&types[]=order_detail_product_price_changed&types[]=order_detail_product_quantity_changed&types[]=order_detail_product_amount_changed&types[]=order_detail_customer_changed',
-    'name' => __d('admin', 'Order_adaptions'),
-    'options' => [
-        'fa-icon' => 'fa-fw ok fa-times'
-    ]
-];
 $orderListsMenuElement = [
     'slug' => $this->Slug->getOrderLists(),
     'name' => __d('admin', 'Order_lists'),
     'options' => [
         'fa-icon' => 'fa-fw ok fa-book'
-    ]
-];
-$orderDetailsGroupedByCustomerMenuElement = [
-    'slug' => $this->Slug->getOrderDetailsList().'?groupBy=customer',
-    'name' => __d('admin', 'Orders'),
-    'options' => [
-        'fa-icon' => 'fa-fw ok fa-shopping-cart'
-    ]
-];
-$customerProfileMenuElement = [
-    'slug' => $this->Slug->getCustomerProfile(),
-    'name' => __d('admin', 'My_data'),
-    'options' => [
-        'fa-icon' => 'fa-fw ok fa-home'
-    ]
-];
-$changePasswordMenuElement = [
-    'slug' => $this->Slug->getChangePassword(),
-    'name' => __d('admin', 'Change_password'),
-    'options' => [
-        'fa-icon' => 'fa-fw ok fa-key'
-    ]
-];
-$myInvoicesMenuElement = [
-    'slug' => $this->Slug->getMyInvoices(),
-    'name' => __d('admin', 'My_invoices'),
-    'options' => [
-        'fa-icon' => 'fa-fw ok fa-file-invoice'
     ]
 ];
 $blogPostsMenuElement = [
@@ -103,22 +67,7 @@ $menu[] = [
 ];
 
 if ($appAuth->isCustomer()) {
-    if (Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
-        $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
-        $menu[] = $orderDetailsGroupedByCustomerMenuElement;
-    }
-    if (!empty($myFeedbackMenuElement)) {
-        $customerProfileMenuElement['children'][] = $myFeedbackMenuElement;
-    }
-    $menu[] = $customerProfileMenuElement;
-    if (! empty($paymentProductMenuElement)) {
-        $menu[]= $paymentProductMenuElement;
-    }
-    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        $menu[] = $myInvoicesMenuElement;
-    }
-    $menu[] = $changePasswordMenuElement;
-    $menu[] = $actionLogsMenuElement;
+    $menu = array_merge($menu, $this->Menu->getCustomerMenuElements($appAuth));
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
@@ -343,7 +292,6 @@ $footerHtml = '';
 if ($appAuth->isManufacturer() && !empty($appAuth->getManufacturerCustomer()) && !empty($appAuth->getManufacturerCustomer()['address_customer'])) {
     $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->getManufacturerCustomer()['name'] . ', ' . $appAuth->getManufacturerCustomer()['email']. ', ' . $appAuth->getManufacturerCustomer()['address_customer']['phone_mobile'];
 }
-
 echo $this->Menu->render($menu, [
     'id' => 'menu',
     'class' => 'vertical menu',

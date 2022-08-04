@@ -210,26 +210,46 @@ body.categories.detail div.description-wrapper {
 #main-menu a.active::after {
     width: 100%;
 }
-
 #user-menu {
     position: absolute;
+    right: 10px;
     top: 5px;
-    right: 0;
-    line-height: 26px;
-    margin-bottom: 2px;
 }
-#user-menu > li {
-    float: left;
-    margin-right: 10px;
-}
-#user-menu > li a {
+#user-menu li > a {
     color: #333;
 }
-#user-menu > li a.btn-success {
-    color: #fff;
+#user-menu i.fa-user {
+    padding-right: 5px;
 }
-#user-menu > li:not(:last-of-type):after {
-    padding-left: 5px;
+#user-menu > li {
+    padding-bottom: 5px;
+}
+#user-menu li ul {
+    position: absolute;
+    right: -11px;
+    top: 25px;
+    width: 170px;
+    border: 1px solid #d6d4d4;
+    background: #fff;
+    padding: 5px;
+    z-index: 1000;
+    display: none;
+}
+#user-menu li ul li {
+    float: left;
+    line-height: 25px;
+    width: 100%;
+    margin-left: 5px;
+}
+#user-menu li ul li a {
+    display: block;
+    width: 100%;
+}
+#user-menu li ul li a.has-icon i {
+    padding-right: 20px;
+}
+#user-menu li ul ul {
+    display: none ! important; /* never show third level */
 }
 #login-form {
     width: 440px;
@@ -335,7 +355,7 @@ body.customers.new_password_request .input input {
 #login-form #LoginForm button {
     float: right;
     margin-right: 5px;
-    margin-top: -54px;
+    margin-top: -61px;
 }
 form div.error-message {
     margin-left: 70px;
