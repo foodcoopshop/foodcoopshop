@@ -42,6 +42,9 @@ class OrderDetailsController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'addFeedback';
+                if (!Configure::read('appDb.FCS_FEEDBACK_TO_PRODUCTS_ENABLED')) {
+                    return false;
+                }
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
                 }

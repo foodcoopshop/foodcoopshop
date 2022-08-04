@@ -126,7 +126,7 @@ INSERT INTO `fcs_configuration` VALUES
 (585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',80,'en_US','2019-08-03 20:07:08','2019-08-03 20:07:08'),
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Run self-service mode in test mode?<br /><div class=\"small\">Does not add links to main menu and to stock products.</div>','0','boolean',3100,'en_US','2019-12-09 13:46:32','2019-12-09 13:46:32'),
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Type of adding the payments<br /><div class=\"small\">How do the payment addings get into FoodCoopShop?</div>','list-upload','dropdown',1450,'en_US','2020-02-11 10:13:01','2020-02-11 10:13:01'),
-(589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Are members allowed to write feedback to products?','1','boolean',3200,'en_US','2020-06-19 09:02:50','2020-06-19 09:02:50'),
+(589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Are members allowed to write feedback to products?','0','boolean',3200,'en_US','2020-06-19 09:02:50','2020-06-19 09:02:50'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Pickup day can be selected by member on order confirmation.','0','readonly',590,'en_US','2020-07-06 10:34:39','2020-07-06 10:34:39'),
 (591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Retail mode activated?.','0','readonly',580,'en_US','2020-10-29 10:06:39','2020-10-29 10:06:39'),
 (592,1,'FCS_DEPOSIT_TAX_RATE','VAT for deposit','20.00','readonly',581,'en_US','2020-11-03 15:24:01','2020-11-03 15:24:01'),

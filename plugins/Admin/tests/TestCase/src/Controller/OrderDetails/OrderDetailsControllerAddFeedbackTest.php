@@ -22,6 +22,12 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
     public $orderDetailFeedback = 'Product tasted <i>great</i>! <b>Thank you</b>!<img src="/test.jpg"></img>';
     public $orderDetailId = 1;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->changeConfiguration('FCS_FEEDBACK_TO_PRODUCTS_ENABLED', 1);
+    }
+
     public function testAddFeedbackWithWrongOrderDetailId()
     {
         $this->loginAsSuperadmin();
