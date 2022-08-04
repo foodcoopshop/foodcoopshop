@@ -35,6 +35,9 @@
     max-width: none;
     padding: 3px;
 }
+.filter-container .right {
+    margin-top: 1px;
+}
 .filter-container h1 {
   font-size: 20px;
   float: none;

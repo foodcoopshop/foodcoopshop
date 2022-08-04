@@ -215,11 +215,13 @@ td.amount .fa-times {
     float: right;
 }
 .filter-container .right {
-    margin-top: 4px;
+    margin-top: 3px;
+    margin-bottom: -3px;
 }
 .filter-container .right .icons,
 .filter-container-not-fixed .right .icons {
     float: left;
+    margin-bottom: 3px;
 }
 .filter-container .right a.submit,
 .filter-container .right a.cancel {
@@ -451,6 +453,7 @@ body.payments.product #add-payment-button-wrapper {
 .add-button-wrapper {
     float: left;
     margin-right: 3px;
+    margin-bottom: 3px;
 }
 body.order_details #add-instant-order-button-wrapper.bottom {
     float: left;
