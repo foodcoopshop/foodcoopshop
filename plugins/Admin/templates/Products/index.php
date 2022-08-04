@@ -135,18 +135,8 @@ use Cake\Core\Configure;
                     echo '</div>';
                 }
 
-
-                if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-                    echo $this->Html->link('Bilder verschwunden?',
-                        '/admin/products/detectMissingProductImages',
-                        [
-                        'class' => 'btn btn-danger',
-                        'style' => 'margin-left: 5px;',
-                        'escape' => false,
-                    ]);
-                }
-
                 echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]);
+
                 ?>
             </div>
         <?php echo $this->Form->end(); ?>
