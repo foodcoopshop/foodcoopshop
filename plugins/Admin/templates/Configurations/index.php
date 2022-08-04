@@ -299,6 +299,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.additionalTextForInvoice</td>
+            <td><?php echo Configure::read('app.additionalTextForInvoice'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.showStatisticsForAdmins</td>
             <td><?php echo Configure::read('app.showStatisticsForAdmins') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
