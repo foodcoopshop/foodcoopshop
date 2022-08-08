@@ -874,6 +874,7 @@ body.carts #load-last-order-details,
     padding: 0;
     color: #f3515c;
     margin-top: -3px;
+    border: none;
 }
 .cart .delete a.btn:hover,
 .cart span.amount .btn:hover {
@@ -894,6 +895,7 @@ body.carts .cart:not(#cart) span.product-name-wrapper span.product-name {
 }
 body.carts .cart:not(#cart) a.btn {
     font-size: 17px;
+    border: none;
 }
 body.carts #CartsDetailForm {
     float: left;
