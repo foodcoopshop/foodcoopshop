@@ -75,6 +75,8 @@ class FileAndEmailLog extends FileLog
             '{"no_delivery_days":',
             '{"price_incl_per_unit":{"greaterThan":',
             'Form tampering protection token validation failed',
+            'General error: 1205 Lock wait timeout exceeded',
+            'Communication link failure: 1053 Server shutdown in progress',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
