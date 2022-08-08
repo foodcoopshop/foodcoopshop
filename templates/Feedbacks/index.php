@@ -32,7 +32,43 @@ $myEditLink = $this->Html->link(
     ],
 );
 
+$showWriteFeedbackLink = true;
+
+if ($appAuth->user()) {
+
+    if ($appAuth->isManufacturer()) {
+        foreach($feedbacks['manufacturers'] as $feedback) {
+            if ($appAuth->getUserId() == $feedback->customer_id) {
+                $showWriteFeedbackLink = false;
+            }
+        }
+    } else {
+        foreach($feedbacks['customers'] as $feedback) {
+            if ($appAuth->getUserId() == $feedback->customer_id) {
+                $showWriteFeedbackLink = false;
+            }
+        }
+    }
+
+} else {
+    $showWriteFeedbackLink = false;
+}
+
+$writeFeedbackLink = '';
+if ($showWriteFeedbackLink) {
+    $writeFeedbackLink = $this->Html->link(
+        __('Click_here_to_write_your_own_feedback.'),
+        $this->Slug->getMyFeedbackForm(),
+        [
+            'class' => 'btn btn-outline-light',
+            'style' => 'margin-bottom:20px;',
+        ],
+    );
+}
+
+
 if (!empty($feedbacks['customers'])) {
+    echo $writeFeedbackLink;
     echo '<h1 style="margin-bottom:40px;">' . __('Members_feedback') . '</h1>';
     foreach($feedbacks['customers'] as $feedback) {
 
@@ -61,6 +97,7 @@ if (!empty($feedbacks['customers'])) {
 
 if (!empty($feedbacks['manufacturers'])) {
     echo '<h1 style="margin-bottom:40px;">' . __('Manufacturers_feedback') . '</h1>';
+    echo $writeFeedbackLink;
     foreach($feedbacks['manufacturers'] as $feedback) {
 
         $additionalMetaData = '';

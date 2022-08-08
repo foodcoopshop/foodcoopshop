@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-27 11:35+0200\n"
-"PO-Revision-Date: 2022-07-27 11:36+0200\n"
+"POT-Creation-Date: 2022-08-08 09:47+0200\n"
+"PO-Revision-Date: 2022-08-08 09:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2261,6 +2261,9 @@ msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das he
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
+
+msgid "Click_here_to_write_your_own_feedback."
+msgstr "Hier kannst du dein eigenes Feedback verfassen."
 
 msgid "Members_feedback"
 msgstr "Feedback von Mitgliedern"

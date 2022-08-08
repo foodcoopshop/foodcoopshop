@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-07-28 10:58+0200\n"
+"POT-Creation-Date: 2022-08-08 09:47+0200\n"
 "PO-Revision-Date: 2022-07-28 11:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1938,12 +1938,6 @@ msgstr "IBAN"
 msgid "BIC"
 msgstr "BIC"
 
-msgid "Order_adaptions"
-msgstr "Order adaptions"
-
-msgid "My_data"
-msgstr "My data"
-
 msgid "Configurations"
 msgstr "Settings"
 
@@ -2384,6 +2378,12 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Order_adaptions"
+#~ msgstr "Order adaptions"
+
+#~ msgid "My_data"
+#~ msgstr "My data"
 
 #, fuzzy
 #~ msgid "Your_feedback_was_saved."
