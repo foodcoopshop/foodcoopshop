@@ -355,7 +355,7 @@ class ManufacturersController extends AdminAppController
                         ]
                     ])->first();
                 }
-                $manufacturer->customer_record_id = $customer->id_customer;
+                $manufacturer->customer_record_id = $customer->id_customer ?? 0;
             }
             $manufacturer->sum_open_order_detail = $this->OrderDetail->getOpenOrderDetailSum($manufacturer->id_manufacturer, $dateFrom);
         }
