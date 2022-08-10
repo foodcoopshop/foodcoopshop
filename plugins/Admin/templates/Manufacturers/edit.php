@@ -149,11 +149,13 @@ if ($appAuth->isManufacturer()) {
         $this->Form->unlockField('Manufacturers.tmp_image');
         echo '</div>';
 
-        echo $this->Form->control('Manufacturers.delete_image', [
-        'label' => __d('admin', 'Delete_logo?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
-        'type' => 'checkbox',
-        'escape' => false,
-        ]);
+        echo '<div class="warning">';
+            echo $this->Form->control('Manufacturers.delete_image', [
+            'label' => __d('admin', 'Delete_logo?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false,
+            ]);
+        echo '</div>';
 
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             echo '<div style="margin-top:10px;"></div>';

@@ -102,11 +102,13 @@ echo $this->Form->hidden('Customers.tmp_image');
 $this->Form->unlockField('Customers.tmp_image');
 echo '</div>';
 
-echo $this->Form->control('Customers.delete_image', [
-    'label' => __d('admin', 'Delete_profile_image?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
-    'type' => 'checkbox',
-    'escape' => false
-]);
+echo '<div class="warning">';
+    echo $this->Form->control('Customers.delete_image', [
+        'label' => __d('admin', 'Delete_profile_image?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+echo '</div>';
 
 echo $this->Form->control('Customers.address_customer.email', [
     'label' => __d('admin', 'Email')

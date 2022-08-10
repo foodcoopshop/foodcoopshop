@@ -88,18 +88,22 @@ echo $this->Form->hidden('Categories.tmp_image');
 $this->Form->unlockField('Categories.tmp_image');
 echo '</div>';
 
-echo $this->Form->control('Categories.delete_image', [
-    'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
-    'type' => 'checkbox',
-    'escape' => false
-]);
-
-if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
-    echo $this->Form->control('Categories.delete_category', [
-        'label' => __d('admin', 'Delete_category?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+echo '<div class="warning">';
+    echo $this->Form->control('Categories.delete_image', [
+        'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
+echo '</div>';
+
+if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
+    echo '<div class="warning">';
+        echo $this->Form->control('Categories.delete_category', [
+            'label' => __d('admin', 'Delete_category?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+    echo '</div>';
 }
 
 echo $this->Form->control('Categories.active', [

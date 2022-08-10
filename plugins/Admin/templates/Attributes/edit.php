@@ -60,12 +60,14 @@ echo $this->Form->control('Attributes.can_be_used_as_unit', [
 
 
 if ($this->request->getRequestTarget() != $this->Slug->getAttributeAdd()) {
-    echo $this->Form->control('Attributes.delete_attribute', [
-        'label' => __d('admin', 'Delete_attribute?').' <span class="after small">' . ($attribute->has_combined_products ? __d('admin', 'Attribute_can_not_be_deleted_because_products_are_associated_with_it.') : __d('admin', 'Check_and_do_not_forget_to_click_save_button.')) . '</span>',
-        'disabled' => ($attribute->has_combined_products ? 'disabled' : ''),
-        'escape' => false,
-        'type' => 'checkbox'
-    ]);
+    echo '<div class="warning">';
+        echo $this->Form->control('Attributes.delete_attribute', [
+            'label' => __d('admin', 'Delete_attribute?').' <span class="after small">' . ($attribute->has_combined_products ? __d('admin', 'Attribute_can_not_be_deleted_because_products_are_associated_with_it.') : __d('admin', 'Check_and_do_not_forget_to_click_save_button.')) . '</span>',
+            'disabled' => ($attribute->has_combined_products ? 'disabled' : ''),
+            'escape' => false,
+            'type' => 'checkbox'
+        ]);
+    echo '</div>';
 }
 
 echo $this->Form->end();

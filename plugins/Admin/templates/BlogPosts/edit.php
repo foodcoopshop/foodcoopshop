@@ -92,11 +92,14 @@ echo '</div>';
 echo $this->Form->hidden('BlogPosts.tmp_image');
 $this->Form->unlockField('BlogPosts.tmp_image');
 echo '</div>';
-echo $this->Form->control('BlogPosts.delete_image', [
-    'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
-    'type' => 'checkbox',
-    'escape' => false
-]);
+
+echo '<div class="warning">';
+    echo $this->Form->control('BlogPosts.delete_image', [
+        'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+echo '</div>';
 
 if (Configure::read('app.showManufacturerListAndDetailPage') && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
     echo $this->Form->control('BlogPosts.id_manufacturer', [
@@ -136,11 +139,13 @@ if (($appAuth->isSuperadmin() || $appAuth->isAdmin()) && $this->request->getRequ
 }
 
 if ($this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
-    echo $this->Form->control('BlogPosts.delete_blog_post', [
-        'label' => __d('admin', 'Delete_blog_post?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
-        'type' => 'checkbox',
-        'escape' => false
-    ]);
+    echo '<div class="warning">';
+        echo $this->Form->control('BlogPosts.delete_blog_post', [
+            'label' => __d('admin', 'Delete_blog_post?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+    echo '</div>';
 }
 
 echo $this->Form->control('BlogPosts.content', [
