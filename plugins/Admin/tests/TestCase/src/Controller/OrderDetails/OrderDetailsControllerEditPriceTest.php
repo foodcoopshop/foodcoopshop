@@ -15,6 +15,7 @@
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use Cake\TestSuite\TestEmailTransport;
 
 class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 {
@@ -95,6 +96,23 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $this->assertOrderDetailProductPriceChangedEmails(1, $expectedToEmails);
+    }
+
+    public function testEditOrderDetailPriceNoEditPriceReason()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductPrice($this->productIdA, 0);
+        $this->mockCart = $this->generateAndGetCart();
+
+        $mockOrderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailPrice($mockOrderDetailId, $this->newPrice, '', true);
+
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$mockOrderDetailId]);
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl));
+
+        $this->runAndAssertQueue();
+        $email = TestEmailTransport::getMessages()[1];
+        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Warum wurde der Preis angepasst?', $email->getBodyHtml());
     }
 
     public function testEditOrderDetailPriceNoEmailToCustomer()

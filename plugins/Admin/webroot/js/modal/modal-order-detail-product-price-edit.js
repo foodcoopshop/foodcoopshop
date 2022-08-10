@@ -67,13 +67,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
             return;
         }
 
-        var ckeditorData = CKEDITOR.instances['dialogEditPriceReason'].getData().trim();
-        if (ckeditorData == '') {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.AdaptPriceReasonIsMandatory);
-            foodcoopshop.Modal.resetButtons(modalSelector);
-            return;
-        }
-
+        var editPriceReason = CKEDITOR.instances['dialogEditPriceReason'].getData().trim();
         var productPrice = $('#dialogOrderDetailProductPricePrice').val();
 
         foodcoopshop.Helper.ajaxCall(
@@ -81,7 +75,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
             {
                 orderDetailId: $('#dialogOrderDetailProductPriceOrderDetailId').val(),
                 productPrice: productPrice,
-                editPriceReason: ckeditorData,
+                editPriceReason: editPriceReason,
                 sendEmailToCustomer: $('#dialogEditPriceSendEmailToCustomer:checked').length > 0 ? 1 : 0,
             },
             {

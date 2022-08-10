@@ -36,10 +36,12 @@ use Cake\Core\Configure;
                 <li><?php echo __d('admin', 'New_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
             </ul>
 
-            <p>
-                <?php echo __d('admin', 'Why_has_the_price_been_adpated?'); ?><br />
-                <b><?php echo '"' . $editPriceReason . '"'; ?></b>
-            </p>
+            <?php if ($editPriceReason != '') { ?>
+                <p>
+                    <?php echo __d('admin', 'Why_has_the_price_been_adpated?'); ?><br />
+                    <b><?php echo '"' . $editPriceReason . '"'; ?></b>
+                </p>
+            <?php } ?>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
