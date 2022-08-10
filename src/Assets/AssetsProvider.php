@@ -25,7 +25,7 @@ class AssetsProvider
     {
         return [
             'reset.css',
-            'components-jqueryui/themes/smoothness/jquery-ui.css',
+            'jquery-ui/dist/themes/smoothness/jquery-ui.css',
             'table.css',
             'bootstrap-select/dist/css/bootstrap-select.css',
             'bootstrap/dist/css/bootstrap.css',
@@ -54,7 +54,7 @@ class AssetsProvider
             '@popperjs/core/dist/umd/popper.js',
             'bootstrap/dist/js/bootstrap.min.js',
             'bootstrap-select/dist/js/bootstrap-select.js',
-            'components-jqueryui/jquery-ui.min.js',
+            'jquery-ui/dist/jquery-ui.js',
             'blueimp-file-upload/js/jquery.fileupload.js',
             'bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js',
             'jquery-backstretch/jquery.backstretch.js',
