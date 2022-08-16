@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-10 11:12+0200\n"
-"PO-Revision-Date: 2022-08-10 11:13+0200\n"
+"POT-Creation-Date: 2022-08-16 15:03+0200\n"
+"PO-Revision-Date: 2022-08-16 15:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -185,6 +185,12 @@ msgstr "Die Variante {0} des Produkts {1} kann aufgrund von fehlenden Produktdat
 
 msgid "The_attribute_does_not_exist."
 msgstr "Die Variante existiert nicht."
+
+msgid "The_product_now_contains_attributes."
+msgstr "Dem Produkt wurden in der Zwischenzeit Varianten hinzugefügt."
+
+msgid "You_can_add_it_again_after_having_it_deleted."
+msgstr "Du kannst es nach dem Löschen erneut hinzufügen."
 
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."

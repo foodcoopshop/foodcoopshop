@@ -279,6 +279,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testAddedProductWithoutAttributesInCartAndOnFinishProductHasAttributes()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 103;
+        $this->addProductToCart($productId, 1);
+        $this->assertJsonOk();
+        $this->ProductAttribute= $this->getTableLocator()->get('ProductAttributes');
+        $this->ProductAttribute->add($productId, 35);
+        $this->finishCart();
+        $this->checkValidationError();
+        $this->assertRegExpWithUnquotedString('Dem Produkt wurden in der Zwischenzeit Varianten hinzugef', $this->_response);
+    }
+
     public function testRemoveProductIfProductAttributeWasDeletedAndOtherProductAttributesExistAfterAddingToCart()
     {
         $this->loginAsCustomer();

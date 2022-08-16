@@ -288,6 +288,14 @@ class CartComponent extends Component
                     $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                     $cartErrors[$cartProduct['productId']][] = $message;
                 }
+            } else {
+
+                if (!empty($product->product_attributes)) {
+                    $message = __('The_product_now_contains_attributes.');
+                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                    $message .= ' ' . __('You_can_add_it_again_after_having_it_deleted.');
+                    $cartErrors[$cartProduct['productId']][] = $message;
+                }
             }
 
             if (! $product->active) {

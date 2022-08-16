@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-08-10 11:12+0200\n"
+"POT-Creation-Date: 2022-08-16 15:03+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -183,6 +183,12 @@ msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_in
 msgstr ""
 
 msgid "The_attribute_does_not_exist."
+msgstr ""
+
+msgid "The_product_now_contains_attributes."
+msgstr ""
+
+msgid "You_can_add_it_again_after_having_it_deleted."
 msgstr ""
 
 msgid "The_product_{0}_is_not_activated_any_more."
