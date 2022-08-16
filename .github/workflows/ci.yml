@@ -60,10 +60,6 @@ jobs:
           composer install --optimize-autoloader  --no-progress
           cp ./.github/workflows/*.php ./config/
           npm --prefix ./webroot install ./webroot
-          bash bin/cake SavedLocalizedJsAsStaticFile
-          sed -i "s/'debug' => true,/'debug' => false,/" ./config/custom_config.php
-          bash bin/cake asset_compress build
-          sed -i "s/'debug' => false,/'debug' => true,/" ./config/custom_config.php
           
       - name: Upload files to server
         if: ${{github.event_name == 'push'}}
