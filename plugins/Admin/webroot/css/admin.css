@@ -71,7 +71,7 @@ body.taxes.edit #flashMessage {
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
     padding: 2px 2px 2px 1px;
-    border-left: 5px solid #efefef;
+    border-left: 2px solid #efefef;
     border-bottom-right-radius: 15px;
     position: relative;
 }
