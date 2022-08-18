@@ -195,7 +195,7 @@ class MenuHelper extends Helper
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getOrderDetailsList().'?groupBy=customer',
-            'name' => __d('admin', 'Orders'),
+            'name' => __('Orders'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-shopping-cart',
             ],
@@ -206,7 +206,7 @@ class MenuHelper extends Helper
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getActionLogsList().'/index/?types[]=order_detail_cancelled&types[]=order_detail_product_price_changed&types[]=order_detail_product_quantity_changed&types[]=order_detail_product_amount_changed&types[]=order_detail_customer_changed',
-            'name' => __d('admin', 'Order_adaptions'),
+            'name' => __('Order_adaptions'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-times',
             ],
@@ -217,7 +217,7 @@ class MenuHelper extends Helper
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getCustomerProfile(),
-            'name' => __d('admin', 'My_data'),
+            'name' => __('My_data'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-home',
             ],
@@ -228,7 +228,7 @@ class MenuHelper extends Helper
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getActionLogsList(),
-            'name' => __d('admin', 'Activities'),
+            'name' => __('Activities'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-eye',
             ],
@@ -239,7 +239,7 @@ class MenuHelper extends Helper
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getChangePassword(),
-            'name' => __d('admin', 'Change_password'),
+            'name' => __('Change_password'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-key',
             ],
@@ -250,7 +250,7 @@ class MenuHelper extends Helper
     {
         return [
             'slug' => Configure::read('app.slugHelper')->getMyInvoices(),
-            'name' => __d('admin', 'My_invoices'),
+            'name' => __('My_invoices'),
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-file-invoice',
             ],

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-18 17:24+0200\n"
-"PO-Revision-Date: 2022-08-18 17:25+0200\n"
+"POT-Creation-Date: 2022-08-18 18:16+0200\n"
+"PO-Revision-Date: 2022-08-18 18:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2003,6 +2003,21 @@ msgstr "Activities"
 
 msgid "Credit"
 msgstr "Credit"
+
+msgid "Orders"
+msgstr "Orders"
+
+msgid "Order_adaptions"
+msgstr "Order adaptions"
+
+msgid "My_data"
+msgstr ""
+
+msgid "Change_password"
+msgstr "Change password"
+
+msgid "My_invoices"
+msgstr "My nvoices"
 
 msgid "Shopping_with_selling_price"
 msgstr "User selling price for shopping"
