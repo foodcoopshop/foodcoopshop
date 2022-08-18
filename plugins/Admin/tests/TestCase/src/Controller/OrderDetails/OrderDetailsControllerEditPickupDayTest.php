@@ -15,17 +15,10 @@
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use Cake\TestSuite\TestEmailTransport;
 
 class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTestCase
 {
-
-    public function testEditPickupDayAsSuperadminEmptyReason()
-    {
-        $this->loginAsSuperadmin();
-        $response = $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-01-01', '', true);
-        $this->assertRegExpWithUnquotedString('Bitte gib an, warum der Abholtag geändert wird.', $response->msg);
-        $this->assertJsonError();
-    }
 
     public function testEditPickupDayAsSuperadminNoOrderDetailIds()
     {
@@ -77,6 +70,18 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertJsonOk();
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
+    }
+
+    public function testEditPickupDayAsSuperadminNoReasonEmailsOk()
+    {
+        $this->loginAsSuperadmin();
+        $reason = '';
+        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
+        $this->assertJsonOk();
+        $this->runAndAssertQueue();
+        $this->assertMailCount(1);
+        $email = TestEmailTransport::getMessages()[0];
+        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('Warum wurde der Abholtag geändert?', $email->getBodyHtml());
     }
 
     private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason, $sendEmail)

@@ -27,11 +27,12 @@
                 <?php echo __d('admin', 'Old_pickup_day'); ?>: <?php echo $oldPickupDay; ?>
             </p>
 
+            <?php if ($editPickupDayReason != '') { ?>
             <p>
                 <?php echo __d('admin', 'Why_was_the_pickup_day_changed?'); ?><br />
                 <b><?php echo '"' . $editPickupDayReason . '"'; ?></b>
             </p>
-
+            <?php } ?>
 
             <p>
             <?php

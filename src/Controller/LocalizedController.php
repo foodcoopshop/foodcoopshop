@@ -217,7 +217,7 @@ class LocalizedController extends Controller
                 'ChangeGroupFor' => __('Change_group_for'),
                 'TheUserNeedsToSignInAgain' => __('The_user_needs_to_sign_again.'),
                 'Member' => __('Member'),
-                'WhyIsPickupDayChanged' => __('Why_is_pickup_day_changed?'),
+                'WhyIsPickupDayChanged' => __('Why_is_pickup_day_changed_(optional_field)?'),
                 'ChangePickupDay' => __('Change_pickup_day'),
                 'NewPickupDay' => __('New_pickup_day'),
                 'ChangePickupDayInvoicesInfoText' => __('Change_pickup_day_invoices_info_text'),

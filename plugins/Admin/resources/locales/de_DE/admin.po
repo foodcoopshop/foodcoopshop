@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-08 09:47+0200\n"
-"PO-Revision-Date: 2022-07-28 11:03+0200\n"
+"POT-Creation-Date: 2022-08-18 17:24+0200\n"
+"PO-Revision-Date: 2022-08-18 17:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -377,9 +377,6 @@ msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich v
 
 msgid "Ordered_price_adapted"
 msgstr "Preis angepasst"
-
-msgid "Please_enter_why_pickup_day_is_changed."
-msgstr "Bitte gib an, warum der Abholtag geändert wird."
 
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
@@ -2381,6 +2378,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Please_enter_why_pickup_day_is_changed."
+#~ msgstr "Bitte gib an, warum der Abholtag geändert wird."
 
 #~ msgid "Order_adaptions"
 #~ msgstr "Bestelländerungen"

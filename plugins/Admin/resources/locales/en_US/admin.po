@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-08 09:47+0200\n"
-"PO-Revision-Date: 2022-07-28 11:03+0200\n"
+"POT-Creation-Date: 2022-08-18 17:24+0200\n"
+"PO-Revision-Date: 2022-08-18 17:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -377,9 +377,6 @@ msgstr "The price of the ordered product {0} (amount {1}) was successfully adapt
 
 msgid "Ordered_price_adapted"
 msgstr "Price adapted"
-
-msgid "Please_enter_why_pickup_day_is_changed."
-msgstr "Please enter why the pickup day is changed."
 
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "The pickup day of your order was changed to"
@@ -2378,6 +2375,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Please_enter_why_pickup_day_is_changed."
+#~ msgstr "Please enter why the pickup day is changed."
 
 #~ msgid "Order_adaptions"
 #~ msgstr "Order adaptions"

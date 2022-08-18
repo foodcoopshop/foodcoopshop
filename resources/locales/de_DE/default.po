@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-16 15:03+0200\n"
-"PO-Revision-Date: 2022-08-16 15:05+0200\n"
+"POT-Creation-Date: 2022-08-18 17:24+0200\n"
+"PO-Revision-Date: 2022-08-18 17:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -843,8 +843,8 @@ msgstr "Der Benutzer muss sich nach der Änderung neu einloggen."
 msgid "Member"
 msgstr "Mitglied"
 
-msgid "Why_is_pickup_day_changed?"
-msgstr "Warum wird der Abholtag geändert?"
+msgid "Why_is_pickup_day_changed_(optional_field)?"
+msgstr "Warum wird der Abholtag geändert (optional)?"
 
 msgid "Change_pickup_day"
 msgstr "Abholtag ändern"
@@ -2663,6 +2663,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Why_is_pickup_day_changed?"
+#~ msgstr "Warum wird der Abholtag geändert?"
 
 #~ msgid "Feedbacks"
 #~ msgstr "Feedbacks"

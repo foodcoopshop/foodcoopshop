@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-08-08 09:47+0200\n"
+"POT-Creation-Date: 2022-08-18 17:24+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -375,9 +375,6 @@ msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapte
 msgstr ""
 
 msgid "Ordered_price_adapted"
-msgstr ""
-
-msgid "Please_enter_why_pickup_day_is_changed."
 msgstr ""
 
 msgid "The_pickup_day_of_your_order_was_changed_to"

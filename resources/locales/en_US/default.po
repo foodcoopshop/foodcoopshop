@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-16 15:03+0200\n"
-"PO-Revision-Date: 2022-08-16 15:07+0200\n"
+"POT-Creation-Date: 2022-08-18 17:24+0200\n"
+"PO-Revision-Date: 2022-08-18 17:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -843,8 +843,8 @@ msgstr "The user needs to sign in again."
 msgid "Member"
 msgstr "Member"
 
-msgid "Why_is_pickup_day_changed?"
-msgstr "Why is the pickup day changed?"
+msgid "Why_is_pickup_day_changed_(optional_field)?"
+msgstr "Why is the pickup day changed (optional)?"
 
 msgid "Change_pickup_day"
 msgstr "Change pickup day"
@@ -2663,6 +2663,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Why_is_pickup_day_changed?"
+#~ msgstr "Why is the pickup day changed?"
 
 #, fuzzy
 #~ msgid "Feedbacks"

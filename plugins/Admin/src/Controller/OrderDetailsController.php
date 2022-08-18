@@ -1443,10 +1443,6 @@ class OrderDetailsController extends AdminAppController
                 throw new InvalidParameterException('error - no order detail id passed');
             }
             $errorMessages = [];
-            if ($editPickupDayReason == '') {
-                $errorMessages[] = __d('admin', 'Please_enter_why_pickup_day_is_changed.');
-            }
-
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $orderDetails = $this->OrderDetail->find('all', [
                 'conditions' => [
@@ -1509,7 +1505,7 @@ class OrderDetailsController extends AdminAppController
                         'appAuth' => $this->AppAuth,
                         'oldPickupDay' => $oldPickupDay,
                         'newPickupDay' => $newPickupDay,
-                        'editPickupDayReason' => $editPickupDayReason
+                        'editPickupDayReason' => $editPickupDayReason,
                     ]);
                     $email->addToQueue();
                 }
