@@ -6,7 +6,7 @@ bash devtools/setup-git.sh
 rm -Rf vendor/tecnickcom/tcpdf/examples
 
 #delete all files and folders in folder /fonts except starting with helvetica*
-find vendor/tecnickcom/tcpdf/fonts/ ! -name helvetica* -delete
+find vendor/tecnickcom/tcpdf/fonts/ ! -name helvetica* -type f -delete
 
 cp src/Assets/Filter/CleanCss.php vendor/markstory/mini-asset/src/Filter/
 
