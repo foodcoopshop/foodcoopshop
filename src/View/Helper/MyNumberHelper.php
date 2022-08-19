@@ -53,6 +53,7 @@ class MyNumberHelper extends NumberHelper
 
     public function formatAsCurrency($amount)
     {
+        $amount = round($amount, 2); // 3.325 was rounded to 3.32 without this line
         $currency = self::currency($amount, 'USD');
         // e.g. PLN for polish zloty does not return the polish currency symbol
         $currency = str_replace('$', Configure::read('appDb.FCS_CURRENCY_SYMBOL'), $currency);
