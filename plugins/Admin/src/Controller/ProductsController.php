@@ -1250,7 +1250,7 @@ class ProductsController extends AdminAppController
                     throw new InvalidParameterException(join(' ', $unitTable->getAllValidationErrors($patchedEntity)));
                 }
                 $unitTable->save($patchedEntity);
-                $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+                $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit ?? 0, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
                 $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($purchaseGrossPrice, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
             } else {
                 $purchasePrice2Save = $this->Product->getNetPrice($purchaseGrossPrice, $taxRate);
