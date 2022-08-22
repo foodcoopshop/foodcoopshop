@@ -138,6 +138,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testAddProductWithPricePerUnitWithoutCreditAndPurchasePriceCustomer()
+    {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.customerId'), 'shopping_price', 'PP');
+        $this->resetCustomerCreditBalance();
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
+        $this->loginAsCustomer();
+        // test product without attribute
+        $this->addProductToCart(347, 1);
+        $this->assertJsonOk();
+    }
+
     public function testAddProductDeliveryRhythmIndividualOrderNotPossibleAnyMore()
     {
         $this->loginAsSuperadmin();
