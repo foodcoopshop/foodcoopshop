@@ -752,7 +752,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-v3.4.jpg',
+            '/img/bg-v3.5.jpg',
             {
                 positionY: 'top',
                 transitionDuration: 400
