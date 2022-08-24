@@ -62,6 +62,12 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
 
+    private function prepareSaturdayThursdayConfig()
+    {
+        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
+        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);
+    }
+
     public function testGetFormattedNextDeliveryDayThursdayFriday()
     {
         $this->prepareThursdayFridayConfig();
@@ -146,6 +152,20 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('05.12.2017', '27.11.2017'); // tuesday
     }
 
+    public function testGetOrderPeriodFirstDaySaturdayThursday()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $this->assertGetOrderPeriodFirstDay('22.08.2022', '20.08.2022'); // monday
+        $this->assertGetOrderPeriodFirstDay('23.08.2022', '20.08.2022'); // tuesday
+        $this->assertGetOrderPeriodFirstDay('24.08.2022', '20.08.2022'); // wednesday
+        $this->assertGetOrderPeriodFirstDay('25.08.2022', '20.08.2022'); // thursday
+        $this->assertGetOrderPeriodFirstDay('26.08.2022', '20.08.2022'); // friday
+        $this->assertGetOrderPeriodFirstDay('27.08.2022', '27.08.2022'); // saturday
+        $this->assertGetOrderPeriodFirstDay('28.08.2022', '27.08.2022'); // sunday
+        $this->assertGetOrderPeriodFirstDay('29.08.2022', '27.08.2022'); // monday
+        $this->assertGetOrderPeriodFirstDay('30.08.2022', '27.08.2022'); // tuesday
+    }
+
     public function testGetOrderPeriodLastDayThursdayFriday()
     {
         $this->prepareThursdayFridayConfig();
@@ -201,6 +221,20 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('04.12.2017', '03.12.2017'); // monday
         $this->assertGetOrderPeriodLastDay('05.12.2017', '03.12.2017'); // tuesday
         $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
+    }
+
+    public function testGetOrderPeriodLastDaySaturdayThursday()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $this->assertGetOrderPeriodLastDay('22.08.2022', '26.08.2022'); // monday
+        $this->assertGetOrderPeriodLastDay('23.08.2022', '26.08.2022'); // tuesday
+        $this->assertGetOrderPeriodLastDay('24.08.2022', '26.08.2022'); // wednesday
+        $this->assertGetOrderPeriodLastDay('25.08.2022', '26.08.2022'); // thursday
+        $this->assertGetOrderPeriodLastDay('26.08.2022', '26.08.2022'); // friday
+        $this->assertGetOrderPeriodLastDay('27.08.2022', '02.09.2022'); // saturday
+        $this->assertGetOrderPeriodLastDay('28.08.2022', '02.09.2022'); // sunday
+        $this->assertGetOrderPeriodLastDay('29.08.2022', '02.09.2022'); // monday
+        $this->assertGetOrderPeriodLastDay('30.08.2022', '02.09.2022'); // tuesday
     }
 
     public function testGetDeliveryDayTuesdayFriday()
