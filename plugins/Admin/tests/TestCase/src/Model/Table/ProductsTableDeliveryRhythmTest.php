@@ -351,7 +351,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test2WeekCurrentWeekAllowOrderConfigOnf()
+    public function test2WeekCurrentWeekAllowOrderConfigOn()
     {
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
