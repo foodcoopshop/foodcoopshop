@@ -11,7 +11,7 @@ use Cake\Datasource\FactoryLocator;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.5.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
