@@ -361,11 +361,6 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
     }
 
-    /**
-     * see tests for implementations
-     * @param $day
-     * @return $day
-     */
     public function getOrderPeriodFirstDay($day)
     {
 
@@ -382,11 +377,6 @@ class MyTimeHelper extends TimeHelper
         return $date;
     }
 
-    /**
-     * implemented for $this->sendOrderListsWeekday() == monday OR tuesday OR wednesday OR saturday
-     * @param $day
-     * @return $day
-     */
     public function getOrderPeriodLastDay($day)
     {
 
