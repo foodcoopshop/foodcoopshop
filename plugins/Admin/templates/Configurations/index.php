@@ -361,6 +361,11 @@ $this->element('addScript', [
         ?>
 
         <tr>
+            <td>app.showTaxInOrderConfirmationEmail</td>
+            <td><?php echo Configure::read('app.showTaxInOrderConfirmationEmail') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.emailErrorLoggingEnabled</td>
             <td><?php echo Configure::read('app.emailErrorLoggingEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>

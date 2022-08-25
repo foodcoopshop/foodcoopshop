@@ -61,9 +61,14 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             </td></tr>
         <?php } ?>
 
-        <tr><td style="padding-top:20px;">
-            <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
-        </td></tr>
+
+        <?php if (Configure::read('app.showTaxInOrderConfirmationEmail')) { ?>
+
+            <tr><td style="padding-top:20px;">
+                <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
+            </td></tr>
+
+        <?php } ?>
 
         <tr><td>
             <?php
