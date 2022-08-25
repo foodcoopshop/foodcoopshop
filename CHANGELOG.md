@@ -12,6 +12,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Neue Funktionen / Verbesserungen
 - Die Umsatzsteuer in der Bestellbestätigung kann nun mittels `app.showTaxInOrderConfirmationEmail => false` ausgeblendet werden. [PR#869](https://github.com/foodcoopshop/foodcoopshop/pull/869) <a href="https://github.com/MaxGitHubAccount"><img src="https://github.com/MaxGitHubAccount.png" width="20"></a>
+- Die Konfiguration "Freitag Bestellschluss / Samstag Bestelllisten-Versand / Donnerstag Abholtag" ist jetzt möglich. [I#866](https://github.com/foodcoopshop/foodcoopshop/issues/866) / [PR#867](https://github.com/foodcoopshop/foodcoopshop/pull/867) <a href="https://github.com/MaxGitHubAccount"><img src="https://github.com/MaxGitHubAccount.png" width="20"></a>
 
 
 # Unveröffentlichte Version
