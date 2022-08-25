@@ -13,12 +13,15 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\DeliveryRhythmConfigsTrait;
 use App\View\Helper\MyTimeHelper;
 use Cake\I18n\FrozenDate;
 use Cake\View\View;
 
 class MyTimeHelperTest extends AppCakeTestCase
 {
+
+    use DeliveryRhythmConfigsTrait;
 
     public function setUp(): void
     {
@@ -36,36 +39,6 @@ class MyTimeHelperTest extends AppCakeTestCase
     {
         $result = $this->MyTimeHelper->formatToDbFormatDate('06/12/2018');
         $this->assertEquals($result, '2018-06-12');
-    }
-
-    private function prepareThursdayFridayConfig()
-    {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
-    }
-
-    private function prepareWednesdayFridayConfig()
-    {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 2);
-    }
-
-    private function prepareTuesdayFridayConfig()
-    {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
-    }
-
-    private function prepareMondayTuesdayConfig()
-    {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 2);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
-    }
-
-    private function prepareSaturdayThursdayConfig()
-    {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);
     }
 
     public function testGetFormattedNextDeliveryDayThursdayFriday()

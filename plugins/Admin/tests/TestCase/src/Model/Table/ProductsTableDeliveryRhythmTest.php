@@ -3,6 +3,7 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\I18n\FrozenDate;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\DeliveryRhythmConfigsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 
 /**
@@ -22,6 +23,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
+    use DeliveryRhythmConfigsTrait;
     use LoginTrait;
 
     public $Product;
@@ -67,7 +69,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekNormalNoFirstDeliveryDay()
+    public function test1WeekNormalNoFirstDeliveryDayWednesdayFriday()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -79,6 +81,23 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
             ),
             'currentDay' => '2018-10-07',
             'result' => '2018-10-12'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursday()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0'
+                ]
+            ),
+            'currentDay' => '2022-08-25',
+            'result' => '2022-09-01'
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
