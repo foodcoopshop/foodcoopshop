@@ -62,7 +62,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
         <?php } ?>
 
 
-        <?php if (Configure::read('app.sendTaxViaMail')) { ?>
+        <?php if (Configure::read('app.showTaxInOrderConfirmationEmail')) { ?>
 
             <tr><td style="padding-top:20px;">
                 <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>

@@ -52,20 +52,16 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
     <tbody>
 
 
-        <tr><td style="padding-top:20px;">
+        <?php if (Configure::read('app.showTaxInOrderConfirmationEmail')) { ?>
 
-
-        <?php if (Configure::read('app.sendTaxViaMail')) { ?>
-
-
+            <tr><td style="padding-top:20px;">
                 <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
             </td></tr>
 
+        <?php } ?>
+
         <tr><td>
             <?php
-
-                }
-
                 if ($this->MyHtml->paymentIsCashless()) {
                     echo __('The_amount_was_reduced_from_your_credit_balance.');
                 } else {
