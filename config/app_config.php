@@ -180,6 +180,8 @@ return [
 
         'isZeroTaxEnabled' => true,
 
+        'showTaxInOrderConfirmationEmail' => true,
+
         // additionalTextForInvoice - for invoices to customers (not available if hello cash is used!)
         'additionalTextForInvoice' => '',
 
