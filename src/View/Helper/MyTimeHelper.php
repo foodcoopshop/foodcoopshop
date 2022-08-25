@@ -383,7 +383,7 @@ class MyTimeHelper extends TimeHelper
     }
 
     /**
-     * implemented for $this->sendOrderListsWeekday() == monday OR tuesday OR wednesday
+     * implemented for $this->sendOrderListsWeekday() == monday OR tuesday OR wednesday OR saturday
      * @param $day
      * @return $day
      */
@@ -415,7 +415,14 @@ class MyTimeHelper extends TimeHelper
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 1;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 6) % 7) {
-            $dateDiff = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1;
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 0;
+        }
+
+        // method returned wrong data for MyTimeHelperTest::prepareSaturdayThursdayConfig()
+        // the following part fixes that
+        $correctionFactor = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
+        if ($correctionFactor < 0 && $dateDiff < 0) {
+            $dateDiff += 7;
         }
 
         $date = date($this->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
