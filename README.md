@@ -65,3 +65,7 @@ Our [installation guide](https://foodcoopshop.github.io/en/installation-guide) h
 
 ## 😎 Maintainer
 [Mario Rothauer](https://github.com/mrothauer) started the project in 2014 and maintains it.
+
+## Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=foodcoopshop/foodcoopshop&type=Date)](https://star-history.com/#foodcoopshop/foodcoopshop&Date)
+
