@@ -409,15 +409,19 @@ class MyTimeHelper extends TimeHelper
         }
 
         // method returned wrong data for MyTimeHelperTest::prepareSaturdayThursdayConfig()
-        // the following part fixes that
-        $correctionFactor = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
-        if ($correctionFactor < 0 && $dateDiff < 0) {
+        // the check for isWeeklyPickupDayBeforeSendOrderListsDay fixes that
+        if ($this->isWeeklyPickupDayBeforeSendOrderListsDay() && $dateDiff < 0) {
             $dateDiff += 7;
         }
 
         $date = date($this->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
 
         return $date;
+    }
+
+    private function isWeeklyPickupDayBeforeSendOrderListsDay()
+    {
+        return (Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA')) < 0;
     }
 
     public function getSendOrderListsWeekdayOptions()
