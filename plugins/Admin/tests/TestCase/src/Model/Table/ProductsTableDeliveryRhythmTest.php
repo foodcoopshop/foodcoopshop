@@ -96,8 +96,26 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
                     'is_stock_product' => '0'
                 ]
             ),
-            'currentDay' => '2022-08-25',
-            'result' => '2022-09-01'
+            'currentDay' => '2022-08-26', // friday
+            'result' => '2022-09-01',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 5,
+                ]
+            ),
+            'currentDay' => '2022-08-26',
+            'result' => '2022-09-08',
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }

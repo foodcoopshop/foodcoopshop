@@ -213,7 +213,20 @@ class MyTimeHelperTest extends AppCakeTestCase
     public function testGetDeliveryDayTuesdayFriday()
     {
         $this->prepareTuesdayFridayConfig();
-        $this->assertGetDeliveryDay('25.07.2018', '03.08.2018'); // wednesday
+        $this->assertGetDeliveryDay('25.07.2018', '03.08.2018');
+    }
+
+    public function testGetDeliveryDaySaturdayThursday()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $this->assertGetDeliveryDay('24.08.2022', '01.09.2022'); // wednesday
+        $this->assertGetDeliveryDay('25.08.2022', '01.09.2022'); // thursday
+        $this->assertGetDeliveryDay('26.08.2022', '01.09.2022'); // friday
+        $this->assertGetDeliveryDay('27.08.2022', '08.09.2022'); // saturday
+        $this->assertGetDeliveryDay('28.08.2022', '08.09.2022'); // sunday
+        $this->assertGetDeliveryDay('29.08.2022', '08.09.2022'); // monday
+        $this->assertGetDeliveryDay('30.08.2022', '08.09.2022'); // tuesday
+        $this->assertGetDeliveryDay('31.08.2022', '08.09.2022'); // wednesday
     }
 
     public function testGetLastDayOfLastMonth()
