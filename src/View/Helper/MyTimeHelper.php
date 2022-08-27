@@ -291,14 +291,13 @@ class MyTimeHelper extends TimeHelper
         return $deliveryDay;
     }
 
-    public function getDeliveryDay($orderDay, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
+    public function getDeliveryDay($orderDay, $sendOrderListsWeekday = null, $deliveryRhythmType = 'week', $deliveryRhythmCount = 1)
     {
-        if (is_null($deliveryRhythmType)) {
-            $deliveryRhythmType = 'week';
+
+        if (is_null($sendOrderListsWeekday)) {
+            $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         }
-        if (is_null($deliveryRhythmCount)) {
-            $deliveryRhythmCount = 1;
-        }
+
         $daysToAddToOrderPeriodLastDay = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
         $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
 
@@ -307,10 +306,6 @@ class MyTimeHelper extends TimeHelper
 
         $weekdayOrderDay = $this->formatAsWeekday($orderDay);
         $weekdayOrderDay = $weekdayOrderDay % 7;
-
-        if (is_null($sendOrderListsWeekday)) {
-            $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
-        }
 
         if ($weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
