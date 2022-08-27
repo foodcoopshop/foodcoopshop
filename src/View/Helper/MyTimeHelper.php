@@ -312,7 +312,7 @@ class MyTimeHelper extends TimeHelper
             $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         }
 
-        if ($weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate && $deliveryRhythmType != 'individual') {
+        if ($weekdayOrderDay >= $sendOrderListsWeekday && ($weekdayOrderDay <= $weekdayDeliveryDate || $this->isWeeklyPickupDayBeforeSendOrderListsDay()) && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
             $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . ' ' . $weekdayStringDeliveryDate);
         }
