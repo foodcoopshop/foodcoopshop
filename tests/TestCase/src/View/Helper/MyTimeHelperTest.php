@@ -69,77 +69,6 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetFormattedNextDeliveryDay('16.10.2018', '19.10.2018'); // tuesday
     }
 
-    public function testGetOrderPeriodFirstDayThursdayFriday()
-    {
-        $this->prepareThursdayFridayConfig();
-        $this->assertGetOrderPeriodFirstDay('27.11.2017', '23.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('28.11.2017', '23.11.2017'); // tuesday
-        $this->assertGetOrderPeriodFirstDay('29.11.2017', '23.11.2017'); // wednesday
-        $this->assertGetOrderPeriodFirstDay('30.11.2017', '23.11.2017'); // thursday
-        $this->assertGetOrderPeriodFirstDay('01.12.2017', '23.11.2017'); // friday
-        $this->assertGetOrderPeriodFirstDay('02.12.2017', '30.11.2017'); // saturday
-        $this->assertGetOrderPeriodFirstDay('03.12.2017', '30.11.2017'); // sunday
-        $this->assertGetOrderPeriodFirstDay('04.12.2017', '30.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('05.12.2017', '30.11.2017'); // tuesday
-    }
-
-    public function testGetOrderPeriodFirstDayWednesdayFriday()
-    {
-        $this->prepareWednesdayFridayConfig();
-        $this->assertGetOrderPeriodFirstDay('27.11.2017', '22.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('28.11.2017', '22.11.2017'); // tuesday
-        $this->assertGetOrderPeriodFirstDay('29.11.2017', '22.11.2017'); // wednesday
-        $this->assertGetOrderPeriodFirstDay('30.11.2017', '22.11.2017'); // thursday
-        $this->assertGetOrderPeriodFirstDay('01.12.2017', '22.11.2017'); // friday
-        $this->assertGetOrderPeriodFirstDay('02.12.2017', '29.11.2017'); // saturday
-        $this->assertGetOrderPeriodFirstDay('03.12.2017', '29.11.2017'); // sunday
-        $this->assertGetOrderPeriodFirstDay('04.12.2017', '29.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('05.12.2017', '29.11.2017'); // tuesday
-    }
-
-    public function testGetOrderPeriodFirstDayTuesdayFriday()
-    {
-        $this->prepareTuesdayFridayConfig();
-        $this->assertGetOrderPeriodFirstDay('27.11.2017', '21.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('28.11.2017', '21.11.2017'); // tuesday
-        $this->assertGetOrderPeriodFirstDay('29.11.2017', '21.11.2017'); // wednesday
-        $this->assertGetOrderPeriodFirstDay('30.11.2017', '21.11.2017'); // thursday
-        $this->assertGetOrderPeriodFirstDay('01.12.2017', '21.11.2017'); // friday
-        $this->assertGetOrderPeriodFirstDay('02.12.2017', '28.11.2017'); // saturday
-        $this->assertGetOrderPeriodFirstDay('03.12.2017', '28.11.2017'); // sunday
-        $this->assertGetOrderPeriodFirstDay('04.12.2017', '28.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('05.12.2017', '28.11.2017'); // tuesday
-    }
-
-    public function testGetOrderPeriodFirstDayMondayTuesday()
-    {
-        $this->prepareMondayTuesdayConfig();
-        $this->assertGetOrderPeriodFirstDay('27.11.2017', '20.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('28.11.2017', '20.11.2017'); // tuesday
-        $this->assertGetOrderPeriodFirstDay('29.11.2017', '27.11.2017'); // wednesday
-        $this->assertGetOrderPeriodFirstDay('30.11.2017', '27.11.2017'); // thursday
-        $this->assertGetOrderPeriodFirstDay('01.12.2017', '27.11.2017'); // friday
-        $this->assertGetOrderPeriodFirstDay('02.12.2017', '27.11.2017'); // saturday
-        $this->assertGetOrderPeriodFirstDay('03.12.2017', '27.11.2017'); // sunday
-        $this->assertGetOrderPeriodFirstDay('04.12.2017', '27.11.2017'); // monday
-        $this->assertGetOrderPeriodFirstDay('05.12.2017', '27.11.2017'); // tuesday
-    }
-
-    public function XtestGetOrderPeriodFirstDaySaturdayThursday()
-    {
-        $this->prepareSaturdayThursdayConfig();
-        $this->assertGetOrderPeriodFirstDay('22.08.2022', '20.08.2022'); // monday
-        $this->assertGetOrderPeriodFirstDay('23.08.2022', '20.08.2022'); // tuesday
-        $this->assertGetOrderPeriodFirstDay('24.08.2022', '20.08.2022'); // wednesday
-        $this->assertGetOrderPeriodFirstDay('25.08.2022', '20.08.2022'); // thursday
-        $this->assertGetOrderPeriodFirstDay('26.08.2022', '27.08.2022'); // friday
-        $this->assertGetOrderPeriodFirstDay('27.08.2022', '27.08.2022'); // saturday
-        $this->assertGetOrderPeriodFirstDay('28.08.2022', '27.08.2022'); // sunday
-        $this->assertGetOrderPeriodFirstDay('29.08.2022', '27.08.2022'); // monday
-        $this->assertGetOrderPeriodFirstDay('30.08.2022', '27.08.2022'); // tuesday
-    }
-
-
     public function testGetDeliveryDayTuesdayFriday()
     {
         $this->prepareTuesdayFridayConfig();
@@ -259,12 +188,6 @@ class MyTimeHelperTest extends AppCakeTestCase
     {
         $result = $this->MyTimeHelper->getDeliveryDay(strtotime($currentDay));
         $result = date($this->MyTimeHelper->getI18Format('DateShortAlt'), $result);
-        $this->assertEquals($expected, $result);
-    }
-
-    private function assertGetOrderPeriodFirstDay($currentDay, $expected)
-    {
-        $result = $this->MyTimeHelper->getOrderPeriodFirstDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 

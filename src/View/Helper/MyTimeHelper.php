@@ -284,14 +284,6 @@ class MyTimeHelper extends TimeHelper
         return $pickupDay;
     }
 
-    public function getDeliveryDateForSendOrderListsShell($date)
-    {
-        $formattedToday = date(Configure::read('DateFormat.DatabaseAlt'), $date);
-        $deliveryDay = strtotime($formattedToday . '+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' days');
-        $deliveryDay = date($this->getI18Format('DatabaseAlt'), $deliveryDay);
-        return $deliveryDay;
-    }
-
     public function getDeliveryDay($orderDay, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
     {
         if (is_null($deliveryRhythmType)) {
@@ -368,29 +360,13 @@ class MyTimeHelper extends TimeHelper
 
     public function getNextDeliveryDay($day)
     {
-        $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
+        $orderPeriodFirstDay = DeliveryRhythm::getOrderPeriodFirstDay($day);
         return date($this->getI18Format('DatabaseAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
     }
 
     public function getFormattedNextDeliveryDay($day)
     {
         return date($this->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
-    }
-
-    public function getOrderPeriodFirstDay($day)
-    {
-
-        $currentWeekday = $this->formatAsWeekday($day);
-        $dateDiff = 7 - $this->getSendOrderListsWeekday() + $currentWeekday;
-        $date = strtotime('-' . $dateDiff . ' day ', $day);
-
-        if ($currentWeekday > $this->getDeliveryWeekday()) {
-            $date = strtotime('+7 day', $date);
-        }
-
-        $date = date($this->getI18Format('DateShortAlt'), $date);
-
-        return $date;
     }
 
     public function getSendOrderListsWeekdayOptions()

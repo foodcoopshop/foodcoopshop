@@ -255,7 +255,7 @@ class OrderDetailsTable extends AppTable
         $i = 0;
         while($foundOrders < $ordersToLoad) {
 
-            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
             $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
             // stop trying to search for valid orders if year is one year ago

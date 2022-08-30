@@ -19,6 +19,21 @@ use Cake\Core\Configure;
 class DeliveryRhythm
 {
 
+    public static function getOrderPeriodFirstDay($day)
+    {
+        $currentWeekday = Configure::read('app.timeHelper')->formatAsWeekday($day);
+        $dateDiff = 7 - Configure::read('app.timeHelper')->getSendOrderListsWeekday() + $currentWeekday;
+        $date = strtotime('-' . $dateDiff . ' day ', $day);
+
+        if ($currentWeekday > Configure::read('app.timeHelper')->getDeliveryWeekday()) {
+            $date = strtotime('+7 day', $date);
+        }
+
+        $date = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $date);
+
+        return $date;
+    }
+
     public static function getOrderPeriodLastDay($day)
     {
 
