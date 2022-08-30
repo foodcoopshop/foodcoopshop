@@ -19,6 +19,42 @@ use Cake\Core\Configure;
 class DeliveryRhythm
 {
 
+    public static function getOrderPeriodLastDay($day)
+    {
+
+        $currentWeekday = Configure::read('app.timeHelper')->formatAsWeekday($day);
+
+        if ($currentWeekday == 7) {
+            $currentWeekday = 0;
+        }
+
+        if ($currentWeekday == Configure::read('app.timeHelper')->getDeliveryWeekday()) {
+            $dateDiff = -1 - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
+        }
+        if ($currentWeekday == (Configure::read('app.timeHelper')->getDeliveryWeekday() + 1) % 7) {
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 5;
+        }
+        if ($currentWeekday == (Configure::read('app.timeHelper')->getDeliveryWeekday() + 2) % 7) {
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 4;
+        }
+        if ($currentWeekday == (Configure::read('app.timeHelper')->getDeliveryWeekday() + 3) % 7) {
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 3;
+        }
+        if ($currentWeekday == (Configure::read('app.timeHelper')->getDeliveryWeekday() + 4) % 7) {
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 2;
+        }
+        if ($currentWeekday == (Configure::read('app.timeHelper')->getDeliveryWeekday() + 5) % 7) {
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 1;
+        }
+        if ($currentWeekday == (Configure::read('app.timeHelper')->getDeliveryWeekday() + 6) % 7) {
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1);
+        }
+
+        $date = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
+
+        return $date;
+    }
+
     public static function getDaysToAddToOrderPeriodLastDay()
     {
         if (self::hasSaturdayThursdayConfig()) {

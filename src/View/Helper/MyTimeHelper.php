@@ -302,7 +302,7 @@ class MyTimeHelper extends TimeHelper
         }
 
         $daysToAddToOrderPeriodLastDay = DeliveryRhythm::getDaysToAddToOrderPeriodLastDay();
-        $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        $deliveryDate = strtotime(DeliveryRhythm::getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
 
         $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
         $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
