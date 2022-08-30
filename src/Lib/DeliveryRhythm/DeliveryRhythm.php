@@ -149,13 +149,13 @@ class DeliveryRhythm
         $date = strtotime('-' . $dateDiff . ' day ', $day);
 
         if (self::hasSaturdayThursdayConfig()) {
-            if (in_array($currentWeekday, [6,7]) && self::getDeliveryWeekday()) {
-                $date = strtotime('+7 day', $date);
-            }
+            $addOneWeekCondition = in_array($currentWeekday, [6,7]) && self::getDeliveryWeekday();
         } else {
-            if ($currentWeekday > self::getDeliveryWeekday()) {
-                $date = strtotime('+7 day', $date);
-            }
+            $addOneWeekCondition = $currentWeekday > self::getDeliveryWeekday();
+        }
+
+        if ($addOneWeekCondition) {
+            $date = strtotime('+7 day', $date);
         }
 
         $date = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $date);
