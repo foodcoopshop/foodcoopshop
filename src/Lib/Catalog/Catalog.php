@@ -14,6 +14,7 @@
  */
 namespace App\Lib\Catalog;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Database\Query;
@@ -387,7 +388,7 @@ class Catalog {
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm($product);
+            $deliveryDate = DeliveryRhythm::getNextPickupDayForProduct($product);
 
             // deactivates the product if it can not be ordered this week
             if ($deliveryDate == 'delivery-rhythm-triggered-delivery-break') {
@@ -479,7 +480,7 @@ class Catalog {
                 $products[$i]->deposit_product->deposit = 0;
             }
 
-            $products[$i]->next_delivery_day = $this->Product->getNextDeliveryDay($product, $appAuth);
+            $products[$i]->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
 
             foreach ($product->product_attributes as &$attribute) {
 

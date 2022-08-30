@@ -168,7 +168,7 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            $nextDeliveryDay = $this->Product->getNextDeliveryDay($cartProduct->product, $appAuth);
+            $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
             $nextDeliveryDay = strtotime($nextDeliveryDay);
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
 

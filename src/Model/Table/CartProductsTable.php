@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -134,7 +135,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $product->next_delivery_day = $this->Products->getNextDeliveryDay($product, $appAuth);
+        $product->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
@@ -344,10 +345,8 @@ class CartProductsTable extends AppTable
     public function setPickupDays($cartProducts, $customerId, $cartType, $appAuth)
     {
         $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
-        $productTable = FactoryLocator::get('Table')->get('Products');
-
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = $productTable->getNextDeliveryDay($cartProduct->product, $appAuth);
+            $cartProduct->pickup_day = DeliveryRhythm::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
         }
 
         $pickupDays = [];
