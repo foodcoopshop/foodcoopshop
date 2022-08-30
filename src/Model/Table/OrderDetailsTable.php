@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
@@ -255,7 +256,7 @@ class OrderDetailsTable extends AppTable
         while($foundOrders < $ordersToLoad) {
 
             $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
-            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
             // stop trying to search for valid orders if year is one year ago
             if (date('Y', $dateFrom) == date('Y') - 1) {
