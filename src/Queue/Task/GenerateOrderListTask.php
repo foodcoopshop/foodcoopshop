@@ -37,7 +37,7 @@ class GenerateOrderListTask extends Task {
     {
 
         $pickupDayDbFormat = $data['pickupDayDbFormat'];
-        $pickupDayFormated = $data['pickupDayFormated'];
+        $pickupDayFormatted = $data['pickupDayFormatted'];
         $manufacturerId = $data['manufacturerId'];
         $orderDetailIds = $data['orderDetailIds'];
         $actionLogId = $data['actionLogId'];
@@ -82,7 +82,7 @@ class GenerateOrderListTask extends Task {
                 $productPdfFile,
                 $customerPdfFile,
             ])
-            ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
+            ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormatted)
             ->setViewVars([
                 'manufacturer' => $manufacturer,
                 'showManufacturerUnsubscribeLink' => true,
@@ -92,7 +92,7 @@ class GenerateOrderListTask extends Task {
             }
 
             $email->afterRunParams = [
-                'actionLogIdentifier' => 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormated,
+                'actionLogIdentifier' => 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormatted,
                 'actionLogId' => $actionLogId,
                 'manufacturerId' => $manufacturerId,
                 'orderDetailIds' => $orderDetailIds,
@@ -101,7 +101,7 @@ class GenerateOrderListTask extends Task {
 
         }
 
-        $actionLogIdentifier = 'generate-order-list-' . $manufacturerId . '-' . $pickupDayFormated;
+        $actionLogIdentifier = 'generate-order-list-' . $manufacturerId . '-' . $pickupDayFormatted;
         $this->updateActionLogSuccess($actionLogId, $actionLogIdentifier, $jobId);
 
     }

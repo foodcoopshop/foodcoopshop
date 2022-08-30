@@ -113,15 +113,15 @@ class SendOrderListsShell extends AppShell
                     continue;
                 }
 
-                $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
-                $pickupDayFormated = $pickupDayFormated->i18nFormat(
+                $pickupDayFormatted = new FrozenDate($pickupDayDbFormat);
+                $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
                     Configure::read('app.timeHelper')->getI18Format('DateLong2')
                 );
                 $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
 
                 $this->QueuedJobs->createJob('GenerateOrderList', [
                     'pickupDayDbFormat' => $pickupDayDbFormat,
-                    'pickupDayFormated' => $pickupDayFormated,
+                    'pickupDayFormatted' => $pickupDayFormatted,
                     'orderDetailIds' => $orderDetailIds,
                     'manufacturerId' => $manufacturer->id_manufacturer,
                     'manufactuerName' => $manufacturer->name,
@@ -172,15 +172,15 @@ class SendOrderListsShell extends AppShell
                 if (in_array($manufacturer->id_manufacturer, array_keys($tmpActionLogDatas))) {
                     ksort($tmpActionLogDatas[$manufacturer->id_manufacturer]);
                     foreach($tmpActionLogDatas[$manufacturer->id_manufacturer] as $pickupDayDbFormat => $tmpActionLogData) {
-                        $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
-                        $pickupDayFormated = $pickupDayFormated->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-                        $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
+                        $pickupDayFormatted = new FrozenDate($pickupDayDbFormat);
+                        $pickupDayFormatted = $pickupDayFormatted->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+                        $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormatted;
                         $newData = '- <i class="fas fa-book not-ok" data-identifier="generate-order-list-'.$identifier.'"></i> <i class="fas fa-envelope not-ok" data-identifier="send-order-list-'.$identifier.'"></i> ';
                         $newData .= html_entity_decode($manufacturer->name) . ': ' .
                             __('{0,plural,=1{1_product} other{#_products}}', [$tmpActionLogData['order_detail_amount_sum']]) . ' / ' .
                             Configure::read('app.numberHelper')->formatAsCurrency($tmpActionLogData['order_detail_price_sum']);
                             if ($pickupDayDbFormat != $pickupDay) {
-                                $newData .=  ' / ' . __('Delivery_day') . ': ' . $pickupDayFormated;
+                                $newData .=  ' / ' . __('Delivery_day') . ': ' . $pickupDayFormatted;
                             }
                         $actionLogDatas[] = $newData;
                     }

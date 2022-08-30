@@ -81,16 +81,16 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
 
-        $pickupDayFormated = new FrozenDate($pickupDay);
-        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
 
-        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormated);
+        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormatted);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
-        $pickupDayFormated = new FrozenDate($pickupDay);
-        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
@@ -111,12 +111,12 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->assertMailCount(3);
 
-        $pickupDayFormated = new FrozenDate($pickupDay);
-        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
 
-        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormated);
+        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormatted);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
@@ -140,12 +140,12 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
 
-        $pickupDayFormated = new FrozenDate($pickupDay);
-        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
             );
 
-        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormated);
+        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormatted);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));

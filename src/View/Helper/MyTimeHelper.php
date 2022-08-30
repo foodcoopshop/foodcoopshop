@@ -142,7 +142,7 @@ class MyTimeHelper extends TimeHelper
         return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +' . $days . ' days'));
     }
 
-    public function getWeekdayFormatedDaysList($day, $maxDays, $factor)
+    public function getWeekdayFormattedDaysList($day, $maxDays, $factor)
     {
         $days = [
             $day => $this->getDateFormattedWithWeekday(strtotime($day))
