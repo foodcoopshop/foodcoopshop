@@ -330,7 +330,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-10-07',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1WeekNormalNoFirstDeliveryDayWednesdayFriday()
@@ -346,7 +346,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-10-07',
             'result' => '2018-10-12',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1WeekNormalNoFirstDeliveryDaySaturdayThursday()
@@ -363,7 +363,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2022-08-26', // friday
             'result' => '2022-09-01',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekDeliveryDaySaturdayThursday()
@@ -381,7 +381,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2022-08-25', // thursday
             'result' => '2022-09-08',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
@@ -399,7 +399,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2022-08-26',
             'result' => '2022-09-08',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1WeekWithSendOrderListDayOneDayBeforeDefault()
@@ -416,7 +416,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2017-08-08',
             'result' => '2017-08-18',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1WeekWithSendOrderListDayTwoDaysBeforeDefault()
@@ -433,7 +433,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2020-04-05',
             'result' => '2020-04-10',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOff()
@@ -452,7 +452,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2021-08-01',
             'result' => '2021-08-20',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOn()
@@ -472,7 +472,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2021-08-01',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
@@ -489,7 +489,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2022-02-01',
             'result' => '2022-02-11',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
@@ -507,7 +507,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2022-02-01',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOff()
@@ -525,7 +525,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2019-02-25',
             'result' => '2019-03-15',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekWithSendOrderListDayMondayAllowOrdersConfigOn()
@@ -544,7 +544,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2019-02-25',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekWithSendOrderListDayThursday()
@@ -562,7 +562,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2019-03-08',
             'result' => '2019-03-15',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1MonthFirstFridayWithSendOrderListDaySunday()
@@ -580,7 +580,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2020-09-28',
             'result' => '2020-11-06',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekNotCurrentWeekAAllowOrderConfigOff()
@@ -597,7 +597,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-08-14',
             'result' => '2018-08-24',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekNotCurrentWeekAAllowOrderConfigOn()
@@ -615,7 +615,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-08-14',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekNotCurrentWeekBAllowOrderConfigOff()
@@ -632,7 +632,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-09-15',
             'result' => '2018-09-28',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekNotCurrentWeekBAllowOrderConfigOn()
@@ -650,7 +650,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-09-15',
             'result' => 'delivery-rhythm-triggered-delivery-break',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekCurrentWeekAllowOrderConfigOff()
@@ -667,7 +667,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-08-14',
             'result' => '2018-08-17',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekCurrentWeekAllowOrderConfigOn()
@@ -685,7 +685,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-08-14',
             'result' => '2018-08-17',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2WeekD()
@@ -702,7 +702,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2019-03-15',
             'result' => '2019-03-22',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test4Week()
@@ -719,7 +719,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-08-07',
             'result' => '2018-08-31',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test1MonthFirstWeekdayOfMonthA()
@@ -735,7 +735,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2017-08-07',
             'result' => '2017-09-01',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function testFirstWeekdayOfMonthB()
@@ -751,7 +751,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2017-08-07',
             'result' => '2017-08-11',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function testLastMonthLastWeekdayOfMonthA()
@@ -767,7 +767,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-09-13',
             'result' => '2018-09-28',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function testLastMonthLastWeekdayOfMonthB()
@@ -783,7 +783,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2018-08-07',
             'result' => '2018-08-31',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function testLastMonthLastWeekdayOfMonthC()
@@ -800,7 +800,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2021-01-20',
             'result' => '2021-02-26',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test2Month()
@@ -816,7 +816,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2020-11-20',
             'result' => '2020-12-11',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test3Month()
@@ -832,7 +832,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2020-11-20',
             'result' => '2020-12-18',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function test4Month()
@@ -848,7 +848,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2020-11-30',
             'result' => '2020-12-25',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
     public function testIndividual()
@@ -865,10 +865,10 @@ class DeliveryRhythmTest extends AppCakeTestCase
             'currentDay' => '2017-08-07',
             'result' => '2018-08-03',
         ];
-        $this->assertPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
-    private function assertPickupDayForProduct($product, $currentDay, $expectedResult)
+    private function assertGetNextPickupDayForProduct($product, $currentDay, $expectedResult)
     {
         $result = DeliveryRhythm::getNextPickupDayForProduct($product, $currentDay);
         $this->assertEquals($expectedResult, $result);
