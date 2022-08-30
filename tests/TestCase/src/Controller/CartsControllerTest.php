@@ -1021,7 +1021,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrderWithDeliveryBreak()
     {
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
