@@ -6,17 +6,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-### Herzlichen Dank an alle beteiligten Personen
-* <img src="https://github.com/MaxGitHubAccount.png" width="20"> [MaxGitHubAccount](https://github.com/MaxGitHubAccount)
-* <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
-
-### Neue Funktionen / Verbesserungen
-- Die Umsatzsteuer in der Bestellbestätigung kann nun mittels `app.showTaxInOrderConfirmationEmail => false` ausgeblendet werden. [PR#869](https://github.com/foodcoopshop/foodcoopshop/pull/869) <a href="https://github.com/MaxGitHubAccount"><img src="https://github.com/MaxGitHubAccount.png" width="20"></a>
-
 
 # Unveröffentlichte Version
 
 ### Herzlichen Dank an alle beteiligten Personen
+* <img src="https://github.com/MaxGitHubAccount.png" width="20"> [MaxGitHubAccount](https://github.com/MaxGitHubAccount)
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
 ### Änderung der Open-Source-Lizenz
@@ -33,6 +27,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Da der E-Mail-Versand (z.B. Verschicken der Bestellbestätigung) immer wieder komplizierte Probleme verursacht, werden ab sofort alle E-Mails in einer Queue gesammelt und über einen Hintergrund-Prozess (Worker) versendet. [I#842](https://github.com/foodcoopshop/foodcoopshop/issues/842) / [PR#843](https://github.com/foodcoopshop/foodcoopshop/pull/843)
 - Bei der Produkt-Suche werden jetzt zuerst alle Produkte angezeigt, bei denen der Suchbegriff im Produktnamen vorkommt. Und dann jene mit dem Suchbegriff in der kurzen Beschreibung. [PR#852](https://github.com/foodcoopshop/foodcoopshop/pull/852)
 - Bei monatlichen Cronjobs kann jetzt mit dem Wert "0" auch der Monatsletzte als Ausführtag angegeben werden. [I#854](https://github.com/foodcoopshop/foodcoopshop/issues/854) / [PR#859](https://github.com/foodcoopshop/foodcoopshop/pull/859)
+- Die Umsatzsteuer in der Bestellbestätigung kann nun mittels `app.showTaxInOrderConfirmationEmail => false` ausgeblendet werden. [PR#869](https://github.com/foodcoopshop/foodcoopshop/pull/869) <a href="https://github.com/MaxGitHubAccount"><img src="https://github.com/MaxGitHubAccount.png" width="20"></a>
 
 ### Neue Funktionen für den [Einzelhandels-Modus](https://foodcoopshop.github.io/de/dorfladen-online.html)
 - Kunden können sich jetzt auch als Firma (mit Firmennamen und optionaler Ansprechperson) registrieren. [I#819](https://github.com/foodcoopshop/foodcoopshop/issues/819) / [PR#821](https://github.com/foodcoopshop/foodcoopshop/pull/821) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
