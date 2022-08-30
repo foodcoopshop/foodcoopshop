@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\Http\Exception\UnauthorizedException;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,7 +46,7 @@ class ListsController extends AdminAppController
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $dateFrom = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         } else {
-            $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $dateFrom = DeliveryRhythm::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
 
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {

@@ -266,7 +266,7 @@ class OrderDetailsTable extends AppTable
             $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
 
             if (count($orderDetails) > 0) {
-                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
+                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', DeliveryRhythm::getDeliveryDay($dateTo)));
                 $result[$deliveryDay] = __('Pickup_day') . ' ' . $deliveryDay . ' - ' . __('{0,plural,=1{1_product} other{#_products}}', [count($orderDetails)]);
                 $foundOrders++;
             }

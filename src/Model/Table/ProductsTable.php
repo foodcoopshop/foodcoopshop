@@ -12,6 +12,7 @@ use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -183,7 +184,7 @@ class ProductsTable extends AppTable
                     $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($context['data']['delivery_rhythm_first_delivery_day'])));
                     $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
 
-                    $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday());
+                    $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(DeliveryRhythm::getDeliveryWeekday());
                     $message = __('The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month.', [
                         $ordinalForWeekday,
                         $deliveryWeekdayName,
@@ -232,7 +233,7 @@ class ProductsTable extends AppTable
             $sendOrderListsWeekday = $product->delivery_rhythm_send_order_list_weekday;
         }
 
-        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
+        $pickupDay = DeliveryRhythm::getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
 
         // assure that $product->is_stock_product also contains check for $product->manufacturer->stock_management_enabled
         if ($product->is_stock_product) {
@@ -241,7 +242,7 @@ class ProductsTable extends AppTable
 
         if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
             if ($product->delivery_rhythm_type == 'week' && $product->delivery_rhythm_count == 1) {
-                $regularPickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
+                $regularPickupDay = DeliveryRhythm::getDbFormattedPickupDayByDbFormattedDate($currentDay);
                 if ($pickupDay != $regularPickupDay) {
                     return 'delivery-rhythm-triggered-delivery-break';
                 }
@@ -1504,7 +1505,7 @@ class ProductsTable extends AppTable
                 'id_manufacturer' => $manufacturer->id_manufacturer,
                 'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
                 'name' => StringComponent::removeSpecialChars(strip_tags(trim($productName))),
-                'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
+                'delivery_rhythm_send_order_list_weekday' => DeliveryRhythm::getSendOrderListsWeekday(),
                 'description_short' => StringComponent::prepareWysiwygEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
                 'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
                 'unity' => StringComponent::removeSpecialChars(strip_tags(trim($unity))),

@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
@@ -256,7 +257,7 @@ abstract class AppCakeTestCase extends TestCase
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
                 'customer_id' => $this->getUserId(),
-                'pickup_day' => !is_null($pickupDay) ? $pickupDay : Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
+                'pickup_day' => !is_null($pickupDay) ? $pickupDay : DeliveryRhythm::getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment,
             ];
         }

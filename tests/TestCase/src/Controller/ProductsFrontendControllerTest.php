@@ -12,6 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
@@ -109,7 +110,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $manufacturerId = 5;
-        $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->get($this->Slug->getProductDetail($productId, 'Artischocke'));
         $this->assertResponseContains('<i class="fas fa-fw fa-lg fa-times"></i> Lieferpause!');
     }

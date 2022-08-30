@@ -8,6 +8,7 @@ use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Lib\OutputFilter\OutputFilter;
 
 /**
@@ -120,7 +121,7 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         if ($deliveryRhythmType == 'month') {
-            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday());
+            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName(DeliveryRhythm::getDeliveryWeekday());
             if ($deliveryRhythmCount > 0) {
                 $deliveryRhythmString = __('every_{0}_{1}_of_a_month', [
                     $this->MyNumber->ordinal($deliveryRhythmCount),
@@ -138,6 +139,19 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         return $deliveryRhythmString;
+    }
+
+    public function getSendOrderListsWeekdayOptions()
+    {
+        $defaultSendOrderListsWeekday = DeliveryRhythm::getSendOrderListsWeekday();
+        $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
+        $weekday2 = $this->MyTime->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
+        $weekday1 = $this->MyTime->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);
+        return [
+            $weekday3 => $this->MyTime->getWeekdayName($weekday3) . ' ' . __('midnight'),
+            $weekday2 => $this->MyTime->getWeekdayName($weekday2) . ' ' . __('midnight'),
+            $weekday1 => $this->MyTime->getWeekdayName($weekday1) . ' ' . __('midnight') . ' (' . __('default_value') . ')'
+        ];
     }
 
     public function getDeliveryRhythmTypesForDropdown()

@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
@@ -206,7 +207,7 @@ $this->element('addScript', [
                             echo $this->MyTime->getWeekdayName($configuration->value);
                             break;
                         case 'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA':
-                            echo $configuration->value . ' (' . $this->MyTime->getWeekdayName($this->MyTime->getSendOrderListsWeekday()) . ')';
+                            echo $configuration->value . ' (' . $this->MyTime->getWeekdayName(DeliveryRhythm::getSendOrderListsWeekday()) . ')';
                             break;
                         default:
                             echo $configuration->value;

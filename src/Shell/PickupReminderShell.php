@@ -18,6 +18,7 @@ namespace App\Shell;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 class PickupReminderShell extends AppShell
 {
@@ -54,7 +55,7 @@ class PickupReminderShell extends AppShell
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        $nextPickupDay = Configure::read('app.timeHelper')->getDeliveryDay(strtotime($this->cronjobRunDay));
+        $nextPickupDay = DeliveryRhythm::getDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextPickupDay);
         $diffOrderAndPickupInDays = 6;
 

@@ -13,6 +13,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use App\Model\Table\OrderDetailsTable;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -572,7 +573,7 @@ class OrderDetailsController extends AdminAppController
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $pickupDay[0] = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
                 } else {
-                    $pickupDay[0] = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+                    $pickupDay[0] = DeliveryRhythm::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
                 }
             }
         }

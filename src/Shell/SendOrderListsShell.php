@@ -14,6 +14,7 @@
  */
 namespace App\Shell;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Utility\Hash;
@@ -39,7 +40,7 @@ class SendOrderListsShell extends AppShell
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $pickupDay = $this->cronjobRunDay;
         } else {
-            $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
+            $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($this->cronjobRunDay));
         }
 
         // 1) get all manufacturers (not only active ones)

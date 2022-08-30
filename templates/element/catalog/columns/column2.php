@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 
 echo '<div class="heading">';
@@ -56,7 +57,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
         if (!($product->delivery_rhythm_type == 'week'
             && $product->delivery_rhythm_count == 1
-            && $this->Time->getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
+            && DeliveryRhythm::getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
             )
             && $lastOrderDay != ''
             ) {

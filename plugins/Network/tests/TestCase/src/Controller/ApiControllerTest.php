@@ -15,6 +15,7 @@
 
 namespace Network\Test\TestCase;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use Cake\Core\Configure;
@@ -58,7 +59,7 @@ class ApiControllerTest extends AppCakeTestCase
 
         $preparedResponse = str_replace(
             [
-                Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
+                DeliveryRhythm::getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
                 json_encode(Configure::read('app.cakeServerName')),
             ],
             [
