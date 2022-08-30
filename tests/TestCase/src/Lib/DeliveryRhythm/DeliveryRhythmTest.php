@@ -222,26 +222,15 @@ class DeliveryRhythmTest extends AppCakeTestCase
     public function testGetFormattedNextDeliveryDaySaturdayThursday()
     {
         $this->prepareSaturdayThursdayConfig();
-        $this->assertGetFormattedNextDeliveryDay('22.08.2022', '01.09.2022'); // monday
-        $this->assertGetFormattedNextDeliveryDay('23.08.2022', '01.09.2022'); // tuesday
-        $this->assertGetFormattedNextDeliveryDay('24.08.2022', '01.09.2022'); // wednesday
-        $this->assertGetFormattedNextDeliveryDay('25.08.2022', '01.09.2022'); // thursday
-        $this->assertGetFormattedNextDeliveryDay('26.08.2022', '01.09.2022'); // friday
-        $this->assertGetFormattedNextDeliveryDay('27.08.2022', '08.09.2022'); // saturday
-        $this->assertGetFormattedNextDeliveryDay('28.08.2022', '08.09.2022'); // sunday
-        $this->assertGetFormattedNextDeliveryDay('29.08.2022', '08.09.2022'); // monday
-        $this->assertGetFormattedNextDeliveryDay('30.08.2022', '08.09.2022'); // tuesday
-    }
-
-    public function testGetDeliveryDayForSendOrderListsCronjobWednesdayFriday()
-    {
-        $this->assertGetDeliveryDayForSendOrderListsCronjob('24.08.2022', '2022-08-26'); // wednesday
-    }
-
-    public function testGetDeliveryDayForSendOrderListsCronjobSaturdayThursday()
-    {
-        $this->prepareSaturdayThursdayConfig();
-        $this->assertGetDeliveryDayForSendOrderListsCronjob('27.08.2022', '2022-09-01'); // saturday
+        $this->assertGetFormattedNextDeliveryDay('22.08.2022', '25.08.2022'); // monday
+        $this->assertGetFormattedNextDeliveryDay('23.08.2022', '25.08.2022'); // tuesday
+        $this->assertGetFormattedNextDeliveryDay('24.08.2022', '25.08.2022'); // wednesday
+        $this->assertGetFormattedNextDeliveryDay('25.08.2022', '25.08.2022'); // thursday
+        $this->assertGetFormattedNextDeliveryDay('26.08.2022', '25.08.2022'); // friday
+        $this->assertGetFormattedNextDeliveryDay('27.08.2022', '01.09.2022'); // saturday
+        $this->assertGetFormattedNextDeliveryDay('28.08.2022', '01.09.2022'); // sunday
+        $this->assertGetFormattedNextDeliveryDay('29.08.2022', '01.09.2022'); // monday
+        $this->assertGetFormattedNextDeliveryDay('30.08.2022', '01.09.2022'); // tuesday
     }
 
     public function testGetLastOrderDayWeeklySendOrderListsDayNormal()
@@ -327,12 +316,6 @@ class DeliveryRhythmTest extends AppCakeTestCase
     private function assertGetFormattedNextDeliveryDay($currentDay, $expected)
     {
         $result = DeliveryRhythm::getFormattedNextDeliveryDay(strtotime($currentDay));
-        $this->assertEquals($expected, $result);
-    }
-
-    private function assertGetDeliveryDayForSendOrderListsCronjob($currentDay, $expected)
-    {
-        $result = DeliveryRhythm::getDeliveryDayForSendOrderListsCronjob(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 

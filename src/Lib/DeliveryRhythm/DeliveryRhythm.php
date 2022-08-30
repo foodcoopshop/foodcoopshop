@@ -99,12 +99,7 @@ class DeliveryRhythm
     public static function getNextDeliveryDay($day)
     {
         $orderPeriodFirstDay = self::getOrderPeriodFirstDay($day);
-        return date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), self::getDeliveryDay(strtotime($orderPeriodFirstDay)));
-    }
-
-    public static function getDeliveryDayForSendOrderListsCronjob($day)
-    {
-        $deliveryDay = self::getNextDeliveryDay($day);
+        $deliveryDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), self::getDeliveryDay(strtotime($orderPeriodFirstDay)));
         if (self::hasSaturdayThursdayConfig()) {
             $deliveryDay = date(
                 Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'),
