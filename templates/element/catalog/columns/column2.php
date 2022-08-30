@@ -47,7 +47,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
     if (!$appAuth->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
 
-        $lastOrderDay = $this->Time->getLastOrderDay(
+        $lastOrderDay = DeliveryRhythm::getLastOrderDay(
             $product->next_delivery_day,
             $product->delivery_rhythm_type,
             $product->delivery_rhythm_count,
