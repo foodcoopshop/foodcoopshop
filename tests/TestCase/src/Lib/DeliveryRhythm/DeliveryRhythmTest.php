@@ -113,7 +113,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('23.08.2022', '20.08.2022'); // tuesday
         $this->assertGetOrderPeriodFirstDay('24.08.2022', '20.08.2022'); // wednesday
         $this->assertGetOrderPeriodFirstDay('25.08.2022', '20.08.2022'); // thursday
-        $this->assertGetOrderPeriodFirstDay('26.08.2022', '27.08.2022'); // friday
+        $this->assertGetOrderPeriodFirstDay('26.08.2022', '20.08.2022'); // friday
         $this->assertGetOrderPeriodFirstDay('27.08.2022', '27.08.2022'); // saturday
         $this->assertGetOrderPeriodFirstDay('28.08.2022', '27.08.2022'); // sunday
         $this->assertGetOrderPeriodFirstDay('29.08.2022', '27.08.2022'); // monday

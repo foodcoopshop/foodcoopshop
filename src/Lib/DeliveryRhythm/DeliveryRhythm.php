@@ -148,12 +148,19 @@ class DeliveryRhythm
 
     public static function getOrderPeriodFirstDay($day)
     {
+
         $currentWeekday = Configure::read('app.timeHelper')->formatAsWeekday($day);
         $dateDiff = 7 - self::getSendOrderListsWeekday() + $currentWeekday;
         $date = strtotime('-' . $dateDiff . ' day ', $day);
 
-        if ($currentWeekday > self::getDeliveryWeekday()) {
-            $date = strtotime('+7 day', $date);
+        if (self::hasSaturdayThursdayConfig()) {
+            if (in_array($currentWeekday, [6,7]) && self::getDeliveryWeekday()) {
+                $date = strtotime('+7 day', $date);
+            }
+        } else {
+            if ($currentWeekday > self::getDeliveryWeekday()) {
+                $date = strtotime('+7 day', $date);
+            }
         }
 
         $date = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $date);
