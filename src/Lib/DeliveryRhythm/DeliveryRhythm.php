@@ -209,31 +209,6 @@ class DeliveryRhythm
         return Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
     }
 
-    public static function hasTuesdayFridayConfig()
-    {
-        return self::compareConfig(5, 3);
-    }
-
-    public static function hasWednesdayFridayConfig()
-    {
-        return self::compareConfig(5, 2);
-    }
-
-    public static function hasThursdayFridayConfig()
-    {
-        return self::compareConfig(5, 1);
-    }
-
-    public static function hasMondayTuesdayConfig()
-    {
-        return self::compareConfig(2, 1);
-    }
-
-    public static function hasMondayThursdayConfig()
-    {
-        return self::compareConfig(4, 3);
-    }
-
     public static function hasSaturdayThursdayConfig()
     {
         return self::compareConfig(4, 5);
