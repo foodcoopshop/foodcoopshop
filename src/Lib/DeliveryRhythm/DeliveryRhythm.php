@@ -50,7 +50,12 @@ class DeliveryRhythm
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1);
         }
 
+        if (self::hasSaturdayThursdayConfig() && $dateDiff < 0) {
+            $dateDiff += 7;
+        }
+
         $date = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
+
 
         return $date;
     }

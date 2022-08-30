@@ -79,7 +79,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
     }
 
-    public function xtestGetOrderPeriodLastDaySaturdayThursday()
+    public function testGetOrderPeriodLastDaySaturdayThursday()
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetOrderPeriodLastDay('29.08.2022', '02.09.2022'); // monday
