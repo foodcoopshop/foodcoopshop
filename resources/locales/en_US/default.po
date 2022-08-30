@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-18 18:16+0200\n"
-"PO-Revision-Date: 2022-08-18 18:21+0200\n"
+"POT-Creation-Date: 2022-08-30 14:09+0200\n"
+"PO-Revision-Date: 2022-08-30 14:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -896,9 +896,6 @@ msgstr "Please select..."
 
 msgid "all"
 msgstr "all"
-
-msgid "No_stock_products_selected."
-msgstr "No stock products were selected."
 
 msgid "Add_product_feedback"
 msgstr "Write feedback to product"
@@ -2678,6 +2675,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "No_stock_products_selected."
+#~ msgstr "No stock products were selected."
 
 #~ msgid "Why_is_pickup_day_changed?"
 #~ msgstr "Why is the pickup day changed?"

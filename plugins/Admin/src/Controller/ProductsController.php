@@ -312,6 +312,11 @@ class ProductsController extends AdminAppController
 
         $preparedProducts = [];
         foreach($products as &$product) {
+
+            if (Configure::read('app.selfServiceModeShowOnlyStockProducts') && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
+                continue;
+            }
+
             if (!empty($product->product_attributes)) {
                 // avoid rendering main product if product has attributes
                 continue;
@@ -330,6 +335,9 @@ class ProductsController extends AdminAppController
             $preparedProducts[] = $product;
         }
 
+        if (empty($preparedProducts)) {
+            throw new InvalidParameterException('no stock product selected');
+        }
         $pdfWriter = new ProductCardsPdfWriter();
         $pdfWriter->setFilename(__d('admin', 'Products').'.pdf');
         $pdfWriter->setData([
