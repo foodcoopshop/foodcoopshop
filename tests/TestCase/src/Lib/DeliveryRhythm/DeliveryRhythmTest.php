@@ -16,14 +16,18 @@
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\DeliveryRhythmConfigsTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use App\View\Helper\MyTimeHelper;
 use Cake\I18n\FrozenDate;
 use Cake\View\View;
+use Cake\TestSuite\IntegrationTestTrait;
 
 class DeliveryRhythmTest extends AppCakeTestCase
 {
 
     use DeliveryRhythmConfigsTrait;
+    use IntegrationTestTrait;
+    use LoginTrait;
 
     public function setUp(): void
     {
