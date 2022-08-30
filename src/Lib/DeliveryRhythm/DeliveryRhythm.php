@@ -111,34 +111,29 @@ class DeliveryRhythm
             $deliveryRhythmCount = 1;
         }
 
-        $daysToAddToOrderPeriodLastDay = self::getDaysToAddToOrderPeriodLastDay();
-        $deliveryDate = strtotime(self::getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
-
-        $weekdayDeliveryDate = Configure::read('app.timeHelper')->formatAsWeekday($deliveryDate);
-        $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
-
-        $weekdayOrderDay = Configure::read('app.timeHelper')->formatAsWeekday($orderDay);
-        $weekdayOrderDay = $weekdayOrderDay % 7;
-
         if (is_null($sendOrderListsWeekday)) {
             $sendOrderListsWeekday = self::getSendOrderListsWeekday();
         }
 
-        /*
-         $daysToAddToOrderPeriodLastDayMatrix = [
-         3 => [
-         2 => 5 => []
-         ],
-         ];
+        $daysToAddToOrderPeriodLastDay = self::getDaysToAddToOrderPeriodLastDay();
+        $deliveryDate = strtotime(self::getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
 
-         $daysToAddToOrderPeriodLastDay = $daysToAddToOrderPeriodLastDayMatrix[$weekdayOrderDay][$weekdayDeliveryDate];
-         */
+        $weekdayOrderDay = Configure::read('app.timeHelper')->formatAsWeekday($orderDay);
+        $weekdayOrderDay = $weekdayOrderDay % 7;
 
-        //         pr($weekdayOrderDay);
-        //         pr($sendOrderListsWeekday);
-        //         pr($weekdayDeliveryDate);
+        $weekdayDeliveryDate = Configure::read('app.timeHelper')->formatAsWeekday($deliveryDate);
+        $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
 
-        if ($weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate && $deliveryRhythmType != 'individual') {
+        if (self::hasSaturdayThursdayConfig()) {
+            $calculateNextDeliveryDay = $weekdayOrderDay == 6 || (
+                $weekdayOrderDay == 5 && $sendOrderListsWeekday == 5
+            );
+        } else {
+            $calculateNextDeliveryDay = $weekdayOrderDay >= $sendOrderListsWeekday
+                && $weekdayOrderDay <= $weekdayDeliveryDate;
+        }
+
+        if ($calculateNextDeliveryDay && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $orderDay);
             $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . ' ' . $weekdayStringDeliveryDate);
         }
@@ -211,11 +206,7 @@ class DeliveryRhythm
 
     public static function getDaysToAddToOrderPeriodLastDay()
     {
-        if (self::hasSaturdayThursdayConfig()) {
-            return 5;
-        } else {
-            return Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
-        }
+        return Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
     }
 
     public static function hasTuesdayFridayConfig()

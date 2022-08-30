@@ -85,7 +85,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function xtest1WeekNormalNoFirstDeliveryDaySaturdayThursday()
+    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursday()
     {
         $this->prepareSaturdayThursdayConfig();
         $data = [
@@ -102,7 +102,25 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function xtest1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
+    public function test2WeekDeliveryDaySaturdayThursday()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2022-09-08'),
+                    'is_stock_product' => '0',
+                ]
+            ),
+            'currentDay' => '2022-08-25', // thursday
+            'result' => '2022-09-08',
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
     {
         $this->prepareSaturdayThursdayConfig();
         $data = [

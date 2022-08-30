@@ -37,7 +37,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
         $this->assertGetDeliveryDay('25.07.2018', '03.08.2018');
     }
 
-    public function xtestGetDeliveryDaySaturdayThursday()
+    public function testGetDeliveryDaySaturdayThursday()
     {
         $this->prepareSaturdayThursdayConfig();
         $this->assertGetDeliveryDay('24.08.2022', '01.09.2022'); // wednesday
@@ -316,6 +316,5 @@ class DeliveryRhythmTest extends AppCakeTestCase
         );
         $this->assertEquals($expected, $result);
     }
-
 
 }
