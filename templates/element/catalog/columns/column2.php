@@ -91,7 +91,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
     if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isOrderForDifferentCustomerMode()) {
         if (
             $product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break'
-            && strtotime($product->next_delivery_day) != $this->Time->getDeliveryDayByCurrentDay()
+            && strtotime($product->next_delivery_day) != DeliveryRhythm::getDeliveryDayByCurrentDay()
             ) {
                 $weeksAsFloat = (strtotime($product->next_delivery_day) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
                 $fullWeeks = (int) ($weeksAsFloat / 7);

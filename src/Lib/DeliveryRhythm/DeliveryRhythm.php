@@ -39,13 +39,13 @@ class DeliveryRhythm
     public static function getNextWeeklyDeliveryDays($maxDays=52)
     {
         $nextDeliveryDay = self::getDeliveryDateByCurrentDayForDb();
-        return Configure::read('app.timeHelper')->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 7);
+        return Configure::read('app.htmlHelper')->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 7);
     }
 
     public static function getNextDailyDeliveryDays($maxDays)
     {
         $nextDeliveryDay = Configure::read('app.timeHelper')->getTomorrowForDatabase();
-        return Configure::read('app.timeHelper')->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 1);
+        return Configure::read('app.htmlHelper')->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 1);
     }
 
     public static function getDeliveryDayByCurrentDay()
