@@ -85,7 +85,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursday()
+    public function xtest1WeekNormalNoFirstDeliveryDaySaturdayThursday()
     {
         $this->prepareSaturdayThursdayConfig();
         $data = [
@@ -102,7 +102,7 @@ class ProductsTableDeliveryRhythmTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function test1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
+    public function xtest1WeekNormalNoFirstDeliveryDaySaturdayThursdayWithSendOrderListDayOneDayBeforeDefault()
     {
         $this->prepareSaturdayThursdayConfig();
         $data = [

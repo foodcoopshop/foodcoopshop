@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\I18n\FrozenTime;
 use Cake\View\Helper\TimeHelper;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -299,7 +300,8 @@ class MyTimeHelper extends TimeHelper
         if (is_null($deliveryRhythmCount)) {
             $deliveryRhythmCount = 1;
         }
-        $daysToAddToOrderPeriodLastDay = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
+
+        $daysToAddToOrderPeriodLastDay = DeliveryRhythm::getDaysToAddToOrderPeriodLastDay();
         $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
 
         $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
@@ -312,7 +314,21 @@ class MyTimeHelper extends TimeHelper
             $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         }
 
-        if ($weekdayOrderDay >= $sendOrderListsWeekday && ($weekdayOrderDay <= $weekdayDeliveryDate || $this->isWeeklyPickupDayBeforeSendOrderListsDay()) && $deliveryRhythmType != 'individual') {
+        /*
+        $daysToAddToOrderPeriodLastDayMatrix = [
+            3 => [
+                2 => 5 => []
+            ],
+        ];
+
+        $daysToAddToOrderPeriodLastDay = $daysToAddToOrderPeriodLastDayMatrix[$weekdayOrderDay][$weekdayDeliveryDate];
+        */
+
+//         pr($weekdayOrderDay);
+//         pr($sendOrderListsWeekday);
+//         pr($weekdayDeliveryDate);
+
+        if ($weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
             $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . ' ' . $weekdayStringDeliveryDate);
         }
@@ -405,23 +421,12 @@ class MyTimeHelper extends TimeHelper
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 1;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 6) % 7) {
-            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 0;
-        }
-
-        // method returned wrong data for MyTimeHelperTest::prepareSaturdayThursdayConfig()
-        // the check for isWeeklyPickupDayBeforeSendOrderListsDay fixes that
-        if ($this->isWeeklyPickupDayBeforeSendOrderListsDay() && $dateDiff < 0) {
-            $dateDiff += 7;
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1);
         }
 
         $date = date($this->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
 
         return $date;
-    }
-
-    private function isWeeklyPickupDayBeforeSendOrderListsDay()
-    {
-        return (Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA')) < 0;
     }
 
     public function getSendOrderListsWeekdayOptions()
