@@ -52,7 +52,8 @@ class AssetsProvider
         $result = array_merge($result, [
             'jquery/dist/jquery.js',
             '@popperjs/core/dist/umd/popper.js',
-            'bootstrap/dist/js/bootstrap.min.js',
+            'bootstrap/bootstrap-with-bugfix.js',
+            //'bootstrap/dist/js/bootstrap.min.js',
             'bootstrap-select/dist/js/bootstrap-select.js',
             'jquery-ui/dist/jquery-ui.js',
             'blueimp-file-upload/js/jquery.fileupload.js',
