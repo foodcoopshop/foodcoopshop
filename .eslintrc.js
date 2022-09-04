@@ -4,7 +4,10 @@ module.exports = {
         "jquery": true,
         "es6": true
     },
-    "ignorePatterns": ["webroot/js/elFinder/"],
+    "ignorePatterns": [
+        "webroot/js/elFinder/",
+        "webroot/js/bootstrap/" //remove after release of bootstrap v5.2.1
+    ],
     "globals": {
         "bootstrap": true,
         "Chart": true,
