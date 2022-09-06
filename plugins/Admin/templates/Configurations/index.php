@@ -348,6 +348,11 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.selfServiceModeShowOnlyStockProducts') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
+        <tr>
+            <td>app.selfServiceModeAutoGenerateInvoice</td>
+            <td><?php echo Configure::read('app.selfServiceModeAutoGenerateInvoice') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
         <?php
         if ($this->elementExists('latestGitCommit')) {
             echo '<tr>';

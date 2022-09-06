@@ -504,7 +504,7 @@ class CartComponent extends Component
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
 
-                    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
                         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
                         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
                         $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
