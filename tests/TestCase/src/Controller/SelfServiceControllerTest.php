@@ -13,7 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Application;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -241,6 +240,29 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->get($this->Slug->getSelfService($barcodeForProduct));
         $this->assertFlashMessageAt(0, 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.');
         $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+    }
+
+    public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomerWithAutoGenerateInvoiceDisabled()
+    {
+
+        Configure::write('app.selfServiceModeAutoGenerateInvoice', false);
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers/changeStatus/' . Configure::read('test.selfServiceCustomerId'). '/1/0');
+        $this->loginAsSelfServiceCustomer();
+        $this->addProductToSelfServiceCart(346, 1, 0);
+        $this->addProductToSelfServiceCart(351, 1, '0,5');
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $this->finishSelfServiceCart(1, 1);
+        $this->runAndAssertQueue();
+        $this->assertSessionNotHasKey('invoiceRouteForAutoPrint');
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoices = $this->Invoice->find('all');
+        $this->assertEquals($invoices->count(), 0);
     }
 
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()

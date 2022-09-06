@@ -104,6 +104,7 @@ return [
         'showTaxSumTableOnOrderDetailPdf' => false,
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
         'selfServiceModeShowOnlyStockProducts' => true,
+        'selfServiceModeAutoGenerateInvoice' => true,
 
         /**
          * id of the category "all products"
