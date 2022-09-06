@@ -48,6 +48,7 @@ class SendInvoicesToCustomersShell extends AppShell
         $customers = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.active' => APP_ON,
+                'Customers.shopping_price <> "ZP"',
             ],
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind

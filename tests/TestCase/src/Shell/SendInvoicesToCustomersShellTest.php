@@ -113,6 +113,15 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
 
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+
+        // never create invoices for zero price users
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
+        $this->exec('send_invoices_to_customers "' . $cronjobRunDay . '"');
+        $this->runAndAssertQueue();
+        $this->assertEquals(0, count($this->Invoice->find('all')->toArray()));
+
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'SP');
         $this->exec('send_invoices_to_customers "' . $cronjobRunDay . '"');
         $this->runAndAssertQueue();
 
@@ -120,7 +129,6 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $pdfFilenameWithPath = DS . '2018' . DS . '02' . DS . $pdfFilenameWithoutPath;
         $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilenameWithPath);
 
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoice = $this->Invoice->find('all', [
             'conditions' => [
                 'Invoices.id_customer' => $customerId,
