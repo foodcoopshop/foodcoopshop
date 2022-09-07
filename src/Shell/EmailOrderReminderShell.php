@@ -40,7 +40,14 @@ class EmailOrderReminderShell extends AppShell
             return true;
         }
 
-        $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDay(strtotime($this->cronjobRunDay));
+        $productsTable = $this->getTableLocator()->get('Products');
+        $dummyProduct = $productsTable->newEntity([
+            'delivery_rhythm_type' => 'week',
+            'delivery_rhythm_count' => '1',
+            'is_stock_product' => '0',
+        ]);
+        $nextDeliveryDay = DeliveryRhythm::getNextPickupDayForProduct($dummyProduct, $this->cronjobRunDay);
+
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
             $this->Product = $this->getTableLocator()->get('Products');
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
