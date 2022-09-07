@@ -5,8 +5,7 @@ module.exports = {
         "es6": true
     },
     "ignorePatterns": [
-        "webroot/js/elFinder/",
-        "webroot/js/bootstrap/" //remove after release of bootstrap v5.2.1
+        "webroot/js/elFinder/"
     ],
     "globals": {
         "bootstrap": true,
