@@ -51,7 +51,9 @@
     margin-bottom: 10px;
 }
 .modal .mini-upload-form .drop img.existingImage.loading {
-  padding: 20px 118px;
+  margin: 50px 0;
+  width: 32px;
+  height: 32px;
 }
 .modal .mini-upload-form p.heading {
     font-size: 16px;
