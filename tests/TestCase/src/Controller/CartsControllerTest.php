@@ -19,6 +19,7 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -394,7 +395,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $manufacturerId = 5;
-        $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
         $this->checkValidationError();
         $this->assertMatchesRegularExpression('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->_response);
@@ -406,7 +407,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->finishCart(0, 0);
         $this->checkValidationError();
@@ -674,7 +675,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
-        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+        $pickupDay = DeliveryRhythm::getDeliveryDateByCurrentDayForDb();
 
         // check order_details for product1 (index 2!)
         $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
@@ -831,7 +832,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
-        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+        $pickupDay = DeliveryRhythm::getDeliveryDateByCurrentDayForDb();
 
         // check order_details
         $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
@@ -1020,7 +1021,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrderWithDeliveryBreak()
     {
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);

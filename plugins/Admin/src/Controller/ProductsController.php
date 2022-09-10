@@ -13,6 +13,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -724,7 +725,7 @@ class ProductsController extends AdminAppController
         $product2update['delivery_rhythm_order_possible_until'] = '';
         $product2update['delivery_rhythm_send_order_list_day'] = '';
         if ($deliveryRhythmSendOrderListWeekday == '') {
-            $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, Configure::read('app.timeHelper')->getSendOrderListsWeekday());
+            $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, DeliveryRhythm::getSendOrderListsWeekday());
         }
         $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $deliveryRhythmSendOrderListWeekday);
 
@@ -760,7 +761,7 @@ class ProductsController extends AdminAppController
                     $additionalMessages[] = __d('admin', 'Order_list_is_not_sent');
                 }
             } else {
-                if ($product2update['delivery_rhythm_send_order_list_weekday'] != Configure::read('app.timeHelper')->getSendOrderListsWeekday()) {
+                if ($product2update['delivery_rhythm_send_order_list_weekday'] != DeliveryRhythm::getSendOrderListsWeekday()) {
                     $additionalMessages[] =  __d('admin', 'Last_order_weekday') . ': <b>' . Configure::read('app.timeHelper')->getWeekdayName(
                         $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
                         . '</b>';

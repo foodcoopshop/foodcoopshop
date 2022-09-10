@@ -12,6 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 
 ?>
@@ -411,7 +412,7 @@ use Cake\Core\Configure;
         echo $this->Form->control('Weekdays', [
             'type' => 'select',
             'label' => '',
-            'options' => $this->Time->getSendOrderListsWeekdayOptions()
+            'options' => $this->Html->getSendOrderListsWeekdayOptions()
         ]);
     echo '</div>';
 

@@ -12,6 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 
 if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -26,7 +27,7 @@ $this->element('addScript', ['script' => "
 
 echo '<div class="select-pickup-day-wrapper">';
 
-    $preparedDeliveryDays = $this->Time->getNextDailyDeliveryDays(14);
+    $preparedDeliveryDays = DeliveryRhythm::getNextDailyDeliveryDays(14);
     $formattedToDatabaseDeliveryDays = $this->Html->getGlobalNoDeliveryDaysAsArray();
 
     $i = 0;

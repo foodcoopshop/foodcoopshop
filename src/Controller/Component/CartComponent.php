@@ -12,6 +12,7 @@ use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -215,7 +216,7 @@ class CartComponent extends Component
                 'contain' => $contain,
             ])->first();
 
-            $product->next_delivery_day = $this->Product->getNextDeliveryDay($product, $this->AppAuth);
+            $product->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $this->AppAuth);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;

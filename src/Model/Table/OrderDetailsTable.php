@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
@@ -254,8 +255,8 @@ class OrderDetailsTable extends AppTable
         $i = 0;
         while($foundOrders < $ordersToLoad) {
 
-            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
-            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
             // stop trying to search for valid orders if year is one year ago
             if (date('Y', $dateFrom) == date('Y') - 1) {
@@ -265,7 +266,7 @@ class OrderDetailsTable extends AppTable
             $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
 
             if (count($orderDetails) > 0) {
-                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
+                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', DeliveryRhythm::getDeliveryDay($dateTo)));
                 $result[$deliveryDay] = __('Pickup_day') . ' ' . $deliveryDay . ' - ' . __('{0,plural,=1{1_product} other{#_products}}', [count($orderDetails)]);
                 $foundOrders++;
             }

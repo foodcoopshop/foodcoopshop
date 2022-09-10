@@ -18,6 +18,7 @@
 
 namespace App\Shell;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
@@ -39,7 +40,14 @@ class EmailOrderReminderShell extends AppShell
             return true;
         }
 
-        $nextDeliveryDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
+        $productsTable = $this->getTableLocator()->get('Products');
+        $dummyProduct = $productsTable->newEntity([
+            'delivery_rhythm_type' => 'week',
+            'delivery_rhythm_count' => '1',
+            'is_stock_product' => '0',
+        ]);
+        $nextDeliveryDay = DeliveryRhythm::getNextPickupDayForProduct($dummyProduct, $this->cronjobRunDay);
+
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
             $this->Product = $this->getTableLocator()->get('Products');
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
@@ -86,7 +94,7 @@ class EmailOrderReminderShell extends AppShell
             ->setViewVars([
                 'customer' => $customer,
                 'newsletterCustomer' => $customer,
-                'lastOrderDayAsString' => (Configure::read('app.timeHelper')->getSendOrderListsWeekday() - date('N', strtotime($this->cronjobRunDay))) == 1 ? __('today') : __('tomorrow')
+                'lastOrderDayAsString' => (DeliveryRhythm::getSendOrderListsWeekday() - date('N', strtotime($this->cronjobRunDay))) == 1 ? __('today') : __('tomorrow')
             ])
             ->addToQueue();
 

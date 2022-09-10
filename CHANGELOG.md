@@ -6,6 +6,13 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+### Herzlichen Dank an alle beteiligten Personen
+
+* <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
+
+### Neue Funktionen / Verbesserungen
+- Die Konfiguration "Freitag Bestellschluss / Samstag Bestelllisten-Versand / Donnerstag Abholtag" ist jetzt möglich. [I#866](https://github.com/foodcoopshop/foodcoopshop/issues/866) / [PR#867](https://github.com/foodcoopshop/foodcoopshop/pull/867) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 
 # Unveröffentlichte Version
 
