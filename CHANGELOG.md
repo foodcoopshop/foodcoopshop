@@ -14,7 +14,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Konfiguration "Freitag Bestellschluss / Samstag Bestelllisten-Versand / Donnerstag Abholtag" ist jetzt möglich. [I#866](https://github.com/foodcoopshop/foodcoopshop/issues/866) / [PR#867](https://github.com/foodcoopshop/foodcoopshop/pull/867) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
-# Unveröffentlichte Version
+# v3.5.0
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/MaxGitHubAccount.png" width="20"> [MaxGitHubAccount](https://github.com/MaxGitHubAccount)
@@ -56,6 +56,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Doppelte Aufrufe von lang andauerenden Cronjobs sind jetzt nicht mehr möglich. Das kam sehr selten vor, aber eben doch. [PR#853](https://github.com/foodcoopshop/foodcoopshop/pull/853) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Neuer CSS-Compressor: CssMin wurde durch CleanCss ersetzt. [PR#856](https://github.com/foodcoopshop/foodcoopshop/pull/856) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Fontawesome v6 Update. [PR#855](https://github.com/foodcoopshop/foodcoopshop/pull/855) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+Datum: 12.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/17) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.4.2...v3.5.0)
 
 # v3.4.2
 
