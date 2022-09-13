@@ -54,7 +54,6 @@ class CronjobsTableTest extends AppCakeTestCase
     {
         $time = '2018-10-22 23:00:00';
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
-        $this->Cronjob->cronjobRunDay = strtotime($time);
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
@@ -75,7 +74,6 @@ class CronjobsTableTest extends AppCakeTestCase
     {
         $time = '2018-10-22 23:00:00';
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
-        $this->Cronjob->cronjobRunDay = strtotime($time);
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
