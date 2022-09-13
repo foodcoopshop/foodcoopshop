@@ -142,28 +142,6 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['created'], $time);
     }
 
-    /**
-     * SocketException are triggered when email could not be sent
-     * set cronjob success to 1 to avoid that it is called again
-     */
-    public function testCronjobWithSocketException()
-    {
-        $time = '2018-10-23 22:31:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
-        $this->Cronjob->save(
-            $this->Cronjob->patchEntity(
-                $this->Cronjob->get(1),
-                [
-                    'name' => 'TestCronjobWithSocketException'
-                ],
-            )
-        );
-        $executedCronjobs = $this->Cronjob->run();
-        $this->assertEquals(1, count($executedCronjobs));
-        $this->assertEquals($executedCronjobs[0]['success'], 1);
-        $this->assertEquals($executedCronjobs[0]['created'], $time);
-    }
-
     public function testCronjobAlreadyExecutedOnCurrentDay()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-25 22:30:02')->toUnixString();

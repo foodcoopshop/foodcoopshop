@@ -131,10 +131,7 @@ class CronjobsTable extends AppTable
             $success = $shell->main();
             $success = $success !== true ? CronjobLogsTable::FAILURE : CronjobLogsTable::SUCCESS;
         } catch (\Exception $e) {
-            $success = CronjobLogsTable::SUCCESS;
-            if (get_class($e) != 'Cake\Network\Exception\SocketException') {
-                $success = CronjobLogsTable::FAILURE;
-            }
+            $success = CronjobLogsTable::FAILURE;
         }
 
         $entity->success = $success;
