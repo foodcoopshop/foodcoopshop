@@ -35,6 +35,41 @@ class CronjobsTable extends AppTable
         ]);
     }
 
+    public function getTimeIntervals()
+    {
+        return [
+            'day'   => __('daily'),
+            'week'  => __('weekly'),
+            'month' => __('monthly'),
+        ];
+    }
+
+    public function getDaysOfMonth()
+    {
+        $days = [];
+        $i = 0;
+        while($i<=31) {
+            $days[$i] = $i;
+            $i++;
+        }
+        return $days;
+    }
+
+    public function getWeekdays()
+    {
+        $weekdays = [
+            'Sunday' => __('Sunday'),
+            'Monday' => __('Monday'),
+            'Tuesday' => __('Tuesday'),
+            'Wednesday' => __('Wednesday'),
+            'Thursday' => __('Thursday'),
+            'Friday' => __('Friday'),
+            'Saturday' => __('Saturday')
+        ];
+        return $weekdays;
+
+    }
+
     public function findAvailable(Query $query, array $options)
     {
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {

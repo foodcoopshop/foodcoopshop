@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 14:27+0200\n"
+"POT-Creation-Date: 2022-09-14 14:51+0200\n"
 "PO-Revision-Date: 2022-09-14 14:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1755,6 +1755,15 @@ msgstr "Bitte gib den Namen der Foodcoop an."
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "Die Anzahl der Zeichen muss zwischen {0} und {1} liegen."
 
+msgid "daily"
+msgstr "täglich"
+
+msgid "weekly"
+msgstr "wöchentlich"
+
+msgid "monthly"
+msgstr "monatlich"
+
 msgid "Please_enter_your_first_name."
 msgstr "Bitte gib deinen Vornamen an."
 
@@ -2049,9 +2058,6 @@ msgstr "Einkaufen zum Einkaufspreis"
 msgid "Shopping_with_zero_price"
 msgstr "Einkaufen zum Nullpreis"
 
-msgid "weekly"
-msgstr "wöchentlich"
-
 msgid "every_{0}_week"
 msgstr "jede {0} Woche"
 
@@ -2183,12 +2189,6 @@ msgstr "deaktiviert"
 
 msgid "active_state_all"
 msgstr "alle"
-
-msgid "daily"
-msgstr "täglich"
-
-msgid "monthly"
-msgstr "monatlich"
 
 msgid "{0,plural,=1{1_minute} other{#_minutes}}"
 msgstr "{0,plural,=1{1 Minute} other{# Minuten}}"

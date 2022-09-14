@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-14 14:27+0200\n"
+"POT-Creation-Date: 2022-09-14 14:51+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1754,6 +1754,15 @@ msgstr ""
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr ""
 
+msgid "daily"
+msgstr ""
+
+msgid "weekly"
+msgstr ""
+
+msgid "monthly"
+msgstr ""
+
 msgid "Please_enter_your_first_name."
 msgstr ""
 
@@ -2048,9 +2057,6 @@ msgstr ""
 msgid "Shopping_with_zero_price"
 msgstr ""
 
-msgid "weekly"
-msgstr ""
-
 msgid "every_{0}_week"
 msgstr ""
 
@@ -2181,12 +2187,6 @@ msgid "active_state_inactive"
 msgstr ""
 
 msgid "active_state_all"
-msgstr ""
-
-msgid "daily"
-msgstr ""
-
-msgid "monthly"
 msgstr ""
 
 msgid "{0,plural,=1{1_minute} other{#_minutes}}"

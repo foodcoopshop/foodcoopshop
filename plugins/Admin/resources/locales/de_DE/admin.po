@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 14:27+0200\n"
-"PO-Revision-Date: 2022-09-14 10:15+0200\n"
+"POT-Creation-Date: 2022-09-14 14:52+0200\n"
+"PO-Revision-Date: 2022-09-14 14:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -86,6 +86,12 @@ msgstr "Test E-Mail"
 
 msgid "Cronjobs"
 msgstr "Cronjobs"
+
+msgid "Edit_cronjob"
+msgstr "Cronjob bearbeiten"
+
+msgid "The_cronjob_{0}_has_been_changed."
+msgstr "Der Cronjob {0} wurde geändert."
 
 msgid "all_members"
 msgstr "alle Mitglieder"
@@ -948,17 +954,20 @@ msgstr "Standard-Bild für Blog-Artikel, Breite: "
 msgid "Website_administration"
 msgstr "Homepage-Verwaltung"
 
-msgid "Configurations"
-msgstr "Einstellungen"
-
 msgid "Time_interval"
 msgstr "Intervall"
 
 msgid "Day_of_month"
 msgstr "Tag (Monat)"
 
+msgid "Please_select..."
+msgstr "Bitte auswählen..."
+
 msgid "Weekday"
 msgstr "Wochentag"
+
+msgid "Configurations"
+msgstr "Einstellungen"
 
 msgid "Not_before_time"
 msgstr "Uhrzeit"
@@ -1487,9 +1496,6 @@ msgstr "Lieferpause"
 
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "Wie verwende ich die Funktion \"Lieferpause\"?"
-
-msgid "Please_select..."
-msgstr "Bitte auswählen..."
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Hersteller-Profil und Produkte werden <b>nur für eingeloggte Mitglieder</b> angezeigt."
@@ -2396,6 +2402,10 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#, fuzzy
+#~ msgid "Please_chose"
+#~ msgstr "Bitte auswählen..."
 
 #~ msgid "Please_enter_why_pickup_day_is_changed."
 #~ msgstr "Bitte gib an, warum der Abholtag geändert wird."

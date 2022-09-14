@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 14:27+0200\n"
+"POT-Creation-Date: 2022-09-14 14:51+0200\n"
 "PO-Revision-Date: 2022-09-14 14:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1755,6 +1755,15 @@ msgstr "Please enter the name of the food-coop."
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "The amount of characters needs to be between {0} and {1}."
 
+msgid "daily"
+msgstr "daily"
+
+msgid "weekly"
+msgstr "weekly"
+
+msgid "monthly"
+msgstr "monthly"
+
 msgid "Please_enter_your_first_name."
 msgstr "Please enter your first name."
 
@@ -2049,9 +2058,6 @@ msgstr "Use purchase price for shopping"
 msgid "Shopping_with_zero_price"
 msgstr "Use zero price for shopping"
 
-msgid "weekly"
-msgstr "weekly"
-
 msgid "every_{0}_week"
 msgstr "every {0} week"
 
@@ -2183,12 +2189,6 @@ msgstr "inactive"
 
 msgid "active_state_all"
 msgstr "all"
-
-msgid "daily"
-msgstr "daily"
-
-msgid "monthly"
-msgstr "monthly"
 
 msgid "{0,plural,=1{1_minute} other{#_minutes}}"
 msgstr "{0,plural,=1{1 minute} other{# minutes}}"

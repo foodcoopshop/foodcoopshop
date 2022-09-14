@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 14:27+0200\n"
+"POT-Creation-Date: 2022-09-14 14:52+0200\n"
 "PO-Revision-Date: 2022-09-14 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -86,6 +86,14 @@ msgstr "Test email"
 
 msgid "Cronjobs"
 msgstr "Cronjobs"
+
+#, fuzzy
+msgid "Edit_cronjob"
+msgstr "Cronjobs"
+
+#, fuzzy
+msgid "The_cronjob_{0}_has_been_changed."
+msgstr "The setting {0} has been changed to {1}."
 
 msgid "all_members"
 msgstr "all members"
@@ -948,17 +956,20 @@ msgstr "Default image for blog post, width:"
 msgid "Website_administration"
 msgstr "Website administration"
 
-msgid "Configurations"
-msgstr "Settings"
-
 msgid "Time_interval"
 msgstr "Interval"
 
 msgid "Day_of_month"
 msgstr "Day of month"
 
+msgid "Please_select..."
+msgstr "Please select..."
+
 msgid "Weekday"
 msgstr "Weekday"
+
+msgid "Configurations"
+msgstr "Settings"
 
 msgid "Not_before_time"
 msgstr "Time"
@@ -1484,9 +1495,6 @@ msgstr "Delivery break"
 
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "How do I use the function \"delivery break\"?"
-
-msgid "Please_select..."
-msgstr "Please select..."
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Manufacturer provile and products are only visible for signed in members."
@@ -2393,6 +2401,10 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "Please_chose"
+#~ msgstr "Please select..."
 
 #~ msgid "Please_enter_why_pickup_day_is_changed."
 #~ msgstr "Please enter why the pickup day is changed."
