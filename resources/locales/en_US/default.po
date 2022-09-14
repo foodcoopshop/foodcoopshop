@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 08:52+0200\n"
-"PO-Revision-Date: 2022-09-14 08:57+0200\n"
+"POT-Creation-Date: 2022-09-14 14:27+0200\n"
+"PO-Revision-Date: 2022-09-14 14:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2126,6 +2126,15 @@ msgstr "Admin"
 
 msgid "Superadmin"
 msgstr "Superadmin"
+
+msgid "Configurations"
+msgstr "Settings"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
+
+msgid "Tax_rates"
+msgstr "Tax rates"
 
 msgid "Credit_overview"
 msgstr "Credit overview"

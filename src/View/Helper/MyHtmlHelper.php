@@ -503,6 +503,27 @@ class MyHtmlHelper extends HtmlHelper
         return (int) $cartId[5];
     }
 
+    public function getConfigurationTabs()
+    {
+        $tabs = [];
+        $tabs[] = [
+            'name' => '<i class="fas fa-fw ok fa-cogs"></i> ' . __('Configurations'),
+            'url' => Configure::read('app.slugHelper')->getConfigurationsList(),
+            'key' => 'configurations',
+        ];
+        $tabs[] = [
+            'name' => '<i class="fas fa-fw ok fa-clock"></i> ' . __('Cronjobs'),
+            'url' => Configure::read('app.slugHelper')->getCronjobsList(),
+            'key' => 'cronjobs',
+        ];
+        $tabs[] = [
+            'name' => '<i class="fas fa-fw ok fa-percent"></i> ' . __('Tax_rates'),
+            'url' => Configure::read('app.slugHelper')->getTaxesList(),
+            'key' => 'tax_rates',
+        ];
+        return $tabs;
+    }
+
     public function getReportTabs()
     {
         $tabs = [];

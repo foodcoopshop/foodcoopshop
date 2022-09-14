@@ -12,7 +12,6 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
 
 ?>
 <ul class="nav nav-tabs">

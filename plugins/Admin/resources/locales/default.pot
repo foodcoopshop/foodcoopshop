@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-14 10:15+0200\n"
+"POT-Creation-Date: 2022-09-14 14:27+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -944,6 +944,12 @@ msgstr ""
 msgid "Default_image_for_blog_post,_width:"
 msgstr ""
 
+msgid "Website_administration"
+msgstr ""
+
+msgid "Configurations"
+msgstr ""
+
 msgid "Time_interval"
 msgstr ""
 
@@ -969,9 +975,6 @@ msgid "min_8_characters"
 msgstr ""
 
 msgid "New_password_again"
-msgstr ""
-
-msgid "Website_administration"
 msgstr ""
 
 msgid "Financial_reports"
@@ -1944,9 +1947,6 @@ msgid "IBAN"
 msgstr ""
 
 msgid "BIC"
-msgstr ""
-
-msgid "Configurations"
 msgstr ""
 
 msgid "My_products"

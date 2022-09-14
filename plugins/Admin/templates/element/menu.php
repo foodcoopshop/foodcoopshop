@@ -178,13 +178,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     ];
 
     if ($appAuth->isSuperadmin()) {
-        $homepageAdministrationElement['children'][] = [
-            'slug' => $this->Slug->getTaxesList(),
-            'name' => __d('admin', 'Tax_rates'),
-            'options' => [
-                'fa-icon' => 'fa-fw ok fa-percent'
-            ]
-        ];
+
         $reportSlug = null;
 
         if ($this->Html->paymentIsCashless()) {
@@ -212,14 +206,6 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'options' => [
                 'fa-icon' => 'fa-fw ok fa-cogs'
             ]
-        ];
-
-        $homepageAdministrationElement['children'][] = [
-            'slug' => $this->Slug->getCronjobsList(),
-            'name' => __d('admin', 'Cronjobs'),
-            'options' => [
-                'fa-icon' => 'fa-fw ok fa-clock'
-            ],
         ];
 
     }

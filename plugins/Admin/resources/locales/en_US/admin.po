@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 10:15+0200\n"
+"POT-Creation-Date: 2022-09-14 14:27+0200\n"
 "PO-Revision-Date: 2022-09-14 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -945,6 +945,12 @@ msgstr "Default image for manufacturer, width:"
 msgid "Default_image_for_blog_post,_width:"
 msgstr "Default image for blog post, width:"
 
+msgid "Website_administration"
+msgstr "Website administration"
+
+msgid "Configurations"
+msgstr "Settings"
+
 msgid "Time_interval"
 msgstr "Interval"
 
@@ -971,9 +977,6 @@ msgstr "min 8 characters"
 
 msgid "New_password_again"
 msgstr "New password (again)"
-
-msgid "Website_administration"
-msgstr "Website administration"
 
 msgid "Financial_reports"
 msgstr "Financial reports"
@@ -1952,9 +1955,6 @@ msgstr "IBAN"
 
 msgid "BIC"
 msgstr "BIC"
-
-msgid "Configurations"
-msgstr "Settings"
 
 msgid "My_products"
 msgstr "My products"

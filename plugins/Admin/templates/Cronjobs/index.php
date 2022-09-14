@@ -15,10 +15,12 @@
 
 use Cake\Core\Configure;
 
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();
+$this->element('addScript', [ 'script' =>
+    Configure::read('app.jsNamespace') . ".Admin.init(); " .
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
     "
 ]);
+
 ?>
 
 <div class="filter-container">
@@ -32,6 +34,10 @@ $this->element('addScript', [
 </div>
 
 <?php
+
+echo $this->element('navTabs/configurationNavTabs', [
+    'key' => 'cronjobs',
+]);
 
 echo '<table class="list">';
 

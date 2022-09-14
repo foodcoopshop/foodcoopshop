@@ -32,6 +32,13 @@ $this->element('addScript', [
     </div>
 </div>
 
+<?php
+    echo $this->element('navTabs/configurationNavTabs', [
+        'key' => 'configurations',
+    ]);
+?>
+
+
 <div class="sc"></div>
 
 <?php
