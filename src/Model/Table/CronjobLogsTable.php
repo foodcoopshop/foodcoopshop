@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use App\Lib\Error\Exception\InvalidParameterException;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -21,5 +23,20 @@ class CronjobLogsTable extends AppTable
     public const RUNNING = 2;
     public const SUCCESS = 1;
     public const FAILURE = 0;
+
+    public function deleteOldLogs($timestamp)
+    {
+
+        $timestamp = (int) $timestamp;
+        if ($timestamp <= 0) {
+            throw new InvalidParameterException('invalid timestamp: ' . $timestamp);
+        }
+
+        $diffInDays = 60;
+        $this->deleteAll([
+            'DATEDIFF(DATE_FORMAT(FROM_UNIXTIME(' . $timestamp . '), \'%Y-%m-%d\'), created) > ' . $diffInDays,
+        ]);
+
+    }
 
 }

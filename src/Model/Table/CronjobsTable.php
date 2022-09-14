@@ -41,6 +41,8 @@ class CronjobsTable extends AppTable
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(date(Configure::read('DateFormat.DatabaseWithTimeAlt')))->toUnixString();
         }
 
+        $this->CronjobLogs->deleteOldLogs($this->cronjobRunDay);
+
         $cronjobs = $this->find('all', [
             'conditions' => [
                 'Cronjobs.active' => APP_ON,
