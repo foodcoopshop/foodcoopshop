@@ -7,6 +7,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Query;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,6 +33,23 @@ class CronjobsTable extends AppTable
         $this->hasMany('CronjobLogs', [
             'foreignKey' => 'cronjob_id'
         ]);
+    }
+
+    public function findAvailable(Query $query, array $options)
+    {
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $query->where(['name <> "SendInvoicesToManufacturers"']);
+        } else {
+            $query->where(['name <> "SendInvoicesToCustomers"']);
+            $query->where(['name <> "SendDeliveryNotes"']);
+        }
+        if (!Configure::read('app.htmlHelper')->paymentIsCashless()) {
+            $query->where(['name <> "CheckCreditBalance"']);
+        }
+        if (!Configure::read('app.emailOrderReminderEnabled')) {
+            $query->where(['name <> "EmailOrderReminder"']);
+        }
+        return $query;
     }
 
     public function run()

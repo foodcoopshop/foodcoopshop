@@ -485,4 +485,15 @@ class SlugHelper extends Helper
     {
         return '/admin/configurations/edit/'.$configurationId;
     }
+
+    public function getCronjobsList()
+    {
+        return '/admin/cronjobs';
+    }
+
+    public function getCronjobEdit($cronjobId)
+    {
+        return '/admin/cronjobs/edit/'.$cronjobId;
+    }
+
 }

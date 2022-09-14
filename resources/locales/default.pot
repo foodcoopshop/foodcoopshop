@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-08-30 14:09+0200\n"
+"POT-Creation-Date: 2022-09-14 08:52+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1316,6 +1316,30 @@ msgstr ""
 msgid "You_are_not_signed_in."
 msgstr ""
 
+msgid "BackupDatabaseCronjob"
+msgstr ""
+
+msgid "CheckCreditBalanceCronjob"
+msgstr ""
+
+msgid "EmailOrderReminderCronjob"
+msgstr ""
+
+msgid "PickupReminderCronjob"
+msgstr ""
+
+msgid "SendOrderListsCronjob"
+msgstr ""
+
+msgid "SendInvoicesToCustomersCronjob"
+msgstr ""
+
+msgid "SendInvoicesToManufacturersCronjob"
+msgstr ""
+
+msgid "SendDeliveryNotesCronjob"
+msgstr ""
+
 msgid "Action_Log_Invoice_added"
 msgstr ""
 
@@ -2039,6 +2063,12 @@ msgstr ""
 msgid "bulk_order"
 msgstr ""
 
+msgid "midnight"
+msgstr ""
+
+msgid "default_value"
+msgstr ""
+
 msgid "yes"
 msgstr ""
 
@@ -2144,16 +2174,16 @@ msgstr ""
 msgid "active_state_all"
 msgstr ""
 
+msgid "daily"
+msgstr ""
+
+msgid "monthly"
+msgstr ""
+
 msgid "{0,plural,=1{1_minute} other{#_minutes}}"
 msgstr ""
 
 msgid "{0,plural,=1{1_second} other{#_seconds}}"
-msgstr ""
-
-msgid "midnight"
-msgstr ""
-
-msgid "default_value"
 msgstr ""
 
 msgid "price_will_be_adapted."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-18 17:24+0200\n"
-"PO-Revision-Date: 2022-08-18 18:21+0200\n"
+"POT-Creation-Date: 2022-09-14 08:52+0200\n"
+"PO-Revision-Date: 2022-09-14 09:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -83,6 +83,9 @@ msgstr "Send test email"
 
 msgid "Test_email"
 msgstr "Test email"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
 
 msgid "all_members"
 msgstr "all members"
@@ -941,6 +944,18 @@ msgstr "Default image for manufacturer, width:"
 
 msgid "Default_image_for_blog_post,_width:"
 msgstr "Default image for blog post, width:"
+
+msgid "Time_interval"
+msgstr "Interval"
+
+msgid "Day_of_month"
+msgstr "Day of month"
+
+msgid "Weekday"
+msgstr "Weekday"
+
+msgid "Not_before_time"
+msgstr "Time"
 
 msgid "Old_password"
 msgstr "Old password"

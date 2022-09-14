@@ -213,6 +213,15 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 'fa-icon' => 'fa-fw ok fa-cogs'
             ]
         ];
+
+        $homepageAdministrationElement['children'][] = [
+            'slug' => $this->Slug->getCronjobsList(),
+            'name' => __d('admin', 'Cronjobs'),
+            'options' => [
+                'fa-icon' => 'fa-fw ok fa-clock'
+            ],
+        ];
+
     }
 
     $menu[] = $homepageAdministrationElement;
