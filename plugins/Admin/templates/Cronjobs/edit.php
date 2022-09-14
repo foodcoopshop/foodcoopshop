@@ -79,6 +79,12 @@ echo $this->Form->control('Cronjobs.not_before_time', [
     'escape' => false,
 ]);
 
+echo $this->Form->control('Cronjobs.active', [
+    'label' => __d('admin', 'Active'),
+    'type' => 'checkbox',
+]);
+
+
 echo $this->Form->end();
 
 ?>
