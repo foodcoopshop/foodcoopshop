@@ -1,6 +1,8 @@
 <?php
 namespace Admin\Controller;
 
+use Cake\ORM\Query;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -27,6 +29,14 @@ class CronjobsController extends AdminAppController
     {
         $this->Cronjobs = $this->getTableLocator()->get('Cronjobs');
         $cronjobs = $this->Cronjobs->find('available');
+
+        $cronjobs->contain([
+            'CronjobLogs' => function (Query $q) {
+                $q->orderDesc('CronjobLogs.created');
+                return $q;
+            }
+        ]);
+
         $this->set('cronjobs', $cronjobs);
         $this->set('title_for_layout', __d('admin', 'Cronjobs'));
     }

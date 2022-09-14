@@ -44,6 +44,7 @@ echo '<th style="text-align:center;">' . __d('admin', 'Day_of_month') . '</th>';
 echo '<th>' . __d('admin', 'Weekday') . '</th>';
 echo '<th style="text-align:center;">' . __d('admin', 'Not_before_time') . '</th>';
 echo '<th>' . __d('admin', 'Active') . '</th>';
+echo '<th>' . __d('admin', 'Last_run') . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -106,11 +107,18 @@ foreach ($cronjobs as $cronjob) {
     }
     echo '</td>';
 
+    echo '<td>';
+    if (!empty($cronjob->cronjob_logs[0])) {
+        echo $this->Time->getWeekdayName($this->Time->formatAsWeekday($cronjob->cronjob_logs[0]->created->toUnixString())) . ', ';
+        echo $cronjob->cronjob_logs[0]->created->i18nFormat($this->Time->getI18Format('DateNTimeShort'));
+    }
+    echo '</td>';
+
     echo '</tr>';
 }
 
 echo '<tr>';
-echo '<td colspan="7"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="8"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

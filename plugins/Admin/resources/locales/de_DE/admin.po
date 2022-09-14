@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 08:52+0200\n"
-"PO-Revision-Date: 2022-09-14 09:00+0200\n"
+"POT-Creation-Date: 2022-09-14 10:15+0200\n"
+"PO-Revision-Date: 2022-09-14 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -956,6 +956,9 @@ msgstr "Wochentag"
 
 msgid "Not_before_time"
 msgstr "Uhrzeit"
+
+msgid "Last_run"
+msgstr "Zuletzt ausgeführt"
 
 msgid "Old_password"
 msgstr "Altes Passwort"
