@@ -75,7 +75,6 @@ class CronjobsController extends AdminAppController
         if ($cronjob->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('cronjob', $cronjob);
-            //$this->render('edit');
         } else {
             $cronjob = $this->Cronjob->save($cronjob);
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');

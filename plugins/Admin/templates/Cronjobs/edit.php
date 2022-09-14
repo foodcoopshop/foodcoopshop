@@ -74,8 +74,9 @@ echo $this->Form->control('Cronjobs.weekday', [
 ]);
 
 echo $this->Form->control('Cronjobs.not_before_time', [
-    'label' => __d('admin', 'Not_before_time'),
+    'label' => __d('admin', 'Not_before_time').' <span class="after small">'.__d('admin', 'Cronjob_is_called_up_to_10_min_after_the_given_time.').'</span>',
     'type' => 'time',
+    'escape' => false,
 ]);
 
 echo $this->Form->end();

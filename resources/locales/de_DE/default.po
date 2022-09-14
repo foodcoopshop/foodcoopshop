@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 14:51+0200\n"
-"PO-Revision-Date: 2022-09-14 14:27+0200\n"
+"POT-Creation-Date: 2022-09-14 15:11+0200\n"
+"PO-Revision-Date: 2022-09-14 15:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1321,25 +1321,25 @@ msgid "BackupDatabaseCronjob"
 msgstr "Datenbank-Backup"
 
 msgid "CheckCreditBalanceCronjob"
-msgstr "Guthaben-Erinnerung"
+msgstr "Guthaben-Erinnerung versenden"
 
 msgid "EmailOrderReminderCronjob"
-msgstr "Bestell-Erinnerung"
+msgstr "Bestell-Erinnerung versenden"
 
 msgid "PickupReminderCronjob"
-msgstr "Abhol-Erinnerung"
+msgstr "Abhol-Erinnerung versenden"
 
 msgid "SendOrderListsCronjob"
-msgstr "Bestelllisten"
+msgstr "Bestelllisten versenden"
 
 msgid "SendInvoicesToCustomersCronjob"
-msgstr "Rechnungen"
+msgstr "Rechnungen versenden"
 
 msgid "SendInvoicesToManufacturersCronjob"
-msgstr "Rechnungen"
+msgstr "Rechnungen versenden"
 
 msgid "SendDeliveryNotesCronjob"
-msgstr "Lieferscheine"
+msgstr "Lieferscheine versenden"
 
 msgid "Action_Log_Invoice_added"
 msgstr "Rechnung: erstellt"
@@ -1754,6 +1754,15 @@ msgstr "Bitte gib den Namen der Foodcoop an."
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "Die Anzahl der Zeichen muss zwischen {0} und {1} liegen."
+
+msgid "The_time_interval_is_not_valid."
+msgstr "Das Intervall ist nicht gültig."
+
+msgid "The_day_of_month_is_not_valid."
+msgstr "Der Tag (Monat) ist nicht gültig."
+
+msgid "The_weekday_is_not_valid."
+msgstr "Der Wochentag ist nicht gültig."
 
 msgid "daily"
 msgstr "täglich"
@@ -2834,9 +2843,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Surcharge"
 #~ msgstr "Aufschlag"
-
-#~ msgid "The_discount_is_not_valid."
-#~ msgstr "Der Rabatt ist nicht gültig."
 
 #~ msgid "No_discount_normal_selling_prices_are_used"
 #~ msgstr "Kein Rabatt - Einkauf zum normalen Verkaufspreis"

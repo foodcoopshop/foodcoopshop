@@ -8,6 +8,7 @@ use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,6 +34,16 @@ class CronjobsTable extends AppTable
         $this->hasMany('CronjobLogs', [
             'foreignKey' => 'cronjob_id'
         ]);
+    }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->inList('time_interval', array_keys($this->getTimeIntervals()), __('The_time_interval_is_not_valid.'));
+        $validator->allowEmptyString('day_of_month');
+        $validator->inList('day_of_month', array_keys($this->getDaysOfMonth()), __('The_day_of_month_is_not_valid.'));
+        $validator->allowEmptyString('weekday');
+        $validator->inList('weekday', array_keys($this->getWeekdays()), __('The_weekday_is_not_valid.'));
+        return $validator;
     }
 
     public function getTimeIntervals()

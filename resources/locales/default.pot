@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-14 14:51+0200\n"
+"POT-Creation-Date: 2022-09-14 15:11+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1752,6 +1752,15 @@ msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr ""
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
+msgstr ""
+
+msgid "The_time_interval_is_not_valid."
+msgstr ""
+
+msgid "The_day_of_month_is_not_valid."
+msgstr ""
+
+msgid "The_weekday_is_not_valid."
 msgstr ""
 
 msgid "daily"

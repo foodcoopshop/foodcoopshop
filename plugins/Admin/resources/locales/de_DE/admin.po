@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 14:52+0200\n"
-"PO-Revision-Date: 2022-09-14 14:52+0200\n"
+"POT-Creation-Date: 2022-09-14 15:18+0200\n"
+"PO-Revision-Date: 2022-09-14 15:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -966,11 +966,14 @@ msgstr "Bitte auswählen..."
 msgid "Weekday"
 msgstr "Wochentag"
 
-msgid "Configurations"
-msgstr "Einstellungen"
-
 msgid "Not_before_time"
 msgstr "Uhrzeit"
+
+msgid "Cronjob_is_called_up_to_10_min_after_the_given_time."
+msgstr "Der tatsächliche Aufruf kann bis zu 10 min nach dieser Uhrzeit erfolgen."
+
+msgid "Configurations"
+msgstr "Einstellungen"
 
 msgid "Last_run"
 msgstr "Zuletzt ausgeführt"
