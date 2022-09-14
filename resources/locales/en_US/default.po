@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-14 15:11+0200\n"
-"PO-Revision-Date: 2022-09-14 15:12+0200\n"
+"POT-Creation-Date: 2022-09-14 15:26+0200\n"
+"PO-Revision-Date: 2022-09-14 15:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1598,6 +1598,9 @@ msgstr "Feedback approved"
 
 msgid "Action_Log_Feedback_deleted"
 msgstr "Feedback deleted"
+
+msgid "Action_Log_Cronjob_changed"
+msgstr "Cronjob: Changed"
 
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Database backup done"
