@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [ 'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init();" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();".
-    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Cronjobs')."');
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
     "
 ]);
 ?>
