@@ -174,9 +174,9 @@ class CronjobsTable extends AppTable
 
     private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject)
     {
-        $shellName = $cronjob->name . 'Shell';
+        $shellName = $cronjob->getOriginalValues()['name'] . 'Shell';
         if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $shellName . '.php')) {
-            throw new InvalidParameterException('shell not found: ' . $cronjob->name);
+            throw new InvalidParameterException('shell not found: ' . $shellName);
         }
         $shellClass = '\\App\\Shell\\' . $shellName;
         $shell = new $shellClass();
@@ -204,7 +204,7 @@ class CronjobsTable extends AppTable
         $this->CronjobLogs->save($entity);
 
         return [
-            'name' => $cronjob->name,
+            'name' => $cronjob->getOriginalValues()['name'],
             'time_interval' => $cronjob->time_interval,
             'created' => $entity->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
             'success' => $success,
