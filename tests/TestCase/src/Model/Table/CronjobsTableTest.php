@@ -27,6 +27,19 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
     }
 
+    public function testEditDaily()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'time_interval' => 'day',
+            'day_of_month' => 4,
+            'weekday' => 'Sunday',
+        ]);
+        $errors = $result->getErrors();
+        $this->assertEquals('Beim Interval "täglich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-no-day-of-month']);
+        $this->assertEquals('Beim Interval "täglich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-no-weekday']);
+    }
+
     public function testRunSunday()
     {
         $time = '2018-10-21 23:00:00';

@@ -43,7 +43,7 @@ class CronjobsTable extends AppTable
         $validator->inList('day_of_month', array_keys($this->getDaysOfMonth()), __('The_day_of_month_is_not_valid.'));
         $validator->allowEmptyString('weekday');
         $validator->inList('weekday', array_keys($this->getWeekdays()), __('The_weekday_is_not_valid.'));
-        $validator->add('day_of_month', 'time-interal-day_no-day-of-month', [
+        $validator->add('day_of_month', 'time-interval-day-no-day-of-month', [
             'rule' => function ($value, $context) {
                 if ($context['data']['time_interval'] == 'day') {
                     if ($value == '') {
@@ -56,7 +56,7 @@ class CronjobsTable extends AppTable
             },
             'message' => __('No_day_of_month_allowed_if_time_interval_is_day.'),
         ]);
-        $validator->add('weekday', 'time-interal-day-no-weekday', [
+        $validator->add('weekday', 'time-interval-day-no-weekday', [
             'rule' => function ($value, $context) {
                 if ($context['data']['time_interval'] == 'day') {
                     if ($value == '') {
@@ -69,7 +69,8 @@ class CronjobsTable extends AppTable
             },
             'message' => __('No_weekday_allowed_if_time_interval_is_day.'),
         ]);
-        $validator->add('day_of_month', 'time-interal-day-of-month_day-of-month-mandatory', [
+        /*
+        $validator->add('day_of_month', 'time-interval-day-of-month-day-of-month-mandatory', [
             'rule' => function ($value, $context) {
                 if ($context['data']['time_interval'] == 'month') {
                     if ($value == '') {
@@ -80,6 +81,7 @@ class CronjobsTable extends AppTable
             },
             'message' => __('Please_select_a_day_of_month.'),
         ]);
+        */
         return $validator;
     }
 
