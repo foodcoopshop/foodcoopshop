@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-14 15:26+0200\n"
+"POT-Creation-Date: 2022-09-15 07:54+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1764,6 +1764,12 @@ msgid "The_day_of_month_is_not_valid."
 msgstr ""
 
 msgid "The_weekday_is_not_valid."
+msgstr ""
+
+msgid "No_day_of_month_allowed_if_time_interval_is_day."
+msgstr ""
+
+msgid "No_weekday_allowed_if_time_interval_is_day."
 msgstr ""
 
 msgid "daily"
