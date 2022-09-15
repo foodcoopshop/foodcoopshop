@@ -45,11 +45,13 @@ class CronjobsTable extends AppTable
         $validator->inList('weekday', array_keys($this->getWeekdays()), __('The_weekday_is_not_valid.'));
         $validator->add('day_of_month', 'time-interval-day-no-day-of-month', [
             'rule' => function ($value, $context) {
-                if ($context['data']['time_interval'] == 'day') {
-                    if ($value == '') {
-                        return true;
-                    } else {
-                        return false;
+                if (isset($context['data']['time_interval'])) {
+                    if ($context['data']['time_interval'] == 'day') {
+                        if ($value == '') {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
                 return true;
@@ -58,11 +60,13 @@ class CronjobsTable extends AppTable
         ]);
         $validator->add('weekday', 'time-interval-day-no-weekday', [
             'rule' => function ($value, $context) {
-                if ($context['data']['time_interval'] == 'day') {
-                    if ($value == '') {
-                        return true;
-                    } else {
-                        return false;
+                if (isset($context['data']['time_interval'])) {
+                    if ($context['data']['time_interval'] == 'day') {
+                        if ($value == '') {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
                 return true;
