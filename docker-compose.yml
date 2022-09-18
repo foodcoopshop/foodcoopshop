@@ -24,9 +24,9 @@ services:
     container_name: fcs-database
     restart: always
     ports:
-     - '6603:3306'
+     - '3306:3306'
     environment:
-      MYSQL_DATABASE: foodcoopshop_dev
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./config/sql/_installation/clean-db-structure.sql:/docker-entrypoint-initdb.d/1.sql
