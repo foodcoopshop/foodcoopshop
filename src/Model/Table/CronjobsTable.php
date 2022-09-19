@@ -104,11 +104,12 @@ class CronjobsTable extends AppTable
     public function getDaysOfMonth()
     {
         $days = [];
-        $i = 0;
+        $i = 1;
         while($i<=31) {
             $days[$i] = $i;
             $i++;
         }
+        $days[0] = __('Last_day_of_month');
         return $days;
     }
 

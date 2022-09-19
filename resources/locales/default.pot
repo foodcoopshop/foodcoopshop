@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-19 16:42+0200\n"
+"POT-Creation-Date: 2022-09-19 16:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1785,6 +1785,9 @@ msgid "weekly"
 msgstr ""
 
 msgid "monthly"
+msgstr ""
+
+msgid "Last_day_of_month"
 msgstr ""
 
 msgid "Please_enter_your_first_name."
