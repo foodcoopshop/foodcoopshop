@@ -27,7 +27,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
     }
 
-    public function testEditDaily()
+    public function testEditDailyValidations()
     {
         $entity = $this->Cronjob->get(1);
         $result = $this->Cronjob->patchEntity($entity, [
@@ -40,7 +40,18 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Beim Interval "täglich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-or-month-no-weekday']);
     }
 
-    public function testEditWeekly()
+    public function testEditDailyOk()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'time_interval' => 'day',
+            'day_of_month' => '',
+            'weekday' => '',
+        ]);
+        $this->assertEquals(false, $result->hasErrors());
+    }
+
+    public function testEditWeeklyValidations()
     {
         $entity = $this->Cronjob->get(1);
         $result = $this->Cronjob->patchEntity($entity, [
@@ -53,7 +64,17 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals('Beim Interval "wöchentlich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-or-week-no-day-of-month']);
     }
 
-    public function testEditMonthly()
+    public function testEditWeeklyOk() {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'time_interval' => 'week',
+            'day_of_month' => '',
+            'weekday' => 'Sunday',
+        ]);
+        $this->assertEquals(false, $result->hasErrors());
+    }
+
+    public function testEditMonthlyValidations()
     {
         $entity = $this->Cronjob->get(1);
         $result = $this->Cronjob->patchEntity($entity, [
@@ -64,6 +85,17 @@ class CronjobsTableTest extends AppCakeTestCase
         $errors = $result->getErrors();
         $this->assertEquals('Bitte wähle einen Tag (Monat) aus.', $errors['day_of_month']['_empty']);
         $this->assertEquals('Beim Interval "monatlich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-or-month-no-weekday']);
+    }
+
+    public function testEditMonthlyOk()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'time_interval' => 'month',
+            'day_of_month' => '2',
+            'weekday' => '',
+        ]);
+        $this->assertEquals(false, $result->hasErrors());
     }
 
     public function testRunSunday()
