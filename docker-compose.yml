@@ -23,6 +23,7 @@ services:
     image: mysql:8.0
     container_name: fcs-database
     restart: always
+    tmpfs: /var/lib/mysql:exec,size=1G
     ports:
      - '3306:3306'
     environment:
