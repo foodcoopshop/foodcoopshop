@@ -135,13 +135,13 @@ class CronjobsTable extends AppTable
     public function getWeekdays()
     {
         $weekdays = [
-            'Sunday' => __('Sunday'),
             'Monday' => __('Monday'),
             'Tuesday' => __('Tuesday'),
             'Wednesday' => __('Wednesday'),
             'Thursday' => __('Thursday'),
             'Friday' => __('Friday'),
-            'Saturday' => __('Saturday')
+            'Saturday' => __('Saturday'),
+            'Sunday' => __('Sunday'),
         ];
         return $weekdays;
 
