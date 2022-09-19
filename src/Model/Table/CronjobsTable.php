@@ -39,9 +39,25 @@ class CronjobsTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator->inList('time_interval', array_keys($this->getTimeIntervals()), __('The_time_interval_is_not_valid.'));
-        $validator->allowEmptyString('day_of_month');
+        $validator->allowEmptyString('day_of_month', __('Please_select_a_day_of_month.'), function($context) {
+            if (!isset($context['data']['time_interval'])) {
+                return true;
+            }
+            if ($context['data']['time_interval'] == 'day_of_month') {
+                return true;
+            }
+            return false;
+        });
         $validator->inList('day_of_month', array_keys($this->getDaysOfMonth()), __('The_day_of_month_is_not_valid.'));
-        $validator->allowEmptyString('weekday');
+        $validator->allowEmptyString('weekday', __('Please_select_a_weekday.'), function($context) {
+            if (!isset($context['data']['time_interval'])) {
+                return true;
+            }
+            if ($context['data']['time_interval'] == 'weekday') {
+                return true;
+            }
+            return false;
+        });
         $validator->inList('weekday', array_keys($this->getWeekdays()), __('The_weekday_is_not_valid.'));
         $validator->add('day_of_month', 'time-interval-day-no-day-of-month', [
             'rule' => function ($value, $context) {
@@ -73,19 +89,6 @@ class CronjobsTable extends AppTable
             },
             'message' => __('No_weekday_allowed_if_time_interval_is_day.'),
         ]);
-        /*
-        $validator->add('day_of_month', 'time-interval-day-of-month-day-of-month-mandatory', [
-            'rule' => function ($value, $context) {
-                if ($context['data']['time_interval'] == 'month') {
-                    if ($value == '') {
-                        return false;
-                    }
-                }
-                return true;
-            },
-            'message' => __('Please_select_a_day_of_month.'),
-        ]);
-        */
         return $validator;
     }
 
