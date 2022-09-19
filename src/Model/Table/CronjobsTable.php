@@ -43,20 +43,20 @@ class CronjobsTable extends AppTable
             if (!isset($context['data']['time_interval'])) {
                 return true;
             }
-            if ($context['data']['time_interval'] == 'day_of_month') {
-                return true;
+            if ($context['data']['time_interval'] == 'month') {
+                return false;
             }
-            return false;
+            return true;
         });
         $validator->inList('day_of_month', array_keys($this->getDaysOfMonth()), __('The_day_of_month_is_not_valid.'));
         $validator->allowEmptyString('weekday', __('Please_select_a_weekday.'), function($context) {
             if (!isset($context['data']['time_interval'])) {
                 return true;
             }
-            if ($context['data']['time_interval'] == 'weekday') {
-                return true;
+            if ($context['data']['time_interval'] == 'week') {
+                return false;
             }
-            return false;
+            return true;
         });
         $validator->inList('weekday', array_keys($this->getWeekdays()), __('The_weekday_is_not_valid.'));
         $validator->add('day_of_month', 'time-interval-day-no-day-of-month', [
