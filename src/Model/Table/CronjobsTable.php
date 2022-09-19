@@ -107,6 +107,7 @@ class CronjobsTable extends AppTable
                 return true;
             },
         ]);
+        $validator->time('not_before_time', __('Please_enter_a_valid_time.'));
         return $validator;
     }
 

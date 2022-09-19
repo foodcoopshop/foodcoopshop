@@ -34,10 +34,12 @@ class CronjobsTableTest extends AppCakeTestCase
             'time_interval' => 'day',
             'day_of_month' => 4,
             'weekday' => 'Sunday',
+            'not_before_time' => 'wrong-time',
         ]);
         $errors = $result->getErrors();
         $this->assertEquals('Beim Interval "täglich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-or-week-no-day-of-month']);
         $this->assertEquals('Beim Interval "täglich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-or-month-no-weekday']);
+        $this->assertEquals('Bitte gib eine gültige Uhrzeit ein.', $errors['not_before_time']['time']);
     }
 
     public function testEditDailyOk()
@@ -47,6 +49,7 @@ class CronjobsTableTest extends AppCakeTestCase
             'time_interval' => 'day',
             'day_of_month' => '',
             'weekday' => '',
+            'not_before_time' => '18:00:00',
         ]);
         $this->assertEquals(false, $result->hasErrors());
     }

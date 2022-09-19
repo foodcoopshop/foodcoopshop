@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-19 20:53+0200\n"
-"PO-Revision-Date: 2022-09-19 20:55+0200\n"
+"POT-Creation-Date: 2022-09-19 21:16+0200\n"
+"PO-Revision-Date: 2022-09-19 21:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1787,6 +1787,9 @@ msgstr "monatlich"
 
 msgid "No_weekday_allowed_for_time_interval_{0}."
 msgstr "Beim Interval \"{0}\" bitte keinen Wochentag angeben."
+
+msgid "Please_enter_a_valid_time."
+msgstr "Bitte gib eine gültige Uhrzeit ein."
 
 msgid "Last_day_of_month"
 msgstr "Monatsletzter"
