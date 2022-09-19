@@ -27,11 +27,11 @@ services:
     ports:
      - '3306:3306'
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: foodcoopshop_dev
+      MYSQL_ROOT_PASSWORD: secret
     volumes:
       - ./config/sql/_installation/clean-db-structure.sql:/docker-entrypoint-initdb.d/1.sql
-      - ./config/sql/_installation/clean-db-data-de_DE.sql:/docker-entrypoint-initdb.d/2.sql
+      - ./tests/config/sql/test-db-data.sql:/docker-entrypoint-initdb.d/2.sql
 
   phpmyadmin:
     depends_on:
@@ -43,3 +43,5 @@ services:
      - '8080:80'
     environment:
       PMA_HOST: database
+      PMA_USER: root
+      PMA_PASSWORD: secret
