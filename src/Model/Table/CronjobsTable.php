@@ -80,7 +80,8 @@ class CronjobsTable extends AppTable
                         }
                     }
                 }
-            }
+                return true;
+            },
         ]);
         $validator->add('weekday', 'time-interval-day-or-month-no-weekday', [
             'rule' => function ($value, $context) {
