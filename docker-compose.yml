@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: ./config/docker-dev/php/Dockerfile
     volumes:
-      - ./:/var/www/html/
+      - ./:/var/www/html
       - ./config/docker-dev/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
 
   database:
