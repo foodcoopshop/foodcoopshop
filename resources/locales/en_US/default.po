@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-15 07:54+0200\n"
-"PO-Revision-Date: 2022-09-15 07:55+0200\n"
+"POT-Creation-Date: 2022-09-19 16:42+0200\n"
+"PO-Revision-Date: 2022-09-19 16:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1761,8 +1761,14 @@ msgstr "The amount of characters needs to be between {0} and {1}."
 msgid "The_time_interval_is_not_valid."
 msgstr "The time interval is not valid."
 
+msgid "Please_select_a_day_of_month."
+msgstr "Please select a day of month."
+
 msgid "The_day_of_month_is_not_valid."
 msgstr "The day of month is not valid."
+
+msgid "Please_select_a_weekday."
+msgstr "Please select a weekday."
 
 msgid "The_weekday_is_not_valid."
 msgstr "The weekday is not valid."
@@ -2732,6 +2738,10 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "The_day_of_month_is_required."
+#~ msgstr "The day of month is not valid."
 
 #~ msgid "No_stock_products_selected."
 #~ msgstr "No stock products were selected."

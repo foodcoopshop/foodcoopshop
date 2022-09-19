@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-14 15:18+0200\n"
+"POT-Creation-Date: 2022-09-19 16:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -953,6 +953,9 @@ msgstr ""
 msgid "Website_administration"
 msgstr ""
 
+msgid "Configurations"
+msgstr ""
+
 msgid "Time_interval"
 msgstr ""
 
@@ -969,9 +972,6 @@ msgid "Not_before_time"
 msgstr ""
 
 msgid "Cronjob_is_called_up_to_10_min_after_the_given_time."
-msgstr ""
-
-msgid "Configurations"
 msgstr ""
 
 msgid "Last_run"
