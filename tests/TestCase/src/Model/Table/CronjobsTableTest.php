@@ -36,8 +36,8 @@ class CronjobsTableTest extends AppCakeTestCase
             'weekday' => 'Sunday',
         ]);
         $errors = $result->getErrors();
-        $this->assertEquals('Beim Interval "täglich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-no-day-of-month']);
-        $this->assertEquals('Beim Interval "täglich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-no-weekday']);
+        $this->assertEquals('Beim Interval "täglich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-or-week-no-day-of-month']);
+        $this->assertEquals('Beim Interval "täglich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-or-month-no-weekday']);
     }
 
     public function testEditWeekly()
@@ -45,11 +45,12 @@ class CronjobsTableTest extends AppCakeTestCase
         $entity = $this->Cronjob->get(1);
         $result = $this->Cronjob->patchEntity($entity, [
             'time_interval' => 'week',
-            'day_of_month' => '',
+            'day_of_month' => '2',
             'weekday' => '',
         ]);
         $errors = $result->getErrors();
         $this->assertEquals('Bitte wähle einen Wochentag aus.', $errors['weekday']['_empty']);
+        $this->assertEquals('Beim Interval "wöchentlich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-or-week-no-day-of-month']);
     }
 
     public function testEditMonthly()
@@ -58,10 +59,11 @@ class CronjobsTableTest extends AppCakeTestCase
         $result = $this->Cronjob->patchEntity($entity, [
             'time_interval' => 'month',
             'day_of_month' => '',
-            'weekday' => '',
+            'weekday' => 'Sunday',
         ]);
         $errors = $result->getErrors();
         $this->assertEquals('Bitte wähle einen Tag (Monat) aus.', $errors['day_of_month']['_empty']);
+        $this->assertEquals('Beim Interval "monatlich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-or-month-no-weekday']);
     }
 
     public function testRunSunday()

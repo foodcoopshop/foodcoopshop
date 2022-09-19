@@ -59,35 +59,52 @@ class CronjobsTable extends AppTable
             return true;
         });
         $validator->inList('weekday', array_keys($this->getWeekdays()), __('The_weekday_is_not_valid.'));
-        $validator->add('day_of_month', 'time-interval-day-no-day-of-month', [
+        $validator->add('day_of_month', 'time-interval-day-or-week-no-day-of-month', [
             'rule' => function ($value, $context) {
                 if (isset($context['data']['time_interval'])) {
-                    if ($context['data']['time_interval'] == 'day') {
+                    if (in_array($context['data']['time_interval'], ['day', 'week'])) {
                         if ($value == '') {
                             return true;
                         } else {
-                            return false;
+                            switch($context['data']['time_interval']) {
+                                case 'day';
+                                    $timeInterval = __('daily');
+                                    break;
+                                case 'week';
+                                    $timeInterval = __('weekly');
+                                    break;
+                            }
+                            return __('No_day_of_month_allowed_for_time_interval_{0}.', [
+                                $timeInterval,
+                            ]);
                         }
                     }
                 }
-                return true;
-            },
-            'message' => __('No_day_of_month_allowed_if_time_interval_is_day.'),
+            }
         ]);
-        $validator->add('weekday', 'time-interval-day-no-weekday', [
+        $validator->add('weekday', 'time-interval-day-or-month-no-weekday', [
             'rule' => function ($value, $context) {
                 if (isset($context['data']['time_interval'])) {
-                    if ($context['data']['time_interval'] == 'day') {
+                    if (in_array($context['data']['time_interval'], ['day', 'month'])) {
                         if ($value == '') {
                             return true;
                         } else {
-                            return false;
+                            switch($context['data']['time_interval']) {
+                                case 'day';
+                                    $timeInterval = __('daily');
+                                    break;
+                                case 'month';
+                                    $timeInterval = __('monthly');
+                                    break;
+                            }
+                            return __('No_weekday_allowed_for_time_interval_{0}.', [
+                                $timeInterval,
+                            ]);
                         }
                     }
                 }
                 return true;
             },
-            'message' => __('No_weekday_allowed_if_time_interval_is_day.'),
         ]);
         return $validator;
     }
