@@ -25,10 +25,11 @@ services:
     restart: always
     tmpfs: /var/lib/mysql:exec,size=1G
     ports:
-     - '3306:3306'
+     - '3310:3306'
     environment:
       MYSQL_DATABASE: foodcoopshop_dev
       MYSQL_ROOT_PASSWORD: secret
+      MYSQL_TCP_PORT: 3310
     volumes:
       - ./config/sql/_installation/clean-db-structure.sql:/docker-entrypoint-initdb.d/1.sql
       - ./tests/config/sql/test-db-data.sql:/docker-entrypoint-initdb.d/2.sql
