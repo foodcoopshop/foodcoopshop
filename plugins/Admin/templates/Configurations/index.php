@@ -37,6 +37,12 @@ $this->element('addScript', [
         </div>
     </div>
 
+    <?php
+        echo $this->element('navTabs/configurationNavTabs', [
+            'key' => 'configurations',
+        ]);
+    ?>
+
     <h2 class="info"><?php echo __d('admin', 'The_following_settings_can_be_changed_in_the_admin_area.'); ?></h2>
 
     <table class="list no-hover no-clone-last-row">

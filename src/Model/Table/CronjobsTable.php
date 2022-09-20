@@ -7,6 +7,8 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Query;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,6 +34,177 @@ class CronjobsTable extends AppTable
         $this->hasMany('CronjobLogs', [
             'foreignKey' => 'cronjob_id'
         ]);
+    }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->inList('time_interval', array_keys($this->getTimeIntervals()), __('The_time_interval_is_not_valid.'));
+        $validator->allowEmptyString('day_of_month', __('Please_select_a_day_of_month.'), function($context) {
+            if (!isset($context['data']['time_interval'])) {
+                return true;
+            }
+            if ($context['data']['time_interval'] == 'month') {
+                return false;
+            }
+            return true;
+        });
+        $validator->inList('day_of_month', array_keys($this->getDaysOfMonth()), __('The_day_of_month_is_not_valid.'));
+        $validator->allowEmptyString('weekday', __('Please_select_a_weekday.'), function($context) {
+            if (!isset($context['data']['time_interval'])) {
+                return true;
+            }
+            if ($context['data']['time_interval'] == 'week') {
+                return false;
+            }
+            return true;
+        });
+        $validator->inList('weekday', array_keys($this->getWeekdays()), __('The_weekday_is_not_valid.'));
+        $validator->add('day_of_month', 'time-interval-day-or-week-no-day-of-month', [
+            'rule' => function ($value, $context) {
+                if (isset($context['data']['time_interval'])) {
+                    if (in_array($context['data']['time_interval'], ['day', 'week'])) {
+                        if ($value == '') {
+                            return true;
+                        } else {
+                            switch($context['data']['time_interval']) {
+                                case 'day';
+                                    $timeInterval = __('daily');
+                                    break;
+                                case 'week';
+                                    $timeInterval = __('weekly');
+                                    break;
+                            }
+                            return __('No_day_of_month_allowed_for_time_interval_{0}.', [
+                                $timeInterval,
+                            ]);
+                        }
+                    }
+                }
+                return true;
+            },
+        ]);
+        $validator->add('weekday', 'time-interval-day-or-month-no-weekday', [
+            'rule' => function ($value, $context) {
+                if (isset($context['data']['time_interval'])) {
+                    if (in_array($context['data']['time_interval'], ['day', 'month'])) {
+                        if ($value == '') {
+                            return true;
+                        } else {
+                            switch($context['data']['time_interval']) {
+                                case 'day';
+                                    $timeInterval = __('daily');
+                                    break;
+                                case 'month';
+                                    $timeInterval = __('monthly');
+                                    break;
+                            }
+                            return __('No_weekday_allowed_for_time_interval_{0}.', [
+                                $timeInterval,
+                            ]);
+                        }
+                    }
+                }
+                return true;
+            },
+        ]);
+        $validator->time('not_before_time', __('Please_enter_a_valid_time.'));
+        return $validator;
+    }
+
+    public function validationPickupReminder(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'week', __('weekly'));
+        return $validator;
+    }
+
+    public function validationEmailOrderReminder(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'week', __('weekly'));
+        return $validator;
+    }
+
+    public function validationSendDeliveryNotes(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'month', __('monthly'));
+        return $validator;
+    }
+
+    public function validationSendInvoicesToManufacturers(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'month', __('monthly'));
+        return $validator;
+    }
+
+    public function validationSendOrderLists(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'day', __('daily'));
+        return $validator;
+    }
+
+    private function getAllowOnlyOneTimeIntervalValidator($validator, $timeInterval, $timeIntervalString)
+    {
+        $validator = $validator->equals('time_interval', $timeInterval, __('The_time_interval_needs_to_equal_"{0}"', [
+            $timeIntervalString,
+        ]));
+        return $validator;
+    }
+
+    public function getTimeIntervals()
+    {
+        return [
+            'day'   => __('daily'),
+            'week'  => __('weekly'),
+            'month' => __('monthly'),
+        ];
+    }
+
+    public function getDaysOfMonth()
+    {
+        $days = [];
+        $i = 1;
+        while($i<=31) {
+            $days[$i] = $i;
+            $i++;
+        }
+        $days[0] = __('Last_day_of_month');
+        return $days;
+    }
+
+    public function getWeekdays()
+    {
+        $weekdays = [
+            'Monday' => __('Monday'),
+            'Tuesday' => __('Tuesday'),
+            'Wednesday' => __('Wednesday'),
+            'Thursday' => __('Thursday'),
+            'Friday' => __('Friday'),
+            'Saturday' => __('Saturday'),
+            'Sunday' => __('Sunday'),
+        ];
+        return $weekdays;
+
+    }
+
+    public function findAvailable(Query $query, array $options)
+    {
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $query->where(['name <> "SendInvoicesToManufacturers"']);
+        } else {
+            $query->where(['name <> "SendInvoicesToCustomers"']);
+            $query->where(['name <> "SendDeliveryNotes"']);
+        }
+        if (!Configure::read('app.htmlHelper')->paymentIsCashless()) {
+            $query->where(['name <> "CheckCreditBalance"']);
+        }
+        if (!Configure::read('app.emailOrderReminderEnabled')) {
+            $query->where(['name <> "EmailOrderReminder"']);
+        }
+        return $query;
     }
 
     public function run()
@@ -110,9 +283,9 @@ class CronjobsTable extends AppTable
 
     private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject)
     {
-        $shellName = $cronjob->name . 'Shell';
+        $shellName = $cronjob->getOriginalValues()['name'] . 'Shell';
         if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $shellName . '.php')) {
-            throw new InvalidParameterException('shell not found: ' . $cronjob->name);
+            throw new InvalidParameterException('shell not found: ' . $shellName);
         }
         $shellClass = '\\App\\Shell\\' . $shellName;
         $shell = new $shellClass();
@@ -140,7 +313,7 @@ class CronjobsTable extends AppTable
         $this->CronjobLogs->save($entity);
 
         return [
-            'name' => $cronjob->name,
+            'name' => $cronjob->getOriginalValues()['name'],
             'time_interval' => $cronjob->time_interval,
             'created' => $entity->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
             'success' => $success,

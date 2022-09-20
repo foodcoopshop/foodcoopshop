@@ -22,6 +22,21 @@ use Cake\View\Helper\TimeHelper;
 class MyTimeHelper extends TimeHelper
 {
 
+    public function getTranslatedTimeInterval($timeInterval)
+    {
+        switch($timeInterval) {
+            case 'day':
+                return __('daily');
+                break;
+            case 'week':
+                return __('weekly');
+                break;
+            case 'month':
+                return __('monthly');
+                break;
+        }
+    }
+
     public function convertSecondsInMinutesAndSeconds($seconds)
     {
         $secondsAsInteger = (int) $seconds;

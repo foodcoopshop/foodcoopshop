@@ -41,7 +41,7 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->element('reportNavTabs', [
+echo $this->element('navTabs/reportNavTabs', [
     'key' => 'profit',
     'dateFrom' => $dateFrom,
     'dateTo' => $dateTo,

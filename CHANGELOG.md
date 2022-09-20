@@ -11,6 +11,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen / Verbesserungen
+- Superadmins können Tag und Uhrzeit der Cronjobs (z.B. die automatische Bestell-Erinnerung, Rechnungsversand) jetzt selber im Admin-Bereich (Homepage-Verwaltung / Einstellungen / neuer Tab "Cronjobs") ändern. [I#860](https://github.com/foodcoopshop/foodcoopshop/issues/860) / [PR#74](https://github.com/foodcoopshop/foodcoopshop/pull/874) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Konfiguration "Freitag Bestellschluss / Samstag Bestelllisten-Versand / Donnerstag Abholtag" ist jetzt möglich. [I#866](https://github.com/foodcoopshop/foodcoopshop/issues/866) / [PR#867](https://github.com/foodcoopshop/foodcoopshop/pull/867) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 

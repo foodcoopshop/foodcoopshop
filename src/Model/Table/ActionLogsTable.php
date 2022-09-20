@@ -456,6 +456,9 @@ class ActionLogsTable extends AppTable
                 ],
             ],
 
+            'cronjob_changed' => [
+                'name' => __('Action_Log_Cronjob_changed'),
+            ],
             'cronjob_backup_database' => [
                 'name' => __('Action_Log_Cronjob_database_backup_done')
             ],

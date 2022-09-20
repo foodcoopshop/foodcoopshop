@@ -6,7 +6,7 @@
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -35,36 +35,55 @@ $this->element('addScript', [ 'script' =>
 
 <?php
     echo $this->element('navTabs/configurationNavTabs', [
-        'key' => 'tax_rates',
+        'key' => 'cronjobs',
     ]);
 ?>
 <div class="sc"></div>
 
 <?php
 
-echo $this->Form->create($tax, [
+echo $this->Form->create($cronjob, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
-    'url' => $isEditMode ? $this->Slug->getTaxEdit($tax->id_tax) : $this->Slug->getTaxAdd(),
-    'id' => 'taxEditForm'
+    'url' => $this->Slug->getCronjobEdit($cronjob->id),
+    'id' => 'cronjobEditForm',
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-if ($this->request->getRequestTarget() != $this->Slug->getTaxAdd()) {
-    echo '<label>'.__d('admin', 'Tax_rate').'<br /><span class="small">'.__d('admin', 'Tax_rates_can_not_be_changed.').'</span></label><p>' . $this->Number->formatAsPercent($tax->rate) . '</p>';
-} else {
-    echo $this->Form->control('Taxes.rate', [
-        'class' => 'long',
-        'label' => __d('admin', 'Tax_rate') . '<br /><span class="small">'.__d('admin', 'e.g._10_for_10%').'<br />'.__d('admin', 'Tax_rates_can_not_be_changed_later.').'</span>',
-        'escape' => false
-    ]);
-}
+echo '<h1>' . $cronjob->name . '</h1>';
 
-echo $this->Form->control('Taxes.active', [
-    'label' => __d('admin', 'Active').'?',
+echo $this->Form->control('Cronjobs.time_interval', [
+    'label' => __d('admin', 'Time_interval'),
+    'type' => 'select',
+    'options' => $timeIntervals,
+]);
+
+echo $this->Form->control('Cronjobs.day_of_month', [
+    'label' => __d('admin', 'Day_of_month'),
+    'type' => 'select',
+    'empty' => __d('admin', 'Please_select...'),
+    'options' => $daysOfMonth,
+]);
+
+echo $this->Form->control('Cronjobs.weekday', [
+    'label' => __d('admin', 'Weekday'),
+    'type' => 'select',
+    'empty' => __d('admin', 'Please_select...'),
+    'options' => $weekdays,
+]);
+
+echo $this->Form->control('Cronjobs.not_before_time', [
+    'label' => __d('admin', 'Not_before_time').' <span class="after small">'.__d('admin', 'Cronjob_is_called_up_to_10_min_after_the_given_time.').'</span>',
+    'type' => 'time',
+    'escape' => false,
+]);
+
+echo $this->Form->control('Cronjobs.active', [
+    'label' => __d('admin', 'Active'),
     'type' => 'checkbox',
 ]);
+
 
 echo $this->Form->end();
 
