@@ -42,8 +42,15 @@ services:
       PMA_PASSWORD: secret
 
   composer:
-    restart: 'no'
+    container_name: fcs-composer
     image: composer:latest
-    command: install
+    restart: 'no'
     volumes:
-      - .:/var/www/html
+      - ./:/var/www/html
+  
+  node:
+    container_name: fcs-node
+    image: node:18
+    working_dir: /app
+    volumes:
+      - .:/app
