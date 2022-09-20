@@ -40,6 +40,7 @@ services:
       PMA_HOST: database
       PMA_USER: root
       PMA_PASSWORD: secret
+      PMA_PORT: 3310
 
   composer:
     container_name: fcs-composer
