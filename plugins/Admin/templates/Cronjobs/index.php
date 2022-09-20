@@ -14,6 +14,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\Utility\Inflector;
 
 $this->element('addScript', [ 'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init(); " .
@@ -115,8 +116,17 @@ foreach ($cronjobs as $cronjob) {
 
     echo '<td>';
     if (!empty($cronjob->cronjob_logs[0])) {
-        echo $this->Time->getWeekdayName($this->Time->formatAsWeekday($cronjob->cronjob_logs[0]->created->toUnixString())) . ', ';
-        echo $cronjob->cronjob_logs[0]->created->i18nFormat($this->Time->getI18Format('DateNTimeShort'));
+        $name = $cronjob->getOriginalValues()['name'];
+        $cronjobFilterString = Inflector::underscore($name);
+        if (preg_match('/SendInvoices/', $name)) {
+            $cronjobFilterString = 'send_invoices';
+        }
+        $cronjobFilterString = 'cronjob_' . $cronjobFilterString;
+        echo $this->Html->link(
+            $this->Time->getWeekdayName($this->Time->formatAsWeekday($cronjob->cronjob_logs[0]->created->toUnixString())) . ', ' .
+            $cronjob->cronjob_logs[0]->created->i18nFormat($this->Time->getI18Format('DateNTimeShort')),
+            $this->Slug->getActionLogsList() . '/?dateFrom=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('-3 month')) . '&types[]=' . $cronjobFilterString,
+        );
     }
     echo '</td>';
 
