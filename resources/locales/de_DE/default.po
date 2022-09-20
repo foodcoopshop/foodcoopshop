@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-30 14:09+0200\n"
-"PO-Revision-Date: 2022-08-18 18:21+0200\n"
+"POT-Creation-Date: 2022-09-20 08:24+0200\n"
+"PO-Revision-Date: 2022-09-20 08:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1317,6 +1317,30 @@ msgstr "Summe Preis inkl."
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
 
+msgid "BackupDatabaseCronjob"
+msgstr "Datenbank-Backup"
+
+msgid "CheckCreditBalanceCronjob"
+msgstr "Guthaben-Erinnerung versenden"
+
+msgid "EmailOrderReminderCronjob"
+msgstr "Bestell-Erinnerung versenden"
+
+msgid "PickupReminderCronjob"
+msgstr "Abhol-Erinnerung versenden"
+
+msgid "SendOrderListsCronjob"
+msgstr "Bestelllisten versenden"
+
+msgid "SendInvoicesToCustomersCronjob"
+msgstr "Rechnungen versenden"
+
+msgid "SendInvoicesToManufacturersCronjob"
+msgstr "Rechnungen versenden"
+
+msgid "SendDeliveryNotesCronjob"
+msgstr "Lieferscheine versenden"
+
 msgid "Action_Log_Invoice_added"
 msgstr "Rechnung: erstellt"
 
@@ -1575,6 +1599,9 @@ msgstr "Feedback freigeschaltet"
 msgid "Action_Log_Feedback_deleted"
 msgstr "Feedback gelöscht"
 
+msgid "Action_Log_Cronjob_changed"
+msgstr "Cronjob: geändert"
+
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Datenbank gebackupt"
 
@@ -1730,6 +1757,45 @@ msgstr "Bitte gib den Namen der Foodcoop an."
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "Die Anzahl der Zeichen muss zwischen {0} und {1} liegen."
+
+msgid "The_time_interval_is_not_valid."
+msgstr "Das Intervall ist nicht gültig."
+
+msgid "Please_select_a_day_of_month."
+msgstr "Bitte wähle einen Tag (Monat) aus."
+
+msgid "The_day_of_month_is_not_valid."
+msgstr "Der Tag (Monat) ist nicht gültig."
+
+msgid "Please_select_a_weekday."
+msgstr "Bitte wähle einen Wochentag aus."
+
+msgid "The_weekday_is_not_valid."
+msgstr "Der Wochentag ist nicht gültig."
+
+msgid "daily"
+msgstr "täglich"
+
+msgid "weekly"
+msgstr "wöchentlich"
+
+msgid "No_day_of_month_allowed_for_time_interval_{0}."
+msgstr "Beim Interval \"{0}\" bitte keinen Tag (Monat) angeben."
+
+msgid "monthly"
+msgstr "monatlich"
+
+msgid "No_weekday_allowed_for_time_interval_{0}."
+msgstr "Beim Interval \"{0}\" bitte keinen Wochentag angeben."
+
+msgid "Please_enter_a_valid_time."
+msgstr "Bitte gib eine gültige Uhrzeit ein."
+
+msgid "The_time_interval_needs_to_equal_\"{0}\""
+msgstr "Das Intervall muss \"{0}\" sein."
+
+msgid "Last_day_of_month"
+msgstr "Monatsletzter"
 
 msgid "Please_enter_your_first_name."
 msgstr "Bitte gib deinen Vornamen an."
@@ -2025,9 +2091,6 @@ msgstr "Einkaufen zum Einkaufspreis"
 msgid "Shopping_with_zero_price"
 msgstr "Einkaufen zum Nullpreis"
 
-msgid "weekly"
-msgstr "wöchentlich"
-
 msgid "every_{0}_week"
 msgstr "jede {0} Woche"
 
@@ -2039,6 +2102,12 @@ msgstr "jeden letzten {0} im Monat"
 
 msgid "bulk_order"
 msgstr "Sammelbestellung"
+
+msgid "midnight"
+msgstr "Mitternacht"
+
+msgid "default_value"
+msgstr "Standardwert"
 
 msgid "yes"
 msgstr "ja"
@@ -2097,6 +2166,15 @@ msgstr "Admin"
 msgid "Superadmin"
 msgstr "Superadmin"
 
+msgid "Configurations"
+msgstr "Einstellungen"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
+
+msgid "Tax_rates"
+msgstr "Steuersätze"
+
 msgid "Credit_overview"
 msgstr "Guthaben-Übersicht"
 
@@ -2150,12 +2228,6 @@ msgstr "{0,plural,=1{1 Minute} other{# Minuten}}"
 
 msgid "{0,plural,=1{1_second} other{#_seconds}}"
 msgstr "{0,plural,=1{1 Sekunde} other{# Sekunden}}"
-
-msgid "midnight"
-msgstr "Mitternacht"
-
-msgid "default_value"
-msgstr "Standardwert"
 
 msgid "price_will_be_adapted."
 msgstr "Preis wird angepasst."
@@ -2676,6 +2748,9 @@ msgstr "getätigt am"
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
+#~ msgid "The_day_of_month_is_required."
+#~ msgstr "Bitte gib einen Tag (Monat) an."
+
 #~ msgid "No_stock_products_selected."
 #~ msgstr "Es wurden keine Lagerprodukte ausgewählt."
 
@@ -2795,9 +2870,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Surcharge"
 #~ msgstr "Aufschlag"
-
-#~ msgid "The_discount_is_not_valid."
-#~ msgstr "Der Rabatt ist nicht gültig."
 
 #~ msgid "No_discount_normal_selling_prices_are_used"
 #~ msgstr "Kein Rabatt - Einkauf zum normalen Verkaufspreis"

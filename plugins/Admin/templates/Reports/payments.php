@@ -43,7 +43,7 @@ if ($paymentType == 'product') {
 
 <?php
 
-echo $this->element('reportNavTabs', [
+echo $this->element('navTabs/reportNavTabs', [
     'key' => $this->request->getParam('pass')[0],
     'dateFrom' => $dateFrom,
     'dateTo' => $dateTo,

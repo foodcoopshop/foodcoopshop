@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-18 17:24+0200\n"
-"PO-Revision-Date: 2022-08-18 18:21+0200\n"
+"POT-Creation-Date: 2022-09-19 16:36+0200\n"
+"PO-Revision-Date: 2022-09-14 15:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -83,6 +83,15 @@ msgstr "Send test email"
 
 msgid "Test_email"
 msgstr "Test email"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
+
+msgid "Edit_cronjob"
+msgstr "Edit cronjob"
+
+msgid "The_cronjob_{0}_has_been_changed."
+msgstr "The cronjob {0} has been changed."
 
 msgid "all_members"
 msgstr "all members"
@@ -942,6 +951,33 @@ msgstr "Default image for manufacturer, width:"
 msgid "Default_image_for_blog_post,_width:"
 msgstr "Default image for blog post, width:"
 
+msgid "Website_administration"
+msgstr "Website administration"
+
+msgid "Configurations"
+msgstr "Settings"
+
+msgid "Time_interval"
+msgstr "Interval"
+
+msgid "Day_of_month"
+msgstr "Day of month"
+
+msgid "Please_select..."
+msgstr "Please select..."
+
+msgid "Weekday"
+msgstr "Weekday"
+
+msgid "Not_before_time"
+msgstr "Time"
+
+msgid "Cronjob_is_called_up_to_10_min_after_the_given_time."
+msgstr "Cronjob is called up to 10 min after the given time."
+
+msgid "Last_run"
+msgstr "Last run"
+
 msgid "Old_password"
 msgstr "Old password"
 
@@ -953,9 +989,6 @@ msgstr "min 8 characters"
 
 msgid "New_password_again"
 msgstr "New password (again)"
-
-msgid "Website_administration"
-msgstr "Website administration"
 
 msgid "Financial_reports"
 msgstr "Financial reports"
@@ -1464,9 +1497,6 @@ msgstr "Delivery break"
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "How do I use the function \"delivery break\"?"
 
-msgid "Please_select..."
-msgstr "Please select..."
-
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Manufacturer provile and products are only visible for signed in members."
 
@@ -1935,9 +1965,6 @@ msgstr "IBAN"
 msgid "BIC"
 msgstr "BIC"
 
-msgid "Configurations"
-msgstr "Settings"
-
 msgid "My_products"
 msgstr "My products"
 
@@ -2375,6 +2402,10 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "Please_chose"
+#~ msgstr "Please select..."
 
 #~ msgid "Please_enter_why_pickup_day_is_changed."
 #~ msgstr "Please enter why the pickup day is changed."

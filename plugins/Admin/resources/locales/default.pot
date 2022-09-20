@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-08-18 17:24+0200\n"
+"POT-Creation-Date: 2022-09-19 16:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -81,6 +81,15 @@ msgid "Send_test_email"
 msgstr ""
 
 msgid "Test_email"
+msgstr ""
+
+msgid "Cronjobs"
+msgstr ""
+
+msgid "Edit_cronjob"
+msgstr ""
+
+msgid "The_cronjob_{0}_has_been_changed."
 msgstr ""
 
 msgid "all_members"
@@ -941,6 +950,33 @@ msgstr ""
 msgid "Default_image_for_blog_post,_width:"
 msgstr ""
 
+msgid "Website_administration"
+msgstr ""
+
+msgid "Configurations"
+msgstr ""
+
+msgid "Time_interval"
+msgstr ""
+
+msgid "Day_of_month"
+msgstr ""
+
+msgid "Please_select..."
+msgstr ""
+
+msgid "Weekday"
+msgstr ""
+
+msgid "Not_before_time"
+msgstr ""
+
+msgid "Cronjob_is_called_up_to_10_min_after_the_given_time."
+msgstr ""
+
+msgid "Last_run"
+msgstr ""
+
 msgid "Old_password"
 msgstr ""
 
@@ -951,9 +987,6 @@ msgid "min_8_characters"
 msgstr ""
 
 msgid "New_password_again"
-msgstr ""
-
-msgid "Website_administration"
 msgstr ""
 
 msgid "Financial_reports"
@@ -1457,9 +1490,6 @@ msgstr ""
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr ""
 
-msgid "Please_select..."
-msgstr ""
-
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr ""
 
@@ -1926,9 +1956,6 @@ msgid "IBAN"
 msgstr ""
 
 msgid "BIC"
-msgstr ""
-
-msgid "Configurations"
 msgstr ""
 
 msgid "My_products"

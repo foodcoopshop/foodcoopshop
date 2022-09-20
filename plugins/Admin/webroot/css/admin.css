@@ -730,7 +730,8 @@ form.fcs-form .input.text .after.small,
 form.fcs-form .input.number .after.small,
 form.fcs-form .input.tel .after.small,
 form.fcs-form .input.select .after.small,
-form.fcs-form .input.fcs-upload .after.small {
+form.fcs-form .input.fcs-upload .after.small,
+form.fcs-form .input.time .after.small {
     float: right;
     line-height: 28px;
     margin-left: 5px;
