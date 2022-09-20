@@ -123,10 +123,14 @@ foreach ($cronjobs as $cronjob) {
     if (!empty($cronjob->cronjob_logs[0])) {
         $name = $cronjob->getOriginalValues()['name'];
         $cronjobFilterString = Inflector::underscore($name);
-        if (preg_match('/SendInvoices/', $name)) {
+        if (preg_match('/SendInvoicesToManufacturers/', $name)) {
             $cronjobFilterString = 'send_invoices';
         }
         $cronjobFilterString = 'cronjob_' . $cronjobFilterString;
+        if (preg_match('/SendInvoicesToCustomers/', $name)) {
+            $cronjobFilterString = 'invoice_added';
+        }
+        $cronjobFilterString = $cronjobFilterString;
         echo $this->Html->link(
             $this->Time->getWeekdayName($this->Time->formatAsWeekday($cronjob->cronjob_logs[0]->created->toUnixString())) . ', ' .
             $cronjob->cronjob_logs[0]->created->i18nFormat($this->Time->getI18Format('DateNTimeShort')),
