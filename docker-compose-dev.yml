@@ -21,7 +21,7 @@ services:
     ports:
      - '3310:3306'
     environment:
-      MYSQL_DATABASE: foodcoopshop_dev
+      MYSQL_DATABASE: foodcoopshop
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_TCP_PORT: 3310
     volumes:
