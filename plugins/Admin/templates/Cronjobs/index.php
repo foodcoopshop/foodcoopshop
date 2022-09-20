@@ -15,6 +15,7 @@
 
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
+use Cake\Datasource\FactoryLocator;
 
 $this->element('addScript', [ 'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init(); " .
@@ -91,7 +92,10 @@ foreach ($cronjobs as $cronjob) {
     echo '</td>';
 
     echo '<td style="text-align:center;">';
-    echo $cronjob->day_of_month;
+    if ($cronjob->day_of_month != '') {
+        $cm = FactoryLocator::get('Table')->get('Cronjobs');
+        echo $cm->getDaysOfMonth()[$cronjob->day_of_month];
+    }
     echo '</td>';
 
     echo '<td>';
