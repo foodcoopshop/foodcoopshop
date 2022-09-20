@@ -40,3 +40,10 @@ services:
       PMA_HOST: database
       PMA_USER: root
       PMA_PASSWORD: secret
+
+  composer:
+    restart: 'no'
+    image: composer:latest
+    command: install
+    volumes:
+      - .:/var/www/html
