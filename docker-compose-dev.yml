@@ -41,6 +41,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: secret
       PMA_PORT: 3310
+      UPLOAD_LIMIT: 300M
 
   composer:
     container_name: fcs-composer
