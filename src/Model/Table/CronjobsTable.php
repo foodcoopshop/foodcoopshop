@@ -111,6 +111,49 @@ class CronjobsTable extends AppTable
         return $validator;
     }
 
+    public function validationPickupReminder(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'week', __('weekly'));
+        return $validator;
+    }
+
+    public function validationEmailOrderReminder(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'week', __('weekly'));
+        return $validator;
+    }
+
+    public function validationSendDeliveryNotes(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'month', __('monthly'));
+        return $validator;
+    }
+
+    public function validationSendInvoicesToManufacturers(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'month', __('monthly'));
+        return $validator;
+    }
+
+    public function validationSendOrderLists(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator = $this->getAllowOnlyOneTimeIntervalValidator($validator, 'day', __('daily'));
+        return $validator;
+    }
+
+    private function getAllowOnlyOneTimeIntervalValidator($validator, $timeInterval, $timeIntervalString)
+    {
+        $validator = $validator->equals('time_interval', $timeInterval, __('The_time_interval_needs_to_equal_"{0}"', [
+            $timeIntervalString,
+        ]));
+        return $validator;
+    }
+
     public function getTimeIntervals()
     {
         return [

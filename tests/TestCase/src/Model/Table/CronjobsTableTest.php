@@ -77,17 +77,92 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(false, $result->hasErrors());
     }
 
-    public function testEditMonthlyValidations()
+    public function testPickupReminderValidation()
     {
         $entity = $this->Cronjob->get(1);
         $result = $this->Cronjob->patchEntity($entity, [
+            'time_interval' => 'week',
+            'day_of_month' => '2',
+            'weekday' => '',
+        ]);
+        $errors = $result->getErrors();
+        $this->assertEquals('Bitte wähle einen Wochentag aus.', $errors['weekday']['_empty']);
+        $this->assertEquals('Beim Interval "wöchentlich" bitte keinen Tag (Monat) angeben.', $errors['day_of_month']['time-interval-day-or-week-no-day-of-month']);
+    }
+
+    public function testEditPickupReminderValidations()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'name' => 'PickupReminder',
             'time_interval' => 'month',
             'day_of_month' => '',
             'weekday' => 'Sunday',
-        ]);
+        ],
+            ['validate' => 'PickupReminder'],
+        );
         $errors = $result->getErrors();
-        $this->assertEquals('Bitte wähle einen Tag (Monat) aus.', $errors['day_of_month']['_empty']);
-        $this->assertEquals('Beim Interval "monatlich" bitte keinen Wochentag angeben.', $errors['weekday']['time-interval-day-or-month-no-weekday']);
+        $this->assertEquals('Das Intervall muss "wöchentlich" sein.', $errors['time_interval']['equals']);
+    }
+
+    public function testEditEmailOrderReminderValidations()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'name' => 'PickupReminder',
+            'time_interval' => 'month',
+            'day_of_month' => '',
+            'weekday' => 'Sunday',
+        ],
+            ['validate' => 'EmailOrderReminder'],
+        );
+        $errors = $result->getErrors();
+        $this->assertEquals('Das Intervall muss "wöchentlich" sein.', $errors['time_interval']['equals']);
+    }
+
+    public function testEditSendDeliveryNotesValidations()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'name' => 'SendDeliveryNotes',
+            'time_interval' => 'week',
+            'day_of_month' => '',
+            'weekday' => 'Sunday',
+        ],
+            ['validate' => 'SendDeliveryNotes'],
+        );
+        $errors = $result->getErrors();
+        $this->assertEquals('Das Intervall muss "monatlich" sein.', $errors['time_interval']['equals']);
+    }
+
+    public function testEditSendInvoicesToManufacturersValidations()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'name' => 'SendInvoicesToManufacturers',
+            'time_interval' => 'day',
+            'day_of_month' => '',
+            'weekday' => '',
+        ],
+            ['validate' => 'SendInvoicesToManufacturers'],
+        );
+        $errors = $result->getErrors();
+        $this->assertEquals('Das Intervall muss "monatlich" sein.', $errors['time_interval']['equals']);
+    }
+
+    public function testEditSendOrderListsValidations()
+    {
+        $entity = $this->Cronjob->get(1);
+        $result = $this->Cronjob->patchEntity($entity, [
+            'name' => 'SendOrderLists',
+            'time_interval' => 'week',
+            'day_of_month' => '',
+            'weekday' => '',
+        ],
+            ['validate' => 'SendOrderLists'],
+        );
+        $errors = $result->getErrors();
+        $this->assertEquals('Das Intervall muss "täglich" sein.', $errors['time_interval']['equals']);
     }
 
     public function testEditMonthlyOk()

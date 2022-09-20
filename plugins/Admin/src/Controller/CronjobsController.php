@@ -71,7 +71,18 @@ class CronjobsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
-        $cronjob = $this->Cronjob->patchEntity($cronjob, $this->getRequest()->getData());
+        $validationName = $cronjob->getOriginalValues()['name'];
+        if (!method_exists($this->Cronjob, 'validation'.$validationName)) {
+            $validationName = 'default';
+        }
+
+        $cronjob = $this->Cronjob->patchEntity(
+            $cronjob,
+            $this->getRequest()->getData(),
+            [
+                'validate' => $validationName,
+            ],
+        );
         if ($cronjob->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('cronjob', $cronjob);
