@@ -62,6 +62,7 @@ foreach ($cronjobs as $cronjob) {
     ];
     if (! $cronjob->active) {
         $rowClass[] = 'deactivated';
+        $rowClass[] = 'line-through';
     }
     echo '<tr id="cronjob-' . $cronjob->id . '" class="' . implode(' ', $rowClass) . '">';
 
@@ -110,7 +111,7 @@ foreach ($cronjobs as $cronjob) {
     if ($cronjob->active == 1) {
         echo '<i class="fas fa-check-circle ok"></i>';
     } else {
-        echo '<i class="fas fa-minus-circle ok"></i>';
+        echo '<i class="fas fa-minus-circle not-ok"></i>';
     }
     echo '</td>';
 
