@@ -10,7 +10,7 @@ services:
       - WEB_DOCUMENT_ROOT=/var/www/html/webroot
     volumes:
       - ./:/var/www/html
-      - ./config/docker-dev/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      - ./config/docker-dev/php-nginx/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
     ports:
       - "8001:80"
     depends_on:
@@ -47,8 +47,7 @@ services:
      - '8080:80'
     environment:
       PMA_HOST: database
-      PMA_USER: user
-      PMA_PASSWORD: secret
+      PMA_USER: root
       PMA_PORT: 3310
       UPLOAD_LIMIT: 300M
     networks:
