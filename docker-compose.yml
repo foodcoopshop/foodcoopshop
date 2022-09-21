@@ -61,9 +61,9 @@ services:
     volumes:
       - ./:/var/www/html
   
-  npm:
-    container_name: fcs-npm
-    image: node:18
+  node:
+    container_name: fcs-node
+    build: ./config/docker-dev/node 
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
