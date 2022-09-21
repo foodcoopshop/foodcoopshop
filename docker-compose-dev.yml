@@ -2,9 +2,10 @@ version: '3'
 
 services:
 
-  web:
+  php-nginx:
     image: webdevops/php-nginx:8.1
-    container_name: fcs-web
+    container_name: fcs-php-nginx
+    restart: always
     environment:
       - WEB_DOCUMENT_ROOT=/var/www/html/webroot
     volumes:
@@ -12,7 +13,11 @@ services:
       - ./config/docker-dev/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
     ports:
       - "8001:80"
-
+    depends_on:
+      - database
+    networks:
+      - fcs
+      
   database:
     image: mysql:8.0
     container_name: fcs-database
@@ -27,6 +32,8 @@ services:
     volumes:
       - ./config/sql/_installation/clean-db-structure.sql:/docker-entrypoint-initdb.d/1.sql
       - ./tests/config/sql/test-db-data.sql:/docker-entrypoint-initdb.d/2.sql
+    networks:
+      - fcs
 
   phpmyadmin:
     depends_on:
@@ -42,17 +49,29 @@ services:
       PMA_PASSWORD: secret
       PMA_PORT: 3310
       UPLOAD_LIMIT: 300M
-
+    networks:
+      - fcs
+      
   composer:
     container_name: fcs-composer
     image: composer:latest
-    restart: 'no'
+    depends_on:
+      - php-nginx
+    entrypoint: ['composer', '--ignore-platform-reqs']
+    working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
   
-  node:
-    container_name: fcs-node
+  npm:
+    container_name: fcs-npm
     image: node:18
-    working_dir: /app
+    working_dir: /var/www/html
     volumes:
-      - .:/app
+      - ./:/var/www/html
+    entrypoint: ['npm']
+    networks:
+      - fcs
+
+
+networks:
+  fcs:
