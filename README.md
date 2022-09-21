@@ -61,7 +61,8 @@
 Before installing don't forget to read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
 
 ## 🤖 Self-hosting / developing
-🐳 (Docker Dev Environment)[https://foodcoopshop.github.io/en/docker-dev-environment.html] / [installation guide](https://foodcoopshop.github.io/en/installation-guide)
+* 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment)
+* [Installation guide](https://foodcoopshop.github.io/en/installation-guide)
 
 ## 😎 Maintainer
 [Mario Rothauer](https://github.com/mrothauer) started the project in 2014 and maintains it.
