@@ -66,6 +66,7 @@ services:
     container_name: fcs-npm
     image: node:18
     working_dir: /var/www/html
+    entrypoint: ['npm']
     volumes:
       - ./:/var/www/html
     networks:
