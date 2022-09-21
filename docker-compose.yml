@@ -26,8 +26,10 @@ services:
     ports:
      - '3310:3306'
     environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
       MYSQL_DATABASE: foodcoopshop
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_TCP_PORT: 3310
     volumes:
       - ./config/sql/_installation/clean-db-structure.sql:/docker-entrypoint-initdb.d/1.sql
@@ -45,7 +47,7 @@ services:
      - '8080:80'
     environment:
       PMA_HOST: database
-      PMA_USER: root
+      PMA_USER: user
       PMA_PASSWORD: secret
       PMA_PORT: 3310
       UPLOAD_LIMIT: 300M
