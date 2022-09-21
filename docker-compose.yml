@@ -56,8 +56,6 @@ services:
   composer:
     container_name: fcs-composer
     image: composer:latest
-    depends_on:
-      - php-nginx
     entrypoint: ['composer', '--ignore-platform-reqs']
     working_dir: /var/www/html
     volumes:
