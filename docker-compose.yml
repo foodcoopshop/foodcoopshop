@@ -68,10 +68,8 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    entrypoint: ['npm']
     networks:
       - fcs
-
 
 networks:
   fcs:
