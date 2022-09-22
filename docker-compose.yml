@@ -14,45 +14,78 @@ services:
     ports:
       - "8001:80"
     depends_on:
-      - database
+      - database-dev
+      - database-test
     networks:
       - fcs
       
-  database:
+  database-dev:
     image: mysql:8.0
-    container_name: fcs-database
+    container_name: fcs-database-dev
     restart: always
-    tmpfs: /var/lib/mysql:exec,size=1G
     ports:
      - '3310:3306'
     environment:
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
-      MYSQL_DATABASE: foodcoopshop
+      MYSQL_DATABASE: foodcoopshop-dev
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_TCP_PORT: 3310
     volumes:
+      - ./config/docker-dev/database-dev/data:/var/lib/mysql
+    networks:
+      - fcs
+   
+  database-test:
+    image: mysql:8.0
+    container_name: fcs-database-test
+    restart: always
+    tmpfs: /var/lib/mysql:exec,size=1G
+    ports:
+     - '3311:3306'
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: foodcoopshop-test
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_TCP_PORT: 3311
+    volumes:
       - ./config/sql/_installation/clean-db-structure.sql:/docker-entrypoint-initdb.d/1.sql
-      - ./tests/config/sql/test-db-data.sql:/docker-entrypoint-initdb.d/2.sql
     networks:
       - fcs
 
-  phpmyadmin:
+  phpmyadmin-dev:
     depends_on:
-     - database
+     - database-dev
     image: phpmyadmin/phpmyadmin
-    container_name: fcs-phpmyadmin
+    container_name: fcs-phpmyadmin-dev
     restart: always
     ports:
      - '8080:80'
     environment:
-      PMA_HOST: database
+      PMA_HOST: database-test
       PMA_USER: root
       PMA_PORT: 3310
       UPLOAD_LIMIT: 300M
     networks:
       - fcs
       
+  phpmyadmin-test:
+    depends_on:
+     - database-test
+    image: phpmyadmin/phpmyadmin
+    container_name: fcs-phpmyadmin-test
+    restart: always
+    ports:
+     - '8081:80'
+    environment:
+      PMA_HOST: database-test
+      PMA_USER: root
+      PMA_PORT: 3311
+      UPLOAD_LIMIT: 300M
+    networks:
+      - fcs
+
   composer:
     container_name: fcs-composer
     image: composer:latest
