@@ -63,7 +63,7 @@ services:
     ports:
      - '8080:80'
     environment:
-      PMA_HOST: database-test
+      PMA_HOST: database-dev
       PMA_USER: root
       PMA_PORT: 3310
       UPLOAD_LIMIT: 300M
