@@ -45,4 +45,3 @@ nbproject/*
 /.buildpath
 /.phpunit.result.cache
 /vendor
-/.env
