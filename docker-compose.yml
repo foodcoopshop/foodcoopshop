@@ -3,7 +3,8 @@ version: '3'
 services:
 
   php-nginx:
-    image: webdevops/php-nginx:8.1
+    #image: webdevops/php-nginx:8.1
+    build: ./config/docker-dev/php-nginx
     container_name: fcs-php-nginx
     restart: always
     environment:
