@@ -11,6 +11,7 @@ use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
+use Cake\Log\Log;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
@@ -556,6 +557,8 @@ class CartComponent extends Component
             $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->getController()->Flash->success($message);
+
+            Log::error('cart finished');
 
         }
 
