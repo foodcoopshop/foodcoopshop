@@ -55,9 +55,25 @@ class CartsTable extends AppTable
 
     public function validationDefault(Validator $validator): Validator
     {
-        $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
-        $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
-        $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+        if (Configure::read('app.generalTermsAndConditionsEnabled')) {
+            $validator->requirePresence('cancellation_terms_accepted', __('Please_accept_the_information_about_right_of_withdrawal'));
+            $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
+            $validator->requirePresence('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
+            $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
+        }
+        if (Configure::read('app.promiseToPickUpProductsCheckboxEnabled')) {
+            $validator->requirePresence('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+            $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+        }
+        $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
+        return $validator;
+    }
+
+    /**
+     * no checkboxes are shown here - do not validate them neither use requirePresence
+     */
+    public function validationSelfServiceForDifferentCustomer(Validator $validator): Validator
+    {
         $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
         return $validator;
     }
@@ -110,7 +126,8 @@ class CartsTable extends AppTable
                 'id_customer' => $customerId,
                 'cart_type' => $cartType,
             ];
-            $cart = $this->save($this->newEntity($cart2save));
+            $newCartEntity = $this->newEntity($cart2save, ['validate' => false]);
+            $cart = $this->save($newCartEntity);
         }
 
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
