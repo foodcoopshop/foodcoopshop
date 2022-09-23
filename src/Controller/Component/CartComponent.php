@@ -152,6 +152,8 @@ class CartComponent extends Component
     public function finish()
     {
 
+        Log::error('CartComponent::finish() start');
+
         $cart = $this->AppAuth->getCart();
 
         $this->Cart = FactoryLocator::get('Table')->get('Carts');
@@ -564,7 +566,7 @@ class CartComponent extends Component
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->getController()->Flash->success($message);
 
-            Log::error('cart finished');
+            Log::error('CartComponent::finish() end');
 
         }
 
