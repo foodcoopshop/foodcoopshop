@@ -154,12 +154,6 @@ return [
         'mysqlDumpCommand' => 'mysqldump',
 
         /**
-         * if you work on windows, change to e.g
-         * '"C:\\Programme\\xampp\\mysql\\bin\\mysql.exe"'
-         */
-        'mysqlCommand' => 'mysql',
-
-        /**
          * date of the last update of terms of use
          */
         'termsOfUseLastUpdate' => '2016-11-28',
