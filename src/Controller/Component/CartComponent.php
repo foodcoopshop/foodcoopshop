@@ -152,11 +152,15 @@ class CartComponent extends Component
     public function finish()
     {
 
-        Log::error('CartComponent::finish() start');
+        $this->Cart = FactoryLocator::get('Table')->get('Carts');
+
+        if ($this->AppAuth->getCartType() == $this->Cart::CART_TYPE_WEEKLY_RHYTHM
+            && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
+                Log::error('CartComponent::finish() start');
+        }
 
         $cart = $this->AppAuth->getCart();
 
-        $this->Cart = FactoryLocator::get('Table')->get('Carts');
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $this->PickupDay = FactoryLocator::get('Table')->get('PickupDays');
         $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -566,8 +570,10 @@ class CartComponent extends Component
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->getController()->Flash->success($message);
 
-            Log::error('CartComponent::finish() end');
-
+            if ($this->AppAuth->getCartType() == $this->Cart::CART_TYPE_WEEKLY_RHYTHM
+                && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
+                    Log::error('CartComponent::finish() end');
+            }
         }
 
         return $cart;
