@@ -7,7 +7,6 @@ tasks:
       docker compose exec -T database-dev mysql --port 3310 foodcoopshop-dev < ~./tests/config/sql/test-db-data.sql
       docker compose run -w /var/www/html/webroot --rm node npm install
       docker exec -w /var/www/html fcs-php-nginx bash ./bin/cake npm_post_install
-    command: |
       echo "The FoodCoopShop application is ready to use."
       echo "@see https://foodcoopshop.github.io/en/docker-dev-environment.html'"
 ports:
