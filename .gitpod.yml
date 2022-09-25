@@ -9,7 +9,7 @@ tasks:
       echo "@see https://foodcoopshop.github.io/en/docker-dev-environment.html"
 ports:
   - port: 8001
-    onOpen: open-browser
+    onOpen: notify
   - port: 8080
     onOpen: ignore
   - port: 8081
