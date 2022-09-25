@@ -1,9 +1,9 @@
 tasks:
+  - name: Bash
   - name: Docker
     init: |
       docker compose pull
       docker compose up
-  - name: Bash
 
 ports:
   - port: 8001
