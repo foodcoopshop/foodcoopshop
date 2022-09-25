@@ -5,7 +5,7 @@ tasks:
       docker compose up
   - name: bash
     command: |
-      echo "When all containers are up and running, run: bash ./devtools/setup-dev-init.sh"
+      echo "When all containers are up and running, open your bash terminal (not: Docker) and run: bash ./devtools/setup-dev-init.sh"
       echo "@see https://foodcoopshop.github.io/en/docker-dev-environment.html"
 ports:
   - port: 8001
