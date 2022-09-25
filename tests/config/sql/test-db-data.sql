@@ -320,7 +320,7 @@ INSERT INTO `fcs_purchase_prices` VALUES
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
-(6,'2be64c60e6126c9085fd9d9717532a14e5a5bb4e_slide4.png',NULL,0,0,1);
+(6,'demo-slider.jpg',NULL,0,0,1);
 /*!40000 ALTER TABLE `fcs_sliders` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;

@@ -1,0 +1,19 @@
+tasks:
+  - name: Bash
+  - name: Docker
+    init: |
+      docker compose pull
+      docker compose up
+
+ports:
+  - port: 8001
+    onOpen: notify
+  - port: 8080
+    onOpen: ignore
+  - port: 8081
+    onOpen: ignore
+  - port: 3310
+    onOpen: ignore
+  - port: 3311
+    onOpen: ignore
+    
