@@ -5,7 +5,7 @@ tasks:
       docker compose up
   - name: bash
     command: |
-      echo "Please run 'bash ./devtools/gitpod-init.sh' to complete setting up your dev environment."
+      echo "When all containers are up and running, run: bash ./devtools/setup-dev-init.sh"
       echo "@see https://foodcoopshop.github.io/en/docker-dev-environment.html"
 ports:
   - port: 8001
