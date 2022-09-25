@@ -12,13 +12,14 @@ tasks:
       docker exec -w /var/www/html fcs-php-nginx bash ./bin/cake npm_post_install
       echo "The FoodCoopShop application is ready to use."
       echo "@see https://foodcoopshop.github.io/en/docker-dev-environment.html'"
+
 ports:
   - port: 8001
     onOpen: open-preview
   - port: 8080
-    onOpen: open-preview
+    onOpen: notify
   - port: 8081
-    onOpen: open-preview
+    onOpen: notify
   - port: 3310
     onOpen: ignore
   - port: 3311
