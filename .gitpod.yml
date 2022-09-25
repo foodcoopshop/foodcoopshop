@@ -1,7 +1,9 @@
 tasks:
+
   - init: |
       docker compose pull
       docker compose up
+
   - command: |
       docker compose exec -T database-dev mysql --port 3310 foodcoopshop-dev < ./config/sql/_installation/clean-db-structure.sql
       docker compose exec -T database-dev mysql --port 3310 foodcoopshop-dev < ./tests/config/sql/test-db-data.sql
