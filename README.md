@@ -39,7 +39,7 @@
 * 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment) / [Installation guide](https://foodcoopshop.github.io/en/installation-guide)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
-* When all containers are up and running, open your bash terminal (not: Docker) and run: `bash ./devtools/setup-dev-init.sh`
+* Gitpod: When all containers are up and running, open your bash terminal (not: Docker) and run: `bash ./devtools/setup-dev-init.sh`
 
 ## ✨ Features
 * user-friendly web shop optimized for selling food from different producers
