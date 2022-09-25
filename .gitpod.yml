@@ -4,6 +4,7 @@ tasks:
       docker compose pull
       docker compose up
   - name: Bash
+
 ports:
   - port: 8001
     onOpen: notify
@@ -15,11 +16,4 @@ ports:
     onOpen: ignore
   - port: 3311
     onOpen: ignore
-
-github:
-  prebuilds:
-    master: true
-    branches: true
-    pullRequests: true
-    pullRequestsFromForks: true
-    addCheck: true
+    
