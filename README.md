@@ -36,9 +36,8 @@
 </h3>
 
 ## 🤖 Self-hosting / developing
-* 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment)
-* [Installation guide](https://foodcoopshop.github.io/en/installation-guide)
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
+* 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment) / [Installation guide](https://foodcoopshop.github.io/en/installation-guide) /
+* [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
 
 ## ✨ Features
 * user-friendly web shop optimized for selling food from different producers
