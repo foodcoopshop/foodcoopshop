@@ -1,7 +1,11 @@
 tasks:
-  - init: |
+  - name: Docker
+    init: |
       docker compose pull
       docker compose up
+  - name: bash
+    command: |
+      bash ./devtools/gitpod-init.sh
       echo "Please run 'bash ./devtools/gitpod-init.sh' to complete setting up your dev environment."
       echo "@see https://foodcoopshop.github.io/en/docker-dev-environment.html"
 ports:
