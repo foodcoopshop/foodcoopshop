@@ -64,6 +64,9 @@ Before installing don't forget to read the legal information in [German](https:/
 * 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment)
 * [Installation guide](https://foodcoopshop.github.io/en/installation-guide)
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
+
+
 ## 😎 Maintainer
 [Mario Rothauer](https://github.com/mrothauer) started the project in 2014 and maintains it.
 
