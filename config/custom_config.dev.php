@@ -18,7 +18,7 @@
  */
 
 return [
-    'debug' => false,
+    'debug' => true,
     'EmailTransport' => [
         'default' => [
             'className' => 'Smtp',
