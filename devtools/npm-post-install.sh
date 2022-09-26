@@ -3,6 +3,8 @@
 rm -Rf ../webroot/node_modules/jquery-backstretch/examples
 rm -Rf ../webroot/node_modules/jquery-backstretch/test
 rm -Rf ../webroot/node_modules/@fortawesome/fontawesome-free/js
+rm -Rf ../webroot/node_modules/@fortawesome/fontawesome-free/metadata
+rm -Rf ../webroot/node_modules/@fortawesome/fontawesome-free/svgs
 rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/all.min.css
 rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/fontawesome.css
 rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css
