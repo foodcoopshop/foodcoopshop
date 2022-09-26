@@ -16,4 +16,11 @@ ports:
     onOpen: ignore
   - port: 3311
     onOpen: ignore
-    
+
+github:
+  prebuilds:
+    master: false
+    branches: false
+    pullRequests: false
+    pullRequestsFromForks: false
+    addCheck: false
