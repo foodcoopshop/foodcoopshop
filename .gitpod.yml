@@ -3,7 +3,7 @@ tasks:
   - name: Docker
     init: |
       docker compose pull
-      docker compose up
+      CURRENT_UID=$(id -u):$(id -g) docker compose up
 
 ports:
   - port: 8001

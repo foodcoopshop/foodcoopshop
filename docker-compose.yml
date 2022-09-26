@@ -8,6 +8,7 @@ services:
     build: ./config/docker-dev/php-nginx
     container_name: fcs-php-nginx
     restart: always
+    user: ${CURRENT_UID}
     environment:
       - WEB_DOCUMENT_ROOT=/var/www/html/webroot
     volumes:
@@ -92,6 +93,7 @@ services:
   composer:
     container_name: fcs-composer
     image: composer:latest
+    user: ${CURRENT_UID}
     entrypoint: ['composer', '--ignore-platform-reqs']
     working_dir: /var/www/html
     volumes:

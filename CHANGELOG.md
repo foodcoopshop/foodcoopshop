@@ -15,7 +15,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Konfiguration "Freitag Bestellschluss / Samstag Bestelllisten-Versand / Donnerstag Abholtag" ist jetzt möglich. [I#866](https://github.com/foodcoopshop/foodcoopshop/issues/866) / [PR#867](https://github.com/foodcoopshop/foodcoopshop/pull/867) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### For developers
-- New 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment.html) and [Gitpod-Integration](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop).  [I#871](https://github.com/foodcoopshop/foodcoopshop/issues/871) / [PR#876](https://github.com/foodcoopshop/foodcoopshop/pull/876) / [PR#879](https://github.com/foodcoopshop/foodcoopshop/pull/879) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- New 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment.html) and [Gitpod-Integration](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop).  [I#871](https://github.com/foodcoopshop/foodcoopshop/issues/871) / [PR#876](https://github.com/foodcoopshop/foodcoopshop/pull/876) / [PR#879](https://github.com/foodcoopshop/foodcoopshop/pull/879) / / [PR#881](https://github.com/foodcoopshop/foodcoopshop/pull/881) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 # v3.5.0
 

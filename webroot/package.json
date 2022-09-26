@@ -11,7 +11,7 @@
   "license": "AGPL-3.0",
   "homepage": "https://www.foodcoopshop.com",
   "scripts": {
-    "install": "bash ../bin/cake npm_post_install"
+    "install": "bash ../devtools/npm-post-install.sh"
   },
   "dependencies": {
     "@beyonk/gdpr-cookie-consent-banner": "^9.0.3",

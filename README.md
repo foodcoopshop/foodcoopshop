@@ -40,7 +40,7 @@
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
 * Gitpod: When all containers are up and running, open your bash terminal (not: Docker) and run
-* `bash ./devtools/setup-dev-init.sh`
+* `bash ./devtools/init-dev-setup.sh`
 
 ## ✨ Features
 * user-friendly web shop optimized for selling food from different producers
