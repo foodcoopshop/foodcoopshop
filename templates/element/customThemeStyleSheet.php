@@ -59,7 +59,7 @@ use Cake\Core\Configure;
     h2.info,
     #flashMessage.success,
     .modal-header,
-    .cookieConsentWrapper,
+    .cookieConsentWrapper .cookieConsent__Right button,
     .drop a.upload-button,
     #footer .bottom {
         background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
@@ -98,6 +98,7 @@ use Cake\Core\Configure;
     #flashMessage.success,
     hr,
     .pw, .manufacturer-wrapper,
+    .cookieConsentWrapper,
     body.manufacturers.detail #inner-content h2,
     h1.middle-line span.middle {
         border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
