@@ -5,4 +5,4 @@ CURRENT_UID=$(id -u):$(id -g) docker compose exec -T database-dev mysql --port 3
 CURRENT_UID=$(id -u):$(id -g) docker compose run --rm composer install
 bash ./devtools/setup-dev/set-permissions.sh
 bash ./devtools/setup-dev/copy-config-files.sh
-CURRENT_UID=$(id -u):$(id -g) docker compose run -w /var/www/html/webroot --rm node npm install
+docker compose run -w /var/www/html/webroot --rm node npm install
