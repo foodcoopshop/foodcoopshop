@@ -602,17 +602,18 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     display: none;
 }
 .cookieConsentWrapper {
-    box-shadow: 0px -3px 3px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
+    border-radius: 3px;
     width: 330px;
     bottom: 5px ! important;
     left: 5px ! important;
+    background-color: #fff ! important;
+    color: #333 ! important;
+    border-width: 1px;
+    border-style: solid;
 }
 .cookieConsentWrapper .cookieConsent {
     flex-direction: column;
-}
-.cookieConsentWrapper .cookieConsent__Left a {
-    color: #fff ! important;
-    text-decoration: underline ! important;
 }
 .cookieConsentWrapper .cookieConsent__Right {
     margin-top: 15px;
@@ -622,6 +623,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     margin-left: 0;
     margin-bottom: 0;
     font-size: 14px;
+    color: #fff;
 }
 .fa-spin {
   animation:10s infinite, fa-spin 2s infinite linear;
