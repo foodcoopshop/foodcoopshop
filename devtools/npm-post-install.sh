@@ -15,8 +15,8 @@ rm -Rf ../webroot/node_modules/tooltipster/demo
 rm -Rf ../webroot/node_modules/tooltipster/doc
 rm -Rf ../webroot/node_modules/chart.js/dist/docs
 
-cp -R ../webroot/node_modules/@fortawesome/fontawesome-free/webfonts ../webroot/webfonts
-cp -R ../webroot/node_modules/jquery-ui/dist/themes/smoothness/images ../webroot/cache/images
+cp -R ../webroot/node_modules/@fortawesome/fontawesome-free/webfonts ../webroot
+cp -R ../webroot/node_modules/jquery-ui/dist/themes/smoothness/images ../webroot/cache
 
 cp ../config/elfinder/elfinder.html ../webroot/js/elfinder/elfinder.html
 cp ../config/elfinder/php/connector.minimal.php ../webroot/js/elfinder/php/connector.minimal.php
