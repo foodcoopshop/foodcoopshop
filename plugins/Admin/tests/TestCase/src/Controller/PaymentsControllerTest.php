@@ -413,7 +413,9 @@ class PaymentsControllerTest extends AppCakeTestCase
         $jsonDecodedContent = $this->addPayment($customerId, $amountToAdd, $paymentType);
         $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
         $amountToAddAsDecimal = Configure::read('app.numberHelper')->getStringAsFloat($amountToAdd);
-        $this->assertEquals($amountToAddAsDecimal, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment '.$paymentType.' did not increase credit balance');
+
+        $result = number_format($creditBalanceAfterAdd - $creditBalanceBeforeAdd, 1);
+        $this->assertEquals($amountToAddAsDecimal, $result, 'add payment '.$paymentType.' did not increase credit balance');
         $this->assertEquals(1, $jsonDecodedContent->status);
         $this->assertEquals($amountToAdd, Configure::read('app.numberHelper')->formatAsDecimal($jsonDecodedContent->amount, 1));
     }

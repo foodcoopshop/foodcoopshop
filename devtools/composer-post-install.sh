@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-bash devtools/setup-git.sh
-
 # remove overhead from tcpdf library
 rm -Rf vendor/tecnickcom/tcpdf/examples
 
