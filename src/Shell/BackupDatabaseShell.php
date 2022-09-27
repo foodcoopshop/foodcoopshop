@@ -18,7 +18,6 @@ namespace App\Shell;
 use Cake\Mailer\Mailer;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Filesystem\File;
 use Cake\I18n\Number;
 use Ifsnop\Mysqldump as IMysqldump;
 
