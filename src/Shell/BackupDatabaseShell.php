@@ -55,7 +55,6 @@ class BackupDatabaseShell extends AppShell
 
         $settings = [
             'add-drop-table' => true,
-            'disable-keys' => false,
             'compress' => IMysqldump\Mysqldump::BZIP2,
             'exclude-tables' => [
                 $dbConfig['database'] . '.queued_jobs',
