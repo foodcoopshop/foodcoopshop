@@ -54,6 +54,7 @@ class BackupDatabaseShell extends AppShell
         }
 
         $settings = [
+            'default-character-set' => IMysqldump\Mysqldump::UTF8MB4,
             'add-drop-table' => true,
             'compress' => IMysqldump\Mysqldump::BZIP2,
             'exclude-tables' => [
