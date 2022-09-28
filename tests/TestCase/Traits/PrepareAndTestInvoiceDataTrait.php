@@ -51,9 +51,9 @@ trait PrepareAndTestInvoiceDataTrait
     public function doAssertInvoiceTaxes($data, $taxRate, $excl, $tax, $incl)
     {
         $this->assertEquals($data->tax_rate, $taxRate);
-        $this->assertEquals($data->total_price_tax_excl, $excl);
-        $this->assertEquals($data->total_price_tax, $tax);
-        $this->assertEquals($data->total_price_tax_incl, $incl);
+        $this->assertEquals(round($data->total_price_tax_excl, 2), $excl);
+        $this->assertEquals(round($data->total_price_tax, 2), $tax);
+        $this->assertEquals(round($data->total_price_tax_incl, 2), $incl);
     }
 
     public function getAndAssertOrderDetailsAfterCancellation($orderDetailIds)
