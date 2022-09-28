@@ -104,8 +104,9 @@ class CartComponent extends Component
         $cc = FactoryLocator::get('Table')->get('Carts');
         $patchedEntity = $cc->patchEntity(
             $cc->get($this->getCartId()), [
-                'status' => APP_OFF
-            ]
+                'status' => APP_OFF,
+            ],
+            ['validate' => false],
         );
         $cc->save($patchedEntity);
         return $patchedEntity;
@@ -437,6 +438,11 @@ class CartComponent extends Component
             $options['validate'] = 'customerCanSelectPickupDay';
         }
 
+        if ($this->AppAuth->getCartType() == $this->Cart::CART_TYPE_SELF_SERVICE
+            && $this->AppAuth->isOrderForDifferentCustomerMode()) {
+            $options['validate'] = 'selfServiceForDifferentCustomer';
+        }
+
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
             $this->getController()->getRequest()->getData(),
@@ -556,7 +562,6 @@ class CartComponent extends Component
             $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->getController()->Flash->success($message);
-
         }
 
         return $cart;
