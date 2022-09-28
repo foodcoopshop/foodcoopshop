@@ -1,22 +1,26 @@
 #!/usr/bin/env bash
 
-rm -Rf ../webroot/node_modules/jquery-backstretch/examples
-rm -Rf ../webroot/node_modules/jquery-backstretch/test
-rm -Rf ../webroot/node_modules/@fortawesome/fontawesome-free/js
-rm -Rf ../webroot/node_modules/@fortawesome/fontawesome-free/metadata
-rm -Rf ../webroot/node_modules/@fortawesome/fontawesome-free/svgs
-rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/all.min.css
-rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/fontawesome.css
-rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css
-rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/v4-shims.css
-rm ../webroot/node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css
-rm -Rf ../webroot/node_modules/jquery-ui/external
-rm -Rf ../webroot/node_modules/tooltipster/demo
-rm -Rf ../webroot/node_modules/tooltipster/doc
-rm -Rf ../webroot/node_modules/chart.js/dist/docs
+# allows script to be called from /webroot and root directory
+SCRIPT=$(readlink -f "$0")
+APP=$(dirname "$SCRIPT")/..
 
-cp -R ../webroot/node_modules/@fortawesome/fontawesome-free/webfonts ../webroot
-cp -R ../webroot/node_modules/jquery-ui/dist/themes/smoothness/images ../webroot/cache
+rm -Rf $APP/webroot/node_modules/jquery-backstretch/examples
+rm -Rf $APP/webroot/node_modules/jquery-backstretch/test
+rm -Rf $APP/webroot/node_modules/@fortawesome/fontawesome-free/js
+rm -Rf $APP/webroot/node_modules/@fortawesome/fontawesome-free/metadata
+rm -Rf $APP/webroot/node_modules/@fortawesome/fontawesome-free/svgs
+rm $APP/webroot/node_modules/@fortawesome/fontawesome-free/css/all.min.css 2> /dev/null
+rm $APP/webroot/node_modules/@fortawesome/fontawesome-free/css/fontawesome.css 2> /dev/null
+rm $APP/webroot/node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css 2> /dev/null
+rm $APP/webroot/node_modules/@fortawesome/fontawesome-free/css/v4-shims.css 2> /dev/null
+rm $APP/webroot/node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css 2> /dev/null
+rm -Rf $APP/webroot/node_modules/jquery-ui/external
+rm -Rf $APP/webroot/node_modules/tooltipster/demo
+rm -Rf $APP/webroot/node_modules/tooltipster/doc
+rm -Rf $APP/webroot/node_modules/chart.js/dist/docs
 
-cp ../config/elfinder/elfinder.html ../webroot/js/elfinder/elfinder.html
-cp ../config/elfinder/php/connector.minimal.php ../webroot/js/elfinder/php/connector.minimal.php
+cp -R $APP/webroot/node_modules/@fortawesome/fontawesome-free/webfonts $APP/webroot
+cp -R $APP/webroot/node_modules/jquery-ui/dist/themes/smoothness/images $APP/webroot
+
+cp $APP/config/elfinder/elfinder.html $APP/webroot/js/elfinder/elfinder.html
+cp $APP/config/elfinder/php/connector.minimal.php $APP/webroot/js/elfinder/php/connector.minimal.php
