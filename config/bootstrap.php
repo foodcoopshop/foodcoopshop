@@ -211,26 +211,6 @@ ServerRequest::addDetector('tablet', function ($request) {
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
-// foodcoopshop
-mb_internal_encoding('UTF-8');
-
-FactoryLocator::get('Table')->get('Configurations')->loadConfigurations();
-if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
-    ini_set('intl.default_locale', Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-    locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-    I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-    Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
-    setlocale(LC_CTYPE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
-    setlocale(LC_COLLATE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
-}
-
 // Number::config(Configure::read('appDb.FCS_DEFAULT_LOCALE'), NumberFormatter::DECIMAL);
 // TypeFactory::build('decimal')->useLocaleParser();
-
-// gettext not available in app_config
-Configure::load('localized_config', 'default');
-
-if (file_exists(CONFIG.DS.'localized_custom_config.php')) {
-    Configure::load('localized_custom_config', 'default');
-}
 

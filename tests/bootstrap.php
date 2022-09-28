@@ -7,10 +7,17 @@
  */
 use Cake\Core\Configure;
 use Cake\Utility\Security;
+use Migrations\TestSuite\Migrator;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 require dirname(__DIR__) . '/config/bootstrap.php';
+
+$migrator = new Migrator();
+$migrator->runMany([
+    ['plugin' => 'Queue'],
+    [],
+]);
 
 Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
 

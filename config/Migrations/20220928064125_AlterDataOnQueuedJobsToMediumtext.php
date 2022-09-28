@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class BiggerQueuedJobDataField extends AbstractMigration
+class AlterDataOnQueuedJobsToMediumtext extends AbstractMigration
 {
     /**
      * Change Method.
@@ -14,6 +14,10 @@ class BiggerQueuedJobDataField extends AbstractMigration
      */
     public function change()
     {
-        $this->execute("ALTER TABLE `queued_jobs` CHANGE `data` `data` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;");
+        $table = $this->table('queued_jobs');
+        $table->changeColumn('data', 'text', [
+            'limit' => 16777215,
+        ]);
+        $table->update();
     }
 }
