@@ -58,7 +58,7 @@ class BackupDatabaseShell extends AppShell
             'add-drop-table' => true,
             'compress' => IMysqldump\Mysqldump::BZIP2,
             'exclude-tables' => [
-                $dbConfig['database'] . '.queued_jobs',
+                'queued_jobs',
             ],
         ];
         $dump = new IMysqldump\Mysqldump($dsnString, $dbConfig['username'], $dbConfig['password'], $settings);
