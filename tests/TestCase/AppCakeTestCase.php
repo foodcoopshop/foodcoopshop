@@ -12,10 +12,11 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\View\View;
-use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
+use Migrations\Migrations;
+use Network\View\Helper\NetworkHelper;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -62,19 +63,21 @@ abstract class AppCakeTestCase extends TestCase
     {
         parent::setUp();
 
+        $this->dbConnection = ConnectionManager::get('test');
+        $this->seedTestDatabase();
+        $this->resetLogs();
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
+        $this->Configuration->loadConfigurations();
+
         $View = new View();
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
         $this->Network = new NetworkHelper($View);
         $this->PricePerUnit = new PricePerUnitHelper($View);
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
-        $this->resetTestDatabaseData();
-        $this->resetLogs();
-        $this->Configuration->loadConfigurations();
 
         // enable security token only for IntegrationTests
         if (method_exists($this, 'enableSecurityToken')) {
@@ -115,11 +118,13 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
 
-    protected function resetTestDatabaseData()
+    protected function seedTestDatabase()
     {
-        $this->dbConnection = ConnectionManager::get('test');
-        $this->testDumpDir = TESTS . 'config' . DS . 'sql' . DS;
-        $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
+        $migrations = new Migrations();
+        $migrations->seed([
+            'connection' => 'test',
+            'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
+        ]);
     }
 
     protected function getJsonDecodedContent()

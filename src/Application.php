@@ -18,11 +18,9 @@ namespace App;
 
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
-use Cake\Datasource\FactoryLocator;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
-use Cake\I18n\I18n;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 
@@ -44,6 +42,7 @@ class Application extends BaseApplication
     {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
+
         if (Configure::read('debug')) {
             $this->addPlugin('Bake');
             $this->addPlugin('DebugKit', ['bootstrap' => true]);
@@ -66,25 +65,7 @@ class Application extends BaseApplication
             ]);
         }
 
-        mb_internal_encoding('UTF-8');
-        try {
-            FactoryLocator::get('Table')->get('Configurations')->loadConfigurations();
-            if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
-                ini_set('intl.default_locale', Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-                locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-                I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-                Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
-                setlocale(LC_CTYPE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
-                setlocale(LC_COLLATE, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
-            }
-        } catch (\Exception $e) {}
-
-        // gettext not available in app_config
-        Configure::load('localized_config', 'default');
-
-        if (file_exists(CONFIG.DS.'localized_custom_config.php')) {
-            Configure::load('localized_custom_config', 'default');
-        }
+        require_once $this->configDir . 'bootstrap_locale.php';
 
     }
 

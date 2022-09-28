@@ -7,6 +7,7 @@
  */
 use Cake\Core\Configure;
 use Cake\Utility\Security;
+use Migrations\Migrations;
 use Migrations\TestSuite\Migrator;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -18,6 +19,14 @@ $migrator->runMany([
     ['plugin' => 'Queue'],
     [],
 ]);
+
+$migrations = new Migrations();
+$migrations->seed([
+    'connection' => 'test',
+    'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
+]);
+
+require dirname(__DIR__) . '/config/bootstrap_locale.php';
 
 Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
 
