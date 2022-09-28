@@ -57,6 +57,7 @@
 * Apache with `mod_rewrite`
 * PHP >= 8.1
 * PHP intl extension INTL_ICU_VERSION >= 50.1
+* PHP bzip2 lib (for automatic database backups)
 * MySQL >= 8.0
 * Node.js and npm >= v7 ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer v2 ([installation](https://getcomposer.org/download/)) developer packages
