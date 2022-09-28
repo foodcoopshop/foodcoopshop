@@ -148,12 +148,6 @@ return [
         'countryId' => 2, // austria: 2, germany: 1
 
         /**
-         * if you work on windows, change to e.g
-         * '"C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe"'
-         */
-        'mysqlDumpCommand' => 'mysqldump',
-
-        /**
          * date of the last update of terms of use
          */
         'termsOfUseLastUpdate' => '2016-11-28',

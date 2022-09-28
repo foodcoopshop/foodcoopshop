@@ -32,7 +32,8 @@
         "dereuromark/cakephp-queue": "^6.0",
         "tecnickcom/tcpdf": "^6.4",
         "hisorange/browser-detect": "^4.4",
-        "phpoffice/phpspreadsheet": "1.*"
+        "phpoffice/phpspreadsheet": "1.*",
+        "ifsnop/mysqldump-php": "^2.9"
     },
     "require-dev": {
         "psy/psysh": "@stable",

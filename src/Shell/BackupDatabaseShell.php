@@ -18,8 +18,8 @@ namespace App\Shell;
 use Cake\Mailer\Mailer;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Filesystem\File;
 use Cake\I18n\Number;
+use Ifsnop\Mysqldump as IMysqldump;
 
 class BackupDatabaseShell extends AppShell
 {
@@ -38,7 +38,7 @@ class BackupDatabaseShell extends AppShell
         $dbConfig = ConnectionManager::getConfig('default');
 
         $backupdir = ROOT . DS . 'files_private' . DS . 'db-backups';
-        $filename = 'db-backup-' . date('Y-m-d_H-i-s', time()) . '.sql';
+        $filename = $backupdir . DS . 'db-backup-' . date('Y-m-d_H-i-s', time()) . '.bz2';
 
         if (! is_dir($backupdir)) {
             $this->out(' ', 1);
@@ -48,36 +48,23 @@ class BackupDatabaseShell extends AppShell
             }
         }
 
-        $configFile = TMP . 'mysql.txt';
-        $configFileObject = new File($configFile);
-        $configFileContent = '[mysqldump]
-host=%host%
-user=%user%
-password="%password%"
-';
-        $configFileContent = str_replace(['%host%', '%user%', '%password%'], [$dbConfig['host'], $dbConfig['username'], $dbConfig['password']], $configFileContent);
+        $dsnString = "mysql:host=". $dbConfig['host'].";dbname=".$dbConfig['database'];
         if (isset($dbConfig['port'])) {
-            $configFileContent .= 'port=' . $dbConfig['port'];
+            $dsnString .= ";port=".$dbConfig['port'];
         }
 
-        $configFileObject->write($configFileContent);
+        $settings = [
+            'default-character-set' => IMysqldump\Mysqldump::UTF8MB4,
+            'add-drop-table' => true,
+            'compress' => IMysqldump\Mysqldump::BZIP2,
+            'exclude-tables' => [
+                $dbConfig['database'] . '.queued_jobs',
+            ],
+        ];
+        $dump = new IMysqldump\Mysqldump($dsnString, $dbConfig['username'], $dbConfig['password'], $settings);
+        $dump->start($filename);
 
-        $cmdString = Configure::read('app.mysqlDumpCommand');
-        $cmdString .= " --defaults-file=" . $configFile . " --allow-keywords --add-drop-table --ignore-table=" . $dbConfig['database'] . ".queued_jobs --complete-insert --no-tablespaces --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
-        exec($cmdString);
-
-        $configFileObject->delete();
-
-        // START zip and file sql file
-        $zip = new \ZipArchive();
-        $zipFilename = str_replace('.sql', '.zip', $backupdir . DS . $filename);
-        $zip->open($zipFilename, \ZipArchive::CREATE);
-        $zip->addFile($backupdir . DS . $filename, $filename); // 2nd param for no folders in zip file
-        $zip->close();
-        unlink($backupdir . DS . $filename);
-        // END zip and delete sql file
-
-        $message = __('Database_backup_successful') . ' ('.Number::toReadableSize(filesize($zipFilename)).').';
+        $message = __('Database_backup_successful') . ' ('.Number::toReadableSize(filesize($filename)).').';
 
         // email zipped file via Mailer (to avoid queue's max 16MB mediumtext limit of AppMailer)
         $email = new Mailer(false);
@@ -85,10 +72,9 @@ password="%password%"
         $email->setTo(Configure::read('app.hostingEmail'))
             ->setSubject($message . ': ' . Configure::read('app.cakeServerName'))
             ->setAttachments([
-              $zipFilename
+                $filename
             ])
             ->send();
-
         $this->out($message);
 
         $this->stopTimeLogging();
