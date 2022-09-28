@@ -18,7 +18,10 @@ use Cake\Datasource\FactoryLocator;
 use Cake\I18n\I18n;
 
 mb_internal_encoding('UTF-8');
-FactoryLocator::get('Table')->get('Configurations')->loadConfigurations();
+try {
+    // on fresh installations there is no configurations table yet when first migrations run
+    FactoryLocator::get('Table')->get('Configurations')->loadConfigurations();
+} catch(\Exception $e) {}
 if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
     ini_set('intl.default_locale', Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
