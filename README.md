@@ -57,12 +57,11 @@
 * Apache with `mod_rewrite`
 * PHP >= 8.1
 * PHP intl extension INTL_ICU_VERSION >= 50.1
-* PHP ZipArchive class
+* PHP bzip2 lib (for automatic database backups)
 * MySQL >= 8.0
 * Node.js and npm >= v7 ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer v2 ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
-* PHP needs to be able to call mysqldump with exec() for database backups
 
 ## ❗ Legal information
 Before installing don't forget to read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
