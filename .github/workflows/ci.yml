@@ -48,12 +48,6 @@ jobs:
           sed -i 's/HELLO_CASH_USERNAME/${{secrets.HELLO_CASH_USERNAME}}/' ./.github/workflows/custom_config.php
           sed -i 's/HELLO_CASH_PASSWORD/${{secrets.HELLO_CASH_PASSWORD}}/' ./.github/workflows/custom_config.php
           sed -i 's/HELLO_CASH_CASHIER_ID/${{secrets.HELLO_CASH_CASHIER_ID}}/' ./.github/workflows/custom_config.php
-   
-      - name: Setup DB
-        run: |
-          mysql --version
-          mysql -h 127.0.0.1 --port 8888 -u root -ppassword foodcoopshop_test < ./config/sql/_installation/clean-db-structure.sql
-          mysql -h 127.0.0.1 --port 8888 -u root -ppassword foodcoopshop_test < ./tests/config/sql/test-db-data.sql
           
       - name: Install vendors 
         run: |
