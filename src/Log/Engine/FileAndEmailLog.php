@@ -67,6 +67,7 @@ class FileAndEmailLog extends FileLog
             '{"id_customer":{"numeric":',
             '{"id_customer":{"greaterThan":',
             '{"name":{"_empty":"Bitte gib einen Namen ein."',
+            '{"title":{"_empty":"Bitte gib einen Titel ein."}}',
             '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000',
             '{"quantity_limit":{"_empty":',
             '{"quantity_limit":{"lessThanOrEqual":',
