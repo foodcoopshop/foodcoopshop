@@ -43,7 +43,7 @@ services:
     image: mysql:8.0
     container_name: fcs-database-test
     restart: always
-    tmpfs: /var/lib/mysql:exec,size=1G
+    tmpfs: /var/lib/mysql:exec,size=256M
     ports:
      - '3311:3306'
     environment:
