@@ -91,7 +91,7 @@ services:
     container_name: fcs-composer
     image: composer:latest
     user: ${CURRENT_UID}
-    entrypoint: ['composer']
+    entrypoint: ['composer', '--ignore-platform-reqs']
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
