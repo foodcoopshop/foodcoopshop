@@ -45,6 +45,7 @@ class Application extends BaseApplication
 
         if (Configure::read('debug')) {
             $this->addPlugin('Bake');
+            Configure::write('DebugKit.forceEnable', true);
             $this->addPlugin('DebugKit', ['bootstrap' => true]);
         }
 
