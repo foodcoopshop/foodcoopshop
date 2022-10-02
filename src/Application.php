@@ -43,6 +43,7 @@ class Application extends BaseApplication
         // Call parent to load bootstrap from files.
         parent::bootstrap();
         if (Configure::read('debug')) {
+            Configure::write('DebugKit.forceEnable', true);
             $this->addPlugin('DebugKit', ['bootstrap' => true]);
         }
 
