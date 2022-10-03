@@ -292,6 +292,16 @@ class PaymentsController extends AdminAppController
             }
 
             if ($type == 'deposit') {
+                if (!isset($userType)) {
+                    $msg = 'no userType set - payment cannot be saved';
+                    $this->log($msg);
+                    $this->set([
+                        'status' => 0,
+                        'msg' => $msg,
+                    ]);
+                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                    return;
+                }
                 $actionLogType .= '_'.$userType;
             }
         }
