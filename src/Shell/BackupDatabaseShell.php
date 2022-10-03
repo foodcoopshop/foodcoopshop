@@ -16,10 +16,12 @@
 namespace App\Shell;
 
 use Cake\Mailer\Mailer;
+use Cake\Utility\Inflector;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Number;
 use Ifsnop\Mysqldump as IMysqldump;
+use App\Controller\Component\StringComponent;
 
 class BackupDatabaseShell extends AppShell
 {
@@ -38,7 +40,10 @@ class BackupDatabaseShell extends AppShell
         $dbConfig = ConnectionManager::getConfig('default');
 
         $backupdir = ROOT . DS . 'files_private' . DS . 'db-backups';
-        $filename = $backupdir . DS . 'db-backup-' . date('Y-m-d_H-i-s', time()) . '.bz2';
+        $preparedHostWithoutProtocol = Configure::read('app.htmlHelper')->getHostWithoutProtocol(Configure::read('app.cakeServerName'));
+        $preparedHostWithoutProtocol = str_replace('www.', '', $preparedHostWithoutProtocol);
+        $preparedHostWithoutProtocol = StringComponent::slugify($preparedHostWithoutProtocol);
+        $filename = $backupdir . DS . $preparedHostWithoutProtocol . '-' . date('Y-m-d_H-i-s', time()) . '.bz2';
 
         if (! is_dir($backupdir)) {
             $this->out(' ', 1);
