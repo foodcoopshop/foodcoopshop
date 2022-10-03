@@ -16,6 +16,14 @@ class Initial extends AbstractMigration
      */
     public function up()
     {
+
+        $query = "SELECT * FROM phinxlog";
+        $rows = $this->fetchAll($query);
+
+        if (count($rows) > 0) {
+            return;
+        }
+
         $this->table('fcs_action_logs')
             ->addColumn('id', 'integer', [
                 'autoIncrement' => true,
