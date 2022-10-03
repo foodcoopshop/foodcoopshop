@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 use Migrations\AbstractSeed;
 
-/**
- * TestData seed.
- */
 class InitTestDataSeed extends AbstractSeed
 {
     /**

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-CURRENT_UID=$(id -u):$(id -g) docker compose exec -T database-dev mysql --port 3310 foodcoopshop-dev < ./config/sql/_installation/clean-db-structure.sql
-CURRENT_UID=$(id -u):$(id -g) docker compose exec -T database-dev mysql --port 3310 foodcoopshop-dev < ./tests/config/sql/test-db-data.sql
+CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html fcs-php-nginx bash ./bin/cake migrations migrate -p Queue
+CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html fcs-php-nginx bash ./bin/cake migrations migrate
+CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html fcs-php-nginx bash ./bin/cake migrations seed --source Seeds/tests --seed InitTestDataSeed
+
 CURRENT_UID=$(id -u):$(id -g) docker compose run --rm composer install
 bash ./devtools/setup-dev/set-permissions.sh
 bash ./devtools/setup-dev/copy-config-files.sh
