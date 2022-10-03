@@ -60,7 +60,7 @@ use Cake\Core\Configure;
                         echo Configure::read('appDb.FCS_APP_NAME').'<br />';
                         echo Configure::read('appDb.FCS_APP_ADDRESS').'<br />';
                         echo '<a href="mailto:'.Configure::read('appDb.FCS_APP_EMAIL').'">'.Configure::read('appDb.FCS_APP_EMAIL').'</a><br />';
-                        echo '<a href="'.Configure::read('app.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('app.cakeServerName')).'</a>';
+                        echo '<a href="'.Configure::read('app.cakeServerName').'">'.$this->MyHtml->getHostWithoutProtocol(Configure::read('app.cakeServerName')).'</a>';
                     ?>
                     <?php if (isset($appAuth) && $appAuth->user()) { ?>
                         <br /><br /><?php echo __('Signed_in'); ?>:

@@ -164,3 +164,8 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 
 <p><b>3.4.6 Auskunftsrecht</b></p>
 <p>Das Mitglied hat jederzeit das Recht auf kostenlose Auskunft.</p>
+
+<?php if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) { ?>
+<p><b>3.4.7 Datenweitergabe an helloCash</b></p>
+<p>Die personenbezogenen Daten der Mitglieder werden zum Zweck der Rechnungs- bzw. Belegerstellung an helloCash (www.hellocash.at) übermittelt. <a href="https://hellocash.at/datenschutz" target="_blank">Zur Datenschutzerklärung von helloCash.</a></p>
+<?php } ?>

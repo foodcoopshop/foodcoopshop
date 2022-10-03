@@ -35,6 +35,15 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function getHostWithoutProtocol($hostnameWithProtocol)
+    {
+        $parsedHostnameWithProtocol = (parse_url($hostnameWithProtocol));
+        if (!empty($parsedHostnameWithProtocol['host'])) {
+            return $parsedHostnameWithProtocol['host'];
+        }
+        return false;
+    }
+
     public function buildElementProductCacheKey($product, $appAuth)
     {
         $elementCacheKey = join('_', [
