@@ -14,17 +14,22 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 
 require dirname(__DIR__) . '/config/bootstrap.php';
 
+// 1) import structure
 $migrator = new Migrator();
 $migrator->runMany([
     ['plugin' => 'Queue'],
-    [],
+    ['source' => 'Migrations' . DS . 'init'],
 ]);
 
+// 2) add test data (generated to fit after run migrations in init folder)
 $migrations = new Migrations();
 $migrations->seed([
     'connection' => 'test',
     'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
 ]);
+
+// 3) run new migrations (located in main folder)
+$migrator->run([], false);
 
 require dirname(__DIR__) . '/config/bootstrap_locale.php';
 
