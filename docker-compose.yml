@@ -99,14 +99,5 @@ services:
     volumes:
       - ./:/var/www/html
   
-  node:
-    container_name: fcs-node
-    build: ./config/docker-dev/node 
-    working_dir: /var/www/html
-    volumes:
-      - ./:/var/www/html
-    networks:
-      - fcs
-
 networks:
   fcs:
