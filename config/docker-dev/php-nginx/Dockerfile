@@ -7,6 +7,9 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/node
 
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
+#avoid permission error on gitpod on running npm install
+RUN npm config set cache /var/www/html/tmp --global
+
 RUN apt-get update && \
     apt-get install gettext-base && apt-get install gettext && \
     npm install -g npm-check-updates
