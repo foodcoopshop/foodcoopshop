@@ -1,11 +1,12 @@
+FROM node:latest AS node
 FROM webdevops/php-nginx:8.1
 
-#https://tecadmin.net/install-latest-nodejs-npm-on-debian/
+#https://stackoverflow.com/questions/44447821/how-to-create-a-docker-image-for-php-and-node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 RUN apt-get update && \
     apt-get install gettext-base && apt-get install gettext && \
-    apt-get -y install curl software-properties-common && \
-    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install nodejs && \
-    npm install -g && \
     npm install -g npm-check-updates
