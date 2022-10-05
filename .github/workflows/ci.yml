@@ -1,4 +1,4 @@
-name: FoodCoopShop Tests
+name: FoodCoopShop CI
 
 on:
   push:
@@ -9,8 +9,7 @@ on:
       - '**.md'
 
 jobs:
-  test:
-    name: FoodCoopShop Tests
+  ci:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
