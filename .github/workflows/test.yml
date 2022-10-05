@@ -30,3 +30,19 @@ jobs:
 
       - name: PHPUnit Tests
         run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
+        
+      - name: Upload files to server
+        if: ${{github.event_name == 'push'}}
+        uses: up9cloud/action-rsync@master
+        env:
+          HOST: ${{secrets.DEPLOY_HOST}}
+          USER: ${{secrets.DEPLOY_USER}}
+          KEY: ${{secrets.DEPLOY_SSH_KEY}}
+          SOURCE: ./webroot
+          TARGET: ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
+          RUN_SCRIPT_ON: remote
+          PRE_SCRIPT: |
+              echo ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
+              mkdir -p ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
+          SSH_ARGS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+        
