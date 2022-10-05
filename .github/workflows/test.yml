@@ -28,9 +28,6 @@ jobs:
           sed -i 's/HELLO_CASH_PASSWORD/${{secrets.HELLO_CASH_PASSWORD}}/' ./config/custom_config.php
           sed -i 's/HELLO_CASH_CASHIER_ID/${{secrets.HELLO_CASH_CASHIER_ID}}/' ./config/custom_config.php
 
-      - name: PHPUnit Tests
-        run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
-        
       - name: Upload files to server
         if: ${{github.event_name == 'push'}}
         uses: up9cloud/action-rsync@master
@@ -45,4 +42,14 @@ jobs:
               echo ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
               mkdir -p ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
           SSH_ARGS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+
+      - name: PHPStan
+        run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
         
+      - name: ESLint
+        run: |
+            npm install -g eslint
+            bash devtools/eslint.sh
+
+      - name: PHPUnit Tests
+        run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
