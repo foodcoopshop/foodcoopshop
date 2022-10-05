@@ -19,5 +19,8 @@ jobs:
         run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
         
       - name: PHPUnit Tests
-        wait-on: http://localhost:8001
-        run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
+        with
+          wait-on: http://localhost:8001
+        run: |
+          bash ./devtools/init-dev-setup.sh
+          docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
