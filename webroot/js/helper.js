@@ -21,7 +21,6 @@ foodcoopshop.Helper = {
 
     init: function () {
         this.initMenu();
-        helloxxx dsadf {]
         foodcoopshop.ModalLogout.init();
         this.changeOutgoingLinksTargetToBlank();
         this.initCookieBanner();
