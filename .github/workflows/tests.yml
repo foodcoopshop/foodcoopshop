@@ -1,4 +1,4 @@
-name: FoodCoopShop Unit Tests
+name: FoodCoopShop Tests
 
 on:
   push:
@@ -9,9 +9,8 @@ on:
       - '**.md'
 
 jobs:
-  tests:
+  test:
     runs-on: ubuntu-22.04
-    
     steps:
     
       - name: Checkout code
