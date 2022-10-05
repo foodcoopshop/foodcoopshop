@@ -7,54 +7,27 @@ on:
   pull_request:
     paths-ignore:
       - '**.md'
-  
+
 jobs:
   ci:
     runs-on: ubuntu-22.04
-    continue-on-error: ${{matrix.experimental}}
-    strategy:
-      matrix:
-        php-version: ['8.1']
-        experimental: [false]
-    services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - 8888:3306
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: foodcoopshop_test
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    name: PHP ${{matrix.php-version}}
-             
+    name: FoodCoopShop CI
     steps:
-    
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{matrix.php-version}}
-        env:
-          update: true #forces minor release update
-          
-      - name: Setup NodeJS
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-                      
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
       
+      - name: Run Docker Compose
+        run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
+        
+      - name: Setup Dev Environment
+        run: bash ./devtools/init-dev-setup.sh
+        
       - name: Apply secrets
         run: |
-          sed -i 's/HELLO_CASH_USERNAME/${{secrets.HELLO_CASH_USERNAME}}/' ./.github/workflows/custom_config.php
-          sed -i 's/HELLO_CASH_PASSWORD/${{secrets.HELLO_CASH_PASSWORD}}/' ./.github/workflows/custom_config.php
-          sed -i 's/HELLO_CASH_CASHIER_ID/${{secrets.HELLO_CASH_CASHIER_ID}}/' ./.github/workflows/custom_config.php
-          
-      - name: Install vendors 
-        run: |
-          composer install --optimize-autoloader  --no-progress
-          cp ./.github/workflows/*.php ./config/
-          npm --prefix ./webroot install ./webroot
-          
+          sed -i 's/HELLO_CASH_USERNAME/${{secrets.HELLO_CASH_USERNAME}}/' ./config/custom_config.php
+          sed -i 's/HELLO_CASH_PASSWORD/${{secrets.HELLO_CASH_PASSWORD}}/' ./config/custom_config.php
+          sed -i 's/HELLO_CASH_CASHIER_ID/${{secrets.HELLO_CASH_CASHIER_ID}}/' ./config/custom_config.php
+
       - name: Upload files to server
         if: ${{github.event_name == 'push'}}
         uses: up9cloud/action-rsync@master
@@ -69,17 +42,14 @@ jobs:
               echo ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
               mkdir -p ${{secrets.DEPLOY_PATH}}/builds/${{github.ref}}
           SSH_ARGS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
-          
+
       - name: PHPStan
-        if: always()
-        run: vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
+        run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
         
       - name: ESLint
-        if: always()
         run: |
             npm install -g eslint
             bash devtools/eslint.sh
-        
-      - name: PHPUnit
-        if: always()
-        run: vendor/bin/phpunit
+
+      - name: PHPUnit Tests
+        run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
