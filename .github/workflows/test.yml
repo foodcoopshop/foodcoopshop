@@ -18,7 +18,8 @@ jobs:
       - name: Run Docker Compose
         run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
         
+      - name: Setup Dev Environment
+        run: bash ./devtools/init-dev-setup.sh
+
       - name: PHPUnit Tests
-        run: |
-          bash ./devtools/init-dev-setup.sh
-          docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
+        run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
