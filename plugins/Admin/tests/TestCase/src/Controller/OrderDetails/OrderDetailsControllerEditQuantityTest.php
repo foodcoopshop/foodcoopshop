@@ -155,9 +155,9 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
      * https://github.com/foodcoopshop/foodcoopshop/issues/836
      * fix is not yet implemented
      */
+    /*
     public function testEditOrderDetailQuantityAsSuperadminWithHugeQuantity()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->OrderDetail->deleteAll([]);
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
@@ -180,6 +180,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals(18.32, $changedOrderDetails[0]->tax_total_amount);
 
     }
+    */
 
     private function preparePricePerUnitOrder()
     {
