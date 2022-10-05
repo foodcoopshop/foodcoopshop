@@ -17,7 +17,9 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Run Docker Compose
-        run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
+        run: |
+          CURRENT_UID=$(id -u):$(id -g) docker compose up php-nginx -d
+          CURRENT_UID=$(id -u):$(id -g) docker compose up composer -d
         
       - name: Setup Dev Environment
         run: |
