@@ -16,7 +16,6 @@
 namespace App\Shell;
 
 use Cake\Mailer\Mailer;
-use Cake\Utility\Inflector;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Number;
