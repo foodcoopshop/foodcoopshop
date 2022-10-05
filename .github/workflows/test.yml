@@ -13,12 +13,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       
-     - name: Run Docker Compose
-       run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
+      - name: Run Docker Compose
+        run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
         
-     - name: PHPUnit Tests
-       wait-on: http://localhost:8001
-       start: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
-          
+      - name: PHPUnit Tests
+        wait-on: http://localhost:8001
+        start: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
