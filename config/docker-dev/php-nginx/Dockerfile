@@ -1,4 +1,4 @@
-FROM node:latest AS node
+FROM node:18 AS node
 FROM webdevops/php-nginx:8.1
 
 #https://stackoverflow.com/questions/44447821/how-to-create-a-docker-image-for-php-and-node
