@@ -34,9 +34,10 @@ class HelloCashTest extends AppCakeTestCase
     public function setUp(): void
     {
         if (
-            Configure::read('app.helloCashAtCredentials.username') == ''
-            || Configure::read('app.helloCashAtCredentials.password') == ''
-            || Configure::read('app.helloCashAtCredentials.cashier_id') == ''
+            in_array(Configure::read('app.helloCashAtCredentials.username'), [
+                '',
+                Configure::read('app.helloCashAtCredentials.username') == 'HELLO_CASH_USERNAME',
+            ])
             ) {
                 $this->markTestSkipped('The credentials for HelloCash are missing.');
             }
