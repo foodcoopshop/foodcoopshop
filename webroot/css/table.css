@@ -23,6 +23,12 @@ table.list tr td:first-child,
 table.list tr th:first-child {
   border-left: 1px solid #dfdfdf;
 }
+table.list th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 44px; /* overriden in admin.initStickyTableHeader */
+    z-index: 2;
+}
 table.list tr {
   vertical-align: top;
 }
