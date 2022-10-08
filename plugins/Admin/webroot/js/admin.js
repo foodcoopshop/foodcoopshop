@@ -456,7 +456,7 @@ foodcoopshop.Admin = {
 
     initStickyTableHeader : function() {
         var newTop = $('.filter-container').height();
-        $('table.list th').css('top', newTop + 10);
+        $('table.list th').css('top', newTop + 11);
     },
 
     initGenerateMemberCardsOfSelectedCustomersButton : function() {
