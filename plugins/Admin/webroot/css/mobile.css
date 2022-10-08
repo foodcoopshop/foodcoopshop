@@ -62,7 +62,7 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
 }
 .sb-toggle-left {
     float: left;
-    margin: 3px 5px 0 3px;
+    margin: 0 5px 0 3px;
     border-radius: 3px;
     padding: 2px 5px 0px 5px;
     background: #fff;
