@@ -80,6 +80,7 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
 #container {
     float: left;
     min-width: 100%;
+    overflow: initial ! important; /* for sticky table headers */
 }
 body.pages.home #container,
 body.pages.home #content,

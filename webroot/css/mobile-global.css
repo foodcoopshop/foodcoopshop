@@ -36,12 +36,7 @@
     }
     #container {
         min-height: initial ! important;
-    }
-    /* CSS specific to iOS devices */
-    @supports (-webkit-overflow-scrolling: touch) {
-        #container {
-            overflow: hidden ! important; /* avoids iphone scrolling bug */
-        }
+        overflow: hidden ! important; /* avoids iphone scrolling bug */
     }
     #responsive-header .responsive-cart {
         float: right ! important;
