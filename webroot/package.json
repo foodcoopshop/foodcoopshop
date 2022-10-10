@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@beyonk/gdpr-cookie-consent-banner": "^9.0.4",
-    "@ericblade/quagga2": "^1.7.4",
+    "@ericblade/quagga2": "^1.7.5",
     "@fortawesome/fontawesome-free": "^6.2.0",
     "blueimp-file-upload": "^10.32.0",
     "bootstrap": "^5.2.2",
@@ -36,9 +36,9 @@
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
     "svelte": "^3.50.1",
-    "swiper": "8.4.2",
+    "swiper": "8.4.3",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.17.2",
+    "uglify-js": "^3.17.3",
     "webrtc-adapter": "^8.1.2"
   }
 }
