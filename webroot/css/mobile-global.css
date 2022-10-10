@@ -35,8 +35,8 @@
         text-decoration: none ! important;
     }
     #container {
-        overflow: hidden ! important; /* avoids iphone scrolling bug */
         min-height: initial ! important;
+        overflow: hidden ! important; /* avoids iphone scrolling bug */
     }
     #responsive-header .responsive-cart {
         float: right ! important;

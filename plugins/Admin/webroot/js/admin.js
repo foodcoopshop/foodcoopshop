@@ -22,6 +22,7 @@ foodcoopshop.Admin = {
         foodcoopshop.ModalLogout.init();
         this.setMenuFixed();
         this.adaptContentMargin();
+        this.initStickyTableHeader();
         foodcoopshop.Helper.initScrolltopButton();
     },
 
@@ -451,6 +452,11 @@ foodcoopshop.Admin = {
         var marginTop = $('.filter-container').outerHeight();
         $('#content').css('margin-top', marginTop);
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
+    },
+
+    initStickyTableHeader : function() {
+        var newTop = $('.filter-container').height();
+        $('table.list th').css('top', newTop + 11);
     },
 
     initGenerateMemberCardsOfSelectedCustomersButton : function() {

@@ -70,7 +70,6 @@ body.taxes.edit #flashMessage {
     margin-left: 155px;
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
-    padding: 2px 2px 2px 1px;
     border-left: 2px solid #efefef;
     border-bottom-right-radius: 15px;
     position: relative;
@@ -744,7 +743,7 @@ ul.nav-tabs {
     background: #efefef;
     margin-top: -2px;
     margin-left: -2px;
-    width: 1070px;
+    width: 1074px;
     padding-bottom: 1px;
 }
 ul.nav-tabs > li > a {
