@@ -585,7 +585,9 @@ class CustomersTable extends AppTable
         $depositSum = $orderDetailTable->getSumDeposit($customerId);
 
         // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
-        return round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
+        $creditBalance = round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
+        // "+ 0" converts -0,00 to 0,00
+        return $creditBalance + 0;
     }
 
     public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = [])

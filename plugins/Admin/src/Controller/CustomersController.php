@@ -629,7 +629,7 @@ class CustomersController extends AdminAppController
             'customer_type' => __d('admin', 'Sum_of_credits_of_deleted_members'),
             'count' => 0,
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_deposit_delta' => $paymentDepositDelta * -1
+            'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
         ];
 
         $paymentDepositDelta = $this->Payment->getManufacturerDepositMoneySum();
@@ -637,7 +637,7 @@ class CustomersController extends AdminAppController
             'customer_type' => __d('admin', 'Sum_of_deposit_compensation_payments_for_manufactures'),
             'count' => 0,
             'credit_balance' => 0,
-            'payment_deposit_delta' => $paymentDepositDelta * -1
+            'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
         ];
 
         $this->set('customers', $customers);
@@ -652,6 +652,7 @@ class CustomersController extends AdminAppController
             $sums['deposit_delta'] += $customer['payment_deposit_delta'] ?? 0;
             $sums['product_delta'] += $customer['payment_product_delta'] ?? 0;
         }
+
         $this->set('sums', $sums);
 
         $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
