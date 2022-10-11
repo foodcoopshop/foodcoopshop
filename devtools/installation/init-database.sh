@@ -3,7 +3,13 @@
 locale=$1
 
 if [[ "$locale" == "" ]]; then
-    echo "locale is not set"
+    source ./devtools/locales.sh
+    localeConcat='';
+    for locale in "${LOCALES[@]}"
+    do
+        localeConcat+="$locale "
+    done
+    echo "locale is not set, allowed values: $localeConcat"
     exit
 fi
 

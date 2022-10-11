@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-bash ./devtools/setup-dev/set-permissions.sh
+bash ./devtools/installation/set-permissions.sh
 bash ./devtools/setup-dev/copy-config-files.sh
 
 CURRENT_UID=$(id -u):$(id -g) docker compose run --rm composer install
