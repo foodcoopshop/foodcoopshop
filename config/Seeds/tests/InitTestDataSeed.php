@@ -1,4 +1,13 @@
+<?php
+declare(strict_types=1);
 
+use Migrations\AbstractSeed;
+
+class InitTestDataSeed extends AbstractSeed
+{
+    public function run()
+    {
+        $query = "
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -200,13 +209,13 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
-(87,3,0,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0,0,'SP',1,1,1,1,0),
-(88,4,0,'Demo','Admin','fcs-demo-admin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0,0,'SP',1,1,1,1,0),
-(89,4,0,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0,0,'SP',1,1,1,1,0),
-(90,4,0,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0,0,'SP',1,1,1,1,0),
-(91,4,0,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0,'SP',1,1,1,1,0),
-(92,5,0,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0),
-(93,2,0,'Demo','SB-Kunde','fcs-demo-sb-kunde@mailinator.com','$2y$10$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0);
+(87,3,0,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0,0,'SP',1,1,1,1,0),
+(88,4,0,'Demo','Admin','fcs-demo-admin@mailinator.com','$2y$10\\\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0,0,'SP',1,1,1,1,0),
+(89,4,0,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0,0,'SP',1,1,1,1,0),
+(90,4,0,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0,0,'SP',1,1,1,1,0),
+(91,4,0,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0,'SP',1,1,1,1,0),
+(92,5,0,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0),
+(93,2,0,'Demo','SB-Kunde','fcs-demo-sb-kunde@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,NULL,0,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0);
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
@@ -386,75 +395,6 @@ INSERT INTO `fcs_units` VALUES
 (8,351,0,15.00,NULL,'kg',1,1,1.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
-INSERT INTO `phinxlog` VALUES
-(20200404145856,'RemoveV2Migrations','2020-04-04 15:01:12','2020-04-04 15:01:12',0),
-(20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:02','2020-04-15 07:42:02',0),
-(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:17','2020-05-01 19:30:17',0),
-(20200618063024,'AddProductFeedback','2020-06-19 07:02:54','2020-06-19 07:02:55',0),
-(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:44','2020-07-06 08:34:44',0),
-(20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:29','2020-08-31 15:10:29',0),
-(20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:21:00','2020-09-10 09:21:00',0),
-(20200925073919,'GermanIbanFix','2020-09-25 08:12:53','2020-09-25 08:12:53',0),
-(20201017182431,'AdaptMinimalCreditBalance','2020-10-17 18:38:11','2020-10-17 18:38:11',0),
-(20201029084931,'AddRetailMode','2020-10-29 09:06:50','2020-10-29 09:06:50',0),
-(20201029084932,'AddRetailMode','2020-11-09 10:31:46','2020-11-09 10:31:47',0),
-(20201118084516,'AddRetailMode2','2020-11-18 08:47:48','2020-11-18 08:47:48',0),
-(20201213120713,'AddRetailMode3','2020-12-13 12:14:11','2020-12-13 12:14:11',0),
-(20201217101514,'SliderWithLink','2020-12-17 10:26:47','2020-12-17 10:26:47',0),
-(20201217101515,'SliderWithLink','2020-12-17 18:47:08','2020-12-17 18:47:08',0),
-(20201220182015,'ImproveMemberFeeAdministration','2020-12-20 18:26:26','2020-12-20 18:26:26',0),
-(20210119101923,'CheckCreditBalanceLimit','2021-01-19 10:23:49','2021-01-19 10:23:49',0),
-(20210401071718,'RemoveCustomerGroupSetting','2021-04-01 07:18:55','2021-04-01 07:18:55',0),
-(20210401082727,'CustomerActivateEmailCode','2021-04-01 08:29:23','2021-04-01 08:29:23',0),
-(20210419084816,'BlogPostShowOnStartPageUntilDate','2021-04-19 09:41:23','2021-04-19 09:41:24',0),
-(20210427144234,'RemoveOldMemberFeeSetting','2021-04-27 15:05:04','2021-04-27 15:05:04',0),
-(20210504085123,'SaveTaxInOrderDetails','2021-05-04 09:10:14','2021-05-04 09:10:14',0),
-(20210510080630,'EnablePurchasePrices','2021-05-12 13:24:17','2021-05-12 13:24:18',0),
-(20210707083827,'AddRegistrierkasseApi','2021-07-07 08:55:14','2021-07-07 08:55:14',0),
-(20210802090623,'AddStorageLocation','2021-08-02 09:28:40','2021-08-02 09:28:40',0),
-(20210910191430,'Instagram','2021-09-10 19:23:18','2021-09-10 19:23:18',0),
-(20210914071747,'DifferentPricesForCustomers','2021-09-16 05:50:12','2021-09-16 05:50:12',0),
-(20210922154148,'RemoveUnusedQueueTable','2021-09-22 15:43:09','2021-09-22 15:43:09',0),
-(20210923073422,'RemoveSettingShowNewProductsOnHome','2021-09-23 07:39:32','2021-09-23 07:39:32',0),
-(20210923090820,'AllowNullAsPurchasePrice','2021-09-23 09:09:52','2021-09-23 09:09:52',0),
-(20211028083847,'UseExistingBarcode','2021-10-28 08:45:02','2021-10-28 08:45:02',0),
-(20211123095227,'DeactivateCheckCreditReminder','2021-11-23 10:01:05','2021-11-23 10:01:05',0),
-(20211213081433,'ImproveCustomerNotifications','2021-12-13 09:24:45','2021-12-13 09:24:46',0),
-(20211213081434,'ImproveCustomerNotifications','2021-12-13 10:44:55','2021-12-13 10:44:55',0),
-(20211215184633,'ManufacturerSettingIncludeStockProductsOnOrderList','2021-12-15 18:51:00','2021-12-15 18:51:00',0),
-(20211229194617,'AddIndizesForBetterPerformance','2021-12-29 19:53:31','2021-12-29 19:53:31',0),
-(20220129082136,'SendDeliveryNotesEveryMonth','2022-01-29 08:32:01','2022-01-29 08:32:02',0),
-(20220201163254,'OptionalDeliveryRhythmSettingOrderInWeekBeforeDelivery','2022-02-01 16:48:46','2022-02-01 16:48:46',0),
-(20220321103059,'PrefixForInvoices','2022-03-21 11:03:07','2022-03-21 11:03:07',0),
-(20220323075926,'TaxBasedOnNetInvoiceSum','2022-03-23 08:12:43','2022-03-23 08:12:43',0),
-(20220407093247,'AddIsCompanyFieldForCustomer','2022-04-07 09:37:45','2022-04-07 09:37:45',0),
-(20220412131842,'Newsletter','2022-04-12 13:29:05','2022-04-12 13:29:05',0),
-(20220525092822,'BiggerQueuedJobDataField','2022-05-25 09:32:10','2022-05-25 09:32:10',0),
-(20220620091755,'RemoveTimebasedCurrencyModule','2022-06-20 09:30:39','2022-06-20 09:30:39',0),
-(20220717194215,'UserFeedback','2022-07-19 12:39:45','2022-07-19 12:39:45',0);
-/*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
-INSERT INTO `queue_phinxlog` VALUES
-(20150425180802,'Init','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20150511062806,'Fixmissing','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20150911132343,'ImprovementsForMysql','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20161319000000,'IncreaseDataSize','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20161319000001,'Priority','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20161319000002,'Rename','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20161319000003,'Processes','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20171013131845,'AlterQueuedJobs','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20171013133145,'Utf8mb4Fix','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
-(20171019083500,'ColumnLength','2020-09-17 07:23:31','2020-09-17 07:23:32',0),
-(20171019083501,'MigrationQueueNull','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
-(20171019083502,'MigrationQueueStatus','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
-(20171019083503,'MigrationQueueProcesses','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
-(20171019083505,'MigrationQueueProcessesIndex','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
-(20171019083506,'MigrationQueueProcessesKey','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
-(20191319000002,'MigrationQueueRename','2021-07-20 11:13:02','2021-07-20 11:13:02',0);
-/*!40000 ALTER TABLE `queue_phinxlog` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `queue_processes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `queue_processes` ENABLE KEYS */;
 
@@ -470,3 +410,7 @@ INSERT INTO `queue_phinxlog` VALUES
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+";
+        $this->execute($query);
+    }
+}

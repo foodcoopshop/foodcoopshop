@@ -17,11 +17,18 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Run Docker Compose
-        run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
+        run: |
+          CURRENT_UID=$(id -u):$(id -g) docker compose up php-nginx -d
+          CURRENT_UID=$(id -u):$(id -g) docker compose up composer -d
         
       - name: Setup Dev Environment
-        run: bash ./devtools/init-dev-setup.sh
-        
+        run: |
+          # do not use ./devtools/init-dev-setup.sh because dev db is not needed
+          bash ./devtools/installation/set-permissions.sh
+          bash ./devtools/setup-dev/copy-config-files.sh
+          CURRENT_UID=$(id -u):$(id -g) docker compose run --rm composer install
+          CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html/webroot fcs-php-nginx npm install
+    
       - name: Apply secrets
         run: |
           sed -i 's/HELLO_CASH_USERNAME/${{secrets.HELLO_CASH_USERNAME}}/' ./config/custom_config.php
@@ -49,7 +56,7 @@ jobs:
       - name: ESLint
         run: |
             npm install -g eslint
-            bash devtools/eslint.sh
+            bash ./devtools/eslint.sh
 
       - name: PHPUnit Tests
         run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit

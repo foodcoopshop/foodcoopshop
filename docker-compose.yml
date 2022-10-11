@@ -52,9 +52,6 @@ services:
       MYSQL_DATABASE: foodcoopshop-test
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_TCP_PORT: 3311
-    volumes:
-      - ./config/sql/_installation/clean-db-structure.sql:/docker-entrypoint-initdb.d/1.sql
-      - ./tests/config/sql/test-db-data.sql:/docker-entrypoint-initdb.d/2.sql
     networks:
       - fcs
 

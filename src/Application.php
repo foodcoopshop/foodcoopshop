@@ -42,7 +42,9 @@ class Application extends BaseApplication
     {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
+
         if (Configure::read('debug')) {
+            $this->addPlugin('Bake');
             Configure::write('DebugKit.forceEnable', true);
             $this->addPlugin('DebugKit', ['bootstrap' => true]);
         }
@@ -64,7 +66,8 @@ class Application extends BaseApplication
             ]);
         }
 
-        // Load more plugins here
+        require_once $this->configDir . 'bootstrap_locale.php';
+
     }
 
     /**
