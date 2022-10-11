@@ -175,7 +175,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('versionFoodCoopShop', $this->Configuration->getVersion());
 
         try {
-            $query = 'SELECT * FROM phinxlog ORDER by version DESC LIMIT 1;';
+            $query = 'SELECT * FROM phinxlog WHERE start_time IS NOT NULL ORDER by version DESC LIMIT 1;';
             $lastMigration = $this->Configuration->getConnection()->query($query)->fetch('assoc');
             $this->set('lastMigration', $lastMigration);
         } catch (\PDOException  $e) {
