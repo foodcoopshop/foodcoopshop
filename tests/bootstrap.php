@@ -17,19 +17,20 @@ require dirname(__DIR__) . '/config/bootstrap.php';
 // 1) import structure
 $migrator = new Migrator();
 $migrator->runMany([
-    ['plugin' => 'Queue'],
-    ['source' => 'Migrations' . DS . 'init'],
+    ['plugin' => 'Queue', 'connection' => 'test'],
+    ['source' => 'Migrations' . DS . 'init', 'connection' => 'test'],
 ]);
 
-// 2) add test data (generated to fit after run migrations in init folder)
+// 2) run new migrations (located in main folder)
+//$migrator->run([], false); // causes "Going to drop all tables in this source, and re-apply migrations."
 $migrations = new Migrations();
+$migrations->migrate(['connection' => 'test']);
+
+// 3) add test data (generated to fit after run migrations in init folder)
 $migrations->seed([
     'connection' => 'test',
     'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
 ]);
-
-// 3) run new migrations (located in main folder)
-$migrator->run([], false);
 
 require dirname(__DIR__) . '/config/bootstrap_locale.php';
 
