@@ -24,7 +24,7 @@ jobs:
       - name: Setup Dev Environment
         run: |
           # do not use ./devtools/init-dev-setup.sh because dev db is not needed
-          bash ./devtools/setup-dev/set-permissions.sh
+          bash ./devtools/installation/set-permissions.sh
           bash ./devtools/setup-dev/copy-config-files.sh
           CURRENT_UID=$(id -u):$(id -g) docker compose run --rm composer install
           CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html/webroot fcs-php-nginx npm install
