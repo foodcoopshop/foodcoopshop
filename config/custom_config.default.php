@@ -78,6 +78,7 @@ return [
 
         /**
          * your host's name, eg. http://www.yourfoodcoop.com
+         * BE AWARE: NO TRAILING SLASH!
          */
         'cakeServerName' => '',
 
