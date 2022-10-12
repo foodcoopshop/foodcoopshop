@@ -82,7 +82,7 @@ table.list td.slim {
     line-height: 15px;
 }
 table.list th {
-    font-weight: 600;
+    font-weight: normal;
     position: sticky;
     position: -webkit-sticky;
     top: 44px; /* overriden in admin.initStickyTableHeader */
@@ -123,6 +123,7 @@ table.list a.btn {
 .sort a.desc:before {
     font-family: 'Font Awesome 6 Free';
     padding-right: 5px;
+    font-weight: 600;
 }
 .sort a.asc:before {
     content: "\f0aa";
