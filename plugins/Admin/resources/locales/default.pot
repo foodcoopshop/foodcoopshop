@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-19 16:36+0200\n"
+"POT-Creation-Date: 2022-10-12 09:27+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1121,12 +1121,6 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-msgid "Ordered_products"
-msgstr ""
-
-msgid "Reminder"
-msgstr ""
-
 msgid "Feedback"
 msgstr ""
 
@@ -2004,6 +1998,9 @@ msgid "Add_product_feedback"
 msgstr ""
 
 msgid "Click_to_change_name"
+msgstr ""
+
+msgid "Ordered_products"
 msgstr ""
 
 msgid "Show_all_ordered_products_from_{0}"

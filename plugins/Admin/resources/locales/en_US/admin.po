@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-19 16:36+0200\n"
+"POT-Creation-Date: 2022-10-12 09:27+0200\n"
 "PO-Revision-Date: 2022-09-14 15:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1122,12 +1122,6 @@ msgstr "Group"
 msgid "Status"
 msgstr "Status"
 
-msgid "Ordered_products"
-msgstr "Ordered products"
-
-msgid "Reminder"
-msgstr "Reminder"
-
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -2013,6 +2007,9 @@ msgstr "Give the manufacturer feedback for the product"
 msgid "Click_to_change_name"
 msgstr "Click to change name"
 
+msgid "Ordered_products"
+msgstr "Ordered products"
+
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
 
@@ -2402,6 +2399,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Reminder"
+#~ msgstr "Reminder"
 
 #, fuzzy
 #~ msgid "Please_chose"

@@ -74,7 +74,10 @@ if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>'.__d('admin', 'Credit').'</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Reminder')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Order_reminder')) . '</th>';
+}
+if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+    echo '<th>' . $this->Paginator->sort('Customers.check_credit_reminder_enabled',  __d('admin', 'Check_credit_reminder')) . '</th>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
@@ -94,7 +97,8 @@ echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
-$sumEmailReminders = 0;
+$sumOrderReminders = 0;
+$sumCreditReminders = 0;
 $sumNewsletter = 0;
 $sumFeedback = 0;
 $sumFeedbackNotApproved = 0;
@@ -244,11 +248,20 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
+    if ($this->Html->paymentIsCashless()) {
+        echo '<td align="center">';
+        if ($customer->check_credit_reminder_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumCreditReminders++;
+        }
+        echo '</td>';
+    }
+
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td align="center">';
         if ($customer->email_order_reminder_enabled) {
             echo '<i class="fas fa-check-circle ok"></i>';
-            $sumEmailReminders++;
+            $sumOrderReminders++;
         }
         echo '</td>';
     }
@@ -347,9 +360,10 @@ echo '<tr>';
 echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
+    echo '<td align="center"><b>' . $sumCreditReminders . '</b></td>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<td align="center"><b>' . $sumEmailReminders . '</b></td>';
+    echo '<td align="center"><b>' . $sumOrderReminders . '</b></td>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';

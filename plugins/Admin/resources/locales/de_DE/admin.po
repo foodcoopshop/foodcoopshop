@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-19 16:36+0200\n"
+"POT-Creation-Date: 2022-10-12 09:27+0200\n"
 "PO-Revision-Date: 2022-09-14 15:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1122,12 +1122,6 @@ msgstr "Gruppe"
 msgid "Status"
 msgstr "Status"
 
-msgid "Ordered_products"
-msgstr "Bestellte Produkte"
-
-msgid "Reminder"
-msgstr "Erinnerung"
-
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -2016,6 +2010,9 @@ msgstr "Gib dem Hersteller Feedback zum Produkt"
 msgid "Click_to_change_name"
 msgstr "Zum Ändern des Namens anklicken"
 
+msgid "Ordered_products"
+msgstr "Bestellte Produkte"
+
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
 
@@ -2405,6 +2402,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Reminder"
+#~ msgstr "Erinnerung"
 
 #, fuzzy
 #~ msgid "Please_chose"
