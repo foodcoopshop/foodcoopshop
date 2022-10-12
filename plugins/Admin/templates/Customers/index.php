@@ -70,7 +70,6 @@ echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Name'
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
-echo '<th style="text-align:right">'.__d('admin', 'Ordered_products').'</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>'.__d('admin', 'Credit').'</th>';
 }
@@ -95,7 +94,6 @@ echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
-$sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
 $sumNewsletter = 0;
 $sumFeedback = 0;
@@ -220,11 +218,6 @@ foreach ($customers as $customer) {
         );
     }
 
-    echo '</td>';
-
-    echo '<td style="text-align:right">';
-        echo $this->Number->formatAsDecimal($customer->order_detail_count, 0);
-        $sumOrderDetailsCount += $customer->order_detail_count;
     echo '</td>';
 
     if ($this->Html->paymentIsCashless()) {
@@ -352,7 +345,6 @@ foreach ($customers as $customer) {
 
 echo '<tr>';
 echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
-echo '<td style="text-align:right"><b>' . $this->Number->formatAsDecimal($sumOrderDetailsCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
 }
