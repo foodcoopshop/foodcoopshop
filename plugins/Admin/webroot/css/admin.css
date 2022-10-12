@@ -253,9 +253,6 @@ td.amount .fa-times {
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
 }
-body.products.index .bootstrap-select {
-  width: 172px ! important;
-}
 body.products.index td.status {
     text-align: center;
     width: 49px;
