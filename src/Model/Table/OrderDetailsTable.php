@@ -252,7 +252,7 @@ class OrderDetailsTable extends AppTable
         $foundOrders = 0;
         $result = [];
 
-        $i = 0;
+        $i = 1;
         while($foundOrders < $ordersToLoad) {
 
             $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
