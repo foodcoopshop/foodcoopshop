@@ -180,6 +180,9 @@ return [
 
         'sendEmailWhenOrderDetailCustomerChanged' => true,
 
+        // if set, a paypal.me-link is added to the invoice-to-customer email
+        'paypalMeUsername' => '',
+
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 
         'helloCashAtCredentials' => [

@@ -276,6 +276,7 @@ class HelloCash
         $sendInvoiceToCustomer->customerEmail = $customer->email;
         $sendInvoiceToCustomer->invoicePdfFile = '';
         $sendInvoiceToCustomer->invoiceNumber = $invoice->invoice_number;
+        $sendInvoiceToCustomer->invoiceSumPriceIncl = $invoice->sumPriceIncl;
         $sendInvoiceToCustomer->invoiceDate = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
         $sendInvoiceToCustomer->invoiceId = $invoice->id;
         $sendInvoiceToCustomer->originalInvoiceId = $invoice->original_invoice_id ?? null;

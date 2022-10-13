@@ -85,6 +85,7 @@ class GenerateInvoiceToCustomer
             $sendInvoiceToCustomer->customerEmail = $data->email;
             $sendInvoiceToCustomer->invoicePdfFile = $invoicePdfFile;
             $sendInvoiceToCustomer->invoiceNumber = $invoiceNumber;
+            $sendInvoiceToCustomer->invoiceSumPriceIncl = $data->sumPriceIncl;
             $sendInvoiceToCustomer->invoiceDate = $invoiceDate;
             $sendInvoiceToCustomer->invoiceId = $newInvoice->id;
             $sendInvoiceToCustomer->originalInvoiceId = null;

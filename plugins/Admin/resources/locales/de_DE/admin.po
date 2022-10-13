@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-12 09:27+0200\n"
-"PO-Revision-Date: 2022-09-14 15:19+0200\n"
+"POT-Creation-Date: 2022-10-13 10:23+0200\n"
+"PO-Revision-Date: 2022-10-13 10:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -2327,6 +2327,9 @@ msgstr "Deine Rechnung befindet sich im Anhang."
 
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "{0} sagt Danke für Deinen Einkauf!"
+
+msgid "Pay_invoice_with_paypal"
+msgstr "Rechnung mit Paypal bezahlen"
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "in dieser Rechnung sind alle Produkte enthalten, die im {0} geliefert wurden."

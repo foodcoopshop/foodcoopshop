@@ -42,6 +42,7 @@ class SendInvoiceToCustomer
         $invoiceNumber = $this->invoiceNumber;
         $invoiceDate = $this->invoiceDate;
         $invoiceId = $this->invoiceId;
+        $invoiceSumPriceIncl = $this->invoiceSumPriceIncl;
         $paidInCash = $this->paidInCash;
         $isCancellationInvoice = (bool) $this->isCancellationInvoice;
         $originalInvoiceId = $this->originalInvoiceId ?? $invoiceId;
@@ -59,6 +60,7 @@ class SendInvoiceToCustomer
         ->setSubject($subject)
         ->setViewVars([
             'paidInCash' => $paidInCash,
+            'invoiceSumPriceIncl' => $invoiceSumPriceIncl,
             'customerName' => $customerName,
             'creditBalance' => $creditBalance,
         ]);

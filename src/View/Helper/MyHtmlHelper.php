@@ -234,6 +234,21 @@ class MyHtmlHelper extends HtmlHelper
         }
     }
 
+    public function getCurrencyIsoCode($currencySymbol)
+    {
+        switch($currencySymbol) {
+            case '€':
+                return 'EUR';
+                break;
+            case '$':
+                return 'USD';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
+
     public function getFontAwesomeIconForCurrencyName($currencySymbol)
     {
         $currencyIcon = 'fas fa-fw ok fa-'.strtolower(Configure::read('app.currencyName')).'-sign';
