@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-13 10:23+0200\n"
-"PO-Revision-Date: 2022-10-13 10:23+0200\n"
+"POT-Creation-Date: 2022-10-13 10:55+0200\n"
+"PO-Revision-Date: 2022-10-13 10:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -923,12 +923,6 @@ msgstr "Version FoodCoopShop"
 
 msgid "Last_executed_migration"
 msgstr "Zuletzt ausgeführte Migration"
-
-msgid "Software_update_version"
-msgstr "Software-Update / Version"
-
-msgid "Please_find_more_information_in_the_changelog_{0}."
-msgstr "Mehr Informationen zu den Änderungen findest du im {0}."
 
 msgid "activated"
 msgstr "aktiviert"
@@ -2328,8 +2322,8 @@ msgstr "Deine Rechnung befindet sich im Anhang."
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "{0} sagt Danke für Deinen Einkauf!"
 
-msgid "Pay_invoice_with_paypal"
-msgstr "Rechnung mit Paypal bezahlen"
+msgid "Pay_this_invoice_with_paypal"
+msgstr "Diese Rechnung mit Paypal bezahlen"
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "in dieser Rechnung sind alle Produkte enthalten, die im {0} geliefert wurden."
@@ -2405,6 +2399,12 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Software_update_version"
+#~ msgstr "Software-Update / Version"
+
+#~ msgid "Please_find_more_information_in_the_changelog_{0}."
+#~ msgstr "Mehr Informationen zu den Änderungen findest du im {0}."
 
 #~ msgid "Reminder"
 #~ msgstr "Erinnerung"

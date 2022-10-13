@@ -33,7 +33,7 @@ use Cake\Core\Configure;
 
             <?php if (Configure::read('app.paypalMeUsername') != '' && $invoiceSumPriceIncl > 0) { ?>
                 <p>
-                    <?php echo __d('admin', 'Pay_invoice_with_paypal') . ': https://paypal.me/' . Configure::read('app.paypalMeUsername') . '/' . $invoiceSumPriceIncl . $this->MyHtml->getCurrencyIsoCode(Configure::read('appDb.FCS_CURRENCY_SYMBOL')); ?>
+                    <?php echo __d('admin', 'Pay_this_invoice_with_paypal') . ': https://paypal.me/' . Configure::read('app.paypalMeUsername') . '/' . $invoiceSumPriceIncl . $this->MyHtml->getCurrencyIsoCode(Configure::read('appDb.FCS_CURRENCY_SYMBOL')); ?>
                 </p>
             <?php } ?>
 

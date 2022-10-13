@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-13 10:23+0200\n"
+"POT-Creation-Date: 2022-10-13 10:55+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -921,12 +921,6 @@ msgid "Version_FoodCoopShop"
 msgstr ""
 
 msgid "Last_executed_migration"
-msgstr ""
-
-msgid "Software_update_version"
-msgstr ""
-
-msgid "Please_find_more_information_in_the_changelog_{0}."
 msgstr ""
 
 msgid "activated"
@@ -2318,7 +2312,7 @@ msgstr ""
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr ""
 
-msgid "Pay_invoice_with_paypal"
+msgid "Pay_this_invoice_with_paypal"
 msgstr ""
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
