@@ -28,6 +28,7 @@ class SendInvoiceToCustomer
     public $invoiceNumber;
     public $invoiceDate;
     public $invoiceId;
+    public $invoiceSumPriceIncl;
     public $paidInCash;
     public $isCancellationInvoice;
     public $originalInvoiceId;
