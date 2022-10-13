@@ -371,6 +371,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.paypalMeUsername</td>
+            <td><?php echo Configure::read('app.paypalMeUsername'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.defaultTax</td>
             <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? __d('admin', 'activated') : __d('admin', 'deactivated'); ?></td>
         </tr>
