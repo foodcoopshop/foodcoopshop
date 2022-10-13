@@ -31,6 +31,12 @@ use Cake\Core\Configure;
 
             <p><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></p>
 
+            <?php if (Configure::read('app.paypalMeUsername') != '' && $invoiceSumPriceIncl > 0) { ?>
+                <p>
+                    <?php echo __d('admin', 'Pay_this_invoice_with_paypal') . ': https://paypal.me/' . Configure::read('app.paypalMeUsername') . '/' . $invoiceSumPriceIncl . $this->MyHtml->getCurrencyIsoCode(Configure::read('appDb.FCS_CURRENCY_SYMBOL')); ?>
+                </p>
+            <?php } ?>
+
             <p>
                 <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
             </p>

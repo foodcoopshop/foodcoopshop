@@ -67,11 +67,23 @@ class InvoicesTable extends AppTable
         ])->toArray();
 
         foreach($invoices as &$invoice) {
+
             foreach($invoice->invoice_taxes as $invoiceTax) {
                 $invoice->total_sum_price_excl += $invoiceTax->total_price_tax_excl;
                 $invoice->total_sum_tax += $invoiceTax->total_price_tax;
                 $invoice->total_sum_price_incl += $invoiceTax->total_price_tax_incl;
             }
+
+            if (is_null($invoice->total_sum_price_excl)) {
+                $invoice->total_sum_price_excl = 0;
+            }
+            if (is_null($invoice->total_sum_tax)) {
+                $invoice->total_sum_tax = 0;
+            }
+            if (is_null($invoice->total_sum_price_incl)) {
+                $invoice->total_sum_price_incl = 0;
+            }
+
         }
 
         return $invoices;
