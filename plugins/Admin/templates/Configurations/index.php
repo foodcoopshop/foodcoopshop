@@ -360,18 +360,6 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.selfServiceModeAutoGenerateInvoice') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
-        <?php
-        if ($this->elementExists('latestGitCommit')) {
-            echo '<tr>';
-            echo '<td>'.__d('admin', 'Software_update_version').'</td>';
-            echo '<td>';
-            echo nl2br($this->element('latestGitCommit'));
-            echo __d('admin', 'Please_find_more_information_in_the_changelog_{0}.', ['<a href="https://www.foodcoopshop.com/changelog" target="_blank">Changelog</a>']);
-            echo '</td>';
-            echo '</tr>';
-        }
-        ?>
-
         <tr>
             <td>app.showTaxInOrderConfirmationEmail</td>
             <td><?php echo Configure::read('app.showTaxInOrderConfirmationEmail') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
