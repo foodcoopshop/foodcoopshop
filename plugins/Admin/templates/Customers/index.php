@@ -358,6 +358,7 @@ foreach ($customers as $customer) {
 
 echo '<tr>';
 echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+$colspan = 3;
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
     echo '<td align="center"><b>' . $sumCreditReminders . '</b></td>';
@@ -370,8 +371,9 @@ if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $sumFeedback > 0) {
     echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';
+} else {
+    $colspan++;
 }
-$colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     $colspan++;
 }
