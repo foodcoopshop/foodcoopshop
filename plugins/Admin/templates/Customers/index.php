@@ -248,20 +248,20 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    if ($this->Html->paymentIsCashless()) {
-        echo '<td align="center">';
-        if ($customer->check_credit_reminder_enabled) {
-            echo '<i class="fas fa-check-circle ok"></i>';
-            $sumCreditReminders++;
-        }
-        echo '</td>';
-    }
-
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td align="center">';
         if ($customer->email_order_reminder_enabled) {
             echo '<i class="fas fa-check-circle ok"></i>';
             $sumOrderReminders++;
+        }
+        echo '</td>';
+    }
+
+    if ($this->Html->paymentIsCashless()) {
+        echo '<td align="center">';
+        if ($customer->check_credit_reminder_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumCreditReminders++;
         }
         echo '</td>';
     }
