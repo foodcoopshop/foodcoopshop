@@ -722,6 +722,7 @@ class CustomersController extends AdminAppController
                 'Customers.email',
                 'Customers.active',
                 'Customers.email_order_reminder_enabled',
+                'Customers.check_credit_reminder_enabled',
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
                 'Feedbacks.modified',
