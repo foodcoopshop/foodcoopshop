@@ -26,8 +26,6 @@
   <span> · </span>
   <a href="https://foodcoopshop.github.io">Docs</a>
   <span> · </span>
-  <a href="https://www.foodcoopshop.com/crowdfunding-weiterentwicklung">Crowdfunding</a>
-  <span> · </span>
   <a href="https://demo-de.foodcoopshop.com">German Demo</a>
   <span> · </span>
   <a href="https://demo-en.foodcoopshop.com">English Demo</a>
