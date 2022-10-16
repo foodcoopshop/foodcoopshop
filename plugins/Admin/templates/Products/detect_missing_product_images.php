@@ -35,7 +35,8 @@ foreach($products as $product) {
             $i++;
             $outputHtml .= $this->Html->link($product->name, $this->Slug->getProductDetail($product->id_product, $product->name));
             $outputHtml .= ' / ' . $this->Html->link('Admin',  $this->Slug->getProductAdmin($product->id_manufacturer, $product->id_product));
-            $outputHtml .= ' / ' . $product->manufacturer->name . '<br />';
+            $outputHtml .= ' / ' . $product->manufacturer->name;
+            $outputHtml .= ' / ImageId: ' . $product->image->id_image . '<br />';
         }
     }
 }

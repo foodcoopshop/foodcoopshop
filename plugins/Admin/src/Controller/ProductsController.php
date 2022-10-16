@@ -104,7 +104,6 @@ class ProductsController extends AdminAppController
                 'Images',
             ],
             'order' => [
-                'Products.modified' => 'DESC',
                 'Images.id_image' => 'ASC',
             ],
         ]);
