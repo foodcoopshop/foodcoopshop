@@ -3,7 +3,7 @@
 bash ./devtools/installation/set-permissions.sh
 bash ./devtools/setup-dev/copy-config-files.sh
 
-CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html/webroot fcs-php-nginx composer install
+CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html fcs-php-nginx composer install
 
 CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html fcs-php-nginx bash ./bin/cake migrations migrate -p Queue
 CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html fcs-php-nginx bash ./bin/cake migrations migrate
