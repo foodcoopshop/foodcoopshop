@@ -1156,6 +1156,7 @@ a.blog-post-wrapper span {
     float: left;
     line-height: 19px;
     color: #333;
+    word-break: break-word;
 }
 a.blog-post-wrapper span.content {
     max-height: 107px;
