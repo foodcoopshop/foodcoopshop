@@ -39,7 +39,7 @@ class BackupDatabaseShell extends AppShell
         $dbConfig = ConnectionManager::getConfig('default');
 
         $backupdir = ROOT . DS . 'files_private' . DS . 'db-backups';
-        $preparedHostWithoutProtocol = Configure::read('app.htmlHelper')->getHostWithoutProtocol(Configure::read('app.cakeServerName'));
+        $preparedHostWithoutProtocol = Configure::read('app.htmlHelper')->getHostWithoutProtocol(Configure::read('App.fullBaseUrl'));
         $preparedHostWithoutProtocol = str_replace('www.', '', $preparedHostWithoutProtocol);
         $preparedHostWithoutProtocol = StringComponent::slugify($preparedHostWithoutProtocol);
         $filename = $backupdir . DS . $preparedHostWithoutProtocol . '-' . date('Y-m-d_H-i-s', time()) . '.bz2';
@@ -74,7 +74,7 @@ class BackupDatabaseShell extends AppShell
         $email = new Mailer(false);
         $email->setProfile('debug');
         $email->setTo(Configure::read('app.hostingEmail'))
-            ->setSubject($message . ': ' . Configure::read('app.cakeServerName'))
+            ->setSubject($message . ': ' . Configure::read('App.fullBaseUrl'))
             ->setAttachments([
                 $filename
             ])

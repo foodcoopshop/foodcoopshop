@@ -910,7 +910,7 @@ class ProductsTable extends AppTable
                 $imageFile = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFile);
                 if ($imageFile != '' && !preg_match('/de-default-home/', $imageFile) && file_exists($imageFile)) {
                     $product->image->hash = sha1_file($imageFile);
-                    $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
+                    $product->image->src = Configure::read('App.fullBaseUrl') . $imageSrc;
                 }
             }
 

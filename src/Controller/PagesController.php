@@ -67,8 +67,8 @@ class PagesController extends FrontendController
             echo '<p>Please copy this <b>Security => salt</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
             $securityErrors++;
         }
-        if (Configure::read('app.cakeServerName') == '') {
-            echo '<p>Please copy <b>http://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
+        if (Configure::read('App.fullBaseUrl') == '') {
+            echo '<p>Please copy <b>' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
             $securityErrors++;
         }
         if ($securityErrors > 0) {

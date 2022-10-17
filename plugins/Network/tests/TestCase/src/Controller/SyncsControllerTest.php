@@ -36,7 +36,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
     protected function correctSyncDomain()
     {
-        $this->dbConnection->query("UPDATE fcs_sync_domains SET domain = REPLACE(domain, '{{serverName}}', '" . Configure::read('app.cakeServerName') . "');");
+        $this->dbConnection->query("UPDATE fcs_sync_domains SET domain = REPLACE(domain, '{{serverName}}', '" . Configure::read('App.fullBaseUrl') . "');");
     }
 
     public function testDenyAccessIfVariableMemberFeeEnabled()
@@ -91,7 +91,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
         $productId = 47; // joghurt, owner: milk manufactuer
         $productName = 'Joghurt';
-        $response = $this->saveProductRelation($productId, $productId, $productName, Configure::read('app.cakeServerName'));
+        $response = $this->saveProductRelation($productId, $productId, $productName, Configure::read('App.fullBaseUrl'));
 
         $this->assertFalse((boolean) $response->status);
         $this->assertRegExpWithUnquotedString('product ' . $productId . ' is not associated with manufacturer ' . $manufacturerId, $response->msg);
@@ -105,12 +105,12 @@ class SyncsControllerTest extends AppCakeTestCase
 
         $productId = 339;
         $productName = 'Kartoffel';
-        $response = $this->saveProductRelation($productId, $productId, $productName, Configure::read('app.cakeServerName'));
+        $response = $this->saveProductRelation($productId, $productId, $productName, Configure::read('App.fullBaseUrl'));
         $this->assertTrue($response->status);
         $this->assertNotEmpty($response->product);
         $this->assertEquals($response->product->localProductId, $productId);
         $this->assertEquals($response->product->remoteProductId, $productId);
-        $this->assertEquals($response->product->domain, Configure::read('app.cakeServerName'));
+        $this->assertEquals($response->product->domain, Configure::read('App.fullBaseUrl'));
         $this->assertEquals($response->product->productName, strip_tags($productName, '<span>'));
         $this->assertResponseOk();
     }
@@ -122,7 +122,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
         $productId = 339;
         $productName = 'Kartoffel';
-        $this->saveProductRelation($productId, $productId, $productName, Configure::read('app.cakeServerName'));
+        $this->saveProductRelation($productId, $productId, $productName, Configure::read('App.fullBaseUrl'));
 
         $response = $this->deleteProductRelation($productId, $productId, $productName);
         $this->assertTrue($response->status);
@@ -145,7 +145,7 @@ class SyncsControllerTest extends AppCakeTestCase
                 [
                     'localProductId' => $localProductId,
                     'remoteProductId' => $remoteProductId,
-                    'domain' => Configure::read('app.cakeServerName'),
+                    'domain' => Configure::read('App.fullBaseUrl'),
                     'productName' => $productName
                 ]
             ]);

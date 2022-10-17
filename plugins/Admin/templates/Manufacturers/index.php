@@ -25,7 +25,7 @@ use Cake\Datasource\FactoryLocator;
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace') . ".ModalImage.init('a.open-with-modal');" .
-            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');".
+            Configure::read('app.jsNamespace') . ".Helper.setFullBaseUrl('" . Configure::read('App.fullBaseUrl') . "');".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button, .manufacturer-email-button, .test-order-list, .no-delivery-days-button, .feedback-button');"
     ]);
     $this->element('highlightRowAfterEdit', [

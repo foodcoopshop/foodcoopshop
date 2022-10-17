@@ -53,7 +53,7 @@ class ConfigurationsController extends AdminAppController
 
         if (in_array($configuration->type, ['textarea_big'])) {
             $_SESSION['ELFINDER'] = [
-                'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
+                'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/configurations/",
                 'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             ];
         }

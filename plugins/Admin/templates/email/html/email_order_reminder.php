@@ -26,15 +26,15 @@ use Cake\Core\Configure;
             <p><?php echo __d('admin', '{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight.', [$lastOrderDayAsString]); ?></p>
 
             <p><?php echo __d('admin', 'Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that.'); ?><br />
-                 <a href="<?php echo Configure::read('app.cakeServerName'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart"><?php echo Configure::read('app.cakeServerName'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart</a>
+                 <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart"><?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart</a>
             </p>
 
             <p>
-                <?php echo __d('admin', 'Click_here_to_open_the') . ' ' . __d('admin', 'Website'); ?>:<br /> <a href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a>
+                <?php echo __d('admin', 'Click_here_to_open_the') . ' ' . __d('admin', 'Website'); ?>:<br /> <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>"><?php echo Configure::read('App.fullBaseUrl'); ?></a>
             </p>
 
             <p>
-                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
             </p>
 
         </td>

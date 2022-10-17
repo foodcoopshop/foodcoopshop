@@ -30,7 +30,7 @@ use Cake\Core\Configure;
             <p><?php echo __d('admin', 'please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member).'); ?></p>
 
             <p>
-                <b><?php echo __d('admin', 'Your_personal_manufacturer_panel'); ?>: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
+                <b><?php echo __d('admin', 'Your_personal_manufacturer_panel'); ?>: </b> <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>/admin"><?php echo Configure::read('App.fullBaseUrl'); ?>/admin</a>
             </p>
 
             <p>

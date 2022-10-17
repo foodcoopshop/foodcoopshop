@@ -90,7 +90,7 @@ class FileAndEmailLog extends FileLog
             $loggedUser = $session->read('Auth');
         }
 
-        $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
+        $subject = Configure::read('App.fullBaseUrl') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
             $email = new Mailer(false);
             $email->setProfile('debug');

@@ -89,7 +89,7 @@ class ProductsTableTest extends AppCakeTestCase
     {
         $productId = 346;
         $products = [
-            [$productId => Configure::read('app.cakeServerName') . '/css/global.css']
+            [$productId => Configure::read('App.fullBaseUrl') . '/css/global.css']
         ];
         $exceptionThrown = false;
 
@@ -106,7 +106,7 @@ class ProductsTableTest extends AppCakeTestCase
     {
         $productId = 346;
         $products = [
-            [$productId => Configure::read('app.cakeServerName') . '/img/tests/non-existing-file.jpg']
+            [$productId => Configure::read('App.fullBaseUrl') . '/img/tests/non-existing-file.jpg']
         ];
         $exceptionThrown = false;
 
