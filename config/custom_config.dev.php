@@ -77,7 +77,7 @@ return [
 
     'App' => [
         //* BE AWARE: NO TRAILING SLASH!
-        'fullBaseUrl' => 'http://localhost,
+        'fullBaseUrl' => 'http://localhost',
     ],
 
     'app' => [
