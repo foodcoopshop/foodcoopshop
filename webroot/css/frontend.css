@@ -29,7 +29,7 @@ body {
     z-index: 100;
     margin-right: 0px;
     border-right: 1px solid #d6d4d4;
-    margin-top: 148px;
+    padding-top: 148px;
 }
 #inner-content {
     float: left;
