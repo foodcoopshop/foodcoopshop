@@ -263,11 +263,13 @@ class MyHtmlHelper extends HtmlHelper
      * @param string $page
      * @return string
      */
-    public function getDocsUrl($page)
+    public function getDocsUrl($page, $languageCode=null)
     {
-        $languageCode = substr(I18n::getLocale(), 0, 2);
+        if (is_null($languageCode)) {
+            $languageCode = substr(I18n::getLocale(), 0, 2);
+        }
         $url = 'https://foodcoopshop.github.io/' . $languageCode . '/';
-        if ($languageCode == 'de') {
+        if ($languageCode == 'de' || $page == 'settings') {
             $url .= $page;
         }
         return $url;
