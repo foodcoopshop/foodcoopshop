@@ -113,7 +113,7 @@ class BlogPostsController extends AdminAppController
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
 
         $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/blog_posts",
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/blog_posts",
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/blog_posts"
         ];
 

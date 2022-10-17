@@ -99,7 +99,7 @@ class PagesController extends AdminAppController
     private function _processForm($page, $isEditMode)
     {
         $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/pages",
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/pages",
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/pages"
         ];
         $this->set('pagesForSelect', $this->Page->getForSelect($page->id_page));

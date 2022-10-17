@@ -734,8 +734,8 @@ foodcoopshop.Helper = {
 
     },
 
-    setCakeServerName: function (cakeServerName) {
-        this.cakeServerName = cakeServerName;
+    setFullBaseUrl: function (fullBaseUrl) {
+        this.fullBaseUrl = fullBaseUrl;
     },
 
     setIsManufacturer: function (isManufacturer) {

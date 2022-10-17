@@ -83,7 +83,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
         // always preselect user if there is a dropdown called #customerId (for call from order detail)
         var customerId = $('#customerid').val();
         foodcoopshop.Admin.initCustomerDropdown(customerId, 0, 0, customerDropdownSelector, function () {
-            var newSrc = foodcoopshop.Helper.cakeServerName + iframeSrcInit + '/' + $(customerDropdownSelector).val();
+            var newSrc = foodcoopshop.Helper.fullBaseUrl + iframeSrcInit + '/' + $(customerDropdownSelector).val();
             $(modalSelector + ' iframe').attr('src', newSrc);
         });
 
@@ -92,7 +92,7 @@ foodcoopshop.ModalIOrderForDifferentCustomerAdd = {
 
         // START IFRAME
         var iframe = $('<iframe></iframe>');
-        iframe.attr('src', foodcoopshop.Helper.cakeServerName + iframeSrc);
+        iframe.attr('src', foodcoopshop.Helper.fullBaseUrl + iframeSrc);
         iframe.css('width', '100%');
         iframe.css('border', 'none');
         $(modalSelector + ' .modal-body').append(iframe);

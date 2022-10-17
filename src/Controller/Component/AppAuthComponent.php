@@ -258,7 +258,7 @@ class AppAuthComponent extends AuthComponent
             '/' . __('route_cart') . '/ajaxRemove/'
         ];
         if (isset($serverParams['HTTP_REFERER'])) {
-            $result = preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
+            $result = preg_match('`' . preg_quote(Configure::read('App.fullBaseUrl')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
         }
         if (!in_array($serverParams['REQUEST_URI'], $requestUriAllowed)) {
             $result = false;

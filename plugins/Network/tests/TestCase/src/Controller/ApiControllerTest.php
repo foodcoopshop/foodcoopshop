@@ -60,7 +60,7 @@ class ApiControllerTest extends AppCakeTestCase
         $preparedResponse = str_replace(
             [
                 DeliveryRhythm::getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
-                json_encode(Configure::read('app.cakeServerName')),
+                json_encode(Configure::read('App.fullBaseUrl')),
             ],
             [
                 '2020-01-17',

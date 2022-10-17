@@ -75,6 +75,11 @@ return [
         ],
     ],
 
+    'App' => [
+        //* BE AWARE: NO TRAILING SLASH!
+        'fullBaseUrl' => 'http://localhost,
+    ],
+
     'app' => [
 
         'discourseSsoEnabled' => false,
@@ -83,12 +88,6 @@ return [
          * A random string used for Discourse SSO
          */
         'discourseSsoSecret' => '',
-
-        /**
-         * your host's name, eg. http://www.yourfoodcoop.com
-         * BE AWARE: NO TRAILING SLASH!
-         */
-        'cakeServerName' => 'https://localhost',
 
         /**
          * cronjob needs to be activated / deactivated too if you change emailOrderReminderEnabled

@@ -26,7 +26,7 @@ use Cake\Core\Configure;
                 <p>
                     <b>
                         <?php echo __('Please_click_on_this_link_to_activate_your_new_password'); ?>:<br />
-                        <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?></a>
+                        <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?></a>
                     </b>
                 </p>
 

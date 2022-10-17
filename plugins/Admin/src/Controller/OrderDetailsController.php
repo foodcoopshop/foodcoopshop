@@ -1966,7 +1966,7 @@ class OrderDetailsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
 
         $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/order_details/" . $orderDetailId,
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/order_details/" . $orderDetailId,
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/order_details/" . $orderDetailId
         ];
 

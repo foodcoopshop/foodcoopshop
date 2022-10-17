@@ -29,8 +29,8 @@ use Cake\Core\Configure;
         <tbody>
             <tr>
                 <td align="center" valign="middle" style="padding-bottom: 20px;">
-                    <a href="<?php echo Configure::read('app.cakeServerName'); ?>">
-                        <img src="<?php echo Configure::read('app.cakeServerName').'/files/images/'.Configure::read('app.logoFileName'); ?>" width="150" />
+                    <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>">
+                        <img src="<?php echo Configure::read('App.fullBaseUrl').'/files/images/'.Configure::read('app.logoFileName'); ?>" width="150" />
                     </a>
                 </td>
             </tr>
@@ -47,11 +47,11 @@ use Cake\Core\Configure;
                 <td style="padding-top:20px;font-size:12px;">
                     <?php echo __('This_email_was_created_automatically.'); ?>
                         <?php if (isset($showManufacturerUnsubscribeLink) && $showManufacturerUnsubscribeLink) { ?>
-                           <?php echo __('You_can_unsubscribe_it_<a href="{0}">in_your_settings</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getManufacturerMyOptions()]); ?>
+                           <?php echo __('You_can_unsubscribe_it_<a href="{0}">in_your_settings</a>.', [Configure::read('App.fullBaseUrl') . $this->Slug->getManufacturerMyOptions()]); ?>
                         <?php } ?><br /><br />
                         <?php
                         if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') && isset($newsletterCustomer->newsletter_enabled) && !$newsletterCustomer->newsletter_enabled) {
-                                echo __('You_can_subscribe_our_newsletter_<a href="{0}">in_the_admin_areas_menu_point_my_data</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getCustomerProfile()]);
+                                echo __('You_can_subscribe_our_newsletter_<a href="{0}">in_the_admin_areas_menu_point_my_data</a>.', [Configure::read('App.fullBaseUrl') . $this->Slug->getCustomerProfile()]);
                                 echo '<br /><br />';
                             }
                         ?>
@@ -60,7 +60,7 @@ use Cake\Core\Configure;
                         echo Configure::read('appDb.FCS_APP_NAME').'<br />';
                         echo Configure::read('appDb.FCS_APP_ADDRESS').'<br />';
                         echo '<a href="mailto:'.Configure::read('appDb.FCS_APP_EMAIL').'">'.Configure::read('appDb.FCS_APP_EMAIL').'</a><br />';
-                        echo '<a href="'.Configure::read('app.cakeServerName').'">'.$this->MyHtml->getHostWithoutProtocol(Configure::read('app.cakeServerName')).'</a>';
+                        echo '<a href="'.Configure::read('App.fullBaseUrl').'">'.$this->MyHtml->getHostWithoutProtocol(Configure::read('App.fullBaseUrl')).'</a>';
                     ?>
                     <?php if (isset($appAuth) && $appAuth->user()) { ?>
                         <br /><br /><?php echo __('Signed_in'); ?>:

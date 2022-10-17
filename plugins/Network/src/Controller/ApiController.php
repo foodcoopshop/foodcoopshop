@@ -387,7 +387,7 @@ class ApiController extends Controller
         $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),
-                'domain' => Configure::read('app.cakeServerName')
+                'domain' => Configure::read('App.fullBaseUrl')
             ],
             'status' => count($syncFieldsError) == 0,
             'msg' => $message,
@@ -399,7 +399,7 @@ class ApiController extends Controller
     private function getInstallationName()
     {
 
-        return Configure::check('appDb.FCS_APP_NAME') ? Configure::read('appDb.FCS_APP_NAME') : Configure::read('app.cakeServerName');
+        return Configure::check('appDb.FCS_APP_NAME') ? Configure::read('appDb.FCS_APP_NAME') : Configure::read('App.fullBaseUrl');
     }
 
     public function getProducts()
@@ -416,7 +416,7 @@ class ApiController extends Controller
         $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),
-                'domain' => Configure::read('app.cakeServerName'),
+                'domain' => Configure::read('App.fullBaseUrl'),
                 'variableMemberFee' => $variableMemberFee
             ],
             'loggedUser' => $this->AppAuth->user(),

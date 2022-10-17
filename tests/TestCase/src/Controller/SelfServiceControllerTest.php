@@ -414,7 +414,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             'headers' => [
                 'X_REQUESTED_WITH' => 'XMLHttpRequest',
                 'ACCEPT' => 'application/json',
-                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service'),
+                'REFERER' => Configure::read('App.fullBaseUrl') . '/' . __('route_self_service'),
             ],
         ]);
     }
@@ -429,7 +429,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ];
         $this->configRequest([
             'headers' => [
-                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service'),
+                'REFERER' => Configure::read('App.fullBaseUrl') . '/' . __('route_self_service'),
             ],
         ]);
         $this->post(
