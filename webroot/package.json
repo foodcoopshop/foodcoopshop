@@ -35,10 +35,10 @@
     "lazysizes": "^5.3.2",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "svelte": "^3.51.0",
+    "svelte": "^3.52.0",
     "swiper": "8.4.4",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.17.3",
-    "webrtc-adapter": "^8.1.2"
+    "webrtc-adapter": "^8.2.0"
   }
 }
