@@ -239,7 +239,7 @@ $this->element('addScript', [
         <?php } ?>
 
         <tr>
-            <td>app.cakeServerName</td>
+            <td>App.fullBaseUrl</td>
             <td><a target="_blank"href="<?php echo Configure::read('App.fullBaseUrl'); ?>"><?php echo Configure::read('App.fullBaseUrl'); ?></a></td>
         </tr>
 

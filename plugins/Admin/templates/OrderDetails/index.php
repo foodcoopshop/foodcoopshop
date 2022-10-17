@@ -22,7 +22,7 @@ use Cake\Core\Configure;
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             $('input.datepicker').datepicker();".
             Configure::read('app.jsNamespace').".Admin.init();" .
-            Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('App.fullBaseUrl') . "');" .
+            Configure::read('app.jsNamespace').".Helper.setFullBaseUrl('" . Configure::read('App.fullBaseUrl') . "');" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".

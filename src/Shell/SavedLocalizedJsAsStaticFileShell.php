@@ -28,7 +28,7 @@ class SavedLocalizedJsAsStaticFileShell extends AppShell
      *
      * this script was written to be executed in the deploy process
      * in order to get the javascript content from the tmp installation
-     * (and not from app.cakeServerName where the new code is not yet available)
+     * (and not from App.fullBaseUrl where the new code is not yet available)
      * the built-in HttpClient from IntegrationTest is used
      *
      * run this script to generate a static file for production use
