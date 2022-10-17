@@ -18,7 +18,6 @@ require dirname(__DIR__) . '/config/bootstrap.php';
 $migrator = new Migrator();
 $migrator->runMany([
     ['plugin' => 'Queue', 'connection' => 'test'],
-    ['source' => 'Migrations' . DS . 'init', 'connection' => 'test'],
 ]);
 
 // 2) run new migrations (located in main folder)

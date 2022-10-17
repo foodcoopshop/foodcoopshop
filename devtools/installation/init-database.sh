@@ -14,7 +14,6 @@ if [[ "$locale" == "" ]]; then
 fi
 
 ./bin/cake migrations migrate -p Queue
-./bin/cake migrations migrate --source Migrations/init
 ./bin/cake migrations migrate
 ./bin/cake migrations seed --source Seeds/locale/$locale --seed InitDataSeed
 ./bin/cake migrations seed --seed InitDataSeed
