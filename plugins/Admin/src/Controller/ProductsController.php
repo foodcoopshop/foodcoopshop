@@ -711,7 +711,7 @@ class ProductsController extends AdminAppController
 
         $product2update = [
             'delivery_rhythm_count' => $deliveryRhythmCount,
-            'delivery_rhythm_type' => $deliveryRhythmType
+            'delivery_rhythm_type' => $deliveryRhythmType,
         ];
 
         $isFirstDeliveryDayMandatory = in_array($deliveryRhythmTypeCombined, ['0-individual', '2-week', '4-week']);
