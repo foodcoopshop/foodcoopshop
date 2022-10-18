@@ -307,7 +307,7 @@ class CustomersController extends FrontendController
                     !empty($customer)) {
                     $customer = $this->Customer->get($customer['id_customer']);
                     if ($customer->auto_login_hash == '') {
-                        $customer->auto_login_hash = Security::hash(rand());
+                        $customer->auto_login_hash = Security::hash((string) rand());
                         $this->Customer->save($customer);
                     }
                     $cookie = (new Cookie('remember_me'))

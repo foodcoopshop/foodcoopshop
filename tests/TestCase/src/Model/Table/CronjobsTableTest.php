@@ -179,7 +179,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testRunSunday()
     {
         $time = '2018-10-21 23:00:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals($executedCronjobs[0]['created'], $time);
 
@@ -191,7 +191,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testRunMonday()
     {
         $time = '2018-10-22 23:00:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(2, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
@@ -202,7 +202,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testPreviousCronjobLogFailure()
     {
         $time = '2018-10-22 23:00:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
@@ -222,7 +222,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testPreviousCronjobLogRunning()
     {
         $time = '2018-10-22 23:00:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
@@ -241,7 +241,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testCronjobNotYetExecutedWithinTimeInterval()
     {
         $time = '2018-10-23 22:30:01';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
@@ -259,7 +259,7 @@ class CronjobsTableTest extends AppCakeTestCase
 
     public function testCronjobAlreadyExecutedWithinTimeInterval()
     {
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-23 22:29:59')->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC('2018-10-23 22:29:59')->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
@@ -276,7 +276,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testCronjobWithInvalidParameterException()
     {
         $time = '2018-10-23 22:31:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $this->Cronjob->save(
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
@@ -293,7 +293,7 @@ class CronjobsTableTest extends AppCakeTestCase
 
     public function testCronjobAlreadyExecutedOnCurrentDay()
     {
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-25 22:30:02')->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC('2018-10-25 22:30:02')->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
@@ -309,7 +309,7 @@ class CronjobsTableTest extends AppCakeTestCase
 
     public function testRunMonthlyBeforeNotBeforeTime()
     {
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-11 07:29:00')->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC('2018-10-11 07:29:00')->toUnixString();
         $this->Cronjob->save(
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
@@ -325,7 +325,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testRunMonthlyAfterNotBeforeTime()
     {
         $time = '2018-10-11 07:31:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $this->Cronjob->save(
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
@@ -342,7 +342,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testRunMonthlyLastDayOfMonthAfterNotBeforeTime()
     {
         $time = '2018-11-30 07:31:00';
-        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = (int) $this->Time->getTimeObjectUTC($time)->toUnixString();
         $this->Cronjob->updateAll(
             [
                 'active' => APP_OFF,

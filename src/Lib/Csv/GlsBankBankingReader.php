@@ -65,7 +65,6 @@ class GlsBankBankingReader extends BankingReader {
         return $preparedRecords;
     }
 
-
 }
 
 ?>

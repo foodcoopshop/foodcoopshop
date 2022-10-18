@@ -759,7 +759,10 @@ class ProductsTable extends AppTable
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
         foreach ($conditions as $condition) {
-            if (!is_array($condition) && preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
+            if (is_int($condition) || !is_array($condition)) {
+                continue;
+            }
+            if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
                 $this->getAssociation('ProductAttributes')->setConditions(
                     [
                         'StockAvailables.quantity < 3'
@@ -767,7 +770,7 @@ class ProductsTable extends AppTable
                 );
                 $quantityIsZeroFilterOn = true;
             }
-            if (!is_array($condition) && preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
+            if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
                 $this->ProductAttributes->setConditions(
                     [
                         'ProductAttributes.price' => 0
@@ -1101,7 +1104,7 @@ class ProductsTable extends AppTable
 
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                         $attributeId = $attribute->id_product_attribute ?? 0;
-                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attributeId, 4);
+                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber((string) $attributeId, 4);
                         $preparedProduct['image'] = $product->image;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                             $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;

@@ -69,7 +69,6 @@ class RaiffeisenBankingReader extends BankingReader {
         return $preparedRecords;
     }
 
-
 }
 
 ?>

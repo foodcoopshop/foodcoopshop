@@ -99,7 +99,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
             $structureIsOk |= $this->checkStructureForRecord($record);
         }
 
-        return $structureIsOk;
+        return (bool) $structureIsOk;
     }
 
 }

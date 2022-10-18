@@ -67,7 +67,6 @@ class VolksbankBankingReader extends BankingReader {
         return $preparedRecords;
     }
 
-
 }
 
 ?>

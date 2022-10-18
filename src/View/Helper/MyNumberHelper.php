@@ -24,9 +24,8 @@ class MyNumberHelper extends NumberHelper
 {
     /**
      * turns eg 245 into 00245
-     * @return string
      */
-    public function addLeadingZerosToNumber($number, $digits)
+    public function addLeadingZerosToNumber(string $number, int $digits): string
     {
         return str_pad($number, $digits, '0', STR_PAD_LEFT);
     }

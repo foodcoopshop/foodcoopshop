@@ -72,7 +72,6 @@ class SparkasseBankingReader extends BankingReader {
         return $preparedRecords;
     }
 
-
 }
 
 ?>
