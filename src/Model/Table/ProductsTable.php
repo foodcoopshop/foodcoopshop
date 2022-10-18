@@ -233,7 +233,7 @@ class ProductsTable extends AppTable
     public function getProductIdAndAttributeId($productId): array
     {
         $attributeId = 0;
-        $explodedProductId = explode('-', $productId);
+        $explodedProductId = explode('-', (string) $productId);
         if (count($explodedProductId) == 2) {
             $productId = $explodedProductId[0];
             $attributeId = $explodedProductId[1];
