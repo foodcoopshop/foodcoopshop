@@ -585,13 +585,13 @@ class CartComponent extends Component
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $ids['attributeId']) {
                     if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                        $totalPurchasePriceTaxIncl = (float) $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
-                        $totalPurchasePriceTaxIncl = round($totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
+                        $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
+                        $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
                         $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                     } else {
-                        $totalPurchasePriceTaxExcl = (float) $attribute->purchase_price_product_attribute->price ?? 0;
-                        $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
+                        $totalPurchasePriceTaxExcl = $attribute->purchase_price_product_attribute->price ?? 0;
+                        $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
                         $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxIncl *= $amount;
                         $totalPurchasePriceTaxExcl *= $amount;
@@ -602,13 +602,13 @@ class CartComponent extends Component
         } else {
             // main product
             if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
-                $totalPurchasePriceTaxIncl = (float) $product->unit_product->purchase_price_incl_per_unit ?? 0;
-                $totalPurchasePriceTaxIncl = round($totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
+                $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
+                $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
                 $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
             } else {
-                $totalPurchasePriceTaxExcl = (float) $product->purchase_price_product->price ?? 0;
-                $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
+                $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
+                $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
                 $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxIncl *= $amount;
                 $totalPurchasePriceTaxExcl *= $amount;
