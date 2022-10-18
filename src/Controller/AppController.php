@@ -158,7 +158,7 @@ class AppController extends Controller
     {
         parent::afterFilter($event);
         if (Configure::check('app.outputStringReplacements')) {
-            $newOutput = OutputFilter::replace($this->response->getBody(), Configure::read('app.outputStringReplacements'));
+            $newOutput = OutputFilter::replace($this->response->getBody()->__toString(), Configure::read('app.outputStringReplacements'));
             $this->response = $this->response->withStringBody($newOutput);
         }
     }
