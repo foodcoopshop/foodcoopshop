@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;

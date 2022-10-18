@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Network\Test\TestCase;
 
 use App\Test\TestCase\AppCakeTestCase;

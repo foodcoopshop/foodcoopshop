@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\View\Helper;
 
@@ -640,7 +641,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getProductImageIdAsPath($imageId)
     {
-        preg_match_all('/[0-9]/', $imageId, $imageIdAsArray);
+        preg_match_all('/[0-9]/', (string) $imageId, $imageIdAsArray);
         $imageIdAsPath = implode(DS, $imageIdAsArray[0]);
         return $imageIdAsPath;
     }

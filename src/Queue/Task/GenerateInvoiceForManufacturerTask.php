@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Queue\Task;
 
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;

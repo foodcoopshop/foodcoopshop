@@ -169,6 +169,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
+        if (is_null($response)) return;
         $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 

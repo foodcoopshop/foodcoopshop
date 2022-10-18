@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * app.config.php
  * this file contains the main configuration for foodcoopshop
