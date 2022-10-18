@@ -68,7 +68,7 @@ class ApiControllerTest extends AppCakeTestCase
                 '2020-01-17',
                 '"{{serverName}}"',
             ],
-            $this->_response
+            $this->_response->getBody()->__toString(),
         );
 
         $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $preparedResponse);

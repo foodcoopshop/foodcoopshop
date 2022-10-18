@@ -390,7 +390,7 @@ class MyTimeHelper extends TimeHelper
     public function formatToDbFormatDate($dateString)
     {
         $timestamp = strtotime($dateString);
-        $result = date(Configure::read('DateFormat.DatabaseAlt'), $timestamp);
+        $result = date(Configure::read('DateFormat.DatabaseAlt'), (int) $timestamp);
         return $result;
     }
 
