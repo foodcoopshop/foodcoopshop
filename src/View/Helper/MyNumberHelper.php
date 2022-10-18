@@ -107,7 +107,7 @@ class MyNumberHelper extends NumberHelper
     public function parseFloatRespectingLocale($double)
     {
         if (I18n::getLocale() == 'de_DE') {
-            $double = str_replace(',', '.', $double); // then replace decimal places
+            $double = str_replace(',', '.', (string) $double); // then replace decimal places
         }
         if (!is_numeric($double)) {
             return false;

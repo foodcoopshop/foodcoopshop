@@ -395,11 +395,11 @@ class OrderDetailsController extends AdminAppController
             $this->Product = $this->getTableLocator()->get('Products');
 
             $grossPrice = $this->Product->getGrossPrice(
-                round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2),
+                round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2),
                 $orderDetail->order_detail_purchase_price->tax_rate,
             );
 
-            $unitPriceExcl = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2) / $orderDetail->product_amount;
+            $unitPriceExcl = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2) / $orderDetail->product_amount;
             $unitTaxAmount = $this->Product->getUnitTax(
                 $grossPrice,
                 $unitPriceExcl,
