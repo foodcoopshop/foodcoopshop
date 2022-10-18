@@ -4,5 +4,10 @@ parameters:
         - php
     paths:
         - src
+        - templates
         - plugins/Admin/src
+        - plugins/Admin/templates
         - plugins/Network/src
+        - plugins/Network/templates
+rules:
+    - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
