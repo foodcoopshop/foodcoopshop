@@ -813,12 +813,8 @@ class OrderDetailsController extends AdminAppController
                 $productName = [];
                 $customerName = [];
                 foreach ($orderDetails as $orderDetail) {
-                    $orderDetail->quantityInUnitsNotYetChanged = false;
+                    $orderDetail->quantityInUnitsNotYetChanged = true;
                     if (!empty($orderDetail->order_detail_unit)) {
-                        // quantity comparison can be removed in v4. it was replaced by mark_as_saved in v3.1. default value needs to be set to true then
-                        if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
-                            $orderDetail->quantityInUnitsNotYetChanged = true;
-                        }
                         if ($orderDetail->order_detail_unit->mark_as_saved) {
                             $orderDetail->quantityInUnitsNotYetChanged = false;
                         }
