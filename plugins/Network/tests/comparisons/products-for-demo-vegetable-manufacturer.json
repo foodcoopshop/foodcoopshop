@@ -101,7 +101,7 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_members": 0
+                "anonymize_customers": 0
             },
             "unit_product": null,
             "tax": {
@@ -220,7 +220,7 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_members": 0
+                "anonymize_customers": 0
             },
             "unit_product": null,
             "tax": {
@@ -331,7 +331,7 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_members": 0
+                "anonymize_customers": 0
             },
             "unit_product": null,
             "tax": {
@@ -442,7 +442,7 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_members": 0
+                "anonymize_customers": 0
             },
             "unit_product": {
                 "id": 4,
@@ -576,7 +576,7 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_members": 0
+                "anonymize_customers": 0
             },
             "unit_product": {
                 "id": 8,
@@ -831,7 +831,7 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_members": 0
+                "anonymize_customers": 0
             },
             "unit_product": null,
             "tax": {
@@ -1075,7 +1075,7 @@
                 "no_delivery_days": "",
                 "include_stock_products_in_order_lists": 1,
                 "send_delivery_notes": 0,
-                "anonymize_members": 0
+                "anonymize_customers": 0
             },
             "unit_product": null,
             "tax": {
