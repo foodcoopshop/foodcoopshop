@@ -59,7 +59,13 @@ class CustomersController extends AdminAppController
         if ($this->AppAuth->isSuperadmin()) {
             $includeOfflineCustomers = true;
         }
-        $customers = $this->Customer->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions);
+
+        $anonymize = false;
+        if ($this->AppAuth->isManufacturer() && $this->AppAuth->getManufacturerAnonymizeCustomers()) {
+            $anonymize = true;
+        }
+
+        $customers = $this->Customer->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions, $anonymize);
         $customersForDropdown = [];
         foreach ($customers as $key => $ps) {
             $customersForDropdown[] = '<optgroup label="' . $key . '">';

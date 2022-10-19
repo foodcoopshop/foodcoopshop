@@ -141,7 +141,11 @@ foreach ($blogPosts as $blogPost) {
         echo $blogPost->customer->manufacturer->name;
     } else {
         if (!empty($blogPost->customer)) {
-            echo $blogPost->customer->name;
+            $customerName = $blogPost->customer->name;
+            if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+                $customerName = $this->Html->anonymizeCustomerName($customerName, $blogPost->customer->id_customer);
+            }
+            echo $customerName;
         }
     }
     echo '</td>';

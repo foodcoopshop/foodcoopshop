@@ -593,7 +593,7 @@ class CustomersTable extends AppTable
         return $creditBalance + 0;
     }
 
-    public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = [])
+    public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = [], $anonymize = false)
     {
 
         $contain = [];
@@ -635,7 +635,11 @@ class CustomersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($customers as $customer) {
+
             $userNameForDropdown = $customer->name;
+            if ($anonymize) {
+                $userNameForDropdown = Configure::read('app.htmlHelper')->anonymizeCustomerName($userNameForDropdown, $customer->id_customer);
+            }
 
             $manufacturerIncluded = false;
             if ($includeManufacturers) {

@@ -84,7 +84,7 @@ foreach ($actionLogs as $actionLog) {
     echo '</td>';
 
     echo '<td>';
-    echo $actionLog->date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
+    echo $actionLog->date->i18nFormat($this->Time->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td>';
@@ -94,6 +94,9 @@ foreach ($actionLogs as $actionLog) {
     echo '<td>';
     if ($actionLog->customer) {
         $name = $actionLog->customer->name;
+        if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+            $name = $this->Html->anonymizeCustomerName($name, $actionLog->customer->id_customer);
+        }
         if ($actionLog->customer->manufacturer) {
             $name = $actionLog->customer->manufacturer->name;
         }
