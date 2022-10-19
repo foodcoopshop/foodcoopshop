@@ -41,7 +41,7 @@ class SavedLocalizedJsAsStaticFileShell extends AppShell
     {
         $this->get('/js/localized-javascript.js');
         $jsFile = new File(WWW_ROOT . '/cache/localized-javascript-static.js');
-        $jsFile->write($this->_response);
+        $jsFile->write($this->_response->getBody()->__toString());
     }
 
 }
