@@ -346,7 +346,7 @@ class HelloCash
             $helloCashUser = $this->decodeApiResponseAndCheckForErrors($response);
 
             // check if associated user_id_registrierkasse is still available within hello cash)
-            if ($helloCashUser != 'User not found') {
+            if (!empty($helloCashUser->user_id)) {
                 $data = array_merge($data, [
                     'user_id' => $customer->user_id_registrierkasse,
                 ]);
@@ -384,9 +384,10 @@ class HelloCash
 
         $decodedResponse = json_decode($response->getStringBody());
 
-        // An error occurred: Invalid Basic authentication: Benutzername oder Passwort falsch
         if (!empty($decodedResponse->error)) {
-            throw new HelloCashApiException($decodedResponse->error);
+            if ($decodedResponse->error == 'An error occurred: Invalid Basic authentication: Benutzername oder Passwort falsch') {
+                throw new HelloCashApiException($decodedResponse->error);
+            }
         }
 
         if ($decodedResponse === 'An Error occurred') {
