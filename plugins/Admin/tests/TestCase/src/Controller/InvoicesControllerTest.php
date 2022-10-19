@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -123,7 +124,7 @@ class InvoicesControllerTest extends AppCakeTestCase
                 'invoiceId' => $invoice->id,
             ]
         );
-        $response = json_decode($this->_response);
+        $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
         $invoices = $this->Invoice->find('all', [

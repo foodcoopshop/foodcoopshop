@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -97,7 +99,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
             $structureIsOk |= $this->checkStructureForRecord($record);
         }
 
-        return $structureIsOk;
+        return (bool) $structureIsOk;
     }
 
 }

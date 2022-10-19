@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 
@@ -52,7 +53,7 @@ class OrderDetailsTableTest extends AppCakeTestCase
     {
         $result = $this->OrderDetail->getDepositTax($gross, $amount);
         $result = number_format($result, 2);
-        $expected = number_format($result, 2);
+        $expected = number_format($expected, 2);
         $this->assertEquals($result, $expected);
     }
 
@@ -60,7 +61,7 @@ class OrderDetailsTableTest extends AppCakeTestCase
     {
         $result = $this->OrderDetail->getDepositNet($gross, $amount);
         $result = number_format($result, 2);
-        $expected = number_format($result, 2);
+        $expected = number_format($expected, 2);
         $this->assertEquals($result, $expected);
     }
 

@@ -18,7 +18,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Überschriften aller Tabellen im Admin-Bereich bleiben jetzt beim Scrollen sichtbar (nicht in iOS ). [PR#888](https://github.com/foodcoopshop/foodcoopshop/pull/888) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### For developers
-- New 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment.html) and [Gitpod-Integration](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop).  [I#871](https://github.com/foodcoopshop/foodcoopshop/issues/871) / [PR#876](https://github.com/foodcoopshop/foodcoopshop/pull/876) / [PR#879](https://github.com/foodcoopshop/foodcoopshop/pull/879) / / [PR#881](https://github.com/foodcoopshop/foodcoopshop/pull/881) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- New 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment.html) and [Gitpod-Integration](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop).  [I#871](https://github.com/foodcoopshop/foodcoopshop/issues/871) / [PR#876](https://github.com/foodcoopshop/foodcoopshop/pull/876) / [PR#879](https://github.com/foodcoopshop/foodcoopshop/pull/879) / [PR#881](https://github.com/foodcoopshop/foodcoopshop/pull/881) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Enable strict typing in every php file to improve code quality. [I#872](https://github.com/foodcoopshop/foodcoopshop/issues/872) / [PR#893](https://github.com/foodcoopshop/foodcoopshop/pull/893) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 # v3.5.0
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
@@ -211,7 +212,7 @@ class CronjobsTable extends AppTable
     {
 
         if (empty($this->cronjobRunDay)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(date(Configure::read('DateFormat.DatabaseWithTimeAlt')))->toUnixString();
+            $this->cronjobRunDay = (int) Configure::read('app.timeHelper')->getTimeObjectUTC(date(Configure::read('DateFormat.DatabaseWithTimeAlt')))->toUnixString();
         }
 
         $this->CronjobLogs->deleteOldLogs($this->cronjobRunDay);

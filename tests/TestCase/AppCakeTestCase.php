@@ -169,6 +169,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
+        if (is_null($response)) return;
         $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
@@ -323,7 +324,14 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
+    protected function changeProductDeliveryRhythm(
+        int $productId,
+        string $deliveryRhythmType,
+        string $deliveryRhythmFirstDeliveryDay = '',
+        string $deliveryRhythmOrderPossibleUntil = '',
+        string $deliveryRhythmSendOrderListWeekday = '',
+        string $deliveryRhythmSendOrderListDay = ''
+        )
     {
         $this->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],

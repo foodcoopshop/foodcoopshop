@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\View\Helper;
 
@@ -23,9 +24,8 @@ class MyNumberHelper extends NumberHelper
 {
     /**
      * turns eg 245 into 00245
-     * @return string
      */
-    public function addLeadingZerosToNumber($number, $digits)
+    public function addLeadingZerosToNumber(string $number, int $digits): string
     {
         return str_pad($number, $digits, '0', STR_PAD_LEFT);
     }
@@ -53,7 +53,7 @@ class MyNumberHelper extends NumberHelper
 
     public function formatAsCurrency($amount)
     {
-        $amount = round($amount, 2); // 3.325 was rounded to 3.32 without this line
+        $amount = round((float) $amount, 2); // 3.325 was rounded to 3.32 without this line
         $currency = self::currency($amount, 'USD');
         // e.g. PLN for polish zloty does not return the polish currency symbol
         $currency = str_replace('$', Configure::read('appDb.FCS_CURRENCY_SYMBOL'), $currency);
@@ -107,7 +107,7 @@ class MyNumberHelper extends NumberHelper
     public function parseFloatRespectingLocale($double)
     {
         if (I18n::getLocale() == 'de_DE') {
-            $double = str_replace(',', '.', $double); // then replace decimal places
+            $double = str_replace(',', '.', (string) $double); // then replace decimal places
         }
         if (!is_numeric($double)) {
             return false;

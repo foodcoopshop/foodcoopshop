@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * - this file contains the specific configuration for your foodcoop
  * - configurations in config.php can be overriden in this file

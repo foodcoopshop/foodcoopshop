@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
@@ -422,7 +423,7 @@ class InvoicesTable extends AppTable
             }
         }
 
-        $newIncreasingInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($increasingNumberOfLastInvoice, 6);
+        $newIncreasingInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros((string) $increasingNumberOfLastInvoice, 6);
 
         $newInvoiceNumber = $invoicePrefix . $currentYear . '-' . $newIncreasingInvoiceNumber;
         return $newInvoiceNumber;
@@ -435,14 +436,14 @@ class InvoicesTable extends AppTable
         if (! empty($invoices)) {
             $invoiceNumber = (int) $invoices[0]->invoice_number + 1;
         }
-        $newInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($invoiceNumber, 4);
+        $newInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros((string) $invoiceNumber, 4);
         return $newInvoiceNumber;
     }
 
     /**
      * turns eg 24 into 0024
      */
-    private function formatInvoiceNumberWithLeadingZeros($invoiceNumber, $zeroCount)
+    private function formatInvoiceNumberWithLeadingZeros(string $invoiceNumber, int $zeroCount): string
     {
         return str_pad($invoiceNumber, $zeroCount, '0', STR_PAD_LEFT);
     }

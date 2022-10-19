@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Network\Model\Table;
 
@@ -7,8 +8,6 @@ use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
 /**
- * SyncDomain
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under the GNU Affero General Public License version 3

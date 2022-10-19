@@ -196,7 +196,7 @@ class HelloCashTest extends AppCakeTestCase
                 'invoiceId' => $invoice->id,
             ]
         );
-        $response = json_decode($this->_response);
+        $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
         $invoice = $this->Invoice->find('all', [

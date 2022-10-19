@@ -41,7 +41,8 @@
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^9.0",
         "phpstan/phpstan": "^1.0",
-        "cakephp/bake": "^2.8"
+        "cakephp/bake": "^2.8",
+        "ergebnis/phpstan-rules": "^1.0"
     },
     "autoload": {
         "psr-4": {

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -66,7 +68,6 @@ class RaiffeisenBankingReader extends BankingReader {
 
         return $preparedRecords;
     }
-
 
 }
 
