@@ -82,7 +82,7 @@ table.list td.slim {
     line-height: 15px;
 }
 table.list th {
-    font-weight: normal;
+    font-weight: 600;
     position: sticky;
     position: -webkit-sticky;
     top: 44px; /* overriden in admin.initStickyTableHeader */
