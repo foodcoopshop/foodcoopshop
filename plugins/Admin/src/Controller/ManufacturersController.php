@@ -66,7 +66,7 @@ class ManufacturersController extends AdminAppController
             [
                 'active' => APP_ON,
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
-                'anonymize_members' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_ON : APP_OFF,
+                'anonymize_customers' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_ON : APP_OFF,
             ],
             ['validate' => false]
         );
