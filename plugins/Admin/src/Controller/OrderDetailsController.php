@@ -371,7 +371,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         if (empty($this->getRequest()->getData())) {
-            $orderDetail->order_detail_purchase_price->total_price_tax_excl = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
+            $orderDetail->order_detail_purchase_price->total_price_tax_excl = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
             $this->set('orderDetail', $orderDetail);
             return;
         }
@@ -516,8 +516,8 @@ class OrderDetailsController extends AdminAppController
         foreach($orderDetails as $orderDetail) {
             $orderDetails[$i]->purchase_price_ok = false;
             if (!empty($orderDetail->order_detail_purchase_price)) {
-                $roundedPurchasePrice = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
-                $roundedSellingPrice = round($orderDetail->total_price_tax_excl, 2);
+                $roundedPurchasePrice = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
+                $roundedSellingPrice = round((float) $orderDetail->total_price_tax_excl, 2);
                 $roundedProfit = round($roundedSellingPrice - $roundedPurchasePrice, 2);
                 if ($roundedPurchasePrice >= 0) {
                     $orderDetails[$i]->purchase_price_ok = true;
@@ -1082,7 +1082,7 @@ class OrderDetailsController extends AdminAppController
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
 
         if (!$doNotChangePrice) {
-            $newProductPrice = round($oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+            $newProductPrice = round((float) $oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
             if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
                 $toleranceFactor = 100;
                 $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
@@ -1100,7 +1100,7 @@ class OrderDetailsController extends AdminAppController
                 }
             }
             if (!empty($oldOrderDetail->order_detail_purchase_price)) {
-                $productPurchasePrice = round($oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+                $productPurchasePrice = round((float) $oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
                 $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
             }
             $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
