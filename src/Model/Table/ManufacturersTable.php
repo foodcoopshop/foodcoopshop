@@ -372,6 +372,25 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
+    public function anonymizeMembersInInvoiceOrOrderList($results)
+    {
+        return array_map(function ($data) {
+
+            $words = explode(' ', $data['CustomerName']);
+            $pieces = [];
+
+            foreach ($words as $w) {
+                $pieces[] = mb_substr($w, 0, 1) . '.';
+            }
+
+            $anonymizedCustomerName = join('', $pieces) . ' - ID ' . $data['CustomerId'];
+            $data['CustomerName'] = $anonymizedCustomerName;
+            return $data;
+
+        }, $results);
+
+    }
+
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
         $orderClause = match($order) {
