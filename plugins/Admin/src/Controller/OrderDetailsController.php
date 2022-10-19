@@ -813,8 +813,9 @@ class OrderDetailsController extends AdminAppController
                 $productName = [];
                 $customerName = [];
                 foreach ($orderDetails as $orderDetail) {
-                    $orderDetail->quantityInUnitsNotYetChanged = true;
+                    $orderDetail->quantityInUnitsNotYetChanged = false;
                     if (!empty($orderDetail->order_detail_unit)) {
+                        $orderDetail->quantityInUnitsNotYetChanged = true;
                         if ($orderDetail->order_detail_unit->mark_as_saved) {
                             $orderDetail->quantityInUnitsNotYetChanged = false;
                         }
