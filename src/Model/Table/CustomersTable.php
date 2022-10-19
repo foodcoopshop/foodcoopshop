@@ -228,17 +228,6 @@ class CustomersTable extends AppTable
         ]);
     }
 
-    public function anonymizeName(string $name, int $id)
-    {
-        $words = explode(' ', $name);
-        $pieces = [];
-        foreach ($words as $w) {
-            $pieces[] = mb_substr($w, 0, 1) . '.';
-        }
-        $anonymizedCustomerName = join('', $pieces) . ' - ID ' . $id;
-        return $anonymizedCustomerName;
-    }
-
     public function getCustomerName($tableName = 'Customers')
     {
         $concat = $tableName . '.firstname, " ", ' . $tableName . '.lastname';

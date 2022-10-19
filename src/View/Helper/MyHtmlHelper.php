@@ -274,6 +274,17 @@ class MyHtmlHelper extends HtmlHelper
         return __('Deleted_Email_Address');
     }
 
+    public function anonymizeMemberName(string $name, int $id)
+    {
+        $words = explode(' ', $name);
+        $pieces = [];
+        foreach ($words as $w) {
+            $pieces[] = mb_substr($w, 0, 1) . '.';
+        }
+        $anonymizedCustomerName = join('', $pieces) . ' - ID ' . $id;
+        return $anonymizedCustomerName;
+    }
+
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number

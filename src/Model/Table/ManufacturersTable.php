@@ -374,9 +374,8 @@ class ManufacturersTable extends AppTable
 
     public function anonymizeMembersInInvoiceOrOrderList($results)
     {
-        $cm = FactoryLocator::get('Table')->get('Customers');
-        return array_map(function ($data) use ($cm) {
-            $data['CustomerName'] = $cm->anonymizeName($data['CustomerName'], (int) $data['CustomerId']);
+        return array_map(function ($data) {
+            $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeMemberName($data['CustomerName'], (int) $data['CustomerId']);
             return $data;
         }, $results);
     }

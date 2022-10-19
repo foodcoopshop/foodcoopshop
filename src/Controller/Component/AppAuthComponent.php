@@ -168,6 +168,14 @@ class AppAuthComponent extends AuthComponent
         return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.name');
     }
 
+    public function getManufacturerAnonymizeMembers()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.anonymize_members');
+    }
+
     public function getManufacturerVariableMemberFee()
     {
         if (! $this->isManufacturer()) {

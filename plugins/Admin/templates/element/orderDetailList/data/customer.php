@@ -15,12 +15,15 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-if ($groupBy == '') {
-    echo '<td class="customer-field">';
-    if (
-        $editRecordAllowed
+if ($groupBy != '') {
+    return;
+}
+
+echo '<td class="customer-field">';
+    if ($editRecordAllowed
         && ($appAuth->isAdmin() || $appAuth->isSuperadmin())
-        && $this->Html->getNameRespectingIsDeleted($orderDetail->customer) != $this->Html->getDeletedCustomerName()) {
+        && $this->Html->getNameRespectingIsDeleted($orderDetail->customer)
+            != $this->Html->getDeletedCustomerName()) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 'javascript:void(0);',
@@ -30,10 +33,14 @@ if ($groupBy == '') {
                     'escape' => false
                 ]
             );
-        }
-        echo '<span class="customer-name-for-dialog">' . $this->Html->getNameRespectingIsDeleted($orderDetail->customer) . '</span>';
-        echo '<span class="customer-id-for-dialog hide">' . $orderDetail->id_customer . '</span>';
-    echo '</td>';
-}
+    }
+    $customerName = $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
+    if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeMembers()) {
+        $customerName = $this->Html->anonymizeMemberName($customerName, $orderDetail->id_customer);
+    }
+    echo '<span class="customer-name-for-dialog">' . $customerName . '</span>';
+    echo '<span class="customer-id-for-dialog hide">' . $orderDetail->id_customer . '</span>';
+echo '</td>';
+
 
 ?>
