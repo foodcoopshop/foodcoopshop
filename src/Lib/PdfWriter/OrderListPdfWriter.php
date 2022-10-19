@@ -66,8 +66,8 @@ abstract class OrderListPdfWriter extends PdfWriter
             $orderDetailIds,
         );
 
-        if ($manufacturer->anonymize_members) {
-            $results = $this->Manufacturer->anonymizeMembersInInvoiceOrOrderList($results);
+        if ($manufacturer->anonymize_customers) {
+            $results = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($results);
         }
 
         $this->setSums($results);

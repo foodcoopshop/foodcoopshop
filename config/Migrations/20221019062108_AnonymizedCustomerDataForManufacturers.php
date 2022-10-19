@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class AnonymizedMemberDataForManufacturers extends AbstractMigration
+class AnonymizedCustomerDataForManufacturers extends AbstractMigration
 {
     public function change()
     {
         $this->table('fcs_manufacturer')
-            ->addColumn('anonymize_members', 'tinyinteger', [
+            ->addColumn('anonymize_customers', 'tinyinteger', [
                 'default' => '0',
                 'limit' => null,
                 'null' => false,

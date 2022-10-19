@@ -35,12 +35,11 @@ echo '<td class="customer-field">';
             );
     }
     $customerName = $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
-    if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeMembers()) {
-        $customerName = $this->Html->anonymizeMemberName($customerName, $orderDetail->id_customer);
+    if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+        $customerName = $this->Html->anonymizeCustomerName($customerName, $orderDetail->id_customer);
     }
     echo '<span class="customer-name-for-dialog">' . $customerName . '</span>';
     echo '<span class="customer-id-for-dialog hide">' . $orderDetail->id_customer . '</span>';
 echo '</td>';
-
 
 ?>

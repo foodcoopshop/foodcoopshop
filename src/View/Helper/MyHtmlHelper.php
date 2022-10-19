@@ -274,7 +274,7 @@ class MyHtmlHelper extends HtmlHelper
         return __('Deleted_Email_Address');
     }
 
-    public function anonymizeMemberName(string $name, int $id)
+    public function anonymizeCustomerName(string $name, int $id)
     {
         $words = explode(' ', $name);
         $pieces = [];
