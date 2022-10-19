@@ -46,6 +46,8 @@ class ManufacturersController extends AdminAppController
                 break;
             case 'edit':
             case 'editOptions':
+            case 'getOrderListByProduct':
+            case 'getOrderListByCustomer':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
             case 'getDeliveryNote':
