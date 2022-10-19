@@ -1598,6 +1598,12 @@ msgstr ""
 msgid "Chose_member"
 msgstr ""
 
+msgid "Anonymize_members?"
+msgstr ""
+
+msgid "Member_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer."
+msgstr ""
+
 msgid "Pickup_days"
 msgstr ""
 

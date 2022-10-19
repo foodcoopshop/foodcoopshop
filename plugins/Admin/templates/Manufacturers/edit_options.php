@@ -242,6 +242,14 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         echo '<div class="sc"></div>';
     }
 
+    if (!$appAuth->isManufacturer()) {
+        echo $this->Form->control('Manufacturers.anonymize_members', [
+        'label' => __d('admin', 'Anonymize_members?').' <span class="after small">'.__d('admin', 'Member_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer.').'</a></span>',
+        'type' => 'checkbox',
+        'escape' => false
+        ]);
+    }
+
     echo $this->Form->end();
 
 ?>
