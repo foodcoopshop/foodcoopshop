@@ -75,10 +75,10 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [
-            Configure::read('test.loginEmailVegetableManufacturer')
-        ];
-        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, []);
+
+        $expectedToEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
+        $this->assertOrderDetailDeletedEmails(1, $expectedToEmails, []);
 
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
