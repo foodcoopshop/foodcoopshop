@@ -363,6 +363,18 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     }
 
+    public function testContentOfOrderListWithoutPricePerUnitAnonymized()
+    {
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
+        $this->loginAsSuperadmin();
+        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $this->assertResponseContains('D.S. - ID 92');
+        $this->assertResponseNotContains('Demo Superadmin');
+        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $this->assertResponseContains('D.S. - ID 92');
+        $this->assertResponseNotContains('Demo Superadmin');
+    }
+
     public function testContentOfOrderListWithoutPricePerUnit()
     {
         $this->loginAsSuperadmin();
