@@ -58,7 +58,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailContainsHtmlAt(1, 'Der Grundpreis beträgt 1,50 € / 100 g');
 
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
-        $this->assertMailSentWithAt(1, Configure::read('test.loginEmailMeatManufacturer'), 'cc');
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailMeatManufacturer'));
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantityPurchasePriceAvailable()

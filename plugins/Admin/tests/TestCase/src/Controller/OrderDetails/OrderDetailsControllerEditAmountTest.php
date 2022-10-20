@@ -129,8 +129,10 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertEquals(10, $changedOrder->cart_products[0]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
-        $expectedCcEmail = Configure::read('test.loginEmailVegetableManufacturer');
-        $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail, $expectedCcEmail);
+        $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);
+
+        $expectedToEmail = Configure::read('test.loginEmailVegetableManufacturer');
+        $this->assertOrderDetailProductAmountChangedEmails(2, $expectedToEmail);
 
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
@@ -156,7 +158,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail, $expectedCcEmail = null)
+    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail)
     {
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Anzahl angepasst: Artischocke : Stück');
@@ -165,9 +167,6 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertMailContainsHtmlAt($emailIndex, 'Neue Anzahl: <b>' . $this->newAmount . '</b>');
         $this->assertMailContainsHtmlAt($emailIndex, 'Demo Gemüse-Hersteller');
         $this->assertMailSentToAt($emailIndex, $expectedToEmail);
-        if ($expectedCcEmail !== null) {
-            $this->assertMailSentWithAt($emailIndex, $expectedCcEmail, 'cc');
-        }
     }
 
     private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason)
