@@ -17,13 +17,13 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-if (!$appAuth->user() || $appAuth->isManufacturer()) {
-    return;
-}
-
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
 ]);
+
+if (!$appAuth->user() || $appAuth->isManufacturer()) {
+    return;
+}
 
 if ($appAuth->Cart->getProducts() !== null) {
     $this->element('addScript', ['script' =>
