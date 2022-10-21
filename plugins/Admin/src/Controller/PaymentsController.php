@@ -593,8 +593,10 @@ class PaymentsController extends AdminAppController
             if (! empty($orderDetailsGroupedByMonth)) {
                 foreach ($orderDetailsGroupedByMonth as $orderDetail) {
                     $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
+                    $monthAndYear[0] = (int) $monthAndYear[0];
+                    $monthAndYear[1] = (int) $monthAndYear[1];
                     $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
-                    $lastDayOfMonth = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
+                    $lastDayOfMonth = (int) Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
                     $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                     $payments[] = [
                         'dateRaw' => $frozenDateFrom,
