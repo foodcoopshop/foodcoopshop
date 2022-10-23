@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Query;
 
