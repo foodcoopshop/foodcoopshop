@@ -18,16 +18,15 @@ services:
       - "8001:80"
     depends_on:
       - database-dev
-      - database-test
     networks:
       - fcs
-      
+
   database-dev:
     image: mysql:8.0
     container_name: fcs-database-dev
     restart: always
     ports:
-     - '3310:3306'
+      - '3310:3306'
     environment:
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
@@ -38,14 +37,14 @@ services:
       - db-dev-data:/var/lib/mysql
     networks:
       - fcs
-   
+
   database-test:
     image: mysql:8.0
     container_name: fcs-database-test
     restart: always
     tmpfs: /var/lib/mysql:exec,size=1G #smaller size (eg. 256M) lead to failing tests
     ports:
-     - '3311:3306'
+      - '3311:3306'
     environment:
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
@@ -57,12 +56,12 @@ services:
 
   phpmyadmin-dev:
     depends_on:
-     - database-dev
+      - database-dev
     image: phpmyadmin/phpmyadmin
     container_name: fcs-phpmyadmin-dev
     restart: always
     ports:
-     - '8080:80'
+      - '8080:80'
     environment:
       PMA_HOST: database-dev
       PMA_USER: root
@@ -70,15 +69,15 @@ services:
       UPLOAD_LIMIT: 300M
     networks:
       - fcs
-      
+
   phpmyadmin-test:
     depends_on:
-     - database-test
+      - database-test
     image: phpmyadmin/phpmyadmin
     container_name: fcs-phpmyadmin-test
     restart: always
     ports:
-     - '8081:80'
+      - '8081:80'
     environment:
       PMA_HOST: database-test
       PMA_USER: root
@@ -89,6 +88,7 @@ services:
 
 volumes:
   db-dev-data:
+
 
 networks:
   fcs:
