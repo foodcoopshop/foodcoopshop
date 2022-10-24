@@ -35,7 +35,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_TCP_PORT: 3310
     volumes:
-      - ./config/docker-dev/database-dev/data:/var/lib/mysql
+      - db-dev-data:/var/lib/mysql
     networks:
       - fcs
    
@@ -86,6 +86,9 @@ services:
       UPLOAD_LIMIT: 300M
     networks:
       - fcs
+
+volumes:
+  db-dev-data:
 
 networks:
   fcs:
