@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -19,9 +20,10 @@ use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 use Cake\Datasource\FactoryLocator;
 
-$this->element('addScript', [ 'script' =>
+$this->element('addScript', [
+    'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init(); " .
-    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('" . __d('admin', 'Website_administration') . "', '" . __d('admin', 'Configurations') . "');
     "
 ]);
 
@@ -31,7 +33,7 @@ $this->element('addScript', [ 'script' =>
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <?php
-            echo $this->element('printIcon');
+        echo $this->element('printIcon');
         ?>
     </div>
 
@@ -59,11 +61,11 @@ echo '</tr>';
 
 $i = 0;
 foreach ($cronjobs as $cronjob) {
-    $i ++;
+    $i++;
     $rowClass = [
         'data'
     ];
-    if (! $cronjob->active) {
+    if (!$cronjob->active) {
         $rowClass[] = 'deactivated';
         $rowClass[] = 'line-through';
     }
@@ -105,7 +107,8 @@ foreach ($cronjobs as $cronjob) {
         echo $this->Time->getWeekdayName(
             $this->Time->formatAsWeekday(
                 strtotime('next ' . $cronjob->weekday), // trick to get eg. 6 from Saturday
-            ));
+            )
+        );
     }
     echo '</td>';
 
@@ -134,8 +137,8 @@ foreach ($cronjobs as $cronjob) {
         }
         $cronjobFilterString = $cronjobFilterString;
         echo $this->Html->link(
-            $this->Time->getWeekdayName($this->Time->formatAsWeekday($cronjob->cronjob_logs[0]->created->toUnixString())) . ', ' .
-            $cronjob->cronjob_logs[0]->created->i18nFormat($this->Time->getI18Format('DateNTimeShort')),
+            $this->Time->getWeekdayName($this->Time->formatAsWeekday((int) $cronjob->cronjob_logs[0]->created->toUnixString())) . ', ' .
+                $cronjob->cronjob_logs[0]->created->i18nFormat($this->Time->getI18Format('DateNTimeShort')),
             $this->Slug->getActionLogsList() . '/?dateFrom=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('-3 month')) . '&types[]=' . $cronjobFilterString,
         );
     }
@@ -145,7 +148,7 @@ foreach ($cronjobs as $cronjob) {
 }
 
 echo '<tr>';
-echo '<td colspan="8"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="8"><b>' . $i . '</b> ' . __d('admin', '{0,plural,=1{record} other{records}}', $i) . '</td>';
 echo '</tr>';
 
 echo '</table>';
