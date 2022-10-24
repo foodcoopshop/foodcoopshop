@@ -189,8 +189,13 @@ class CartsTable extends AppTable
             $productData['manufacturerLink'] = $manufacturerLink;
 
             $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
-            $nextDeliveryDay = strtotime($nextDeliveryDay);
-            $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
+            if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
+                $dateFormattedWithWeekday = __('Delivery_break');
+            } else {
+                $nextDeliveryDay = strtotime($nextDeliveryDay);
+                $dateFormattedWithWeekday = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
+            }
+            $productData['nextDeliveryDay'] = $dateFormattedWithWeekday;
 
             $preparedCart['CartProducts'][] = $productData;
 
