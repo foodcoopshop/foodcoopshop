@@ -18,6 +18,7 @@ services:
       - "8001:80"
     depends_on:
       - database-dev
+      - database-test
     networks:
       - fcs
 
