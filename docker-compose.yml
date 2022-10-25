@@ -5,15 +5,16 @@ version: '3'
 services:
 
   php-nginx:
-    build: ./config/docker-dev/php-nginx
+    build: .
     container_name: fcs-php-nginx
     restart: always
     user: ${CURRENT_UID}
     environment:
-      - WEB_DOCUMENT_ROOT=/var/www/html/webroot
+      WEB_DOCUMENT_ROOT: /var/www/html/webroot
+      PHP_UPLOAD_MAX_FILESIZE: 200M
+      PHP_POST_MAX_SIZE: 200M
     volumes:
       - ./:/var/www/html
-      - ./config/docker-dev/php-nginx/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
     ports:
       - "8001:80"
     depends_on:
