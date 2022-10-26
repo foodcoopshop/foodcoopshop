@@ -21,7 +21,10 @@ services:
       - database-dev
       - database-test
     networks:
-      - fcs
+      default:
+        aliases:
+          - foodcoopshop.test
+      fcs:
 
   database-dev:
     image: mysql:8.0
