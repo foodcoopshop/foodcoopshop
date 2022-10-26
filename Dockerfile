@@ -1,4 +1,4 @@
-FROM node:18 AS node
+FROM node:18-alpine AS node
 FROM webdevops/php-nginx:8.1-alpine
 
 #https://stackoverflow.com/questions/44447821/how-to-create-a-docker-image-for-php-and-node
