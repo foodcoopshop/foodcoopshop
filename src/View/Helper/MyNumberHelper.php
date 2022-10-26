@@ -41,7 +41,12 @@ class MyNumberHelper extends NumberHelper
             return -1;
         }
 
-        $float = trim($string);
+        // sometimes a float is passed to this function, but trim only accepts strings
+        $float = $string;
+        if (is_string($string)) {
+            $float = trim($string);
+        }
+
         $float = $this->parseFloatRespectingLocale($float);
 
         if ($float === false) {
