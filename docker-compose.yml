@@ -23,6 +23,7 @@ services:
     networks:
       default:
         aliases:
+           # add "127.0.0.1 foodcoopshop.test" to your hosts file to use http://foodcoopshop.test:8001
           - foodcoopshop.test
       fcs:
 
