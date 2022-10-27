@@ -344,11 +344,14 @@ use Cake\Core\Configure;
     echo '</table>';
 
     echo '<div class="bottom-button-container">';
-        echo $this->element('productList/button/deleteSelectedProducts');
-        echo $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
-        echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
-        echo $this->element('productList/button/editStatusForSelectedProducts');
-        echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
+        if (!empty($products)) {
+            echo '<div style="float:left;padding:4px;">' . __d('admin', 'Selected_products') . ':</div>';
+            echo $this->element('productList/button/deleteSelectedProducts');
+            echo $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
+            echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
+            echo $this->element('productList/button/editStatusForSelectedProducts');
+            echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
+        }
     echo '</div>';
 
     ?>

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-27 21:22+0200\n"
-"PO-Revision-Date: 2022-10-27 21:22+0200\n"
+"POT-Creation-Date: 2022-10-27 22:55+0200\n"
+"PO-Revision-Date: 2022-10-27 22:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -1824,6 +1824,9 @@ msgstr "New?"
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
 
+msgid "Selected_products"
+msgstr "Selected products"
+
 msgid "Storage_location"
 msgstr "Storage location"
 
@@ -2073,17 +2076,17 @@ msgstr "Thank you very much for delivering your products to us!"
 msgid "Customer_ID"
 msgstr "Customer-ID"
 
-msgid "Calculate_selling_price_with_surcharge_for_selected_products"
-msgstr "Calculate selling price with surcharge for selected products"
+msgid "Calculate_selling_price"
+msgstr "Calculate selling price"
 
-msgid "Delete_selected_products"
-msgstr "Delete selected products"
+msgid "Delete"
+msgstr "Delete"
 
-msgid "Edit_delivery_rhythm_for_selected_products"
-msgstr "Edit delivery rhythm for selected products"
+msgid "Edit_delivery_rhythm"
+msgstr "Edit delivery rhythm"
 
-msgid "Edit_status_for_selected_products"
-msgstr "Edit status for selected products"
+msgid "Edit_status"
+msgstr "Edit status"
 
 msgid "Generate_product_cards"
 msgstr "Generate product cards"
@@ -2400,6 +2403,15 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "Product_ID"
 msgstr "ProductID"
 
+#~ msgid "Delete_selected_products"
+#~ msgstr "Delete selected products"
+
+#~ msgid "Edit_delivery_rhythm_for_selected_products"
+#~ msgstr "Edit delivery rhythm for selected products"
+
+#~ msgid "Edit_status_for_selected_products"
+#~ msgstr "Edit status for selected products"
+
 #~ msgid "Software_update_version"
 #~ msgstr "Software update / Version"
 
@@ -2494,9 +2506,6 @@ msgstr "ProductID"
 
 #~ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 #~ msgstr "0 means: global limit of {0} is used."
-
-#~ msgid "Delete"
-#~ msgstr "Delete"
 
 #~ msgid "Additional_in_{0}"
 #~ msgstr "Additional in {0}"

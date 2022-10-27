@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-27 21:22+0200\n"
-"PO-Revision-Date: 2022-10-27 21:22+0200\n"
+"POT-Creation-Date: 2022-10-27 22:55+0200\n"
+"PO-Revision-Date: 2022-10-27 22:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -1827,6 +1827,9 @@ msgstr "Neu?"
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
 
+msgid "Selected_products"
+msgstr "Ausgewählte Produkte"
+
 msgid "Storage_location"
 msgstr "Lagerort"
 
@@ -2076,17 +2079,17 @@ msgstr "Vielen Dank, dass du uns belieferst!"
 msgid "Customer_ID"
 msgstr "Mitglieds-Nr."
 
-msgid "Calculate_selling_price_with_surcharge_for_selected_products"
-msgstr "Verkaufspreis mit Aufschlag für ausgewählte Produkte berechnen"
+msgid "Calculate_selling_price"
+msgstr "Verkaufspreis berechnen"
 
-msgid "Delete_selected_products"
-msgstr "Ausgewählte Produkte löschen"
+msgid "Delete"
+msgstr "Löschen"
 
-msgid "Edit_delivery_rhythm_for_selected_products"
-msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
+msgid "Edit_delivery_rhythm"
+msgstr "Lieferrhythmus ändern"
 
-msgid "Edit_status_for_selected_products"
-msgstr "Status für ausgewählte Produkte bearbeiten"
+msgid "Edit_status"
+msgstr "Status ändern"
 
 msgid "Generate_product_cards"
 msgstr "Produktkarten generieren"
@@ -2403,6 +2406,15 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#~ msgid "Delete_selected_products"
+#~ msgstr "Ausgewählte Produkte löschen"
+
+#~ msgid "Edit_delivery_rhythm_for_selected_products"
+#~ msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
+
+#~ msgid "Edit_status_for_selected_products"
+#~ msgstr "Status für ausgewählte Produkte bearbeiten"
+
 #~ msgid "Software_update_version"
 #~ msgstr "Software-Update / Version"
 
@@ -2499,9 +2511,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 #~ msgstr "0 bedeutet: globales Limit von {0} wird verwendet."
-
-#~ msgid "Delete"
-#~ msgstr "Löschen"
 
 #~ msgid "Additional_in_{0}"
 #~ msgstr "Zusätzlich in {0}"
