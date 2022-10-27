@@ -54,7 +54,7 @@ foodcoopshop.ModalProductStatusEditBulk = {
                 modalSelector,
                 foodcoopshop.LocalizedJs.admin.ChangeStatus,
                 html,
-                buttons,
+                buttons
             );
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
