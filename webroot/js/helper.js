@@ -783,17 +783,6 @@ foodcoopshop.Helper = {
         return imageSrc.replace(/\?.{3}/g, '');
     },
 
-    initJqueryUiIcons: function () {
-        $('li.ui-state-default').hover(
-            function () {
-                $(this).addClass('ui-state-hover');
-            },
-            function () {
-                $(this).removeClass('ui-state-hover');
-            }
-        );
-    },
-
     showContent: function () {
         // do not use jquery .animate() or .show() here, if loaded in iframe and firefox, this does not work
         // only css('display') works
@@ -945,10 +934,6 @@ foodcoopshop.Helper = {
         return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : undefined;
         }, obj || self);
-    },
-
-    getRandomCode: function () {
-        return Math.floor(Math.random() * 981151510);
     },
 
     removeFlashMessage: function () {
