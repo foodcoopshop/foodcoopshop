@@ -34,6 +34,7 @@ Thumbs.db
 nbproject/*
 # Visual Studio Code
 .vscode
+.history/
 # Sass preprocessor
 .sass-cache/
 
