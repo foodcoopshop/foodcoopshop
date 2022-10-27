@@ -47,7 +47,7 @@ if (!empty($manufacturers)) {
 
         if (Configure::read('app.isDepositEnabled')) {
             $widths[4] = 45;
-            $headers[] = __d('admin', 'Deposit');
+            $headers[] = __('Deposit');
         } else {
             $widths[1] = 265;
             $widths[4] = 0;

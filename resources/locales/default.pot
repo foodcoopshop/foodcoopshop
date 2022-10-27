@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-27 22:11+0200\n"
+"POT-Creation-Date: 2022-10-27 22:40+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -276,6 +276,9 @@ msgid "Your_email_address_was_already_activated_or_the_activation_code_was_not_v
 msgstr ""
 
 msgid "Your_email_address_has_been_activated_successfully."
+msgstr ""
+
+msgid "Filename_Terms-of-use"
 msgstr ""
 
 msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
@@ -1947,6 +1950,9 @@ msgid "deleted"
 msgstr ""
 
 msgid "The_price_needs_to_be_greater_or_equal_than_0."
+msgstr ""
+
+msgid "Purchase_price"
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."

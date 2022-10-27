@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-27 22:11+0200\n"
-"PO-Revision-Date: 2022-10-27 22:13+0200\n"
+"POT-Creation-Date: 2022-10-27 22:40+0200\n"
+"PO-Revision-Date: 2022-10-27 22:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -278,6 +278,9 @@ msgstr "Deine E-Mail-Adresse wurde bereits aktiviert oder der Aktivierungscode w
 
 msgid "Your_email_address_has_been_activated_successfully."
 msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert."
+
+msgid "Filename_Terms-of-use"
+msgstr "Nutzungsbedingungen"
 
 msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
 msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert, dein Passwort wurde dir soeben zugeschickt."
@@ -1731,7 +1734,6 @@ msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
 
-#, fuzzy
 msgid "Please_accept_the_information_about_right_of_withdrawal"
 msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
 
@@ -1950,6 +1952,9 @@ msgstr "gelöscht"
 
 msgid "The_price_needs_to_be_greater_or_equal_than_0."
 msgstr "Der Preis muss eine positive Zahl sein."
+
+msgid "Purchase_price"
+msgstr "Einkaufspreis"
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "Der Lagerstand muss eine Zahl sein."
@@ -2920,9 +2925,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 #, fuzzy
 #~ msgid "Your_email_address_was_activated"
 #~ msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert und du bist bereits eingeloggt."
-
-#~ msgid "Filename_Terms-of-use"
-#~ msgstr "Nutzungsbedingungen"
 
 #~ msgid "Generate_orders_as_pdf?"
 #~ msgstr "Bestellungen als PDF generieren?"

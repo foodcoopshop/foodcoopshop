@@ -262,7 +262,7 @@ class PurchasePriceProductsTable extends AppTable
             }
 
             $changedTaxInfoForMessage[] = [
-                'label' => __d('admin', 'Purchase_price') . ': ',
+                'label' => __('Purchase_price') . ': ',
                 'oldTaxRate' => $oldPurchasePriceTaxRate,
                 'newTaxRate' => $taxRate,
             ];
