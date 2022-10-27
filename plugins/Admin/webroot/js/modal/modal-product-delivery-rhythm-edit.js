@@ -119,7 +119,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
         select.append($('#rhythmtypes').html());
         select.on('change', function() {
             var elementToShow = 'default';
-            if ($(this).val().match('individual')) {
+            if ($(this).val() !== null && $(this).val().match('individual')) {
                 elementToShow = 'individual';
             }
             $(modalSelector + ' .dynamic-element').hide();
