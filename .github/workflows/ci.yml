@@ -52,9 +52,7 @@ jobs:
         run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
         
       - name: ESLint
-        run: |
-            npm install -g eslint
-            bash ./devtools/eslint.sh
+        run: docker exec -w /var/www/html fcs-php-nginx bash ./devtools/eslint.sh
 
       - name: PHPUnit Tests
         run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpunit
