@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-13 10:55+0200\n"
+"POT-Creation-Date: 2022-10-27 21:22+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2073,6 +2073,9 @@ msgid "Delete_selected_products"
 msgstr ""
 
 msgid "Edit_delivery_rhythm_for_selected_products"
+msgstr ""
+
+msgid "Edit_status_for_selected_products"
 msgstr ""
 
 msgid "Generate_product_cards"

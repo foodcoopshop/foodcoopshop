@@ -347,9 +347,8 @@ use Cake\Core\Configure;
         echo $this->element('productList/button/deleteSelectedProducts');
         echo $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
         echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
-        echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts', [
-            'products' => $products
-        ]);
+        echo $this->element('productList/button/editStatusForSelectedProducts');
+        echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
     echo '</div>';
 
     ?>

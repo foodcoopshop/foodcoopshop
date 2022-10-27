@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-20 08:24+0200\n"
-"PO-Revision-Date: 2022-09-20 08:28+0200\n"
+"POT-Creation-Date: 2022-10-27 22:11+0200\n"
+"PO-Revision-Date: 2022-10-27 22:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -720,6 +720,12 @@ msgstr "Produkt {0} wirklich als \"neu\" anzeigen?"
 msgid "Really_do_not_show_product_{0}_as_new?"
 msgstr "Produkt {0} wirklich als \"nicht neu\" anzeigen?"
 
+msgid "Activate"
+msgstr "Aktivieren"
+
+msgid "Deactivate"
+msgstr "Deaktivieren"
+
 msgid "Activate_product"
 msgstr "Produkt aktivieren"
 
@@ -791,6 +797,9 @@ msgstr "Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!"
 
 msgid "Errors_occurred_while_member_was_deleted"
 msgstr "Beim Löschen des Mitgliedskontos sind Fehler aufgetreten"
+
+msgid "Errors_occurred_while_product_status_was_changed"
+msgstr "Beim Ändern des Produkt-Status sind Fehler aufgetreten"
 
 msgid "Delete_products?"
 msgstr "Produkte löschen?"
@@ -950,6 +959,9 @@ msgstr "zurück"
 
 msgid "Send_email_to_member"
 msgstr "E-Mail an Mitglied versenden"
+
+msgid "Change_status"
+msgstr "Status ändern"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
@@ -1260,9 +1272,6 @@ msgstr "Rechnung"
 msgid "Cancellation_invoice"
 msgstr "Storno-Rechnung"
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
-
 msgid "ID"
 msgstr ""
 
@@ -1313,6 +1322,9 @@ msgstr "Summe Steuer"
 
 msgid "Sum_price_incl."
 msgstr "Summe Preis inkl."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -1719,6 +1731,10 @@ msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
 
+#, fuzzy
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
+
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
 
@@ -1736,6 +1752,9 @@ msgstr "Bitte wähle einen Abholtag aus."
 
 msgid "The_pickup_day_is_not_valid."
 msgstr "Der Abholtag ist nicht gültig."
+
+msgid "Delivery_break"
+msgstr "Lieferpause"
 
 msgid "offline"
 msgstr "offline"
@@ -1856,9 +1875,6 @@ msgstr "Bitte gib einen gültigen IBAN ein."
 
 msgid "Please_enter_a_valid_BIC."
 msgstr "Bitte gib einen gültigen BIC ein."
-
-msgid "Delivery_break"
-msgstr "Lieferpause"
 
 msgid "online"
 msgstr "online"

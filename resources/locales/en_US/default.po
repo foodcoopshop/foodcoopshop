@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-20 08:24+0200\n"
-"PO-Revision-Date: 2022-09-20 08:29+0200\n"
+"POT-Creation-Date: 2022-10-27 22:11+0200\n"
+"PO-Revision-Date: 2022-10-27 22:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -720,6 +720,12 @@ msgstr "Do you really want to show product {0} as \"new\"?"
 msgid "Really_do_not_show_product_{0}_as_new?"
 msgstr "Do you really want to show product {0} as \"not new\"?"
 
+msgid "Activate"
+msgstr "Activate"
+
+msgid "Deactivate"
+msgstr "Deactivate"
+
 msgid "Activate_product"
 msgstr "Activate product"
 
@@ -791,6 +797,9 @@ msgstr "Be careful, you cannot undo this action!"
 
 msgid "Errors_occurred_while_member_was_deleted"
 msgstr "Errors occurred while member was deleted"
+
+msgid "Errors_occurred_while_product_status_was_changed"
+msgstr "Errors occurred while the product status was changed"
 
 msgid "Delete_products?"
 msgstr "Delete products?"
@@ -950,6 +959,9 @@ msgstr "back"
 
 msgid "Send_email_to_member"
 msgstr "Send email to member"
+
+msgid "Change_status"
+msgstr "Change status"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1260,9 +1272,6 @@ msgstr "Invoice"
 msgid "Cancellation_invoice"
 msgstr "Cancellation invoice"
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
-
 msgid "ID"
 msgstr ""
 
@@ -1313,6 +1322,9 @@ msgstr "Sum tax"
 
 msgid "Sum_price_incl."
 msgstr "Sum price incl."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "You_are_not_signed_in."
 msgstr "Your are not signed in."
@@ -1719,6 +1731,10 @@ msgstr "The product with id {0} does not exist."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"
 
+#, fuzzy
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr "Please accept the information about the right of withdrawal."
+
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr "Please accept the information about the right of withdrawal."
 
@@ -1736,6 +1752,9 @@ msgstr "Please select a pickup day."
 
 msgid "The_pickup_day_is_not_valid."
 msgstr "The pickup day is not valid."
+
+msgid "Delivery_break"
+msgstr "Delivery break"
 
 msgid "offline"
 msgstr "offline"
@@ -1856,9 +1875,6 @@ msgstr "Please enter a valid IBAN."
 
 msgid "Please_enter_a_valid_BIC."
 msgstr "Please enter a valid BIC."
-
-msgid "Delivery_break"
-msgstr "Delivery break"
 
 msgid "online"
 msgstr "online"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-13 10:55+0200\n"
-"PO-Revision-Date: 2022-10-13 10:55+0200\n"
+"POT-Creation-Date: 2022-10-27 21:22+0200\n"
+"PO-Revision-Date: 2022-10-27 21:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2081,6 +2081,9 @@ msgstr "Delete selected products"
 
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Edit delivery rhythm for selected products"
+
+msgid "Edit_status_for_selected_products"
+msgstr "Edit status for selected products"
 
 msgid "Generate_product_cards"
 msgstr "Generate product cards"

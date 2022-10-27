@@ -1724,6 +1724,38 @@ class ProductsController extends AdminAppController
         $this->redirect($this->referer());
     }
 
+    public function changeStatusBulk()
+    {
+
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+
+        $productIds = $this->request->getData('productIds');
+        $status = (int) $this->request->getData('status');
+        
+        $data = [];
+        foreach($productIds as $productId) {
+            $productId = (int) $productId;
+            $data[] = [$productId => $status];
+        }
+
+        try {
+            $this->Product->changeStatus($data);
+
+            $this->set([
+                'status' => 1,
+                'msg' => __d('admin', 'Saving_successful.'),
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
+        }
+
+    }
+
     public function changeStatus($productId, $status)
     {
 

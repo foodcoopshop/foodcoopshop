@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-20 08:24+0200\n"
+"POT-Creation-Date: 2022-10-27 22:11+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -719,6 +719,12 @@ msgstr ""
 msgid "Really_do_not_show_product_{0}_as_new?"
 msgstr ""
 
+msgid "Activate"
+msgstr ""
+
+msgid "Deactivate"
+msgstr ""
+
 msgid "Activate_product"
 msgstr ""
 
@@ -789,6 +795,9 @@ msgid "Be_careful_there_is_no_way_back!"
 msgstr ""
 
 msgid "Errors_occurred_while_member_was_deleted"
+msgstr ""
+
+msgid "Errors_occurred_while_product_status_was_changed"
 msgstr ""
 
 msgid "Delete_products?"
@@ -948,6 +957,9 @@ msgid "back"
 msgstr ""
 
 msgid "Send_email_to_member"
+msgstr ""
+
+msgid "Change_status"
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
@@ -1259,9 +1271,6 @@ msgstr ""
 msgid "Cancellation_invoice"
 msgstr ""
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr ""
-
 msgid "ID"
 msgstr ""
 
@@ -1311,6 +1320,9 @@ msgid "Sum_tax"
 msgstr ""
 
 msgid "Sum_price_incl."
+msgstr ""
+
+msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
 msgid "You_are_not_signed_in."
@@ -1718,6 +1730,9 @@ msgstr ""
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr ""
 
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr ""
+
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr ""
 
@@ -1734,6 +1749,9 @@ msgid "Please_select_a_pickup_day."
 msgstr ""
 
 msgid "The_pickup_day_is_not_valid."
+msgstr ""
+
+msgid "Delivery_break"
 msgstr ""
 
 msgid "offline"
@@ -1854,9 +1872,6 @@ msgid "Please_enter_a_valid_IBAN."
 msgstr ""
 
 msgid "Please_enter_a_valid_BIC."
-msgstr ""
-
-msgid "Delivery_break"
 msgstr ""
 
 msgid "online"
