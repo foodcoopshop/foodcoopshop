@@ -5,7 +5,7 @@
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.1.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -66,7 +66,7 @@ foodcoopshop.ModalProductStatusEditBulk = {
                 foodcoopshop.Helper.disableButton($(this));
                 foodcoopshop.ModalProductStatusEditBulk.getSuccessHandler(modalSelector, 0);
             });
-    
+
             $(modalSelector).on('hidden.bs.modal', function (e) {
                 foodcoopshop.ModalProductStatusEditBulk.getCloseHandler(modalSelector);
             });
