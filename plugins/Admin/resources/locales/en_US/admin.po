@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-27 22:55+0200\n"
-"PO-Revision-Date: 2022-10-27 22:56+0200\n"
+"POT-Creation-Date: 2022-10-28 20:44+0200\n"
+"PO-Revision-Date: 2022-10-28 20:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -647,6 +647,12 @@ msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
 msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
+msgstr "{0,plural,=1{One product was} other{# products were}} deactivated."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
+msgstr "{0,plural,=1{One product was} other{# products were}} activated."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr "The product {0} of manufacturer {1} has been deactivated."

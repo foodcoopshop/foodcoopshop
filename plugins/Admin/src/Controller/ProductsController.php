@@ -1735,7 +1735,7 @@ class ProductsController extends AdminAppController
 
         $productIds = $this->request->getData('productIds');
         $status = (int) $this->request->getData('status');
-        
+
         $data = [];
         foreach($productIds as $productId) {
             $productId = (int) $productId;
@@ -1743,13 +1743,28 @@ class ProductsController extends AdminAppController
         }
 
         try {
+
             $this->Product->changeStatus($data);
+            $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deactivated.', [
+                count($productIds),
+            ]);
+            $actionLogType = 'product_set_inactive';
+            if ($status) {
+                $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_activated.', [
+                    count($productIds),
+                ]);
+                $actionLogType = 'product_set_active';
+            }
+            $this->Flash->success($actionLogMessage);
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage . '<br />Ids: ' . join(',', $productIds));
 
             $this->set([
                 'status' => 1,
                 'msg' => __d('admin', 'Saving_successful.'),
             ]);
+
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
         } catch (InvalidParameterException $e) {
             return $this->sendAjaxError($e);
         }
