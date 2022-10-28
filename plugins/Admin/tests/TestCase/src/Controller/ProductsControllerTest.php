@@ -46,7 +46,26 @@ class ProductsControllerTest extends AppCakeTestCase
                 'Products.id_product' => $productId
             ]
         ])->first();
-        $this->assertEquals($product->active, $status, 'changing product status did not work');
+        $this->assertEquals($product->active, $status);
+    }
+
+    public function testChangeProductStatusBulk()
+    {
+        $this->loginAsSuperadmin();
+        $productIds = [60, 102, 103];
+        $status = APP_OFF;
+        $this->ajaxPost('/admin/products/changeStatusBulk', [
+            'productIds' => $productIds,
+            'status' => APP_OFF,
+        ]);
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product IN' => $productIds
+            ]
+        ]);
+        foreach ($products as $product) {
+            $this->assertEquals($product->active, $status);
+        }
     }
 
     public function testEditSellingPriceWithInvalidPriceAsSuperadmin()
