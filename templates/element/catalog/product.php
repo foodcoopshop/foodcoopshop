@@ -15,7 +15,14 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<div class="pw" id="pw-' . $product->id_product . '">';
+$classes = [
+    'pw'
+];
+$deliveryBreakEnabled = $product->delivery_break_enabled ?? false;
+if ($deliveryBreakEnabled) {
+    $classes[] = 'delivery-break-enabled';
+}
+echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';
 
     echo '<div class="c1">';
         echo $this->element('catalog/columns/column1', [
