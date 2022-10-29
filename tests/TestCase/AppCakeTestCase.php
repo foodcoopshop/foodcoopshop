@@ -2,6 +2,7 @@
 namespace App\Test\TestCase;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
@@ -36,6 +37,7 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 abstract class AppCakeTestCase extends TestCase
 {
 
+    use AppIntegrationTestTrait;
     use ConsoleIntegrationTestTrait;
     use QueueTrait;
 
