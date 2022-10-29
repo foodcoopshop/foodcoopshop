@@ -3,17 +3,18 @@ namespace App\Test\TestCase;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
 use App\View\Helper\SlugHelper;
+use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\View\View;
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
 use Migrations\Migrations;
@@ -39,6 +40,7 @@ abstract class AppCakeTestCase extends TestCase
 
     use AppIntegrationTestTrait;
     use ConsoleIntegrationTestTrait;
+    use LoginTrait;
     use QueueTrait;
 
     protected $dbConnection;
@@ -57,10 +59,6 @@ abstract class AppCakeTestCase extends TestCase
 
     public $Manufacturer;
 
-
-    /**
-     * called before every test method
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -79,7 +77,6 @@ abstract class AppCakeTestCase extends TestCase
         $this->PricePerUnit = new PricePerUnitHelper($View);
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-
 
         // enable security token only for IntegrationTests
         if (method_exists($this, 'enableSecurityToken')) {
@@ -228,21 +225,14 @@ abstract class AppCakeTestCase extends TestCase
         ob_flush();
     }
 
-    protected function changeManufacturerNoDeliveryDays($manufacturerId, $noDeliveryDays = '')
+    protected function changeManufacturerNoDeliveryDays(int $manufacturerId, string $noDeliveryDays = ''): void
     {
-        $query = 'UPDATE fcs_manufacturer SET no_delivery_days = :noDeliveryDays WHERE id_manufacturer = :manufacturerId;';
-        $params = [
-            'manufacturerId' => $manufacturerId,
-            'noDeliveryDays' => $noDeliveryDays
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $this->changeManufacturer($manufacturerId, 'no_delivery_days', $noDeliveryDays);
     }
 
     /**
      * @param int $productId
      * @param int $amount
-     * @return string
      */
     protected function addProductToCart($productId, $amount)
     {
@@ -368,27 +358,18 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-
-    protected function changeManufacturer($manufacturerId, $field, $value)
+    protected function changeManufacturer(int $manufacturerId, string $field, $value)
     {
-        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$field.' = :value WHERE id_manufacturer = :manufacturerId';
-        $params = [
-            'value' => $value,
-            'manufacturerId' => $manufacturerId
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        return $statement->execute($params);
+        $newManufacturer = $this->Manufacturer->get($manufacturerId);
+        $newManufacturer->{$field} = $value;
+        $this->Manufacturer->save($newManufacturer);
     }
 
-    protected function changeCustomer($customerId, $field, $value)
+    protected function changeCustomer(int $customerId, string $field, $value)
     {
-        $query = 'UPDATE ' . $this->Customer->getTable().' SET '.$field.' = :value WHERE id_customer = :customerId';
-        $params = [
-            'value' => $value,
-            'customerId' => $customerId
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        return $statement->execute($params);
+        $newCustomer = $this->Customer->get($customerId);
+        $newCustomer->{$field} = $value;
+        $this->Customer->save($newCustomer);
     }
 
     protected function getCorrectedLogoPathInHtmlForPdfs($html)
@@ -408,7 +389,7 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function resetCustomerCreditBalance() {
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 2');
+        $this->Payment->delete($this->Payment->get(2));
     }
 
     private function prepareSendingOrderListsOrInvoices($contentFolder)
