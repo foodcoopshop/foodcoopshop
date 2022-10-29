@@ -230,9 +230,10 @@ foodcoopshop.Admin = {
     },
 
     initHighlightedRowId: function (rowId) {
+        var newTop = $('.filter-container').height() + $(rowId).closest('table').find('tr.sort').height() + 10;
         $.scrollTo(rowId, 1000, {
             offset: {
-                top: -100
+                top: newTop * -1,
             }
         });
         $(rowId).css('background-color', 'orange');
