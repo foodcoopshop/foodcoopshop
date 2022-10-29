@@ -10,13 +10,13 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 
-* <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
+- <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen / Verbesserungen
 - Superadmins können Tag und Uhrzeit der Cronjobs (z.B. die automatische Bestell-Erinnerung, Rechnungsversand) jetzt selber im Admin-Bereich (Homepage-Verwaltung / Einstellungen / neuer Tab "Cronjobs") ändern. [I#860](https://github.com/foodcoopshop/foodcoopshop/issues/860) / [PR#74](https://github.com/foodcoopshop/foodcoopshop/pull/874) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Konfiguration "Freitag Bestellschluss / Samstag Bestelllisten-Versand / Donnerstag Abholtag" ist jetzt möglich. [I#866](https://github.com/foodcoopshop/foodcoopshop/issues/866) / [PR#867](https://github.com/foodcoopshop/foodcoopshop/pull/867) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-* Die Überschriften aller Tabellen im Admin-Bereich bleiben jetzt beim Scrollen sichtbar (nicht in iOS). [PR#888](https://github.com/foodcoopshop/foodcoopshop/pull/888) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-* Im Produkt-Admin kann jetzt der Status (aktiviert, deaktiviert) von mehreren markierten Produkten auf einmal geändert werden. [I#895](https://github.com/foodcoopshop/foodcoopshop/issues/897) / [PR#897](https://github.com/foodcoopshop/foodcoopshop/pull/897) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die Überschriften aller Tabellen im Admin-Bereich bleiben jetzt beim Scrollen sichtbar (nicht in iOS). [PR#888](https://github.com/foodcoopshop/foodcoopshop/pull/888) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Im Produkt-Admin kann jetzt der Status (aktiviert, deaktiviert) von mehreren markierten Produkten auf einmal geändert werden. [I#895](https://github.com/foodcoopshop/foodcoopshop/issues/897) / [PR#897](https://github.com/foodcoopshop/foodcoopshop/pull/897) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ### For developers
