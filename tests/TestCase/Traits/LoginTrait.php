@@ -78,6 +78,12 @@ trait LoginTrait
         $this->session($sessionData);
     }
 
+    public function loginAsMilkManufacturer()
+    {
+        $sessionData = $this->login(Configure::read('test.milkManufacturerId'));
+        $this->session($sessionData);
+    }
+
     public function logout()
     {
         $this->get($this->Slug->getLogout());

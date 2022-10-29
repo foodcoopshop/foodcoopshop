@@ -43,13 +43,13 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->get('/admin/products/changeStatus/' . $productId . '/' . $status);
         $product = $this->Product->find('all', [
             'conditions' => [
-                'Products.id_product' => $productId
+                'Products.id_product' => $productId,
             ]
         ])->first();
         $this->assertEquals($product->active, $status);
     }
 
-    public function testChangeProductStatusBulk()
+    public function testChangeProductStatusBulkAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $productIds = [60, 102, 103];
@@ -60,7 +60,38 @@ class ProductsControllerTest extends AppCakeTestCase
         ]);
         $products = $this->Product->find('all', [
             'conditions' => [
-                'Products.id_product IN' => $productIds
+                'Products.id_product IN' => $productIds,
+            ]
+        ]);
+        foreach ($products as $product) {
+            $this->assertEquals($product->active, $status);
+        }
+    }
+
+    public function testChangeProductStatusBulkAsManufacturerPermisionsNotOk()
+    {
+        $this->loginAsMeatManufacturer();
+        $productIds = [60, 102, 103];
+        $status = APP_OFF;
+        $this->ajaxPost('/admin/products/changeStatusBulk', [
+            'productIds' => $productIds,
+            'status' => $status,
+        ]);
+        $this->assertAccessDeniedFlashMessage();
+    }
+
+    public function testChangeProductStatusBulkAsManufacturersPermissionsOk()
+    {
+        $this->loginAsMilkManufacturer();
+        $productIds = [60];
+        $status = APP_OFF;
+        $this->ajaxPost('/admin/products/changeStatusBulk', [
+            'productIds' => $productIds,
+            'status' => $status,
+        ]);
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product IN' => $productIds,
             ]
         ]);
         foreach ($products as $product) {
