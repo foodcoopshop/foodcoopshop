@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-09-20 08:24+0200\n"
-"PO-Revision-Date: 2022-09-20 08:28+0200\n"
+"POT-Creation-Date: 2022-10-29 09:12+0200\n"
+"PO-Revision-Date: 2022-10-29 09:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -278,6 +278,9 @@ msgstr "Deine E-Mail-Adresse wurde bereits aktiviert oder der Aktivierungscode w
 
 msgid "Your_email_address_has_been_activated_successfully."
 msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert."
+
+msgid "Filename_Terms-of-use"
+msgstr "Nutzungsbedingungen"
 
 msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
 msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert, dein Passwort wurde dir soeben zugeschickt."
@@ -654,17 +657,11 @@ msgstr "Ja, stornieren!"
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
 
-msgid "Really_delete_selected_product?"
-msgstr "Ausgewähltes Produkt wirklich stornieren?"
+msgid "You_selected_1_product."
+msgstr "Du hast 1 Produkt markiert."
 
-msgid "Really_delete_selected_products?"
-msgstr "Ausgewählte Produkte wirklich stornieren?"
-
-msgid "You_selected_1_product"
-msgstr "Du hast 1 Produkt ausgewählt"
-
-msgid "You_selected_{0}_products"
-msgstr "Du hast {0} Produkte ausgewählt"
+msgid "You_selected_{0}_products."
+msgstr "Du hast {0} Produkte markiert."
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Bitte gib an, warum die Anzahl vermindert wird."
@@ -719,6 +716,12 @@ msgstr "Produkt {0} wirklich als \"neu\" anzeigen?"
 
 msgid "Really_do_not_show_product_{0}_as_new?"
 msgstr "Produkt {0} wirklich als \"nicht neu\" anzeigen?"
+
+msgid "Activate"
+msgstr "Aktivieren"
+
+msgid "Deactivate"
+msgstr "Deaktivieren"
 
 msgid "Activate_product"
 msgstr "Produkt aktivieren"
@@ -791,6 +794,9 @@ msgstr "Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!"
 
 msgid "Errors_occurred_while_member_was_deleted"
 msgstr "Beim Löschen des Mitgliedskontos sind Fehler aufgetreten"
+
+msgid "Errors_occurred_while_product_status_was_changed"
+msgstr "Beim Ändern des Produkt-Status sind Fehler aufgetreten"
 
 msgid "Delete_products?"
 msgstr "Produkte löschen?"
@@ -904,7 +910,7 @@ msgid "Add_product_feedback_explanation_text_{0}."
 msgstr "Dein Feedback wird dem Hersteller {0} nach dem Speichern automatisch per E-Mail geschickt, es ist dann <b>nicht mehr änderbar</b>. Der Hersteller erhält deine E-Mail-Adresse, damit er dir ggfs. zurückschreiben kann."
 
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
-msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links auswählst und auf den Button ganz unten klickst."
+msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links markierst und dann auf den Button ganz unten klickst."
 
 msgid "Generate_invoice"
 msgstr "Rechnung erstellen"
@@ -950,6 +956,9 @@ msgstr "zurück"
 
 msgid "Send_email_to_member"
 msgstr "E-Mail an Mitglied versenden"
+
+msgid "Change_status"
+msgstr "Status ändern"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
@@ -1180,10 +1189,10 @@ msgid "Status"
 msgstr "Status"
 
 msgid "No_products_or_attributes_selected."
-msgstr "Es sind keine Produkte oder Varianten ausgewählt."
+msgstr "Es sind keine Produkte oder Varianten markiert."
 
 msgid "No_product_data_selected."
-msgstr "Es sind keine Produktdaten ausgewählt."
+msgstr "Es sind keine Produktdaten markiert."
 
 msgid "Please_enter_your_credentials."
 msgstr "Bitte gib deine Login-Daten ein."
@@ -1260,9 +1269,6 @@ msgstr "Rechnung"
 msgid "Cancellation_invoice"
 msgstr "Storno-Rechnung"
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
-
 msgid "ID"
 msgstr ""
 
@@ -1313,6 +1319,9 @@ msgstr "Summe Steuer"
 
 msgid "Sum_price_incl."
 msgstr "Summe Preis inkl."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -1719,6 +1728,9 @@ msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
 
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
+
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
 
@@ -1736,6 +1748,9 @@ msgstr "Bitte wähle einen Abholtag aus."
 
 msgid "The_pickup_day_is_not_valid."
 msgstr "Der Abholtag ist nicht gültig."
+
+msgid "Delivery_break"
+msgstr "Lieferpause"
 
 msgid "offline"
 msgstr "offline"
@@ -1857,9 +1872,6 @@ msgstr "Bitte gib einen gültigen IBAN ein."
 msgid "Please_enter_a_valid_BIC."
 msgstr "Bitte gib einen gültigen BIC ein."
 
-msgid "Delivery_break"
-msgstr "Lieferpause"
-
 msgid "online"
 msgstr "online"
 
@@ -1934,6 +1946,9 @@ msgstr "gelöscht"
 
 msgid "The_price_needs_to_be_greater_or_equal_than_0."
 msgstr "Der Preis muss eine positive Zahl sein."
+
+msgid "Purchase_price"
+msgstr "Einkaufspreis"
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "Der Lagerstand muss eine Zahl sein."
@@ -2748,6 +2763,12 @@ msgstr "getätigt am"
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
+#~ msgid "Really_delete_selected_product?"
+#~ msgstr "Markiertes Produkt wirklich stornieren?"
+
+#~ msgid "Really_delete_selected_products?"
+#~ msgstr "Markierte Produkte wirklich stornieren?"
+
 #~ msgid "The_day_of_month_is_required."
 #~ msgstr "Bitte gib einen Tag (Monat) an."
 
@@ -2904,9 +2925,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 #, fuzzy
 #~ msgid "Your_email_address_was_activated"
 #~ msgstr "Deine E-Mail-Adresse wurde erfolgreich aktiviert und du bist bereits eingeloggt."
-
-#~ msgid "Filename_Terms-of-use"
-#~ msgstr "Nutzungsbedingungen"
 
 #~ msgid "Generate_orders_as_pdf?"
 #~ msgstr "Bestellungen als PDF generieren?"

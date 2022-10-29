@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-09-20 08:24+0200\n"
+"POT-Creation-Date: 2022-10-29 09:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -276,6 +276,9 @@ msgid "Your_email_address_was_already_activated_or_the_activation_code_was_not_v
 msgstr ""
 
 msgid "Your_email_address_has_been_activated_successfully."
+msgstr ""
+
+msgid "Filename_Terms-of-use"
 msgstr ""
 
 msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
@@ -653,16 +656,10 @@ msgstr ""
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr ""
 
-msgid "Really_delete_selected_product?"
+msgid "You_selected_1_product."
 msgstr ""
 
-msgid "Really_delete_selected_products?"
-msgstr ""
-
-msgid "You_selected_1_product"
-msgstr ""
-
-msgid "You_selected_{0}_products"
+msgid "You_selected_{0}_products."
 msgstr ""
 
 msgid "Adapt_amount_reason_is_mandatory."
@@ -717,6 +714,12 @@ msgid "Really_show_product_{0}_as_new?"
 msgstr ""
 
 msgid "Really_do_not_show_product_{0}_as_new?"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Deactivate"
 msgstr ""
 
 msgid "Activate_product"
@@ -789,6 +792,9 @@ msgid "Be_careful_there_is_no_way_back!"
 msgstr ""
 
 msgid "Errors_occurred_while_member_was_deleted"
+msgstr ""
+
+msgid "Errors_occurred_while_product_status_was_changed"
 msgstr ""
 
 msgid "Delete_products?"
@@ -948,6 +954,9 @@ msgid "back"
 msgstr ""
 
 msgid "Send_email_to_member"
+msgstr ""
+
+msgid "Change_status"
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
@@ -1259,9 +1268,6 @@ msgstr ""
 msgid "Cancellation_invoice"
 msgstr ""
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr ""
-
 msgid "ID"
 msgstr ""
 
@@ -1311,6 +1317,9 @@ msgid "Sum_tax"
 msgstr ""
 
 msgid "Sum_price_incl."
+msgstr ""
+
+msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
 msgid "You_are_not_signed_in."
@@ -1718,6 +1727,9 @@ msgstr ""
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr ""
 
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr ""
+
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr ""
 
@@ -1734,6 +1746,9 @@ msgid "Please_select_a_pickup_day."
 msgstr ""
 
 msgid "The_pickup_day_is_not_valid."
+msgstr ""
+
+msgid "Delivery_break"
 msgstr ""
 
 msgid "offline"
@@ -1856,9 +1871,6 @@ msgstr ""
 msgid "Please_enter_a_valid_BIC."
 msgstr ""
 
-msgid "Delivery_break"
-msgstr ""
-
 msgid "online"
 msgstr ""
 
@@ -1932,6 +1944,9 @@ msgid "deleted"
 msgstr ""
 
 msgid "The_price_needs_to_be_greater_or_equal_than_0."
+msgstr ""
+
+msgid "Purchase_price"
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."

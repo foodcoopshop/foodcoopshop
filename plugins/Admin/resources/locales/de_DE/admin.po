@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-13 10:55+0200\n"
-"PO-Revision-Date: 2022-10-17 10:27+0200\n"
+"POT-Creation-Date: 2022-10-28 20:44+0200\n"
+"PO-Revision-Date: 2022-10-28 21:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -647,6 +647,12 @@ msgstr "Das Produkt {0} vom Hersteller {1} wird nicht mehr als \"neu\" angezeigt
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
 msgstr "Das Produkt {0} vom Hersteller {1} wird jetzt {2} Tage lang als \"neu\" angezeigt."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
+msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} deaktiviert."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
+msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} aktiviert."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
@@ -1827,6 +1833,9 @@ msgstr "Neu?"
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
 
+msgid "Selected_products"
+msgstr "Markierte Produkte"
+
 msgid "Storage_location"
 msgstr "Lagerort"
 
@@ -1927,7 +1936,7 @@ msgid "Order_stock_products"
 msgstr "Lagerprodukte bestellen"
 
 msgid "Copy_selected_email_addresses"
-msgstr "Ausgewählte E-Mail-Adressen kopieren"
+msgstr "Markierte E-Mail-Adressen kopieren"
 
 msgid "Generate_member_cards"
 msgstr "Mitgliedskarten generieren"
@@ -1972,7 +1981,7 @@ msgid "Change_pickup_day"
 msgstr "Abholtag ändern"
 
 msgid "Cancel_selected_products"
-msgstr "Ausgewählte Produkte stornieren"
+msgstr "Markierte Produkte stornieren"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
@@ -2076,14 +2085,17 @@ msgstr "Vielen Dank, dass du uns belieferst!"
 msgid "Customer_ID"
 msgstr "Mitglieds-Nr."
 
-msgid "Calculate_selling_price_with_surcharge_for_selected_products"
-msgstr "Verkaufspreis mit Aufschlag für ausgewählte Produkte berechnen"
+msgid "Calculate_selling_price"
+msgstr "Verkaufspreis berechnen"
 
-msgid "Delete_selected_products"
-msgstr "Ausgewählte Produkte löschen"
+msgid "Delete"
+msgstr "Löschen"
 
-msgid "Edit_delivery_rhythm_for_selected_products"
-msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
+msgid "Edit_delivery_rhythm"
+msgstr "Lieferrhythmus ändern"
+
+msgid "Edit_status"
+msgstr "Status ändern"
 
 msgid "Generate_product_cards"
 msgstr "Produktkarten generieren"
@@ -2400,6 +2412,15 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#~ msgid "Delete_selected_products"
+#~ msgstr "Ausgewählte Produkte löschen"
+
+#~ msgid "Edit_delivery_rhythm_for_selected_products"
+#~ msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
+
+#~ msgid "Edit_status_for_selected_products"
+#~ msgstr "Status für ausgewählte Produkte bearbeiten"
+
 #~ msgid "Software_update_version"
 #~ msgstr "Software-Update / Version"
 
@@ -2496,9 +2517,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 #~ msgstr "0 bedeutet: globales Limit von {0} wird verwendet."
-
-#~ msgid "Delete"
-#~ msgstr "Löschen"
 
 #~ msgid "Additional_in_{0}"
 #~ msgstr "Zusätzlich in {0}"

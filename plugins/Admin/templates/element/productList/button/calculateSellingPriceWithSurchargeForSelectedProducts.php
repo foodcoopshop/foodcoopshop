@@ -16,15 +16,11 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
-if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || $appAuth->isManufacturer()) {
+if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || $appAuth->isManufacturer() || empty($products)) {
     return false;
 }
 
-if (!empty($products)) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace').".ModalProductCalculateSellingPriceWithSurcharge.init();"
-    ]);
-    echo '<a id="calculateSellingPriceWithSurchargForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-calculator"></i> ' . __d('admin', 'Calculate_selling_price_with_surcharge_for_selected_products') . '</a>';
-}
-
-?>
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".ModalProductCalculateSellingPriceWithSurcharge.init();"
+]);
+echo '<a id="calculateSellingPriceWithSurchargForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-calculator"></i> ' . __d('admin', 'Calculate_selling_price') . '</a>';

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-13 10:55+0200\n"
-"PO-Revision-Date: 2022-10-13 10:55+0200\n"
+"POT-Creation-Date: 2022-10-28 20:44+0200\n"
+"PO-Revision-Date: 2022-10-28 20:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -647,6 +647,12 @@ msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
 msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
+msgstr "{0,plural,=1{One product was} other{# products were}} deactivated."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
+msgstr "{0,plural,=1{One product was} other{# products were}} activated."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr "The product {0} of manufacturer {1} has been deactivated."
@@ -1824,6 +1830,9 @@ msgstr "New?"
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
 
+msgid "Selected_products"
+msgstr "Selected products"
+
 msgid "Storage_location"
 msgstr "Storage location"
 
@@ -2073,14 +2082,17 @@ msgstr "Thank you very much for delivering your products to us!"
 msgid "Customer_ID"
 msgstr "Customer-ID"
 
-msgid "Calculate_selling_price_with_surcharge_for_selected_products"
-msgstr "Calculate selling price with surcharge for selected products"
+msgid "Calculate_selling_price"
+msgstr "Calculate selling price"
 
-msgid "Delete_selected_products"
-msgstr "Delete selected products"
+msgid "Delete"
+msgstr "Delete"
 
-msgid "Edit_delivery_rhythm_for_selected_products"
-msgstr "Edit delivery rhythm for selected products"
+msgid "Edit_delivery_rhythm"
+msgstr "Edit delivery rhythm"
+
+msgid "Edit_status"
+msgstr "Edit status"
 
 msgid "Generate_product_cards"
 msgstr "Generate product cards"
@@ -2397,6 +2409,15 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "Product_ID"
 msgstr "ProductID"
 
+#~ msgid "Delete_selected_products"
+#~ msgstr "Delete selected products"
+
+#~ msgid "Edit_delivery_rhythm_for_selected_products"
+#~ msgstr "Edit delivery rhythm for selected products"
+
+#~ msgid "Edit_status_for_selected_products"
+#~ msgstr "Edit status for selected products"
+
 #~ msgid "Software_update_version"
 #~ msgstr "Software update / Version"
 
@@ -2491,9 +2512,6 @@ msgstr "ProductID"
 
 #~ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 #~ msgstr "0 means: global limit of {0} is used."
-
-#~ msgid "Delete"
-#~ msgstr "Delete"
 
 #~ msgid "Additional_in_{0}"
 #~ msgstr "Additional in {0}"

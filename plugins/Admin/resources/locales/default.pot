@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-13 10:55+0200\n"
+"POT-Creation-Date: 2022-10-28 20:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -645,6 +645,12 @@ msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
 msgstr ""
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr ""
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
+msgstr ""
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
 msgstr ""
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
@@ -1817,6 +1823,9 @@ msgstr ""
 msgid "Delivery_rhythm"
 msgstr ""
 
+msgid "Selected_products"
+msgstr ""
+
 msgid "Storage_location"
 msgstr ""
 
@@ -2066,13 +2075,16 @@ msgstr ""
 msgid "Customer_ID"
 msgstr ""
 
-msgid "Calculate_selling_price_with_surcharge_for_selected_products"
+msgid "Calculate_selling_price"
 msgstr ""
 
-msgid "Delete_selected_products"
+msgid "Delete"
 msgstr ""
 
-msgid "Edit_delivery_rhythm_for_selected_products"
+msgid "Edit_delivery_rhythm"
+msgstr ""
+
+msgid "Edit_status"
 msgstr ""
 
 msgid "Generate_product_cards"
