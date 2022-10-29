@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-27 22:40+0200\n"
+"POT-Creation-Date: 2022-10-29 09:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -656,16 +656,10 @@ msgstr ""
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr ""
 
-msgid "Really_delete_selected_product?"
+msgid "You_selected_1_product."
 msgstr ""
 
-msgid "Really_delete_selected_products?"
-msgstr ""
-
-msgid "You_selected_1_product"
-msgstr ""
-
-msgid "You_selected_{0}_products"
+msgid "You_selected_{0}_products."
 msgstr ""
 
 msgid "Adapt_amount_reason_is_mandatory."

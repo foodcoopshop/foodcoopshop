@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-27 22:40+0200\n"
-"PO-Revision-Date: 2022-10-27 22:43+0200\n"
+"POT-Creation-Date: 2022-10-29 09:12+0200\n"
+"PO-Revision-Date: 2022-10-29 09:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -657,17 +657,11 @@ msgstr "Cancel product!"
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Please only cancel if this is ok for the manfacturer!"
 
-msgid "Really_delete_selected_product?"
-msgstr "Really cancel the selected product?"
+msgid "You_selected_1_product."
+msgstr "You selected 1 product."
 
-msgid "Really_delete_selected_products?"
-msgstr "Really cancel the selected products?"
-
-msgid "You_selected_1_product"
-msgstr "You selected 1 product"
-
-msgid "You_selected_{0}_products"
-msgstr "You selected {0} products"
+msgid "You_selected_{0}_products."
+msgstr "You selected {0} products."
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Please tell us, why you want to decrease the amount."
@@ -2768,6 +2762,12 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Really_delete_selected_product?"
+#~ msgstr "Really cancel the selected product?"
+
+#~ msgid "Really_delete_selected_products?"
+#~ msgstr "Really cancel the selected products?"
 
 #, fuzzy
 #~ msgid "The_day_of_month_is_required."
