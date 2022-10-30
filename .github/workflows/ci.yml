@@ -10,15 +10,15 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.10
     name: FoodCoopShop CI
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Run Docker Compose
         run: CURRENT_UID=$(id -u):$(id -g) docker compose up php-nginx -d
-        
+
       - name: Setup Dev Environment
         run: |
           # do not use ./devtools/init-dev-setup.sh because dev db is not needed
@@ -26,7 +26,7 @@ jobs:
           bash ./devtools/setup-dev/copy-config-files.sh
           CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html fcs-php-nginx composer install
           CURRENT_UID=$(id -u):$(id -g) docker exec -w /var/www/html/webroot fcs-php-nginx npm install
-    
+
       - name: Apply secrets
         run: |
           sed -i 's/HELLO_CASH_USERNAME/${{secrets.HELLO_CASH_USERNAME}}/' ./config/custom_config.php
@@ -50,7 +50,7 @@ jobs:
 
       - name: PHPStan
         run: docker exec -w /var/www/html fcs-php-nginx php ./vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
-        
+
       - name: ESLint
         run: docker exec -w /var/www/html fcs-php-nginx bash ./devtools/eslint.sh
 
