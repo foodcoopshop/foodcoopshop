@@ -59,14 +59,14 @@ class Application extends BaseApplication
             'autoload' => true
         ]);
 
+        require_once $this->configDir . 'bootstrap_locale.php';
+
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->addPlugin('Network', [
                 'routes' => true,
                 'autoload' => true
             ]);
         }
-
-        require_once $this->configDir . 'bootstrap_locale.php';
 
     }
 
