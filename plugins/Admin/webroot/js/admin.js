@@ -86,7 +86,7 @@ foodcoopshop.Admin = {
 
     addLoaderToSyncProductDataButton : function (button) {
         button.on('click', function () {
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-left');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-right');
             foodcoopshop.Helper.disableButton($(this));
         });
     },
