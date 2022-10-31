@@ -114,6 +114,10 @@ body.syncs.product div.product-list table.list th, body.syncs.product div.produc
   border-right: none;
 }
 
+body.syncs div.product-list table.list th {
+  /* override sticky, that would need some extra work */
+  position: inherit;
+}
 body.syncs.product div.product-list>b {
   margin-top: 5px;
 }
