@@ -44,14 +44,14 @@ return [
             'username' => 'user',
             'password' => 'secret',
             'database' => 'foodcoopshop-dev',
-            'port' => 3310,
+            'port' => 3320,
         ],
         'test' => [
             'host' => 'database-test',
             'username' => 'user',
             'password' => 'secret',
             'database' => 'foodcoopshop-test',
-            'port' => 3311,
+            'port' => 3321,
         ],
     ],
 

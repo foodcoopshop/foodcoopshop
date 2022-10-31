@@ -12,9 +12,9 @@ ports:
     onOpen: ignore
   - port: 8081
     onOpen: ignore
-  - port: 3310
+  - port: 3320
     onOpen: ignore
-  - port: 3311
+  - port: 3321
     onOpen: ignore
 
 github:
