@@ -18,7 +18,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
         var button = $('#editDeliveryRhythmForSelectedProducts');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 

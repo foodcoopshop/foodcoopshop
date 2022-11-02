@@ -18,9 +18,6 @@ use Cake\Core\Configure;
 
 echo '<th style="width:20px;">';
 if ($enabled) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
-    ]);
     echo '<input type="checkbox" id="row-marker-all" />';
 }
 echo '</th>';

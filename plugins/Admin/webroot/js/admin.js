@@ -19,6 +19,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();
+        this.initRowMarkerAll();
         this.setMenuFixed();
         this.adaptContentMargin();
         this.initStickyTableHeader();
@@ -95,15 +96,17 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
     },
 
-    /**
-     * @return rowMarker dom element
-     */
     initRowMarkerAll : function () {
-        var rowMarkerAll = $('input#row-marker-all').on('change', function () {
+        var rowMarkerAll = $('input#row-marker-all').on('click', function () {
+            var row;
             if (this.checked) {
-                $('input.row-marker[type="checkbox"]:not(:checked)').trigger('click');
+                row = $('input.row-marker[type="checkbox"]:not(:checked)');
+                row.prop('checked', true);
+                row.closest('tr').addClass('selected');
             } else {
-                $('input.row-marker[type="checkbox"]:checked').trigger('click');
+                row = $('input.row-marker[type="checkbox"]:checked')
+                row.prop('checked', false);
+                row.closest('tr').removeClass('selected');
             }
         });
         return rowMarkerAll;
@@ -145,7 +148,7 @@ foodcoopshop.Admin = {
         return ids;
     },
 
-    updateObjectSelectionActionButton : function (button) {
+    updateObjectSelectionActionButton: function (button) {
         foodcoopshop.Helper.disableButton(button);
         if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
             foodcoopshop.Helper.enableButton(button);
@@ -296,7 +299,7 @@ foodcoopshop.Admin = {
         var button = $(btnSelector);
 
         foodcoopshop.Helper.disableButton(button);
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
@@ -463,7 +466,7 @@ foodcoopshop.Admin = {
         var button = $('#generateMemberCardsOfSelectedCustomersButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
@@ -477,7 +480,8 @@ foodcoopshop.Admin = {
         var button = $('#generateProductCardsOfSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
+            console.log('click');
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
