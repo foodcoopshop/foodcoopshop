@@ -6,7 +6,7 @@ services:
 
   php-nginx:
     build: .
-    container_name: fcs-php-nginx
+    container_name: fcs.php
     restart: always
     user: ${CURRENT_UID}
     environment:
@@ -29,7 +29,7 @@ services:
 
   database-dev:
     image: mysql:8.0
-    container_name: fcs-database-dev
+    container_name: fcs.database.dev
     restart: always
     ports:
       - '3320:3306'
@@ -46,7 +46,7 @@ services:
 
   database-test:
     image: mysql:8.0
-    container_name: fcs-database-test
+    container_name: fcs.database.test
     restart: always
     tmpfs: /var/lib/mysql:exec,size=1G #smaller size (eg. 256M) lead to failing tests
     ports:
@@ -64,7 +64,7 @@ services:
     depends_on:
       - database-dev
     image: phpmyadmin/phpmyadmin
-    container_name: fcs-phpmyadmin-dev
+    container_name: fcs.phpmyadmin.dev
     restart: always
     ports:
       - '8080:80'
@@ -80,7 +80,7 @@ services:
     depends_on:
       - database-test
     image: phpmyadmin/phpmyadmin
-    container_name: fcs-phpmyadmin-test
+    container_name: fcs.phpmyadmin.test
     restart: always
     ports:
       - '8081:80'
