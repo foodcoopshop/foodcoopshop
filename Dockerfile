@@ -13,4 +13,4 @@ RUN apk update && \
     npm install -g eslint
 
 #avoid permission error on gitpod on running npm install
-RUN npm config set cache /var/www/html/tmp --global
+RUN npm config set cache /app/tmp --global

@@ -10,11 +10,11 @@ services:
     restart: always
     user: ${CURRENT_UID}
     environment:
-      WEB_DOCUMENT_ROOT: /var/www/html/webroot
+      WEB_DOCUMENT_ROOT: /app/webroot
       PHP_UPLOAD_MAX_FILESIZE: 200M
       PHP_POST_MAX_SIZE: 200M
     volumes:
-      - ./:/var/www/html
+      - ./:/app
     ports:
       - "8001:80"
     depends_on:
