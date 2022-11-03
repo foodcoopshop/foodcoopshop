@@ -28,22 +28,24 @@ echo '<div class="heading">';
     echo '</h4>';
 echo '</div>';
 
-if ($product->description_short != '') {
-    echo $product->description_short.'<br />';
-}
+echo '<div class="descriptions">';
+    if ($product->description_short != '') {
+        echo $product->description_short.'<br />';
+    }
 
-if ($product->description != '') {
-    echo $this->Html->link(
-        '<i class="fa"></i> '.__('Show_more'),
-        'javascript:void(0);',
-        [
-            'class' => 'toggle-link',
-            'title' => __('More_infos_to_product_{0}', [h($product->name)]),
-            'escape' => false
-        ]
-        );
-    echo '<div class="toggle-content description">'.$product->description.'</div>';
-}
+    if ($product->description != '') {
+        echo $this->Html->link(
+            '<i class="fa"></i> '.__('Show_more'),
+            'javascript:void(0);',
+            [
+                'class' => 'toggle-link',
+                'title' => __('More_infos_to_product_{0}', [h($product->name)]),
+                'escape' => false
+            ]
+            );
+        echo '<div class="toggle-content description">'.$product->description.'</div>';
+    }
+echo '</div>';
 
 if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
