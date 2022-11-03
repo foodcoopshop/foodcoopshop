@@ -45,7 +45,7 @@ foodcoopshop.Admin = {
         }
 
 
-        $('.row-marker').on('click', function() {
+        $('.row-marker,#row-marker-all').on('click', function () {
 
             var selectedOrderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
 
