@@ -426,10 +426,6 @@ body.configurations.index td {
 form div.error-message {
     margin-left: 220px;
 }
-.ui-dialog-content label {
-    font-weight: 600;
-    margin-bottom: 0;
-}
 .overlay-info {
     color: red;
     font-weight: 600;
@@ -536,7 +532,7 @@ table.list td.amount > .has-separator:after {
     content: ' / ';
 }
 .cke_dialog_container {
-    z-index: 2147483650 ! important; /* open upload from dialog - 2 more than .ui-dialog */
+    z-index: 2147483650 ! important; /* open upload from dialog */
 }
 #manufacturer-options-edit-form h3 {
     margin-top: 15px;
@@ -595,9 +591,6 @@ body.payments .bottom-button-container {
     float: left;
     width: 20px;
     height: 20px;
-}
-.ui-dialog.has-datepicker {
-    z-index: 2147483646 ! important;
 }
 #product-is-stock-product-edit-form input {
     float: right ! important;

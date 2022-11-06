@@ -205,9 +205,6 @@ foodcoopshop.SyncBase = {
                             }
                         }
                         foodcoopshop.Helper.showOrAppendErrorMessage(syncDomain + ': ' + errorMessage);
-                        $('.ui-dialog-content').dialog('close');
-                        $('.ui-dialog .ajax-loader').hide();
-                        $('.ui-dialog button').attr('disabled', false);
                         // TODO better implementation needed - maybe add callback for failures?
                         $('.product-list').removeClass('loader');
                     });

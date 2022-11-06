@@ -67,9 +67,6 @@
     #flashMessage img {
         height: 100px;
     }
-    .ui-dialog-content #flashMessage {
-        left: 50% ! important;
-    }
     .sb-left {
       -webkit-box-shadow: 5px 0 5px -2px #888;
       box-shadow: 5px 0 5px -2px #888;
