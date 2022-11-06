@@ -438,11 +438,6 @@ foodcoopshop.Admin = {
         return url;
     },
 
-    addParameterToURL : function(url, param) {
-        url += (url.split('?')[1] ? '&':'?') + param;
-        return url;
-    },
-
     setMenuFixed: function () {
         $(window).scroll(function () {
             $('#menu').css('left', -$(window).scrollLeft());
