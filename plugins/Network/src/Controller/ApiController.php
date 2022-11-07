@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace Network\Controller;
 
-use App\Lib\Error\Exception\InvalidParameterException;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\Controller\Controller;
+use Cake\Database\Expression\QueryExpression;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -425,4 +426,70 @@ class ApiController extends Controller
         ]);
         $this->viewBuilder()->setOption('serialize', ['app', 'loggedUser', 'products']);
     }
+
+    public function getOrders()
+    {
+
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+
+        $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
+        $formattedPickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+
+        if (empty($pickupDay) || $formattedPickupDay == '1970-01-01') {
+            $this->set([
+                'error' => 'wrong pickupDay format',
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['error']);
+            return;
+        }
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $conditions = [
+            'Products.id_manufacturer' => $this->AppAuth->getManufacturerId(),
+        ];
+        $exp = new QueryExpression();
+        $conditions[] = $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', $formattedPickupDay);
+
+        $orderDetails = $this->OrderDetail->find('all', [
+            'conditions' => $conditions,
+            'contain' => [
+                'Products',
+                'OrderDetailUnits',
+            ],
+        ]);
+
+        $preparedOrders = [];
+        foreach($orderDetails as $orderDetail)
+        {
+            $preparedOrder = [
+                'id' => $orderDetail->id_order_detail,
+                'product_id' => $orderDetail->product_id,
+                'attribute_id' => $orderDetail->product_attribute_id,
+                'name' => $orderDetail->product_name,
+                'amount' => $orderDetail->product_amount,
+                'order_state' => $orderDetail->order_state,
+                'created' => $orderDetail->created,
+            ];
+            if (!empty($orderDetail->order_detail_unit)) {
+                $preparedOrder['unit'] = [
+                    'name' =>  $orderDetail->order_detail_unit->unit_name,
+                    'product_quantity_in_units' => $orderDetail->order_detail_unit->product_quantity_in_units,
+                    'mark_as_saved' => (bool) $orderDetail->order_detail_unit->mark_as_saved,
+                ];
+            }
+            $preparedOrders[] = $preparedOrder;
+        }
+
+        $this->set([
+            'app' => [
+                'name' => $this->getInstallationName(),
+                'domain' => Configure::read('App.fullBaseUrl'),
+                'orders' => $preparedOrders,
+            ],
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['app', 'orders']);
+
+    }
+
 }
