@@ -5,9 +5,12 @@ parameters:
     paths:
         - src
         - templates
+        - tests
         - plugins/Admin/src
         - plugins/Admin/templates
+        - plugins/Admin/tests
         - plugins/Network/src
         - plugins/Network/templates
+        - plugins/Network/tests
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

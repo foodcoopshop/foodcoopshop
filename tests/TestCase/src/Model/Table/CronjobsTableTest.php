@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Table\CronjobLogsTable;

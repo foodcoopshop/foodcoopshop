@@ -1,6 +1,6 @@
 <?php
+declare(strict_types=1);
 
-use App\Application;
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;

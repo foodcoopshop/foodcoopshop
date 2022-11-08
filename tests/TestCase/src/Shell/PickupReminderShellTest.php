@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\I18n\FrozenDate;
