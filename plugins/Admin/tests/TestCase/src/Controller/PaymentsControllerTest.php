@@ -26,6 +26,8 @@ use Cake\TestSuite\EmailTrait;
 class PaymentsControllerTest extends AppCakeTestCase
 {
 
+    protected $ActionLog;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
     use EmailTrait;

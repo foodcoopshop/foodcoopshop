@@ -23,6 +23,7 @@ use Cake\Utility\Hash;
 
 class HelloCashTest extends AppCakeTestCase
 {
+
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;

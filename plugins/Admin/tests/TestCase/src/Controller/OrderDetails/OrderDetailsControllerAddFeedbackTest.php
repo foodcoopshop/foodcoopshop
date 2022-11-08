@@ -21,6 +21,7 @@ use Cake\Core\Configure;
 class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetail;
     public $orderDetailFeedback = 'Product tasted <i>great</i>! <b>Thank you</b>!<img src="/test.jpg"></img>';
     public $orderDetailId = 1;
 

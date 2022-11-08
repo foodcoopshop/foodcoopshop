@@ -26,6 +26,8 @@ use Network\View\Helper\NetworkHelper;
 class SyncsControllerTest extends AppCakeTestCase
 {
 
+    public $Network;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
 

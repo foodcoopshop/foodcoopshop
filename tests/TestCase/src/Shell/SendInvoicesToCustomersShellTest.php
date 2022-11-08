@@ -24,6 +24,10 @@ use Cake\TestSuite\EmailTrait;
 class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 {
 
+    protected $Invoice;
+    protected $OrderDetail;
+    protected $Product;
+
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;

@@ -26,6 +26,11 @@ use Cake\TestSuite\TestEmailTransport;
 class SendOrderListsShellTest extends AppCakeTestCase
 {
 
+    protected $ActionLog;
+    public $Cart;
+    protected $OrderDetail;
+    protected $Product;
+
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;

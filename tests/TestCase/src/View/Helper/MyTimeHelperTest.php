@@ -20,6 +20,8 @@ use Cake\View\View;
 class MyTimeHelperTest extends AppCakeTestCase
 {
 
+    protected $MyTimeHelper;
+
     use DeliveryRhythmConfigsTrait;
 
     public function setUp(): void

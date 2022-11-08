@@ -21,6 +21,7 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetail;
     public $newCustomerId = 88;
     public $editCustomerReason = 'The member forgot his product and I took it.';
     public $editCustomerAmount = 1;

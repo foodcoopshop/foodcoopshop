@@ -21,6 +21,8 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetailPurchasePrice;
+
     public function testEditOrderDetailPurchasePricePriceExclValidPurchasePrice()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);

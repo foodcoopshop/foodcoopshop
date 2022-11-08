@@ -18,6 +18,8 @@ namespace App\Test\TestCase\Traits;
 trait PrepareAndTestInvoiceDataTrait
 {
 
+    protected $OrderDetail;
+
     public function generateInvoice($customerId, $paidInCash)
     {
         $this->get('/admin/invoices/generate.pdf?customerId='.$customerId.'&paidInCash='.$paidInCash.'&currentDay=2018-02-02');

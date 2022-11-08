@@ -20,10 +20,12 @@ use Cake\Core\Configure;
 
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
+
+    protected $Product;
+    protected $Unit;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public $Product;
 
     public function setUp(): void
     {

@@ -19,7 +19,8 @@ use App\Test\TestCase\AppCakeTestCase;
  */
 class CronjobsTableTest extends AppCakeTestCase
 {
-    public $Cronjob;
+
+    protected $Cronjob;
 
     public function setUp(): void
     {
@@ -377,7 +378,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->expectExceptionMessage('weekday not available');
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
-        $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
+        $this->assertEmpty(0, $this->Cronjob->CronjobLogs->find('all')->all());
     }
 
     public function testInvalidDayOfMonth()
@@ -393,7 +394,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->expectException(InvalidParameterException::class);
         $this->expectExceptionMessage('day of month not available or not valid');
         $this->Cronjob->run();
-        $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
+        $this->assertEmpty(0, $this->Cronjob->CronjobLogs->find('all')->all());
     }
 
 }

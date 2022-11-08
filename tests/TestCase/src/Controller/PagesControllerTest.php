@@ -21,11 +21,12 @@ use App\Test\TestCase\Traits\LoginTrait;
 class PagesControllerTest extends AppCakeTestCase
 {
 
+    protected $Page;
+    public $Network;
+
     use AssertPagesForErrorsTrait;
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public $Page;
 
     public function setUp(): void
     {

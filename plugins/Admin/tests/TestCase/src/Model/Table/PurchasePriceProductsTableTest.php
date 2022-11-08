@@ -20,6 +20,7 @@ class PurchasePriceProductsTableTest extends AppCakeTestCase
 {
 
     public $Product;
+    protected $PurchasePriceProduct;
 
     public function setUp(): void
     {

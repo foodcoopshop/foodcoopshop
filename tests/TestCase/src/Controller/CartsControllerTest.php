@@ -24,6 +24,12 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 class CartsControllerTest extends AppCakeTestCase
 {
 
+    protected $ActionLog;
+    protected $PickupDay;
+    protected $ProductAttribute;
+    protected $PurchasePriceProduct;
+    protected $Unit;
+
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
@@ -1181,25 +1187,16 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->tax_rate, $taxRate);
     }
 
-    /**
-     * @param int $productId
-     * @param int $amount
-     * @return string
-     */
-    private function changeProductStatus($productId, $status)
+    private function changeProductStatus($productId, $status): void
     {
         $this->Product->changeStatus([[$productId => $status]]);
     }
 
-    private function changeManufacturerStatus($manufacturerId, $status)
+    private function changeManufacturerStatus($manufacturerId, $status): void
     {
         $this->changeManufacturer($manufacturerId, 'active', $status);
     }
 
-    /**
-     * @param int $productId
-     * @return string
-     */
     private function removeProduct($productId)
     {
         $this->ajaxPost('/warenkorb/ajaxRemove', [

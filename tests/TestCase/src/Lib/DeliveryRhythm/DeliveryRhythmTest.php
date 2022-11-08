@@ -25,6 +25,9 @@ use Cake\TestSuite\IntegrationTestTrait;
 class DeliveryRhythmTest extends AppCakeTestCase
 {
 
+    protected $Product;
+    protected $MyTimeHelper;
+
     use DeliveryRhythmConfigsTrait;
     use IntegrationTestTrait;
     use LoginTrait;

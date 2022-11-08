@@ -21,6 +21,9 @@ use Cake\TestSuite\EmailTrait;
 
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
+
+    protected $OrderDetail;
+
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;

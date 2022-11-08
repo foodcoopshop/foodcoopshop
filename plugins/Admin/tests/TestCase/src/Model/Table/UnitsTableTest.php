@@ -20,7 +20,7 @@ use App\Test\TestCase\AppCakeTestCase;
 class UnitsTableTest extends AppCakeTestCase
 {
 
-    public $Units;
+    protected $Unit;
 
     public $productId = 346;
     public $productAttributeId = 0;

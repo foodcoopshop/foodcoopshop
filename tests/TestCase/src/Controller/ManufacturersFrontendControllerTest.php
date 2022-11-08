@@ -22,9 +22,9 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
 
-    private $manufacturerId = 5;
-    private $today;
-    private $mustNotBeShownString = 'Lieferpause.</h2>';
+    protected $manufacturerId = 5;
+    protected $today;
+    protected $mustNotBeShownString = 'Lieferpause.</h2>';
 
     public function setUp(): void
     {

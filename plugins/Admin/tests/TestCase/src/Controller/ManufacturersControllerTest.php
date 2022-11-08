@@ -26,6 +26,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
     use LoginTrait;
 
     public $Manufacturer;
+    protected $OrderDetail;
+    protected $Product;
 
     public $manufacturerData = [
         'Manufacturers' => [
@@ -352,7 +354,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    private function doTestCustomerRecord($manufacturer)
+    private function doTestCustomerRecord($manufacturer): void
     {
         $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
         $this->assertEquals($manufacturer->address_manufacturer->firstname, $customerRecord->firstname);
@@ -361,12 +363,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $customerRecord->active);
     }
 
-    /**
-     *
-     * @param array $data
-     * @return string
-     */
-    private function add($data)
+    private function add($data): void
     {
         $this->post($this->Slug->getManufacturerAdd(), $data);
     }

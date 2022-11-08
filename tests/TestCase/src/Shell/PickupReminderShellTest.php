@@ -22,6 +22,9 @@ use Cake\TestSuite\EmailTrait;
 
 class PickupReminderShellTest extends AppCakeTestCase
 {
+
+    protected $OrderDetail;
+
     use EmailTrait;
 
     public function testCustomersDoNotHaveFutureOrders()

@@ -24,6 +24,11 @@ use Cake\TestSuite\EmailTrait;
 class SelfServiceControllerTest extends AppCakeTestCase
 {
 
+    protected $ActionLog;
+    public $Cart;
+    protected $CartProductUnit;
+    protected $Invoice;
+
     use AppIntegrationTestTrait;
     use AssertPagesForErrorsTrait;
     use LoginTrait;
