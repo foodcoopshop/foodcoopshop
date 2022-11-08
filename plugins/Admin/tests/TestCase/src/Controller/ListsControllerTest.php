@@ -28,6 +28,8 @@ class ListsControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
+    protected $Invoice;
+
     public function setUp(): void
     {
         parent::setUp();

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,6 +25,12 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 class CartsControllerTest extends AppCakeTestCase
 {
+
+    protected $ActionLog;
+    protected $PickupDay;
+    protected $ProductAttribute;
+    protected $PurchasePriceProduct;
+    protected $Unit;
 
     use AppIntegrationTestTrait;
     use EmailTrait;
@@ -155,7 +163,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddProductDeliveryRhythmIndividualOrderNotPossibleAnyMore()
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm($this->productId1, '0-individual', '2018-12-14', '2018-07-12');
+        $this->changeProductDeliveryRhythm((int) $this->productId1, '0-individual', '2018-12-14', '2018-07-12');
         $response = $this->addProductToCart($this->productId1, 1);
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Artischocke</b> kann nicht mehr bestellt werden.', $response->msg);
         $this->assertJsonError();
@@ -164,7 +172,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddProductDeliveryRhythmIndividualOrderPossible()
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm($this->productId1, '0-individual', '2035-12-14', '2035-07-12');
+        $this->changeProductDeliveryRhythm((int) $this->productId1, '0-individual', '2035-12-14', '2035-07-12');
         $this->addProductToCart($this->productId1, 1);
         $this->assertJsonOk();
     }
@@ -303,7 +311,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->ProductAttribute->add($productId, 35);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExpWithUnquotedString('Dem Produkt wurden in der Zwischenzeit Varianten hinzugef', $this->_response);
+        $this->assertRegExpWithUnquotedString('Dem Produkt wurden in der Zwischenzeit Varianten hinzugef', $this->_response->getBody()->__toString());
     }
 
     public function testRemoveProductIfProductAttributeWasDeletedAndOtherProductAttributesExistAfterAddingToCart()
@@ -370,7 +378,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeProductStatus($this->productId1, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->_response);
+        $this->assertMatchesRegularExpression('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->_response->getBody()->__toString());
         $this->changeProductStatus($this->productId1, APP_ON);
     }
 
@@ -384,7 +392,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->_response);
+        $this->assertMatchesRegularExpression('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->_response->getBody()->__toString());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
     }
 
@@ -398,7 +406,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->_response);
+        $this->assertMatchesRegularExpression('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->_response->getBody()->__toString());
         $this->changeManufacturerNoDeliveryDays($manufacturerId);
     }
 
@@ -411,7 +419,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->finishCart(0, 0);
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/(.*) hat die Lieferpause aktiviert und das Produkt (.*) ist nicht mehr bestellbar./', $this->_response);
+        $this->assertMatchesRegularExpression('/(.*) hat die Lieferpause aktiviert und das Produkt (.*) ist nicht mehr bestellbar./', $this->_response->getBody()->__toString());
     }
 
     public function testProductStockAvailableDecreasedWhileShopping()
@@ -423,7 +431,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId1, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/Anzahl <b>2/', $this->_response);
+        $this->assertMatchesRegularExpression('/Anzahl <b>2/', $this->_response->getBody()->__toString());
         $this->assertResponseContains('Menge: 1');
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
     }
@@ -437,7 +445,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/Anzahl \<b\>3/', $this->_response);
+        $this->assertMatchesRegularExpression('/Anzahl \<b\>3/', $this->_response->getBody()->__toString());
         $this->assertResponseContains('Menge: 1');
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
@@ -545,13 +553,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
         // product and missing pp per piece
-        $this->assertMatchesRegularExpression('/Das Produkt (.*)Beuschl(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        $this->assertMatchesRegularExpression('/Das Produkt (.*)Beuschl(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
         // product and missing pp per unit
-        $this->assertMatchesRegularExpression('/Das Produkt (.*)Forelle(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        $this->assertMatchesRegularExpression('/Das Produkt (.*)Forelle(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
         // attribute and missing pp per piece
-        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Lagerprodukt mit Varianten(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Lagerprodukt mit Varianten(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
         // attribute and missing pp per unit
-        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response);
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
     }
 
     public function testFinishWithPurchasePriceOk()
@@ -1141,7 +1149,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function checkValidationError()
     {
-        $this->assertMatchesRegularExpression('/initCartErrors()/', $this->_response);
+        $this->assertMatchesRegularExpression('/initCartErrors()/', $this->_response->getBody()->__toString());
     }
 
     private function changeStockAvailable($productId, $amount)
@@ -1181,25 +1189,16 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->tax_rate, $taxRate);
     }
 
-    /**
-     * @param int $productId
-     * @param int $amount
-     * @return string
-     */
-    private function changeProductStatus($productId, $status)
+    private function changeProductStatus($productId, $status): void
     {
         $this->Product->changeStatus([[$productId => $status]]);
     }
 
-    private function changeManufacturerStatus($manufacturerId, $status)
+    private function changeManufacturerStatus($manufacturerId, $status): void
     {
         $this->changeManufacturer($manufacturerId, 'active', $status);
     }
 
-    /**
-     * @param int $productId
-     * @return string
-     */
     private function removeProduct($productId)
     {
         $this->ajaxPost('/warenkorb/ajaxRemove', [

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,6 +25,7 @@ use Cake\Utility\Hash;
 
 class HelloCashTest extends AppCakeTestCase
 {
+
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;

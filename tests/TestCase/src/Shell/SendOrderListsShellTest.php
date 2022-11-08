@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\AppCakeTestCase;
@@ -25,6 +26,11 @@ use Cake\TestSuite\TestEmailTransport;
 
 class SendOrderListsShellTest extends AppCakeTestCase
 {
+
+    protected $ActionLog;
+    public $Cart;
+    protected $OrderDetail;
+    protected $Product;
 
     use AppIntegrationTestTrait;
     use EmailTrait;

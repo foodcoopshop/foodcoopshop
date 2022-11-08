@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -20,10 +22,12 @@ use Cake\Core\Configure;
 
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
+
+    protected $Product;
+    protected $Unit;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public $Product;
 
     public function setUp(): void
     {

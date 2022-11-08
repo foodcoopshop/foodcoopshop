@@ -21,6 +21,8 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetail;
+
     public function testEditOrderDetailQuantityNotValid()
     {
         $this->loginAsSuperadmin();

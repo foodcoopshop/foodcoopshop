@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\I18n\FrozenDate;
@@ -22,6 +23,9 @@ use Cake\TestSuite\EmailTrait;
 
 class PickupReminderShellTest extends AppCakeTestCase
 {
+
+    protected $OrderDetail;
+
     use EmailTrait;
 
     public function testCustomersDoNotHaveFutureOrders()

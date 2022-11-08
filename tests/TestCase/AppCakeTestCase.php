@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
@@ -44,20 +46,18 @@ abstract class AppCakeTestCase extends TestCase
     use QueueTrait;
 
     protected $dbConnection;
-
     protected $testDumpDir;
-
     protected $appDumpDir;
-
     public $Slug;
-
     public $Html;
-
     public $Time;
-
+    public $Cart;
+    public $Configuration;
     public $Customer;
-
     public $Manufacturer;
+    public $Network;
+    public $Payment;
+    public $PricePerUnit;
 
     public function setUp(): void
     {

@@ -27,7 +27,9 @@ class InvoicesTableTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    public $Invoice;
+    protected $Invoice;
+    protected $OrderDetail;
+    protected $Product;
 
     public function setUp(): void
     {

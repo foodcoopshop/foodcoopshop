@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -143,7 +144,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
     }
 
-    private $registrationDataEmpty = [
+    protected $registrationDataEmpty = [
         'Customers' => [
             'firstname' => '',
             'lastname' => '',

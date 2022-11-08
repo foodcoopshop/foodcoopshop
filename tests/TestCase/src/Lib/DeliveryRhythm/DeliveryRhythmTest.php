@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -24,6 +26,9 @@ use Cake\TestSuite\IntegrationTestTrait;
 
 class DeliveryRhythmTest extends AppCakeTestCase
 {
+
+    protected $Product;
+    protected $MyTimeHelper;
 
     use DeliveryRhythmConfigsTrait;
     use IntegrationTestTrait;

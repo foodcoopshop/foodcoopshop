@@ -22,6 +22,7 @@ use Cake\TestSuite\TestEmailTransport;
 class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 {
 
+    protected $mockCart;
     public $newPrice = '3,53';
     public $editPriceReason = 'Product was smaller than expected.';
 

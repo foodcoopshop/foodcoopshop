@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -21,6 +23,9 @@ use Cake\TestSuite\EmailTrait;
 
 class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
 {
+
+    public $Cart;
+    protected $OrderDetail;
 
     use AppIntegrationTestTrait;
     use EmailTrait;

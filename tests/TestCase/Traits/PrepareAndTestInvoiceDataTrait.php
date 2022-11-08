@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Traits;
 
@@ -17,6 +18,8 @@ namespace App\Test\TestCase\Traits;
  */
 trait PrepareAndTestInvoiceDataTrait
 {
+
+    protected $OrderDetail;
 
     public function generateInvoice($customerId, $paidInCash)
     {

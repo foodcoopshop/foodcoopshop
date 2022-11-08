@@ -27,7 +27,7 @@ class ProductsControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public $Product;
+    protected $Product;
 
     public function setUp(): void
     {

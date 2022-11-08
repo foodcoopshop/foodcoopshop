@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -36,6 +38,11 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     public $orderDetailIdA = 1;
     public $orderDetailIdB = 2;
     public $orderDetailIdC = 3;
+
+    protected $OrderDetail;
+    protected $mockCart;
+    protected $Product;
+    protected $StockAvailable;
 
     public function setUp(): void
     {

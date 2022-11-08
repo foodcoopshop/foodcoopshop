@@ -23,10 +23,11 @@ use App\Test\TestCase\Traits\LoginTrait;
 class ProductAttributesTableTest extends AppCakeTestCase
 {
 
+    protected $Product;
+    protected $ProductAttribute;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public $ProductAttribute;
 
     public function setUp(): void
     {

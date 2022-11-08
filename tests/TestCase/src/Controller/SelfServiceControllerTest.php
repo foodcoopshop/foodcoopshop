@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,6 +25,11 @@ use Cake\TestSuite\EmailTrait;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
+
+    protected $ActionLog;
+    public $Cart;
+    protected $CartProductUnit;
+    protected $Invoice;
 
     use AppIntegrationTestTrait;
     use AssertPagesForErrorsTrait;
