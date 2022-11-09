@@ -30,29 +30,12 @@ class MyNumberHelper extends NumberHelper
         return str_pad($number, $digits, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * @param string $string
-     * @return boolean / float
-     */
-    public function getStringAsFloat($string)
+    public function getStringAsFloat(string $string)
     {
-
-        if (is_null($string)) {
-            return -1;
-        }
-
-        // sometimes a float is passed to this function, but trim only accepts strings
-        $float = $string;
-        if (is_string($string)) {
-            $float = trim($string);
-        }
-
-        $float = $this->parseFloatRespectingLocale($float);
-
+        $float = $this->parseFloatRespectingLocale(trim($string));
         if ($float === false) {
             return -1; // do not return false, because 0 is a valid return value!
         }
-
         return $float;
     }
 
