@@ -407,17 +407,11 @@ class OrderDetailsTable extends AppTable
         ];
 
         $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
-
-        switch($groupBy) {
-            case 'month':
-                $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ';
-                break;
-            case 'year':
-                $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y\') as Year ';
-                break;
-            default:
-                break;
-        }
+        $sql .= match($groupBy) {
+            'month' => ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ',
+            'year'  => ', DATE_FORMAT(od.pickup_day, \'%Y\') as Year ',
+            default => '',
+        };
 
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
@@ -430,19 +424,11 @@ class OrderDetailsTable extends AppTable
 
         $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
 
-        switch($groupBy) {
-            case 'month':
-                $sql .= 'GROUP BY monthAndYear ';
-                $sql .= 'ORDER BY monthAndYear DESC;';
-                break;
-            case 'year':
-                $sql .= 'GROUP BY Year ';
-                $sql .= 'ORDER BY Year DESC;';
-                break;
-            default:
-                $sql .= 'ORDER BY od.pickup_day DESC;';
-                break;
-        }
+        $sql .= match($groupBy) {
+            'month' => 'GROUP BY monthAndYear ORDER BY monthAndYear DESC;',
+            'year'  => 'GROUP BY Year ORDER BY Year DESC;',
+            default => 'ORDER BY od.pickup_day DESC;',
+        };
 
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);

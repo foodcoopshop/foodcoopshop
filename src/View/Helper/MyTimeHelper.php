@@ -25,17 +25,11 @@ class MyTimeHelper extends TimeHelper
 
     public function getTranslatedTimeInterval($timeInterval)
     {
-        switch($timeInterval) {
-            case 'day':
-                return __('daily');
-                break;
-            case 'week':
-                return __('weekly');
-                break;
-            case 'month':
-                return __('monthly');
-                break;
-        }
+        return match($timeInterval) {
+            'day' => __('daily'),
+            'week' => __('weekly'),
+            'month' => __('monthly'),
+        };
     }
 
     public function convertSecondsInMinutesAndSeconds($seconds)

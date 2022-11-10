@@ -209,19 +209,11 @@ $this->element('addScript', [
                 echo '</td>';
 
                 echo '<td>';
-
-                    switch($configuration->name) {
-                        case 'FCS_WEEKLY_PICKUP_DAY':
-                            echo $this->MyTime->getWeekdayName($configuration->value);
-                            break;
-                        case 'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA':
-                            echo $configuration->value . ' (' . $this->MyTime->getWeekdayName(DeliveryRhythm::getSendOrderListsWeekday()) . ')';
-                            break;
-                        default:
-                            echo $configuration->value;
-                            break;
-                    }
-
+                    echo match($configuration->name) {
+                        'FCS_WEEKLY_PICKUP_DAY' => $this->MyTime->getWeekdayName($configuration->value),
+                        'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA' => $configuration->value . ' (' . $this->MyTime->getWeekdayName(DeliveryRhythm::getSendOrderListsWeekday()) . ')',
+                        default => $configuration->value,
+                    };
                 echo '</td>';
 
             echo '</tr>';

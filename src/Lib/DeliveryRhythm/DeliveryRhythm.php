@@ -272,23 +272,13 @@ class DeliveryRhythm
         }
 
         if ($product->delivery_rhythm_type == 'month') {
-            switch($product->delivery_rhythm_count) {
-                case '1':
-                    $ordinal = 'first';
-                    break;
-                case '2':
-                    $ordinal = 'second';
-                    break;
-                case '3':
-                    $ordinal = 'third';
-                    break;
-                case '4':
-                    $ordinal = 'fourth';
-                    break;
-                case '0':
-                    $ordinal = 'last';
-                    break;
-            }
+            $ordinal = match($product->delivery_rhythm_count) {
+                1 => 'first',
+                2 => 'second',
+                3 => 'third',
+                4 => 'fourth',
+                0 => 'last',
+            };
             $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
             $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
 
