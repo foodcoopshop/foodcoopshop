@@ -412,7 +412,10 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            $price = $product[$productId]['gross_price'];
+            if (!is_float($product[$productId]['gross_price'])) {
+                $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            }
             if ($price < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]['gross_price']);
             }
@@ -422,7 +425,10 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
 
             $productId = key($product);
-            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            $price = $product[$productId]['gross_price'];
+            if (!is_float($product[$productId]['gross_price'])) {
+                $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            }
 
             $ids = $this->getProductIdAndAttributeId($productId);
             $productEntity = $this->find('all', [
@@ -457,7 +463,7 @@ class ProductsTable extends AppTable
                 $success |= is_object($result);
             }
 
-            if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
+            if (isset($product[$productId]['unit_product_price_per_unit_enabled']) && isset($product[$productId]['unit_product_price_incl_per_unit'])) {
                 $this->Unit = FactoryLocator::get('Table')->get('Units');
                 $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
                 $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units']);
