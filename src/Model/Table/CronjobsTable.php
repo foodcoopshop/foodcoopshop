@@ -67,14 +67,10 @@ class CronjobsTable extends AppTable
                         if ($value == '') {
                             return true;
                         } else {
-                            switch($context['data']['time_interval']) {
-                                case 'day';
-                                    $timeInterval = __('daily');
-                                    break;
-                                case 'week';
-                                    $timeInterval = __('weekly');
-                                    break;
-                            }
+                            $timeInterval = match($context['data']['time_interval']) {
+                                'day' => __('daily'),
+                                'week' => __('weekly'),
+                            };
                             return __('No_day_of_month_allowed_for_time_interval_{0}.', [
                                 $timeInterval,
                             ]);
@@ -91,14 +87,10 @@ class CronjobsTable extends AppTable
                         if ($value == '') {
                             return true;
                         } else {
-                            switch($context['data']['time_interval']) {
-                                case 'day';
-                                    $timeInterval = __('daily');
-                                    break;
-                                case 'month';
-                                    $timeInterval = __('monthly');
-                                    break;
-                            }
+                            $timeInterval = match($context['data']['time_interval']) {
+                                'day' => __('daily'),
+                                'month' => __('monthly'),
+                            };
                             return __('No_weekday_allowed_for_time_interval_{0}.', [
                                 $timeInterval,
                             ]);

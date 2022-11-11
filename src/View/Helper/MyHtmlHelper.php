@@ -181,20 +181,12 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderStateFontawesomeIcon($orderState)
     {
-        switch($orderState)
-        {
-            case ORDER_STATE_ORDER_PLACED:
-                return 'fas fa-cart-arrow-down ok';
-                break;
-            case ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER:
-                return 'far fa-envelope ok';
-                break;
-            case ORDER_STATE_BILLED_CASHLESS:
-            case ORDER_STATE_BILLED_CASH:
-                return 'fa fa-lock not-ok';
-                break;
-        }
-        return '';
+        return match($orderState) {
+            ORDER_STATE_ORDER_PLACED => 'fas fa-cart-arrow-down ok',
+            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER => 'far fa-envelope ok',
+            ORDER_STATE_BILLED_CASHLESS, ORDER_STATE_BILLED_CASH => 'fa fa-lock not-ok',
+            default => '',
+        };
     }
 
     public function wrapJavascriptBlock($content) {
@@ -222,17 +214,11 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCurrencyName($currencySymbol)
     {
-        switch($currencySymbol) {
-            case '€':
-                return 'Euro';
-                break;
-            case '$':
-                return 'Dollar';
-                break;
-            default:
-                return '';
-                break;
-        }
+        return match($currencySymbol) {
+            '€' => 'Euro',
+            '$' => 'Dollar',
+            default => '',
+        };
     }
 
     public function getCurrencyIsoCode($currencySymbol)
