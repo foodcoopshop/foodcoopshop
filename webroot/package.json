@@ -35,7 +35,7 @@
     "lazysizes": "^5.3.2",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "svelte": "^3.52.0",
+    "svelte": "^3.53.1",
     "swiper": "8.4.4",
     "tooltipster": "^4.2.8",
     "uglify-js": "^3.17.4",
