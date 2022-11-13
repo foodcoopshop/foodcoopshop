@@ -14,7 +14,7 @@ jobs:
     name: FoodCoopShop CI
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Run Docker Compose
         run: CURRENT_UID=$(id -u):$(id -g) docker compose up php-nginx -d
