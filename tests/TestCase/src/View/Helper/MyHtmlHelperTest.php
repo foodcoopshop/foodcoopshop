@@ -29,25 +29,30 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $this->MyHtmlHelper = new MyHtmlHelper(new View());
     }
 
-    public function testRemoveTimestampFromFileValidTimestamp()
+    /**
+     * @dataProvider removeTimestampFromFileDataProvider
+     */
+    public function testRemoveTimestampFromFile(string $filename, string $result): void
     {
-        $filename = 'asdf.jpg?1539847477';
-        $result = 'asdf.jpg';
         $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
     }
 
-    public function testRemoveTimestampFromFileNoTimestamp()
+    public function removeTimestampFromFileDataProvider()
     {
-        $filename = 'asdf.jpg';
-        $result = 'asdf.jpg';
-        $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
-    }
-
-    public function testRemoveTimestampFromFileInvalidTimestamp()
-    {
-        $filename = 'asdf.jpg?adfs';
-        $result = 'asdf.jpg';
-        $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
+        return [
+            'correct-timestamp' => [
+                'asdf.jpg?1539847477',
+                'asdf.jpg',
+            ],
+            'no-timestamp' => [
+                'asdf.jpg',
+                'asdf.jpg',
+            ],
+            'invalid-timestamp' => [
+                'asdf.jpg?adfs',
+                'asdf.jpg',
+            ],
+        ];
     }
 
 }
