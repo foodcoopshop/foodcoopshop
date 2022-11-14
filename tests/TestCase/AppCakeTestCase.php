@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Lib\Folder\Folder;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\QueueTrait;
@@ -14,8 +15,6 @@ use App\View\Helper\SlugHelper;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Filesystem\Folder;
-use Cake\Filesystem\File;
 use Cake\View\View;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
@@ -89,17 +88,17 @@ abstract class AppCakeTestCase extends TestCase
         TestEmailTransport::clearMessages();
     }
 
-    private function getLogFile($name)
+    private function getLogFile(string $name): string
     {
-        return new File(ROOT . DS . 'logs' . DS . $name . '.log');
+        return ROOT . DS . 'logs' . DS . $name . '.log';
     }
 
-    protected function resetLogs()
+    protected function resetLogs(): void
     {
-        $this->getLogFile('debug')->write('');
-        $this->getLogFile('error')->write('');
-        $this->getLogFile('cli-debug')->write('');
-        $this->getLogFile('cli-error')->write('');
+        file_put_contents($this->getLogFile('debug'), '');
+        file_put_contents($this->getLogFile('error'), '');
+        file_put_contents($this->getLogFile('cli-debug'), '');
+        file_put_contents($this->getLogFile('cli-error'), '');
     }
 
     public function tearDown(): void
@@ -110,10 +109,10 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function assertLogFilesForErrors()
     {
-        $log = $this->getLogFile('debug')->read(true, 'r');
-        $log .= $this->getLogFile('error')->read(true, 'r');
-        $log .= $this->getLogFile('cli-debug')->read(true, 'r');
-        $log .= $this->getLogFile('cli-error')->read(true, 'r');
+        $log = file_get_contents($this->getLogFile('debug'));
+        $log .= file_get_contents($this->getLogFile('error'));
+        $log .= file_get_contents($this->getLogFile('cli-debug'));
+        $log .= file_get_contents($this->getLogFile('cli-error'));
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
 
@@ -394,11 +393,12 @@ abstract class AppCakeTestCase extends TestCase
 
     private function prepareSendingOrderListsOrInvoices($contentFolder)
     {
-        $folder = new Folder();
-        $folder->delete($contentFolder);
-        $file = new File($contentFolder . DS . '.gitignore', true);
-        $file->append('/*
+        Folder::rrmdir($contentFolder);
+        mkdir($contentFolder, 0755, true);
+        $file = fopen($contentFolder . DS . '.gitignore', 'w');
+        fwrite($file, '/*
 !.gitignore');
+        fclose($file);
     }
 
 }

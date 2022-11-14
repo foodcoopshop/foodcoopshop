@@ -19,10 +19,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Im Produkt-Admin kann jetzt der Status (aktiviert, deaktiviert) von mehreren markierten Produkten auf einmal geändert werden. [I#895](https://github.com/foodcoopshop/foodcoopshop/issues/895) / [PR#897](https://github.com/foodcoopshop/foodcoopshop/pull/897) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Hersteller können ihre Bestellungen über [eine neue API](https://foodcoopshop.github.io/de/netzwerk-modul.html#6-api-zum-abrufen-von-bestellungen) abrufen und sie so im eigenen System weiterverarbeiten. [I#894](https://github.com/foodcoopshop/foodcoopshop/issues/894) / [PR#899](https://github.com/foodcoopshop/foodcoopshop/pull/899) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-
 ### For developers
 - New 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment.html) and [Gitpod-Integration](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop).  [I#871](https://github.com/foodcoopshop/foodcoopshop/issues/871) / [PR#876](https://github.com/foodcoopshop/foodcoopshop/pull/876) / [PR#879](https://github.com/foodcoopshop/foodcoopshop/pull/879) / [PR#881](https://github.com/foodcoopshop/foodcoopshop/pull/881) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Enable strict typing in every php file to improve code quality. [I#872](https://github.com/foodcoopshop/foodcoopshop/issues/872) / [PR#893](https://github.com/foodcoopshop/foodcoopshop/pull/893) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Replace CakePHP's deprecated File and Folder class. [I#902](https://github.com/foodcoopshop/foodcoopshop/issues/902) / [PR#905](https://github.com/foodcoopshop/foodcoopshop/pull/905) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 # v3.5.0
 

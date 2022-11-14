@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace App\Shell;
 
-use Cake\Filesystem\File;
 use Cake\TestSuite\IntegrationTestTrait;
 
 class SavedLocalizedJsAsStaticFileShell extends AppShell
@@ -40,8 +39,9 @@ class SavedLocalizedJsAsStaticFileShell extends AppShell
     public function main()
     {
         $this->get('/js/localized-javascript.js');
-        $jsFile = new File(WWW_ROOT . '/cache/localized-javascript-static.js');
-        $jsFile->write($this->_response->getBody()->__toString());
+        $jsFile = fopen(WWW_ROOT . '/cache/localized-javascript-static.js', 'w');
+        fwrite($jsFile, $this->_response->getBody()->__toString());
+        fclose($jsFile);
     }
 
 }
