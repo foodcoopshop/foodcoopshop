@@ -768,6 +768,7 @@ class ProductsTable extends AppTable
             if (is_int($condition) || !is_array($condition)) {
                 continue;
             }
+            $condition = (string) $condition;
             if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
                 $this->getAssociation('ProductAttributes')->setConditions(
                     [
