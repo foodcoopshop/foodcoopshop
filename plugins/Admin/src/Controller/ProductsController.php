@@ -5,10 +5,10 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\Folder\Folder;
 use App\Lib\PdfWriter\ProductCardsPdfWriter;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
-use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
@@ -457,11 +457,8 @@ class ProductsController extends AdminAppController
         $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
         $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
 
-        // recursively create path
-        $dir = new Folder();
-        $dir->delete($thumbsPath);
-        $dir->create($thumbsPath);
-        $dir->chmod($thumbsPath, 0755);
+        Folder::rrmdir($thumbsPath);
+        mkdir($thumbsPath, 0755, true);
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
 

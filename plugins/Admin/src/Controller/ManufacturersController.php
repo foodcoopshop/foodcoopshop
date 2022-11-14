@@ -11,8 +11,6 @@ use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
@@ -220,20 +218,12 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    private function saveUploadedGeneralTermsAndConditions($manufacturerId, $filename)
+    private function saveUploadedGeneralTermsAndConditions(int $manufacturerId, string $filename): void
     {
-
-        $newFileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
-
-        $fileObject = new File(WWW_ROOT . $filename);
-
-        // assure that folder structure exists
-        $dir = new Folder();
-        $path = dirname(WWW_ROOT . $newFileName);
-        $dir->create($path);
-        $dir->chmod($path, 0755);
-
-        $fileObject->copy(WWW_ROOT . $newFileName);
+        $newFilename = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
+        $path = dirname(WWW_ROOT . $newFilename);
+        mkdir($path, 0755, true);
+        copy(WWW_ROOT . $filename, WWW_ROOT . $newFilename);
     }
 
     private function deleteUploadedGeneralTermsAndConditions($manufacturerId)

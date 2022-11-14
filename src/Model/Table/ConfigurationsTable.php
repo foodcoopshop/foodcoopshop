@@ -6,7 +6,6 @@ namespace App\Model\Table;
 use Cake\Core\Configure;
 use App\Lib\Error\Exception\ConfigFileMissingException;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
-use Cake\Filesystem\File;
 use Cake\Validation\Validator;
 
 /**
@@ -37,21 +36,14 @@ class ConfigurationsTable extends AppTable
         $this->setPrimaryKey('id_configuration');
     }
 
-    /**
-     * @param string $plugin
-     * @throws ConfigFileMissingException
-     * @return string (version)
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         $versionFileWithPath = ROOT . DS . 'VERSION.txt';
-
         if (!file_exists($versionFileWithPath)) {
             throw new ConfigFileMissingException('version file not found: ' . $versionFileWithPath);
         }
-        $file = new File($versionFileWithPath);
-        $version = $file->read(true, 'r');
-
+        $file = fopen($versionFileWithPath, "r");
+        $version = fgets($file);
         return $version;
     }
 

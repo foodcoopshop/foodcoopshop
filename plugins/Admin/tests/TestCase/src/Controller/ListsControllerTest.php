@@ -6,7 +6,6 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -88,10 +87,14 @@ class ListsControllerTest extends AppCakeTestCase
 
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
-        $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
-        $objects = $folder->read();
-        $downloadFileName = $objects[1][0];
-        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$downloadFileName;
+        $dir = new \DirectoryIterator(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
+        foreach ($dir as $fileinfo) {
+            if (!$fileinfo->isDot()) {
+                $downloadFileName = $fileinfo->getFilename();
+            }
+        }
+
+        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/' . $downloadFileName;
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
