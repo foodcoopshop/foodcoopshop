@@ -28,6 +28,8 @@ use Ifsnop\Mysqldump as IMysqldump;
 class BackupDatabaseCommand extends AppCommand
 {
 
+    public $ActionLog;
+
     public function execute(Arguments $args, ConsoleIo $io)
     {
 

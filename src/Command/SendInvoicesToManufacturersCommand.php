@@ -27,6 +27,10 @@ class SendInvoicesToManufacturersCommand extends AppCommand
 {
 
     public $cronjobRunDay;
+    public $ActionLog;
+    public $OrderDetail;
+    public $Manufacturer;
+    public $QueuedJobs;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {

@@ -27,6 +27,9 @@ class SendDeliveryNotesCommand extends AppCommand
 {
 
     public $cronjobRunDay;
+    public $ActionLog;
+    public $Manufacturer;
+    public $OrderDetail;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {

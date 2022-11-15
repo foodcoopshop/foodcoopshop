@@ -26,6 +26,9 @@ use App\Lib\Error\Exception\InvalidParameterException;
 class ChangeWeeklyPickupDayByOneDayCommand extends Command
 {
 
+    public $Product;
+    public $Configuration;
+
     public function execute(Arguments $args, ConsoleIo $io)
     {
 

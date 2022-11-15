@@ -26,6 +26,13 @@ use Cake\Utility\Hash;
 class SendOrderListsCommand extends AppCommand
 {
 
+    public $cronjobRunDay;
+    public $ActionLog;
+    public $Manufacturer;
+    public $OrderDetail;
+    public $QueuedJobs;
+    public $Product;
+
     public function execute(Arguments $args, ConsoleIo $io)
     {
 

@@ -30,6 +30,11 @@ use Cake\Database\Expression\QueryExpression;
 class EmailOrderReminderCommand extends AppCommand
 {
 
+    public $cronjobRunDay;
+    public $ActionLog;
+    public $Customer;
+    public $Product;
+
     public function execute(Arguments $args, ConsoleIo $io)
     {
 

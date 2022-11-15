@@ -28,6 +28,9 @@ class PickupReminderCommand extends AppCommand
 {
 
     public $cronjobRunDay;
+    public $Customer;
+    public $OrderDetail;
+    public $ActionLog;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {

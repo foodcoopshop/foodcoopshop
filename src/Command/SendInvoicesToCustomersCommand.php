@@ -27,6 +27,9 @@ class SendInvoicesToCustomersCommand extends AppCommand
 {
 
     public $cronjobRunDay;
+    public $ActionLog;
+    public $Customer;
+    public $Invoice;
 
     public function execute(Arguments $args, ConsoleIo $io)
     {

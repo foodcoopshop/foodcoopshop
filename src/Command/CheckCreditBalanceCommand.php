@@ -26,6 +26,9 @@ use Cake\Console\ConsoleIo;
 class CheckCreditBalanceCommand extends AppCommand
 {
 
+    public $ActionLog;
+    public $Customer;
+
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
