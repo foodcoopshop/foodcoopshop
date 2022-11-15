@@ -8,24 +8,26 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Shell;
+namespace App\Command;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 
-class CheckCreditBalanceShell extends AppShell
+
+class CheckCreditBalanceCommand extends AppCommand
 {
 
-    public function main()
+    public function execute(Arguments $args, ConsoleIo $io)
     {
-        parent::main();
 
         if (!Configure::read('app.htmlHelper')->paymentIsCashless()) {
             return;
@@ -33,6 +35,7 @@ class CheckCreditBalanceShell extends AppShell
 
         $this->startTimeLogging();
 
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Customer->dropManufacturersInNextFind();
         $conditions = [
             'Customers.active' => 1,
@@ -105,12 +108,14 @@ class CheckCreditBalanceShell extends AppShell
 
         $this->stopTimeLogging();
 
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('cronjob_check_credit_balance', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
-        $this->out($outString);
-        $this->out($this->getRuntime());
+        $io->out($outString);
+        $io->out($this->getRuntime());
 
-        return true;
+        return static::CODE_SUCCESS;
 
     }
+
 }

@@ -21,7 +21,7 @@ use Cake\TestSuite\EmailTrait;
  * @link          https://www.foodcoopshop.com
  */
 
-class PickupReminderShellTest extends AppCakeTestCase
+class PickupReminderCommandTest extends AppCakeTestCase
 {
 
     protected $OrderDetail;

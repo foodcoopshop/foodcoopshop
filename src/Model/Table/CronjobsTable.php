@@ -3,13 +3,16 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\I18n;
-use App\Lib\Error\Exception\InvalidParameterException;
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
+use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
+use Cake\Database\Expression\QueryExpression;
+use App\Lib\Error\Exception\InvalidParameterException;
+use Queue\Console\Io;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -276,12 +279,12 @@ class CronjobsTable extends AppTable
 
     private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject)
     {
-        $shellName = $cronjob->getOriginalValues()['name'] . 'Shell';
-        if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $shellName . '.php')) {
-            throw new InvalidParameterException('shell not found: ' . $shellName);
+        $commandName = $cronjob->getOriginalValues()['name'] . 'Command';
+        if (!file_exists(ROOT . DS . 'src' . DS . 'Command' . DS . $commandName . '.php')) {
+            throw new InvalidParameterException('command not found: ' . $commandName);
         }
-        $shellClass = '\\App\\Shell\\' . $shellName;
-        $shell = new $shellClass();
+        $commandClass = '\\App\\Command\\' . $commandName;
+        $command = new $commandClass();
 
         $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(
             $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')
@@ -296,8 +299,10 @@ class CronjobsTable extends AppTable
         $this->CronjobLogs->save($entity);
 
         try {
-            $success = $shell->main();
-            $success = $success !== true ? CronjobLogsTable::FAILURE : CronjobLogsTable::SUCCESS;
+            $args = new Arguments([], [], []);
+            $io = new ConsoleIo();
+            $success = $command->execute($args, $io);
+            $success = $success !== $command::CODE_SUCCESS ? CronjobLogsTable::FAILURE : CronjobLogsTable::SUCCESS;
         } catch (\Exception $e) {
             $success = CronjobLogsTable::FAILURE;
         }

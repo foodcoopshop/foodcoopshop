@@ -11,35 +11,36 @@ declare(strict_types=1);
  * Cronjob works properly if it's called on Configure::read('app.timeHelper')->getSendOrderListsDay() -1 or -2
  * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Shell;
+namespace App\Command;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Mailer\AppMailer;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 
-class EmailOrderReminderShell extends AppShell
+class EmailOrderReminderCommand extends AppCommand
 {
 
-    public function main()
+    public function execute(Arguments $args, ConsoleIo $io)
     {
 
-        // $this->cronjobRunDay can is set in unit test
-        if (!isset($this->args[0])) {
+        if (!$args->getArgumentAt(0)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         } else {
-            $this->cronjobRunDay = $this->args[0];
+            $this->cronjobRunDay = $args->getArgumentAt(0);
         }
 
         if (! Configure::read('app.emailOrderReminderEnabled')) {
-            return true;
+            return static::CODE_SUCCESS;
         }
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -53,18 +54,17 @@ class EmailOrderReminderShell extends AppShell
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
             $this->Product = $this->getTableLocator()->get('Products');
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
-                return true;
+                return static::CODE_SUCCESS;
             }
         }
-
-        parent::main();
 
         $this->startTimeLogging();
 
         $conditions = [
             'Customers.email_order_reminder_enabled' => 1,
-            'Customers.active' => 1
+            'Customers.active' => 1,
         ];
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
@@ -109,12 +109,13 @@ class EmailOrderReminderShell extends AppShell
 
         $this->stopTimeLogging();
 
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('cronjob_email_order_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
-        $this->out($outString);
-        $this->out($this->getRuntime());
+        $io->out($outString);
+        $io->out($this->getRuntime());
 
-        return true;
+        return static::CODE_SUCCESS;
 
     }
 }
