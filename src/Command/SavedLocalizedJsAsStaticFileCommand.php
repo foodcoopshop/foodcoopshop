@@ -8,18 +8,20 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.4.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Shell;
+namespace App\Command;
 
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 use Cake\TestSuite\IntegrationTestTrait;
 
-class SavedLocalizedJsAsStaticFileShell extends AppShell
+class SavedLocalizedJsAsStaticFileCommand extends AppCommand
 {
 
     use IntegrationTestTrait;
@@ -34,14 +36,15 @@ class SavedLocalizedJsAsStaticFileShell extends AppShell
      *
      * run this script to generate a static file for production use
      *
-     * @see AppShell::main()
+     * @see AppCommand::main()
      */
-    public function main()
+    public function execute(Arguments $args, ConsoleIo $io)
     {
         $this->get('/js/localized-javascript.js');
         $jsFile = fopen(WWW_ROOT . '/cache/localized-javascript-static.js', 'w');
         fwrite($jsFile, $this->_response->getBody()->__toString());
         fclose($jsFile);
+        return static::CODE_SUCCESS;
     }
 
 }

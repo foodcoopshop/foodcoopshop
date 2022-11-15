@@ -23,7 +23,7 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\EmailTrait;
 
-class SendInvoicesToCustomersShellTest extends AppCakeTestCase
+class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 {
 
     protected $Invoice;

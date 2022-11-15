@@ -8,35 +8,43 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Shell;
+namespace App\Command;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Utility\Hash;
 
-class SendOrderListsShell extends AppShell
+class SendOrderListsCommand extends AppCommand
 {
 
-    public function main()
-    {
-        parent::main();
+    public $cronjobRunDay;
+    public $ActionLog;
+    public $Manufacturer;
+    public $OrderDetail;
+    public $QueuedJobs;
+    public $Product;
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+    public function execute(Arguments $args, ConsoleIo $io)
+    {
+
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        // $this->cronjobRunDay can is set in unit test
-        if (!isset($this->args[0])) {
+        if (!$args->getArgumentAt(0)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         } else {
-            $this->cronjobRunDay = $this->args[0];
+            $this->cronjobRunDay = $args->getArgumentAt(0);
         }
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -136,9 +144,9 @@ class SendOrderListsShell extends AppShell
 
         $this->resetQuantityToDefaultQuantity($allOrderDetails);
 
-        $this->out($outString);
+        $io->out($outString);
 
-        return true;
+        return static::CODE_SUCCESS;
 
     }
 

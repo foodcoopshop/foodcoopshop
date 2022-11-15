@@ -23,7 +23,7 @@ use Cake\TestSuite\EmailTrait;
  * @link          https://www.foodcoopshop.com
  */
 
-class CheckCreditBalanceShellTest extends AppCakeTestCase
+class CheckCreditBalanceCommandTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;

@@ -8,27 +8,31 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.2.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Shell;
+namespace App\Command;
 
 use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 
-class SendInvoicesToCustomersShell extends AppShell
+class SendInvoicesToCustomersCommand extends AppCommand
 {
 
     public $cronjobRunDay;
+    public $ActionLog;
+    public $Customer;
+    public $Invoice;
 
-    public function main()
+    public function execute(Arguments $args, ConsoleIo $io)
     {
-        parent::main();
 
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             throw new ForbiddenException();
@@ -39,11 +43,10 @@ class SendInvoicesToCustomersShell extends AppShell
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoiceToCustomer = new GenerateInvoiceToCustomer();
 
-        // $this->cronjobRunDay can is set in unit test
-        if (!isset($this->args[0])) {
+        if (!$args->getArgumentAt(0)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         } else {
-            $this->cronjobRunDay = $this->args[0];
+            $this->cronjobRunDay = $args->getArgumentAt(0);
         }
 
         $this->Customer->dropManufacturersInNextFind();
@@ -86,7 +89,7 @@ class SendInvoicesToCustomersShell extends AppShell
         $message = __('{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully.', [$i]);
         $this->ActionLog->customSave('invoice_added', 0, 0, 'invoices', $message . '<br />' . $this->getRuntime());
 
-        return true;
+        return static::CODE_SUCCESS;
 
     }
 

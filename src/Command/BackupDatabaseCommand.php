@@ -1,6 +1,17 @@
 <?php
 declare(strict_types=1);
 
+namespace App\Command;
+
+use App\Controller\Component\StringComponent;
+use Cake\Mailer\Mailer;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
+use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
+use Cake\I18n\Number;
+use Ifsnop\Mysqldump as IMysqldump;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -8,33 +19,22 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-namespace App\Shell;
-
-use Cake\Mailer\Mailer;
-use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
-use Cake\I18n\Number;
-use Ifsnop\Mysqldump as IMysqldump;
-use App\Controller\Component\StringComponent;
-
-class BackupDatabaseShell extends AppShell
+class BackupDatabaseCommand extends AppCommand
 {
 
-    public function main()
+    public $ActionLog;
+
+    public function execute(Arguments $args, ConsoleIo $io)
     {
-        parent::main();
 
         ini_set('max_execution_time', 300);
         ini_set('memory_limit', '256M');
-
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
 
         $this->startTimeLogging();
 
@@ -47,10 +47,10 @@ class BackupDatabaseShell extends AppShell
         $filename = $backupdir . DS . $preparedHostWithoutProtocol . '-' . date('Y-m-d_H-i-s', time()) . '.bz2';
 
         if (! is_dir($backupdir)) {
-            $this->out(' ', 1);
-            $this->out('Will create "' . $backupdir . '" directory!');
+            $io->out(' ', 1);
+            $io->out('Will create "' . $backupdir . '" directory!');
             if (mkdir($backupdir, 0755, true)) {
-                $this->out('Directory created!');
+                $io->out('Directory created!');
             }
         }
 
@@ -75,20 +75,22 @@ class BackupDatabaseShell extends AppShell
         // email zipped file via Mailer (to avoid queue's max 16MB mediumtext limit of AppMailer)
         $email = new Mailer(false);
         $email->setProfile('debug');
-        $email->setTo(Configure::read('app.hostingEmail'))
+         $email->setTo(Configure::read('app.hostingEmail'))
             ->setSubject($message . ': ' . Configure::read('App.fullBaseUrl'))
             ->setAttachments([
                 $filename
             ])
             ->send();
-        $this->out($message);
+        $io->out($message);
 
         $this->stopTimeLogging();
 
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('cronjob_backup_database', 0, 0, '', $message . '<br />' . $this->getRuntime());
-        $this->out($this->getRuntime());
+        $io->out($this->getRuntime());
 
-        return true;
+        return static::CODE_SUCCESS;
 
     }
+
 }

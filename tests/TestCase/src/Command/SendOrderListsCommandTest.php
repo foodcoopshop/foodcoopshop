@@ -24,7 +24,7 @@ use Cake\TestSuite\TestEmailTransport;
  * @link          https://www.foodcoopshop.com
  */
 
-class SendOrderListsShellTest extends AppCakeTestCase
+class SendOrderListsCommandTest extends AppCakeTestCase
 {
 
     protected $ActionLog;

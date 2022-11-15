@@ -8,37 +8,41 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Shell;
+namespace App\Command;
 
 use App\Mailer\AppMailer;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\FrozenTime;
 
-class SendInvoicesToManufacturersShell extends AppShell
+class SendInvoicesToManufacturersCommand extends AppCommand
 {
 
     public $cronjobRunDay;
+    public $ActionLog;
+    public $OrderDetail;
+    public $Manufacturer;
+    public $QueuedJobs;
 
-    public function main()
+    public function execute(Arguments $args, ConsoleIo $io)
     {
-        parent::main();
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
-        // $this->cronjobRunDay can is set in unit test
-        if (!isset($this->args[0])) {
+        if (!$args->getArgumentAt(0)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         } else {
-            $this->cronjobRunDay = $this->args[0];
+            $this->cronjobRunDay = $args->getArgumentAt(0);
         }
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
@@ -111,7 +115,7 @@ class SendInvoicesToManufacturersShell extends AppShell
         }
         $outString .= $actionLogDatas;
         $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new FrozenTime($this->cronjobRunDay));
-        $this->out($outString);
+        $io->out($outString);
 
         // 6) trigger queue invoice generation
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
@@ -144,7 +148,7 @@ class SendInvoicesToManufacturersShell extends AppShell
                 ->addToQueue();
         }
 
-        return true;
+        return static::CODE_SUCCESS;
 
     }
 
@@ -218,7 +222,6 @@ class SendInvoicesToManufacturersShell extends AppShell
             $outString .= '<tr><td colspan="4" align="right">'.__('Generated_invoices').'</td><td align="right"><b>'.$i.'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
-
 
         return $outString;
 

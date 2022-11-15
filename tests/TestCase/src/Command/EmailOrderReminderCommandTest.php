@@ -21,7 +21,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
-class EmailOrderReminderShellTest extends AppCakeTestCase
+class EmailOrderReminderCommandTest extends AppCakeTestCase
 {
 
     protected $OrderDetail;

@@ -8,35 +8,37 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.2.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Shell;
+namespace App\Command;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 use Cake\Database\Expression\QueryExpression;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
-class PickupReminderShell extends AppShell
+class PickupReminderCommand extends AppCommand
 {
 
     public $cronjobRunDay;
+    public $Customer;
+    public $OrderDetail;
+    public $ActionLog;
 
-    public function main()
+    public function execute(Arguments $args, ConsoleIo $io)
     {
 
-        parent::main();
-
-        // $this->cronjobRunDay can is set in unit test
-        if (!isset($this->args[0])) {
+        if (!$args->getArgumentAt(0)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         } else {
-            $this->cronjobRunDay = $this->args[0];
+            $this->cronjobRunDay = $args->getArgumentAt(0);
         }
 
         $this->startTimeLogging();
@@ -45,6 +47,7 @@ class PickupReminderShell extends AppShell
             'Customers.pickup_day_reminder_enabled' => 1,
             'Customers.active' => 1,
         ];
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
@@ -106,12 +109,13 @@ class PickupReminderShell extends AppShell
 
         $this->stopTimeLogging();
 
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('cronjob_pickup_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
-        $this->out($outString);
-        $this->out($this->getRuntime());
+        $io->out($outString);
+        $io->out($this->getRuntime());
 
-        return true;
+        return static::CODE_SUCCESS;
 
     }
 }

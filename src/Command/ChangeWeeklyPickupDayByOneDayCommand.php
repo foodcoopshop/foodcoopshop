@@ -8,30 +8,35 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.4.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Shell;
+namespace App\Command;
 
-use Cake\Console\Shell;
+use Cake\Command\Command;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use App\Lib\Error\Exception\InvalidParameterException;
 
-class ChangeWeeklyPickupDayByOneDayShell extends Shell
+class ChangeWeeklyPickupDayByOneDayCommand extends Command
 {
 
-    public function main()
+    public $Product;
+    public $Configuration;
+
+    public function execute(Arguments $args, ConsoleIo $io)
     {
 
-        if (empty($this->args)) {
+        if (empty($args->getArguments())) {
             throw new InvalidParameterException('args not set');
         }
 
-        if (!in_array($this->args[0], ['increase', 'decrease'])) {
+        if (!in_array($args->getArgumentAt(0), ['increase', 'decrease'])) {
             throw new InvalidParameterException('args wrong');
         }
 
@@ -42,10 +47,10 @@ class ChangeWeeklyPickupDayByOneDayShell extends Shell
             "UPDATE fcs_configuration SET value = :newWeeklyPickupDay WHERE name = 'FCS_WEEKLY_PICKUP_DAY';"
         );
 
-        if ($this->args[0] == 'increase') {
+        if ($args->getArgumentAt(0) == 'increase') {
             $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
         }
-        if ($this->args[0] == 'decrease') {
+        if ($args->getArgumentAt(0) == 'decrease') {
             $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
         }
 
@@ -56,10 +61,10 @@ class ChangeWeeklyPickupDayByOneDayShell extends Shell
 
         $products = $this->Product->find('all');
         foreach($products as $product) {
-            if ($this->args[0] == 'increase') {
+            if ($args->getArgumentAt(0) == 'increase') {
                 $newDeliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $product->delivery_rhythm_send_order_list_weekday);
             }
-            if ($this->args[0] == 'decrease') {
+            if ($args->getArgumentAt(0) == 'decrease') {
                 $newDeliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday);
             }
             $statement = $this->Product->getConnection()->prepare(
@@ -72,9 +77,10 @@ class ChangeWeeklyPickupDayByOneDayShell extends Shell
             $statement->execute($params);
         }
 
-        $this->out('Changed FCS_WEEKLY_PICKUP_DAY to ' . Configure::read('app.timeHelper')->getWeekdayName($newWeeklyPickupDay) . '.');
+        $io->out('Changed FCS_WEEKLY_PICKUP_DAY to ' . Configure::read('app.timeHelper')->getWeekdayName($newWeeklyPickupDay) . '.');
+
+        return static::CODE_SUCCESS;
 
     }
 
 }
-

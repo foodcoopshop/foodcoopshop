@@ -21,7 +21,7 @@ use Cake\TestSuite\TestEmailTransport;
  * @link          https://www.foodcoopshop.com
  */
 
-class SendDeliveryNotesShellTest extends AppCakeTestCase
+class SendDeliveryNotesCommandTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
