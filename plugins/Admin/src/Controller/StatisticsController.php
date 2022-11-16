@@ -104,7 +104,15 @@ class StatisticsController extends AdminAppController
         }
         $this->set('title_for_layout', $titleForLayout);
 
-        $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2014));
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $firstOrderYear = $this->OrderDetail->getFirstOrderYear();
+        $lastOrderYear = $this->OrderDetail->getLastOrderYear();
+        if ($lastOrderYear !== false && $firstOrderYear !== false) {
+            $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear);
+        } else {
+            $years = null;
+        }
+        $this->set('years', $years);
 
         $excludeMemberFeeCondition = [];
         if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
@@ -113,7 +121,6 @@ class StatisticsController extends AdminAppController
             ];
         }
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
         if (!empty($excludeMemberFeeCondition)) {
             $monthlySumProducts->where($excludeMemberFeeCondition);
@@ -130,7 +137,7 @@ class StatisticsController extends AdminAppController
             return;
         }
 
-        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2014);
+        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear($lastOrderYear, $firstOrderYear);
 
         $monthsWithTurnoverMonthAndYear = $monthlySumProducts->all()->extract('MonthAndYear')->toArray();
         $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->all()->extract('SumTotalPaid')->toArray();

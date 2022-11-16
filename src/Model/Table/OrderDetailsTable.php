@@ -125,6 +125,29 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
+    private function getLastOrFirstOrderYear(string $sort): int|false
+    {
+        $orderDetail = $this->find('all', [
+            'order' => [
+                'OrderDetails.pickup_day' => $sort,
+            ]
+        ])->first();
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return (int) $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year'));
+    }
+
+    public function getLastOrderYear(): int|false
+    {
+        return $this->getLastOrFirstOrderYear('DESC');
+    }
+
+    public function getFirstOrderYear(): int|false
+    {
+        return $this->getLastOrFirstOrderYear('ASC');
+    }
+
     public function getOrderDetailsForOrderListPreview($pickupDay)
     {
         $query = $this->find('all', [
@@ -750,4 +773,5 @@ class OrderDetailsTable extends AppTable
 
         return $odParams;
     }
+
 }

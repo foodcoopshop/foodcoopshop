@@ -48,7 +48,7 @@ class MyTimeHelper extends TimeHelper
         return join(' ', $result);
     }
 
-    public function getAllYearsUntilThisYear($thisYear, $firstYear, $labelPrefix='')
+    public function getAllYearsUntilThisYear(int $thisYear, int $firstYear, $labelPrefix=''): array
     {
         $years = [];
         while($thisYear >= $firstYear) {
@@ -228,6 +228,11 @@ class MyTimeHelper extends TimeHelper
     public function formatAsWeekday($day)
     {
         return date('N', $day);
+    }
+
+    public function formatAsYear($date)
+    {
+        return date('N', $date);
     }
 
     public function getCurrentDay()

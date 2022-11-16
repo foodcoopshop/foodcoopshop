@@ -674,7 +674,20 @@ class CustomersController extends AdminAppController
         }
         $this->set('year', $year);
 
-        $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2017, __d('admin', 'Member_fee') . ' '));
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+
+        $firstOrderYear = $this->OrderDetail->getFirstOrderYear();
+        $this->set('firstOrderYear', $firstOrderYear);
+
+        $lastOrderYear = $this->OrderDetail->getLastOrderYear();
+        $this->set('lastOrderYear', $lastOrderYear);
+
+        if ($lastOrderYear !== false && $firstOrderYear !== false) {
+            $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear, __d('admin', 'Member_fee') . ' ');
+        } else {
+            $years = null;
+        }
+        $this->set('years', $years);
 
         $conditions = [];
         if ($active != 'all') {
@@ -734,7 +747,6 @@ class CustomersController extends AdminAppController
 
         $i = 0;
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
