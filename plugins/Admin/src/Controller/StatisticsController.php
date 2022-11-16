@@ -107,10 +107,10 @@ class StatisticsController extends AdminAppController
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $firstOrderYear = $this->OrderDetail->getFirstOrderYear();
         $lastOrderYear = $this->OrderDetail->getLastOrderYear();
+
+        $years = null;
         if ($lastOrderYear !== false && $firstOrderYear !== false) {
             $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear);
-        } else {
-            $years = null;
         }
         $this->set('years', $years);
 

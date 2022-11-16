@@ -682,10 +682,9 @@ class CustomersController extends AdminAppController
         $lastOrderYear = $this->OrderDetail->getLastOrderYear();
         $this->set('lastOrderYear', $lastOrderYear);
 
+        $years = null;
         if ($lastOrderYear !== false && $firstOrderYear !== false) {
             $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear, __d('admin', 'Member_fee') . ' ');
-        } else {
-            $years = null;
         }
         $this->set('years', $years);
 
