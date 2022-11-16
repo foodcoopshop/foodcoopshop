@@ -230,11 +230,6 @@ class MyTimeHelper extends TimeHelper
         return date('N', $day);
     }
 
-    public function formatAsYear($date)
-    {
-        return date('N', $date);
-    }
-
     public function getCurrentDay()
     {
         return time();
