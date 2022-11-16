@@ -125,12 +125,21 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    private function getLastOrFirstOrderYear(string $sort): int|false
+    private function getLastOrFirstOrderYear(string $manufacturerId, string $sort): int|false
     {
+        $conditions = [];
+        if ($manufacturerId != 'all') {
+            $conditions['Products.id_manufacturer'] = $manufacturerId;
+        }
+
         $orderDetail = $this->find('all', [
+            'conditions' => $conditions,
             'order' => [
                 'OrderDetails.pickup_day' => $sort,
-            ]
+            ],
+            'contain' => [
+                'Products',
+            ],
         ])->first();
         if (empty($orderDetail)) {
             return false;
@@ -138,9 +147,9 @@ class OrderDetailsTable extends AppTable
         return (int) $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year'));
     }
 
-    public function getLastOrderYear(): int|false
+    public function getLastOrderYear(string $manufacturerId = 'all'): int|false
     {
-        return $this->getLastOrFirstOrderYear('DESC');
+        return $this->getLastOrFirstOrderYear($manufacturerId, 'DESC');
     }
 
     public function addLastMonthsCondition($query, $firstDayOfLastOrderMonth, $lastMonths)
@@ -152,9 +161,19 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getFirstDayOfLastOrderMonth(): string|false
+    public function getFirstDayOfLastOrderMonth(string $manufacturerId = 'all'): string|false
     {
+
+        $conditions = [];
+        if ($manufacturerId != 'all') {
+            $conditions['Products.id_manufacturer'] = $manufacturerId;
+        }
+
         $orderDetail = $this->find('all', [
+            'conditions' => $conditions,
+            'contain' => [
+                'Products',
+            ],
             'order' => [
                 'OrderDetails.pickup_day' => 'DESC'
             ]
@@ -165,9 +184,9 @@ class OrderDetailsTable extends AppTable
         return $orderDetail->pickup_day->i18nFormat('Y-MM') . '-01';
     }
 
-    public function getFirstOrderYear(): int|false
+    public function getFirstOrderYear(string $manufacturerId = 'all'): int|false
     {
-        return $this->getLastOrFirstOrderYear('ASC');
+        return $this->getLastOrFirstOrderYear($manufacturerId, 'ASC');
     }
 
     public function getOrderDetailsForOrderListPreview($pickupDay)

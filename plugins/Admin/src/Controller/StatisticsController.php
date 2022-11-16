@@ -119,8 +119,8 @@ class StatisticsController extends AdminAppController
         $this->set('title_for_layout', $titleForLayout);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $firstOrderYear = $this->OrderDetail->getFirstOrderYear();
-        $lastOrderYear = $this->OrderDetail->getLastOrderYear();
+        $firstOrderYear = $this->OrderDetail->getFirstOrderYear($manufacturerId);
+        $lastOrderYear = $this->OrderDetail->getLastOrderYear($manufacturerId);
 
         $rangesForDropdown = [
             '' => __d('admin', 'Total'),
@@ -144,7 +144,7 @@ class StatisticsController extends AdminAppController
 
         if ($lastMonths !== null) {
             $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, '');
-            $firstDayOfLastOrderMonth = $this->OrderDetail->getFirstDayOfLastOrderMonth();
+            $firstDayOfLastOrderMonth = $this->OrderDetail->getFirstDayOfLastOrderMonth($manufacturerId);
             $monthlySumProducts = $this->OrderDetail->addLastMonthsCondition($monthlySumProducts, $firstDayOfLastOrderMonth, $lastMonths);
         } else {
             $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
