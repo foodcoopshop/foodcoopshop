@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace Admin\Controller;
+
+use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 
 /**
@@ -65,11 +67,23 @@ class StatisticsController extends AdminAppController
     {
         $manufacturerId = $this->getManufacturerId();
 
-        $year = '';
-        if (!empty($this->getRequest()->getQuery('year'))) {
-            $year = h($this->getRequest()->getQuery('year'));
+        $range = 'last-months-12';
+        if (in_array('range', array_keys($this->getRequest()->getQueryParams()))) {
+            $range = h($this->getRequest()->getQuery('range'));
         }
-        $this->set('year', $year);
+        $this->set('range', $range);
+
+        $year = null;
+        $lastMonths = null;
+        if (preg_match('`year-`', $range)) {
+            $year = preg_replace('`year-`', '', $range);
+        }
+        if (preg_match('`last-months-`', $range)) {
+            $lastMonths = preg_replace('`last-months-`', '', $range);
+            if (!in_array($lastMonths, [12,24])) {
+                throw new InvalidParameterException($lastMonths . ' not valid as last-months parameter');
+            }
+        }
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = [];
@@ -108,11 +122,18 @@ class StatisticsController extends AdminAppController
         $firstOrderYear = $this->OrderDetail->getFirstOrderYear();
         $lastOrderYear = $this->OrderDetail->getLastOrderYear();
 
-        $years = null;
+        $rangesForDropdown = [
+            'last-months-12' => __d('admin', 'Last_{0}_months', [12]),
+            'last-months-24' => __d('admin', 'Last_{0}_months', [24]),
+            '' => __d('admin', 'Total'),
+        ];
         if ($lastOrderYear !== false && $firstOrderYear !== false) {
-            $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear);
+            $allYears = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear);
+            foreach($allYears as $y) {
+                $rangesForDropdown['year-' . $y] = $y;
+            }
         }
-        $this->set('years', $years);
+        $this->set('ranges', $rangesForDropdown);
 
         $excludeMemberFeeCondition = [];
         if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
@@ -121,7 +142,14 @@ class StatisticsController extends AdminAppController
             ];
         }
 
-        $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
+        if ($lastMonths !== null) {
+            $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, '');
+            $firstDayOfLastOrderMonth = $this->OrderDetail->getFirstDayOfLastOrderMonth();
+            $monthlySumProducts = $this->OrderDetail->addLastMonthsCondition($monthlySumProducts, $firstDayOfLastOrderMonth, $lastMonths);
+        } else {
+            $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
+        }
+
         if (!empty($excludeMemberFeeCondition)) {
             $monthlySumProducts->where($excludeMemberFeeCondition);
         }
@@ -260,7 +288,13 @@ class StatisticsController extends AdminAppController
             $data = [];
             foreach($manufacturers as $manufacturer) {
 
-                $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                if ($lastMonths !== null) {
+                    $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                    $monthlySumProductsQuery = $this->OrderDetail->addLastMonthsCondition($monthlySumProductsQuery, $firstDayOfLastOrderMonth, $lastMonths);
+                } else {
+                    $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                }
+
                 if (!empty($excludeMemberFeeCondition)) {
                     $monthlySumProductsQuery->where($excludeMemberFeeCondition);
                 }

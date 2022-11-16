@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-28 20:44+0200\n"
-"PO-Revision-Date: 2022-10-28 21:02+0200\n"
+"POT-Creation-Date: 2022-11-16 17:08+0100\n"
+"PO-Revision-Date: 2022-11-16 17:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -695,6 +695,12 @@ msgstr "Umsatz- und Gewinnstatistik"
 
 msgid "Turnover_statistics"
 msgstr "Umsatzstatistik"
+
+msgid "Last_{0}_months"
+msgstr "Letzte {0} Monate"
+
+msgid "Total"
+msgstr "Gesamt"
 
 msgid "December"
 msgstr "Dezember"
@@ -2402,9 +2408,6 @@ msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf 
 
 msgid "Detail_view"
 msgstr "Detailübersicht"
-
-msgid "Total"
-msgstr "Gesamt"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."

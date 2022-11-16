@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-29 09:12+0200\n"
+"POT-Creation-Date: 2022-11-16 17:08+0100\n"
 "PO-Revision-Date: 2022-10-29 09:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -110,6 +110,75 @@ msgstr "abgeschlossen"
 
 msgid "route_self_service"
 msgstr "selbstbedienung"
+
+msgid "Runtime"
+msgstr "Laufzeit"
+
+msgid "Database_backup_successful"
+msgstr "Datenbank-Backup erfolgreich"
+
+msgid "Please_add_credit"
+msgstr "Bitte lade dein Guthaben auf"
+
+msgid "Sum"
+msgstr "Summe"
+
+msgid "Sent_emails"
+msgstr "Versendete E-Mails"
+
+msgid "Order_reminder"
+msgstr "Bestell-Erinnerung"
+
+msgid "today"
+msgstr "heute"
+
+msgid "tomorrow"
+msgstr "morgen"
+
+msgid "Pickup_reminder_for"
+msgstr "Abhol-Erinnerung für"
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 Lieferschein wurde} other{# Lieferscheine wurden}} erfolgreich erstellt."
+
+msgid "Delivery_note_for_{0}"
+msgstr "Lieferschein für {0}"
+
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 Rechnung wurde} other{# Rechnungen wurden}} erfolgreich erstellt."
+
+msgid "to_(time_context)"
+msgstr "bis"
+
+msgid "Generated_invoices"
+msgstr "Generierte Rechnungen"
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr "Rechnungen für {0} wurden verschickt"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Re. Nr."
+
+msgid "Sent"
+msgstr "Versendet"
+
+msgid "Products"
+msgstr "Produkte"
+
+msgid "Total_sum"
+msgstr "Gesamtsumme"
+
+msgid "Sent_order_lists"
+msgstr "Verschickte Bestelllisten"
+
+msgid "Delivery_day"
+msgstr "Liefertag"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -1056,9 +1125,6 @@ msgstr "Bestellbar bis zu einer Anzahl von"
 msgid "zero_or_smaller_zero"
 msgstr "0 oder kleiner als 0"
 
-msgid "Manufacturer"
-msgstr "Hersteller"
-
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden."
 
@@ -1079,9 +1145,6 @@ msgstr "Lieferrhythmus ändern"
 
 msgid "First_delivery_day"
 msgstr "Erster Liefertag"
-
-msgid "Delivery_day"
-msgstr "Liefertag"
 
 msgid "First_delivery_day_info_(one_product)."
 msgstr "Produkt ist ab sofort bestellbar."
@@ -1277,9 +1340,6 @@ msgstr "Preis exkl."
 
 msgid "Price_incl."
 msgstr "Preis inkl."
-
-msgid "Total_sum"
-msgstr "Gesamtsumme"
 
 msgid "Price_net"
 msgstr "Nettopreis"
@@ -1881,9 +1941,6 @@ msgstr "Bitte gib dein Feedback ein."
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
-
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
@@ -2006,63 +2063,6 @@ msgstr "Mitglied"
 
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
-
-msgid "Runtime"
-msgstr "Laufzeit"
-
-msgid "Database_backup_successful"
-msgstr "Datenbank-Backup erfolgreich"
-
-msgid "Please_add_credit"
-msgstr "Bitte lade dein Guthaben auf"
-
-msgid "Sum"
-msgstr "Summe"
-
-msgid "Sent_emails"
-msgstr "Versendete E-Mails"
-
-msgid "Order_reminder"
-msgstr "Bestell-Erinnerung"
-
-msgid "today"
-msgstr "heute"
-
-msgid "tomorrow"
-msgstr "morgen"
-
-msgid "Pickup_reminder_for"
-msgstr "Abhol-Erinnerung für"
-
-msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
-msgstr "{0,plural,=1{1 Lieferschein wurde} other{# Lieferscheine wurden}} erfolgreich erstellt."
-
-msgid "Delivery_note_for_{0}"
-msgstr "Lieferschein für {0}"
-
-msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
-msgstr "{0,plural,=1{1 Rechnung wurde} other{# Rechnungen wurden}} erfolgreich erstellt."
-
-msgid "to_(time_context)"
-msgstr "bis"
-
-msgid "Generated_invoices"
-msgstr "Generierte Rechnungen"
-
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr "Rechnungen für {0} wurden verschickt"
-
-msgid "Invoice_number_abbreviation"
-msgstr "Re. Nr."
-
-msgid "Sent"
-msgstr "Versendet"
-
-msgid "Products"
-msgstr "Produkte"
-
-msgid "Sent_order_lists"
-msgstr "Verschickte Bestelllisten"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Mitglieder tragen die Guthaben-Aufladungen selbst ein"

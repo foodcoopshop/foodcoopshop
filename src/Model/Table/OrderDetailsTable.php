@@ -143,6 +143,28 @@ class OrderDetailsTable extends AppTable
         return $this->getLastOrFirstOrderYear('DESC');
     }
 
+    public function addLastMonthsCondition($query, $firstDayOfLastOrderMonth, $lastMonths)
+    {
+        $lastMonths--;
+        $query->where(function (QueryExpression $exp) use ($firstDayOfLastOrderMonth, $lastMonths) {
+            return $exp->add('OrderDetails.pickup_day >= DATE_SUB("' . $firstDayOfLastOrderMonth . '", INTERVAL ' . $lastMonths . ' MONTH)');
+        });
+        return $query;
+    }
+
+    public function getFirstDayOfLastOrderMonth(): string|false
+    {
+        $orderDetail = $this->find('all', [
+            'order' => [
+                'OrderDetails.pickup_day' => 'DESC'
+            ]
+        ])->first();
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return $orderDetail->pickup_day->i18nFormat('Y-MM') . '-01';
+    }
+
     public function getFirstOrderYear(): int|false
     {
         return $this->getLastOrFirstOrderYear('ASC');
