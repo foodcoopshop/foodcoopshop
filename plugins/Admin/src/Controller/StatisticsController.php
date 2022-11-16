@@ -67,7 +67,7 @@ class StatisticsController extends AdminAppController
     {
         $manufacturerId = $this->getManufacturerId();
 
-        $range = 'last-months-12';
+        $range = '';
         if (in_array('range', array_keys($this->getRequest()->getQueryParams()))) {
             $range = h($this->getRequest()->getQuery('range'));
         }
@@ -123,9 +123,9 @@ class StatisticsController extends AdminAppController
         $lastOrderYear = $this->OrderDetail->getLastOrderYear();
 
         $rangesForDropdown = [
+            '' => __d('admin', 'Total'),
             'last-months-12' => __d('admin', 'Last_{0}_months', [12]),
             'last-months-24' => __d('admin', 'Last_{0}_months', [24]),
-            '' => __d('admin', 'Total'),
         ];
         if ($lastOrderYear !== false && $firstOrderYear !== false) {
             $allYears = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear);
