@@ -179,8 +179,8 @@ class MyTimeHelper extends TimeHelper
     {
 
         $startCalendarWeek = date('W', $timestampStart);
-        $startYear = date('Y', $timestampStart);
-        $currentYear = date('Y');
+        $startYear = (int) date('Y', $timestampStart);
+        $currentYear = (int) date('Y');
         $allYears = array_reverse($this->getAllYearsUntilThisYear($currentYear, $startYear));
         $currentCalendarWeek = date('W');
 
