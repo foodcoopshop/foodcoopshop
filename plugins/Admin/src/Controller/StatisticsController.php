@@ -65,7 +65,7 @@ class StatisticsController extends AdminAppController
 
     public function index()
     {
-        $manufacturerId = $this->getManufacturerId();
+        $manufacturerId = (string) $this->getManufacturerId();
 
         $range = '';
         if (in_array('range', array_keys($this->getRequest()->getQueryParams()))) {
