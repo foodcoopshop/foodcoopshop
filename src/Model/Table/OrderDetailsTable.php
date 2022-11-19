@@ -125,6 +125,60 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
+    private function getLastOrFirstOrderYear(string $manufacturerId, string $sort)
+    {
+        $conditions = [];
+        if ($manufacturerId != 'all') {
+            $conditions['Products.id_manufacturer'] = $manufacturerId;
+        }
+        $orderDetail = $this->find('all', [
+            'conditions' => $conditions,
+            'order' => [
+                'OrderDetails.pickup_day' => $sort,
+            ],
+            'contain' => [
+                'Products',
+            ],
+        ])->first();
+        return $orderDetail;
+    }
+
+    public function getFirstOrderYear(string $manufacturerId = 'all'): int|false
+    {
+        $orderDetail = $this->getLastOrFirstOrderYear($manufacturerId, 'ASC');
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return (int) $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year'));
+    }
+
+    public function getLastOrderYear(string $manufacturerId = 'all'): int|false
+    {
+        $orderDetail = $this->getLastOrFirstOrderYear($manufacturerId, 'DESC');
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return (int) $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year'));
+    }
+
+    public function getFirstDayOfLastOrderMonth(string $manufacturerId = 'all'): string|false
+    {
+        $orderDetail = $this->getLastOrFirstOrderYear($manufacturerId, 'DESC');
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return $orderDetail->pickup_day->i18nFormat('Y-MM') . '-01';
+    }
+
+    public function addLastMonthsCondition($query, $firstDayOfLastOrderMonth, $lastMonths)
+    {
+        $lastMonths--;
+        $query->where(function (QueryExpression $exp) use ($firstDayOfLastOrderMonth, $lastMonths) {
+            return $exp->add('OrderDetails.pickup_day >= DATE_SUB("' . $firstDayOfLastOrderMonth . '", INTERVAL ' . $lastMonths . ' MONTH)');
+        });
+        return $query;
+    }
+
     public function getOrderDetailsForOrderListPreview($pickupDay)
     {
         $query = $this->find('all', [
@@ -750,4 +804,5 @@ class OrderDetailsTable extends AppTable
 
         return $odParams;
     }
+
 }

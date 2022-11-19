@@ -138,10 +138,15 @@ foreach ($customers as $customer) {
             ]).'"></i> ' . $customerName;
         }
 
-        echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort('2014-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort('2022-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
-            'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
-            'escape' => false
-        ]) . '</span>';
+        if ($lastOrderYear === false && $firstOrderYear === false) {
+            $customerLink = $customerName;
+        } else {
+            $customerLink = $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort($firstOrderYear . '-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort($lastOrderYear . '-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
+                'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
+                'escape' => false
+            ]);
+        }
+        echo '<span class="name">' . $customerLink . '</span>';
 
         echo '<div class="customer-details-wrapper">';
             $imageSrc = $this->Html->getCustomerImageSrc($customer->id_customer, 'small');

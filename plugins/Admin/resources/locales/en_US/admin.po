@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-28 20:44+0200\n"
-"PO-Revision-Date: 2022-10-28 20:45+0200\n"
+"POT-Creation-Date: 2022-11-16 17:08+0100\n"
+"PO-Revision-Date: 2022-11-16 17:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -695,6 +695,12 @@ msgstr "Turnover and profit statistics"
 
 msgid "Turnover_statistics"
 msgstr "Turnover statistics"
+
+msgid "Last_{0}_months"
+msgstr "Last {0} months"
+
+msgid "Total"
+msgstr "Total"
 
 msgid "December"
 msgstr "December"
@@ -2399,9 +2405,6 @@ msgstr "The total sum to the right (price incl.) will be transferred to your ban
 
 msgid "Detail_view"
 msgstr "Detail view"
-
-msgid "Total"
-msgstr "Total"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-29 09:12+0200\n"
+"POT-Creation-Date: 2022-11-16 17:08+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -108,6 +108,75 @@ msgid "route_cart_finished"
 msgstr ""
 
 msgid "route_self_service"
+msgstr ""
+
+msgid "Runtime"
+msgstr ""
+
+msgid "Database_backup_successful"
+msgstr ""
+
+msgid "Please_add_credit"
+msgstr ""
+
+msgid "Sum"
+msgstr ""
+
+msgid "Sent_emails"
+msgstr ""
+
+msgid "Order_reminder"
+msgstr ""
+
+msgid "today"
+msgstr ""
+
+msgid "tomorrow"
+msgstr ""
+
+msgid "Pickup_reminder_for"
+msgstr ""
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr ""
+
+msgid "Delivery_note_for_{0}"
+msgstr ""
+
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
+msgstr ""
+
+msgid "to_(time_context)"
+msgstr ""
+
+msgid "Generated_invoices"
+msgstr ""
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Total_sum"
+msgstr ""
+
+msgid "Sent_order_lists"
+msgstr ""
+
+msgid "Delivery_day"
 msgstr ""
 
 msgid "You_have_been_signed_out."
@@ -1055,9 +1124,6 @@ msgstr ""
 msgid "zero_or_smaller_zero"
 msgstr ""
 
-msgid "Manufacturer"
-msgstr ""
-
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr ""
 
@@ -1077,9 +1143,6 @@ msgid "Change_delivery_rhythm"
 msgstr ""
 
 msgid "First_delivery_day"
-msgstr ""
-
-msgid "Delivery_day"
 msgstr ""
 
 msgid "First_delivery_day_info_(one_product)."
@@ -1275,9 +1338,6 @@ msgid "Price_excl."
 msgstr ""
 
 msgid "Price_incl."
-msgstr ""
-
-msgid "Total_sum"
 msgstr ""
 
 msgid "Price_net"
@@ -1880,9 +1940,6 @@ msgstr ""
 msgid "Please_enter_a_correct_number."
 msgstr ""
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr ""
-
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr ""
 
@@ -2004,63 +2061,6 @@ msgid "member"
 msgstr ""
 
 msgid "Order_lists_for_the_day"
-msgstr ""
-
-msgid "Runtime"
-msgstr ""
-
-msgid "Database_backup_successful"
-msgstr ""
-
-msgid "Please_add_credit"
-msgstr ""
-
-msgid "Sum"
-msgstr ""
-
-msgid "Sent_emails"
-msgstr ""
-
-msgid "Order_reminder"
-msgstr ""
-
-msgid "today"
-msgstr ""
-
-msgid "tomorrow"
-msgstr ""
-
-msgid "Pickup_reminder_for"
-msgstr ""
-
-msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
-msgstr ""
-
-msgid "Delivery_note_for_{0}"
-msgstr ""
-
-msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
-msgstr ""
-
-msgid "to_(time_context)"
-msgstr ""
-
-msgid "Generated_invoices"
-msgstr ""
-
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr ""
-
-msgid "Invoice_number_abbreviation"
-msgstr ""
-
-msgid "Sent"
-msgstr ""
-
-msgid "Products"
-msgstr ""
-
-msgid "Sent_order_lists"
 msgstr ""
 
 msgid "Customer_adds_payment_manually"

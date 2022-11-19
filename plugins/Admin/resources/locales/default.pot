@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-28 20:44+0200\n"
+"POT-Creation-Date: 2022-11-16 17:08+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -693,6 +693,12 @@ msgid "Turnover_and_profit_statistics"
 msgstr ""
 
 msgid "Turnover_statistics"
+msgstr ""
+
+msgid "Last_{0}_months"
+msgstr ""
+
+msgid "Total"
 msgstr ""
 
 msgid "December"
@@ -2391,9 +2397,6 @@ msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_a
 msgstr ""
 
 msgid "Detail_view"
-msgstr ""
-
-msgid "Total"
 msgstr ""
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
