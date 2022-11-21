@@ -33,6 +33,19 @@
   <a href="https://foodcoopshop.github.io/en/users.html">Users</a>
 </h3>
 
+<h3 align="center">
+  <a href="https://signal.group/#CjQKIBEXUVQCyyQu3-7kOgvPIuFDcAN_12WPTAWs4L8kkyGZEhBefC_uCkp2pqHpl8XljqlN">Signal Support Group</a>
+  <span> · </span>
+  <a href="https://foodcoopshop.github.io">Docs</a>
+  <span> · </span>
+  <a href="https://demo-de.foodcoopshop.com">German Demo</a>
+  <span> · </span>
+  <a href="https://demo-en.foodcoopshop.com">English Demo</a>
+  <span> · </span>
+  <a href="https://foodcoopshop.github.io/en/users.html">Users</a>
+</h3>
+
+
 ## 🤖 Self-hosting / developing
 * 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment) / [Installation guide](https://foodcoopshop.github.io/en/installation-guide)
 
