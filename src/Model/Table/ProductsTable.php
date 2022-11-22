@@ -426,8 +426,8 @@ class ProductsTable extends AppTable
 
             $productId = key($product);
             $price = $product[$productId]['gross_price'];
-            if (!is_float($product[$productId]['gross_price'])) {
-                $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            if (!is_float($price)) {
+                $price = Configure::read('app.numberHelper')->getStringAsFloat($price);
             }
 
             $ids = $this->getProductIdAndAttributeId($productId);
@@ -464,9 +464,18 @@ class ProductsTable extends AppTable
             }
 
             if (isset($product[$productId]['unit_product_price_per_unit_enabled']) && isset($product[$productId]['unit_product_price_incl_per_unit'])) {
+
                 $this->Unit = FactoryLocator::get('Table')->get('Units');
-                $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
-                $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units']);
+
+                $priceInclPerUnit = $product[$productId]['unit_product_price_incl_per_unit'];
+                if (!is_float($priceInclPerUnit)) {
+                    $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($priceInclPerUnit);
+                }
+                $quantityInUnits = $product[$productId]['unit_product_quantity_in_units'];
+                if (!is_float($quantityInUnits)) {
+                    $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($quantityInUnits);
+                }
+
                 $this->Unit->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
