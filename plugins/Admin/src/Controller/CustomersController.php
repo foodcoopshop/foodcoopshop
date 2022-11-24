@@ -267,7 +267,7 @@ class CustomersController extends AdminAppController
     }
 
 
-    public function delete($customerId)
+    public function delete(int $customerId)
     {
         $this->RequestHandler->renderAs($this, 'json');
 
