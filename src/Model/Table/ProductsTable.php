@@ -468,11 +468,11 @@ class ProductsTable extends AppTable
                 $this->Unit = FactoryLocator::get('Table')->get('Units');
 
                 $priceInclPerUnit = $product[$productId]['unit_product_price_incl_per_unit'];
-                if (!is_float($priceInclPerUnit)) {
+                if (is_string($priceInclPerUnit)) {
                     $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($priceInclPerUnit);
                 }
                 $quantityInUnits = $product[$productId]['unit_product_quantity_in_units'];
-                if (!is_float($quantityInUnits)) {
+                if (is_string($quantityInUnits)) {
                     $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($quantityInUnits);
                 }
 
