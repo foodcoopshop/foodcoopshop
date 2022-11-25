@@ -413,7 +413,7 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             $productId = key($product);
             $price = $product[$productId]['gross_price'];
-            if (!is_float($product[$productId]['gross_price'])) {
+            if (is_string($product[$productId]['gross_price'])) {
                 $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
             }
             if ($price < 0) {
@@ -426,7 +426,7 @@ class ProductsTable extends AppTable
 
             $productId = key($product);
             $price = $product[$productId]['gross_price'];
-            if (!is_float($price)) {
+            if (is_string($price)) {
                 $price = Configure::read('app.numberHelper')->getStringAsFloat($price);
             }
 
