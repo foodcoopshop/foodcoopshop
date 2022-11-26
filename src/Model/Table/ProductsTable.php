@@ -330,7 +330,10 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+            $deposit = $product[$productId];
+            if (is_string($deposit)) {
+                $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+            }
             if ($deposit < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]);
             }
@@ -338,8 +341,13 @@ class ProductsTable extends AppTable
 
         $success = false;
         foreach ($products as $product) {
+
             $productId = key($product);
-            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+
+            $deposit = $product[$productId];
+            if (is_string($deposit)) {
+                $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+            }
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -413,7 +421,7 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             $productId = key($product);
             $price = $product[$productId]['gross_price'];
-            if (is_string($product[$productId]['gross_price'])) {
+            if (is_string($price)) {
                 $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
             }
             if ($price < 0) {
