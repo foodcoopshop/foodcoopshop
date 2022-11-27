@@ -72,16 +72,11 @@ if (count($payments) == 0) {
         echo '<td>';
 
         if ($payment['type'] == 'product') {
-            switch ($payment['approval']) {
-                case APP_DEL:
-                    echo '<i class="fas fa-minus-circle not-ok payment-approval"></i>';
-                    break;
-                case APP_OFF:
-                    break;
-                case APP_ON:
-                    echo '<i class="fas fa-check-circle ok payment-approval"></i>';
-                    break;
-            }
+            echo match($payment['approval']) {
+                APP_DEL => '<i class="fas fa-minus-circle not-ok payment-approval"></i>',
+                APP_OFF => '',
+                APP_ON => '<i class="fas fa-check-circle ok payment-approval"></i>',
+            };
             if ($payment['approval_comment'] != '') {
                 echo $this->Html->link(
                     '<i class="fas fa-comment-dots ok"></i>',

@@ -389,14 +389,10 @@ class PaymentsController extends AdminAppController
 
         if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer'])) {
             $message .= '. ';
-            switch ($actionLogType) {
-                case 'deposit_customer':
-                    $message .= __d('admin', 'The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']);
-                    break;
-                case 'deposit_manufacturer':
-                    $message .= __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
-                    break;
-            }
+            $message .= match($actionLogType) {
+                'deposit_customer' => __d('admin', 'The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']),
+                'deposit_manufacturer' => __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']),
+            };
         }
 
         $this->Flash->success($message);
