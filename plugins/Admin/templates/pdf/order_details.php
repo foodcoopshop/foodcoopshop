@@ -25,7 +25,7 @@ $j = 1;
 foreach ($orderDetails as $od) {
 
     $pdf->Ln(5);
-    $customerHtml = '<h1 style="font-size:30px;">' . $od[0]->customer->name . '</h1>';
+    $customerHtml = '<h1 style="font-size:24px;">' . $od[0]->customer->name . '</h1>';
     $pdf->writeHTML($customerHtml, true, false, true, false, '');
     $pdf->writeHTML('<h3>' .__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' /  ID: ' . $od[0]->customer->id_customer . '</h3>', true, false, true, false, '');
 
