@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
+use Cake\Datasource\FactoryLocator;
+use Cake\Database\Expression\QueryExpression;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +27,9 @@ use Cake\Validation\Validator;
 class OrderDetailsTable extends AppTable
 {
 
+    use ProductCacheClearAfterDeleteTrait;
+    use ProductCacheClearAfterSaveTrait;
+    
     public function initialize(array $config): void
     {
         $this->setTable('order_detail');
