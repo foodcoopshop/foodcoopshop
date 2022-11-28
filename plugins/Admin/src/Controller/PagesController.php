@@ -25,15 +25,10 @@ class PagesController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'home':
-                if ($this->AppAuth->user()) {
-                    return true;
-                }
-                break;
-            default:
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'home' => $this->AppAuth->user(),
+             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+        };
     }
 
     public function home()

@@ -30,11 +30,9 @@ class ReportsController extends AdminAppController
     public function isAuthorized($user)
     {
         if (isset($this->getRequest()->getParam('pass')[0])) {
-            switch ($this->getRequest()->getParam('pass')[0]) {
+            if($this->getRequest()->getParam('pass')[0] == 'deposit') {
                 // allow deposit for cash configuration
-                case 'deposit':
-                    return $this->AppAuth->isSuperadmin();
-                    break;
+                return $this->AppAuth->isSuperadmin();
             }
         }
         return $this->AppAuth->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();

@@ -229,7 +229,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
                 'Customers.email' => $email,
             ],
         ])->first();
-        $this->assertTrue((boolean) $customer->is_company);
+        $this->assertTrue((bool) $customer->is_company);
     }
 
     public function testRegistrationUserNotActive()

@@ -145,17 +145,11 @@ class PaymentsController extends AdminAppController
             $payment = $this->Payment->save($payment);
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            switch ($payment->approval) {
-                case -1:
-                    $actionLogType = 'payment_product_approval_not_ok';
-                    break;
-                case 0:
-                    $actionLogType = 'payment_product_approval_open';
-                    break;
-                case 1:
-                    $actionLogType = 'payment_product_approval_ok';
-                    break;
-            }
+            $actionLogType = match($payment->approval) {
+                -1 => 'payment_product_approval_not_ok',
+                 0 => 'payment_product_approval_open',
+                 1 => 'payment_product_approval_ok',
+            };
 
             $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$payment->approval];
 

@@ -82,7 +82,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $domain = 'http://www.not-available-domain.at';
         $response = $this->saveProductRelation(152, 152, '', $domain);
 
-        $this->assertFalse((boolean) $response->status);
+        $this->assertFalse((bool) $response->status);
         $this->assertRegExpWithUnquotedString($domain, $response->msg);
         $this->assertResponseCode(500);
     }
@@ -97,7 +97,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $productName = 'Joghurt';
         $response = $this->saveProductRelation($productId, $productId, $productName, Configure::read('App.fullBaseUrl'));
 
-        $this->assertFalse((boolean) $response->status);
+        $this->assertFalse((bool) $response->status);
         $this->assertRegExpWithUnquotedString('product ' . $productId . ' is not associated with manufacturer ' . $manufacturerId, $response->msg);
         $this->assertResponseCode(500);
     }

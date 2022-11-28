@@ -28,14 +28,10 @@ class FeedbacksController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'myFeedback':
-                return Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->user();
-                break;
-            default:
-                return Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->isSuperadmin();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->user(),
+             default => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->isSuperadmin(),
+        };
     }
 
     private function getCustomerId()

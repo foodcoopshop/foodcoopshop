@@ -34,31 +34,14 @@ class CustomersController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'generateMemberCards':
-                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
-                break;
-            case 'generateMyMemberCard':
-                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer());
-                break;
-            case 'edit':
-            case 'creditBalanceSum':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'profile':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
-                break;
-            case 'delete':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'changePassword':
-            case 'ajaxGetCustomersForDropdown':
-                return $this->AppAuth->user();
-                break;
-            default:
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'generateMemberCards' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()),
+            'generateMyMemberCard' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer()),
+            'creditBalanceSum', 'delete' =>  $this->AppAuth->isSuperadmin(),
+            'profile' => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer(),
+            'changePassword', 'ajaxGetCustomersForDropdown' => $this->AppAuth->user(),
+             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+        };
     }
 
     public function ajaxGetCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)

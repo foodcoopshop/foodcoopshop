@@ -113,7 +113,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderedProductDeletedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -126,7 +126,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderedProductPriceChangedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -139,7 +139,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderedProductAmountChangedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -152,7 +152,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendInstantOrderNotification)) {
             $result = Configure::read('app.defaultSendInstantOrderNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -165,7 +165,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendInvoice)) {
             $result = Configure::read('app.defaultSendInvoice');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -372,15 +372,10 @@ class ManufacturersTable extends AppTable
 
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
-        switch ($order) {
-            case 'product':
-                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC';
-                break;
-            case 'customer':
-                $orderClause = $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC';
-                break;
-        }
-
+        $orderClause = match($order) {
+            'product' => 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC',
+            'customer' => $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC',
+        };
         $params = [
             'manufacturerId' => $manufacturerId
         ];

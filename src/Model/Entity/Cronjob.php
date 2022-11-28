@@ -23,33 +23,17 @@ class Cronjob extends Entity
 
     protected function _getName($name)
     {
-        switch ($name) {
-            case 'BackupDatabase':
-                return __('BackupDatabaseCronjob');
-                break;
-            case 'CheckCreditBalance':
-                return __('CheckCreditBalanceCronjob');
-                break;
-            case 'EmailOrderReminder':
-                return __('EmailOrderReminderCronjob');
-                break;
-            case 'PickupReminder':
-                return __('PickupReminderCronjob');
-                break;
-            case 'SendOrderLists':
-                return __('SendOrderListsCronjob');
-                break;
-            case 'SendInvoicesToCustomers':
-                return __('SendInvoicesToCustomersCronjob');
-                break;
-            case 'SendInvoicesToManufacturers':
-                return __('SendInvoicesToManufacturersCronjob');
-                break;
-            case 'SendDeliveryNotes':
-                return __('SendDeliveryNotesCronjob');
-                break;
-        }
-        return $name;
+        return match($name) {
+            'BackupDatabase' => __('BackupDatabaseCronjob'),
+            'CheckCreditBalance' => __('CheckCreditBalanceCronjob'),
+            'EmailOrderReminder' => __('EmailOrderReminderCronjob'),
+            'PickupReminder' => __('PickupReminderCronjob'),
+            'SendOrderLists' => __('SendOrderListsCronjob'),
+            'SendInvoicesToCustomers' =>  __('SendInvoicesToCustomersCronjob'),
+            'SendInvoicesToManufacturers' => __('SendInvoicesToManufacturersCronjob'),
+            'SendDeliveryNotes' => __('SendDeliveryNotesCronjob'),
+             default => $name,
+        };
     }
 
 }

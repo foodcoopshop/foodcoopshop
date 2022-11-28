@@ -223,17 +223,11 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCurrencyIsoCode($currencySymbol)
     {
-        switch($currencySymbol) {
-            case '€':
-                return 'EUR';
-                break;
-            case '$':
-                return 'USD';
-                break;
-            default:
-                return '';
-                break;
-        }
+        return match($currencySymbol) {
+            '€' => 'EUR',
+            '$' => 'USD',
+            default => '',
+        };
     }
 
     public function getFontAwesomeIconForCurrencyName($currencySymbol)

@@ -187,17 +187,11 @@ class MyTimeHelper extends TimeHelper
         $result = [];
         foreach($allYears as $year)
         {
-            switch($year) {
-                case $startYear:
-                    $result = array_merge($result, $this->getCalendarWeeks($startCalendarWeek, $this->getLastCalendarWeekOfYear($startYear), $year));
-                    break;
-                case $currentYear:
-                    $result = array_merge($result, $this->getCalendarWeeks(1, $currentCalendarWeek, $year));
-                    break;
-                default:
-                    $result = array_merge($result, $this->getCalendarWeeks(1, $this->getLastCalendarWeekOfYear($year), $year));
-                    break;
-            }
+            $result = match($year) {
+                $startYear => array_merge($result, $this->getCalendarWeeks($startCalendarWeek, $this->getLastCalendarWeekOfYear($startYear), $year)),
+                $currentYear => array_merge($result, $this->getCalendarWeeks(1, $currentCalendarWeek, $year)),
+                default => array_merge($result, $this->getCalendarWeeks(1, $this->getLastCalendarWeekOfYear($year), $year)),
+            };
         }
 
         return $result;

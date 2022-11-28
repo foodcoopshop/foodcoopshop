@@ -224,7 +224,7 @@ class ProductsTable extends AppTable
                 'Products.id_manufacturer' => $manufacturerId
             ]
         ])->count();
-        return (boolean) $found;
+        return (bool) $found;
     }
 
     /**
@@ -496,8 +496,8 @@ class ProductsTable extends AppTable
             }
         }
 
-        $success = (boolean) $success;
-        return $success;
+        return (bool) $success;
+        
     }
 
     /**
