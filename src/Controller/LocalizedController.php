@@ -96,7 +96,7 @@ class LocalizedController extends Controller
                 'ThisPageUsesCookies' => __('This_page_uses_cookies'),
                 'CookiesExplainationText' => __('Cookies_explaination_text'),
                 'AcceptCookies' => __('Accept_cookies'),
-                'YouHaveAlredyOrdered01TimesFor2' => __('You_have_already_ordered_{0}_{1}_times_for_{2}.'),
+                'YouHaveAlreadyOrdered01TimesFor2' => __('You_have_already_ordered_{0}_{1}_times_for_{2}.'),
                 'Firstname' => __('Firstname'),
                 'Lastname' => __('Lastname'),
                 'ContactPerson' => __('Contact_person'),
