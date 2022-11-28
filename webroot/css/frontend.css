@@ -549,6 +549,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     margin-top: 5px;
     margin-bottom: 10px;
     float: left;
+    width: 100%;
 }
 .pw .amount-wrapper .loi {
     float: left;
@@ -577,9 +578,17 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     border: 1px solid #d6d4d4;
     width: 28px;
 }
-.pw .amount-wrapper .right-of-input {
+.pw .amount-wrapper .below-input {
     float: left;
     clear: both;
+}
+.pw .amount-wrapper .ordered-products-total-amount {
+    float: right;
+    border-radius: 50%;
+    border: 1px solid #d6d4d4;
+    text-align: center;
+    width: 30px;
+    height: 30px;
 }
 .pw span.not-available-info {
     display: block;

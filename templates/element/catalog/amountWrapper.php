@@ -30,10 +30,25 @@ use Cake\Core\Configure;
             <i class="fas fa-minus-circle"></i>
         </a>
     <?php } ?>
+
+    <?php
+        if (Configure::read('app.showOrderedProductsTotalAmountInCatalog') && !is_null($orderedTotalAmount)) {
+            if ($product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break') {
+                $pickupDayString = $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
+                $tooltip = __('{0,plural,=1{1_order} other{#_orders}}_for_pickup_day_{1}.', [
+                    $orderedTotalAmount,
+                    $pickupDayString,
+                ]);
+                echo '<div title="' . $tooltip . '" class="ordered-products-total-amount">' . $orderedTotalAmount . '</div>';
+            }
+        }
+    ?>
+
     <?php
         $availableQuantity = $stockAvailable->quantity - $stockAvailable->quantity_limit;
         if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailable->always_available) && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
-            <span <?php echo !$hideAmountSelector ? 'class="right-of-input availibility"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
+            <span <?php echo !$hideAmountSelector ? 'class="below-input availibility"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
     <?php } ?>
+
 
 </div>

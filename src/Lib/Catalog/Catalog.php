@@ -31,6 +31,7 @@ class Catalog {
     protected $Manufacturer;
     protected $Product;
     protected $ProductAttribute;
+    protected $OrderDetail;
 
     public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
@@ -54,6 +55,7 @@ class Catalog {
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
+            $products = $this->addOrderedProductsTotalAmount($products, $appAuth);
             Cache::write($cacheKey, $products);
         }
 
@@ -353,6 +355,39 @@ class Catalog {
         return $query;
 
     }
+
+    protected function addOrderedProductsTotalAmount($products, $appAuth)
+    {
+
+        if (!Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
+            return $products;
+        }
+
+        if ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
+            return $products;
+        }
+
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+
+        $i = -1;
+        foreach($products as $product) {
+            $i++;
+            $pickupDay = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
+            if (empty($product->product_attributes)) {
+                $totalOrderDetails = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
+                $product->ordered_total_amount = $totalOrderDetails;
+            } else {
+                foreach($product->product_attributes as &$attribute) {
+                    $totalOrderDetails = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, $attribute->id_product_attribute);
+                    $attribute->ordered_total_amount = $totalOrderDetails;
+                }
+            }
+        }
+
+        return $products;
+
+    }
+
 
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products)
     {

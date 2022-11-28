@@ -85,7 +85,8 @@ foreach ($preparedProductAttributes as $attribute) {
     echo $this->element('catalog/amountWrapper', [
         'product' => $product,
         'stockAvailable' => $attribute->stock_available,
-        'hideAmountSelector' => $isStockProductOrderPossible
+        'orderedTotalAmount' => $attribute->ordered_total_amount ?? null,
+        'hideAmountSelector' => $isStockProductOrderPossible,
     ]);
     echo $this->element('catalog/cartButton', [
         'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,

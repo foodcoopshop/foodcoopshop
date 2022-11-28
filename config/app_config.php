@@ -107,6 +107,7 @@ return [
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
         'selfServiceModeShowOnlyStockProducts' => true,
         'selfServiceModeAutoGenerateInvoice' => true,
+        'showOrderedProductsTotalAmountInCatalog' => false,
 
         /**
          * id of the category "all products"

@@ -179,6 +179,30 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
+    public function getTotalOrderDetails(string $pickupDay, int $productId, int $attributeId)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.pickup_day' => $pickupDay,
+                'OrderDetails.product_id' => $productId,
+                'OrderDetails.product_attribute_id' => $attributeId,
+            ],
+        ]);
+        $query->select([
+            'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
+        ]);
+        $query->group([
+            'OrderDetails.pickup_day',
+            'OrderDetails.product_id',
+            'OrderDetails.product_attribute_id',
+        ]);
+        $query = $query->toArray();
+        if (count($query) > 0) {
+            return $query[0]->SumAmount;
+        }
+        return null;
+    }
+
     public function getOrderDetailsForOrderListPreview($pickupDay)
     {
         $query = $this->find('all', [
