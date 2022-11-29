@@ -36,8 +36,8 @@ use Cake\Core\Configure;
             if ($product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break') {
                 $pickupDayString = $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
                 $tooltip = __('{0}_times_ordered_for_pickup_day_{1}.', [
-                    $orderedTotalAmount,
-                    $pickupDayString,
+                    '<b>' . $orderedTotalAmount . '</b>',
+                    '<b>' . $pickupDayString . '</b>',
                 ]);
                 echo '<div title="' . $tooltip . '" class="ordered-products-total-amount">' . $orderedTotalAmount . '</div>';
             }
