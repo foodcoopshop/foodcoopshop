@@ -23,6 +23,7 @@ use Cake\Core\Configure;
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
 
+    protected $OrderDetail;
     protected $Product;
     protected $Unit;
 
