@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
-use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
@@ -27,8 +26,7 @@ use Cake\Database\Expression\QueryExpression;
 class OrderDetailsTable extends AppTable
 {
 
-    use ProductCacheClearAfterDeleteTrait;
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
     
     public function initialize(array $config): void
     {

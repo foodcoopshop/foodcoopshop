@@ -186,6 +186,32 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
 
+    public function testProductDetailHtmlProductCatalogShowOrderedProductsTotalAmountInCatalog()
+    {
+        Configure::write('app.showOrderedProductsTotalAmountInCatalog', true);
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+
+        $productId = 60;
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'id_product' => $productId,
+            ],
+        ])->first();
+        $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDayForProduct($product, $this);
+
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (3);';
+        $params = [
+            'pickupDay' => $nextDeliveryDay,
+        ];
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute($params);
+        
+        $this->get($this->Slug->getProductDetail($productId, 'Milch'));
+        $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
+        $this->assertResponseContains('<div title="<b>1</b> Bestellung für Abholtag <b>'.$formattedPickupDay.'</b>." class="ordered-products-total-amount">1</div>');
+    }
+
     public function testProductDetailHtmlProductCatalogInstantOrder()
     {
         $this->loginAsSuperadmin();

@@ -23,12 +23,21 @@ use Cake\Datasource\EntityInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-trait ProductCacheClearAfterDeleteTrait
+trait ProductCacheClearAfterSaveAndDeleteTrait
 {
+
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    {
+        $this->clearProductCache();
+    }
 
     public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
-        
+        $this->clearProductCache();
+    }
+
+    private function clearProductCache()
+    {
         $clearCache = true;
         
         if ($this->getRegistryAlias() == 'OrderDetails') {
@@ -41,7 +50,7 @@ trait ProductCacheClearAfterDeleteTrait
         if ($clearCache) {
             Cache::clearAll();
         }
-        
+
     }
 
 }
