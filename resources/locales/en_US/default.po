@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-11-28 10:54+0100\n"
-"PO-Revision-Date: 2022-11-28 10:56+0100\n"
+"POT-Creation-Date: 2022-11-29 20:16+0100\n"
+"PO-Revision-Date: 2022-11-29 20:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2487,8 +2487,8 @@ msgstr "I promise to pick up the products on the selected pickup day and I will 
 msgid "No_order_possible"
 msgstr "No order possible"
 
-msgid "{0,plural,=1{1_order} other{#_orders}}_for_pickup_day_{1}."
-msgstr "{0,plural,=1{<b>1</b> order} other{<b>#</b> orders}} for pickup day <b>{1}</b>."
+msgid "{0}_times_ordered_for_pickup_day_{1}."
+msgstr "{0} times ordered for pickup day {1}."
 
 msgid "available"
 msgstr "available"

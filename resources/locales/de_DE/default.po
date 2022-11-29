@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-11-28 10:54+0100\n"
-"PO-Revision-Date: 2022-11-28 10:56+0100\n"
+"POT-Creation-Date: 2022-11-29 20:16+0100\n"
+"PO-Revision-Date: 2022-11-29 20:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2487,8 +2487,8 @@ msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle de
 msgid "No_order_possible"
 msgstr "Keine Bestellung möglich"
 
-msgid "{0,plural,=1{1_order} other{#_orders}}_for_pickup_day_{1}."
-msgstr "{0,plural,=1{<b>1</b> Bestellung} other{<b>#</b> Bestellungen}} für Abholtag <b>{1}</b>."
+msgid "{0}_times_ordered_for_pickup_day_{1}."
+msgstr "{0}x für Abholtag {1} bestellt."
 
 msgid "available"
 msgstr "verfügbar"

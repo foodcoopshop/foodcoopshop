@@ -209,7 +209,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         
         $this->get($this->Slug->getProductDetail($productId, 'Milch'));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
-        $this->assertResponseContains('<div title="<b>1</b> Bestellung für Abholtag <b>'.$formattedPickupDay.'</b>." class="ordered-products-total-amount">1</div>');
+        $this->assertResponseContains('<div title="<b>1</b>x für Abholtag <b>'.$formattedPickupDay.'</b> bestellt." class="ordered-products-total-amount">1</div>');
     }
 
     public function testProductDetailHtmlProductCatalogInstantOrder()
