@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Traits;
 
-use Cake\Cache\Cache;
-use Cake\Datasource\EntityInterface;
-use Cake\Event\EventInterface;
 use ArrayObject;
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Event\EventInterface;
+use Cake\Datasource\EntityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,7 +28,20 @@ trait ProductCacheClearAfterDeleteTrait
 
     public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
-        Cache::clearAll();
+        
+        $clearCache = true;
+        
+        if ($this->getRegistryAlias() == 'OrderDetails') {
+            $clearCache = false;
+            if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
+                $clearCache = true;
+            }
+        }
+        
+        if ($clearCache) {
+            Cache::clearAll();
+        }
+        
     }
 
 }
