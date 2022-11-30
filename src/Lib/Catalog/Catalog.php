@@ -363,6 +363,10 @@ class Catalog {
             return $products;
         }
 
+        if (!$appAuth->user()) {
+            return $products;
+        }
+
         if ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
             return $products;
         }
@@ -374,12 +378,10 @@ class Catalog {
             $i++;
             $pickupDay = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
             if (empty($product->product_attributes)) {
-                $totalOrderDetails = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
-                $product->ordered_total_amount = $totalOrderDetails;
+                $product->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
             } else {
                 foreach($product->product_attributes as &$attribute) {
-                    $totalOrderDetails = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, $attribute->id_product_attribute);
-                    $attribute->ordered_total_amount = $totalOrderDetails;
+                    $attribute->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, $attribute->id_product_attribute);
                 }
             }
         }
