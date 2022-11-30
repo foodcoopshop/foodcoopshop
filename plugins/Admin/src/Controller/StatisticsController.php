@@ -27,17 +27,11 @@ class StatisticsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'index':
-                return $this->AppAuth->isSuperadmin() || ($this->AppAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'));
-                break;
-            case 'myIndex':
-                return !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isManufacturer();
-                break;
-            default:
-                return $this->AppAuth->isManufacturer();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'index' => $this->AppAuth->isSuperadmin() || ($this->AppAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins')),
+            'myIndex' => !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isManufacturer(),
+             default => $this->AppAuth->isManufacturer(),
+        };
     }
 
     /**

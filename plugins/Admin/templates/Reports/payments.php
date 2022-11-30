@@ -166,12 +166,10 @@ foreach ($payments as $payment) {
 
     if ($showTextColumn) {
         echo '<td>';
-        switch ($paymentType) {
-            case 'deposit':
-                echo $this->Html->getManufacturerDepositPaymentText($payment->text);
-                break;
-            default:
-                echo $payment->text;
+        if ($paymentType == 'deposit') {
+            echo $this->Html->getManufacturerDepositPaymentText($payment->text);
+        } else {
+            echo $payment->text;
         }
         echo '</td>';
     }

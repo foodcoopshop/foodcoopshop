@@ -32,25 +32,13 @@ class PaymentsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'overview':
-                return Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
-                break;
-            case 'product':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'edit':
-            case 'previewEmail':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'add':
-            case 'changeState':
-                return $this->AppAuth->user();
-                break;
-            default:
-                return $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'overview' => Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer(),
+            'product' => $this->AppAuth->isSuperadmin(),
+            'edit', 'previewEmail' => $this->AppAuth->isSuperadmin(),
+            'add', 'changeState' => $this->AppAuth->user(),
+             default => $this->AppAuth->user() && ! $this->AppAuth->isManufacturer(),
+        };
     }
 
     public function beforeFilter(EventInterface $event)
