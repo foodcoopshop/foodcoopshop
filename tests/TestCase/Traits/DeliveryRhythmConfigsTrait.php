@@ -21,8 +21,6 @@ use Cake\Datasource\FactoryLocator;
 trait DeliveryRhythmConfigsTrait
 {
 
-    protected $Products;
-
     protected function prepareThursdayFridayConfig()
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
@@ -51,7 +49,6 @@ trait DeliveryRhythmConfigsTrait
     {
         $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
         $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);
-        $this->Products = FactoryLocator::get('Table')->get('Products');
         $this->Product->updateAll(['delivery_rhythm_send_order_list_weekday' => 6], []);
     }
 
