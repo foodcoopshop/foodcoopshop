@@ -25,35 +25,34 @@ trait DeliveryRhythmConfigsTrait
 
     protected function prepareThursdayFridayConfig()
     {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
 
     protected function prepareWednesdayFridayConfig()
     {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 2);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 2);
     }
 
     protected function prepareTuesdayFridayConfig()
     {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
     }
 
     protected function prepareMondayTuesdayConfig()
     {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 2);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 2);
+        $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
 
     protected function prepareSaturdayThursdayConfig()
     {
-        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
-        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);
+        $this->changeConfiguration('FCS_WEEKLY_PICKUP_DAY', 4);
+        $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 5);
         $this->Products = FactoryLocator::get('Table')->get('Products');
-        $query = 'UPDATE ' . $this->Products->getTable().' SET delivery_rhythm_send_order_list_weekday = 6';
-        $this->dbConnection->execute($query);
+        $this->Product->updateAll(['delivery_rhythm_send_order_list_weekday' => 6], []);
     }
 
 }

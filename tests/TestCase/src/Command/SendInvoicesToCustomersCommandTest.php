@@ -113,12 +113,9 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
         // move one order detail in future - must be excluded from invoice
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(1);';
-        $params = [
-            'pickupDay' => '2018-02-09',
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $orderDetailEntity = $this->OrderDetail->get(1);
+        $orderDetailEntity->pickup_day = '2018-02-09';
+        $this->OrderDetail->save($orderDetailEntity);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
 

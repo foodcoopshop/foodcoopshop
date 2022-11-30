@@ -187,33 +187,16 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertEquals($url, $expectedUrl, $msg);
     }
 
-    protected function changeReadOnlyConfiguration($configKey, $value)
-    {
-        $query = 'UPDATE ' . $this->Configuration->getTable() . ' SET value = :value WHERE name = :configKey';
-        $params = [
-            'value' => $value,
-            'configKey' => $configKey
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
-        $this->Configuration->loadConfigurations();
-    }
-
     /**
-     * needs to login as superadmin and logs user out automatically
-     *
-     * @param string $configKey
-     * @param string $newValue
+     * automatically logout of user
      */
-    protected function changeConfiguration($configKey, $newValue)
+    protected function changeConfiguration(string $configKey, $value)
     {
-        $query = 'UPDATE fcs_configuration SET value = :newValue WHERE name = :configKey;';
-        $params = [
-            'newValue' => $newValue,
-            'configKey' => $configKey
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $this->Configuration->setPrimaryKey('name');
+        $configurationEntity = $this->Configuration->get($configKey);
+        $configurationEntity->value = $value;
+        $this->Configuration->save($configurationEntity);
+        $this->Configuration->setPrimaryKey('id_configuration');
         $this->Configuration->loadConfigurations();
         $this->logout();
     }

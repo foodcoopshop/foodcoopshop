@@ -176,7 +176,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
     private function disableVariableMemberFee()
     {
-        $this->changeReadOnlyConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 0);
+        $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 0);
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'variable_member_fee', 0);
     }
