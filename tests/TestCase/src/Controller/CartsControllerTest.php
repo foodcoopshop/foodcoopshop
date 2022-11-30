@@ -318,10 +318,15 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId2, 1);
-        $query = 'UPDATE ' . $this->Product->getTable().' SET active = 0 WHERE id_product = 60';
-        $this->dbConnection->execute($query);
-        $query = 'UPDATE ' . $this->Cart->CartProducts->getTable().' SET id_product_attribute = 5000 WHERE id_cart_product = 3';
-        $this->dbConnection->execute($query);
+
+        $productEntity = $this->Product->get(60);
+        $productEntity->active = APP_OFF;
+        $this->Product->save($productEntity);
+
+        $cpEntity = $this->Cart->CartProducts->get(3);
+        $cpEntity->id_product_attribute = 5000;
+        $this->Cart->CartProducts->save($cpEntity);
+
         $this->removeProduct($this->productId2);
         $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');

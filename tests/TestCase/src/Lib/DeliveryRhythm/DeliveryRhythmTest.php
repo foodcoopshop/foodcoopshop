@@ -443,7 +443,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
 
     public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOff()
     {
-        $this->changeConfiguration('FCS_SEND_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
+        $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
         $data = [
             'product' => $this->Product->newEntity(
                 [
@@ -462,7 +462,7 @@ class DeliveryRhythmTest extends AppCakeTestCase
 
     public function test2WeekWithSendOrderListDayTwoDaysBeforeDefaultAndChangedSendOrderListsDayDeltaAllowOrdersConfigOn()
     {
-        $this->changeConfiguration('FCS_SEND_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
+        $this->changeConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
         $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
         $data = [
             'product' => $this->Product->newEntity(

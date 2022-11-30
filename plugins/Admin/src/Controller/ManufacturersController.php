@@ -33,32 +33,15 @@ class ManufacturersController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'profile':
-            case 'myOptions':
-                return $this->AppAuth->isManufacturer();
-                break;
-            case 'index':
-            case 'add':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-                break;
-            case 'edit':
-            case 'editOptions':
-            case 'getOrderListByProduct':
-            case 'getOrderListByCustomer':
-            case 'getInvoice':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-                break;
-            case 'getDeliveryNote':
-                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
-                break;
-            case 'getInvoice':
-                return !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
-                break;
-            default:
-                return $this->AppAuth->user();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'profile', 'myOptions' => $this->AppAuth->isManufacturer(),
+            'index', 'add' => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+            'edit', 'editOptions', 'getOrderListByProduct', 'getOrderListByCustomer', 'getInvoice' => 
+                $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+            'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin(),
+            'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()),
+             default =>  $this->AppAuth->user(),
+        };
     }
 
     public function beforeFilter(EventInterface $event)

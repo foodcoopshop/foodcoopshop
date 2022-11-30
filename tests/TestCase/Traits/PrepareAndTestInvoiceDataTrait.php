@@ -39,12 +39,13 @@ trait PrepareAndTestInvoiceDataTrait
         $this->finishCart(1, 1, '', null, $pickupDay);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(4,5);';
-        $params = [
-            'pickupDay' => $pickupDay,
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $orderDetailEntityA = $this->OrderDetail->get(4);
+        $orderDetailEntityA->pickup_day = $pickupDay;
+        $this->OrderDetail->save($orderDetailEntityA);
+
+        $orderDetailEntityB = $this->OrderDetail->get(5);
+        $orderDetailEntityB->pickup_day = $pickupDay;
+        $this->OrderDetail->save($orderDetailEntityB);
 
         $this->addPayment($customerId, 2.0, 'deposit', 0, '', $pickupDay);
         $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
