@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 
 /**
  * fake model for using associations with foreign keys that are not the id of the model
@@ -23,7 +23,7 @@ use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 class UnitProductAttributesTable extends AppTable
 {
 
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public function initialize(array $config): void
     {

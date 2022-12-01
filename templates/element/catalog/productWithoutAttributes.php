@@ -44,6 +44,7 @@ if ($showProductPrice) {
 echo $this->element('catalog/hiddenProductIdField', ['productId' => $product->id_product]);
 echo $this->element('catalog/amountWrapper', [
     'product' => $product,
+    'orderedTotalAmount' => $product->ordered_total_amount ?? null,
     'stockAvailable' => $product->stock_available,
     'hideAmountSelector' => $isStockProductOrderPossible,
 ]);

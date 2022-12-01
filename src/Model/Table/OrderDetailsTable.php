@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
+use Cake\Datasource\FactoryLocator;
+use Cake\Database\Expression\QueryExpression;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +26,8 @@ use Cake\Validation\Validator;
 class OrderDetailsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveAndDeleteTrait;
+    
     public function initialize(array $config): void
     {
         $this->setTable('order_detail');
@@ -177,6 +180,30 @@ class OrderDetailsTable extends AppTable
             return $exp->add('OrderDetails.pickup_day >= DATE_SUB("' . $firstDayOfLastOrderMonth . '", INTERVAL ' . $lastMonths . ' MONTH)');
         });
         return $query;
+    }
+
+    public function getTotalOrderDetails(string $pickupDay, int $productId, int $attributeId)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.pickup_day' => $pickupDay,
+                'OrderDetails.product_id' => $productId,
+                'OrderDetails.product_attribute_id' => $attributeId,
+            ],
+        ]);
+        $query->select([
+            'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
+        ]);
+        $query->group([
+            'OrderDetails.pickup_day',
+            'OrderDetails.product_id',
+            'OrderDetails.product_attribute_id',
+        ]);
+        $query = $query->toArray();
+        if (count($query) > 0) {
+            return $query[0]->SumAmount;
+        }
+        return null;
     }
 
     public function getOrderDetailsForOrderListPreview($pickupDay)

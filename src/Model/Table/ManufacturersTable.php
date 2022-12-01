@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Lib\Catalog\Catalog;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
@@ -26,7 +26,7 @@ use Cake\Validation\Validator;
 class ManufacturersTable extends AppTable
 {
 
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public function initialize(array $config): void
     {

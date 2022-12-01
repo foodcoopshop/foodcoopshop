@@ -30,6 +30,13 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
 ]);
+
+if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace') . ".Helper.initTooltip('.ordered-products-total-amount');"
+    ]);
+}
+
 ?>
 
 <h1><?php echo $manufacturer->name; ?>

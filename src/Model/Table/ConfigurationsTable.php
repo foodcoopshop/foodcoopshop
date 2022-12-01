@@ -5,7 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use App\Lib\Error\Exception\ConfigFileMissingException;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Validation\Validator;
 
 /**
@@ -24,7 +24,7 @@ use Cake\Validation\Validator;
 class ConfigurationsTable extends AppTable
 {
 
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
     public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';

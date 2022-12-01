@@ -9,7 +9,7 @@ use App\Lib\Catalog\Catalog;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\RemoteFile\RemoteFile;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
@@ -31,7 +31,7 @@ use Cake\Validation\Validator;
 class ProductsTable extends AppTable
 {
 
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
