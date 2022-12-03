@@ -184,6 +184,11 @@ class OrderDetailsTable extends AppTable
 
     public function getTotalOrderDetails(string $pickupDay, int $productId, int $attributeId)
     {
+        
+        if ($pickupDay == 'delivery-rhythm-triggered-delivery-break') {
+            return null;
+        }
+
         $query = $this->find('all', [
             'conditions' => [
                 'OrderDetails.pickup_day' => $pickupDay,
