@@ -28,6 +28,7 @@
         "pickup_day_reminder_enabled": 1,
         "credit_upload_reminder_enabled": 1,
         "newsletter_enabled": 0,
+        "dark_mode_enabled": 0,
         "address_customer": null,
         "name": "Demo Gem\u00fcse-Hersteller"
     },
