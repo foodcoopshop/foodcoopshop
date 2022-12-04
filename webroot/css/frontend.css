@@ -218,8 +218,12 @@ body.categories.detail div.description-wrapper {
 #user-menu li > a {
     color: #333;
 }
-#user-menu i.fa-user {
+#user-menu i.fa-user,
+#user-menu .theme i {
     padding-right: 5px;
+}
+#user-menu .theme {
+    margin-right: 5px;
 }
 #user-menu > li {
     padding-bottom: 5px;

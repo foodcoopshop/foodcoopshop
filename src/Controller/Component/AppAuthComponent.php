@@ -72,7 +72,7 @@ class AppAuthComponent extends AuthComponent
         return $result;
     }
 
-    public function getDarkModeEnabled()
+    public function isDarkModeEnabled()
     {
         return $this->user('dark_mode_enabled');
     }

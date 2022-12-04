@@ -33,6 +33,21 @@ foodcoopshop.Helper = {
         }
     },
 
+    initThemeSwitcher: function() {
+        $('#user-menu .theme').on('click', function() {
+            var icon = $(this).find('i');
+            if ($('body').hasClass('dark')) {
+                $('body').removeClass('dark');
+                icon.removeClass('fa-moon');
+                icon.addClass('fa-sun');
+            } else {
+                $('body').addClass('dark');
+                icon.removeClass('fa-sun');
+                icon.addClass('fa-moon');
+            }
+        }).trigger('click');
+    },
+
     initRegistrationAsCompany: function() {
 
         var isCompanyCheckbox = $('#customers-is-company');

@@ -1,0 +1,48 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 3.6.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+ :root {
+    --main-bg-color: #1b1b1b;
+    --main-font-color: #CDCDCD;
+}
+body.dark {
+    background-image: none;
+    background-color: var(--main-bg-color);
+    color: var(--main-font-color);
+}
+body.dark #header,
+body.dark #content,
+body.dark .sidebar,
+body.dark .box,
+body.dark #main-menu li ul,
+body.dark #user-menu li ul,
+body.dark #inner-content {
+    background-color: var(--main-bg-color);
+}
+body.dark .vertical.menu a {
+    background-color: var(--main-bg-color) ! important;
+}
+body.dark .btn-outline-light,
+body.dark select,
+body.dark input {
+    background-color: var(--main-bg-color);
+    color: var(--main-font-color);
+}
+body.dark #main-menu li > a,
+body.dark #user-menu li > a,
+body.dark a.blog-post-wrapper span {
+    color: var(--main-font-color);
+}
+body.dark .vertical.menu a {
+    color: var(--main-font-color) ! important;
+}

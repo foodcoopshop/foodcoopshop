@@ -35,6 +35,14 @@ if ($appAuth->isManufacturer()) {
 }
 
 if ($appAuth->user()) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initThemeSwitcher();"
+    ]);
+    if ($appAuth->isDarkModeEnabled()) {
+        $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-moon', 'class' => ['theme']]];
+    } else {
+        $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-sun', 'class' => ['theme']]];
+    }
     if (!$appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
     }
@@ -44,11 +52,11 @@ if ($appAuth->user()) {
 }
 
 if ($appAuth->user() && !$appAuth->isCustomer() && !$appAuth->isOrderForDifferentCustomerMode()) {
-    $menu[0]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
+    $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
 }
 
 if ($appAuth->isCustomer()) {
-    $menu[0]['children'] = $this->Menu->getCustomerMenuElements($appAuth);
+    $menu[1]['children'] = $this->Menu->getCustomerMenuElements($appAuth);
 }
 
 if (!$appAuth->isOrderForDifferentCustomerMode()) {
@@ -67,13 +75,13 @@ if (!$appAuth->isOrderForDifferentCustomerMode()) {
     $authMenuElement = $this->Menu->getAuthMenuElement($appAuth);
     if ($appAuth->user()) {
         if (!is_null($selfServiceMenuElement)) {
-            $menu[0]['children'][] = $selfServiceMenuElement;
+            $menu[1]['children'][] = $selfServiceMenuElement;
         }
-        $menu[0]['children'][] = $authMenuElement;
+        $menu[1]['children'][] = $authMenuElement;
     } else {
         $menu[] = $authMenuElement;
         if (!is_null($selfServiceMenuElement)) {
-            $menu[0]['children'][] = $selfServiceMenuElement;
+            $menu[1]['children'][] = $selfServiceMenuElement;
         }
     }
 
