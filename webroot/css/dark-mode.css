@@ -13,6 +13,7 @@
  */
  :root {
     --main-bg-color: #1b1b1b;
+    --2nd-bg-color: #0d1117;
     --main-font-color: #CDCDCD;
 }
 body.dark {
@@ -24,19 +25,27 @@ body.dark #header,
 body.dark #content,
 body.dark .sidebar,
 body.dark .box,
-body.dark #main-menu li ul,
-body.dark #user-menu li ul,
 body.dark #inner-content {
     background-color: var(--main-bg-color);
+}
+body.dark #main-menu li ul,
+body.dark #user-menu li ul {
+    background-color: var(--2nd-bg-color);
 }
 body.dark .vertical.menu a {
     background-color: var(--main-bg-color) ! important;
 }
 body.dark .btn-outline-light,
 body.dark select,
+body.dark #product-search input,
 body.dark input {
-    background-color: var(--main-bg-color);
+    background-color: var(--2nd-bg-color);
     color: var(--main-font-color);
+}
+body.dark .btn-outline-light:hover,
+body.dark .btn-outline-light:active:focus {
+    background-color: var(--2nd-bg-color) ! important;
+    opacity: .7;
 }
 body.dark #main-menu li > a,
 body.dark #user-menu li > a,
@@ -45,4 +54,11 @@ body.dark a.blog-post-wrapper span {
 }
 body.dark .vertical.menu a {
     color: var(--main-font-color) ! important;
+}
+body.dark a.blog-post-wrapper {
+    background-color: var(--2nd-bg-color);
+}
+body.dark .swiper-button-prev:after,
+body.dark .swiper-button-next:after {
+    color: var(--main-bg-color);
 }
