@@ -22,7 +22,7 @@ body {
     background-attachment: fixed;
     background-color: #e6e6e6;
 }
-img {
+img, iframe {
     border-radius: 5px;
 }
 a {
