@@ -16,7 +16,6 @@
     --2nd-bg-color: #0d1117;
     --main-font-color: #CDCDCD;
     --main-border-color: #696969;
-    --main-transition-duration: .5s;
 }
 body,
 #header,
@@ -27,7 +26,7 @@ body,
 input,
 select,
 a.blog-post-wrapper {
-    transition: background var(--main-transition-duration);
+    transition: background .5s;
 }
 body.dark {
     background-color: var(--main-bg-color);
@@ -38,7 +37,6 @@ body.dark #content,
 body.dark .sidebar,
 body.dark .box,
 body.dark #inner-content {
-    transition: background .5s;
     background-color: var(--main-bg-color);
 }
 body.dark #main-menu li ul,
@@ -83,7 +81,8 @@ body.dark .vertical.menu a,
 body.dark .cart-extra-info {
     color: var(--main-font-color) ! important;
 }
-body.dark a.blog-post-wrapper {
+body.dark a.blog-post-wrapper,
+body.dark .vertical.menu {
     background-color: var(--2nd-bg-color);
 }
 body.dark .swiper-button-prev:after,
@@ -96,6 +95,7 @@ body.dark #header,
 body.dark .vertical.menu,
 body.dark div.c2,
 body.dark div.c3,
+body.dark .vertical.menu,
 body.dark .vertical.menu li.header,
 body.dark .vertical.menu a,
 body.dark #content,

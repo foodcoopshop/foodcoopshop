@@ -292,7 +292,6 @@ h2.info a:not(.btn) {
     width: 145px;
     background: #efefef;
     margin-right: 5px;
-    border-top: 1px solid #dfdfdf;
 }
 .vertical.menu a,
 .vertical.menu > li img.logo {
