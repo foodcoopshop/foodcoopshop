@@ -33,6 +33,11 @@ foodcoopshop.Helper = {
         }
     },
 
+    setBackgroundImage: function() {
+        var theme = $('body').hasClass('dark') ? 'dark' : 'light';
+        $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(theme) + '"');
+    },
+
     initThemeSwitcher: function() {
         $('#user-menu .theme').on('click', function() {
             var icon = $(this).find('i');
@@ -45,6 +50,7 @@ foodcoopshop.Helper = {
                 icon.removeClass('fa-sun');
                 icon.addClass('fa-moon');
             }
+            foodcoopshop.Helper.setBackgroundImage();
         }).trigger('click');
     },
 

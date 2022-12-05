@@ -17,7 +17,6 @@
     --main-font-color: #CDCDCD;
 }
 body.dark {
-    background-image: none;
     background-color: var(--main-bg-color);
     color: var(--main-font-color);
 }
