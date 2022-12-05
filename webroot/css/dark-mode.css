@@ -78,7 +78,8 @@ body.dark .btn-success,
 body.dark #footer .bottom a i,
 body.dark #footer .bottom a,
 body.dark .modal-title,
-body.dark .modal-header i {
+body.dark .modal-header i,
+body.dark #footer a:hover {
     color: var(--main-font-color);
 }
 body.dark .vertical.menu a,
@@ -118,4 +119,13 @@ body.dark #load-last-order-details {
 }
 body.dark .btn-outline-light:active {
     color: #fff;
+}
+body.dark .menu.vertical span.additional-info {
+    background-color: transparent ! important;
+    color: var(--main-font-color) ! important;
+}
+body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a:hover,
+body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a.active,
+body.dark #footer a:hover {
+    text-decoration: underline ! important;
 }
