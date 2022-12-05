@@ -108,7 +108,8 @@ body.dark #cart p.total-sum-wrapper,
 body.dark #right .inner-right,
 body.dark .pw,
 body.dark .manufacturer-wrapper,
-body.dark a.blog-post-wrapper h3 {
+body.dark a.blog-post-wrapper h3,
+body.dark .modal-footer {
     border-color: var(--main-border-color);
 }
 body.dark #load-last-order-details {
