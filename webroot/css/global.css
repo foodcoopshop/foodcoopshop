@@ -33,7 +33,7 @@ a:not(.btn):visited,
 a:not(.btn):active,
 a:not([href]):not([tabindex]),
 a:not([href]):not([tabindex]):focus {
-  text-decoration: none ! important;
+    text-decoration: none ! important;
 }
 
 table.list a:not(.btn),
@@ -58,7 +58,7 @@ body.admin h2 span a:hover,
     border-color: transparent;
 }
 a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):hover {
-  text-decoration: underline ! important;
+    text-decoration: underline ! important;
 }
 ul.menu:not(#user-menu):not(#footer-menu) a:hover {
     text-decoration: none ! important;
@@ -89,8 +89,8 @@ button,
 }
 .btn-outline-light {
     color: #333;
-      background-color: #fff;
-      border-color: #ccc;
+    background-color: #fff;
+    border-color: #ccc;
 }
 .btn-outline-light.disabled {
     color: #333;
@@ -119,13 +119,13 @@ button,
 .btn-danger:active,
 .btn-danger:active:focus,
 .btn-danger.disabled {
-  background-color: #f3515c;
-  border-color: #f3515c;
-  color: #fff;
+    background-color: #f3515c;
+    border-color: #f3515c;
+    color: #fff;
 }
 .btn-danger {
-  background-color: #f3515c;
-  border-color: #d9534f;
+    background-color: #f3515c;
+    border-color: #d9534f;
 }
 .btn-warning {
     background-color: #f0ad4e;
@@ -143,7 +143,7 @@ button,
 .btn-success:hover,
 .btn-danger:hover,
 .btn-warning:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 .sc { clear: both; height: 0px; font-size: 0px; background-color: transparent; }
 .hide {
@@ -353,35 +353,35 @@ a.toggle-link.collapsed i:before {
     font-family: 'Open Sans';
 }
 #scroll-to-top {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  z-index: 99;
-  display: none;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 99;
+    display: none;
 }
 #scroll-to-top a {
-  width: 45px;
-  height: 45px;
-  display: block;
-  -webkit-transition: 0.6s;
-  -moz-transition: 0.6s;
-  -o-transition: 0.6s;
-  transition: 0.6s;
-  background: #fff;
-  border-radius: 100px;
-  font-size: 34px;
-  text-align: center;
-  background: #fff;
-  line-height: 1.5;
+    width: 45px;
+    height: 45px;
+    display: block;
+    -webkit-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;
+    background: #fff;
+    border-radius: 100px;
+    font-size: 34px;
+    text-align: center;
+    background: #fff;
+    line-height: 1.5;
 }
 #scroll-to-top a i {
-  font-size: 41px;
+    font-size: 41px;
 }
 .truncate {
-  width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 input[type="text"],
