@@ -37,7 +37,8 @@ body.dark #content,
 body.dark .sidebar,
 body.dark .box,
 body.dark #inner-content,
-body.dark .modal-content {
+body.dark .modal-content,
+body.dark .btn-outline-light.disabled {
     background-color: var(--main-bg-color);
 }
 body.dark #main-menu li ul,
@@ -114,4 +115,7 @@ body.dark .modal-footer {
 }
 body.dark #load-last-order-details {
     border-color: var(--main-border-color) ! important;
+}
+body.dark .btn-outline-light:active {
+    color: #fff;
 }
