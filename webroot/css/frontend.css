@@ -639,6 +639,7 @@ body.manufacturers.index h2.info {
     width: 928px;
     min-height: 172px;
     float: left;
+    border-right: 1px solid #d6d4d4;
 }
 #footer .inner-footer {
     padding: 20px;

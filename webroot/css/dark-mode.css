@@ -45,6 +45,10 @@ body.dark textarea {
     color: var(--main-font-color);
     border-color: var(--main-border-color);
 }
+body.dark #footer {
+    background-color: var(--2nd-bg-color);
+    border-color: var(--main-border-color);
+}
 body.dark .btn-outline-light:hover,
 body.dark .btn-outline-light:active:focus {
     background-color: var(--2nd-bg-color) ! important;
@@ -53,10 +57,17 @@ body.dark .btn-outline-light:active:focus {
 body.dark #main-menu li > a,
 body.dark #user-menu li > a,
 body.dark a.blog-post-wrapper span,
-body.dark .cart span.product-name-wrapper span.unity {
+body.dark .cart span.product-name-wrapper span.unity,
+body.dark .vertical.menu li.header,
+body.dark .box h3,
+body.dark .box h3 i,
+body.dark .btn-success,
+body.dark #footer .bottom a i,
+body.dark #footer .bottom a {
     color: var(--main-font-color);
 }
-body.dark .vertical.menu a {
+body.dark .vertical.menu a,
+body.dark .cart-extra-info {
     color: var(--main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper {
