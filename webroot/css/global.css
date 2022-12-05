@@ -60,6 +60,10 @@ body.admin h2 span a:hover,
 a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):hover {
     text-decoration: underline ! important;
 }
+.swiper-button-next,
+.swiper-button-prev {
+    border-radius: 50%;
+}
 ul.menu:not(#user-menu):not(#footer-menu) a:hover {
     text-decoration: none ! important;
 }

@@ -90,6 +90,9 @@ body.dark a.blog-post-wrapper,
 body.dark .vertical.menu {
     background-color: var(--2nd-bg-color);
 }
+body.dark a.blog-post-wrapper:hover {
+    opacity: .8;
+}
 body.dark .swiper-button-prev:after,
 body.dark .swiper-button-next:after {
     color: var(--main-bg-color);
@@ -129,4 +132,8 @@ body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a:hover,
 body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a.active,
 body.dark #footer a:hover {
     text-decoration: underline ! important;
+}
+body.dark .blog-wrapper .swiper-button-prev,
+body.dark .blog-wrapper .swiper-button-next {
+    background-color: var(--main-font-color);
 }
