@@ -15,7 +15,19 @@
     --main-bg-color: #1b1b1b;
     --2nd-bg-color: #0d1117;
     --main-font-color: #CDCDCD;
-    --main-border-color: #696969 ;
+    --main-border-color: #696969;
+    --main-transition-duration: .5s;
+}
+body,
+#header,
+#content,
+.sidebar,
+.box
+#inner-content,
+input,
+select,
+a.blog-post-wrapper {
+    transition: background var(--main-transition-duration);
 }
 body.dark {
     background-color: var(--main-bg-color);
@@ -26,6 +38,7 @@ body.dark #content,
 body.dark .sidebar,
 body.dark .box,
 body.dark #inner-content {
+    transition: background .5s;
     background-color: var(--main-bg-color);
 }
 body.dark #main-menu li ul,
