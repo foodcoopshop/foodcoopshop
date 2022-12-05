@@ -73,6 +73,9 @@ body {
 #header .logo-wrapper a {
     display: block;
 }
+#header .logo {
+    border-radius: 5px;
+}
 .sidebar {
     float: left;
     padding-right: 10px;
@@ -398,6 +401,7 @@ a[disabled] {
 .pw .c1 a img {
     max-width: 150px;
     height: auto;
+    border-radius: 5px;
 }
 .pw .heading {
     width: 100%;
@@ -427,6 +431,7 @@ body.superadmin .pw .heading h4 {
 }
 .manufacturer-wrapper div.c1 img {
     width: 148px;
+    border-radius: 5px;
 }
 .pw div.c1 span.fa-stack i.fa-star {
     color: #fff;
@@ -453,6 +458,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 }
 .pw .toggle-content.description img {
   margin-bottom: 3px;
+  border-radius: 5px;
 }
 .pw div.c2,
 .manufacturer-wrapper div.c2 {
@@ -581,6 +587,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     height: 28px;
     border: 1px solid #d6d4d4;
     width: 28px;
+    border-radius: 3px;
 }
 .pw .amount-wrapper .below-input {
     float: left;
@@ -605,6 +612,9 @@ body.manufacturers.detail .manufacturer-infos {
     margin-bottom: 20px;
     float: left;
 }
+body.manufacturers.detail .manufacturer-infos img {
+    border-radius: 5px;
+}
 body.manufacturers.detail .manufacturer-infos h2 {
     border: none;
     font-size: 20px;
@@ -625,6 +635,7 @@ body.manufacturers.detail img.manufacturer-logo {
     float: right;
     margin-left: 15px;
     margin-bottom: 15px;
+    border-radius: 5px;
 }
 body.manufacturers.detail .imprint {
     float: right;
@@ -1122,11 +1133,15 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     padding: 6px;
     background: #fbfbfb;
     line-height: 1.5;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 #product-search .btn {
     padding: 6px 10px;
     border-radius: 0;
     float: right;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 #product-search a.btn {
     margin-left: 1px;
@@ -1160,10 +1175,11 @@ a.blog-post-wrapper:nth-of-type(3n) {
 }
 a.blog-post-wrapper img {
     padding: 2px;
-    width: 100%;
-    object-fit: contain;
-    height: 145px;
     margin-bottom: 3px;
+    height: 145px;
+    border-radius: 5px;
+    max-width: 100%;
+    max-height: 100%;
 }
 a.blog-post-wrapper h3 {
     font-size: 16px;
@@ -1195,6 +1211,9 @@ a.blog-post-wrapper span.date {
 }
 a.blog-post-wrapper span.img-wrapper {
     float: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 a.blog-post-wrapper:hover {
     box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.5);

@@ -21,6 +21,7 @@
 .modal-header {
     color: #fff;
     min-height: 55px;
+    border-bottom: none;
 }
 .modal-header .btn-close {
     background-image: none;
@@ -208,6 +209,7 @@ body.iframe_self_service_order {
     width: auto;
     max-width: 766px;
     max-height: calc(100vh - 154px);
+    border-radius: 5px;
 }
 #modal-product-add input[type="text"],
 #modal-product-name-edit input[type="text"],

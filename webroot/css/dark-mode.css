@@ -36,7 +36,8 @@ body.dark #header,
 body.dark #content,
 body.dark .sidebar,
 body.dark .box,
-body.dark #inner-content {
+body.dark #inner-content,
+body.dark .modal-content {
     background-color: var(--main-bg-color);
 }
 body.dark #main-menu li ul,
@@ -74,7 +75,9 @@ body.dark .box h3,
 body.dark .box h3 i,
 body.dark .btn-success,
 body.dark #footer .bottom a i,
-body.dark #footer .bottom a {
+body.dark #footer .bottom a,
+body.dark .modal-title,
+body.dark .modal-header i {
     color: var(--main-font-color);
 }
 body.dark .vertical.menu a,
