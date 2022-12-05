@@ -265,24 +265,16 @@ body.categories.detail div.description-wrapper {
     margin: 0 auto;
 }
 #login-form h1 {
-    border: 1px solid #fff;
-    border-bottom: none;
     line-height: 30px;
     margin-bottom: 0px;
     padding: 10px;
     padding-left: 108px;
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 10px 10px 0px 0px;
-    border-radius: 10px 10px 0px 0px;
 }
 #inner-content #login-form form,
 body.customers.new_password_request #inner-content form {
     border-top: none;
     float: left;
     padding: 10px;
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 0px 0px 10px 10px;
-    border-radius: 0px 0px 10px 10px;
 }
 body.customers.new_password_request #inner-content form {
     padding: 0;
@@ -342,7 +334,7 @@ body.customers.new_password_request .input {
 body.customers.new_password_request .input input {
     width: 255px;
     padding: 3px;
-    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 body.customers.new_password_request .input {
     margin-right: 10px;
@@ -961,7 +953,7 @@ body.carts #CartsDetailForm {
 .h1-registration {
     border-radius: 0;
     margin-top: 20px;
-    padding-top: 20px;
+    padding-top: 25px ! important;
     border-top: 1px solid #d6d4d4;
 }
 #CartsDetailForm  .input.checkbox .error-message,

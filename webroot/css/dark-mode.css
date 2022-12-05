@@ -111,7 +111,8 @@ body.dark #right .inner-right,
 body.dark .pw,
 body.dark .manufacturer-wrapper,
 body.dark a.blog-post-wrapper h3,
-body.dark .modal-footer {
+body.dark .modal-footer,
+body.dark .h1-registration {
     border-color: var(--main-border-color);
 }
 body.dark #load-last-order-details {
