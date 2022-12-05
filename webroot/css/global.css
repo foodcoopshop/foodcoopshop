@@ -374,6 +374,10 @@ a.toggle-link.collapsed i:before {
     background: #fff;
     line-height: 1.5;
 }
+div.input.error input {
+    border-bottom-right-radius: 0 ! important;
+    border-bottom-left-radius: 0 ! important;
+}
 #scroll-to-top a i {
     font-size: 41px;
 }
@@ -400,6 +404,8 @@ form div.error-message {
     padding: 3px 5px;
     margin-bottom: 5px;
     width: 270px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 form div.error-message.long {
     width: 562px;
