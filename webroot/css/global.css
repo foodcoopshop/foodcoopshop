@@ -16,6 +16,9 @@
         content: '';
     }
 }
+* {
+    transition: background .5s, border .5s;
+}
 body {
     font-family: 'Open Sans';
     color: #333333;
