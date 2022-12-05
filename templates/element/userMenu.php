@@ -34,11 +34,11 @@ if ($appAuth->isManufacturer()) {
     $userName = $appAuth->getManufacturerName();
 }
 
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".Helper.initThemeSwitcher();"
+]);
+$menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-sun', 'class' => ['theme']]];
 if ($appAuth->user()) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Helper.initThemeSwitcher();"
-    ]);
-    $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-sun', 'class' => ['theme']]];
     if (!$appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
     }
