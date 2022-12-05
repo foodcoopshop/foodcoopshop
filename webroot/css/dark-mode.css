@@ -15,6 +15,7 @@
     --main-bg-color: #1b1b1b;
     --2nd-bg-color: #0d1117;
     --main-font-color: #CDCDCD;
+    --main-border-color: #696969 ;
 }
 body.dark {
     background-color: var(--main-bg-color);
@@ -30,6 +31,7 @@ body.dark #inner-content {
 body.dark #main-menu li ul,
 body.dark #user-menu li ul {
     background-color: var(--2nd-bg-color);
+    border-color: var(--main-border-color);
 }
 body.dark .vertical.menu a {
     background-color: var(--main-bg-color) ! important;
@@ -37,9 +39,11 @@ body.dark .vertical.menu a {
 body.dark .btn-outline-light,
 body.dark select,
 body.dark #product-search input,
-body.dark input {
+body.dark input,
+body.dark textarea {
     background-color: var(--2nd-bg-color);
     color: var(--main-font-color);
+    border-color: var(--main-border-color);
 }
 body.dark .btn-outline-light:hover,
 body.dark .btn-outline-light:active:focus {
@@ -48,7 +52,8 @@ body.dark .btn-outline-light:active:focus {
 }
 body.dark #main-menu li > a,
 body.dark #user-menu li > a,
-body.dark a.blog-post-wrapper span {
+body.dark a.blog-post-wrapper span,
+body.dark .cart span.product-name-wrapper span.unity {
     color: var(--main-font-color);
 }
 body.dark .vertical.menu a {
@@ -60,4 +65,25 @@ body.dark a.blog-post-wrapper {
 body.dark .swiper-button-prev:after,
 body.dark .swiper-button-next:after {
     color: var(--main-bg-color);
+}
+
+body.dark .box,
+body.dark #header,
+body.dark .vertical.menu,
+body.dark div.c2,
+body.dark div.c3,
+body.dark .vertical.menu li.header,
+body.dark .vertical.menu a,
+body.dark #content,
+body.dark.carts .cart:not(#cart) .product,
+body.dark #cart p.product-sum-wrapper,
+body.dark #cart p.total-sum-wrapper,
+body.dark #right .inner-right,
+body.dark .pw,
+body.dark .manufacturer-wrapper,
+body.dark a.blog-post-wrapper h3 {
+    border-color: var(--main-border-color);
+}
+body.dark #load-last-order-details {
+    border-color: var(--main-border-color) ! important;
 }

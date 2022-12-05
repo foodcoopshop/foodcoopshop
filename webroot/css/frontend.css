@@ -718,6 +718,7 @@ body.manufacturers.index h2.info {
 }
 #right .inner-right {
     position: fixed;
+    border-right: 1px solid #d6d4d4;
 }
 .box {
     left: 927px;
