@@ -372,18 +372,18 @@ a.toggle-link.collapsed i:before {
     -o-transition: 0.6s;
     transition: 0.6s;
     background: #fff;
-    border-radius: 100px;
+    border-radius: 50%;
     font-size: 34px;
     text-align: center;
     background: #fff;
     line-height: 1.5;
 }
+#scroll-to-top a i {
+    font-size: 43px;
+}
 div.input.error input {
     border-bottom-right-radius: 0 ! important;
     border-bottom-left-radius: 0 ! important;
-}
-#scroll-to-top a i {
-    font-size: 41px;
 }
 .truncate {
     width: 250px;

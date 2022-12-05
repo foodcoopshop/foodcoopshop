@@ -128,12 +128,17 @@ body.dark .menu.vertical span.additional-info {
     background-color: transparent ! important;
     color: var(--main-font-color) ! important;
 }
+body.dark .menu.vertical a:hover i,
+body.dark .menu.vertical a.active i {
+    background-color: transparent ! important;
+}
 body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a:hover,
 body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a.active,
 body.dark #footer a:hover {
     text-decoration: underline ! important;
 }
 body.dark .blog-wrapper .swiper-button-prev,
-body.dark .blog-wrapper .swiper-button-next {
+body.dark .blog-wrapper .swiper-button-next,
+body.dark #scroll-to-top a {
     background-color: var(--main-font-color);
 }
