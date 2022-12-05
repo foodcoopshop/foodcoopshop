@@ -18,7 +18,7 @@ body.self_services {
 body.self_services #content,
 .self-service,
 .self-service .footer {
-    width: 917px;
+    width: 918px;
 }
 body.self_services #content {
     margin-top: -46px;
@@ -33,7 +33,7 @@ body.self_services #content {
 .self-service .right-box {
     position: fixed;
     left: 611px;
-    width: 305px;
+    width: 306px;
     top: 0;
     overflow-y: auto;
     background-color: #fff;
