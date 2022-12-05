@@ -209,7 +209,6 @@ body.iframe_self_service_order {
     width: auto;
     max-width: 766px;
     max-height: calc(100vh - 154px);
-    border-radius: 5px;
 }
 #modal-product-add input[type="text"],
 #modal-product-name-edit input[type="text"],

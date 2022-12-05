@@ -73,9 +73,6 @@ body {
 #header .logo-wrapper a {
     display: block;
 }
-#header .logo {
-    border-radius: 5px;
-}
 .sidebar {
     float: left;
     padding-right: 10px;
@@ -135,6 +132,10 @@ body.categories.detail div.description-wrapper {
     color: #fff;
     border-bottom: 1px solid #dfdfdf;
     font-weight: 600;
+    border-top-right-radius: 5px;
+}
+.vertical.menu li:last-of-type a {
+    border-bottom-right-radius: 3px;
 }
 .vertical.menu a {
     padding: 4px 10px;
@@ -174,6 +175,7 @@ body.categories.detail div.description-wrapper {
     border: 1px solid #d6d4d4;
     z-index: 1000;
     display: none;
+    border-radius: 5px;
 }
 #main-menu li ul ul {
     display: none ! important; /* never show third level */
@@ -401,7 +403,6 @@ a[disabled] {
 .pw .c1 a img {
     max-width: 150px;
     height: auto;
-    border-radius: 5px;
 }
 .pw .heading {
     width: 100%;
@@ -458,7 +459,6 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 }
 .pw .toggle-content.description img {
   margin-bottom: 3px;
-  border-radius: 5px;
 }
 .pw div.c2,
 .manufacturer-wrapper div.c2 {
@@ -612,9 +612,6 @@ body.manufacturers.detail .manufacturer-infos {
     margin-bottom: 20px;
     float: left;
 }
-body.manufacturers.detail .manufacturer-infos img {
-    border-radius: 5px;
-}
 body.manufacturers.detail .manufacturer-infos h2 {
     border: none;
     font-size: 20px;
@@ -635,7 +632,6 @@ body.manufacturers.detail img.manufacturer-logo {
     float: right;
     margin-left: 15px;
     margin-bottom: 15px;
-    border-radius: 5px;
 }
 body.manufacturers.detail .imprint {
     float: right;
@@ -730,13 +726,13 @@ body.manufacturers.index h2.info {
 }
 #right .inner-right {
     position: fixed;
-    border-right: 1px solid #d6d4d4;
 }
 .box {
     left: 927px;
-    width: 305px;
+    width: 306px;
     background: #fff;
     border-bottom: 1px solid #d6d4d4;
+    border-right: 1px solid #d6d4d4;
 }
 .box h3 {
     color: #fff;
@@ -752,6 +748,9 @@ body.manufacturers.index h2.info {
     margin: 0;
     padding: 5px;
     padding-bottom: 0px;
+}
+.box:last-of-type {
+    border-bottom-right-radius: 3px;
 }
 #cart {
     min-height: 140px;
@@ -1133,15 +1132,15 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     padding: 6px;
     background: #fbfbfb;
     line-height: 1.5;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 #product-search .btn {
     padding: 6px 10px;
     border-radius: 0;
     float: right;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 #product-search a.btn {
     margin-left: 1px;
@@ -1177,7 +1176,6 @@ a.blog-post-wrapper img {
     padding: 2px;
     margin-bottom: 3px;
     height: 145px;
-    border-radius: 5px;
     max-width: 100%;
     max-height: 100%;
 }
