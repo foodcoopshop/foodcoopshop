@@ -12,7 +12,6 @@
  * @link          https://www.foodcoopshop.com
  */
  :root {
-    color-scheme: light dark;
     --main-bg-color: #1b1b1b;
     --2nd-bg-color: #0d1117;
     --main-font-color: #CDCDCD;
@@ -27,8 +26,7 @@ body,
 .box
 #inner-content,
 input,
-select,
-a.blog-post-wrapper {
+select {
     transition: background .5s;
 }
 body.dark {
