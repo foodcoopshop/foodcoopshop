@@ -24,6 +24,7 @@ foodcoopshop.Helper = {
         foodcoopshop.ModalLogout.init();
         this.changeOutgoingLinksTargetToBlank();
         this.initCookieBanner();
+        this.initColorMode();
         if (!this.isMobile()) {
             this.initWindowResize();
             this.initScrolltopButton();
@@ -39,7 +40,6 @@ foodcoopshop.Helper = {
     },
 
     initColorModeSwitcher: function() {
-        let colorMode = localStorage.getItem('color-mode');
         $('#user-menu .color-mode').on('click', function() {
             if ($('body').hasClass('dark')) {
                 localStorage.setItem('color-mode', 'light');
@@ -49,6 +49,10 @@ foodcoopshop.Helper = {
                 foodcoopshop.Helper.enableDarkMode();
             }
         });
+    },
+
+    initColorMode: function() {
+        let colorMode = localStorage.getItem('color-mode');
         if (colorMode === 'dark') {
             foodcoopshop.Helper.enableDarkMode();
         } else {

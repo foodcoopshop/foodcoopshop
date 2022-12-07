@@ -18,6 +18,7 @@ foodcoopshop.SelfService = {
 
     init : function() {
         foodcoopshop.ModalLogout.init(document.location.href);
+        foodcoopshop.Helper.initColorMode();
         this.initWindowResize();
         this.initSearchForm();
         this.bindQuantityInUnitsInputFields();
