@@ -12,12 +12,14 @@
  * @link          https://www.foodcoopshop.com
  */
  :root {
+    color-scheme: light dark;
     --main-bg-color: #1b1b1b;
     --2nd-bg-color: #0d1117;
     --main-font-color: #CDCDCD;
     --2nd-font-color: #f4f0ec;;
     --main-border-color: #696969;
 }
+
 body,
 #header,
 #content,
@@ -84,12 +86,12 @@ body.dark #footer a:hover {
 }
 body.dark .box h3,
 body.dark .box h3 i,
+body.dark .cart-extra-info,
 body.dark .vertical.menu li.header,
 body.dark .btn-success {
     color: var(--2nd-font-color);
 }
-body.dark .vertical.menu a,
-body.dark .cart-extra-info {
+body.dark .vertical.menu a {
     color: var(--main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper,

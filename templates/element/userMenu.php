@@ -35,9 +35,9 @@ if ($appAuth->isManufacturer()) {
 }
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Helper.initThemeSwitcher();"
+    'script' => Configure::read('app.jsNamespace') . ".Helper.initColorModeSwitcher();"
 ]);
-$menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-sun', 'class' => ['theme']]];
+$menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw fas fa-sun', 'class' => ['color-mode']]];
 if ($appAuth->user()) {
     if (!$appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];

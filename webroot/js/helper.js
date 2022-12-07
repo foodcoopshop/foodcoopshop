@@ -38,8 +38,8 @@ foodcoopshop.Helper = {
         $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(theme) + '"');
     },
 
-    initThemeSwitcher: function() {
-        $('#user-menu .theme').on('click', function() {
+    initColorModeSwitcher: function() {
+        $('#user-menu .color-mode').on('click', function() {
             var icon = $(this).find('i');
             if ($('body').hasClass('dark')) {
                 $('body').removeClass('dark');
