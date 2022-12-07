@@ -32,6 +32,9 @@ body.dark {
     background-color: var(--main-bg-color);
     color: var(--main-font-color);
 }
+body.dark img {
+    filter: brightness(.8) contrast(1.2);
+}
 body.dark #header,
 body.dark #content,
 body.dark .sidebar,
