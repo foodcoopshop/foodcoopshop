@@ -39,19 +39,36 @@ foodcoopshop.Helper = {
     },
 
     initColorModeSwitcher: function() {
+        let colorMode = localStorage.getItem('color-mode');
         $('#user-menu .color-mode').on('click', function() {
-            var icon = $(this).find('i');
             if ($('body').hasClass('dark')) {
-                $('body').removeClass('dark');
-                icon.removeClass('fa-moon');
-                icon.addClass('fa-sun');
+                localStorage.setItem('color-mode', 'light');
+                foodcoopshop.Helper.enableLightMode();
             } else {
-                $('body').addClass('dark');
-                icon.removeClass('fa-sun');
-                icon.addClass('fa-moon');
+                localStorage.setItem('color-mode', 'dark');
+                foodcoopshop.Helper.enableDarkMode();
             }
-            foodcoopshop.Helper.setBackgroundImage();
-        }).trigger('click');
+        });
+        if (colorMode === 'dark') {
+            foodcoopshop.Helper.enableDarkMode();
+        } else {
+            foodcoopshop.Helper.enableLightMode();
+        }
+        foodcoopshop.Helper.setBackgroundImage();
+    },
+
+    enableLightMode: function() {
+        $('body').removeClass('dark');
+        var icon = $('#user-menu .color-mode').find('i');
+        icon.removeClass('fa-moon');
+        icon.addClass('fa-sun');
+    },
+
+    enableDarkMode: function() {
+        $('body').addClass('dark');
+        var icon = $('#user-menu .color-mode').find('i');
+        icon.removeClass('fa-sun');
+        icon.addClass('fa-moon');
     },
 
     initRegistrationAsCompany: function() {
