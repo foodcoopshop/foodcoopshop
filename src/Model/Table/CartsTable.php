@@ -94,7 +94,7 @@ class CartsTable extends AppTable
     {
         $validator->add($field, 'allow-only-defined-pickup-days', [
             'rule' => function ($value, $context) {
-            if (!in_array($value, array_keys(DeliveryRhythm::getNextDailyDeliveryDays(14)))
+            if (!in_array($value, array_keys(DeliveryRhythm::getNextDailyDeliveryDays(21)))
                 || in_array($value, Configure::read('app.htmlHelper')->getGlobalNoDeliveryDaysAsArray())) {
                     return false;
                 }
