@@ -42,11 +42,17 @@ body.dark .sidebar,
 body.dark .box,
 body.dark #inner-content,
 body.dark .modal-content,
-body.dark .btn-outline-light.disabled {
+body.dark .btn-outline-light.disabled,
+body.dark .self-service .header,
+body.dark .self-service #SelfServiceForm,
+body.dark .self-service #login-form h2 span {
     background-color: var(--main-bg-color);
 }
 body.dark #main-menu li ul,
-body.dark #user-menu li ul {
+body.dark #user-menu li ul,
+body.dark .bootstrap-select .dropdown-toggle,
+body.dark .bootstrap-select .dropdown-menu,
+body.dark .bootstrap-select .no-results {
     background-color: var(--2nd-bg-color);
     border-color: var(--main-border-color);
 }
@@ -62,7 +68,8 @@ body.dark textarea {
     color: var(--main-font-color);
     border-color: var(--main-border-color);
 }
-body.dark #footer {
+body.dark #footer,
+body.dark .self-service .footer {
     background-color: var(--2nd-bg-color);
     border-color: var(--main-border-color);
 }
@@ -79,7 +86,11 @@ body.dark #footer .bottom a i,
 body.dark #footer .bottom a,
 body.dark .modal-title,
 body.dark .modal-header i,
-body.dark #footer a:hover {
+body.dark #footer a:hover,
+body.dark .bootstrap-select .filter-option-inner-inner,
+body.dark .bootstrap-select .dropdown-menu li a span.text,
+body.dark .bootstrap-select .no-results,
+body.dark .bootstrap-select > .dropdown-toggle:after {
     color: var(--main-font-color);
 }
 body.dark .box h3,
@@ -103,7 +114,9 @@ body.dark .swiper-button-prev:after,
 body.dark .swiper-button-next:after {
     color: var(--main-bg-color);
 }
-
+body.dark .dropdown-item:hover span {
+    color: var(--main-bg-color) ! important;
+}
 body.dark .box,
 body.dark #header,
 body.dark .vertical.menu,
@@ -121,7 +134,10 @@ body.dark .pw,
 body.dark .manufacturer-wrapper,
 body.dark a.blog-post-wrapper h3,
 body.dark .modal-footer,
-body.dark .h1-registration {
+body.dark .h1-registration,
+body.dark .self-service #SelfServiceForm,
+body.dark .self-service #cart,
+body.dark .self-service #login-form h2 {
     border-color: var(--main-border-color);
 }
 body.dark #load-last-order-details {

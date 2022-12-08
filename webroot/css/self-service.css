@@ -74,7 +74,6 @@ body.self_services #content {
     min-height: calc(100vh - 100px - 66px - 2px);
 }
 .self-service .pw {
-    background: #fff;
     border-right: 1px solid #d6d4d4;
 }
 .self-service .pw div.c1 {
