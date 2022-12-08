@@ -104,13 +104,16 @@ body.dark.admin .vertical.menu a:hover i,
 body.dark.admin .vertical.menu a.active i,
 body.dark.admin table.list a:not(.btn),
 body.dark.admin h2 span a,
-body.dark.admin form .input a:not(.btn) {
+body.dark.admin form .input a:not(.btn),
+body.dark .tooltipster-box .tooltipster-content,
+body.dark .tooltipster-box .tooltipster-content a {
     color: var(--main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper,
 body.dark .vertical.menu,
 body.dark.admin div:not(.product-list) > table.list tr:nth-child(odd),
-body.dark.admin table.list th {
+body.dark.admin table.list th,
+body.dark .tooltipster-box .tooltipster-content {
     background-color: var(--2nd-bg-color);
 }
 body.dark a.blog-post-wrapper:hover {
