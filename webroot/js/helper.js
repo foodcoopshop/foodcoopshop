@@ -48,6 +48,7 @@ foodcoopshop.Helper = {
                 localStorage.setItem('color-mode', 'dark');
                 foodcoopshop.Helper.enableDarkMode();
             }
+            foodcoopshop.Helper.setBackgroundImage();
         });
     },
 
