@@ -224,10 +224,10 @@ body.categories.detail div.description-wrapper {
     color: #333;
 }
 #user-menu i.fa-user,
-#user-menu .color-mode i {
+.color-mode-toggle i {
     padding-right: 5px;
 }
-#user-menu .color-mode {
+.color-mode-toggle {
     margin-right: 5px;
 }
 #user-menu > li {
