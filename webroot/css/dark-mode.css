@@ -65,6 +65,13 @@ body.dark .btn-outline-light:active:focus {
     background-color: var(--dark-mode-2nd-bg-color) ! important;
     opacity: .7;
 }
+body.dark .cookieConsentWrapper {
+    background-color: var(--dark-mode-2nd-bg-color) ! important;
+    color: var(--dark-mode-main-font-color) ! important;
+}
+.cookieConsentWrapper .cookieConsent__Right button {
+    color: var(--dark-mode-2nd-font-color) ! important;
+}
 body.dark #main-menu li > a,
 body.dark #user-menu li > a,
 body.dark a.blog-post-wrapper span,
