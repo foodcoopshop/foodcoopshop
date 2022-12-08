@@ -108,12 +108,15 @@ body.dark.admin table.list a:not(.btn),
 body.dark.admin h2 span a,
 body.dark.admin form .input a:not(.btn),
 body.dark .tooltipster-box .tooltipster-content,
-body.dark .tooltipster-box .tooltipster-content a {
+body.dark .tooltipster-box .tooltipster-content a,
+body.dark table.list td.not-available,
+body.dark table.list td.not-available i.sold-out-limit-for-dialog i {
     color: var(--dark-mode-main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper,
 body.dark .vertical.menu,
 body.dark.admin div:not(.product-list) > table.list tr:nth-child(odd),
+body.dark.admin table.list tr.custom-odd,
 body.dark.admin table.list th,
 body.dark .tooltipster-box .tooltipster-content {
     background-color: var(--dark-mode-2nd-bg-color);
