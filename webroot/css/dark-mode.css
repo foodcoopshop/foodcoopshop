@@ -45,7 +45,10 @@ body.dark .modal-content,
 body.dark .btn-outline-light.disabled,
 body.dark .self-service .header,
 body.dark .self-service #SelfServiceForm,
-body.dark .self-service #login-form h2 span {
+body.dark .self-service #login-form h2 span,
+body.dark.admin #menu,
+body.dark.admin .filter-container,
+body.dark.admin table.list {
     background-color: var(--main-bg-color);
 }
 body.dark #main-menu li ul,
@@ -90,7 +93,8 @@ body.dark #footer a:hover,
 body.dark .bootstrap-select .filter-option-inner-inner,
 body.dark .bootstrap-select .dropdown-menu li a span.text,
 body.dark .bootstrap-select .no-results,
-body.dark .bootstrap-select > .dropdown-toggle:after {
+body.dark .bootstrap-select > .dropdown-toggle:after,
+body.dark.admin .filter-container {
     color: var(--main-font-color);
 }
 body.dark .box h3,
@@ -104,7 +108,9 @@ body.dark .vertical.menu a {
     color: var(--main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper,
-body.dark .vertical.menu {
+body.dark .vertical.menu,
+body.dark.admin div:not(.product-list) > table.list tr:nth-child(odd),
+body.dark.admin table.list th {
     background-color: var(--2nd-bg-color);
 }
 body.dark a.blog-post-wrapper:hover {
@@ -137,7 +143,11 @@ body.dark .modal-footer,
 body.dark .h1-registration,
 body.dark .self-service #SelfServiceForm,
 body.dark .self-service #cart,
-body.dark .self-service #login-form h2 {
+body.dark .self-service #login-form h2,
+body.dark.admin .filter-container,
+body.dark.admin table.list th,
+body.dark.admin table.list td,
+body.dark.admin table.list tr {
     border-color: var(--main-border-color);
 }
 body.dark #load-last-order-details {
