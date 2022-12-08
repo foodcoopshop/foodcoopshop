@@ -70,7 +70,8 @@ body.taxes.edit #flashMessage {
     margin-left: 155px;
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
-    border-left: 2px solid #efefef;
+    border: 1px solid #efefef;
+    border-top: none;
     border-bottom-right-radius: 15px;
     position: relative;
 }
@@ -203,7 +204,7 @@ td.amount .fa-times {
     background: #efefef;
     width: 1074px; /* be aware of table border if scrolled */
     z-index: 100;
-    border-bottom: 1px solid #dfdfdf;
+    border: 1px solid #efefef;
 }
 .filter-container-not-fixed {
   float: left;
@@ -457,7 +458,7 @@ body.order_details #add-self-service-order-button-wrapper div.select {
 body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,
 body.customers.index td .customer-comment-edit-button.btn-disabled i.fas,
 body.customers.index td i.not-activated {
-  opacity: 0.3;
+  opacity: 0.6;
 }
 body.manufacturers.index a.edit-link,
 body.customers.index a.edit-link {

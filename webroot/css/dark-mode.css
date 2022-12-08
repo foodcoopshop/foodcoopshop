@@ -66,7 +66,8 @@ body.dark .btn-outline-light,
 body.dark select,
 body.dark #product-search input,
 body.dark input,
-body.dark textarea {
+body.dark textarea,
+body.dark .bootstrap-select .form-control:focus {
     background-color: var(--2nd-bg-color);
     color: var(--main-font-color);
     border-color: var(--main-border-color);
@@ -94,17 +95,26 @@ body.dark .bootstrap-select .filter-option-inner-inner,
 body.dark .bootstrap-select .dropdown-menu li a span.text,
 body.dark .bootstrap-select .no-results,
 body.dark .bootstrap-select > .dropdown-toggle:after,
-body.dark.admin .filter-container {
+body.dark.admin .filter-container,
+body.dark h2.warning,
+body.dark h2.info, 
+body.dark h2.info2 {
     color: var(--main-font-color);
 }
 body.dark .box h3,
 body.dark .box h3 i,
 body.dark .cart-extra-info,
 body.dark .vertical.menu li.header,
-body.dark .btn-success {
+body.dark .btn-success,
+body.dark .btn-warning {
     color: var(--2nd-font-color);
 }
-body.dark .vertical.menu a {
+body.dark .vertical.menu a,
+body.dark.admin .vertical.menu a:hover i,
+body.dark.admin .vertical.menu a.active i,
+body.dark.admin table.list a:not(.btn),
+body.dark.admin h2 span a,
+body.dark.admin form .input a:not(.btn) {
     color: var(--main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper,
@@ -174,3 +184,16 @@ body.dark .blog-wrapper .swiper-button-next,
 body.dark #scroll-to-top a {
     background-color: var(--main-font-color);
 }
+body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover,
+body.dark.admin table.list tr.selected {
+    background-color: var(--main-font-color) ! important;
+}
+body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover td,
+body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover td a:not(.btn),
+body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover td > i,
+body.dark.admin table.list tr.selected td,
+body.dark.admin table.list tr.selected td a:not(.btn),
+body.dark.admin table.list tr.selected td > i {
+    color: var(--main-bg-color) ! important;
+}
+
