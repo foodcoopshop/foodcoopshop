@@ -1,0 +1,25 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 3.6.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+@media only screen and (max-device-width: 850px) {
+
+    body.dark #responsive-header,
+    body.dark .sb-slidebar,
+    body.dark.admin .sb-toggle-left {
+        background-color: var(--dark-mode-main-bg-color) ! important;
+    }
+    body.dark .sb-slidebar li a {
+        color: var(--dark-mode-main-font-color) ! important;
+    }
+
+}

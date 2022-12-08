@@ -44,7 +44,12 @@ use Cake\Utility\Inflector;
     }
     echo $this->element('renderCss', ['configs' => $cssConfigs]);
     if ($isMobile) {
-        echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile']);
+        echo $this->Html->css([
+            '/node_modules/slidebars/dist/slidebars',
+            'mobile-global',
+            'Admin.mobile',
+            'mobile-dark-mode',
+        ]);
     }
     echo $this->element('customThemeStyleSheet');
     echo $this->element('layout/customHeader');

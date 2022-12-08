@@ -11,17 +11,9 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
- :root {
-    --main-bg-color: #1b1b1b;
-    --2nd-bg-color: #0d1117;
-    --main-font-color: #CDCDCD;
-    --2nd-font-color: #f4f0ec;;
-    --main-border-color: #696969;
-}
-
 body.dark {
-    background-color: var(--main-bg-color);
-    color: var(--main-font-color);
+    background-color: var(--dark-mode-main-bg-color);
+    color: var(--dark-mode-main-font-color);
 }
 body.dark img {
     filter: brightness(.8) contrast(1.2);
@@ -39,37 +31,38 @@ body.dark .self-service #login-form h2 span,
 body.dark.admin #menu,
 body.dark.admin .filter-container,
 body.dark.admin table.list {
-    background-color: var(--main-bg-color);
+    background-color: var(--dark-mode-main-bg-color);
 }
 body.dark #main-menu li ul,
 body.dark #user-menu li ul,
 body.dark .bootstrap-select .dropdown-toggle,
 body.dark .bootstrap-select .dropdown-menu,
 body.dark .bootstrap-select .no-results {
-    background-color: var(--2nd-bg-color);
-    border-color: var(--main-border-color);
+    background-color: var(--dark-mode-2nd-bg-color);
+    border-color: var(--dark-mode-main-border-color);
 }
 body.dark .vertical.menu a {
-    background-color: var(--main-bg-color) ! important;
+    background-color: var(--dark-mode-main-bg-color) ! important;
 }
 body.dark .btn-outline-light,
 body.dark select,
 body.dark #product-search input,
+body.dark #product-search select,
 body.dark input,
 body.dark textarea,
 body.dark .bootstrap-select .form-control:focus {
-    background-color: var(--2nd-bg-color);
-    color: var(--main-font-color);
-    border-color: var(--main-border-color);
+    background-color: var(--dark-mode-2nd-bg-color);
+    color: var(--dark-mode-main-font-color);
+    border-color: var(--dark-mode-main-border-color);
 }
 body.dark #footer,
 body.dark .self-service .footer {
-    background-color: var(--2nd-bg-color);
-    border-color: var(--main-border-color);
+    background-color: var(--dark-mode-2nd-bg-color);
+    border-color: var(--dark-mode-main-border-color);
 }
 body.dark .btn-outline-light:hover,
 body.dark .btn-outline-light:active:focus {
-    background-color: var(--2nd-bg-color) ! important;
+    background-color: var(--dark-mode-2nd-bg-color) ! important;
     opacity: .7;
 }
 body.dark #main-menu li > a,
@@ -89,7 +82,7 @@ body.dark.admin .filter-container,
 body.dark h2.warning,
 body.dark h2.info, 
 body.dark h2.info2 {
-    color: var(--main-font-color);
+    color: var(--dark-mode-main-font-color);
 }
 body.dark .box h3,
 body.dark .box h3 i,
@@ -97,7 +90,7 @@ body.dark .cart-extra-info,
 body.dark .vertical.menu li.header,
 body.dark .btn-success,
 body.dark .btn-warning {
-    color: var(--2nd-font-color);
+    color: var(--dark-mode-2nd-font-color);
 }
 body.dark .vertical.menu a,
 body.dark.admin .vertical.menu a:hover i,
@@ -107,24 +100,24 @@ body.dark.admin h2 span a,
 body.dark.admin form .input a:not(.btn),
 body.dark .tooltipster-box .tooltipster-content,
 body.dark .tooltipster-box .tooltipster-content a {
-    color: var(--main-font-color) ! important;
+    color: var(--dark-mode-main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper,
 body.dark .vertical.menu,
 body.dark.admin div:not(.product-list) > table.list tr:nth-child(odd),
 body.dark.admin table.list th,
 body.dark .tooltipster-box .tooltipster-content {
-    background-color: var(--2nd-bg-color);
+    background-color: var(--dark-mode-2nd-bg-color);
 }
 body.dark a.blog-post-wrapper:hover {
     opacity: .8;
 }
 body.dark .swiper-button-prev:after,
 body.dark .swiper-button-next:after {
-    color: var(--main-bg-color);
+    color: var(--dark-mode-main-bg-color);
 }
 body.dark .dropdown-item:hover span {
-    color: var(--main-bg-color) ! important;
+    color: var(--dark-mode-main-bg-color) ! important;
 }
 body.dark .box,
 body.dark #header,
@@ -151,17 +144,17 @@ body.dark.admin .filter-container,
 body.dark.admin table.list th,
 body.dark.admin table.list td,
 body.dark.admin table.list tr {
-    border-color: var(--main-border-color);
+    border-color: var(--dark-mode-main-border-color);
 }
 body.dark #load-last-order-details {
-    border-color: var(--main-border-color) ! important;
+    border-color: var(--dark-mode-main-border-color) ! important;
 }
 body.dark .btn-outline-light:active {
     color: #fff;
 }
 body.dark .menu.vertical span.additional-info {
     background-color: transparent ! important;
-    color: var(--main-font-color) ! important;
+    color: var(--dark-mode-main-font-color) ! important;
 }
 body.dark .menu.vertical a:hover i,
 body.dark .menu.vertical a.active i {
@@ -175,11 +168,11 @@ body.dark #footer a:hover {
 body.dark .blog-wrapper .swiper-button-prev,
 body.dark .blog-wrapper .swiper-button-next,
 body.dark #scroll-to-top a {
-    background-color: var(--main-font-color);
+    background-color: var(--dark-mode-main-font-color);
 }
 body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover,
 body.dark.admin table.list tr.selected {
-    background-color: var(--main-font-color) ! important;
+    background-color: var(--dark-mode-main-font-color) ! important;
 }
 body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover td,
 body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover td a:not(.btn),
@@ -187,6 +180,5 @@ body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):
 body.dark.admin table.list tr.selected td,
 body.dark.admin table.list tr.selected td a:not(.btn),
 body.dark.admin table.list tr.selected td > i {
-    color: var(--main-bg-color) ! important;
+    color: var(--dark-mode-main-bg-color) ! important;
 }
-
