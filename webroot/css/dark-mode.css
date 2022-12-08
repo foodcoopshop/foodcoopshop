@@ -93,8 +93,10 @@ body.dark .btn-warning {
     color: var(--dark-mode-2nd-font-color);
 }
 body.dark .vertical.menu a,
-body.dark.admin .vertical.menu a:hover i,
-body.dark.admin .vertical.menu a.active i,
+body.dark .vertical.menu a:hover i,
+body.dark .vertical.menu a.active i,
+body.dark .vertical.menu a.active span.additional-info,
+body.dark .vertical.menu a:hover span.additional-info,
 body.dark.admin table.list a:not(.btn),
 body.dark.admin h2 span a,
 body.dark.admin form .input a:not(.btn),
