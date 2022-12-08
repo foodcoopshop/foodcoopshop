@@ -19,16 +19,6 @@
     --main-border-color: #696969;
 }
 
-body,
-#header,
-#content,
-.sidebar,
-.box
-#inner-content,
-input,
-select {
-    transition: background .5s;
-}
 body.dark {
     background-color: var(--main-bg-color);
     color: var(--main-font-color);
