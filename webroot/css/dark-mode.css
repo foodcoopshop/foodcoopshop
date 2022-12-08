@@ -181,7 +181,7 @@ body.dark #scroll-to-top a {
 }
 body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover,
 body.dark.admin table.list tr.selected {
-    background-color: var(--dark-mode-main-font-color) ! important;
+    background-color: #737373 ! important;
 }
 body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover td,
 body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover td a:not(.btn),
