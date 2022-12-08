@@ -40,7 +40,7 @@ foodcoopshop.Helper = {
     },
 
     initColorModeSwitcher: function() {
-        $('#user-menu .color-mode').on('click', function() {
+        $('.color-mode-switcher').on('click', function() {
             if ($('body').hasClass('dark')) {
                 localStorage.setItem('color-mode', 'light');
                 foodcoopshop.Helper.enableLightMode();
@@ -64,14 +64,14 @@ foodcoopshop.Helper = {
 
     enableLightMode: function() {
         $('body').removeClass('dark');
-        var icon = $('#user-menu .color-mode').find('i');
+        var icon = $('.color-mode-switcher').find('i');
         icon.removeClass('fa-moon');
         icon.addClass('fa-sun');
     },
 
     enableDarkMode: function() {
         $('body').addClass('dark');
-        var icon = $('#user-menu .color-mode').find('i');
+        var icon = $('.color-mode-switcher').find('i');
         icon.removeClass('fa-sun');
         icon.addClass('fa-moon');
     },
