@@ -50,7 +50,8 @@ body.dark #product-search input,
 body.dark #product-search select,
 body.dark input,
 body.dark textarea,
-body.dark .bootstrap-select .form-control:focus {
+body.dark .bootstrap-select .form-control:focus,
+body.dark.admin #home h1 {
     background-color: var(--dark-mode-2nd-bg-color);
     color: var(--dark-mode-main-font-color);
     border-color: var(--dark-mode-main-border-color);

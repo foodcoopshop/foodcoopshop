@@ -19,7 +19,8 @@
         background-color: var(--dark-mode-main-bg-color) ! important;
     }
     body.dark .sb-slidebar li a,
-    body.dark #responsive-header a {
+    body.dark #responsive-header a,
+    body.dark.admin .sb-toggle-left {
         color: var(--dark-mode-main-font-color) ! important;
     }
 
