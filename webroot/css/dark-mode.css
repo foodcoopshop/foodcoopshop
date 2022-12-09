@@ -185,7 +185,8 @@ body.dark .menu.vertical span.additional-info {
     color: var(--dark-mode-main-font-color) ! important;
 }
 body.dark .menu.vertical a:hover i,
-body.dark .menu.vertical a.active i {
+body.dark .menu.vertical a.active i,
+body.dark.admin .vertical.menu > li img.logo {
     background-color: transparent ! important;
 }
 body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a:hover,
