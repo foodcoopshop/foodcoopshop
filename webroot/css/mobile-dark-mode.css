@@ -18,8 +18,15 @@
     body.dark.admin .sb-toggle-left {
         background-color: var(--dark-mode-main-bg-color) ! important;
     }
-    body.dark .sb-slidebar li a {
+    body.dark .sb-slidebar li a,
+    body.dark #responsive-header a {
         color: var(--dark-mode-main-font-color) ! important;
+    }
+
+    body.dark .sb-left a,
+    body.dark .sb-left li.header,
+    body.dark .sb-left li.footer {
+        border-color: var(--dark-mode-main-border-color);
     }
 
 }
