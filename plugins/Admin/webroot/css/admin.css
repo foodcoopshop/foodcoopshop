@@ -302,7 +302,7 @@ input.datepicker {
     text-align: center;
 }
 .warning {
-    color: red;
+    color: var(--not-ok-red);
 }
 .ui-widget {
     font-family: 'Open Sans';
@@ -312,7 +312,7 @@ input.datepicker {
     margin-bottom: 0;
 }
 .tooltipster-content li.negative {
-    color: red;
+    color: var(--not-ok-red);
 }
 .tooltipster-content .credit-balance-wrapper {
     margin-top: 10px;
@@ -429,7 +429,7 @@ form div.error-message {
     margin-left: 220px;
 }
 .overlay-info {
-    color: red;
+    color: var(--not-ok-red);
     font-weight: 600;
     font-size: 14px;
 }

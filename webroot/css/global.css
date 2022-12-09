@@ -18,6 +18,7 @@
     --dark-mode-main-font-color: #CDCDCD;
     --dark-mode-2nd-font-color: #f4f0ec;;
     --dark-mode-main-border-color: #696969;
+    --not-ok-red: #dc143c;
 }
 
 @media print {
@@ -523,7 +524,7 @@ i.gold {
 i.fa.not-ok,
 i.fas.not-ok,
 i.far.not-ok {
-    color: red;
+    color: var(--not-ok-red);
 }
 i.fa.neutral,
 i.fas.neutral,

@@ -66,13 +66,13 @@ table.list tr.sub-row td {
 }
 table.list td.not-available,
 table.list td.not-available i.sold-out-limit-for-dialog i {
-    background-color: #dc143c;
+    background-color: var(--not-ok-red);
     color: white;
 }
 table.list td.negative,
 b.negative,
 span.negative {
-    color: #dc143c ! important;
+    color: var(--not-ok-red) ! important;
 }
 table.list tr:hover td.negative,
 tr:hover b.negative {
