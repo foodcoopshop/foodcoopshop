@@ -128,6 +128,9 @@ body.dark .swiper-button-next:after,
 body.dark .btn-warning {
     color: var(--dark-mode-main-bg-color);
 }
+body.dark.admin table.list th {
+    box-shadow: inset 0 0px 0 var(--dark-mode-main-border-color), inset 0 -1px 0 var(--dark-mode-main-border-color);
+}
 body.dark .dropdown-item:hover span,
 body.dark .btn-warning:hover {
     color: var(--dark-mode-main-bg-color) ! important;
