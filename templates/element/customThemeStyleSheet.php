@@ -152,6 +152,7 @@ use Cake\Core\Configure;
             .sb-left li.header,
             .sb-left a:hover,
             .sb-left a.active,
+            .sb-left a:hover i.far,
             .sb-left a:hover i.fas:not(.gold),
             .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
                 background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
