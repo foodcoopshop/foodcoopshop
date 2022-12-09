@@ -30,7 +30,8 @@ body.dark .self-service #SelfServiceForm,
 body.dark .self-service #login-form h2 span,
 body.dark.admin #menu,
 body.dark.admin .filter-container,
-body.dark.admin table.list {
+body.dark.admin table.list,
+body.dark.admin #actionLogs div.changed {
     background-color: var(--dark-mode-main-bg-color);
 }
 body.dark #main-menu li ul,
@@ -76,6 +77,10 @@ body.dark .cookieConsentWrapper {
 }
 .cookieConsentWrapper .cookieConsent__Right button {
     color: var(--dark-mode-2nd-font-color) ! important;
+}
+body.dark .testimonial-quote blockquote,
+body.dark  .testimonial-quote cite span {
+    text-shadow: none;
 }
 body.dark #main-menu li > a,
 body.dark #user-menu li > a,
