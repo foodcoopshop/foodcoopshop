@@ -87,7 +87,7 @@ body.dark .bootstrap-select .no-results,
 body.dark .bootstrap-select > .dropdown-toggle:after,
 body.dark.admin .filter-container,
 body.dark h2.warning,
-body.dark h2.info, 
+body.dark h2.info,
 body.dark h2.info2 {
     color: var(--dark-mode-main-font-color);
 }
@@ -95,8 +95,7 @@ body.dark .box h3,
 body.dark .box h3 i,
 body.dark .cart-extra-info,
 body.dark .vertical.menu li.header,
-body.dark .btn-success,
-body.dark .btn-warning {
+body.dark .btn-success {
     color: var(--dark-mode-2nd-font-color);
 }
 body.dark .vertical.menu a,
@@ -125,10 +124,12 @@ body.dark a.blog-post-wrapper:hover {
     opacity: .8;
 }
 body.dark .swiper-button-prev:after,
-body.dark .swiper-button-next:after {
+body.dark .swiper-button-next:after,
+body.dark .btn-warning {
     color: var(--dark-mode-main-bg-color);
 }
-body.dark .dropdown-item:hover span {
+body.dark .dropdown-item:hover span,
+body.dark .btn-warning:hover {
     color: var(--dark-mode-main-bg-color) ! important;
 }
 body.dark .box,
