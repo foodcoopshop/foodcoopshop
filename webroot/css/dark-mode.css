@@ -44,6 +44,9 @@ body.dark .bootstrap-select .no-results {
 body.dark .vertical.menu a {
     background-color: var(--dark-mode-main-bg-color) ! important;
 }
+body.dark .modal-content {
+    border: 1px solid var(--dark-mode-main-border-color);
+}
 body.dark .btn-outline-light,
 body.dark select,
 body.dark #product-search input,
@@ -197,6 +200,6 @@ body.dark #scroll-to-top a {
 }
 body.dark.admin table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover,
 body.dark.admin table.list tr.selected {
-    background-color: #737373 ! important;
+    background-color: #43464B ! important;
 }
 
