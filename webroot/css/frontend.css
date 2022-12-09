@@ -228,7 +228,8 @@ body.categories.detail div.description-wrapper {
     padding-right: 5px;
 }
 .color-mode-toggle {
-    margin-right: 5px;
+    margin-top: 1px;
+    float: left;
 }
 #user-menu > li {
     padding-bottom: 5px;

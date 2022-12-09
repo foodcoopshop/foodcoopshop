@@ -35,8 +35,8 @@ foodcoopshop.Helper = {
     },
 
     setBackgroundImage: function() {
-        var theme = $('body').hasClass('dark') ? 'dark' : 'light';
-        $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(theme) + '"');
+        var colorMode = this.getColorMode();
+        $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(colorMode) + '"');
     },
 
     initColorModeSwitcher: function() {
@@ -65,15 +65,15 @@ foodcoopshop.Helper = {
     enableLightMode: function() {
         $('body').removeClass('dark');
         var icon = $('.color-mode-toggle').find('i');
-        icon.removeClass('fa-moon');
-        icon.addClass('fa-sun');
+        icon.removeClass('fas');
+        icon.addClass('far');
     },
 
     enableDarkMode: function() {
         $('body').addClass('dark');
         var icon = $('.color-mode-toggle').find('i');
-        icon.removeClass('fa-sun');
-        icon.addClass('fa-moon');
+        icon.removeClass('far');
+        icon.addClass('fas');
     },
 
     getColorMode: function() {

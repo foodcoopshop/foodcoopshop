@@ -31,6 +31,9 @@
     #inner-content iframe {
         width: 100% ! important;
     }
+    .color-mode-toggle {
+        float: none;
+    }
     .cookieConsentWrapper {
         left: 2% ! important;
         bottom: 1% ! important;
