@@ -736,9 +736,7 @@ div.date-field-wrapper {
 }
 ul.nav-tabs {
     background: #efefef;
-    margin-top: -2px;
-    margin-left: -2px;
-    width: 1074px;
+    width: 1072px;
     padding-bottom: 1px;
 }
 ul.nav-tabs > li > a {
@@ -749,6 +747,7 @@ ul.nav-tabs > li > a {
 ul.nav-tabs a:hover,
 ul.nav-tabs li.active a {
     background-color: #fff;
+    text-decoration: underline ! important;
 }
 a.btn-arrow {
     display: inline-block;
@@ -846,7 +845,8 @@ body.reports.payment .payment-approval-comment {
     margin-right: 2px;
 }
 body.reports.payment form#csv-upload {
-    padding: 10px 0 5px 0;
+    padding: 10px 0 5px 10px;
+    border-bottom: 1px solid #efefef;
 }
 body.reports.payment form#csv-upload label {
     margin-right: 10px;

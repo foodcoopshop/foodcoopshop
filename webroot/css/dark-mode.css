@@ -51,7 +51,8 @@ body.dark #product-search select,
 body.dark input,
 body.dark textarea,
 body.dark .bootstrap-select .form-control:focus,
-body.dark.admin #home h1 {
+body.dark.admin #home h1,
+body.dark.admin ul.nav-tabs {
     background-color: var(--dark-mode-2nd-bg-color);
     color: var(--dark-mode-main-font-color);
     border-color: var(--dark-mode-main-border-color);
@@ -110,7 +111,8 @@ body.dark.admin form .input a:not(.btn),
 body.dark .tooltipster-box .tooltipster-content,
 body.dark .tooltipster-box .tooltipster-content a,
 body.dark table.list td.not-available,
-body.dark table.list td.not-available i.sold-out-limit-for-dialog i {
+body.dark table.list td.not-available i.sold-out-limit-for-dialog i,
+body.dark.admin ul.nav-tabs > li > a {
     color: var(--dark-mode-main-font-color) ! important;
 }
 body.dark a.blog-post-wrapper,
@@ -120,6 +122,10 @@ body.dark.admin table.list tr.custom-odd,
 body.dark.admin table.list th,
 body.dark .tooltipster-box .tooltipster-content {
     background-color: var(--dark-mode-2nd-bg-color);
+}
+body.dark.admin ul.nav-tabs li.active a,
+body.dark.admin ul.nav-tabs li a:hover {
+    background-color: var(--dark-mode-main-bg-color) ! important;
 }
 body.dark a.blog-post-wrapper:hover {
     opacity: .8;
@@ -160,7 +166,8 @@ body.dark .self-service #login-form h2,
 body.dark.admin .filter-container,
 body.dark.admin table.list th,
 body.dark.admin table.list td,
-body.dark.admin table.list tr {
+body.dark.admin table.list tr,
+body.reports.payment form#csv-upload {
     border-color: var(--dark-mode-main-border-color);
 }
 body.dark #load-last-order-details {
