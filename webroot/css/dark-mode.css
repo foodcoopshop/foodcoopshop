@@ -90,7 +90,8 @@ body.dark .bootstrap-select > .dropdown-toggle:after,
 body.dark.admin .filter-container,
 body.dark h2.warning,
 body.dark h2.info,
-body.dark h2.info2 {
+body.dark h2.info2,
+body.dark.admin a.btn i:not(.not-ok) {
     color: var(--dark-mode-main-font-color);
 }
 body.dark .box h3,
