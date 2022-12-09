@@ -76,6 +76,10 @@ foodcoopshop.Helper = {
         icon.addClass('fa-moon');
     },
 
+    getColorMode: function() {
+        return $('body').hasClass('dark') ? 'dark' : 'light';
+    },
+
     initRegistrationAsCompany: function() {
 
         var isCompanyCheckbox = $('#customers-is-company');
