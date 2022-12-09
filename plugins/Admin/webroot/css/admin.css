@@ -28,6 +28,9 @@ body.customers.login #content {
 body.pages.home .filter-container {
     display: none;
 }
+body.pages.home #content {
+    border: none;
+}
 #home {
     width: 100%;
     text-align: center;
