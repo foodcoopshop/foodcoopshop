@@ -74,7 +74,7 @@ foodcoopshop.AppChart = {
             tooltip: {
                 callbacks: {
                     label: function(ctx) {
-                        return ctx.label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed);
+                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed);
                     }
                 }
             },
