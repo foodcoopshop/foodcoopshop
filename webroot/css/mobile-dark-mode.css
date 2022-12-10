@@ -23,7 +23,9 @@
     body.dark.admin .sb-toggle-left {
         color: var(--dark-mode-main-font-color) ! important;
     }
-
+    body.dark .sb-slidebar li a.active {
+        color: var(--dark-mode-2nd-font-color) ! important;
+    }
     body.dark .sb-left a,
     body.dark .sb-left li.header,
     body.dark .sb-left li.footer {

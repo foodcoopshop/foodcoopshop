@@ -110,10 +110,6 @@ body.dark .btn-success {
     color: var(--dark-mode-2nd-font-color);
 }
 body.dark .vertical.menu a,
-body.dark .vertical.menu a:hover i,
-body.dark .vertical.menu a.active i,
-body.dark .vertical.menu a.active span.additional-info,
-body.dark .vertical.menu a:hover span.additional-info,
 body.dark.admin table.list a:not(.btn),
 body.dark.admin h2 span a,
 body.dark.admin form .input a:not(.btn),
@@ -131,6 +127,14 @@ body.dark.admin table.list tr.custom-odd,
 body.dark.admin table.list th,
 body.dark .tooltipster-box .tooltipster-content {
     background-color: var(--dark-mode-2nd-bg-color);
+}
+body.dark .vertical.menu a.active,
+body.dark .vertical.menu a:hover,
+body.dark .vertical.menu a:hover i,
+body.dark .vertical.menu a.active i,
+body.dark .vertical.menu a.active span.additional-info,
+body.dark .vertical.menu a:hover span.additional-info {
+    color: var(--dark-mode-2nd-font-color) ! important;
 }
 body.dark.admin ul.nav-tabs li.active a,
 body.dark.admin ul.nav-tabs li a:hover {

@@ -1190,7 +1190,7 @@ a.blog-post-wrapper span {
     word-break: break-word;
 }
 a.blog-post-wrapper span.content {
-    max-height: 107px;
+    max-height: 105px;
     overflow-y: hidden;
 }
 a.blog-post-wrapper span.date {
