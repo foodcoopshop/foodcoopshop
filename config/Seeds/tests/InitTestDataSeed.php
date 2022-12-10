@@ -5,7 +5,7 @@ use Migrations\AbstractSeed;
 
 class InitTestDataSeed extends AbstractSeed
 {
-    public function run()
+    public function run(): void
     {
         $query = "
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;

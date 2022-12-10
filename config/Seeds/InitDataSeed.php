@@ -5,7 +5,7 @@ use Migrations\AbstractSeed;
 
 class InitDataSeed extends AbstractSeed
 {
-    public function run()
+    public function run(): void
     {
         $query = "
             INSERT INTO `fcs_cronjobs` VALUES
