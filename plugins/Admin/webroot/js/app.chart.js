@@ -94,7 +94,7 @@ foodcoopshop.AppChart = {
                     }
                     return '';
                 },
-                color: '#fff',
+                color: '#ccc',
                 labels: {
                     title: {
                         font: {
@@ -153,7 +153,6 @@ foodcoopshop.AppChart = {
                 pointBackgroundColor: this.color,
                 pointRadius: 5
             }],
-
         };
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
@@ -293,7 +292,7 @@ foodcoopshop.AppChart = {
         var pieChartData = {
             datasets: [{
                 data: dataPieChart,
-                borderColor: '#fff',
+                borderColor: '#CDCDCD',
                 backgroundColor: backgroundColorPieChart,
                 hoverBackgroundColor: this.color,
                 borderWidth: 1,
@@ -302,7 +301,7 @@ foodcoopshop.AppChart = {
                         outer: {
                             align: 'end',
                             anchor: 'end',
-                            color: '#333333',
+                            color: foodcoopshop.Helper.getColorMode() == 'dark' ? '#CDCDCD' : '#333333',
                             font: {
                                 size: 15
                             },

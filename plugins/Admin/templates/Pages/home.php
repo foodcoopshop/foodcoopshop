@@ -19,6 +19,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
+        Configure::read('app.jsNamespace') . ".Helper.initColorMode();" .
         Configure::read('app.jsNamespace') . ".Helper.showContent();" .
         Configure::read('app.jsNamespace') . ".Helper.initAnystretch();" .
         Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" .

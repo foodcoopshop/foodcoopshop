@@ -58,6 +58,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
                 'mobile-frontend',
                 'mobile-frontend-portrait',
                 'mobile-self-service',
+                'mobile-dark-mode',
                 'mobile-frontend-custom',
             ]);
         }

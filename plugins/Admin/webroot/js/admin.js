@@ -16,6 +16,7 @@ foodcoopshop.Admin = {
     init: function () {
         this.initFilter();
         this.improveTableLayout();
+        foodcoopshop.Helper.initColorMode();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();

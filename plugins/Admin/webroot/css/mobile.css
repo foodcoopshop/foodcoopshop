@@ -33,6 +33,7 @@
     left: 0;
     width: 100vw;
     max-width: none;
+    border-left: none;
 }
 .filter-container .right {
     margin-top: 1px;

@@ -36,9 +36,6 @@
     body.blog_posts.detail .blog-post-wrapper {
         height: 234px;
     }
-    .blog-post-wrapper img.blog-post-image {
-        height: 100px;
-    }
     .blog-post-wrapper span.date {
         display: none;
     }
