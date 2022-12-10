@@ -16,6 +16,7 @@ foodcoopshop.SyncBase = {
     activeAjaxRequests : [],
 
     init : function () {
+        foodcoopshop.Helper.initColorMode();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();

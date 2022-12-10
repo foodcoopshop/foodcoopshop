@@ -38,7 +38,9 @@ body.dark #main-menu li ul,
 body.dark #user-menu li ul,
 body.dark .bootstrap-select .dropdown-toggle,
 body.dark .bootstrap-select .dropdown-menu,
-body.dark .bootstrap-select .no-results {
+body.dark .bootstrap-select .no-results,
+body.dark form.sync-login-form,
+body.dark.syncs.product_data table.product-list tr.horizontal-checkboxes {
     background-color: var(--dark-mode-2nd-bg-color);
     border-color: var(--dark-mode-main-border-color);
 }
