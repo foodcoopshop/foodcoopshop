@@ -34,6 +34,14 @@ body.dark.admin table.list,
 body.dark.admin #actionLogs div.changed {
     background-color: var(--dark-mode-main-bg-color);
 }
+body.dark .ui-widget-header,
+body.dark .ui-state-default,
+body.dark .ui-widget-header .ui-state-hover {
+    color: var(--dark-mode-main-font-color);
+    border-color: var(--dark-mode-main-border-color);
+    background-color: var(--dark-mode-main-bg-color);
+    background-image: none;
+}
 body.dark #main-menu li ul,
 body.dark #user-menu li ul,
 body.dark .bootstrap-select .dropdown-toggle,
@@ -60,7 +68,8 @@ body.dark textarea,
 body.dark .pw .amount-wrapper .ordered-products-total-amount,
 body.dark .bootstrap-select .form-control:focus,
 body.dark.admin #home h1,
-body.dark.admin ul.nav-tabs {
+body.dark.admin ul.nav-tabs,
+body.dark .ui-widget.ui-widget-content {
     background-color: var(--dark-mode-2nd-bg-color);
     color: var(--dark-mode-main-font-color);
     border-color: var(--dark-mode-main-border-color);
