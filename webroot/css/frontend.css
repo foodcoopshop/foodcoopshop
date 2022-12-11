@@ -1263,7 +1263,6 @@ body.blog_posts.detail #inner-content .content h2,
 body.pages:not(.home) #inner-content h2,
 body.manufacturers.detail .manufacturer-infos h2,
 body.categories.detail .description-wrapper h2 {
-    color: #333;
     padding-top: 10px;
     font-size: 18px;
 }
