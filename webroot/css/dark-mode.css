@@ -107,7 +107,8 @@ body.dark .bootstrap-select .dropdown-menu li a span.text,
 body.dark .bootstrap-select .no-results,
 body.dark .bootstrap-select > .dropdown-toggle:after,
 body.dark.admin .filter-container,
-body.dark.admin a.btn i:not(.not-ok) {
+body.dark.admin a.btn i:not(.not-ok),
+body.dark a.btn.edit-shortcut-button i {
     color: var(--dark-mode-main-font-color);
 }
 body.dark h2.warning,
