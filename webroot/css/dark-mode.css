@@ -24,7 +24,7 @@ body.dark .sidebar,
 body.dark .box,
 body.dark #inner-content,
 body.dark .modal-content,
-body.dark .btn-outline-light.disabled,
+body.dark .btn-outline-light.disabled:not(.btn-danger),
 body.dark .self-service .header,
 body.dark .self-service #SelfServiceForm,
 body.dark .self-service #login-form h2 span,
@@ -48,7 +48,8 @@ body.dark .bootstrap-select .dropdown-toggle,
 body.dark .bootstrap-select .dropdown-menu,
 body.dark .bootstrap-select .no-results,
 body.dark form.sync-login-form,
-body.dark.syncs.product_data table.product-list tr.horizontal-checkboxes {
+body.dark.syncs.product_data table.product-list tr.horizontal-checkboxes,
+body.dark .pw.delivery-break-enabled {
     background-color: var(--dark-mode-2nd-bg-color);
     border-color: var(--dark-mode-main-border-color);
 }
@@ -58,7 +59,7 @@ body.dark .vertical.menu a {
 body.dark .modal-content {
     border: 1px solid var(--dark-mode-main-border-color);
 }
-body.dark .btn-outline-light,
+body.dark .btn-outline-light:not(.btn-danger),
 body.dark select,
 body.dark #product-search input,
 body.dark #product-search select,
