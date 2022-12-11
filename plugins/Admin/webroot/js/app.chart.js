@@ -293,6 +293,7 @@ foodcoopshop.AppChart = {
             };
             this.barChartOptions.scales.x.ticks.color = this.getFontColor();
             this.barChartOptions.scales.y.ticks.color = this.getFontColor();
+            this.barChartOptions.scales.y1.ticks.color = this.getFontColor();
             this.barChartOptions.plugins.legend.labels = {color: this.getFontColor()};
             this.barChartOptions.scales.y.grid.color = this.getGridColor();
         }
