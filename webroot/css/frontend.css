@@ -589,7 +589,7 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 .pw .amount-wrapper .ordered-products-total-amount {
     float: right;
     border-radius: 50%;
-    border: 1px solid #d6d4d4;
+    border: 1px solid var(--not-ok-red);
     text-align: center;
     width: 30px;
     height: 30px;
