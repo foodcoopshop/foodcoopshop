@@ -282,7 +282,7 @@ foodcoopshop.AppChart = {
                 }
             );
 
-            lineChartOptions.scales.y1 = {
+            this.barChartOptions.scales.y1 = {
                 type: 'linear',
                 display: true,
                 position: 'right',
@@ -295,11 +295,11 @@ foodcoopshop.AppChart = {
                   display: false,
                 },
             };
-            lineChartOptions.scales.x.ticks.color = this.getFontColor();
-            lineChartOptions.scales.y.ticks.color = this.getFontColor();
-            lineChartOptions.scales.y1.ticks.color = this.getFontColor();
-            lineChartOptions.plugins.legend.labels = {color: this.getFontColor()};
-            lineChartOptions.scales.y.grid.color = this.getGridColor();
+            this.barChartOptions.scales.x.ticks.color = this.getFontColor();
+            this.barChartOptions.scales.y.ticks.color = this.getFontColor();
+            this.barChartOptions.scales.y1.ticks.color = this.getFontColor();
+            this.barChartOptions.plugins.legend.labels = {color: this.getFontColor()};
+            this.barChartOptions.scales.y.grid.color = this.getGridColor();
         }
 
         var ctx = $('#myBarChart').get(0).getContext('2d');
@@ -307,7 +307,7 @@ foodcoopshop.AppChart = {
             responsive : true,
             type: 'bar',
             data: barChartData,
-            options: lineChartOptions
+            options: this.barChartOptions
         });
 
     },
