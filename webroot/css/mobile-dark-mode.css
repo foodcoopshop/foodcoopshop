@@ -23,7 +23,8 @@
     body.dark.admin .sb-toggle-left {
         color: var(--dark-mode-main-font-color) ! important;
     }
-    body.dark .sb-slidebar li a.active {
+    body.dark .sb-slidebar li a.active,
+    body.dark .sb-slidebar li a:hover {
         color: var(--dark-mode-2nd-font-color) ! important;
     }
     body.dark .sb-left a,
