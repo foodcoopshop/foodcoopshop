@@ -223,6 +223,10 @@ foodcoopshop.AppChart = {
 
         var lineChartOptions = this.lineChartOptions;
         lineChartOptions.plugins.legend.display = true;
+        lineChartOptions.scales.x.ticks.color = this.getFontColor();
+        lineChartOptions.scales.y.ticks.color = this.getFontColor();
+        lineChartOptions.plugins.legend.labels = {color: this.getFontColor()};
+        lineChartOptions.scales.y.grid.color = this.getGridColor();
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
         new Chart(ctx, {
@@ -278,7 +282,7 @@ foodcoopshop.AppChart = {
                 }
             );
 
-            this.barChartOptions.scales.y1 = {
+            lineChartOptions.scales.y1 = {
                 type: 'linear',
                 display: true,
                 position: 'right',
@@ -291,11 +295,11 @@ foodcoopshop.AppChart = {
                   display: false,
                 },
             };
-            this.barChartOptions.scales.x.ticks.color = this.getFontColor();
-            this.barChartOptions.scales.y.ticks.color = this.getFontColor();
-            this.barChartOptions.scales.y1.ticks.color = this.getFontColor();
-            this.barChartOptions.plugins.legend.labels = {color: this.getFontColor()};
-            this.barChartOptions.scales.y.grid.color = this.getGridColor();
+            lineChartOptions.scales.x.ticks.color = this.getFontColor();
+            lineChartOptions.scales.y.ticks.color = this.getFontColor();
+            lineChartOptions.scales.y1.ticks.color = this.getFontColor();
+            lineChartOptions.plugins.legend.labels = {color: this.getFontColor()};
+            lineChartOptions.scales.y.grid.color = this.getGridColor();
         }
 
         var ctx = $('#myBarChart').get(0).getContext('2d');
@@ -303,7 +307,7 @@ foodcoopshop.AppChart = {
             responsive : true,
             type: 'bar',
             data: barChartData,
-            options: this.barChartOptions
+            options: lineChartOptions
         });
 
     },
