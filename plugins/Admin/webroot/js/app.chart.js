@@ -15,6 +15,14 @@ foodcoopshop.AppChart = {
 
     color: '#cccccc', // default color
 
+    getFontColor: function() {
+        return foodcoopshop.Helper.getColorMode() == 'dark' ? '#CDCDCD' : '#333333';
+    },
+
+    getGridColor: function() {
+        return foodcoopshop.Helper.getColorMode() == 'dark' ? '#696969' : '#dfdfdf';
+    },
+
     barChartOptions : {
         plugins: {
             legend: {
@@ -57,8 +65,9 @@ foodcoopshop.AppChart = {
                 ticks: {
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
-                    }
-                }
+                    },
+                },
+                grid: {}
             },
         }
     },
@@ -123,7 +132,8 @@ foodcoopshop.AppChart = {
             x: {
                 grid: {
                     display: false
-                }
+                },
+                ticks: {}
             },
             y: {
                 beginAtZero: true,
@@ -131,7 +141,8 @@ foodcoopshop.AppChart = {
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
-                }
+                },
+                grid: {}
             }
         }
     },
@@ -154,6 +165,10 @@ foodcoopshop.AppChart = {
                 pointRadius: 5
             }],
         };
+
+        this.lineChartOptions.scales.x.ticks.color = this.getFontColor();
+        this.lineChartOptions.scales.y.ticks.color = this.getFontColor();
+        this.lineChartOptions.scales.y.grid.color = this.getGridColor();
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
         new Chart(ctx, {
@@ -262,6 +277,7 @@ foodcoopshop.AppChart = {
                     type: 'line',
                 }
             );
+
             this.barChartOptions.scales.y1 = {
                 type: 'linear',
                 display: true,
@@ -275,6 +291,10 @@ foodcoopshop.AppChart = {
                   display: false,
                 },
             };
+            this.barChartOptions.scales.x.ticks.color = this.getFontColor();
+            this.barChartOptions.scales.y.ticks.color = this.getFontColor();
+            this.barChartOptions.plugins.legend.labels = {color: this.getFontColor()};
+            this.barChartOptions.scales.y.grid.color = this.getGridColor();
         }
 
         var ctx = $('#myBarChart').get(0).getContext('2d');
