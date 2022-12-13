@@ -170,16 +170,16 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "3656173785245edc62efb0694fd477b50eb7402e"
+                "reference": "bbe44b610bbf51bda751114ecabfe5dd172a6dab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/3656173785245edc62efb0694fd477b50eb7402e",
-                "reference": "3656173785245edc62efb0694fd477b50eb7402e",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/bbe44b610bbf51bda751114ecabfe5dd172a6dab",
+                "reference": "bbe44b610bbf51bda751114ecabfe5dd172a6dab",
                 "shasum": ""
             },
             "require": {
@@ -226,7 +226,7 @@
                 "issues": "https://github.com/cakephp/migrations/issues",
                 "source": "https://github.com/cakephp/migrations"
             },
-            "time": "2022-12-09T18:33:11+00:00"
+            "time": "2022-12-10T12:39:01+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -3524,16 +3524,16 @@
         },
         {
             "name": "tecnickcom/tcpdf",
-            "version": "6.6.0",
+            "version": "6.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "154bba45ffc9c2a049aa9e21501d02472b24deb4"
+                "reference": "a336b531f6f6b5487fca0caf034a671d4e60df5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/154bba45ffc9c2a049aa9e21501d02472b24deb4",
-                "reference": "154bba45ffc9c2a049aa9e21501d02472b24deb4",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/a336b531f6f6b5487fca0caf034a671d4e60df5c",
+                "reference": "a336b531f6f6b5487fca0caf034a671d4e60df5c",
                 "shasum": ""
             },
             "require": {
@@ -3584,7 +3584,7 @@
             ],
             "support": {
                 "issues": "https://github.com/tecnickcom/TCPDF/issues",
-                "source": "https://github.com/tecnickcom/TCPDF/tree/6.6.0"
+                "source": "https://github.com/tecnickcom/TCPDF/tree/v"
             },
             "funding": [
                 {
@@ -3592,7 +3592,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-12-06T09:28:13+00:00"
+            "time": "2022-12-12T14:42:28+00:00"
         },
         {
             "name": "ua-parser/uap-php",
@@ -5241,16 +5241,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.19",
+            "version": "9.2.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559"
+                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c77b56b63e3d2031bd8997fcec43c1925ae46559",
-                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/af7463c955007de36db0c5e26d03e2f933c2e980",
+                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980",
                 "shasum": ""
             },
             "require": {
@@ -5306,7 +5306,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.19"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.20"
             },
             "funding": [
                 {
@@ -5314,7 +5314,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-11-18T07:47:47+00:00"
+            "time": "2022-12-13T07:49:28+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
