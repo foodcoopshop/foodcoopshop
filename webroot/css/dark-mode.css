@@ -153,6 +153,7 @@ body.dark .vertical.menu a:hover span.additional-info {
 body.dark.admin ul.nav-tabs li.active a,
 body.dark.admin ul.nav-tabs li a:hover {
     background-color: var(--dark-mode-main-bg-color) ! important;
+
 }
 body.dark a.blog-post-wrapper:hover {
     opacity: .8;
@@ -214,7 +215,8 @@ body.dark.admin .vertical.menu > li img.logo {
 }
 body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a:hover,
 body.dark ul.menu.vertical:not(#user-menu):not(#footer-menu) a.active,
-body.dark #footer a:hover {
+body.dark #footer a:hover,
+body.dark .ui-datepicker-calendar .ui-state-active {
     text-decoration: underline ! important;
 }
 body.dark .blog-wrapper .swiper-button-prev,
