@@ -31,6 +31,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public $Cart;
     protected $OrderDetail;
     protected $Product;
+    protected $SendOrderLists;
 
     use AppIntegrationTestTrait;
     use EmailTrait;

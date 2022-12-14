@@ -25,6 +25,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
 {
 
     protected $OrderDetail;
+    protected $EmailOrderReminder;
 
     use AppIntegrationTestTrait;
     use EmailTrait;

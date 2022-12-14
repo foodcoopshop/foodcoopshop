@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Mailer\AppMailer;
-use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
-use App\Lib\PdfWriter\OrderListByProductPdfWriter;
-use Cake\Core\Configure;
 use Queue\Queue\Task;
+use Cake\Core\Configure;
+use App\Mailer\AppMailer;
+use Cake\Datasource\FactoryLocator;
+use App\Lib\PdfWriter\OrderListByProductPdfWriter;
+use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,13 +27,10 @@ use Queue\Queue\Task;
 class GenerateOrderListTask extends Task {
 
     use UpdateActionLogTrait;
-
+    
     public $Manufacturer;
-
     public $QueuedJobs;
-
     public $timeout = 30;
-
     public $retries = 2;
 
     public function run(array $data, $jobId) : void
@@ -44,7 +42,7 @@ class GenerateOrderListTask extends Task {
         $orderDetailIds = $data['orderDetailIds'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = $this->loadModel('Manufacturers');
+        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();

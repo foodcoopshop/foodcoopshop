@@ -56,7 +56,7 @@
 ## ✔ Requirements
 * Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
-* PHP >= 8.1
+* PHP >= 8.2
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP bzip2 lib (for automatic database backups)
 * MySQL >= 8.0

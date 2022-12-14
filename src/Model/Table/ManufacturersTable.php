@@ -28,6 +28,8 @@ class ManufacturersTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    private $Catalog;
+
     public function initialize(array $config): void
     {
         $this->setTable('manufacturer');

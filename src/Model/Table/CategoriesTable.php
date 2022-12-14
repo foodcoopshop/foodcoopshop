@@ -26,6 +26,8 @@ class CategoriesTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    private $Catalog;
+
     public function initialize(array $config): void
     {
         $this->setTable('category');
