@@ -1204,7 +1204,7 @@ a.blog-post-wrapper span.img-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 145px;
+    height: 55%;
 }
 a.blog-post-wrapper:hover {
     box-shadow: 8px 10px 15px 0px rgba(0,0,0,0.5);
