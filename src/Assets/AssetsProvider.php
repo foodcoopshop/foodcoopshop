@@ -26,11 +26,12 @@ class AssetsProvider
     public static function getCssFilesBase()
     {
         return [
+            'bootstrap/dist/css/bootstrap.css',
+            'theme-color.css',
             'reset.css',
             'jquery-ui/dist/themes/smoothness/jquery-ui.css',
             'table.css',
             'bootstrap-select/dist/css/bootstrap-select.css',
-            'bootstrap/dist/css/bootstrap.css',
             '@fortawesome/fontawesome-free/css/all.css',
             'dark-mode.css',
             'global.css',

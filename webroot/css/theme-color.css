@@ -1,0 +1,117 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 3.6.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+#header .logo-wrapper {
+    width: var(--logo-width);
+}
+#header .logo {
+    max-width: var(--logo-width);
+}
+#main-menu {
+    width: calc(100% - var(--logo-width) - 34px);
+}
+#header .logo {
+    max-height: var(--logo-max-height);
+}
+
+::selection {
+    background: var(--theme-color);
+    color: #fff;
+}
+
+h2.info::selection,
+h2.info b::selection,
+#flashMessage.success::selection,
+#flashMessage.success b::selection {
+    background-color: #fff;
+    color: #000;
+}
+
+.box h3,
+.btn-success,
+.vertical.menu a:hover, .vertical.menu a:hover i, .vertical.menu a.active, .vertical.menu a.active i,
+.vertical.menu li.heading,
+.menu.vertical a:hover span.additional-info,
+.menu.vertical a.active span.additional-info,
+#main-menu a::after,
+#categories-menu li.header,
+#manufacturers-menu li.header,
+h2.info,
+#flashMessage.success,
+.modal-header,
+.cookieConsentWrapper .cookieConsent__Right button,
+.drop a.upload-button,
+#footer .bottom {
+    background-color: var(--theme-color);
+}
+
+h1,
+h2,
+a.blog-post-wrapper h3,
+.pw .price,
+#scroll-to-top a,
+#scroll-to-top a i,
+.vertical.menu a i.fas,
+.vertical.menu span.additional-info,
+a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
+a.btn.edit-shortcut-button,
+a.btn.prev-button i, a.btn.next-button i,
+.pw .price-asterisk,
+i.fa.ok, i.fas.ok, i.far.ok,
+body.carts .cart:not(#cart) span.amount .btn,
+#filter-loader i,
+.btn-cart i.fa-cart-plus,
+.btn-cart i.fa-shopping-bag {
+    color: var(--theme-color);
+}
+
+.blog-wrapper .swiper-button-prev,
+.blog-wrapper .swiper-button-next,
+body.blog_posts.detail #inner-content h2.further-news,
+body.customers.registration_successful #inner-content h2.further-news,
+a.btn-arrow:hover {
+    color: var(--theme-color) ! important;
+}
+
+.btn-success,
+.btn-success:active:hover,
+#flashMessage.success,
+hr,
+.pw, .manufacturer-wrapper,
+.cookieConsentWrapper,
+body.manufacturers.detail #inner-content h2,
+h1.middle-line span.middle {
+    border-color: var(--theme-color);
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.disabled {
+    background-color: var(--theme-color) ! important;
+    border-color: var(--theme-color);
+}
+.btn-success:focus:active,
+#flashMessage.success .progress-bar.bg-success,
+.bootstrap-select .dropdown-item.active,
+.bootstrap-select .dropdown-item:active,
+table.list tr.selected {
+    background-color: var(--theme-color) ! important;
+}
+.vertical.menu a {
+    color: #333333;
+}
+body.customers.login #self-service {
+    box-shadow: inset 0 0 3em var(--theme-color);
+}
