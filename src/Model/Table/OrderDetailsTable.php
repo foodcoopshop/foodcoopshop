@@ -27,6 +27,8 @@ class OrderDetailsTable extends AppTable
 {
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
+
+    private $Manufacturer;
     
     public function initialize(array $config): void
     {

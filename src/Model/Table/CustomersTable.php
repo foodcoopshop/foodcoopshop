@@ -27,6 +27,8 @@ use Cake\Database\Expression\QueryExpression;
 class CustomersTable extends AppTable
 {
 
+    private $Product;
+
     public function initialize(array $config): void
     {
         $this->setTable('customer');

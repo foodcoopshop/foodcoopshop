@@ -24,6 +24,10 @@ class ProductAttributesTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
+    private $BarcodeProduct;
+    private $Product;
+    private $StockAvailable;
+
     public function initialize(array $config): void
     {
         $this->setTable('product_attribute');

@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
-use App\Mailer\AppMailer;
-use Cake\Core\Configure;
 use Queue\Queue\Task;
+use Cake\Core\Configure;
+use App\Mailer\AppMailer;
+use Cake\Datasource\FactoryLocator;
+use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,7 +47,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
         $dateFrom = $data['dateFrom'];
         $dateTo = $data['dateTo'];
 
-        $this->Manufacturer = $this->loadModel('Manufacturers');
+        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $validOrderStates = [
@@ -71,7 +72,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
             $this->Manufacturer->Invoices->newEntity($invoice2save)
         );
 
-        $this->OrderDetail = $this->loadModel('OrderDetails');
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
 
         $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);

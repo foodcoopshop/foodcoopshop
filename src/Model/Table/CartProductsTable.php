@@ -24,6 +24,8 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 class CartProductsTable extends AppTable
 {
 
+    private $Cart;
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
