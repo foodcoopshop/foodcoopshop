@@ -22,8 +22,8 @@ declare(strict_types=1);
 /*
  * You can remove this if you are confident that your PHP version is sufficient.
  */
-if (version_compare(PHP_VERSION, '8.1.0') < 0) {
-    trigger_error('Your PHP version must be equal or higher than 8.1.0 to use CakePHP.', E_USER_ERROR);
+if (version_compare(PHP_VERSION, '8.2.0') < 0) {
+    trigger_error('Your PHP version must be equal or higher than 8.2.0 to use CakePHP.', E_USER_ERROR);
 }
 
 /*
