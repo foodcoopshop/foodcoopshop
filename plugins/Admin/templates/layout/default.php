@@ -39,19 +39,15 @@ use Cake\Utility\Inflector;
 
     <?php
     echo $this->element('customCssVars');
-    $cssConfigs = ['admin'];
-    if ($this->plugin != 'Admin') {
-        $cssConfigs[] = $this->plugin.'.all';
-    }
-    echo $this->element('renderCss', ['configs' => $cssConfigs]);
+
+    $renderConfigs = ['admin'];
     if ($isMobile) {
-        echo $this->Html->css([
-            '/node_modules/slidebars/dist/slidebars',
-            'mobile-global',
-            'Admin.mobile',
-            'mobile-dark-mode',
-        ]);
+        $renderConfigs = ['admin_mobile'];
     }
+    if ($this->plugin != 'Admin') {
+        $renderConfigs[] = $this->plugin.'.all';
+    }
+    echo $this->element('renderCss', ['configs' => $renderConfigs]);
     echo $this->element('layout/customHeader');
     ?>
 
