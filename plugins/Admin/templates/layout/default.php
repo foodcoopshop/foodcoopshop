@@ -38,6 +38,7 @@ use Cake\Utility\Inflector;
     <?php echo $this->element('jsNamespace'); ?>
 
     <?php
+    echo $this->element('customCssVars');
     $cssConfigs = ['admin'];
     if ($this->plugin != 'Admin') {
         $cssConfigs[] = $this->plugin.'.all';
@@ -51,7 +52,6 @@ use Cake\Utility\Inflector;
             'mobile-dark-mode',
         ]);
     }
-    echo $this->element('customThemeStyleSheet');
     echo $this->element('layout/customHeader');
     ?>
 

@@ -65,7 +65,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             echo $this->Html->css(['customer-can-select-pickup-day']);
         }
-        echo $this->element('customThemeStyleSheet');
+        echo $this->element('customCssVars');
         echo $this->Html->css(['custom']);
         echo $this->element('layout/customHeader');
     ?>
