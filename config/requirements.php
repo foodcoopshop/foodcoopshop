@@ -16,17 +16,6 @@ declare(strict_types=1);
  */
 
 /*
- * You can empty out this file, if you are certain that you match all requirements.
- */
-
-/*
- * You can remove this if you are confident that your PHP version is sufficient.
- */
-if (version_compare(PHP_VERSION, '8.2.0') < 0) {
-    trigger_error('Your PHP version must be equal or higher than 8.2.0 to use CakePHP.', E_USER_ERROR);
-}
-
-/*
  * You can remove this if you are confident you have intl installed.
  */
 if (!extension_loaded('intl')) {
