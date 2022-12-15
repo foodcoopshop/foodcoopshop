@@ -31,7 +31,8 @@ body.dark .self-service #login-form h2 span,
 body.dark.admin #menu,
 body.dark.admin .filter-container,
 body.dark.admin table.list,
-body.dark.admin #actionLogs div.changed {
+body.dark.admin #actionLogs div.changed,
+body.dark table.list td.image {
     background-color: var(--dark-mode-main-bg-color);
 }
 body.dark .ui-widget-header,

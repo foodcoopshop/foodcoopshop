@@ -69,6 +69,9 @@ table.list td.not-available i.sold-out-limit-for-dialog i {
     background-color: var(--not-ok-red);
     color: white;
 }
+table.list td.image {
+  background-color: #fff;
+}
 table.list td.negative,
 b.negative,
 span.negative {

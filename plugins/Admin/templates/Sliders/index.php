@@ -83,7 +83,7 @@ foreach ($sliders as $slider) {
     echo $slider->id_slider;
     echo '</td>';
 
-    echo '<td align="center" style="background-color: #fff;">';
+    echo '<td align="center" class="image">';
     echo '<img width="500" src="' . $this->Html->getSliderImageSrc($slider->image) . '" />';
     echo '</td>';
 

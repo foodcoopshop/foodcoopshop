@@ -95,7 +95,7 @@ foreach ($blogPosts as $blogPost) {
     echo $blogPost->id_blog_post;
     echo '</td>';
 
-    echo '<td align="center" style="background-color: #fff;">';
+    echo '<td align="center" class="image">';
     $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
     $srcSmallImage = $this->Html->getBlogPostImageSrc($blogPost, 'home');
 

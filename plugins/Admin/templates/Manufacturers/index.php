@@ -105,7 +105,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td class="hide">';
         echo $manufacturer->id_manufacturer;
     echo '</td>';
-    echo '<td align="center" style="background-color: #fff;">';
+    echo '<td align="center" class="image">';
         $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
         $largeImageExists = preg_match('/de-default-large_default/', $srcLargeImage);
         if (! $largeImageExists) {
