@@ -170,26 +170,25 @@ body.categories.detail div.description-wrapper {
     left: 241px;
     top: 137px;
     width: 670px;
-    padding: 24px 15px 0 15px;
+    padding: 15px 15px 0 15px;
     background: #fff;
     border: 1px solid #d6d4d4;
     z-index: 1000;
     display: none;
     border-radius: 5px;
+    columns: 3;
+    min-height: 49px;
 }
 #main-menu li ul ul {
     display: none ! important; /* never show third level */
 }
-#main-menu li ul li {
-    float: left;
-    line-height: 17px;
-    width: 201px;
-    margin-left: 16px;
-}
 #main-menu li ul li a {
+    line-height: 16px;
+    margin-left: 16px;
     margin-top: 0px;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
     float: left;
+    width: 201px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
