@@ -24,7 +24,7 @@ foodcoopshop.Helper = {
         foodcoopshop.ModalLogout.init();
         this.changeOutgoingLinksTargetToBlank();
         this.initCookieBanner();
-        this.initColorMode();
+        foodcoopshop.ColorMode.init();
         if (!this.isMobile()) {
             this.initWindowResize();
             this.initScrolltopButton();
@@ -33,53 +33,7 @@ foodcoopshop.Helper = {
             this.showContent();
         }
     },
-
-    setBackgroundImage: function() {
-        var colorMode = this.getColorMode();
-        $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(colorMode) + '"');
-    },
-
-    initColorModeSwitcher: function() {
-        $('.color-mode-toggle').on('click', function() {
-            if ($('body').hasClass('dark')) {
-                localStorage.setItem('color-mode', 'light');
-                foodcoopshop.Helper.enableLightMode();
-            } else {
-                localStorage.setItem('color-mode', 'dark');
-                foodcoopshop.Helper.enableDarkMode();
-            }
-            foodcoopshop.Helper.setBackgroundImage();
-        });
-    },
-
-    initColorMode: function() {
-        let colorMode = localStorage.getItem('color-mode');
-        if (colorMode === 'dark') {
-            foodcoopshop.Helper.enableDarkMode();
-        } else {
-            foodcoopshop.Helper.enableLightMode();
-        }
-        foodcoopshop.Helper.setBackgroundImage();
-    },
-
-    enableLightMode: function() {
-        $('body').removeClass('dark');
-        var icon = $('.color-mode-toggle').find('i');
-        icon.removeClass('fas');
-        icon.addClass('far');
-    },
-
-    enableDarkMode: function() {
-        $('body').addClass('dark');
-        var icon = $('.color-mode-toggle').find('i');
-        icon.removeClass('far');
-        icon.addClass('fas');
-    },
-
-    getColorMode: function() {
-        return $('body').hasClass('dark') ? 'dark' : 'light';
-    },
-
+    
     initRegistrationAsCompany: function() {
 
         var isCompanyCheckbox = $('#customers-is-company');

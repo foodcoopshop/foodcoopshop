@@ -16,7 +16,7 @@ foodcoopshop.BackgroundImage = {
     getBackgroundImage: function(theme) {
 
         var opacity = 0.33;
-        
+
         if (theme == 'dark') {
             opacity = 0.03;
         }

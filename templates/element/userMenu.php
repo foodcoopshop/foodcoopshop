@@ -35,7 +35,7 @@ if ($appAuth->isManufacturer()) {
 }
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Helper.initColorModeSwitcher();"
+    'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
 ]);
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw far fa-moon', 'class' => ['color-mode-toggle']]];
 if ($appAuth->user()) {
