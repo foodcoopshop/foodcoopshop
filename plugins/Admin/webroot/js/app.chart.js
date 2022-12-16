@@ -16,11 +16,11 @@ foodcoopshop.AppChart = {
     color: '#cccccc', // default color
 
     getFontColor: function() {
-        return foodcoopshop.Helper.getColorMode() == 'dark' ? '#CDCDCD' : '#333333';
+        return foodcoopshop.ColorMode.getColorMode() == 'dark' ? '#CDCDCD' : '#333333';
     },
 
     getGridColor: function() {
-        return foodcoopshop.Helper.getColorMode() == 'dark' ? '#696969' : '#dfdfdf';
+        return foodcoopshop.ColorMode.getColorMode() == 'dark' ? '#696969' : '#dfdfdf';
     },
 
     barChartOptions : {
