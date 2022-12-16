@@ -327,7 +327,7 @@ foodcoopshop.AppChart = {
                         outer: {
                             align: 'end',
                             anchor: 'end',
-                            color: foodcoopshop.Helper.getColorMode() == 'dark' ? '#CDCDCD' : '#333333',
+                            color: this.getFontColor(),
                             font: {
                                 size: 15
                             },
