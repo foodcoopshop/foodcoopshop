@@ -36,6 +36,7 @@ class ProductsTable extends AppTable
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
 
+    private $Catalog;
     private $Configuration;
     private $Manufacturer;
     private $Unit;
