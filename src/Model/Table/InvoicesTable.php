@@ -181,6 +181,12 @@ class InvoicesTable extends AppTable
         $paymentsTable = FactoryLocator::get('Table')->get('Payments');
         $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
 
+        // create empty dummy data for deleted customer 
+        if (is_null($customer)) {
+            $customer = $customersTable->newEmptyEntity();
+            $customer->active_order_details = [];
+        }
+
         $preparedData = $this->prepareDataForCustomerInvoice($customer->active_order_details, $deposits, null);
 
         $customer->active_order_details = $preparedData['active_order_details'];
