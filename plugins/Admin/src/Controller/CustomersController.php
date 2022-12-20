@@ -399,6 +399,10 @@ class CustomersController extends AdminAppController
             ]
         ])->first();
 
+        if (empty($customer)) {
+            throw new NotFoundException('customer not found');
+        }
+
         $this->setFormReferer();
 
         if (empty($this->getRequest()->getData())) {
