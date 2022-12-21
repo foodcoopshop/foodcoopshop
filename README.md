@@ -9,9 +9,9 @@
     <img src="https://img.shields.io/github/v/release/foodcoopshop/foodcoopshop?label=stable&style=for-the-badge" alt="Latest stable version">
   </a>
   <a href="https://github.com/foodcoopshop/foodcoopshop/actions">
-    <img src="https://img.shields.io/github/workflow/status/foodcoopshop/foodcoopshop/FoodCoopShop%20CI/develop?style=for-the-badge"
-        alt="Build status">
+    <img src="https://img.shields.io/github/actions/workflow/status/foodcoopshop/foodcoopshop/ci.yml?branch=develop&style=for-the-badge" alt="Build status">
   </a>
+
   <a href="https://github.com/foodcoopshop/foodcoopshop/stargazers">
       <img src="https://img.shields.io/github/stars/foodcoopshop/foodcoopshop?style=for-the-badge" />
   </a>
