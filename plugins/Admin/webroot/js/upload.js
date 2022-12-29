@@ -27,7 +27,7 @@ foodcoopshop.Upload = {
         if (image.length == 0) {
             return;
         }
-        $('body.blog_posts input[name="BlogPosts[tmp_image]"').val(image.attr('src'));
+        $('body.blog_posts input[name="BlogPosts[tmp_image]"]').val(image.attr('src'));
         var button = $('body.blog_posts a.add-image-button');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');
@@ -41,7 +41,7 @@ foodcoopshop.Upload = {
         if (image.length == 0) {
             return;
         }
-        $('body.manufacturers input[name="Manufacturers[tmp_image]"').val(image.attr('src'));
+        $('body.manufacturers input[name="Manufacturers[tmp_image]"]').val(image.attr('src'));
         var button = $('body.manufacturers a.add-image-button');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');
@@ -55,7 +55,7 @@ foodcoopshop.Upload = {
         if (image.length == 0) {
             return;
         }
-        $('body.customers input[name="Customers[tmp_image]"').val(image.attr('src'));
+        $('body.customers input[name="Customers[tmp_image]"]').val(image.attr('src'));
         var button = $('body.customers a.add-image-button');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');
@@ -66,7 +66,7 @@ foodcoopshop.Upload = {
 
     saveManufacturerTmpGeneralTermsAndConditionsInForm : function(modalSelector) {
         var filename = $(modalSelector + ' form .drop a').attr('href');
-        $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"').val(filename);
+        $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"]').val(filename);
         var button= $('body.manufacturers a.add-general-terms-and-conditions-button');
         button.removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
         button.find('span').text(foodcoopshop.LocalizedJs.upload.ChangeGeneralTermsAndConditions);
@@ -78,7 +78,7 @@ foodcoopshop.Upload = {
         if (image.length == 0) {
             return;
         }
-        $('body.categories input[name="Categories[tmp_image]"').val(image.attr('src'));
+        $('body.categories input[name="Categories[tmp_image]"]').val(image.attr('src'));
         var button = $('body.categories a.add-image-button');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');
@@ -92,7 +92,7 @@ foodcoopshop.Upload = {
         if (image.length == 0) {
             return;
         }
-        $('body.sliders input[name="Sliders[tmp_image]"').val(image.attr('src'));
+        $('body.sliders input[name="Sliders[tmp_image]"]').val(image.attr('src'));
         var button = $('body.sliders a.add-image-button');
         button.removeClass('uploaded').addClass('uploaded');
         button.html('');
