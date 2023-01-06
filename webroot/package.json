@@ -20,7 +20,7 @@
     "blueimp-file-upload": "^10.32.0",
     "bootstrap": "^5.2.3",
     "bootstrap-select": "^1.14.0-beta3",
-    "chart.js": "^4.1.1",
+    "chart.js": "^4.1.2",
     "chartjs-plugin-datalabels": "^2.2.0",
     "ckeditor4": "^4.20.1",
     "clean-css-cli": "^5.6.1",
