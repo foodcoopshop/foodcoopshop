@@ -33,7 +33,7 @@
         "tecnickcom/tcpdf": "^6.4",
         "hisorange/browser-detect": "^4.4",
         "phpoffice/phpspreadsheet": "1.*",
-        "ifsnop/mysqldump-php": "^2.9"
+        "druidfi/mysqldump-php": "^1.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",

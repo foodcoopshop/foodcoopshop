@@ -10,7 +10,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Number;
-use Ifsnop\Mysqldump as IMysqldump;
+use Druidfi\Mysqldump;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -60,14 +60,14 @@ class BackupDatabaseCommand extends AppCommand
         }
 
         $settings = [
-            'default-character-set' => IMysqldump\Mysqldump::UTF8MB4,
+            'default-character-set' => 'utf8mb4',
             'add-drop-table' => true,
-            'compress' => IMysqldump\Mysqldump::BZIP2,
+            'compress' => 'Bzip2',
             'exclude-tables' => [
                 'queued_jobs',
             ],
         ];
-        $dump = new IMysqldump\Mysqldump($dsnString, $dbConfig['username'], $dbConfig['password'], $settings);
+        $dump = new \Druidfi\Mysqldump\Mysqldump($dsnString, $dbConfig['username'], $dbConfig['password'], $settings);
         $dump->start($filename);
 
         $message = __('Database_backup_successful') . ' ('.Number::toReadableSize(filesize($filename)).').';
