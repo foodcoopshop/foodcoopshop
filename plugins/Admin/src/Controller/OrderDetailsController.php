@@ -865,6 +865,7 @@ class OrderDetailsController extends AdminAppController
         $customerId = (int) $this->getRequest()->getData('customerId');
         $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
         $amount = (int) $this->getRequest()->getData('amount');
+        $sendEmailToCustomers = (bool) $this->getRequest()->getData('sendEmailToCustomers');
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
@@ -996,7 +997,7 @@ class OrderDetailsController extends AdminAppController
 
         $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
 
-        if (Configure::read('app.sendEmailWhenOrderDetailCustomerChanged')) {
+        if ($sendEmailToCustomers) {
             $recipients = [
                 [
                     'email' => $newCustomer->email,
