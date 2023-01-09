@@ -179,10 +179,6 @@ return [
 
         'showStatisticsForAdmins' => true,
 
-        'sendEmailWhenOrderDetailQuantityChanged' => true,
-
-        'sendEmailWhenOrderDetailCustomerChanged' => true,
-
         // if set, a paypal.me-link is added to the invoice-to-customer email
         'paypalMeUsername' => '',
 

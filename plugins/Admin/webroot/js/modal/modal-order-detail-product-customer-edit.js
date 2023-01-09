@@ -48,6 +48,10 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         html += '<label for="dialogEditCustomerReason">' + foodcoopshop.LocalizedJs.admin.WhyIsMemberEdited + '</label>';
         html += '<textarea class="ckeditor" name="dialogEditCustomerReason" id="dialogEditCustomerReason"></textarea>';
         html += '</div>';
+        html += '<label class="checkbox">';
+        html += '<input type="checkbox" name="dialogEditCustomerSendEmailToCustomers" id="dialogEditCustomerSendEmailToCustomers" />';
+        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToBothMembers + '</span>';
+        html += '</label>';
         html += '<input type="hidden" name="dialogOrderDetailEditCustomerOrderDetailId" id="dialogOrderDetailEditCustomerOrderDetailId" value="" />';
         return html;
     },
@@ -64,7 +68,8 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
                 orderDetailId: $('#dialogOrderDetailEditCustomerOrderDetailId').val(),
                 customerId: $('#dialogOrderDetailEditCustomerId').val(),
                 editCustomerReason: CKEDITOR.instances['dialogEditCustomerReason'].getData().trim(),
-                amount: $('#dialogOrderDetailEditCustomerAmount').val()
+                amount: $('#dialogOrderDetailEditCustomerAmount').val(),
+                sendEmailToCustomers: $('#dialogEditCustomerSendEmailToCustomers:checked').length > 0 ? 1 : 0,
             },
             {
                 onOk: function (data) {

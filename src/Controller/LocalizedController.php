@@ -256,6 +256,7 @@ class LocalizedController extends Controller
                 'GivenAmount' => __('Given_amount'),
                 'back' => __('back'),
                 'SendEmailToMember' => __('Send_email_to_member'),
+                'SendEmailToBothMembers' => __('Send_email_to_both_members'),
                 'ChangeStatus' => __('Change_status'),
             ],
             'pickupDay' => [
