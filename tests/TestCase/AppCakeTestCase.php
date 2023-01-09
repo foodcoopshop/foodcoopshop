@@ -77,9 +77,10 @@ abstract class AppCakeTestCase extends TestCase
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
-        // enable security token only for IntegrationTests
+        // enable tokens only for IntegrationTests
         if (method_exists($this, 'enableSecurityToken')) {
             $this->enableSecurityToken();
+            $this->enableCsrfToken();
         }
 
         $this->useCommandRunner();

@@ -37,6 +37,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="<?php echo Configure::read('app.customThemeMainColor'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrfToken" content="<?php echo $this->request->getAttribute('csrfToken'); ?>">
 
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
 

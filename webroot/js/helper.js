@@ -1010,6 +1010,12 @@ foodcoopshop.Helper = {
 
     ajaxCall: function (url, data, callbacks) {
 
+        var csrfToken = $('meta[name="csrfToken"]').attr('content');
+        jQuery.ajaxSetup({
+            headers:
+            { 'X-CSRF-TOKEN': csrfToken }
+        });
+
         return jQuery.ajax({
             url: url,
             type: callbacks.method || 'POST',
