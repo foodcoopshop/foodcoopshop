@@ -43,7 +43,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         html += '<b></b>';
         html += '<br />';
         html += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
-        html += '<ul style="margin-top:5px;">';
+        html += '<ul style="margin-top:5px;margin-bottom:20px;">';
         html += '<li class="price-per-unit-base-info"></li>';
         html += '<li>' + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + '</li>';
         html += '<li>' + foodcoopshop.LocalizedJs.admin.FieldIsRedIfWeightNotYetAdapted + '</li>';
