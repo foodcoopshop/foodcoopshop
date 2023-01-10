@@ -28,6 +28,11 @@ class SendDeliveryNotesCommandTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
+    public function tearDown(): void
+    {
+        unlink(TMP . 'Lieferschein-01.02.2018-28.02.2018-Demo-Milch-Hersteller-FoodCoop-Test.xlsx');
+    }
+
     public function testSendDeliveryNotes()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
