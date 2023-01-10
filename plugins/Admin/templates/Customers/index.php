@@ -368,10 +368,12 @@ echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} oth
 $colspan = 3;
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
-    echo '<td align="center"><b>' . $sumCreditReminders . '</b></td>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td align="center"><b>' . $sumOrderReminders . '</b></td>';
+}
+if ($this->Html->paymentIsCashless()) {
+    echo '<td align="center"><b>' . $sumCreditReminders . '</b></td>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
