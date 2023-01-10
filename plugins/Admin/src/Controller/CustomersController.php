@@ -729,7 +729,6 @@ class CustomersController extends AdminAppController
                 'Feedbacks.modified',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
-            'limit' => 20,
         ])->toArray();
 
         $i = 0;
