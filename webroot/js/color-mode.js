@@ -26,7 +26,7 @@ foodcoopshop.ColorMode = {
 
     setBackgroundImage: function() {
         var colorMode = this.getColorMode();
-        $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(colorMode) + '"');
+        $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(colorMode) + '")');
     },
 
     initToggle: function() {
