@@ -162,6 +162,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
                     inputVal = inputVal.replace(/,/g, '.');
                 }
                 let newValue = math.evaluate(inputVal);
+                newValue = math.format(newValue, {precision: 14}); // prevents 0,7+0,6 = 1,2999999
                 $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity').val(newValue);
             } catch(e) {
                 console.log('error in expression');
