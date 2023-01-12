@@ -65,6 +65,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
     getCloseHandler : function() {
         $('#dialogOrderDetailProductQuantityQuantity').val('');
         $('#dialogOrderDetailProductQuantityOrderDetailId').val('');
+        $('#dialogOrderDetailProductQuantityCalculator').val('').hide();
         $('#dialogOrderDetailProductQuantityDoNotChangePrice').prop('checked', false);
         $('#flashMessage').remove();
     },
