@@ -3,18 +3,19 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Controller\Component\StringComponent;
-use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\PdfWriter\OrderDetailsPdfWriter;
-use App\Mailer\AppMailer;
-use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Http\Exception\ForbiddenException;
+use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
+use Cake\Core\Configure;
+use App\Mailer\AppMailer;
 use App\Model\Table\OrderDetailsTable;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Http\Exception\ForbiddenException;
+use App\Lib\PdfWriter\OrderDetailsPdfWriter;
+use App\Controller\Component\StringComponent;
+use Cake\Database\Expression\QueryExpression;
+use App\Lib\Error\Exception\InvalidParameterException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -1052,6 +1053,10 @@ class OrderDetailsController extends AdminAppController
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
         $doNotChangePrice = $this->getRequest()->getData('doNotChangePrice');
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
+
+        if ($doNotChangePrice) {
+            Log::error('doNotChangePrice on quantity edit was checked');
+        }
 
         if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
             $message = __d('admin', 'The_delivered_quantity_is_not_valid.');
