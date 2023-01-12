@@ -150,7 +150,11 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
         $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator').on('keyup', function (e) {
             try {
-                let newValue = math.evaluate($(this).val());
+                let inputVal = $(this).val();
+                if (foodcoopshop.LocalizedJs.helper.defaultLocale != 'en_US') {
+                    inputVal = inputVal.replace(',', '.');
+                }
+                let newValue = math.evaluate(inputVal);
                 $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity').val(newValue);
             } catch(e) {
                 console.log('error in expression');
