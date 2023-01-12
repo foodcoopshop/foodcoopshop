@@ -153,6 +153,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
                 let newValue = math.evaluate($(this).val());
                 $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity').val(newValue);
             } catch(e) {
+                console.log('error in expression');
             }
         });
 

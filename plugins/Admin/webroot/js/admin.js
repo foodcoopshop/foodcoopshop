@@ -105,7 +105,7 @@ foodcoopshop.Admin = {
                 row.prop('checked', true);
                 row.closest('tr').addClass('selected');
             } else {
-                row = $('input.row-marker[type="checkbox"]:checked')
+                row = $('input.row-marker[type="checkbox"]:checked');
                 row.prop('checked', false);
                 row.closest('tr').removeClass('selected');
             }

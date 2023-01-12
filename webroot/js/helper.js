@@ -112,7 +112,7 @@ foodcoopshop.Helper = {
             for(i in groupedOrderDetails[productId]) {
                 linesHtml = foodcoopshop.LocalizedJs.helper.YouHaveAlreadyOrdered01TimesFor2.replaceI18n(0, '"' + groupedOrderDetails[productId][i].product_name + '"');
                 linesHtml = linesHtml.replaceI18n(1, groupedOrderDetails[productId][i].product_amount);
-                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47, { year:"numeric", month:"2-digit", day:"2-digit"});
+                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47, { year:'numeric', month:'2-digit', day:'2-digit'});
                 linesHtml = linesHtml.replaceI18n(2, formattedPickupDay);
                 lines.push(linesHtml);
             }
@@ -927,7 +927,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-        );
+            );
         $('#flashMessage.success .progress-bar.bg-white')
             .animate({
                 'width': '0%',
@@ -936,7 +936,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-        );
+            );
 
         setTimeout(function() {
             $('#flashMessage.success a.closer').trigger('click');
