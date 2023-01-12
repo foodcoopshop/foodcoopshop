@@ -146,7 +146,9 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
 
         $(modalSelector + ' #dialogOrderDetailProductQuantityShowCalculator').on('click', function (e) {
-            $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator').show().focus();
+            var calculator = $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator');
+            calculator.toggle();
+            calculator.focus();
         });
 
         $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator').on('keyup', function (e) {
