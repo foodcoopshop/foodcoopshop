@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-09 14:06+0100\n"
-"PO-Revision-Date: 2023-01-09 14:06+0100\n"
+"POT-Creation-Date: 2023-01-12 20:33+0100\n"
+"PO-Revision-Date: 2023-01-12 20:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -695,9 +695,6 @@ msgstr "Base price"
 
 msgid "Price_is_automatically_adapted_after_save."
 msgstr "Price will be automatically adapted after saving."
-
-msgid "The_field_is_red_if_weight_not_yet_adapted."
-msgstr "The field appears read if the weight has not yet been adapted."
 
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Do not automatically adapt price, just change the weight."
@@ -2768,6 +2765,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "The_field_is_red_if_weight_not_yet_adapted."
+#~ msgstr "The field appears read if the weight has not yet been adapted."
 
 #~ msgid "Really_delete_selected_product?"
 #~ msgstr "Really cancel the selected product?"

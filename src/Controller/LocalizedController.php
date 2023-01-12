@@ -146,7 +146,6 @@ class LocalizedController extends Controller
                 'DeliveredTotalWeight' => __('Delivered_total_weight'),
                 'BasePrice' => __('Base_price'),
                 'PriceIsAutomaticallyAdaptedAfterSave' => __('Price_is_automatically_adapted_after_save.'),
-                'FieldIsRedIfWeightNotYetAdapted' => __('The_field_is_red_if_weight_not_yet_adapted.'),
                 'DoNotAutomaticallyAdaptPriceJustChangeWeight' => __('Do_not_automatically_apapt_price_just_change_weight.'),
                 'ReallyDeleteOrderedProduct' => __('Really_delete_ordered_product?'),
                 'ProductCancellation' => __('Product_cancellation'),

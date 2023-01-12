@@ -46,7 +46,6 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         html += '<ul style="margin-top:5px;margin-bottom:20px;">';
         html += '<li class="price-per-unit-base-info"></li>';
         html += '<li>' + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + '</li>';
-        html += '<li>' + foodcoopshop.LocalizedJs.admin.FieldIsRedIfWeightNotYetAdapted + '</li>';
         html += '</ul>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogOrderDetailProductQuantityDoNotChangePrice" id="dialogOrderDetailProductQuantityDoNotChangePrice" value="" />';

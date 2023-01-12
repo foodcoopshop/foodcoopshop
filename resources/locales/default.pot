@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-01-09 14:06+0100\n"
+"POT-Creation-Date: 2023-01-12 20:33+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -693,9 +693,6 @@ msgid "Base_price"
 msgstr ""
 
 msgid "Price_is_automatically_adapted_after_save."
-msgstr ""
-
-msgid "The_field_is_red_if_weight_not_yet_adapted."
 msgstr ""
 
 msgid "Do_not_automatically_apapt_price_just_change_weight."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-09 14:06+0100\n"
-"PO-Revision-Date: 2023-01-09 14:06+0100\n"
+"POT-Creation-Date: 2023-01-12 20:33+0100\n"
+"PO-Revision-Date: 2023-01-12 20:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -695,9 +695,6 @@ msgstr "Grundpreis"
 
 msgid "Price_is_automatically_adapted_after_save."
 msgstr "Der Preis wird nach dem Speichern automatisch angepasst."
-
-msgid "The_field_is_red_if_weight_not_yet_adapted."
-msgstr "Das Feld ist rot, wenn das Gewicht noch nicht angepasst wurde."
 
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Den Preis nicht automatisch anpassen, nur das Gewicht ändern."
@@ -2768,6 +2765,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "The_field_is_red_if_weight_not_yet_adapted."
+#~ msgstr "Das Feld ist rot, wenn das Gewicht noch nicht angepasst wurde."
 
 #~ msgid "Really_delete_selected_product?"
 #~ msgstr "Markiertes Produkt wirklich stornieren?"
