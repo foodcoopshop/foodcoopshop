@@ -17,12 +17,13 @@ declare(strict_types=1);
 namespace App;
 
 use Cake\Core\Configure;
-use Cake\Core\Exception\MissingPluginException;
-use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Cake\Core\Exception\MissingPluginException;
+use Cake\Error\Middleware\ErrorHandlerMiddleware;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
 
 /**
  * Application setup class.
@@ -87,6 +88,8 @@ class Application extends BaseApplication
         ->add(new AssetMiddleware([
             'cacheTime' => Configure::read('Asset.cacheTime'),
         ]))
+
+        ->add(new CsrfProtectionMiddleware ())
 
         // Add routing middleware.
         // If you have a large number of routes connected, turning on routes

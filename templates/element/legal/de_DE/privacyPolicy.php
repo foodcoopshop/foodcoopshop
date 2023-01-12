@@ -120,6 +120,11 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
         Dauer: 1 Jahr<br />
         Zweck: Speichert, ob die Cookies akzeptiert wurden.
     </li>
+    <li>
+        csrfToken<br />
+        Dauer: So lange, wie die aktuelle Session gültig ist<br />
+        Zweck: Schutz gegen Cross Site Request Forgery
+    </li>
 </ul>
 
 <h3>3.4 Verwaltung von Mitgliedern, Herstellern und Bestellungen</h3>
