@@ -147,6 +147,8 @@ class LocalizedController extends Controller
                 'BasePrice' => __('Base_price'),
                 'PriceIsAutomaticallyAdaptedAfterSave' => __('Price_is_automatically_adapted_after_save.'),
                 'DoNotAutomaticallyAdaptPriceJustChangeWeight' => __('Do_not_automatically_apapt_price_just_change_weight.'),
+                'Calculator' => __('Calculator'),
+                'ExampleGivenAbbr' => __('Example_given_abbr'),
                 'ReallyDeleteOrderedProduct' => __('Really_delete_ordered_product?'),
                 'ProductCancellation' => __('Product_cancellation'),
                 'DoYouReallyWantToCancelProduct0' => __('Do_you_really_want_to_cancel_product_{0}?'),

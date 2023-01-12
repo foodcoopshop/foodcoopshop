@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-01-12 20:33+0100\n"
+"POT-Creation-Date: 2023-01-12 21:42+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -696,6 +696,12 @@ msgid "Price_is_automatically_adapted_after_save."
 msgstr ""
 
 msgid "Do_not_automatically_apapt_price_just_change_weight."
+msgstr ""
+
+msgid "Calculator"
+msgstr ""
+
+msgid "Example_given_abbr"
 msgstr ""
 
 msgid "Really_delete_ordered_product?"

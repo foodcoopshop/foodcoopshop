@@ -11,6 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
     init : function() {
@@ -44,6 +45,12 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         html += '<br />';
         html += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
         html += '<ul style="margin-top:5px;margin-bottom:20px;">';
+        html += '<li>';
+        html += '<a id="dialogOrderDetailProductQuantityShowCalculator" href="javascript:void(0);" style="line-height:29px;">';
+        html += foodcoopshop.LocalizedJs.admin.Calculator;
+        html += '</a>';
+        html += '<input id="dialogOrderDetailProductQuantityCalculator" style="margin-left:10px;width:178px;display:none;" placeholder="' + foodcoopshop.LocalizedJs.admin.ExampleGivenAbbr + ' 167+142" type="text" />';
+        html += '</li>';
         html += '<li class="price-per-unit-base-info"></li>';
         html += '<li>' + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + '</li>';
         html += '</ul>';
@@ -135,6 +142,19 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $('#dialogOrderDetailProductQuantityQuantity').focus().select();
+
+
+        $(modalSelector + ' #dialogOrderDetailProductQuantityShowCalculator').on('click', function (e) {
+            $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator').show();
+        });
+
+        $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator').on('keyup', function (e) {
+            try {
+                let newValue = math.evaluate($(this).val());
+                $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity').val(newValue);
+            } catch(e) {
+            }
+        });
 
     }
 

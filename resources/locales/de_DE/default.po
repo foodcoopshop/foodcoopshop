@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-12 20:33+0100\n"
-"PO-Revision-Date: 2023-01-12 20:34+0100\n"
+"POT-Creation-Date: 2023-01-12 21:42+0100\n"
+"PO-Revision-Date: 2023-01-12 21:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -698,6 +698,12 @@ msgstr "Der Preis wird nach dem Speichern automatisch angepasst."
 
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Den Preis nicht automatisch anpassen, nur das Gewicht ändern."
+
+msgid "Calculator"
+msgstr "Taschenrechner"
+
+msgid "Example_given_abbr"
+msgstr "Z.B."
 
 msgid "Really_delete_ordered_product?"
 msgstr "Bestelltes Produkt wirklich stornieren?"
