@@ -152,7 +152,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
             try {
                 let inputVal = $(this).val();
                 if (foodcoopshop.LocalizedJs.helper.defaultLocale != 'en_US') {
-                    inputVal = inputVal.replace(',', '.');
+                    inputVal = inputVal.replace(/,/g, '.');
                 }
                 let newValue = math.evaluate(inputVal);
                 $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity').val(newValue);
