@@ -16,6 +16,7 @@ module.exports = {
         "Cookies": true,
         "foodcoopshop": true,
         "GdprConsent": true,
+        "math": true,
         "Quagga": true,
         "slidebars": true,
         "Swiper": true
