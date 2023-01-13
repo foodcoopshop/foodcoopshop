@@ -24,6 +24,30 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getHtml()
         );
 
+        $(modalSelector + ' #dialogOrderDetailProductQuantityShowCalculator').on('click', function (e) {
+            var calculator = $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator');
+            if (calculator.css('display') == 'none') {
+                calculator.show();
+                calculator.focus();
+            } else {
+                calculator.hide();
+            }
+        });
+
+        $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator').on('keyup', function (e) {
+            try {
+                let inputVal = $(this).val();
+                if (foodcoopshop.LocalizedJs.helper.defaultLocale != 'en_US') {
+                    inputVal = inputVal.replace(/,/g, '.');
+                }
+                let newValue = math.evaluate(inputVal);
+                newValue = math.format(newValue, {precision: 14}); // prevents 0,7+0,6 = 1,2999999
+                $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity').val(newValue);
+            } catch(e) {
+                console.log('error in expression');
+            }
+        });
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getSuccessHandler(modalSelector);
         });
@@ -143,31 +167,6 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         $('#dialogOrderDetailProductQuantityQuantity').focus().select();
-
-
-        $(modalSelector + ' #dialogOrderDetailProductQuantityShowCalculator').on('click', function (e) {
-            var calculator = $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator');
-            if (calculator.css('display') == 'none') {
-                calculator.show();
-                calculator.focus();
-            } else {
-                calculator.hide();
-            }
-        });
-
-        $(modalSelector + ' #dialogOrderDetailProductQuantityCalculator').on('keyup', function (e) {
-            try {
-                let inputVal = $(this).val();
-                if (foodcoopshop.LocalizedJs.helper.defaultLocale != 'en_US') {
-                    inputVal = inputVal.replace(/,/g, '.');
-                }
-                let newValue = math.evaluate(inputVal);
-                newValue = math.format(newValue, {precision: 14}); // prevents 0,7+0,6 = 1,2999999
-                $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity').val(newValue);
-            } catch(e) {
-                console.log('error in expression');
-            }
-        });
 
     }
 
