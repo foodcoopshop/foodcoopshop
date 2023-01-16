@@ -149,6 +149,25 @@ class CartComponent extends Component
         return $isEmpty;
     }
 
+    protected function getProductContain(): array
+    {
+        $contain = [
+            'Manufacturers',
+            'Manufacturers.AddressManufacturers',
+            'StockAvailables',
+            'ProductAttributes.StockAvailables',
+            'ProductAttributes.ProductAttributeCombinations',
+            'Taxes',
+        ];
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $contain[] = 'UnitProducts';
+            $contain[] = 'PurchasePriceProducts.Taxes';
+            $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
+            $contain[] = 'ProductAttributes.UnitProductAttributes';
+        }
+        return $contain;
+    }
+
     public function finish()
     {
 
@@ -193,24 +212,11 @@ class CartComponent extends Component
         $stockAvailable2saveData = [];
         $stockAvailable2saveConditions = [];
 
+        $contain = $this->getProductContain();
+
         foreach ($this->getProducts() as $cartProduct) {
 
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
-
-            $contain = [
-                'Manufacturers',
-                'Manufacturers.AddressManufacturers',
-                'StockAvailables',
-                'ProductAttributes.StockAvailables',
-                'ProductAttributes.ProductAttributeCombinations',
-                'Taxes',
-            ];
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $contain[] = 'UnitProducts';
-                $contain[] = 'PurchasePriceProducts.Taxes';
-                $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
-                $contain[] = 'ProductAttributes.UnitProductAttributes';
-            }
             $product = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
