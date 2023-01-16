@@ -140,7 +140,8 @@ body.dark .vertical.menu,
 body.dark.admin div:not(.product-list) > table.list tr:nth-child(odd),
 body.dark.admin table.list tr.custom-odd,
 body.dark.admin table.list th,
-body.dark .tooltipster-box .tooltipster-content {
+body.dark .tooltipster-box .tooltipster-content,
+body.dark.reports.payment form#csv-records tr.not-selected {
     background-color: var(--dark-mode-2nd-bg-color);
 }
 body.dark .vertical.menu a.active,
