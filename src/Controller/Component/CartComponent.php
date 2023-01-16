@@ -14,6 +14,7 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Model\Table\StockAvailablesTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -166,6 +167,115 @@ class CartComponent extends Component
             $contain[] = 'ProductAttributes.UnitProductAttributes';
         }
         return $contain;
+    }
+
+    protected function saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products)
+    {
+
+        $this->saveOrderDetails($orderDetails2save);
+        $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
+
+        $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
+        $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
+
+        $pickupDayEntities = null;
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $pickupDayEntities = $cart['Cart']->pickup_day_entities;
+            $this->Cart->PickupDayEntities->saveMany($pickupDayEntities);
+        }
+
+        $cart = $this->AppAuth->getCart(); // to get attached order details
+        $this->AppAuth->setCart($cart);
+        $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
+
+        $cartType = $this->AppAuth->getCartType();
+        $userIdForActionLog = $this->AppAuth->getUserId();
+
+        switch($cartType) {
+            case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
+                $actionLogType = 'customer_order_finished';
+                $message = __('Your_order_has_been_placed_succesfully.');
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
+                $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
+                break;
+            case $this->Cart::CART_TYPE_INSTANT_ORDER;
+                $actionLogType = 'instant_order_added';
+                $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                if (empty($manufacturersThatReceivedInstantOrderNotification)) {
+                    $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>'
+                    ]);
+                } else {
+                    $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
+                    ]);
+                }
+                $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
+                $messageForActionLog = $message;
+                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
+                if (!($this->AppAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
+                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
+                }
+                break;
+            case $this->Cart::CART_TYPE_SELF_SERVICE;
+
+                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
+                    $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+                    $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+                    $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
+
+                    if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
+                        $paidInCash = 0;
+                        if ($this->AppAuth->isSelfServiceCustomer()) {
+                            $paidInCash = 1;
+                        }
+                        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                            $helloCash = new HelloCash();
+                            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+                            $invoiceId = $responseObject->invoice_id;
+                            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                        } else {
+                            $invoiceToCustomer = new GenerateInvoiceToCustomer();
+                            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+                            $invoiceId = $newInvoice->id;
+                            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
+                        }
+                        $cart['invoice_id'] = $invoiceId;
+                    }
+                }
+
+                $actionLogType = 'self_service_order_added';
+                $message = __('Thank_you_for_your_purchase!');
+                $message .= '<br />';
+                $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout(Configure::read('app.slugHelper')->getSelfService()) . '"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
+                $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fas fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
+                if (isset($invoiceRoute)) {
+                    $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('App.fullBaseUrl') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
+                }
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+
+                if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
+                    $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                    $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
+                        $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['name'],
+                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                    ]);
+                } else {
+                    $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
+                }
+                break;
+        }
+
+        $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
+        $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
+        $this->getController()->Flash->success($message);
+
+        return $cart;
     }
 
     public function finish()
@@ -465,112 +575,10 @@ class CartComponent extends Component
 
         if (!empty($cartErrors) || !empty($formErrors)) {
             $this->getController()->Flash->error(__('Errors_occurred.'));
-        } else {
-
-            $this->saveOrderDetails($orderDetails2save);
-            $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
-
-            $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
-            $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
-
-            $pickupDayEntities = null;
-            if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-                $pickupDayEntities = $cart['Cart']->pickup_day_entities;
-                $this->Cart->PickupDayEntities->saveMany($pickupDayEntities);
-            }
-
-            $cart = $this->AppAuth->getCart(); // to get attached order details
-            $this->AppAuth->setCart($cart);
-            $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
-
-            $cartType = $this->AppAuth->getCartType();
-            $userIdForActionLog = $this->AppAuth->getUserId();
-
-            switch($cartType) {
-                case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
-                    $actionLogType = 'customer_order_finished';
-                    $message = __('Your_order_has_been_placed_succesfully.');
-                    $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
-                    $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
-                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
-                    break;
-                case $this->Cart::CART_TYPE_INSTANT_ORDER;
-                    $actionLogType = 'instant_order_added';
-                    $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
-                    if (empty($manufacturersThatReceivedInstantOrderNotification)) {
-                        $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
-                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>'
-                        ]);
-                    } else {
-                        $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
-                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
-                            '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
-                        ]);
-                    }
-                    $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
-                    $messageForActionLog = $message;
-                    $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
-                    if (!($this->AppAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
-                        $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
-                    }
-                    break;
-                case $this->Cart::CART_TYPE_SELF_SERVICE;
-
-                    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
-                        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-                        $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-                        $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
-
-                        if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
-                            $paidInCash = 0;
-                            if ($this->AppAuth->isSelfServiceCustomer()) {
-                                $paidInCash = 1;
-                            }
-                            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                                $helloCash = new HelloCash();
-                                $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
-                                $invoiceId = $responseObject->invoice_id;
-                                $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
-                            } else {
-                                $invoiceToCustomer = new GenerateInvoiceToCustomer();
-                                $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
-                                $invoiceId = $newInvoice->id;
-                                $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
-                            }
-                            $cart['invoice_id'] = $invoiceId;
-                        }
-                    }
-
-                    $actionLogType = 'self_service_order_added';
-                    $message = __('Thank_you_for_your_purchase!');
-                    $message .= '<br />';
-                    $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout(Configure::read('app.slugHelper')->getSelfService()) . '"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
-                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fas fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
-                    if (isset($invoiceRoute)) {
-                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('App.fullBaseUrl') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
-                    }
-                    $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
-
-                    if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
-                        $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
-                        $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
-                            $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['name'],
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
-                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                        ]);
-                    } else {
-                        $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
-                    }
-                    break;
-            }
-
-            $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
-            $this->getController()->Flash->success($message);
+            return $cart;
         }
 
+        $cart = $this->saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products);
         return $cart;
 
     }
