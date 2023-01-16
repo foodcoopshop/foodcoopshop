@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Component;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
@@ -13,8 +14,6 @@ use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
-use App\Model\Table\StockAvailablesTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
