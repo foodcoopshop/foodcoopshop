@@ -109,6 +109,7 @@ switch ($configuration->type) {
             'type' => 'select',
             'multiple' => true,
             'data-val' => $value,
+            'data-live-search' => true,
             'label' => $label,
             'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name, $appAuth),
             'escape' => false,
