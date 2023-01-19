@@ -41,6 +41,30 @@ class DeliveryRhythmTest extends AppCakeTestCase
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
 
+    public function testGetOrderPeriodFirstDayByDeliveryDaySaturdayThursday()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $this->assertGetOrderPeriodFirstDayByDeliveryDay(strtotime('12.01.2023'), '31.12.2022');
+    }
+
+    public function testGetOrderPeriodLastDayByDeliveryDaySaturdayThursday()
+    {
+        $this->prepareSaturdayThursdayConfig();
+        $this->assertGetOrderPeriodLastDayByDeliveryDay(strtotime('12.01.2023'), '06.01.2023');
+    }
+
+    public function testGetOrderPeriodFirstDayByDeliveryDayWednesdayFriday()
+    {
+        $this->prepareWednesdayFridayConfig();
+        $this->assertGetOrderPeriodFirstDayByDeliveryDay(strtotime('12.01.2023'), '04.01.2023');
+    }
+
+    public function testGetOrderPeriodLastDayByDeliveryDayWednesdayFriday()
+    {
+        $this->prepareWednesdayFridayConfig();
+        $this->assertGetOrderPeriodLastDayByDeliveryDay(strtotime('12.01.2023'), '10.01.2023');
+    }
+
     public function testGetDeliveryDayTuesdayFriday()
     {
         $this->prepareTuesdayFridayConfig();
@@ -901,6 +925,18 @@ class DeliveryRhythmTest extends AppCakeTestCase
     private function assertGetFormattedNextDeliveryDay($currentDay, $expected)
     {
         $result = DeliveryRhythm::getFormattedNextDeliveryDay(strtotime($currentDay));
+        $this->assertEquals($expected, $result);
+    }
+
+    private function assertGetOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected)
+    {
+        $result = DeliveryRhythm::getOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected);
+        $this->assertEquals($expected, $result);
+    }
+
+    private function assertGetOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected)
+    {
+        $result = DeliveryRhythm::getOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected);
         $this->assertEquals($expected, $result);
     }
 

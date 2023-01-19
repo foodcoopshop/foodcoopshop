@@ -347,8 +347,9 @@ class OrderDetailsTable extends AppTable
             $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
             $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
-            // stop trying to search for valid orders if year is one year ago
-            if (date('Y', $dateFrom) == date('Y') - 1) {
+            // stop trying to search for valid orders if year is two years ago
+            // one year is not enough for usage in first weeks of january
+            if (date('Y', $dateFrom) == date('Y') - 2) {
                 break;
             }
 

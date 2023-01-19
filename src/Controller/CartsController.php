@@ -253,8 +253,8 @@ class CartsController extends FrontendController
 
         $formattedDeliveryDate = strtotime($deliveryDate);
 
-        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodFirstDay($formattedDeliveryDate)));
-        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodLastDay($formattedDeliveryDate)));
+        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
+        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());

@@ -98,6 +98,22 @@ class DeliveryRhythm
         return date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(self::getNextDeliveryDay($day)));
     }
 
+    public static function getOrderPeriodFirstDayByDeliveryDay(int $deliveryDay)
+    {
+        if (self::hasSaturdayThursdayConfig()) {
+            $deliveryDay = strtotime('-7 days', $deliveryDay);
+        }
+        return self::getOrderPeriodFirstDay($deliveryDay);
+    }
+    
+    public static function getOrderPeriodLastDayByDeliveryDay(int $deliveryDay)
+    {
+        if (self::hasSaturdayThursdayConfig()) {
+            $deliveryDay = strtotime('-7 days', $deliveryDay);
+        }
+        return self::getOrderPeriodLastDay($deliveryDay);
+    }
+
     public static function getNextDeliveryDay($day)
     {
         $orderPeriodFirstDay = self::getOrderPeriodFirstDay($day);
