@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 
 ?>
 <form data-object-id="<?php echo $id; ?>" id="mini-upload-form-image-<?php echo $id ?>" class="hide mini-upload-form mini-upload-form-image" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
-    <input type="hidden" name="_csrfToken" value="<?php echo $this->request->getAttribute('csrfToken'); ?>">
+    <input type="hidden" name="_csrfToken" value="<?php echo $this->request->getAttribute('csrfToken'); ?>" />
     <p class="heading hide">
         <?php if ($imageExists) { ?>
             <?php echo __('Replace_existing_image'); ?>

@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 ?>
 <form data-object-id="<?php echo $id; ?>" id="mini-upload-form-file-<?php echo $id ?>" class="hide mini-upload-form mini-upload-form-file" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
-    <input type="hidden" name="_csrfToken" value="<?php echo $this->request->getAttribute('csrfToken'); ?>">
+    <input type="hidden" name="_csrfToken" value="<?php echo $this->request->getAttribute('csrfToken'); ?>" />
     <p class="heading hide">
         <?php if ($fileUploadExists) { ?>
             <?php echo __('Replace_existing_file'); ?>
