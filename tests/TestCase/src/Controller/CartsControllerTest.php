@@ -405,7 +405,6 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
-        $this->removeProduct(346);
         $this->checkCartStatus();
 
         $manufacturerId = 5;
