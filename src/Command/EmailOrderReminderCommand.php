@@ -58,7 +58,7 @@ class EmailOrderReminderCommand extends AppCommand
 
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
             $this->Product = $this->getTableLocator()->get('Products');
-            if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
+            if ($this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
                 return static::CODE_SUCCESS;
             }
         }

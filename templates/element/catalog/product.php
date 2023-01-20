@@ -18,8 +18,8 @@ declare(strict_types=1);
 $classes = [
     'pw'
 ];
-$deliveryBreakEnabled = $product->delivery_break_enabled ?? false;
-if ($deliveryBreakEnabled) {
+$deliveryBreakManufacturerEnabled = $product->delivery_break_enabled ?? false;
+if ($deliveryBreakManufacturerEnabled) {
     $classes[] = 'delivery-break-enabled';
 }
 echo '<div class="' . join(' ', $classes) . '" id="pw-' . $product->id_product . '">';

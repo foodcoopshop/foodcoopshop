@@ -435,12 +435,16 @@ class Catalog {
             }
 
             // deactivates the product if manufacturer based delivery break is enabled
-            if ($this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $deliveryDate)) {
-                $products[$i]->delivery_break_enabled = true;
+            if ($this->Product->deliveryBreakManufacturerEnabled(
+                $product->manufacturer->no_delivery_days,
+                $deliveryDate,
+                $product->manufacturer->stock_management_enabled,
+                $product->is_stock_product)) {
+                    $products[$i]->delivery_break_enabled = true;
             }
 
             // deactivates the product if global delivery break is enabled
-            if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
+            if ($this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
                 $products[$i]->delivery_break_enabled = true;
             }
 

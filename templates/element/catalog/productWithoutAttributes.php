@@ -49,7 +49,7 @@ echo $this->element('catalog/amountWrapper', [
     'hideAmountSelector' => $isStockProductOrderPossible,
 ]);
 echo $this->element('catalog/cartButton', [
-    'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
+    'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
     'productId' => $product->id_product,
     'product' => $product,
     'stockAvailableQuantity' => $product->stock_available->quantity,

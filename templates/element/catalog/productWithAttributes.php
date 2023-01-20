@@ -89,7 +89,7 @@ foreach ($preparedProductAttributes as $attribute) {
         'hideAmountSelector' => $isStockProductOrderPossible,
     ]);
     echo $this->element('catalog/cartButton', [
-        'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
+        'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
         'productId' => $product->id_product . '-' . $attribute->id_product_attribute,
         'product' => $product,
         'stockAvailableQuantity' => $attribute->stock_available->quantity,
