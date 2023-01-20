@@ -210,14 +210,14 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
-    private function deliveryBreakBase(string $noDeliveryDaysAsString, string $deliveryDate): bool
+    private function deliveryBreakEnabledBase(string $noDeliveryDaysAsString, string $deliveryDate): bool
     {
         return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
     }
 
     public function deliveryBreakGlobalEnabled(string $noDeliveryDaysAsString, string $deliveryDate): bool
     {
-        return $this->deliveryBreakBase($noDeliveryDaysAsString, $deliveryDate);
+        return $this->deliveryBreakEnabledBase($noDeliveryDaysAsString, $deliveryDate);
     }
 
     /**
@@ -232,7 +232,7 @@ class ProductsTable extends AppTable
         if ($stockManagementEnabled && $isStockProduct) {
             return false;
         }
-        return $this->deliveryBreakBase($noDeliveryDaysAsString, $deliveryDate);
+        return $this->deliveryBreakEnabledBase($noDeliveryDaysAsString, $deliveryDate);
     }
 
     /**
