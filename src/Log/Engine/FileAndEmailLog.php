@@ -44,6 +44,7 @@ class FileAndEmailLog extends FileLog
             'MissingRouteException',
             'MissingTemplateException',
             'UnauthorizedException',
+            'InvalidCsrfTokenException',
             'cancellation_terms_accepted',
             'general_terms_and_conditions_accepted',
             'terms_of_use_accepted_date_checkbox',
