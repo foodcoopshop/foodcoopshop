@@ -412,7 +412,31 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart();
         $this->checkValidationError();
         $this->assertMatchesRegularExpression('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->_response->getBody()->__toString());
-        $this->changeManufacturerNoDeliveryDays($manufacturerId);
+    }
+
+    public function testManufacturerDeliveryBreakActivatedWhileShoppingWithStockProduct()
+    {
+        $this->loginAsSuperadmin();
+        $this->addProductToCart($this->productId3, 1);
+        $this->checkCartStatus();
+
+        $this->Product->save(
+            $this->Product->patchEntity(
+                $this->Product->get($this->productId3),
+                [
+                    'is_stock_product' => '1',
+                ]
+            )
+        );
+
+        $manufacturerId = 5;
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
+        $this->finishCart();
+        
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $this->checkCartStatusAfterFinish();
+        $cart = $this->getCartById($cartId);
+        $this->assertEquals($this->productId3, $cart->cart_products[0]->id_product);        
     }
 
     public function testGlobalDeliveryBreakActivatedWhileShopping()

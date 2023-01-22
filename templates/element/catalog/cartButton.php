@@ -30,11 +30,11 @@ if ($hideButton) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
     if (((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
-        || $deliveryBreakEnabled) {
+        || $deliveryBreakManufacturerEnabled) {
 
         $classes[] = 'disabled';
 
-        if ($deliveryBreakEnabled) {
+        if ($deliveryBreakManufacturerEnabled) {
             $classes[] = 'btn-danger';
             $cartButtonIcon = 'fa-times';
             $cartButtonLabel = __('Delivery_break') . '!';

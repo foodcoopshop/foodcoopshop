@@ -210,9 +210,29 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
-    public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
+    private function deliveryBreakEnabledBase(string $noDeliveryDaysAsString, string $deliveryDate): bool
     {
         return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
+    }
+
+    public function deliveryBreakGlobalEnabled(string $noDeliveryDaysAsString, string $deliveryDate): bool
+    {
+        return $this->deliveryBreakEnabledBase($noDeliveryDaysAsString, $deliveryDate);
+    }
+
+    /**
+     * manufacturer based delivery break is never applied for stock products
+     */
+    public function deliveryBreakManufacturerEnabled(
+        string $noDeliveryDaysAsString,
+        string $deliveryDate,
+        bool|int $stockManagementEnabled,
+        bool|int $isStockProduct): bool
+    {
+        if ($stockManagementEnabled && $isStockProduct) {
+            return false;
+        }
+        return $this->deliveryBreakEnabledBase($noDeliveryDaysAsString, $deliveryDate);
     }
 
     /**
@@ -222,7 +242,6 @@ class ProductsTable extends AppTable
      */
     public function isOwner($productId, $manufacturerId)
     {
-
         $found = $this->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId,

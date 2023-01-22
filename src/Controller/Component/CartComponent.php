@@ -431,10 +431,16 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (! $product->manufacturer->active || (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
-                $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
-                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                $cartErrors[$cartProduct['productId']][] = $message;
+            if (! $product->manufacturer->active || (!$this->AppAuth->isOrderForDifferentCustomerMode()
+                && !$this->AppAuth->isSelfServiceModeByUrl()
+                && $this->Product->deliveryBreakManufacturerEnabled(
+                    $product->manufacturer->no_delivery_days,
+                    $product->next_delivery_day,
+                    $product->manufacturer->stock_management_enabled,
+                    $product->is_stock_product))) {
+                        $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
+                        $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                        $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
@@ -447,7 +453,7 @@ class CartComponent extends Component
                 }
             }
 
-            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
                 $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                     [
                         Configure::read('appDb.FCS_APP_NAME'),

@@ -55,7 +55,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
 
     }
 
-    public function testGlobalDeliveryBreakEnabledAndNextDeliveryDay()
+    public function testDeliveryBreakGlobalEnabledAndNextDeliveryDay()
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-01');
         $this->exec('email_order_reminder 2019-10-27');
@@ -63,7 +63,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
-    public function testGlobalDeliveryBreakEnabledAndNotNextDeliveryDay()
+    public function testDeliveryBreakGlobalEnabledAndNotNextDeliveryDay()
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-08');
         $this->exec('email_order_reminder 2019-10-27');
