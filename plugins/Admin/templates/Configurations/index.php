@@ -354,6 +354,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.pageBreakOnOrderDetailsAsPdfEnabled</td>
+            <td><?php echo Configure::read('app.pageBreakOnOrderDetailsAsPdfEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.defaultTax</td>
             <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? __d('admin', 'activated') : __d('admin', 'deactivated'); ?></td>
         </tr>
