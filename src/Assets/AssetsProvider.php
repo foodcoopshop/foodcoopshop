@@ -73,6 +73,8 @@ class AssetsProvider
             'modal/modal-text.js',
             'modal/modal-load-last-order-details.js',
             'mobile.js',
+            'mathjs/lib/browser/math.js',
+            'calculator.js',
         ]);
 
         return $result;

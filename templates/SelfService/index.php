@@ -37,6 +37,12 @@ if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::rea
     ]);
 }
 
+if ($appAuth->isSelfServiceModeByUrl()) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"
+    ]);
+}
+
 echo $this->element('autoPrintInvoice');
 
 if ($isMobile) {
