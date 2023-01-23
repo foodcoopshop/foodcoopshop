@@ -83,7 +83,7 @@ foreach ($orderDetails as $od) {
 
         $oldStorageLocation = $orderDetail->product->id_storage_location;
 
-        $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
+        $pdf->table .= '<tr nobr="true" style="font-weight:normal;background-color:#ffffff;">';
 
         $quantityStyle = '';
         if ($orderDetail['product_amount'] > 1) {
@@ -140,7 +140,7 @@ foreach ($orderDetails as $od) {
         if ($i == count($od)) {
 
             if (Configure::read('app.isDepositEnabled')) {
-                $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
+                $pdf->table .= '<tr nobr="true" style="font-weight:normal;background-color:#ffffff;">';
                     $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                     $pdf->table .= '<td width="' . $widths[1] . '"></td>';
                     $pdf->table .= '<td width="' . $widths[2] . '"></td>';
