@@ -809,25 +809,25 @@ class ProductsTable extends AppTable
             if (is_int($condition) || !is_array($condition)) {
                 continue;
             }
-            $condition = (string) $condition;
-            if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
-                $this->getAssociation('ProductAttributes')->setConditions(
-                    [
-                        'StockAvailables.quantity < 3'
-                    ]
-                );
-                $quantityIsZeroFilterOn = true;
-            }
-            if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                $this->ProductAttributes->setConditions(
-                    [
-                        'ProductAttributes.price' => 0
-                    ]
-                );
-                $priceIsZeroFilterOn = true;
+            if (is_string($condition)) {
+                if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
+                    $this->getAssociation('ProductAttributes')->setConditions(
+                        [
+                            'StockAvailables.quantity < 3'
+                        ]
+                    );
+                    $quantityIsZeroFilterOn = true;
+                }
+                if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
+                    $this->ProductAttributes->setConditions(
+                        [
+                            'ProductAttributes.price' => 0
+                        ]
+                    );
+                    $priceIsZeroFilterOn = true;
+                }
             }
         }
-
         $contain = [
             'CategoryProducts',
             'CategoryProducts.Categories',
