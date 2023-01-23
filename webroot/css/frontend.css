@@ -139,6 +139,7 @@ body.categories.detail div.description-wrapper {
 }
 .vertical.menu a {
     padding: 4px 10px;
+    word-break: break-all;
 }
 .vertical.menu a i.fas {
     font-size: 13px;
