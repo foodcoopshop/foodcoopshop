@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-23 17:22+0100\n"
-"PO-Revision-Date: 2023-01-23 17:23+0100\n"
+"POT-Creation-Date: 2023-01-23 17:42+0100\n"
+"PO-Revision-Date: 2023-01-23 17:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -324,8 +324,8 @@ msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's se
 msgid "Your_purchase"
 msgstr "Your purchase"
 
-msgid "New_order_comment_was_written:_{0}"
-msgstr "New order comment was written by {0}"
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
+msgstr "New order comment was written by {0} for {1}"
 
 msgid "Order_confirmation"
 msgstr "Order confirmation"

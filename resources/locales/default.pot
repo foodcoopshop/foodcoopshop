@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-01-23 17:22+0100\n"
+"POT-Creation-Date: 2023-01-23 17:42+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -323,7 +323,7 @@ msgstr ""
 msgid "Your_purchase"
 msgstr ""
 
-msgid "New_order_comment_was_written:_{0}"
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
 msgstr ""
 
 msgid "Order_confirmation"

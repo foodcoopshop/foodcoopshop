@@ -21,8 +21,9 @@ echo $this->element('email/tableHead'); ?>
             <td>
                 <p>
                     <?php 
-                        echo __('New_order_comment_was_written:_{0}', [
+                        echo __('New_order_comment__was_written_by_{0}_for_{1}', [
                             $appAuth->getUsername(),
+                            $formattedPickupDay,
                         ]) . ':';
                     ?>
                 </p>

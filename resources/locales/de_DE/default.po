@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-23 17:22+0100\n"
-"PO-Revision-Date: 2023-01-23 17:24+0100\n"
+"POT-Creation-Date: 2023-01-23 17:42+0100\n"
+"PO-Revision-Date: 2023-01-23 17:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -324,8 +324,8 @@ msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen a
 msgid "Your_purchase"
 msgstr "Dein Einkauf"
 
-msgid "New_order_comment_was_written:_{0}"
-msgstr "Neuer Bestell-Kommentar von {0}"
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
+msgstr "Neuer Bestell-Kommentar von {0} für {1}"
 
 msgid "Order_confirmation"
 msgstr "Bestellbestätigung"

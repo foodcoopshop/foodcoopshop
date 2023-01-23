@@ -834,15 +834,19 @@ class CartComponent extends Component
         if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
             return false;
         }
-        foreach($pickupDayEntities as $pickupDayEntity) {
+        foreach($pickupDayEntities as $pickupDay) {
+            $formattedPickupDay = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+            $formattedPickupDay = $formattedPickupDay->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('order_comment_notification');
             $email->setTo(Configure::read('appDb.FCS_APP_EMAIL'))
-            ->setSubject(__('New_order_comment_was_written:_{0}', [
+            ->setSubject(__('New_order_comment__was_written_by_{0}_for_{1}', [
                 $this->AppAuth->getUsername(),
+                $formattedPickupDay,
             ]))
             ->setViewVars([
-                'comment' => $pickupDayEntity['comment'],
+                'comment' => $pickupDay['comment'],
+                'formattedPickupDay' => $formattedPickupDay,
                 'appAuth' => $this->AppAuth,
             ]);
             $email->addToQueue();
