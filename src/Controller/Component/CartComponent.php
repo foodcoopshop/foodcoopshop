@@ -835,7 +835,7 @@ class CartComponent extends Component
             return false;
         }
         foreach($pickupDayEntities as $pickupDay) {
-            if ($pickupDay['comment'] != '') {
+            if ($pickupDay['comment'] == '') {
                 continue;
             }
             $formattedPickupDay = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
