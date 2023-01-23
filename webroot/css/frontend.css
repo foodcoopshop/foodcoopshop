@@ -583,8 +583,14 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     border-radius: 3px;
 }
 .pw .amount-wrapper .below-input {
-    float: left;
+    float: right;
     clear: both;
+}
+.pw .c3 i.is-stock-product {
+    float: right;
+}
+.pw .c3 i.is-stock-product {
+    margin-right: 3px;
 }
 .pw .amount-wrapper .ordered-products-total-amount {
     float: right;

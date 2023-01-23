@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price');".
+    Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price, .c3 .is-stock-product');".
     Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
     Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks(true);".

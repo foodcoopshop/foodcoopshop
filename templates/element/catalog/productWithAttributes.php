@@ -87,6 +87,7 @@ foreach ($preparedProductAttributes as $attribute) {
         'stockAvailable' => $attribute->stock_available,
         'orderedTotalAmount' => $attribute->ordered_total_amount ?? null,
         'hideAmountSelector' => $isStockProductOrderPossible,
+        'hideIsStockProductIcon' => $appAuth->isSelfServiceModeByUrl(),
     ]);
     echo $this->element('catalog/cartButton', [
         'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,

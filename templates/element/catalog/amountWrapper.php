@@ -45,10 +45,14 @@ use Cake\Core\Configure;
     ?>
 
     <?php
+
+        if (!$hideIsStockProductIcon && $product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+            echo '<i class="is-stock-product fa fas fa-store" title="'.__('Stock_product').'"></i>';
+        }
+
         $availableQuantity = $stockAvailable->quantity - $stockAvailable->quantity_limit;
         if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailable->always_available) && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
             <span <?php echo !$hideAmountSelector ? 'class="below-input availibility"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
     <?php } ?>
-
 
 </div>

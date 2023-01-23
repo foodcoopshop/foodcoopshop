@@ -47,6 +47,7 @@ echo $this->element('catalog/amountWrapper', [
     'orderedTotalAmount' => $product->ordered_total_amount ?? null,
     'stockAvailable' => $product->stock_available,
     'hideAmountSelector' => $isStockProductOrderPossible,
+    'hideIsStockProductIcon' => $appAuth->isSelfServiceModeByUrl(),
 ]);
 echo $this->element('catalog/cartButton', [
     'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
