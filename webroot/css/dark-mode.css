@@ -32,7 +32,8 @@ body.dark.admin #menu,
 body.dark.admin .filter-container,
 body.dark.admin table.list,
 body.dark.admin #actionLogs div.changed,
-body.dark table.list td.image {
+body.dark table.list td.image,
+body.dark .self-service .right-box {
     background-color: var(--dark-mode-main-bg-color);
 }
 body.dark .ui-widget-header,
