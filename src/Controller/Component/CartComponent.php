@@ -553,6 +553,7 @@ class CartComponent extends Component
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
                 $this->getController()->setRequest($this->getController()->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
+                $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
         }
 
@@ -823,9 +824,29 @@ class CartComponent extends Component
         ->setSubject(__('Your_purchase'))
         ->setViewVars([
             'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
-            'appAuth' => $this->AppAuth
+            'appAuth' => $this->AppAuth,
         ]);
         $email->addToQueue();
+    }
+
+    private function sendOrderCommentNotificationToPlatformOwner($pickupDayEntities)
+    {
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
+            return false;
+        }
+        foreach($pickupDayEntities as $pickupDayEntity) {
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('order_comment_notification');
+            $email->setTo(Configure::read('appDb.FCS_APP_EMAIL'))
+            ->setSubject(__('New_order_comment_was_written:_{0}', [
+                $this->AppAuth->getUsername(),
+            ]))
+            ->setViewVars([
+                'comment' => $pickupDayEntity['comment'],
+                'appAuth' => $this->AppAuth,
+            ]);
+            $email->addToQueue();
+        }
     }
 
     /**

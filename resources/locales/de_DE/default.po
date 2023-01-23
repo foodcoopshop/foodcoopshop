@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-12 21:42+0100\n"
-"PO-Revision-Date: 2023-01-12 21:43+0100\n"
+"POT-Creation-Date: 2023-01-23 17:22+0100\n"
+"PO-Revision-Date: 2023-01-23 17:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -231,6 +231,36 @@ msgstr "Neue Produkte"
 msgid "Search"
 msgstr "Suche"
 
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
+
+msgid "Pickup_day"
+msgstr "Abholtag"
+
+msgid "Thank_you_for_your_purchase!"
+msgstr "Vielen Dank für deinen Einkauf!"
+
+msgid "Sign_out"
+msgstr "Abmelden"
+
+msgid "Continue_shopping"
+msgstr "Weiter einkaufen"
+
+msgid "Print_receipt"
+msgstr "Beleg drucken"
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} hat eine neue Bestellung für {1} getätigt ({2})."
+
 msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr "Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {0}, du kannst bis {1} bestellen."
 
@@ -279,36 +309,6 @@ msgstr "{0} hat die Lieferpause aktiviert und das Produkt {1} ist nicht mehr bes
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
 
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} hat eine neue Bestellung getätigt ({1})."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
-
-msgid "Pickup_day"
-msgstr "Abholtag"
-
-msgid "Thank_you_for_your_purchase!"
-msgstr "Vielen Dank für deinen Einkauf!"
-
-msgid "Sign_out"
-msgstr "Abmelden"
-
-msgid "Continue_shopping"
-msgstr "Weiter einkaufen"
-
-msgid "Print_receipt"
-msgstr "Beleg drucken"
-
-msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
-msgstr "{0} hat eine neue Bestellung für {1} getätigt ({2})."
-
 msgid "Notification_about_instant_order_order"
 msgstr "Benachrichtigung über Sofort-Bestellung"
 
@@ -323,6 +323,9 @@ msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen a
 
 msgid "Your_purchase"
 msgstr "Dein Einkauf"
+
+msgid "New_order_comment_was_written:_{0}"
+msgstr "Neuer Bestell-Kommentar von {0}"
 
 msgid "Order_confirmation"
 msgstr "Bestellbestätigung"
@@ -2825,9 +2828,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Mouseover_shows_the_paid_amont_in_{0}."
 #~ msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
-
-#~ msgid "Order_contains_amount_in_{0}."
-#~ msgstr "Bestellung wurde teilweise in {0} bezahlt."
 
 #~ msgid "Paying_with_time_account_name_{0}"
 #~ msgstr "{0}konto"

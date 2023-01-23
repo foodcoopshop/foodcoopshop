@@ -591,6 +591,23 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
     }
 
+    public function testFinishWithPickupDayCommentNotification()
+    {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->checkCartStatus();
+
+        $pickupDayComment = 'this is a valid pickup day comment';
+        $this->finishCart(1, 1, $pickupDayComment);
+
+        $this->assertMailCount(2);
+        $this->assertMailSubjectContainsAt(0, 'Neuer Bestell-Kommentar von Demo Superadmin');
+        $this->assertMailContainsAt(0, $pickupDayComment);
+
+    }
+
     public function testFinishWithPurchasePriceOk()
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
