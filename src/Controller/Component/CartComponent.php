@@ -553,6 +553,7 @@ class CartComponent extends Component
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
                 $this->getController()->setRequest($this->getController()->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
+                $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
         }
 
@@ -823,9 +824,36 @@ class CartComponent extends Component
         ->setSubject(__('Your_purchase'))
         ->setViewVars([
             'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
-            'appAuth' => $this->AppAuth
+            'appAuth' => $this->AppAuth,
         ]);
         $email->addToQueue();
+    }
+
+    private function sendOrderCommentNotificationToPlatformOwner($pickupDayEntities)
+    {
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
+            return false;
+        }
+        foreach($pickupDayEntities as $pickupDay) {
+            if ($pickupDay['comment'] == '') {
+                continue;
+            }
+            $formattedPickupDay = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+            $formattedPickupDay = $formattedPickupDay->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('order_comment_notification');
+            $email->setTo(Configure::read('appDb.FCS_APP_EMAIL'))
+            ->setSubject(__('New_order_comment__was_written_by_{0}_for_{1}', [
+                $this->AppAuth->getUsername(),
+                $formattedPickupDay,
+            ]))
+            ->setViewVars([
+                'comment' => $pickupDay['comment'],
+                'formattedPickupDay' => $formattedPickupDay,
+                'appAuth' => $this->AppAuth,
+            ]);
+            $email->addToQueue();
+        }
     }
 
     /**

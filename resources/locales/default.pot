@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-01-12 21:42+0100\n"
+"POT-Creation-Date: 2023-01-23 17:42+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -230,6 +230,36 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Your_order_has_been_placed_succesfully."
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr ""
+
+msgid "Pickup_day"
+msgstr ""
+
+msgid "Thank_you_for_your_purchase!"
+msgstr ""
+
+msgid "Sign_out"
+msgstr ""
+
+msgid "Continue_shopping"
+msgstr ""
+
+msgid "Print_receipt"
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr ""
+
 msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr ""
 
@@ -278,36 +308,6 @@ msgstr ""
 msgid "Errors_occurred."
 msgstr ""
 
-msgid "Your_order_has_been_placed_succesfully."
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr ""
-
-msgid "Pickup_day"
-msgstr ""
-
-msgid "Thank_you_for_your_purchase!"
-msgstr ""
-
-msgid "Sign_out"
-msgstr ""
-
-msgid "Continue_shopping"
-msgstr ""
-
-msgid "Print_receipt"
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
-msgstr ""
-
 msgid "Notification_about_instant_order_order"
 msgstr ""
 
@@ -321,6 +321,9 @@ msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_man
 msgstr ""
 
 msgid "Your_purchase"
+msgstr ""
+
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
 msgstr ""
 
 msgid "Order_confirmation"

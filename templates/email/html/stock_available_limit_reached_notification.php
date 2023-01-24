@@ -53,6 +53,7 @@ use Cake\Core\Configure;
                             echo $notificationEditLink;
                         }
                     ?>
+                </p>
             </td>
         </tr>
 
