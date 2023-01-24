@@ -126,6 +126,7 @@ body.dark .btn-success {
     color: var(--dark-mode-2nd-font-color);
 }
 body.dark .vertical.menu a,
+body.dark.admin.modal-open .modal a:not(.btn):not(.upload-button),
 body.dark.admin table.list a:not(.btn),
 body.dark.admin h2 span a,
 body.dark.admin form .input a:not(.btn),
