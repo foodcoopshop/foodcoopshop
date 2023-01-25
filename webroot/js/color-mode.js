@@ -27,6 +27,19 @@ foodcoopshop.ColorMode = {
     setBackgroundImage: function() {
         var colorMode = this.getColorMode();
         $('body').css('background-image', 'url("' + foodcoopshop.BackgroundImage.getBackgroundImage(colorMode) + '")');
+        this.setBackgroundColor(colorMode);
+    },
+
+    /**
+     * in globals.css a color-theme neutral background color (#a9a9a9) is defined
+     * to avoid showing a very bright empty page when loading page lasts a while
+     */
+    setBackgroundColor: function(colorMode) {
+        let backgroundColor = '#0f0f0f';
+        if (colorMode == 'light') {
+            backgroundColor = '#e6e6e6';
+        }
+        $('body').css('background-color', backgroundColor);
     },
 
     initToggle: function() {
