@@ -577,9 +577,9 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
 .pw .amount-wrapper input {
     float:left;
     text-align: center;
-    height: 28px;
+    height: 26px;
+    width: 26px;
     border: 1px solid #d6d4d4;
-    width: 28px;
     border-radius: 3px;
 }
 .pw .amount-wrapper .below-input {
