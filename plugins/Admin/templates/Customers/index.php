@@ -88,9 +88,9 @@ if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin
     echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
-echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
+echo '<th>' . $this->Paginator->sort('last_pickup_day',  __d('admin', 'Last_pickup_day'), ['direction' => 'desc']) . '</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
@@ -324,8 +324,8 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td>';
-        if (!empty($customer->last_order_date)) {
-            echo $customer->last_order_date->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
+        if (!empty($customer->last_pickup_day)) {
+            echo $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
         }
     echo '</td>';
 

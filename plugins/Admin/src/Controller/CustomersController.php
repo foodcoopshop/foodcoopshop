@@ -715,6 +715,12 @@ class CustomersController extends AdminAppController
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
             $query->select($this->Customer->Feedbacks);
         }
+
+        $query->select([
+            'last_pickup_day' => 'Customers.id_customer', // add fake field to make custom sort icon work
+            'member_fee' => 'Customers.id_customer',
+        ]);
+        $query->select($this->Customer->AddressCustomers);
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',
@@ -727,6 +733,8 @@ class CustomersController extends AdminAppController
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
                 'Feedbacks.modified',
+                'member_fee',
+                'last_pickup_day',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();
@@ -739,14 +747,25 @@ class CustomersController extends AdminAppController
                 $customer->credit_balance = $this->Customer->getCreditBalance($customer->id_customer);
             }
             $customer->different_pickup_day_count = $this->OrderDetail->getDifferentPickupDayCountByCustomerId($customer->id_customer);
-            $customer->last_order_date = $this->OrderDetail->getLastOrderDate($customer->id_customer);
+            $customer->last_pickup_day = $this->OrderDetail->getLastPickupDay($customer->id_customer);
+            $customer->last_pickup_day_sort = '';
+            if (!is_null($customer->last_pickup_day)) {
+                $customer->last_pickup_day_sort = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            }
             $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
             $i ++;
         }
 
-        if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) && $this->getRequest()->getQuery('sort') == 'Customers.member_fee') {
-            $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'), [
-                'type' => 'locale',
+        if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) 
+            && in_array($this->getRequest()->getQuery('sort'), ['member_fee', 'last_pickup_day'])) {
+            $path = '{n}.' .$this->getRequest()->getQuery('sort');
+            $type = 'numeric';
+            if ($this->getRequest()->getQuery('sort') == 'last_pickup_day') {
+                $path .= '_sort';
+                $type = 'locale';
+            }
+            $customers = Hash::sort($customers, $path, $this->getRequest()->getQuery('direction'), [
+                'type' => $type,
                 'ignoreCase' => true,
             ]);
         }

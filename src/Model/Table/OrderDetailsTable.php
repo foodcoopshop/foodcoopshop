@@ -117,7 +117,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getLastOrderDate($customerId)
+    public function getLastPickupDay($customerId)
     {
         $query = $this->find('all', [
             'conditions' => [
