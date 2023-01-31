@@ -22,13 +22,13 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
 
     getHtml : function(customerName, invoiceAmount, paymentIsCashless) {
         var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>';
-        html += '<h3 style="text-align:center;font-weight:bold;" id="invoiceAmount">' + invoiceAmount + '</h3>';
+        html += '<h3 style="text-align:center;font-weight:bold;font-size:35px" id="invoiceAmount">' + invoiceAmount + '</h3>';
         html += '<div class="field-wrapper">';
         html += '<input type="number" id="givenAmount" style="text-align:left;margin-bottom:15px;" />';
         html += ' ' + foodcoopshop.LocalizedJs.admin.GivenAmount;
         html += '</div>';
         html += '<div class="field-wrapper">';
-        html += '<h3 style="text-align:center;font-weight:bold;color:red;" id="changeAmount">&nbsp;</h3>';
+        html += '<h3 style="text-align:center;font-weight:bold;color:var(--not-ok-red);" id="changeAmount">&nbsp;</h3>';
         html += '</div>';
         html += '<div class="field-wrapper">';
         if (paymentIsCashless) {
