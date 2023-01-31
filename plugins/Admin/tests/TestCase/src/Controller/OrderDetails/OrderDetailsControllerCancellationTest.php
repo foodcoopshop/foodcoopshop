@@ -67,6 +67,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
     {
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
 
@@ -77,6 +78,8 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
         $expectedToEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
         $this->assertOrderDetailDeletedEmails(1, $expectedToEmails);
+        $this->assertMailContainsHtmlAt(1, 'Hallo Demo Gemüse-Hersteller');
+        $this->assertMailContainsHtmlAt(1, 'D.S. - ID 92');
 
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
