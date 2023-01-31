@@ -34,6 +34,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity()
     {
+
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
 
         $cart = $this->preparePricePerUnitOrder();
@@ -54,12 +56,13 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
         $this->assertMailSubjectContainsAt(1, 'Gewicht angepasst für "Forelle : Stück": 800,584 g');
         $this->assertMailContainsHtmlAt(1, '800,584 g');
-        $this->assertMailContainsHtmlAt(1, 'Demo Superadmin');
+        $this->assertMailContainsHtmlAt(1, 'Hallo Demo Superadmin');
         $this->assertMailContainsHtmlAt(1, 'Der Grundpreis beträgt 1,50 € / 100 g');
 
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailMeatManufacturer'));
         $this->assertMailContainsHtmlAt(2, 'Hallo Demo Fleisch-Hersteller');
+        $this->assertMailContainsHtmlAt(2, 'D.S. - ID 92');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantityPurchasePriceAvailable()
