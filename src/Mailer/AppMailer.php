@@ -91,10 +91,8 @@ class AppMailer extends Mailer
 
         $outputStringReplacements = $this->getAnonymizedCustomersAsStringReplacementArray();
         if (!is_null(Configure::read('app.outputStringReplacements'))) {
-            array_merge($outputStringReplacements, Configure::read('app.outputStringReplacements'));
+            $outputStringReplacements = array_merge($outputStringReplacements, Configure::read('app.outputStringReplacements'));
         }
-
-        pr($outputStringReplacements);
 
         if (!empty($outputStringReplacements)) {
             $replacedSubject = OutputFilter::replace($this->getOriginalSubject(), $outputStringReplacements);
