@@ -68,7 +68,14 @@ class AppMailer extends Mailer
                     ],
                 ]);
                 foreach($customers as $customer) {
-                    $outputStringReplacements[$customer->name] = Configure::read('app.htmlHelper')->anonymizeCustomerName($customer->name, $customer->id_customer);
+                    // eg. greeting is ALWAYS firstname - lastname (not respecting app.customerMainNamePart)
+                    $replaceArrays = [
+                        $customer->firstname . ' ' . $customer->lastname,
+                        $customer->lastname . ' ' . $customer->firstname,
+                    ];
+                    foreach($replaceArrays as $customerName) {
+                        $outputStringReplacements[$customerName] = Configure::read('app.htmlHelper')->anonymizeCustomerName($customerName, $customer->id_customer);
+                    }
                 }
             }
 
