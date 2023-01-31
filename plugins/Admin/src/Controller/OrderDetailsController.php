@@ -1401,12 +1401,14 @@ class OrderDetailsController extends AdminAppController
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            $orderDetailForManufacturerEmail = $oldOrderDetail;
+            $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
             $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email)
             ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
-                'oldOrderDetail' => $oldOrderDetail,
+                'oldOrderDetail' => $orderDetailForManufacturerEmail,
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth,
                 'editPriceReason' => $editPriceReason,
