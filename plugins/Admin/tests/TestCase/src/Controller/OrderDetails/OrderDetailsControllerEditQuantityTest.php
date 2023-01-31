@@ -59,6 +59,8 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailMeatManufacturer'));
+
+        $this->assertMailContainsHtmlAt(2, 'Demo Superadmin');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantityPurchasePriceAvailable()
