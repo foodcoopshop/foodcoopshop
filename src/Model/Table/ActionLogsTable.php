@@ -21,15 +21,7 @@ use Cake\I18n\FrozenTime;
  */
 class ActionLogsTable extends AppTable
 {
-    /*
-     * Supported structure:
-     * {type_id} => [
-     *     'name' => 'text to show in German language',
-     *     'access' => [
-     *         'manufacturer', // uncertain how that works
-     *     ],
-     * ],
-     */
+
     public $types;
 
     public function initialize(array $config): void
@@ -240,19 +232,22 @@ class ActionLogsTable extends AppTable
             'order_detail_product_price_changed' => [
                 'name' => __('Action_Log_Order_detail_product_price_changed'),
                 'access' => [
-                    'manufacturer'
+                    'manufacturer',
+                    'manufacturerAnonymizationEnabled',
                 ]
             ],
             'order_detail_product_quantity_changed' => [
                 'name' => __('Action_Log_Order_detail_product_quantity_changed'),
                 'access' => [
-                    'manufacturer'
+                    'manufacturer',
+                    'manufacturerAnonymizationEnabled',
                 ]
             ],
             'order_detail_product_amount_changed' => [
                 'name' => __('Action_Log_Order_detail_product_amount_changed'),
                 'access' => [
-                    'manufacturer'
+                    'manufacturer',
+                    'manufacturerAnonymizationEnabled',
                 ]
             ],
             'order_detail_customer_changed' => [
@@ -261,7 +256,8 @@ class ActionLogsTable extends AppTable
             'order_detail_cancelled' => [
                 'name' => __('Action_Log_Ordered_product_cancelled'),
                 'access' => [
-                    'manufacturer'
+                    'manufacturer',
+                    'manufacturerAnonymizationEnabled',
                 ]
             ],
             'order_detail_pickup_day_changed' => [
@@ -508,10 +504,22 @@ class ActionLogsTable extends AppTable
         $statement = $this->getConnection()->prepare($query);
         return $statement->execute();
     }
+
     public function removeCustomerEmailFromAllActionLogs($email) {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $email . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerEmail().'\')';
         $statement = $this->getConnection()->prepare($query);
         return $statement->execute();
+    }
+
+    public function getHiddenTypesForManufacturersWithEnabledAnonymization(): array
+    {
+        $types = [];
+        foreach($this->types as $key => $value) {
+            if (isset($value['access']) && in_array('manufacturerAnonymizationEnabled', $value['access'])) {
+                $types[] = $key;
+            }
+        }
+        return $types;
     }
 
     public function customSave($type, $customerId, $objectId, $objectType, $text, $time=null)
@@ -533,6 +541,9 @@ class ActionLogsTable extends AppTable
         foreach ($this->types as $type => $value) {
             if ($appAuth->isManufacturer()) {
                 if (isset($value['access']) && in_array('manufacturer', $value['access'])) {
+                    if ($appAuth->getManufacturerAnonymizeCustomers() && in_array('manufacturerAnonymizationEnabled', $value['access'])) {
+                        continue;
+                    }
                     $result[$type] = $value['name'];
                 }
             } else {
