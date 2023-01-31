@@ -27,6 +27,8 @@ class AppMailer extends Mailer
 
     public $afterRunParams = [];
 
+    public $customerAnonymizationForManufacturers = true;
+
     public function __construct($addBccBackupAddress = true)
     {
         parent::__construct(null);
@@ -45,6 +47,10 @@ class AppMailer extends Mailer
     {
 
         $outputStringReplacements = [];
+
+        if (!$this->customerAnonymizationForManufacturers) {
+            return $outputStringReplacements;
+        }
 
         foreach($this->getTo() as $email) {
             

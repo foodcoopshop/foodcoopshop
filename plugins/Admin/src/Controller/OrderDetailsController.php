@@ -1616,6 +1616,7 @@ class OrderDetailsController extends AdminAppController
             'appAuth' => $this->AppAuth,
             'orderDetailFeedback' => $orderDetailFeedback,
         ]);
+        $email->customerAnonymizationForManufacturers = false;
 
         $email->addToQueue();
 
