@@ -94,6 +94,8 @@ class AppMailer extends Mailer
             array_merge($outputStringReplacements, Configure::read('app.outputStringReplacements'));
         }
 
+        pr($outputStringReplacements);
+
         if (!empty($outputStringReplacements)) {
             $replacedSubject = OutputFilter::replace($this->getOriginalSubject(), $outputStringReplacements);
             $this->setSubject($replacedSubject);
