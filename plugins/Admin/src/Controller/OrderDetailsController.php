@@ -1138,13 +1138,13 @@ class OrderDetailsController extends AdminAppController
             ]);
             $email->addToQueue();
 
-            $message = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
 
             if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-                $message = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                     '<b>' . $oldOrderDetail->customer->name . '</b>',
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
                 ]);
@@ -1156,6 +1156,8 @@ class OrderDetailsController extends AdminAppController
                 ]);
                 $email->addToQueue();
             }
+
+            $message .= $emailMessage;
 
         }
 
