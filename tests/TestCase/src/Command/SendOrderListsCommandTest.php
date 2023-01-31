@@ -365,6 +365,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     public function testContentOfOrderListWithoutPricePerUnitAnonymized()
     {
+        $this->markTestSkipped('waiting for #929');
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');

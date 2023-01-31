@@ -48,12 +48,14 @@ class InvoiceToManufacturerPdfWriter extends PdfWriter
 
         $productResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         if ($manufacturer->anonymize_customers) {
-            $productResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($productResults);
+            // uncomment when #929 is ready
+            // $productResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($productResults);
         }
 
         $customerResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         if ($manufacturer->anonymize_customers) {
-            $customerResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($customerResults);
+            // uncomment when #929 is ready
+            //$customerResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($customerResults);
         }
 
         $this->setSums($productResults);
