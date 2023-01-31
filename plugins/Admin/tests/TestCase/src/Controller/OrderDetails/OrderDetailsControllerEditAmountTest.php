@@ -115,6 +115,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
     public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
     {
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
         $orderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
@@ -133,6 +134,8 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
         $expectedToEmail = Configure::read('test.loginEmailVegetableManufacturer');
         $this->assertOrderDetailProductAmountChangedEmails(2, $expectedToEmail);
+        $this->assertMailContainsHtmlAt(2, 'Hallo Demo Gemüse-Hersteller');
+        $this->assertMailContainsHtmlAt(2, 'D.S. - ID 92');
 
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
