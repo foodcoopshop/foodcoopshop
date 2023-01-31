@@ -1149,6 +1149,11 @@ class OrderDetailsController extends AdminAppController
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
                 ]);
                 $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+                $oldOrderDetail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
+                $email->setViewVars([
+                    'oldOrderDetail' => $oldOrderDetail,
+                ]);
+    
                 $email->addToQueue();
             }
 
