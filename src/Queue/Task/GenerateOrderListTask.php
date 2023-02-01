@@ -97,6 +97,8 @@ class GenerateOrderListTask extends Task {
                 'manufacturerId' => $manufacturerId,
                 'orderDetailIds' => $orderDetailIds,
             ];
+
+            $email->customerAnonymizationForManufacturers = false; // always show contact person in email body
             $email->addToQueue();
 
         }
