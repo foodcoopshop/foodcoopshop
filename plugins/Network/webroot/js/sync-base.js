@@ -235,12 +235,6 @@ foodcoopshop.SyncBase = {
             return false;
         }
 
-        var csrfToken = $('meta[name="csrfToken"]').attr('content');
-        $.ajaxSetup({
-            headers:
-            { 'X-CSRF-TOKEN': csrfToken }
-        });
-
         return $.ajax({
             type: type,
             url: url,
