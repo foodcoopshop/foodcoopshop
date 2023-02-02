@@ -79,6 +79,16 @@ class Application extends BaseApplication
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
+
+        $csrf = new CsrfProtectionMiddleware();
+
+        // Token check will be skipped when callback returns `true`.
+        $csrf->skipCheckCallback(function ($request) {
+            if (in_array($request->getPath(), ['/api/getProducts.json', '/api/updateProducts.json', '/api/getOrders.json'])) {
+                return true;
+            }
+        });
+        
         $middlewareQueue
         // Catch any exceptions in the lower layers,
         // and make an error page/response
@@ -89,7 +99,8 @@ class Application extends BaseApplication
             'cacheTime' => Configure::read('Asset.cacheTime'),
         ]))
 
-        ->add(new CsrfProtectionMiddleware ())
+        // Ensure routing middleware is added to the queue before CSRF protection middleware.
+        ->add($csrf)
 
         // Add routing middleware.
         // If you have a large number of routes connected, turning on routes
