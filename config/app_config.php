@@ -109,6 +109,7 @@ return [
         'selfServiceModeAutoGenerateInvoice' => true,
         'showOrderedProductsTotalAmountInCatalog' => false,
         'pageBreakOnOrderDetailsAsPdfEnabled' => true,
+        'anonymizeCustomersForManufacturersEnabled' => false,
 
         /**
          * id of the category "all products"
