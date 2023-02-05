@@ -145,6 +145,24 @@ class PagesControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
+    public function testAllManufacturerUrlsAnonymized()
+    {
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
+        $this->loginAsMeatManufacturer();
+
+        $testUrls = [
+            $this->Slug->getOrderDetailsList() . '?pickupDay[]=02.02.2018',
+        ];
+
+        foreach ($testUrls as $url) {
+            $this->get($url);
+            $this->assertResponseNotContains('Demo Superadmin');
+            $this->assertResponseContains('D.S. - ID 92');
+        }
+
+        $this->assertPagesForErrors($testUrls);
+    }
+
     public function test404PagesLoggedOut()
     {
         $testUrls = [

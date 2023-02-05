@@ -372,6 +372,14 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
+    public function anonymizeCustomersInInvoiceOrOrderList($results)
+    {
+        return array_map(function ($data) {
+            $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeCustomerName($data['CustomerName'], (int) $data['CustomerId']);
+            return $data;
+        }, $results);
+    }
+
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
         $orderClause = match($order) {

@@ -242,6 +242,16 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         echo '<div class="sc"></div>';
     }
 
+    if (Configure::read('app.anonymizeCustomersForManufacturersEnabled')) {
+        if (!$appAuth->isManufacturer()) {
+            echo $this->Form->control('Manufacturers.anonymize_customers', [
+            'label' => __d('admin', 'Anonymize_customers?').' <span class="after small">'.__d('admin', 'Customer_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer.').'</a></span>',
+            'type' => 'checkbox',
+            'escape' => false
+            ]);
+        }
+    }
+    
     echo $this->Form->end();
 
 ?>

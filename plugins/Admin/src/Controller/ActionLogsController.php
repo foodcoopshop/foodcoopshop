@@ -91,6 +91,11 @@ class ActionLogsController extends AdminAppController
                     ') '.
                 ') '.
               ' OR (ActionLogs.customer_id = ' .$this->AppAuth->getUserId().') )';
+
+            if ($this->AppAuth->getManufacturerAnonymizeCustomers()) {
+                $conditions['ActionLogs.type NOT IN'] = $this->ActionLog->getHiddenTypesForManufacturersWithEnabledAnonymization();
+            }
+
         }
 
         // customers are only allowed to see their own data

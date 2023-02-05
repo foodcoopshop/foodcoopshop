@@ -71,6 +71,8 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
     public function testEditOrderDetailPriceAsSuperadminWithEnabledNotification()
     {
+
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
 
         $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason, true);
@@ -82,7 +84,8 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails);
 
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
-
+        $this->assertMailContainsHtmlAt(1, 'Hallo Demo Gemüse-Hersteller');
+        $this->assertMailContainsHtmlAt(1, 'D.S. - ID 92');
     }
 
     public function testEditOrderDetailPriceIfPriceWasZero()

@@ -36,7 +36,11 @@ use Cake\Core\Configure;
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
                 <?php echo $this->Form->control('types', ['type' => 'select', 'multiple' => true, 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'data-val' => join(',', $types)]); ?>
+            <?php } ?>
+            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_users'), 'options' => []]); ?>
+            <?php } ?>
+            <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
                 <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
@@ -84,7 +88,7 @@ foreach ($actionLogs as $actionLog) {
     echo '</td>';
 
     echo '<td>';
-    echo $actionLog->date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
+    echo $actionLog->date->i18nFormat($this->Time->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td>';
@@ -94,6 +98,9 @@ foreach ($actionLogs as $actionLog) {
     echo '<td>';
     if ($actionLog->customer) {
         $name = $actionLog->customer->name;
+        if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+            $name = $this->Html->anonymizeCustomerName($name, $actionLog->customer->id_customer);
+        }
         if ($actionLog->customer->manufacturer) {
             $name = $actionLog->customer->manufacturer->name;
         }

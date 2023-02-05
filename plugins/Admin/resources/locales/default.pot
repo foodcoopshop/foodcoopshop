@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-11-28 09:35+0100\n"
+"POT-Creation-Date: 2022-10-19 11:14+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1596,6 +1596,12 @@ msgid "Should_stock_products_be_included_in_order_lists?"
 msgstr ""
 
 msgid "Chose_member"
+msgstr ""
+
+msgid "Anonymize_customers?"
+msgstr ""
+
+msgid "Customer_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer."
 msgstr ""
 
 msgid "Pickup_days"

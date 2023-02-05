@@ -1136,6 +1136,7 @@ class OrderDetailsController extends AdminAppController
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth
             ]);
+            $email->addToQueue();
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
@@ -1147,10 +1148,14 @@ class OrderDetailsController extends AdminAppController
                     '<b>' . $oldOrderDetail->customer->name . '</b>',
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
                 ]);
-                $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+                $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+                $orderDetailForManufacturerEmail = $oldOrderDetail;
+                $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
+                $email->setViewVars([
+                    'oldOrderDetail' => $orderDetailForManufacturerEmail,
+                ]);
+                $email->addToQueue();
             }
-
-            $email->addToQueue();
 
             $message .= $emailMessage;
 
@@ -1242,6 +1247,7 @@ class OrderDetailsController extends AdminAppController
             'appAuth' => $this->AppAuth,
             'editAmountReason' => $editAmountReason
         ]);
+        $email->addToQueue();
 
         $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
@@ -1253,10 +1259,14 @@ class OrderDetailsController extends AdminAppController
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
-            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            $orderDetailForManufacturerEmail = $oldOrderDetail;
+            $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
+            $email->setViewVars([
+                'oldOrderDetail' => $orderDetailForManufacturerEmail,
+            ]);
+            $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            $email->addToQueue();
         }
-
-        $email->addToQueue();
 
         $message .= $emailMessage;
 
@@ -1398,12 +1408,14 @@ class OrderDetailsController extends AdminAppController
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            $orderDetailForManufacturerEmail = $oldOrderDetail;
+            $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
             $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email)
             ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
-                'oldOrderDetail' => $oldOrderDetail,
+                'oldOrderDetail' => $orderDetailForManufacturerEmail,
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth,
                 'editPriceReason' => $editPriceReason,
@@ -1604,6 +1616,7 @@ class OrderDetailsController extends AdminAppController
             'appAuth' => $this->AppAuth,
             'orderDetailFeedback' => $orderDetailFeedback,
         ]);
+        $email->customerAnonymizationForManufacturers = false;
 
         $email->addToQueue();
 
@@ -1810,6 +1823,7 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ]);
+            $email->addToQueue();
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
@@ -1821,10 +1835,14 @@ class OrderDetailsController extends AdminAppController
                     '<b>' . $orderDetail->customer->name . '</b>',
                     '<b>' . $orderDetail->product->manufacturer->name . '</b>'
                 ]);
-                $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
+                $email->setTo($orderDetail->product->manufacturer->address_manufacturer->email);
+                $orderDetailForManufacturerEmail = $orderDetail;
+                $orderDetailForManufacturerEmail->customer = $orderDetail->product->manufacturer->address_manufacturer;
+                $email->setViewVars([
+                    'orderDetail' => $orderDetailForManufacturerEmail,
+                ]);
+                $email->addToQueue();
             }
-
-            $email->addToQueue();
 
             $message .= $emailMessage;
 

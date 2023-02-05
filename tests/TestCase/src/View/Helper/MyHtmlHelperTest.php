@@ -29,6 +29,22 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $this->MyHtmlHelper = new MyHtmlHelper(new View());
     }
 
+    public function testAnonymizeCustomerNameNormal()
+    {
+        $name = 'Demo Admin';
+        $id = 1;
+        $result = 'D.A. - ID 1';
+        $this->assertEquals($result, $this->MyHtmlHelper->anonymizeCustomerName($name, $id));
+    }
+
+    public function testAnonymizeCustomerNameAdvanced()
+    {
+        $name = 'Demo-Marie Test Admin';
+        $id = 1;
+        $result = 'D.T.A. - ID 1';
+        $this->assertEquals($result, $this->MyHtmlHelper->anonymizeCustomerName($name, $id));
+    }
+    
     /**
      * @dataProvider removeTimestampFromFileDataProvider
      */

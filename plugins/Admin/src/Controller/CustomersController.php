@@ -59,6 +59,7 @@ class CustomersController extends AdminAppController
         if ($this->AppAuth->isSuperadmin()) {
             $includeOfflineCustomers = true;
         }
+
         $customers = $this->Customer->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions);
         $customersForDropdown = [];
         foreach ($customers as $key => $ps) {

@@ -50,6 +50,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
 
     public function testAddFeedbackAsSuperadmin()
     {
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
         $this->assertJsonOk();

@@ -115,6 +115,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
     public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
     {
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
         $orderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
@@ -129,8 +130,12 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertEquals(10, $changedOrder->cart_products[0]->order_detail->tax_rate);
 
         $expectedToEmail = Configure::read('test.loginEmailSuperadmin');
-        $expectedCcEmail = Configure::read('test.loginEmailVegetableManufacturer');
-        $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail, $expectedCcEmail);
+        $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmail);
+
+        $expectedToEmail = Configure::read('test.loginEmailVegetableManufacturer');
+        $this->assertOrderDetailProductAmountChangedEmails(2, $expectedToEmail);
+        $this->assertMailContainsHtmlAt(2, 'Hallo Demo Gemüse-Hersteller');
+        $this->assertMailContainsHtmlAt(2, 'D.S. - ID 92');
 
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
@@ -156,7 +161,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail, $expectedCcEmail = null)
+    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail)
     {
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Anzahl angepasst: Artischocke : Stück');
@@ -165,9 +170,6 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertMailContainsHtmlAt($emailIndex, 'Neue Anzahl: <b>' . $this->newAmount . '</b>');
         $this->assertMailContainsHtmlAt($emailIndex, 'Demo Gemüse-Hersteller');
         $this->assertMailSentToAt($emailIndex, $expectedToEmail);
-        if ($expectedCcEmail !== null) {
-            $this->assertMailSentWithAt($emailIndex, $expectedCcEmail, 'cc');
-        }
     }
 
     private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason)
