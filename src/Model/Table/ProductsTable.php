@@ -559,7 +559,7 @@ class ProductsTable extends AppTable
                         'id_product' => $ids['productId']
                     ],
                 ])->first();
-                if (!is_null($entity)) {
+                if (is_null($entity)) {
                     Log::error('entity was empty: productId: ' . $ids['productId'] . ' / attributeId: ' . $ids['attributeId']);
                     continue;
                 }
