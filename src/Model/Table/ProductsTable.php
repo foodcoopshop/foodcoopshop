@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Controller\Component\StringComponent;
+use Cake\Log\Log;
+use Cake\Utility\Hash;
+use Cake\Core\Configure;
 use App\Lib\Folder\Folder;
 use App\Lib\Catalog\Catalog;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
-use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\RemoteFile\RemoteFile;
-use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
-use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
-use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use App\Lib\RemoteFile\RemoteFile;
+use Cake\Datasource\FactoryLocator;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Controller\Component\StringComponent;
+use App\Lib\Error\Exception\InvalidParameterException;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -558,6 +559,10 @@ class ProductsTable extends AppTable
                         'id_product' => $ids['productId']
                     ],
                 ])->first();
+                if (!is_null($entity)) {
+                    Log::error('entity was empty: productId: ' . $ids['productId'] . ' / attributeId: ' . $ids['attributeId']);
+                    continue;
+                }
                 $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
                 $this->StockAvailables->setPrimaryKey('id_product_attribute');
                 $this->StockAvailables->save(
