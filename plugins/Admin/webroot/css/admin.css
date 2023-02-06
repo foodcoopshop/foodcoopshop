@@ -965,3 +965,6 @@ body.feedbacks textarea {
 body.feedbacks form div.error-message {
     margin-top: -10px;
 }
+body.lists.order_list .list td > a.btn:last-of-type {
+    margin-left: 5px;
+}

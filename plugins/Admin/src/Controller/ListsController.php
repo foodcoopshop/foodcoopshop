@@ -54,7 +54,7 @@ class ListsController extends AdminAppController
         $files = [];
 
         foreach ($objects as $name => $object) {
-            
+
             if (!preg_match('/\.pdf$/', $name)) {
                 continue;
             }
@@ -68,6 +68,7 @@ class ListsController extends AdminAppController
             $splittedFileName = $this->splitOrderDetailStringIntoParts($object->getFileName(), $matches[1]);
             $deliveryDate = $splittedFileName['deliveryDate'];
             $manufacturerId = $splittedFileName['manufacturerId'];
+            $generationDate = $splittedFileName['generationDate'];
 
             // date check
             if (! (strtotime($dateFrom) == strtotime($deliveryDate))) {
@@ -118,17 +119,46 @@ class ListsController extends AdminAppController
             $files[] = [
                 'delivery_date' => $deliveryDate,
                 'manufacturer_name' => $manufacturer->name,
-                'product_list_link' => $productListLink,
-                'list_label' => $listLabel,
-                'customer_list_link' => $customerListLink,
+                'product_lists' => [
+                    ['label' => $listLabel, 'link' => $productListLink],
+                ],
+                'customer_lists' => [
+                    ['label' => $listLabel, 'link' => $customerListLink],
+                ],
+                'generation_date' => $generationDate,
+                'manufacturer_id' => $manufacturerId,
+                'is_anonymized' => $isAnonymized,
             ];
             
             $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
             
         }
+
+        if (!$this->AppAuth->isManufacturer()) {
+            $files = $this->mergeAnonymizedListsAndClearNameLists($files);
+        }
         $this->set('files', $files);
 
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
+    }
+
+    private function mergeAnonymizedListsAndClearNameLists(array $files): array
+    {
+        $mergedFiles = [];
+        foreach($files as $file) {
+            $key = $file['manufacturer_id'] . '-' . $file['generation_date'];
+            if (!$file['is_anonymized']) {
+                $mergedFiles[$key] = $file;
+            }
+        }
+        foreach($files as $file) {
+            $key = $file['manufacturer_id'] . '-' . $file['generation_date'];
+            if ($file['is_anonymized']) {
+                $mergedFiles[$key]['product_lists'][] = $file['product_lists'][0];
+                $mergedFiles[$key]['customer_lists'][] = $file['customer_lists'][0];
+            }
+        }
+        return $mergedFiles;
     }
 
     private function splitOrderDetailStringIntoParts($fileName, $ending)

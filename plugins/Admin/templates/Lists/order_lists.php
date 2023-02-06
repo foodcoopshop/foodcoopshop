@@ -72,27 +72,31 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . $file['list_label'],
-            $file['product_list_link'],
-            [
-                'class' => 'btn btn-outline-light',
-                'target' => '_blank',
-                'escape' => false
-            ]
-        );
+            foreach($file['product_lists'] as $productList) {
+                echo $this->Html->link(
+                    '<i class="fas fa-arrow-right ok"></i> ' . $productList['label'],
+                    $productList['link'],
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'target' => '_blank',
+                        'escape' => false,
+                    ]
+                );
+            }
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . $file['list_label'],
-            $file['customer_list_link'],
-            [
-                'class' => 'btn btn-outline-light',
-                'target' => '_blank',
-                'escape' => false
-            ]
-        );
+            foreach($file['customer_lists'] as $customerList) {
+                echo $this->Html->link(
+                    '<i class="fas fa-arrow-right ok"></i> ' . $customerList['label'],
+                    $customerList['link'],
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'target' => '_blank',
+                        'escape' => false,
+                    ]
+                );
+            }
         echo '</td>';
 
         echo '</tr>';
