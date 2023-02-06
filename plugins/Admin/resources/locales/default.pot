@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-02-06 15:24+0100\n"
+"POT-Creation-Date: 2023-02-06 17:09+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Anonymized_list"
 msgstr ""
 
-msgid "List_with_names"
+msgid "Order_list_with_clear_names"
 msgstr ""
 
 msgid "Show_order_list"
@@ -1632,6 +1632,12 @@ msgid "Edit_manufacturer_settings"
 msgstr ""
 
 msgid "grouped_by_product"
+msgstr ""
+
+msgid "List_with_clear_names"
+msgstr ""
+
+msgid "Anonymized_order_list"
 msgstr ""
 
 msgid "grouped_by_customer"

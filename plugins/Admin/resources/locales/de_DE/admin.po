@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-06 15:24+0100\n"
-"PO-Revision-Date: 2023-02-06 15:25+0100\n"
+"POT-Creation-Date: 2023-02-06 17:09+0100\n"
+"PO-Revision-Date: 2023-02-06 17:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -264,8 +264,8 @@ msgstr "Mitglied"
 msgid "Anonymized_list"
 msgstr "Anonymisierte Liste"
 
-msgid "List_with_names"
-msgstr "Liste mit Namen"
+msgid "Order_list_with_clear_names"
+msgstr "Bestellliste mit Klarnamen"
 
 msgid "Show_order_list"
 msgstr "Bestellliste anzeigen"
@@ -1643,6 +1643,12 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 
 msgid "grouped_by_product"
 msgstr "gruppiert nach Produkt"
+
+msgid "List_with_clear_names"
+msgstr "Liste mit Klarnamen"
+
+msgid "Anonymized_order_list"
+msgstr "Anonymisierte Bestellliste"
 
 msgid "grouped_by_customer"
 msgstr "gruppiert nach Mitglied"

@@ -112,7 +112,7 @@ class ListsController extends AdminAppController
                 $productListLink,
             1);
             
-            $listLabel = $isAnonymized ? __d('admin', 'Anonymized_list') : __d('admin', 'List_with_names');
+            $listLabel = $isAnonymized ? __d('admin', 'Anonymized_list') : __d('admin', 'Order_list_with_clear_names');
             if ($this->AppAuth->isManufacturer()) {
                 $listLabel = __d('admin', 'Show_order_list');
             }
