@@ -87,15 +87,19 @@ class ListsControllerTest extends AppCakeTestCase
 
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
-        $dir = new \DirectoryIterator(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
+        $path = realpath(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
+        $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
+
         $files = [];
-        foreach ($dir as $fileinfo) {
-            if (!$fileinfo->isDot()) {
-                $files[] = $fileinfo->getFilename();
+        foreach ($objects as $name => $object) {
+            if (!preg_match('/\.pdf$/', $name)) {
+                continue;
             }
+            $files[] = str_replace(Configure::read('app.folder_order_lists'), '', $object->getPathName());
         }
         sort($files);
-        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/' . $files[0];
+        $orderListDownloadUrlClearText = '/admin/lists/getOrderList?file=' . $files[0];
+        $orderListDownloadUrlAnonymized = '/admin/lists/getOrderList?file=' . $files[6];
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
@@ -106,18 +110,31 @@ class ListsControllerTest extends AppCakeTestCase
         $this->assertResponseNotContains('<td>Demo Milch-Hersteller</td>');
 
         // check downloadable file as correct manufacturer
-        $this->get($orderListDownloadUrl);
+        $this->get($orderListDownloadUrlClearText);
         $this->assertResponseOk();
         $this->assertContentType('pdf');
 
+        // check if anonymized file is not downloadable with clear text configuration
+        $this->get($orderListDownloadUrlAnonymized);
+        $this->assertResponseCode(401);
+
+        // check if clear text file is not downloadable with anonymized configuration
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
+        $this->get($orderListDownloadUrlClearText);
+        $this->assertResponseCode(401);
+
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
-        $this->get($orderListDownloadUrl);
+        $this->get($orderListDownloadUrlClearText);
         $this->assertResponseCode(401);
 
         // check downloadable file as admin
         $this->loginAsAdmin();
-        $this->get($orderListDownloadUrl);
+        $this->get($orderListDownloadUrlClearText);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
+
+        $this->get($orderListDownloadUrlAnonymized);
         $this->assertResponseOk();
         $this->assertContentType('pdf');
 
