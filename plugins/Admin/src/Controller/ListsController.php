@@ -79,7 +79,7 @@ class ListsController extends AdminAppController
                 continue;
             }
 
-            $isAnonymized = preg_match('/anonymized/', $name);
+            $isAnonymized = $this->isAnonymized($name);
 
             if ($this->AppAuth->isManufacturer()) {
                 if ($this->AppAuth->getManufacturerAnonymizeCustomers() && !$isAnonymized) {
@@ -180,6 +180,11 @@ class ListsController extends AdminAppController
         return $result;
     }
 
+    private function isAnonymized($path)
+    {
+        return preg_match('/anonymized/', $path);
+    }
+
     public function getOrderList()
     {
         $filenameWithPath = Configure::read('app.folder_order_lists') . DS . h($this->getRequest()->getQuery('file'));
@@ -190,7 +195,13 @@ class ListsController extends AdminAppController
                 $splittedFileName = $this->splitOrderDetailStringIntoParts(h($this->getRequest()->getQuery('file')), $matches[1]);
                 $manufacturerId = $splittedFileName['manufacturerId'];
                 if ($manufacturerId != $this->AppAuth->getManufacturerId()) {
-                    throw new UnauthorizedException();
+                    throw new UnauthorizedException('manufactuer is not allowd to open order list of other manufacturers');
+                }
+                if ($this->AppAuth->getManufacturerAnonymizeCustomers() && !$this->isAnonymized($filenameWithPath)) {
+                    throw new UnauthorizedException('manufacturer is not allowed to open order list with clear text data');
+                }
+                if (!$this->AppAuth->getManufacturerAnonymizeCustomers() && $this->isAnonymized($filenameWithPath)) {
+                    throw new UnauthorizedException('manufacturer is not allowed to open order list with anonymized data');
                 }
             }
         }
