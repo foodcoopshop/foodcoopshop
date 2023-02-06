@@ -73,20 +73,10 @@ use Cake\Core\Configure;
 
         echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Anonymized_list'),
-            $file['product_list_link_anonymized'],
+            '<i class="fas fa-arrow-right ok"></i> ' . $file['list_label'],
+            $file['product_list_link'],
             [
                 'class' => 'btn btn-outline-light',
-                'target' => '_blank',
-                'escape' => false
-            ]
-        );
-        echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'List_with_names'),
-            $file['product_list_link_with_names'],
-            [
-                'class' => 'btn btn-outline-light',
-                'style' => 'margin-left:5px;',
                 'target' => '_blank',
                 'escape' => false
             ]
@@ -95,20 +85,10 @@ use Cake\Core\Configure;
 
         echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Anonymized_list'),
-            $file['customer_list_link_anonymized'],
+            '<i class="fas fa-arrow-right ok"></i> ' . $file['list_label'],
+            $file['customer_list_link'],
             [
                 'class' => 'btn btn-outline-light',
-                'target' => '_blank',
-                'escape' => false
-            ]
-        );
-        echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'List_with_names'),
-            $file['customer_list_link_with_names'],
-            [
-                'class' => 'btn btn-outline-light',
-                'style' => 'margin-left:5px;',
                 'target' => '_blank',
                 'escape' => false
             ]

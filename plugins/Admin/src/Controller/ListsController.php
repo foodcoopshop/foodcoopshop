@@ -75,6 +75,17 @@ class ListsController extends AdminAppController
                     continue;
                 }
 
+                $isAnonymized = preg_match('/anonymized/', $name);
+
+                if ($this->AppAuth->isManufacturer()) {
+                    if ($this->AppAuth->getManufacturerAnonymizeCustomers() && !$isAnonymized) {
+                        continue;
+                    }
+                    if (!$this->AppAuth->getManufacturerAnonymizeCustomers() && $isAnonymized) {
+                        continue;
+                    }
+                }
+
                 if (!$manufacturerId) {
                     $message = 'error: ManufacturerId not found in ' . $object->getFileName();
                     $this->Flash->error($message);
@@ -96,16 +107,19 @@ class ListsController extends AdminAppController
                     str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . __d('admin', 'member'),
                     $productListLink,
                 1);
-
+                
+                $listLabel = $isAnonymized ? __d('admin', 'Anonymized_list') : __d('admin', 'List_with_names');
+                if ($this->AppAuth->isManufacturer()) {
+                    $listLabel = __d('admin', 'Order_list');
+                }
                 $files[] = [
                     'delivery_date' => $deliveryDate,
                     'manufacturer_name' => $manufacturer->name,
-                    'product_list_link_anonymized' => $productListLink,
-                    'product_list_link_with_names' => $productListLink,
-                    'customer_list_link_anonymized' => $customerListLink,
-                    'customer_list_link_with_names' => $customerListLink,
+                    'product_list_link' => $productListLink,
+                    'list_label' => $listLabel,
+                    'customer_list_link' => $customerListLink,
                 ];
-
+                
                 $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
             }
         }
