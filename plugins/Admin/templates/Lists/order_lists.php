@@ -73,7 +73,7 @@ use Cake\Core\Configure;
 
         echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-search ok"></i> ' . __d('admin', 'Show_list_(grouped_by_product)'),
+            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Show_list_(grouped_by_product)'),
             $file['product_list_link'],
             [
                 'class' => 'btn btn-outline-light',
@@ -86,7 +86,7 @@ use Cake\Core\Configure;
 
         echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-search ok"></i> ' . __d('admin', 'Show_list_(grouped_by_member)'),
+            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Show_list_(grouped_by_member)'),
             $file['customer_list_link'],
             [
                 'class' => 'btn btn-outline-light',
