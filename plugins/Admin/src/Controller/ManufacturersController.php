@@ -605,7 +605,7 @@ class ManufacturersController extends AdminAppController
     private function getOrderListFilenameForWriteInline($manufacturerId, $manufacturerName, $pickupDay, $type): string
     {
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
-        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists);
+        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists, false);
         $productPdfFile = explode(DS, $productPdfFile);
         $productPdfFile = end($productPdfFile);
         $productPdfFile = substr($productPdfFile, 11);

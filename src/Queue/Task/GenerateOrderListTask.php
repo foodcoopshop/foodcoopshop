@@ -33,6 +33,30 @@ class GenerateOrderListTask extends Task {
     public $timeout = 30;
     public $retries = 2;
 
+    private function generateOrderListProduct($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
+    {
+        $pdfWriter = new OrderListByProductPdfWriter();
+        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
+            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists, $isAnonymized
+        );
+        $pdfWriter->setFilename($productPdfFile);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, $isAnonymized);
+        $pdfWriter->writeFile();
+        return $productPdfFile;
+    }
+
+    private function generateOrderListCustomer($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
+    {
+        $pdfWriter = new OrderListByCustomerPdfWriter();
+        $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
+            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists, $isAnonymized
+        );
+        $pdfWriter->setFilename($customerPdfFile);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, $isAnonymized);
+        $pdfWriter->writeFile();
+        return $customerPdfFile;
+    }
+
     public function run(array $data, $jobId) : void
     {
 
@@ -47,25 +71,12 @@ class GenerateOrderListTask extends Task {
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
 
-        // START generate PDFs grouped by PRODUCT
-        $pdfWriter = new OrderListByProductPdfWriter();
-        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists
-        );
-        $pdfWriter->setFilename($productPdfFile);
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, false);
-        $pdfWriter->writeFile();
-        // END generate PDF grouped by PRODUCT
-
-        // START generate PDFs grouped by CUSTOMER
-        $pdfWriter = new OrderListByCustomerPdfWriter();
-        $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists
-        );
-        $pdfWriter->setFilename($customerPdfFile);
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, false);
-        $pdfWriter->writeFile();
-        // END generate PDF grouped by CUSTOMER
+        $anonymizedOrderLists = [];
+        $orderListWithNames = [];
+        $anonymizedOrderLists[] = $this->generateOrderListProduct(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds);
+        $orderListWithNames[] = $this->generateOrderListProduct(false, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds);
+        $anonymizedOrderLists[] = $this->generateOrderListCustomer(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds);
+        $orderListWithNames[] = $this->generateOrderListCustomer(false, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds);
 
         $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
 
@@ -78,10 +89,7 @@ class GenerateOrderListTask extends Task {
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.send_order_list');
             $email->setTo($manufacturer->address_manufacturer->email)
-            ->setAttachments([
-                $productPdfFile,
-                $customerPdfFile,
-            ])
+            ->setAttachments($manufacturer->anonymize_customers ? $anonymizedOrderLists : $orderListWithNames)
             ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormatted)
             ->setViewVars([
                 'manufacturer' => $manufacturer,
