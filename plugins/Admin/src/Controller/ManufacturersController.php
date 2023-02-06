@@ -631,7 +631,6 @@ class ManufacturersController extends AdminAppController
 
         $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
-        $isAnonymized = h($this->getRequest()->getQuery('isAnonymized'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -640,8 +639,10 @@ class ManufacturersController extends AdminAppController
             ],
         ])->first();
 
-        if (empty($isAnonymized)) {
+        if (!in_array('isAnonymized', array_keys($this->getRequest()->getQueryParams()))) {
             $isAnonymized = $manufacturer->anonymize_customers;
+        } else {
+            $isAnonymized = h($this->getRequest()->getQuery('isAnonymized'));
         }
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
