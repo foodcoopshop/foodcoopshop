@@ -35,7 +35,7 @@ abstract class OrderListPdfWriter extends PdfWriter
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
     }
 
-    public function prepareAndSetData($manufacturerId, $pickupDay, $validOrderStates, $orderDetailIds)
+    public function prepareAndSetData($manufacturerId, $pickupDay, $validOrderStates, $orderDetailIds, $isAnonymized)
     {
 
         $reflect = new \ReflectionClass($this);
@@ -66,9 +66,8 @@ abstract class OrderListPdfWriter extends PdfWriter
             $orderDetailIds,
         );
 
-        if ($manufacturer->anonymize_customers) {
-            // uncomment when #929 is ready
-            // $results = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($results);
+        if ($isAnonymized) {
+            $results = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($results);
         }
 
         $this->setSums($results);

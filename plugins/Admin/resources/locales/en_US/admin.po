@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-19 11:14+0200\n"
+"POT-Creation-Date: 2023-02-06 09:18+0100\n"
 "PO-Revision-Date: 2023-01-31 08:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1365,11 +1365,13 @@ msgstr "Order list by product"
 msgid "Order_list_by_member"
 msgstr "Order list by member"
 
-msgid "Show_list_(grouped_by_product)"
-msgstr "Show list (grouped by product)"
+#, fuzzy
+msgid "Anonymized_list"
+msgstr "Anonymize members?"
 
-msgid "Show_list_(grouped_by_member)"
-msgstr "Show list (grouped by member)"
+#, fuzzy
+msgid "List_with_names"
+msgstr "Last name"
 
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
@@ -1634,6 +1636,14 @@ msgstr "Show deposit account"
 
 msgid "Edit_manufacturer_settings"
 msgstr "Edit manufacturer settings"
+
+#, fuzzy
+msgid "grouped_by_product"
+msgstr "Group by product"
+
+#, fuzzy
+msgid "grouped_by_customer"
+msgstr "Group by member"
 
 msgid "Test_order_list"
 msgstr "Test order list"
@@ -2417,6 +2427,20 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "Anonymize_members"
+#~ msgstr "Anonymize members?"
+
+#~ msgid "Show_list_(grouped_by_product)"
+#~ msgstr "Show list (grouped by product)"
+
+#~ msgid "Show_list_(grouped_by_member)"
+#~ msgstr "Show list (grouped by member)"
+
+#, fuzzy
+#~ msgid "Show_list_(anonymized)"
+#~ msgstr "Show list (grouped by member)"
 
 #~ msgid "Delete_selected_products"
 #~ msgstr "Delete selected products"

@@ -47,23 +47,23 @@ class GenerateOrderListTask extends Task {
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
 
-        // START generate PDF grouped by PRODUCT
+        // START generate PDFs grouped by PRODUCT
         $pdfWriter = new OrderListByProductPdfWriter();
         $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
             $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists
         );
         $pdfWriter->setFilename($productPdfFile);
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, false);
         $pdfWriter->writeFile();
         // END generate PDF grouped by PRODUCT
 
-        // START generate PDF grouped by CUSTOMER
+        // START generate PDFs grouped by CUSTOMER
         $pdfWriter = new OrderListByCustomerPdfWriter();
         $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
             $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists
         );
         $pdfWriter->setFilename($customerPdfFile);
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, false);
         $pdfWriter->writeFile();
         // END generate PDF grouped by CUSTOMER
 

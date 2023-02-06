@@ -100,8 +100,10 @@ class ListsController extends AdminAppController
                 $files[] = [
                     'delivery_date' => $deliveryDate,
                     'manufacturer_name' => $manufacturer->name,
-                    'product_list_link' => $productListLink,
-                    'customer_list_link' => $customerListLink
+                    'product_list_link_anonymized' => $productListLink,
+                    'product_list_link_with_names' => $productListLink,
+                    'customer_list_link_anonymized' => $customerListLink,
+                    'customer_list_link_with_names' => $customerListLink,
                 ];
 
                 $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');

@@ -365,13 +365,12 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     public function testContentOfOrderListWithoutPricePerUnitAnonymized()
     {
-        $this->markTestSkipped('waiting for #929');
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
-        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&isAnonymized=1&outputType=html');
         $this->assertResponseContains('D.S. - ID 92');
         $this->assertResponseNotContains('Demo Superadmin');
-        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&isAnonymized=1&outputType=html');
         $this->assertResponseContains('D.S. - ID 92');
         $this->assertResponseNotContains('Demo Superadmin');
     }
@@ -389,7 +388,6 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnit.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
-
     }
 
     public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled()

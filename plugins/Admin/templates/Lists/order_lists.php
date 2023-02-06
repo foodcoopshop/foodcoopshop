@@ -73,12 +73,21 @@ use Cake\Core\Configure;
 
         echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Show_list_(grouped_by_product)'),
-            $file['product_list_link'],
+            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Anonymized_list'),
+            $file['product_list_link_anonymized'],
             [
                 'class' => 'btn btn-outline-light',
                 'target' => '_blank',
-                'title' => __d('admin', 'Show_list_(grouped_by_product)'),
+                'escape' => false
+            ]
+        );
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'List_with_names'),
+            $file['product_list_link_with_names'],
+            [
+                'class' => 'btn btn-outline-light',
+                'style' => 'margin-left:5px;',
+                'target' => '_blank',
                 'escape' => false
             ]
         );
@@ -86,12 +95,21 @@ use Cake\Core\Configure;
 
         echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Show_list_(grouped_by_member)'),
-            $file['customer_list_link'],
+            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Anonymized_list'),
+            $file['customer_list_link_anonymized'],
             [
                 'class' => 'btn btn-outline-light',
                 'target' => '_blank',
-                'title' => __d('admin', 'Show_list_(grouped_by_member)'),
+                'escape' => false
+            ]
+        );
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'List_with_names'),
+            $file['customer_list_link_with_names'],
+            [
+                'class' => 'btn btn-outline-light',
+                'style' => 'margin-left:5px;',
+                'target' => '_blank',
                 'escape' => false
             ]
         );

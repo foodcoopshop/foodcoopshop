@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-19 11:14+0200\n"
-"PO-Revision-Date: 2023-01-31 08:18+0100\n"
+"POT-Creation-Date: 2023-02-06 09:18+0100\n"
+"PO-Revision-Date: 2023-02-06 08:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1368,11 +1368,11 @@ msgstr "Bestellliste nach Produkt"
 msgid "Order_list_by_member"
 msgstr "Bestellliste nach Mitglied"
 
-msgid "Show_list_(grouped_by_product)"
-msgstr "Liste anzeigen (gruppiert nach Produkt)"
+msgid "Anonymized_list"
+msgstr "Anonymisierte Liste"
 
-msgid "Show_list_(grouped_by_member)"
-msgstr "Liste anzeigen (gruppiert nach Mitglied)"
+msgid "List_with_names"
+msgstr "Liste mit Namen"
 
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
@@ -1637,6 +1637,12 @@ msgstr "Pfandkonto anzeigen"
 
 msgid "Edit_manufacturer_settings"
 msgstr "Hersteller-Einstellungen bearbeiten"
+
+msgid "grouped_by_product"
+msgstr "gruppiert nach Produkt"
+
+msgid "grouped_by_customer"
+msgstr "gruppiert nach Mitglied"
 
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
@@ -2420,6 +2426,19 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#, fuzzy
+#~ msgid "Anonymize_members"
+#~ msgstr "Mitglieder-Daten anonymisieren?"
+
+#~ msgid "Show_list_(grouped_by_product)"
+#~ msgstr "Liste anzeigen (gruppiert nach Produkt)"
+
+#~ msgid "Show_list_(grouped_by_member)"
+#~ msgstr "Liste anzeigen (gruppiert nach Mitglied)"
+
+#~ msgid "Show_list_(anonymized)"
+#~ msgstr "Liste anzeigen (anonymisiert)"
 
 #~ msgid "Delete_selected_products"
 #~ msgstr "Ausgewählte Produkte löschen"

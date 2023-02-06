@@ -583,7 +583,7 @@ class ManufacturersController extends AdminAppController
         $newInvoiceNumber = 'xxx';
 
         $pdfWriter = new InvoiceToManufacturerPdfWriter();
-        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
+        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx', $isAnonymized = $manufacturer->anonymize_customers);
         if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
@@ -640,6 +640,10 @@ class ManufacturersController extends AdminAppController
             ],
         ])->first();
 
+        if (empty($isAnonymized)) {
+            $isAnonymized = $manufacturer->anonymize_customers;
+        }
+
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
@@ -659,7 +663,7 @@ class ManufacturersController extends AdminAppController
         $pdfFile = $this->getOrderListFilenameForWriteInline($manufacturerId, $manufacturer->name, $pickupDay, $typeString);
         $pdfWriter->setFilename($pdfFile);
 
-        $pdfWriter->prepareAndSetData($manufacturerId, $pickupDayDbFormat, [], $orderDetailIds);
+        $pdfWriter->prepareAndSetData($manufacturerId, $pickupDayDbFormat, [], $orderDetailIds, $isAnonymized);
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
             return $this->response->withStringBody($pdfWriter->writeHtml());
         }
