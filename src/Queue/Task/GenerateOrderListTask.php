@@ -84,7 +84,6 @@ class GenerateOrderListTask extends Task {
 
         if ($sendEmail) {
 
-            $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
             $attachments = $orderListsWithNames;
