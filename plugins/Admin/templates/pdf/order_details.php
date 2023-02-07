@@ -184,7 +184,7 @@ foreach ($orderDetails as $od) {
         $pdf->renderTaxSumTable($taxRates[$orderDetail->id_customer]);
     }
 
-    if (Configure::read('app.pageBreakOnOrderDetailsAsPdfEnabled') && $j < count($orderDetails)) {
+    if ($j < count($orderDetails)) {
         $pdf->AddPage();
     }
 
