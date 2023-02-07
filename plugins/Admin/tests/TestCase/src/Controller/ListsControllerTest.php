@@ -140,7 +140,7 @@ class ListsControllerTest extends AppCakeTestCase
 
         // check list page as admin
         $this->get($listPageUrl);
-        $this->assertResponseContains('<b>3</b> Datensätze');
+        $this->assertResponseContains('<b>6</b> Datensätze');
         $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Gemüse-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Milch-Hersteller</td>');
