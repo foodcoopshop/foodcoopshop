@@ -108,7 +108,6 @@ return [
         'selfServiceModeShowOnlyStockProducts' => true,
         'selfServiceModeAutoGenerateInvoice' => true,
         'showOrderedProductsTotalAmountInCatalog' => false,
-        'pageBreakOnOrderDetailsAsPdfEnabled' => true,
         'anonymizeCustomersForManufacturersEnabled' => false,
 
         /**
