@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-06 17:09+0100\n"
-"PO-Revision-Date: 2023-02-06 17:09+0100\n"
+"POT-Creation-Date: 2023-02-07 08:35+0100\n"
+"PO-Revision-Date: 2023-02-07 08:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -261,11 +261,11 @@ msgstr "Bestellliste"
 msgid "member"
 msgstr "Mitglied"
 
-msgid "Anonymized_list"
-msgstr "Anonymisierte Liste"
-
 msgid "Order_list_with_clear_names"
-msgstr "Bestellliste mit Klarnamen"
+msgstr "Bestellliste mit Mitgliedernamen"
+
+msgid "Anonymized_order_list"
+msgstr "Anonymisierte Bestellliste"
 
 msgid "Show_order_list"
 msgstr "Bestellliste anzeigen"
@@ -1644,11 +1644,8 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "grouped_by_product"
 msgstr "gruppiert nach Produkt"
 
-msgid "List_with_clear_names"
-msgstr "Liste mit Klarnamen"
-
-msgid "Anonymized_order_list"
-msgstr "Anonymisierte Bestellliste"
+msgid "Anonymized_list"
+msgstr "Anonymisierte Liste"
 
 msgid "grouped_by_customer"
 msgstr "gruppiert nach Mitglied"
@@ -2435,6 +2432,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "List_with_clear_names"
+#~ msgstr "Liste mit Klarnamen"
 
 #, fuzzy
 #~ msgid "Anonymize_members"

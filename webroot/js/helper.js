@@ -737,7 +737,7 @@ foodcoopshop.Helper = {
             $(this).not('.tooltipstered').tooltipster({
                 contentAsHTML: true,
                 interactive: true,
-                maxWidth: 400,
+                maxWidth: 450,
                 distance: 0,
                 trigger: trigger,
                 animationDuration: 0,

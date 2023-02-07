@@ -239,48 +239,49 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
         $orderListProductBaseLink = '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom;
-        $testOrderListLinks = '<p><b>' . h($manufacturer->name) . '</b><br />';
+        $testOrderListLinks = '<div class="generate-order-lists-tooltip">';
+        $testOrderListLinks .= '<p><b>' . h($manufacturer->name) . '</b><br />';
         $testOrderListLinks .= __d('admin', 'Anonymize_customers?') . ' <b>' . ($manufacturer->anonymize_customers ? __d('admin', 'yes') : __d('admin', 'no')) . '</b></p>';
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'List_with_clear_names') . ' - ' . __d('admin', 'grouped_by_product'),
+            '<i class="fas fa-eye ok"></i> ' . __d('admin', 'Order_list_with_clear_names') . ' - ' . __d('admin', 'grouped_by_product'),
             $orderListProductBaseLink . '&isAnonymized=0',
             [
                 'class' => 'btn btn-outline-light',
-                'style' => 'margin-bottom:5px;text-decoration:none ! important;',
+                'style' => 'margin-bottom:5px;',
                 'target' => '_blank',
                 'escape' => false,
         ]);
         $testOrderListLinks .= '<br />';
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Anonymized_list') . ' - ' . __d('admin', 'grouped_by_product'),
+            '<i class="fas fa-eye-slash ok"></i> ' . __d('admin', 'Anonymized_list') . ' - ' . __d('admin', 'grouped_by_product'),
             $orderListProductBaseLink . '&isAnonymized=1',
             [
                 'class' => 'btn btn-outline-light',
-                'style' => 'margin-bottom:15px;text-decoration:none ! important;',
+                'style' => 'margin-bottom:15px;',
                 'target' => '_blank',
                 'escape' => false,
         ]);
         $testOrderListLinks .= '<br />';
         $orderListCustomerBaseLink = '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom;
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Order_list_with_clear_names') . ' - ' . __d('admin', 'grouped_by_customer'),
+            '<i class="fas fa-eye ok"></i> ' . __d('admin', 'Order_list_with_clear_names') . ' - ' . __d('admin', 'grouped_by_customer'),
             $orderListCustomerBaseLink . '&isAnonymized=0',
             [
                 'class' => 'btn btn-outline-light',
-                'style' => 'margin-bottom:5px;text-decoration:none ! important;',
+                'style' => 'margin-bottom:5px;',
                 'target' => '_blank',
                 'escape' => false,
         ]);
         $testOrderListLinks .= '<br />';
         $testOrderListLinks .= $this->Html->link(
-            '<i class="fas fa-arrow-right ok"></i> ' . __d('admin', 'Anonymized_order_list') . ' - ' . __d('admin', 'grouped_by_customer'),
+            '<i class="fas fa-eye-slash ok"></i> ' . __d('admin', 'Anonymized_order_list') . ' - ' . __d('admin', 'grouped_by_customer'),
             $orderListCustomerBaseLink . '&isAnonymized=1',
             [
                 'class' => 'btn btn-outline-light',
-                'style' => 'text-decoration:none ! important;',
                 'target' => '_blank',
                 'escape' => false,
         ]);
+        $testOrderListLinks .= '</div>';
         echo '<span class="test-order-list" title="' . h($testOrderListLinks) . '">' . __d('admin', 'Test_order_list').'</span>';
     echo '</td>';
 

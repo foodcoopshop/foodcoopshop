@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-06 17:09+0100\n"
-"PO-Revision-Date: 2023-02-06 17:09+0100\n"
+"POT-Creation-Date: 2023-02-07 08:35+0100\n"
+"PO-Revision-Date: 2023-02-07 08:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -261,11 +261,11 @@ msgstr "Order list"
 msgid "member"
 msgstr "member"
 
-msgid "Anonymized_list"
-msgstr "Anonymized list"
-
 msgid "Order_list_with_clear_names"
-msgstr "Order list with clear names"
+msgstr "Order list with member names"
+
+msgid "Anonymized_order_list"
+msgstr "Anonymized order list"
 
 msgid "Show_order_list"
 msgstr "Show order list"
@@ -1641,11 +1641,8 @@ msgstr "Edit manufacturer settings"
 msgid "grouped_by_product"
 msgstr "group by product"
 
-msgid "List_with_clear_names"
-msgstr "List with clear names"
-
-msgid "Anonymized_order_list"
-msgstr "Anonymized order list"
+msgid "Anonymized_list"
+msgstr "Anonymized list"
 
 msgid "grouped_by_customer"
 msgstr "group by member"
@@ -2432,6 +2429,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "List_with_clear_names"
+#~ msgstr "List with clear names"
 
 #, fuzzy
 #~ msgid "Anonymize_members"

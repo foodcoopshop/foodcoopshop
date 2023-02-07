@@ -74,7 +74,7 @@ use Cake\Core\Configure;
         echo '<td>';
             foreach($file['product_lists'] as $productList) {
                 echo $this->Html->link(
-                    '<i class="fas fa-arrow-right ok"></i> ' . $productList['label'],
+                    '<i class="fas ' . $productList['icon'] .' ok"></i> ' . $productList['label'],
                     $productList['link'],
                     [
                         'class' => 'btn btn-outline-light',
@@ -88,7 +88,7 @@ use Cake\Core\Configure;
         echo '<td>';
             foreach($file['customer_lists'] as $customerList) {
                 echo $this->Html->link(
-                    '<i class="fas fa-arrow-right ok"></i> ' . $customerList['label'],
+                    '<i class="fas ' . $customerList['icon'] .' ok"></i> ' . $customerList['label'],
                     $customerList['link'],
                     [
                         'class' => 'btn btn-outline-light',
