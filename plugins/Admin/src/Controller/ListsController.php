@@ -135,9 +135,11 @@ class ListsController extends AdminAppController
                 'is_anonymized' => $isAnonymized,
             ];
             
-            $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
-            
         }
+
+        $files = Hash::sort($files, '{n}.product_lists.0.label', 'asc');
+        $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
+
         $this->set('files', $files);
 
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
