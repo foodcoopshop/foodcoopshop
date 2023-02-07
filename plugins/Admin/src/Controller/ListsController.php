@@ -120,6 +120,7 @@ class ListsController extends AdminAppController
             }
             if ($this->AppAuth->isManufacturer()) {
                 $listLabel = __d('admin', 'Show_order_list');
+                $listIcon = 'fa-arrow-right';
             }
             $files[] = [
                 'delivery_date' => $deliveryDate,
