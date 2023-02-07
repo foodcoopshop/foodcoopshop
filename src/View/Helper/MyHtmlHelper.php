@@ -274,14 +274,14 @@ class MyHtmlHelper extends HtmlHelper
         return __('Deleted_Email_Address');
     }
 
-    public function anonymizeCustomerName(string $name, int $id)
+    public function anonymizeCustomerName(string $name, int $id): string
     {
         $words = explode(' ', $name);
         $pieces = [];
         foreach ($words as $w) {
-            $pieces[] = mb_substr($w, 0, 1) . '.';
+            $pieces[] = mb_substr($w, 0, 1);
         }
-        $anonymizedCustomerName = join('', $pieces) . ' - ID ' . $id;
+        $anonymizedCustomerName = join('.', $pieces) . '. - ID ' . $id;
         return $anonymizedCustomerName;
     }
 
