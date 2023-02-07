@@ -241,7 +241,7 @@ foreach ($manufacturers as $manufacturer) {
         $orderListProductBaseLink = '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $dateFrom;
         $testOrderListLinks = '<div class="generate-order-lists-tooltip">';
         $testOrderListLinks .= '<p><b>' . h($manufacturer->name) . '</b><br />';
-        $testOrderListLinks .= __d('admin', 'Anonymize_customers?') . ' <b>' . ($manufacturer->anonymize_customers ? __d('admin', 'yes') : __d('admin', 'no')) . '</b></p>';
+        $testOrderListLinks .= __d('admin', 'Anonymize_customers?') . ' <b>' . ($manufacturer->anonymize_customers ? __d('admin', 'yes') . ' <i class="fas fa-eye-slash ok"></i>' : __d('admin', 'no') . ' <i class="fas fa-eye ok"></i>') . '</b></p>';
         $testOrderListLinks .= $this->Html->link(
             '<i class="fas fa-eye ok"></i> ' . __d('admin', 'Order_list_with_clear_names') . ' - ' . __d('admin', 'grouped_by_product'),
             $orderListProductBaseLink . '&isAnonymized=0',
