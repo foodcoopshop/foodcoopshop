@@ -59,6 +59,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListsIfOneOrderAvailable()
     {
 
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
+
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
 
@@ -111,6 +113,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     {
         $cronjobRunDay = '2018-01-31';
         $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($cronjobRunDay));
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
 
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
@@ -132,7 +135,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
 
-        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1,2,3,4,5], [6,7,8,9,10,11]);
+        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1,2,3,4,5], [6,7]);
     }
 
     public function testSendOrderListsWithSendOrderListFalse()
@@ -140,6 +143,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $cronjobRunDay = '2018-01-31';
         $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($cronjobRunDay));
 
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->changeManufacturer(4, 'send_order_list', 0);
         $this->runAndAssertQueue();
 
@@ -155,7 +159,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $pickupDayFormatted = new FrozenDate($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
-            );
+        );
 
         $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormatted);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
@@ -163,7 +167,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
 
-        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1,2,3,4,5], [6,7,8,9,10,11]);
+        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1,2,3,4,5], [6,7]);
 
     }
 
@@ -172,6 +176,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $cronjobRunDay = '2018-01-30';
         $productId = 346;
         $orderDetailId = 1;
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
 
         // 1) run cronjob and assert no changings
         $this->exec('send_order_lists ' . $cronjobRunDay);
@@ -214,6 +219,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     public function testSendOrderListsWithDifferentIndividualSendOrderListDayAndWeeklySendDay()
     {
+
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $productId = 346;
         $orderDetailIdIndividualDate = 1;
@@ -524,7 +531,6 @@ class SendOrderListsCommandTest extends AppCakeTestCase
             }
             $files[] = str_replace(Configure::read('app.folder_order_lists'), '', $object->getPathName());
         }
-
         sort($files);
         
         $this->assertEquals(count($clearText) + count($anonymous), count($files));

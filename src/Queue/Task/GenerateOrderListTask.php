@@ -71,25 +71,23 @@ class GenerateOrderListTask extends Task {
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
 
-        $anonymizedOrderLists = [
-            $this->generateOrderListProduct(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
-            $this->generateOrderListCustomer(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
-        ];
-        $orderListsWithNames = [
+        $attachments = [
             $this->generateOrderListProduct(false, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
             $this->generateOrderListCustomer(false, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
         ];
+        
+        if ($manufacturer->anonymize_customers) {
+            $attachments = [
+                $this->generateOrderListProduct(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
+                $this->generateOrderListCustomer(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
+            ];
+        }
 
         $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
 
         if ($sendEmail) {
 
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
-
-            $attachments = $orderListsWithNames;
-            if ($manufacturer->anonymize_customers) {
-                $attachments = $anonymizedOrderLists;
-            }
 
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.send_order_list');

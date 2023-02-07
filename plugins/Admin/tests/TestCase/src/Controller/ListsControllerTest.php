@@ -82,6 +82,7 @@ class ListsControllerTest extends AppCakeTestCase
      */
     public function testAccessOrderListPageAndDownloadableFile()
     {
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->exec('send_order_lists 2018-01-31');
         $this->runAndAssertQueue();
 
@@ -98,6 +99,7 @@ class ListsControllerTest extends AppCakeTestCase
             $files[] = str_replace(Configure::read('app.folder_order_lists'), '', $object->getPathName());
         }
         sort($files);
+
         $orderListDownloadUrlClearText = '/admin/lists/getOrderList?file=' . $files[0];
         $orderListDownloadUrlAnonymized = '/admin/lists/getOrderList?file=' . $files[6];
 
@@ -110,17 +112,17 @@ class ListsControllerTest extends AppCakeTestCase
         $this->assertResponseNotContains('<td>Demo Milch-Hersteller</td>');
 
         // check downloadable file as correct manufacturer
-        $this->get($orderListDownloadUrlClearText);
+        $this->get($orderListDownloadUrlAnonymized);
         $this->assertResponseOk();
         $this->assertContentType('pdf');
 
-        // check if anonymized file is not downloadable with clear text configuration
-        $this->get($orderListDownloadUrlAnonymized);
+        // check if clear text file is not downloadable with anonymized configuration
+        $this->get($orderListDownloadUrlClearText);
         $this->assertResponseCode(401);
 
-        // check if clear text file is not downloadable with anonymized configuration
-        $this->changeManufacturer(4, 'anonymize_customers', 1);
-        $this->get($orderListDownloadUrlClearText);
+        // check if anonymized file is not downloadable with clear text configuration
+        $this->changeManufacturer(4, 'anonymize_customers', 0);
+        $this->get($orderListDownloadUrlAnonymized);
         $this->assertResponseCode(401);
 
         // check downloadable file as wrong manufacturer
@@ -140,7 +142,7 @@ class ListsControllerTest extends AppCakeTestCase
 
         // check list page as admin
         $this->get($listPageUrl);
-        $this->assertResponseContains('<b>6</b> Datensätze');
+        $this->assertResponseContains('<b>4</b> Datensätze');
         $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Gemüse-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Milch-Hersteller</td>');
