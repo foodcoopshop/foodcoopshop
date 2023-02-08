@@ -108,7 +108,6 @@ return [
         'selfServiceModeShowOnlyStockProducts' => true,
         'selfServiceModeAutoGenerateInvoice' => true,
         'showOrderedProductsTotalAmountInCatalog' => false,
-        'anonymizeCustomersForManufacturersEnabled' => false,
 
         /**
          * id of the category "all products"
