@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-19 11:14+0200\n"
+"POT-Creation-Date: 2023-02-07 08:35+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -258,6 +258,15 @@ msgid "Order_list"
 msgstr ""
 
 msgid "member"
+msgstr ""
+
+msgid "Order_list_with_clear_names"
+msgstr ""
+
+msgid "Anonymized_order_list"
+msgstr ""
+
+msgid "Show_order_list"
 msgstr ""
 
 msgid "Order_lists"
@@ -1358,12 +1367,6 @@ msgstr ""
 msgid "Order_list_by_member"
 msgstr ""
 
-msgid "Show_list_(grouped_by_product)"
-msgstr ""
-
-msgid "Show_list_(grouped_by_member)"
-msgstr ""
-
 msgid "docs_route_manufacturers"
 msgstr ""
 
@@ -1626,6 +1629,15 @@ msgid "Show_deposit_account"
 msgstr ""
 
 msgid "Edit_manufacturer_settings"
+msgstr ""
+
+msgid "grouped_by_product"
+msgstr ""
+
+msgid "Anonymized_list"
+msgstr ""
+
+msgid "grouped_by_customer"
 msgstr ""
 
 msgid "Test_order_list"

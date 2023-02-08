@@ -965,3 +965,7 @@ body.feedbacks textarea {
 body.feedbacks form div.error-message {
     margin-top: -10px;
 }
+body.manufacturers .generate-order-lists-tooltip a.btn {
+    text-align: left;
+    text-decoration: none ! important;
+}

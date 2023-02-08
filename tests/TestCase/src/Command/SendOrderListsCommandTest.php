@@ -59,6 +59,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListsIfOneOrderAvailable()
     {
 
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
+
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
 
@@ -102,12 +104,16 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         );
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
+
+        $this->assertGenerationOfOrderLists('2019'.DS.'03', [0,1], [2,3]);
+
     }
 
     public function testSendOrderListsIfMoreOrdersAvailable()
     {
         $cronjobRunDay = '2018-01-31';
         $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($cronjobRunDay));
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
 
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
@@ -128,6 +134,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
+
+        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1,2,3,4,5], [6,7]);
     }
 
     public function testSendOrderListsWithSendOrderListFalse()
@@ -135,6 +143,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $cronjobRunDay = '2018-01-31';
         $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($cronjobRunDay));
 
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->changeManufacturer(4, 'send_order_list', 0);
         $this->runAndAssertQueue();
 
@@ -150,13 +159,15 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $pickupDayFormatted = new FrozenDate($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
-            );
+        );
 
         $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormatted);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
+
+        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1,2,3,4,5], [6,7]);
 
     }
 
@@ -165,6 +176,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $cronjobRunDay = '2018-01-30';
         $productId = 346;
         $orderDetailId = 1;
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
 
         // 1) run cronjob and assert no changings
         $this->exec('send_order_lists ' . $cronjobRunDay);
@@ -201,10 +213,14 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         ])->toArray();
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 1 Produkt / 1,82 €<br />Verschickte Bestelllisten: 1', $actionLogs[1]->text);
 
+        $this->assertGenerationOfOrderLists('2018'.DS.'02', [0,1], [2,3]);
+
     }
 
     public function testSendOrderListsWithDifferentIndividualSendOrderListDayAndWeeklySendDay()
     {
+
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $productId = 346;
         $orderDetailIdIndividualDate = 1;
@@ -282,6 +298,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->runAndAssertQueue();
 
         $this->assertMailCount(3);
+
+        $this->assertGenerationOfOrderLists('2019'.DS.'10', [0,1,2,3], [4,5,6,7]);
 
     }
 
@@ -365,13 +383,12 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     public function testContentOfOrderListWithoutPricePerUnitAnonymized()
     {
-        $this->markTestSkipped('waiting for #929');
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
-        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&isAnonymized=1&outputType=html');
         $this->assertResponseContains('D.S. - ID 92');
         $this->assertResponseNotContains('Demo Superadmin');
-        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&isAnonymized=1&outputType=html');
         $this->assertResponseContains('D.S. - ID 92');
         $this->assertResponseNotContains('Demo Superadmin');
     }
@@ -389,7 +406,6 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnit.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
-
     }
 
     public function testContentOfOrderListWithoutPricePerUnitAndPurchasePriceEnabled()
@@ -501,6 +517,29 @@ class SendOrderListsCommandTest extends AppCakeTestCase
             ]
         ])->first();
         $this->assertEquals($expectedOrderState, $newOrderDetail->order_state);
+    }
+
+    private function assertGenerationOfOrderLists(string $datePath, array $clearText, array $anonymous)
+    {
+        $path = realpath(Configure::read('app.folder_order_lists') . DS . $datePath);
+        $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
+
+        $files = [];
+        foreach ($objects as $name => $object) {
+            if (!preg_match('/\.pdf$/', $name)) {
+                continue;
+            }
+            $files[] = str_replace(Configure::read('app.folder_order_lists'), '', $object->getPathName());
+        }
+        sort($files);
+        
+        $this->assertEquals(count($clearText) + count($anonymous), count($files));
+        foreach($clearText as $clearTextIndex) {
+            $this->assertDoesNotMatchRegularExpression('/anonymized/', $files[$clearTextIndex]);
+        }
+        foreach($anonymous as $anonymousIndex) {
+            $this->assertMatchesRegularExpression('/anonymized/', $files[$anonymousIndex]);
+        }
     }
 
     public function tearDown(): void

@@ -66,7 +66,7 @@ class ManufacturersController extends AdminAppController
             [
                 'active' => APP_ON,
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
-                'anonymize_customers' => Configure::read('app.anonymizeCustomersForManufacturersEnabled') ? APP_ON : APP_OFF,
+                'anonymize_customers' => APP_ON,
             ],
             ['validate' => false]
         );
@@ -583,7 +583,7 @@ class ManufacturersController extends AdminAppController
         $newInvoiceNumber = 'xxx';
 
         $pdfWriter = new InvoiceToManufacturerPdfWriter();
-        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
+        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx', $manufacturer->anonymize_customers);
         if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
@@ -605,7 +605,7 @@ class ManufacturersController extends AdminAppController
     private function getOrderListFilenameForWriteInline($manufacturerId, $manufacturerName, $pickupDay, $type): string
     {
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
-        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists);
+        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists, false);
         $productPdfFile = explode(DS, $productPdfFile);
         $productPdfFile = end($productPdfFile);
         $productPdfFile = substr($productPdfFile, 11);
@@ -639,6 +639,12 @@ class ManufacturersController extends AdminAppController
             ],
         ])->first();
 
+        if (!in_array('isAnonymized', array_keys($this->getRequest()->getQueryParams()))) {
+            $isAnonymized = $manufacturer->anonymize_customers;
+        } else {
+            $isAnonymized = h($this->getRequest()->getQuery('isAnonymized'));
+        }
+
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
@@ -658,7 +664,7 @@ class ManufacturersController extends AdminAppController
         $pdfFile = $this->getOrderListFilenameForWriteInline($manufacturerId, $manufacturer->name, $pickupDay, $typeString);
         $pdfWriter->setFilename($pdfFile);
 
-        $pdfWriter->prepareAndSetData($manufacturerId, $pickupDayDbFormat, [], $orderDetailIds);
+        $pdfWriter->prepareAndSetData($manufacturerId, $pickupDayDbFormat, [], $orderDetailIds, $isAnonymized);
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
             return $this->response->withStringBody($pdfWriter->writeHtml());
         }
