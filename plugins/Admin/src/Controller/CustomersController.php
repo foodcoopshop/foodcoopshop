@@ -718,7 +718,8 @@ class CustomersController extends AdminAppController
         }
 
         $query->select([
-            'last_pickup_day' => 'Customers.id_customer', // add fake field to make custom sort icon work
+            'credit_balance' => 'Customers.id_customer', // add fake field to make custom sort icon work and avoid "Column not found: 1054 Unknown column"
+            'last_pickup_day' => 'Customers.id_customer',
             'member_fee' => 'Customers.id_customer',
         ]);
         $query->select($this->Customer->AddressCustomers);
@@ -734,6 +735,7 @@ class CustomersController extends AdminAppController
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
                 'Feedbacks.modified',
+                'credit_balance',
                 'member_fee',
                 'last_pickup_day',
             ],
@@ -758,7 +760,7 @@ class CustomersController extends AdminAppController
         }
 
         if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) 
-            && in_array($this->getRequest()->getQuery('sort'), ['member_fee', 'last_pickup_day'])) {
+            && in_array($this->getRequest()->getQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {
             $path = '{n}.' .$this->getRequest()->getQuery('sort');
             $type = 'numeric';
             if ($this->getRequest()->getQuery('sort') == 'last_pickup_day') {

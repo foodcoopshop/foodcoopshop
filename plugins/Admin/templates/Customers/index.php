@@ -73,7 +73,7 @@ echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>'.__d('admin', 'Credit').'</th>';
+    echo '<th>' . $this->Paginator->sort('credit_balance',  __d('admin', 'Credit'), ['direction' => 'desc']) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Order_reminder')) . '</th>';
