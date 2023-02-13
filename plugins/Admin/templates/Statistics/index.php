@@ -92,7 +92,7 @@ if ($manufacturerId == 'all') {
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
         echo '<table class="list no-clone-last-row" style="width:350px;margin-bottom:5px;"><tr>';
 
-            echo '<td><b>' . __d('admin', 'Net_turnover') . '</b></td>';
+            echo '<td><b>' . __d('admin', 'Net_turnover_selling_price') . '</b></td>';
             echo '<td>'. __d('admin', 'total') . '</td>';
             echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalNetTurnover) . '</b></td>';
             echo '</tr><tr>';

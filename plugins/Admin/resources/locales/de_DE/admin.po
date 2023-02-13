@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-07 08:35+0100\n"
-"PO-Revision-Date: 2023-02-07 08:36+0100\n"
+"POT-Creation-Date: 2023-02-13 21:01+0100\n"
+"PO-Revision-Date: 2023-02-13 21:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1899,8 +1899,8 @@ msgstr "Netto-Einkaufspreis"
 msgid "Gross_turnover"
 msgstr "Brutto-Umsatz"
 
-msgid "Net_turnover"
-msgstr "Netto-Umsatz"
+msgid "Net_turnover_selling_price"
+msgstr "Netto-Umsatz (VP)"
 
 msgid "total"
 msgstr "gesamt"
@@ -2432,6 +2432,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Net_turnover"
+#~ msgstr "Netto-Umsatz"
 
 #~ msgid "List_with_clear_names"
 #~ msgstr "Liste mit Klarnamen"
