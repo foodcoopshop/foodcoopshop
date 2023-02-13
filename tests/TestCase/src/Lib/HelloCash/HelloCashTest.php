@@ -63,6 +63,16 @@ class HelloCashTest extends AppCakeTestCase
 
         $invoice = $this->Invoice->find('all', [])->first();
 
+        // not-owning user must not be able to download receipt
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
+        $this->assertAccessDeniedFlashMessage();
+
+        // owning user must be able to download receipt
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
+        $this->assertResponseCode(200);
+
         $receiptHtml = $this->HelloCash->getReceipt($invoice->id, false);
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
