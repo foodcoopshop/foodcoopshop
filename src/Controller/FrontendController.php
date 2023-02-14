@@ -23,6 +23,8 @@ use Cake\Event\EventInterface;
 class FrontendController extends AppController
 {
 
+    public $protectEmailAddresses = true;
+
     public function isAuthorized($user)
     {
         return true;

@@ -26,6 +26,8 @@ use hisorange\BrowserDetect\Parser as Browser;
 class AppController extends Controller
 {
 
+    public $protectEmailAddresses = false;
+
     public function initialize(): void
     {
 
@@ -157,10 +159,16 @@ class AppController extends Controller
     public function afterFilter(EventInterface $event)
     {
         parent::afterFilter($event);
-        if (Configure::check('app.outputStringReplacements')) {
-            $newOutput = OutputFilter::replace($this->response->getBody()->__toString(), Configure::read('app.outputStringReplacements'));
-            $this->response = $this->response->withStringBody($newOutput);
+
+        $newOutput = $this->response->getBody()->__toString();
+        if ($this->protectEmailAddresses) {
+            $newOutput = OutputFilter::protectEmailAdresses($newOutput);
         }
+        
+        if (Configure::check('app.outputStringReplacements')) {
+            $newOutput = OutputFilter::replace($newOutput, Configure::read('app.outputStringReplacements'));
+        }
+        $this->response = $this->response->withStringBody($newOutput);
     }
 
     /**
