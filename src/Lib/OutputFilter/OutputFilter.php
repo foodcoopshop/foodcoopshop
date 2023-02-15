@@ -47,8 +47,7 @@ class OutputFilter
 
     protected static function getEmailsFromString($string)
     {
-        $regexp = '/([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+/i';
-        preg_match_all($regexp, $string, $matches);
+        preg_match_all(EMAIL_REGEX, $string, $matches);
         return isset($matches[0]) ? $matches[0] : [];
     }
 
