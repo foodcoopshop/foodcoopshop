@@ -35,7 +35,7 @@ class OutputFilterTest extends AppCakeTestCase
     {
         return [
             'two-equal-emails-separated-with-space' => [
-                'test@test.com test@test.com',
+                'test@test.com test@test.online',
                 2,
             ],
             'two-different-emails-separated-with-slash' => [
