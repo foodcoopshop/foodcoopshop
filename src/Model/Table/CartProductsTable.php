@@ -300,7 +300,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        if (!$appAuth->isOrderForDifferentCustomerMode() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
+        if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
             $message = __('{0}_can_be_ordered_next_week.',
                 [
                     '<b>' . $product->name . '</b>'
