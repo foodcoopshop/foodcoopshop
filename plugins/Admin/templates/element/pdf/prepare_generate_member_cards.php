@@ -23,13 +23,13 @@ $pdf->SetTopMargin(54);
 $pdf->AddPage();
 
 $i = 0;
-$pdf->table = '<table border="1" cellspacing="0" cellpadding="4">';
+$pdf->table = '<table border="0" cellspacing="0" cellpadding="4">';
 foreach($customers as $customer) {
     $pairRecord = $i % 2 == 0;
     if ($pairRecord) {
         $pdf->table .= '<tr>';
     }
-    $pdf->table .= '<td style="width:240px;">'; // roughly 85,60mm x 53,98mm
+    $pdf->table .= '<td style="width:240px;border:1px solid #E6E6E3;">'; // roughly 85,60mm x 53,98mm
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0">';
 
         // START ROW logo and name block
@@ -57,7 +57,8 @@ foreach($customers as $customer) {
 
         // START ROW barcode and customer image
         $pdf->table .= '<tr>';
-            $pdf->table .= '<td style="width:120px;">';
+            $pdf->table .= '<td style="width:5px;"></td>'; //spacer left of barcode
+            $pdf->table .= '<td style="width:120px;" border="0">';
             $barcodeObject = new TCPDFBarcode($customer->system_bar_code, 'C39');
             //https://stackoverflow.com/a/54520065/2100184
             $imgBase64Encoded = @base64_encode($barcodeObject->getBarcodePngData(1.5, 102));
@@ -67,7 +68,7 @@ foreach($customers as $customer) {
             $pdf->table .= '</td>';
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
             // move user image to bottom
-            $pdf->table .= '<td style="width:100px;" align="right">';
+            $pdf->table .= '<td style="width:90px;" align="right">';
             $customerImage = Configure::read('app.customerImagesDir') . DS . Configure::read('app.htmlHelper')->getImageFile(Configure::read('app.customerImagesDir'), $customer->id_customer . '-large');
                 if (file_exists($customerImage)) {
                     $fileinfos = getimagesize($customerImage);
