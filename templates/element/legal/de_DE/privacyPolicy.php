@@ -34,7 +34,7 @@ Betroffene können sich jederzeit direkt an den Verantwortlichen wenden.</p>
 Barichgasse 40-42<br />
 A-1030 Wien<br />
 Telefon: +43 1 52 152-0<br />
-E-Mail: <a href="mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</a><br />
+E-Mail: dsb@dsb.gv.at<br />
 Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 </p>
 

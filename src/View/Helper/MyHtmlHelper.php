@@ -387,7 +387,7 @@ class MyHtmlHelper extends HtmlHelper
     }
 
     /**
-     * @param array $manufacturer
+     * @param $manufacturer
      * @param string $outputType "pdf" of "html"
      * @return string
      */
@@ -420,7 +420,7 @@ class MyHtmlHelper extends HtmlHelper
                 $imprintLines[] = __('Phone') . ': ' . $manufacturer->address_manufacturer->phone;
             }
         }
-        $imprintLines[] = __('Email') . ': ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
+        $imprintLines[] = __('Email') . ': ' . $manufacturer->address_manufacturer->email;
 
         if (!$addressOnly) {
             if ($manufacturer->homepage != '') {

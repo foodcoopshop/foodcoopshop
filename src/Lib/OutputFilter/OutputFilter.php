@@ -16,6 +16,8 @@ declare(strict_types=1);
  */
 namespace App\Lib\OutputFilter;
 
+use App\Controller\Component\StringComponent;
+
 /**
  * Strings in any outputs (email, html, pdf) can be replaced using
  * `app.outputStringReplacements`
@@ -41,6 +43,26 @@ class OutputFilter
 
         return $text;
 
+    }
+
+    protected static function getEmailsFromString($string)
+    {
+        preg_match_all(EMAIL_REGEX, $string, $matches);
+        return isset($matches[0]) ? $matches[0] : [];
+    }
+
+    public static function protectEmailAdresses(string $text): string
+    {
+        $emails = self::getEmailsFromString($text);
+        foreach($emails as $email) {
+            // replace email one by one
+            // https://stackoverflow.com/questions/1252693/using-str-replace-so-that-it-only-acts-on-the-first-match#1252710
+            $position = strpos($text, $email);
+            if ($position !== false) {
+                $text = substr_replace($text, StringComponent::hideEmail($email), $position, strlen($email));
+            }
+        }
+        return $text;
     }
 
 }
