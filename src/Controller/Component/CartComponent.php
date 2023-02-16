@@ -422,7 +422,7 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && !$this->AppAuth->isSelfServiceModeByReferer() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
                 $message = __('{0}_can_be_ordered_next_week.',
                     [
                         '<b>' . $product->name . '</b>'
