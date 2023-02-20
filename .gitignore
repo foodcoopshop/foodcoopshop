@@ -35,6 +35,7 @@ nbproject/*
 # Visual Studio Code
 .vscode
 .history/
+*.code-search
 # Sass preprocessor
 .sass-cache/
 
