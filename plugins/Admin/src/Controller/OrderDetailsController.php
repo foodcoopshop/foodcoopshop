@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use Cake\Core\Configure;
@@ -1051,12 +1050,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
-        $doNotChangePrice = $this->getRequest()->getData('doNotChangePrice');
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
-
-        if ($doNotChangePrice) {
-            Log::error('doNotChangePrice on quantity edit was checked');
-        }
 
         if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
             $message = __d('admin', 'The_delivered_quantity_is_not_valid.');
@@ -1088,30 +1082,28 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
 
-        if (!$doNotChangePrice) {
-            $newProductPrice = round((float) $oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
-            if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
-                $toleranceFactor = 100;
-                $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
-                if ($oldToNewQuantityRelation < 1 / $toleranceFactor || $oldToNewQuantityRelation > $toleranceFactor) {
-                    $message = __d('admin', 'The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
-                        '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($newProductPrice) . '</b>',
-                        '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name . '</b>',
-                    ]);
-                    $this->set([
-                        'status' => 0,
-                        'msg' => $message,
-                    ]);
-                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                    return;
-                }
+        $newProductPrice = round((float) $oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+        if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
+            $toleranceFactor = 100;
+            $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
+            if ($oldToNewQuantityRelation < 1 / $toleranceFactor || $oldToNewQuantityRelation > $toleranceFactor) {
+                $message = __d('admin', 'The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
+                    '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($newProductPrice) . '</b>',
+                    '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name . '</b>',
+                ]);
+                $this->set([
+                    'status' => 0,
+                    'msg' => $message,
+                ]);
+                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                return;
             }
-            if (!empty($oldOrderDetail->order_detail_purchase_price)) {
-                $productPurchasePrice = round((float) $oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
-                $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
-            }
-            $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
         }
+        if (!empty($oldOrderDetail->order_detail_purchase_price)) {
+            $productPurchasePrice = round((float) $oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+            $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
+        }
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
         $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
@@ -1124,7 +1116,7 @@ class OrderDetailsController extends AdminAppController
         $quantityWasChanged = $oldOrderDetail->order_detail_unit->product_quantity_in_units != $productQuantity;
 
         // send email to customer if price was changed
-        if (!$doNotChangePrice && $quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityChanged')) {
+        if ($quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityChanged')) {
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
