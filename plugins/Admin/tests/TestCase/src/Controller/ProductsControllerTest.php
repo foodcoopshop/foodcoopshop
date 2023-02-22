@@ -28,6 +28,7 @@ class ProductsControllerTest extends AppCakeTestCase
     use LoginTrait;
 
     protected $Product;
+    protected $Image;
 
     public function setUp(): void
     {
@@ -642,13 +643,16 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
-    public function testSaveUploadedImageProduct()
+    public function testUploadAndDeleteProductImage()
     {
         $this->loginAsAdmin();
         
         $productId = 340;
         $filename = 'img/tests/test-image.jpg';
+
+        $this->Image = $this->getTableLocator()->get('Images');
         
+        // START upload image
         $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
             'objectId' => $productId,
             'filename' => $filename,
@@ -667,6 +671,28 @@ class ProductsControllerTest extends AppCakeTestCase
             $this->assertTrue(file_exists($thumbsFileName));
             $i++;
         }
+
+        $image = $this->Image->find('all', [
+            'conditions' => [
+                'Images.id_image' => $imageId,
+            ],
+        ])->first();
+        $this->assertNotEmpty($image);
+        
+        // START delete image
+        $this->get('/admin/products/deleteImage/' . $productId);
+
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
+            $this->assertFalse(file_exists($thumbsFileName));
+        }
+
+        $image = $this->Image->find('all', [
+            'conditions' => [
+                'Images.id_image' => $imageId,
+            ],
+        ])->first();
+        $this->assertEmpty($image);
 
     }
 
