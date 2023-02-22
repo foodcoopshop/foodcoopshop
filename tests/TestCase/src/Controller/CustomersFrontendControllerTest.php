@@ -31,7 +31,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     private function setUpProfileImageTests()
     {
-        $profileImageSrcFileAndPath = WWW_ROOT . '/img/tests/test-image.jpg';
+        $profileImageSrcFileAndPath = WWW_ROOT . 'img/tests/test-image.jpg';
         $profileImageTargetFilename = Configure::read('test.customerId') . '-small.jpg';
         copy($profileImageSrcFileAndPath, Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
         return $profileImageTargetFilename;
