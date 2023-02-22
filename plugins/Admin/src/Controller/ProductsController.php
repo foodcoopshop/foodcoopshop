@@ -484,8 +484,9 @@ class ProductsController extends AdminAppController
         $this->set([
             'status' => 1,
             'msg' => 'success',
+            'imageId' => $image->id_image,
         ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'imageId']);
     }
 
     public function editProductAttribute()

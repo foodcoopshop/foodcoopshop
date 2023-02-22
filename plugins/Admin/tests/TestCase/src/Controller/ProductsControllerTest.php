@@ -642,4 +642,32 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
+    public function testSaveUploadedImageProduct()
+    {
+        $this->loginAsAdmin();
+        
+        $productId = 340;
+        $filename = 'img/tests/test-image.jpg';
+        
+        $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
+            'objectId' => $productId,
+            'filename' => $filename,
+        ]);
+
+        $this->assertJsonOk();
+        $imageId = $this->getJsonDecodedContent()->imageId;
+
+        $imageIdAsPath = $this->Html->getProductImageIdAsPath($imageId);
+        $thumbsPath = $this->Html->getProductThumbsPath($imageIdAsPath);
+        $expectedFilesizes = [4224,12364,36656];
+        $i = 0;
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
+            $this->assertEquals($expectedFilesizes[$i], file_exists($thumbsFileName));
+            $this->assertTrue(file_exists($thumbsFileName));
+            $i++;
+        }
+
+    }
+
 }
