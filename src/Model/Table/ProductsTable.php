@@ -5,10 +5,10 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Catalog\Catalog;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\Folder\Folder;
 use App\Lib\RemoteFile\RemoteFile;
 use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
@@ -1464,12 +1464,10 @@ class ProductsTable extends AppTable
 
             if ($imageFromRemoteServer != 'no-image') {
 
-                // recursively create path
-                $dir = new Folder();
-                $dir->delete($thumbsPath);
-                $dir->create($thumbsPath);
-                $dir->chmod($thumbsPath, 0755);
-
+                Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
+                if (!file_exists($thumbsPath)) {
+                    mkdir($thumbsPath, 0755, true);
+                }
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
                     $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
                     $remoteFileName = preg_replace('/-home_default/', $options['suffix'], $imageFromRemoteServer);
@@ -1483,9 +1481,7 @@ class ProductsTable extends AppTable
                     'Images.id_image' => $image->id_image
                 ]);
 
-                // delete physical files
-                $dir = new Folder();
-                $dir->delete($thumbsPath);
+                Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
 
             }
         }
