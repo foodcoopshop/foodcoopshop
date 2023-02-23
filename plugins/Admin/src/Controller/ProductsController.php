@@ -92,6 +92,11 @@ class ProductsController extends AdminAppController
         }
     }
 
+    /**
+     * this method was used to debug 
+     * https://github.com/foodcoopshop/foodcoopshop/issues/824
+     * together with the view it can be removed after release of v3.6
+     */
     public function detectMissingProductImages()
     {
         $products = $this->Product->find('all', [
