@@ -294,6 +294,9 @@ class CustomersController extends FrontendController
             }
 
             if ($this->getRequest()->is('post')) {
+
+                $this->protectEmailAddresses = false; // no spam protected email output in input field when login fails
+                
                 $customer = $this->AppAuth->identify();
                 if ($customer) {
                     $this->AppAuth->setUser($customer);
