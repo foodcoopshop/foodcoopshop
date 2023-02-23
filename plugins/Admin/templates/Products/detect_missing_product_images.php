@@ -43,7 +43,7 @@ foreach($products as $product) {
 if ($i == 0) {
     $outputHtml = Configure::read('appDb.FCS_APP_NAME') . ' ist vom Bug nicht betroffen! Alle Produkt-Bilder sind ok. 👍';
 } else {
-    $introText = '<b>Aufgrund eines Bugs sind die Bilder zu folgenden Produkten leider nicht mehr vorhanden. Trotz intensiver Suche habe ich den Fehler bisher noch nicht eingrenzen können (Stand: 27.04.2022), dh. auch nach einem erneuten Upload kann es sein, dass das Bild wieder verschwindet. Das Fehlen der Bilder fällt nicht sofort auf, da im Produkt-Admin das fehlende Bild nicht rot hinterlegt ist. Hinweise bitte per Mail an office@foodcoopshop.com.<br />Danke für die Mithilfe, Mario<br /><br /></b>';
+    $introText = '<b>Aufgrund eines Bugs (der Ende Februar 2023 gefixt wurde) sind die Bilder zu folgenden Produkten leider nicht mehr vorhanden. Bitte lade sie erneut hoch.<br />Sorry für die Umstände, Mario<br /><br /></b>';
     $outputHtml = $introText . '<b>Anzahl: ' . $i . '</b><br />' . $outputHtml;
 }
 
