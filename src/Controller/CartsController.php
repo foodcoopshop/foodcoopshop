@@ -95,6 +95,11 @@ class CartsController extends FrontendController
             return;
         }
 
+        if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
+            // no spam protected email output in input field when email address is used in comment text
+            $this->protectEmailAddresses = false; 
+        }
+
         $this->set('title_for_layout', __('Finish_cart'));
 
         if ($this->AppAuth->Cart->isCartEmpty()) {

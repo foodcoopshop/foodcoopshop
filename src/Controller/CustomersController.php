@@ -285,7 +285,12 @@ class CustomersController extends FrontendController
 
         $this->set('title_for_layout', $title);
 
-        /**
+        if ($this->getRequest()->is('post')) {
+            // no spam protected email output in input field when login or registration fails
+            $this->protectEmailAddresses = false; 
+        }
+
+            /**
          * login start
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
@@ -294,8 +299,6 @@ class CustomersController extends FrontendController
             }
 
             if ($this->getRequest()->is('post')) {
-
-                $this->protectEmailAddresses = false; // no spam protected email output in input field when login fails
                 
                 $customer = $this->AppAuth->identify();
                 if ($customer) {
