@@ -457,8 +457,10 @@ class ProductsController extends AdminAppController
         $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
         $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
 
-        Folder::rrmdir($thumbsPath);
-        mkdir($thumbsPath, 0755, true);
+        Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
+        if (!file_exists($thumbsPath)) {
+            mkdir($thumbsPath, 0755, true);
+        }
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
 

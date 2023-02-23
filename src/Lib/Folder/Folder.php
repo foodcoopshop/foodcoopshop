@@ -19,6 +19,17 @@ namespace App\Lib\Folder;
 class Folder
 {
 
+    public static function nonRecursivelyRemoveAllFiles(string $dir): void
+    {
+        $dir = rtrim($dir, '/'); // remove last slash if there is one
+        $files = glob($dir . '/*'); // get all file names
+        foreach($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
+
     /**
      * recursively removes an empty and non-empty directory including all sub-directories
      */

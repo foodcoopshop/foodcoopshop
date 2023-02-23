@@ -1425,9 +1425,10 @@ class ProductsTable extends AppTable
 
             if ($imageFromRemoteServer != 'no-image') {
 
-                Folder::rrmdir($thumbsPath);
-                mkdir($thumbsPath, 0755, true);
-
+                Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
+                if (!file_exists($thumbsPath)) {
+                    mkdir($thumbsPath, 0755, true);
+                }
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
                     $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
                     $remoteFileName = preg_replace('/-home_default/', $options['suffix'], $imageFromRemoteServer);
@@ -1441,7 +1442,7 @@ class ProductsTable extends AppTable
                     'Images.id_image' => $image->id_image
                 ]);
 
-                Folder::rrmdir($thumbsPath);
+                Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
 
             }
         }
