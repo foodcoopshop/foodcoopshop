@@ -25,7 +25,8 @@ class ProductsControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public $Product;
+    protected $Product;
+    protected $Image;
 
     public function setUp(): void
     {
@@ -587,6 +588,112 @@ class ProductsControllerTest extends AppCakeTestCase
         }
 
         return $product;
+
+    }
+
+    public function testUploadAndDeleteProductImage()
+    {
+        $this->loginAsAdmin();
+        
+        $productId = 340;
+        $filename = 'img/tests/test-image.jpg';
+
+        $this->Image = $this->getTableLocator()->get('Images');
+        
+        // START upload image
+        $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
+            'objectId' => $productId,
+            'filename' => $filename,
+        ]);
+
+        $this->assertJsonOk();
+        $imageId = $this->getJsonDecodedContent()->imageId;
+
+        $imageIdAsPath = $this->Html->getProductImageIdAsPath($imageId);
+        $thumbsPath = $this->Html->getProductThumbsPath($imageIdAsPath);
+        $expectedFilesizes = [4224,12364,36656];
+        $i = 0;
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
+            $this->assertEquals($expectedFilesizes[$i], file_exists($thumbsFileName));
+            $this->assertTrue(file_exists($thumbsFileName));
+            $i++;
+        }
+
+        $image = $this->Image->find('all', [
+            'conditions' => [
+                'Images.id_image' => $imageId,
+            ],
+        ])->first();
+        $this->assertNotEmpty($image);
+        
+        // START delete image
+        $this->get('/admin/products/deleteImage/' . $productId);
+
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
+            $this->assertFalse(file_exists($thumbsFileName));
+        }
+
+        $image = $this->Image->find('all', [
+            'conditions' => [
+                'Images.id_image' => $imageId,
+            ],
+        ])->first();
+        $this->assertEmpty($image);
+
+    }
+
+    /**
+     * https://github.com/foodcoopshop/foodcoopshop/issues/824
+     * If a product image with an image id of eg. 15 was *replaced* or *deleted*,
+     * all product images with image ids 15x were also removed (folder was recursively deleted)
+     * the corresponding record in table fcs_images was not touched though
+     * this test freezes that bug so that it never happens again :-)
+     */
+    public function testReproduceDeletedImagesBug()
+    {
+
+        $filename = 'img/tests/test-image.jpg';
+
+        $productIdA = 60;
+        $this->Image = $this->getTableLocator()->get('Images');
+
+        $this->Image->deleteAll(['id_product' => $productIdA]);
+        $imageEntity = $this->Image->newEntity(
+            [
+                'id_image' => 15,
+                'id_product' => $productIdA,
+            ]
+        );
+        $this->Image->save($imageEntity);
+        
+        $this->loginAsAdmin();
+
+        // START upload image
+        $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
+            'objectId' => $productIdA,
+            'filename' => $filename,
+        ]);
+        $this->assertJsonOk();
+        
+        $productIdB = 340;
+        $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
+            'objectId' => $productIdB,
+            'filename' => $filename,
+        ]);
+        $this->assertJsonOk();
+        $imageId = $this->getJsonDecodedContent()->imageId;
+
+        $this->get('/admin/products/deleteImage/' . $productIdA);
+
+        $imageIdAsPath = $this->Html->getProductImageIdAsPath($imageId);
+        $thumbsPath = $this->Html->getProductThumbsPath($imageIdAsPath);
+
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
+            $this->assertTrue(file_exists($thumbsFileName));
+        }
 
     }
 
