@@ -36,7 +36,6 @@
         "druidfi/mysqldump-php": "^1.0"
     },
     "require-dev": {
-        "psy/psysh": "@stable",
         "cakephp/debug_kit": "^4.0",
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^9.0",
