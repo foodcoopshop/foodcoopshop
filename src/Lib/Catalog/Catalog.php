@@ -51,7 +51,7 @@ class Catalog {
         $products = Cache::read($cacheKey);
 
         if ($products === null) {
-            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $countMode, $getOnlyStockProducts, $manufacturerId);
+            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId);
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
@@ -72,7 +72,7 @@ class Catalog {
         return $this->getProducts($appAuth, '', false, '', 0, $countMode, false, $manufacturerId);
     }
 
-    protected function getQuery($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
+    protected function getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
