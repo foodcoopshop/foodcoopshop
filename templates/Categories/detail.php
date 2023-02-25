@@ -71,7 +71,7 @@ foreach ($products as $product) {
     ],
     [
         'cache' => [
-            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth, $this->request),
         ],
     ]
     );

@@ -58,7 +58,7 @@ if (!empty($newProducts)) {
         ],
         [
             'cache' => [
-                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth, $this->request),
             ],
         ]
         );
