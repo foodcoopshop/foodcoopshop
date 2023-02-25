@@ -48,7 +48,7 @@ class MyHtmlHelper extends HtmlHelper
             'isSuperadmin-' . ($appAuth->isSuperadmin() ? 1 : 0),
             'isSelfServiceModeByUrl-' . ($appAuth->isSelfServiceModeByUrl() ? 1 : 0),
             'isOrderForDifferentCustomerMode-' . ($appAuth->isOrderForDifferentCustomerMode() ? 1 : 0),
-            $orderCustomer['shopping_price'],
+            $orderCustomer['shopping_price'] ?? 'SP',
             'date-' . date('Y-m-d'),
         ]);
         return $elementCacheKey;
