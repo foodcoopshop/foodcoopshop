@@ -49,7 +49,7 @@ if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
     ],
     [
         'cache' => [
-            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+            'key' => $this->Html->buildElementProductCacheKey($product, $appAuth, $this->request),
         ],
     ]
     );

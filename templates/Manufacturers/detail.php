@@ -111,7 +111,7 @@ if (!empty($manufacturer['Products'])) {
         ],
         [
             'cache' => [
-                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth),
+                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth, $this->request),
             ],
         ]
         );
