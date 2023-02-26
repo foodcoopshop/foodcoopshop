@@ -538,7 +538,7 @@ foodcoopshop.Cart = {
     },
 
     updateCartTaxSum: function (amount) {
-        var cartTaxSum = $('.cart .sums-wrapper p.tax-sum-wrapper span.sum');
+        var cartTaxSum = $('.cart p.tax-sum-wrapper span.sum');
         if (cartTaxSum.length == 0) {
             return;
         }
