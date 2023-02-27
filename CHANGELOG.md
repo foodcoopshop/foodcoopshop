@@ -10,12 +10,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
-* <img src="https://github.com/pabneukistl.png" width="20"> [mrothauer](https://github.com/pabneukistl)
-* <img src="https://github.com/toblinga.png" width="20"> [mrothauer](https://github.com/toblinga)
+* <img src="https://github.com/pabneukistl.png" width="20"> [pabneukistl](https://github.com/pabneukistl)
+* <img src="https://github.com/toblinga.png" width="20"> [toblinga](https://github.com/toblinga)
 
 ### Bugfixes
 - Das mysteriöse Verschwinden von Produkt-Bildern hat endlich ein Ende! Ob deine Installation vom Bug betroffen ist, kannst du über diese Route feststellen: /admin/products/detectMissingProductImages. [I#824](https://github.com/foodcoopshop/foodcoopshop/issues/824)
-- Die Umsatzsteuer wurde beim Abschließen des Warenkorb immer mt 0,00 € ausgewiesen. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cb876b9ae7d384c576f7bf60649af94260564414)
+- Die Umsatzsteuer wurde beim Abschließen des Warenkorb immer mit 0,00 € ausgewiesen. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cb876b9ae7d384c576f7bf60649af94260564414)
 - Bei einer Barcode-Suche im Selbstbedienungs-Modus wurde immer nur die erste Variante direkt in den Warenkorb gelegt. [I#939](https://github.com/foodcoopshop/foodcoopshop/issues/939)
 - In seltenen Fällen wurden bei der Barcode-Suche falsche Produkte angezeigt. [I#938](https://github.com/foodcoopshop/foodcoopshop/issues/938)
 - Bei einer der Sofort-Betstellung wurde bei Dorfläden unter bestimmten Umständen Verkaufspreis und Einkaufspreis in der Anzeige verwechselt. Bestell- und Rechnungsdaten waren korrekt, es war "lediglich" ein Anzeigeproblem. [I#937](https://github.com/foodcoopshop/foodcoopshop/issues/937)
