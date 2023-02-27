@@ -11,6 +11,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 * <img src="https://github.com/pabneukistl.png" width="20"> [mrothauer](https://github.com/pabneukistl)
+* <img src="https://github.com/toblinga.png" width="20"> [mrothauer](https://github.com/toblinga)
 
 ### Bugfixes
 - Das mysteriöse Verschwinden von Produkt-Bildern hat endlich ein Ende! Ob deine Installation vom Bug betroffen ist, kannst du über diese Route feststellen: /admin/products/detectMissingProductImages. [I#824](https://github.com/foodcoopshop/foodcoopshop/issues/824)
