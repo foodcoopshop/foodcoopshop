@@ -344,10 +344,15 @@ class Catalog {
             ];
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                 $or = array_merge($or, [
-                    $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
                     $q->newExpr()->eq('BarcodeProducts.barcode', $keyword),
                     $q->newExpr()->eq('BarcodeProductAttributes.barcode', $keyword),
                 ]);
+                // fixes https://github.com/foodcoopshop/foodcoopshop/issues/938
+                if (strlen($keyword) == 8) {
+                    $or = array_merge($or, [
+                        $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
+                    ]);
+                }
             }
             return $exp->or($or);
         });
