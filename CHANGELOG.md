@@ -10,9 +10,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
+* <img src="https://github.com/pabneukistl.png" width="20"> [mrothauer](https://github.com/pabneukistl)
 
 ### Bugfixes
 - Die Umsatzsteuer wurde beim Abschließen des Warenkorb immer mt 0,00 € ausgewiesen. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cb876b9ae7d384c576f7bf60649af94260564414)
+- Bei einer Barcode-Suche im Selbstbedienungs-Modus wurde immer nur die erste Variante direkt in den Warenkorb gelegt. [I#939](https://github.com/foodcoopshop/foodcoopshop/issues/939)
 
 Datum: 01.03.2023 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.5.0...v3.5.1)
 
