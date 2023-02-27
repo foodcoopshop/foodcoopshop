@@ -6,6 +6,15 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+# v3.5.1
+
+### Herzlichen Dank an alle beteiligten Personen
+* <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
+
+### Bugfixes
+- Die Umsatzsteuer wurde beim Abschließen des Warenkorb immer mt 0,00 € ausgewiesen. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cb876b9ae7d384c576f7bf60649af94260564414)
+
+Datum: 01.03.2023 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.5.0...v3.5.1)
 
 # v3.5.0
 
