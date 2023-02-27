@@ -16,6 +16,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Die Umsatzsteuer wurde beim Abschließen des Warenkorb immer mt 0,00 € ausgewiesen. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cb876b9ae7d384c576f7bf60649af94260564414)
 - Bei einer Barcode-Suche im Selbstbedienungs-Modus wurde immer nur die erste Variante direkt in den Warenkorb gelegt. [I#939](https://github.com/foodcoopshop/foodcoopshop/issues/939)
 - In seltenen Fällen wurden bei der Barcode-Suche falsche Produkte angezeigt. [I#938](https://github.com/foodcoopshop/foodcoopshop/issues/938)
+- Bei einer der Sofort-Betstellung wurde bei Dorfläden unter bestimmten Umständen Verkaufspreis und Einkaufspreis in der Anzeige verwechselt. Bestell- und Rechnungsdaten waren korrekt, es war "lediglich" ein Anzeigeproblem. [I#937](https://github.com/foodcoopshop/foodcoopshop/issues/937)
 
 Datum: 01.03.2023 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.5.0...v3.5.1)
 
