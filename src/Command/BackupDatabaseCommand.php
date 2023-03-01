@@ -10,7 +10,6 @@ use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Number;
-use Druidfi\Mysqldump;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
