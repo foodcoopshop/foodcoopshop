@@ -400,6 +400,10 @@ body.configurations.index td {
     background-color: #C00000;
     color: white;
 }
+#actionLogs table.list td.text {
+    word-break :break-word;
+    min-width: 170px;
+}
 #manufacturer-profile .input {
     float: left;
 }

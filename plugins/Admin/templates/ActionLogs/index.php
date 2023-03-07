@@ -91,7 +91,7 @@ foreach ($actionLogs as $actionLog) {
     echo $actionLog->date->i18nFormat($this->Time->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
-    echo '<td style="word-break:break-word;">';
+    echo '<td class="text">';
     echo $actionLog->text;
     echo '</td>';
 
