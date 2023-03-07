@@ -36,7 +36,7 @@ trait ProductCacheClearAfterSaveAndDeleteTrait
         $this->clearProductCache();
     }
 
-    private function clearProductCache()
+    public function clearProductCache()
     {
         $clearCache = true;
         

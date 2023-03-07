@@ -456,6 +456,8 @@ class ProductsController extends AdminAppController
             );
         } else {
             $image = $product->image;
+            // cache needs to be cleared manually because neither image nor product record is changed
+            $this->Product->clearProductCache();
         }
 
         // not (yet) implemented for attributes, only for productIds!
