@@ -240,21 +240,22 @@ class InvoicesTable extends AppTable
         }
 
         // prepare delivered deposit
+        $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
         foreach($orderDetails as $orderDetail) {
             if ($orderDetail->deposit != 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
-                $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
-                $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
+                $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
 
         foreach($returnedDeposits as $deposit) {
             $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
-            $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1) * -1;
-            $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1) * -1;
+            $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1, $depositTaxRate) * -1;
+            $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1, $depositTaxRate) * -1;
             $returnedDeposit['deposit_amount']++;
             $returnedDeposit['entities'][] = $deposit;
         }
