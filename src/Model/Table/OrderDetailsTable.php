@@ -317,18 +317,17 @@ class OrderDetailsTable extends AppTable
     }
 
 
-    public function getDepositTax($depositGross, $amount)
+    public function getDepositTax($depositGross, $amount, $taxRate)
     {
-        $vat = 0.2;
         $depositGrossPerPiece = round($depositGross / $amount, 2);
-        $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $vat), 2);
+        $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $taxRate / 100), 2);
         $depositTax = $depositTax * $amount;
         return $depositTax;
     }
 
-    public function getDepositNet($depositGross, $amount)
+    public function getDepositNet($depositGross, $amount, $taxRate)
     {
-        $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount);
+        $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount, $taxRate);
         return $depositNet;
     }
 

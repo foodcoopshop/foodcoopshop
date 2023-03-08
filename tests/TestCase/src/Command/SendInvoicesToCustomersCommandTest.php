@@ -57,6 +57,21 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
     }
 
+    public function testContentOfInvoiceForPersonWithZeroTaxDepositRate()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->changeConfiguration('FCS_DEPOSIT_TAX_RATE', 0);
+        $this->loginAsSuperadmin();
+
+        $customerId = Configure::read('test.superadminId');
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $this->assertResponseContains('<td align="left" width="142">Pfand geliefert</td><td align="left" width="81"></td><td align="right" width="58">1,00 €</td><td align="right" width="58">0,00 € (0%)</td><td align="right" width="58">1,00 €</td>');
+
+    }
+    
     public function testContentOfInvoiceForCompany()
     {
 

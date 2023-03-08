@@ -305,8 +305,8 @@ class OrderDetailsController extends AdminAppController
 
             $taxRates = [];
 
-            $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-            $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+            $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+            $formattedDepositTaxRate = Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate);
 
             foreach($preparedOrderDetails as $customerId => $orderDetails) {
 
@@ -318,12 +318,12 @@ class OrderDetailsController extends AdminAppController
                 ];
 
                 foreach($orderDetails as $orderDetail) {
-                    if (!isset($taxRates[$customerId][$depositVatRate])) {
-                        $taxRates[$customerId][$depositVatRate] = $defaultArray;
+                    if (!isset($taxRates[$customerId][$formattedDepositTaxRate])) {
+                        $taxRates[$customerId][$formattedDepositTaxRate] = $defaultArray;
                     }
-                    $taxRates[$customerId][$depositVatRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
-                    $taxRates[$customerId][$depositVatRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
-                    $taxRates[$customerId][$depositVatRate]['sum_price_incl'] += $orderDetail->deposit;
+                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_price_incl'] += $orderDetail->deposit;
                 }
 
                 $taxRates[$customerId] = $this->OrderDetail->clearZeroArray($taxRates[$customerId]);
