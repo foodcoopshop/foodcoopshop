@@ -36,6 +36,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Replace CakePHP's deprecated classes: File, Folder, Shell. [I#902](https://github.com/foodcoopshop/foodcoopshop/issues/902) [I#906](https://github.com/foodcoopshop/foodcoopshop/issues/906) / [PR#905](https://github.com/foodcoopshop/foodcoopshop/pull/905) / [PR#907](https://github.com/foodcoopshop/foodcoopshop/pull/907) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Software ist jetzt kompatibel mit PHP 8.2. [I#915](https://github.com/foodcoopshop/foodcoopshop/issues/915) / [PR#916](https://github.com/foodcoopshop/foodcoopshop/pull/916) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### Bugfixes
+- Sofern Rechnungen an Kunden generiert wurden (Dorfladen) UND die Steuer für Pfand nicht auf 20% gesetzt war, wurde die Steuer von geliefertem Pfand trotzdem immer mit 20% berechnet. [I#940](https://github.com/foodcoopshop/foodcoopshop/issues/940) / [PR#941](https://github.com/foodcoopshop/foodcoopshop/pull/941) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 
 # v3.5.1
 
