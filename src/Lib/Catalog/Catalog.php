@@ -16,14 +16,16 @@ declare(strict_types=1);
  */
 namespace App\Lib\Catalog;
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\I18n\I18n;
 use Cake\Cache\Cache;
+use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\Database\Query;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\FactoryLocator;
-use Cake\Utility\Hash;
 use Cake\Utility\Security;
+use Cake\Datasource\FactoryLocator;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Database\Expression\QueryExpression;
+use Cake\Database\Expression\StringExpression;
 
 class Catalog {
 
@@ -337,9 +339,13 @@ class Catalog {
         }
 
         $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
+            $searchValue = '%' . $keyword . '%';
+            if (I18n::getLocale() == 'de_DE') {
+                $searchValue = new StringExpression('%'.$keyword.'%', 'utf8mb4_german2_ci');
+            }
             $or = [
-                $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
-                $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
+                $q->newExpr()->like('Products.name', $searchValue),
+                $q->newExpr()->like('Products.description_short', $searchValue),
                 $q->newExpr()->eq('Products.id_product', (int) $keyword),
             ];
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
