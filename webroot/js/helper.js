@@ -59,6 +59,7 @@ foodcoopshop.Helper = {
             'a[href^="https://"]',
             'a.sb-toggle-left',
             'a.open-with-modal',
+            'a.color-mode-toggle',
         ];
         $(allowList.join(',')).not(disallowList.join(',')).on('click', function() {
             foodcoopshop.Helper.showLoader();

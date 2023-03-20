@@ -55,7 +55,7 @@ a:not([href]):not([tabindex]):focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001;
+    z-index: 99995;
     overflow: hidden;
 }
 #full-page-loader i {
