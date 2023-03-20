@@ -54,6 +54,7 @@ foodcoopshop.Helper = {
             '.swiper-button-prev',
             '.swiper-button-next',
             '.toggle-link',
+            'a.calculator-toggle-button',
             'a.as',
             'a[href^="http://"]',
             'a[href^="https://"]',
