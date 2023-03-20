@@ -34,6 +34,37 @@ foodcoopshop.Helper = {
         }
     },
 
+    showLoader: function() {
+        this.removeLoader();
+        $('body').append('<div id="full-page-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');
+    },
+
+    removeLoader: function() {
+        $('#full-page-loader').remove();
+    },
+
+    initShowLoaderOnContentChange: function() {
+        var allowList = [
+            'a, button',
+        ];
+        var disallowList = [
+            foodcoopshop.Cart.disabledButtonsDuringUpdateCartRequest,
+            '#user-menu a',
+            '.order-for-different-customer-info a',
+            '.swiper-button-prev',
+            '.swiper-button-next',
+            '.toggle-link',
+            'a.as',
+            'a[href^="http://"]',
+            'a[href^="https://"]',
+            'a.sb-toggle-left',
+            'a.open-with-modal',
+        ];
+        $(allowList.join(',')).not(disallowList.join(',')).on('click', function() {
+            foodcoopshop.Helper.showLoader();
+        });
+    },
+
     isNumeric: function(str) {
         if (typeof str != "string") return false // we only process strings!  
         return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...

@@ -70,7 +70,7 @@ a.btn.prev-button i, a.btn.next-button i,
 .pw .price-asterisk,
 i.fa.ok, i.fas.ok, i.far.ok,
 body.carts .cart:not(#cart) span.amount .btn,
-#filter-loader i,
+#full-page-loader i,
 .btn-cart i.fa-cart-plus,
 .btn-cart i.fa-shopping-bag {
     color: var(--theme-color);

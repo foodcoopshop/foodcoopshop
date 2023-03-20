@@ -265,12 +265,6 @@ body.products.index td.status {
 body.products.index td.status .fa-exclamation {
     margin-left: 3px;
 }
-#filter-loader {
-  position: fixed;
-  top: 10px;
-  left: 590px;
-  font-size: 150px;
-}
 td.right,
 th.right {
     text-align: right;
