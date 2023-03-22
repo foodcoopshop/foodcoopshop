@@ -396,7 +396,7 @@ body.configurations.index td {
 }
 #actionLogs table.list td.text {
     word-break :break-word;
-    min-width: 170px;
+    min-width: 500px;
 }
 #manufacturer-profile .input {
     float: left;
