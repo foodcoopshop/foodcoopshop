@@ -265,12 +265,6 @@ body.products.index td.status {
 body.products.index td.status .fa-exclamation {
     margin-left: 3px;
 }
-#filter-loader {
-  position: fixed;
-  top: 10px;
-  left: 590px;
-  font-size: 150px;
-}
 td.right,
 th.right {
     text-align: right;
@@ -402,7 +396,7 @@ body.configurations.index td {
 }
 #actionLogs table.list td.text {
     word-break :break-word;
-    min-width: 170px;
+    min-width: 500px;
 }
 #manufacturer-profile .input {
     float: left;
