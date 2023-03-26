@@ -93,8 +93,8 @@ if ($isMobile) {
     );
 }
 
-echo $this->Html->script('/node_modules/ckeditor4/ckeditor.js?v4.20.2');
-echo $this->Html->script('/node_modules/ckeditor4/adapters/jquery.js?v4.20.2');
+echo $this->Html->script('/node_modules/ckeditor4/ckeditor.js?v4.21.0');
+echo $this->Html->script('/node_modules/ckeditor4/adapters/jquery.js?v4.21.0');
 $scripts = $this->fetch('script');
 if ($scripts != '') {
     echo $this->Html->wrapJavascriptBlock($scripts);
