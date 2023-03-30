@@ -13,7 +13,7 @@ if [[ "$locale" == "" ]]; then
     exit
 fi
 
-./bin/cake migrations migrate -p Queue
-./bin/cake migrations migrate
-./bin/cake migrations seed --source Seeds/locale/$locale --seed InitDataSeed
-./bin/cake migrations seed --seed InitDataSeed
+bash ./bin/cake migrations migrate -p Queue
+bash ./bin/cake migrations migrate
+bash ./bin/cake migrations seed --source Seeds/locale/$locale --seed InitDataSeed
+bash ./bin/cake migrations seed --seed InitDataSeed
