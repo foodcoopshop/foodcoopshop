@@ -461,16 +461,16 @@
         },
         {
             "name": "dereuromark/cakephp-queue",
-            "version": "6.6.1",
+            "version": "6.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-queue.git",
-                "reference": "4b17f9b06039d60f599ea99c5f7fc80e6a0b95a2"
+                "reference": "bbd339a771ae753afa40cf78f0bdf2c5546069f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/4b17f9b06039d60f599ea99c5f7fc80e6a0b95a2",
-                "reference": "4b17f9b06039d60f599ea99c5f7fc80e6a0b95a2",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/bbd339a771ae753afa40cf78f0bdf2c5546069f5",
+                "reference": "bbd339a771ae753afa40cf78f0bdf2c5546069f5",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 "issues": "https://github.com/dereuromark/cakephp-queue/issues",
                 "source": "https://github.com/dereuromark/cakephp-queue"
             },
-            "time": "2023-03-10T15:50:20+00:00"
+            "time": "2023-03-27T14:30:32+00:00"
         },
         {
             "name": "druidfi/mysqldump-php",
@@ -5203,16 +5203,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.8",
+            "version": "1.10.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "0166aef76e066f0dd2adc2799bdadfa1635711e9"
+                "reference": "9b13dafe3d66693d20fe5729c3dde1d31bb64703"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0166aef76e066f0dd2adc2799bdadfa1635711e9",
-                "reference": "0166aef76e066f0dd2adc2799bdadfa1635711e9",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9b13dafe3d66693d20fe5729c3dde1d31bb64703",
+                "reference": "9b13dafe3d66693d20fe5729c3dde1d31bb64703",
                 "shasum": ""
             },
             "require": {
@@ -5261,7 +5261,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-24T10:28:16+00:00"
+            "time": "2023-03-30T08:58:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
