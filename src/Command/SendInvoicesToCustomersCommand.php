@@ -75,7 +75,7 @@ class SendInvoicesToCustomersCommand extends AppCommand
 
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
                 $helloCash->generateInvoice($data, $this->cronjobRunDay, false, false);
-                sleep(5); // the Hello Cash API handels max 60 requests per minute, one generateInvoice call uses up to 5 requests
+                sleep(4); // the Hello Cash API handels max 60 requests per minute, one generateInvoice call uses up to 5 requests
             } else {
                 $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
             }
