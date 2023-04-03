@@ -102,14 +102,12 @@ class ProductsController extends AdminAppController
     public function detectMissingProductImages()
     {
         $products = $this->Product->find('all', [
-            'conditions' => [
-                'Products.active' => APP_ON,
-            ],
             'contain' => [
                 'Manufacturers',
                 'Images',
             ],
             'order' => [
+                'Products.active' => 'DESC',
                 'Images.id_image' => 'ASC',
             ],
         ]);
