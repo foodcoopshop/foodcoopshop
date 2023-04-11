@@ -6,7 +6,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlichte Version
+## v3.6.0
 
 ### Herzlichen Dank an alle beteiligten Personen
 
@@ -40,6 +40,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Sofern Rechnungen an Kunden generiert wurden (Dorfladen) UND die Steuer für Pfand nicht auf 20% gesetzt war, wurde die Steuer von geliefertem Pfand trotzdem immer mit 20% berechnet. [I#940](https://github.com/foodcoopshop/foodcoopshop/issues/940) / [PR#941](https://github.com/foodcoopshop/foodcoopshop/pull/941) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Sofort-Bestellungen ist es ab sofort nicht mehr möglich, das erneute Laden von langsamen Seiten durch wiederholtes Klicken zu erzwingen. Diese Mehrfach-Requests haben nämlich den eingeloggten User und den User, für den bestellt wird, durcheinandergewirbelt. [I#945](https://github.com/foodcoopshop/foodcoopshop/issues/945) / [PR#946](https://github.com/foodcoopshop/foodcoopshop/pull/946) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+Datum: 12.04.2023 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/18) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.5.1...v3.6.0)
 
 # v3.5.1
 
