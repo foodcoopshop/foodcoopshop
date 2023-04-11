@@ -8,7 +8,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## v3.6.0
 
-### Neue Datenschutz-Fuktionen
+### Neue Datenschutz-Funktionen
 - Personenbezogene Mitglieder-Daten (Vorname, Nachname, E-Mail) können nun für bestimmte Hersteller systemweit **anonymisiert** werden. Im Sinne des Datenschutzes ist das für neu angelegte Hersteller auch die Standard-Einstellung. [I#767](https://github.com/foodcoopshop/foodcoopshop/issues/767) / [I#929](https://github.com/foodcoopshop/foodcoopshop/issues/929) / [PR#930](https://github.com/foodcoopshop/foodcoopshop/pull/930) / [PR#932](https://github.com/foodcoopshop/foodcoopshop/pull/932) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - E-Mail-Adressen, die über den Editor eingegeben wurden (z.B. auf Seiten oder in Blog-Artikeln), werden jetzt automatisch verlinkt und spamgeschützt angezeigt. [I#933](https://github.com/foodcoopshop/foodcoopshop/issues/933) / [PR#943](https://github.com/foodcoopshop/foodcoopshop/pull/934) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
