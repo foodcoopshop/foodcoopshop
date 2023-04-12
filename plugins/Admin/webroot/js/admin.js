@@ -16,12 +16,14 @@ foodcoopshop.Admin = {
     init: function () {
         this.initFilter();
         this.improveTableLayout();
-        foodcoopshop.Helper.initJqueryUiIcons();
+        foodcoopshop.ColorMode.init();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();
+        this.initRowMarkerAll();
         this.setMenuFixed();
         this.adaptContentMargin();
+        this.initStickyTableHeader();
         foodcoopshop.Helper.initScrolltopButton();
     },
 
@@ -44,7 +46,7 @@ foodcoopshop.Admin = {
         }
 
 
-        $('.row-marker').on('click', function() {
+        $('.row-marker,#row-marker-all').on('click', function () {
 
             var selectedOrderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
 
@@ -86,7 +88,7 @@ foodcoopshop.Admin = {
 
     addLoaderToSyncProductDataButton : function (button) {
         button.on('click', function () {
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-left');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-right');
             foodcoopshop.Helper.disableButton($(this));
         });
     },
@@ -95,15 +97,17 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
     },
 
-    /**
-     * @return rowMarker dom element
-     */
     initRowMarkerAll : function () {
-        var rowMarkerAll = $('input#row-marker-all').on('change', function () {
+        var rowMarkerAll = $('input#row-marker-all').on('click', function () {
+            var row;
             if (this.checked) {
-                $('input.row-marker[type="checkbox"]:not(:checked)').trigger('click');
+                row = $('input.row-marker[type="checkbox"]:not(:checked)');
+                row.prop('checked', true);
+                row.closest('tr').addClass('selected');
             } else {
-                $('input.row-marker[type="checkbox"]:checked').trigger('click');
+                row = $('input.row-marker[type="checkbox"]:checked');
+                row.prop('checked', false);
+                row.closest('tr').removeClass('selected');
             }
         });
         return rowMarkerAll;
@@ -145,7 +149,7 @@ foodcoopshop.Admin = {
         return ids;
     },
 
-    updateObjectSelectionActionButton : function (button) {
+    updateObjectSelectionActionButton: function (button) {
         foodcoopshop.Helper.disableButton(button);
         if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
             foodcoopshop.Helper.enableButton(button);
@@ -230,9 +234,10 @@ foodcoopshop.Admin = {
     },
 
     initHighlightedRowId: function (rowId) {
+        var newTop = $('.filter-container').height() + $(rowId).closest('table').find('tr.sort').height() + 10;
         $.scrollTo(rowId, 1000, {
             offset: {
-                top: -100
+                top: newTop * -1,
             }
         });
         $(rowId).css('background-color', 'orange');
@@ -295,7 +300,7 @@ foodcoopshop.Admin = {
         var button = $(btnSelector);
 
         foodcoopshop.Helper.disableButton(button);
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
@@ -394,11 +399,7 @@ foodcoopshop.Admin = {
     },
 
     triggerFilter : function () {
-        $('#filter-loader').remove();
-        $('#content').css('opacity', '.3');
-        $('#container').prepend('<div id="filter-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');
-        var marginTop = $('.filter-container').outerHeight();
-        $('#filter-loader').css('top', marginTop + 20);
+        foodcoopshop.Helper.showLoader();
         foodcoopshop.Admin.submitFilterForm();
     },
 
@@ -434,11 +435,6 @@ foodcoopshop.Admin = {
         return url;
     },
 
-    addParameterToURL : function(url, param) {
-        url += (url.split('?')[1] ? '&':'?') + param;
-        return url;
-    },
-
     setMenuFixed: function () {
         $(window).scroll(function () {
             $('#menu').css('left', -$(window).scrollLeft());
@@ -453,11 +449,16 @@ foodcoopshop.Admin = {
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
     },
 
+    initStickyTableHeader : function() {
+        var newTop = $('.filter-container').height();
+        $('table.list th').css('top', newTop + 11);
+    },
+
     initGenerateMemberCardsOfSelectedCustomersButton : function() {
         var button = $('#generateMemberCardsOfSelectedCustomersButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
@@ -471,7 +472,8 @@ foodcoopshop.Admin = {
         var button = $('#generateProductCardsOfSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
+            console.log('click');
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 

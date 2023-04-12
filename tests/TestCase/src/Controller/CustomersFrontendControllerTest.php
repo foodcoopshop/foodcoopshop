@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -30,7 +31,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     private function setUpProfileImageTests()
     {
-        $profileImageSrcFileAndPath = WWW_ROOT . '/img/tests/test-image.jpg';
+        $profileImageSrcFileAndPath = WWW_ROOT . 'img/tests/test-image.jpg';
         $profileImageTargetFilename = Configure::read('test.customerId') . '-small.jpg';
         copy($profileImageSrcFileAndPath, Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
         return $profileImageTargetFilename;
@@ -143,7 +144,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
     }
 
-    private $registrationDataEmpty = [
+    protected $registrationDataEmpty = [
         'Customers' => [
             'firstname' => '',
             'lastname' => '',
@@ -228,7 +229,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
                 'Customers.email' => $email,
             ],
         ])->first();
-        $this->assertTrue((boolean) $customer->is_company);
+        $this->assertTrue((bool) $customer->is_company);
     }
 
     public function testRegistrationUserNotActive()

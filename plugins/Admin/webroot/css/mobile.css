@@ -33,7 +33,7 @@
     left: 0;
     width: 100vw;
     max-width: none;
-    padding: 3px;
+    border-left: none;
 }
 .filter-container .right {
     margin-top: 1px;
@@ -57,13 +57,9 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     clear: both;
     margin-left: 0px;
 }
-#filter-loader {
-  left: 50%;
-  margin-left: -75px;
-}
 .sb-toggle-left {
     float: left;
-    margin: 3px 5px 0 3px;
+    margin: 0 5px 0 0;
     border-radius: 3px;
     padding: 2px 5px 0px 5px;
     background: #fff;
@@ -81,6 +77,7 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
 #container {
     float: left;
     min-width: 100%;
+    overflow: initial ! important; /* for sticky table headers */
 }
 body.pages.home #container,
 body.pages.home #content,
@@ -95,11 +92,6 @@ body.pages.home .filter-container {
 body.pages.home .filter-container,
 body.pages.home #content {
     background: transparent;
-}
-.ui-dialog {
-    min-width: 200px ! important;
-    width: 98% ! important;
-    max-width: 450px ! important;
 }
 .product-attributes-dropdown {
     width: 100%;
@@ -139,10 +131,6 @@ div.cke {
 }
 form.fcs-form .input .after.small {
     width: 100%;
-}
-.ui-dialog-content #flashMessage {
-    width: 96%;
-    left: 2%;
 }
 table.list th,
 table.list tr.fake-th td {

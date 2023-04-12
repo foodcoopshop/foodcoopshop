@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -15,8 +17,10 @@
 
 use Cake\Core\Configure;
 
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm();
+$this->element('addScript', [ 'script' =>
+    Configure::read('app.jsNamespace') . ".Admin.init();" .
+    Configure::read('app.jsNamespace') . ".Admin.initForm();".
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
     "
 ]);
 ?>
@@ -31,6 +35,11 @@ $this->element('addScript', [
     </div>
 </div>
 
+<?php
+    echo $this->element('navTabs/configurationNavTabs', [
+        'key' => 'tax_rates',
+    ]);
+?>
 <div class="sc"></div>
 
 <?php

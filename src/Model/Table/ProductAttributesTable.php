@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -22,8 +22,11 @@ use Cake\Datasource\FactoryLocator;
 class ProductAttributesTable extends AppTable
 {
 
-    use ProductCacheClearAfterDeleteTrait;
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
+
+    private $BarcodeProduct;
+    private $Product;
+    private $StockAvailable;
 
     public function initialize(array $config): void
     {

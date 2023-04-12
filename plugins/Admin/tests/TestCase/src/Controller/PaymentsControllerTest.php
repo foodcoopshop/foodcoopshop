@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
@@ -25,6 +26,8 @@ use Cake\TestSuite\EmailTrait;
 class PaymentsControllerTest extends AppCakeTestCase
 {
 
+    protected $ActionLog;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
     use EmailTrait;
@@ -42,21 +45,21 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertResponseCode(403);
     }
 
-    public function testAddPaymentParameterPriceOk()
+    public function testAddPaymentParameterAmountOk()
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', 'product');
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
 
-    public function testAddPaymentParameterPriceWithWhitespaceOk()
+    public function testAddPaymentParameterAmountWithWhitespaceOk()
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), ' 24,88 ', 'product');
         $this->assertEquals(24.88, $jsonDecodedContent->amount);
     }
 
-    public function testAddPaymentParameterPriceNegative()
+    public function testAddPaymentParameterAmountNegative()
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '-10', 'product');
@@ -64,7 +67,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterPriceAlmostZero()
+    public function testAddPaymentParameterAmountAlmostZero()
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0,003', 'product');
@@ -72,7 +75,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterPriceZero()
+    public function testAddPaymentParameterAmountZero()
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0', 'product');
@@ -80,7 +83,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentParameterPriceWrongNumber()
+    public function testAddPaymentParameterAmountWrongNumber()
     {
         $this->loginAsCustomer();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10,--', 'product');
@@ -413,7 +416,9 @@ class PaymentsControllerTest extends AppCakeTestCase
         $jsonDecodedContent = $this->addPayment($customerId, $amountToAdd, $paymentType);
         $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
         $amountToAddAsDecimal = Configure::read('app.numberHelper')->getStringAsFloat($amountToAdd);
-        $this->assertEquals($amountToAddAsDecimal, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment '.$paymentType.' did not increase credit balance');
+
+        $result = number_format($creditBalanceAfterAdd - $creditBalanceBeforeAdd, 1);
+        $this->assertEquals($amountToAddAsDecimal, $result, 'add payment '.$paymentType.' did not increase credit balance');
         $this->assertEquals(1, $jsonDecodedContent->status);
         $this->assertEquals($amountToAdd, Configure::read('app.numberHelper')->formatAsDecimal($jsonDecodedContent->amount, 1));
     }

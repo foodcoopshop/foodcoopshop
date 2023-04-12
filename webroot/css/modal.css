@@ -21,6 +21,7 @@
 .modal-header {
     color: #fff;
     min-height: 55px;
+    border-bottom: none;
 }
 .modal-header .btn-close {
     background-image: none;
@@ -184,7 +185,7 @@ body.iframe_self_service_order {
     text-align: right;
 }
 #order-detail-product-price-edit-form .price-per-unit-info-text {
-    color:red;
+    color:var(--not-ok-red);
     float:left;
     margin-bottom:5px;
 }
@@ -275,7 +276,8 @@ body.iframe_self_service_order {
 #product-categories-edit-form input[type="checkbox"],
 #order-detail-product-quantity-edit-form input[type="checkbox"],
 #order-detail-pickup-day-edit input[type="checkbox"],
-#order-detail-product-price-edit-form input[type="checkbox"] {
+#order-detail-product-price-edit-form input[type="checkbox"],
+#order-detail-customer-edit-form input[type="checkbox"] {
     float: left;
 }
 #modal-product-quantity-edit input[type="number"],

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,15 +16,11 @@
  */
 use Cake\Core\Configure;
 
-if ($appAuth->isManufacturer()) {
+if ($appAuth->isManufacturer() || empty($products) || !Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
     return false;
 }
 
-if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace').".Admin.initGenerateProductCardsOfSelectedProductsButton();"
-    ]);
-    echo '<a id="generateProductCardsOfSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_product_cards') . '</a>';
-}
-
-?>
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".Admin.initGenerateProductCardsOfSelectedProductsButton();"
+]);
+echo '<a id="generateProductCardsOfSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_product_cards') . '</a>';

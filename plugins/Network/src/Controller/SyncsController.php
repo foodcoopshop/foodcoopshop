@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Network\Controller;
 
@@ -134,7 +135,7 @@ class SyncsController extends AppController
             'products' => $matchedProducts,
             'app' => [
                 'name' => Configure::read('appDb.FCS_APP_NAME'),
-                'domain' => Configure::read('app.cakeServerName')
+                'domain' => Configure::read('App.fullBaseUrl')
             ]
         ];
         $localResponse = json_decode(json_encode($localResponse), true);

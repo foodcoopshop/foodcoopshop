@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,7 +19,7 @@ use Cake\Core\Configure;
 
 if (!$isMobile && $this->request->getSession()->read('invoiceRouteForAutoPrint') != '') {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Helper.openPrintDialogForFile('".Configure::read('app.cakeServerName') . $this->request->getSession()->read('invoiceRouteForAutoPrint') . "');"
+        Configure::read('app.jsNamespace').".Helper.openPrintDialogForFile('".Configure::read('App.fullBaseUrl') . $this->request->getSession()->read('invoiceRouteForAutoPrint') . "');"
     ]);
     $this->request->getSession()->delete('invoiceRouteForAutoPrint');
 }

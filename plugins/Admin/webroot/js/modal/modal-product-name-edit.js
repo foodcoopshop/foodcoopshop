@@ -39,8 +39,8 @@ foodcoopshop.ModalProductNameEdit = {
         if ($('.storage-location-dropdown-wrapper').length > 0) {
             html += '<hr />';
             html += '<div class="field-wrapper storage-location-wrapper">';
-                html += '<label for="dialogStorageLocation"><b>' + foodcoopshop.LocalizedJs.dialogProduct.StorageLocation + '</b></label>';
-                html += '<select name="dialogStorageLoation" id="dialogStorageLocation"></select><br />';
+            html += '<label for="dialogStorageLocation"><b>' + foodcoopshop.LocalizedJs.dialogProduct.StorageLocation + '</b></label>';
+            html += '<select name="dialogStorageLoation" id="dialogStorageLocation"></select><br />';
             html += '</div>';
         }
 

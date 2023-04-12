@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -15,6 +17,11 @@
 use Cake\Core\Configure;
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer()) {
+
+    if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+        return;
+    }
+
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();"
     ]);

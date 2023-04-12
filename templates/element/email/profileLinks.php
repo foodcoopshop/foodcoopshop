@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,7 +19,7 @@ use Cake\Core\Configure;
 ?>
 <p>
     <?php echo __('You_can_sign_in_here_for_ordering'); ?>:<br />
-    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?></a><br /><br />
+    <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getLogin(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getLogin(); ?></a><br /><br />
     <?php echo __('E-mail_address'); ?>: <?php echo $data->address_customer->email; ?><br />
     <?php echo __('Password'); ?>: <?php echo $newPassword; ?>
 </p>
@@ -28,10 +30,10 @@ use Cake\Core\Configure;
 
 <p style="font-size:12px;padding-top:15px;">
     <?php echo __('You_can_change_your_password_here'); ?>:<br />
-    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
+    <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getChangePassword(); ?></a>
 </p>
 
 <p style="font-size:12px;">
     <?php echo __('You_can_change_your_profile_here'); ?>:<br />
-    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+    <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
 </p>

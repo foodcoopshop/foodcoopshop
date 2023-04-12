@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -32,7 +34,7 @@ Betroffene können sich jederzeit direkt an den Verantwortlichen wenden.</p>
 Barichgasse 40-42<br />
 A-1030 Wien<br />
 Telefon: +43 1 52 152-0<br />
-E-Mail: <a href="mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</a><br />
+E-Mail: dsb@dsb.gv.at<br />
 Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 </p>
 
@@ -118,6 +120,11 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
         Dauer: 1 Jahr<br />
         Zweck: Speichert, ob die Cookies akzeptiert wurden.
     </li>
+    <li>
+        csrfToken<br />
+        Dauer: So lange, wie die aktuelle Session gültig ist<br />
+        Zweck: Schutz gegen Cross Site Request Forgery
+    </li>
 </ul>
 
 <h3>3.4 Verwaltung von Mitgliedern, Herstellern und Bestellungen</h3>
@@ -164,3 +171,8 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 
 <p><b>3.4.6 Auskunftsrecht</b></p>
 <p>Das Mitglied hat jederzeit das Recht auf kostenlose Auskunft.</p>
+
+<?php if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) { ?>
+<p><b>3.4.7 Datenweitergabe an helloCash</b></p>
+<p>Die personenbezogenen Daten der Mitglieder werden zum Zweck der Rechnungs- bzw. Belegerstellung an helloCash (www.hellocash.at) übermittelt. <a href="https://hellocash.at/datenschutz" target="_blank">Zur Datenschutzerklärung von helloCash.</a></p>
+<?php } ?>

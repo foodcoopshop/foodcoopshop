@@ -121,5 +121,5 @@
 }
 
 .upload ul li.error p{
-    color:red;
+    color:var(--not-ok-red);
 }

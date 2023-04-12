@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -57,7 +59,7 @@ if ($isOverviewMode && !Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
 <?php
 if ($isOverviewMode) {
-    echo $this->element('reportNavTabs', [
+    echo $this->element('navTabs/reportNavTabs', [
         'key' => 'invoices',
         'dateFrom' => $dateFrom,
         'dateTo' => $dateTo,

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,6 +25,7 @@ use Cake\Utility\Inflector;
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="<?php echo Configure::read('app.customThemeMainColor'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <meta name="csrfToken" content="<?php echo $this->request->getAttribute('csrfToken'); ?>">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -36,15 +39,16 @@ use Cake\Utility\Inflector;
     <?php echo $this->element('jsNamespace'); ?>
 
     <?php
-    $cssConfigs = ['admin'];
-    if ($this->plugin != 'Admin') {
-        $cssConfigs[] = $this->plugin.'.all';
-    }
-    echo $this->element('renderCss', ['configs' => $cssConfigs]);
+    echo $this->element('customCssVars');
+
+    $renderConfigs = ['admin'];
     if ($isMobile) {
-        echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile']);
+        $renderConfigs = ['admin_mobile'];
     }
-    echo $this->element('customThemeStyleSheet');
+    if ($this->plugin != 'Admin') {
+        $renderConfigs[] = $this->plugin.'.all';
+    }
+    echo $this->element('renderCss', ['configs' => $renderConfigs]);
     echo $this->element('layout/customHeader');
     ?>
 
@@ -89,9 +93,8 @@ if ($isMobile) {
     );
 }
 
-echo $this->Html->script('/node_modules/ckeditor4/ckeditor.js?v4.19.1');
-echo $this->Html->script('/node_modules/ckeditor4/adapters/jquery.js?v4.19.1');
-
+echo $this->Html->script('/node_modules/ckeditor4/ckeditor.js?v4.21.0');
+echo $this->Html->script('/node_modules/ckeditor4/adapters/jquery.js?v4.21.0');
 $scripts = $this->fetch('script');
 if ($scripts != '') {
     echo $this->Html->wrapJavascriptBlock($scripts);

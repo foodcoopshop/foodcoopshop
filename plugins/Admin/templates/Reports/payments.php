@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -43,7 +45,7 @@ if ($paymentType == 'product') {
 
 <?php
 
-echo $this->element('reportNavTabs', [
+echo $this->element('navTabs/reportNavTabs', [
     'key' => $this->request->getParam('pass')[0],
     'dateFrom' => $dateFrom,
     'dateTo' => $dateTo,
@@ -108,16 +110,12 @@ foreach ($payments as $payment) {
         }
         echo '</td>';
         echo '<td style="text-align:right;width:51px;">';
-        switch ($payment->approval) {
-            case -1:
-                echo '<i class="fas fa-minus-circle not-ok payment-approval"></i>';
-                break;
-            case 0:
-                break;
-            case 1:
-                echo '<i class="fas fa-check-circle ok payment-approval"></i>';
-                break;
-        }
+        echo match($payment->approval) {
+            -1 => '<i class="fas fa-minus-circle not-ok payment-approval"></i>',
+             0 => '',
+             1 => '<i class="fas fa-check-circle ok payment-approval"></i>',
+        };
+
         if ($payment->approval_comment != '') {
             echo $this->Html->link(
                 '<i class="fas fa-comment-dots ok"></i>',
@@ -168,12 +166,10 @@ foreach ($payments as $payment) {
 
     if ($showTextColumn) {
         echo '<td>';
-        switch ($paymentType) {
-            case 'deposit':
-                echo $this->Html->getManufacturerDepositPaymentText($payment->text);
-                break;
-            default:
-                echo $payment->text;
+        if ($paymentType == 'deposit') {
+            echo $this->Html->getManufacturerDepositPaymentText($payment->text);
+        } else {
+            echo $payment->text;
         }
         echo '</td>';
     }

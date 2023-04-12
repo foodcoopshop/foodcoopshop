@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -27,7 +29,7 @@ use Cake\Core\Configure;
 
                 <p><b>
                     <?php echo __('Please_confirm_your_email_address'); ?>:<br />
-                    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?></a>
+                    <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getActivateEmailAddress($data->activate_email_code); ?></a>
                 </b></p>
 
             </td>

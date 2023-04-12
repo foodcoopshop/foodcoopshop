@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -129,7 +131,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
             if (!$expectPrice) {
                 $priceAssertFunction = 'assertDoesNotMatchRegularExpressionWithUnquotedString';
             }
-            $this->{$priceAssertFunction}($priceRegExp, $this->_response, 'price expected: ' . $expectPrice);
+            $this->{$priceAssertFunction}($priceRegExp, $this->_response->getBody()->__toString(), 'price expected: ' . $expectPrice);
         }
     }
 }

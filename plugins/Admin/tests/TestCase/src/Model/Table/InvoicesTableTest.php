@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -26,7 +27,9 @@ class InvoicesTableTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    public $Invoice;
+    protected $Invoice;
+    protected $OrderDetail;
+    protected $Product;
 
     public function setUp(): void
     {
@@ -211,29 +214,29 @@ class InvoicesTableTest extends AppCakeTestCase
                 'cash' => [],
                 'cashless' => [
                     '10' => [
-                        'sum_price_excl' => 35.28,
-                        'sum_tax' => 3.53,
-                        'sum_price_incl' => 38.81,
+                        'sum_price_excl' => 34.95,
+                        'sum_tax' => 3.5,
+                        'sum_price_incl' => 38.45,
                     ],
                 ],
                 'total' => [
                     '10' => [
-                        'sum_price_excl' => 35.28,
-                        'sum_tax' => 3.53,
-                        'sum_price_incl' => 38.81,
+                        'sum_price_excl' => 34.95,
+                        'sum_tax' => 3.5,
+                        'sum_price_incl' => 38.45,
                     ],
                 ]
             ],
             'taxRatesSums' => [
                 'cashless' => [
-                    'sum_price_excl' => 35.28,
-                    'sum_tax' => 3.53,
-                    'sum_price_incl' => 38.81,
+                    'sum_price_excl' => 34.95,
+                    'sum_tax' => 3.5,
+                    'sum_price_incl' => 38.45,
                 ],
                 'total' => [
-                    'sum_price_excl' => 35.28,
-                    'sum_tax' => 3.53,
-                    'sum_price_incl' => 38.81,
+                    'sum_price_excl' => 34.95,
+                    'sum_tax' => 3.5,
+                    'sum_price_incl' => 38.45,
                 ],
             ],
         ];

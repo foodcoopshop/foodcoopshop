@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-30 14:09+0200\n"
-"PO-Revision-Date: 2022-08-30 14:10+0200\n"
+"POT-Creation-Date: 2023-01-23 17:42+0100\n"
+"PO-Revision-Date: 2023-01-31 15:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -111,6 +111,75 @@ msgstr "finished"
 msgid "route_self_service"
 msgstr "self-service"
 
+msgid "Runtime"
+msgstr "Runtime"
+
+msgid "Database_backup_successful"
+msgstr "Database backup successful"
+
+msgid "Please_add_credit"
+msgstr "Please add credit"
+
+msgid "Sum"
+msgstr "Sum"
+
+msgid "Sent_emails"
+msgstr "Sent emails"
+
+msgid "Order_reminder"
+msgstr "Order reminder"
+
+msgid "today"
+msgstr "today"
+
+msgid "tomorrow"
+msgstr "tomorrow"
+
+msgid "Pickup_reminder_for"
+msgstr "Pickup reminder for"
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 delivery note was} other{# delivery notes were}} generated successfully."
+
+msgid "Delivery_note_for_{0}"
+msgstr "Delivery note for {0}"
+
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 invoice was} other{# invoices were}} generated successfully."
+
+msgid "to_(time_context)"
+msgstr "to"
+
+msgid "Generated_invoices"
+msgstr "Generated invoices"
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr "Invoices for {0} have been sent"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 product} other{# products}}"
+
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Invoice nº"
+
+msgid "Sent"
+msgstr "Sent"
+
+msgid "Products"
+msgstr "Products"
+
+msgid "Total_sum"
+msgstr "Total sum"
+
+msgid "Sent_order_lists"
+msgstr "Sent order lists"
+
+msgid "Delivery_day"
+msgstr "Delivery day"
+
 msgid "You_have_been_signed_out."
 msgstr "You have been signed out."
 
@@ -162,6 +231,36 @@ msgstr "New products"
 msgid "Search"
 msgstr "Search"
 
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Your order was placed successfully."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} has placed a new order ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Instant order ({0}) successfully placed for {1}."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
+
+msgid "Pickup_day"
+msgstr "Pickup day"
+
+msgid "Thank_you_for_your_purchase!"
+msgstr "Thank you for your purchase!"
+
+msgid "Sign_out"
+msgstr "Sign out"
+
+msgid "Continue_shopping"
+msgstr "Continue shopping"
+
+msgid "Print_receipt"
+msgstr "Print receipt"
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} has placed a new order for {1} ({2})."
+
 msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
 
@@ -210,36 +309,6 @@ msgstr "{0} has activated the delivery break and the product {1} cannot be order
 msgid "Errors_occurred."
 msgstr "Errors occurred."
 
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Your order was placed successfully."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} has placed a new order ({1})."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Instant order ({0}) successfully placed for {1}."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
-
-msgid "Pickup_day"
-msgstr "Pickup day"
-
-msgid "Thank_you_for_your_purchase!"
-msgstr "Thank you for your purchase!"
-
-msgid "Sign_out"
-msgstr "Sign out"
-
-msgid "Continue_shopping"
-msgstr "Continue shopping"
-
-msgid "Print_receipt"
-msgstr "Print receipt"
-
-msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
-msgstr "{0} has placed a new order for {1} ({2})."
-
 msgid "Notification_about_instant_order_order"
 msgstr "Notification about instant order"
 
@@ -254,6 +323,9 @@ msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's se
 
 msgid "Your_purchase"
 msgstr "Your purchase"
+
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
+msgstr "New order comment was written by {0} for {1}"
 
 msgid "Order_confirmation"
 msgstr "Order confirmation"
@@ -278,6 +350,9 @@ msgstr "Your email address was already activated or the activation code was not 
 
 msgid "Your_email_address_has_been_activated_successfully."
 msgstr "Your email address has been activated successfully."
+
+msgid "Filename_Terms-of-use"
+msgstr "Terms-of-use"
 
 msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
 msgstr "Your email address has been activated successfully, your password has been sent to you."
@@ -624,11 +699,14 @@ msgstr "Base price"
 msgid "Price_is_automatically_adapted_after_save."
 msgstr "Price will be automatically adapted after saving."
 
-msgid "The_field_is_red_if_weight_not_yet_adapted."
-msgstr "The field appears read if the weight has not yet been adapted."
-
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Do not automatically adapt price, just change the weight."
+
+msgid "Calculator"
+msgstr "Calculator"
+
+msgid "Example_given_abbr"
+msgstr "E.g."
 
 msgid "Really_delete_ordered_product?"
 msgstr "Really cancel the ordered product?"
@@ -654,17 +732,11 @@ msgstr "Cancel product!"
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Please only cancel if this is ok for the manfacturer!"
 
-msgid "Really_delete_selected_product?"
-msgstr "Really cancel the selected product?"
+msgid "You_selected_1_product."
+msgstr "You selected 1 product."
 
-msgid "Really_delete_selected_products?"
-msgstr "Really cancel the selected products?"
-
-msgid "You_selected_1_product"
-msgstr "You selected 1 product"
-
-msgid "You_selected_{0}_products"
-msgstr "You selected {0} products"
+msgid "You_selected_{0}_products."
+msgstr "You selected {0} products."
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Please tell us, why you want to decrease the amount."
@@ -719,6 +791,12 @@ msgstr "Do you really want to show product {0} as \"new\"?"
 
 msgid "Really_do_not_show_product_{0}_as_new?"
 msgstr "Do you really want to show product {0} as \"not new\"?"
+
+msgid "Activate"
+msgstr "Activate"
+
+msgid "Deactivate"
+msgstr "Deactivate"
 
 msgid "Activate_product"
 msgstr "Activate product"
@@ -791,6 +869,9 @@ msgstr "Be careful, you cannot undo this action!"
 
 msgid "Errors_occurred_while_member_was_deleted"
 msgstr "Errors occurred while member was deleted"
+
+msgid "Errors_occurred_while_product_status_was_changed"
+msgstr "Errors occurred while the product status was changed"
 
 msgid "Delete_products?"
 msgstr "Delete products?"
@@ -901,7 +982,7 @@ msgid "Add_product_feedback"
 msgstr "Write feedback to product"
 
 msgid "Add_product_feedback_explanation_text_{0}."
-msgstr "Your feedback will be sent to the manufacturer {0} after successful saving, you <b>can't change it </b> then. The manufacturer gets your e-mail address so that he can write back."
+msgstr "Your feedback will be sent to the manufacturer {0} after successful saving, you <b>can't change it </b> then. The manufacturer gets your name and your e-mail address so that he can write back."
 
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
@@ -950,6 +1031,12 @@ msgstr "back"
 
 msgid "Send_email_to_member"
 msgstr "Send email to member"
+
+msgid "Send_email_to_both_members"
+msgstr "Send email to both members"
+
+msgid "Change_status"
+msgstr "Change status"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1047,9 +1134,6 @@ msgstr "Order possible until amount of"
 msgid "zero_or_smaller_zero"
 msgstr "0 or smaller than 0"
 
-msgid "Manufacturer"
-msgstr "Manufacturer"
-
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "For manufacturers and contact persons. Can be changed in the manufacturer settings."
 
@@ -1070,9 +1154,6 @@ msgstr "Change delivery rhythm"
 
 msgid "First_delivery_day"
 msgstr "First delivery day"
-
-msgid "Delivery_day"
-msgstr "Delivery day"
 
 msgid "First_delivery_day_info_(one_product)."
 msgstr "The product can be ordered from now on."
@@ -1260,9 +1341,6 @@ msgstr "Invoice"
 msgid "Cancellation_invoice"
 msgstr "Cancellation invoice"
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
-
 msgid "ID"
 msgstr ""
 
@@ -1271,9 +1349,6 @@ msgstr "Price excl."
 
 msgid "Price_incl."
 msgstr "Price incl."
-
-msgid "Total_sum"
-msgstr "Total sum"
 
 msgid "Price_net"
 msgstr "Price net"
@@ -1314,8 +1389,35 @@ msgstr "Sum tax"
 msgid "Sum_price_incl."
 msgstr "Sum price incl."
 
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
+
 msgid "You_are_not_signed_in."
 msgstr "Your are not signed in."
+
+msgid "BackupDatabaseCronjob"
+msgstr "Backup database"
+
+msgid "CheckCreditBalanceCronjob"
+msgstr "Credit reminder"
+
+msgid "EmailOrderReminderCronjob"
+msgstr "Order reminder"
+
+msgid "PickupReminderCronjob"
+msgstr "Pickup reminder"
+
+msgid "SendOrderListsCronjob"
+msgstr "Order lists"
+
+msgid "SendInvoicesToCustomersCronjob"
+msgstr "Invoices"
+
+msgid "SendInvoicesToManufacturersCronjob"
+msgstr "Invoices"
+
+msgid "SendDeliveryNotesCronjob"
+msgstr "Delivery notes"
 
 msgid "Action_Log_Invoice_added"
 msgstr "Invoice: Added"
@@ -1575,6 +1677,9 @@ msgstr "Feedback approved"
 msgid "Action_Log_Feedback_deleted"
 msgstr "Feedback deleted"
 
+msgid "Action_Log_Cronjob_changed"
+msgstr "Cronjob: Changed"
+
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr "Cronjob: Database backup done"
 
@@ -1692,6 +1797,9 @@ msgstr "The product with id {0} does not exist."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"
 
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr "Please accept the information about the right of withdrawal."
+
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr "Please accept the information about the right of withdrawal."
 
@@ -1709,6 +1817,9 @@ msgstr "Please select a pickup day."
 
 msgid "The_pickup_day_is_not_valid."
 msgstr "The pickup day is not valid."
+
+msgid "Delivery_break"
+msgstr "Delivery break"
 
 msgid "offline"
 msgstr "offline"
@@ -1730,6 +1841,45 @@ msgstr "Please enter the name of the food-coop."
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "The amount of characters needs to be between {0} and {1}."
+
+msgid "The_time_interval_is_not_valid."
+msgstr "The time interval is not valid."
+
+msgid "Please_select_a_day_of_month."
+msgstr "Please select a day of month."
+
+msgid "The_day_of_month_is_not_valid."
+msgstr "The day of month is not valid."
+
+msgid "Please_select_a_weekday."
+msgstr "Please select a weekday."
+
+msgid "The_weekday_is_not_valid."
+msgstr "The weekday is not valid."
+
+msgid "daily"
+msgstr "daily"
+
+msgid "weekly"
+msgstr "weekly"
+
+msgid "No_day_of_month_allowed_for_time_interval_{0}."
+msgstr "No day of month allowed for time interval \"{0}\"."
+
+msgid "monthly"
+msgstr "monthly"
+
+msgid "No_weekday_allowed_for_time_interval_{0}."
+msgstr "No weekday allowed for time interval \"{0}\"."
+
+msgid "Please_enter_a_valid_time."
+msgstr "Please enter a valid time."
+
+msgid "The_time_interval_needs_to_equal_\"{0}\""
+msgstr "The time interval needs to equal \"{0}\"."
+
+msgid "Last_day_of_month"
+msgstr "Last day of month"
 
 msgid "Please_enter_your_first_name."
 msgstr "Please enter your first name."
@@ -1791,9 +1941,6 @@ msgstr "Please enter a valid IBAN."
 msgid "Please_enter_a_valid_BIC."
 msgstr "Please enter a valid BIC."
 
-msgid "Delivery_break"
-msgstr "Delivery break"
-
 msgid "online"
 msgstr "online"
 
@@ -1802,9 +1949,6 @@ msgstr "Please enter your feedback."
 
 msgid "Please_enter_a_correct_number."
 msgstr "Please enter a correct number."
-
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 product} other{# products}}"
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "The amount needs to be greater than 0."
@@ -1869,6 +2013,9 @@ msgstr "deleted"
 msgid "The_price_needs_to_be_greater_or_equal_than_0."
 msgstr "The price needs to be greater or equal than 0."
 
+msgid "Purchase_price"
+msgstr "Purchase price"
+
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "The quantity needs to be a number."
 
@@ -1926,63 +2073,6 @@ msgstr "Member"
 msgid "Order_lists_for_the_day"
 msgstr "Order lists for"
 
-msgid "Runtime"
-msgstr "Runtime"
-
-msgid "Database_backup_successful"
-msgstr "Database backup successful"
-
-msgid "Please_add_credit"
-msgstr "Please add credit"
-
-msgid "Sum"
-msgstr "Sum"
-
-msgid "Sent_emails"
-msgstr "Sent emails"
-
-msgid "Order_reminder"
-msgstr "Order reminder"
-
-msgid "today"
-msgstr "today"
-
-msgid "tomorrow"
-msgstr "tomorrow"
-
-msgid "Pickup_reminder_for"
-msgstr "Pickup reminder for"
-
-msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
-msgstr "{0,plural,=1{1 delivery note was} other{# delivery notes were}} generated successfully."
-
-msgid "Delivery_note_for_{0}"
-msgstr "Delivery note for {0}"
-
-msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
-msgstr "{0,plural,=1{1 invoice was} other{# invoices were}} generated successfully."
-
-msgid "to_(time_context)"
-msgstr "to"
-
-msgid "Generated_invoices"
-msgstr "Generated invoices"
-
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr "Invoices for {0} have been sent"
-
-msgid "Invoice_number_abbreviation"
-msgstr "Invoice nº"
-
-msgid "Sent"
-msgstr "Sent"
-
-msgid "Products"
-msgstr "Products"
-
-msgid "Sent_order_lists"
-msgstr "Sent order lists"
-
 msgid "Customer_adds_payment_manually"
 msgstr "Members add their payments manually"
 
@@ -2008,7 +2098,7 @@ msgid "Order_adaptions"
 msgstr "Order adaptions"
 
 msgid "My_data"
-msgstr ""
+msgstr "My data"
 
 msgid "Change_password"
 msgstr "Change password"
@@ -2025,9 +2115,6 @@ msgstr "Use purchase price for shopping"
 msgid "Shopping_with_zero_price"
 msgstr "Use zero price for shopping"
 
-msgid "weekly"
-msgstr "weekly"
-
 msgid "every_{0}_week"
 msgstr "every {0} week"
 
@@ -2039,6 +2126,12 @@ msgstr "every last {0} of a month"
 
 msgid "bulk_order"
 msgstr "bulk order"
+
+msgid "midnight"
+msgstr "midnight"
+
+msgid "default_value"
+msgstr "default value"
 
 msgid "yes"
 msgstr "yes"
@@ -2097,6 +2190,15 @@ msgstr "Admin"
 msgid "Superadmin"
 msgstr "Superadmin"
 
+msgid "Configurations"
+msgstr "Settings"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
+
+msgid "Tax_rates"
+msgstr "Tax rates"
+
 msgid "Credit_overview"
 msgstr "Credit overview"
 
@@ -2150,12 +2252,6 @@ msgstr "{0,plural,=1{1 minute} other{# minutes}}"
 
 msgid "{0,plural,=1{1_second} other{#_seconds}}"
 msgstr "{0,plural,=1{1 second} other{# seconds}}"
-
-msgid "midnight"
-msgstr "midnight"
-
-msgid "default_value"
-msgstr "default value"
 
 msgid "price_will_be_adapted."
 msgstr "price will be adapted."
@@ -2399,6 +2495,9 @@ msgstr "I promise to pick up the products on the selected pickup day and I will 
 
 msgid "No_order_possible"
 msgstr "No order possible"
+
+msgid "{0}_times_ordered_for_pickup_day_{1}."
+msgstr "{0} times ordered for pickup day {1}."
 
 msgid "available"
 msgstr "available"
@@ -2676,6 +2775,19 @@ msgstr "placed on"
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
 
+#~ msgid "The_field_is_red_if_weight_not_yet_adapted."
+#~ msgstr "The field appears read if the weight has not yet been adapted."
+
+#~ msgid "Really_delete_selected_product?"
+#~ msgstr "Really cancel the selected product?"
+
+#~ msgid "Really_delete_selected_products?"
+#~ msgstr "Really cancel the selected products?"
+
+#, fuzzy
+#~ msgid "The_day_of_month_is_required."
+#~ msgstr "The day of month is not valid."
+
 #~ msgid "No_stock_products_selected."
 #~ msgstr "No stock products were selected."
 
@@ -2718,9 +2830,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "Mouseover_shows_the_paid_amont_in_{0}."
 #~ msgstr "Mouseover shows the paid amount in {0}."
-
-#~ msgid "Order_contains_amount_in_{0}."
-#~ msgstr "Order was partly paid  in {0}."
 
 #~ msgid "Paying_with_time_account_name_{0}"
 #~ msgstr "Account of {0}"
@@ -2794,9 +2903,6 @@ msgstr "The prices include the VAT."
 #~ msgid "Surcharge"
 #~ msgstr "Surcharge"
 
-#~ msgid "The_discount_is_not_valid."
-#~ msgstr "The discount is not valid."
-
 #~ msgid "No_discount_normal_selling_prices_are_used"
 #~ msgstr "No discount - normal selling prices are used for shopping"
 
@@ -2831,9 +2937,6 @@ msgstr "The prices include the VAT."
 #, fuzzy
 #~ msgid "Your_email_address_was_activated"
 #~ msgstr "Your email address was successfully activated and you are already signed in."
-
-#~ msgid "Filename_Terms-of-use"
-#~ msgstr "Terms-of-use"
 
 #~ msgid "Generate_orders_as_pdf?"
 #~ msgstr "Generate orders as PDF?"

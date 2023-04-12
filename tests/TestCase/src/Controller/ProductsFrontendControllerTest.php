@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -12,6 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
@@ -19,10 +22,13 @@ use Cake\Core\Configure;
 
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
+
+    protected $OrderDetail;
+    protected $Product;
+    protected $Unit;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public $Product;
 
     public function setUp(): void
     {
@@ -109,7 +115,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $manufacturerId = 5;
-        $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->get($this->Slug->getProductDetail($productId, 'Artischocke'));
         $this->assertResponseContains('<i class="fas fa-fw fa-lg fa-times"></i> Lieferpause!');
     }
@@ -176,9 +182,36 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
                 'id_product' => $productId,
             ],
         ])->first();
-        $nextDeliveryDay = $this->Product->getNextDeliveryDay($product, $this);
+        $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDayForProduct($product, $this);
         $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
+    }
+
+    public function testProductDetailHtmlProductCatalogShowOrderedProductsTotalAmountInCatalog()
+    {
+        Configure::write('app.showOrderedProductsTotalAmountInCatalog', true);
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+
+        $productId = 60;
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'id_product' => $productId,
+            ],
+        ])->first();
+        $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDayForProduct($product, $this);
+
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (3);';
+        $params = [
+            'pickupDay' => $nextDeliveryDay,
+        ];
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute($params);
+        
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getProductDetail($productId, 'Milch'));
+        $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
+        $this->assertResponseContains('<div title="<b>1</b>x für Abholtag <b>'.$formattedPickupDay.'</b> bestellt." class="ordered-products-total-amount">1</div>');
     }
 
     public function testProductDetailHtmlProductCatalogInstantOrder()
@@ -195,13 +228,9 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     protected function changeProductStatus($productId, $active)
     {
-        $query = 'UPDATE ' . $this->Product->getTable().' SET active = :active WHERE id_product = :productId;';
-        $params = [
-            'productId' => $productId,
-            'active' => $active
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $productEntity = $this->Product->get($productId);
+        $productEntity->active = $active;
+        $this->Product->save($productEntity);
     }
 
 }

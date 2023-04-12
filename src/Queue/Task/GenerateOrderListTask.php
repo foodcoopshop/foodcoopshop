@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Queue\Task;
 
-use App\Mailer\AppMailer;
-use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
-use App\Lib\PdfWriter\OrderListByProductPdfWriter;
-use Cake\Core\Configure;
 use Queue\Queue\Task;
+use Cake\Core\Configure;
+use App\Mailer\AppMailer;
+use Cake\Datasource\FactoryLocator;
+use App\Lib\PdfWriter\OrderListByProductPdfWriter;
+use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,65 +27,73 @@ use Queue\Queue\Task;
 class GenerateOrderListTask extends Task {
 
     use UpdateActionLogTrait;
-
+    
     public $Manufacturer;
-
     public $QueuedJobs;
-
     public $timeout = 30;
-
     public $retries = 2;
+
+    private function generateOrderListProduct($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
+    {
+        $pdfWriter = new OrderListByProductPdfWriter();
+        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
+            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists, $isAnonymized
+        );
+        $pdfWriter->setFilename($productPdfFile);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, $isAnonymized);
+        $pdfWriter->writeFile();
+        return $productPdfFile;
+    }
+
+    private function generateOrderListCustomer($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
+    {
+        $pdfWriter = new OrderListByCustomerPdfWriter();
+        $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
+            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists, $isAnonymized
+        );
+        $pdfWriter->setFilename($customerPdfFile);
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds, $isAnonymized);
+        $pdfWriter->writeFile();
+        return $customerPdfFile;
+    }
 
     public function run(array $data, $jobId) : void
     {
 
         $pickupDayDbFormat = $data['pickupDayDbFormat'];
-        $pickupDayFormated = $data['pickupDayFormated'];
+        $pickupDayFormatted = $data['pickupDayFormatted'];
         $manufacturerId = $data['manufacturerId'];
         $orderDetailIds = $data['orderDetailIds'];
         $actionLogId = $data['actionLogId'];
 
-        $this->Manufacturer = $this->loadModel('Manufacturers');
+        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
 
-        // START generate PDF grouped by PRODUCT
-        $pdfWriter = new OrderListByProductPdfWriter();
-        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists
-        );
-        $pdfWriter->setFilename($productPdfFile);
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
-        $pdfWriter->writeFile();
-        // END generate PDF grouped by PRODUCT
-
-        // START generate PDF grouped by CUSTOMER
-        $pdfWriter = new OrderListByCustomerPdfWriter();
-        $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-            $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists
-        );
-        $pdfWriter->setFilename($customerPdfFile);
-        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
-        $pdfWriter->writeFile();
-        // END generate PDF grouped by CUSTOMER
+        $attachments = [
+            $this->generateOrderListProduct(false, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
+            $this->generateOrderListCustomer(false, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
+        ];
+        
+        if ($manufacturer->anonymize_customers) {
+            $attachments = [
+                $this->generateOrderListProduct(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
+                $this->generateOrderListCustomer(true, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds),
+            ];
+        }
 
         $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
 
         if ($sendEmail) {
-
-            $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.send_order_list');
             $email->setTo($manufacturer->address_manufacturer->email)
-            ->setAttachments([
-                $productPdfFile,
-                $customerPdfFile,
-            ])
-            ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
+            ->setAttachments($attachments)
+            ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormatted)
             ->setViewVars([
                 'manufacturer' => $manufacturer,
                 'showManufacturerUnsubscribeLink' => true,
@@ -92,16 +103,18 @@ class GenerateOrderListTask extends Task {
             }
 
             $email->afterRunParams = [
-                'actionLogIdentifier' => 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormated,
+                'actionLogIdentifier' => 'send-order-list-' . $manufacturerId . '-' . $pickupDayFormatted,
                 'actionLogId' => $actionLogId,
                 'manufacturerId' => $manufacturerId,
                 'orderDetailIds' => $orderDetailIds,
             ];
+
+            $email->customerAnonymizationForManufacturers = false; // always show contact person in email body
             $email->addToQueue();
 
         }
 
-        $actionLogIdentifier = 'generate-order-list-' . $manufacturerId . '-' . $pickupDayFormated;
+        $actionLogIdentifier = 'generate-order-list-' . $manufacturerId . '-' . $pickupDayFormatted;
         $this->updateActionLogSuccess($actionLogId, $actionLogIdentifier, $jobId);
 
     }

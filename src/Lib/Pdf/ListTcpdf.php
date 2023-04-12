@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -25,6 +27,8 @@ class ListTcpdf extends AppTcpdf
     public $headerRight;
 
     public $infoTextForFooter = '';
+
+    public $html;
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {

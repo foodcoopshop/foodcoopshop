@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,6 +25,7 @@ use Cake\Utility\Hash;
 
 class HelloCashTest extends AppCakeTestCase
 {
+
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
@@ -34,9 +37,10 @@ class HelloCashTest extends AppCakeTestCase
     public function setUp(): void
     {
         if (
-            Configure::read('app.helloCashAtCredentials.username') == ''
-            || Configure::read('app.helloCashAtCredentials.password') == ''
-            || Configure::read('app.helloCashAtCredentials.cashier_id') == ''
+            in_array(Configure::read('app.helloCashAtCredentials.username'), [
+                '',
+                Configure::read('app.helloCashAtCredentials.username') == 'HELLO_CASH_USERNAME',
+            ])
             ) {
                 $this->markTestSkipped('The credentials for HelloCash are missing.');
             }
@@ -58,6 +62,16 @@ class HelloCashTest extends AppCakeTestCase
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $invoice = $this->Invoice->find('all', [])->first();
+
+        // not-owning user must not be able to download receipt
+        $this->loginAsCustomer();
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
+        $this->assertAccessDeniedFlashMessage();
+
+        // owning user must be able to download receipt
+        $this->loginAsSuperadmin();
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
+        $this->assertResponseCode(200);
 
         $receiptHtml = $this->HelloCash->getReceipt($invoice->id, false);
 
@@ -195,7 +209,7 @@ class HelloCashTest extends AppCakeTestCase
                 'invoiceId' => $invoice->id,
             ]
         );
-        $response = json_decode($this->_response);
+        $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
         $invoice = $this->Invoice->find('all', [

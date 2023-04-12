@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -32,7 +34,7 @@ class InvoiceToManufacturerPdfWriter extends PdfWriter
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
     }
 
-    public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate)
+    public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate, $isAnonymized)
     {
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -45,7 +47,14 @@ class InvoiceToManufacturerPdfWriter extends PdfWriter
         ])->first();
 
         $productResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
+        if ($isAnonymized) {
+            $productResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($productResults);
+        }
+
         $customerResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
+        if ($isAnonymized) {
+            $customerResults = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($customerResults);
+        }
 
         $this->setSums($productResults);
 

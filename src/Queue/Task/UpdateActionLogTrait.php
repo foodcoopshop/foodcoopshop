@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Queue\Task;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,12 +22,13 @@ use Cake\I18n\FrozenTime;
  */
 trait UpdateActionLogTrait
 {
+
     public $ActionLog;
 
     public function updateActionLogFailure($actionLogId, $identifier, $jobId, $errorMessage)
     {
 
-        $this->ActionLog = $this->loadModel('ActionLogs');
+        $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
 
         $search = 'data-identifier="'.$identifier.'"';
         $now = new FrozenTime();
@@ -45,7 +48,7 @@ trait UpdateActionLogTrait
     public function updateActionLogSuccess($actionLogId, $identifier, $jobId)
     {
 
-        $this->ActionLog = $this->loadModel('ActionLogs');
+        $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
 
         $search = 'not-ok" data-identifier="'.$identifier.'"';
         $now = new FrozenTime();

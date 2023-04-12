@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,6 +21,7 @@ use Cake\Core\Configure;
 class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetail;
     public $orderDetailFeedback = 'Product tasted <i>great</i>! <b>Thank you</b>!<img src="/test.jpg"></img>';
     public $orderDetailId = 1;
 
@@ -47,6 +50,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
 
     public function testAddFeedbackAsSuperadmin()
     {
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
         $this->assertJsonOk();

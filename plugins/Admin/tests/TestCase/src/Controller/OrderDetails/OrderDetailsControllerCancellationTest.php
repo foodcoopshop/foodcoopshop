@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,6 +21,8 @@ use Cake\Core\Configure;
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetail;
+    protected $Product;
     public $cancellationReason = 'Product was not fresh any more.';
 
     public function testCancellationWithPurchasePrice()
@@ -45,8 +49,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails);
 
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
@@ -57,24 +60,26 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails);
 
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
     public function testCancellationAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
     {
+        $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
         $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
 
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [
-            Configure::read('test.loginEmailVegetableManufacturer')
-        ];
-        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails);
+
+        $expectedToEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
+        $this->assertOrderDetailDeletedEmails(1, $expectedToEmails);
+        $this->assertMailContainsHtmlAt(1, 'Hallo Demo Gemüse-Hersteller');
+        $this->assertMailContainsHtmlAt(1, 'D.S. - ID 92');
 
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
@@ -90,8 +95,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails);
 
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
@@ -160,7 +164,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertEmpty($orderDetails);
     }
 
-    private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
+    private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails)
     {
 
         $this->runAndAssertQueue();
@@ -169,9 +173,6 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
         foreach($expectedToEmails as $expectedToEmail) {
             $this->assertMailSentToAt($emailIndex, $expectedToEmail);
-        }
-        foreach($expectedCcEmails as $expectedCcEmail) {
-            $this->assertMailSentWithAt($emailIndex, $expectedCcEmail, 'cc');
         }
 
         $this->assertMailContainsHtmlAt($emailIndex, $this->cancellationReason);

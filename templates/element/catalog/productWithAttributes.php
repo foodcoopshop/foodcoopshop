@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -83,10 +85,12 @@ foreach ($preparedProductAttributes as $attribute) {
     echo $this->element('catalog/amountWrapper', [
         'product' => $product,
         'stockAvailable' => $attribute->stock_available,
-        'hideAmountSelector' => $isStockProductOrderPossible
+        'orderedTotalAmount' => $attribute->ordered_total_amount ?? null,
+        'hideAmountSelector' => $isStockProductOrderPossible,
+        'hideIsStockProductIcon' => $appAuth->isSelfServiceModeByUrl(),
     ]);
     echo $this->element('catalog/cartButton', [
-        'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
+        'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
         'productId' => $product->id_product . '-' . $attribute->id_product_attribute,
         'product' => $product,
         'stockAvailableQuantity' => $attribute->stock_available->quantity,

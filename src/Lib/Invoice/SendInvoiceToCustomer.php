@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -28,6 +30,7 @@ class SendInvoiceToCustomer
     public $invoiceNumber;
     public $invoiceDate;
     public $invoiceId;
+    public $invoiceSumPriceIncl;
     public $paidInCash;
     public $isCancellationInvoice;
     public $originalInvoiceId;
@@ -42,6 +45,7 @@ class SendInvoiceToCustomer
         $invoiceNumber = $this->invoiceNumber;
         $invoiceDate = $this->invoiceDate;
         $invoiceId = $this->invoiceId;
+        $invoiceSumPriceIncl = $this->invoiceSumPriceIncl;
         $paidInCash = $this->paidInCash;
         $isCancellationInvoice = (bool) $this->isCancellationInvoice;
         $originalInvoiceId = $this->originalInvoiceId ?? $invoiceId;
@@ -59,6 +63,7 @@ class SendInvoiceToCustomer
         ->setSubject($subject)
         ->setViewVars([
             'paidInCash' => $paidInCash,
+            'invoiceSumPriceIncl' => $invoiceSumPriceIncl,
             'customerName' => $customerName,
             'creditBalance' => $creditBalance,
         ]);

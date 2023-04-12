@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,19 +21,20 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetail;
     public $newCustomerId = 88;
     public $editCustomerReason = 'The member forgot his product and I took it.';
     public $editCustomerAmount = 1;
 
     public function testEditOrderDetailCustomerAsManufacturer() {
         $this->loginAsVegetableManufacturer();
-        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
+        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, true);
         $this->assertNotPerfectlyImplementedAccessRestricted();
     }
 
     public function testEditOrderDetailCustomerAsSuperadminNotParted() {
         $this->loginAsSuperadmin();
-        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
+        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->editCustomerAmount, $changedOrderDetails[0]->product_amount);
@@ -63,7 +66,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
-        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
+        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
 
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
@@ -99,7 +102,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
-        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, 3);
+        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, 3, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
 
         $changedOrderDetails = $this->OrderDetail->find('all', [
@@ -143,7 +146,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
-        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
+        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
 
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
@@ -170,7 +173,15 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
 
     }
 
-    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount)
+    public function testEditOrderDetailCustomerAsSuperadminNoEmailsSent()
+    {
+        $this->loginAsSuperadmin();
+        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount, false);
+        $this->runAndAssertQueue();
+        $this->assertNoMailSent();
+    }
+
+    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount, $sendEmailToCustomers)
     {
         $this->post(
             '/admin/order-details/editCustomer/',
@@ -178,7 +189,8 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
                 'orderDetailId' => $orderDetailId,
                 'customerId' => $customerId,
                 'editCustomerReason' => $editCustomerReason,
-                'amount' => $amount
+                'amount' => $amount,
+                'sendEmailToCustomers' => $sendEmailToCustomers,
             ]
         );
     }

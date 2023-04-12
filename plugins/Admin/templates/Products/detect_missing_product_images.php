@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -33,9 +35,12 @@ foreach($products as $product) {
         $src = $thumbsPath . DS . $imageFilename;
         if (!file_exists($src)) {
             $i++;
-            $outputHtml .= $this->Html->link($product->name, $this->Slug->getProductDetail($product->id_product, $product->name));
-            $outputHtml .= ' / ' . $this->Html->link('Admin',  $this->Slug->getProductAdmin($product->id_manufacturer, $product->id_product));
-            $outputHtml .= ' / ' . $product->manufacturer->name . '<br />';
+            $outputHtml .= '<div style="' . (!$product->active ? 'text-decoration:line-through;' : '') . '">';
+                $outputHtml .= $this->Html->link($product->name, $this->Slug->getProductDetail($product->id_product, $product->name));
+                $outputHtml .= ' / ' . $this->Html->link('Admin',  $this->Slug->getProductAdmin($product->id_manufacturer, $product->id_product));
+                $outputHtml .= ' / ' . $product->manufacturer->name;
+                $outputHtml .= ' / ImageId: ' . $product->image->id_image . '<br />';
+            $outputHtml .= '</div>';
         }
     }
 }

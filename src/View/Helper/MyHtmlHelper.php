@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\View\Helper;
 
@@ -8,6 +9,7 @@ use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Lib\OutputFilter\OutputFilter;
 
 /**
@@ -32,6 +34,15 @@ class MyHtmlHelper extends HtmlHelper
         $this->helpers[] = 'MyNumber';
         $this->helpers[] = 'MyTime';
         parent::__construct($View, $config);
+    }
+
+    public function getHostWithoutProtocol($hostnameWithProtocol)
+    {
+        $parsedHostnameWithProtocol = (parse_url($hostnameWithProtocol));
+        if (!empty($parsedHostnameWithProtocol['host'])) {
+            return $parsedHostnameWithProtocol['host'];
+        }
+        return false;
     }
 
     public function buildElementProductCacheKey($product, $appAuth, $request)
@@ -124,7 +135,7 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         if ($deliveryRhythmType == 'month') {
-            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday());
+            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName(DeliveryRhythm::getDeliveryWeekday());
             if ($deliveryRhythmCount > 0) {
                 $deliveryRhythmString = __('every_{0}_{1}_of_a_month', [
                     $this->MyNumber->ordinal($deliveryRhythmCount),
@@ -144,6 +155,19 @@ class MyHtmlHelper extends HtmlHelper
         return $deliveryRhythmString;
     }
 
+    public function getSendOrderListsWeekdayOptions()
+    {
+        $defaultSendOrderListsWeekday = DeliveryRhythm::getSendOrderListsWeekday();
+        $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
+        $weekday2 = $this->MyTime->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
+        $weekday1 = $this->MyTime->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);
+        return [
+            $weekday3 => $this->MyTime->getWeekdayName($weekday3) . ' ' . __('midnight'),
+            $weekday2 => $this->MyTime->getWeekdayName($weekday2) . ' ' . __('midnight'),
+            $weekday1 => $this->MyTime->getWeekdayName($weekday1) . ' ' . __('midnight') . ' (' . __('default_value') . ')'
+        ];
+    }
+
     public function getDeliveryRhythmTypesForDropdown()
     {
         return [
@@ -161,20 +185,12 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderStateFontawesomeIcon($orderState)
     {
-        switch($orderState)
-        {
-            case ORDER_STATE_ORDER_PLACED:
-                return 'fas fa-cart-arrow-down ok';
-                break;
-            case ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER:
-                return 'far fa-envelope ok';
-                break;
-            case ORDER_STATE_BILLED_CASHLESS:
-            case ORDER_STATE_BILLED_CASH:
-                return 'fa fa-lock not-ok';
-                break;
-        }
-        return '';
+        return match($orderState) {
+            ORDER_STATE_ORDER_PLACED => 'fas fa-cart-arrow-down ok',
+            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER => 'far fa-envelope ok',
+            ORDER_STATE_BILLED_CASHLESS, ORDER_STATE_BILLED_CASH => 'fa fa-lock not-ok',
+            default => '',
+        };
     }
 
     public function wrapJavascriptBlock($content) {
@@ -202,17 +218,20 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCurrencyName($currencySymbol)
     {
-        switch($currencySymbol) {
-            case '€':
-                return 'Euro';
-                break;
-            case '$':
-                return 'Dollar';
-                break;
-            default:
-                return '';
-                break;
-        }
+        return match($currencySymbol) {
+            '€' => 'Euro',
+            '$' => 'Dollar',
+            default => '',
+        };
+    }
+
+    public function getCurrencyIsoCode($currencySymbol)
+    {
+        return match($currencySymbol) {
+            '€' => 'EUR',
+            '$' => 'USD',
+            default => '',
+        };
     }
 
     public function getFontAwesomeIconForCurrencyName($currencySymbol)
@@ -229,11 +248,13 @@ class MyHtmlHelper extends HtmlHelper
      * @param string $page
      * @return string
      */
-    public function getDocsUrl($page)
+    public function getDocsUrl($page, $languageCode=null)
     {
-        $languageCode = substr(I18n::getLocale(), 0, 2);
+        if (is_null($languageCode)) {
+            $languageCode = substr(I18n::getLocale(), 0, 2);
+        }
         $url = 'https://foodcoopshop.github.io/' . $languageCode . '/';
-        if ($languageCode == 'de') {
+        if ($languageCode == 'de' || $page == 'settings') {
             $url .= $page;
         }
         return $url;
@@ -255,6 +276,17 @@ class MyHtmlHelper extends HtmlHelper
     public function getDeletedCustomerEmail()
     {
         return __('Deleted_Email_Address');
+    }
+
+    public function anonymizeCustomerName(string $name, int $id): string
+    {
+        $words = explode(' ', $name);
+        $pieces = [];
+        foreach ($words as $w) {
+            $pieces[] = mb_substr($w, 0, 1);
+        }
+        $anonymizedCustomerName = join('.', $pieces) . '. - ID ' . $id;
+        return $anonymizedCustomerName;
     }
 
     /**
@@ -359,7 +391,7 @@ class MyHtmlHelper extends HtmlHelper
     }
 
     /**
-     * @param array $manufacturer
+     * @param $manufacturer
      * @param string $outputType "pdf" of "html"
      * @return string
      */
@@ -392,7 +424,7 @@ class MyHtmlHelper extends HtmlHelper
                 $imprintLines[] = __('Phone') . ': ' . $manufacturer->address_manufacturer->phone;
             }
         }
-        $imprintLines[] = __('Email') . ': ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
+        $imprintLines[] = __('Email') . ': ' . $manufacturer->address_manufacturer->email;
 
         if (!$addressOnly) {
             if ($manufacturer->homepage != '') {
@@ -493,6 +525,27 @@ class MyHtmlHelper extends HtmlHelper
         return (int) $cartId[5];
     }
 
+    public function getConfigurationTabs()
+    {
+        $tabs = [];
+        $tabs[] = [
+            'name' => '<i class="fas fa-fw ok fa-cogs"></i> ' . __('Configurations'),
+            'url' => Configure::read('app.slugHelper')->getConfigurationsList(),
+            'key' => 'configurations',
+        ];
+        $tabs[] = [
+            'name' => '<i class="fas fa-fw ok fa-clock"></i> ' . __('Cronjobs'),
+            'url' => Configure::read('app.slugHelper')->getCronjobsList(),
+            'key' => 'cronjobs',
+        ];
+        $tabs[] = [
+            'name' => '<i class="fas fa-fw ok fa-percent"></i> ' . __('Tax_rates'),
+            'url' => Configure::read('app.slugHelper')->getTaxesList(),
+            'key' => 'tax_rates',
+        ];
+        return $tabs;
+    }
+
     public function getReportTabs()
     {
         $tabs = [];
@@ -583,7 +636,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getProductImageIdAsPath($imageId)
     {
-        preg_match_all('/[0-9]/', $imageId, $imageIdAsArray);
+        preg_match_all('/[0-9]/', (string) $imageId, $imageIdAsArray);
         $imageIdAsPath = implode(DS, $imageIdAsArray[0]);
         return $imageIdAsPath;
     }
@@ -796,9 +849,13 @@ class MyHtmlHelper extends HtmlHelper
         return $string;
     }
 
-    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupTypeLabel, $currentDate)
+    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupTypeLabel, $currentDate, $isAnonymized)
     {
-        $url = Configure::read('app.folder_order_lists') . DS . date('Y', strtotime($deliveryDay)) . DS . date('m', strtotime($deliveryDay)) . DS;
+        $url = Configure::read('app.folder_order_lists');
+        $url .= DS . date('Y', strtotime($deliveryDay)) . DS . date('m', strtotime($deliveryDay)) . DS;
+        if ($isAnonymized) {
+            $url .= 'anonymized' . DS;
+        }
         $url .= $deliveryDay . '_' . StringComponent::slugify($manufacturerName) . '_' . $manufacturerId . __('_Order_list_filename_') . $groupTypeLabel . '_' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '-' . $currentDate . '.pdf';
         if (Configure::check('app.outputStringReplacements')) {
             $url = OutputFilter::replace($url, Configure::read('app.outputStringReplacements'));

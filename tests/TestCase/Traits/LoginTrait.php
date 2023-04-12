@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Traits;
 
@@ -75,6 +76,12 @@ trait LoginTrait
     public function loginAsVegetableManufacturer()
     {
         $sessionData = $this->login(Configure::read('test.vegetableManufacturerId'));
+        $this->session($sessionData);
+    }
+
+    public function loginAsMilkManufacturer()
+    {
+        $sessionData = $this->login(Configure::read('test.milkManufacturerId'));
         $this->session($sessionData);
     }
 

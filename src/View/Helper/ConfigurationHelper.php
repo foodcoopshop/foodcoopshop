@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\View\Helper;
 
@@ -7,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -48,9 +50,9 @@ class ConfigurationHelper extends Helper
                 break;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                    $values = Configure::read('app.timeHelper')->getNextDailyDeliveryDays(365);
+                    $values = DeliveryRhythm::getNextDailyDeliveryDays(365);
                 } else {
-                    $values = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
+                    $values = DeliveryRhythm::getNextWeeklyDeliveryDays();
                 }
                 return $values;
                 break;
@@ -80,18 +82,6 @@ class ConfigurationHelper extends Helper
     public function getConfigurationDropdownOption($name, $value, $appAuth)
     {
         return self::getConfigurationDropdownOptions($name, $appAuth)[$value];
-    }
-
-    public function getConfigurationDropdownEmpty($name)
-    {
-        switch($name) {
-            case 'FCS_MEMBER_FEE_PRODUCTS':
-                return null;
-                break;
-            default:
-                return null;
-                break;
-        }
     }
 
     public function getConfigurationMultipleDropdownOptions($name, $value)

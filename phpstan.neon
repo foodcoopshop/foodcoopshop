@@ -4,7 +4,13 @@ parameters:
         - php
     paths:
         - src
+        - templates
+        - tests
         - plugins/Admin/src
+        - plugins/Admin/templates
+        - plugins/Admin/tests
         - plugins/Network/src
-    bootstrapFiles:
-        - tests/bootstrap.php
+        - plugins/Network/templates
+        - plugins/Network/tests
+rules:
+    - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

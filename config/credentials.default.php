@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * credentials.default.php
  * please rename this file to "credentials.php" to use it

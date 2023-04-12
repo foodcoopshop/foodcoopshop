@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,6 +21,8 @@ use Cake\View\View;
 
 class MyNumberHelperTest extends AppCakeTestCase
 {
+
+    protected $MyNumberHelper;
 
     public function setUp(): void
     {

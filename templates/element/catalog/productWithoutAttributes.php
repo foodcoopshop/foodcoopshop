@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -42,11 +44,13 @@ if ($showProductPrice) {
 echo $this->element('catalog/hiddenProductIdField', ['productId' => $product->id_product]);
 echo $this->element('catalog/amountWrapper', [
     'product' => $product,
+    'orderedTotalAmount' => $product->ordered_total_amount ?? null,
     'stockAvailable' => $product->stock_available,
     'hideAmountSelector' => $isStockProductOrderPossible,
+    'hideIsStockProductIcon' => $appAuth->isSelfServiceModeByUrl(),
 ]);
 echo $this->element('catalog/cartButton', [
-    'deliveryBreakEnabled' => $product->delivery_break_enabled ?? false,
+    'deliveryBreakManufacturerEnabled' => $product->delivery_break_enabled ?? false,
     'productId' => $product->id_product,
     'product' => $product,
     'stockAvailableQuantity' => $product->stock_available->quantity,

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -21,11 +22,12 @@ use App\Test\TestCase\Traits\LoginTrait;
 class PagesControllerTest extends AppCakeTestCase
 {
 
+    protected $Page;
+    public $Network;
+
     use AssertPagesForErrorsTrait;
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public $Page;
 
     public function setUp(): void
     {
@@ -85,6 +87,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getReport('product'),
             $this->Slug->getReport('payback'),
             $this->Slug->getReport('deposit'),
+            $this->Slug->getMyCreditBalance(),
             $this->Slug->getPaymentEdit(1),
             $this->Slug->getBlogPostListAdmin(),
             $this->Slug->getBlogPostAdd(),
@@ -111,6 +114,8 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Network->getSyncDomainEdit(1),
             $this->Slug->getConfigurationsList(),
             $this->Slug->getConfigurationEdit(544),
+            $this->Slug->getCronjobsList(),
+            $this->Slug->getCronjobEdit(1),
         ];
 
         $this->assertPagesForErrors($testUrls);
@@ -138,6 +143,24 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertPagesForErrors($testUrls);
 
         $this->logout();
+    }
+
+    public function testAllManufacturerUrlsAnonymized()
+    {
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
+        $this->loginAsMeatManufacturer();
+
+        $testUrls = [
+            $this->Slug->getOrderDetailsList() . '?pickupDay[]=02.02.2018',
+        ];
+
+        foreach ($testUrls as $url) {
+            $this->get($url);
+            $this->assertResponseNotContains('Demo Superadmin');
+            $this->assertResponseContains('D.S. - ID 92');
+        }
+
+        $this->assertPagesForErrors($testUrls);
     }
 
     public function test404PagesLoggedOut()
@@ -213,13 +236,9 @@ class PagesControllerTest extends AppCakeTestCase
 
     protected function changePage($pageId, $isPrivate = 0, $active = 1)
     {
-        $query = 'UPDATE ' . $this->Page->getTable().' SET is_private = :isPrivate, active = :active WHERE id_page = :pageId;';
-        $params = [
-            'pageId' => $pageId,
-            'isPrivate' => $isPrivate,
-            'active' => $active
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $pageEntity = $this->Page->get($pageId);
+        $pageEntity->active = $active;
+        $pageEntity->is_private = $isPrivate;
+        $this->Page->save($pageEntity);
     }
 }

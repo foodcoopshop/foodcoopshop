@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
@@ -21,6 +22,14 @@ use Cake\Validation\Validator;
 class AddressManufacturersTable extends AddressesTable
 {
 
+    public function initialize(array $config): void
+    {
+        parent::initialize($config);
+        $this->belongsTo('Manufacturers', [
+            'foreignKey' => 'id_manufacturer'
+        ]);
+    }
+    
     public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('firstname', __('Please_enter_the_first_name.'));

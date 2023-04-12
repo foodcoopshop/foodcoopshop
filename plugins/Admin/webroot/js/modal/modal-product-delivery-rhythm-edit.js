@@ -18,7 +18,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
         var button = $('#editDeliveryRhythmForSelectedProducts');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
@@ -119,7 +119,7 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
         select.append($('#rhythmtypes').html());
         select.on('change', function() {
             var elementToShow = 'default';
-            if ($(this).val().match('individual')) {
+            if ($(this).val() !== null && $(this).val().match('individual')) {
                 elementToShow = 'individual';
             }
             $(modalSelector + ' .dynamic-element').hide();

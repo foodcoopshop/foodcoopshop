@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Log\Engine;
 
@@ -43,6 +44,7 @@ class FileAndEmailLog extends FileLog
             'MissingRouteException',
             'MissingTemplateException',
             'UnauthorizedException',
+            'InvalidCsrfTokenException',
             'cancellation_terms_accepted',
             'general_terms_and_conditions_accepted',
             'terms_of_use_accepted_date_checkbox',
@@ -67,6 +69,7 @@ class FileAndEmailLog extends FileLog
             '{"id_customer":{"numeric":',
             '{"id_customer":{"greaterThan":',
             '{"name":{"_empty":"Bitte gib einen Namen ein."',
+            '{"title":{"_empty":"Bitte gib einen Titel ein."}}',
             '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000',
             '{"quantity_limit":{"_empty":',
             '{"quantity_limit":{"lessThanOrEqual":',
@@ -89,7 +92,7 @@ class FileAndEmailLog extends FileLog
             $loggedUser = $session->read('Auth');
         }
 
-        $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
+        $subject = Configure::read('App.fullBaseUrl') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
             $email = new Mailer(false);
             $email->setProfile('debug');

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -29,6 +31,8 @@ abstract class CustomerInvoiceBaseTcpdf extends AppTcpdf implements CustomerInvo
     public $infoTextForFooter = '';
 
     public $headers = [];
+
+    public $html;
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {

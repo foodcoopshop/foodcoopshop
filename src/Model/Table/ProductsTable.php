@@ -1,17 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Controller\Component\StringComponent;
-use App\Lib\Catalog\Catalog;
-use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\Folder\Folder;
-use App\Lib\RemoteFile\RemoteFile;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
-use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
+use Cake\Log\Log;
 use Cake\Utility\Hash;
+use Cake\Core\Configure;
+use App\Lib\Folder\Folder;
+use App\Lib\Catalog\Catalog;
 use Cake\Validation\Validator;
+use App\Lib\RemoteFile\RemoteFile;
+use Cake\Datasource\FactoryLocator;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Controller\Component\StringComponent;
+use App\Lib\Error\Exception\InvalidParameterException;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,10 +32,15 @@ use Cake\Validation\Validator;
 class ProductsTable extends AppTable
 {
 
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
+
+    private $Catalog;
+    private $Configuration;
+    private $Manufacturer;
+    private $Unit;
 
     public function initialize(array $config): void
     {
@@ -183,7 +191,7 @@ class ProductsTable extends AppTable
                     $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($context['data']['delivery_rhythm_first_delivery_day'])));
                     $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
 
-                    $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday());
+                    $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(DeliveryRhythm::getDeliveryWeekday());
                     $message = __('The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month.', [
                         $ordinalForWeekday,
                         $deliveryWeekdayName,
@@ -203,106 +211,29 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
-    public function getNextDeliveryDay($product, $appAuth)
-    {
-        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            $nextDeliveryDay = '1970-01-01';
-        } elseif ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
-            $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-        } else {
-            $nextDeliveryDay = $this->calculatePickupDayRespectingDeliveryRhythm($product);
-        }
-        return $nextDeliveryDay;
-    }
-
-    public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
+    private function deliveryBreakEnabledBase(string|null $noDeliveryDaysAsString, string $deliveryDate): bool
     {
         return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
     }
 
-    public function calculatePickupDayRespectingDeliveryRhythm($product, $currentDay=null)
+    public function deliveryBreakGlobalEnabled(string|null $noDeliveryDaysAsString, string $deliveryDate): bool
     {
+        return $this->deliveryBreakEnabledBase($noDeliveryDaysAsString, $deliveryDate);
+    }
 
-        if (is_null($currentDay)) {
-            $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+    /**
+     * manufacturer based delivery break is never applied for stock products
+     */
+    public function deliveryBreakManufacturerEnabled(
+        string|null $noDeliveryDaysAsString,
+        string $deliveryDate,
+        bool|int $stockManagementEnabled,
+        bool|int $isStockProduct): bool
+    {
+        if ($stockManagementEnabled && $isStockProduct) {
+            return false;
         }
-
-        $sendOrderListsWeekday = null;
-        if (!is_null($product->delivery_rhythm_send_order_list_weekday)) {
-            $sendOrderListsWeekday = $product->delivery_rhythm_send_order_list_weekday;
-        }
-
-        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
-
-        // assure that $product->is_stock_product also contains check for $product->manufacturer->stock_management_enabled
-        if ($product->is_stock_product) {
-            return $pickupDay;
-        }
-
-        if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
-            if ($product->delivery_rhythm_type == 'week' && $product->delivery_rhythm_count == 1) {
-                $regularPickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
-                if ($pickupDay != $regularPickupDay) {
-                    return 'delivery-rhythm-triggered-delivery-break';
-                }
-            }
-        }
-
-        if ($product->delivery_rhythm_type == 'week') {
-            if (!is_null($product->delivery_rhythm_first_delivery_day)) {
-                $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-                while($calculatedPickupDay < $pickupDay) {
-                    $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
-                    $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
-                }
-
-                if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
-                    if (in_array($product->delivery_rhythm_count, [1, 2]) && $pickupDay != $calculatedPickupDay) {
-                        return 'delivery-rhythm-triggered-delivery-break';
-                    }
-                }
-
-                $pickupDay = $calculatedPickupDay;
-            }
-        }
-
-        if ($product->delivery_rhythm_type == 'month') {
-            switch($product->delivery_rhythm_count) {
-                case '1':
-                    $ordinal = 'first';
-                    break;
-                case '2':
-                    $ordinal = 'second';
-                    break;
-                case '3':
-                    $ordinal = 'third';
-                    break;
-                case '4':
-                    $ordinal = 'fourth';
-                    break;
-                case '0':
-                    $ordinal = 'last';
-                    break;
-            }
-            $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
-            $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
-
-            if (!is_null($product->delivery_rhythm_first_delivery_day)) {
-                $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-            }
-
-            while($calculatedPickupDay < $pickupDay) {
-                $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($calculatedPickupDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
-            }
-            $pickupDay = $calculatedPickupDay;
-        }
-
-        if ($product->delivery_rhythm_type == 'individual') {
-            $pickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-        }
-
-        return $pickupDay;
-
+        return $this->deliveryBreakEnabledBase($noDeliveryDaysAsString, $deliveryDate);
     }
 
     /**
@@ -312,14 +243,13 @@ class ProductsTable extends AppTable
      */
     public function isOwner($productId, $manufacturerId)
     {
-
         $found = $this->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId,
                 'Products.id_manufacturer' => $manufacturerId
             ]
         ])->count();
-        return (boolean) $found;
+        return (bool) $found;
     }
 
     /**
@@ -328,7 +258,7 @@ class ProductsTable extends AppTable
     public function getProductIdAndAttributeId($productId): array
     {
         $attributeId = 0;
-        $explodedProductId = explode('-', $productId);
+        $explodedProductId = explode('-', (string) $productId);
         if (count($explodedProductId) == 2) {
             $productId = $explodedProductId[0];
             $attributeId = $explodedProductId[1];
@@ -425,7 +355,10 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+            $deposit = $product[$productId];
+            if (is_string($deposit)) {
+                $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+            }
             if ($deposit < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]);
             }
@@ -433,8 +366,13 @@ class ProductsTable extends AppTable
 
         $success = false;
         foreach ($products as $product) {
+
             $productId = key($product);
-            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+
+            $deposit = $product[$productId];
+            if (is_string($deposit)) {
+                $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
+            }
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -507,7 +445,10 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            $price = $product[$productId]['gross_price'];
+            if (is_string($price)) {
+                $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            }
             if ($price < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]['gross_price']);
             }
@@ -517,7 +458,10 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
 
             $productId = key($product);
-            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
+            $price = $product[$productId]['gross_price'];
+            if (is_string($price)) {
+                $price = Configure::read('app.numberHelper')->getStringAsFloat($price);
+            }
 
             $ids = $this->getProductIdAndAttributeId($productId);
             $productEntity = $this->find('all', [
@@ -552,10 +496,19 @@ class ProductsTable extends AppTable
                 $success |= is_object($result);
             }
 
-            if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
+            if (isset($product[$productId]['unit_product_price_per_unit_enabled']) && isset($product[$productId]['unit_product_price_incl_per_unit'])) {
+
                 $this->Unit = FactoryLocator::get('Table')->get('Units');
-                $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
-                $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units']);
+
+                $priceInclPerUnit = $product[$productId]['unit_product_price_incl_per_unit'];
+                if (is_string($priceInclPerUnit)) {
+                    $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($priceInclPerUnit);
+                }
+                $quantityInUnits = $product[$productId]['unit_product_quantity_in_units'];
+                if (is_string($quantityInUnits)) {
+                    $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($quantityInUnits);
+                }
+
                 $this->Unit->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
@@ -568,8 +521,8 @@ class ProductsTable extends AppTable
             }
         }
 
-        $success = (boolean) $success;
-        return $success;
+        return (bool) $success;
+        
     }
 
     /**
@@ -606,6 +559,10 @@ class ProductsTable extends AppTable
                         'id_product' => $ids['productId']
                     ],
                 ])->first();
+                if (is_null($entity)) {
+                    Log::error('entity was empty: productId: ' . $ids['productId'] . ' / attributeId: ' . $ids['attributeId']);
+                    continue;
+                }
                 $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
                 $this->StockAvailables->setPrimaryKey('id_product_attribute');
                 $this->StockAvailables->save(
@@ -854,24 +811,28 @@ class ProductsTable extends AppTable
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
         foreach ($conditions as $condition) {
-            if (!is_array($condition) && preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
-                $this->getAssociation('ProductAttributes')->setConditions(
-                    [
-                        'StockAvailables.quantity < 3'
-                    ]
-                );
-                $quantityIsZeroFilterOn = true;
+            if (is_int($condition) || !is_array($condition)) {
+                continue;
             }
-            if (!is_array($condition) && preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                $this->ProductAttributes->setConditions(
-                    [
-                        'ProductAttributes.price' => 0
-                    ]
-                );
-                $priceIsZeroFilterOn = true;
+            if (is_string($condition)) {
+                if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
+                    $this->getAssociation('ProductAttributes')->setConditions(
+                        [
+                            'StockAvailables.quantity < 3'
+                        ]
+                    );
+                    $quantityIsZeroFilterOn = true;
+                }
+                if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
+                    $this->ProductAttributes->setConditions(
+                        [
+                            'ProductAttributes.price' => 0
+                        ]
+                    );
+                    $priceIsZeroFilterOn = true;
+                }
             }
         }
-
         $contain = [
             'CategoryProducts',
             'CategoryProducts.Categories',
@@ -1006,7 +967,7 @@ class ProductsTable extends AppTable
                 $imageFile = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFile);
                 if ($imageFile != '' && !preg_match('/de-default-home/', $imageFile) && file_exists($imageFile)) {
                     $product->image->hash = sha1_file($imageFile);
-                    $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
+                    $product->image->src = Configure::read('App.fullBaseUrl') . $imageSrc;
                 }
             }
 
@@ -1196,7 +1157,7 @@ class ProductsTable extends AppTable
 
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                         $attributeId = $attribute->id_product_attribute ?? 0;
-                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attributeId, 4);
+                        $preparedProduct['system_bar_code'] = $product->system_bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber((string) $attributeId, 4);
                         $preparedProduct['image'] = $product->image;
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                             $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;
@@ -1500,7 +1461,7 @@ class ProductsTable extends AppTable
                 'id_manufacturer' => $manufacturer->id_manufacturer,
                 'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
                 'name' => StringComponent::removeSpecialChars(strip_tags(trim($productName))),
-                'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
+                'delivery_rhythm_send_order_list_weekday' => DeliveryRhythm::getSendOrderListsWeekday(),
                 'description_short' => StringComponent::prepareWysiwygEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
                 'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
                 'unity' => StringComponent::removeSpecialChars(strip_tags(trim($unity))),

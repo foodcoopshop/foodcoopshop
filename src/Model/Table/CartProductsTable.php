@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,6 +23,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
  */
 class CartProductsTable extends AppTable
 {
+
+    private $Cart;
 
     public function initialize(array $config): void
     {
@@ -134,7 +138,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $product->next_delivery_day = $this->Products->getNextDeliveryDay($product, $appAuth);
+        $product->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
@@ -242,13 +246,19 @@ class CartProductsTable extends AppTable
         }
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            if (!$product->manufacturer->active || (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
-                $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
-                return [
-                    'status' => 0,
-                    'msg' => $message,
-                    'productId' => $initialProductId
-                ];
+            if (!$product->manufacturer->active || (!$appAuth->isOrderForDifferentCustomerMode()
+                && !$appAuth->isSelfServiceModeByReferer()
+                && $this->Products->deliveryBreakManufacturerEnabled(
+                    $product->manufacturer->no_delivery_days,
+                    $product->next_delivery_day,
+                    $product->manufacturer->stock_management_enabled,
+                    $product->is_stock_product))) {
+                        $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
+                        return [
+                            'status' => 0,
+                            'msg' => $message,
+                            'productId' => $initialProductId
+                        ];
             }
         }
 
@@ -266,7 +276,7 @@ class CartProductsTable extends AppTable
         }
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+            if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
                 $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                     [
                         Configure::read('appDb.FCS_APP_NAME'),
@@ -290,7 +300,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        if (!$appAuth->isOrderForDifferentCustomerMode() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
+        if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
             $message = __('{0}_can_be_ordered_next_week.',
                 [
                     '<b>' . $product->name . '</b>'
@@ -344,10 +354,8 @@ class CartProductsTable extends AppTable
     public function setPickupDays($cartProducts, $customerId, $cartType, $appAuth)
     {
         $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
-        $productTable = FactoryLocator::get('Table')->get('Products');
-
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = $productTable->getNextDeliveryDay($cartProduct->product, $appAuth);
+            $cartProduct->pickup_day = DeliveryRhythm::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
         }
 
         $pickupDays = [];

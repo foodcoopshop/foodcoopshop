@@ -17,12 +17,13 @@ declare(strict_types=1);
 namespace App;
 
 use Cake\Core\Configure;
-use Cake\Core\Exception\MissingPluginException;
-use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Cake\Core\Exception\MissingPluginException;
+use Cake\Error\Middleware\ErrorHandlerMiddleware;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
 
 /**
  * Application setup class.
@@ -42,7 +43,10 @@ class Application extends BaseApplication
     {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
+
         if (Configure::read('debug')) {
+            $this->addPlugin('Bake');
+            Configure::write('DebugKit.forceEnable', true);
             $this->addPlugin('DebugKit', ['bootstrap' => true]);
         }
 
@@ -56,6 +60,8 @@ class Application extends BaseApplication
             'autoload' => true
         ]);
 
+        require_once $this->configDir . 'bootstrap_locale.php';
+
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->addPlugin('Network', [
                 'routes' => true,
@@ -63,7 +69,6 @@ class Application extends BaseApplication
             ]);
         }
 
-        // Load more plugins here
     }
 
     /**
@@ -74,6 +79,16 @@ class Application extends BaseApplication
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
+
+        $csrf = new CsrfProtectionMiddleware();
+
+        // Token check will be skipped when callback returns `true`.
+        $csrf->skipCheckCallback(function ($request) {
+            if (in_array($request->getPath(), ['/api/getProducts.json', '/api/updateProducts.json', '/api/getOrders.json'])) {
+                return true;
+            }
+        });
+        
         $middlewareQueue
         // Catch any exceptions in the lower layers,
         // and make an error page/response
@@ -83,6 +98,9 @@ class Application extends BaseApplication
         ->add(new AssetMiddleware([
             'cacheTime' => Configure::read('Asset.cacheTime'),
         ]))
+
+        // Ensure routing middleware is added to the queue before CSRF protection middleware.
+        ->add($csrf)
 
         // Add routing middleware.
         // If you have a large number of routes connected, turning on routes

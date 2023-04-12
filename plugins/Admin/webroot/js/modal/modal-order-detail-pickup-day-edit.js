@@ -18,7 +18,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         var button = $('#changePickupDayOfSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
@@ -118,7 +118,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
         var datepickerInput = $('#dialogChangePickupDay');
-        datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());
+        datepickerInput.val($('.filter-container input[name="pickupDay[]"]').val());
         datepickerInput.datepicker();
 
         foodcoopshop.Helper.initCkeditor('dialogEditPickupDayReason', true);

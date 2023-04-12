@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -13,7 +15,8 @@
  * @link          https://www.foodcoopshop.com
  */
 namespace App\Lib\PdfWriter;
-use Cake\Filesystem\Folder;
+
+use App\Lib\Folder\Folder;
 use Cake\Utility\Inflector;
 use Cake\View\ViewBuilder;
 
@@ -85,9 +88,6 @@ abstract class PdfWriter
         return $this->pdfLibrary->Output('', 'S');
     }
 
-    /**
-     * creates folder structure if not yet existings
-     */
     public function writeFile()
     {
         $this->setContent();
@@ -96,11 +96,11 @@ abstract class PdfWriter
         if (file_exists($this->getFilename())) {
             unlink($this->getFilename());
         }
-        // assure that folder structure exists
-        $dir = new Folder();
+
         $path = dirname($this->getFilename());
-        $dir->create($path);
-        $dir->chmod($path, 0755);
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
 
         return $this->pdfLibrary->Output($this->getFilename(), 'F');
     }

@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,6 +26,8 @@ class ListsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
+
+    protected $Invoice;
 
     public function setUp(): void
     {
@@ -80,15 +82,26 @@ class ListsControllerTest extends AppCakeTestCase
      */
     public function testAccessOrderListPageAndDownloadableFile()
     {
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->exec('send_order_lists 2018-01-31');
         $this->runAndAssertQueue();
 
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
-        $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
-        $objects = $folder->read();
-        $downloadFileName = $objects[1][0];
-        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$downloadFileName;
+        $path = realpath(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
+        $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
+
+        $files = [];
+        foreach ($objects as $name => $object) {
+            if (!preg_match('/\.pdf$/', $name)) {
+                continue;
+            }
+            $files[] = str_replace(Configure::read('app.folder_order_lists'), '', $object->getPathName());
+        }
+        sort($files);
+
+        $orderListDownloadUrlClearText = '/admin/lists/getOrderList?file=' . $files[0];
+        $orderListDownloadUrlAnonymized = '/admin/lists/getOrderList?file=' . $files[6];
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
@@ -99,24 +112,37 @@ class ListsControllerTest extends AppCakeTestCase
         $this->assertResponseNotContains('<td>Demo Milch-Hersteller</td>');
 
         // check downloadable file as correct manufacturer
-        $this->get($orderListDownloadUrl);
+        $this->get($orderListDownloadUrlAnonymized);
         $this->assertResponseOk();
         $this->assertContentType('pdf');
 
+        // check if clear text file is not downloadable with anonymized configuration
+        $this->get($orderListDownloadUrlClearText);
+        $this->assertResponseCode(401);
+
+        // check if anonymized file is not downloadable with clear text configuration
+        $this->changeManufacturer(4, 'anonymize_customers', 0);
+        $this->get($orderListDownloadUrlAnonymized);
+        $this->assertResponseCode(401);
+
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
-        $this->get($orderListDownloadUrl);
+        $this->get($orderListDownloadUrlClearText);
         $this->assertResponseCode(401);
 
         // check downloadable file as admin
         $this->loginAsAdmin();
-        $this->get($orderListDownloadUrl);
+        $this->get($orderListDownloadUrlClearText);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
+
+        $this->get($orderListDownloadUrlAnonymized);
         $this->assertResponseOk();
         $this->assertContentType('pdf');
 
         // check list page as admin
         $this->get($listPageUrl);
-        $this->assertResponseContains('<b>3</b> Datensätze');
+        $this->assertResponseContains('<b>4</b> Datensätze');
         $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Gemüse-Hersteller</td>');
         $this->assertResponseContains('<td>Demo Milch-Hersteller</td>');

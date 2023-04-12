@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\Http\Exception\UnauthorizedException;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,15 +26,11 @@ class ListsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'getInvoice':
-                return (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->user()) ||
-                    ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer());
-                break;
-            default:
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'getInvoice' => (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->user()) ||
+                ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()),
+             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer(),
+        };
     }
 
     public function orderLists()
@@ -45,7 +43,7 @@ class ListsController extends AdminAppController
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $dateFrom = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         } else {
-            $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $dateFrom = DeliveryRhythm::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
 
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
@@ -56,59 +54,93 @@ class ListsController extends AdminAppController
         $files = [];
 
         foreach ($objects as $name => $object) {
-            if (preg_match('/\.pdf$/', $name)) {
 
-                // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
-                // the following preg_match avoids a batch renaming
-                if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|Artikel)/', $name, $matches)) {
-                    continue;
-                }
-
-                $splittedFileName = $this->splitOrderDetailStringIntoParts($object->getFileName(), $matches[1]);
-                $deliveryDate = $splittedFileName['deliveryDate'];
-                $manufacturerId = $splittedFileName['manufacturerId'];
-
-                // date check
-                if (! (strtotime($dateFrom) == strtotime($deliveryDate))) {
-                    continue;
-                }
-
-                if ($this->AppAuth->isManufacturer() && $manufacturerId != $this->AppAuth->getManufacturerId()) {
-                    continue;
-                }
-
-                if (!$manufacturerId) {
-                    $message = 'error: ManufacturerId not found in ' . $object->getFileName();
-                    $this->Flash->error($message);
-                    $this->log($message);
-                    $this->set('files', []);
-                    return;
-                }
-
-                $manufacturer = $this->Manufacturer->find('all', [
-                    'conditions' => [
-                        'Manufacturers.id_manufacturer' => $manufacturerId
-                    ]
-                ])->first();
-
-                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists') . DS, '', $name);
-                $productListLink = str_replace(DS, '/', $productListLink);
-                $customerListLink = preg_replace(
-                    '/' . str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . $matches[1] . '/',
-                    str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . __d('admin', 'member'),
-                    $productListLink,
-                1);
-
-                $files[] = [
-                    'delivery_date' => $deliveryDate,
-                    'manufacturer_name' => $manufacturer->name,
-                    'product_list_link' => $productListLink,
-                    'customer_list_link' => $customerListLink
-                ];
-
-                $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
+            if (!preg_match('/\.pdf$/', $name)) {
+                continue;
             }
+
+            // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
+            // the following preg_match avoids a batch renaming
+            if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|Artikel)/', $name, $matches)) {
+                continue;
+            }
+
+            $splittedFileName = $this->splitOrderDetailStringIntoParts($object->getFileName(), $matches[1]);
+            $deliveryDate = $splittedFileName['deliveryDate'];
+            $manufacturerId = $splittedFileName['manufacturerId'];
+            $generationDate = $splittedFileName['generationDate'];
+
+            // date check
+            if (! (strtotime($dateFrom) == strtotime($deliveryDate))) {
+                continue;
+            }
+
+            if ($this->AppAuth->isManufacturer() && $manufacturerId != $this->AppAuth->getManufacturerId()) {
+                continue;
+            }
+
+            $isAnonymized = $this->isAnonymized($name);
+
+            if ($this->AppAuth->isManufacturer()) {
+                if ($this->AppAuth->getManufacturerAnonymizeCustomers() && !$isAnonymized) {
+                    continue;
+                }
+                if (!$this->AppAuth->getManufacturerAnonymizeCustomers() && $isAnonymized) {
+                    continue;
+                }
+            }
+
+            if (!$manufacturerId) {
+                $message = 'error: ManufacturerId not found in ' . $object->getFileName();
+                $this->Flash->error($message);
+                $this->log($message);
+                $this->set('files', []);
+                return;
+            }
+
+            $manufacturer = $this->Manufacturer->find('all', [
+                'conditions' => [
+                    'Manufacturers.id_manufacturer' => $manufacturerId
+                ]
+            ])->first();
+
+            $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists') . DS, '', $name);
+            $productListLink = str_replace(DS, '/', $productListLink);
+            $customerListLink = preg_replace(
+                '/' . str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . $matches[1] . '/',
+                str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . __d('admin', 'member'),
+                $productListLink,
+            1);
+            
+            $listLabel = __d('admin', 'Order_list_with_clear_names');
+            $listIcon = 'fa-eye';
+            if ($isAnonymized) {
+                $listLabel = __d('admin', 'Anonymized_order_list');
+                $listIcon = 'fa-eye-slash';
+            }
+            if ($this->AppAuth->isManufacturer()) {
+                $listLabel = __d('admin', 'Show_order_list');
+                $listIcon = 'fa-arrow-right';
+            }
+            $files[] = [
+                'delivery_date' => $deliveryDate,
+                'manufacturer_name' => $manufacturer->name,
+                'product_lists' => [
+                    ['label' => $listLabel, 'link' => $productListLink, 'icon' => $listIcon],
+                ],
+                'customer_lists' => [
+                    ['label' => $listLabel, 'link' => $customerListLink, 'icon' => $listIcon],
+                ],
+                'generation_date' => $generationDate,
+                'manufacturer_id' => $manufacturerId,
+                'is_anonymized' => $isAnonymized,
+            ];
+            
         }
+
+        $files = Hash::sort($files, '{n}.product_lists.0.label', 'asc');
+        $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
+
         $this->set('files', $files);
 
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
@@ -128,8 +160,14 @@ class ListsController extends AdminAppController
         $splittedManufacturerString = explode('_', $manufacturerString);
 
         $result['manufacturerId'] = (int) end($splittedManufacturerString);
+        $result['generationDate'] = substr($fileName, -23, 19);
 
         return $result;
+    }
+
+    private function isAnonymized($path)
+    {
+        return preg_match('/anonymized/', $path);
     }
 
     public function getOrderList()
@@ -142,7 +180,13 @@ class ListsController extends AdminAppController
                 $splittedFileName = $this->splitOrderDetailStringIntoParts(h($this->getRequest()->getQuery('file')), $matches[1]);
                 $manufacturerId = $splittedFileName['manufacturerId'];
                 if ($manufacturerId != $this->AppAuth->getManufacturerId()) {
-                    throw new UnauthorizedException();
+                    throw new UnauthorizedException('manufacturer is not allowed to open order list of other manufacturers');
+                }
+                if ($this->AppAuth->getManufacturerAnonymizeCustomers() && !$this->isAnonymized($filenameWithPath)) {
+                    throw new UnauthorizedException('manufacturer is not allowed to open order list with clear text data');
+                }
+                if (!$this->AppAuth->getManufacturerAnonymizeCustomers() && $this->isAnonymized($filenameWithPath)) {
+                    throw new UnauthorizedException('manufacturer is not allowed to open order list with anonymized data');
                 }
             }
         }

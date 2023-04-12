@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,6 +19,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
+        Configure::read('app.jsNamespace') . ".ColorMode.init();" .
         Configure::read('app.jsNamespace') . ".Helper.showContent();" .
         Configure::read('app.jsNamespace') . ".Helper.initAnystretch();" .
         Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" .

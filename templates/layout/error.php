@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -27,10 +29,12 @@ use Cake\Core\Configure;
     <?php echo $this->element('jsNamespace'); ?>
 
     <?php
+        echo $this->element('customCssVars');
         // do not use AssetCompressPlugin here (not loaded for errors!)
         echo $this->Html->css([
             'reset',
             '/node_modules/bootstrap/dist/css/bootstrap.css',
+            'dark-mode',
             'global',
             'fonts',
             'frontend',
@@ -40,9 +44,6 @@ use Cake\Core\Configure;
         if ($isMobile) {
             echo $this->Html->css(['mobile-error']);
         }
-
-        echo $this->element('customThemeStyleSheet');
-
     ?>
 
 </head>

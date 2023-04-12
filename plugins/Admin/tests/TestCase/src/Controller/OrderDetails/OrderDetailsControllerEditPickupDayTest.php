@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -59,7 +61,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason, true);
         $this->assertJsonOk();
         $this->runAndAssertQueue();
-        $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('app.cakeServerName') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
+        $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('App.fullBaseUrl') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
     }
 
     public function testEditPickupDayAsSuperadminWithoutEmailsOk()

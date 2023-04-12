@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
@@ -19,7 +20,7 @@ use App\Test\TestCase\AppCakeTestCase;
 class UnitsTableTest extends AppCakeTestCase
 {
 
-    public $Units;
+    protected $Unit;
 
     public $productId = 346;
     public $productAttributeId = 0;

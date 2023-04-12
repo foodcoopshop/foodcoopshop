@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -31,7 +33,9 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <h1><?php echo $title_for_layout; ?></h1>
-            <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
+            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
+            <?php } ?>
             <?php
             if (Configure::read('app.showManufacturerListAndDetailPage') && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
                 echo $this->Form->control('manufacturerId', [
@@ -93,7 +97,7 @@ foreach ($blogPosts as $blogPost) {
     echo $blogPost->id_blog_post;
     echo '</td>';
 
-    echo '<td align="center" style="background-color: #fff;">';
+    echo '<td align="center" class="image">';
     $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
     $srcSmallImage = $this->Html->getBlogPostImageSrc($blogPost, 'home');
 
@@ -139,7 +143,11 @@ foreach ($blogPosts as $blogPost) {
         echo $blogPost->customer->manufacturer->name;
     } else {
         if (!empty($blogPost->customer)) {
-            echo $blogPost->customer->name;
+            $customerName = $blogPost->customer->name;
+            if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+                $customerName = $this->Html->anonymizeCustomerName($customerName, $blogPost->customer->id_customer);
+            }
+            echo $customerName;
         }
     }
     echo '</td>';

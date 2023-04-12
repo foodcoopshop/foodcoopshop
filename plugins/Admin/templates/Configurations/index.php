@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -13,6 +15,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
@@ -32,9 +35,15 @@ $this->element('addScript', [
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
-            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'), 'en')]); ?>
         </div>
     </div>
+
+    <?php
+        echo $this->element('navTabs/configurationNavTabs', [
+            'key' => 'configurations',
+        ]);
+    ?>
 
     <h2 class="info"><?php echo __d('admin', 'The_following_settings_can_be_changed_in_the_admin_area.'); ?></h2>
 
@@ -89,23 +98,12 @@ $this->element('addScript', [
 
                 echo '<td>';
 
-                switch ($configuration->type) {
-                    case 'number':
-                    case 'text':
-                    case 'textarea':
-                    case 'textarea_big':
-                        echo $configuration->value;
-                        break;
-                    case 'dropdown':
-                        echo $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value, $appAuth);
-                        break;
-                    case 'multiple_dropdown':
-                        echo $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value);
-                        break;
-                    case 'boolean':
-                        echo (boolean) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no');
-                        break;
-                }
+                echo match($configuration->type) {
+                    'number', 'text', 'textarea', 'textarea_big' => $configuration->value,
+                    'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value, $appAuth),
+                    'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
+                    'boolean' => (bool) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no'),
+                };
 
                 echo '</td>';
 
@@ -200,19 +198,11 @@ $this->element('addScript', [
                 echo '</td>';
 
                 echo '<td>';
-
-                    switch($configuration->name) {
-                        case 'FCS_WEEKLY_PICKUP_DAY':
-                            echo $this->MyTime->getWeekdayName($configuration->value);
-                            break;
-                        case 'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA':
-                            echo $configuration->value . ' (' . $this->MyTime->getWeekdayName($this->MyTime->getSendOrderListsWeekday()) . ')';
-                            break;
-                        default:
-                            echo $configuration->value;
-                            break;
-                    }
-
+                    echo match($configuration->name) {
+                        'FCS_WEEKLY_PICKUP_DAY' => $this->MyTime->getWeekdayName($configuration->value),
+                        'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA' => $configuration->value . ' (' . $this->MyTime->getWeekdayName(DeliveryRhythm::getSendOrderListsWeekday()) . ')',
+                        default => $configuration->value,
+                    };
                 echo '</td>';
 
             echo '</tr>';
@@ -232,8 +222,8 @@ $this->element('addScript', [
         <?php } ?>
 
         <tr>
-            <td>app.cakeServerName</td>
-            <td><a target="_blank"href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
+            <td>App.fullBaseUrl</td>
+            <td><a target="_blank"href="<?php echo Configure::read('App.fullBaseUrl'); ?>"><?php echo Configure::read('App.fullBaseUrl'); ?></a></td>
         </tr>
 
         <tr>
@@ -329,11 +319,6 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.sendEmailWhenOrderDetailCustomerChanged</td>
-            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailCustomerChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
-        </tr>
-
-        <tr>
             <td>app.showTaxSumTableOnOrderDetailPdf</td>
             <td><?php echo Configure::read('app.showTaxSumTableOnOrderDetailPdf') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
@@ -353,18 +338,6 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.selfServiceModeAutoGenerateInvoice') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
-        <?php
-        if ($this->elementExists('latestGitCommit')) {
-            echo '<tr>';
-            echo '<td>'.__d('admin', 'Software_update_version').'</td>';
-            echo '<td>';
-            echo nl2br($this->element('latestGitCommit'));
-            echo __d('admin', 'Please_find_more_information_in_the_changelog_{0}.', ['<a href="https://www.foodcoopshop.com/changelog" target="_blank">Changelog</a>']);
-            echo '</td>';
-            echo '</tr>';
-        }
-        ?>
-
         <tr>
             <td>app.showTaxInOrderConfirmationEmail</td>
             <td><?php echo Configure::read('app.showTaxInOrderConfirmationEmail') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
@@ -376,32 +349,37 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.paypalMeUsername</td>
+            <td><?php echo Configure::read('app.paypalMeUsername'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.defaultTax</td>
             <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? __d('admin', 'activated') : __d('admin', 'deactivated'); ?></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Logo_for_website,_width:'); ?> 260px<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/<?php echo Configure::read('app.logoFileName'); ?></td>
+            <td><?php echo __d('admin', 'Logo_for_website,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/<?php echo Configure::read('app.logoFileName'); ?></td>
             <td><img src="/files/images/<?php echo Configure::read('app.logoFileName'); ?>" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Logo_for_order_lists_and_invoices,_width:'); ?> 260px<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo-pdf.jpg</td>
+            <td><?php echo __d('admin', 'Logo_for_order_lists_and_invoices,_width:'); ?> 260px<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/logo-pdf.jpg</td>
             <td><img src="/files/images/logo-pdf.jpg" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Default_image_for_product,_width:'); ?> 150x150<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/products/de-default-home_default.jpg</td>
+            <td><?php echo __d('admin', 'Default_image_for_product,_width:'); ?> 150x150<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/products/de-default-home_default.jpg</td>
             <td><img src="/files/images/products/de-default-home_default.jpg" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Default_image_for_manufacturer,_width:'); ?> 150x150<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
+            <td><?php echo __d('admin', 'Default_image_for_manufacturer,_width:'); ?> 150x150<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
             <td><img src="/files/images/manufacturers/de-default-medium_default.jpg" /></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Default_image_for_blog_post,_width:'); ?> 150x113<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/blog_posts/no-home-default.jpg</td>
+            <td><?php echo __d('admin', 'Default_image_for_blog_post,_width:'); ?> 150x113<br /><?php echo Configure::read('App.fullBaseUrl'); ?>/files/images/blog_posts/no-home-default.jpg</td>
             <td><img src="/files/images/blog_posts/no-home-default.jpg" /></td>
         </tr>
 

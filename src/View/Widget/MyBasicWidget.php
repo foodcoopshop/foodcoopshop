@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\View\Widget;
 
 use Cake\View\Form\ContextInterface;
@@ -49,7 +51,7 @@ class MyBasicWidget extends BasicWidget
         // since HtmlPurifier converts all database updates to htmlspecialchars (eg. & => &amp;, > => &lt;)
         // they need to be reconverted for being displayed properly in form inputs
         if (!is_null($data['value'])) {
-            $data['value'] = html_entity_decode($data['value']);
+            $data['value'] = html_entity_decode((string) $data['value']);
         }
 
         return $this->_templates->format('input', [

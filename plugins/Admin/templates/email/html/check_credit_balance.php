@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -35,7 +37,7 @@ use Cake\Core\Configure;
                 <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_to_our_bank_account.'); ?></p>
                 <p><?php echo __d('admin', 'Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer.'); ?></p>
                 <p><?php echo __d('admin', 'Here_you_find_the_link_to_add_the_credit:'); ?><br />
-                    <a href="<?php echo Configure::read('app.cakeServerName') . $this->Slug->getMyCreditBalance(); ?>"><?php echo Configure::read('app.cakeServerName') . $this->Slug->getMyCreditBalance(); ?></a>
+                    <a href="<?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?>"><?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?></a>
                 </p>
            <?php } else { ?>
                 <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_add_your_personal_transaction_code_{0}.', [
@@ -53,7 +55,7 @@ use Cake\Core\Configure;
                 }
             ?>
             <p>
-                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+                <?php echo __d('admin', 'Here_you_can_unsubscribe_this_email_reminder'); ?>: <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getCustomerProfile(); ?></a>
             </p>
         </td>
 

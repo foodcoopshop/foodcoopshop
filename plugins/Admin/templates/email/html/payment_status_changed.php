@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -48,7 +50,7 @@ use Cake\Core\Configure;
 
             <p>
                 <?php echo __d('admin', 'Here_you_find_the_link_to_add_the_credit:'); ?><br />
-                <a href="<?php echo Configure::read('app.cakeServerName') . $this->Slug->getMyCreditBalance(); ?>"><?php echo Configure::read('app.cakeServerName') . $this->Slug->getMyCreditBalance(); ?></a>
+                <a href="<?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?>"><?php echo Configure::read('App.fullBaseUrl') . $this->Slug->getMyCreditBalance(); ?></a>
             </p>
 
         </td>

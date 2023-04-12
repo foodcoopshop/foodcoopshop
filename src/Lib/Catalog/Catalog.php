@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,13 +16,16 @@
  */
 namespace App\Lib\Catalog;
 
+use Cake\I18n\I18n;
 use Cake\Cache\Cache;
+use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\Database\Query;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\FactoryLocator;
-use Cake\Utility\Hash;
 use Cake\Utility\Security;
+use Cake\Datasource\FactoryLocator;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Database\Expression\QueryExpression;
+use Cake\Database\Expression\StringExpression;
 
 class Catalog {
 
@@ -28,6 +33,7 @@ class Catalog {
     protected $Manufacturer;
     protected $Product;
     protected $ProductAttribute;
+    protected $OrderDetail;
 
     public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
@@ -47,10 +53,11 @@ class Catalog {
         $products = Cache::read($cacheKey);
 
         if ($products === null) {
-            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $countMode, $getOnlyStockProducts, $manufacturerId);
+            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId);
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
+            $products = $this->addOrderedProductsTotalAmount($products, $appAuth);
             Cache::write($cacheKey, $products);
         }
 
@@ -67,7 +74,7 @@ class Catalog {
         return $this->getProducts($appAuth, '', false, '', 0, $countMode, false, $manufacturerId);
     }
 
-    protected function getQuery($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
+    protected function getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -332,9 +339,13 @@ class Catalog {
         }
 
         $query->where(function (QueryExpression $exp, Query $q) use($keyword) {
+            $searchValue = '%' . $keyword . '%';
+            if (I18n::getLocale() == 'de_DE') {
+                $searchValue = new StringExpression('%'.$keyword.'%', 'utf8mb4_german2_ci');
+            }
             $or = [
-                $q->newExpr()->like('Products.name', '%'.$keyword.'%'),
-                $q->newExpr()->like('Products.description_short', '%'.$keyword.'%'),
+                $q->newExpr()->like('Products.name', $searchValue),
+                $q->newExpr()->like('Products.description_short', $searchValue),
                 $q->newExpr()->eq('Products.id_product', (int) $keyword),
             ];
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
@@ -355,6 +366,41 @@ class Catalog {
         return $query;
 
     }
+
+    protected function addOrderedProductsTotalAmount($products, $appAuth)
+    {
+
+        if (!Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
+            return $products;
+        }
+
+        if (!$appAuth->user()) {
+            return $products;
+        }
+
+        if ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
+            return $products;
+        }
+
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+
+        $i = -1;
+        foreach($products as $product) {
+            $i++;
+            $pickupDay = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
+            if (empty($product->product_attributes)) {
+                $product->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
+            } else {
+                foreach($product->product_attributes as &$attribute) {
+                    $attribute->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, $attribute->id_product_attribute);
+                }
+            }
+        }
+
+        return $products;
+
+    }
+
 
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products)
     {
@@ -392,7 +438,7 @@ class Catalog {
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm($product);
+            $deliveryDate = DeliveryRhythm::getNextPickupDayForProduct($product);
 
             // deactivates the product if it can not be ordered this week
             if ($deliveryDate == 'delivery-rhythm-triggered-delivery-break') {
@@ -400,12 +446,16 @@ class Catalog {
             }
 
             // deactivates the product if manufacturer based delivery break is enabled
-            if ($this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $deliveryDate)) {
-                $products[$i]->delivery_break_enabled = true;
+            if ($this->Product->deliveryBreakManufacturerEnabled(
+                $product->manufacturer->no_delivery_days,
+                $deliveryDate,
+                $product->manufacturer->stock_management_enabled,
+                $product->is_stock_product)) {
+                    $products[$i]->delivery_break_enabled = true;
             }
 
             // deactivates the product if global delivery break is enabled
-            if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
+            if ($this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
                 $products[$i]->delivery_break_enabled = true;
             }
 
@@ -484,7 +534,7 @@ class Catalog {
                 $products[$i]->deposit_product->deposit = 0;
             }
 
-            $products[$i]->next_delivery_day = $this->Product->getNextDeliveryDay($product, $appAuth);
+            $products[$i]->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
 
             foreach ($product->product_attributes as &$attribute) {
 

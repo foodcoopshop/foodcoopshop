@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -33,7 +35,7 @@ abstract class OrderListPdfWriter extends PdfWriter
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
     }
 
-    public function prepareAndSetData($manufacturerId, $pickupDay, $validOrderStates, $orderDetailIds)
+    public function prepareAndSetData($manufacturerId, $pickupDay, $validOrderStates, $orderDetailIds, $isAnonymized)
     {
 
         $reflect = new \ReflectionClass($this);
@@ -63,6 +65,10 @@ abstract class OrderListPdfWriter extends PdfWriter
             (bool) $manufacturer->include_stock_products_in_order_lists,
             $orderDetailIds,
         );
+
+        if ($isAnonymized) {
+            $results = $this->Manufacturer->anonymizeCustomersInInvoiceOrOrderList($results);
+        }
 
         $this->setSums($results);
 

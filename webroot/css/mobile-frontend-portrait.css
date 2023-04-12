@@ -18,10 +18,6 @@
     #RegistrationForm .input.checkbox input[type="checkbox"] {
         margin-top: 8px;
     }
-    .ui-dialog {
-        width: 98% ! important;
-        max-width: 450px ! important;
-    }
     body.categories .blog-post-wrapper,
     body.manufacturers.detail .blog-post-wrapper,
     body.pages.home .blog-post-wrapper,
@@ -39,9 +35,6 @@
     body.blog_posts.detail .blog-wrapper,
     body.blog_posts.detail .blog-post-wrapper {
         height: 234px;
-    }
-    .blog-post-wrapper img.blog-post-image {
-        height: 100px;
     }
     .blog-post-wrapper span.date {
         display: none;

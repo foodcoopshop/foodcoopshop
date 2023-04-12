@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -25,7 +27,7 @@ use Cake\Core\Configure;
 
                 <p><?php echo __('there_has_been_a_new_registration:_{0}_({1})_from_{2}.', ['<b>'.$data->firstname . ' ' . $data->lastname . '</b>', $data->email, '<b>'.$data->address_customer->city.'</b>']); ?></p>
 
-                <?php $link = Configure::read('app.cakeServerName').'/admin/customers/index?active='.(Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
+                <?php $link = Configure::read('App.fullBaseUrl').'/admin/customers/index?active='.(Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
 
                 <?php if (!Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
                     <p><?php echo __('Here_you_can_activate_the_new_member_and_see_the_data'); ?>:

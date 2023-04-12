@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -94,7 +96,7 @@ class LocalizedController extends Controller
                 'ThisPageUsesCookies' => __('This_page_uses_cookies'),
                 'CookiesExplainationText' => __('Cookies_explaination_text'),
                 'AcceptCookies' => __('Accept_cookies'),
-                'YouHaveAlredyOrdered01TimesFor2' => __('You_have_already_ordered_{0}_{1}_times_for_{2}.'),
+                'YouHaveAlreadyOrdered01TimesFor2' => __('You_have_already_ordered_{0}_{1}_times_for_{2}.'),
                 'Firstname' => __('Firstname'),
                 'Lastname' => __('Lastname'),
                 'ContactPerson' => __('Contact_person'),
@@ -144,8 +146,9 @@ class LocalizedController extends Controller
                 'DeliveredTotalWeight' => __('Delivered_total_weight'),
                 'BasePrice' => __('Base_price'),
                 'PriceIsAutomaticallyAdaptedAfterSave' => __('Price_is_automatically_adapted_after_save.'),
-                'FieldIsRedIfWeightNotYetAdapted' => __('The_field_is_red_if_weight_not_yet_adapted.'),
                 'DoNotAutomaticallyAdaptPriceJustChangeWeight' => __('Do_not_automatically_apapt_price_just_change_weight.'),
+                'Calculator' => __('Calculator'),
+                'ExampleGivenAbbr' => __('Example_given_abbr'),
                 'ReallyDeleteOrderedProduct' => __('Really_delete_ordered_product?'),
                 'ProductCancellation' => __('Product_cancellation'),
                 'DoYouReallyWantToCancelProduct0' => __('Do_you_really_want_to_cancel_product_{0}?'),
@@ -154,10 +157,8 @@ class LocalizedController extends Controller
                 'WhyAreProductsCancelled' => __('Why_are_products_cancelled_(mandatory_field)?'),
                 'YesDoCancelButton' => __('Yes_do_cancel_button!'),
                 'PleaseOnlyCancelIfOkForManufacturer' => __('Please_only_cancel_if_ok_for_manufacturer!'),
-                'ReallyDeleteSelectedProduct' => __('Really_delete_selected_product?'),
-                'ReallyDeleteSelectedProducts' => __('Really_delete_selected_products?'),
-                'YouSelectedOneProduct' => __('You_selected_1_product'),
-                'YouSelected0Products' => __('You_selected_{0}_products'),
+                'YouSelectedOneProduct' => __('You_selected_1_product.'),
+                'YouSelected0Products' => __('You_selected_{0}_products.'),
                 'AdaptAmountReasonIsMandatory' => __('Adapt_amount_reason_is_mandatory.'),
                 'AdaptPriceReasonIsMandatory' => __('Adapt_price_reason_is_mandatory.'),
                 'CancellationReasonIsMandatory' => __('Cancellation_reason_is_mandatory.'),
@@ -176,6 +177,8 @@ class LocalizedController extends Controller
                 'DoNotShowProductAsNew' => __('Do_not_show_product_as_new?'),
                 'ReallyShowProduct0AsNew' => __('Really_show_product_{0}_as_new?'),
                 'ReallyDoNotShowProduct0AsNew' => __('Really_do_not_show_product_{0}_as_new?'),
+                'Activate' => __('Activate'),
+                'Deactivate' => __('Deactivate'),
                 'ActivateProduct' => __('Activate_product'),
                 'DeactivateProduct' => __('Deactivate_product'),
                 'ActivateMember' => __('Activate_member?'),
@@ -200,6 +203,7 @@ class LocalizedController extends Controller
                 'ReallyDeleteMember' => __('Really_delete_member?'),
                 'BeCarefulNoWayBack' => __('Be_careful_there_is_no_way_back!'),
                 'ErrorsOccurredWhileMemberWasDeleted' => __('Errors_occurred_while_member_was_deleted'),
+                'ErrorsOccurredWhileProductStatusWasChanged' => __('Errors_occurred_while_product_status_was_changed'),
                 'DeleteProducts' => __('Delete_products?'),
                 'ReallyDelete0Products' => __('Really_delete_{0}_products?'),
                 'ErrorsOccurredWhileProductsWereDeleted' => __('Errors_occurred_while_products_were_deleted'),
@@ -253,6 +257,8 @@ class LocalizedController extends Controller
                 'GivenAmount' => __('Given_amount'),
                 'back' => __('back'),
                 'SendEmailToMember' => __('Send_email_to_member'),
+                'SendEmailToBothMembers' => __('Send_email_to_both_members'),
+                'ChangeStatus' => __('Change_status'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
@@ -375,7 +381,7 @@ class LocalizedController extends Controller
     {
         parent::afterFilter($event);
         if (Configure::check('app.outputStringReplacements')) {
-            $newOutput = OutputFilter::replace($this->response->getBody(), Configure::read('app.outputStringReplacements'));
+            $newOutput = OutputFilter::replace($this->response->getBody()->__toString(), Configure::read('app.outputStringReplacements'));
             $this->response = $this->response->withStringBody($newOutput);
         }
     }

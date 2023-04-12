@@ -1,11 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Controller;
 
 use App\Controller\AppController;
 use Intervention\Image\ImageManagerStatic as Image;
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,31 +33,20 @@ class AdminAppController extends AppController
         $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
     }
 
-    /**
-     * deletes physical files (thumbs)
-     */
-    protected function deleteUploadedImage($imageId, $thumbsPath)
+    protected function deleteUploadedImage(int $imageId, string $thumbsPath): void
     {
-        $dir = new Folder($thumbsPath);
-        $files = $dir->read();
-        if (!empty($files[1])) {
-            foreach($files[1] as $file) {
-                if (preg_match('/^' . $imageId . '-/', $file)) {
-                    $file = new File($thumbsPath . DS . $file);
-                    $file->delete();
+        $dir = new \DirectoryIterator($thumbsPath);
+        foreach ($dir as $fileinfo) {
+            if (!$fileinfo->isDot()) {
+                $filename = $fileinfo->getFilename();
+                if (preg_match('/^' . $imageId . '-/', $filename)) {
+                    unlink($thumbsPath . DS . $filename);
                 }
             }
         }
     }
 
-    /**
-     *
-     * @param int $imageId
-     * @param string $filename
-     * @param string $thumbsPath
-     * @param array $imageSizes
-     */
-    protected function saveUploadedImage($imageId, $filename, $thumbsPath, $imageSizes)
+    protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string
     {
 
         $this->deleteUploadedImage($imageId, $thumbsPath);
@@ -82,5 +70,6 @@ class AdminAppController extends AppController
         }
 
         return $imageId . $options['suffix'] . '.' . $extension;
+
     }
 }

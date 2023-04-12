@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Mailer;
 
-use App\Lib\OutputFilter\OutputFilter;
-use Cake\Core\Configure;
+use Cake\ORM\Query;
 use Cake\Mailer\Mailer;
+use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use App\Lib\OutputFilter\OutputFilter;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +27,8 @@ class AppMailer extends Mailer
 
     public $afterRunParams = [];
 
+    public $customerAnonymizationForManufacturers = true;
+
     public function __construct($addBccBackupAddress = true)
     {
         parent::__construct(null);
@@ -39,15 +43,67 @@ class AppMailer extends Mailer
         }
     }
 
+    private function getAnonymizedCustomersAsStringReplacementArray(): array
+    {
+
+        $outputStringReplacements = [];
+
+        if (!$this->customerAnonymizationForManufacturers) {
+            return $outputStringReplacements;
+        }
+
+        foreach($this->getTo() as $email) {
+            
+            $addressManufacturerTable = FactoryLocator::get('Table')->get('AddressManufacturers');
+            $addressManufacturer = $addressManufacturerTable->find('all', [
+                'conditions' => [
+                    'AddressManufacturers.email' => $email,
+                    'AddressManufacturers.id_manufacturer > 0',
+                ],
+                'contain' => [
+                    'Manufacturers',
+                ],
+            ])->first();
+            
+            if (!empty($addressManufacturer) && $addressManufacturer->manufacturer->anonymize_customers) {
+                $customersTable = FactoryLocator::get('Table')->get('Customers');
+                $customersTable->dropManufacturersInNextFind();
+                $customers = $customersTable->find('all', [
+                    'contain' => [
+                        'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+                    ],
+                ]);
+                foreach($customers as $customer) {
+                    // eg. greeting is ALWAYS firstname - lastname (not respecting app.customerMainNamePart)
+                    $replaceArrays = [
+                        $customer->firstname . ' ' . $customer->lastname,
+                        $customer->lastname . ' ' . $customer->firstname,
+                    ];
+                    foreach($replaceArrays as $customerName) {
+                        $outputStringReplacements[$customerName] = Configure::read('app.htmlHelper')->anonymizeCustomerName($customerName, $customer->id_customer);
+                    }
+                }
+            }
+
+        }
+
+        return $outputStringReplacements;
+    }
+
     public function addToQueue(): void
     {
 
         $this->render();
 
-        if (Configure::check('app.outputStringReplacements')) {
-            $replacedSubject = OutputFilter::replace($this->getOriginalSubject(), Configure::read('app.outputStringReplacements'));
+        $outputStringReplacements = $this->getAnonymizedCustomersAsStringReplacementArray();
+        if (!is_null(Configure::read('app.outputStringReplacements'))) {
+            $outputStringReplacements = array_merge($outputStringReplacements, Configure::read('app.outputStringReplacements'));
+        }
+
+        if (!empty($outputStringReplacements)) {
+            $replacedSubject = OutputFilter::replace($this->getOriginalSubject(), $outputStringReplacements);
             $this->setSubject($replacedSubject);
-            $replacedBody = OutputFilter::replace($this->getMessage()->getBodyHtml(), Configure::read('app.outputStringReplacements'));
+            $replacedBody = OutputFilter::replace($this->getMessage()->getBodyHtml(), $outputStringReplacements);
             $this->getMessage()->setBodyHtml($replacedBody);
         }
 

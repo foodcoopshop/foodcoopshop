@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -70,12 +72,14 @@ echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Name'
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
-echo '<th style="text-align:right">'.__d('admin', 'Ordered_products').'</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>'.__d('admin', 'Credit').'</th>';
+    echo '<th>' . $this->Paginator->sort('credit_balance',  __d('admin', 'Credit'), ['direction' => 'desc']) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Reminder')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Order_reminder')) . '</th>';
+}
+if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+    echo '<th>' . $this->Paginator->sort('Customers.check_credit_reminder_enabled',  __d('admin', 'Check_credit_reminder')) . '</th>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
@@ -84,9 +88,9 @@ if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin
     echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
-echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
+echo '<th>' . $this->Paginator->sort('last_pickup_day',  __d('admin', 'Last_pickup_day'), ['direction' => 'desc']) . '</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
@@ -95,8 +99,8 @@ echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
-$sumOrderDetailsCount = 0;
-$sumEmailReminders = 0;
+$sumOrderReminders = 0;
+$sumCreditReminders = 0;
 $sumNewsletter = 0;
 $sumFeedback = 0;
 $sumFeedbackNotApproved = 0;
@@ -134,10 +138,15 @@ foreach ($customers as $customer) {
             ]).'"></i> ' . $customerName;
         }
 
-        echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort('2014-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort('2022-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
-            'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
-            'escape' => false
-        ]) . '</span>';
+        if ($lastOrderYear === false && $firstOrderYear === false) {
+            $customerLink = $customerName;
+        } else {
+            $customerLink = $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort($firstOrderYear . '-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort($lastOrderYear . '-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
+                'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
+                'escape' => false
+            ]);
+        }
+        echo '<span class="name">' . $customerLink . '</span>';
 
         echo '<div class="customer-details-wrapper">';
             $imageSrc = $this->Html->getCustomerImageSrc($customer->id_customer, 'small');
@@ -222,11 +231,6 @@ foreach ($customers as $customer) {
 
     echo '</td>';
 
-    echo '<td style="text-align:right">';
-        echo $this->Number->formatAsDecimal($customer->order_detail_count, 0);
-        $sumOrderDetailsCount += $customer->order_detail_count;
-    echo '</td>';
-
     if ($this->Html->paymentIsCashless()) {
         $negativeClass = $customer->credit_balance < 0 ? 'negative' : '';
         echo '<td style="text-align:center" class="' . $negativeClass . '">';
@@ -255,7 +259,16 @@ foreach ($customers as $customer) {
         echo '<td align="center">';
         if ($customer->email_order_reminder_enabled) {
             echo '<i class="fas fa-check-circle ok"></i>';
-            $sumEmailReminders++;
+            $sumOrderReminders++;
+        }
+        echo '</td>';
+    }
+
+    if ($this->Html->paymentIsCashless()) {
+        echo '<td align="center">';
+        if ($customer->check_credit_reminder_enabled) {
+            echo '<i class="fas fa-check-circle ok"></i>';
+            $sumCreditReminders++;
         }
         echo '</td>';
     }
@@ -311,8 +324,8 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td>';
-        if (!empty($customer->last_order_date)) {
-            echo $customer->last_order_date->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
+        if (!empty($customer->last_pickup_day)) {
+            echo $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
         }
     echo '</td>';
 
@@ -352,20 +365,24 @@ foreach ($customers as $customer) {
 
 echo '<tr>';
 echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
-echo '<td style="text-align:right"><b>' . $this->Number->formatAsDecimal($sumOrderDetailsCount, 0) . '</b></td>';
+$colspan = 3;
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<td align="center"><b>' . $sumEmailReminders . '</b></td>';
+    echo '<td align="center"><b>' . $sumOrderReminders . '</b></td>';
+}
+if ($this->Html->paymentIsCashless()) {
+    echo '<td align="center"><b>' . $sumCreditReminders . '</b></td>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<td align="center"><b>' . $sumNewsletter . '</b></td>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $sumFeedback > 0) {
     echo '<td align="center"><b>' . $sumFeedback . ($sumFeedbackNotApproved > 0 ? ' (' . $sumFeedbackNotApproved . ')' : ''). '</b></td>';
+} else {
+    $colspan++;
 }
-$colspan = 3;
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
     $colspan++;
 }

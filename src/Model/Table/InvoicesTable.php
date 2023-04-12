@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
@@ -67,11 +68,23 @@ class InvoicesTable extends AppTable
         ])->toArray();
 
         foreach($invoices as &$invoice) {
+
             foreach($invoice->invoice_taxes as $invoiceTax) {
                 $invoice->total_sum_price_excl += $invoiceTax->total_price_tax_excl;
                 $invoice->total_sum_tax += $invoiceTax->total_price_tax;
                 $invoice->total_sum_price_incl += $invoiceTax->total_price_tax_incl;
             }
+
+            if (is_null($invoice->total_sum_price_excl)) {
+                $invoice->total_sum_price_excl = 0;
+            }
+            if (is_null($invoice->total_sum_tax)) {
+                $invoice->total_sum_tax = 0;
+            }
+            if (is_null($invoice->total_sum_price_incl)) {
+                $invoice->total_sum_price_incl = 0;
+            }
+
         }
 
         return $invoices;
@@ -114,8 +127,15 @@ class InvoicesTable extends AppTable
                     $taxRatesSums[$trt]['sum_price_excl'] += $invoiceTax->total_price_tax_excl;
                     $taxRatesSums[$trt]['sum_tax'] += $invoiceTax->total_price_tax;
                     $taxRatesSums[$trt]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
-
                 }
+
+                $taxRates[$trt][$taxRate]['sum_price_excl'] = round($taxRates[$trt][$taxRate]['sum_price_excl'], 2);
+                $taxRates[$trt][$taxRate]['sum_tax'] = round($taxRates[$trt][$taxRate]['sum_tax'], 2);
+                $taxRates[$trt][$taxRate]['sum_price_incl'] = round($taxRates[$trt][$taxRate]['sum_price_incl'], 2);
+                $taxRatesSums[$trt]['sum_price_excl'] = round($taxRatesSums[$trt]['sum_price_excl'], 2);
+                $taxRatesSums[$trt]['sum_tax'] = round($taxRatesSums[$trt]['sum_tax'], 2);
+                $taxRatesSums[$trt]['sum_price_incl'] = round($taxRatesSums[$trt]['sum_price_incl'], 2);
+
             }
         }
 
@@ -160,6 +180,12 @@ class InvoicesTable extends AppTable
         // fetch returned deposit
         $paymentsTable = FactoryLocator::get('Table')->get('Payments');
         $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
+
+        // create empty dummy data for deleted customer 
+        if (is_null($customer)) {
+            $customer = $customersTable->newEmptyEntity();
+            $customer->active_order_details = [];
+        }
 
         $preparedData = $this->prepareDataForCustomerInvoice($customer->active_order_details, $deposits, null);
 
@@ -214,21 +240,22 @@ class InvoicesTable extends AppTable
         }
 
         // prepare delivered deposit
+        $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
         foreach($orderDetails as $orderDetail) {
             if ($orderDetail->deposit != 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
-                $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
-                $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
+                $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
 
         foreach($returnedDeposits as $deposit) {
             $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
-            $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1) * -1;
-            $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1) * -1;
+            $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1, $depositTaxRate) * -1;
+            $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1, $depositTaxRate) * -1;
             $returnedDeposit['deposit_amount']++;
             $returnedDeposit['entities'][] = $deposit;
         }
@@ -403,7 +430,7 @@ class InvoicesTable extends AppTable
             }
         }
 
-        $newIncreasingInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($increasingNumberOfLastInvoice, 6);
+        $newIncreasingInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros((string) $increasingNumberOfLastInvoice, 6);
 
         $newInvoiceNumber = $invoicePrefix . $currentYear . '-' . $newIncreasingInvoiceNumber;
         return $newInvoiceNumber;
@@ -416,14 +443,14 @@ class InvoicesTable extends AppTable
         if (! empty($invoices)) {
             $invoiceNumber = (int) $invoices[0]->invoice_number + 1;
         }
-        $newInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($invoiceNumber, 4);
+        $newInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros((string) $invoiceNumber, 4);
         return $newInvoiceNumber;
     }
 
     /**
      * turns eg 24 into 0024
      */
-    private function formatInvoiceNumberWithLeadingZeros($invoiceNumber, $zeroCount)
+    private function formatInvoiceNumberWithLeadingZeros(string $invoiceNumber, int $zeroCount): string
     {
         return str_pad($invoiceNumber, $zeroCount, '0', STR_PAD_LEFT);
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Controller;
 
@@ -31,25 +32,13 @@ class PaymentsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'overview':
-                return Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
-                break;
-            case 'product':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'edit':
-            case 'previewEmail':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'add':
-            case 'changeState':
-                return $this->AppAuth->user();
-                break;
-            default:
-                return $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'overview' => Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer(),
+            'product' => $this->AppAuth->isSuperadmin(),
+            'edit', 'previewEmail' => $this->AppAuth->isSuperadmin(),
+            'add', 'changeState' => $this->AppAuth->user(),
+             default => $this->AppAuth->user() && ! $this->AppAuth->isManufacturer(),
+        };
     }
 
     public function beforeFilter(EventInterface $event)
@@ -144,17 +133,11 @@ class PaymentsController extends AdminAppController
             $payment = $this->Payment->save($payment);
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            switch ($payment->approval) {
-                case -1:
-                    $actionLogType = 'payment_product_approval_not_ok';
-                    break;
-                case 0:
-                    $actionLogType = 'payment_product_approval_open';
-                    break;
-                case 1:
-                    $actionLogType = 'payment_product_approval_ok';
-                    break;
-            }
+            $actionLogType = match($payment->approval) {
+                -1 => 'payment_product_approval_not_ok',
+                 0 => 'payment_product_approval_open',
+                 1 => 'payment_product_approval_ok',
+            };
 
             $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$payment->approval];
 
@@ -292,6 +275,16 @@ class PaymentsController extends AdminAppController
             }
 
             if ($type == 'deposit') {
+                if (!isset($userType)) {
+                    $msg = 'no userType set - payment cannot be saved';
+                    $this->log($msg);
+                    $this->set([
+                        'status' => 0,
+                        'msg' => $msg,
+                    ]);
+                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                    return;
+                }
                 $actionLogType .= '_'.$userType;
             }
         }
@@ -378,14 +371,10 @@ class PaymentsController extends AdminAppController
 
         if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer'])) {
             $message .= '. ';
-            switch ($actionLogType) {
-                case 'deposit_customer':
-                    $message .= __d('admin', 'The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']);
-                    break;
-                case 'deposit_manufacturer':
-                    $message .= __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
-                    break;
-            }
+            $message .= match($actionLogType) {
+                'deposit_customer' => __d('admin', 'The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']),
+                'deposit_manufacturer' => __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']),
+            };
         }
 
         $this->Flash->success($message);
@@ -582,8 +571,10 @@ class PaymentsController extends AdminAppController
             if (! empty($orderDetailsGroupedByMonth)) {
                 foreach ($orderDetailsGroupedByMonth as $orderDetail) {
                     $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
+                    $monthAndYear[0] = (int) $monthAndYear[0];
+                    $monthAndYear[1] = (int) $monthAndYear[1];
                     $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
-                    $lastDayOfMonth = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
+                    $lastDayOfMonth = (int) Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
                     $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                     $payments[] = [
                         'dateRaw' => $frozenDateFrom,

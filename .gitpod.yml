@@ -1,0 +1,26 @@
+tasks:
+  - name: Bash
+  - name: Docker
+    init: |
+      docker compose pull
+      CURRENT_UID=$(id -u):$(id -g) docker compose up
+
+ports:
+  - port: 8001
+    onOpen: notify
+  - port: 8080
+    onOpen: ignore
+  - port: 8081
+    onOpen: ignore
+  - port: 3320
+    onOpen: ignore
+  - port: 3321
+    onOpen: ignore
+
+github:
+  prebuilds:
+    master: false
+    branches: false
+    pullRequests: false
+    pullRequestsFromForks: false
+    addCheck: false

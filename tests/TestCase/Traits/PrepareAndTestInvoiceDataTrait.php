@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Traits;
 
@@ -18,6 +19,8 @@ namespace App\Test\TestCase\Traits;
 trait PrepareAndTestInvoiceDataTrait
 {
 
+    protected $OrderDetail;
+
     public function generateInvoice($customerId, $paidInCash)
     {
         $this->get('/admin/invoices/generate.pdf?customerId='.$customerId.'&paidInCash='.$paidInCash.'&currentDay=2018-02-02');
@@ -36,12 +39,13 @@ trait PrepareAndTestInvoiceDataTrait
         $this->finishCart(1, 1, '', null, $pickupDay);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(4,5);';
-        $params = [
-            'pickupDay' => $pickupDay,
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $orderDetailEntityA = $this->OrderDetail->get(4);
+        $orderDetailEntityA->pickup_day = $pickupDay;
+        $this->OrderDetail->save($orderDetailEntityA);
+
+        $orderDetailEntityB = $this->OrderDetail->get(5);
+        $orderDetailEntityB->pickup_day = $pickupDay;
+        $this->OrderDetail->save($orderDetailEntityB);
 
         $this->addPayment($customerId, 2.0, 'deposit', 0, '', $pickupDay);
         $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
@@ -51,9 +55,9 @@ trait PrepareAndTestInvoiceDataTrait
     public function doAssertInvoiceTaxes($data, $taxRate, $excl, $tax, $incl)
     {
         $this->assertEquals($data->tax_rate, $taxRate);
-        $this->assertEquals($data->total_price_tax_excl, $excl);
-        $this->assertEquals($data->total_price_tax, $tax);
-        $this->assertEquals($data->total_price_tax_incl, $incl);
+        $this->assertEquals(round($data->total_price_tax_excl, 2), $excl);
+        $this->assertEquals(round($data->total_price_tax, 2), $tax);
+        $this->assertEquals(round($data->total_price_tax_incl, 2), $incl);
     }
 
     public function getAndAssertOrderDetailsAfterCancellation($orderDetailIds)

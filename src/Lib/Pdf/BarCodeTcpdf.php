@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -33,6 +35,8 @@ class BarCodeTcpdf extends AppTcpdf
         'fontsize' => 8,
         'stretchtext' => 4
     ];
+
+    public $html = '';
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {

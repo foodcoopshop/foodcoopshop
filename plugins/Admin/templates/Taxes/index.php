@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,8 +20,10 @@ use Cake\Core\Configure;
 <div id="taxes">
 
         <?php
-        $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
+        $this->element('addScript', [ 'script' =>
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Configurations')."');
+            "
         ]);
         $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#tax-'
@@ -43,6 +47,9 @@ use Cake\Core\Configure;
     </div>
 
 <?php
+echo $this->element('navTabs/configurationNavTabs', [
+    'key' => 'tax_rates',
+]);
 
 echo '<table class="list">';
 echo '<tr class="sort">';

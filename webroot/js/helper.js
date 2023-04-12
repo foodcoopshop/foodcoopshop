@@ -24,6 +24,7 @@ foodcoopshop.Helper = {
         foodcoopshop.ModalLogout.init();
         this.changeOutgoingLinksTargetToBlank();
         this.initCookieBanner();
+        foodcoopshop.ColorMode.init();
         if (!this.isMobile()) {
             this.initWindowResize();
             this.initScrolltopButton();
@@ -31,6 +32,50 @@ foodcoopshop.Helper = {
             this.adaptionsForHorizontalScrolling();
             this.showContent();
         }
+    },
+
+    showLoader: function() {
+        this.removeLoader();
+        $('body').append('<div id="full-page-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');
+    },
+
+    removeLoader: function() {
+        $('#full-page-loader').remove();
+    },
+
+    initShowLoaderOnContentChange: function() {
+        var allowList = [
+            'a, button',
+        ];
+        var disallowList = [
+            foodcoopshop.Cart.disabledButtonsDuringUpdateCartRequest,
+            '#user-menu a',
+            '.order-for-different-customer-info a',
+            '.swiper-button-prev',
+            '.swiper-button-next',
+            '.toggle-link',
+            'a.calculator-toggle-button',
+            'a.as',
+            'a[href^="http://"]',
+            'a[href^="https://"]',
+            'a.sb-toggle-left',
+            'a.open-with-modal',
+            'a.color-mode-toggle',
+            'button.dropdown-toggle',
+            '#product-search button',
+            '.modal-content button',
+            '.modal-content a',
+            '#flashMessage a'
+        ];
+        $(allowList.join(',')).not(disallowList.join(',')).on('click', function() {
+            foodcoopshop.Helper.showLoader();
+        });
+    },
+
+    isNumeric: function(str) {
+        if (typeof str != "string") return false // we only process strings!
+        return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+                !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
     },
 
     initRegistrationAsCompany: function() {
@@ -109,9 +154,9 @@ foodcoopshop.Helper = {
             lines = [];
             linesHtml = '';
             for(i in groupedOrderDetails[productId]) {
-                linesHtml = foodcoopshop.LocalizedJs.helper.YouHaveAlredyOrdered01TimesFor2.replaceI18n(0, '"' + groupedOrderDetails[productId][i].product_name + '"');
+                linesHtml = foodcoopshop.LocalizedJs.helper.YouHaveAlreadyOrdered01TimesFor2.replaceI18n(0, '"' + groupedOrderDetails[productId][i].product_name + '"');
                 linesHtml = linesHtml.replaceI18n(1, groupedOrderDetails[productId][i].product_amount);
-                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47, { year:"numeric", month:"2-digit", day:"2-digit"});
+                var formattedPickupDay = new Date(groupedOrderDetails[productId][i].pickup_day).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47, { year:'numeric', month:'2-digit', day:'2-digit'});
                 linesHtml = linesHtml.replaceI18n(2, formattedPickupDay);
                 lines.push(linesHtml);
             }
@@ -174,28 +219,6 @@ foodcoopshop.Helper = {
 
             scroll = $(document).scrollTop();
         });
-    },
-
-    /**
-     * Returns a function, that, as long as it continues to be invoked, will not
-     * be triggered. The function will be called after it stops being called for
-     * N milliseconds. If `immediate` is passed, trigger the function on the
-     * leading edge, instead of the trailing.
-     * https://davidwalsh.name/javascript-debounce-function
-     */
-    debounce: function(func, wait, immediate) {
-        var timeout;
-        return function() {
-            var context = this, args = arguments;
-            var later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            var callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
     },
 
     addPrevAndNextCategoryLinks : function() {
@@ -323,23 +346,6 @@ foodcoopshop.Helper = {
         return $.grep(array, function(el, index) {
             return index === $.inArray(el, array);
         });
-    },
-
-    getJqueryUiNoButton : function() {
-        return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
-    },
-
-    getJqueryUiCancelButton : function() {
-        return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.cancel);
-    },
-
-    getJqueryUiCloseDialogButton : function(label) {
-        return {
-            text: label,
-            click: function() {
-                $(this).dialog('close');
-            }
-        };
     },
 
     initBlogPostCarousel: function () {
@@ -734,8 +740,8 @@ foodcoopshop.Helper = {
 
     },
 
-    setCakeServerName: function (cakeServerName) {
-        this.cakeServerName = cakeServerName;
+    setFullBaseUrl: function (fullBaseUrl) {
+        this.fullBaseUrl = fullBaseUrl;
     },
 
     setIsManufacturer: function (isManufacturer) {
@@ -752,7 +758,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-v3.5.jpg',
+            '/img/bg-v3.6.jpg',
             {
                 positionY: 'top',
                 transitionDuration: 400
@@ -769,7 +775,7 @@ foodcoopshop.Helper = {
             $(this).not('.tooltipstered').tooltipster({
                 contentAsHTML: true,
                 interactive: true,
-                maxWidth: 400,
+                maxWidth: 450,
                 distance: 0,
                 trigger: trigger,
                 animationDuration: 0,
@@ -781,17 +787,6 @@ foodcoopshop.Helper = {
 
     cutRandomStringOffImageSrc: function (imageSrc) {
         return imageSrc.replace(/\?.{3}/g, '');
-    },
-
-    initJqueryUiIcons: function () {
-        $('li.ui-state-default').hover(
-            function () {
-                $(this).addClass('ui-state-hover');
-            },
-            function () {
-                $(this).removeClass('ui-state-hover');
-            }
-        );
     },
 
     showContent: function () {
@@ -810,7 +805,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.19.1';
+        CKEDITOR.timestamp = 'v4.21.0';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js',
             startupFocus : startupFocus
@@ -839,7 +834,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.19.1';
+        CKEDITOR.timestamp = 'v4.21.0';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
         });
@@ -854,7 +849,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.19.1';
+        CKEDITOR.timestamp = 'v4.21.0';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-small-with-upload.js'
         });
@@ -947,10 +942,6 @@ foodcoopshop.Helper = {
         }, obj || self);
     },
 
-    getRandomCode: function () {
-        return Math.floor(Math.random() * 981151510);
-    },
-
     removeFlashMessage: function () {
         $('#flashMessage').remove();
     },
@@ -980,7 +971,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-        );
+            );
         $('#flashMessage.success .progress-bar.bg-white')
             .animate({
                 'width': '0%',
@@ -989,7 +980,7 @@ foodcoopshop.Helper = {
                 duration: duration,
                 easing: 'linear',
             }
-        );
+            );
 
         setTimeout(function() {
             $('#flashMessage.success a.closer').trigger('click');
@@ -1062,6 +1053,12 @@ foodcoopshop.Helper = {
     },
 
     ajaxCall: function (url, data, callbacks) {
+
+        var csrfToken = $('meta[name="csrfToken"]').attr('content');
+        jQuery.ajaxSetup({
+            headers:
+            { 'X-CSRF-TOKEN': csrfToken }
+        });
 
         return jQuery.ajax({
             url: url,

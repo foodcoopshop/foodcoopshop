@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller\Component;
 
@@ -167,6 +168,14 @@ class AppAuthComponent extends AuthComponent
         return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.name');
     }
 
+    public function getManufacturerAnonymizeCustomers()
+    {
+        if (! $this->isManufacturer()) {
+            throw new \Exception('logged user is no manufacturer');
+        }
+        return $this->getController()->getRequest()->getSession()->read('Auth.Manufacturer.anonymize_customers');
+    }
+
     public function getManufacturerVariableMemberFee()
     {
         if (! $this->isManufacturer()) {
@@ -258,7 +267,7 @@ class AppAuthComponent extends AuthComponent
             '/' . __('route_cart') . '/ajaxRemove/'
         ];
         if (isset($serverParams['HTTP_REFERER'])) {
-            $result = preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
+            $result = preg_match('`' . preg_quote(Configure::read('App.fullBaseUrl')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
         }
         if (!in_array($serverParams['REQUEST_URI'], $requestUriAllowed)) {
             $result = false;

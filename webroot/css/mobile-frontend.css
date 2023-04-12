@@ -25,11 +25,14 @@
     body.customers.new_password_request form,
     #login-form .input,
     body.customers.new_password_request .input,
-    a.blog-post-wrapper img,
     #RegistrationForm .detail-form,
     #RegistrationForm .input.checkbox label,
     #inner-content iframe {
         width: 100% ! important;
+    }
+    .color-mode-toggle {
+        margin-top: 0;
+        float: none;
     }
     .cookieConsentWrapper {
         left: 2% ! important;
@@ -182,8 +185,8 @@
         width: 100%;
     }
     .pw .amount-wrapper .fas {
-        font-size: 26px;
-        margin-top: 0px;
+        font-size: 18px;
+        margin-top: 5px;
     }
     .manufacturer-wrapper div.c3 a.btn {
         margin-top: 35px ! important;
@@ -211,7 +214,7 @@
         height: 55px;
     }
     #responsive-header .logo {
-        height: 50px ! important;
+        height: 51px ! important;
         float: left ! important;
     }
     #responsive-header .fa-spin,
@@ -221,7 +224,7 @@
     }
     #responsive-header .sb-toggle-left {
         float: left ! important;
-        margin: 13px 5px 5px 3px ! important;
+        margin: 12px 8px 5px 3px ! important;
         text-align: center;
         width: 25px;
     }

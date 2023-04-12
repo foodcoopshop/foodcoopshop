@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,6 +19,8 @@ use App\Test\TestCase\OrderDetailsControllerTestCase;
 
 class OrderDetailsControllerEditNameTest extends OrderDetailsControllerTestCase
 {
+
+    protected $mockCart;
 
     public function testEditOrderDetailNameNotValid()
     {

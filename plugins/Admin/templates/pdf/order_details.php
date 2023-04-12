@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,7 +25,7 @@ $j = 1;
 foreach ($orderDetails as $od) {
 
     $pdf->Ln(5);
-    $customerHtml = '<h1 style="font-size:30px;">' . $od[0]->customer->name . '</h1>';
+    $customerHtml = '<h1 style="font-size:24px;">' . $od[0]->customer->name . '</h1>';
     $pdf->writeHTML($customerHtml, true, false, true, false, '');
     $pdf->writeHTML('<h3>' .__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' /  ID: ' . $od[0]->customer->id_customer . '</h3>', true, false, true, false, '');
 
@@ -81,7 +83,7 @@ foreach ($orderDetails as $od) {
 
         $oldStorageLocation = $orderDetail->product->id_storage_location;
 
-        $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
+        $pdf->table .= '<tr nobr="true" style="font-weight:normal;background-color:#ffffff;">';
 
         $quantityStyle = '';
         if ($orderDetail['product_amount'] > 1) {
@@ -138,7 +140,7 @@ foreach ($orderDetails as $od) {
         if ($i == count($od)) {
 
             if (Configure::read('app.isDepositEnabled')) {
-                $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
+                $pdf->table .= '<tr nobr="true" style="font-weight:normal;background-color:#ffffff;">';
                     $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                     $pdf->table .= '<td width="' . $widths[1] . '"></td>';
                     $pdf->table .= '<td width="' . $widths[2] . '"></td>';

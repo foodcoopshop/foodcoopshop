@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -178,13 +180,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     ];
 
     if ($appAuth->isSuperadmin()) {
-        $homepageAdministrationElement['children'][] = [
-            'slug' => $this->Slug->getTaxesList(),
-            'name' => __d('admin', 'Tax_rates'),
-            'options' => [
-                'fa-icon' => 'fa-fw ok fa-percent'
-            ]
-        ];
+
         $reportSlug = null;
 
         if ($this->Html->paymentIsCashless()) {
@@ -213,6 +209,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 'fa-icon' => 'fa-fw ok fa-cogs'
             ]
         ];
+
     }
 
     $menu[] = $homepageAdministrationElement;

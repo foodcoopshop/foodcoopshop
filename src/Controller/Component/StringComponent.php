@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
@@ -145,7 +147,16 @@ class StringComponent extends Component
     public static function hideEmail($email, $innerHtml='d')
     {
         $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
-        $key = str_shuffle($character_set);
+
+        // assure that $key never matches the email regexp
+        $dotPos = 1;
+        $atPos = 0;
+        while($dotPos > $atPos) {
+            $key = str_shuffle($character_set);
+            $atPos = strpos($key, '@');
+            $dotPos = strpos($key, '.');
+        }
+        
         $cipher_text = '';
         $id = 'e' . rand(1, 999999999);
         for ($i = 0; $i < strlen($email); $i += 1) {

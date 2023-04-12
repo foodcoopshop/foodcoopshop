@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -21,6 +22,8 @@ use Cake\Event\EventInterface;
  */
 class FrontendController extends AppController
 {
+
+    public $protectEmailAddresses = true;
 
     public function isAuthorized($user)
     {

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,13 +25,13 @@ use Cake\Core\Configure;
 
 <h2>1. Geltung</h2>
 
-<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen seiner Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
+<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen seiner Internet-Dienstleistung unter der Domain <?php echo Configure::read('App.fullBaseUrl'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
 
 <p>1.2. Geschäftsbedingungen des Nutzers kommen nicht zur Anwendung.</p>
 
 <h2>2. Leistungen und Entgelte</h2>
 
-<p>2.1. Die vom Hersteller in der Plattform des Betreibers unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> dargebotenen Waren und Leistungen sind eine unverbindliche Aufforderung des Herstellers an den Vertragspartner, ein verbindliches Anbot für die angebotenen Waren und Leistungen zu legen. Durch die Bestellung im Onlineshop legt der Vertragspartner ein solches verbindliches Anbot. <b>Ein Vertrag zwischen dem Vertragspartner und dem Hersteller kommt erst zustande, wenn der Lieferant mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
+<p>2.1. Die vom Hersteller in der Plattform des Betreibers unter der Domain <?php echo Configure::read('App.fullBaseUrl'); ?> dargebotenen Waren und Leistungen sind eine unverbindliche Aufforderung des Herstellers an den Vertragspartner, ein verbindliches Anbot für die angebotenen Waren und Leistungen zu legen. Durch die Bestellung im Onlineshop legt der Vertragspartner ein solches verbindliches Anbot. <b>Ein Vertrag zwischen dem Vertragspartner und dem Hersteller kommt erst zustande, wenn der Lieferant mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
 
 <p>2.2. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p>
 
@@ -54,7 +56,7 @@ wird bei der Abholung bar bezahlt
 
 <h2>5. Rücktrittsrecht</h2>
 
-<p>5.1. Informationen über das Rücktrittsrecht erhalten Sie <a href="<?php echo Configure::read('app.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>.</p>
+<p>5.1. Informationen über das Rücktrittsrecht erhalten Sie <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>.</p>
 
 <p>5.2. Der Lieferant wird von den alternativen Streitbeilegungsstellen "Online-Streitbeilegung" (https://webgate.ec.europa.eu/odr) sowie "Internetombudsmann" (www.ombudsmann.at) erfasst. Wenn der Vertragspartner ein Verbraucher ist, haben diese auf den genannten Plattformen die Möglichkeit, außergerichtliche Streitbeilegung durch eine unparteiische Schlichtungsstelle in Anspruch zu nehmen.</p>
 

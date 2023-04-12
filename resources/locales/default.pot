@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-08-30 14:09+0200\n"
+"POT-Creation-Date: 2023-01-23 17:42+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -110,6 +110,75 @@ msgstr ""
 msgid "route_self_service"
 msgstr ""
 
+msgid "Runtime"
+msgstr ""
+
+msgid "Database_backup_successful"
+msgstr ""
+
+msgid "Please_add_credit"
+msgstr ""
+
+msgid "Sum"
+msgstr ""
+
+msgid "Sent_emails"
+msgstr ""
+
+msgid "Order_reminder"
+msgstr ""
+
+msgid "today"
+msgstr ""
+
+msgid "tomorrow"
+msgstr ""
+
+msgid "Pickup_reminder_for"
+msgstr ""
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr ""
+
+msgid "Delivery_note_for_{0}"
+msgstr ""
+
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
+msgstr ""
+
+msgid "to_(time_context)"
+msgstr ""
+
+msgid "Generated_invoices"
+msgstr ""
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Total_sum"
+msgstr ""
+
+msgid "Sent_order_lists"
+msgstr ""
+
+msgid "Delivery_day"
+msgstr ""
+
 msgid "You_have_been_signed_out."
 msgstr ""
 
@@ -161,6 +230,36 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Your_order_has_been_placed_succesfully."
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr ""
+
+msgid "Pickup_day"
+msgstr ""
+
+msgid "Thank_you_for_your_purchase!"
+msgstr ""
+
+msgid "Sign_out"
+msgstr ""
+
+msgid "Continue_shopping"
+msgstr ""
+
+msgid "Print_receipt"
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr ""
+
 msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr ""
 
@@ -209,36 +308,6 @@ msgstr ""
 msgid "Errors_occurred."
 msgstr ""
 
-msgid "Your_order_has_been_placed_succesfully."
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr ""
-
-msgid "Pickup_day"
-msgstr ""
-
-msgid "Thank_you_for_your_purchase!"
-msgstr ""
-
-msgid "Sign_out"
-msgstr ""
-
-msgid "Continue_shopping"
-msgstr ""
-
-msgid "Print_receipt"
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
-msgstr ""
-
 msgid "Notification_about_instant_order_order"
 msgstr ""
 
@@ -252,6 +321,9 @@ msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_man
 msgstr ""
 
 msgid "Your_purchase"
+msgstr ""
+
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
 msgstr ""
 
 msgid "Order_confirmation"
@@ -276,6 +348,9 @@ msgid "Your_email_address_was_already_activated_or_the_activation_code_was_not_v
 msgstr ""
 
 msgid "Your_email_address_has_been_activated_successfully."
+msgstr ""
+
+msgid "Filename_Terms-of-use"
 msgstr ""
 
 msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
@@ -623,10 +698,13 @@ msgstr ""
 msgid "Price_is_automatically_adapted_after_save."
 msgstr ""
 
-msgid "The_field_is_red_if_weight_not_yet_adapted."
+msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr ""
 
-msgid "Do_not_automatically_apapt_price_just_change_weight."
+msgid "Calculator"
+msgstr ""
+
+msgid "Example_given_abbr"
 msgstr ""
 
 msgid "Really_delete_ordered_product?"
@@ -653,16 +731,10 @@ msgstr ""
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr ""
 
-msgid "Really_delete_selected_product?"
+msgid "You_selected_1_product."
 msgstr ""
 
-msgid "Really_delete_selected_products?"
-msgstr ""
-
-msgid "You_selected_1_product"
-msgstr ""
-
-msgid "You_selected_{0}_products"
+msgid "You_selected_{0}_products."
 msgstr ""
 
 msgid "Adapt_amount_reason_is_mandatory."
@@ -717,6 +789,12 @@ msgid "Really_show_product_{0}_as_new?"
 msgstr ""
 
 msgid "Really_do_not_show_product_{0}_as_new?"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Deactivate"
 msgstr ""
 
 msgid "Activate_product"
@@ -789,6 +867,9 @@ msgid "Be_careful_there_is_no_way_back!"
 msgstr ""
 
 msgid "Errors_occurred_while_member_was_deleted"
+msgstr ""
+
+msgid "Errors_occurred_while_product_status_was_changed"
 msgstr ""
 
 msgid "Delete_products?"
@@ -950,6 +1031,12 @@ msgstr ""
 msgid "Send_email_to_member"
 msgstr ""
 
+msgid "Send_email_to_both_members"
+msgstr ""
+
+msgid "Change_status"
+msgstr ""
+
 msgid "Were_the_products_picked_up?"
 msgstr ""
 
@@ -1046,9 +1133,6 @@ msgstr ""
 msgid "zero_or_smaller_zero"
 msgstr ""
 
-msgid "Manufacturer"
-msgstr ""
-
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr ""
 
@@ -1068,9 +1152,6 @@ msgid "Change_delivery_rhythm"
 msgstr ""
 
 msgid "First_delivery_day"
-msgstr ""
-
-msgid "Delivery_day"
 msgstr ""
 
 msgid "First_delivery_day_info_(one_product)."
@@ -1259,9 +1340,6 @@ msgstr ""
 msgid "Cancellation_invoice"
 msgstr ""
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr ""
-
 msgid "ID"
 msgstr ""
 
@@ -1269,9 +1347,6 @@ msgid "Price_excl."
 msgstr ""
 
 msgid "Price_incl."
-msgstr ""
-
-msgid "Total_sum"
 msgstr ""
 
 msgid "Price_net"
@@ -1313,7 +1388,34 @@ msgstr ""
 msgid "Sum_price_incl."
 msgstr ""
 
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr ""
+
 msgid "You_are_not_signed_in."
+msgstr ""
+
+msgid "BackupDatabaseCronjob"
+msgstr ""
+
+msgid "CheckCreditBalanceCronjob"
+msgstr ""
+
+msgid "EmailOrderReminderCronjob"
+msgstr ""
+
+msgid "PickupReminderCronjob"
+msgstr ""
+
+msgid "SendOrderListsCronjob"
+msgstr ""
+
+msgid "SendInvoicesToCustomersCronjob"
+msgstr ""
+
+msgid "SendInvoicesToManufacturersCronjob"
+msgstr ""
+
+msgid "SendDeliveryNotesCronjob"
 msgstr ""
 
 msgid "Action_Log_Invoice_added"
@@ -1574,6 +1676,9 @@ msgstr ""
 msgid "Action_Log_Feedback_deleted"
 msgstr ""
 
+msgid "Action_Log_Cronjob_changed"
+msgstr ""
+
 msgid "Action_Log_Cronjob_database_backup_done"
 msgstr ""
 
@@ -1691,6 +1796,9 @@ msgstr ""
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr ""
 
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr ""
+
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr ""
 
@@ -1707,6 +1815,9 @@ msgid "Please_select_a_pickup_day."
 msgstr ""
 
 msgid "The_pickup_day_is_not_valid."
+msgstr ""
+
+msgid "Delivery_break"
 msgstr ""
 
 msgid "offline"
@@ -1728,6 +1839,45 @@ msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr ""
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
+msgstr ""
+
+msgid "The_time_interval_is_not_valid."
+msgstr ""
+
+msgid "Please_select_a_day_of_month."
+msgstr ""
+
+msgid "The_day_of_month_is_not_valid."
+msgstr ""
+
+msgid "Please_select_a_weekday."
+msgstr ""
+
+msgid "The_weekday_is_not_valid."
+msgstr ""
+
+msgid "daily"
+msgstr ""
+
+msgid "weekly"
+msgstr ""
+
+msgid "No_day_of_month_allowed_for_time_interval_{0}."
+msgstr ""
+
+msgid "monthly"
+msgstr ""
+
+msgid "No_weekday_allowed_for_time_interval_{0}."
+msgstr ""
+
+msgid "Please_enter_a_valid_time."
+msgstr ""
+
+msgid "The_time_interval_needs_to_equal_\"{0}\""
+msgstr ""
+
+msgid "Last_day_of_month"
 msgstr ""
 
 msgid "Please_enter_your_first_name."
@@ -1790,9 +1940,6 @@ msgstr ""
 msgid "Please_enter_a_valid_BIC."
 msgstr ""
 
-msgid "Delivery_break"
-msgstr ""
-
 msgid "online"
 msgstr ""
 
@@ -1800,9 +1947,6 @@ msgid "Please_enter_your_feedback."
 msgstr ""
 
 msgid "Please_enter_a_correct_number."
-msgstr ""
-
-msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
@@ -1868,6 +2012,9 @@ msgstr ""
 msgid "The_price_needs_to_be_greater_or_equal_than_0."
 msgstr ""
 
+msgid "Purchase_price"
+msgstr ""
+
 msgid "The_quantity_needs_to_be_a_number."
 msgstr ""
 
@@ -1925,63 +2072,6 @@ msgstr ""
 msgid "Order_lists_for_the_day"
 msgstr ""
 
-msgid "Runtime"
-msgstr ""
-
-msgid "Database_backup_successful"
-msgstr ""
-
-msgid "Please_add_credit"
-msgstr ""
-
-msgid "Sum"
-msgstr ""
-
-msgid "Sent_emails"
-msgstr ""
-
-msgid "Order_reminder"
-msgstr ""
-
-msgid "today"
-msgstr ""
-
-msgid "tomorrow"
-msgstr ""
-
-msgid "Pickup_reminder_for"
-msgstr ""
-
-msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
-msgstr ""
-
-msgid "Delivery_note_for_{0}"
-msgstr ""
-
-msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
-msgstr ""
-
-msgid "to_(time_context)"
-msgstr ""
-
-msgid "Generated_invoices"
-msgstr ""
-
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr ""
-
-msgid "Invoice_number_abbreviation"
-msgstr ""
-
-msgid "Sent"
-msgstr ""
-
-msgid "Products"
-msgstr ""
-
-msgid "Sent_order_lists"
-msgstr ""
-
 msgid "Customer_adds_payment_manually"
 msgstr ""
 
@@ -2024,9 +2114,6 @@ msgstr ""
 msgid "Shopping_with_zero_price"
 msgstr ""
 
-msgid "weekly"
-msgstr ""
-
 msgid "every_{0}_week"
 msgstr ""
 
@@ -2037,6 +2124,12 @@ msgid "every_last_{0}_of_a_month"
 msgstr ""
 
 msgid "bulk_order"
+msgstr ""
+
+msgid "midnight"
+msgstr ""
+
+msgid "default_value"
 msgstr ""
 
 msgid "yes"
@@ -2096,6 +2189,15 @@ msgstr ""
 msgid "Superadmin"
 msgstr ""
 
+msgid "Configurations"
+msgstr ""
+
+msgid "Cronjobs"
+msgstr ""
+
+msgid "Tax_rates"
+msgstr ""
+
 msgid "Credit_overview"
 msgstr ""
 
@@ -2148,12 +2250,6 @@ msgid "{0,plural,=1{1_minute} other{#_minutes}}"
 msgstr ""
 
 msgid "{0,plural,=1{1_second} other{#_seconds}}"
-msgstr ""
-
-msgid "midnight"
-msgstr ""
-
-msgid "default_value"
 msgstr ""
 
 msgid "price_will_be_adapted."
@@ -2397,6 +2493,9 @@ msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_i
 msgstr ""
 
 msgid "No_order_possible"
+msgstr ""
+
+msgid "{0}_times_ordered_for_pickup_day_{1}."
 msgstr ""
 
 msgid "available"

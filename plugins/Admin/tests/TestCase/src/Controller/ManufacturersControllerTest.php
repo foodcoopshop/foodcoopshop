@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -24,6 +26,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
     use LoginTrait;
 
     public $Manufacturer;
+    protected $OrderDetail;
+    protected $Product;
 
     public $manufacturerData = [
         'Manufacturers' => [
@@ -216,26 +220,19 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Product = $this->getTableLocator()->get('Products');
 
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(1);';
-        $params = [
-            'pickupDay' => $noDeliveryDayA,
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $orderDetailEntityA = $this->OrderDetail->get(1);
+        $orderDetailEntityA->pickup_day = $noDeliveryDayA;
+        $this->OrderDetail->save($orderDetailEntityA);
 
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (2,3);';
-        $params = [
-            'pickupDay' => $noDeliveryDayB,
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $orderDetailEntityB = $this->OrderDetail->get(2);
+        $orderDetailEntityB->pickup_day = $noDeliveryDayB;
+        $this->OrderDetail->save($orderDetailEntityB);
 
-        $query = 'UPDATE ' . $this->Product->getTable().' SET id_manufacturer = :manufacturerId;';
-        $params = [
-            'manufacturerId' => $manufacturerId,
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $orderDetailEntityC = $this->OrderDetail->get(3);
+        $orderDetailEntityC->pickup_day = $noDeliveryDayB;
+        $this->OrderDetail->save($orderDetailEntityC);
+
+        $this->Product->updateAll(['id_manufacturer' => $manufacturerId], []);
 
         $this->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -350,7 +347,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    private function doTestCustomerRecord($manufacturer)
+    private function doTestCustomerRecord($manufacturer): void
     {
         $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
         $this->assertEquals($manufacturer->address_manufacturer->firstname, $customerRecord->firstname);
@@ -359,12 +356,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $customerRecord->active);
     }
 
-    /**
-     *
-     * @param array $data
-     * @return string
-     */
-    private function add($data)
+    private function add($data): void
     {
         $this->post($this->Slug->getManufacturerAdd(), $data);
     }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Admin\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
@@ -24,22 +26,12 @@ class DepositsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'overviewDiagram':
-                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin();
-                break;
-            case 'index':
-            case 'detail':
-                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-                break;
-            case 'myIndex':
-            case 'myDetail':
-                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer();
-                break;
-            default:
-                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'overviewDiagram' => Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin(),
+            'index', 'detail' => Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+            'myIndex', 'myDetail' => Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer(),
+             default => Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer(),
+        };
     }
 
     /**

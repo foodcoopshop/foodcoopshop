@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -69,7 +71,6 @@ class SparkasseBankingReader extends BankingReader {
 
         return $preparedRecords;
     }
-
 
 }
 

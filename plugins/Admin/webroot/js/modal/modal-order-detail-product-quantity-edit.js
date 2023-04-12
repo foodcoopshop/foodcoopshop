@@ -11,6 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
     init : function() {
@@ -22,6 +23,8 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
             foodcoopshop.LocalizedJs.admin.AdaptWeight,
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getHtml()
         );
+
+        foodcoopshop.Calculator.init(modalSelector);
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getSuccessHandler(modalSelector);
@@ -39,27 +42,27 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
     getHtml : function() {
         var html = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
-        html += '<br /><span class="quantity-string">' + foodcoopshop.LocalizedJs.admin.DeliveredWeight + '</span>: <input type="number" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
+        html += '<br /><span class="quantity-string">' + foodcoopshop.LocalizedJs.admin.DeliveredWeight + '</span>: <input type="number" class="calculator-output" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
         html += '<b></b>';
         html += '<br />';
         html += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
-        html += '<ul style="margin-top:5px;">';
+        html += '<ul style="margin-top:5px;margin-bottom:10px;">';
+        html += '<li>';
+        html += '<a id="dialogOrderDetailProductQuantityShowCalculator" class="calculator-toggle-button" href="javascript:void(0);" style="line-height:29px;">';
+        html += foodcoopshop.LocalizedJs.admin.Calculator;
+        html += '</a>';
+        html += '<input id="dialogOrderDetailProductQuantityCalculator" class="calculator-input" style="margin-left:10px;width:178px;" placeholder="' + foodcoopshop.LocalizedJs.admin.ExampleGivenAbbr + ' 167+142" type="text" />';
+        html += '</li>';
         html += '<li class="price-per-unit-base-info"></li>';
         html += '<li>' + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + '</li>';
-        html += '<li>' + foodcoopshop.LocalizedJs.admin.FieldIsRedIfWeightNotYetAdapted + '</li>';
         html += '</ul>';
-        html += '<label class="checkbox">';
-        html += '<input type="checkbox" name="dialogOrderDetailProductQuantityDoNotChangePrice" id="dialogOrderDetailProductQuantityDoNotChangePrice" value="" />';
-        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.DoNotAutomaticallyAdaptPriceJustChangeWeight + '</span>';
-        html += '</label>';
-        html += '<br />';
         return html;
     },
 
     getCloseHandler : function() {
         $('#dialogOrderDetailProductQuantityQuantity').val('');
         $('#dialogOrderDetailProductQuantityOrderDetailId').val('');
-        $('#dialogOrderDetailProductQuantityDoNotChangePrice').prop('checked', false);
+        $('#dialogOrderDetailProductQuantityCalculator').val('').hide();
         $('#flashMessage').remove();
     },
 
@@ -74,8 +77,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
             '/admin/order-details/editProductQuantity/',
             {
                 orderDetailId: $('#dialogOrderDetailProductQuantityOrderDetailId').val(),
-                productQuantity: productQuantity,
-                doNotChangePrice: $('#dialogOrderDetailProductQuantityDoNotChangePrice:checked').length > 0 ? 1 : 0
+                productQuantity: productQuantity
             },
             {
                 onOk: function (data) {

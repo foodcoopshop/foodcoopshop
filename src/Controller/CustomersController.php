@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -148,7 +149,7 @@ class CustomersController extends FrontendController
             ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
-                $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             }
             $email->addToQueue();
 
@@ -284,7 +285,12 @@ class CustomersController extends FrontendController
 
         $this->set('title_for_layout', $title);
 
-        /**
+        if ($this->getRequest()->is('post')) {
+            // no spam protected email output in input field when login or registration fails
+            $this->protectEmailAddresses = false; 
+        }
+
+            /**
          * login start
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
@@ -293,6 +299,7 @@ class CustomersController extends FrontendController
             }
 
             if ($this->getRequest()->is('post')) {
+                
                 $customer = $this->AppAuth->identify();
                 if ($customer) {
                     $this->AppAuth->setUser($customer);
@@ -306,7 +313,7 @@ class CustomersController extends FrontendController
                     !empty($customer)) {
                     $customer = $this->Customer->get($customer['id_customer']);
                     if ($customer->auto_login_hash == '') {
-                        $customer->auto_login_hash = Security::hash(rand());
+                        $customer->auto_login_hash = Security::hash((string) rand());
                         $this->Customer->save($customer);
                     }
                     $cookie = (new Cookie('remember_me'))

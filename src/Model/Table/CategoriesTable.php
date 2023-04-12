@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
 use App\Lib\Catalog\Catalog;
-use App\Model\Traits\ProductCacheClearAfterDeleteTrait;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -24,8 +24,9 @@ use Cake\Validation\Validator;
 class CategoriesTable extends AppTable
 {
 
-    use ProductCacheClearAfterDeleteTrait;
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
+
+    private $Catalog;
 
     public function initialize(array $config): void
     {

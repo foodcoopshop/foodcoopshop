@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * app.config.php
  * this file contains the main configuration for foodcoopshop
@@ -32,6 +34,7 @@ define('CUSTOMER_GROUP_SUPERADMIN', 5);
 
 define('MAX_CART_PRODUCT_AMOUNT', 250);
 define('PHONE_REGEX', '/^[0-9 ()+-\/]{7,20}$/');
+define('EMAIL_REGEX', '/([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+/i');
 define('ZIP_REGEX', '/^[0-9]{4,5}$/');
 define('BIC_REGEX', '/^[a-z]{6}[2-9a-z][0-9a-np-z]([a-z0-9]{3}|x{3})?$/i');
 define('HTTPS_REGEX', '/^https\:\/\//');
@@ -105,6 +108,7 @@ return [
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
         'selfServiceModeShowOnlyStockProducts' => true,
         'selfServiceModeAutoGenerateInvoice' => true,
+        'showOrderedProductsTotalAmountInCatalog' => false,
 
         /**
          * id of the category "all products"
@@ -148,18 +152,6 @@ return [
         'countryId' => 2, // austria: 2, germany: 1
 
         /**
-         * if you work on windows, change to e.g
-         * '"C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe"'
-         */
-        'mysqlDumpCommand' => 'mysqldump',
-
-        /**
-         * if you work on windows, change to e.g
-         * '"C:\\Programme\\xampp\\mysql\\bin\\mysql.exe"'
-         */
-        'mysqlCommand' => 'mysql',
-
-        /**
          * date of the last update of terms of use
          */
         'termsOfUseLastUpdate' => '2016-11-28',
@@ -189,8 +181,9 @@ return [
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
-
-        'sendEmailWhenOrderDetailCustomerChanged' => true,
+        
+        // if set, a paypal.me-link is added to the invoice-to-customer email
+        'paypalMeUsername' => '',
 
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 

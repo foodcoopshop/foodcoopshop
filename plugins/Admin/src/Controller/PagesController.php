@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Controller;
 
@@ -24,15 +25,10 @@ class PagesController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'home':
-                if ($this->AppAuth->user()) {
-                    return true;
-                }
-                break;
-            default:
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'home' => $this->AppAuth->user(),
+             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+        };
     }
 
     public function home()
@@ -99,7 +95,7 @@ class PagesController extends AdminAppController
     private function _processForm($page, $isEditMode)
     {
         $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/pages",
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/pages",
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/pages"
         ];
         $this->set('pagesForSelect', $this->Page->getForSelect($page->id_page));

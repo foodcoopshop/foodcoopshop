@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
@@ -6,6 +7,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,6 +31,8 @@ class CartsTable extends AppTable
 
     public const CART_SELF_SERVICE_PAYMENT_TYPE_CASH   = 1;
     public const CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT = 2;
+
+    private $Product;
 
     public function initialize(array $config): void
     {
@@ -54,9 +58,27 @@ class CartsTable extends AppTable
 
     public function validationDefault(Validator $validator): Validator
     {
-        $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
-        $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
-        $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+        if (Configure::read('app.rightOfWithdrawalEnabled')) {
+            $validator->requirePresence('cancellation_terms_accepted', __('Please_accept_the_information_about_right_of_withdrawal'));
+            $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
+        }
+        if (Configure::read('app.generalTermsAndConditionsEnabled')) {
+            $validator->requirePresence('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
+            $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
+        }
+        if (Configure::read('app.promiseToPickUpProductsCheckboxEnabled')) {
+            $validator->requirePresence('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+            $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+        }
+        $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
+        return $validator;
+    }
+
+    /**
+     * no checkboxes are shown here - do not validate them neither use requirePresence
+     */
+    public function validationSelfServiceForDifferentCustomer(Validator $validator): Validator
+    {
         $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
         return $validator;
     }
@@ -74,7 +96,7 @@ class CartsTable extends AppTable
     {
         $validator->add($field, 'allow-only-defined-pickup-days', [
             'rule' => function ($value, $context) {
-            if (!in_array($value, array_keys(Configure::read('app.timeHelper')->getNextDailyDeliveryDays(14)))
+            if (!in_array($value, array_keys(DeliveryRhythm::getNextDailyDeliveryDays(21)))
                 || in_array($value, Configure::read('app.htmlHelper')->getGlobalNoDeliveryDaysAsArray())) {
                     return false;
                 }
@@ -109,7 +131,8 @@ class CartsTable extends AppTable
                 'id_customer' => $customerId,
                 'cart_type' => $cartType,
             ];
-            $cart = $this->save($this->newEntity($cart2save));
+            $newCartEntity = $this->newEntity($cart2save, ['validate' => false]);
+            $cart = $this->save($newCartEntity);
         }
 
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
@@ -167,9 +190,14 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            $nextDeliveryDay = $this->Product->getNextDeliveryDay($cartProduct->product, $appAuth);
-            $nextDeliveryDay = strtotime($nextDeliveryDay);
-            $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
+            $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
+            if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
+                $dateFormattedWithWeekday = __('Delivery_break');
+            } else {
+                $nextDeliveryDay = strtotime($nextDeliveryDay);
+                $dateFormattedWithWeekday = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
+            }
+            $productData['nextDeliveryDay'] = $dateFormattedWithWeekday;
 
             $preparedCart['CartProducts'][] = $productData;
 

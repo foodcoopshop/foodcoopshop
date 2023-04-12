@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Validation\Validator;
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +22,7 @@ use App\Model\Traits\ProductCacheClearAfterSaveTrait;
 class UnitsTable extends AppTable
 {
 
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public function validationDefault(Validator $validator): Validator
     {

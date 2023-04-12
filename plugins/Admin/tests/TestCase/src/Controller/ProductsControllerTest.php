@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -42,10 +44,60 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->get('/admin/products/changeStatus/' . $productId . '/' . $status);
         $product = $this->Product->find('all', [
             'conditions' => [
-                'Products.id_product' => $productId
+                'Products.id_product' => $productId,
             ]
         ])->first();
-        $this->assertEquals($product->active, $status, 'changing product status did not work');
+        $this->assertEquals($product->active, $status);
+    }
+
+    public function testChangeProductStatusBulkAsSuperadmin()
+    {
+        $this->loginAsSuperadmin();
+        $productIds = [60, 102, 103];
+        $status = APP_OFF;
+        $this->ajaxPost('/admin/products/changeStatusBulk', [
+            'productIds' => $productIds,
+            'status' => APP_OFF,
+        ]);
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product IN' => $productIds,
+            ]
+        ]);
+        foreach ($products as $product) {
+            $this->assertEquals($product->active, $status);
+        }
+    }
+
+    public function testChangeProductStatusBulkAsManufacturerPermisionsNotOk()
+    {
+        $this->loginAsMeatManufacturer();
+        $productIds = [60, 102, 103];
+        $status = APP_OFF;
+        $this->ajaxPost('/admin/products/changeStatusBulk', [
+            'productIds' => $productIds,
+            'status' => $status,
+        ]);
+        $this->assertAccessDeniedFlashMessage();
+    }
+
+    public function testChangeProductStatusBulkAsManufacturersPermissionsOk()
+    {
+        $this->loginAsMilkManufacturer();
+        $productIds = [60];
+        $status = APP_OFF;
+        $this->ajaxPost('/admin/products/changeStatusBulk', [
+            'productIds' => $productIds,
+            'status' => $status,
+        ]);
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product IN' => $productIds,
+            ]
+        ]);
+        foreach ($products as $product) {
+            $this->assertEquals($product->active, $status);
+        }
     }
 
     public function testEditSellingPriceWithInvalidPriceAsSuperadmin()
@@ -408,7 +460,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmIndividualInvalidSendOrderListDay()
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-08-28', 2, '2019-01-01');
+        $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-08-28', '2', '2019-01-01');
         $this->assertRegExpWithUnquotedString('Das Datum für den Bestellisten-Versand muss zwischen Bestellbar-bis-Datum und dem Liefertag liegen.', $response->msg);
         $this->assertJsonError();
     }
@@ -432,7 +484,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditDeliveryRhythmWeeklyInvalidSendOrderListsWeekday()
     {
         $this->loginAsSuperadmin();
-        $response = $this->changeProductDeliveryRhythm(346, '1-week', '', '', 15);
+        $response = $this->changeProductDeliveryRhythm(346, '1-week', '', '', '15');
         $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 0 und 6 an.', $response->msg);
         $this->assertJsonError();
     }

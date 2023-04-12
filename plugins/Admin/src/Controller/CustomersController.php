@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
@@ -32,31 +34,14 @@ class CustomersController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'generateMemberCards':
-                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
-                break;
-            case 'generateMyMemberCard':
-                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer());
-                break;
-            case 'edit':
-            case 'creditBalanceSum':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'profile':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
-                break;
-            case 'delete':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'changePassword':
-            case 'ajaxGetCustomersForDropdown':
-                return $this->AppAuth->user();
-                break;
-            default:
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'generateMemberCards' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()),
+            'generateMyMemberCard' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer()),
+            'creditBalanceSum', 'delete' =>  $this->AppAuth->isSuperadmin(),
+            'profile' => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer(),
+            'changePassword', 'ajaxGetCustomersForDropdown' => $this->AppAuth->user(),
+             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+        };
     }
 
     public function ajaxGetCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
@@ -74,6 +59,7 @@ class CustomersController extends AdminAppController
         if ($this->AppAuth->isSuperadmin()) {
             $includeOfflineCustomers = true;
         }
+
         $customers = $this->Customer->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions);
         $customersForDropdown = [];
         foreach ($customers as $key => $ps) {
@@ -265,7 +251,7 @@ class CustomersController extends AdminAppController
     }
 
 
-    public function delete($customerId)
+    public function delete(int $customerId)
     {
         $this->RequestHandler->renderAs($this, 'json');
 
@@ -413,6 +399,10 @@ class CustomersController extends AdminAppController
                 'AddressCustomers'
             ]
         ])->first();
+
+        if (empty($customer)) {
+            throw new NotFoundException('customer not found');
+        }
 
         $this->setFormReferer();
 
@@ -629,7 +619,7 @@ class CustomersController extends AdminAppController
             'customer_type' => __d('admin', 'Sum_of_credits_of_deleted_members'),
             'count' => 0,
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_deposit_delta' => $paymentDepositDelta * -1
+            'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
         ];
 
         $paymentDepositDelta = $this->Payment->getManufacturerDepositMoneySum();
@@ -637,7 +627,7 @@ class CustomersController extends AdminAppController
             'customer_type' => __d('admin', 'Sum_of_deposit_compensation_payments_for_manufactures'),
             'count' => 0,
             'credit_balance' => 0,
-            'payment_deposit_delta' => $paymentDepositDelta * -1
+            'payment_deposit_delta' => ($paymentDepositDelta * -1) + 0,
         ];
 
         $this->set('customers', $customers);
@@ -652,6 +642,7 @@ class CustomersController extends AdminAppController
             $sums['deposit_delta'] += $customer['payment_deposit_delta'] ?? 0;
             $sums['product_delta'] += $customer['payment_product_delta'] ?? 0;
         }
+
         $this->set('sums', $sums);
 
         $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
@@ -671,7 +662,19 @@ class CustomersController extends AdminAppController
         }
         $this->set('year', $year);
 
-        $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2017, __d('admin', 'Member_fee') . ' '));
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+
+        $firstOrderYear = $this->OrderDetail->getFirstOrderYear();
+        $this->set('firstOrderYear', $firstOrderYear);
+
+        $lastOrderYear = $this->OrderDetail->getLastOrderYear();
+        $this->set('lastOrderYear', $lastOrderYear);
+
+        $years = null;
+        if ($lastOrderYear !== false && $firstOrderYear !== false) {
+            $years = Configure::read('app.timeHelper')->getAllYearsUntilThisYear($lastOrderYear, $firstOrderYear, __d('admin', 'Member_fee') . ' ');
+        }
+        $this->set('years', $years);
 
         $conditions = [];
         if ($active != 'all') {
@@ -713,6 +716,13 @@ class CustomersController extends AdminAppController
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
             $query->select($this->Customer->Feedbacks);
         }
+
+        $query->select([
+            'credit_balance' => 'Customers.id_customer', // add fake field to make custom sort icon work and avoid "Column not found: 1054 Unknown column"
+            'last_pickup_day' => 'Customers.id_customer',
+            'member_fee' => 'Customers.id_customer',
+        ]);
+        $query->select($this->Customer->AddressCustomers);
         $customers = $this->paginate($query, [
             'sortableFields' => [
                 'CustomerNameForOrder',
@@ -721,31 +731,44 @@ class CustomersController extends AdminAppController
                 'Customers.email',
                 'Customers.active',
                 'Customers.email_order_reminder_enabled',
+                'Customers.check_credit_reminder_enabled',
                 'Customers.date_add',
                 'Customers.newsletter_enabled',
                 'Feedbacks.modified',
+                'credit_balance',
+                'member_fee',
+                'last_pickup_day',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
         ])->toArray();
 
         $i = 0;
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $customer->credit_balance = $this->Customer->getCreditBalance($customer->id_customer);
             }
-            $customer->order_detail_count = $this->OrderDetail->getCountByCustomerId($customer->id_customer);
             $customer->different_pickup_day_count = $this->OrderDetail->getDifferentPickupDayCountByCustomerId($customer->id_customer);
-            $customer->last_order_date = $this->OrderDetail->getLastOrderDate($customer->id_customer);
+            $customer->last_pickup_day = $this->OrderDetail->getLastPickupDay($customer->id_customer);
+            $customer->last_pickup_day_sort = '';
+            if (!is_null($customer->last_pickup_day)) {
+                $customer->last_pickup_day_sort = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            }
             $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
             $i ++;
         }
 
-        if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) && $this->getRequest()->getQuery('sort') == 'Customers.member_fee') {
-            $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'), [
-                'type' => 'locale',
+        if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) 
+            && in_array($this->getRequest()->getQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {
+            $path = '{n}.' .$this->getRequest()->getQuery('sort');
+            $type = 'numeric';
+            if ($this->getRequest()->getQuery('sort') == 'last_pickup_day') {
+                $path .= '_sort';
+                $type = 'locale';
+            }
+            $customers = Hash::sort($customers, $path, $this->getRequest()->getQuery('direction'), [
+                'type' => $type,
                 'ignoreCase' => true,
             ]);
         }

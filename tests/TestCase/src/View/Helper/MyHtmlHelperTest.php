@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,31 +21,54 @@ use Cake\View\View;
 class MyHtmlHelperTest extends AppCakeTestCase
 {
 
+    protected $MyHtmlHelper;
+
     public function setUp(): void
     {
         parent::setUp();
         $this->MyHtmlHelper = new MyHtmlHelper(new View());
     }
 
-    public function testRemoveTimestampFromFileValidTimestamp()
+    public function testAnonymizeCustomerNameNormal()
     {
-        $filename = 'asdf.jpg?1539847477';
-        $result = 'asdf.jpg';
+        $name = 'Demo Admin';
+        $id = 1;
+        $result = 'D.A. - ID 1';
+        $this->assertEquals($result, $this->MyHtmlHelper->anonymizeCustomerName($name, $id));
+    }
+
+    public function testAnonymizeCustomerNameAdvanced()
+    {
+        $name = 'Demo-Marie Test Admin';
+        $id = 1;
+        $result = 'D.T.A. - ID 1';
+        $this->assertEquals($result, $this->MyHtmlHelper->anonymizeCustomerName($name, $id));
+    }
+    
+    /**
+     * @dataProvider removeTimestampFromFileDataProvider
+     */
+    public function testRemoveTimestampFromFile(string $filename, string $result): void
+    {
         $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
     }
 
-    public function testRemoveTimestampFromFileNoTimestamp()
+    public function removeTimestampFromFileDataProvider()
     {
-        $filename = 'asdf.jpg';
-        $result = 'asdf.jpg';
-        $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
-    }
-
-    public function testRemoveTimestampFromFileInvalidTimestamp()
-    {
-        $filename = 'asdf.jpg?adfs';
-        $result = 'asdf.jpg';
-        $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
+        return [
+            'correct-timestamp' => [
+                'asdf.jpg?1539847477',
+                'asdf.jpg',
+            ],
+            'no-timestamp' => [
+                'asdf.jpg',
+                'asdf.jpg',
+            ],
+            'invalid-timestamp' => [
+                'asdf.jpg?adfs',
+                'asdf.jpg',
+            ],
+        ];
     }
 
 }

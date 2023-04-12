@@ -14,9 +14,11 @@
 @media only screen and (max-device-width: 850px) {
     .self-service,
     .self-service .header,
-    .self-service #products,
-    .self-service .pw .quantity-in-units-input-field-wrapper input {
+    .self-service #products {
        width: 100%;
+    }
+    .self-service .pw .quantity-in-units-input-field-wrapper input {
+      width: 75% ! important;
     }
     body.customers.login #content.self-service {
        min-height: 100vh;

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -45,12 +47,13 @@ use Cake\Core\Configure;
                     <?php echo __('This_notification_triggered_if_stock_available_is_less_than:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->sold_out_limit, 0) . '</b>'; ?>
                 </p>
                 <p>
-                    <a href="<?php echo Configure::read('app.cakeServerName').$productEditLink; ?>"><?php echo __('Click_here_to_edit_the_product.'); ?></a>
+                    <a href="<?php echo Configure::read('App.fullBaseUrl').$productEditLink; ?>"><?php echo __('Click_here_to_edit_the_product.'); ?></a>
                     <?php
                         if (isset($notificationEditLink)) {
                             echo $notificationEditLink;
                         }
                     ?>
+                </p>
             </td>
         </tr>
 

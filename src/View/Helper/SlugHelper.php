@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\View\Helper;
 
@@ -485,4 +486,15 @@ class SlugHelper extends Helper
     {
         return '/admin/configurations/edit/'.$configurationId;
     }
+
+    public function getCronjobsList()
+    {
+        return '/admin/cronjobs';
+    }
+
+    public function getCronjobEdit($cronjobId)
+    {
+        return '/admin/cronjobs/edit/'.$cronjobId;
+    }
+
 }

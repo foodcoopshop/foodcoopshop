@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Cake\Core\Configure;
 
@@ -35,7 +36,7 @@ if (!empty($newProducts)) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.pw .toggle-content.description img');".
         Configure::read('app.jsNamespace').".ModalImage.init('.pw a.open-with-modal');".
-        Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price');".
+        Configure::read('app.jsNamespace').".Helper.initTooltip('.ew .price, .c3 .is-stock-product');".
         Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
         Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
@@ -43,7 +44,13 @@ if (!empty($newProducts)) {
         Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
         Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
     ]);
-
+    
+    if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.ordered-products-total-amount');"
+        ]);
+    }
+    
     $isFirstElement = empty($blogPosts) || $blogPosts->count() == 0;
     echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:10px;' : '') . '">';
         echo __('New_products');

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-08-18 17:24+0200\n"
+"POT-Creation-Date: 2023-02-13 21:01+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -81,6 +81,15 @@ msgid "Send_test_email"
 msgstr ""
 
 msgid "Test_email"
+msgstr ""
+
+msgid "Cronjobs"
+msgstr ""
+
+msgid "Edit_cronjob"
+msgstr ""
+
+msgid "The_cronjob_{0}_has_been_changed."
 msgstr ""
 
 msgid "all_members"
@@ -249,6 +258,15 @@ msgid "Order_list"
 msgstr ""
 
 msgid "member"
+msgstr ""
+
+msgid "Order_list_with_clear_names"
+msgstr ""
+
+msgid "Anonymized_order_list"
+msgstr ""
+
+msgid "Show_order_list"
 msgstr ""
 
 msgid "Order_lists"
@@ -638,6 +656,12 @@ msgstr ""
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
 msgstr ""
 
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
+msgstr ""
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
+msgstr ""
+
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr ""
 
@@ -678,6 +702,12 @@ msgid "Turnover_and_profit_statistics"
 msgstr ""
 
 msgid "Turnover_statistics"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Last_{0}_months"
 msgstr ""
 
 msgid "December"
@@ -914,12 +944,6 @@ msgstr ""
 msgid "Last_executed_migration"
 msgstr ""
 
-msgid "Software_update_version"
-msgstr ""
-
-msgid "Please_find_more_information_in_the_changelog_{0}."
-msgstr ""
-
 msgid "activated"
 msgstr ""
 
@@ -941,6 +965,33 @@ msgstr ""
 msgid "Default_image_for_blog_post,_width:"
 msgstr ""
 
+msgid "Website_administration"
+msgstr ""
+
+msgid "Configurations"
+msgstr ""
+
+msgid "Time_interval"
+msgstr ""
+
+msgid "Day_of_month"
+msgstr ""
+
+msgid "Please_select..."
+msgstr ""
+
+msgid "Weekday"
+msgstr ""
+
+msgid "Not_before_time"
+msgstr ""
+
+msgid "Cronjob_is_called_up_to_10_min_after_the_given_time."
+msgstr ""
+
+msgid "Last_run"
+msgstr ""
+
 msgid "Old_password"
 msgstr ""
 
@@ -951,9 +1002,6 @@ msgid "min_8_characters"
 msgstr ""
 
 msgid "New_password_again"
-msgstr ""
-
-msgid "Website_administration"
 msgstr ""
 
 msgid "Financial_reports"
@@ -1086,12 +1134,6 @@ msgid "Group"
 msgstr ""
 
 msgid "Status"
-msgstr ""
-
-msgid "Ordered_products"
-msgstr ""
-
-msgid "Reminder"
 msgstr ""
 
 msgid "Feedback"
@@ -1325,12 +1367,6 @@ msgstr ""
 msgid "Order_list_by_member"
 msgstr ""
 
-msgid "Show_list_(grouped_by_product)"
-msgstr ""
-
-msgid "Show_list_(grouped_by_member)"
-msgstr ""
-
 msgid "docs_route_manufacturers"
 msgstr ""
 
@@ -1457,9 +1493,6 @@ msgstr ""
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr ""
 
-msgid "Please_select..."
-msgstr ""
-
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr ""
 
@@ -1568,6 +1601,12 @@ msgstr ""
 msgid "Chose_member"
 msgstr ""
 
+msgid "Anonymize_customers?"
+msgstr ""
+
+msgid "Customer_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer."
+msgstr ""
+
 msgid "Pickup_days"
 msgstr ""
 
@@ -1590,6 +1629,15 @@ msgid "Show_deposit_account"
 msgstr ""
 
 msgid "Edit_manufacturer_settings"
+msgstr ""
+
+msgid "grouped_by_product"
+msgstr ""
+
+msgid "Anonymized_list"
+msgstr ""
+
+msgid "grouped_by_customer"
 msgstr ""
 
 msgid "Test_order_list"
@@ -1799,6 +1847,9 @@ msgstr ""
 msgid "Delivery_rhythm"
 msgstr ""
 
+msgid "Selected_products"
+msgstr ""
+
 msgid "Storage_location"
 msgstr ""
 
@@ -1838,7 +1889,7 @@ msgstr ""
 msgid "Gross_turnover"
 msgstr ""
 
-msgid "Net_turnover"
+msgid "Net_turnover_selling_price"
 msgstr ""
 
 msgid "total"
@@ -1928,9 +1979,6 @@ msgstr ""
 msgid "BIC"
 msgstr ""
 
-msgid "Configurations"
-msgstr ""
-
 msgid "My_products"
 msgstr ""
 
@@ -1977,6 +2025,9 @@ msgid "Add_product_feedback"
 msgstr ""
 
 msgid "Click_to_change_name"
+msgstr ""
+
+msgid "Ordered_products"
 msgstr ""
 
 msgid "Show_all_ordered_products_from_{0}"
@@ -2048,13 +2099,16 @@ msgstr ""
 msgid "Customer_ID"
 msgstr ""
 
-msgid "Calculate_selling_price_with_surcharge_for_selected_products"
+msgid "Calculate_selling_price"
 msgstr ""
 
-msgid "Delete_selected_products"
+msgid "Delete"
 msgstr ""
 
-msgid "Edit_delivery_rhythm_for_selected_products"
+msgid "Edit_delivery_rhythm"
+msgstr ""
+
+msgid "Edit_status"
 msgstr ""
 
 msgid "Generate_product_cards"
@@ -2294,6 +2348,9 @@ msgstr ""
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr ""
 
+msgid "Pay_this_invoice_with_paypal"
+msgstr ""
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr ""
 
@@ -2358,9 +2415,6 @@ msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_a
 msgstr ""
 
 msgid "Detail_view"
-msgstr ""
-
-msgid "Total"
 msgstr ""
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."

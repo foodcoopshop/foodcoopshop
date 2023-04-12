@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,6 +19,13 @@ use Cake\I18n\I18n;
 
     echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
+
+
+    if ($appAuth->isOrderForDifferentCustomerMode()) {
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace').".Helper.initShowLoaderOnContentChange();"
+        ]);
+    }
 
     if ($isMobile) {
         echo '<div class="is-mobile-detector"></div>';

@@ -1,20 +1,25 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Lib\Folder\Folder;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\QueueTrait;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
 use App\View\Helper\SlugHelper;
+use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Filesystem\Folder;
-use Cake\Filesystem\File;
 use Cake\View\View;
-use Network\View\Helper\NetworkHelper;
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
+use Migrations\Migrations;
+use Network\View\Helper\NetworkHelper;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -34,32 +39,34 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 abstract class AppCakeTestCase extends TestCase
 {
 
+    use AppIntegrationTestTrait;
     use ConsoleIntegrationTestTrait;
+    use LoginTrait;
     use QueueTrait;
 
     protected $dbConnection;
-
     protected $testDumpDir;
-
     protected $appDumpDir;
-
     public $Slug;
-
     public $Html;
-
     public $Time;
-
+    public $Cart;
+    public $Configuration;
     public $Customer;
-
     public $Manufacturer;
+    public $Network;
+    public $Payment;
+    public $PricePerUnit;
 
-
-    /**
-     * called before every test method
-     */
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->dbConnection = ConnectionManager::get('test');
+        $this->seedTestDatabase();
+        $this->resetLogs();
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
+        $this->Configuration->loadConfigurations();
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
@@ -67,17 +74,13 @@ abstract class AppCakeTestCase extends TestCase
         $this->Time = new MyTimeHelper($View);
         $this->Network = new NetworkHelper($View);
         $this->PricePerUnit = new PricePerUnitHelper($View);
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
-        $this->resetTestDatabaseData();
-        $this->resetLogs();
-        $this->Configuration->loadConfigurations();
-
-        // enable security token only for IntegrationTests
+        // enable tokens only for IntegrationTests
         if (method_exists($this, 'enableSecurityToken')) {
             $this->enableSecurityToken();
+            $this->enableCsrfToken();
         }
 
         $this->useCommandRunner();
@@ -86,17 +89,17 @@ abstract class AppCakeTestCase extends TestCase
         TestEmailTransport::clearMessages();
     }
 
-    private function getLogFile($name)
+    private function getLogFile(string $name): string
     {
-        return new File(ROOT . DS . 'logs' . DS . $name . '.log');
+        return ROOT . DS . 'logs' . DS . $name . '.log';
     }
 
-    protected function resetLogs()
+    protected function resetLogs(): void
     {
-        $this->getLogFile('debug')->write('');
-        $this->getLogFile('error')->write('');
-        $this->getLogFile('cli-debug')->write('');
-        $this->getLogFile('cli-error')->write('');
+        file_put_contents($this->getLogFile('debug'), '');
+        file_put_contents($this->getLogFile('error'), '');
+        file_put_contents($this->getLogFile('cli-debug'), '');
+        file_put_contents($this->getLogFile('cli-error'), '');
     }
 
     public function tearDown(): void
@@ -107,18 +110,20 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function assertLogFilesForErrors()
     {
-        $log = $this->getLogFile('debug')->read(true, 'r');
-        $log .= $this->getLogFile('error')->read(true, 'r');
-        $log .= $this->getLogFile('cli-debug')->read(true, 'r');
-        $log .= $this->getLogFile('cli-error')->read(true, 'r');
+        $log = file_get_contents($this->getLogFile('debug'));
+        $log .= file_get_contents($this->getLogFile('error'));
+        $log .= file_get_contents($this->getLogFile('cli-debug'));
+        $log .= file_get_contents($this->getLogFile('cli-error'));
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
 
-    protected function resetTestDatabaseData()
+    protected function seedTestDatabase()
     {
-        $this->dbConnection = ConnectionManager::get('test');
-        $this->testDumpDir = TESTS . 'config' . DS . 'sql' . DS;
-        $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
+        $migrations = new Migrations();
+        $migrations->seed([
+            'connection' => 'test',
+            'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
+        ]);
     }
 
     protected function getJsonDecodedContent()
@@ -138,7 +143,7 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function assertRedirectToLoginPage()
     {
-        $this->assertRegExpWithUnquotedString('http://localhost' .  $this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
+        $this->assertRegExpWithUnquotedString(Configure::read('App.fullBaseUrl') .  $this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
     }
 
     protected function assertJsonOk()
@@ -152,7 +157,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function assertNotPerfectlyImplementedAccessRestricted()
     {
-        $this->assertEquals('http://localhost/', $this->_response->getHeaderLine('Location'));
+        $this->assertEquals(Configure::read('App.fullBaseUrl') . '/' , $this->_response->getHeaderLine('Location'));
     }
 
     /**
@@ -163,6 +168,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
+        if (is_null($response)) return;
         $this->assertMatchesRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
@@ -182,33 +188,16 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertEquals($url, $expectedUrl, $msg);
     }
 
-    protected function changeReadOnlyConfiguration($configKey, $value)
-    {
-        $query = 'UPDATE ' . $this->Configuration->getTable() . ' SET value = :value WHERE name = :configKey';
-        $params = [
-            'value' => $value,
-            'configKey' => $configKey
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
-        $this->Configuration->loadConfigurations();
-    }
-
     /**
-     * needs to login as superadmin and logs user out automatically
-     *
-     * @param string $configKey
-     * @param string $newValue
+     * automatically logout of user
      */
-    protected function changeConfiguration($configKey, $newValue)
+    protected function changeConfiguration(string $configKey, $value)
     {
-        $query = 'UPDATE fcs_configuration SET value = :newValue WHERE name = :configKey;';
-        $params = [
-            'newValue' => $newValue,
-            'configKey' => $configKey
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $this->Configuration->setPrimaryKey('name');
+        $configurationEntity = $this->Configuration->get($configKey);
+        $configurationEntity->value = $value;
+        $this->Configuration->save($configurationEntity);
+        $this->Configuration->setPrimaryKey('id_configuration');
         $this->Configuration->loadConfigurations();
         $this->logout();
     }
@@ -219,21 +208,14 @@ abstract class AppCakeTestCase extends TestCase
         ob_flush();
     }
 
-    protected function changeManufacturerNoDeliveryDays($manufacturerId, $noDeliveryDays = '')
+    protected function changeManufacturerNoDeliveryDays(int $manufacturerId, string $noDeliveryDays = ''): void
     {
-        $query = 'UPDATE fcs_manufacturer SET no_delivery_days = :noDeliveryDays WHERE id_manufacturer = :manufacturerId;';
-        $params = [
-            'manufacturerId' => $manufacturerId,
-            'noDeliveryDays' => $noDeliveryDays
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $this->changeManufacturer($manufacturerId, 'no_delivery_days', $noDeliveryDays);
     }
 
     /**
      * @param int $productId
      * @param int $amount
-     * @return string
      */
     protected function addProductToCart($productId, $amount)
     {
@@ -256,7 +238,7 @@ abstract class AppCakeTestCase extends TestCase
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
                 'customer_id' => $this->getUserId(),
-                'pickup_day' => !is_null($pickupDay) ? $pickupDay : Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
+                'pickup_day' => !is_null($pickupDay) ? $pickupDay : DeliveryRhythm::getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment,
             ];
         }
@@ -317,7 +299,14 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
+    protected function changeProductDeliveryRhythm(
+        int $productId,
+        string $deliveryRhythmType,
+        string $deliveryRhythmFirstDeliveryDay = '',
+        string $deliveryRhythmOrderPossibleUntil = '',
+        string $deliveryRhythmSendOrderListWeekday = '',
+        string $deliveryRhythmSendOrderListDay = ''
+        )
     {
         $this->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
@@ -352,27 +341,18 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-
-    protected function changeManufacturer($manufacturerId, $field, $value)
+    protected function changeManufacturer(int $manufacturerId, string $field, $value)
     {
-        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$field.' = :value WHERE id_manufacturer = :manufacturerId';
-        $params = [
-            'value' => $value,
-            'manufacturerId' => $manufacturerId
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        return $statement->execute($params);
+        $newManufacturer = $this->Manufacturer->get($manufacturerId);
+        $newManufacturer->{$field} = $value;
+        $this->Manufacturer->save($newManufacturer);
     }
 
-    protected function changeCustomer($customerId, $field, $value)
+    protected function changeCustomer(int $customerId, string $field, $value)
     {
-        $query = 'UPDATE ' . $this->Customer->getTable().' SET '.$field.' = :value WHERE id_customer = :customerId';
-        $params = [
-            'value' => $value,
-            'customerId' => $customerId
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        return $statement->execute($params);
+        $newCustomer = $this->Customer->get($customerId);
+        $newCustomer->{$field} = $value;
+        $this->Customer->save($newCustomer);
     }
 
     protected function getCorrectedLogoPathInHtmlForPdfs($html)
@@ -392,16 +372,17 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function resetCustomerCreditBalance() {
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 2');
+        $this->Payment->delete($this->Payment->get(2));
     }
 
     private function prepareSendingOrderListsOrInvoices($contentFolder)
     {
-        $folder = new Folder();
-        $folder->delete($contentFolder);
-        $file = new File($contentFolder . DS . '.gitignore', true);
-        $file->append('/*
+        Folder::rrmdir($contentFolder);
+        mkdir($contentFolder, 0755, true);
+        $file = fopen($contentFolder . DS . '.gitignore', 'w');
+        fwrite($file, '/*
 !.gitignore');
+        fclose($file);
     }
 
 }

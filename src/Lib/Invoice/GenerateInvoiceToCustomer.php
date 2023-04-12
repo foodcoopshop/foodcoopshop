@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -85,6 +87,7 @@ class GenerateInvoiceToCustomer
             $sendInvoiceToCustomer->customerEmail = $data->email;
             $sendInvoiceToCustomer->invoicePdfFile = $invoicePdfFile;
             $sendInvoiceToCustomer->invoiceNumber = $invoiceNumber;
+            $sendInvoiceToCustomer->invoiceSumPriceIncl = $data->sumPriceIncl;
             $sendInvoiceToCustomer->invoiceDate = $invoiceDate;
             $sendInvoiceToCustomer->invoiceId = $newInvoice->id;
             $sendInvoiceToCustomer->originalInvoiceId = null;

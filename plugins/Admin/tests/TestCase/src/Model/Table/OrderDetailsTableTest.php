@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 
@@ -50,13 +51,17 @@ class OrderDetailsTableTest extends AppCakeTestCase
 
     private function assertGetDepositTax($gross, $amount, $expected)
     {
-        $result = $this->OrderDetail->getDepositTax($gross, $amount);
+        $result = $this->OrderDetail->getDepositTax($gross, $amount, 20);
+        $result = number_format($result, 2);
+        $expected = number_format($expected, 2);
         $this->assertEquals($result, $expected);
     }
 
     private function assertGetDepositNet($gross, $amount, $expected)
     {
-        $result = $this->OrderDetail->getDepositNet($gross, $amount);
+        $result = $this->OrderDetail->getDepositNet($gross, $amount, 20);
+        $result = number_format($result, 2);
+        $expected = number_format($expected, 2);
         $this->assertEquals($result, $expected);
     }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -7,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -93,6 +95,11 @@ class CartsController extends FrontendController
             return;
         }
 
+        if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
+            // no spam protected email output in input field when email address is used in comment text
+            $this->protectEmailAddresses = false; 
+        }
+
         $this->set('title_for_layout', __('Finish_cart'));
 
         if ($this->AppAuth->Cart->isCartEmpty()) {
@@ -131,7 +138,7 @@ class CartsController extends FrontendController
         $this->set('cart', $cart);
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
@@ -251,8 +258,8 @@ class CartsController extends FrontendController
 
         $formattedDeliveryDate = strtotime($deliveryDate);
 
-        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodFirstDay($formattedDeliveryDate)));
-        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodLastDay($formattedDeliveryDate)));
+        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
+        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());
@@ -323,7 +330,7 @@ class CartsController extends FrontendController
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
         $amount = (int) $this->getRequest()->getData('amount');
         $orderedQuantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat(
-            $this->getRequest()->getData('orderedQuantityInUnits')
+            (string) $this->getRequest()->getData('orderedQuantityInUnits')
         );
 
         $this->CartProduct = $this->getTableLocator()->get('CartProducts');

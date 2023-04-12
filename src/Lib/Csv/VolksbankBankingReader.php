@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -64,7 +66,6 @@ class VolksbankBankingReader extends BankingReader {
 
         return $preparedRecords;
     }
-
 
 }
 

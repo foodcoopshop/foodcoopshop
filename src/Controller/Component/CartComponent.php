@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller\Component;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
@@ -103,8 +105,9 @@ class CartComponent extends Component
         $cc = FactoryLocator::get('Table')->get('Carts');
         $patchedEntity = $cc->patchEntity(
             $cc->get($this->getCartId()), [
-                'status' => APP_OFF
-            ]
+                'status' => APP_OFF,
+            ],
+            ['validate' => false],
         );
         $cc->save($patchedEntity);
         return $patchedEntity;
@@ -144,6 +147,134 @@ class CartComponent extends Component
             $isEmpty = true;
         }
         return $isEmpty;
+    }
+
+    protected function getProductContain(): array
+    {
+        $contain = [
+            'Manufacturers',
+            'Manufacturers.AddressManufacturers',
+            'StockAvailables',
+            'ProductAttributes.StockAvailables',
+            'ProductAttributes.ProductAttributeCombinations',
+            'Taxes',
+        ];
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+            $contain[] = 'UnitProducts';
+            $contain[] = 'PurchasePriceProducts.Taxes';
+            $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
+            $contain[] = 'ProductAttributes.UnitProductAttributes';
+        }
+        return $contain;
+    }
+
+    protected function saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products)
+    {
+
+        $this->saveOrderDetails($orderDetails2save);
+        $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
+
+        $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
+        $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
+
+        $pickupDayEntities = null;
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $pickupDayEntities = $cart['Cart']->pickup_day_entities;
+            $this->Cart->PickupDayEntities->saveMany($pickupDayEntities);
+        }
+
+        $cart = $this->AppAuth->getCart(); // to get attached order details
+        $this->AppAuth->setCart($cart);
+        $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
+
+        $cartType = $this->AppAuth->getCartType();
+        $userIdForActionLog = $this->AppAuth->getUserId();
+
+        switch($cartType) {
+            case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
+                $actionLogType = 'customer_order_finished';
+                $message = __('Your_order_has_been_placed_succesfully.');
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
+                $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
+                break;
+            case $this->Cart::CART_TYPE_INSTANT_ORDER;
+                $actionLogType = 'instant_order_added';
+                $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                if (empty($manufacturersThatReceivedInstantOrderNotification)) {
+                    $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>'
+                    ]);
+                } else {
+                    $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
+                    ]);
+                }
+                $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
+                $messageForActionLog = $message;
+                $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
+                if (!($this->AppAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
+                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
+                }
+                break;
+            case $this->Cart::CART_TYPE_SELF_SERVICE;
+
+                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
+                    $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+                    $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+                    $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
+
+                    if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
+                        $paidInCash = 0;
+                        if ($this->AppAuth->isSelfServiceCustomer()) {
+                            $paidInCash = 1;
+                        }
+                        if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
+                            $helloCash = new HelloCash();
+                            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+                            $invoiceId = $responseObject->invoice_id;
+                            $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
+                        } else {
+                            $invoiceToCustomer = new GenerateInvoiceToCustomer();
+                            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+                            $invoiceId = $newInvoice->id;
+                            $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
+                        }
+                        $cart['invoice_id'] = $invoiceId;
+                    }
+                }
+
+                $actionLogType = 'self_service_order_added';
+                $message = __('Thank_you_for_your_purchase!');
+                $message .= '<br />';
+                $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout(Configure::read('app.slugHelper')->getSelfService()) . '"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
+                $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fas fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
+                if (isset($invoiceRoute)) {
+                    $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('App.fullBaseUrl') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
+                }
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+
+                if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
+                    $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                    $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
+                        $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['name'],
+                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                    ]);
+                } else {
+                    $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
+                }
+                break;
+        }
+
+        $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
+        $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
+        $this->getController()->Flash->success($message);
+
+        return $cart;
     }
 
     public function finish()
@@ -190,24 +321,11 @@ class CartComponent extends Component
         $stockAvailable2saveData = [];
         $stockAvailable2saveConditions = [];
 
+        $contain = $this->getProductContain();
+
         foreach ($this->getProducts() as $cartProduct) {
 
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
-
-            $contain = [
-                'Manufacturers',
-                'Manufacturers.AddressManufacturers',
-                'StockAvailables',
-                'ProductAttributes.StockAvailables',
-                'ProductAttributes.ProductAttributeCombinations',
-                'Taxes',
-            ];
-            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                $contain[] = 'UnitProducts';
-                $contain[] = 'PurchasePriceProducts.Taxes';
-                $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
-                $contain[] = 'ProductAttributes.UnitProductAttributes';
-            }
             $product = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
@@ -215,7 +333,7 @@ class CartComponent extends Component
                 'contain' => $contain,
             ])->first();
 
-            $product->next_delivery_day = $this->Product->getNextDeliveryDay($product, $this->AppAuth);
+            $product->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $this->AppAuth);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;
@@ -304,7 +422,7 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && !$this->AppAuth->isSelfServiceModeByReferer() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
                 $message = __('{0}_can_be_ordered_next_week.',
                     [
                         '<b>' . $product->name . '</b>'
@@ -313,10 +431,16 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (! $product->manufacturer->active || (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
-                $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
-                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                $cartErrors[$cartProduct['productId']][] = $message;
+            if (! $product->manufacturer->active || (!$this->AppAuth->isOrderForDifferentCustomerMode()
+                && !$this->AppAuth->isSelfServiceModeByUrl()
+                && $this->Product->deliveryBreakManufacturerEnabled(
+                    $product->manufacturer->no_delivery_days,
+                    $product->next_delivery_day,
+                    $product->manufacturer->stock_management_enabled,
+                    $product->is_stock_product))) {
+                        $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
+                        $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                        $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
@@ -329,7 +453,7 @@ class CartComponent extends Component
                 }
             }
 
-            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
                 $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                     [
                         Configure::read('appDb.FCS_APP_NAME'),
@@ -429,11 +553,17 @@ class CartComponent extends Component
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
                 $this->getController()->setRequest($this->getController()->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
+                $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
         }
 
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $options['validate'] = 'customerCanSelectPickupDay';
+        }
+
+        if ($this->AppAuth->getCartType() == $this->Cart::CART_TYPE_SELF_SERVICE
+            && $this->AppAuth->isOrderForDifferentCustomerMode()) {
+            $options['validate'] = 'selfServiceForDifferentCustomer';
         }
 
         $cart['Cart'] = $this->Cart->patchEntity(
@@ -451,113 +581,10 @@ class CartComponent extends Component
 
         if (!empty($cartErrors) || !empty($formErrors)) {
             $this->getController()->Flash->error(__('Errors_occurred.'));
-        } else {
-
-            $this->saveOrderDetails($orderDetails2save);
-            $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
-
-            $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
-            $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
-
-            $pickupDayEntities = null;
-            if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-                $pickupDayEntities = $cart['Cart']->pickup_day_entities;
-                $this->Cart->PickupDayEntities->saveMany($pickupDayEntities);
-            }
-
-            $cart = $this->AppAuth->getCart(); // to get attached order details
-            $this->AppAuth->setCart($cart);
-            $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
-
-            $cartType = $this->AppAuth->getCartType();
-            $userIdForActionLog = $this->AppAuth->getUserId();
-
-            switch($cartType) {
-                case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
-                    $actionLogType = 'customer_order_finished';
-                    $message = __('Your_order_has_been_placed_succesfully.');
-                    $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
-                    $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
-                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
-                    break;
-                case $this->Cart::CART_TYPE_INSTANT_ORDER;
-                    $actionLogType = 'instant_order_added';
-                    $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
-                    if (empty($manufacturersThatReceivedInstantOrderNotification)) {
-                        $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
-                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>'
-                        ]);
-                    } else {
-                        $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
-                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
-                            '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
-                        ]);
-                    }
-                    $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
-                    $messageForActionLog = $message;
-                    $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
-                    if (!($this->AppAuth->isOrderForDifferentCustomerMode() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS'))) {
-                        $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
-                    }
-                    break;
-                case $this->Cart::CART_TYPE_SELF_SERVICE;
-
-                    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
-                        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-                        $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-                        $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->AppAuth->getUserId(), $currentDay);
-
-                        if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
-                            $paidInCash = 0;
-                            if ($this->AppAuth->isSelfServiceCustomer()) {
-                                $paidInCash = 1;
-                            }
-                            if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                                $helloCash = new HelloCash();
-                                $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
-                                $invoiceId = $responseObject->invoice_id;
-                                $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
-                            } else {
-                                $invoiceToCustomer = new GenerateInvoiceToCustomer();
-                                $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
-                                $invoiceId = $newInvoice->id;
-                                $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
-                            }
-                            $cart['invoice_id'] = $invoiceId;
-                        }
-                    }
-
-                    $actionLogType = 'self_service_order_added';
-                    $message = __('Thank_you_for_your_purchase!');
-                    $message .= '<br />';
-                    $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout(Configure::read('app.slugHelper')->getSelfService()) . '"><i class="fas fa-sign-out-alt ok"></i> '.__('Sign_out').'</a>';
-                    $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'"><i class="fas fa-shopping-bag ok"></i> '.__('Continue_shopping').'</a>';
-                    if (isset($invoiceRoute)) {
-                        $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('app.cakeServerName') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
-                    }
-                    $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
-
-                    if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
-                        $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
-                        $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
-                            $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['name'],
-                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
-                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                        ]);
-                    } else {
-                        $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
-                    }
-                    break;
-            }
-
-            $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
-            $this->getController()->Flash->success($message);
-
+            return $cart;
         }
 
+        $cart = $this->saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products);
         return $cart;
 
     }
@@ -579,12 +606,12 @@ class CartComponent extends Component
                 if ($attribute->id_product_attribute == $ids['attributeId']) {
                     if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                         $totalPurchasePriceTaxIncl = $attribute->unit_product_attribute->purchase_price_incl_per_unit ?? 0;
-                        $totalPurchasePriceTaxIncl = round($totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
+                        $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $attribute->unit_product_attribute->amount, 2);
                         $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
                     } else {
                         $totalPurchasePriceTaxExcl = $attribute->purchase_price_product_attribute->price ?? 0;
-                        $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
+                        $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
                         $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                         $totalPurchasePriceTaxIncl *= $amount;
                         $totalPurchasePriceTaxExcl *= $amount;
@@ -596,12 +623,12 @@ class CartComponent extends Component
             // main product
             if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
                 $totalPurchasePriceTaxIncl = $product->unit_product->purchase_price_incl_per_unit ?? 0;
-                $totalPurchasePriceTaxIncl = round($totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
+                $totalPurchasePriceTaxIncl = round((float) $totalPurchasePriceTaxIncl * $cartProduct['productQuantityInUnits'] / $product->unit_product->amount, 2);
                 $totalPurchasePriceTaxExcl = $this->Product->getNetPrice($totalPurchasePriceTaxIncl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
             } else {
                 $totalPurchasePriceTaxExcl = $product->purchase_price_product->price ?? 0;
-                $totalPurchasePriceTaxExcl = round($totalPurchasePriceTaxExcl, 2);
+                $totalPurchasePriceTaxExcl = round((float) $totalPurchasePriceTaxExcl, 2);
                 $totalPurchasePriceTaxIncl = $this->Product->getGrossPrice($totalPurchasePriceTaxExcl, $purchasePriceTaxRate);
                 $totalPurchasePriceTaxIncl *= $amount;
                 $totalPurchasePriceTaxExcl *= $amount;
@@ -780,7 +807,7 @@ class CartComponent extends Component
                     'stockAvailable' => $stockAvailable,
                     'manufacturer' => $cartProduct->product->manufacturer,
                     'showManufacturerName' => true,
-                    'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('app.cakeServerName') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
+                    'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('App.fullBaseUrl') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
                 ]);
                 $email->addToQueue();
             }
@@ -797,9 +824,36 @@ class CartComponent extends Component
         ->setSubject(__('Your_purchase'))
         ->setViewVars([
             'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
-            'appAuth' => $this->AppAuth
+            'appAuth' => $this->AppAuth,
         ]);
         $email->addToQueue();
+    }
+
+    private function sendOrderCommentNotificationToPlatformOwner($pickupDayEntities)
+    {
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || Configure::read('appDb.FCS_APP_EMAIL') == '') {
+            return false;
+        }
+        foreach($pickupDayEntities as $pickupDay) {
+            if ($pickupDay['comment'] == '') {
+                continue;
+            }
+            $formattedPickupDay = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+            $formattedPickupDay = $formattedPickupDay->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('order_comment_notification');
+            $email->setTo(Configure::read('appDb.FCS_APP_EMAIL'))
+            ->setSubject(__('New_order_comment__was_written_by_{0}_for_{1}', [
+                $this->AppAuth->getUsername(),
+                $formattedPickupDay,
+            ]))
+            ->setViewVars([
+                'comment' => $pickupDay['comment'],
+                'formattedPickupDay' => $formattedPickupDay,
+                'appAuth' => $this->AppAuth,
+            ]);
+            $email->addToQueue();
+        }
     }
 
     /**

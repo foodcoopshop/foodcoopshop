@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Controller;
 
@@ -10,9 +11,8 @@ use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,29 +33,15 @@ class ManufacturersController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'profile':
-            case 'myOptions':
-                return $this->AppAuth->isManufacturer();
-                break;
-            case 'index':
-            case 'add':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-                break;
-            case 'edit':
-            case 'editOptions':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-                break;
-            case 'getDeliveryNote':
-                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
-                break;
-            case 'getInvoice':
-                return !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
-                break;
-            default:
-                return $this->AppAuth->user();
-                break;
-        }
+        return match($this->getRequest()->getParam('action')) {
+            'profile', 'myOptions' => $this->AppAuth->isManufacturer(),
+            'index', 'add' => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+            'edit', 'editOptions', 'getOrderListByProduct', 'getOrderListByCustomer', 'getInvoice' => 
+                $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+            'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin(),
+            'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()),
+             default =>  $this->AppAuth->user(),
+        };
     }
 
     public function beforeFilter(EventInterface $event)
@@ -80,6 +66,7 @@ class ManufacturersController extends AdminAppController
             [
                 'active' => APP_ON,
                 'is_private' => Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') ? APP_OFF : APP_ON,
+                'anonymize_customers' => APP_ON,
             ],
             ['validate' => false]
         );
@@ -98,7 +85,7 @@ class ManufacturersController extends AdminAppController
         }
 
         $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
 
@@ -215,20 +202,12 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    private function saveUploadedGeneralTermsAndConditions($manufacturerId, $filename)
+    private function saveUploadedGeneralTermsAndConditions(int $manufacturerId, string $filename): void
     {
-
-        $newFileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
-
-        $fileObject = new File(WWW_ROOT . $filename);
-
-        // assure that folder structure exists
-        $dir = new Folder();
-        $path = dirname(WWW_ROOT . $newFileName);
-        $dir->create($path);
-        $dir->chmod($path, 0755);
-
-        $fileObject->copy(WWW_ROOT . $newFileName);
+        $newFilename = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
+        $path = dirname(WWW_ROOT . $newFilename);
+        mkdir($path, 0755, true);
+        copy(WWW_ROOT . $filename, WWW_ROOT . $newFilename);
     }
 
     private function deleteUploadedGeneralTermsAndConditions($manufacturerId)
@@ -255,7 +234,7 @@ class ManufacturersController extends AdminAppController
         }
 
         $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
 
@@ -272,7 +251,7 @@ class ManufacturersController extends AdminAppController
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $defaultDate = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         } else {
-            $defaultDate = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $defaultDate = DeliveryRhythm::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
         return $defaultDate;
     }
@@ -436,7 +415,7 @@ class ManufacturersController extends AdminAppController
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
+            $noDeliveryBreakOptions = DeliveryRhythm::getNextWeeklyDeliveryDays();
             $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
         }
 
@@ -604,7 +583,7 @@ class ManufacturersController extends AdminAppController
         $newInvoiceNumber = 'xxx';
 
         $pdfWriter = new InvoiceToManufacturerPdfWriter();
-        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
+        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx', $manufacturer->anonymize_customers);
         if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
@@ -626,7 +605,7 @@ class ManufacturersController extends AdminAppController
     private function getOrderListFilenameForWriteInline($manufacturerId, $manufacturerName, $pickupDay, $type): string
     {
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
-        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists);
+        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturerName, $manufacturerId, $pickupDay, $type, $currentDateForOrderLists, false);
         $productPdfFile = explode(DS, $productPdfFile);
         $productPdfFile = end($productPdfFile);
         $productPdfFile = substr($productPdfFile, 11);
@@ -660,6 +639,12 @@ class ManufacturersController extends AdminAppController
             ],
         ])->first();
 
+        if (!in_array('isAnonymized', array_keys($this->getRequest()->getQueryParams()))) {
+            $isAnonymized = $manufacturer->anonymize_customers;
+        } else {
+            $isAnonymized = h($this->getRequest()->getQuery('isAnonymized'));
+        }
+
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
@@ -679,7 +664,7 @@ class ManufacturersController extends AdminAppController
         $pdfFile = $this->getOrderListFilenameForWriteInline($manufacturerId, $manufacturer->name, $pickupDay, $typeString);
         $pdfWriter->setFilename($pdfFile);
 
-        $pdfWriter->prepareAndSetData($manufacturerId, $pickupDayDbFormat, [], $orderDetailIds);
+        $pdfWriter->prepareAndSetData($manufacturerId, $pickupDayDbFormat, [], $orderDetailIds, $isAnonymized);
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
             return $this->response->withStringBody($pdfWriter->writeHtml());
         }

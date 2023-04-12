@@ -28,6 +28,9 @@ body.customers.login #content {
 body.pages.home .filter-container {
     display: none;
 }
+body.pages.home #content {
+    border: none;
+}
 #home {
     width: 100%;
     text-align: center;
@@ -70,8 +73,8 @@ body.taxes.edit #flashMessage {
     margin-left: 155px;
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
-    padding: 2px 2px 2px 1px;
-    border-left: 2px solid #efefef;
+    border: 1px solid #efefef;
+    border-top: none;
     border-bottom-right-radius: 15px;
     position: relative;
 }
@@ -204,7 +207,8 @@ td.amount .fa-times {
     background: #efefef;
     width: 1074px; /* be aware of table border if scrolled */
     z-index: 100;
-    border-bottom: 1px solid #dfdfdf;
+    border: 1px solid #efefef;
+    border-top: none;
 }
 .filter-container-not-fixed {
   float: left;
@@ -254,21 +258,12 @@ td.amount .fa-times {
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
 }
-body.products.index .bootstrap-select {
-  width: 172px ! important;
-}
 body.products.index td.status {
     text-align: center;
     width: 49px;
 }
 body.products.index td.status .fa-exclamation {
     margin-left: 3px;
-}
-#filter-loader {
-  position: fixed;
-  top: 10px;
-  left: 590px;
-  font-size: 150px;
 }
 td.right,
 th.right {
@@ -304,7 +299,7 @@ input.datepicker {
     text-align: center;
 }
 .warning {
-    color: red;
+    color: var(--not-ok-red);
 }
 .ui-widget {
     font-family: 'Open Sans';
@@ -314,7 +309,7 @@ input.datepicker {
     margin-bottom: 0;
 }
 .tooltipster-content li.negative {
-    color: red;
+    color: var(--not-ok-red);
 }
 .tooltipster-content .credit-balance-wrapper {
     margin-top: 10px;
@@ -399,6 +394,10 @@ body.configurations.index td {
     background-color: #C00000;
     color: white;
 }
+#actionLogs table.list td.text {
+    word-break :break-word;
+    min-width: 500px;
+}
 #manufacturer-profile .input {
     float: left;
 }
@@ -430,12 +429,8 @@ body.configurations.index td {
 form div.error-message {
     margin-left: 220px;
 }
-.ui-dialog-content label {
-    font-weight: 600;
-    margin-bottom: 0;
-}
 .overlay-info {
-    color: red;
+    color: var(--not-ok-red);
     font-weight: 600;
     font-size: 14px;
 }
@@ -540,7 +535,7 @@ table.list td.amount > .has-separator:after {
     content: ' / ';
 }
 .cke_dialog_container {
-    z-index: 2147483650 ! important; /* open upload from dialog - 2 more than .ui-dialog */
+    z-index: 2147483650 ! important; /* open upload from dialog */
 }
 #manufacturer-options-edit-form h3 {
     margin-top: 15px;
@@ -599,9 +594,6 @@ body.payments .bottom-button-container {
     float: left;
     width: 20px;
     height: 20px;
-}
-.ui-dialog.has-datepicker {
-    z-index: 2147483646 ! important;
 }
 #product-is-stock-product-edit-form input {
     float: right ! important;
@@ -730,7 +722,8 @@ form.fcs-form .input.text .after.small,
 form.fcs-form .input.number .after.small,
 form.fcs-form .input.tel .after.small,
 form.fcs-form .input.select .after.small,
-form.fcs-form .input.fcs-upload .after.small {
+form.fcs-form .input.fcs-upload .after.small,
+form.fcs-form .input.time .after.small {
     float: right;
     line-height: 28px;
     margin-left: 5px;
@@ -741,9 +734,7 @@ div.date-field-wrapper {
 }
 ul.nav-tabs {
     background: #efefef;
-    margin-top: -2px;
-    margin-left: -2px;
-    width: 1070px;
+    width: 1072px;
     padding-bottom: 1px;
 }
 ul.nav-tabs > li > a {
@@ -754,6 +745,7 @@ ul.nav-tabs > li > a {
 ul.nav-tabs a:hover,
 ul.nav-tabs li.active a {
     background-color: #fff;
+    text-decoration: underline ! important;
 }
 a.btn-arrow {
     display: inline-block;
@@ -851,7 +843,8 @@ body.reports.payment .payment-approval-comment {
     margin-right: 2px;
 }
 body.reports.payment form#csv-upload {
-    padding: 10px 0 5px 0;
+    padding: 10px 0 5px 10px;
+    border-bottom: 1px solid #efefef;
 }
 body.reports.payment form#csv-upload label {
     margin-right: 10px;
@@ -969,4 +962,8 @@ body.feedbacks textarea {
 }
 body.feedbacks form div.error-message {
     margin-top: -10px;
+}
+body.manufacturers .generate-order-lists-tooltip a.btn {
+    text-align: left;
+    text-decoration: none ! important;
 }

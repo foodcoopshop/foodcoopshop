@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
 use App\Lib\Catalog\Catalog;
-use App\Model\Traits\ProductCacheClearAfterSaveTrait;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
@@ -25,7 +26,9 @@ use Cake\Validation\Validator;
 class ManufacturersTable extends AppTable
 {
 
-    use ProductCacheClearAfterSaveTrait;
+    use ProductCacheClearAfterSaveAndDeleteTrait;
+
+    private $Catalog;
 
     public function initialize(array $config): void
     {
@@ -112,7 +115,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderedProductDeletedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -125,7 +128,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderedProductPriceChangedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -138,7 +141,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderedProductAmountChangedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -151,7 +154,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendInstantOrderNotification)) {
             $result = Configure::read('app.defaultSendInstantOrderNotification');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -164,7 +167,7 @@ class ManufacturersTable extends AppTable
         if (is_null($sendInvoice)) {
             $result = Configure::read('app.defaultSendInvoice');
         }
-        return (boolean) $result;
+        return (bool) $result;
     }
 
     /**
@@ -369,17 +372,20 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
+    public function anonymizeCustomersInInvoiceOrOrderList($results)
+    {
+        return array_map(function ($data) {
+            $data['CustomerName'] = Configure::read('app.htmlHelper')->anonymizeCustomerName($data['CustomerName'], (int) $data['CustomerId']);
+            return $data;
+        }, $results);
+    }
+
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
-        switch ($order) {
-            case 'product':
-                $orderClause = 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC';
-                break;
-            case 'customer':
-                $orderClause = $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC';
-                break;
-        }
-
+        $orderClause = match($order) {
+            'product' => 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC',
+            'customer' => $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC',
+        };
         $params = [
             'manufacturerId' => $manufacturerId
         ];

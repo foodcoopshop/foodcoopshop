@@ -234,7 +234,7 @@ foodcoopshop.Cart = {
             var orderedQuantityInUnitsWrapper = productWrapper.find('.ew.active .quantity-in-units-input-field-wrapper');
             if (orderedQuantityInUnitsWrapper.length > 0) {
                 orderedQuantityInUnitsWrapper.removeClass('error');
-                orderedQuantityInUnits = foodcoopshop.Helper.getStringAsFloat(orderedQuantityInUnitsWrapper.find('input').val()) * amount;
+                orderedQuantityInUnits = orderedQuantityInUnitsWrapper.find('input').val() * amount;
             }
 
             var unitName = '';

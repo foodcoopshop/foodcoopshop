@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -32,6 +34,12 @@ $this->element('addScript', ['script' =>
 if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
+    ]);
+}
+
+if ($appAuth->isSelfServiceModeByUrl()) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"
     ]);
 }
 

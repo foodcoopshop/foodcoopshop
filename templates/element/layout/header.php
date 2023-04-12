@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -35,34 +37,32 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="<?php echo Configure::read('app.customThemeMainColor'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrfToken" content="<?php echo $this->request->getAttribute('csrfToken'); ?>">
 
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
 
     <?php echo $this->element('jsNamespace'); ?>
 
     <?php
-        echo $this->element('renderCss', ['configs' => ['frontend']]);
+        $renderConfig = 'frontend';
         if ($isMobile) {
-            echo $this->Html->css([
-                '/node_modules/slidebars/dist/slidebars',
-                'mobile-global',
-                'mobile-frontend',
-                'mobile-frontend-portrait',
-                'mobile-self-service',
-                'mobile-frontend-custom',
-            ]);
+            $renderConfig = 'frontend_mobile';
+        }
+        echo $this->element('renderCss', ['configs' => [$renderConfig]]);
+        if ($isMobile) {
+            echo $this->Html->css(['mobile-frontend-custom']);
         }
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             echo $this->Html->css(['customer-can-select-pickup-day']);
         }
-        echo $this->element('customThemeStyleSheet');
+        echo $this->element('customCssVars');
         echo $this->Html->css(['custom']);
         echo $this->element('layout/customHeader');
     ?>

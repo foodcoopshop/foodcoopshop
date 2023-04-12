@@ -1,18 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Controller\Component\StringComponent;
-use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\PdfWriter\OrderDetailsPdfWriter;
-use App\Mailer\AppMailer;
-use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
+use Cake\Core\Configure;
+use App\Mailer\AppMailer;
 use App\Model\Table\OrderDetailsTable;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Http\Exception\ForbiddenException;
+use App\Lib\PdfWriter\OrderDetailsPdfWriter;
+use App\Controller\Component\StringComponent;
+use Cake\Database\Expression\QueryExpression;
+use App\Lib\Error\Exception\InvalidParameterException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -303,8 +305,8 @@ class OrderDetailsController extends AdminAppController
 
             $taxRates = [];
 
-            $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-            $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+            $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+            $formattedDepositTaxRate = Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate);
 
             foreach($preparedOrderDetails as $customerId => $orderDetails) {
 
@@ -316,12 +318,12 @@ class OrderDetailsController extends AdminAppController
                 ];
 
                 foreach($orderDetails as $orderDetail) {
-                    if (!isset($taxRates[$customerId][$depositVatRate])) {
-                        $taxRates[$customerId][$depositVatRate] = $defaultArray;
+                    if (!isset($taxRates[$customerId][$formattedDepositTaxRate])) {
+                        $taxRates[$customerId][$formattedDepositTaxRate] = $defaultArray;
                     }
-                    $taxRates[$customerId][$depositVatRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
-                    $taxRates[$customerId][$depositVatRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
-                    $taxRates[$customerId][$depositVatRate]['sum_price_incl'] += $orderDetail->deposit;
+                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
+                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_price_incl'] += $orderDetail->deposit;
                 }
 
                 $taxRates[$customerId] = $this->OrderDetail->clearZeroArray($taxRates[$customerId]);
@@ -369,7 +371,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         if (empty($this->getRequest()->getData())) {
-            $orderDetail->order_detail_purchase_price->total_price_tax_excl = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
+            $orderDetail->order_detail_purchase_price->total_price_tax_excl = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
             $this->set('orderDetail', $orderDetail);
             return;
         }
@@ -393,11 +395,11 @@ class OrderDetailsController extends AdminAppController
             $this->Product = $this->getTableLocator()->get('Products');
 
             $grossPrice = $this->Product->getGrossPrice(
-                round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2),
+                round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2),
                 $orderDetail->order_detail_purchase_price->tax_rate,
             );
 
-            $unitPriceExcl = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2) / $orderDetail->product_amount;
+            $unitPriceExcl = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2) / $orderDetail->product_amount;
             $unitTaxAmount = $this->Product->getUnitTax(
                 $grossPrice,
                 $unitPriceExcl,
@@ -514,8 +516,8 @@ class OrderDetailsController extends AdminAppController
         foreach($orderDetails as $orderDetail) {
             $orderDetails[$i]->purchase_price_ok = false;
             if (!empty($orderDetail->order_detail_purchase_price)) {
-                $roundedPurchasePrice = round($orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
-                $roundedSellingPrice = round($orderDetail->total_price_tax_excl, 2);
+                $roundedPurchasePrice = round((float) $orderDetail->order_detail_purchase_price->total_price_tax_excl, 2);
+                $roundedSellingPrice = round((float) $orderDetail->total_price_tax_excl, 2);
                 $roundedProfit = round($roundedSellingPrice - $roundedPurchasePrice, 2);
                 if ($roundedPurchasePrice >= 0) {
                     $orderDetails[$i]->purchase_price_ok = true;
@@ -572,7 +574,7 @@ class OrderDetailsController extends AdminAppController
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $pickupDay[0] = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
                 } else {
-                    $pickupDay[0] = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+                    $pickupDay[0] = DeliveryRhythm::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
                 }
             }
         }
@@ -813,10 +815,7 @@ class OrderDetailsController extends AdminAppController
                 foreach ($orderDetails as $orderDetail) {
                     $orderDetail->quantityInUnitsNotYetChanged = false;
                     if (!empty($orderDetail->order_detail_unit)) {
-                        // quantity comparison can be removed in v4. it was replaced by mark_as_saved in v3.1. default value needs to be set to true then
-                        if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
-                            $orderDetail->quantityInUnitsNotYetChanged = true;
-                        }
+                        $orderDetail->quantityInUnitsNotYetChanged = true;
                         if ($orderDetail->order_detail_unit->mark_as_saved) {
                             $orderDetail->quantityInUnitsNotYetChanged = false;
                         }
@@ -866,6 +865,7 @@ class OrderDetailsController extends AdminAppController
         $customerId = (int) $this->getRequest()->getData('customerId');
         $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
         $amount = (int) $this->getRequest()->getData('amount');
+        $sendEmailToCustomers = (bool) $this->getRequest()->getData('sendEmailToCustomers');
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
@@ -997,7 +997,7 @@ class OrderDetailsController extends AdminAppController
 
         $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
 
-        if (Configure::read('app.sendEmailWhenOrderDetailCustomerChanged')) {
+        if ($sendEmailToCustomers) {
             $recipients = [
                 [
                     'email' => $newCustomer->email,
@@ -1050,7 +1050,6 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
-        $doNotChangePrice = $this->getRequest()->getData('doNotChangePrice');
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
         if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
@@ -1083,30 +1082,28 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
 
-        if (!$doNotChangePrice) {
-            $newProductPrice = round($oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
-            if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
-                $toleranceFactor = 100;
-                $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
-                if ($oldToNewQuantityRelation < 1 / $toleranceFactor || $oldToNewQuantityRelation > $toleranceFactor) {
-                    $message = __d('admin', 'The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
-                        '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($newProductPrice) . '</b>',
-                        '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name . '</b>',
-                    ]);
-                    $this->set([
-                        'status' => 0,
-                        'msg' => $message,
-                    ]);
-                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                    return;
-                }
+        $newProductPrice = round((float) $oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+        if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
+            $toleranceFactor = 100;
+            $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
+            if ($oldToNewQuantityRelation < 1 / $toleranceFactor || $oldToNewQuantityRelation > $toleranceFactor) {
+                $message = __d('admin', 'The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
+                    '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($newProductPrice) . '</b>',
+                    '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name . '</b>',
+                ]);
+                $this->set([
+                    'status' => 0,
+                    'msg' => $message,
+                ]);
+                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                return;
             }
-            if (!empty($oldOrderDetail->order_detail_purchase_price)) {
-                $productPurchasePrice = round($oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
-                $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
-            }
-            $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
         }
+        if (!empty($oldOrderDetail->order_detail_purchase_price)) {
+            $productPurchasePrice = round((float) $oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+            $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
+        }
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
         $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
@@ -1119,7 +1116,7 @@ class OrderDetailsController extends AdminAppController
         $quantityWasChanged = $oldOrderDetail->order_detail_unit->product_quantity_in_units != $productQuantity;
 
         // send email to customer if price was changed
-        if (!$doNotChangePrice && $quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityChanged')) {
+        if ($quantityWasChanged && Configure::read('app.sendEmailWhenOrderDetailQuantityChanged')) {
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
@@ -1131,6 +1128,7 @@ class OrderDetailsController extends AdminAppController
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth
             ]);
+            $email->addToQueue();
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
@@ -1142,10 +1140,14 @@ class OrderDetailsController extends AdminAppController
                     '<b>' . $oldOrderDetail->customer->name . '</b>',
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
                 ]);
-                $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+                $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+                $orderDetailForManufacturerEmail = $oldOrderDetail;
+                $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
+                $email->setViewVars([
+                    'oldOrderDetail' => $orderDetailForManufacturerEmail,
+                ]);
+                $email->addToQueue();
             }
-
-            $email->addToQueue();
 
             $message .= $emailMessage;
 
@@ -1237,6 +1239,7 @@ class OrderDetailsController extends AdminAppController
             'appAuth' => $this->AppAuth,
             'editAmountReason' => $editAmountReason
         ]);
+        $email->addToQueue();
 
         $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
@@ -1248,10 +1251,14 @@ class OrderDetailsController extends AdminAppController
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
-            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            $orderDetailForManufacturerEmail = $oldOrderDetail;
+            $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
+            $email->setViewVars([
+                'oldOrderDetail' => $orderDetailForManufacturerEmail,
+            ]);
+            $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            $email->addToQueue();
         }
-
-        $email->addToQueue();
 
         $message .= $emailMessage;
 
@@ -1393,12 +1400,14 @@ class OrderDetailsController extends AdminAppController
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            $orderDetailForManufacturerEmail = $oldOrderDetail;
+            $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
             $email->setTo($oldOrderDetail->product->manufacturer->address_manufacturer->email)
             ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
-                'oldOrderDetail' => $oldOrderDetail,
+                'oldOrderDetail' => $orderDetailForManufacturerEmail,
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth,
                 'editPriceReason' => $editPriceReason,
@@ -1599,6 +1608,7 @@ class OrderDetailsController extends AdminAppController
             'appAuth' => $this->AppAuth,
             'orderDetailFeedback' => $orderDetailFeedback,
         ]);
+        $email->customerAnonymizationForManufacturers = false;
 
         $email->addToQueue();
 
@@ -1805,6 +1815,7 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ]);
+            $email->addToQueue();
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
@@ -1816,10 +1827,14 @@ class OrderDetailsController extends AdminAppController
                     '<b>' . $orderDetail->customer->name . '</b>',
                     '<b>' . $orderDetail->product->manufacturer->name . '</b>'
                 ]);
-                $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
+                $email->setTo($orderDetail->product->manufacturer->address_manufacturer->email);
+                $orderDetailForManufacturerEmail = $orderDetail;
+                $orderDetailForManufacturerEmail->customer = $orderDetail->product->manufacturer->address_manufacturer;
+                $email->setViewVars([
+                    'orderDetail' => $orderDetailForManufacturerEmail,
+                ]);
+                $email->addToQueue();
             }
-
-            $email->addToQueue();
 
             $message .= $emailMessage;
 
@@ -1965,7 +1980,7 @@ class OrderDetailsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
 
         $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/order_details/" . $orderDetailId,
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/order_details/" . $orderDetailId,
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/order_details/" . $orderDetailId
         ];
 

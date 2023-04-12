@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Controller;
 
@@ -13,6 +14,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -100,15 +102,12 @@ class ProductsController extends AdminAppController
     public function detectMissingProductImages()
     {
         $products = $this->Product->find('all', [
-            'conditions' => [
-                'Products.active' => APP_ON,
-            ],
             'contain' => [
                 'Manufacturers',
                 'Images',
             ],
             'order' => [
-                'Products.modified' => 'DESC',
+                'Products.active' => 'DESC',
                 'Images.id_image' => 'ASC',
             ],
         ]);
@@ -455,6 +454,8 @@ class ProductsController extends AdminAppController
             );
         } else {
             $image = $product->image;
+            // cache needs to be cleared manually because neither image nor product record is changed
+            $this->Product->clearProductCache();
         }
 
         // not (yet) implemented for attributes, only for productIds!
@@ -532,7 +533,7 @@ class ProductsController extends AdminAppController
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
-            $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+            $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         } else {
             try {
@@ -558,7 +559,7 @@ class ProductsController extends AdminAppController
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
-            $this->ActionLog->customSave('product_attribute_changed', $this->AppAuth->getUserId(), $productAttributeId, 'products', $actionLogMessage);
+            $this->ActionLog->customSave('product_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
             $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeId);
         }
         $this->Flash->success($actionLogMessage);
@@ -715,7 +716,7 @@ class ProductsController extends AdminAppController
 
         $product2update = [
             'delivery_rhythm_count' => $deliveryRhythmCount,
-            'delivery_rhythm_type' => $deliveryRhythmType
+            'delivery_rhythm_type' => $deliveryRhythmType,
         ];
 
         $isFirstDeliveryDayMandatory = in_array($deliveryRhythmTypeCombined, ['0-individual', '2-week', '4-week']);
@@ -729,7 +730,7 @@ class ProductsController extends AdminAppController
         $product2update['delivery_rhythm_order_possible_until'] = '';
         $product2update['delivery_rhythm_send_order_list_day'] = '';
         if ($deliveryRhythmSendOrderListWeekday == '') {
-            $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, Configure::read('app.timeHelper')->getSendOrderListsWeekday());
+            $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, DeliveryRhythm::getSendOrderListsWeekday());
         }
         $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $deliveryRhythmSendOrderListWeekday);
 
@@ -765,7 +766,7 @@ class ProductsController extends AdminAppController
                     $additionalMessages[] = __d('admin', 'Order_list_is_not_sent');
                 }
             } else {
-                if ($product2update['delivery_rhythm_send_order_list_weekday'] != Configure::read('app.timeHelper')->getSendOrderListsWeekday()) {
+                if ($product2update['delivery_rhythm_send_order_list_weekday'] != DeliveryRhythm::getSendOrderListsWeekday()) {
                     $additionalMessages[] =  __d('admin', 'Last_order_weekday') . ': <b>' . Configure::read('app.timeHelper')->getWeekdayName(
                         $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
                         . '</b>';
@@ -1726,6 +1727,53 @@ class ProductsController extends AdminAppController
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
+    }
+
+    public function changeStatusBulk()
+    {
+
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+
+        $productIds = $this->request->getData('productIds');
+        $status = (int) $this->request->getData('status');
+
+        $data = [];
+        foreach($productIds as $productId) {
+            $productId = (int) $productId;
+            $data[] = [$productId => $status];
+        }
+
+        try {
+
+            $this->Product->changeStatus($data);
+            $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deactivated.', [
+                count($productIds),
+            ]);
+            $actionLogType = 'product_set_inactive';
+            if ($status) {
+                $actionLogMessage = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_activated.', [
+                    count($productIds),
+                ]);
+                $actionLogType = 'product_set_active';
+            }
+            $this->Flash->success($actionLogMessage);
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage . '<br />Ids: ' . join(',', $productIds));
+
+            $this->set([
+                'status' => 1,
+                'msg' => __d('admin', 'Saving_successful.'),
+            ]);
+
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
+        }
+
     }
 
     public function changeStatus($productId, $status)

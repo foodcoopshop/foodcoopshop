@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -22,17 +24,18 @@ if ($hideButton) {
 
     <?php
     $availableQuantity = $stockAvailableQuantity;
-    $disabledClass = '';
+    $classes = ['btn', 'btn-cart', 'btn-outline-light'];
 
     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
     if (((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
-        || $deliveryBreakEnabled) {
+        || $deliveryBreakManufacturerEnabled) {
 
-        $disabledClass = 'disabled ';
+        $classes[] = 'disabled';
 
-        if ($deliveryBreakEnabled) {
+        if ($deliveryBreakManufacturerEnabled) {
+            $classes[] = 'btn-danger';
             $cartButtonIcon = 'fa-times';
             $cartButtonLabel = __('Delivery_break') . '!';
         }
@@ -40,7 +43,7 @@ if ($hideButton) {
     }
     ?>
 
-    <a id="btn-cart-<?php echo $productId; ?>" class="<?php echo $disabledClass; ?>btn btn-outline-light btn-cart" href="javascript:void(0);">
+    <a id="btn-cart-<?php echo $productId; ?>" class="<?php echo join(' ', $classes); ?>" href="javascript:void(0);">
         <i class="fas fa-fw fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
     </a>
 

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Assets;
 
 use Cake\Core\Configure;
@@ -24,12 +26,14 @@ class AssetsProvider
     public static function getCssFilesBase()
     {
         return [
+            'bootstrap/dist/css/bootstrap.css',
+            'theme-color.css',
             'reset.css',
             'jquery-ui/dist/themes/smoothness/jquery-ui.css',
             'table.css',
             'bootstrap-select/dist/css/bootstrap-select.css',
-            'bootstrap/dist/css/bootstrap.css',
             '@fortawesome/fontawesome-free/css/all.css',
+            'dark-mode.css',
             'global.css',
             'modal.css',
             'fonts.css',
@@ -60,6 +64,7 @@ class AssetsProvider
             'jquery-backstretch/jquery.backstretch.js',
             'tooltipster/dist/js/tooltipster.bundle.js',
             'jquery.scrollto/jquery.scrollTo.js',
+            'background-image.js',
             'modal/modal.js',
             'modal/modal-logout.js',
             'modal/modal-order-for-different-customer-cancel.js',
@@ -68,6 +73,8 @@ class AssetsProvider
             'modal/modal-text.js',
             'modal/modal-load-last-order-details.js',
             'mobile.js',
+            'mathjs/lib/browser/math.js',
+            'calculator.js',
         ]);
 
         return $result;

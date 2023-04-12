@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * - this file contains the specific configuration for your foodcoop
  * - configurations in config.php can be overriden in this file
@@ -67,6 +69,11 @@ return [
         ],
     ],
 
+    'App' => [
+        //* BE AWARE: NO TRAILING SLASH!
+        'fullBaseUrl' => false,
+    ],
+
     'app' => [
 
         'discourseSsoEnabled' => false,
@@ -75,11 +82,6 @@ return [
          * A random string used for Discourse SSO
          */
         'discourseSsoSecret' => '',
-
-        /**
-         * your host's name, eg. http://www.yourfoodcoop.com
-         */
-        'cakeServerName' => '',
 
         /**
          * cronjob needs to be activated / deactivated too if you change emailOrderReminderEnabled

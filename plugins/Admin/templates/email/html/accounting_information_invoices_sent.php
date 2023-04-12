@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -34,14 +36,14 @@ use Cake\Core\Configure;
             <p>
                 <?php echo __d('admin', 'Here_you_find_the_overview_for_making_the_transfers:'); ?><br />
                 <?php $formattedCurrentDay = $this->MyTime->formatToDateShort($cronjobRunDay); ?>
-                <?php $link = Configure::read('app.cakeServerName') . $this->Slug->getActionLogsList() . '?types[]=cronjob_send_invoices&dateFrom='.$formattedCurrentDay.'&dateTo='.$formattedCurrentDay; ?>
+                <?php $link = Configure::read('App.fullBaseUrl') . $this->Slug->getActionLogsList() . '?types[]=cronjob_send_invoices&dateFrom='.$formattedCurrentDay.'&dateTo='.$formattedCurrentDay; ?>
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p>
                     <?php echo __d('admin', 'This_is_a_great_opportunity_to_check_the_credit_uploads_link_below.')?><br />
-                    <?php $link = Configure::read('app.cakeServerName').$this->Slug->getReport('product'); ?>
+                    <?php $link = Configure::read('App.fullBaseUrl').$this->Slug->getReport('product'); ?>
                     <a href="<?php echo $link; ?>"><?php echo $link; ?></a> <?php echo __d('admin', '(Link_only_works_for_superadmins).'); ?>
                 </p>
             <?php } ?>

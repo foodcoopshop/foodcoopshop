@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-18 17:24+0200\n"
-"PO-Revision-Date: 2022-08-18 18:21+0200\n"
+"POT-Creation-Date: 2023-02-13 21:01+0100\n"
+"PO-Revision-Date: 2023-03-06 22:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -83,6 +83,15 @@ msgstr "Send test email"
 
 msgid "Test_email"
 msgstr "Test email"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
+
+msgid "Edit_cronjob"
+msgstr "Edit cronjob"
+
+msgid "The_cronjob_{0}_has_been_changed."
+msgstr "The cronjob {0} has been changed."
 
 msgid "all_members"
 msgstr "all members"
@@ -251,6 +260,15 @@ msgstr "Order list"
 
 msgid "member"
 msgstr "member"
+
+msgid "Order_list_with_clear_names"
+msgstr "Order list with member names"
+
+msgid "Anonymized_order_list"
+msgstr "Anonymized order list"
+
+msgid "Show_order_list"
+msgstr "Show order list"
 
 msgid "Order_lists"
 msgstr "Order lists"
@@ -639,6 +657,12 @@ msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
 msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
 
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
+msgstr "{0,plural,=1{One product was} other{# products were}} deactivated."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
+msgstr "{0,plural,=1{One product was} other{# products were}} activated."
+
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr "The product {0} of manufacturer {1} has been deactivated."
 
@@ -680,6 +704,12 @@ msgstr "Turnover and profit statistics"
 
 msgid "Turnover_statistics"
 msgstr "Turnover statistics"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Last_{0}_months"
+msgstr "Last {0} months"
 
 msgid "December"
 msgstr "December"
@@ -915,12 +945,6 @@ msgstr "Version of FoodCoopShop"
 msgid "Last_executed_migration"
 msgstr "Last executed migration"
 
-msgid "Software_update_version"
-msgstr "Software update / Version"
-
-msgid "Please_find_more_information_in_the_changelog_{0}."
-msgstr "Please find more information in the {0}."
-
 msgid "activated"
 msgstr "activated"
 
@@ -942,6 +966,33 @@ msgstr "Default image for manufacturer, width:"
 msgid "Default_image_for_blog_post,_width:"
 msgstr "Default image for blog post, width:"
 
+msgid "Website_administration"
+msgstr "Website administration"
+
+msgid "Configurations"
+msgstr "Settings"
+
+msgid "Time_interval"
+msgstr "Interval"
+
+msgid "Day_of_month"
+msgstr "Day of month"
+
+msgid "Please_select..."
+msgstr "Please select..."
+
+msgid "Weekday"
+msgstr "Weekday"
+
+msgid "Not_before_time"
+msgstr "Time"
+
+msgid "Cronjob_is_called_up_to_10_min_after_the_given_time."
+msgstr "Cronjob is called up to 10 min after the given time."
+
+msgid "Last_run"
+msgstr "Last run"
+
 msgid "Old_password"
 msgstr "Old password"
 
@@ -953,9 +1004,6 @@ msgstr "min 8 characters"
 
 msgid "New_password_again"
 msgstr "New password (again)"
-
-msgid "Website_administration"
-msgstr "Website administration"
 
 msgid "Financial_reports"
 msgstr "Financial reports"
@@ -1088,12 +1136,6 @@ msgstr "Group"
 
 msgid "Status"
 msgstr "Status"
-
-msgid "Ordered_products"
-msgstr "Ordered products"
-
-msgid "Reminder"
-msgstr "Reminder"
 
 msgid "Feedback"
 msgstr "Feedback"
@@ -1332,12 +1374,6 @@ msgstr "Order list by product"
 msgid "Order_list_by_member"
 msgstr "Order list by member"
 
-msgid "Show_list_(grouped_by_product)"
-msgstr "Show list (grouped by product)"
-
-msgid "Show_list_(grouped_by_member)"
-msgstr "Show list (grouped by member)"
-
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
 
@@ -1464,11 +1500,8 @@ msgstr "Delivery break"
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "How do I use the function \"delivery break\"?"
 
-msgid "Please_select..."
-msgstr "Please select..."
-
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
-msgstr "Manufacturer provile and products are only visible for signed in members."
+msgstr "Manufacturer profile and products are only visible for signed in members."
 
 msgid "Order_lists_by_email"
 msgstr "Order lists by email"
@@ -1575,6 +1608,12 @@ msgstr "Should stock products be included in order lists?"
 msgid "Chose_member"
 msgstr "Chose member..."
 
+msgid "Anonymize_customers?"
+msgstr "Anonymize members?"
+
+msgid "Customer_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer."
+msgstr "Anonymize member data like firstname, lastname, email for this manufacturer globally."
+
 msgid "Pickup_days"
 msgstr "Pickup days"
 
@@ -1598,6 +1637,15 @@ msgstr "Show deposit account"
 
 msgid "Edit_manufacturer_settings"
 msgstr "Edit manufacturer settings"
+
+msgid "grouped_by_product"
+msgstr "group by product"
+
+msgid "Anonymized_list"
+msgstr "Anonymized list"
+
+msgid "grouped_by_customer"
+msgstr "group by member"
 
 msgid "Test_order_list"
 msgstr "Test order list"
@@ -1806,6 +1854,9 @@ msgstr "New?"
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
 
+msgid "Selected_products"
+msgstr "Selected products"
+
 msgid "Storage_location"
 msgstr "Storage location"
 
@@ -1845,8 +1896,8 @@ msgstr "Net purchase price"
 msgid "Gross_turnover"
 msgstr "Gross turnover"
 
-msgid "Net_turnover"
-msgstr "Net turnover"
+msgid "Net_turnover_selling_price"
+msgstr "Net turnover (SP)"
 
 msgid "total"
 msgstr "total"
@@ -1935,9 +1986,6 @@ msgstr "IBAN"
 msgid "BIC"
 msgstr "BIC"
 
-msgid "Configurations"
-msgstr "Settings"
-
 msgid "My_products"
 msgstr "My products"
 
@@ -1985,6 +2033,9 @@ msgstr "Give the manufacturer feedback for the product"
 
 msgid "Click_to_change_name"
 msgstr "Click to change name"
+
+msgid "Ordered_products"
+msgstr "Ordered products"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
@@ -2055,14 +2106,17 @@ msgstr "Thank you very much for delivering your products to us!"
 msgid "Customer_ID"
 msgstr "Customer-ID"
 
-msgid "Calculate_selling_price_with_surcharge_for_selected_products"
-msgstr "Calculate selling price with surcharge for selected products"
+msgid "Calculate_selling_price"
+msgstr "Calculate selling price"
 
-msgid "Delete_selected_products"
-msgstr "Delete selected products"
+msgid "Delete"
+msgstr "Delete"
 
-msgid "Edit_delivery_rhythm_for_selected_products"
-msgstr "Edit delivery rhythm for selected products"
+msgid "Edit_delivery_rhythm"
+msgstr "Edit delivery rhythm"
+
+msgid "Edit_status"
+msgstr "Edit status"
 
 msgid "Generate_product_cards"
 msgstr "Generate product cards"
@@ -2301,6 +2355,9 @@ msgstr "Please find your invoice attached."
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "Thank you for your purchase!"
 
+msgid "Pay_this_invoice_with_paypal"
+msgstr "Pay this invoice with paypal"
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "this invoice contains all products that have been delivered in {0}."
 
@@ -2367,14 +2424,53 @@ msgstr "The total sum to the right (price incl.) will be transferred to your ban
 msgid "Detail_view"
 msgstr "Detail view"
 
-msgid "Total"
-msgstr "Total"
-
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Net_turnover"
+#~ msgstr "Net turnover"
+
+#~ msgid "List_with_clear_names"
+#~ msgstr "List with clear names"
+
+#, fuzzy
+#~ msgid "Anonymize_members"
+#~ msgstr "Anonymize members?"
+
+#~ msgid "Show_list_(grouped_by_product)"
+#~ msgstr "Show list (grouped by product)"
+
+#~ msgid "Show_list_(grouped_by_member)"
+#~ msgstr "Show list (grouped by member)"
+
+#, fuzzy
+#~ msgid "Show_list_(anonymized)"
+#~ msgstr "Show list (grouped by member)"
+
+#~ msgid "Delete_selected_products"
+#~ msgstr "Delete selected products"
+
+#~ msgid "Edit_delivery_rhythm_for_selected_products"
+#~ msgstr "Edit delivery rhythm for selected products"
+
+#~ msgid "Edit_status_for_selected_products"
+#~ msgstr "Edit status for selected products"
+
+#~ msgid "Software_update_version"
+#~ msgstr "Software update / Version"
+
+#~ msgid "Please_find_more_information_in_the_changelog_{0}."
+#~ msgstr "Please find more information in the {0}."
+
+#~ msgid "Reminder"
+#~ msgstr "Reminder"
+
+#, fuzzy
+#~ msgid "Please_chose"
+#~ msgstr "Please select..."
 
 #~ msgid "Please_enter_why_pickup_day_is_changed."
 #~ msgstr "Please enter why the pickup day is changed."
@@ -2457,9 +2553,6 @@ msgstr "ProductID"
 
 #~ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 #~ msgstr "0 means: global limit of {0} is used."
-
-#~ msgid "Delete"
-#~ msgstr "Delete"
 
 #~ msgid "Additional_in_{0}"
 #~ msgstr "Additional in {0}"

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -41,7 +43,7 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->element('reportNavTabs', [
+echo $this->element('navTabs/reportNavTabs', [
     'key' => 'profit',
     'dateFrom' => $dateFrom,
     'dateTo' => $dateTo,

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,13 +21,13 @@ $pdf->SetTopMargin(15);
 $pdf->AddPage();
 
 $i = 0;
-$pdf->table = '<table border="1" cellspacing="0" cellpadding="4">';
+$pdf->table = '<table border="0" cellspacing="0" cellpadding="4">';
 foreach($products as $product) {
     $pairRecord = $i % 2 == 0;
     if ($pairRecord) {
         $pdf->table .= '<tr>';
     }
-    $pdf->table .= '<td style="width:375px;">'; // roughly 85,60mm x 53,98mm
+    $pdf->table .= '<td style="width:375px;border:1px solid #E6E6E3;">'; // roughly 85,60mm x 53,98mm
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0">';
 
     // START ROW logo and name block
@@ -40,6 +42,7 @@ foreach($products as $product) {
 
     // START ROW barcode and product image
     $pdf->table .= '<tr>';
+    $pdf->table .= '<td style="width:5px;"></td>'; //spacer left of barcode
     $pdf->table .= '<td style="width:255px;">';
     $barcodeObject = new TCPDFBarcode($product->system_bar_code, 'C39');
     //https://stackoverflow.com/a/54520065/2100184
@@ -50,7 +53,7 @@ foreach($products as $product) {
     $pdf->table .= '</td>';
     $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
     // move user image to bottom
-    $pdf->table .= '<td style="width:100px;" align="right">';
+    $pdf->table .= '<td style="width:90px;" align="right">';
 
     if ($product->image) {
         $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'thickbox');

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -31,6 +33,13 @@ $this->element('addScript', [
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
     </div>
 </div>
+
+<?php
+    echo $this->element('navTabs/configurationNavTabs', [
+        'key' => 'configurations',
+    ]);
+?>
+
 
 <div class="sc"></div>
 
@@ -100,10 +109,10 @@ switch ($configuration->type) {
             'type' => 'select',
             'multiple' => true,
             'data-val' => $value,
+            'data-live-search' => true,
             'label' => $label,
             'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name, $appAuth),
             'escape' => false,
-            'empty' => $this->Configuration->getConfigurationDropdownEmpty($configuration->name),
         ]);
         break;
 }

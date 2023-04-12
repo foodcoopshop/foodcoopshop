@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
+use Cake\Datasource\FactoryLocator;
+use Cake\Database\Expression\QueryExpression;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +26,10 @@ use Cake\Validation\Validator;
 class OrderDetailsTable extends AppTable
 {
 
+    use ProductCacheClearAfterSaveAndDeleteTrait;
+
+    private $Manufacturer;
+    
     public function initialize(array $config): void
     {
         $this->setTable('order_detail');
@@ -110,7 +117,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getLastOrderDate($customerId)
+    public function getLastPickupDay($customerId)
     {
         $query = $this->find('all', [
             'conditions' => [
@@ -121,6 +128,89 @@ class OrderDetailsTable extends AppTable
             ]
         ])->first();
         return $query;
+    }
+
+    private function getLastOrFirstOrderYear(string $manufacturerId, string $sort)
+    {
+        $conditions = [];
+        if ($manufacturerId != 'all') {
+            $conditions['Products.id_manufacturer'] = $manufacturerId;
+        }
+        $orderDetail = $this->find('all', [
+            'conditions' => $conditions,
+            'order' => [
+                'OrderDetails.pickup_day' => $sort,
+            ],
+            'contain' => [
+                'Products',
+            ],
+        ])->first();
+        return $orderDetail;
+    }
+
+    public function getFirstOrderYear(string $manufacturerId = 'all'): int|false
+    {
+        $orderDetail = $this->getLastOrFirstOrderYear($manufacturerId, 'ASC');
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return (int) $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year'));
+    }
+
+    public function getLastOrderYear(string $manufacturerId = 'all'): int|false
+    {
+        $orderDetail = $this->getLastOrFirstOrderYear($manufacturerId, 'DESC');
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return (int) $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year'));
+    }
+
+    public function getFirstDayOfLastOrderMonth(string $manufacturerId = 'all'): string|false
+    {
+        $orderDetail = $this->getLastOrFirstOrderYear($manufacturerId, 'DESC');
+        if (empty($orderDetail)) {
+            return false;
+        }
+        return $orderDetail->pickup_day->i18nFormat('Y-MM') . '-01';
+    }
+
+    public function addLastMonthsCondition($query, $firstDayOfLastOrderMonth, $lastMonths)
+    {
+        $lastMonths--;
+        $query->where(function (QueryExpression $exp) use ($firstDayOfLastOrderMonth, $lastMonths) {
+            return $exp->add('OrderDetails.pickup_day >= DATE_SUB("' . $firstDayOfLastOrderMonth . '", INTERVAL ' . $lastMonths . ' MONTH)');
+        });
+        return $query;
+    }
+
+    public function getTotalOrderDetails(string $pickupDay, int $productId, int $attributeId)
+    {
+        
+        if ($pickupDay == 'delivery-rhythm-triggered-delivery-break') {
+            return null;
+        }
+
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.pickup_day' => $pickupDay,
+                'OrderDetails.product_id' => $productId,
+                'OrderDetails.product_attribute_id' => $attributeId,
+            ],
+        ]);
+        $query->select([
+            'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
+        ]);
+        $query->group([
+            'OrderDetails.pickup_day',
+            'OrderDetails.product_id',
+            'OrderDetails.product_attribute_id',
+        ]);
+        $query = $query->toArray();
+        if (count($query) > 0) {
+            return $query[0]->SumAmount;
+        }
+        return null;
     }
 
     public function getOrderDetailsForOrderListPreview($pickupDay)
@@ -227,18 +317,17 @@ class OrderDetailsTable extends AppTable
     }
 
 
-    public function getDepositTax($depositGross, $amount)
+    public function getDepositTax($depositGross, $amount, $taxRate)
     {
-        $vat = 0.2;
         $depositGrossPerPiece = round($depositGross / $amount, 2);
-        $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $vat), 2);
+        $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $taxRate / 100), 2);
         $depositTax = $depositTax * $amount;
         return $depositTax;
     }
 
-    public function getDepositNet($depositGross, $amount)
+    public function getDepositNet($depositGross, $amount, $taxRate)
     {
-        $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount);
+        $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount, $taxRate);
         return $depositNet;
     }
 
@@ -251,21 +340,22 @@ class OrderDetailsTable extends AppTable
         $foundOrders = 0;
         $result = [];
 
-        $i = 0;
+        $i = 1;
         while($foundOrders < $ordersToLoad) {
 
-            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
-            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythm::getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
-            // stop trying to search for valid orders if year is one year ago
-            if (date('Y', $dateFrom) == date('Y') - 1) {
+            // stop trying to search for valid orders if year is two years ago
+            // one year is not enough for usage in first weeks of january
+            if (date('Y', $dateFrom) == date('Y') - 2) {
                 break;
             }
 
             $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
 
             if (count($orderDetails) > 0) {
-                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
+                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', DeliveryRhythm::getDeliveryDay($dateTo)));
                 $result[$deliveryDay] = __('Pickup_day') . ' ' . $deliveryDay . ' - ' . __('{0,plural,=1{1_product} other{#_products}}', [count($orderDetails)]);
                 $foundOrders++;
             }
@@ -405,17 +495,11 @@ class OrderDetailsTable extends AppTable
         ];
 
         $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
-
-        switch($groupBy) {
-            case 'month':
-                $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ';
-                break;
-            case 'year':
-                $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y\') as Year ';
-                break;
-            default:
-                break;
-        }
+        $sql .= match($groupBy) {
+            'month' => ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ',
+            'year'  => ', DATE_FORMAT(od.pickup_day, \'%Y\') as Year ',
+            default => '',
+        };
 
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
@@ -428,19 +512,11 @@ class OrderDetailsTable extends AppTable
 
         $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
 
-        switch($groupBy) {
-            case 'month':
-                $sql .= 'GROUP BY monthAndYear ';
-                $sql .= 'ORDER BY monthAndYear DESC;';
-                break;
-            case 'year':
-                $sql .= 'GROUP BY Year ';
-                $sql .= 'ORDER BY Year DESC;';
-                break;
-            default:
-                $sql .= 'ORDER BY od.pickup_day DESC;';
-                break;
-        }
+        $sql .= match($groupBy) {
+            'month' => 'GROUP BY monthAndYear ORDER BY monthAndYear DESC;',
+            'year'  => 'GROUP BY Year ORDER BY Year DESC;',
+            default => 'ORDER BY od.pickup_day DESC;',
+        };
 
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
@@ -762,4 +838,5 @@ class OrderDetailsTable extends AppTable
 
         return $odParams;
     }
+
 }

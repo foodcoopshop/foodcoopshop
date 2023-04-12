@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
@@ -53,7 +55,7 @@ class ConfigurationsController extends AdminAppController
 
         if (in_array($configuration->type, ['textarea_big'])) {
             $_SESSION['ELFINDER'] = [
-                'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
+                'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/configurations/",
                 'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             ];
         }
@@ -175,7 +177,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('versionFoodCoopShop', $this->Configuration->getVersion());
 
         try {
-            $query = 'SELECT * FROM phinxlog ORDER by version DESC LIMIT 1;';
+            $query = 'SELECT * FROM phinxlog WHERE start_time IS NOT NULL ORDER by version DESC LIMIT 1;';
             $lastMigration = $this->Configuration->getConnection()->query($query)->fetch('assoc');
             $this->set('lastMigration', $lastMigration);
         } catch (\PDOException  $e) {

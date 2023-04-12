@@ -66,13 +66,16 @@ table.list tr.sub-row td {
 }
 table.list td.not-available,
 table.list td.not-available i.sold-out-limit-for-dialog i {
-    background-color: red;
+    background-color: var(--not-ok-red);
     color: white;
+}
+table.list td.image {
+  background-color: #fff;
 }
 table.list td.negative,
 b.negative,
 span.negative {
-    color: red ! important;
+    color: var(--not-ok-red) ! important;
 }
 table.list tr:hover td.negative,
 tr:hover b.negative {
@@ -83,6 +86,12 @@ table.list td.slim {
 }
 table.list th {
     font-weight: 600;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 44px; /* overriden in admin.initStickyTableHeader */
+    z-index: 2;
+    background-color: #ebebeb;
+    box-shadow: inset 0 0px 0 #dfdfdf, inset 0 -1px 0 #dfdfdf; /* borders do not work on sticky elements */
 }
 table.list th,
 table.list td {
@@ -95,10 +104,6 @@ table.list th,
 table.list tr.fake-th td {
   padding: 5px 2px;
   word-break: break-word;
-}
-table.list th {
-  background-color: #ebebeb;
-  border-top: 1px solid #dfdfdf;
 }
 table.list th,
 table.list tr.fake-th {
@@ -121,6 +126,7 @@ table.list a.btn {
 .sort a.desc:before {
     font-family: 'Font Awesome 6 Free';
     padding-right: 5px;
+    font-weight: 600;
 }
 .sort a.asc:before {
     content: "\f0aa";

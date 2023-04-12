@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -13,6 +15,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
@@ -22,6 +25,11 @@ use Cake\TestSuite\EmailTrait;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
+
+    protected $ActionLog;
+    public $Cart;
+    protected $CartProductUnit;
+    protected $Invoice;
 
     use AppIntegrationTestTrait;
     use AssertPagesForErrorsTrait;
@@ -192,7 +200,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithDeliveryBreak()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythm::getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
@@ -413,7 +421,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             'headers' => [
                 'X_REQUESTED_WITH' => 'XMLHttpRequest',
                 'ACCEPT' => 'application/json',
-                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service'),
+                'REFERER' => Configure::read('App.fullBaseUrl') . '/' . __('route_self_service'),
             ],
         ]);
     }
@@ -428,7 +436,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ];
         $this->configRequest([
             'headers' => [
-                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service'),
+                'REFERER' => Configure::read('App.fullBaseUrl') . '/' . __('route_self_service'),
             ],
         ]);
         $this->post(

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,24 +21,28 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
 
+    protected $OrderDetail;
+
     public function testEditOrderDetailQuantityNotValid()
     {
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        $this->editOrderDetailQuantity($orderDetailId, -1, 'reason');
+        $this->editOrderDetailQuantity($orderDetailId, -1);
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity()
     {
+
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsSuperadmin();
 
         $cart = $this->preparePricePerUnitOrder();
 
         $newQuantity = 800.584;
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
 
@@ -50,11 +56,13 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
         $this->assertMailSubjectContainsAt(1, 'Gewicht angepasst für "Forelle : Stück": 800,584 g');
         $this->assertMailContainsHtmlAt(1, '800,584 g');
-        $this->assertMailContainsHtmlAt(1, 'Demo Superadmin');
+        $this->assertMailContainsHtmlAt(1, 'Hallo Demo Superadmin');
         $this->assertMailContainsHtmlAt(1, 'Der Grundpreis beträgt 1,50 € / 100 g');
 
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
-        $this->assertMailSentWithAt(1, Configure::read('test.loginEmailMeatManufacturer'), 'cc');
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailMeatManufacturer'));
+        $this->assertMailContainsHtmlAt(2, 'Hallo Demo Fleisch-Hersteller');
+        $this->assertMailContainsHtmlAt(2, 'D.S. - ID 92');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantityPurchasePriceAvailable()
@@ -66,7 +74,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
         $newQuantity = 800.584;
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
 
         $changedOrderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
@@ -92,7 +100,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
         $newQuantity = 700;
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
 
@@ -107,36 +115,13 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailCount(1);
     }
 
-    public function testEditOrderDetailQuantityAsSuperadminDoNotChangePrice()
-    {
-        $this->loginAsSuperadmin();
-
-        $cart = $this->preparePricePerUnitOrder();
-
-        $newQuantity = 800.854;
-        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-
-        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, true);
-
-        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
-
-        $this->assertEquals($changedOrderDetails[0]->total_price_tax_incl, $changedOrderDetails[0]->total_price_tax_incl);
-        $this->assertEquals($changedOrderDetails[0]->total_price_tax_excl, $changedOrderDetails[0]->total_price_tax_excl);
-        $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
-
-        $this->assertEquals($changedOrderDetails[0]->tax_unit_amount, $changedOrderDetails[0]->tax_unit_amount);
-        $this->assertEquals($changedOrderDetails[0]->tax_total_amount, $changedOrderDetails[0]->tax_total_amount);
-
-        $this->assertMailCount(1);
-    }
-
     public function testEditOrderDetailQuantityAsSuperadminEmailDisabledWithConfig()
     {
         Configure::write('app.sendEmailWhenOrderDetailQuantityChanged', false);
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        $this->editOrderDetailQuantity($orderDetailId, 800.854, false);
+        $this->editOrderDetailQuantity($orderDetailId, 800.854);
         $this->assertMailCount(1);
     }
 
@@ -145,9 +130,9 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->loginAsSuperadmin();
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        $this->editOrderDetailQuantity($orderDetailId, 0.7, false);
+        $this->editOrderDetailQuantity($orderDetailId, 0.7);
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>0,01 €</b> für <b>0,7 g</b>. Bitte überprüfe die Einheit.');
-        $this->editOrderDetailQuantity($orderDetailId, 800000, false);
+        $this->editOrderDetailQuantity($orderDetailId, 800000);
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>12.000,00 €</b> für <b>800.000 g</b>. Bitte überprüfe die Einheit.');
     }
 
@@ -155,9 +140,9 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
      * https://github.com/foodcoopshop/foodcoopshop/issues/836
      * fix is not yet implemented
      */
+    /*
     public function testEditOrderDetailQuantityAsSuperadminWithHugeQuantity()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->OrderDetail->deleteAll([]);
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
@@ -167,7 +152,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->finishCart(1, 1, '', null);
         $orderDetailId = 4;
         $newQuantity = 8000;
-        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
 
@@ -180,6 +165,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals(18.32, $changedOrderDetails[0]->tax_total_amount);
 
     }
+    */
 
     private function preparePricePerUnitOrder()
     {
@@ -191,18 +177,16 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         return $cart;
     }
 
-    private function editOrderDetailQuantity($orderDetailId, $productQuantity, $doNotChangePrice)
+    private function editOrderDetailQuantity($orderDetailId, $productQuantity)
     {
         $this->ajaxPost(
             '/admin/order-details/editProductQuantity/',
             [
                 'orderDetailId' => $orderDetailId,
                 'productQuantity' => $productQuantity,
-                'doNotChangePrice' => $doNotChangePrice
             ]
         );
         $this->runAndAssertQueue();
     }
-
 
 }

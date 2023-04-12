@@ -16,6 +16,7 @@ foodcoopshop.SyncBase = {
     activeAjaxRequests : [],
 
     init : function () {
+        foodcoopshop.ColorMode.init();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.ModalLogout.init();
@@ -205,9 +206,6 @@ foodcoopshop.SyncBase = {
                             }
                         }
                         foodcoopshop.Helper.showOrAppendErrorMessage(syncDomain + ': ' + errorMessage);
-                        $('.ui-dialog-content').dialog('close');
-                        $('.ui-dialog .ajax-loader').hide();
-                        $('.ui-dialog button').attr('disabled', false);
                         // TODO better implementation needed - maybe add callback for failures?
                         $('.product-list').removeClass('loader');
                     });

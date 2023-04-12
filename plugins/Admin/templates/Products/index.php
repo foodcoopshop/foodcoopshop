@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -12,6 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Core\Configure;
 
 ?>
@@ -341,12 +344,14 @@ use Cake\Core\Configure;
     echo '</table>';
 
     echo '<div class="bottom-button-container">';
-        echo $this->element('productList/button/deleteSelectedProducts');
-        echo $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
-        echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
-        echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts', [
-            'products' => $products
-        ]);
+        if (!empty($products)) {
+            echo '<div style="float:left;padding:4px;">' . __d('admin', 'Selected_products') . ':</div>';
+            echo $this->element('productList/button/deleteSelectedProducts');
+            echo $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
+            echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
+            echo $this->element('productList/button/editStatusForSelectedProducts');
+            echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
+        }
     echo '</div>';
 
     ?>
@@ -411,7 +416,7 @@ use Cake\Core\Configure;
         echo $this->Form->control('Weekdays', [
             'type' => 'select',
             'label' => '',
-            'options' => $this->Time->getSendOrderListsWeekdayOptions()
+            'options' => $this->Html->getSendOrderListsWeekdayOptions()
         ]);
     echo '</div>';
 

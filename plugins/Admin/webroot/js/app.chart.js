@@ -15,6 +15,14 @@ foodcoopshop.AppChart = {
 
     color: '#cccccc', // default color
 
+    getFontColor: function() {
+        return foodcoopshop.ColorMode.getColorMode() == 'dark' ? '#CDCDCD' : '#333333';
+    },
+
+    getGridColor: function() {
+        return foodcoopshop.ColorMode.getColorMode() == 'dark' ? '#696969' : '#dfdfdf';
+    },
+
     barChartOptions : {
         plugins: {
             legend: {
@@ -57,8 +65,9 @@ foodcoopshop.AppChart = {
                 ticks: {
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
-                    }
-                }
+                    },
+                },
+                grid: {}
             },
         }
     },
@@ -74,7 +83,7 @@ foodcoopshop.AppChart = {
             tooltip: {
                 callbacks: {
                     label: function(ctx) {
-                        return ctx.label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed);
+                        return foodcoopshop.Helper.formatFloatAsCurrency(ctx.parsed);
                     }
                 }
             },
@@ -94,7 +103,7 @@ foodcoopshop.AppChart = {
                     }
                     return '';
                 },
-                color: '#fff',
+                color: '#ccc',
                 labels: {
                     title: {
                         font: {
@@ -123,7 +132,8 @@ foodcoopshop.AppChart = {
             x: {
                 grid: {
                     display: false
-                }
+                },
+                ticks: {}
             },
             y: {
                 beginAtZero: true,
@@ -131,7 +141,8 @@ foodcoopshop.AppChart = {
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
-                }
+                },
+                grid: {}
             }
         }
     },
@@ -153,8 +164,11 @@ foodcoopshop.AppChart = {
                 pointBackgroundColor: this.color,
                 pointRadius: 5
             }],
-
         };
+
+        this.lineChartOptions.scales.x.ticks.color = this.getFontColor();
+        this.lineChartOptions.scales.y.ticks.color = this.getFontColor();
+        this.lineChartOptions.scales.y.grid.color = this.getGridColor();
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
         new Chart(ctx, {
@@ -209,6 +223,10 @@ foodcoopshop.AppChart = {
 
         var lineChartOptions = this.lineChartOptions;
         lineChartOptions.plugins.legend.display = true;
+        lineChartOptions.scales.x.ticks.color = this.getFontColor();
+        lineChartOptions.scales.y.ticks.color = this.getFontColor();
+        lineChartOptions.plugins.legend.labels = {color: this.getFontColor()};
+        lineChartOptions.scales.y.grid.color = this.getGridColor();
 
         var ctx = $('#myLineChart').get(0).getContext('2d');
         new Chart(ctx, {
@@ -263,6 +281,7 @@ foodcoopshop.AppChart = {
                     type: 'line',
                 }
             );
+
             this.barChartOptions.scales.y1 = {
                 type: 'linear',
                 display: true,
@@ -273,11 +292,17 @@ foodcoopshop.AppChart = {
                     }
                 },
                 grid: {
-                  display: false,
+                    display: false,
                 },
             };
+            this.barChartOptions.scales.y1.ticks.color = this.getFontColor();
         }
 
+        this.barChartOptions.scales.x.ticks.color = this.getFontColor();
+        this.barChartOptions.scales.y.ticks.color = this.getFontColor();
+        this.barChartOptions.plugins.legend.labels = {color: this.getFontColor()};
+        this.barChartOptions.scales.y.grid.color = this.getGridColor();
+    
         var ctx = $('#myBarChart').get(0).getContext('2d');
         new Chart(ctx, {
             responsive : true,
@@ -293,7 +318,7 @@ foodcoopshop.AppChart = {
         var pieChartData = {
             datasets: [{
                 data: dataPieChart,
-                borderColor: '#fff',
+                borderColor: '#CDCDCD',
                 backgroundColor: backgroundColorPieChart,
                 hoverBackgroundColor: this.color,
                 borderWidth: 1,
@@ -302,7 +327,7 @@ foodcoopshop.AppChart = {
                         outer: {
                             align: 'end',
                             anchor: 'end',
-                            color: '#333333',
+                            color: this.getFontColor(),
                             font: {
                                 size: 15
                             },

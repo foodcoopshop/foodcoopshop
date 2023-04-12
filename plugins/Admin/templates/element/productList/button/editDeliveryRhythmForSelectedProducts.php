@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,11 +16,11 @@
  */
 use Cake\Core\Configure;
 
-if (!empty($products)) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace').".ModalProductDeliveryRhythmEdit.initBulk();"
-    ]);
-    echo '<a id="editDeliveryRhythmForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-clock"></i> ' . __d('admin', 'Edit_delivery_rhythm_for_selected_products') . '</a>';
+if (empty($products)) {
+    return false;
 }
 
-?>
+$this->element('addScript', [
+    'script' => Configure::read('app.jsNamespace') . ".ModalProductDeliveryRhythmEdit.initBulk();"
+]);
+echo '<a id="editDeliveryRhythmForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-clock"></i> ' . __d('admin', 'Edit_delivery_rhythm') . '</a>';

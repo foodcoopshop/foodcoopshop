@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -33,12 +35,11 @@ $this->element('addScript', [
             ]);
         }
 
-        echo $this->Form->control('year', [
+        echo $this->Form->control('range', [
             'type' => 'select',
             'label' => '',
-            'empty' => __d('admin', 'Show_all_years'),
-            'options' => $years,
-            'default' => $year != '' ? $year : ''
+            'options' => $ranges,
+            'default' => $range != '' ? $range : ''
         ]);
 
         ?>
@@ -72,7 +73,7 @@ $this->element('addScript', [
         "'" . __d('admin', 'Surcharge') . " %'".
     ");"
 ]);
-if ($year == '' && count($xAxisDataLineChart) > 1) {
+if ($range == '' && count($xAxisDataLineChart) > 1) {
     $this->element('addScript', [
         'script' =>
         Configure::read('app.jsNamespace') . ".AppChart.initLineChart(".json_encode($xAxisDataLineChart).", ".json_encode($yAxisDataLineChart).");"
@@ -91,7 +92,7 @@ if ($manufacturerId == 'all') {
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
         echo '<table class="list no-clone-last-row" style="width:350px;margin-bottom:5px;"><tr>';
 
-            echo '<td><b>' . __d('admin', 'Net_turnover') . '</b></td>';
+            echo '<td><b>' . __d('admin', 'Net_turnover_selling_price') . '</b></td>';
             echo '<td>'. __d('admin', 'total') . '</td>';
             echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($totalNetTurnover) . '</b></td>';
             echo '</tr><tr>';
@@ -134,7 +135,7 @@ if ($manufacturerId == 'all') {
 ?></p>
 
 <canvas id="myBarChart" width="1000" height="500" style="margin-top:10px;"></canvas>
-<?php if ($year == '' && count($xAxisDataLineChart) > 1) { ?>
+<?php if ($range == '' && count($xAxisDataLineChart) > 1) { ?>
     <canvas id="myLineChart" width="1000" height="500" style="margin-top:30px;"></canvas>
 <?php } ?>
 <?php if ($manufacturerId == 'all') { ?>

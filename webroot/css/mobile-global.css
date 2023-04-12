@@ -13,6 +13,39 @@
  */
 @media only screen and (max-device-width: 850px) {
 
+    #responsive-header a:not(.btn-camera),
+    body.self_services #responsive-header i.fa-circle-notch,
+    :not(button)> i.fas
+    :not(.fa-arrow-cycle-right)
+    :not(.fa-arrow-cycle-left)
+    :not(.fa-star)
+    :not(.fa-circle-notch)
+    :not(.fa-tags)
+    :not(.fa-shopping-bag)
+    :not(.fa-minus-circle)
+    :not(.fa-plus-circle) {
+        color: var(--theme-color) ! important;
+    }
+    body.self_services #responsive-header a.btn:not(.btn-flash-message),
+    body.self_services #responsive-header a.btn:not(.btn-flash-message) i.ok {
+        color: #fff ! important;
+    }
+    body:not(.admin) .sb-right h3 {
+        background-color: var(--theme-color) ! important;
+    }
+    .sb-left li.header,
+    .sb-left a:hover,
+    .sb-left a.active,
+    .sb-left a:hover i.far,
+    .sb-left a:hover i.fas:not(.gold),
+    .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
+        background-color: var(--theme-color);
+        color: #fff ! important;
+    }
+    .sb-right .inner {
+        border-color: var(--theme-color) ! important;
+    }
+
     /* START chrome pull refresh fix */
     html {
         overflow-y: scroll;
@@ -35,8 +68,8 @@
         text-decoration: none ! important;
     }
     #container {
-        overflow: hidden ! important; /* avoids iphone scrolling bug */
         min-height: initial ! important;
+        overflow: hidden ! important; /* avoids iphone scrolling bug */
     }
     #responsive-header .responsive-cart {
         float: right ! important;
@@ -66,9 +99,6 @@
     }
     #flashMessage img {
         height: 100px;
-    }
-    .ui-dialog-content #flashMessage {
-        left: 50% ! important;
     }
     .sb-left {
       -webkit-box-shadow: 5px 0 5px -2px #888;
@@ -169,5 +199,4 @@
     .modal-dialog .block hr:last-of-type {
         display: block;
     }
-
 }

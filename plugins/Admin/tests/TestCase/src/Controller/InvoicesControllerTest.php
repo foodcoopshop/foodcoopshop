@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -28,6 +29,8 @@ class InvoicesControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
+
+    protected $Invoice;
 
     public function testGeneratePaidInCashSavedCorrectly()
     {
@@ -117,13 +120,13 @@ class InvoicesControllerTest extends AppCakeTestCase
         ])->toArray();
         $paymentIds = Hash::extract($payments, '{n}.id');
 
-        $response = $this->ajaxPost(
+        $this->ajaxPost(
             '/admin/invoices/cancel/',
             [
                 'invoiceId' => $invoice->id,
             ]
         );
-        $response = json_decode($this->_response);
+        $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
         $invoices = $this->Invoice->find('all', [

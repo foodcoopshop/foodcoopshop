@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -22,10 +23,11 @@ use App\Test\TestCase\Traits\LoginTrait;
 class ProductAttributesTableTest extends AppCakeTestCase
 {
 
+    protected $Product;
+    protected $ProductAttribute;
+
     use AppIntegrationTestTrait;
     use LoginTrait;
-
-    public $ProductAttribute;
 
     public function setUp(): void
     {
