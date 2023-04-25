@@ -104,7 +104,6 @@ return [
         'showPaymentInfoText' => true,
         'showManufacturerListAndDetailPage' => true,
         'showPickupPlaceInfo' => true,
-        'showTaxSumTableOnOrderDetailPdf' => false,
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
         'selfServiceModeShowOnlyStockProducts' => true,
         'selfServiceModeAutoGenerateInvoice' => true,
@@ -181,7 +180,7 @@ return [
         'showStatisticsForAdmins' => true,
 
         'sendEmailWhenOrderDetailQuantityChanged' => true,
-        
+
         // if set, a paypal.me-link is added to the invoice-to-customer email
         'paypalMeUsername' => '',
 

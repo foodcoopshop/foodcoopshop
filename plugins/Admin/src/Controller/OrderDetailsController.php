@@ -301,38 +301,6 @@ class OrderDetailsController extends AdminAppController
             $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
 
-        if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
-
-            $taxRates = [];
-
-            $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-            $formattedDepositTaxRate = Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate);
-
-            foreach($preparedOrderDetails as $customerId => $orderDetails) {
-
-                $taxRates[$customerId] = $this->OrderDetail->getTaxSums($orderDetails);
-                $defaultArray = [
-                    'sum_price_excl' => 0,
-                    'sum_tax' => 0,
-                    'sum_price_incl' => 0,
-                ];
-
-                foreach($orderDetails as $orderDetail) {
-                    if (!isset($taxRates[$customerId][$formattedDepositTaxRate])) {
-                        $taxRates[$customerId][$formattedDepositTaxRate] = $defaultArray;
-                    }
-                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
-                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount, $depositTaxRate);
-                    $taxRates[$customerId][$formattedDepositTaxRate]['sum_price_incl'] += $orderDetail->deposit;
-                }
-
-                $taxRates[$customerId] = $this->OrderDetail->clearZeroArray($taxRates[$customerId]);
-                ksort($taxRates[$customerId]);
-
-            }
-
-        }
-
         $pdfWriter = new OrderDetailsPdfWriter();
         $pdfWriter->setData([
             'orderDetails' => $preparedOrderDetails,

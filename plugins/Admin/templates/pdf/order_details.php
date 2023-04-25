@@ -180,10 +180,6 @@ foreach ($orderDetails as $od) {
         $pdf->Ln(2);
     }
 
-    if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
-        $pdf->renderTaxSumTable($taxRates[$orderDetail->id_customer]);
-    }
-
     if ($j < count($orderDetails)) {
         $pdf->AddPage();
     }

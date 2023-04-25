@@ -319,11 +319,6 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.showTaxSumTableOnOrderDetailPdf</td>
-            <td><?php echo Configure::read('app.showTaxSumTableOnOrderDetailPdf') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
-        </tr>
-
-        <tr>
             <td>app.selfServiceModeAutoLogoutDesktopEnabled</td>
             <td><?php echo Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
