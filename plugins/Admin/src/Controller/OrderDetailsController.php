@@ -306,7 +306,6 @@ class OrderDetailsController extends AdminAppController
             'orderDetails' => $preparedOrderDetails,
             'appAuth' => $this->AppAuth,
             'order' => $order,
-            'taxRates' => isset($taxRates) ? $taxRates : null,
         ]);
         die($pdfWriter->writeInline());
     }
