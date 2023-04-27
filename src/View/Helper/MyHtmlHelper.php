@@ -311,11 +311,17 @@ class MyHtmlHelper extends HtmlHelper
         $formattedAndCleanedDeliveryDays = $this->getFormattedAndCleanedDeliveryDays($manufacturer->no_delivery_days);
 
         $formattedAndCleanedDeliveryDaysCount = count($formattedAndCleanedDeliveryDays);
-        if ($maxCount !== null && $formattedAndCleanedDeliveryDaysCount > $maxCount + 1) {
-            $formattedAndCleanedDeliveryDays = array_slice($formattedAndCleanedDeliveryDays, 0, $maxCount);
-            $formattedAndCleanedDeliveryDays[] = __('{0}_further_delivery_breaks', [
-                ($formattedAndCleanedDeliveryDaysCount - $maxCount)
-            ]);
+        if ($maxCount !== null) {
+            if ($formattedAndCleanedDeliveryDaysCount > $maxCount) {
+                $furtherDeliveryBreaksCount = $formattedAndCleanedDeliveryDaysCount - $maxCount;
+                // show extra info if there are more than 2 further delivery breaks (result would be even longer)
+                if ($furtherDeliveryBreaksCount > 2) {
+                    $formattedAndCleanedDeliveryDays = array_slice($formattedAndCleanedDeliveryDays, 0, $maxCount);
+                    $formattedAndCleanedDeliveryDays[] = __('{0}_further_delivery_breaks', [
+                        $furtherDeliveryBreaksCount
+                    ]);
+                }
+            }
         }
 
         if (empty($formattedAndCleanedDeliveryDays)) {
