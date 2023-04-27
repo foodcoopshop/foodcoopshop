@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-23 17:42+0100\n"
-"PO-Revision-Date: 2023-02-06 08:27+0100\n"
+"POT-Creation-Date: 2023-04-27 09:20+0200\n"
+"PO-Revision-Date: 2023-04-27 09:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2142,6 +2142,9 @@ msgstr "nein"
 msgid "Deleted_Email_Address"
 msgstr "Gelöschte E-Mail-Adresse"
 
+msgid "{0}_further_delivery_breaks"
+msgstr "{0} weitere Lieferpausen"
+
 msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr "Der Hersteller {0} hat am {1} Lieferpause."
 
@@ -2346,11 +2349,11 @@ msgstr "PLZ"
 msgid "City"
 msgstr "Ort"
 
-msgid "Want_to_receive_reminder_emails?"
-msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
-
 msgid "Want_to_receive_the_newsletter?"
 msgstr "Ich möchte den Newsletter per E-Mail erhalten?"
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
@@ -2774,6 +2777,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "{0,plural,=1{further_delivery_break} other{further_delivery_breaks}}"
+#~ msgstr "{0,plural,=1{1 weitere Lieferpause} other{# weitere Lieferpausen}}"
 
 #~ msgid "The_field_is_red_if_weight_not_yet_adapted."
 #~ msgstr "Das Feld ist rot, wenn das Gewicht noch nicht angepasst wurde."
