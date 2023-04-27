@@ -294,7 +294,7 @@ class ManufacturersTable extends AppTable
                 $this->Catalog = new Catalog();
                 $additionalInfo = $this->Catalog->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
             }
-            $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
+            $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer, false, 1);
             if ($noDeliveryDaysString != '') {
                 $noDeliveryDaysString = __('Delivery_break') . ': ' . $noDeliveryDaysString;
                 if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {

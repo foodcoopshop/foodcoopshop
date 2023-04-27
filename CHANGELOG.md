@@ -6,6 +6,12 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## Unveröffentlicht
+
+### Neue Funktionen / Verbesserungen
+- Bei Herstellern mit vielen eingetragenen Lieferpausen war das linke Menü ziemlich überladen. Es werden jetzt nur die zwei bzw. drei nächsten Lieferpausen angezeigt. [I#952](https://github.com/foodcoopshop/foodcoopshop/issues/952) / [PR#955](https://github.com/foodcoopshop/foodcoopshop/pull/955) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v3.6.0
 
 ### Neue Datenschutz-Funktionen

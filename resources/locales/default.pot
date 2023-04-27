@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-01-23 17:42+0100\n"
+"POT-Creation-Date: 2023-04-27 09:20+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2141,6 +2141,9 @@ msgstr ""
 msgid "Deleted_Email_Address"
 msgstr ""
 
+msgid "{0}_further_delivery_breaks"
+msgstr ""
+
 msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr ""
 
@@ -2345,10 +2348,10 @@ msgstr ""
 msgid "City"
 msgstr ""
 
-msgid "Want_to_receive_reminder_emails?"
+msgid "Want_to_receive_the_newsletter?"
 msgstr ""
 
-msgid "Want_to_receive_the_newsletter?"
+msgid "Want_to_receive_reminder_emails?"
 msgstr ""
 
 msgid "terms_of_use"

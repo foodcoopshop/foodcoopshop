@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-23 17:42+0100\n"
-"PO-Revision-Date: 2023-01-31 15:25+0100\n"
+"POT-Creation-Date: 2023-04-27 09:20+0200\n"
+"PO-Revision-Date: 2023-04-27 09:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2142,6 +2142,9 @@ msgstr "no"
 msgid "Deleted_Email_Address"
 msgstr "Deleted e-mail address"
 
+msgid "{0}_further_delivery_breaks"
+msgstr "{0} further delivery breaks"
+
 msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr "The manufacturer {0} takes a delivery break on {1}."
 
@@ -2346,11 +2349,11 @@ msgstr "Zip"
 msgid "City"
 msgstr "City"
 
-msgid "Want_to_receive_reminder_emails?"
-msgstr "Do you want to receive an order reminder e-mail every week?"
-
 msgid "Want_to_receive_the_newsletter?"
 msgstr "Do you want to receive the newsletter via email?"
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Do you want to receive an order reminder e-mail every week?"
 
 msgid "terms_of_use"
 msgstr "terms of use"
@@ -2774,6 +2777,10 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "{0,plural,=1{further_delivery_break} other{further_delivery_breaks}}"
+#~ msgstr "{0,plural,=1{1 week} other{# week}}"
 
 #~ msgid "The_field_is_red_if_weight_not_yet_adapted."
 #~ msgstr "The field appears read if the weight has not yet been adapted."

@@ -300,7 +300,7 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
 
-    public function getManufacturerNoDeliveryDaysString($manufacturer, $long = false)
+    public function getManufacturerNoDeliveryDaysString($manufacturer, bool $long = false, int $maxCount = null): string
     {
 
         $result = '';
@@ -309,6 +309,15 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         $formattedAndCleanedDeliveryDays = $this->getFormattedAndCleanedDeliveryDays($manufacturer->no_delivery_days);
+
+        $formattedAndCleanedDeliveryDaysCount = count($formattedAndCleanedDeliveryDays);
+        if ($maxCount !== null && $formattedAndCleanedDeliveryDaysCount > $maxCount + 1) {
+            $formattedAndCleanedDeliveryDays = array_slice($formattedAndCleanedDeliveryDays, 0, $maxCount);
+            $formattedAndCleanedDeliveryDays[] = __('{0}_further_delivery_breaks', [
+                ($formattedAndCleanedDeliveryDaysCount - $maxCount)
+            ]);
+        }
+
         if (empty($formattedAndCleanedDeliveryDays)) {
             return $result;
         }
