@@ -61,6 +61,12 @@ class SyncDomainsControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Die Domain ist bereits vorhanden.');
     }
 
+    public function testAddSyncDomainWithHttpsAndCapitalLetter()
+    {
+        $this->addSyncDomain('https://www.valid-Domain.com');
+        $this->assertFlashMessage('Die Remote-Foodcoop <b>https://www.valid-domain.com</b> wurde erstellt.');
+    }
+
     public function testAddSyncDomainWithHttps()
     {
         $this->addSyncDomain('https://www.valid-domain.com');

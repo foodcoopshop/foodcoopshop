@@ -92,6 +92,7 @@ class SyncDomainsController extends AppController
             $this->set('syncDomain', $syncDomain);
             $this->render('edit');
         } else {
+            $syncDomain->domain = mb_strtolower($syncDomain->domain);
             $syncDomain = $this->SyncDomain->save($syncDomain);
 
             if (!$isEditMode) {
