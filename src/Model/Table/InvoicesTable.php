@@ -261,6 +261,9 @@ class InvoicesTable extends AppTable
         }
 
         $taxRates = [];
+        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+        $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+
         if (!Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
             $defaultArray = [
@@ -269,9 +272,6 @@ class InvoicesTable extends AppTable
                 'sum_price_incl' => 0,
             ];
             $taxRates = $orderDetailTable->getTaxSums($orderDetails);
-
-            $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
-            $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
 
             if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
                 if (!isset($taxRates[$depositVatRate])) {
