@@ -255,8 +255,7 @@ class DeliveryRhythm
 
         $pickupDay = self::getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
 
-        // assure that $product->is_stock_product also contains check for $product->manufacturer->stock_management_enabled
-        if ($product->is_stock_product) {
+        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
             return $pickupDay;
         }
 
