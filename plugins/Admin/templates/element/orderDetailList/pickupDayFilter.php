@@ -15,26 +15,29 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<b>';
-if ($appAuth->isManufacturer()) {
-    if (count($pickupDay) == 1) {
-        echo __d('admin', 'Delivery_day');
+echo '<div class="pickup-day-filter-wrapper'.(count($pickupDay) == 2 ? ' two-pickup-days' : '') . '">';
+    echo '<b>';
+    if ($appAuth->isManufacturer()) {
+        if (count($pickupDay) == 1) {
+            echo __d('admin', 'Delivery_day');
+        } else {
+            echo __d('admin', 'Delivery_days');
+        }
     } else {
-        echo __d('admin', 'Delivery_days');
+        if (count($pickupDay) == 1) {
+            echo __d('admin', 'Pickup_day');
+        } else {
+            echo __d('admin', 'Pickup_days');
+        }
     }
-} else {
+    echo ':</b>';
     if (count($pickupDay) == 1) {
-        echo __d('admin', 'Pickup_day');
+        echo '<span class="weekday-as-name">';
+            echo $this->Time->getWeekdayName($this->Time->formatAsWeekday(strtotime($pickupDay[0]))) . ', ';
+        echo '</span>';
+        echo $this->element('dateFields', ['dateFrom' => $pickupDay[0], 'nameFrom' => 'pickupDay[]', 'showDateTo' => false]);
     } else {
-        echo __d('admin', 'Pickup_days');
+        echo $this->element('dateFields', ['dateFrom' => $pickupDay[0], 'nameFrom' => 'pickupDay[]', 'dateTo' => $pickupDay[1], 'nameTo' => 'pickupDay[]']);
     }
-}
-echo '</b>: ';
-if (count($pickupDay) == 1) {
-    echo $this->Time->getWeekdayName($this->Time->formatAsWeekday(strtotime($pickupDay[0]))) . ', ';
-    echo $this->element('dateFields', ['dateFrom' => $pickupDay[0], 'nameFrom' => 'pickupDay[]', 'showDateTo' => false]);
-} else {
-    echo $this->element('dateFields', ['dateFrom' => $pickupDay[0], 'nameFrom' => 'pickupDay[]', 'dateTo' => $pickupDay[1], 'nameTo' => 'pickupDay[]']);
-}
-
+echo '</div>';
 ?>

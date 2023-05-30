@@ -342,6 +342,21 @@ div.cke {
 #cke_configurations-value {
     float: left;
 }
+body.order_details.index .pickup-day-filter-wrapper {
+    display: flex;
+    float: left;
+    width: 270px;
+    gap: 4px;
+    align-items: baseline;
+    margin-right: 4px;
+}
+body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
+    width: 328px;
+}
+body.order_details.index .weekday-as-name {
+    text-align: right;
+    flex-grow: 1;
+}
 body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
