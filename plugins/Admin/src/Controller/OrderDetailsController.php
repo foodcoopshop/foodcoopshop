@@ -14,6 +14,7 @@ use App\Lib\PdfWriter\OrderDetailsPdfWriter;
 use App\Controller\Component\StringComponent;
 use Cake\Database\Expression\QueryExpression;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Model\Table\CartsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
@@ -520,10 +521,8 @@ class OrderDetailsController extends AdminAppController
     {
 
         // for filter from action logs page
-        $orderDetailId = '';
-        if (! empty($this->getRequest()->getQuery('orderDetailId'))) {
-            $orderDetailId = h($this->getRequest()->getQuery('orderDetailId'));
-        }
+        $orderDetailId = h($this->getRequest()->getQuery('orderDetailId', ''));
+        $this->set('orderDetailId', $orderDetailId);
 
         $pickupDay = [];
         if ($orderDetailId == '') {
@@ -549,38 +548,25 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = Configure::read('app.timeHelper')->sortArrayByDate($pickupDay);
         $this->set('pickupDay', $pickupDay);
 
-        $manufacturerId = '';
-        if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
-        }
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId', ''));
         $this->set('manufacturerId', $manufacturerId);
 
-        $deposit = '';
-        if (! empty($this->getRequest()->getQuery('deposit'))) {
-            $deposit = h($this->getRequest()->getQuery('deposit'));
-        }
+        $deposit = h($this->getRequest()->getQuery('deposit', ''));
         $this->set('deposit', $deposit);
 
-        $productId = '';
-        if (! empty($this->getRequest()->getQuery('productId'))) {
-            $productId = h($this->getRequest()->getQuery('productId'));
-        }
+        $productId = h($this->getRequest()->getQuery('productId', ''));
         $this->set('productId', $productId);
 
-        $customerId = '';
-        if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = h($this->getRequest()->getQuery('customerId'));
-        }
+        $customerId = h($this->getRequest()->getQuery('customerId', ''));
         $this->set('customerId', $customerId);
 
-        $groupBy = '';
-        if (! empty($this->getRequest()->getQuery('groupBy'))) {
-            $groupBy = h($this->getRequest()->getQuery('groupBy'));
-        }
+        $cartType = h($this->getRequest()->getQuery('cartType', null));
+        $this->set('cartType', $cartType);
+
+        $groupBy = h($this->getRequest()->getQuery('groupBy', null));
         if ($this->AppAuth->isManufacturer() && $groupBy != 'product') {
             $groupBy = '';
         }
-
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -623,8 +609,18 @@ class OrderDetailsController extends AdminAppController
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $contain,
-            'group' => $group
+            'group' => $group,
         ]);
+
+        $this->OrderDetail->getAssociation('CartProducts.Carts')->setJoinType('INNER');
+        $query->contain(['CartProducts.Carts' => function ($q) use ($cartType) {
+            if (in_array($cartType, array_keys(Configure::read('app.htmlHelper')->getCartTypes()))) {
+                $q->where([
+                    'Carts.cart_type' => $cartType,
+                ]);
+            }
+            return $q;
+        }]);
 
         switch($groupBy) {
             case 'customer':
@@ -649,6 +645,8 @@ class OrderDetailsController extends AdminAppController
             default:
                 $query = $this->Customer->addCustomersNameForOrderSelect($query);
                 $query->select($this->OrderDetail);
+                $query->select($this->OrderDetail->CartProducts); // need to be called before ->Carts
+                $query->select($this->OrderDetail->CartProducts->Carts);
                 $query->select($this->OrderDetail->OrderDetailUnits);
                 $query->select($this->OrderDetail->OrderDetailFeedbacks);
                 $query->select($this->Customer);

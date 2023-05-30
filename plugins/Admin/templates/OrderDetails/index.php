@@ -95,6 +95,7 @@ use Cake\Core\Configure;
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
+            <?php echo $this->Form->control('cartType', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_cart_types'), 'options' => $this->Html->getCartTypes(), 'default' => $cartType]); ?>
         <?php echo $this->Form->end(); ?>
 
             <div class="right">

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-02-13 21:01+0100\n"
+"POT-Creation-Date: 2023-05-30 21:50+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1673,6 +1673,9 @@ msgstr ""
 msgid "Group_by..."
 msgstr ""
 
+msgid "all_cart_types"
+msgstr ""
+
 msgid "Deposit_return"
 msgstr ""
 
@@ -2034,6 +2037,9 @@ msgid "Show_all_ordered_products_from_{0}"
 msgstr ""
 
 msgid "Order_state"
+msgstr ""
+
+msgid "Cart_type"
 msgstr ""
 
 msgid "Order_date"

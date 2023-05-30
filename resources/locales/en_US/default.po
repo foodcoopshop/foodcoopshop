@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-04-27 09:20+0200\n"
-"PO-Revision-Date: 2023-04-27 09:21+0200\n"
+"POT-Creation-Date: 2023-05-30 21:50+0200\n"
+"PO-Revision-Date: 2023-05-30 21:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -2105,6 +2105,15 @@ msgstr "Change password"
 
 msgid "My_invoices"
 msgstr "My nvoices"
+
+msgid "cart_type_weekly_rhythm"
+msgstr "Pre-order"
+
+msgid "cart_type_instant_order"
+msgstr "Instant order"
+
+msgid "cart_type_self_service"
+msgstr "Self-service / stock product order"
 
 msgid "Shopping_with_selling_price"
 msgstr "User selling price for shopping"

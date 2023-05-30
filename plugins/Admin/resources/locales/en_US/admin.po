@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-13 21:01+0100\n"
-"PO-Revision-Date: 2023-03-06 22:05+0100\n"
+"POT-Creation-Date: 2023-05-30 21:50+0200\n"
+"PO-Revision-Date: 2023-05-30 21:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -1680,6 +1680,9 @@ msgstr "The pickup day of the instant order will be automatically changed to <b>
 msgid "Group_by..."
 msgstr "Group by..."
 
+msgid "all_cart_types"
+msgstr "all order types"
+
 msgid "Deposit_return"
 msgstr "Deposit return"
 
@@ -2042,6 +2045,9 @@ msgstr "Show all ordered products from {0}"
 
 msgid "Order_state"
 msgstr "Order state"
+
+msgid "Cart_type"
+msgstr "Order type"
 
 msgid "Order_date"
 msgstr "Order date"

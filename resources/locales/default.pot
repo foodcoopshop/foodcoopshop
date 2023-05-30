@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-04-27 09:20+0200\n"
+"POT-Creation-Date: 2023-05-30 21:50+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2103,6 +2103,15 @@ msgid "Change_password"
 msgstr ""
 
 msgid "My_invoices"
+msgstr ""
+
+msgid "cart_type_weekly_rhythm"
+msgstr ""
+
+msgid "cart_type_instant_order"
+msgstr ""
+
+msgid "cart_type_self_service"
 msgstr ""
 
 msgid "Shopping_with_selling_price"

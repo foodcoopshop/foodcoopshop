@@ -11,6 +11,7 @@ use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Lib\OutputFilter\OutputFilter;
+use App\Model\Table\CartsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,6 +35,18 @@ class MyHtmlHelper extends HtmlHelper
         $this->helpers[] = 'MyNumber';
         $this->helpers[] = 'MyTime';
         parent::__construct($View, $config);
+    }
+
+    public function getCartTypes()
+    {
+        $cartTypes = [
+            CartsTable::CART_TYPE_WEEKLY_RHYTHM => __('cart_type_weekly_rhythm'),
+            CartsTable::CART_TYPE_INSTANT_ORDER => __('cart_type_instant_order'),
+        ];
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $cartTypes[CartsTable::CART_TYPE_SELF_SERVICE] = __('cart_type_self_service');
+        }
+        return $cartTypes;
     }
 
     public function getHostWithoutProtocol($hostnameWithProtocol)
