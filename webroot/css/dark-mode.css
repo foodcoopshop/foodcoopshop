@@ -58,6 +58,7 @@ body.dark .pw.delivery-break-enabled {
 body.dark .vertical.menu a {
     background-color: var(--dark-mode-main-bg-color) ! important;
 }
+body.dark .ui-widget-header > a,
 body.dark .modal-content {
     border: 1px solid var(--dark-mode-main-border-color);
 }

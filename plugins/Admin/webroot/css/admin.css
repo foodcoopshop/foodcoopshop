@@ -298,6 +298,16 @@ input.datepicker {
     width: 110px;
     text-align: center;
 }
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {
+    top: 5px;
+}
+.ui-datepicker .ui-datepicker-prev-hover {
+    left: 2px;
+}
+.ui-datepicker .ui-datepicker-next-hover {
+    right: 2px;
+}
 .warning {
     color: var(--not-ok-red);
 }
