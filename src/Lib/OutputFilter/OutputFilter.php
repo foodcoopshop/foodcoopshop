@@ -37,8 +37,11 @@ class OutputFilter
             return $text;
         }
 
+        $delimiter = '`';
+
         foreach($searchAndReplace as $search => $replace) {
-            $text = preg_replace('`' . $search . '`', $replace, $text);
+            $escapedSearch = preg_quote($search, $delimiter);
+            $text = preg_replace($delimiter . $escapedSearch . $delimiter, $replace, $text);
         }
 
         return $text;
