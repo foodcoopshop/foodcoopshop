@@ -824,7 +824,7 @@ class ProductsTable extends AppTable
                     $quantityIsZeroFilterOn = true;
                 }
                 if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                    $this->ProductAttributes->setConditions(
+                    $this->getAssociation('ProductAttributes')->setConditions(
                         [
                             'ProductAttributes.price' => 0
                         ]

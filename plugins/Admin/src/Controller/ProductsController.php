@@ -1547,10 +1547,7 @@ class ProductsController extends AdminAppController
 
     public function index()
     {
-        $productId = '';
-        if (! empty($this->getRequest()->getQuery('productId'))) {
-            $productId = h($this->getRequest()->getQuery('productId'));
-        }
+        $productId = h($this->getRequest()->getQuery('productId', ''));
         $this->set('productId', $productId);
 
         $manufacturerId = '';
@@ -1567,28 +1564,16 @@ class ProductsController extends AdminAppController
         }
         $this->set('manufacturerId', $manufacturerId);
 
-        $active = 'all'; // default value
-        if (in_array('active', array_keys($this->getRequest()->getQueryParams()))) {
-            $active = h($this->getRequest()->getQuery('active'));
-        }
+        $active = h($this->getRequest()->getQuery('active', 'all'));
         $this->set('active', $active);
 
-        $categoryId = ''; // default value
-        if (!empty($this->getRequest()->getQuery('categoryId'))) {
-            $categoryId = h($this->getRequest()->getQuery('categoryId'));
-        }
+        $categoryId = h($this->getRequest()->getQuery('categoryId', ''));
         $this->set('categoryId', $categoryId);
 
-        $isQuantityMinFilterSet = false; // default value
-        if (!empty($this->getRequest()->getQuery('isQuantityMinFilterSet'))) {
-            $isQuantityMinFilterSet = (bool) h($this->getRequest()->getQuery('isQuantityMinFilterSet'));
-        }
+        $isQuantityMinFilterSet = (bool) h($this->getRequest()->getQuery('isQuantityMinFilterSet', false));
         $this->set('isQuantityMinFilterSet', $isQuantityMinFilterSet);
 
-        $isPriceZero = 0; // default value
-        if (!empty($this->getRequest()->getQuery('isPriceZero'))) {
-            $isPriceZero = (bool) h($this->getRequest()->getQuery('isPriceZero'));
-        }
+        $isPriceZero = (bool) h($this->getRequest()->getQuery('isPriceZero', 0));
         $this->set('isPriceZero', $isPriceZero);
 
         if ($manufacturerId != '') {
