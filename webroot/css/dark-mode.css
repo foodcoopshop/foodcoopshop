@@ -110,7 +110,7 @@ body.dark .dropdown .dropdown-menu li a span.text,
 body.dark .dropdown .no-results,
 body.dark .dropdown > .dropdown-toggle:after,
 body.dark.admin .filter-container,
-body.dark.admin a.btn i:not(.not-ok),
+body.dark.admin .btn i:not(.not-ok),
 body.dark a.btn.edit-shortcut-button i {
     color: var(--dark-mode-main-font-color);
 }
