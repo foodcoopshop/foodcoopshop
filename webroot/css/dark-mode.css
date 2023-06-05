@@ -46,9 +46,9 @@ body.dark .ui-widget-header .ui-state-hover {
 }
 body.dark #main-menu li ul,
 body.dark #user-menu li ul,
-body.dark .bootstrap-select .dropdown-toggle,
-body.dark .bootstrap-select .dropdown-menu,
-body.dark .bootstrap-select .no-results,
+body.dark .dropdown .dropdown-toggle,
+body.dark .dropdown .dropdown-menu,
+body.dark .dropdown .no-results,
 body.dark form.sync-login-form,
 body.dark.syncs.product_data table.product-list tr.horizontal-checkboxes,
 body.dark .pw.delivery-break-enabled {
@@ -69,7 +69,7 @@ body.dark #product-search select,
 body.dark input,
 body.dark .pw .amount-wrapper input,
 body.dark textarea,
-body.dark .bootstrap-select .form-control:focus,
+body.dark .dropdown .form-control:focus,
 body.dark.admin #home h1,
 body.dark.admin ul.nav-tabs,
 body.dark .ui-widget.ui-widget-content {
@@ -105,10 +105,10 @@ body.dark .cart span.product-name-wrapper span.unity,
 body.dark .modal-title,
 body.dark .modal-header i,
 body.dark #footer a:hover,
-body.dark .bootstrap-select .filter-option-inner-inner,
-body.dark .bootstrap-select .dropdown-menu li a span.text,
-body.dark .bootstrap-select .no-results,
-body.dark .bootstrap-select > .dropdown-toggle:after,
+body.dark .dropdown .filter-option-inner-inner,
+body.dark .dropdown .dropdown-menu li a span.text,
+body.dark .dropdown .no-results,
+body.dark .dropdown > .dropdown-toggle:after,
 body.dark.admin .filter-container,
 body.dark.admin a.btn i:not(.not-ok),
 body.dark a.btn.edit-shortcut-button i {
@@ -131,6 +131,8 @@ body.dark.admin.modal-open .modal a:not(.btn):not(.upload-button),
 body.dark.admin table.list a:not(.btn),
 body.dark.admin h2 span a,
 body.dark.admin form .input a:not(.btn),
+body.dark.admin .dropdown-item,
+body.dark.admin .dropdown-item i,
 body.dark .tooltipster-box .tooltipster-content,
 body.dark .tooltipster-box .tooltipster-content a,
 body.dark table.list td.not-available,
@@ -171,6 +173,8 @@ body.dark .btn-warning {
 body.dark.admin table.list th {
     box-shadow: inset 0 0px 0 var(--dark-mode-main-border-color), inset 0 -1px 0 var(--dark-mode-main-border-color);
 }
+body.dark .dropdown-item:hover,
+body.dark .dropdown-item:hover > i,
 body.dark .dropdown-item:hover span,
 body.dark .btn-warning:hover {
     color: var(--dark-mode-main-bg-color) ! important;

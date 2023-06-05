@@ -251,7 +251,7 @@ td.amount .fa-times {
     font-size: 23px;
 }
 .filter-container input[type="text"] {
-    padding: 5px 6px;
+    padding: 4px 6px 3px 6px;
     border-radius: 4px;
     font-size: 14px;
 }
@@ -775,7 +775,7 @@ ul.nav-tabs li.active a {
 a.btn-arrow {
     display: inline-block;
     position: absolute;
-    top: 6px;
+    top: 4px;
     color: #ccc ! important;
     width: 15px;
 }

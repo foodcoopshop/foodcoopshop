@@ -64,7 +64,7 @@ a.blog-post-wrapper h3,
 #scroll-to-top a i,
 .vertical.menu a i.fas,
 .vertical.menu span.additional-info,
-a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
+a:not(.btn):not(.dropdown-item), a:not(.btn):not(.dropdown-item):visited, a:not(.btn):active,
 a.btn.edit-shortcut-button,
 a.btn.prev-button i, a.btn.next-button i,
 .pw .price-asterisk,
@@ -104,8 +104,8 @@ h1.middle-line span.middle {
 }
 .btn-success:focus:active,
 #flashMessage.success .progress-bar.bg-success,
-.bootstrap-select .dropdown-item.active,
-.bootstrap-select .dropdown-item:active,
+.dropdown .dropdown-item.active,
+.dropdown .dropdown-item:active,
 table.list tr.selected {
     background-color: var(--theme-color) ! important;
 }
