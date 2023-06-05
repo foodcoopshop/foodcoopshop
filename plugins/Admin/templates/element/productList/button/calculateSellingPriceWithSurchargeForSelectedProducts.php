@@ -23,4 +23,4 @@ if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || $appAuth->isManufact
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ModalProductCalculateSellingPriceWithSurcharge.init();"
 ]);
-echo '<a id="calculateSellingPriceWithSurchargForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-calculator"></i> ' . __d('admin', 'Calculate_selling_price') . '</a>';
+echo '<a id="calculateSellingPriceWithSurchargForSelectedProducts" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-calculator"></i> ' . __d('admin', 'Calculate_selling_price') . '</a>';

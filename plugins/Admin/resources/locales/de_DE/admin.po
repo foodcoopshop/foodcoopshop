@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-05 09:49+0200\n"
-"PO-Revision-Date: 2023-06-05 09:50+0200\n"
+"POT-Creation-Date: 2023-06-05 10:17+0200\n"
+"PO-Revision-Date: 2023-06-05 10:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1860,9 +1860,6 @@ msgstr "Neu?"
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
 
-msgid "Selected_products"
-msgstr "Markierte Produkte"
-
 msgid "Storage_location"
 msgstr "Lagerort"
 
@@ -1977,6 +1974,12 @@ msgstr "1 Tag vor"
 msgid "to"
 msgstr "bis"
 
+msgid "Print_page"
+msgstr "Seite drucken"
+
+msgid "Help"
+msgstr "Hilfe"
+
 msgid "Bank_account_data"
 msgstr "Bankdaten"
 
@@ -1997,15 +2000,6 @@ msgstr "Meine Produkte"
 
 msgid "My_profile"
 msgstr "Mein Profil"
-
-msgid "Print"
-msgstr "Drucken"
-
-msgid "Help"
-msgstr "Hilfe"
-
-msgid "More..."
-msgstr "Mehr..."
 
 msgid "All_products_picked_up?"
 msgstr "Alle Produkte abgeholt?"
@@ -2081,6 +2075,9 @@ msgstr "Zum Ändern des Gewichtes anklicken"
 
 msgid "Picked_up"
 msgstr "Abgeholt"
+
+msgid "More"
+msgstr "Mehr"
 
 msgid "Delivery_days"
 msgstr "Liefertage"
@@ -2204,6 +2201,9 @@ msgstr "Das Produkt kann erst bestellt werden, sobald der Einkaufspreis hinterle
 
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"
+
+msgid "Selected_products"
+msgstr "Markierte Produkte"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
@@ -2447,6 +2447,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Print"
+#~ msgstr "Drucken"
 
 #~ msgid "Net_turnover"
 #~ msgstr "Netto-Umsatz"

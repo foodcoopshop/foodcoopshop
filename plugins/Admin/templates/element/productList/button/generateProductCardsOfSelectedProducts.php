@@ -23,4 +23,4 @@ if ($appAuth->isManufacturer() || empty($products) || !Configure::read('appDb.FC
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.initGenerateProductCardsOfSelectedProductsButton();"
 ]);
-echo '<a id="generateProductCardsOfSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_product_cards') . '</a>';
+echo '<a id="generateProductCardsOfSelectedProductsButton" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw far fa-address-card"></i> ' . __d('admin', 'Generate_product_cards') . '</a>';

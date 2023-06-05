@@ -31,7 +31,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer(
         $class = 'dropdown-item';
     }
 
-    echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard ' . $class . '"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+    echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard ' . $class . '"><i class="fa-fw far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 }
 
 ?>

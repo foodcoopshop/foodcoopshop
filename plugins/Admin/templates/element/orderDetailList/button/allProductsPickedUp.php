@@ -32,7 +32,7 @@ if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin(
             Configure::read('app.jsNamespace').".Helper.disableButton($('.change-products-picked-up-all-customers-button'));"
         ]);
     }
-    echo '<button class="change-products-picked-up-all-customers-button ' . $class . '"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
+    echo '<button class="change-products-picked-up-all-customers-button ' . $class . '"><i class="fa-fw far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 if (count($pickupDay) == 1 && $groupBy == '' && $customerId > 0 && $manufacturerId == '' && $productId == '') {
@@ -44,7 +44,7 @@ if (count($pickupDay) == 1 && $groupBy == '' && $customerId > 0 && $manufacturer
             Configure::read('app.jsNamespace').".Helper.disableButton($('.change-products-picked-up-button'));"
         ]);
     }
-    echo '<button class="change-products-picked-up-button ' . $class . '"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
+    echo '<button class="change-products-picked-up-button ' . $class . '"><i class="fa-fw far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 ?>

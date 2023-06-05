@@ -25,4 +25,4 @@ if (empty($products)) {
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ModalProductStatusEditBulk.init();"
 ]);
-echo '<a id="editStatusForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-check-circle"></i> <i class="fas fa-minus-circle"></i> ' . __d('admin', 'Edit_status') . '</a>';
+echo '<a id="editStatusForSelectedProducts" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-check-circle"></i> ' . __d('admin', 'Edit_status') . '</a>';

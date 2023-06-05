@@ -59,24 +59,10 @@ $buttons[] = $this->element('orderDetailList/button/deleteSelectedOrderDetails',
     'groupBy' => $groupBy
 ]);
 
-$buttons[] = '<a class="dropdown-item" href="javascript:window.print();" target="_blank"><i class="fas fa-print fa-fw ok"></i> ' .  __d('admin', 'Print') . '</a>';
-$buttons[] = '<a class="dropdown-item" href="' . $helperLink . '" target="_blank"><i class="fas fa-question fa-fw ok"></i> ' .  __d('admin', 'Help') . '</a>';
-
-$buttons = array_filter($buttons); // remove empty array elements
+echo $this->element('dropdownWithButtons', [
+    'helperLink' => $helperLink,
+    'buttons' => $buttons,
+    'label' => __d('admin', 'More') . '...',
+]);
 
 ?>
-
-<div class="dropdown">
-    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-solid fa-angles-right"></i> <?php echo __d('admin', 'More...'); ?>
-    </button>
-    <ul class="dropdown-menu">
-        <?php
-            foreach($buttons as $button) {
-                echo '<li>';
-                    echo $button;
-                echo '</li>';
-            }
-        ?>
-    </ul>
-</div>

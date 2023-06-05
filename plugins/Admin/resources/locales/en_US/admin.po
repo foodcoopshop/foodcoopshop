@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-05 09:49+0200\n"
-"PO-Revision-Date: 2023-06-05 09:50+0200\n"
+"POT-Creation-Date: 2023-06-05 10:17+0200\n"
+"PO-Revision-Date: 2023-06-05 10:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1857,9 +1857,6 @@ msgstr "New?"
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
 
-msgid "Selected_products"
-msgstr "Selected products"
-
 msgid "Storage_location"
 msgstr "Storage location"
 
@@ -1974,6 +1971,12 @@ msgstr "1 day back"
 msgid "to"
 msgstr "to"
 
+msgid "Print_page"
+msgstr "Print page"
+
+msgid "Help"
+msgstr "Help"
+
 msgid "Bank_account_data"
 msgstr "Bank account data"
 
@@ -1994,15 +1997,6 @@ msgstr "My products"
 
 msgid "My_profile"
 msgstr "My profile"
-
-msgid "Print"
-msgstr "Print"
-
-msgid "Help"
-msgstr "Help"
-
-msgid "More..."
-msgstr "More..."
 
 msgid "All_products_picked_up?"
 msgstr "All products picked up?"
@@ -2078,6 +2072,9 @@ msgstr "Click to change weight"
 
 msgid "Picked_up"
 msgstr "Picked up"
+
+msgid "More"
+msgstr "More"
 
 msgid "Delivery_days"
 msgstr "Delivery days"
@@ -2201,6 +2198,9 @@ msgstr "The purchase price was not yet set, only then the product can be ordered
 
 msgid "change_tax_rate"
 msgstr "change tax rate"
+
+msgid "Selected_products"
+msgstr "Selected products"
 
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
@@ -2444,6 +2444,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Print"
+#~ msgstr "Print"
 
 #~ msgid "Net_turnover"
 #~ msgstr "Net turnover"
