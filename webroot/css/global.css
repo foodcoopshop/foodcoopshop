@@ -680,3 +680,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     margin-right: 3px;
     margin-left: -5px;
 }
+.dropdown .dropdown-item.disabled,
+.dropdown .dropdown-item:disabled {
+    opacity: .7;
+}

@@ -162,9 +162,7 @@ body.dark.admin ul.nav-tabs li a:hover {
     background-color: var(--dark-mode-main-bg-color) ! important;
 
 }
-body.dark a.blog-post-wrapper:hover,
-body.dark.admin .dropdown-item.disabled,
-body.dark.admin .dropdown-item:disabled {
+body.dark a.blog-post-wrapper:hover {
     opacity: .8;
 }
 body.dark .swiper-button-prev:after,
