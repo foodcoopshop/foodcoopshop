@@ -22,6 +22,6 @@ $queryParams['filterByCartTypeEnabled'] = !$filterByCartTypeEnabled;
 $queryString = '?' . http_build_query($queryParams);
 $href = $this->request->getUri()->getPath() . $queryString;
 
-echo '<a href="' . $href . '" class="dropdown-item"><i class="fas fa-shopping-cart fa-fw ok"></i> ' .  __d('admin', 'Filter_by_cart_type') . ': ' . ($filterByCartTypeEnabled ? __d('admin', 'yes') : __d('admin', 'no')) . '</a>';
+echo '<a href="' . $href . '" class="dropdown-item"><i class="fas fa-shopping-cart fa-fw"></i> ' .  __d('admin', 'Filter_by_cart_type') . ': ' . ($filterByCartTypeEnabled ? __d('admin', 'yes') : __d('admin', 'no')) . '</a>';
 
 ?>
