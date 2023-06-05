@@ -30,10 +30,6 @@ if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR
     ]);
 }
 
-$buttons[] = $this->element('orderDetailList/button/multiplePickupDays', [
-    'pickupDay' => $pickupDay
-]);
-
 $buttons[] = $this->element('orderDetailList/button/generateOrderDetailsAsPdf', [
     'pickupDay' => $pickupDay
 ]);
@@ -57,6 +53,12 @@ $buttons[] = $this->element('orderDetailList/button/deleteSelectedOrderDetails',
     'deposit' => $deposit,
     'orderDetails' => $orderDetails,
     'groupBy' => $groupBy
+]);
+
+$buttons[] = '<hr class="dropdown-divider" />';
+
+$buttons[] = $this->element('orderDetailList/button/multiplePickupDays', [
+    'pickupDay' => $pickupDay
 ]);
 
 $buttons[] = $this->element('orderDetailList/button/filterByCartTypeEnabled', [

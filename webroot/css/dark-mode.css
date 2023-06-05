@@ -162,7 +162,9 @@ body.dark.admin ul.nav-tabs li a:hover {
     background-color: var(--dark-mode-main-bg-color) ! important;
 
 }
-body.dark a.blog-post-wrapper:hover {
+body.dark a.blog-post-wrapper:hover,
+body.dark.admin .dropdown-item.disabled,
+body.dark.admin .dropdown-item:disabled {
     opacity: .8;
 }
 body.dark .swiper-button-prev:after,
@@ -208,7 +210,8 @@ body.dark.admin .filter-container,
 body.dark.admin table.list th,
 body.dark.admin table.list td,
 body.dark.admin table.list tr,
-body.reports.payment form#csv-upload {
+body.reports.payment form#csv-upload,
+body.dark hr.dropdown-divider {
     border-color: var(--dark-mode-main-border-color);
 }
 body.dark #load-last-order-details {

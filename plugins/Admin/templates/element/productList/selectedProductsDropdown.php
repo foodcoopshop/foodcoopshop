@@ -18,11 +18,12 @@ declare(strict_types=1);
 $buttons = [];
 
 if (!empty($products)) {
-    $buttons[] = $this->element('productList/button/deleteSelectedProducts');
     $buttons[] = $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
     $buttons[] = $this->element('productList/button/generateProductCardsOfSelectedProducts');
     $buttons[] = $this->element('productList/button/editStatusForSelectedProducts');
     $buttons[] = $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
+    $buttons[] = '<hr class="dropdown-divider" />';
+    $buttons[] = $this->element('productList/button/deleteSelectedProducts');
 }
 
 echo $this->element('dropdownWithButtons', [
