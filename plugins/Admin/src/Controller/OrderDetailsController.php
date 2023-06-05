@@ -563,6 +563,9 @@ class OrderDetailsController extends AdminAppController
         $cartType = h($this->getRequest()->getQuery('cartType', null));
         $this->set('cartType', $cartType);
 
+        $filterByCartTypeEnabled = h($this->getRequest()->getQuery('filterByCartTypeEnabled', !is_null($cartType)));
+        $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
+
         $groupBy = h($this->getRequest()->getQuery('groupBy', null));
         if ($this->AppAuth->isManufacturer() && $groupBy != 'product') {
             $groupBy = '';

@@ -59,6 +59,10 @@ $buttons[] = $this->element('orderDetailList/button/deleteSelectedOrderDetails',
     'groupBy' => $groupBy
 ]);
 
+$buttons[] = $this->element('orderDetailList/button/filterByCartTypeEnabled', [
+    'filterByCartTypeEnabled' => $filterByCartTypeEnabled,
+]);
+
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,
     'buttons' => $buttons,

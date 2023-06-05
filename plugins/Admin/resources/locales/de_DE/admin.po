@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-05 10:17+0200\n"
-"PO-Revision-Date: 2023-06-05 10:17+0200\n"
+"POT-Creation-Date: 2023-06-05 10:47+0200\n"
+"PO-Revision-Date: 2023-06-05 10:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -2015,6 +2015,9 @@ msgstr "Markierte Produkte stornieren"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Filter_by_cart_type"
+msgstr "Nach Bestell-Typ filtern"
 
 msgid "Orders_as_pdf"
 msgstr "Bestellungen als PDF"
