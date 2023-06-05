@@ -666,6 +666,13 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .calculator-input {
     display: none;
 }
+.dropdown .dropdown-item {
+    color: #333333 ! important;
+}
+.dropdown .dropdown-item.active,
+.dropdown .dropdown-item:active {
+    color: #fff ! important;
+}
 .dropdown .dropdown-menu {
     font-size: 15px;
 }
