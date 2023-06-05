@@ -17,6 +17,11 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
+$class = 'btn btn-outline-light';
+if (isset($renderAsButtonInDropdown) && $renderAsButtonInDropdown) {
+    $class = 'dropdown-item';
+}
+
 if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer())) {
     $this->element('addScript', [ 'script' =>
         Configure::read('app.jsNamespace').".ModalOrderDetailAllProductsPickedUp.initPickedUpForAllCustomers();" .
@@ -27,7 +32,7 @@ if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin(
             Configure::read('app.jsNamespace').".Helper.disableButton($('.change-products-picked-up-all-customers-button'));"
         ]);
     }
-    echo '<button class="change-products-picked-up-all-customers-button btn btn-outline-light"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
+    echo '<button class="change-products-picked-up-all-customers-button ' . $class . '"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 if (count($pickupDay) == 1 && $groupBy == '' && $customerId > 0 && $manufacturerId == '' && $productId == '') {
@@ -39,7 +44,7 @@ if (count($pickupDay) == 1 && $groupBy == '' && $customerId > 0 && $manufacturer
             Configure::read('app.jsNamespace').".Helper.disableButton($('.change-products-picked-up-button'));"
         ]);
     }
-    echo '<button class="change-products-picked-up-button btn btn-outline-light"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
+    echo '<button class="change-products-picked-up-button ' . $class . '"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 ?>

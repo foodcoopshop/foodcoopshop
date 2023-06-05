@@ -992,3 +992,6 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
     text-align: left;
     text-decoration: none ! important;
 }
+.dropdown {
+    float: left;
+}

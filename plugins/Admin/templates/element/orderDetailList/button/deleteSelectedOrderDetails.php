@@ -20,7 +20,7 @@ if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0 && (!$appAuth->
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".ModalOrderDetailDelete.initBulk();"
     ]);
-    echo '<a id="deleteSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
+    echo '<a id="deleteSelectedProductsButton" class="dropdown-item" href="javascript:void(0);"><i class="fas fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
 }
 
 ?>

@@ -136,9 +136,18 @@ use Cake\Core\Configure;
                     echo $this->element('addInstantOrderButton');
                 }
             }
-            echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
+            
+            echo $this->element('moreDropdown', [
+                'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products')),
+                'emailAddresses' => $emailAddresses,
+                'pickupDay' => $pickupDay,
+                'deposit' => $deposit,
+                'orderDetails' => $orderDetails,
+                'groupBy' => $groupBy
+            ]);
+
             ?>
-            </div>
+        </div>
     </div>
 
 <?php
@@ -334,54 +343,8 @@ if ($groupBy == '') {
 echo '</tr>';
 echo '</table>';
 
-echo '<div class="bottom-button-container">';
-
-    if (!empty($emailAddresses)) {
-        echo $this->element('orderDetailList/button/email', [
-            'emailAddresses' => $emailAddresses
-        ]);
-    }
-
-    if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
-        echo $this->element('addInstantOrderButton', [
-            'additionalClass' => 'bottom',
-        ]);
-    }
-
-    echo $this->element('orderDetailList/button/multiplePickupDays', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/generateOrderDetailsAsPdf', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/backToDepositAccount', [
-        'deposit' => $deposit
-    ]);
-
-    echo $this->element('orderDetailList/button/allProductsPickedUp', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/changePickupDayOfSelectedOrderDetails', [
-        'deposit' => $deposit,
-        'orderDetails' => $orderDetails,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/button/deleteSelectedOrderDetails', [
-        'deposit' => $deposit,
-        'orderDetails' => $orderDetails,
-        'groupBy' => $groupBy
-    ]);
-
-echo '</div>';
-echo '<div class="sc"></div>';
 ?>
-
     <div class="sc"></div>
-
 </div>
 <?php
     if ($groupBy == '') {

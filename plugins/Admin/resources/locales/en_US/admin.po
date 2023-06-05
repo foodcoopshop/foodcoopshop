@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-05-30 21:50+0200\n"
-"PO-Revision-Date: 2023-05-30 21:57+0200\n"
+"POT-Creation-Date: 2023-06-05 09:49+0200\n"
+"PO-Revision-Date: 2023-06-05 09:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1995,6 +1995,15 @@ msgstr "My products"
 msgid "My_profile"
 msgstr "My profile"
 
+msgid "Print"
+msgstr "Print"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "More..."
+msgstr "More..."
+
 msgid "All_products_picked_up?"
 msgstr "All products picked up?"
 
@@ -2659,9 +2668,6 @@ msgstr "ProductID"
 
 #~ msgid "Discount"
 #~ msgstr "Discount"
-
-#~ msgid "Print"
-#~ msgstr "Print"
 
 #~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 #~ msgstr "The amount was added to the member fee system of {0} and can be deleted there."

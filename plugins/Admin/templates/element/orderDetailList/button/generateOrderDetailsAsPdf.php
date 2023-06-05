@@ -27,7 +27,7 @@ if (count($orderDetails) == 0) {
     ]);
 }
 if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
-    echo '<a href="/admin/order-details/orderDetailsAsPdf.pdf?'.$orderParam.'pickupDay='.$pickupDay[0].'" target="blank" class="btn btn-outline-light generate-order-details-as-pdf"><i class="far fa-file-pdf"></i> '.__d('admin', 'Orders_as_pdf').'</a>';
+    echo '<a href="/admin/order-details/orderDetailsAsPdf.pdf?'.$orderParam.'pickupDay='.$pickupDay[0].'" target="blank" class="generate-order-details-as-pdf dropdown-item"><i class="far fa-file-pdf"></i> '.__d('admin', 'Orders_as_pdf').'</a>';
 }
 
 ?>
