@@ -23,4 +23,4 @@ if (empty($products)) {
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ModalProductDelete.init();"
 ]);
-echo '<a id="deleteSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-trash-alt not-ok"></i> ' . __d('admin', 'Delete') . '</a>';
+echo '<a id="deleteSelectedProducts" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw far fa-trash-alt not-ok"></i> ' . __d('admin', 'Delete') . '</a>';

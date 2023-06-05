@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-13 21:01+0100\n"
-"PO-Revision-Date: 2023-03-06 22:05+0100\n"
+"POT-Creation-Date: 2023-06-05 10:47+0200\n"
+"PO-Revision-Date: 2023-06-05 10:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -1680,6 +1680,9 @@ msgstr "The pickup day of the instant order will be automatically changed to <b>
 msgid "Group_by..."
 msgstr "Group by..."
 
+msgid "all_cart_types"
+msgstr "all order types"
+
 msgid "Deposit_return"
 msgstr "Deposit return"
 
@@ -1854,9 +1857,6 @@ msgstr "New?"
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
 
-msgid "Selected_products"
-msgstr "Selected products"
-
 msgid "Storage_location"
 msgstr "Storage location"
 
@@ -1971,6 +1971,12 @@ msgstr "1 day back"
 msgid "to"
 msgstr "to"
 
+msgid "Print_page"
+msgstr "Print page"
+
+msgid "Help"
+msgstr "Help"
+
 msgid "Bank_account_data"
 msgstr "Bank account data"
 
@@ -2006,6 +2012,9 @@ msgstr "Cancel selected products"
 
 msgid "Copy_all_email_addresses"
 msgstr "Copy all e-mail adresses"
+
+msgid "Filter_by_cart_type"
+msgstr "Filter by order type"
 
 msgid "Orders_as_pdf"
 msgstr "Orders as PDF"
@@ -2043,6 +2052,9 @@ msgstr "Show all ordered products from {0}"
 msgid "Order_state"
 msgstr "Order state"
 
+msgid "Cart_type"
+msgstr "Order type"
+
 msgid "Order_date"
 msgstr "Order date"
 
@@ -2063,6 +2075,9 @@ msgstr "Click to change weight"
 
 msgid "Picked_up"
 msgstr "Picked up"
+
+msgid "More"
+msgstr "More"
 
 msgid "Delivery_days"
 msgstr "Delivery days"
@@ -2186,6 +2201,9 @@ msgstr "The purchase price was not yet set, only then the product can be ordered
 
 msgid "change_tax_rate"
 msgstr "change tax rate"
+
+msgid "Selected_products"
+msgstr "Selected products"
 
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
@@ -2430,6 +2448,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "Product_ID"
 msgstr "ProductID"
 
+#~ msgid "Print"
+#~ msgstr "Print"
+
 #~ msgid "Net_turnover"
 #~ msgstr "Net turnover"
 
@@ -2653,9 +2674,6 @@ msgstr "ProductID"
 
 #~ msgid "Discount"
 #~ msgstr "Discount"
-
-#~ msgid "Print"
-#~ msgstr "Print"
 
 #~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 #~ msgstr "The amount was added to the member fee system of {0} and can be deleted there."

@@ -23,4 +23,4 @@ if (empty($products)) {
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ModalProductDeliveryRhythmEdit.initBulk();"
 ]);
-echo '<a id="editDeliveryRhythmForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-clock"></i> ' . __d('admin', 'Edit_delivery_rhythm') . '</a>';
+echo '<a id="editDeliveryRhythmForSelectedProducts" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw far fa-clock"></i> ' . __d('admin', 'Edit_delivery_rhythm') . '</a>';

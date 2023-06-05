@@ -82,7 +82,7 @@ body.admin h2 span a:hover,
 .btn-success:active {
     border-color: transparent;
 }
-a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):hover {
+a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):not(.dropdown-item):hover {
     text-decoration: underline ! important;
 }
 .swiper-button-next,
@@ -573,7 +573,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .bootstrap-select .dropdown-toggle .filter-option-inner {
     padding-right: 12px;
 }
-.bootstrap-select .dropdown-menu li a span.text,
+.dropdown .dropdown-menu li a span.text,
 .bootstrap-select .no-results {
     color: #262626;
     font-size: 14px;
@@ -585,8 +585,8 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     box-shadow: inherit;
     border-color: #dfdfdf ! important;
 }
-.bootstrap-select .dropdown-item.active span,
-.bootstrap-select .dropdown-item:active span {
+.dropdown .dropdown-item.active span,
+.dropdown .dropdown-item:active span {
     color: #fff ! important;
 }
 .bootstrap-select .dropdown-header {
@@ -601,7 +601,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .bootstrap-select.big {
     width: 250px ! important;
 }
-.bootstrap-select .dropdown-item {
+.dropdown .dropdown-item {
     padding-top: .15rem;
     padding-bottom: .15rem;
 }
@@ -611,14 +611,11 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
     color: #333;
 }
-.bootstrap-select .btn.dropdown-toggle {
+.dropdown .btn.dropdown-toggle {
     background-color: #fff;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: -1px;
     border-color: #dfdfdf;
 }
-.bootstrap-select .dropdown-menu li a.opt {
+.dropdown .dropdown-menu li a.opt {
     padding-left: 1.5em;
 }
 .bootstrap-select div.filter-option-inner-inner i.fas {
@@ -668,4 +665,11 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 }
 .calculator-input {
     display: none;
+}
+.dropdown .dropdown-menu {
+    font-size: 15px;
+}
+.dropdown .dropdown-menu i {
+    margin-right: 3px;
+    margin-left: -5px;
 }

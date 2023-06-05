@@ -138,7 +138,9 @@ use Cake\Core\Configure;
                     echo '</div>';
                 }
 
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]);
+                echo $this->element('productList/selectedProductsDropdown', [
+                    'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products')),
+                ]);
 
                 ?>
             </div>
@@ -342,17 +344,6 @@ use Cake\Core\Configure;
     echo '</tr>';
 
     echo '</table>';
-
-    echo '<div class="bottom-button-container">';
-        if (!empty($products)) {
-            echo '<div style="float:left;padding:4px;">' . __d('admin', 'Selected_products') . ':</div>';
-            echo $this->element('productList/button/deleteSelectedProducts');
-            echo $this->element('productList/button/calculateSellingPriceWithSurchargeForSelectedProducts');
-            echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
-            echo $this->element('productList/button/editStatusForSelectedProducts');
-            echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
-        }
-    echo '</div>';
 
     ?>
 

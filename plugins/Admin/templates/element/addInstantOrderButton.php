@@ -21,7 +21,7 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".ModalIOrderForDifferentCustomerAdd.init('#add-instant-order-button-wrapper .btn');"
 ]);
-echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
+echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper">';
     $options = [
         'escape' => false
     ];

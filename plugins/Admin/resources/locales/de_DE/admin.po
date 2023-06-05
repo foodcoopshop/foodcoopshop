@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-02-13 21:01+0100\n"
-"PO-Revision-Date: 2023-02-13 21:01+0100\n"
+"POT-Creation-Date: 2023-06-05 10:47+0200\n"
+"PO-Revision-Date: 2023-06-05 10:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -1683,6 +1683,9 @@ msgstr "Der Abholtag der Sofort-Bestellung wird automatisch auf <b>heute, {0}</b
 msgid "Group_by..."
 msgstr "Gruppieren nach..."
 
+msgid "all_cart_types"
+msgstr "alle Bestelltypen"
+
 msgid "Deposit_return"
 msgstr "Pfand-Rückgabe"
 
@@ -1857,9 +1860,6 @@ msgstr "Neu?"
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
 
-msgid "Selected_products"
-msgstr "Markierte Produkte"
-
 msgid "Storage_location"
 msgstr "Lagerort"
 
@@ -1974,6 +1974,12 @@ msgstr "1 Tag vor"
 msgid "to"
 msgstr "bis"
 
+msgid "Print_page"
+msgstr "Seite drucken"
+
+msgid "Help"
+msgstr "Hilfe"
+
 msgid "Bank_account_data"
 msgstr "Bankdaten"
 
@@ -2009,6 +2015,9 @@ msgstr "Markierte Produkte stornieren"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Filter_by_cart_type"
+msgstr "Nach Bestell-Typ filtern"
 
 msgid "Orders_as_pdf"
 msgstr "Bestellungen als PDF"
@@ -2046,6 +2055,9 @@ msgstr "Alle bestellten Produkte von {0} anzeigen"
 msgid "Order_state"
 msgstr "Bestellstatus"
 
+msgid "Cart_type"
+msgstr "Bestell-Typ"
+
 msgid "Order_date"
 msgstr "Bestelldatum"
 
@@ -2066,6 +2078,9 @@ msgstr "Zum Ändern des Gewichtes anklicken"
 
 msgid "Picked_up"
 msgstr "Abgeholt"
+
+msgid "More"
+msgstr "Mehr"
 
 msgid "Delivery_days"
 msgstr "Liefertage"
@@ -2189,6 +2204,9 @@ msgstr "Das Produkt kann erst bestellt werden, sobald der Einkaufspreis hinterle
 
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"
+
+msgid "Selected_products"
+msgstr "Markierte Produkte"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
@@ -2433,6 +2451,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#~ msgid "Print"
+#~ msgstr "Drucken"
+
 #~ msgid "Net_turnover"
 #~ msgstr "Netto-Umsatz"
 
@@ -2661,9 +2682,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "Discount"
 #~ msgstr "Rabatt"
-
-#~ msgid "Print"
-#~ msgstr "Drucken"
 
 #~ msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 #~ msgstr "Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."

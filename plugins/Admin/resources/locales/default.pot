@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-02-13 21:01+0100\n"
+"POT-Creation-Date: 2023-06-05 10:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1673,6 +1673,9 @@ msgstr ""
 msgid "Group_by..."
 msgstr ""
 
+msgid "all_cart_types"
+msgstr ""
+
 msgid "Deposit_return"
 msgstr ""
 
@@ -1847,9 +1850,6 @@ msgstr ""
 msgid "Delivery_rhythm"
 msgstr ""
 
-msgid "Selected_products"
-msgstr ""
-
 msgid "Storage_location"
 msgstr ""
 
@@ -1964,6 +1964,12 @@ msgstr ""
 msgid "to"
 msgstr ""
 
+msgid "Print_page"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
 msgid "Bank_account_data"
 msgstr ""
 
@@ -1998,6 +2004,9 @@ msgid "Cancel_selected_products"
 msgstr ""
 
 msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "Filter_by_cart_type"
 msgstr ""
 
 msgid "Orders_as_pdf"
@@ -2036,6 +2045,9 @@ msgstr ""
 msgid "Order_state"
 msgstr ""
 
+msgid "Cart_type"
+msgstr ""
+
 msgid "Order_date"
 msgstr ""
 
@@ -2055,6 +2067,9 @@ msgid "Click_to_change_weight"
 msgstr ""
 
 msgid "Picked_up"
+msgstr ""
+
+msgid "More"
 msgstr ""
 
 msgid "Delivery_days"
@@ -2178,6 +2193,9 @@ msgid "Purchase_price_not_set_and_therefore_never_active."
 msgstr ""
 
 msgid "change_tax_rate"
+msgstr ""
+
+msgid "Selected_products"
 msgstr ""
 
 msgid "Dear_financial_responsible"

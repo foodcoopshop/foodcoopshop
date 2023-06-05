@@ -33,6 +33,6 @@ if (!empty($queryParams)) {
 }
 $hrefMultiplePickupDay = $this->request->getUri()->getPath() . $queryString;
 
-echo '<a class="btn btn-outline-light button" href="'.$hrefMultiplePickupDay.'"><i class="far fa-calendar-' . ($multiplePickupDayMode ? 'plus' : 'minus') .'"></i> ' . __d('admin', 'Multiple_pickup_days') . ': ' . $this->Html->getYesNo($multiplePickupDayMode) . '</a>';
+echo '<a class="dropdown-item" href="'.$hrefMultiplePickupDay.'"><i class="fa-fw far fa-calendar-' . ($multiplePickupDayMode ? 'plus' : 'minus') .'"></i> ' . __d('admin', 'Multiple_pickup_days') . ': ' . $this->Html->getYesNo($multiplePickupDayMode) . '</a>';
 
 ?>

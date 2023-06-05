@@ -95,6 +95,11 @@ use Cake\Core\Configure;
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
+            <?php
+                if ($filterByCartTypeEnabled) {
+                    echo $this->Form->control('cartType', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_cart_types'), 'options' => $this->Html->getCartTypes(), 'default' => $cartType]);
+                }
+            ?>
         <?php echo $this->Form->end(); ?>
 
             <div class="right">
@@ -130,14 +135,22 @@ use Cake\Core\Configure;
                 }
             }
 
-            if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED'))) {
-                if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
-                    echo $this->element('addInstantOrderButton');
-                }
+            if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
+                echo $this->element('addInstantOrderButton');
             }
-            echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
+            
+            echo $this->element('orderDetailList/moreDropdown', [
+                'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products')),
+                'emailAddresses' => $emailAddresses,
+                'pickupDay' => $pickupDay,
+                'deposit' => $deposit,
+                'orderDetails' => $orderDetails,
+                'groupBy' => $groupBy,
+                'filterByCartTypeEnabled' => $filterByCartTypeEnabled,
+            ]);
+
             ?>
-            </div>
+        </div>
     </div>
 
 <?php
@@ -333,54 +346,8 @@ if ($groupBy == '') {
 echo '</tr>';
 echo '</table>';
 
-echo '<div class="bottom-button-container">';
-
-    if (!empty($emailAddresses)) {
-        echo $this->element('orderDetailList/button/email', [
-            'emailAddresses' => $emailAddresses
-        ]);
-    }
-
-    if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
-        echo $this->element('addInstantOrderButton', [
-            'additionalClass' => 'bottom',
-        ]);
-    }
-
-    echo $this->element('orderDetailList/button/multiplePickupDays', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/generateOrderDetailsAsPdf', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/backToDepositAccount', [
-        'deposit' => $deposit
-    ]);
-
-    echo $this->element('orderDetailList/button/allProductsPickedUp', [
-        'pickupDay' => $pickupDay
-    ]);
-
-    echo $this->element('orderDetailList/button/changePickupDayOfSelectedOrderDetails', [
-        'deposit' => $deposit,
-        'orderDetails' => $orderDetails,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/button/deleteSelectedOrderDetails', [
-        'deposit' => $deposit,
-        'orderDetails' => $orderDetails,
-        'groupBy' => $groupBy
-    ]);
-
-echo '</div>';
-echo '<div class="sc"></div>';
 ?>
-
     <div class="sc"></div>
-
 </div>
 <?php
     if ($groupBy == '') {
