@@ -135,10 +135,8 @@ use Cake\Core\Configure;
                 }
             }
 
-            if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED'))) {
-                if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
-                    echo $this->element('addInstantOrderButton');
-                }
+            if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
+                echo $this->element('addInstantOrderButton');
             }
             
             echo $this->element('orderDetailList/moreDropdown', [

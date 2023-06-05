@@ -24,12 +24,6 @@ if (!empty($emailAddresses)) {
     ]);
 }
 
-if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
-    $buttons[] =  $this->element('addInstantOrderButton', [
-        'additionalClass' => 'bottom',
-    ]);
-}
-
 $buttons[] = $this->element('orderDetailList/button/generateOrderDetailsAsPdf', [
     'pickupDay' => $pickupDay
 ]);
