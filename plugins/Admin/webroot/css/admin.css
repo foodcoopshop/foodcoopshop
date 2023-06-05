@@ -630,7 +630,7 @@ body.payments .bottom-button-container {
 }
 .btn:not(.dropdown-toggle):not(.btn-close),
 .btn.dropdown-toggle {
-    padding: 3px 6px;
+    padding: 4px 6px 3px 6px;
     font-size: 14px;
 }
 form.fcs-form {
