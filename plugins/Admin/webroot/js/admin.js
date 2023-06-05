@@ -473,7 +473,6 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.disableButton(button);
 
         $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
-            console.log('click');
             foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
