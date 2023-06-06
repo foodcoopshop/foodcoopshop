@@ -92,7 +92,7 @@ a.btn-outline-light.help {
 }
 .input.select, .input.checkbox, .input.text {
     display: inline-block;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
 }
 .checkbox input[type="checkbox"] {
     margin-left: 0; /* bootstrap overwrite */
@@ -356,7 +356,7 @@ body.order_details.index .pickup-day-filter-wrapper {
     align-items: baseline;
 }
 body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
-    width: 328px;
+    width: 330px;
 }
 body.order_details.index .weekday-as-name {
     text-align: right;
