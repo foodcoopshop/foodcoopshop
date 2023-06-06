@@ -15,8 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-
-
 $buttons = array_filter($buttons); // remove empty array elements
 
 $buttons[] = '<hr class="dropdown-divider" />';
