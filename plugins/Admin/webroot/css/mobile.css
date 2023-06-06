@@ -57,6 +57,9 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     clear: both;
     margin-left: 0px;
 }
+body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
+    width: 100%;
+}
 .sb-toggle-left {
     float: left;
     margin: 0 5px 0 0;

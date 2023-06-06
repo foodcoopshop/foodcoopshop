@@ -218,10 +218,6 @@ td.amount .fa-times {
 .filter-container-not-fixed .right {
     float: right;
 }
-.filter-container .right {
-    margin-top: 3px;
-    margin-bottom: -3px;
-}
 .filter-container .right .icons,
 .filter-container-not-fixed .right .icons {
     float: left;
@@ -251,7 +247,7 @@ td.amount .fa-times {
     font-size: 23px;
 }
 .filter-container input[type="text"] {
-    padding: 4px 6px 3px 6px;
+    padding: 4px 6px;
     border-radius: 4px;
     font-size: 14px;
 }
@@ -356,9 +352,8 @@ body.order_details.index .pickup-day-filter-wrapper {
     display: flex;
     float: left;
     width: 270px;
-    gap: 4px;
+    gap: 3px;
     align-items: baseline;
-    margin-right: 4px;
 }
 body.order_details.index .pickup-day-filter-wrapper.two-pickup-days {
     width: 328px;
@@ -755,7 +750,8 @@ form.fcs-form .input.time .after.small {
 }
 div.date-field-wrapper {
     position: relative;
-    display: inline-block;
+    float: left;
+    margin-right: 3px;
 }
 ul.nav-tabs {
     background: #efefef;
@@ -775,7 +771,7 @@ ul.nav-tabs li.active a {
 a.btn-arrow {
     display: inline-block;
     position: absolute;
-    top: 4px;
+    top: 5px;
     color: #ccc ! important;
     width: 15px;
 }
