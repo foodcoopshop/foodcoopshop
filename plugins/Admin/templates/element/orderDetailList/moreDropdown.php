@@ -15,8 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 if (!empty($emailAddresses)) {
     $buttons[] =  $this->element('orderDetailList/button/email', [
         'emailAddresses' => $emailAddresses,
