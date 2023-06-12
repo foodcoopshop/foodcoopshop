@@ -585,6 +585,10 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     box-shadow: inherit;
     border-color: #dfdfdf ! important;
 }
+.bootstrap-select .dropdown-toggle:focus {
+	outline: 1px dotted #333 ! important;
+}
+
 .dropdown .dropdown-item.active span,
 .dropdown .dropdown-item:active span {
     color: #fff ! important;
