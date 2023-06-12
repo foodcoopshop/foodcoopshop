@@ -370,6 +370,9 @@ body.home h1,
 body.blog_posts.index h1 {
     padding-bottom: 0;
 }
+body.home .home-text {
+    margin-bottom: 10px;
+}
 a.button {
     border-radius: 5px;
     color: #fff;
