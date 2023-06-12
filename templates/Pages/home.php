@@ -23,6 +23,12 @@ $this->element('addScript', ['script' =>
 
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
+if (Configure::read('appDb.FCS_HOME_TEXT') != '') {
+    echo '<div class="home-text">';
+        echo Configure::read('appDb.FCS_HOME_TEXT');
+    echo '</div>';
+    echo '<hr />';
+}
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
     echo '<h1 class="news">'.__('News').'</h1>';
 }
