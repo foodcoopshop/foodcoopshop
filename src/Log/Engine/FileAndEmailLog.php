@@ -54,6 +54,7 @@ class FileAndEmailLog extends FileLog
             '{"pickup_day":{"allow-only-one-weekday"',
             '{"email":{"unique"',
             '{"email":{"exists"',
+            '{"email":{"_empty"',
             '{"delivery_rhythm_',
             '{"quantity_in_units"',
             '{"email":{"account_inactive"',
