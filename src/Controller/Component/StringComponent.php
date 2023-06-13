@@ -73,25 +73,6 @@ class StringComponent extends Component
      * @param string $string
      * @return string
      */
-    public static function decodeJsonFromForm($string)
-    {
-        return json_decode(str_replace("\r\n", '', $string), true);
-    }
-
-    /**
-     * @param string $string
-     * @return string
-     */
-    public static function brAndP2nl($string)
-    {
-        $string = preg_replace("/<p>(.*?)<\/p>/", "$1<br />", $string);
-        return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, $string);
-    }
-
-    /**
-     * @param string $string
-     * @return string
-     */
     public static function nl2br2($string)
     {
         $string = str_replace([
