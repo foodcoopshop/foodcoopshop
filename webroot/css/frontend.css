@@ -1295,8 +1295,8 @@ body.customers.registration_successful #inner-content h2.further-news {
 }
 #inner-content ul,
 #info-box ul {
-  padding-left: 10px;
-  margin-left: 10px;
+  padding-left: 10px ! important;
+  margin-left: 15px;
   margin-top: 10px;
 }
 #inner-content li,
