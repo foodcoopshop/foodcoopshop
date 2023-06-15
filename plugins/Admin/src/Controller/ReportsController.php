@@ -59,7 +59,7 @@ class ReportsController extends AdminAppController
             $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
             $reader = $bankClassName::createFromString($content);
 
-            if (Configure::read('app.bankNameForCreditSystem') == 'Sparkasse') {
+            if ($reader->csvHasIsoFormat) {
                 $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
             }
 

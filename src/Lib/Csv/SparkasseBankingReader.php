@@ -20,6 +20,8 @@ use Cake\Core\Configure;
 
 class SparkasseBankingReader extends BankingReader {
 
+    public $csvHasIsoFormat = true;
+
     public function configureType(): void
     {
         $this->setDelimiter(';');

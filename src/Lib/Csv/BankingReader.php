@@ -25,6 +25,8 @@ use League\Csv\Reader;
 
 abstract class BankingReader extends Reader implements BankingReaderInterface {
 
+    public $csvHasIsoFormat = false;
+
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = FactoryLocator::get('Table')->get('Customers');
