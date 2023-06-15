@@ -58,7 +58,10 @@ class ReportsController extends AdminAppController
             $content = $upload->getStream()->getContents();
             $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
             $reader = $bankClassName::createFromString($content);
-            $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+
+            if (Configure::read('app.bankNameForCreditSystem') == 'Sparkasse') {
+                $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+            }
 
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
