@@ -1109,6 +1109,8 @@ class ProductsController extends AdminAppController
             }
         }
 
+        $oldStockAvailable = $oldProduct->stock_available->quantity;
+
         try {
             $object2save = [
                 'quantity' => $this->getRequest()->getData('quantity'),
@@ -1142,7 +1144,9 @@ class ProductsController extends AdminAppController
                 $newValue = $entity->get($dirtyField);
                 switch($dirtyField) {
                     case 'quantity':
-                        $translatedFieldName = __d('admin', 'Available_quantity');
+                        $translatedFieldName = __d('admin', 'Available_quantity') . ': ' 
+                            . __d('admin', 'Old_value') . ': <b>' . $oldStockAvailable . '</b> '
+                            . __d('admin', 'New_value');
                         break;
                     case 'always_available':
                         $translatedFieldName = __d('admin', 'Always_available');

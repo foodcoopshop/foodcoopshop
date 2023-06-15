@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-05 10:47+0200\n"
-"PO-Revision-Date: 2023-06-05 10:48+0200\n"
+"POT-Creation-Date: 2023-06-15 21:31+0200\n"
+"PO-Revision-Date: 2023-06-15 21:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -587,6 +587,12 @@ msgstr "Die Anzahl des Produktes {0} wurde erfolgreich geändert."
 
 msgid "Available_quantity"
 msgstr "Verfügbare Menge"
+
+msgid "Old_value"
+msgstr "Alter Wert"
+
+msgid "New_value"
+msgstr "Neuer Wert"
 
 msgid "Always_available"
 msgstr "Immer verfügbar"
