@@ -25,13 +25,6 @@ use League\Csv\Reader;
 
 abstract class BankingReader extends Reader implements BankingReaderInterface {
 
-
-    protected function enableUTF8()
-    {
-        $this->setOutputBOM(Reader::BOM_UTF8);
-        $this->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
-    }
-
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = FactoryLocator::get('Table')->get('Customers');

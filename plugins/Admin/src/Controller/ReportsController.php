@@ -58,12 +58,7 @@ class ReportsController extends AdminAppController
             $content = $upload->getStream()->getContents();
             $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
             $reader = $bankClassName::createFromString($content);
-
-            // change uploaded file charset from UTF16 to UTF8
-            $inputBom = $reader->getInputBOM();
-            if ($inputBom === Reader::BOM_UTF16_LE || $inputBom === Reader::BOM_UTF16_BE) {
-                $reader->addStreamFilter('convert.iconv.UTF-16/UTF-8');
-            }
+            $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
 
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());

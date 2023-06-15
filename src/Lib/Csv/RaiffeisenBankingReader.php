@@ -24,7 +24,6 @@ class RaiffeisenBankingReader extends BankingReader {
 
     public function configureType(): void
     {
-        $this->enableUTF8();
         $this->setDelimiter(';');
     }
 
