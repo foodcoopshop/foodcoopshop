@@ -1,2 +1,2 @@
-"Buchungsdatum";"Betrag";"Buchungs-Info";"Partnername";"Partner IBAN";"BIC/SWIFT";"Partner Kontonummer";"Bankleitzahl";"Währung";"Buchungsreferenz";"Valutadatum";"Eigener Kontoname";"Eigene IBAN";"Notiz";"Highlight";"Virtuelle Kartennummer";"Bezahlt mit";"App";"Zahlungsreferenz";"Mandats ID";"Creditor ID"
-"02.05.2022";"100,00";"";"Test User";"AT301500000721373439";"OBKLAT2LXXX";"";"15000";"EUR";"1500022050112212180806782627";"02.05.2022";"d`Speis - unsere FoodCoop in Andorf";"AT742032032100633811";"";"0";"";"";"";"838B34A3";"";""
+Buchungsdatum;Partnername;Partner IBAN;BIC/SWIFT;Partner Kontonummer;Bankleitzahl;Betrag;Währung;Buchungs-Details;Zahlungsreferenz
+14.06.2023;vorname nachname;AT936000000074354918;BAWAATWWXXX;;60000;100;EUR;838B34A3;

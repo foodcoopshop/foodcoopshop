@@ -22,6 +22,7 @@ class SparkasseBankingReader extends BankingReader {
 
     public function configureType(): void
     {
+        $this->enableUTF8();
         $this->setDelimiter(';');
         $this->setHeaderOffset(0);
     }
@@ -31,12 +32,14 @@ class SparkasseBankingReader extends BankingReader {
 
         $result = false;
         if (strlen($record['Buchungsdatum']) == 10 &&
-            $record['Währung'] == 'EUR' &&
-            is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record['Betrag'])) &&
             isset($record['Partnername']) &&
             isset($record['Partner IBAN']) &&
-            isset($record['Buchungs-Info']) &&
-            isset($record['Buchungsreferenz']) &&
+            isset($record['BIC/SWIFT']) &&
+            isset($record['Partner Kontonummer']) &&
+            isset($record['Bankleitzahl']) &&
+            is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record['Betrag'])) &&
+            isset($record['Währung']) && $record['Währung'] == 'EUR' &&
+            isset($record['Buchungs-Details']) &&
             isset($record['Zahlungsreferenz'])
             ) {
             $result = true;
@@ -53,11 +56,11 @@ class SparkasseBankingReader extends BankingReader {
         foreach($records as $record) {
 
             $contentFields = [
-                $record['Buchungs-Info'],
+                $record['Buchungs-Details'],
                 $record['Zahlungsreferenz'],
                 $record['Partnername'],
                 $record['Partner IBAN'],
-                $record['Buchungsreferenz'],
+                $record['Buchungs-Details'],
             ];
 
             $contentFields = array_filter($contentFields);
