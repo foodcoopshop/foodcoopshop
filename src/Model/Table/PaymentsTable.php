@@ -92,11 +92,24 @@ class PaymentsTable extends AppTable
     {
         $alreadyImported = $this->find('all', [
             'conditions' => [
-                'transaction_text' => $transactionText,
                 'date_transaction_add' => new FrozenTime($date),
                 'status' => APP_ON,
             ]
-        ])->count() > 0;
+        ])
+        ->where(function ($exp, $query) use ($transactionText) {
+            return $exp->or([
+                'transaction_text' => $transactionText,
+                // as I found no way to restore the � in the database, I made a workaround:
+                // the or condition is needed for the case that the transaction text contains a �
+                // which was the case until june 2023 when BankingReader->csvHasIsoFormat was introduced
+                'REPLACE(transaction_text, "�", "") =' => str_replace(
+                    ['ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü', 'ß'],
+                    [ '',  '',  '',  '',  '',  '',  ''],
+                    $transactionText,
+                ),
+            ]);
+        })->count() > 0;
+
         return $alreadyImported;
     }
 
