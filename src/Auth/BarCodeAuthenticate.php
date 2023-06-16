@@ -22,6 +22,7 @@ use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\ORM\Query;
 use Cake\Utility\Security;
+use Cake\Database\Expression\QueryExpression;
 
 class BarCodeAuthenticate extends BaseAuthenticate {
 
@@ -62,7 +63,7 @@ class BarCodeAuthenticate extends BaseAuthenticate {
 
       $options = [
           'conditions' => [
-              $this->getIdentifierField($table) . ' = "' . $username . '"'
+            (new QueryExpression())->eq($this->getIdentifierField($table), $username),
           ]
       ];
 
