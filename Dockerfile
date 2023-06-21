@@ -11,7 +11,7 @@ RUN apk update && \
     apk add gettext && \
     npm install -g npm-check-updates && \
     npm install -g eslint && \
-    npm install -g npm@9.7.1
+    npm install -g npm@9.7.2
 
 #avoid permission error on gitpod on running npm install
 RUN npm config set cache /app/tmp --global
