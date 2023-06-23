@@ -26,8 +26,12 @@ use Cake\Core\Configure;
             <td>
 
                 <p>
-                    <?php echo __('Please_click_on_this_link_to_activate_your_new_password'); ?>:<br />
-                    <a href="<?php echo Configure::read('App.fullBaseUrl').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?>"><?php echo Configure::read('App.fullBaseUrl').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?></a>
+                    <?php echo __('your_new_password_is:'); ?><br />
+                    <b><?php echo $newPassword; ?></b>
+                </p>
+
+                <p>
+                    <?php echo __('Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it.'); ?>
                 </p>
 
             </td>

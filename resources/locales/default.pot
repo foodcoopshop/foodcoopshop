@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-30 21:50+0200\n"
+"POT-Creation-Date: 2023-06-23 07:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -362,16 +362,19 @@ msgstr ""
 msgid "Errors_while_saving!"
 msgstr ""
 
-msgid "New_password_for_{0}"
+msgid "New_password_request_for_{0}"
 msgstr ""
 
-msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
+msgid "We_successfully_sent_the_activation_link_for_your_new_password_to_you."
 msgstr ""
 
 msgid "Your_new_password_was_already_activated_or_the_activation_code_was_not_valid."
 msgstr ""
 
-msgid "Your_new_password_was_successfully_activated."
+msgid "Your_new_password_was_successfully_activated_and_sent_to_you."
+msgstr ""
+
+msgid "New_password_for_{0}"
 msgstr ""
 
 msgid "Sign_in"
@@ -2672,10 +2675,10 @@ msgstr ""
 msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr ""
 
-msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgid "your_new_password_is:"
 msgstr ""
 
-msgid "your_new_password_is:"
+msgid "Please_click_on_this_link_to_activate_your_new_password"
 msgstr ""
 
 msgid "thank_you_for_your_order_from_{0}."

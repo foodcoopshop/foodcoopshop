@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-05-30 21:50+0200\n"
-"PO-Revision-Date: 2023-05-30 21:52+0200\n"
+"POT-Creation-Date: 2023-06-23 07:46+0200\n"
+"PO-Revision-Date: 2023-06-23 07:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -363,17 +363,20 @@ msgstr "Neues Passwort anfordern"
 msgid "Errors_while_saving!"
 msgstr "Beim Speichern sind Fehler aufgetreten!"
 
-msgid "New_password_for_{0}"
-msgstr "Neues Passwort für {0}"
+msgid "New_password_request_for_{0}"
+msgstr "Neues Passwort für {0} angefordert"
 
-msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
-msgstr "Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden."
+msgid "We_successfully_sent_the_activation_link_for_your_new_password_to_you."
+msgstr "Wir haben dir soeben den Aktivierungslink für dein neues Passwort gesendet."
 
 msgid "Your_new_password_was_already_activated_or_the_activation_code_was_not_valid."
 msgstr "Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig."
 
-msgid "Your_new_password_was_successfully_activated."
-msgstr "Dein neues Passwort wurde erfolgreich aktiviert."
+msgid "Your_new_password_was_successfully_activated_and_sent_to_you."
+msgstr "Du hast dein neues Passwort erfolgreich aktiviert und es wurde dir soeben per E-Mail geschickt."
+
+msgid "New_password_for_{0}"
+msgstr "Neues Passwort für {0}"
 
 msgid "Sign_in"
 msgstr "Anmelden"
@@ -2673,11 +2676,11 @@ msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt."
 msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr "Du erhältst diese Nachricht, weil der Liefertag dieser Bestellung automatisch auf <b>heute ({0})</b>, gesetzt wurde und sie daher nicht in deinen Bestelllisten aufscheint."
 
-msgid "Please_click_on_this_link_to_activate_your_new_password"
-msgstr "Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren"
-
 msgid "your_new_password_is:"
 msgstr "dein neues Passwort lautet:"
+
+msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgstr "Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren"
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "vielen Dank für deine Bestellung vom {0}."
@@ -2786,6 +2789,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
+#~ msgstr "Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden."
 
 #~ msgid "{0,plural,=1{further_delivery_break} other{further_delivery_breaks}}"
 #~ msgstr "{0,plural,=1{1 weitere Lieferpause} other{# weitere Lieferpausen}}"

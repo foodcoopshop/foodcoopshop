@@ -109,7 +109,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
     public function testNewPasswordRequestWithValidEmail()
     {
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
-        $this->assertFlashMessage('Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden.');
+        $this->assertFlashMessage('Wir haben dir soeben den Aktivierungslink für dein neues Passwort gesendet.');
 
         $customer = $this->Customer->find('all', [
             'email' => Configure::read('test.loginEmailCustomer')
@@ -119,20 +119,26 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertFlashMessage('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
 
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
-        $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert.');
+        $this->assertFlashMessage('Du hast dein neues Passwort erfolgreich aktiviert und es wurde dir soeben per E-Mail geschickt.');
 
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Neues Passwort für FoodCoop Test');
         $this->assertMailContainsHtmlAt(0, 'Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
 
-        preg_match_all('/\<b\>(.*)\<\/b\>/', TestEmailTransport::getMessages()[0]->getBodyHtml(), $matches);
+        preg_match_all('/href="([^"]+)"/', TestEmailTransport::getMessages()[0]->getBodyHtml(), $matches);
+        $activationLink = str_replace(Configure::read('App.fullBaseUrl'), '', $matches[1][1]);
+        $this->get($activationLink);
+        $this->runAndAssertQueue();
 
+        preg_match_all('/\<b\>(.*)\<\/b\>/', TestEmailTransport::getMessages()[1]->getBodyHtml(), $matches);
+        $plainTextPassword = $matches[1][0]; 
         $this->post($this->Slug->getLogin(), [
             'email' => Configure::read('test.loginEmailCustomer'),
-            'passwd' => $matches[1][0],
+            'passwd' => $plainTextPassword,
         ]);
-        $this->assertResponseCode(302); // if password is wrong, response code is 200
+        $this->assertSessionHasKey('Auth');
+        $this->assertResponseCode(302); // if password is wrong, response code is 200 (sic!)
     }
 
     private function doPostNewPasswordRequest($email)

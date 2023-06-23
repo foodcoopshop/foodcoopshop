@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-05-30 21:50+0200\n"
-"PO-Revision-Date: 2023-05-30 21:56+0200\n"
+"POT-Creation-Date: 2023-06-23 07:46+0200\n"
+"PO-Revision-Date: 2023-06-23 07:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -363,17 +363,20 @@ msgstr "Request new password"
 msgid "Errors_while_saving!"
 msgstr "Errors while saving!"
 
-msgid "New_password_for_{0}"
-msgstr "New password for {0}"
+msgid "New_password_request_for_{0}"
+msgstr "New password request for {0}"
 
-msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
-msgstr "We sent your new pasword to you. It needs to be activated!"
+msgid "We_successfully_sent_the_activation_link_for_your_new_password_to_you."
+msgstr "We successfully sent the activation link for your new password to you."
 
 msgid "Your_new_password_was_already_activated_or_the_activation_code_was_not_valid."
 msgstr "Your new password was already activated or the activation code was not valid."
 
-msgid "Your_new_password_was_successfully_activated."
-msgstr "Your new password was successfully activated."
+msgid "Your_new_password_was_successfully_activated_and_sent_to_you."
+msgstr "Your new password was successfully activated and sent to you."
+
+msgid "New_password_for_{0}"
+msgstr "New password for {0}"
 
 msgid "Sign_in"
 msgstr "Sign in"
@@ -2673,11 +2676,11 @@ msgstr "There has been placed a instant order for {0} by {1}."
 msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr "You receive this message because the delivery day for this order was set to <b>today ({0})</b>, and therefore it does not appear on your order lists."
 
-msgid "Please_click_on_this_link_to_activate_your_new_password"
-msgstr "Please click on this link to activate your new password"
-
 msgid "your_new_password_is:"
 msgstr "your new password:"
+
+msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgstr "Please click on this link to activate your new password"
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "thank you for order from {0}."
@@ -2786,6 +2789,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
+#~ msgstr "We sent your new pasword to you. It needs to be activated!"
 
 #, fuzzy
 #~ msgid "{0,plural,=1{further_delivery_break} other{further_delivery_breaks}}"
