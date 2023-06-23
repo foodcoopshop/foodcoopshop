@@ -119,7 +119,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertFlashMessage('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
 
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
-        $this->assertFlashMessage('Du hast dein neues Passwort erfolgreich aktiviert und es wurde dir soeben per E-Mail geschickt.');
+        $this->assertFlashMessage('Du hast dein neues Passwort erfolgreich aktiviert, es wurde dir soeben per E-Mail geschickt.');
 
         $this->runAndAssertQueue();
         $this->assertMailSubjectContainsAt(0, 'Neues Passwort für FoodCoop Test');
