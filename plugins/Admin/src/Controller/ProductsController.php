@@ -365,7 +365,7 @@ class ProductsController extends AdminAppController
             $productsForDropdown[] = '</optgroup>';
         }
 
-        $emptyElement = ['<option value="0">' . __d('admin', 'All_products') . '</option>'];
+        $emptyElement = ['<option value="">' . __d('admin', 'All_products') . '</option>'];
         $productsForDropdown = array_merge($emptyElement, $productsForDropdown);
 
         $this->set([
