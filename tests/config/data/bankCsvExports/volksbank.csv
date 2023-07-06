@@ -1,2 +1,2 @@
-IBAN;Auszugsnummer;Buchungsdatum;Valutadatum;Umsatzzeit;Zahlungsreferenz;Waehrung;Betrag;Buchungstext;Umsatztext
-AT115645645645460000;1;2021-07-06;2021-07-06;2021-07-06-07.54.26.789861;"";EUR;100,00;"SEPA-Gutschrift";"Bareinlage 838B34A3"
+IBAN;Auszugsnummer;Buchungsdatum;Valutadatum;Umsatzzeit;Zahlungsreferenz;Waehrung;Betrag;Buchungstext;Umsatztext;Name des Partners;Name des ultimate Partners;Name des ultimate Auftraggebers;Creditor ID;Mandat ID;Kontoverbindung des Partners;Partner BIC;Auftraggeberreferenz;Verwendungszweck;Kategorie;Notiz;Original Auftragsbetrag;Original Währung;Bestandskategorie;Umsatzkategorie;Entgeltinformationen;Eigene Referenz
+AT844480012345640000;105;2023-06-29;2023-06-29;2023-06-29-01.05.26.499223;"";EUR;100,00;"SEPA-Gutschrift";"Vorname Nachname IBAN: AT79 2032 4323 1235 123 838B34A3";Demo Admin;;;;;

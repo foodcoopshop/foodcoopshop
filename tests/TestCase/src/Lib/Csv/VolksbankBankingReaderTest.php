@@ -34,7 +34,7 @@ class VolksbankBankingReaderTest extends AppCakeTestCase
             $this->assertEquals(4, count($record));
         }
 
-        $this->assertEquals('2021-07-06 07:54:26.789861', $records[0]['date']);
+        $this->assertEquals('2023-06-29 01:05:26.499223', $records[0]['date']);
         $this->assertEquals(100, $records[0]['amount']);
         $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_id_customer']);
 
