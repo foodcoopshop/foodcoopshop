@@ -32,8 +32,7 @@ class VolksbankBankingReader extends BankingReader {
     {
 
         $result = false;
-
-        if (count($record) == 10 &&
+        if (count($record) == 27 &&
             strlen($record['Valutadatum']) == 10 &&
             strlen($record['Umsatzzeit']) == 26 &&
             $record['Waehrung'] == 'EUR' &&
