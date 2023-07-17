@@ -452,6 +452,9 @@ class OrderDetailsTable extends AppTable
             'conditions' => [
                 'OrderDetails.id_customer' => $customerId,
             ],
+            'fields' => [
+                'OrderDetails.id_order_detail',
+            ],
             'order' => [
                 'OrderDetails.created' => 'DESC',
             ],
