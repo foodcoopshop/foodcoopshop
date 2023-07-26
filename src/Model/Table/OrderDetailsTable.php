@@ -454,6 +454,9 @@ class OrderDetailsTable extends AppTable
             ],
             'fields' => [
                 'OrderDetails.id_order_detail',
+                'OrderDetails.product_id',
+                'OrderDetails.product_attribute_id',
+                'OrderDetails.product_amount',
             ],
             'order' => [
                 'OrderDetails.created' => 'DESC',
