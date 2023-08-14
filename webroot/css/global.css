@@ -628,13 +628,27 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     top: 8px;
     font-size: 15px;
 }
-.cookieConsentWrapper button.cookieConsent__Button {
+#cookies-eu-banner a {
+    text-decoration: underline ! important;
+}
+#cookies-eu-banner button {
+    margin-top: 15px;
+    padding: 10px 30px;
+    margin-left: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: #fff ! important;
+    color: var(--theme-color);
+    border: none;
+    font-weight: normal;
+}
+#cookies-eu-banner {
     display: none;
-}
-.cookieConsentWrapper button.cookieConsent__Button:last-child {
-    display: block;
-}
-.cookieConsentWrapper {
+    font-size: 14px ! important;
+    text-align: left ! important;
+    padding: 20px ! important;
+    position: fixed;
+    z-index: 99990;
     box-shadow: none;
     border-radius: 3px;
     width: 330px;
@@ -644,23 +658,6 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     color: #333 ! important;
     border-width: 1px;
     border-style: solid;
-}
-.cookieConsentWrapper .cookieConsent {
-    flex-direction: column;
-}
-.cookieConsentWrapper .cookieConsent__Left a {
-    text-decoration: underline ! important;
-    color: var(--theme-color);
-}
-.cookieConsentWrapper .cookieConsent__Right {
-    margin-top: 15px;
-}
-.cookieConsentWrapper .cookieConsent__Right button {
-    padding: 10px 30px;
-    margin-left: 0;
-    margin-bottom: 0;
-    font-size: 14px;
-    color: #fff;
 }
 .fa-spin {
   animation:10s infinite, fa-spin 2s infinite linear;

@@ -87,11 +87,11 @@ body.dark .btn-outline-light:active:focus {
     background-color: var(--dark-mode-2nd-bg-color) ! important;
     opacity: .7;
 }
-body.dark .cookieConsentWrapper {
+body.dark #cookies-eu-banner {
     background-color: var(--dark-mode-2nd-bg-color) ! important;
     color: var(--dark-mode-main-font-color) ! important;
 }
-.cookieConsentWrapper .cookieConsent__Right button {
+#cookies-eu-banner button {
     color: var(--dark-mode-2nd-font-color) ! important;
 }
 body.dark .testimonial-quote blockquote,
