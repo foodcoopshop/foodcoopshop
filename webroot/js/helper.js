@@ -179,18 +179,9 @@ foodcoopshop.Helper = {
     },
 
     initCookieBanner: function() {
-        // IE breaks with GdprCookieConsentBanner
-        if (window.document.documentMode) {
-            return;
-        }
-        var options = {
-            cookieName: 'fcs-cookie-banner',
-            heading: foodcoopshop.LocalizedJs.helper.ThisPageUsesCookies,
-            showEditIcon: false,
-            acceptLabel: foodcoopshop.LocalizedJs.helper.AcceptCookies,
-            description: foodcoopshop.LocalizedJs.helper.CookiesExplainationText,
-        };
-        GdprConsent.attachBanner(document.body, options);
+        new CookiesEuBanner(function () {
+            // callback when cookies are accepted
+        }, true);
     },
 
     initMenuAutoHide : function() {

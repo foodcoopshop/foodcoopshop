@@ -50,7 +50,6 @@ h2.info b::selection,
 h2.info,
 #flashMessage.success,
 .modal-header,
-.cookieConsentWrapper .cookieConsent__Right button,
 .drop a.upload-button,
 #footer .bottom {
     background-color: var(--theme-color);
@@ -89,7 +88,7 @@ a.btn-arrow:hover {
 #flashMessage.success,
 hr,
 .pw, .manufacturer-wrapper,
-.cookieConsentWrapper,
+#cookies-eu-banner,
 body.manufacturers.detail #inner-content h2,
 h1.middle-line span.middle {
     border-color: var(--theme-color);
@@ -106,6 +105,7 @@ h1.middle-line span.middle {
 #flashMessage.success .progress-bar.bg-success,
 .dropdown .dropdown-item.active,
 .dropdown .dropdown-item:active,
+#cookies-eu-banner button,
 table.list tr.selected {
     background-color: var(--theme-color) ! important;
 }

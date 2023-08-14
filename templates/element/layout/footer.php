@@ -15,7 +15,6 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 
     echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
@@ -44,6 +43,11 @@ use Cake\I18n\I18n;
     }
 
 ?>
+<div id="cookies-eu-banner">
+    <p><b><?php echo __('This_page_uses_cookies'); ?></b></p>
+    <p><?php echo __('Cookies_explaination_text'); ?></p>
+    <button id="cookies-eu-accept"><?php echo __('Accept_cookies'); ?> </button>
+</div>
 
 </body>
 </html>

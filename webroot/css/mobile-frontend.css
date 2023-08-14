@@ -34,7 +34,7 @@
         margin-top: 0;
         float: none;
     }
-    .cookieConsentWrapper {
+    #cookies-eu-banner {
         left: 2% ! important;
         bottom: 1% ! important;
         width: 96% ! important;
