@@ -57,16 +57,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "4.4.16",
+            "version": "4.4.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "f68c3c6f24d65cb869cceaa8975f2ca2e1d0f5b7"
+                "reference": "9ff254d6d60720089dec1e10aa1907e24e39a98e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/f68c3c6f24d65cb869cceaa8975f2ca2e1d0f5b7",
-                "reference": "f68c3c6f24d65cb869cceaa8975f2ca2e1d0f5b7",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/9ff254d6d60720089dec1e10aa1907e24e39a98e",
+                "reference": "9ff254d6d60720089dec1e10aa1907e24e39a98e",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +165,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/cakephp"
             },
-            "time": "2023-08-05T15:33:05+00:00"
+            "time": "2023-08-20T02:36:22+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -4723,38 +4723,39 @@
         },
         {
             "name": "ergebnis/phpstan-rules",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/phpstan-rules.git",
-                "reference": "99360283faf07a6d553f384183f3551a054c5aeb"
+                "reference": "119e229c48688946450ccca9f1c57c9ca4fb6f02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/99360283faf07a6d553f384183f3551a054c5aeb",
-                "reference": "99360283faf07a6d553f384183f3551a054c5aeb",
+                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/119e229c48688946450ccca9f1c57c9ca4fb6f02",
+                "reference": "119e229c48688946450ccca9f1c57c9ca4fb6f02",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "nikic/php-parser": "^4.2.3",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
-                "phpstan/phpstan": "^1.7.15"
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
+                "phpstan/phpstan": "^1.10.21"
             },
             "require-dev": {
-                "doctrine/orm": "^2.14.3",
-                "ergebnis/composer-normalize": "^2.30.2",
+                "doctrine/orm": "^2.16.1",
+                "ergebnis/composer-normalize": "^2.35.0",
                 "ergebnis/license": "^2.1.0",
-                "ergebnis/php-cs-fixer-config": "^5.5.2",
-                "infection/infection": "~0.26.19",
-                "nette/di": "^3.1.2",
-                "phpstan/phpstan-deprecation-rules": "^1.0.0",
+                "ergebnis/php-cs-fixer-config": "^5.13.0",
+                "ergebnis/phpunit-slow-test-detector": "^2.3.0",
+                "infection/infection": "~0.27.0",
+                "nette/di": "^3.1.3",
+                "phpstan/phpstan-deprecation-rules": "^1.1.4",
                 "phpstan/phpstan-strict-rules": "^1.1.0",
-                "phpunit/phpunit": "^9.6.7",
+                "phpunit/phpunit": "^10.3.2",
                 "psalm/plugin-phpunit": "~0.18.4",
                 "psr/container": "^1.1.2",
-                "rector/rector": "~0.15.25",
-                "vimeo/psalm": "^5.9.0"
+                "rector/rector": "~0.17.13",
+                "vimeo/psalm": "^5.14.1"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -4790,7 +4791,7 @@
                 "issues": "https://github.com/ergebnis/phpstan-rules/issues",
                 "source": "https://github.com/ergebnis/phpstan-rules"
             },
-            "time": "2023-05-01T17:59:46+00:00"
+            "time": "2023-08-17T10:28:37+00:00"
         },
         {
             "name": "jasny/twig-extensions",
@@ -5197,16 +5198,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.28",
+            "version": "1.10.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e4545b55904ebef470423d3ddddb74fa7325497a"
+                "reference": "ee5d8f2d3977fb09e55603eee6fb53bdd76ee9c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e4545b55904ebef470423d3ddddb74fa7325497a",
-                "reference": "e4545b55904ebef470423d3ddddb74fa7325497a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ee5d8f2d3977fb09e55603eee6fb53bdd76ee9c1",
+                "reference": "ee5d8f2d3977fb09e55603eee6fb53bdd76ee9c1",
                 "shasum": ""
             },
             "require": {
@@ -5255,7 +5256,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-08T12:33:42+00:00"
+            "time": "2023-08-14T13:24:11+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
