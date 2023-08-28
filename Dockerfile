@@ -1,5 +1,5 @@
 FROM node:18-alpine AS node
-FROM webdevops/php-nginx:8.2-alpine
+FROM webdevops/php-nginx-dev:8.2-alpine
 
 #https://stackoverflow.com/questions/44447821/how-to-create-a-docker-image-for-php-and-node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules

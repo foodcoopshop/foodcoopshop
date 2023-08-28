@@ -13,6 +13,9 @@ services:
       WEB_DOCUMENT_ROOT: /app/webroot
       PHP_UPLOAD_MAX_FILESIZE: 200M
       PHP_POST_MAX_SIZE: 200M
+      # php_debugger is only necessary for code coverage (ci.yml) and slows down local development
+      PHP_DEBUGGER: xdebug
+      XDEBUG_MODE: coverage
     volumes:
       - ./:/app
     ports:
