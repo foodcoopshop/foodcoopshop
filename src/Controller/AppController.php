@@ -100,7 +100,7 @@ class AppController extends Controller
             ]);
             $query = $this->Customer->findAuth($query, []);
             if (empty($query->first())) {
-                $this->Flash->error(__('You_have_been_signed_out.'));
+                $this->Flash->error(__('You_have_been_signed_out_automatically.'));
                 $this->AppAuth->logout();
                 $this->response = $this->response->withCookie((new Cookie('remember_me')));
                 $this->redirect(Configure::read('app.slugHelper')->getHome());

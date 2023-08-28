@@ -430,6 +430,14 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertEmpty($customer);
     }
 
+    public function testAutoLogout()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeCustomer(Configure::read('test.superadminId'), 'active', 0);
+        $this->get('/');
+        $this->assertFlashMessage('Du wurdest automatisch abgemeldet.');
+    }
+
     public function testLoginAndAutoLogin()
     {
         // 1) login

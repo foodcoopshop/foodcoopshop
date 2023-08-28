@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-23 07:46+0200\n"
-"PO-Revision-Date: 2023-06-23 08:29+0200\n"
+"POT-Creation-Date: 2023-08-28 17:29+0200\n"
+"PO-Revision-Date: 2023-08-28 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -180,8 +180,8 @@ msgstr "Verschickte Bestelllisten"
 msgid "Delivery_day"
 msgstr "Liefertag"
 
-msgid "You_have_been_signed_out."
-msgstr "Du hast dich erfolgreich abgemeldet."
+msgid "You_have_been_signed_out_automatically."
+msgstr "Du wurdest automatisch abgemeldet."
 
 msgid "Blog_archive"
 msgstr "Blog-Archiv"
@@ -405,6 +405,9 @@ msgstr "Deine Registrierung war erfolgreich."
 msgid "Account_created_successfully"
 msgstr "Mitgliedskonto erfolgreich erstellt"
 
+msgid "You_have_been_signed_out."
+msgstr "Du hast dich erfolgreich abgemeldet."
+
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -575,15 +578,6 @@ msgstr "Weniger anzeigen"
 
 msgid "Close"
 msgstr "Schließen"
-
-msgid "This_page_uses_cookies"
-msgstr "Diese Seite verwendet Cookies"
-
-msgid "Cookies_explaination_text"
-msgstr "Die genaue Verwendung der Cookies kannst du in unserer <a href=\"/datenschutzerklaerung#cookies\">Datenschutzerklärung</a> nachlesen."
-
-msgid "Accept_cookies"
-msgstr "Cookies akzeptieren"
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
 msgstr "Du hast {0} bereits {1}x für den Abholtag {2} bestellt."
@@ -1758,15 +1752,6 @@ msgstr "Bitte gib den Nachnamen an."
 msgid "Please_enter_an_email_address."
 msgstr "Bitte gib eine E-Mail-Adresse an."
 
-msgid "{0}_needs_to_be_a_{1}."
-msgstr "{0} muss ein {1} sein."
-
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
-msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Die Lieferpause kann erst gespeichert werden, wenn du die Produkte stornierst oder der Abholtag geändert wird."
-
-msgid "Please_enter_a_number_between_{0}_and_{1}."
-msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
-
 msgid "Please_enter_a_name."
 msgstr "Bitte gib einen Namen ein."
 
@@ -1953,6 +1938,9 @@ msgstr "Bitte gib dein Feedback ein."
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
 
+msgid "Please_enter_a_number_between_{0}_and_{1}."
+msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
+
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
@@ -2069,6 +2057,12 @@ msgstr "Das ungefähre Liefergewicht muss eine Zahl sein."
 
 msgid "The_approximate_weight_needs_to_be_greater_than_0."
 msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
+
+msgid "{0}_needs_to_be_a_{1}."
+msgstr "{0} muss ein {1} sein."
+
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
+msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Die Lieferpause kann erst gespeichert werden, wenn du die Produkte stornierst oder der Abholtag geändert wird."
 
 msgid "member"
 msgstr "Mitglied"
@@ -2603,6 +2597,15 @@ msgstr "Neues Bild hochladen"
 
 msgid "Image_upload_legal_hint."
 msgstr "Bilder bitte nur hochladen, wenn du über die Nutzungsrechte verfügst!"
+
+msgid "This_page_uses_cookies"
+msgstr "Diese Seite verwendet Cookies"
+
+msgid "Cookies_explaination_text"
+msgstr "Die genaue Verwendung der Cookies kannst du in unserer <a href=\"/datenschutzerklaerung#cookies\">Datenschutzerklärung</a> nachlesen."
+
+msgid "Accept_cookies"
+msgstr "Cookies akzeptieren"
 
 msgid "Print"
 msgstr "Drucken"

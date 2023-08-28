@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-23 07:46+0200\n"
-"PO-Revision-Date: 2023-06-23 07:47+0200\n"
+"POT-Creation-Date: 2023-08-28 17:29+0200\n"
+"PO-Revision-Date: 2023-08-28 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -180,8 +180,8 @@ msgstr "Sent order lists"
 msgid "Delivery_day"
 msgstr "Delivery day"
 
-msgid "You_have_been_signed_out."
-msgstr "You have been signed out."
+msgid "You_have_been_signed_out_automatically."
+msgstr "You have been signed out automatically."
 
 msgid "Blog_archive"
 msgstr "Blog archive"
@@ -405,6 +405,9 @@ msgstr "Your registration was successful."
 msgid "Account_created_successfully"
 msgstr "Account created successfully"
 
+msgid "You_have_been_signed_out."
+msgstr "You have been signed out."
+
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -575,15 +578,6 @@ msgstr "Show less"
 
 msgid "Close"
 msgstr "Close"
-
-msgid "This_page_uses_cookies"
-msgstr "This page uses cookies"
-
-msgid "Cookies_explaination_text"
-msgstr "Please accept the cookies. Read more about it in our <a href=\"/privacy-policy\">privacy policy</a>."
-
-msgid "Accept_cookies"
-msgstr "Accept cookies"
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
 msgstr "You have already ordered {0} {1}x for {2}."
@@ -1758,15 +1752,6 @@ msgstr "Please enter the last name."
 msgid "Please_enter_an_email_address."
 msgstr "Please enter an email address."
 
-msgid "{0}_needs_to_be_a_{1}."
-msgstr "{0} needs to be a {1}."
-
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
-msgstr "The following delivery day(s) already contain orders: {0}. To save the delivery break, either cancel them or change the pickup day."
-
-msgid "Please_enter_a_number_between_{0}_and_{1}."
-msgstr "Please enter a number between {0} and {1}."
-
 msgid "Please_enter_a_name."
 msgstr "Please enter a name."
 
@@ -1953,6 +1938,9 @@ msgstr "Please enter your feedback."
 msgid "Please_enter_a_correct_number."
 msgstr "Please enter a correct number."
 
+msgid "Please_enter_a_number_between_{0}_and_{1}."
+msgstr "Please enter a number between {0} and {1}."
+
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "The amount needs to be greater than 0."
 
@@ -2069,6 +2057,12 @@ msgstr "The approximate weight needs to be a number."
 
 msgid "The_approximate_weight_needs_to_be_greater_than_0."
 msgstr "The approximate weight needs to be greater than 0."
+
+msgid "{0}_needs_to_be_a_{1}."
+msgstr "{0} needs to be a {1}."
+
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
+msgstr "The following delivery day(s) already contain orders: {0}. To save the delivery break, either cancel them or change the pickup day."
 
 msgid "member"
 msgstr "Member"
@@ -2603,6 +2597,15 @@ msgstr "Upload new image"
 
 msgid "Image_upload_legal_hint."
 msgstr "Please upload images only if you have the rights to use!"
+
+msgid "This_page_uses_cookies"
+msgstr "This page uses cookies"
+
+msgid "Cookies_explaination_text"
+msgstr "Please accept the cookies. Read more about it in our <a href=\"/privacy-policy\">privacy policy</a>."
+
+msgid "Accept_cookies"
+msgstr "Accept cookies"
 
 msgid "Print"
 msgstr "Print"

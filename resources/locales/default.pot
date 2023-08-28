@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-06-23 07:46+0200\n"
+"POT-Creation-Date: 2023-08-28 17:29+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Delivery_day"
 msgstr ""
 
-msgid "You_have_been_signed_out."
+msgid "You_have_been_signed_out_automatically."
 msgstr ""
 
 msgid "Blog_archive"
@@ -404,6 +404,9 @@ msgstr ""
 msgid "Account_created_successfully"
 msgstr ""
 
+msgid "You_have_been_signed_out."
+msgstr ""
+
 msgid "Feedback"
 msgstr ""
 
@@ -573,15 +576,6 @@ msgid "Show_less"
 msgstr ""
 
 msgid "Close"
-msgstr ""
-
-msgid "This_page_uses_cookies"
-msgstr ""
-
-msgid "Cookies_explaination_text"
-msgstr ""
-
-msgid "Accept_cookies"
 msgstr ""
 
 msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
@@ -1757,15 +1751,6 @@ msgstr ""
 msgid "Please_enter_an_email_address."
 msgstr ""
 
-msgid "{0}_needs_to_be_a_{1}."
-msgstr ""
-
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
-msgstr ""
-
-msgid "Please_enter_a_number_between_{0}_and_{1}."
-msgstr ""
-
 msgid "Please_enter_a_name."
 msgstr ""
 
@@ -1952,6 +1937,9 @@ msgstr ""
 msgid "Please_enter_a_correct_number."
 msgstr ""
 
+msgid "Please_enter_a_number_between_{0}_and_{1}."
+msgstr ""
+
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr ""
 
@@ -2067,6 +2055,12 @@ msgid "The_approximate_weight_needs_to_be_a_number."
 msgstr ""
 
 msgid "The_approximate_weight_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "{0}_needs_to_be_a_{1}."
+msgstr ""
+
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
 msgstr ""
 
 msgid "member"
@@ -2601,6 +2595,15 @@ msgid "Upload_new_image"
 msgstr ""
 
 msgid "Image_upload_legal_hint."
+msgstr ""
+
+msgid "This_page_uses_cookies"
+msgstr ""
+
+msgid "Cookies_explaination_text"
+msgstr ""
+
+msgid "Accept_cookies"
 msgstr ""
 
 msgid "Print"
