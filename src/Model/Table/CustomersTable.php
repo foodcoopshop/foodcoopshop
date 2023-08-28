@@ -10,6 +10,7 @@ use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -212,6 +213,15 @@ class CustomersTable extends AppTable
             'AddressCustomers'
         ]);
         return $query;
+    }
+
+    public function sortByVirtualField($object, $name)
+    {
+        $sortedObject = (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC', [
+            'type' => 'locale',
+            'ignoreCase' => true,
+        ]);
+        return $sortedObject;
     }
 
     public function __construct(array $config = [])

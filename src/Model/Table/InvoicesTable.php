@@ -90,6 +90,16 @@ class InvoicesTable extends AppTable
         return $invoices;
     }
 
+    public function clearZeroArray($array)
+    {
+        foreach($array as $key => $value) {
+            if (array_sum($value) == 0) {
+                unset($array[$key]);
+            }
+        }
+        return $array;
+    }
+
     public function getPreparedTaxRatesForSumTable($invoices)
     {
 

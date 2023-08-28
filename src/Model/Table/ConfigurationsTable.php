@@ -5,8 +5,11 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use App\Lib\Error\Exception\ConfigFileMissingException;
+use App\Model\Traits\MultipleEmailsRuleTrait;
+use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Validation\Validator;
+use App\Model\Traits\NumberRangeValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,6 +27,9 @@ use Cake\Validation\Validator;
 class ConfigurationsTable extends AppTable
 {
 
+    use NumberRangeValidatorTrait;
+    use MultipleEmailsRuleTrait;
+    use NoDeliveryDaysOrdersExistTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';

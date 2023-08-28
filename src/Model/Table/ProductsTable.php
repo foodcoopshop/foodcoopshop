@@ -15,6 +15,7 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
+use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,6 +33,7 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 class ProductsTable extends AppTable
 {
 
+    use AllowOnlyOneWeekdayValidatorTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';

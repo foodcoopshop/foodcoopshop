@@ -8,6 +8,8 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
+use App\Model\Traits\MultipleEmailsRuleTrait;
+use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,6 +28,8 @@ use Cake\Validation\Validator;
 class ManufacturersTable extends AppTable
 {
 
+    use MultipleEmailsRuleTrait;
+    use NoDeliveryDaysOrdersExistTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
     private $Catalog;

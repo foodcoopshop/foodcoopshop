@@ -8,6 +8,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Model\Traits\NumberRangeValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,6 +25,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
  */
 class PaymentsTable extends AppTable
 {
+
+    use NumberRangeValidatorTrait;
 
     public function initialize(array $config): void
     {

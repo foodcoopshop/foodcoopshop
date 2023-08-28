@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Validation\Validator;
+use App\Model\Traits\NumberRangeValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,6 +23,7 @@ use Cake\Validation\Validator;
 class StockAvailablesTable extends AppTable
 {
 
+    use NumberRangeValidatorTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
     public function initialize(array $config): void
