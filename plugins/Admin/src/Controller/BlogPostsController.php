@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\I18n\FrozenDate;
+use Admin\Traits\UploadTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,6 +25,8 @@ use Cake\I18n\FrozenDate;
 
 class BlogPostsController extends AdminAppController
 {
+
+    use UploadTrait;
 
     public function isAuthorized($user)
     {

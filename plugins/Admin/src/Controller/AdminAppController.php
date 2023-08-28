@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\AppController;
-use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,43 +32,4 @@ class AdminAppController extends AppController
         $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
     }
 
-    protected function deleteUploadedImage(int $imageId, string $thumbsPath): void
-    {
-        $dir = new \DirectoryIterator($thumbsPath);
-        foreach ($dir as $fileinfo) {
-            if (!$fileinfo->isDot()) {
-                $filename = $fileinfo->getFilename();
-                if (preg_match('/^' . $imageId . '-/', $filename)) {
-                    unlink($thumbsPath . DS . $filename);
-                }
-            }
-        }
-    }
-
-    protected function saveUploadedImage(int $imageId, string $filename, string $thumbsPath, array $imageSizes): string
-    {
-
-        $this->deleteUploadedImage($imageId, $thumbsPath);
-
-        // if image was rotated, cut off ?xyz (random string)
-        $explodedFilename = explode('?', $filename);
-        if (count($explodedFilename) == 2) {
-            $filename = $explodedFilename[0];
-        }
-        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
-        foreach ($imageSizes as $thumbSize => $options) {
-            $image = Image::make(WWW_ROOT . $filename);
-            // make portrait images smaller
-            if ($image->getHeight() > $image->getWidth()) {
-                $thumbSize = round($thumbSize * ($image->getWidth() / $image->getHeight()), 0);
-            }
-            $image->widen($thumbSize);
-            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $image->save($thumbsFileName, 100);
-        }
-
-        return $imageId . $options['suffix'] . '.' . $extension;
-
-    }
 }

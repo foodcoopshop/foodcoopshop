@@ -14,6 +14,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
+use Admin\Traits\UploadTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,6 +33,8 @@ use Cake\Utility\Hash;
 class CustomersController extends AdminAppController
 {
 
+    use UploadTrait;
+    
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {

@@ -5,6 +5,7 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use Admin\Traits\UploadTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +24,8 @@ use Cake\Http\Exception\NotFoundException;
 class CategoriesController extends AdminAppController
 {
 
+    use UploadTrait;
+    
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();

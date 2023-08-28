@@ -13,6 +13,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Admin\Traits\UploadTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,6 +31,8 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 class ManufacturersController extends AdminAppController
 {
+
+    use UploadTrait;
 
     public function isAuthorized($user)
     {

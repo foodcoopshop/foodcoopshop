@@ -5,6 +5,7 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use Admin\Traits\UploadTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,6 +23,8 @@ use Cake\Http\Exception\NotFoundException;
 class SlidersController extends AdminAppController
 {
 
+    use UploadTrait;
+    
     public function add()
     {
         $this->Slider = $this->getTableLocator()->get('Sliders');
