@@ -13,6 +13,7 @@ services:
       WEB_DOCUMENT_ROOT: /app/webroot
       PHP_UPLOAD_MAX_FILESIZE: 200M
       PHP_POST_MAX_SIZE: 200M
+      PHP_DEBUGGER: xdebug
     volumes:
       - ./:/app
     ports:
