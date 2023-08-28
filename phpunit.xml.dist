@@ -9,7 +9,12 @@
     >
   <coverage>
     <include>
-      <directory suffix=".php">./</directory>
+      <directory>./src/</directory>
+      <directory>./templates/</directory>
+      <directory>./plugins/Admin/src/</directory>
+      <directory>./plugins/Admin/templates/</directory>
+      <directory>./plugins/Network/src/</directory>
+      <directory>./plugins/Network/templates/</directory>
     </include>
   </coverage>
   <php>
