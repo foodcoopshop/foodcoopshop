@@ -11,7 +11,9 @@
   <a href="https://github.com/foodcoopshop/foodcoopshop/actions">
     <img src="https://img.shields.io/github/actions/workflow/status/foodcoopshop/foodcoopshop/ci.yml?branch=develop&style=for-the-badge" alt="Build status">
   </a>
-
+  <a href="https://codecov.io/gh/foodcoopshop/foodcoopshop" target="_blank">
+      <img alt="Coverage Status" src="https://img.shields.io/codecov/c/github/foodcoopshop/foodcoopshop?style=for-the-badge">
+  </a>
   <a href="https://github.com/foodcoopshop/foodcoopshop/stargazers">
       <img src="https://img.shields.io/github/stars/foodcoopshop/foodcoopshop?style=for-the-badge" />
   </a>
