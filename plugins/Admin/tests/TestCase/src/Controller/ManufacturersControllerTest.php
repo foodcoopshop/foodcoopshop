@@ -19,7 +19,6 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Laminas\Diactoros\UploadedFile;
-use PSpell\Config;
 
 class ManufacturersControllerTest extends AppCakeTestCase
 {
@@ -347,7 +346,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->assertFileDoesNotExist($mediumFile);
         $this->assertFileDoesNotExist($largeFile);
-    }
+    }    
 
     public function testEditMain()
     {
