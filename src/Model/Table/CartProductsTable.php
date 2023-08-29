@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Model\Traits\CartValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +24,8 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
  */
 class CartProductsTable extends AppTable
 {
+
+    use CartValidatorTrait;
 
     private $Cart;
 
@@ -46,40 +49,6 @@ class CartProductsTable extends AppTable
             'foreignKey' => 'id_cart'
         ]);
         $this->addBehavior('Timestamp');
-    }
-
-    public function validateQuantityInUnitsForSelfServiceMode($appAuth, $object, $unitObject, $orderedQuantityInUnits)
-    {
-        $result = true;
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($appAuth->isSelfServiceModeByReferer() || $appAuth->isSelfServiceModeByUrl())) {
-            if ($object->{$unitObject} && $object->{$unitObject}->price_per_unit_enabled && $orderedQuantityInUnits < 0 /* !sic < 0 see getStringAsFloat */) {
-                $result = __('Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button.');
-            }
-        }
-        return $result;
-    }
-
-    public function validateMinimalCreditBalance($appAuth, $grossPrice)
-    {
-
-        // implementation for purchase price check is too much work, so simply do not validate at all (enough for now)
-        if ($appAuth->user('shopping_price') != 'SP') {
-            return true;
-        }
-
-        $result = true;
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isOrderForDifferentCustomerMode()) {
-            if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
-                $result = __('The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2}).', [
-                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($grossPrice).'</b>',
-                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
-                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')).'</b>',
-                ]);
-            }
-        }
-
-        return $result;
-
     }
 
     /**
@@ -145,12 +114,21 @@ class CartProductsTable extends AppTable
         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
             $availableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
         }
-        if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available) && $attributeId == 0 && $availableQuantity < $combinedAmount && $amount > 0) {
-            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $product->name . '</b>', $availableQuantity]);
+
+        $message = $this->isAmountAvailableProduct(
+            $product->is_stock_product,
+            $product->manufacturer->stock_management_enabled,
+            $product->stock_available->always_available,
+            $attributeId,
+            $availableQuantity,
+            $combinedAmount,
+            $product->name,
+        );
+        if ($message !== true && $amount > 0) {
             return [
                 'status' => 0,
                 'msg' => $message,
-                'productId' => $initialProductId
+                'productId' => $initialProductId,
             ];
         }
 
@@ -205,8 +183,16 @@ class CartProductsTable extends AppTable
                     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
                         $availableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                     }
-                    if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available) && $availableQuantity < $combinedAmount && $amount > 0) {
-                        $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>', '<b>' . $product->name . '</b>', $availableQuantity]);
+                    $message = $this->isAmountAvailableAttribute(
+                        $product->is_stock_product,
+                        $product->manufacturer->stock_management_enabled,
+                        $attribute->stock_available->always_available,
+                        $availableQuantity,
+                        $combinedAmount,
+                        $attribute->product_attribute_combination->attribute->name,
+                        $product->name,
+                    );
+                    if ($message !== true && $amount > 0) {
                         return [
                             'status' => 0,
                             'msg' => $message,
@@ -236,12 +222,12 @@ class CartProductsTable extends AppTable
             }
         }
 
-        if (! $product->active) {
-            $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->name . '</b>']);
+        $message = $this->isProductActive($product->active, $product->name);
+        if ($message !== true) {
             return [
                 'status' => 0,
                 'msg' => $message,
-                'productId' => $initialProductId
+                'productId' => $initialProductId,
             ];
         }
 
@@ -262,33 +248,29 @@ class CartProductsTable extends AppTable
             }
         }
 
-        if (!$appAuth->isOrderForDifferentCustomerMode()) {
-            if (!($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
-                if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
-                    $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
-                    return [
-                        'status' => 0,
-                        'msg' => $message,
-                        'productId' => $initialProductId
-                    ];
-                }
-            }
+        $message = $this->isProductBulkOrderStillPossible(
+            $appAuth,
+            $product->manufacturer->stock_management_enabled,
+            $product->is_stock_product,
+            $product->delivery_rhythm_type,
+            $product->delivery_rhythm_order_possible_until,
+            $product->name,
+        );
+        if ($message !== true) {
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId,
+            ];
         }
 
-        if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
-                $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
-                    [
-                        Configure::read('appDb.FCS_APP_NAME'),
-                        '<b>' . $product->name . '</b>'
-                    ]
-                );
-                return [
-                    'status' => 0,
-                    'msg' => $message,
-                    'productId' => $initialProductId
-                ];
-            }
+        $message = $this->isGlobalDeliveryBreakEnabled($appAuth, $this->Products, $product->next_delivery_day, $product->name);
+        if ($message != true) {
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId,
+            ];
         }
 
         $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits);
@@ -300,16 +282,12 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
-            $message = __('{0}_can_be_ordered_next_week.',
-                [
-                    '<b>' . $product->name . '</b>'
-                ]
-            );
+        $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($appAuth, $product->next_delivery_day, $product->name);
+        if ($message !== true) {
             return [
                 'status' => 0,
                 'msg' => $message,
-                'productId' => $initialProductId
+                'productId' => $initialProductId,
             ];
         }
 

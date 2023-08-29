@@ -10,6 +10,7 @@ use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
 use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
 use App\Mailer\AppMailer;
+use App\Model\Traits\CartValidatorTrait;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
@@ -31,6 +32,8 @@ use Cake\Datasource\FactoryLocator;
 
 class CartComponent extends Component
 {
+
+    use CartValidatorTrait;
 
     public $components = [
         'AppAuth',
@@ -341,9 +344,17 @@ class CartComponent extends Component
             if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
                 $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
             }
-            // stock available check for product (without attributeId)
-            if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available) && $ids['attributeId'] == 0 && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
-                $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
+            
+            $message = $this->isAmountAvailableProduct(
+                $product->is_stock_product,
+                $product->manufacturer->stock_management_enabled,
+                $product->stock_available->always_available,
+                $ids['attributeId'],
+                $stockAvailableAvailableQuantity,
+                $cartProduct['amount'],
+                $product->name,
+            );
+            if ($message !== true) {
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
@@ -360,6 +371,8 @@ class CartComponent extends Component
             $attribute = null;
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
+                $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
+
                 foreach ($product->product_attributes as $attribute) {
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
 
@@ -370,15 +383,23 @@ class CartComponent extends Component
                             $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         }
 
-                        // stock available check for attribute
-                        if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available) && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
-                            $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
-                            $attributeEntity = $this->Attribute->find('all', [
-                                'conditions' => [
-                                    'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
-                                ]
-                            ])->first();
-                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
+                        $attributeEntity = $this->Attribute->find('all', [
+                            'conditions' => [
+                                'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute,
+                            ]
+                        ])->first();
+        
+                        $errorMessage = $this->isAmountAvailableAttribute(
+                            $product->is_stock_product,
+                            $product->manufacturer->stock_management_enabled,
+                            $attribute->stock_available->always_available,
+                            $stockAvailableAvailableQuantity,
+                            $cartProduct['amount'],
+                            $attributeEntity->name,
+                            $product->name,
+                        );
+                        if ($errorMessage !== true) {
+                            $message .= $errorMessage;
                             $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
@@ -386,12 +407,6 @@ class CartComponent extends Component
                         // purchase price check for attribute
                         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                             if (!$this->Product->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute)) {
-                                $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
-                                $attributeEntity = $this->Attribute->find('all', [
-                                    'conditions' => [
-                                        'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
-                                    ]
-                                ])->first();
                                 $message = __('The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons.', ['<b>' . $attributeEntity->name . '</b> ', '<b>' . $product->name . '</b>']);
                                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -416,18 +431,14 @@ class CartComponent extends Component
                 }
             }
 
-            if (! $product->active) {
-                $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->name . '</b>']);
+            $message = $this->isProductActive($product->active, $product->name);
+            if ($message !== true) {
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && !$this->AppAuth->isSelfServiceModeByReferer() && $product->next_delivery_day == 'delivery-rhythm-triggered-delivery-break') {
-                $message = __('{0}_can_be_ordered_next_week.',
-                    [
-                        '<b>' . $product->name . '</b>'
-                    ]
-                );
+            $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($this->AppAuth, $product->next_delivery_day, $product->name);
+            if ($message !== true) {
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
@@ -443,23 +454,21 @@ class CartComponent extends Component
                         $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (!$this->AppAuth->isOrderForDifferentCustomerMode()) {
-                if ( !($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
-                    if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
-                        $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
-                        $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
-                        $cartErrors[$cartProduct['productId']][] = $message;
-                    }
-                }
+            $message = $this->isProductBulkOrderStillPossible(
+                $this->AppAuth,
+                $product->manufacturer->stock_management_enabled,
+                $product->is_stock_product,
+                $product->delivery_rhythm_type,
+                $product->delivery_rhythm_order_possible_until,
+                $product->name,
+            );
+            if ($message !== true) {
+                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (!$this->AppAuth->isOrderForDifferentCustomerMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
-                $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
-                    [
-                        Configure::read('appDb.FCS_APP_NAME'),
-                        '<b>' . $product->name . '</b>'
-                    ]
-                );
+            $message = $this->isGlobalDeliveryBreakEnabled($this->AppAuth, $this->Product, $product->next_delivery_day, $product->name);
+            if ($message !== true) {
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }

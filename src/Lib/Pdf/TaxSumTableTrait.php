@@ -14,7 +14,6 @@ use Cake\Core\Configure;
  *
  * @since         FoodCoopShop 3.2.0
  * @license       https://opensource.org/licenses/AGPL-3.0
- * @author        Swoichha Adhikari
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
