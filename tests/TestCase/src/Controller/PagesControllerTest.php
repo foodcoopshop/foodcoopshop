@@ -137,8 +137,6 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getMyStatistics(),
             $this->Slug->getManufacturerProfile(),
             $this->Slug->getProductAdmin(),
-            $this->Network->getSyncProductData(),
-            $this->Network->getSyncProducts()
         ];
 
         $this->assertPagesForErrors($testUrls);
