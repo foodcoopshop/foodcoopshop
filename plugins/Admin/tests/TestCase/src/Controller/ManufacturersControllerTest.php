@@ -18,6 +18,8 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Laminas\Diactoros\UploadedFile;
+use PSpell\Config;
 
 class ManufacturersControllerTest extends AppCakeTestCase
 {
@@ -278,6 +280,50 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals($noDeliveryDays, $manufacturerNew->no_delivery_days);
 
         $this->logout();
+    }
+
+    public function testUploadProfileImage()
+    {
+        $this->loginAsSuperadmin();
+        $manufacturerId = 4;
+
+        $uploadFile = WWW_ROOT . 'img/tests/test-image.jpg';
+        $upload = new UploadedFile(
+            $uploadFile,
+            filesize($uploadFile),
+            UPLOAD_ERR_OK,
+            'test-image.jpg',
+        );
+        //pr($upload);
+
+        $this->ajaxPost(
+            '/admin/tools/doTmpImageUpload',
+            [
+                'upload' => $upload,
+            ]
+        );
+        $object = json_decode($this->_response->getBody()->__toString());
+        
+        $this->post(
+            $this->Slug->getManufacturerEdit($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'name' => 'Manufacturer & Sons',
+                    'address_manufacturer' => [
+                        'firstname' => 'firstname',
+                        'lastname' => 'lastname',
+                        'email' => Configure::read('test.loginEmailSuperadmin'),
+                    ],
+                    'tmp_image' => $object->filename,
+                ],
+                'referer' => '/'
+            ]
+        );
+
+        pr($this->_response->getBody()->__toString());
+        //$this->assertFlashMessage('Der Hersteller <b>Demo Gemüse-Hersteller</b> wurde geändert.');
+
+        
     }
 
     public function testEditMain()
