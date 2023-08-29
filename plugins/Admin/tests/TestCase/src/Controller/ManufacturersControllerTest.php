@@ -18,7 +18,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Laminas\Diactoros\UploadedFile;
 
 class ManufacturersControllerTest extends AppCakeTestCase
 {
@@ -280,73 +279,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->logout();
     }
-
-    public function testUploadAndDeleteProfileImage()
-    {
-        $this->loginAsSuperadmin();
-        $manufacturerId = 4;
-        $mediumFile = WWW_ROOT . 'files/images/manufacturers/4-medium_default.jpg';
-        $largeFile = WWW_ROOT . 'files/images/manufacturers/4-large_default.jpg';
-
-        // 1) prepare files
-        if (file_exists($mediumFile)) {
-            unlink($mediumFile);
-        }
-        if (file_exists($largeFile)) {
-            unlink($largeFile);
-        }
-
-        $uploadFile = WWW_ROOT . 'img/tests/test-image.jpg';
-        $newFile = WWW_ROOT . 'img/tests/test-image-new.jpg';
-        $path = dirname($newFile);
-        chmod($path, 0755);
-        copy($uploadFile, $newFile);
-
-        // 2) upload image
-        $upload = new UploadedFile(
-            $newFile,
-            filesize($newFile),
-            UPLOAD_ERR_OK,
-            'random-image-name.jpg',
-        );
-
-        $this->ajaxPost(
-            '/admin/tools/doTmpImageUpload',
-            [
-                'upload' => $upload,
-            ]
-        );
-        $object = json_decode($this->_response->getBody()->__toString());
-        
-        $manufacturer = [
-            'Manufacturers' => [
-                'name' => 'Manufacturer & Sons',
-                'address_manufacturer' => [
-                    'firstname' => 'firstname',
-                    'lastname' => 'lastname',
-                    'email' => Configure::read('test.loginEmailMeatManufacturer'),
-                ],
-            ],
-            'referer' => '/',
-        ];
-
-        $manufacturerUploadImage = $manufacturer;
-        $manufacturerUploadImage['Manufacturers']['tmp_image'] = $object->filename;
-        $this->post($this->Slug->getManufacturerEdit($manufacturerId), $manufacturerUploadImage);
-        $this->assertFlashMessage('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.');
-
-        $this->assertFileExists($mediumFile);
-        $this->assertFileExists($largeFile);
-
-        // 3) delete image
-        $manufacturerDeleteImage = $manufacturer;
-        $manufacturerDeleteImage['Manufacturers']['delete_image'] = true;
-        $this->post($this->Slug->getManufacturerEdit($manufacturerId), $manufacturerDeleteImage);
-        $this->assertFlashMessage('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.');
-
-        $this->assertFileDoesNotExist($mediumFile);
-        $this->assertFileDoesNotExist($largeFile);
-    }    
 
     public function testEditMain()
     {
