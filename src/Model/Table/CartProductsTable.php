@@ -231,21 +231,22 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            if (!$product->manufacturer->active || (!$appAuth->isOrderForDifferentCustomerMode()
-                && !$appAuth->isSelfServiceModeByReferer()
-                && $this->Products->deliveryBreakManufacturerEnabled(
-                    $product->manufacturer->no_delivery_days,
-                    $product->next_delivery_day,
-                    $product->manufacturer->stock_management_enabled,
-                    $product->is_stock_product))) {
-                        $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
-                        return [
-                            'status' => 0,
-                            'msg' => $message,
-                            'productId' => $initialProductId
-                        ];
-            }
+        $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
+            $appAuth,
+            $this->Products,
+            $product->manufacturer->active,
+            $product->manufacturer->no_delivery_days,
+            $product->next_delivery_day,
+            $product->manufacturer->stock_management_enabled,
+            $product->is_stock_product,
+            $product->name,
+        );
+        if ($message !== true) {
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId,
+            ];
         }
 
         $message = $this->isProductBulkOrderStillPossible(

@@ -47,6 +47,25 @@ trait CartValidatorTrait
         return $result;
     }
 
+    public function isManufacturerActiveOrManufacturerHasDeliveryBreak($appAuth, $productsTable, $active, $noDeliveryDays, $nextDeliveryDay, $isStockProduct, $stockManagementEnabled, $productName): bool|string
+    {
+
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            return true;
+        }
+
+        $result = true;
+
+        if (!$active || (!$appAuth->isOrderForDifferentCustomerMode()
+            && !$appAuth->isSelfServiceModeByReferer()
+            && $productsTable->deliveryBreakManufacturerEnabled($noDeliveryDays, $nextDeliveryDay, $stockManagementEnabled, $isStockProduct))) {
+                $result = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $productName . '</b>']);
+        }
+
+        return $result;
+
+    }
+
     public function isGlobalDeliveryBreakEnabled($appAuth, $productsTable, $nextDeliveryDay, $productName): bool|string
     {
 
