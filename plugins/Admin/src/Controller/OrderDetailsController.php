@@ -40,7 +40,6 @@ class OrderDetailsController extends AdminAppController
             case 'editPurchasePrice';
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
                 break;
-            case 'changeTaxOfInvoicedOrderDetail';
             case 'editProductName':
                 return $this->AppAuth->isSuperadmin();
                 break;
@@ -161,49 +160,6 @@ class OrderDetailsController extends AdminAppController
             $sortDirection = h($this->getRequest()->getQuery('direction'));
         }
         return $sortDirection;
-    }
-
-    /**
-     * Helper method if invoices was already generated but tax was wrong
-     *
-     * 1) re-open all order details of the wrong invoice using config/sql/_helper/change-order-state-of-order-details.sql
-     * 2) run this script by calling it via url (as superadmin)
-     * 3) remove appropriate record of manufacturer in fcs_invoices
-     * 4) re-send invoice using `bin/cake SendInvoices yyyy-mm-dd` (month is one month later than order details)
-     *
-     * @param int $orderDetailId
-     * @param int $newTaxRate
-     */
-    public function changeTaxOfInvoicedOrderDetail($orderDetailId, $newTaxRate)
-    {
-
-        $this->RequestHandler->renderAs($this, 'json');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail' => $orderDetailId
-            ],
-            'contain' => [
-                'Customers',
-                'Products.Manufacturers',
-                'OrderDetailUnits'
-            ]
-        ])->first();
-
-        $patchedEntity = $this->OrderDetail->patchEntity(
-            $oldOrderDetail,
-            ['tax_rate' => $newTaxRate]
-        );
-        $orderDetailWithNewTax = $this->OrderDetail->save($patchedEntity);
-
-        $orderDetailWithChangedPrice = $this->changeOrderDetailPriceDepositTax($orderDetailWithNewTax, $orderDetailWithNewTax->total_price_tax_incl, $orderDetailWithNewTax->product_amount);
-
-        $this->set([
-            'status' => 0,
-            'orderDetailWithChangedPrice' => $orderDetailWithChangedPrice,
-        ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'orderDetailWithChangedPrice']);
-
     }
 
     protected function initOrderForDifferentCustomer($customerId)
