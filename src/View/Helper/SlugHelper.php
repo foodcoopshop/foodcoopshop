@@ -214,7 +214,7 @@ class SlugHelper extends Helper
 
     public function getProductSearch($keyword)
     {
-        return '/' . __('route_search') . '?' . $keyword;
+        return '/' . __('route_search') . '?keyword=' . $keyword;
     }
 
     public function getAllProducts()

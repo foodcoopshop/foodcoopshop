@@ -40,7 +40,7 @@ class PagesControllerTest extends AppCakeTestCase
         $testUrls = [
             $this->Slug->getHome(),
             $this->Slug->getManufacturerList(),
-            $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
+            $this->Slug->getManufacturerDetail(4, 'Demo Fleisch-Hersteller'),
             $this->Slug->getBlogList(),
             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
             $this->Slug->getNewPasswordRequest(),
@@ -49,7 +49,6 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getListOfAllergens(),
             $this->Slug->getTermsOfUse(),
             $this->Slug->getPrivacyPolicy(),
-            $this->Slug->getProductSearch('artischocke'),
         ];
         $this->assertPagesForErrors($testUrls);
     }
@@ -62,6 +61,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $testUrls = [
+            $this->Slug->getProductSearch('artischocke'),
             $this->Slug->getAdminHome(),
             $this->Slug->getCartDetail(),
             $this->Slug->getOrderDetailsList(),

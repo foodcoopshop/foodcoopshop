@@ -19,14 +19,11 @@ namespace App\Test\TestCase\Traits;
 trait AssertPagesForErrorsTrait
 {
 
-    /**
-     * array $testPages
-     * asserts html for errors or missing elements that need to occur
-     */
     protected function assertPagesForErrors($testPages): void
     {
         foreach ($testPages as $url) {
             $this->get($url);
+            $this->assertResponseOk();
             $this->assertResponseNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/');
         }
     }
