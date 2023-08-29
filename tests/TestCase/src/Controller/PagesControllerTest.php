@@ -62,6 +62,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         $testUrls = [
             $this->Slug->getProductSearch('artischocke'),
+            $this->Slug->getNewProducts(),
             $this->Slug->getAdminHome(),
             $this->Slug->getCartDetail(),
             $this->Slug->getOrderDetailsList(),
