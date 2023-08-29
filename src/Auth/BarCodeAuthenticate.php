@@ -28,6 +28,9 @@ class BarCodeAuthenticate extends BaseAuthenticate {
 
     public function authenticate(ServerRequest $request, Response $response) {
         $fields = $this->_config['fields'];
+        if (!$this->_checkFields($request, $fields)) {
+            return false;
+        }
         $identifier = $request->getData($fields['identifier']);
         if ($identifier == '') {
             return null;
