@@ -20,6 +20,7 @@ use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\PdfWriter\Traits\SetSumTrait;
 
 abstract class OrderListPdfWriter extends PdfWriter
 {

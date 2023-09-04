@@ -17,9 +17,12 @@ declare(strict_types=1);
 namespace App\Lib\PdfWriter;
 
 use App\Lib\Pdf\BarCodeTcpdf;
+use App\Lib\PdfWriter\Traits\MemberCardDataTrait;
 
 class MyMemberCardPdfWriter extends PdfWriter
 {
+
+    use MemberCardDataTrait;
 
     public function __construct()
     {

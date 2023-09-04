@@ -40,7 +40,7 @@ class BarCodeAuthenticate extends BaseAuthenticate {
 
   public function getIdentifierField($table)
   {
-      return 'SUBSTRING(SHA1(CONCAT(' . $table->aliasField('id_customer') .', "' .  Security::getSalt() . '", "customer")), 1, 6)';
+      return $table->getBarcodeFieldString();
   }
 
   /**

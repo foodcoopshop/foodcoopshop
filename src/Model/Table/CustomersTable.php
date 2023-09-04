@@ -395,6 +395,11 @@ class CustomersTable extends AppTable
         $this->getAssociation('AddressCustomers')->setJoinType('INNER');
     }
 
+    public function getBarcodeFieldString()
+    {
+        return 'SUBSTRING(SHA1(CONCAT(' . $this->aliasField('id_customer') .', "' .  Security::getSalt() . '", "customer")), 1, 6)';
+    }
+
     /**
      * bindings with email as foreign key was tricky...
      *

@@ -19,6 +19,7 @@ namespace App\Lib\PdfWriter;
 use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use App\Lib\PdfWriter\Traits\SetSumTrait;
 
 class InvoiceToManufacturerPdfWriter extends PdfWriter
 {

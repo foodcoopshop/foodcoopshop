@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\MyMemberCardPdfWriter;
 use App\Lib\PdfWriter\MemberCardsPdfWriter;
 use App\Lib\PdfWriter\TermsOfUsePdfWriter;
@@ -86,11 +85,11 @@ class CustomersController extends AdminAppController
     public function generateMyMemberCard()
     {
         $customerId = $this->AppAuth->getUserId();
-        $customers = $this->prepareGenerateMemberCards($customerId);
         $pdfWriter = new MyMemberCardPdfWriter();
+        $customers = $pdfWriter->getMemberCardCustomerData($customerId);
         $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
         $pdfWriter->setData([
-            'customers' => $customers
+            'customers' => $customers,
         ]);
         die($pdfWriter->writeInline());
     }
@@ -99,39 +98,12 @@ class CustomersController extends AdminAppController
     {
         $customerIds = h($this->getRequest()->getQuery('customerIds'));
         $customerIds = explode(',', $customerIds);
-        $customers = $this->prepareGenerateMemberCards($customerIds);
         $pdfWriter = new MemberCardsPdfWriter();
         $pdfWriter->setFilename(__d('admin', 'Members') . ' ' . Configure::read('appDb.FCS_APP_NAME').'.pdf');
         $pdfWriter->setData([
-            'customers' => $customers
+            'customers' => $pdfWriter->getMemberCardCustomerData($customerIds),
         ]);
         die($pdfWriter->writeInline());
-    }
-
-    private function prepareGenerateMemberCards($customerIds)
-    {
-        if (empty($customerIds)) {
-            throw new InvalidParameterException('no customer id passed');
-        }
-
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Customer->dropManufacturersInNextFind();
-        $customers = $this->Customer->find('all', [
-            'fields' => [
-                'system_bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
-            ],
-            'conditions' => [
-                'Customers.id_customer IN' => $customerIds,
-            ],
-            'order' => $this->Customer->getCustomerOrderClause(),
-            'contain' => [
-                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ]
-        ]);
-        $customers = $this->Customer->addCustomersNameForOrderSelect($customers);
-        $customers->select($this->Customer);
-        $customers->select($this->Customer->AddressCustomers);
-        return $customers;
     }
 
     public function ajaxEditGroup()
