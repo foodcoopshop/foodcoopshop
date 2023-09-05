@@ -22,6 +22,7 @@ use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Datasource\FactoryLocator;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -1142,6 +1143,34 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, $cart->cart_products[0]->order_detail->product_amount);
 
     }
+
+    public function testLastOrders()
+     {
+        $this->loginAsSuperadmin();
+        $productId = '346'; // artischocke
+
+        $this->addProductToCart($productId, 3);
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $cart = $this->getCartById($cartId);
+
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetail = $orderDetailsTable->get($orderDetailId);
+
+        $orderDetail->created = $orderDetail->created->subDays(14);
+        $orderDetailsTable->save($orderDetail);
+
+        $lastOrders = $orderDetailsTable->getLastOrderDetailsForDropdown(Configure::read('test.superadminId'));
+        $this->assertEquals(1, count($lastOrders));
+
+        $this->post('/warenkorb/addOrderToCart?deliveryDate=' . $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
+        $this->assertFlashMessage('Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb geladen.<br />Du kannst jetzt weitere Produkte hinzufügen.');
+
+        $this->post('/warenkorb/emptyCart');
+        $this->assertFlashMessage('Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen.');
+
+     }
 
     protected function addAllDifferentProductTypesToCart()
     {
