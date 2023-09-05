@@ -33,6 +33,8 @@ foodcoopshop.ModalLoadLastOrderDetails = {
                     html = foodcoopshop.LocalizedJs.cart.loadPastOrderDescriptionHtml;
                     redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart?deliveryDate=' + selectedValue;
                 }
+            } else {
+                return false;
             }
 
             var buttons = [
