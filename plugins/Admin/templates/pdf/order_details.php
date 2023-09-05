@@ -27,7 +27,7 @@ foreach ($orderDetails as $od) {
     $pdf->Ln(5);
     $customerHtml = '<h1 style="font-size:24px;">' . $od[0]->customer->name . '</h1>';
     $pdf->writeHTML($customerHtml, true, false, true, false, '');
-    $pdf->writeHTML('<h3>' .__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' /  ID: ' . $od[0]->customer->id_customer . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML('<h3>' .__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' / ID: ' . $od[0]->customer->id_customer . '</h3>', true, false, true, false, '');
 
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && !empty($od[0]->pickup_day_entity) && $od[0]->pickup_day_entity->comment != '') {
         $pdf->SetRightMargin(16);
@@ -75,7 +75,7 @@ foreach ($orderDetails as $od) {
 
     foreach($od as $orderDetail) {
 
-        if ($order == 'storageLocation' && $oldStorageLocation != $orderDetail->product->id_storage_location) {
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && $order == 'storageLocation' && $oldStorageLocation != $orderDetail->product->id_storage_location) {
             $pdf->table .= '<tr style="background-color:#cecece;">';
             $pdf->table .= '<td width="'.array_sum($widths).'"><b>' . __d('admin', 'Storage_location') . ': ' . $orderDetail->product->storage_location->name . '</b></td>';
             $pdf->table .= '</tr>';

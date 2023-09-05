@@ -17,14 +17,74 @@ declare(strict_types=1);
 namespace App\Lib\PdfWriter;
 
 use App\Lib\Pdf\ListTcpdf;
+use Cake\Core\Configure;
+use App\Controller\Component\StringComponent;
+use Cake\Datasource\FactoryLocator;
 
 class OrderDetailsPdfWriter extends PdfWriter
 {
+
+    public $OrderDetail;
 
     public function __construct()
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new ListTcpdf());
+    }
+
+    public function prepareAndSetData($appAuth, $pickupDay, $order)
+    {
+
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $odParams = $this->OrderDetail->getOrderDetailParams($appAuth, '', '', '', $pickupDay, '', '');
+
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
+            ]);
+            $odParams['contain'][] = 'PickupDayEntities';
+        }
+
+        $orderDetails = $this->OrderDetail->find('all', [
+            'conditions' => $odParams['conditions'],
+            'contain' => $odParams['contain'],
+        ])->toArray();
+
+        $storageLocation = [];
+        $customerName = [];
+        $manufacturerName = [];
+        $productName = [];
+        foreach($orderDetails as $orderDetail) {
+            $storageLocationValue = 0;
+            if (!is_null($order) && !is_null($orderDetail->product->storage_location)) {
+                $storageLocationValue = $orderDetail->product->storage_location->rank;
+            }
+            $storageLocation[] = $storageLocationValue;
+            $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
+            $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
+            $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
+        }
+        array_multisort(
+            $customerName, SORT_ASC,
+            $storageLocation, SORT_ASC,
+            $manufacturerName, SORT_ASC,
+            $productName, SORT_ASC,
+            $orderDetails,
+        );
+
+        $preparedOrderDetails = [];
+        foreach($orderDetails as $orderDetail) {
+            if (!isset($preparedOrderDetails[$orderDetail->id_customer])) {
+                $preparedOrderDetails[$orderDetail->id_customer] = [];
+            }
+            $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
+        }
+        
+        $this->setData([
+            'orderDetails' => $preparedOrderDetails,
+            'order' => $order,
+        ]);
+        
     }
 
 }

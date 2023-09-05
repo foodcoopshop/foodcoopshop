@@ -209,61 +209,10 @@ class OrderDetailsController extends AdminAppController
 
     public function orderDetailsAsPdf()
     {
-
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
         $order = $this->getRequest()->getQuery('order') ?? null;
-
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
-
-        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
-                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
-            ]);
-            $odParams['contain'][] = 'PickupDayEntities';
-        }
-
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => $odParams['conditions'],
-            'contain' => $odParams['contain'],
-        ])->toArray();
-
-        $storageLocation = [];
-        $customerName = [];
-        $manufacturerName = [];
-        $productName = [];
-        foreach($orderDetails as $orderDetail) {
-            $storageLocationValue = 0;
-            if (!is_null($order) && !is_null($orderDetail->product->storage_location)) {
-                $storageLocationValue = $orderDetail->product->storage_location->rank;
-            }
-            $storageLocation[] = $storageLocationValue;
-            $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
-            $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
-            $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
-        }
-        array_multisort(
-            $customerName, SORT_ASC,
-            $storageLocation, SORT_ASC,
-            $manufacturerName, SORT_ASC,
-            $productName, SORT_ASC,
-            $orderDetails,
-        );
-
-        $preparedOrderDetails = [];
-        foreach($orderDetails as $orderDetail) {
-            if (!isset($preparedOrderDetails[$orderDetail->id_customer])) {
-                $preparedOrderDetails[$orderDetail->id_customer] = [];
-            }
-            $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
-        }
-
         $pdfWriter = new OrderDetailsPdfWriter();
-        $pdfWriter->setData([
-            'orderDetails' => $preparedOrderDetails,
-            'appAuth' => $this->AppAuth,
-            'order' => $order,
-        ]);
+        $pdfWriter->prepareAndSetData($this->AppAuth, $pickupDay, $order);
         die($pdfWriter->writeInline());
     }
 
