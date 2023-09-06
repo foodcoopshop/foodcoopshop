@@ -13,5 +13,11 @@ RUN apk update && \
     npm install -g eslint && \
     npm install -g npm@9.8.1
 
+# install pcov on alpine requires some addtional packages
+RUN apk add gcc musl-dev make autoconf && \
+    pecl install pcov && \
+    docker-php-ext-enable pcov && \
+    echo 'pcov.directory = /app' >> /usr/local/etc/php/php.ini
+
 #avoid permission error on gitpod on running npm install
 RUN npm config set cache /app/tmp --global
