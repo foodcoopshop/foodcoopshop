@@ -14,7 +14,7 @@ services:
       PHP_UPLOAD_MAX_FILESIZE: 200M
       PHP_POST_MAX_SIZE: 200M
       # php_debugger is only necessary for code coverage (ci.yml) and slows down local development
-      PHP_DEBUGGER: xdebug
+      PHP_DEBUGGER: ${PHP_DEBUGGER}
       XDEBUG_MODE: coverage
     volumes:
       - ./:/app
