@@ -52,18 +52,11 @@ class SyncDomainsTable extends AppTable
         return $syncDomains;
     }
 
-    /**
-     * @return array
-     */
     public function getActiveSyncDomains()
     {
         return $this->getSyncDomains(APP_ON);
     }
 
-    /**
-     * @param array $appAuth
-     * @return boolean success
-     */
     public function isAllowedEditManufacturerOptionsDropdown($appAuth)
     {
 
@@ -87,9 +80,6 @@ class SyncDomainsTable extends AppTable
         return $isAllowed;
     }
 
-    /**
-     * @return array
-     */
     public function getActiveManufacturerSyncDomains($enabledSyncDomains)
     {
 
@@ -123,5 +113,6 @@ class SyncDomainsTable extends AppTable
             $result[$syncDomain->id] = $syncDomain->domain;
         }
         return $result;
+        
     }
 }

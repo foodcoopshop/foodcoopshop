@@ -68,11 +68,4 @@ class SyncProductsTable extends AppTable
         return $syncProducts;
     }
 
-    /**
-     * @param array $indexes
-     */
-    public function removeIndexes($products, $indexes2Remove)
-    {
-        return $products;
-    }
 }

@@ -52,11 +52,6 @@ class SyncsController extends AppController
         $this->Product = $this->getTableLocator()->get('Products');
     }
 
-    /**
-     * @param array $product
-     * @throws InvalidParameterException
-     * @return array $syncDomain
-     */
     private function doModifyProductChecks($product)
     {
         $syncDomain = $this->SyncDomain->find('all', [
@@ -129,7 +124,7 @@ class SyncsController extends AppController
         $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->getManufacturerEnabledSyncDomains());
         $this->set('syncDomains', $syncDomains);
 
-        $matchedProducts = $this->getLocalSyncProducts($syncDomains);
+        $matchedProducts = $this->getLocalSyncProducts();
 
         $localResponse = [
             'products' => $matchedProducts,
@@ -214,7 +209,7 @@ class SyncsController extends AppController
         }
         $this->set('syncProducts', $preparedSyncProducts);
 
-        $localSyncProducts = $this->getLocalSyncProducts($syncDomains);
+        $localSyncProducts = $this->getLocalSyncProducts();
 
         // keep only synced products
         $cleanedLocalSyncProducts = [];
@@ -238,10 +233,6 @@ class SyncsController extends AppController
         $this->set('title_for_layout', __d('network', 'Synchronize_products'));
     }
 
-    /**
-     * @param array $syncDomains
-     * @return string
-     */
     private function getEmptyProductsString($syncDomains)
     {
         $syncDomainNames = [];
@@ -256,35 +247,15 @@ class SyncsController extends AppController
         return $emptyProductsString;
     }
 
-    /**
-     * @return array
-     */
-    private function getLocalSyncProducts($syncDomains)
+    private function getLocalSyncProducts()
     {
         $this->Product = $this->getTableLocator()->get('Products');
         $products = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
-
-        $indexes2Remove = [
-          'DepositProducts',
-          'CategoryProducts',
-          'Categories',
-          'Manufacturers',
-          'Taxes',
-          'selectedCategories'
-        ];
-        $products = $this->SyncProduct->removeIndexes($products, $indexes2Remove);
-
-        $matchedProducts = $this->markProductsAsSynced($products, count($syncDomains));
+        $matchedProducts = $this->markProductsAsSynced($products);
         return $matchedProducts;
     }
 
-    /**
-     * check if already synced with local products
-     * @param array $products
-     * @param int $syncDomainsCount
-     * @return array
-     */
-    private function markProductsAsSynced($products, $syncDomainsCount)
+    private function markProductsAsSynced($products)
     {
 
         $syncProducts = $this->SyncProduct->findAllSyncProducts($this->AppAuth->getManufacturerId());
