@@ -106,7 +106,7 @@ foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
         var pickupDay = $('input[name="pickupDay[]"]').val();
 
         foodcoopshop.Helper.ajaxCall(
-            '/admin/order-details/changeProductsPickedUp',
+            '/admin/order-details/editProductsPickedUp',
             {
                 state: state,
                 customerIds: customerIds,
