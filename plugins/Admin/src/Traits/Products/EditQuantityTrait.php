@@ -1,0 +1,136 @@
+<?php
+declare(strict_types=1);
+
+namespace Admin\Traits\Products;
+
+use App\Lib\Error\Exception\InvalidParameterException;
+
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 3.7.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+trait EditQuantityTrait {
+
+    public function editQuantity()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $originalProductId = $this->getRequest()->getData('productId');
+
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productId = $ids['productId'];
+
+        $oldProduct = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'StockAvailables',
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.StockAvailables',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
+            ]
+        ])->first();
+
+        if ($ids['attributeId'] > 0) {
+            // override values for messages
+            foreach ($oldProduct->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute != $ids['attributeId']) {
+                    continue;
+                }
+                $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                $oldProduct->stock_available = $attribute->stock_available;
+            }
+        }
+
+        $oldStockAvailable = $oldProduct->stock_available->quantity;
+
+        try {
+            $object2save = [
+                'quantity' => $this->getRequest()->getData('quantity'),
+                'always_available' => $this->getRequest()->getData('alwaysAvailable'),
+                'default_quantity_after_sending_order_lists' => $this->getRequest()->getData('defaultQuantityAfterSendingOrderLists'),
+            ];
+            if (in_array('quantityLimit', array_keys($this->getRequest()->getData()))) {
+                $object2save['quantity_limit'] = $this->getRequest()->getData('quantityLimit');
+            }
+            if (in_array('soldOutLimit', array_keys($this->getRequest()->getData()))) {
+                $object2save['sold_out_limit'] = $this->getRequest()->getData('soldOutLimit');
+            }
+            $this->Product->changeQuantity(
+                [
+                    [
+                        $originalProductId => $object2save
+                    ]
+                ]
+            );
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
+        }
+
+        $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
+
+        $entity = $this->Product->StockAvailables->patchEntity($oldProduct->stock_available, $object2save);
+
+        if ($entity->isDirty()) {
+            $dirtyFieldsWithNewValues = [];
+            foreach($entity->getDirty() as $dirtyField) {
+                $newValue = $entity->get($dirtyField);
+                switch($dirtyField) {
+                    case 'quantity':
+                        $translatedFieldName = __d('admin', 'Available_quantity') . ': ' 
+                            . __d('admin', 'Old_value') . ': <b>' . $oldStockAvailable . '</b> '
+                            . __d('admin', 'New_value');
+                        break;
+                    case 'always_available':
+                        $translatedFieldName = __d('admin', 'Always_available');
+                        $newValue = $newValue == 1 ? __d('admin', 'yes') : __d('admin', 'no');
+                        break;
+                    case 'default_quantity_after_sending_order_lists':
+                        $translatedFieldName = __d('admin', 'Default_quantity_after_sending_order_lists');
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $newValue;
+                        break;
+                    case 'quantity_limit':
+                        $translatedFieldName = __d('admin', 'Quantity_limit');
+                        break;
+                    case 'sold_out_limit':
+                        $translatedFieldName = __d('admin', 'Sold_out_limit');
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $newValue;
+                        break;
+                }
+                $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $newValue . '</b>';
+            }
+
+            $this->ActionLog->customSave(
+                'product_quantity_changed',
+                $this->AppAuth->getUserId(),
+                $productId,
+                'products',
+                __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}.', [
+                    '<b>' . $oldProduct->name . '</b>',
+                    '<b>' . $oldProduct->manufacturer->name . '</b>',
+                    join(', ', $dirtyFieldsWithNewValues),
+                ])
+            );
+        }
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+    }
+
+}

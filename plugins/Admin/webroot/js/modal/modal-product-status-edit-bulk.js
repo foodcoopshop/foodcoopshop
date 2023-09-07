@@ -85,7 +85,7 @@ foodcoopshop.ModalProductStatusEditBulk = {
         var productIds = foodcoopshop.Admin.getSelectedProductIds();
 
         foodcoopshop.Helper.ajaxCall(
-            '/admin/products/changeStatusBulk/',
+            '/admin/products/editStatusBulk/',
             {
                 productIds: productIds,
                 status: status,

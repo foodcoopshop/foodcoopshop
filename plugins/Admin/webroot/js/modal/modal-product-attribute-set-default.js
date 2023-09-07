@@ -52,7 +52,7 @@ foodcoopshop.ModalProductAttributeSetDefault = {
     },
 
     getSuccessHandler : function(productId, productAttributeId) {
-        document.location.href = '/admin/products/setDefaultAttributeId/' + productId + '/' + productAttributeId;
+        document.location.href = '/admin/products/editDefaultAttribute/' + productId + '/' + productAttributeId;
     },
 
     getOpenHandler : function(modalSelector) {

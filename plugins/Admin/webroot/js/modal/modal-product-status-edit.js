@@ -56,7 +56,7 @@ foodcoopshop.ModalProductStatusEdit = {
     },
 
     getSuccessHandler : function(productId, newState) {
-        document.location.href = '/admin/products/changeStatus/' + productId + '/' + newState;
+        document.location.href = '/admin/products/editStatus/' + productId + '/' + newState;
     },
 
     getOpenHandler : function(modalSelector) {

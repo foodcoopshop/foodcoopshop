@@ -36,12 +36,12 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->Product = $this->getTableLocator()->get('Products');
     }
 
-    public function testChangeProductStatus()
+    public function testEditProductStatus()
     {
         $this->loginAsSuperadmin();
         $productId = 60;
         $status = APP_OFF;
-        $this->get('/admin/products/changeStatus/' . $productId . '/' . $status);
+        $this->get('/admin/products/editStatus/' . $productId . '/' . $status);
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId,
@@ -50,12 +50,12 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($product->active, $status);
     }
 
-    public function testChangeProductStatusBulkAsSuperadmin()
+    public function testEditProductStatusBulkAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $productIds = [60, 102, 103];
         $status = APP_OFF;
-        $this->ajaxPost('/admin/products/changeStatusBulk', [
+        $this->ajaxPost('/admin/products/editStatusBulk', [
             'productIds' => $productIds,
             'status' => APP_OFF,
         ]);
@@ -69,24 +69,24 @@ class ProductsControllerTest extends AppCakeTestCase
         }
     }
 
-    public function testChangeProductStatusBulkAsManufacturerPermisionsNotOk()
+    public function testEditProductStatusBulkAsManufacturerPermisionsNotOk()
     {
         $this->loginAsMeatManufacturer();
         $productIds = [60, 102, 103];
         $status = APP_OFF;
-        $this->ajaxPost('/admin/products/changeStatusBulk', [
+        $this->ajaxPost('/admin/products/editStatusBulk', [
             'productIds' => $productIds,
             'status' => $status,
         ]);
         $this->assertAccessDeniedFlashMessage();
     }
 
-    public function testChangeProductStatusBulkAsManufacturersPermissionsOk()
+    public function testEditProductStatusBulkAsManufacturersPermissionsOk()
     {
         $this->loginAsMilkManufacturer();
         $productIds = [60];
         $status = APP_OFF;
-        $this->ajaxPost('/admin/products/changeStatusBulk', [
+        $this->ajaxPost('/admin/products/editStatusBulk', [
             'productIds' => $productIds,
             'status' => $status,
         ]);
