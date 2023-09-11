@@ -789,6 +789,10 @@ foodcoopshop.Helper = {
 
     initCkeditor: function (name, startupFocus) {
 
+        Jodit.make('textarea#' + name + '.ckeditor');
+
+        return;
+
         startupFocus = startupFocus|| false;
 
         if (!CKEDITOR.env.isCompatible) {
@@ -819,6 +823,19 @@ foodcoopshop.Helper = {
     },
 
     initCkeditorBig: function (name) {
+
+        Jodit.make('textarea#' + name + '.ckeditor', {
+            buttons: [
+                {
+                    icon: 'image',
+                    exec: function (editor) {
+                        editor.filebrowser.open();
+                    }
+                }
+            ],
+        });
+
+        return;
 
         if (!CKEDITOR.env.isCompatible) {
             return false;
