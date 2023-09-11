@@ -824,6 +824,11 @@ foodcoopshop.Helper = {
 
     initCkeditorBig: function (name) {
 
+        /*
+        $('textarea#' + name + '.ckeditor').before('<div id="elfinder"></div>');
+        setElfinder();
+        */
+       
         Jodit.make('textarea#' + name + '.ckeditor', {
             buttons: [
                 {
