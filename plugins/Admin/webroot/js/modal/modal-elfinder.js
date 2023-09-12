@@ -13,7 +13,7 @@
  */
 foodcoopshop.ModalElfinder = {
 
-    init : function() {
+    init : function(editor) {
 
         var modalSelector = '#modal-elfinder';
 
@@ -48,7 +48,13 @@ foodcoopshop.ModalElfinder = {
                 };
                 if (execCopy(fm.convAbsUrl(file.url))) {
                     foodcoopshop.Modal.destroy(modalSelector);
-                    foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheImageHasBeenCopiedToYourClipboard);
+                    if (file.mime.startsWith('image/')) {
+                        editor.selection.insertNode(
+                            editor.create.fromHTML('<img src="' + file.url + '">')
+                        );
+                    } else {
+                        foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheFileHasBeenCopiedToYourClipboard);
+                    }
                 }
             }
             /*

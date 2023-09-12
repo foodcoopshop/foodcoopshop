@@ -824,10 +824,18 @@ foodcoopshop.Helper = {
 
     initCkeditorBig: function (name) {
 
-        foodcoopshop.ModalElfinder.init();
-
         Jodit.make('textarea#' + name + '.ckeditor', {
             theme: foodcoopshop.ColorMode.getColorMode(),
+            buttons: [
+                ...Jodit.defaultOptions.buttons,
+                {
+                    name: 'Upload',
+                    tooltip: 'Bild oder Datei hochladen',
+                    exec: (editor) => {
+                        foodcoopshop.ModalElfinder.init(editor);
+                    }
+                }
+            ]
         });
 
         return;
