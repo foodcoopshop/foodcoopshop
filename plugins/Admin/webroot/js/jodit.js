@@ -41,30 +41,6 @@ foodcoopshop.Jodit = {
 
     },
 
-    initBig: function (name, startupFocus) {
-
-        var editor = Jodit.make('textarea#' + name, {
-            ... this.getDefaultOptions(),
-            buttons: [
-                ...Jodit.defaultOptions.buttons,
-                {
-                    name: 'Upload',
-                    tooltip: foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
-                    exec: (editor) => {
-                        foodcoopshop.ModalElfinder.init(editor);
-                    }
-                }
-            ]
-        });
-
-        if (startupFocus) {
-            editor.selection.focus();
-        }
-
-        return editor;
-
-    },
-
     initSmallWithUpload: function (name) {
 
         var editor = Jodit.make('textarea#' + name, {
@@ -88,6 +64,30 @@ foodcoopshop.Jodit = {
         }
 
         return editor;
+    },
+
+    initBig: function (name, startupFocus) {
+
+        var editor = Jodit.make('textarea#' + name, {
+            ... this.getDefaultOptions(),
+            buttons: [
+                ...Jodit.defaultOptions.buttons,
+                {
+                    name: 'Upload',
+                    tooltip: foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
+                    exec: (editor) => {
+                        foodcoopshop.ModalElfinder.init(editor);
+                    }
+                }
+            ]
+        });
+
+        if (startupFocus) {
+            editor.selection.focus();
+        }
+
+        return editor;
+
     },
 
 };
