@@ -142,7 +142,8 @@ table.list tr.fake-th td {
 .modal .field-wrapper select,
 .modal .field-wrapper input[type="text"],
 .modal .field-wrapper input[type="number"],
-.modal .field-wrapper label:not(.checkbox) {
+.modal .field-wrapper label:not(.checkbox),
+#modal-elfinder .modal-dialog {
     width: 100%;
 }
 #order-for-different-customer-add .bootstrap-select {
