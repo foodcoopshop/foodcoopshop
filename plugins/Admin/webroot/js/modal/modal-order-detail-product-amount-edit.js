@@ -46,7 +46,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
         html += '</div>';
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogEditAmountReason">' + foodcoopshop.LocalizedJs.admin.WhyIsAmountDecreased + '</label>';
-        html += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason"></textarea>';
+        html += '<textarea name="dialogEditAmountReason" id="dialogEditAmountReason"></textarea>';
         html += '</div>';
         html += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
         return html;
@@ -58,8 +58,8 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
     getSuccessHandler : function(modalSelector) {
 
-        var ckeditorData = CKEDITOR.instances['dialogEditAmountReason'].getData().trim();
-        if (ckeditorData == '') {
+        var editorData = $('#dialogEditAmountReason').val();
+        if (editorData == '') {
             foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.AdaptAmountReasonIsMandatory);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return false;
@@ -70,7 +70,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
             {
                 orderDetailId: $('#dialogOrderDetailProductAmountOrderDetailId').val(),
                 productAmount: $('#dialogOrderDetailProductAmountAmount').val(),
-                editAmountReason: ckeditorData
+                editAmountReason: editorData,
             },
             {
                 onOk: function (data) {
@@ -87,7 +87,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        foodcoopshop.Helper.initCkeditor('dialogEditAmountReason', true);
+        foodcoopshop.Jodit.initSmall('dialogEditAmountReason', true);
 
         var row = button.closest('tr');
         var currentAmount = row.find('td:nth-child(3) span.product-amount-for-dialog').html();

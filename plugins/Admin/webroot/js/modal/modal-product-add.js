@@ -62,7 +62,7 @@ foodcoopshop.ModalProductAdd = {
 
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
-        html += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
+        html += '<textarea name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
         html += '</div>';
         html += '<hr />';
 
@@ -74,7 +74,7 @@ foodcoopshop.ModalProductAdd = {
         html += '<label for="dialogDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
         html += '<div class="declaration-wrapper">';
         html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
-        html += '<textarea class="ckeditor hide" name="dialogDescription" id="dialogDescription"></textarea>';
+        html += '<textarea hide" name="dialogDescription" id="dialogDescription"></textarea>';
         html += '</div>';
         html += '</div>';
 
@@ -96,8 +96,8 @@ foodcoopshop.ModalProductAdd = {
                 manufacturerId: $('#manufacturerid').val(),
                 name: $('#dialogName').val(),
                 unity: $('#dialogUnity').val(),
-                descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData().trim(),
-                description: CKEDITOR.instances['dialogDescription'].getData().trim(),
+                descriptionShort: $('#dialogDescriptionShort').val(),
+                description: $('#dialogDescription').val(),
                 isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0,
                 idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0,
                 barcode: $('#dialogBarcode').length > 0 ? $('#dialogBarcode').val() : '',
@@ -135,13 +135,13 @@ foodcoopshop.ModalProductAdd = {
             foodcoopshop.ModalProductAdd.getCloseHandler(modalSelector);
         });
 
-        foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
+        foodcoopshop.Jodit.initSmall('dialogDescriptionShort');
         foodcoopshop.Helper.ajaxCall(
             '/admin/manufacturers/setElFinderUploadPath/' + $('#manufacturerid').val(),
             {},
             {
                 onOk: function (data) {
-                    foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogDescription');
+                    foodcoopshop.Jodit.initSmallWithUpload('dialogDescription');
                 },
                 onError: function (data) {
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);

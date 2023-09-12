@@ -56,7 +56,7 @@ foodcoopshop.ModalProductNameEdit = {
 
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
-        html += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
+        html += '<textarea name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
         html += '</div>';
         html += '<hr />';
 
@@ -68,7 +68,7 @@ foodcoopshop.ModalProductNameEdit = {
         html += '<label for="dialogDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
         html += '<div class="declaration-wrapper">';
         html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
-        html += '<textarea class="ckeditor hide" name="dialogDescription" id="dialogDescription"></textarea>';
+        html += '<textarea hide" name="dialogDescription" id="dialogDescription"></textarea>';
         html += '</div>';
         html += '</div>';
 
@@ -91,8 +91,8 @@ foodcoopshop.ModalProductNameEdit = {
                 productId: $('#dialogProductId').val(),
                 name: $('#dialogName').val(),
                 unity: $('#dialogUnity').val(),
-                descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData().trim(),
-                description: CKEDITOR.instances['dialogDescription'].getData().trim(),
+                descriptionShort: $('#dialogDescriptionShort').val(),
+                description: $('#dialogDescription').val(),
                 isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0,
                 idStorageLocation: $('#dialogStorageLocation').length > 0 ? $('#dialogStorageLocation').val() : 0,
                 barcode: $('#dialogBarcode').length > 0 ? $('#dialogBarcode').val() : '',
@@ -130,8 +130,6 @@ foodcoopshop.ModalProductNameEdit = {
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
-        foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
-
         var nameCell = row.find('td.cell-name');
         $(modalSelector + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog .product-name').html()));
         $(modalSelector + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
@@ -141,7 +139,8 @@ foodcoopshop.ModalProductNameEdit = {
             unity = foodcoopshop.Admin.decodeEntities(unityElement.html());
         }
         $(modalSelector + ' #dialogUnity').val(unity);
-        CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
+        $(modalSelector + ' #dialogDescriptionShort').val(nameCell.find('span.description-short-for-dialog').html());
+        foodcoopshop.Jodit.initSmallWithUpload('dialogDescriptionShort');
         $(modalSelector + ' #dialogProductId').val(row.find('td.cell-id').html());
 
         var storageLocationWrapper = $('.storage-location-dropdown-wrapper');
@@ -162,8 +161,8 @@ foodcoopshop.ModalProductNameEdit = {
             {},
             {
                 onOk: function (data) {
-                    foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogDescription');
-                    CKEDITOR.instances['dialogDescription'].setData(nameCell.find('span.description-for-dialog').html());
+                    $(modalSelector + ' #dialogDescription').val(nameCell.find('span.description-for-dialog').html());
+                    foodcoopshop.Jodit.initSmall('dialogDescription');
                 },
                 onError: function (data) {
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);

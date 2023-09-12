@@ -22,7 +22,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
     $('input.datepicker').datepicker();".
     Configure::read('app.jsNamespace') . ".Admin.init();" .
-    Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('blogposts-content');" .
+    Configure::read('app.jsNamespace') . ".Jodit.initBig('blogposts-content');" .
     Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm);" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
@@ -151,7 +151,6 @@ if ($this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
 }
 
 echo $this->Form->control('BlogPosts.content', [
-    'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => __d('admin', 'Text').'<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false

@@ -40,7 +40,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
     getHtml : function() {
         var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
         html += '<div class="textarea-wrapper">';
-        html += '<textarea class="ckeditor" name="dialogPickupDayComment" id="dialogPickupDayComment"></textarea>';
+        html += '<textarea name="dialogPickupDayComment" id="dialogPickupDayComment"></textarea>';
         html += '</div>';
         html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
         return html;
@@ -58,7 +58,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
             {
                 customerId: $('#dialogCustomerId').val(),
                 pickupDay: $('input[name="pickupDay[]"]').val(), // filter-dropdown!
-                pickupDayComment: CKEDITOR.instances['dialogPickupDayComment'].getData()
+                pickupDayComment: $('#dialogPickupDayComment').val(),
             },
             {
                 onOk: function (data) {
@@ -77,13 +77,13 @@ foodcoopshop.ModalPickupDayCommentEdit = {
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
-        foodcoopshop.Helper.initCkeditor('dialogPickupDayComment', true);
+        var editor = foodcoopshop.Jodit.initSmall('dialogPickupDayComment', true);
 
         var text = button.attr('originalTitle');
         if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
             text = '';
         }
-        CKEDITOR.instances['dialogPickupDayComment'].setData(text);
+        editor.setEditorValue(text);
         var customerId = button.closest('tr').find('td:nth-child(2)').html();
         var customerName = button.closest('tr').find('td:nth-child(3)').text();
         $(modalSelector + ' #dialogCustomerId').val(customerId);

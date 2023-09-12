@@ -67,23 +67,21 @@ switch ($configuration->type) {
         break;
     case 'textarea':
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('configurations-value');"
+            'script' => Configure::read('app.jsNamespace') . ".Jodit.initSmall('configurations-value');"
         ]);
         echo $this->Form->control('Configurations.value', [
             'type' => 'textarea',
             'label' => $label,
-            'class' => 'ckeditor',
             'escape' => false
         ]);
         break;
     case 'textarea_big':
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('configurations-value');"
+            'script' => Configure::read('app.jsNamespace') . ".Jodit.initBig('configurations-value');"
         ]);
         echo $this->Form->control('Configurations.value', [
             'type' => 'textarea',
             'label' => $label . '<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
-            'class' => 'ckeditor',
             'escape' => false
         ]);
         break;

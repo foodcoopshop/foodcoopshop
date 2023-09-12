@@ -23,7 +23,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm);" .
         Configure::read('app.jsNamespace') . ".Admin.disableSelectpickerItems('#categories-id-parent', " . json_encode($disabledSelectCategoryIds) . ");" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('categories-description');" .
+        Configure::read('app.jsNamespace') . ".Jodit.initBig('categories-description');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
@@ -114,7 +114,6 @@ echo $this->Form->control('Categories.active', [
 ]);
 
 echo $this->Form->control('Categories.description', [
-    'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => __d('admin', 'Description') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false

@@ -43,7 +43,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         html += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b>';
         html += '<div class="textarea-wrapper" style="margin-top: 10px;">';
         html += '<label for="dialogEditPriceReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPriceAdapted + '</label>';
-        html += '<textarea class="ckeditor" name="dialogEditPriceReason" id="dialogEditPriceReason"></textarea>';
+        html += '<textarea name="dialogEditPriceReason" id="dialogEditPriceReason"></textarea>';
         html += '</div>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogEditPriceSendEmailToCustomer" id="dialogEditPriceSendEmailToCustomer" checked="checked" />';
@@ -57,7 +57,6 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
     getCloseHandler : function() {
         $('#dialogOrderDetailProductPrice').val('');
         $('#dialogOrderDetailProductPriceOrderDetailId').val('');
-        foodcoopshop.Helper.destroyCkeditor('dialogEditPriceReason');
         $('#flashMessage').remove();
     },
 
@@ -67,7 +66,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
             return;
         }
 
-        var editPriceReason = CKEDITOR.instances['dialogEditPriceReason'].getData().trim();
+        var editPriceReason = $('#dialogEditPriceReason').val();
         var productPrice = $('#dialogOrderDetailProductPricePrice').val();
 
         foodcoopshop.Helper.ajaxCall(
@@ -94,7 +93,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
     getOpenHandler : function(button, modalSelector) {
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
-        foodcoopshop.Helper.initCkeditor('dialogEditPriceReason', true);
+        foodcoopshop.Jodit.initSmall('dialogEditPriceReason', true);
 
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();

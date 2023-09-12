@@ -128,12 +128,12 @@ foodcoopshop.ModalOrderDetailDelete = {
 
         modalHtml += '<div class="textarea-wrapper">';
         modalHtml += '<label for="dialogCancellationReason">' + textareaLabel +'</label>';
-        modalHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason"></textarea>';
+        modalHtml += '<textarea name="dialogCancellationReason" id="dialogCancellationReason"></textarea>';
         modalHtml += '</div>';
 
         $(modalSelector + ' .modal-body').html(modalHtml);
 
-        foodcoopshop.Helper.initCkeditor('dialogCancellationReason', true);
+        foodcoopshop.Jodit.initSmall('dialogCancellationReason', true);
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailDelete.getSuccessHandler(modalSelector, orderDetailIds);
@@ -143,8 +143,8 @@ foodcoopshop.ModalOrderDetailDelete = {
 
     getSuccessHandler : function(modalSelector, orderDetailIds) {
 
-        var ckeditorData = CKEDITOR.instances['dialogCancellationReason'].getData().trim();
-        if (ckeditorData == '') {
+        var editorData = $('#dialogCancellationReason').val();
+        if (editorData == '') {
             foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.CancellationReasonIsMandatory);
             foodcoopshop.Modal.resetButtons(modalSelector);
             return;
@@ -154,7 +154,7 @@ foodcoopshop.ModalOrderDetailDelete = {
             '/admin/order-details/delete',
             {
                 orderDetailIds: orderDetailIds,
-                cancellationReason: ckeditorData
+                cancellationReason: editorData,
             },
             {
                 onOk: function (data) {
