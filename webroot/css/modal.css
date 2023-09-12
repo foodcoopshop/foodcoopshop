@@ -142,7 +142,7 @@ body.iframe_self_service_order {
     float: left;
     margin-top: 4px;
 }
-.modal .cke {
+.modal .jodit-container {
     width: 100% ! important;
     float: none;
 }

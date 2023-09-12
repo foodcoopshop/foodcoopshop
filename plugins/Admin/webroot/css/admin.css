@@ -341,13 +341,6 @@ input.datepicker {
 .date-dropdown-placeholder select {
     width: 300px;
 }
-div.cke {
-    margin-bottom: 10px;
-    float: right;
-}
-#cke_configurations-value {
-    float: left;
-}
 body.order_details.index .pickup-day-filter-wrapper {
     display: flex;
     float: left;
@@ -553,9 +546,6 @@ body.order_details.index .table-cell-wrapper.price {
 }
 table.list td.amount > .has-separator:after {
     content: ' / ';
-}
-.cke_dialog_container {
-    z-index: 2147483650 ! important; /* open upload from dialog */
 }
 #manufacturer-options-edit-form h3 {
     margin-top: 15px;
@@ -935,9 +925,6 @@ label[for="groupbycustomer"] {
 i.fa-fw.far.fa-money-bill-alt {
     margin-right: 3px;
 }
-.cke_emoji-panel {
-    z-index: 10000000001 ! important;
-}
 
 body.deposits.overview_diagram table th,
 body.deposits.overview_diagram table td {
@@ -993,4 +980,11 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
 }
 .jodit-container {
     margin-bottom: 10px;
+}
+.jodit-container {
+    margin-bottom: 10px;
+    float: right;
+}
+#cke_configurations-value {
+    float: left;
 }

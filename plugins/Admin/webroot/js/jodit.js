@@ -81,6 +81,7 @@ foodcoopshop.Jodit = {
 
         var editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
+            width: '760px',
             buttons: [
                 'bold', 'italic', 'brush',
                 '|', 'undo', 'redo', 'eraser',

@@ -129,7 +129,7 @@ form.fcs-form input[type="checkbox"] {
 form.fcs-form .description {
     margin-left: 0px;
 }
-div.cke {
+.jodit-container {
     float: left;
 }
 form.fcs-form .input .after.small {
