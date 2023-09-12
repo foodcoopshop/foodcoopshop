@@ -21,25 +21,44 @@ foodcoopshop.ModalElfinder = {
             url : '/js/elfinder/php/connector.minimal.php',
             cssAutoLoad: false,
             lang: 'de',
-            height: '89%',
             i18nBaseUrl: '/js/elfinder/js/i18n/',
             workerBaseUrl: '/js/elfinder/js/worker/',
 
+            //https://github.com/Studio-42/elFinder/issues/2905#issuecomment-487106097
+            getFileCallback : function(file, fm) {
+                var execCopy = function(string) {
+                    var temp = document.createElement('textarea');
+            
+                    temp.value = string;
+                    temp.selectionStart = 0;
+                    temp.selectionEnd = temp.value.length;
+            
+                    var s = temp.style;
+                    s.position = 'fixed';
+                    s.left = '-100%';
+            
+                    document.body.appendChild(temp);
+                    temp.focus();
+                    var result = document.execCommand('copy');
+                    
+                    temp.blur();
+                    document.body.removeChild(temp);
+            
+                    return result;
+                };
+                if (execCopy(fm.convAbsUrl(file.url))) {
+                    foodcoopshop.Modal.destroy(modalSelector);
+                    foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheImageHasBeenCopiedToYourClipboard);
+                }
+            }
             /*
             sync : 5000,
             sortType : 'date',
             sortOrder : 'desc',
             sortStickFolders : false,
             ui : ['toolbar', 'places', 'tree', 'path', 'stat'],
-            commandsOptions : {
-                edit : {
-                    extraOptions : {
-                        uploadOpts : {
-                            dropEvt: {shiftKey: true, ctrlKey: true}
-                        },
-                        managerUrl : 'manager.html',
-                    }
-                },
+            */
+            /*
             quicklook : {
                 googleMapsApiKey : 'AIzaSyAmQiMcWI1e0QryaAHuGNblqJ9xRE2NXL8',
                 sharecadMimes : ['image/vnd.dwg', 'image/vnd.dxf', 'model/vnd.dwf', 'application/vnd.hp-hpgl', 'application/plt', 'application/step', 'model/iges', 'application/vnd.ms-pki.stl', 'application/sat', 'image/cgm', 'application/x-msmetafile'],

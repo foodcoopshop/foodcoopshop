@@ -57,12 +57,21 @@
     margin-right: auto;
     margin-left: auto;
 }
-#modal-elfinder .modal-dialog,
 #order-for-different-customer-add .modal-dialog {
     max-width: 95vw;
     height: 90vh;
 }
-#modal-elfinder .modal-content,
+#modal-elfinder .modal-dialog {
+    width: 75vw;
+    max-width: 1150px;
+    height: 70vh;
+}
+#elfinder {
+    height: 100% ! important;
+}
+#modal-elfinder .modal-content {
+    height: 70vh;
+}
 #order-for-different-customer-add .modal-content {
     height: 100%;
 }
