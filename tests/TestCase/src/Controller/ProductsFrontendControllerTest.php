@@ -65,7 +65,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);
         $this->get($this->Slug->getProductDetail(60, 'Milch'));
-        $this->assertResponseContains('<div class="price" title="Steuersatz: 13%">0,62 €</div><div class="deposit">+ <b>0,50 €</b> Pfand</div><div class="tax">0,07 €</div>');
+        $this->assertResponseContains('Steuersatz: 13%&lt;br /&gt;Verkaufspreis: 0,62 €">0,62 €</div><div class="deposit">+ <b>0,50 €</b> Pfand</div><div class="tax">0,07 €</div>');
         $this->assertResponseCode(200);
     }
 

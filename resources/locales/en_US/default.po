@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-12 09:00+0200\n"
-"PO-Revision-Date: 2023-09-12 09:01+0200\n"
+"POT-Creation-Date: 2023-09-12 09:46+0200\n"
+"PO-Revision-Date: 2023-09-12 09:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2543,6 +2543,9 @@ msgstr "Move in shopping bag"
 
 msgid "Move_in_cart"
 msgstr "Add to cart"
+
+msgid "Selling_price"
+msgstr "Selling price"
 
 msgid "Weight_in"
 msgstr "Weight in"
