@@ -22,5 +22,4 @@ rm -Rf $APP/webroot/node_modules/chart.js/dist/docs
 cp -R $APP/webroot/node_modules/@fortawesome/fontawesome-free/webfonts $APP/webroot
 cp -R $APP/webroot/node_modules/jquery-ui/dist/themes/smoothness/images $APP/webroot/cache
 
-cp $APP/config/elfinder/elfinder.html $APP/webroot/js/elfinder/elfinder.html
 cp $APP/config/elfinder/php/connector.minimal.php $APP/webroot/js/elfinder/php/connector.minimal.php
