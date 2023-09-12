@@ -35,14 +35,14 @@ foodcoopshop.Jodit = {
             exec: (editor) => {
                 foodcoopshop.ModalElfinder.init(editor);
             }
-        }
+        };
         return button;
     },
 
     initSmall: function (name, startupFocus) {
 
         var editor = Jodit.make('textarea#' + name, {
-            ... this.getDefaultOptions(),
+            ...this.getDefaultOptions(),
             buttons: [
                 'bold',
                 'italic',

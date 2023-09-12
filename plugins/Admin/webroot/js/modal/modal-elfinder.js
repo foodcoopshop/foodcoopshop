@@ -81,7 +81,7 @@ foodcoopshop.ModalElfinder = {
             [],
         );
 
-        $(modalSelector + ' .modal-body').html(html);;
+        $(modalSelector + ' .modal-body').html(html);
         
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
     }

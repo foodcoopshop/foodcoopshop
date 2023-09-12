@@ -4,6 +4,9 @@ module.exports = {
         "jquery": true,
         "es6": true
     },
+    "parserOptions": {
+        "ecmaVersion": 2020
+    },
     "ignorePatterns": [
         "webroot/js/elFinder/"
     ],
@@ -15,6 +18,7 @@ module.exports = {
         "Cookies": true,
         "foodcoopshop": true,
         "CookiesEuBanner": true,
+        "Jodit": true,
         "math": true,
         "Quagga": true,
         "slidebars": true,
