@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-08-28 17:29+0200\n"
-"PO-Revision-Date: 2023-08-28 17:29+0200\n"
+"POT-Creation-Date: 2023-09-12 09:00+0200\n"
+"PO-Revision-Date: 2023-09-12 09:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -264,9 +264,6 @@ msgstr "{0} hat eine neue Bestellung für {1} getätigt ({2})."
 msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr "Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {0}, du kannst bis {1} bestellen."
 
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
-
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr "Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
 
@@ -275,9 +272,6 @@ msgstr "Das Produkt {0} kann aufgrund von fehlenden Produktdaten zur Zeit leider
 
 msgid "Please_delete_product_from_cart_to_place_order."
 msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
 
 msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
 msgstr "Die Variante {0} des Produkts {1} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
@@ -290,21 +284,6 @@ msgstr "Dem Produkt wurden in der Zwischenzeit Varianten hinzugefügt."
 
 msgid "You_can_add_it_again_after_having_it_deleted."
 msgstr "Du kannst es nach dem Löschen erneut hinzufügen."
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
-
-msgid "{0}_can_be_ordered_next_week."
-msgstr "Das Produkt {0} kann erst nächste Woche wieder bestellt werden."
-
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
-
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
-
-msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
-msgstr "{0} hat die Lieferpause aktiviert und das Produkt {1} ist nicht mehr bestellbar."
 
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
@@ -932,6 +911,9 @@ msgstr "Neuer Abholtag"
 
 msgid "Change_pickup_day_invoices_info_text"
 msgstr "Bitte berücksichtige beim Ändern des Abholtages, dass dieser die Grundlage für die automatische Erstellung der Rechnung darstellt!"
+
+msgid "Change_pickup_day_invoices_info_text_2"
+msgstr "Achtung: Produkte, für die bereits eine Bestellliste generiert wurde, tauchen niemals auf einer neuen auf!"
 
 msgid "products"
 msgstr "Produkte"
@@ -1770,12 +1752,6 @@ msgstr "Bitte gib mindestens {0} Zeichen ein."
 msgid "Please_enter_max_{0}_characters."
 msgstr "Bitte gib maximal {0} Zeichen ein."
 
-msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
-msgstr "Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche."
-
-msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
-msgstr "Das Produkt um {0} kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenwert und Pfand beträgt {1}, du kannst bis {2} bestellen."
-
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
@@ -2060,6 +2036,33 @@ msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
 
 msgid "{0}_needs_to_be_a_{1}."
 msgstr "{0} muss ein {1} sein."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr "{0} hat die Lieferpause aktiviert und das Produkt {1} ist nicht mehr bestellbar."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
+
+msgid "{0}_can_be_ordered_next_week."
+msgstr "Das Produkt {0} kann erst nächste Woche wieder bestellt werden."
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
+msgstr "Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche."
+
+msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
+msgstr "Das Produkt um {0} kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenwert und Pfand beträgt {1}, du kannst bis {2} bestellen."
 
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
 msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Die Lieferpause kann erst gespeichert werden, wenn du die Produkte stornierst oder der Abholtag geändert wird."

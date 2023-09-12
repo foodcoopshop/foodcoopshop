@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-08-28 17:29+0200\n"
+"POT-Creation-Date: 2023-09-12 09:00+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -263,9 +263,6 @@ msgstr ""
 msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr ""
 
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr ""
-
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr ""
 
@@ -273,9 +270,6 @@ msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
 msgstr ""
 
 msgid "Please_delete_product_from_cart_to_place_order."
-msgstr ""
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
 msgstr ""
 
 msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
@@ -288,21 +282,6 @@ msgid "The_product_now_contains_attributes."
 msgstr ""
 
 msgid "You_can_add_it_again_after_having_it_deleted."
-msgstr ""
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr ""
-
-msgid "{0}_can_be_ordered_next_week."
-msgstr ""
-
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr ""
-
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr ""
-
-msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
 msgstr ""
 
 msgid "Errors_occurred."
@@ -930,6 +909,9 @@ msgid "New_pickup_day"
 msgstr ""
 
 msgid "Change_pickup_day_invoices_info_text"
+msgstr ""
+
+msgid "Change_pickup_day_invoices_info_text_2"
 msgstr ""
 
 msgid "products"
@@ -1769,12 +1751,6 @@ msgstr ""
 msgid "Please_enter_max_{0}_characters."
 msgstr ""
 
-msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
-msgstr ""
-
-msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
-msgstr ""
-
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
@@ -2058,6 +2034,33 @@ msgid "The_approximate_weight_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "{0}_needs_to_be_a_{1}."
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr ""
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr ""
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr ""
+
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr ""
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr ""
+
+msgid "{0}_can_be_ordered_next_week."
+msgstr ""
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
+msgstr ""
+
+msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
 msgstr ""
 
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."

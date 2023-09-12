@@ -57,6 +57,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         html += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
         html += '<input class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
         html += '</div>';
+        html += '<p class="small"><b>' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText2 + '</b></p>';
         html += '<p class="small">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogEditPickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';

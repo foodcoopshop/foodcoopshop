@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-08-28 17:29+0200\n"
-"PO-Revision-Date: 2023-08-28 17:29+0200\n"
+"POT-Creation-Date: 2023-09-12 09:00+0200\n"
+"PO-Revision-Date: 2023-09-12 09:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -264,9 +264,6 @@ msgstr "{0} has placed a new order for {1} ({2})."
 msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
 
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
-
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
 msgstr "Please change the amout or remove product from cart to place order."
 
@@ -275,9 +272,6 @@ msgstr "The product {0} cannot be ordered any more due to interal reasons."
 
 msgid "Please_delete_product_from_cart_to_place_order."
 msgstr "Please remove product from cart to place order."
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
 
 msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
 msgstr "The attribute {0} of the product {1} cannot be ordered any more due to interal reasons."
@@ -290,21 +284,6 @@ msgstr "The product now contains attributes."
 
 msgid "You_can_add_it_again_after_having_it_deleted."
 msgstr "You can add it again after having it deleted."
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "The product {0} is not activated any more."
-
-msgid "{0}_can_be_ordered_next_week."
-msgstr "{0} can be ordered next week."
-
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
-
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "It's not possible to order the product {0} any more."
-
-msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
-msgstr "{0} has activated the delivery break and the product {1} cannot be ordered."
 
 msgid "Errors_occurred."
 msgstr "Errors occurred."
@@ -932,6 +911,9 @@ msgstr "New pickup day"
 
 msgid "Change_pickup_day_invoices_info_text"
 msgstr "When you change the pickup day, please consider that the pickup day is relvevant for the automatically generated invoices!"
+
+msgid "Change_pickup_day_invoices_info_text_2"
+msgstr "If there was already an order list generated for the selected products, they won't appear on a new one."
 
 msgid "products"
 msgstr "products"
@@ -1770,12 +1752,6 @@ msgstr "Please enter at least {0} characters."
 msgid "Please_enter_max_{0}_characters."
 msgstr "Please enter maximal {0} characters."
 
-msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
-msgstr "Please provide the taken weight and then click on the shopping bag button."
-
-msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
-msgstr "The product ({0}) can't be added to your cart. Please add new credit, your credit minus cart and deposit equals {1}. You can place orders until {2}."
-
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "The desired amount {0} is not valid."
 
@@ -2060,6 +2036,33 @@ msgstr "The approximate weight needs to be greater than 0."
 
 msgid "{0}_needs_to_be_a_{1}."
 msgstr "{0} needs to be a {1}."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "The product {0} is not activated any more."
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
+
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr "{0} has activated the delivery break and the product {1} cannot be ordered."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "It's not possible to order the product {0} any more."
+
+msgid "{0}_can_be_ordered_next_week."
+msgstr "{0} can be ordered next week."
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
+msgstr "Please provide the taken weight and then click on the shopping bag button."
+
+msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
+msgstr "The product ({0}) can't be added to your cart. Please add new credit, your credit minus cart and deposit equals {1}. You can place orders until {2}."
 
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
 msgstr "The following delivery day(s) already contain orders: {0}. To save the delivery break, either cancel them or change the pickup day."
