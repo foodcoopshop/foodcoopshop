@@ -75,9 +75,9 @@ class PricePerUnitHelper extends Helper
         return $result;
     }
 
-    public function getPricePerUnitForFrontend($priceInclPerUnit, $quantityInUnits, $amount, $taxRate)
+    public function getPricePerUnitForFrontend($priceInclPerUnit, $quantityInUnits, $amount, $title)
     {
-        return '<div class="price" title="' . __('Tax_rate') . ': ' . $this->MyNumber->formatTaxRate($taxRate) . '%">' . $this->MyNumber->formatAsCurrency(
+        return '<div class="price" title="' . h($title) . '">' . $this->MyNumber->formatAsCurrency(
             $this->getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
         ) . '</div> <div class="price-asterisk">*</div>';
     }
