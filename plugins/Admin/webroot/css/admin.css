@@ -988,3 +988,7 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
 #cke_configurations-value {
     float: left;
 }
+/* fix path for packed css */
+.elfinder-button-icon {
+    background-image: url(/js/elfinder/img/toolbar.png);
+}
