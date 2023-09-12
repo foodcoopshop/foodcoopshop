@@ -19,6 +19,7 @@ foodcoopshop.Jodit = {
             enter: 'br',
             hidePoweredByJodit: true,
             language: foodcoopshop.LocalizedJs.helper.defaultLocaleShort,
+            toolbarAdaptive: false,
         };
     },
 
@@ -26,7 +27,7 @@ foodcoopshop.Jodit = {
 
         var editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttonsXS: [
+            buttons: [
                 'bold',
                 'italic',
                 'eraser',
@@ -41,11 +42,11 @@ foodcoopshop.Jodit = {
 
     },
 
-    initSmallWithUpload: function (name) {
+    initSmallWithUpload: function (name, startupFocus) {
 
         var editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttonsXS: [
+            buttons: [
                 'bold',
                 'italic',
                 'eraser',
