@@ -17,6 +17,10 @@ foodcoopshop.ModalElfinder = {
 
         var modalSelector = '#modal-elfinder';
 
+        // if closed via dialog-closer-x it can not be opened again
+        // so destroy on every open
+        foodcoopshop.Modal.destroy(modalSelector);
+
         var opts = {
             url : '/js/elfinder/php/connector.minimal.php',
             cssAutoLoad: false,
