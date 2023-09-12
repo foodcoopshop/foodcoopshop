@@ -38,7 +38,8 @@ body.dark .self-service .right-box {
 }
 body.dark .ui-widget-header,
 body.dark .ui-state-default,
-body.dark .ui-widget-header .ui-state-hover {
+body.dark .ui-widget-header .ui-state-hover,
+body.dark .ui-selectable {
     color: var(--dark-mode-main-font-color);
     border-color: var(--dark-mode-main-border-color);
     background-color: var(--dark-mode-main-bg-color);
