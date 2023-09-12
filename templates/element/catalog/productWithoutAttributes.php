@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Log\Log;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,10 +20,18 @@ declare(strict_types=1);
 echo '<div class="ew active">';
 if ($showProductPrice) {
     echo '<div class="line">';
-    $priceHtml =  '<div class="price" title="' . __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%">' . $this->Number->formatAsCurrency($product->gross_price) . '</div>';
+    $tooltip = __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%';
+    if ($appAuth->user('shopping_price') != 'SP') {
+        $sellingPrice = $product->selling_prices['gross_price'];
+        if ($product->unit_product->price_per_unit_enabled) {
+            $sellingPrice = $this->PricePerUnit->getPricePerUnit($product->selling_prices['price_incl_per_unit'], $product->unit_product->quantity_in_units, $product->unit_product->amount);
+        }
+        $tooltip .= '<br />' . __('Selling_price') . ': ' . $this->Number->formatAsCurrency($sellingPrice);
+    }
+    $priceHtml =  '<div class="price" title="' . h($tooltip) .  '">' . $this->Number->formatAsCurrency($product->gross_price) . '</div>';
     $pricePerUnitInfoText = '';
     if ($product->unit_product->price_per_unit_enabled) {
-        $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product->unit_product->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount, $product->tax->rate);
+        $priceHtml = $this->PricePerUnit->getPricePerUnitForFrontend($product->unit_product->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount, $tooltip);
         $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
             $product->unit_product->price_incl_per_unit,
             $product->unit_product->name,

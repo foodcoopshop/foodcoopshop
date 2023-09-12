@@ -518,6 +518,12 @@ class Catalog {
                 $products[$i]->deposit_product->deposit,
                 $taxRate,
             );
+
+            $products[$i]->selling_prices = [
+                'gross_price' => $this->Product->getGrossPrice($products[$i]->price, $taxRate),
+                'price_incl_per_unit' => $products[$i]->unit_product->price_incl_per_unit,
+            ];
+
             $products[$i]->price = $modifiedProductPricesByShoppingPrice['price'];
             $products[$i]->unit_product->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
             $products[$i]->deposit_product->deposit = $modifiedProductPricesByShoppingPrice['deposit'];
@@ -555,6 +561,12 @@ class Catalog {
 
                 // START: override shopping with purchase prices / zero prices
                 $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($appAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attribute->unit_product_attribute->price_incl_per_unit, $attribute->deposit_product_attribute->deposit, $taxRate);
+
+                $attribute->selling_prices = [
+                    'gross_price' => $this->Product->getGrossPrice($attribute->price, $taxRate),
+                    'price_incl_per_unit' => $attribute->unit_product_attribute->price_incl_per_unit,
+                ];
+    
                 $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
                 $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
                 $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];

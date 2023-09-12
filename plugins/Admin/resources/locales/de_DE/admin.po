@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-15 21:31+0200\n"
+"POT-Creation-Date: 2023-09-12 09:00+0200\n"
 "PO-Revision-Date: 2023-06-15 21:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -300,138 +300,6 @@ msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
 msgid "No_orders_within_the_given_time_range."
 msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
-msgid "No_member_found_with_id_{0}."
-msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
-
-msgid "Instant_order"
-msgstr "Sofort-Bestellung"
-
-msgid "Self_service_order"
-msgstr "Bestellung über SB-Modus"
-
-msgid "Edit_purchase_price"
-msgstr "Einkaufspreis bearbeiten"
-
-msgid "Purchase_price_has_been_saved_successfully."
-msgstr "Der Einkaufspreis wurde erfolgreich gespeichert."
-
-msgid "Profit"
-msgstr "Gewinn"
-
-msgid "Group_by_product"
-msgstr "Gruppieren nach Produkt"
-
-msgid "Group_by_member"
-msgstr "Gruppieren nach Mitglied"
-
-msgid "Group_by_manufacturer"
-msgstr "Gruppieren nach Hersteller"
-
-msgid "Orders"
-msgstr "Bestellungen"
-
-msgid "Please_select_a_new_member."
-msgstr "Bitte wähle ein neues Mitglied aus."
-
-msgid "The_same_member_must_not_be_selected."
-msgstr "Bitte wähle ein anderes Mitglied aus."
-
-msgid "The_amount_is_not_valid."
-msgstr "Die Anzahl ist nicht gültig."
-
-msgid "The_reason_for_changing_the_member_is_mandatory."
-msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
-
-msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
-msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
-
-msgid "Amount"
-msgstr "Anzahl"
-
-msgid "Reason"
-msgstr "Grund"
-
-msgid "Assigned_to_another_member"
-msgstr "Auf ein anderes Mitglied umgebucht"
-
-msgid "An_email_was_sent_to_{0}_and_{1}."
-msgstr "Eine E-Mail wurde an {0} und {1} verschickt."
-
-msgid "The_delivered_quantity_is_not_valid."
-msgstr "Das gelieferte Gewicht ist nicht gültig."
-
-msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
-msgstr "Der neue Preis wäre {0} für {1}. Bitte überprüfe die Einheit."
-
-msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
-
-msgid "Weight_adapted_for_\"0\":"
-msgstr "Gewicht angepasst für \"{0}\":"
-
-msgid "An_email_was_sent_to_{0}."
-msgstr "Eine E-Mail wurde an {0} verschickt."
-
-msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
-msgstr "Eine E-Mail wurde an {0} sowie an den Hersteller {1} versendet."
-
-msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
-msgstr "Die Anzahl des bestellten Produktes {0} wurde erfolgreich von {1} auf {2} angepasst."
-
-msgid "Ordered_amount_adapted"
-msgstr "Bestellte Anzahl angepasst"
-
-msgid "The_stock_was_increased_to_{0}."
-msgstr "Der Lagerstand wurde auf {0} erhöht."
-
-msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
-msgstr "Der Name des bestellten Produktes {0} wurde erfolgreich auf {1} geändert."
-
-msgid "The_price_is_not_valid."
-msgstr "Der Preis ist nicht gültig."
-
-msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
-
-msgid "Ordered_price_adapted"
-msgstr "Preis angepasst"
-
-msgid "The_pickup_day_of_your_order_was_changed_to"
-msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
-
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
-msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert."
-
-msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
-msgstr "{0,plural,=1{Ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
-
-msgid "{0}_has_written_a_feedback_to_product_{1}."
-msgstr "{0} hat ein Feedback zum Produkt {1} verfasst."
-
-msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
-msgstr "Danke für dein Feedback! Es wurde erfolgreich gespeichert und an {0} verschickt."
-
-msgid "The_pickup_day_comment_of_{0}_was_changed:"
-msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
-
-msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
-msgstr "Das Gewicht wurde bei {1,plural,=1{1 Produkt} other{# Produkten}}</b> noch nicht angepasst. Mitglied: {0}"
-
-msgid "The_following_customers_still_have_products_with_unchanged_weight:"
-msgstr "Bei folgenden Mitgliedern wurde bei den Produkten das Gewicht noch nicht angepasst."
-
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
-
-msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
-msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}) vom {3} wurde erfolgreich storniert."
-
-msgid "Product_was_cancelled"
-msgstr "Produkt storniert"
-
-msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
-msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurden erfolgreich storniert.}}"
-
 msgid "Home"
 msgstr "Home"
 
@@ -489,17 +357,224 @@ msgstr "Die Zahlung ({0}, {1}) von {2} wurde erfolgreich gelöscht."
 msgid "Credit"
 msgstr "Guthaben"
 
+msgid "Orders"
+msgstr "Bestellungen"
+
 msgid "Show_order"
 msgstr "Bestellung anzeigen"
 
 msgid "of_{0}"
 msgstr "von {0}"
 
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr "Upload erfolgreich. Bitte wähle die Überweisungen aus, die du importieren möchtest und klicke dann auf Speichern."
+
+msgid "The_uploaded_file_is_not_valid."
+msgstr "Die hochgeladene Datei ist nicht gültig."
+
+msgid "Your_transaction_({0})_was_added_to_the_credit_system."
+msgstr "Deine Überweisung ({0}) wurde ins Guthaben-System übernommen."
+
+msgid "No_records_were_imported."
+msgstr "Es wurden keine Überweisungen importiert."
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
+msgstr "{0,plural,=1{Ein Datensatz wurde} other{# Datensätze wurden}} erfolgreich importiert. Summe: {1}"
+
+msgid "Report"
+msgstr "Bericht"
+
+msgid "Add_slider"
+msgstr "Neues Slideshow-Bild erstellen"
+
+msgid "Edit_slider"
+msgstr "Slideshow-Bild bearbeiten"
+
+msgid "The_slider_{0}_has_been_{1}."
+msgstr "Das Slideshow-Bild {0} wurde {1}."
+
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgid "All_manufacturers"
+msgstr "Alle Hersteller"
+
+msgid "Turnover_and_profit_statistics"
+msgstr "Umsatz- und Gewinnstatistik"
+
+msgid "Turnover_statistics"
+msgstr "Umsatzstatistik"
+
+msgid "Total"
+msgstr "Gesamt"
+
+msgid "Last_{0}_months"
+msgstr "Letzte {0} Monate"
+
+msgid "December"
+msgstr "Dezember"
+
+msgid "Add_tax_rate"
+msgstr "Neuen Steuersatz erstellen"
+
+msgid "Edit_tax_rate"
+msgstr "Steuersatz bearbeiten"
+
+msgid "The_tax_rate_{0}_has_been_{1}."
+msgstr "Der Steuersatz {0} wurde {1}."
+
+msgid "Tax_rates"
+msgstr "Steuersätze"
+
+msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
+msgstr "Die hochgeladene Datei muss folgendes Format haben: {0}"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Allgemeine-Geschaeftsbedingungen"
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr "{0} hat ein Feedback zum Produkt {1} verfasst."
+
+msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
+msgstr "Danke für dein Feedback! Es wurde erfolgreich gespeichert und an {0} verschickt."
+
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
+msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}) vom {3} wurde erfolgreich storniert."
+
+msgid "Product_was_cancelled"
+msgstr "Produkt storniert"
+
+msgid "An_email_was_sent_to_{0}."
+msgstr "Eine E-Mail wurde an {0} verschickt."
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr "Eine E-Mail wurde an {0} sowie an den Hersteller {1} versendet."
+
+msgid "Reason"
+msgstr "Grund"
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr "Der Lagerstand wurde auf {0} erhöht."
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
+msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurden erfolgreich storniert.}}"
+
+msgid "Please_select_a_new_member."
+msgstr "Bitte wähle ein neues Mitglied aus."
+
+msgid "The_same_member_must_not_be_selected."
+msgstr "Bitte wähle ein anderes Mitglied aus."
+
+msgid "The_amount_is_not_valid."
+msgstr "Die Anzahl ist nicht gültig."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Assigned_to_another_member"
+msgstr "Auf ein anderes Mitglied umgebucht"
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr "Eine E-Mail wurde an {0} und {1} verschickt."
+
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert."
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "{0,plural,=1{Ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr "Die Anzahl des bestellten Produktes {0} wurde erfolgreich von {1} auf {2} angepasst."
+
+msgid "Ordered_amount_adapted"
+msgstr "Bestellte Anzahl angepasst"
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr "Der Name des bestellten Produktes {0} wurde erfolgreich auf {1} geändert."
+
+msgid "The_price_is_not_valid."
+msgstr "Der Preis ist nicht gültig."
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
+
+msgid "Ordered_price_adapted"
+msgstr "Preis angepasst"
+
+msgid "The_delivered_quantity_is_not_valid."
+msgstr "Das gelieferte Gewicht ist nicht gültig."
+
+msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
+msgstr "Der neue Preis wäre {0} für {1}. Bitte überprüfe die Einheit."
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
+
+msgid "Weight_adapted_for_\"0\":"
+msgstr "Gewicht angepasst für \"{0}\":"
+
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr "Das Gewicht wurde bei {1,plural,=1{1 Produkt} other{# Produkten}}</b> noch nicht angepasst. Mitglied: {0}"
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr "Bei folgenden Mitgliedern wurde bei den Produkten das Gewicht noch nicht angepasst."
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
+
+msgid "Edit_purchase_price"
+msgstr "Einkaufspreis bearbeiten"
+
+msgid "Purchase_price_has_been_saved_successfully."
+msgstr "Der Einkaufspreis wurde erfolgreich gespeichert."
+
+msgid "Group_by_product"
+msgstr "Gruppieren nach Produkt"
+
+msgid "Group_by_member"
+msgstr "Gruppieren nach Mitglied"
+
+msgid "Group_by_manufacturer"
+msgstr "Gruppieren nach Hersteller"
+
+msgid "No_member_found_with_id_{0}."
+msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "Instant_order"
+msgstr "Sofort-Bestellung"
+
+msgid "Self_service_order"
+msgstr "Bestellung über SB-Modus"
+
+msgid "Profit"
+msgstr "Gewinn"
+
+msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
+msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgreich erstellt."
+
+msgid "The_product_{0}_was_created_for_{1}."
+msgstr "Das Produkt {0} wurde erfolgreich für {1} erstellt."
+
 msgid "Surcharge_needs_to_be_greater_than_0."
 msgstr "Der Aufschlag muss größer als 0 sein."
 
 msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
 msgstr "Der Netto-Verkaufspreis wurde erfolgreich berechnet: {0} vom Netto-Einkaufspreis"
+
+msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
+msgstr "Bild (ID: {0}) wurde erfolgreich gelöscht. Produkt: {1}, Hersteller: {2}"
 
 msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
 msgstr "Das Produkt {0} hat {1,plural,=1{1 offene Bestellung} other{# offene Bestellungen}}."
@@ -510,29 +585,14 @@ msgstr "Bitte probiere es nochmal, sobald die nächsten Rechnungen erstellt wurd
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
 msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} erfolgreich gelöscht."
 
-msgid "Products"
-msgstr "Produkte"
+msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgstr "Die Kategorien des Produktes {0} vom Hersteller {1} wurden geändert: {2}"
 
-msgid "All_products"
-msgstr "Alle Produkte"
+msgid "Saving_successful."
+msgstr "Speichern erfolgreich."
 
-msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
-msgstr "Bild (ID: {0}) wurde erfolgreich gelöscht. Produkt: {1}, Hersteller: {2}"
-
-msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
-msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
-
-msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
-msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich gelöscht."
-
-msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
-msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich geändert."
-
-msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
-msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgreich erstellt."
-
-msgid "The_product_{0}_was_created_for_{1}."
-msgstr "Das Produkt {0} wurde erfolgreich für {1} erstellt."
+msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "Die Standard-Variante des Produktes {0} vom Hersteller {1} wurde auf {2} geändert."
 
 msgid "Order_possible_until"
 msgstr "Bestellbar bis"
@@ -561,26 +621,56 @@ msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreic
 msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}."
 msgstr "Der Lieferrhythmus von {0} Produkten wurde erfolgreich auf {1} geändert."
 
-msgid "Saving_successful."
-msgstr "Speichern erfolgreich."
+msgid "Attribute"
+msgstr "Variante"
 
-msgid "Selling_price"
-msgstr "Verkaufspreis"
+msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
+msgstr "Der Pfand des Produktes {0} wurde erfolgreich von {1} auf {2} geändert."
 
-msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
-msgstr "Der Steuersatz des Produktes {0} vom Hersteller {1} wurde erfolgreich geändert."
+msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
+msgstr "Das Produkt {0} wurde erfolgreich zu einem Lagerprodukt geändert."
 
-msgid "From_{0}_to_{1}"
-msgstr "Von {0} auf {1}"
+msgid "The_product_was_changed_successfully."
+msgstr "Das Produkt wurde erfolgreich geändert."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
+msgstr "Das Produkt {0} vom Hersteller {1} wurde umbenannt in {2}."
+
+msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "Die Einheit des Produktes {0} vom Hersteller {1} wurde geändert in {2}."
+
+msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "Die Beschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"
+
+msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "Die Kurzbeschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
+msgstr "Das Produkt {0} vom Hersteller {1} wird nicht mehr als \"neu\" angezeigt."
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr "Das Produkt {0} vom Hersteller {1} wird jetzt {2} Tage lang als \"neu\" angezeigt."
+
+msgid "The_price_of_the_product_{0}_was_changed_successfully."
+msgstr "Der Preis des Produktes {0} wurde erfolgreich geändert."
+
+msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "Der Preis des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich gelöscht."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
+msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich geändert."
 
 msgid "Nothing_changed."
 msgstr "Es wurden keine Änderungen gespeichert."
 
-msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
-msgstr "Die Kategorien des Produktes {0} vom Hersteller {1} wurden geändert: {2}"
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
+msgstr "Der Einkaufspreis des Produktes {0} wurde erfolgreich geändert."
 
-msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
-msgstr "Das Produkt {0} wurde erfolgreich zu einem Lagerprodukt geändert."
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "Der Einkaufspreis des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "Die Anzahl des Produktes {0} wurde erfolgreich geändert."
@@ -618,51 +708,6 @@ msgstr "E-Mail-Benachrichtigung ab Anzahl"
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
 msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde geändert: {2}."
 
-msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
-msgstr "Der Einkaufspreis des Produktes {0} wurde erfolgreich geändert."
-
-msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "Der Einkaufspreis des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
-
-msgid "The_price_of_the_product_{0}_was_changed_successfully."
-msgstr "Der Preis des Produktes {0} wurde erfolgreich geändert."
-
-msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "Der Preis des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
-
-msgid "Attribute"
-msgstr "Variante"
-
-msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
-msgstr "Der Pfand des Produktes {0} wurde erfolgreich von {1} auf {2} geändert."
-
-msgid "The_product_was_changed_successfully."
-msgstr "Das Produkt wurde erfolgreich geändert."
-
-msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
-msgstr "Das Produkt {0} vom Hersteller {1} wurde umbenannt in {2}."
-
-msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr "Die Einheit des Produktes {0} vom Hersteller {1} wurde geändert in {2}."
-
-msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr "Die Beschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"
-
-msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr "Die Kurzbeschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"
-
-msgid "All_manufacturers"
-msgstr "Alle Hersteller"
-
-msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr "Die Standard-Variante des Produktes {0} vom Hersteller {1} wurde auf {2} geändert."
-
-msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
-msgstr "Das Produkt {0} vom Hersteller {1} wird nicht mehr als \"neu\" angezeigt."
-
-msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
-msgstr "Das Produkt {0} vom Hersteller {1} wird jetzt {2} Tage lang als \"neu\" angezeigt."
-
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
 msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} deaktiviert."
 
@@ -675,68 +720,23 @@ msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
 
-msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
-msgstr "Upload erfolgreich. Bitte wähle die Überweisungen aus, die du importieren möchtest und klicke dann auf Speichern."
+msgid "Selling_price"
+msgstr "Verkaufspreis"
 
-msgid "The_uploaded_file_is_not_valid."
-msgstr "Die hochgeladene Datei ist nicht gültig."
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgstr "Der Steuersatz des Produktes {0} vom Hersteller {1} wurde erfolgreich geändert."
 
-msgid "Your_transaction_({0})_was_added_to_the_credit_system."
-msgstr "Deine Überweisung ({0}) wurde ins Guthaben-System übernommen."
+msgid "From_{0}_to_{1}"
+msgstr "Von {0} auf {1}"
 
-msgid "No_records_were_imported."
-msgstr "Es wurden keine Überweisungen importiert."
+msgid "Products"
+msgstr "Produkte"
 
-msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
-msgstr "{0,plural,=1{Ein Datensatz wurde} other{# Datensätze wurden}} erfolgreich importiert. Summe: {1}"
+msgid "All_products"
+msgstr "Alle Produkte"
 
-msgid "Report"
-msgstr "Bericht"
-
-msgid "Add_slider"
-msgstr "Neues Slideshow-Bild erstellen"
-
-msgid "Edit_slider"
-msgstr "Slideshow-Bild bearbeiten"
-
-msgid "The_slider_{0}_has_been_{1}."
-msgstr "Das Slideshow-Bild {0} wurde {1}."
-
-msgid "Slideshow"
-msgstr "Slideshow"
-
-msgid "Turnover_and_profit_statistics"
-msgstr "Umsatz- und Gewinnstatistik"
-
-msgid "Turnover_statistics"
-msgstr "Umsatzstatistik"
-
-msgid "Total"
-msgstr "Gesamt"
-
-msgid "Last_{0}_months"
-msgstr "Letzte {0} Monate"
-
-msgid "December"
-msgstr "Dezember"
-
-msgid "Add_tax_rate"
-msgstr "Neuen Steuersatz erstellen"
-
-msgid "Edit_tax_rate"
-msgstr "Steuersatz bearbeiten"
-
-msgid "The_tax_rate_{0}_has_been_{1}."
-msgstr "Der Steuersatz {0} wurde {1}."
-
-msgid "Tax_rates"
-msgstr "Steuersätze"
-
-msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
-msgstr "Die hochgeladene Datei muss folgendes Format haben: {0}"
-
-msgid "Filename_General-terms-and-conditions"
-msgstr "Allgemeine-Geschaeftsbedingungen"
+msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
+msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
 
 msgid "all_activities"
 msgstr "alle Aktivitäten"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-06-15 21:31+0200\n"
+"POT-Creation-Date: 2023-09-12 09:00+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -299,138 +299,6 @@ msgstr ""
 msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
-msgid "No_member_found_with_id_{0}."
-msgstr ""
-
-msgid "Instant_order"
-msgstr ""
-
-msgid "Self_service_order"
-msgstr ""
-
-msgid "Edit_purchase_price"
-msgstr ""
-
-msgid "Purchase_price_has_been_saved_successfully."
-msgstr ""
-
-msgid "Profit"
-msgstr ""
-
-msgid "Group_by_product"
-msgstr ""
-
-msgid "Group_by_member"
-msgstr ""
-
-msgid "Group_by_manufacturer"
-msgstr ""
-
-msgid "Orders"
-msgstr ""
-
-msgid "Please_select_a_new_member."
-msgstr ""
-
-msgid "The_same_member_must_not_be_selected."
-msgstr ""
-
-msgid "The_amount_is_not_valid."
-msgstr ""
-
-msgid "The_reason_for_changing_the_member_is_mandatory."
-msgstr ""
-
-msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
-msgstr ""
-
-msgid "Amount"
-msgstr ""
-
-msgid "Reason"
-msgstr ""
-
-msgid "Assigned_to_another_member"
-msgstr ""
-
-msgid "An_email_was_sent_to_{0}_and_{1}."
-msgstr ""
-
-msgid "The_delivered_quantity_is_not_valid."
-msgstr ""
-
-msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
-msgstr ""
-
-msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr ""
-
-msgid "Weight_adapted_for_\"0\":"
-msgstr ""
-
-msgid "An_email_was_sent_to_{0}."
-msgstr ""
-
-msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
-msgstr ""
-
-msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
-msgstr ""
-
-msgid "Ordered_amount_adapted"
-msgstr ""
-
-msgid "The_stock_was_increased_to_{0}."
-msgstr ""
-
-msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
-msgstr ""
-
-msgid "The_price_is_not_valid."
-msgstr ""
-
-msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr ""
-
-msgid "Ordered_price_adapted"
-msgstr ""
-
-msgid "The_pickup_day_of_your_order_was_changed_to"
-msgstr ""
-
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
-msgstr ""
-
-msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
-msgstr ""
-
-msgid "{0}_has_written_a_feedback_to_product_{1}."
-msgstr ""
-
-msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
-msgstr ""
-
-msgid "The_pickup_day_comment_of_{0}_was_changed:"
-msgstr ""
-
-msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
-msgstr ""
-
-msgid "The_following_customers_still_have_products_with_unchanged_weight:"
-msgstr ""
-
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr ""
-
-msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
-msgstr ""
-
-msgid "Product_was_cancelled"
-msgstr ""
-
-msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
-msgstr ""
-
 msgid "Home"
 msgstr ""
 
@@ -488,16 +356,223 @@ msgstr ""
 msgid "Credit"
 msgstr ""
 
+msgid "Orders"
+msgstr ""
+
 msgid "Show_order"
 msgstr ""
 
 msgid "of_{0}"
 msgstr ""
 
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr ""
+
+msgid "The_uploaded_file_is_not_valid."
+msgstr ""
+
+msgid "Your_transaction_({0})_was_added_to_the_credit_system."
+msgstr ""
+
+msgid "No_records_were_imported."
+msgstr ""
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
+msgstr ""
+
+msgid "Report"
+msgstr ""
+
+msgid "Add_slider"
+msgstr ""
+
+msgid "Edit_slider"
+msgstr ""
+
+msgid "The_slider_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Slideshow"
+msgstr ""
+
+msgid "All_manufacturers"
+msgstr ""
+
+msgid "Turnover_and_profit_statistics"
+msgstr ""
+
+msgid "Turnover_statistics"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Last_{0}_months"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Add_tax_rate"
+msgstr ""
+
+msgid "Edit_tax_rate"
+msgstr ""
+
+msgid "The_tax_rate_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Tax_rates"
+msgstr ""
+
+msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
+msgstr ""
+
+msgid "Filename_General-terms-and-conditions"
+msgstr ""
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr ""
+
+msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
+msgstr ""
+
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
+msgstr ""
+
+msgid "Product_was_cancelled"
+msgstr ""
+
+msgid "An_email_was_sent_to_{0}."
+msgstr ""
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr ""
+
+msgid "Reason"
+msgstr ""
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr ""
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
+msgstr ""
+
+msgid "Please_select_a_new_member."
+msgstr ""
+
+msgid "The_same_member_must_not_be_selected."
+msgstr ""
+
+msgid "The_amount_is_not_valid."
+msgstr ""
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr ""
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Assigned_to_another_member"
+msgstr ""
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr ""
+
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr ""
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr ""
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr ""
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr ""
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr ""
+
+msgid "Ordered_amount_adapted"
+msgstr ""
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr ""
+
+msgid "The_price_is_not_valid."
+msgstr ""
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr ""
+
+msgid "Ordered_price_adapted"
+msgstr ""
+
+msgid "The_delivered_quantity_is_not_valid."
+msgstr ""
+
+msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
+msgstr ""
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr ""
+
+msgid "Weight_adapted_for_\"0\":"
+msgstr ""
+
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr ""
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
+msgid "Edit_purchase_price"
+msgstr ""
+
+msgid "Purchase_price_has_been_saved_successfully."
+msgstr ""
+
+msgid "Group_by_product"
+msgstr ""
+
+msgid "Group_by_member"
+msgstr ""
+
+msgid "Group_by_manufacturer"
+msgstr ""
+
+msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "Instant_order"
+msgstr ""
+
+msgid "Self_service_order"
+msgstr ""
+
+msgid "Profit"
+msgstr ""
+
+msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
+msgstr ""
+
+msgid "The_product_{0}_was_created_for_{1}."
+msgstr ""
+
 msgid "Surcharge_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
+msgstr ""
+
+msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr ""
 
 msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
@@ -509,28 +584,13 @@ msgstr ""
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
 msgstr ""
 
-msgid "Products"
+msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
 msgstr ""
 
-msgid "All_products"
+msgid "Saving_successful."
 msgstr ""
 
-msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
-msgstr ""
-
-msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
-msgstr ""
-
-msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
-msgstr ""
-
-msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
-msgstr ""
-
-msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
-msgstr ""
-
-msgid "The_product_{0}_was_created_for_{1}."
+msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr ""
 
 msgid "Order_possible_until"
@@ -560,25 +620,55 @@ msgstr ""
 msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}."
 msgstr ""
 
-msgid "Saving_successful."
+msgid "Attribute"
 msgstr ""
 
-msgid "Selling_price"
+msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
 msgstr ""
 
-msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
 msgstr ""
 
-msgid "From_{0}_to_{1}"
+msgid "The_product_was_changed_successfully."
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
+msgstr ""
+
+msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr ""
+
+msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr ""
+
+msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr ""
+
+msgid "The_price_of_the_product_{0}_was_changed_successfully."
+msgstr ""
+
+msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr ""
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr ""
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
 msgstr ""
 
 msgid "Nothing_changed."
 msgstr ""
 
-msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
 msgstr ""
 
-msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr ""
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
@@ -617,51 +707,6 @@ msgstr ""
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
 msgstr ""
 
-msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
-msgstr ""
-
-msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr ""
-
-msgid "The_price_of_the_product_{0}_was_changed_successfully."
-msgstr ""
-
-msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
-msgstr ""
-
-msgid "The_product_was_changed_successfully."
-msgstr ""
-
-msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
-msgstr ""
-
-msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr ""
-
-msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr ""
-
-msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr ""
-
-msgid "All_manufacturers"
-msgstr ""
-
-msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr ""
-
-msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
-msgstr ""
-
-msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
-msgstr ""
-
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
 msgstr ""
 
@@ -674,67 +719,22 @@ msgstr ""
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr ""
 
-msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgid "Selling_price"
 msgstr ""
 
-msgid "The_uploaded_file_is_not_valid."
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
 msgstr ""
 
-msgid "Your_transaction_({0})_was_added_to_the_credit_system."
+msgid "From_{0}_to_{1}"
 msgstr ""
 
-msgid "No_records_were_imported."
+msgid "Products"
 msgstr ""
 
-msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
+msgid "All_products"
 msgstr ""
 
-msgid "Report"
-msgstr ""
-
-msgid "Add_slider"
-msgstr ""
-
-msgid "Edit_slider"
-msgstr ""
-
-msgid "The_slider_{0}_has_been_{1}."
-msgstr ""
-
-msgid "Slideshow"
-msgstr ""
-
-msgid "Turnover_and_profit_statistics"
-msgstr ""
-
-msgid "Turnover_statistics"
-msgstr ""
-
-msgid "Total"
-msgstr ""
-
-msgid "Last_{0}_months"
-msgstr ""
-
-msgid "December"
-msgstr ""
-
-msgid "Add_tax_rate"
-msgstr ""
-
-msgid "Edit_tax_rate"
-msgstr ""
-
-msgid "The_tax_rate_{0}_has_been_{1}."
-msgstr ""
-
-msgid "Tax_rates"
-msgstr ""
-
-msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
-msgstr ""
-
-msgid "Filename_General-terms-and-conditions"
+msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr ""
 
 msgid "all_activities"

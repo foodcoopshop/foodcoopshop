@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-06-15 21:31+0200\n"
+"POT-Creation-Date: 2023-09-12 09:00+0200\n"
 "PO-Revision-Date: 2023-06-15 21:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -300,138 +300,6 @@ msgstr "Your settings have been changed."
 msgid "No_orders_within_the_given_time_range."
 msgstr "No orders within the given time range"
 
-msgid "No_member_found_with_id_{0}."
-msgstr "No member found with id {0}."
-
-msgid "Instant_order"
-msgstr "Instant order"
-
-msgid "Self_service_order"
-msgstr "Self-service order"
-
-msgid "Edit_purchase_price"
-msgstr "Edit purchase price"
-
-msgid "Purchase_price_has_been_saved_successfully."
-msgstr "The purchase price has been saved successfully."
-
-msgid "Profit"
-msgstr "Profit"
-
-msgid "Group_by_product"
-msgstr "Group by product"
-
-msgid "Group_by_member"
-msgstr "Group by member"
-
-msgid "Group_by_manufacturer"
-msgstr "Group by manufacturer"
-
-msgid "Orders"
-msgstr "Orders"
-
-msgid "Please_select_a_new_member."
-msgstr "Please select a new member."
-
-msgid "The_same_member_must_not_be_selected."
-msgstr "The same member must not be selected."
-
-msgid "The_amount_is_not_valid."
-msgstr "The amount is not valid."
-
-msgid "The_reason_for_changing_the_member_is_mandatory."
-msgstr "The reason for changing the member is mandatory."
-
-msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
-msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
-
-msgid "Amount"
-msgstr "Amount"
-
-msgid "Reason"
-msgstr "Reason"
-
-msgid "Assigned_to_another_member"
-msgstr "Assigned to another member"
-
-msgid "An_email_was_sent_to_{0}_and_{1}."
-msgstr "An email was sent to {0} and {1}."
-
-msgid "The_delivered_quantity_is_not_valid."
-msgstr "The delivered quantity is not valid."
-
-msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
-msgstr "The new price would be {0} for {1}. Please check the unit."
-
-msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
-
-msgid "Weight_adapted_for_\"0\":"
-msgstr "Weight adapted for \"{0}\":"
-
-msgid "An_email_was_sent_to_{0}."
-msgstr "An email was sent to {0}."
-
-msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
-msgstr "An email was sent to {0} and to the manufacturer {1}."
-
-msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
-msgstr "The amount of the ordered product {0} was successfully adapted from {1} to {2}."
-
-msgid "Ordered_amount_adapted"
-msgstr "Ordered amount adapted"
-
-msgid "The_stock_was_increased_to_{0}."
-msgstr "The stock was increased to {0}."
-
-msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
-msgstr "The name of the ordered product {0} was successfully changed to {1}."
-
-msgid "The_price_is_not_valid."
-msgstr "The price is not valid."
-
-msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "The price of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
-
-msgid "Ordered_price_adapted"
-msgstr "Price adapted"
-
-msgid "The_pickup_day_of_your_order_was_changed_to"
-msgstr "The pickup day of your order was changed to"
-
-msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
-msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1}."
-
-msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
-msgstr "{0,plural,=1{1 member was} other{# members were}} got an email."
-
-msgid "{0}_has_written_a_feedback_to_product_{1}."
-msgstr "{0} has written a feedback to product {1}."
-
-msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
-msgstr "Thanks for your feedback! It was successfully saved and sent to {0}."
-
-msgid "The_pickup_day_comment_of_{0}_was_changed:"
-msgstr "The pickup day comment {0} was changed:"
-
-msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
-msgstr "The member {0} still has {1,plural,=1{1_product} other{#_products}} with unchanged weight."
-
-msgid "The_following_customers_still_have_products_with_unchanged_weight:"
-msgstr "The following customers still have products with unchanged weight:"
-
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 product} other{# products}}"
-
-msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
-msgstr "Product {0} (manufacturer: {1}, price {2}) from {2} was successfully cancelled."
-
-msgid "Product_was_cancelled"
-msgstr "Product cancelled"
-
-msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
-msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
-
 msgid "Home"
 msgstr "Home"
 
@@ -489,17 +357,224 @@ msgstr "The payment ({0}, {1}) of {2} was removed successfully."
 msgid "Credit"
 msgstr "Credit"
 
+msgid "Orders"
+msgstr "Orders"
+
 msgid "Show_order"
 msgstr "Show order"
 
 msgid "of_{0}"
 msgstr "of {0}"
 
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr "Upload successful. Please select the records you want to import and then click the save button."
+
+msgid "The_uploaded_file_is_not_valid."
+msgstr "The uploaded file is not valid."
+
+msgid "Your_transaction_({0})_was_added_to_the_credit_system."
+msgstr "Your transaction ({0}) was added to the credit system."
+
+msgid "No_records_were_imported."
+msgstr "No records were imported."
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
+msgstr "{0,plural,=1{1 record was} other{# records were}} successfully imported.  Sum: {1}"
+
+msgid "Report"
+msgstr "Report"
+
+msgid "Add_slider"
+msgstr "Add slider"
+
+msgid "Edit_slider"
+msgstr "Edit slider"
+
+msgid "The_slider_{0}_has_been_{1}."
+msgstr "The slider {0} has been {1}."
+
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgid "All_manufacturers"
+msgstr "All manufacturers"
+
+msgid "Turnover_and_profit_statistics"
+msgstr "Turnover and profit statistics"
+
+msgid "Turnover_statistics"
+msgstr "Turnover statistics"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Last_{0}_months"
+msgstr "Last {0} months"
+
+msgid "December"
+msgstr "December"
+
+msgid "Add_tax_rate"
+msgstr "Add tax rate"
+
+msgid "Edit_tax_rate"
+msgstr "Edit tax rate"
+
+msgid "The_tax_rate_{0}_has_been_{1}."
+msgstr "The tax rate {0} has been {1}."
+
+msgid "Tax_rates"
+msgstr "Tax rates"
+
+msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
+msgstr "The uploaded file needs to have the format: {0}"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "General-terms-and-conditions"
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr "{0} has written a feedback to product {1}."
+
+msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
+msgstr "Thanks for your feedback! It was successfully saved and sent to {0}."
+
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
+msgstr "Product {0} (manufacturer: {1}, price {2}) from {2} was successfully cancelled."
+
+msgid "Product_was_cancelled"
+msgstr "Product cancelled"
+
+msgid "An_email_was_sent_to_{0}."
+msgstr "An email was sent to {0}."
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr "An email was sent to {0} and to the manufacturer {1}."
+
+msgid "Reason"
+msgstr "Reason"
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr "The stock was increased to {0}."
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
+msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
+
+msgid "Please_select_a_new_member."
+msgstr "Please select a new member."
+
+msgid "The_same_member_must_not_be_selected."
+msgstr "The same member must not be selected."
+
+msgid "The_amount_is_not_valid."
+msgstr "The amount is not valid."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "The reason for changing the member is mandatory."
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Assigned_to_another_member"
+msgstr "Assigned to another member"
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr "An email was sent to {0} and {1}."
+
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr "The pickup day comment {0} was changed:"
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr "The pickup day of your order was changed to"
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1}."
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "{0,plural,=1{1 member was} other{# members were}} got an email."
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr "The amount of the ordered product {0} was successfully adapted from {1} to {2}."
+
+msgid "Ordered_amount_adapted"
+msgstr "Ordered amount adapted"
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr "The name of the ordered product {0} was successfully changed to {1}."
+
+msgid "The_price_is_not_valid."
+msgstr "The price is not valid."
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "The price of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
+
+msgid "Ordered_price_adapted"
+msgstr "Price adapted"
+
+msgid "The_delivered_quantity_is_not_valid."
+msgstr "The delivered quantity is not valid."
+
+msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
+msgstr "The new price would be {0} for {1}. Please check the unit."
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
+
+msgid "Weight_adapted_for_\"0\":"
+msgstr "Weight adapted for \"{0}\":"
+
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr "The member {0} still has {1,plural,=1{1_product} other{#_products}} with unchanged weight."
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr "The following customers still have products with unchanged weight:"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 product} other{# products}}"
+
+msgid "Edit_purchase_price"
+msgstr "Edit purchase price"
+
+msgid "Purchase_price_has_been_saved_successfully."
+msgstr "The purchase price has been saved successfully."
+
+msgid "Group_by_product"
+msgstr "Group by product"
+
+msgid "Group_by_member"
+msgstr "Group by member"
+
+msgid "Group_by_manufacturer"
+msgstr "Group by manufacturer"
+
+msgid "No_member_found_with_id_{0}."
+msgstr "No member found with id {0}."
+
+msgid "Instant_order"
+msgstr "Instant order"
+
+msgid "Self_service_order"
+msgstr "Self-service order"
+
+msgid "Profit"
+msgstr "Profit"
+
+msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully created."
+
+msgid "The_product_{0}_was_created_for_{1}."
+msgstr "The product {0} was created for {1}."
+
 msgid "Surcharge_needs_to_be_greater_than_0."
 msgstr "The surcharge needs to be greater than 0."
 
 msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
 msgstr "The selling price net was set to: {0} of purchase price net"
+
+msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
+msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."
 
 msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
 msgstr "The product {0} has {1,plural,=1{1 open order} other{# open orders}}."
@@ -510,29 +585,14 @@ msgstr "Please try again as soon as the next invoice has been generated."
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
 msgstr "{0,plural,=1{One product was} other{# products were}} deleted successfully."
 
-msgid "Products"
-msgstr "Products"
+msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgstr "The categories of the product {0} from manufacturer {1} have been changed: {2}"
 
-msgid "All_products"
-msgstr "All products"
+msgid "Saving_successful."
+msgstr "Saving successful."
 
-msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
-msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."
-
-msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
-msgstr "A new image was uploaded to product {0} from manufacturer {1}."
-
-msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
-msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully deleted."
-
-msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
-msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully changed."
-
-msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
-msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully created."
-
-msgid "The_product_{0}_was_created_for_{1}."
-msgstr "The product {0} was created for {1}."
+msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "The default attribute of the product {0} from manufacturer {1} was changed to {2}."
 
 msgid "Order_possible_until"
 msgstr "Order possible until"
@@ -561,26 +621,56 @@ msgstr "The delivery rhythm of the product {0} from manufacturer {1} was changed
 msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}."
 msgstr "The delivery rhythm of {0} products has been changed successfully to {1}."
 
-msgid "Saving_successful."
-msgstr "Saving successful."
+msgid "Attribute"
+msgstr "Attribute"
 
-msgid "Selling_price"
-msgstr "Selling price"
+msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
+msgstr "The deposit of the product {0} was changed from {1} to {2}."
 
-msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
-msgstr "The tax rate of product {0} from manufacturer {1} was changed successfully."
+msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
+msgstr "The product {0} was changed successfully to a stock product."
 
-msgid "From_{0}_to_{1}"
-msgstr "From {0} to {1}"
+msgid "The_product_was_changed_successfully."
+msgstr "The product was changed successfully."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
+msgstr "The product {0} from manufacturer {1} was renamed to {2}."
+
+msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "The unity of the product {0} from manufacturer {1} was changed to {2}."
+
+msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "The description of the product {0} from manufacturer {1} has been changed: {2}"
+
+msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "The short description of the product {0} from manufacturer {1} has been changed: {2}"
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
+msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
+
+msgid "The_price_of_the_product_{0}_was_changed_successfully."
+msgstr "The price of the product {0} was changed successfully."
+
+msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "The price of the product {0} from manufacturer {1} was changed from {2} to {3}."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully deleted."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully changed."
 
 msgid "Nothing_changed."
 msgstr "Nothing changed."
 
-msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
-msgstr "The categories of the product {0} from manufacturer {1} have been changed: {2}"
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
+msgstr "The purchase price of the product {0} was changed successfully."
 
-msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
-msgstr "The product {0} was changed successfully to a stock product."
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "The purchase price of the product {0} from manufacturer {1} was changed from {2} to {3}."
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "The amount of the product {0} was changed successfully."
@@ -618,51 +708,6 @@ msgstr "Notification if amount is lower than"
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
 msgstr "The amount of the product {0} from manufacturer {1} was changed: {2}."
 
-msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
-msgstr "The purchase price of the product {0} was changed successfully."
-
-msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "The purchase price of the product {0} from manufacturer {1} was changed from {2} to {3}."
-
-msgid "The_price_of_the_product_{0}_was_changed_successfully."
-msgstr "The price of the product {0} was changed successfully."
-
-msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "The price of the product {0} from manufacturer {1} was changed from {2} to {3}."
-
-msgid "Attribute"
-msgstr "Attribute"
-
-msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
-msgstr "The deposit of the product {0} was changed from {1} to {2}."
-
-msgid "The_product_was_changed_successfully."
-msgstr "The product was changed successfully."
-
-msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
-msgstr "The product {0} from manufacturer {1} was renamed to {2}."
-
-msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr "The unity of the product {0} from manufacturer {1} was changed to {2}."
-
-msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr "The description of the product {0} from manufacturer {1} has been changed: {2}"
-
-msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr "The short description of the product {0} from manufacturer {1} has been changed: {2}"
-
-msgid "All_manufacturers"
-msgstr "All manufacturers"
-
-msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr "The default attribute of the product {0} from manufacturer {1} was changed to {2}."
-
-msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
-msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
-
-msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
-msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
-
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
 msgstr "{0,plural,=1{One product was} other{# products were}} deactivated."
 
@@ -675,68 +720,23 @@ msgstr "The product {0} of manufacturer {1} has been deactivated."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "The product {0} of manufacturer {1} has been activated."
 
-msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
-msgstr "Upload successful. Please select the records you want to import and then click the save button."
+msgid "Selling_price"
+msgstr "Selling price"
 
-msgid "The_uploaded_file_is_not_valid."
-msgstr "The uploaded file is not valid."
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgstr "The tax rate of product {0} from manufacturer {1} was changed successfully."
 
-msgid "Your_transaction_({0})_was_added_to_the_credit_system."
-msgstr "Your transaction ({0}) was added to the credit system."
+msgid "From_{0}_to_{1}"
+msgstr "From {0} to {1}"
 
-msgid "No_records_were_imported."
-msgstr "No records were imported."
+msgid "Products"
+msgstr "Products"
 
-msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
-msgstr "{0,plural,=1{1 record was} other{# records were}} successfully imported.  Sum: {1}"
+msgid "All_products"
+msgstr "All products"
 
-msgid "Report"
-msgstr "Report"
-
-msgid "Add_slider"
-msgstr "Add slider"
-
-msgid "Edit_slider"
-msgstr "Edit slider"
-
-msgid "The_slider_{0}_has_been_{1}."
-msgstr "The slider {0} has been {1}."
-
-msgid "Slideshow"
-msgstr "Slideshow"
-
-msgid "Turnover_and_profit_statistics"
-msgstr "Turnover and profit statistics"
-
-msgid "Turnover_statistics"
-msgstr "Turnover statistics"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "Last_{0}_months"
-msgstr "Last {0} months"
-
-msgid "December"
-msgstr "December"
-
-msgid "Add_tax_rate"
-msgstr "Add tax rate"
-
-msgid "Edit_tax_rate"
-msgstr "Edit tax rate"
-
-msgid "The_tax_rate_{0}_has_been_{1}."
-msgstr "The tax rate {0} has been {1}."
-
-msgid "Tax_rates"
-msgstr "Tax rates"
-
-msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
-msgstr "The uploaded file needs to have the format: {0}"
-
-msgid "Filename_General-terms-and-conditions"
-msgstr "General-terms-and-conditions"
+msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
+msgstr "A new image was uploaded to product {0} from manufacturer {1}."
 
 msgid "all_activities"
 msgstr "all activities"
