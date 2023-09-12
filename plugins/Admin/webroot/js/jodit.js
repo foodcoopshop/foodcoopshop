@@ -20,6 +20,7 @@ foodcoopshop.Jodit = {
             hidePoweredByJodit: true,
             language: foodcoopshop.LocalizedJs.helper.defaultLocaleShort,
             toolbarAdaptive: false,
+            showPlaceholder: false,
         };
     },
 
