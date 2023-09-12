@@ -21,7 +21,22 @@ foodcoopshop.Jodit = {
             language: foodcoopshop.LocalizedJs.helper.defaultLocaleShort,
             toolbarAdaptive: false,
             showPlaceholder: false,
+            showCharsCounter: false,
+            showWordsCounter: false,
+            showXPathInStatusbar: false,
+            defaultActionOnPaste: 'insert_clear_html',
         };
+    },
+
+    getUploadButton: function(editor) {
+        var button = {
+            name: 'Upload',
+            tooltip: foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
+            exec: (editor) => {
+                foodcoopshop.ModalElfinder.init(editor);
+            }
+        }
+        return button;
     },
 
     initSmall: function (name, startupFocus) {
@@ -51,13 +66,7 @@ foodcoopshop.Jodit = {
                 'bold',
                 'italic',
                 'eraser',
-                {
-                    name: 'Upload',
-                    tooltip: foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
-                    exec: (editor) => {
-                        foodcoopshop.ModalElfinder.init(editor);
-                    }
-                }
+                this.getUploadButton(editor),
             ],
         });
 
@@ -73,15 +82,13 @@ foodcoopshop.Jodit = {
         var editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
             buttons: [
-                ...Jodit.defaultOptions.buttons,
-                {
-                    name: 'Upload',
-                    tooltip: foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
-                    exec: (editor) => {
-                        foodcoopshop.ModalElfinder.init(editor);
-                    }
-                }
-            ]
+                'bold', 'italic', 'brush',
+                '|', 'undo', 'redo', 'eraser',
+                '|', 'paragraph', 'ul', 'ol', 'hr',
+                '|', 'left', 'center', 'right',
+                '|', 'link', 'image', this.getUploadButton(editor),
+                '|','source',
+            ],
         });
 
         if (startupFocus) {

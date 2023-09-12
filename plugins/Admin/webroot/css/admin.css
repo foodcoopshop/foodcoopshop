@@ -991,3 +991,6 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
 .dropdown {
     float: left;
 }
+.jodit-container {
+    margin-bottom: 10px;
+}
