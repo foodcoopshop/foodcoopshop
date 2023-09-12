@@ -10,7 +10,6 @@ module.exports = {
     "globals": {
         "bootstrap": true,
         "Chart": true,
-        "CKEDITOR": true,
         "ChartDataLabels": true,
         "ClipboardJS": true,
         "Cookies": true,
