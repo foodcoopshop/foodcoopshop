@@ -28,7 +28,11 @@ foodcoopshop.ModalElfinder = {
             i18nBaseUrl: '/js/elfinder/js/i18n/',
             workerBaseUrl: '/js/elfinder/js/worker/',
             soundPath: '/js/elfinder/sounds/',
-
+            uiOptions: {
+                toolbar: [
+                    ['upload', 'rm'],
+                ],
+            },
             //https://github.com/Studio-42/elFinder/issues/2905#issuecomment-487106097
             getFileCallback : function(file, fm) {
                 var execCopy = function(string) {
