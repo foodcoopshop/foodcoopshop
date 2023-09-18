@@ -230,6 +230,7 @@ class LocalizedController extends Controller
                 'OneEmailAddressSuccessfullyCopiedToClipboard' => __('1_email_address_has_been_copied_successfully_to_your_clipboard.'),
                 'TheUrlOfTheFileHasBeenCopiedToYourClipboard' => __('The_url_of_the_file_has_been_copied_successfully_to_your_clipboard.'),
                 'UploadImageOrFile' => __('Upload_image_or_file'),
+                'EmojiExplanationText' => __('Emoji_explanation_text'),
                 'SuccessfullyCopiedTableContentToClipboard' => __('The_table_content_was_copied_successfully_to_your_clipboard.'),
                 'ChangeMemberReasonIsMandatory' => __('The_reason_for_changing_the_member_is_mandatory.'),
                 'WhyIsMemberEdited' => __('Why_is_the_member_edited?'),

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-09-18 14:39+0200\n"
+"POT-Creation-Date: 2023-09-18 14:52+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -930,6 +930,9 @@ msgid "The_url_of_the_file_has_been_copied_successfully_to_your_clipboard."
 msgstr ""
 
 msgid "Upload_image_or_file"
+msgstr ""
+
+msgid "Emoji_explanation_text"
 msgstr ""
 
 msgid "The_table_content_was_copied_successfully_to_your_clipboard."

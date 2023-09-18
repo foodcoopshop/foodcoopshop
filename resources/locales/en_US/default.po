@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-18 14:39+0200\n"
-"PO-Revision-Date: 2023-09-18 14:45+0200\n"
+"POT-Creation-Date: 2023-09-18 14:52+0200\n"
+"PO-Revision-Date: 2023-09-18 14:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -932,6 +932,13 @@ msgstr "The url of the uploaded file has been copied successfully to your clipbo
 
 msgid "Upload_image_or_file"
 msgstr "Upload image or file"
+
+msgid "Emoji_explanation_text"
+msgstr ""
+"You can insert emojis like this:\n"
+"- Windows: Windows-key and . (dot)\n"
+"- Apple: Ctrl-cmd-space\n"
+"- Smartphone: you find emojis on an own key of your keyboard"
 
 msgid "The_table_content_was_copied_successfully_to_your_clipboard."
 msgstr "The table content was copied successfully to your clipboard."

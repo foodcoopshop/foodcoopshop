@@ -47,6 +47,16 @@ foodcoopshop.Editor = {
         };
     },
 
+    getEmojiButton: function() {
+        var button = {
+            name: '😄',
+            exec: () => {
+                alert(foodcoopshop.LocalizedJs.admin.EmojiExplanationText);
+            }
+        };
+        return button;
+    },
+
     getUploadButton: function() {
         var button = {
             name: 'Upload',
@@ -62,7 +72,7 @@ foodcoopshop.Editor = {
 
         const editor = Jodit.make('textarea#' + name, {
             ...this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser'],
+            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton()],
         });
         
         if (startupFocus) {
@@ -77,7 +87,7 @@ foodcoopshop.Editor = {
 
         const editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser', this.getUploadButton(),
+            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton(), this.getUploadButton(),
             ],
         });
 
@@ -99,7 +109,7 @@ foodcoopshop.Editor = {
                 '|', 'paragraph', 'ul', 'ol', 'hr',
                 '|', 'left', 'center', 'right',
                 '|', 'link', 'image', this.getUploadButton(),
-                '|', 'source',
+                '|', 'source', this.getEmojiButton(),
             ],
         });
 
