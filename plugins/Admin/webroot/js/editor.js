@@ -47,7 +47,7 @@ foodcoopshop.Editor = {
         };
     },
 
-    getUploadButton: function(editor) {
+    getUploadButton: function() {
         var button = {
             name: 'Upload',
             tooltip: foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
@@ -60,7 +60,7 @@ foodcoopshop.Editor = {
 
     initSmall: function (name, startupFocus) {
 
-        var editor = Jodit.make('textarea#' + name, {
+        Jodit.make('textarea#' + name, {
             ...this.getDefaultOptions(),
             buttons: ['bold', 'italic', 'eraser'],
         });
@@ -75,9 +75,9 @@ foodcoopshop.Editor = {
 
     initSmallWithUpload: function (name, startupFocus) {
 
-        var editor = Jodit.make('textarea#' + name, {
+        Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser', this.getUploadButton(editor),
+            buttons: ['bold', 'italic', 'eraser', this.getUploadButton(),
             ],
         });
 
@@ -89,7 +89,8 @@ foodcoopshop.Editor = {
     },
 
     initBig: function (name, startupFocus) {
-        var editor = Jodit.make('textarea#' + name, {
+        
+        Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
             width: '760px',
             buttons: [
@@ -97,7 +98,7 @@ foodcoopshop.Editor = {
                 '|', 'undo', 'redo', 'eraser',
                 '|', 'paragraph', 'ul', 'ol', 'hr',
                 '|', 'left', 'center', 'right',
-                '|', 'link', 'image', this.getUploadButton(editor),
+                '|', 'link', 'image', this.getUploadButton(),
                 '|', 'source',
             ],
         });
