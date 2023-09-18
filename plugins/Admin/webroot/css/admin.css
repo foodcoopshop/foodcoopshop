@@ -980,13 +980,17 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
 }
 .jodit-container {
     margin-bottom: 10px;
-}
-.jodit-container {
-    margin-bottom: 10px;
     float: right;
 }
 #cke_configurations-value {
     float: left;
+}
+.jodit-container ul {
+    padding-left: 20px ! important;
+}
+.jodit-container ul,
+.jodit-container li {
+    list-style: disc;
 }
 /* fix path for packed css */
 .elfinder-button-icon {
