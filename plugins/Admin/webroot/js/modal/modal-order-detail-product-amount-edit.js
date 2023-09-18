@@ -87,7 +87,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        foodcoopshop.Jodit.initSmall('dialogEditAmountReason', true);
+        foodcoopshop.Editor.initSmall('dialogEditAmountReason', true);
 
         var row = button.closest('tr');
         var currentAmount = row.find('td:nth-child(3) span.product-amount-for-dialog').html();

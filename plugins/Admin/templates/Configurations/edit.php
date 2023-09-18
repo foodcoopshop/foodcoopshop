@@ -67,7 +67,7 @@ switch ($configuration->type) {
         break;
     case 'textarea':
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Jodit.initSmall('configurations-value');"
+            'script' => Configure::read('app.jsNamespace') . ".Editor.initSmall('configurations-value');"
         ]);
         echo $this->Form->control('Configurations.value', [
             'type' => 'textarea',
@@ -77,7 +77,7 @@ switch ($configuration->type) {
         break;
     case 'textarea_big':
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Jodit.initBig('configurations-value');"
+            'script' => Configure::read('app.jsNamespace') . ".Editor.initBig('configurations-value');"
         ]);
         echo $this->Form->control('Configurations.value', [
             'type' => 'textarea',

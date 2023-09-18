@@ -133,7 +133,7 @@ foodcoopshop.ModalOrderDetailDelete = {
 
         $(modalSelector + ' .modal-body').html(modalHtml);
 
-        foodcoopshop.Jodit.initSmall('dialogCancellationReason', true);
+        foodcoopshop.Editor.initSmall('dialogCancellationReason', true);
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailDelete.getSuccessHandler(modalSelector, orderDetailIds);

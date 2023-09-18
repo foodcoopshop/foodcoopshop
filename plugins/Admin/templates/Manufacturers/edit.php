@@ -20,8 +20,8 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Jodit.initBig('manufacturers-description');" .
-        Configure::read('app.jsNamespace') . ".Jodit.initSmall('manufacturers-short-description');" .
+        Configure::read('app.jsNamespace') . ".Editor.initBig('manufacturers-description');" .
+        Configure::read('app.jsNamespace') . ".Editor.initSmall('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm);" .
         Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-general-terms-and-conditions-button', foodcoopshop.Upload.saveManufacturerTmpGeneralTermsAndConditionsInForm);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();"

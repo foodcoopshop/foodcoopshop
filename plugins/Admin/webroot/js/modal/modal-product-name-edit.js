@@ -140,7 +140,7 @@ foodcoopshop.ModalProductNameEdit = {
         }
         $(modalSelector + ' #dialogUnity').val(unity);
         $(modalSelector + ' #dialogDescriptionShort').val(nameCell.find('span.description-short-for-dialog').html());
-        foodcoopshop.Jodit.initSmall('dialogDescriptionShort');
+        foodcoopshop.Editor.initSmall('dialogDescriptionShort');
         $(modalSelector + ' #dialogProductId').val(row.find('td.cell-id').html());
 
         var storageLocationWrapper = $('.storage-location-dropdown-wrapper');
@@ -162,7 +162,7 @@ foodcoopshop.ModalProductNameEdit = {
             {
                 onOk: function (data) {
                     $(modalSelector + ' #dialogDescription').val(nameCell.find('span.description-for-dialog').html());
-                    foodcoopshop.Jodit.initSmallWithUpload('dialogDescription');
+                    foodcoopshop.Editor.initSmallWithUpload('dialogDescription');
                 },
                 onError: function (data) {
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);

@@ -93,7 +93,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
     getOpenHandler : function(button, modalSelector) {
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
-        foodcoopshop.Jodit.initSmall('dialogEditPriceReason', true);
+        foodcoopshop.Editor.initSmall('dialogEditPriceReason', true);
 
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();

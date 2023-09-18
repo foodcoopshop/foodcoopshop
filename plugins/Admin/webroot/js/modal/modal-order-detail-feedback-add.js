@@ -94,7 +94,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
             {},
             {
                 onOk: function (data) {
-                    foodcoopshop.Jodit.initSmallWithUpload('dialogOrderDetailFeedback', true);
+                    foodcoopshop.Editor.initSmallWithUpload('dialogOrderDetailFeedback', true);
                 },
                 onError: function (data) {
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);

@@ -11,7 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.Jodit = {
+foodcoopshop.Editor = {
 
     getDefaultOptions: function () {
         return {

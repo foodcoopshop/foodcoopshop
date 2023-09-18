@@ -22,7 +22,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
     $('input.datepicker').datepicker();".
     Configure::read('app.jsNamespace') . ".Admin.init();" .
-    Configure::read('app.jsNamespace') . ".Jodit.initBig('blogposts-content');" .
+    Configure::read('app.jsNamespace') . ".Editor.initBig('blogposts-content');" .
     Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm);" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();
     "

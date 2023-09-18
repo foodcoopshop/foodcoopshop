@@ -86,7 +86,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        foodcoopshop.Jodit.initSmall('dialogEditCustomerReason', true);
+        foodcoopshop.Editor.initSmall('dialogEditCustomerReason', true);
 
         var customerDropdownSelector = '#dialogOrderDetailEditCustomerId';
         $(customerDropdownSelector).find('option[value=""]').remove();
