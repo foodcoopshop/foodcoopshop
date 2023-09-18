@@ -49,7 +49,8 @@ foodcoopshop.Editor = {
 
     getEmojiButton: function() {
         var button = {
-            name: '😄',
+            name: ':-)',
+            tooltip: 'Emoji',
             exec: () => {
                 alert(foodcoopshop.LocalizedJs.admin.EmojiExplanationText);
             }
