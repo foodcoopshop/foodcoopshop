@@ -77,7 +77,7 @@ foodcoopshop.ModalElfinder = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            '',
+            foodcoopshop.LocalizedJs.admin.UploadImageOrFile,
             '',
             [],
         );

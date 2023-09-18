@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-12 09:46+0200\n"
-"PO-Revision-Date: 2023-09-12 09:46+0200\n"
+"POT-Creation-Date: 2023-09-18 14:39+0200\n"
+"PO-Revision-Date: 2023-09-18 14:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -926,6 +926,12 @@ msgstr "{0} email addresses have been copied successfully to your clipboard."
 
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "One email address has been copied successfully to your clipboard."
+
+msgid "The_url_of_the_file_has_been_copied_successfully_to_your_clipboard."
+msgstr "The url of the uploaded file has been copied successfully to your clipboard."
+
+msgid "Upload_image_or_file"
+msgstr "Upload image or file"
 
 msgid "The_table_content_was_copied_successfully_to_your_clipboard."
 msgstr "The table content was copied successfully to your clipboard."
@@ -2538,14 +2544,14 @@ msgstr "Stock product: order possible only with instant order when picking it up
 msgid "Currently_not_on_stock"
 msgstr "Currently not on stock"
 
+msgid "Selling_price"
+msgstr "Selling price"
+
 msgid "Move_in_shopping_bag"
 msgstr "Move in shopping bag"
 
 msgid "Move_in_cart"
 msgstr "Add to cart"
-
-msgid "Selling_price"
-msgstr "Selling price"
 
 msgid "Weight_in"
 msgstr "Weight in"
