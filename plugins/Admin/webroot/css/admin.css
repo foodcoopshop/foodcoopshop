@@ -989,8 +989,15 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
     padding-left: 20px ! important;
 }
 .jodit-container ul,
-.jodit-container li {
+.jodit-container ul li {
     list-style: disc;
+}
+.jodit-container ol,
+.jodit-container ol li {
+    list-style: decimal;
+}
+.jodit-container .jodit-add-new-line {
+    display: none ! important;
 }
 /* fix path for packed css */
 .elfinder-button-icon {

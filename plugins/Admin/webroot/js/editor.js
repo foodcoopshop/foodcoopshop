@@ -15,6 +15,18 @@ foodcoopshop.Editor = {
 
     getDefaultOptions: function () {
         return {
+            controls: {
+                ul: {
+                    list: Jodit.atom({
+                        default: 'Default',
+                    })
+                },
+                ol: {
+                    list: Jodit.atom({
+                        default: 'Default',
+                    })
+                },
+            },
             theme: foodcoopshop.ColorMode.getColorMode(),
             enter: 'br',
             hidePoweredByJodit: true,
@@ -43,11 +55,7 @@ foodcoopshop.Editor = {
 
         var editor = Jodit.make('textarea#' + name, {
             ...this.getDefaultOptions(),
-            buttons: [
-                'bold',
-                'italic',
-                'eraser',
-            ],
+            buttons: ['bold', 'italic', 'eraser'],
         });
         
         if (startupFocus) {
@@ -62,11 +70,7 @@ foodcoopshop.Editor = {
 
         var editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttons: [
-                'bold',
-                'italic',
-                'eraser',
-                this.getUploadButton(editor),
+            buttons: ['bold', 'italic', 'eraser', this.getUploadButton(editor),
             ],
         });
 
@@ -78,7 +82,6 @@ foodcoopshop.Editor = {
     },
 
     initBig: function (name, startupFocus) {
-
         var editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
             width: '760px',
@@ -88,7 +91,7 @@ foodcoopshop.Editor = {
                 '|', 'paragraph', 'ul', 'ol', 'hr',
                 '|', 'left', 'center', 'right',
                 '|', 'link', 'image', this.getUploadButton(editor),
-                '|','source',
+                '|', 'source',
             ],
         });
 

@@ -1301,9 +1301,17 @@ body.customers.registration_successful #inner-content h2.further-news {
 }
 #inner-content li,
 #info-box li {
-    list-style-type: disc;
     line-height: 23px;
 }
+#inner-content ul li,
+#info-box ul li {
+    list-style-type: disc;
+}
+#inner-content ol li,
+#info-box ol li {
+    list-style-type: decimal;
+}
+
 #info-box li {
     line-height: 19px;
     padding-bottom: 5px;
