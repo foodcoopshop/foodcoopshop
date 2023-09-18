@@ -417,7 +417,7 @@ div.input.error input {
     text-overflow: ellipsis;
 }
 
-input[type="text"]:not(.jodit-ui-input__input),
+input[type="text"]:not(.jodit-ui-input__input):not(.jodit-input),
 input[type="email"],
 input[type="password"],
 input[type="tel"],

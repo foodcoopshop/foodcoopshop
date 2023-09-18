@@ -60,7 +60,7 @@ foodcoopshop.Editor = {
 
     initSmall: function (name, startupFocus) {
 
-        Jodit.make('textarea#' + name, {
+        const editor = Jodit.make('textarea#' + name, {
             ...this.getDefaultOptions(),
             buttons: ['bold', 'italic', 'eraser'],
         });
@@ -75,7 +75,7 @@ foodcoopshop.Editor = {
 
     initSmallWithUpload: function (name, startupFocus) {
 
-        Jodit.make('textarea#' + name, {
+        const editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
             buttons: ['bold', 'italic', 'eraser', this.getUploadButton(),
             ],
@@ -90,7 +90,7 @@ foodcoopshop.Editor = {
 
     initBig: function (name, startupFocus) {
         
-        Jodit.make('textarea#' + name, {
+        const editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
             width: '760px',
             buttons: [
