@@ -26,6 +26,13 @@ foodcoopshop.Editor = {
                         default: 'Default',
                     })
                 },
+                paragraph: {
+                    list: Jodit.atom({
+                        p: 'Normal',
+                        h2: 'Heading 2',
+                        h3: 'Heading 3',
+                    }),
+                },
             },
             theme: foodcoopshop.ColorMode.getColorMode(),
             enter: 'br',
