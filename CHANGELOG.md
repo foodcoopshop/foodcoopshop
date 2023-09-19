@@ -18,7 +18,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Austausch von Komponenten
 - Als neue Cookie-Banner-Library wird jetzt [https://github.com/Alex-D/Cookies-EU-banner](https://github.com/Alex-D/Cookies-EU-banner) verwendet. [I#962](https://github.com/foodcoopshop/foodcoopshop/issues/962) / [PR#963](https://github.com/foodcoopshop/foodcoopshop/pull/963) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Als neuer WYSIWYG-Editor wird jetzt Jodit [https://xdsoft.net/jodit/](https://xdsoft.net/jodit/) verwendet. [I#858](https://github.com/foodcoopshop/foodcoopshop/issues/962) / [PR#858](https://github.com/foodcoopshop/foodcoopshop/pull/967) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Als neuer WYSIWYG-Editor wird jetzt [https://xdsoft.net/jodit/](https://xdsoft.net/jodit/) verwendet. [I#858](https://github.com/foodcoopshop/foodcoopshop/issues/858) / [PR#967](https://github.com/foodcoopshop/foodcoopshop/pull/967) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v3.6.0
