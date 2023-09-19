@@ -34,6 +34,29 @@ foodcoopshop.Helper = {
         }
     },
 
+    // https://github.com/Studio-42/elFinder/issues/2905#issuecomment-487106097
+    copyToClipboard: function(string) {
+
+        var temp = document.createElement('textarea');
+
+        temp.value = string;
+        temp.selectionStart = 0;
+        temp.selectionEnd = temp.value.length;
+
+        var s = temp.style;
+        s.position = 'fixed';
+        s.left = '-100%';
+
+        document.body.appendChild(temp);
+        temp.focus();
+        var result = document.execCommand('copy');
+        
+        temp.blur();
+        document.body.removeChild(temp);
+
+        return result;
+    },
+
     showLoader: function() {
         this.removeLoader();
         $('body').append('<div id="full-page-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');

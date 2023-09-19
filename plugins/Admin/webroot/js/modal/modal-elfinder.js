@@ -33,37 +33,16 @@ foodcoopshop.ModalElfinder = {
                     ['upload', 'rm'],
                 ],
             },
-            //https://github.com/Studio-42/elFinder/issues/2905#issuecomment-487106097
+            
             getFileCallback : function(file, fm) {
-                var execCopy = function(string) {
-                    var temp = document.createElement('textarea');
-            
-                    temp.value = string;
-                    temp.selectionStart = 0;
-                    temp.selectionEnd = temp.value.length;
-            
-                    var s = temp.style;
-                    s.position = 'fixed';
-                    s.left = '-100%';
-            
-                    document.body.appendChild(temp);
-                    temp.focus();
-                    var result = document.execCommand('copy');
-                    
-                    temp.blur();
-                    document.body.removeChild(temp);
-            
-                    return result;
-                };
-                if (execCopy(fm.convAbsUrl(file.url))) {
-                    foodcoopshop.Modal.destroy(modalSelector);
-                    if (file.mime.startsWith('image/')) {
-                        editor.selection.insertNode(
-                            editor.create.fromHTML('<img src="' + file.url + '">')
-                        );
-                    } else {
-                        foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheFileHasBeenCopiedToYourClipboard);
-                    }
+                foodcoopshop.Modal.destroy(modalSelector);
+                if (file.mime.startsWith('image/')) {
+                    editor.selection.insertNode(
+                        editor.create.fromHTML('<img src="' + file.url + '">')
+                    );
+                } else {
+                    foodcoopshop.Helper.copyToClipboard(fm.convAbsUrl(file.url));
+                    foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.TheUrlOfTheFileHasBeenCopiedToYourClipboard);
                 }
             }
         };
