@@ -985,6 +985,9 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
 #cke_configurations-value {
     float: left;
 }
+.jodit-container {
+    font-size: 14px;
+}
 .jodit-container ul {
     padding-left: 20px ! important;
 }
