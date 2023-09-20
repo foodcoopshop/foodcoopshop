@@ -685,3 +685,6 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
 .dropdown .dropdown-item:disabled {
     opacity: .7;
 }
+button:focus:not(:focus-visible) {
+    box-shadow: none;
+}
