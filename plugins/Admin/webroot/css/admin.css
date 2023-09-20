@@ -999,6 +999,10 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
 .jodit-container .jodit-add-new-line {
     display: none ! important;
 }
+.jodit-ui-input__input {
+    width: 100% ! important;
+    padding: 0 8px ! important;
+}
 /* fix path for packed css */
 .elfinder-button-icon {
     background-image: url(/js/elfinder/img/toolbar.png);
