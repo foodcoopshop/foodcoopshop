@@ -74,6 +74,7 @@ foodcoopshop.Editor = {
         const editor = Jodit.make('textarea#' + name, {
             ...this.getDefaultOptions(),
             buttons: ['bold', 'italic', 'eraser', this.getEmojiButton()],
+            height: 220,
         });
         
         if (startupFocus) {
@@ -88,8 +89,8 @@ foodcoopshop.Editor = {
 
         const editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton(), this.getUploadButton(),
-            ],
+            buttons: ['bold', 'italic', 'eraser', this.getEmojiButton(), this.getUploadButton()],
+            height: 364,
         });
 
         if (startupFocus) {
@@ -103,7 +104,8 @@ foodcoopshop.Editor = {
         
         const editor = Jodit.make('textarea#' + name, {
             ... this.getDefaultOptions(),
-            width: '760px',
+            width: 760,
+            height: 550,
             buttons: [
                 'bold', 'italic', 'brush',
                 '|', 'undo', 'redo', 'eraser',
