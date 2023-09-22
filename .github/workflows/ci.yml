@@ -16,8 +16,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Cache Docker images
+        uses: ScribeMD/docker-cache@0.3.6
+        with:
+          key: docker-images-${{ hashFiles('./docker-compose.yml') }}-${{ hashFiles('./Dockerfile') }}
+
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: ./webroot/node_modules
+          key: node-modules-${{ hashFiles('./webroot/package.json') }}-${{ hashFiles('./webroot/package-lock.json') }}
+
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ./vendor
+          key: composer-${{ hashFiles('./composer.json') }}-${{ hashFiles('./comopser.lock') }}
+
       - name: Run Docker Compose
-        run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d
+        run: CURRENT_UID=$(id -u):$(id -g) docker compose up -d php-nginx database-test
 
       - name: Setup Dev Environment
         run: |
