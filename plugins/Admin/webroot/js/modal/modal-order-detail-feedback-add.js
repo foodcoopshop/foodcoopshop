@@ -43,7 +43,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
         var html = '<label></label>';
         html += '<p class="small add-product-feedback-explanation-text"></p>';
         html += '<div class="textarea-wrapper">';
-        html += '<textarea class="ckeditor" name="dialogOrderDetailFeedback" id="dialogOrderDetailFeedback"></textarea>';
+        html += '<textarea name="dialogOrderDetailFeedback" id="dialogOrderDetailFeedback"></textarea>';
         html += '</div>';
         html += '<input type="hidden" name="dialogOrderDetailId" id="dialogOrderDetailId" value="" />';
         return html;
@@ -63,7 +63,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
             '/admin/order-details/addFeedback/',
             {
                 orderDetailId: $('#dialogOrderDetailId').val(),
-                orderDetailFeedback: CKEDITOR.instances['dialogOrderDetailFeedback'].getData()
+                orderDetailFeedback: $('#dialogOrderDetailFeedback').val(),
             },
             {
                 onOk: function (data) {
@@ -94,7 +94,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
             {},
             {
                 onOk: function (data) {
-                    foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogOrderDetailFeedback', true);
+                    foodcoopshop.Editor.initSmallWithUpload('dialogOrderDetailFeedback', true);
                 },
                 onError: function (data) {
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);

@@ -133,7 +133,7 @@
         padding: 5px ! important;
         margin-top: 10px ! important;
     }
-    /* show all ckeditor images in full width and below each other */
+    /* show all editor images in full width and below each other */
     #inner-content img:not(.manufacturer-logo):not(.blog-post-image) {
         display: block ! important;
         width: 100% ! important;

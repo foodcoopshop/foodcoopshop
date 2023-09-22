@@ -61,6 +61,17 @@
     max-width: 95vw;
     height: 90vh;
 }
+#modal-elfinder .modal-dialog {
+    width: 75vw;
+    max-width: 1150px;
+    height: 70vh;
+}
+#elfinder {
+    height: 100% ! important;
+}
+#modal-elfinder .modal-content {
+    height: 70vh;
+}
 #order-for-different-customer-add .modal-content {
     height: 100%;
 }
@@ -131,7 +142,7 @@ body.iframe_self_service_order {
     float: left;
     margin-top: 4px;
 }
-.modal .cke {
+.modal .jodit-container {
     width: 100% ! important;
     float: none;
 }

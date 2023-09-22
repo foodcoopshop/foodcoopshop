@@ -34,6 +34,29 @@ foodcoopshop.Helper = {
         }
     },
 
+    // https://github.com/Studio-42/elFinder/issues/2905#issuecomment-487106097
+    copyToClipboard: function(string) {
+
+        var temp = document.createElement('textarea');
+
+        temp.value = string;
+        temp.selectionStart = 0;
+        temp.selectionEnd = temp.value.length;
+
+        var s = temp.style;
+        s.position = 'fixed';
+        s.left = '-100%';
+
+        document.body.appendChild(temp);
+        temp.focus();
+        var result = document.execCommand('copy');
+        
+        temp.blur();
+        document.body.removeChild(temp);
+
+        return result;
+    },
+
     showLoader: function() {
         this.removeLoader();
         $('body').append('<div id="full-page-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');
@@ -74,9 +97,9 @@ foodcoopshop.Helper = {
     },
 
     isNumeric: function(str) {
-        if (typeof str != "string") return false // we only process strings!
+        if (typeof str != 'string') return false; // we only process strings!
         return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-                !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+                !isNaN(parseFloat(str)); // ...and ensure strings of whitespace fail
     },
 
     initRegistrationAsCompany: function() {
@@ -785,67 +808,6 @@ foodcoopshop.Helper = {
         // do not use jquery .animate() or .show() here, if loaded in iframe and firefox, this does not work
         // only css('display') works
         $('body:not(.cake_errors) #container').css('display', 'block');
-    },
-
-    initCkeditor: function (name, startupFocus) {
-
-        startupFocus = startupFocus|| false;
-
-        if (!CKEDITOR.env.isCompatible) {
-            return false;
-        }
-
-        this.destroyCkeditor(name);
-
-        CKEDITOR.timestamp = 'v4.22.1';
-        $('textarea#' + name + '.ckeditor').ckeditor({
-            customConfig: '/js/ckeditor/config.js',
-            startupFocus : startupFocus
-        });
-
-    },
-
-    destroyCkeditor: function (name) {
-
-        if (!CKEDITOR.env.isCompatible) {
-            return false;
-        }
-
-        var editor = CKEDITOR.instances[name];
-        if (editor) {
-            editor.destroy(true);
-        }
-
-    },
-
-    initCkeditorBig: function (name) {
-
-        if (!CKEDITOR.env.isCompatible) {
-            return false;
-        }
-
-        this.destroyCkeditor(name);
-
-        CKEDITOR.timestamp = 'v4.22.1';
-        $('textarea#' + name + '.ckeditor').ckeditor({
-            customConfig: '/js/ckeditor/config-big.js'
-        });
-
-    },
-
-    initCkeditorSmallWithUpload: function (name) {
-
-        if (!CKEDITOR.env.isCompatible) {
-            return false;
-        }
-
-        this.destroyCkeditor(name);
-
-        CKEDITOR.timestamp = 'v4.22.1';
-        $('textarea#' + name + '.ckeditor').ckeditor({
-            customConfig: '/js/ckeditor/config-small-with-upload.js'
-        });
-
     },
 
     initDatepicker: function () {

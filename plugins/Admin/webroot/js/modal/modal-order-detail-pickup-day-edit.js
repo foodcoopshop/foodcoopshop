@@ -61,7 +61,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         html += '<p class="small">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogEditPickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
-        html += '<textarea class="ckeditor" name="dialogEditPickupDayReason" id="dialogEditPickupDayReason"></textarea>';
+        html += '<textarea name="dialogEditPickupDayReason" id="dialogEditPickupDayReason"></textarea>';
         html += '</div>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogEditPickupdaySendEmail" id="dialogEditPickupdaySendEmail" value="" />';
@@ -81,7 +81,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
             {
                 orderDetailIds: orderDetailIds,
                 pickupDay: $('#dialogChangePickupDay').val(),
-                editPickupDayReason: CKEDITOR.instances['dialogEditPickupDayReason'].getData().trim(),
+                editPickupDayReason: $('#dialogEditPickupDayReason').val(),
                 sendEmail: $('#dialogEditPickupdaySendEmail:checked').length > 0 ? 1 : 0,
             },
             {
@@ -122,7 +122,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         datepickerInput.val($('.filter-container input[name="pickupDay[]"]').val());
         datepickerInput.datepicker();
 
-        foodcoopshop.Helper.initCkeditor('dialogEditPickupDayReason', true);
+        foodcoopshop.Editor.initSmall('dialogEditPickupDayReason', true);
 
     }
 

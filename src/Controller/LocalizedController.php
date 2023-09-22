@@ -38,6 +38,7 @@ class LocalizedController extends Controller
             ],
             'helper' => [
                 'defaultLocale' => Configure::read('appDb.FCS_DEFAULT_LOCALE'),
+                'defaultLocaleShort' => substr(Configure::read('appDb.FCS_DEFAULT_LOCALE'), 0, 2),
                 'defaultLocaleInBCP47' => str_replace('_', '-', Configure::read('appDb.FCS_DEFAULT_LOCALE')),
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
@@ -227,6 +228,9 @@ class LocalizedController extends Controller
                 'product' => __('product'),
                 'EmailAddressesSuccessfullyCopiedToClipboard' => __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.'),
                 'OneEmailAddressSuccessfullyCopiedToClipboard' => __('1_email_address_has_been_copied_successfully_to_your_clipboard.'),
+                'TheUrlOfTheFileHasBeenCopiedToYourClipboard' => __('The_url_of_the_file_has_been_copied_successfully_to_your_clipboard.'),
+                'UploadImageOrFile' => __('Upload_image_or_file'),
+                'EmojiExplanationText' => __('Emoji_explanation_text'),
                 'SuccessfullyCopiedTableContentToClipboard' => __('The_table_content_was_copied_successfully_to_your_clipboard.'),
                 'ChangeMemberReasonIsMandatory' => __('The_reason_for_changing_the_member_is_mandatory.'),
                 'WhyIsMemberEdited' => __('Why_is_the_member_edited?'),

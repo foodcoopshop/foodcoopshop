@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-12 09:46+0200\n"
-"PO-Revision-Date: 2023-09-12 09:46+0200\n"
+"POT-Creation-Date: 2023-09-18 14:52+0200\n"
+"PO-Revision-Date: 2023-09-18 14:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -926,6 +926,19 @@ msgstr "{0} E-Mail-Adressen wurden erfolgreich in deine Zwischenablage kopiert."
 
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "Eine E-Mail-Adresse wurde erfolgreich in deine Zwischenablage kopiert."
+
+msgid "The_url_of_the_file_has_been_copied_successfully_to_your_clipboard."
+msgstr "Die Url der hochgeladenen Datei wurde erfolgreich in deine Zwischenablage kopiert."
+
+msgid "Upload_image_or_file"
+msgstr "Datei oder Bild hochladen"
+
+msgid "Emoji_explanation_text"
+msgstr ""
+"So kannst du Emojis einfügen:\n"
+"- Windows: Windows-Taste und . (Punkt) drücken\n"
+"- Apple: Ctrl-Befehlstaste-Leertaste drücken\n"
+"- Smartphone: Emojis findest du auf einer eigenen Taste der Tastatur"
 
 msgid "The_table_content_was_copied_successfully_to_your_clipboard."
 msgstr "Der Inhalt der Tabelle wurde erfolgreich in deine Zwischenablage kopiert."
@@ -2538,14 +2551,14 @@ msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
 msgid "Currently_not_on_stock"
 msgstr "Derzeit leider nicht verfügbar"
 
+msgid "Selling_price"
+msgstr "Verkaufspreis"
+
 msgid "Move_in_shopping_bag"
 msgstr "In die Einkaufstasche"
 
 msgid "Move_in_cart"
 msgstr "In den Warenkorb"
-
-msgid "Selling_price"
-msgstr "Verkaufspreis"
 
 msgid "Weight_in"
 msgstr "Gewicht in"

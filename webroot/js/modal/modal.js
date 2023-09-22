@@ -46,7 +46,7 @@ foodcoopshop.Modal = {
     },
 
     /**
-     * on mobile tooltipster is triggered on click - interferes with ckeditor
+     * on mobile tooltipster is triggered on click - interferes with editor
      */
     removeTooltipster : function() {
         $('.tooltipster-base ').remove();

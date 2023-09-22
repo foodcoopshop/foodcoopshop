@@ -20,8 +20,8 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('manufacturers-description');" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('manufacturers-short-description');" .
+        Configure::read('app.jsNamespace') . ".Editor.initBig('manufacturers-description');" .
+        Configure::read('app.jsNamespace') . ".Editor.initSmall('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm);" .
         Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-general-terms-and-conditions-button', foodcoopshop.Upload.saveManufacturerTmpGeneralTermsAndConditionsInForm);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();"
@@ -162,7 +162,6 @@ if ($appAuth->isManufacturer()) {
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             echo '<div style="margin-top:10px;"></div>';
             echo $this->Form->control('Manufacturers.short_description', [
-                'class' => 'ckeditor',
                 'type' => 'textarea',
                 'label' => __d('admin', 'Short_description').'<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer.').'</span>',
                 'escape' => false,
@@ -177,7 +176,6 @@ if ($appAuth->isManufacturer()) {
             echo '</div>';
         } else {
             echo $this->Form->control('Manufacturers.description', [
-                'class' => 'ckeditor',
                 'type' => 'textarea',
                 'label' => $label . '<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_the_manufacturer_profile.').'<br /><br /><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
                 'escape' => false,

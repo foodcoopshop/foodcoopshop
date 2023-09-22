@@ -40,7 +40,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
     getHtml : function() {
         var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
         html += '<div class="textarea-wrapper">';
-        html += '<textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment"></textarea>';
+        html += '<textarea name="dialogCustomerComment" id="dialogCustomerComment"></textarea>';
         html += '</div>';
         html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
         return html;
@@ -61,7 +61,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
             '/admin/customers/editComment/',
             {
                 customerId: $('#dialogCustomerId').val(),
-                customerComment: CKEDITOR.instances['dialogCustomerComment'].getData()
+                customerComment: $('#dialogCustomerComment').val(),
             },
             {
                 onOk: function (data) {
@@ -80,7 +80,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
 
         new bootstrap.Modal(document.getElementById(modalSelector.replace(/#/, ''))).show();
 
-        foodcoopshop.Helper.initCkeditor('dialogCustomerComment', true);
+        var editor = foodcoopshop.Editor.initSmall('dialogCustomerComment', true);
 
         var text = button.attr('originalTitle');
         if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
@@ -90,7 +90,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
         var customerId = button.closest('tr').find('td:nth-child(2)').html();
         var customerName = button.closest('tr').find('td.name').text();
 
-        CKEDITOR.instances['dialogCustomerComment'].setData(text);
+        editor.setEditorValue(text);
         $(modalSelector + ' #dialogCustomerId').val(customerId);
 
         $(modalSelector + ' #dialogCustomerId').val(customerId);

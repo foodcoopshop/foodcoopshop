@@ -46,7 +46,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         html += '<select style="width:200px;" id="dialogOrderDetailEditCustomerAmount"></select>';
         html += '<div class="textarea-wrapper" style="margin-top:10px;">';
         html += '<label for="dialogEditCustomerReason">' + foodcoopshop.LocalizedJs.admin.WhyIsMemberEdited + '</label>';
-        html += '<textarea class="ckeditor" name="dialogEditCustomerReason" id="dialogEditCustomerReason"></textarea>';
+        html += '<textarea name="dialogEditCustomerReason" id="dialogEditCustomerReason"></textarea>';
         html += '</div>';
         html += '<label class="checkbox">';
         html += '<input type="checkbox" name="dialogEditCustomerSendEmailToCustomers" id="dialogEditCustomerSendEmailToCustomers" />';
@@ -67,7 +67,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
             {
                 orderDetailId: $('#dialogOrderDetailEditCustomerOrderDetailId').val(),
                 customerId: $('#dialogOrderDetailEditCustomerId').val(),
-                editCustomerReason: CKEDITOR.instances['dialogEditCustomerReason'].getData().trim(),
+                editCustomerReason: $('#dialogEditCustomerReason').val(),
                 amount: $('#dialogOrderDetailEditCustomerAmount').val(),
                 sendEmailToCustomers: $('#dialogEditCustomerSendEmailToCustomers:checked').length > 0 ? 1 : 0,
             },
@@ -86,7 +86,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
-        foodcoopshop.Helper.initCkeditor('dialogEditCustomerReason', true);
+        foodcoopshop.Editor.initSmall('dialogEditCustomerReason', true);
 
         var customerDropdownSelector = '#dialogOrderDetailEditCustomerId';
         $(customerDropdownSelector).find('option[value=""]').remove();

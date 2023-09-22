@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('payments-approval-comment');" .
+        Configure::read('app.jsNamespace') . ".Editor.initSmall('payments-approval-comment');" .
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
         $('#payments-approval').on('change', function() {
@@ -110,7 +110,6 @@ echo $this->Form->control('Payments.send_email', [
 echo $this->Form->control('Payments.approval_comment', [
     'type' => 'textarea',
     'label' => __d('admin', 'Comment'),
-    'class' => 'ckeditor'
 ]);
 
 echo $this->Form->end();

@@ -4,18 +4,21 @@ module.exports = {
         "jquery": true,
         "es6": true
     },
+    "parserOptions": {
+        "ecmaVersion": 2020
+    },
     "ignorePatterns": [
         "webroot/js/elFinder/"
     ],
     "globals": {
         "bootstrap": true,
         "Chart": true,
-        "CKEDITOR": true,
         "ChartDataLabels": true,
         "ClipboardJS": true,
         "Cookies": true,
         "foodcoopshop": true,
         "CookiesEuBanner": true,
+        "Jodit": true,
         "math": true,
         "Quagga": true,
         "slidebars": true,

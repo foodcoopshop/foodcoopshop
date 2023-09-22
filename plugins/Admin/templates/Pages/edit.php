@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('pages-content');" .
+        Configure::read('app.jsNamespace') . ".Editor.initBig('pages-content');" .
         Configure::read('app.jsNamespace') . ".Admin.disableSelectpickerItems('#pages-id-parent', " . json_encode($disabledSelectPageIds) . ");" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
@@ -110,7 +110,6 @@ echo $this->Form->control('Pages.active', [
 ]);
 
 echo $this->Form->control('Pages.content', [
-    'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => __d('admin', 'Text') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false
