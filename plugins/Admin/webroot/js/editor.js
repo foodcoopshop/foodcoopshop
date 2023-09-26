@@ -75,6 +75,7 @@ foodcoopshop.Editor = {
             ...this.getDefaultOptions(),
             buttons: ['bold', 'italic', 'eraser', this.getEmojiButton()],
             height: 220,
+            width: 270,
         });
         
         if (startupFocus) {
@@ -91,6 +92,7 @@ foodcoopshop.Editor = {
             ... this.getDefaultOptions(),
             buttons: ['bold', 'italic', 'eraser', this.getEmojiButton(), this.getUploadButton()],
             height: 364,
+            width: 270,
         });
 
         if (startupFocus) {
@@ -110,8 +112,7 @@ foodcoopshop.Editor = {
                 'bold', 'italic', 'brush',
                 '|', 'undo', 'redo', 'eraser',
                 '|', 'paragraph', 'ul', 'ol', 'hr',
-                '|', 'left', 'center', 'right',
-                '|', 'link', 'image', this.getUploadButton(),
+                '|', 'left', 'center', 'right', 'link', 'image', this.getUploadButton(),
                 '|', 'source', this.getEmojiButton(),
             ],
         });
