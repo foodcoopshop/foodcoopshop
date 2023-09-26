@@ -20,7 +20,6 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Editor.initBig('manufacturers-description');" .
         Configure::read('app.jsNamespace') . ".Editor.initSmall('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm);" .
         Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-general-terms-and-conditions-button', foodcoopshop.Upload.saveManufacturerTmpGeneralTermsAndConditionsInForm);" .
@@ -28,6 +27,12 @@ $this->element('addScript', [
 ]);
 
 $idForUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufacturer : StringComponent::createRandomString(6);
+
+if (!empty($manufacturer->id_manufacturer)) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".Editor.initBig('manufacturers-description');"
+    ]);
+}
 ?>
 
 <div class="filter-container">
