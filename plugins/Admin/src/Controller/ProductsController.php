@@ -23,6 +23,7 @@ use Admin\Traits\Products\EditStatusTrait;
 use Admin\Traits\Products\EditTaxTrait;
 use Admin\Traits\Products\GenerateProductCardsTrait;
 use Admin\Traits\Products\GetProductsForDropdownTrait;
+use Admin\Traits\Products\ImportTrait;
 use Admin\Traits\Products\IndexTrait;
 use Admin\Traits\Products\SaveUploadedImageTrait;
 use Cake\Event\EventInterface;
@@ -66,6 +67,7 @@ class ProductsController extends AdminAppController
     use GenerateProductCardsTrait;
     use GetProductsForDropdownTrait;
     use IndexTrait;
+    use ImportTrait;
     use SaveUploadedImageTrait;
 
     public function isAuthorized($user)

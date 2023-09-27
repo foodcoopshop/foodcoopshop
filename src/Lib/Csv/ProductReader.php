@@ -1,0 +1,54 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under the GNU Affero General Public License version 3
+ * For full copyright and license information, please see LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 3.7.0
+ * @license       https://opensource.org/licenses/AGPL-3.0
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+namespace App\Lib\Csv;
+
+use League\Csv\Reader;
+use League\Csv\Stream;
+use SplFileObject;
+use Cake\Datasource\FactoryLocator;
+
+class ProductReader extends Reader {
+
+
+    protected function __construct(protected SplFileObject|Stream $document) {
+        parent::__construct($document);
+        $this->setDelimiter(';');
+        $this->setHeaderOffset(0);
+    }
+
+    public function import() {
+        $records = $this->getRecords();
+        $productTable = FactoryLocator::get('Table')->get('Products');
+        $productEntities = [];
+        foreach($records as $record) {
+            $productEntities[] = $productTable->addWithManufacturerId(
+                $record['ManufacturerId'],
+                $record['ProductName'],
+                $record['DescriptionShort'],
+                $record['Description'],
+                $record['Unity'],
+                $record['IsDeclarationOk'],
+                $record['StorageLocationId'],
+                $record['Barcode'],
+            );
+        }
+        return $productEntities;
+    }
+
+}
+
+?>

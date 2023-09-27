@@ -16,6 +16,7 @@ use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -1450,6 +1451,23 @@ class ProductsTable extends AppTable
         }
 
         return $success;
+    }
+
+    public function addWithManufacturerId($manufacturerId, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode) {
+
+        $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturer = $manufacturerTable->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId
+            ]
+        ])->first();
+
+        if (empty($manufacturer)) {
+            throw new RecordNotFoundException('manufacturer not found: ' . $manufacturerId);
+        }
+
+        return $this->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
+
     }
 
     public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode)

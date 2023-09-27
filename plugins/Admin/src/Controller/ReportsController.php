@@ -9,7 +9,6 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
-use League\Csv\Reader;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
