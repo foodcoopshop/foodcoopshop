@@ -25,6 +25,7 @@ class ProductReaderTest extends AppCakeTestCase
     public function setUp(): void
     {
         $this->reader = ProductReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products.csv');
+        $this->reader->configureType();
     }
 
     public function tearDown(): void

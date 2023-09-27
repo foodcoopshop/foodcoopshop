@@ -17,15 +17,13 @@ declare(strict_types=1);
 namespace App\Lib\Csv;
 
 use League\Csv\Reader;
-use League\Csv\Stream;
-use SplFileObject;
 use Cake\Datasource\FactoryLocator;
 
 class ProductReader extends Reader {
 
 
-    protected function __construct(protected SplFileObject|Stream $document) {
-        parent::__construct($document);
+    public function configureType(): void
+    {
         $this->setDelimiter(';');
         $this->setHeaderOffset(0);
     }

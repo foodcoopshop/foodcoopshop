@@ -31,6 +31,7 @@ trait ImportTrait {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
             $reader = ProductReader::createFromString($content);
+            $reader->configureType();
 
             try {
                 $productEntities = $reader->import();
