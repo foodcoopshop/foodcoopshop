@@ -28,13 +28,13 @@ class ProductReader extends Reader {
         $this->setHeaderOffset(0);
     }
 
-    public function import() {
+    public function import($manufacturerId) {
         $records = $this->getRecords();
         $productTable = FactoryLocator::get('Table')->get('Products');
         $productEntities = [];
         foreach($records as $record) {
             $productEntities[] = $productTable->addWithManufacturerId(
-                $record['ManufacturerId'],
+                $manufacturerId,
                 $record['ProductName'],
                 $record['DescriptionShort'],
                 $record['Description'],

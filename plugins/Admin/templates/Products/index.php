@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+
 use Cake\Core\Configure;
 
 ?>
@@ -140,6 +140,7 @@ use Cake\Core\Configure;
 
                 echo $this->element('productList/selectedProductsDropdown', [
                     'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products')),
+                    'manufacturerId' => $manufacturerId,
                 ]);
 
                 ?>

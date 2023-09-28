@@ -21,7 +21,7 @@ use App\Lib\Csv\ProductReader;
 
 trait ImportTrait {
 
-    public function import()
+    public function import($manufacturerId)
     {
 
         $this->set('title_for_layout', __d('admin', 'Product_import'));
@@ -34,7 +34,7 @@ trait ImportTrait {
             $reader->configureType();
 
             try {
-                $productEntities = $reader->import();
+                $productEntities = $reader->import($manufacturerId);
                 $this->Flash->success(__d('admin', 'Product_import_successful.' . count($productEntities)));
             } catch(\Exception $e) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));

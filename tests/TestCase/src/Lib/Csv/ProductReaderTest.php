@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 use App\Lib\Csv\ProductReader;
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 
 class ProductReaderTest extends AppCakeTestCase
 {
@@ -38,10 +39,9 @@ class ProductReaderTest extends AppCakeTestCase
         $records = $this->reader->getRecords();
 
         $this->assertCount(2, $records);
-        $this->assertEquals(8, count($this->reader->nth(0)));
-        $this->assertEquals(8, count($this->reader->nth(1)));
+        $this->assertEquals(7, count($this->reader->nth(0)));
+        $this->assertEquals(7, count($this->reader->nth(1)));
 
-        $this->assertEquals(5, $this->reader->nth(0)['ManufacturerId']);
         $this->assertEquals('Brombeeren', $this->reader->nth(0)['ProductName']);
         $this->assertEquals('frisch geerntet', $this->reader->nth(0)['DescriptionShort']);
         $this->assertEquals('Brombeeren haben viel Vitamin C und sind sehr gesund', $this->reader->nth(0)['Description']);
@@ -54,7 +54,8 @@ class ProductReaderTest extends AppCakeTestCase
 
     public function testImport()
     {
-        $productEntities = $this->reader->import();
+        $manufacturerId = 5;
+        $productEntities = $this->reader->import($manufacturerId);
         foreach($productEntities as $productEntity) {
             $this->assertIsObject($productEntity);
         }
