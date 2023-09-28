@@ -434,11 +434,10 @@ class ProductsTable extends AppTable
      *  (
      *      [0] => Array
      *          (
-     *              [
-     *                  productId] => [
-     *                      'gross_price' => (float) price
-     *                      'product unit fields'
-     *                  ]
+     *              [productId] => [
+*                      'gross_price' => (float) price
+*                      'product unit fields'
+*                   ]
      *          )
      *  )
      * @return boolean $success

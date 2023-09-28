@@ -21,7 +21,6 @@ use Cake\Datasource\FactoryLocator;
 
 class ProductReader extends Reader {
 
-
     public function configureType(): void
     {
         $this->setDelimiter(';');
