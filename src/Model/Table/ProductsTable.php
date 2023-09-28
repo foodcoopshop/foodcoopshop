@@ -16,7 +16,7 @@ use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
-use Cake\Datasource\Exception\RecordNotFoundException;
+use App\Model\Traits\ProductImportTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,6 +36,7 @@ class ProductsTable extends AppTable
 
     use AllowOnlyOneWeekdayValidatorTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
+    use ProductImportTrait;
 
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
@@ -1450,65 +1451,6 @@ class ProductsTable extends AppTable
         }
 
         return $success;
-    }
-
-    public function addWithManufacturerId(
-        $manufacturerId,
-        $productName,
-        $descriptionShort,
-        $description,
-        $unity,
-        $isDeclarationOk,
-        $idStorageLocation,
-        $status,
-        $priceGross,
-        $taxRate,
-        $barcode,
-        ) {
-
-        $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $manufacturerTable->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
-        ])->first();
-
-        if (empty($manufacturer)) {
-            throw new RecordNotFoundException('manufacturer not found: ' . $manufacturerId);
-        }
-
-        $newProduct = $this->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
-
-        $this->changeStatus([
-            [$newProduct->id_product => $status],
-        ]);
-
-        $taxRate = $this->Taxes->find('all', [
-            'conditions' => [
-                'Taxes.active' => APP_ON,
-                'Taxes.rate' => $taxRate,
-            ],
-        ])->first();
-
-        $newProduct->id_tax = $taxRate->id_tax ?? 0;
-        $this->save($newProduct);
-
-        $this->changePrice([
-            [$newProduct->id_product => ['gross_price' => $priceGross]],
-        ]);
-
-        $newProduct = $this->find('all', [
-            'conditions' => [
-                'Products.id_product' => $newProduct->id_product,
-            ],
-            'contain' => [
-                'BarcodeProducts',
-            ]
-        ])->first();
-
-        return $newProduct;
-
-
     }
 
     public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode)

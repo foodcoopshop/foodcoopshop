@@ -50,7 +50,7 @@ class ProductReader extends Reader {
         $productTable = FactoryLocator::get('Table')->get('Products');
         $productEntities = [];
         foreach($records as $record) {
-            $productEntities[] = $productTable->addWithManufacturerId(
+            $productEntities[] = $productTable->createFromCsv(
                 $manufacturerId,
                 $record['ProductName'],
                 $record['DescriptionShort'],
