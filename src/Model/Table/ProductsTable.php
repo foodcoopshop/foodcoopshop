@@ -1461,6 +1461,8 @@ class ProductsTable extends AppTable
         $isDeclarationOk,
         $idStorageLocation,
         $status,
+        $priceGross,
+        $taxRate,
         $barcode,
         ) {
 
@@ -1481,9 +1483,26 @@ class ProductsTable extends AppTable
             [$newProduct->id_product => $status],
         ]);
 
+        $taxRate = $this->Taxes->find('all', [
+            'conditions' => [
+                'Taxes.active' => APP_ON,
+                'Taxes.rate' => $taxRate,
+            ],
+        ])->first();
+
+        $newProduct->id_tax = $taxRate->id_tax ?? 0;
+        $this->save($newProduct);
+
+        $this->changePrice([
+            [$newProduct->id_product => ['gross_price' => $priceGross]],
+        ]);
+
         $newProduct = $this->find('all', [
             'conditions' => [
                 'Products.id_product' => $newProduct->id_product,
+            ],
+            'contain' => [
+                'BarcodeProducts',
             ]
         ])->first();
 

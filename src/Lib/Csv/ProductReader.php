@@ -18,6 +18,7 @@ namespace App\Lib\Csv;
 
 use League\Csv\Reader;
 use Cake\Datasource\FactoryLocator;
+use Cake\Core\Configure;
 
 class ProductReader extends Reader {
 
@@ -27,8 +28,25 @@ class ProductReader extends Reader {
         $this->setHeaderOffset(0);
     }
 
-    public function import($manufacturerId) {
+    public function getPreparedRecords(): array
+    {
         $records = $this->getRecords();
+        $records = iterator_to_array($records);
+        $records = array_values($records); // reindex array as 0 is dropped by iterator_to_array
+        $preparedRecords = array_map([$this, 'formatColumns'], $records);
+        return $preparedRecords;
+    }
+
+    private function formatColumns($record) {
+        $record['Status'] = (int) $record['Status'];
+        $record['PriceGross'] = Configure::read('app.numberHelper')->getStringAsFloat($record['PriceGross']);
+        $record['TaxRate'] = Configure::read('app.numberHelper')->getStringAsFloat($record['TaxRate']);
+        return $record;
+    }
+
+    public function import($manufacturerId)
+    {
+        $records = $this->getPreparedRecords();
         $productTable = FactoryLocator::get('Table')->get('Products');
         $productEntities = [];
         foreach($records as $record) {
@@ -40,7 +58,9 @@ class ProductReader extends Reader {
                 $record['Unity'],
                 $record['IsDeclarationOk'],
                 $record['StorageLocationId'],
-                (int) $record['Status'],
+                $record['Status'],
+                $record['PriceGross'],
+                $record['TaxRate'],
                 $record['Barcode'],
             );
         }

@@ -34,33 +34,49 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertLogFilesForErrors();
     }
 
-    public function testRead()
+    public function testReadCsv()
     {
-        $records = $this->reader->getRecords();
+        $records = $this->reader->getPreparedRecords();
 
         $this->assertCount(2, $records);
-        
-        $columnCount = 8;
-        $this->assertEquals($columnCount, count($this->reader->nth(0)));
-        $this->assertEquals($columnCount, count($this->reader->nth(1)));
 
-        $this->assertEquals('Brombeeren', $this->reader->nth(0)['ProductName']);
-        $this->assertEquals('frisch geerntet', $this->reader->nth(0)['DescriptionShort']);
-        $this->assertEquals('Brombeeren haben viel Vitamin C und sind sehr gesund', $this->reader->nth(0)['Description']);
-        $this->assertEquals('1 kg', $this->reader->nth(0)['Unity']);
-        $this->assertEquals('1', $this->reader->nth(0)['IsDeclarationOk']);
-        $this->assertEquals('1', $this->reader->nth(0)['StorageLocationId']);
-        $this->assertEquals('1', $this->reader->nth(0)['Status']);
-        $this->assertEquals('2345678901235', $this->reader->nth(0)['Barcode']);
+        $columnCount = 10;
+        $this->assertEquals($columnCount, count($records[0]));
+        $this->assertEquals($columnCount, count($records[1]));
+
+        $this->assertEquals('Brombeeren', $records[0]['ProductName']);
+        $this->assertEquals('frisch geerntet', $records[0]['DescriptionShort']);
+        $this->assertEquals('Brombeeren haben viel Vitamin C und sind sehr gesund', $records[0]['Description']);
+        $this->assertEquals('1 kg', $records[0]['Unity']);
+        $this->assertEquals('1', $records[0]['IsDeclarationOk']);
+        $this->assertEquals('1', $records[0]['StorageLocationId']);
+        $this->assertEquals(1, $records[0]['Status']);
+        $this->assertEquals(23.3, $records[0]['PriceGross']);
+        $this->assertEquals(10, $records[0]['TaxRate']);
+        $this->assertEquals('2345678901235', $records[0]['Barcode']);
     }
 
-    public function testImport()
+    public function testImportSuccessful()
     {
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
+        
+        $this->assertCount(2, $productEntities);
         foreach($productEntities as $productEntity) {
             $this->assertIsObject($productEntity);
         }
+
+        $this->assertEquals($manufacturerId, $productEntities[0]->id_manufacturer);
+        $this->assertEquals('Brombeeren', $productEntities[0]->name);
+        $this->assertEquals('frisch geerntet', $productEntities[0]->description_short);
+        $this->assertEquals('Brombeeren haben viel Vitamin C und sind sehr gesund', $productEntities[0]->description);
+        $this->assertEquals('1 kg', $productEntities[0]->unity);
+        $this->assertEquals(1, $productEntities[0]->is_declaration_ok);
+        $this->assertEquals(1, $productEntities[0]->id_storage_location);
+        $this->assertEquals(1, $productEntities[0]->active);
+        $this->assertEquals(21.181818, $productEntities[0]->price);
+        $this->assertEquals(2, $productEntities[0]->id_tax);
+        $this->assertEquals('2345678901235', $productEntities[0]->barcode_product->barcode);
     }
 
 }
