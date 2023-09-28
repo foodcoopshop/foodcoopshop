@@ -39,8 +39,10 @@ class ProductReaderTest extends AppCakeTestCase
         $records = $this->reader->getRecords();
 
         $this->assertCount(2, $records);
-        $this->assertEquals(7, count($this->reader->nth(0)));
-        $this->assertEquals(7, count($this->reader->nth(1)));
+        
+        $columnCount = 8;
+        $this->assertEquals($columnCount, count($this->reader->nth(0)));
+        $this->assertEquals($columnCount, count($this->reader->nth(1)));
 
         $this->assertEquals('Brombeeren', $this->reader->nth(0)['ProductName']);
         $this->assertEquals('frisch geerntet', $this->reader->nth(0)['DescriptionShort']);
@@ -48,8 +50,8 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals('1 kg', $this->reader->nth(0)['Unity']);
         $this->assertEquals('1', $this->reader->nth(0)['IsDeclarationOk']);
         $this->assertEquals('1', $this->reader->nth(0)['StorageLocationId']);
+        $this->assertEquals('1', $this->reader->nth(0)['Status']);
         $this->assertEquals('2345678901235', $this->reader->nth(0)['Barcode']);
-
     }
 
     public function testImport()

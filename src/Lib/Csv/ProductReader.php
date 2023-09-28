@@ -41,6 +41,7 @@ class ProductReader extends Reader {
                 $record['Unity'],
                 $record['IsDeclarationOk'],
                 $record['StorageLocationId'],
+                (int) $record['Status'],
                 $record['Barcode'],
             );
         }

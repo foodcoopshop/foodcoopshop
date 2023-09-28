@@ -1453,7 +1453,17 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function addWithManufacturerId($manufacturerId, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode) {
+    public function addWithManufacturerId(
+        $manufacturerId,
+        $productName,
+        $descriptionShort,
+        $description,
+        $unity,
+        $isDeclarationOk,
+        $idStorageLocation,
+        $status,
+        $barcode,
+        ) {
 
         $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $manufacturerTable->find('all', [
@@ -1466,7 +1476,20 @@ class ProductsTable extends AppTable
             throw new RecordNotFoundException('manufacturer not found: ' . $manufacturerId);
         }
 
-        return $this->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
+        $newProduct = $this->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
+
+        $this->changeStatus([
+            [$newProduct->id_product => $status],
+        ]);
+
+        $newProduct = $this->find('all', [
+            'conditions' => [
+                'Products.id_product' => $newProduct->id_product,
+            ]
+        ])->first();
+
+        return $newProduct;
+
 
     }
 
