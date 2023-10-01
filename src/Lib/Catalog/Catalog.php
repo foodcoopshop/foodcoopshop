@@ -476,11 +476,7 @@ class Catalog {
 
     protected function reindexArray($array)
     {
-        $reindexedArray = [];
-        foreach($array as $a) {
-            $reindexedArray[] = $a;
-        }
-        return $reindexedArray;
+        return array_values($array);
     }
 
     public function getProductIdentifierField()

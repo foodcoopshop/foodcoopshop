@@ -156,18 +156,16 @@ class HelloCash
 
     public function getOptions()
     {
-        $auth = [];
-        if (Configure::read('app.helloCashAtCredentials')['username'] != '' &&
-            Configure::read('app.helloCashAtCredentials')['password'] != '') {
-            $auth = [
-                'username' => Configure::read('app.helloCashAtCredentials')['username'],
-                'password' => Configure::read('app.helloCashAtCredentials')['password'],
+        $authHeader = [];
+        if (Configure::read('app.helloCashAtCredentials')['token'] != '') {
+            $authHeader = [
+                'Authorization' => 'Bearer ' . Configure::read('app.helloCashAtCredentials')['token'],
             ];
         }
-        return [
-            'auth' => $auth,
-            'type' => 'json',
+        $options = [
+            'headers' => $authHeader,
         ];
+        return $options;
     }
 
     public function getReceipt($invoiceId, $cancellation)
@@ -382,13 +380,13 @@ class HelloCash
         return $response;
     }
 
-    protected function decodeApiResponseAndCheckForErrors($response)
+    public function decodeApiResponseAndCheckForErrors($response)
     {
 
         $decodedResponse = json_decode($response->getStringBody());
 
         if (!empty($decodedResponse->error)) {
-            if ($decodedResponse->error == 'An error occurred: Invalid Basic authentication: Benutzername oder Passwort falsch') {
+            if ($decodedResponse->error == 'An error occurred: Invalid authentication') {
                 throw new HelloCashApiException($decodedResponse->error);
             }
         }
