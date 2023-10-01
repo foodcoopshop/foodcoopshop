@@ -105,6 +105,7 @@ return [
         ],
 
         'helloCashAtCredentials' => [
+            'token' => 'HELLO_CASH_TOKEN',
             'username' => 'HELLO_CASH_USERNAME',
             'password' => 'HELLO_CASH_PASSWORD',
             'cashier_id' => 'HELLO_CASH_CASHIER_ID',

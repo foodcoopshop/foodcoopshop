@@ -36,19 +36,28 @@ class HelloCashTest extends AppCakeTestCase
 
     public function setUp(): void
     {
-        if (
-            in_array(Configure::read('app.helloCashAtCredentials.username'), [
-                '',
-                Configure::read('app.helloCashAtCredentials.username') == 'HELLO_CASH_USERNAME',
-            ])
-            ) {
-                $this->markTestSkipped('The credentials for HelloCash are missing.');
-            }
+        if (in_array(Configure::read('app.helloCashAtCredentials.token'), ['','HELLO_CASH_TOKEN'])) {
+            $this->markTestSkipped('The token for HelloCash is missing.');
+        }
         parent::setUp();
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
         $this->HelloCash = new HelloCash();
         $this->Invoice = $this->getTableLocator()->get('Invoices');
+    }
+
+    public function testGetUsers() {
+        $this->HelloCash = new HelloCash();
+        $response = $this->HelloCash->getRestClient()->get(
+            '/users?limit=1',
+            [],
+            $this->HelloCash->getOptions(),
+        );
+        $responseObject = $this->HelloCash->decodeApiResponseAndCheckForErrors($response);
+        $this->assertIsObject($responseObject);
+        $this->assertNotEmpty($responseObject->users);
+        $this->assertObjectHasProperty('user_id', $responseObject->users[0]);
+        $this->assertObjectHasProperty('user_email', $responseObject->users[0]);
     }
 
     public function testGenerateReceipt()
