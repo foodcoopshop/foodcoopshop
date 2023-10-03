@@ -1,5 +1,7 @@
 parameters:
-    level: 0
+    level: 1
+    bootstrapFiles:
+        - %currentWorkingDirectory%/config/phpstan-bootstrap.php
     fileExtensions:
         - php
     paths:
@@ -12,5 +14,12 @@ parameters:
         - plugins/Network/src
         - plugins/Network/templates
         - plugins/Network/tests
+    ignoreErrors:
+        - message: '#Variable \$.* might not be defined#'
+          path: %currentWorkingDirectory%/templates
+        - message: '#Variable \$.* might not be defined#'
+          path: %currentWorkingDirectory%/plugins/Admin/templates
+        - message: '#Variable \$.* might not be defined#'
+          path: %currentWorkingDirectory%/plugins/Network/templates
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

@@ -29,6 +29,7 @@ class PurchasePriceProductsTable extends AppTable
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
     private $Product;
+    private $Taxes;
 
     public function initialize(array $config): void
     {

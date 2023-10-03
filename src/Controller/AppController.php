@@ -27,6 +27,7 @@ class AppController extends Controller
 {
 
     public $protectEmailAddresses = false;
+    public $AppAuth;
 
     public function initialize(): void
     {

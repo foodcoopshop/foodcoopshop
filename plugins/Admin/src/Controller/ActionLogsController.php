@@ -23,11 +23,13 @@ use Cake\Event\EventInterface;
 class ActionLogsController extends AdminAppController
 {
 
+    private $ActionLog;
+    private $Customer;
+
     public function beforeFilter(EventInterface $event)
     {
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Product = $this->getTableLocator()->get('Products');
         parent::beforeFilter($event);
     }
 
