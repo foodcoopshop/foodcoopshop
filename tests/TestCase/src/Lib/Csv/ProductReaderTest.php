@@ -45,8 +45,8 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals($columnCount, count($records[1]));
 
         $this->assertEquals('Brombeeren', $records[0]['ProductName']);
-        $this->assertEquals('frisch geerntet', $records[0]['DescriptionShort']);
-        $this->assertEquals('Brombeeren haben viel Vitamin C und sind sehr gesund', $records[0]['Description']);
+        $this->assertEquals('frisch geerntet <script>alert(\'evil\')</script>', $records[0]['DescriptionShort']);
+        $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $records[0]['Description']);
         $this->assertEquals('1 kg', $records[0]['Unity']);
         $this->assertEquals('1', $records[0]['IsDeclarationOk']);
         $this->assertEquals('1', $records[0]['StorageLocationId']);
@@ -60,7 +60,7 @@ class ProductReaderTest extends AppCakeTestCase
     {
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
-        
+
         $this->assertCount(2, $productEntities);
         foreach($productEntities as $productEntity) {
             $this->assertIsObject($productEntity);
@@ -68,8 +68,8 @@ class ProductReaderTest extends AppCakeTestCase
 
         $this->assertEquals($manufacturerId, $productEntities[0]->id_manufacturer);
         $this->assertEquals('Brombeeren', $productEntities[0]->name);
-        $this->assertEquals('frisch geerntet', $productEntities[0]->description_short);
-        $this->assertEquals('Brombeeren haben viel Vitamin C und sind sehr gesund', $productEntities[0]->description);
+        $this->assertEquals('frisch geerntet alert(\'evil\')', $productEntities[0]->description_short);
+        $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $productEntities[0]->description);
         $this->assertEquals('1 kg', $productEntities[0]->unity);
         $this->assertEquals(1, $productEntities[0]->is_declaration_ok);
         $this->assertEquals(1, $productEntities[0]->id_storage_location);
