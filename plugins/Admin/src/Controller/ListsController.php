@@ -24,6 +24,8 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 class ListsController extends AdminAppController
 {
 
+    protected $Manufacturer;
+
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {

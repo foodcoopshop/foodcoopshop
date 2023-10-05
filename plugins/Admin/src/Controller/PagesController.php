@@ -23,6 +23,10 @@ use Cake\Http\Exception\NotFoundException;
 class PagesController extends AdminAppController
 {
 
+    protected $Customer;
+    protected $Page;
+    protected $Sanitize;
+
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {

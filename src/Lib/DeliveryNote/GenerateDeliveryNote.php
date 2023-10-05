@@ -141,11 +141,11 @@ class GenerateDeliveryNote {
         $this->setBoldForCell($sheet, 7, $row);
 
         $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceTax);
-        $this->setNumberFormatForCell($sheet, 8, $row, true);
+        $this->setNumberFormatForCell($sheet, 8, $row);
         $this->setBoldForCell($sheet, 8, $row);
 
         $sheet->setCellValueByColumnAndRow(9, $row, $totalSumPurchasePriceGross);
-        $this->setNumberFormatForCell($sheet, 9, $row, true);
+        $this->setNumberFormatForCell($sheet, 9, $row);
         $this->setBoldForCell($sheet, 9, $row);
 
         if (count($taxRates) > 1) {
@@ -159,11 +159,11 @@ class GenerateDeliveryNote {
             foreach($taxRates as $taxRate => $trt) {
                 $sheet->setCellValueByColumnAndRow(6, $row, $taxRate);
                 $sheet->setCellValueByColumnAndRow(7, $row, $trt['sum_price_net']);
-                $this->setNumberFormatForCell($sheet, 7, $row, true);
+                $this->setNumberFormatForCell($sheet, 7, $row);
                 $sheet->setCellValueByColumnAndRow(8, $row, $trt['sum_tax']);
-                $this->setNumberFormatForCell($sheet, 8, $row, true);
+                $this->setNumberFormatForCell($sheet, 8, $row);
                 $sheet->setCellValueByColumnAndRow(9, $row, $trt['sum_price_gross']);
-                $this->setNumberFormatForCell($sheet, 9, $row, true);
+                $this->setNumberFormatForCell($sheet, 9, $row);
                 $row++;
             }
         }

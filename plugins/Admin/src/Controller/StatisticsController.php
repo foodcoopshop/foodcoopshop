@@ -24,6 +24,9 @@ class StatisticsController extends AdminAppController
 {
 
     public $manufacturerId;
+    protected $Manufacturer;
+    protected $OrderDetail;
+    protected $PurchasePrice;
 
     public function isAuthorized($user)
     {
@@ -280,6 +283,7 @@ class StatisticsController extends AdminAppController
         // START prepare pie chart
         if ($manufacturerId == 'all') {
             $data = [];
+            
             foreach($manufacturers as $manufacturer) {
 
                 if ($lastMonths !== null) {

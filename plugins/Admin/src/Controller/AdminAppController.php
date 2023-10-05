@@ -22,6 +22,8 @@ use App\Controller\AppController;
 class AdminAppController extends AppController
 {
 
+    protected $ActionLog;
+
     public function isAuthorized($user)
     {
         return $this->AppAuth->user();

@@ -23,6 +23,7 @@ class HelloCashController extends AdminAppController
 {
 
     protected $helloCash;
+    protected $Invoice;
 
     public function initialize(): void
     {

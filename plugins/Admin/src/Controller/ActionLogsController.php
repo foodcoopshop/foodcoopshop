@@ -23,8 +23,7 @@ use Cake\Event\EventInterface;
 class ActionLogsController extends AdminAppController
 {
 
-    private $ActionLog;
-    private $Customer;
+    protected $Customer;
 
     public function beforeFilter(EventInterface $event)
     {

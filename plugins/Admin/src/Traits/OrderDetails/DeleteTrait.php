@@ -24,6 +24,8 @@ trait DeleteTrait {
 
     use UpdateOrderDetailsTrait;
 
+    protected $Manufacturer;
+
     public function delete()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -42,6 +44,8 @@ trait DeleteTrait {
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $flashMessage = '';
+        $message = '';
+        
         foreach ($orderDetailIds as $orderDetailId) {
             $orderDetail = $this->OrderDetail->find('all', [
                 'conditions' => [

@@ -149,7 +149,7 @@ class CustomersController extends FrontendController
             ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
-                $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf(), 'mimetype' => 'application/pdf']]);
             }
             $email->addToQueue();
 

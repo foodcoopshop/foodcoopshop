@@ -24,6 +24,8 @@ trait EditCustomerTrait {
 
     use UpdateOrderDetailsTrait;
 
+    protected $Customer;
+
     public function editCustomer()
     {
         $this->RequestHandler->renderAs($this, 'json');

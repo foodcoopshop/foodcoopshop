@@ -25,6 +25,12 @@ use App\Lib\Error\Exception\InvalidParameterException;
 class ApiController extends Controller
 {
 
+    protected $AppAuth;
+    protected $ActionLog;
+    protected $Manufacturer;
+    protected $Product;
+    protected $Sanitize;
+
     public function initialize(): void
     {
 

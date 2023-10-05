@@ -27,6 +27,8 @@ use League\Csv\Reader;
 class ReportsController extends AdminAppController
 {
 
+    protected $Payment;
+
     public function isAuthorized($user)
     {
         if (isset($this->getRequest()->getParam('pass')[0])) {
