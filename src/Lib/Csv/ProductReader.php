@@ -48,9 +48,10 @@ class ProductReader extends Reader {
     {
         $records = $this->getPreparedRecords();
         $productTable = FactoryLocator::get('Table')->get('Products');
-        $productEntities = [];
+
+        $validatedProductEntities = [];
         foreach($records as $record) {
-            $productEntities[] = $productTable->createFromCsv(
+            $validatedProductEntities[] = $productTable->getValidatedEntity(
                 $manufacturerId,
                 $record['ProductName'],
                 $record['DescriptionShort'],
@@ -64,7 +65,23 @@ class ProductReader extends Reader {
                 $record['Barcode'],
             );
         }
-        return $productEntities;
+
+        $allProductEntitiesValid = true;
+        foreach($validatedProductEntities as $validatedProductEntity) {
+            if ($validatedProductEntity->hasErrors()) {
+                $allProductEntitiesValid = false;
+            }
+        }
+
+        if ($allProductEntitiesValid) {
+            $savedProductEntities = [];
+            foreach($validatedProductEntities as $validatedProductEntity) {
+                $savedProductEntities[] = $productTable->createFromCsv($validatedProductEntity);
+            }
+            return $savedProductEntities;
+        }
+
+        return $validatedProductEntities;
     }
 
 }

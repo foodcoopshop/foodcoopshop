@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Traits;
 
 use Cake\Datasource\FactoryLocator;
-use Cake\Datasource\Exception\RecordNotFoundException;
+use App\Lib\DeliveryRhythm\DeliveryRhythm;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +22,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 trait ProductImportTrait
 {
 
-    public function createFromCsv(
+    public function getValidatedEntity(
         $manufacturerId,
         $productName,
         $descriptionShort,
@@ -34,20 +34,46 @@ trait ProductImportTrait
         $priceGross,
         $taxRate,
         $barcode,
-        ) {
+    ) {
+
+        $productEntity = $this->newEntity(
+            [
+                'id_manufacturer' => $manufacturerId,
+                'name' => $productName,
+                'delivery_rhythm_send_order_list_weekday' => DeliveryRhythm::getSendOrderListsWeekday(),
+                'description_short' => $descriptionShort,
+                'description' => $description,
+                'unity' => $unity,
+                'is_declaration_ok' => $isDeclarationOk,
+                'id_storage_location' => $idStorageLocation,
+                'barcode_product' => [
+                    'barcode' => $barcode,
+                ],
+            ],
+            [
+                'validate' => 'name',
+            ]
+        );
 
         $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $manufacturerTable->find('all', [
             'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId,
             ]
         ])->first();
-
         if (empty($manufacturer)) {
-            throw new RecordNotFoundException('manufacturer not found: ' . $manufacturerId);
+            $productEntity->setError('id_manufacturer', __('Manufacturer_not_found.'));
         }
 
-        $newProduct = $this->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
+        return $productEntity;
+
+    }
+
+    public function createFromCsv($productEntity) {
+
+        $productEntity = $this->save($productEntity);
+        return $productEntity;
+
 
         $this->changeStatus([
             [$newProduct->id_product => $status],
