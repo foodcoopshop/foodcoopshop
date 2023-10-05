@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 use App\Lib\Csv\ProductReader;
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\Core\Configure;
 
 class ProductReaderTest extends AppCakeTestCase
 {
