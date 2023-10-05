@@ -38,7 +38,7 @@ class ProductReader extends Reader {
     }
 
     private function formatColumns($record) {
-        $record['Status'] = (int) $record['Status'];
+        $record['Status'] = $record['Status'];
         $record['PriceGross'] = Configure::read('app.numberHelper')->getStringAsFloat($record['PriceGross']);
         $record['TaxRate'] = Configure::read('app.numberHelper')->getStringAsFloat($record['TaxRate']);
         return $record;

@@ -5,6 +5,8 @@ namespace App\Model\Traits;
 
 use Cake\Datasource\FactoryLocator;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Validation\Validator;
+use App\Model\Entity\Product;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,6 +24,13 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 trait ProductImportTrait
 {
 
+    public function validationImport(Validator $validator)
+    {
+        $validator = $this->validationName($validator);
+        $validator->inList('active', Product::ALLOWED_STATUSES, __('The_following_values_are_valid:') . ' ' . implode(', ', Product::ALLOWED_STATUSES));
+        return $validator;
+    }
+    
     public function getValidatedEntity(
         $manufacturerId,
         $productName,
@@ -46,12 +55,13 @@ trait ProductImportTrait
                 'unity' => $unity,
                 'is_declaration_ok' => $isDeclarationOk,
                 'id_storage_location' => $idStorageLocation,
+                'active' => $status,
                 'barcode_product' => [
                     'barcode' => $barcode,
                 ],
             ],
             [
-                'validate' => 'name',
+                'validate' => 'import',
             ]
         );
 
@@ -73,11 +83,6 @@ trait ProductImportTrait
 
         $productEntity = $this->save($productEntity);
         return $productEntity;
-
-
-        $this->changeStatus([
-            [$newProduct->id_product => $status],
-        ]);
 
         $taxRate = $this->Taxes->find('all', [
             'conditions' => [

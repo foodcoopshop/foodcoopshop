@@ -16,6 +16,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
+use App\Model\Entity\Product;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -302,8 +303,7 @@ class ProductsTable extends AppTable
                 throw new InvalidParameterException('change status is not allowed for product attributes');
             }
             $status = $product[$ids['productId']];
-            $allowed = [APP_OFF, APP_ON];
-            if (!in_array($status, $allowed, true)) { // last param for type check
+            if (!in_array($status, Product::ALLOWED_STATUSES, true)) { // last param for type check
                 throw new InvalidParameterException('Products.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
             } else {
                 $products2save[] = [

@@ -24,6 +24,7 @@ use App\Controller\Component\StringComponent;
 
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
+    public const ALLOWED_STATUSES = [APP_OFF, APP_ON];
 
     public $nameSetterMethodEnabled = true;
 

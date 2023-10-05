@@ -60,13 +60,16 @@ class ProductReaderTest extends AppCakeTestCase
 
         $errorsA = $productEntities[0]->getErrors();
         $productNameErrorMessage = 'Der Name des Produktes muss aus mindestens 2 Zeichen bestehen.';
+        $productActiveErrorMessage = 'Folgende Werte sind gültig: 0, 1';
         $barcodeErrorMessage = 'Die Länge des Barcodes muss genau 13 Zeichen betragen.';
 
         $this->assertEquals($productNameErrorMessage, $errorsA['name']['minLength']);
+        $this->assertEquals($productActiveErrorMessage, $errorsA['active']['inList']);
         $this->assertEquals($barcodeErrorMessage, $errorsA['barcode_product']['barcode']['lengthBetween']);
 
         $errorsB = $productEntities[1]->getErrors();
         $this->assertEquals($productNameErrorMessage, $errorsB['name']['minLength']);
+        $this->assertEquals($productActiveErrorMessage, $errorsB['active']['inList']);
         $this->assertEquals($barcodeErrorMessage, $errorsB['barcode_product']['barcode']['lengthBetween']);
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -86,6 +89,7 @@ class ProductReaderTest extends AppCakeTestCase
         $productsTable = $this->getTableLocator()->get('Products');
         $this->assertCount(15, $productsTable->find('all'));
 
+        // first product
         $this->assertEquals($manufacturerId, $productEntities[0]->id_manufacturer);
         $this->assertEquals('Brombeeren', $productEntities[0]->name);
         $this->assertEquals('frisch geerntet alert(\'evil\')', $productEntities[0]->description_short);
@@ -93,10 +97,13 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals('1 kg', $productEntities[0]->unity);
         $this->assertEquals(1, $productEntities[0]->is_declaration_ok);
         $this->assertEquals(1, $productEntities[0]->id_storage_location);
-        //$this->assertEquals(1, $productEntities[0]->active);
+        $this->assertEquals(1, $productEntities[0]->active);
         //$this->assertEquals(21.181818, $productEntities[0]->price);
         //$this->assertEquals(2, $productEntities[0]->id_tax);
         $this->assertEquals('2345678901235', $productEntities[0]->barcode_product->barcode);
+
+        // second product
+        $this->assertEquals(0, $productEntities[1]->active);
     }
 
 }
