@@ -24,6 +24,12 @@ use Cake\Event\EventInterface;
 class SyncsController extends AppController
 {
 
+    protected $Configuration;
+    protected $SyncDomain;
+    protected $SyncManufacturer;
+    protected $SyncProduct;
+    protected $Product;
+
     public function isAuthorized($user)
     {
         if (!$this->AppAuth->isManufacturer()) {
@@ -250,7 +256,7 @@ class SyncsController extends AppController
     private function getLocalSyncProducts()
     {
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
+        $products = $this->Product->getProductsForBackend('', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
         $matchedProducts = $this->markProductsAsSynced($products);
         return $matchedProducts;
     }

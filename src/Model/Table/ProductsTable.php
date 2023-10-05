@@ -39,10 +39,11 @@ class ProductsTable extends AppTable
     public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
 
-    private $Catalog;
-    private $Configuration;
-    private $Manufacturer;
-    private $Unit;
+    protected $Catalog;
+    protected $CategoryProducts;
+    protected $Configuration;
+    protected $Manufacturer;
+    protected $Unit;
 
     public function initialize(array $config): void
     {
@@ -781,7 +782,7 @@ class ProductsTable extends AppTable
         return false;
     }
 
-    public function getProductsForBackend($appAuth, $productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];

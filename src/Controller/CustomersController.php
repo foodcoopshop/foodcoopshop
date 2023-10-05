@@ -33,6 +33,10 @@ use Cake\Http\Exception\NotFoundException;
 class CustomersController extends FrontendController
 {
 
+    protected $Customer;
+    protected $Sanitize;
+    protected $ActionLog;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -100,7 +104,7 @@ class CustomersController extends FrontendController
 
         $errors = $patchedEntity->getErrors();
         if (isset($errors['terms_of_use_accepted_date'])) {
-            $this->AppFlash->setFlashError($errors['terms_of_use_accepted_date']['equals']);
+            $this->Flash->error($errors['terms_of_use_accepted_date']['equals']);
         }
 
         if (empty($errors)) {

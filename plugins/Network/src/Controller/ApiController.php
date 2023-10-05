@@ -29,6 +29,7 @@ class ApiController extends Controller
     protected $ActionLog;
     protected $Manufacturer;
     protected $Product;
+    protected $OrderDetail;
     protected $Sanitize;
 
     public function initialize(): void
@@ -112,7 +113,9 @@ class ApiController extends Controller
                     }
                 }
             }
-            $productDetailLinks[] = Configure::read('app.htmlHelper')->link($linkName, Configure::read('app.slugHelper')->getProductDetail($productIds['productId'], $product->name));
+            if (isset($linkName)) {
+                $productDetailLinks[] = Configure::read('app.htmlHelper')->link($linkName, Configure::read('app.slugHelper')->getProductDetail($productIds['productId'], $product->name));
+            }
         }
         return join(', ', $productDetailLinks);
     }
@@ -419,7 +422,7 @@ class ApiController extends Controller
         $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
             $this->AppAuth->getManufacturerVariableMemberFee()
         );
-        $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
+        $preparedProducts = $this->Product->getProductsForBackend('', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
 
         $this->set([
             'app' => [

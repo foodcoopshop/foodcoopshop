@@ -33,7 +33,7 @@ trait GenerateProductCardsTrait {
         }
 
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all', '', false, false, true);
+        $products = $this->Product->getProductsForBackend($productIds, 'all', 'all', '', false, false, true);
 
         $preparedProducts = [];
         foreach($products as &$product) {

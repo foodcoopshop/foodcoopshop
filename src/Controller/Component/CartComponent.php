@@ -36,7 +36,10 @@ class CartComponent extends Component
     use CartValidatorTrait;
 
     protected $ActionLog;
+    protected $Attribute;
     protected $Invoice;
+    protected $Manufacturer;
+    protected $Product;
 
     public $components = [
         'AppAuth',

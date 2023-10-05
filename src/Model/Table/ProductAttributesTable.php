@@ -24,9 +24,11 @@ class ProductAttributesTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
-    private $BarcodeProduct;
-    private $Product;
-    private $StockAvailable;
+    protected $BarcodeProduct;
+    protected $Product;
+    protected $ProductAttributeCombinations;
+    protected $StockAvailables;
+    protected $UnitProductAttributes;
 
     public function initialize(array $config): void
     {
@@ -153,7 +155,7 @@ class ProductAttributesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
 
-        $this->StockAvailable = FactoryLocator::get('Table')->get('StockAvailables');
-        $this->StockAvailable->updateQuantityForMainProduct($productId);
+        $this->StockAvailables = FactoryLocator::get('Table')->get('StockAvailables');
+        $this->StockAvailables->updateQuantityForMainProduct($productId);
     }
 }

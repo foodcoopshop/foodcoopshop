@@ -23,6 +23,10 @@ use Cake\Http\Exception\NotFoundException;
 class SyncDomainsController extends AppController
 {
 
+    protected $ActionLog;
+    protected $Sanitize;
+    protected $SyncDomain;
+
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin();

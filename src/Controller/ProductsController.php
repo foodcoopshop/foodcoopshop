@@ -25,6 +25,9 @@ use Cake\Core\Configure;
 class ProductsController extends FrontendController
 {
 
+    protected $Catalog;
+    protected $Product;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);

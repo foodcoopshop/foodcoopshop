@@ -32,7 +32,7 @@ class CartsTable extends AppTable
     public const CART_SELF_SERVICE_PAYMENT_TYPE_CASH   = 1;
     public const CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT = 2;
 
-    private $Product;
+    protected $Product;
 
     public function initialize(array $config): void
     {

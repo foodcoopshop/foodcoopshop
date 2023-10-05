@@ -28,7 +28,7 @@ use Cake\Utility\Hash;
 class CustomersTable extends AppTable
 {
 
-    private $Product;
+    protected $Product;
 
     public function initialize(array $config): void
     {

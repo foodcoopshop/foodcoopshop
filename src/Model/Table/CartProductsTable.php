@@ -27,7 +27,7 @@ class CartProductsTable extends AppTable
 
     use CartValidatorTrait;
 
-    private $Cart;
+    protected $Cart;
 
     public function initialize(array $config): void
     {

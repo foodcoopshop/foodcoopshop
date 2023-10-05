@@ -24,6 +24,8 @@ use Cake\Event\EventInterface;
 class BlogPostsController extends FrontendController
 {
 
+    protected $BlogPost;
+
     public function beforeFilter(EventInterface $event)
     {
 

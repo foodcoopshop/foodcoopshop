@@ -32,7 +32,7 @@ class ManufacturersTable extends AppTable
     use NoDeliveryDaysOrdersExistTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
-    private $Catalog;
+    protected $Catalog;
 
     public function initialize(array $config): void
     {

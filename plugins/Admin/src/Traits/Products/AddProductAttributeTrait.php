@@ -47,7 +47,9 @@ trait AddProductAttributeTrait {
                 $productAttributeIdForHighlighting = $attribute->product_attribute_combination->id_product_attribute;
             }
         }
-        $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
+        if (!isset($productAttributeIdForHighlighting)) {
+            $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
+        }
 
         $actionLogMessage = __d('admin', 'The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created.', [
             '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>',

@@ -26,6 +26,11 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 class CartsController extends FrontendController
 {
 
+    protected $BlogPost;
+    protected $Cart;
+    protected $OrderDetail;
+    protected $Product;
+
     /**
      * allowing ajaxActions is ok as they are separately checked in ajaxIsAuthorized
      */
