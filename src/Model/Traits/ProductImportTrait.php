@@ -7,6 +7,7 @@ use Cake\Datasource\FactoryLocator;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Validation\Validator;
 use App\Model\Entity\Product;
+use App\Model\Traits\NumberRangeValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,11 +25,44 @@ use App\Model\Entity\Product;
 trait ProductImportTrait
 {
 
+    use NumberRangeValidatorTrait;
+
     public function validationImport(Validator $validator)
     {
         $validator = $this->validationName($validator);
         $validator->inList('active', Product::ALLOWED_STATUSES, __('The_following_values_are_valid:') . ' ' . implode(', ', Product::ALLOWED_STATUSES));
+        $validator = $this->getNumberRangeValidator($validator, 'price', 0, 2000);
+        $allowedTaxIds = $this->Taxes->getValidTaxIds();
+        $validator->inList('id_tax', $allowedTaxIds, __('The_following_values_are_valid:') . ' ' . implode(', ', $allowedTaxIds));
         return $validator;
+    }
+
+    public function getNetPriceAndTaxId($grossPrice, $taxRate)
+    {
+
+        $taxId = false;
+        $calculatedTaxRate = 0;
+
+        if ($taxRate == 0) {
+            $taxId = 0;
+        } else {
+            $tax = $this->Taxes->find('all', [
+                'conditions' => [
+                    'Taxes.active' => APP_ON,
+                    'Taxes.rate' => $taxRate,
+                ],
+            ])->first();
+            if (!empty($tax)) {
+                $taxId = $tax->id_tax;
+                $calculatedTaxRate = $tax->rate;
+            }
+        }
+
+        return [
+            'netPrice' => $this->getNetPrice($grossPrice, $calculatedTaxRate),
+            'taxId' => $taxId,
+        ];
+
     }
     
     public function getValidatedEntity(
@@ -40,10 +74,12 @@ trait ProductImportTrait
         $isDeclarationOk,
         $idStorageLocation,
         $status,
-        $priceGross,
+        $grossPrice,
         $taxRate,
         $barcode,
     ) {
+
+        $netPriceAndTaxId = $this->getNetPriceAndTaxId($grossPrice, $taxRate);
 
         $productEntity = $this->newEntity(
             [
@@ -56,6 +92,8 @@ trait ProductImportTrait
                 'is_declaration_ok' => $isDeclarationOk,
                 'id_storage_location' => $idStorageLocation,
                 'active' => $status,
+                'id_tax' => $netPriceAndTaxId['taxId'],
+                'price' => $netPriceAndTaxId['netPrice'],
                 'barcode_product' => [
                     'barcode' => $barcode,
                 ],
@@ -76,38 +114,6 @@ trait ProductImportTrait
         }
 
         return $productEntity;
-
-    }
-
-    public function createFromCsv($productEntity) {
-
-        $productEntity = $this->save($productEntity);
-        return $productEntity;
-
-        $taxRate = $this->Taxes->find('all', [
-            'conditions' => [
-                'Taxes.active' => APP_ON,
-                'Taxes.rate' => $taxRate,
-            ],
-        ])->first();
-
-        $newProduct->id_tax = $taxRate->id_tax ?? 0;
-        $this->save($newProduct);
-
-        $this->changePrice([
-            [$newProduct->id_product => ['gross_price' => $priceGross]],
-        ]);
-
-        $newProduct = $this->find('all', [
-            'conditions' => [
-                'Products.id_product' => $newProduct->id_product,
-            ],
-            'contain' => [
-                'BarcodeProducts',
-            ]
-        ])->first();
-
-        return $newProduct;
 
     }
 

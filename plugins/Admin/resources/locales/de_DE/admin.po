@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-12 09:00+0200\n"
+"POT-Creation-Date: 2023-10-05 14:09+0200\n"
 "PO-Revision-Date: 2023-06-15 21:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -734,6 +734,14 @@ msgstr "Produkte"
 
 msgid "All_products"
 msgstr "Alle Produkte"
+
+#, fuzzy
+msgid "Product_import"
+msgstr "Produkt-Nr."
+
+#, fuzzy
+msgid "Product_import_successful."
+msgstr "Das Produkt wurde erfolgreich geändert."
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
@@ -1818,6 +1826,10 @@ msgstr "Dein Kontostand"
 msgid "Back_to_member_overview"
 msgstr "Zurück zur Mitglieder-Übersicht"
 
+#, fuzzy
+msgid "Upload_CSV_file_with_products"
+msgstr "CSV-Datei mit Überweisungen hochladen"
+
 msgid "chose_manufacturer..."
 msgstr "Hersteller auswählen..."
 
@@ -2210,6 +2222,10 @@ msgstr "Das Produkt kann erst bestellt werden, sobald der Einkaufspreis hinterle
 
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"
+
+#, fuzzy
+msgid "Import_products"
+msgstr "produkte"
 
 msgid "Selected_products"
 msgstr "Markierte Produkte"

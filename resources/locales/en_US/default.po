@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-18 14:52+0200\n"
-"PO-Revision-Date: 2023-09-18 14:57+0200\n"
+"POT-Creation-Date: 2023-10-05 14:09+0200\n"
+"PO-Revision-Date: 2023-10-05 14:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -2080,6 +2080,12 @@ msgstr "The product ({0}) can't be added to your cart. Please add new credit, yo
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
 msgstr "The following delivery day(s) already contain orders: {0}. To save the delivery break, either cancel them or change the pickup day."
 
+msgid "Please_enter_a_price."
+msgstr "Please enter a price."
+
+msgid "Manufacturer_not_found."
+msgstr "The manufacturer was not found."
+
 msgid "member"
 msgstr "Member"
 
@@ -3058,9 +3064,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 #~ msgstr "The amount can only be decreased. To increase, please order product again."
-
-#~ msgid "Please_enter_a_price."
-#~ msgstr "Please enter a price."
 
 #~ msgid "Delivered_weight_needs_to_be_greater_than_0."
 #~ msgstr "The delivered weight needs to be greater than 0."

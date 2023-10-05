@@ -38,9 +38,8 @@ class ProductReader extends Reader {
     }
 
     private function formatColumns($record) {
-        $record['Status'] = $record['Status'];
-        $record['PriceGross'] = Configure::read('app.numberHelper')->getStringAsFloat($record['PriceGross']);
-        $record['TaxRate'] = Configure::read('app.numberHelper')->getStringAsFloat($record['TaxRate']);
+        $record['PriceGross'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['PriceGross']);
+        $record['TaxRate'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['TaxRate']);
         return $record;
     }
 
@@ -76,7 +75,7 @@ class ProductReader extends Reader {
         if ($allProductEntitiesValid) {
             $savedProductEntities = [];
             foreach($validatedProductEntities as $validatedProductEntity) {
-                $savedProductEntities[] = $productTable->createFromCsv($validatedProductEntity);
+                $savedProductEntities[] = $productTable->save($validatedProductEntity);
             }
             return $savedProductEntities;
         }

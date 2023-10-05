@@ -41,6 +41,13 @@ class TaxesTable extends AppTable
         return $validator;
     }
 
+    public function getValidTaxIds() {
+        $taxes = $this->getForDropdown();
+        $taxes = array_keys($taxes);
+        sort($taxes);
+        return $taxes;
+    }
+
     public function getForDropdown($useRateAsKey = false)
     {
         $taxes = $this->find('all', [

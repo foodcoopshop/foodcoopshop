@@ -45,7 +45,7 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals('1 kg', $records[0]['Unity']);
         $this->assertEquals('1', $records[0]['IsDeclarationOk']);
         $this->assertEquals('1', $records[0]['StorageLocationId']);
-        $this->assertEquals(1, $records[0]['Status']);
+        $this->assertEquals('1', $records[0]['Status']);
         $this->assertEquals(23.3, $records[0]['PriceGross']);
         $this->assertEquals(10, $records[0]['TaxRate']);
         $this->assertEquals('2345678901235', $records[0]['Barcode']);
@@ -61,15 +61,19 @@ class ProductReaderTest extends AppCakeTestCase
         $errorsA = $productEntities[0]->getErrors();
         $productNameErrorMessage = 'Der Name des Produktes muss aus mindestens 2 Zeichen bestehen.';
         $productActiveErrorMessage = 'Folgende Werte sind gültig: 0, 1';
+        $productPriceWrongErrorMessage = 'Bitte gib eine Zahl zwischen 0 und 2.000 an.';
+        $productIdTaxWrongErrorMessage = 'Folgende Werte sind gültig: 0, 1, 2, 3';
         $barcodeErrorMessage = 'Die Länge des Barcodes muss genau 13 Zeichen betragen.';
 
         $this->assertEquals($productNameErrorMessage, $errorsA['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsA['active']['inList']);
+        $this->assertEquals($productIdTaxWrongErrorMessage, $errorsA['id_tax']['inList']);
         $this->assertEquals($barcodeErrorMessage, $errorsA['barcode_product']['barcode']['lengthBetween']);
 
         $errorsB = $productEntities[1]->getErrors();
         $this->assertEquals($productNameErrorMessage, $errorsB['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsB['active']['inList']);
+        $this->assertEquals($productPriceWrongErrorMessage, $errorsB['price']['greaterThanOrEqual']);
         $this->assertEquals($barcodeErrorMessage, $errorsB['barcode_product']['barcode']['lengthBetween']);
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -98,12 +102,14 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals(1, $productEntities[0]->is_declaration_ok);
         $this->assertEquals(1, $productEntities[0]->id_storage_location);
         $this->assertEquals(1, $productEntities[0]->active);
-        //$this->assertEquals(21.181818, $productEntities[0]->price);
-        //$this->assertEquals(2, $productEntities[0]->id_tax);
+        $this->assertEquals(21.181818, $productEntities[0]->price);
+        $this->assertEquals(2, $productEntities[0]->id_tax);
         $this->assertEquals('2345678901235', $productEntities[0]->barcode_product->barcode);
 
         // second product
+        $this->assertEquals(0, $productEntities[1]->id_tax);
         $this->assertEquals(0, $productEntities[1]->active);
+        $this->assertEquals(1.4, $productEntities[1]->price);
     }
 
 }

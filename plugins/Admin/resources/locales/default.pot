@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-09-12 09:00+0200\n"
+"POT-Creation-Date: 2023-10-05 14:09+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -732,6 +732,12 @@ msgid "Products"
 msgstr ""
 
 msgid "All_products"
+msgstr ""
+
+msgid "Product_import"
+msgstr ""
+
+msgid "Product_import_successful."
 msgstr ""
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
@@ -1808,6 +1814,9 @@ msgstr ""
 msgid "Back_to_member_overview"
 msgstr ""
 
+msgid "Upload_CSV_file_with_products"
+msgstr ""
+
 msgid "chose_manufacturer..."
 msgstr ""
 
@@ -2199,6 +2208,9 @@ msgid "Purchase_price_not_set_and_therefore_never_active."
 msgstr ""
 
 msgid "change_tax_rate"
+msgstr ""
+
+msgid "Import_products"
 msgstr ""
 
 msgid "Selected_products"
