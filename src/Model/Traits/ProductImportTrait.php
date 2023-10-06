@@ -32,7 +32,8 @@ trait ProductImportTrait
         $validator = $this->validationName($validator);
         $validator->inList('active', Product::ALLOWED_STATUSES, __('The_following_values_are_valid:') . ' ' . implode(', ', Product::ALLOWED_STATUSES));
         $validator = $this->getNumberRangeValidator($validator, 'price', 0, 2000);
-        $allowedTaxIds = $this->Taxes->getValidTaxIds();
+        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+        $allowedTaxIds = $taxesTable->getValidTaxIds();
         $validator->inList('id_tax', $allowedTaxIds, __('The_following_values_are_valid:') . ' ' . implode(', ', $allowedTaxIds));
         return $validator;
     }
@@ -46,7 +47,8 @@ trait ProductImportTrait
         if ($taxRate == 0) {
             $taxId = 0;
         } else {
-            $tax = $this->Taxes->find('all', [
+            $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+            $tax = $taxesTable->find('all', [
                 'conditions' => [
                     'Taxes.active' => APP_ON,
                     'Taxes.rate' => $taxRate,

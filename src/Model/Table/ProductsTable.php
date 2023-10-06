@@ -754,7 +754,7 @@ class ProductsTable extends AppTable
                 $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
             }
 
-            if (isset($name['barcode']) && isset($barcode)) {
+            if (isset($name['barcode'])) {
                 $tmpProduct2Save['barcode_product'] = [
                     'product_id' => $ids['productId'],
                     'barcode' => $name['barcode'],
