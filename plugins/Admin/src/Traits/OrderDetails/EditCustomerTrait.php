@@ -84,6 +84,7 @@ trait EditCustomerTrait {
 
         $originalProductAmount = $oldOrderDetail->product_amount;
         $newAmountForOldOrderDetail = $oldOrderDetail->product_amount - $amount;
+        $productPurchasePrice = 0;
 
         if ($newAmountForOldOrderDetail > 0) {
 

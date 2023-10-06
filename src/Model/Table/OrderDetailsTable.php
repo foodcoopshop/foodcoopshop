@@ -483,8 +483,9 @@ class OrderDetailsTable extends AppTable
             $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
         }
 
+        $orderDetailPurchasePricesTable = FactoryLocator::get('Table')->get('OrderDetailPurchasePrices');
         if (!empty($orderDetail->order_detail_purchase_price)) {
-            $this->OrderDetailPurchasePrices->delete($orderDetail->order_detail_purchase_price);
+            $orderDetailPurchasePricesTable->delete($orderDetail->order_detail_purchase_price);
         }
 
     }

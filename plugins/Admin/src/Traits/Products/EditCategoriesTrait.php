@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,8 +44,8 @@ trait EditCategoriesTrait {
             ]
         ])->first();
 
-        $this->CategoryProduct = $this->getTableLocator()->get('CategoryProducts');
-        $this->CategoryProduct->deleteAll([
+        $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProductsTable->deleteAll([
             'id_product' => $productId,
         ]);
 
@@ -70,11 +71,11 @@ trait EditCategoriesTrait {
             }
         }
         if (!empty($data)) {
-            $tmpPrimaryKey = $this->CategoryProduct->getPrimaryKey();
-            $this->CategoryProduct->setPrimaryKey(null);
-            $categoryProducts = $this->CategoryProduct->newEntities($data);
-            $this->CategoryProduct->saveMany($categoryProducts);
-            $this->CategoryProduct->setPrimaryKey($tmpPrimaryKey);
+            $tmpPrimaryKey = $categoryProductsTable->getPrimaryKey();
+            $categoryProductsTable->setPrimaryKey(null);
+            $categoryProducts = $categoryProductsTable->newEntities($data);
+            $categoryProductsTable->saveMany($categoryProducts);
+            $categoryProductsTable->setPrimaryKey($tmpPrimaryKey);
         }
 
         $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);

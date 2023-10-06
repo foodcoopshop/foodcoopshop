@@ -386,9 +386,10 @@ class ManufacturersTable extends AppTable
 
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProducts, $orderDetailIds = [])
     {
+        $customersTable = FactoryLocator::get('Table')->get('Customers');
         $orderClause = match($order) {
-            'product' => 'od.product_name ASC, od.tax_rate ASC, ' . $this->Customers->getCustomerName('c') . ' ASC',
-            'customer' => $this->Customers->getCustomerName('c') . ' ASC, od.product_name ASC',
+            'product' => 'od.product_name ASC, od.tax_rate ASC, ' . $customersTable->getCustomerName('c') . ' ASC',
+            'customer' => $customersTable->getCustomerName('c') . ' ASC, od.product_name ASC',
         };
         $params = [
             'manufacturerId' => $manufacturerId
@@ -419,7 +420,7 @@ class ManufacturersTable extends AppTable
             $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
         }
 
-        $customerNameAsSql = $this->Customers->getCustomerName('c');
+        $customerNameAsSql = $customersTable->getCustomerName('c');
 
         $sql = "SELECT
         m.id_manufacturer ManufacturerId,

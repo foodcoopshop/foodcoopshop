@@ -9,6 +9,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -243,8 +244,9 @@ class CartsController extends FrontendController
 
     private function doEmptyCart()
     {
-        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
-        $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId(), $this->AppAuth->getUserId());
+        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+        $cartProductTable = $this->getTableLocator()->get('CartProducts');
+        $cartProductTable->removeAll($this->AppAuth->Cart->getCartId(), $this->AppAuth->getUserId());
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
 
@@ -259,7 +261,7 @@ class CartsController extends FrontendController
     {
 
         $this->doEmptyCart();
-        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
+        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
 
         $formattedDeliveryDate = strtotime($deliveryDate);
 
@@ -273,7 +275,7 @@ class CartsController extends FrontendController
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
             foreach($orderDetails as $orderDetail) {
-                $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
+                $result = $cartProductTable->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;
@@ -338,8 +340,9 @@ class CartsController extends FrontendController
             (string) $this->getRequest()->getData('orderedQuantityInUnits')
         );
 
-        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
-        $result = $this->CartProduct->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
+        $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
+        $cartProductTable = $this->getTableLocator()->get('CartProducts');
+        $result = $cartProductTable->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();

@@ -24,12 +24,6 @@ class ProductAttributesTable extends AppTable
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
-    protected $BarcodeProduct;
-    protected $Product;
-    protected $ProductAttributeCombinations;
-    protected $StockAvailables;
-    protected $UnitProductAttributes;
-
     public function initialize(array $config): void
     {
         $this->setTable('product_attribute');
@@ -61,7 +55,8 @@ class ProductAttributesTable extends AppTable
     public function deleteProductAttribute($productId, $productAttributeId)
     {
 
-        $pac = $this->ProductAttributeCombinations->find('all', [
+        $productAttributeCombinationsTable = FactoryLocator::get('Table')->get('ProductAttributeCombinations');
+        $pac = $productAttributeCombinationsTable->find('all', [
             'conditions' => [
                 'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
             ]
@@ -72,31 +67,35 @@ class ProductAttributesTable extends AppTable
             'ProductAttributes.id_product_attribute' => $productAttributeId,
         ]);
 
-        $this->ProductAttributeCombinations->deleteAll([
+        $productAttributeCombinationsTable->deleteAll([
             'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
         ]);
 
-        $this->UnitProductAttributes->deleteAll([
+        $unitProductAttributesTable = FactoryLocator::get('Table')->get('UnitProductAttributes');
+        $unitProductAttributesTable->deleteAll([
             'UnitProductAttributes.id_product_attribute' => $productAttributeId,
         ]);
 
-        $this->PurchasePriceProductAttributes->deleteAll([
+        $purchasePriceProductAttributesTable = FactoryLocator::get('Table')->get('PurchasePriceProductAttributes');
+        $purchasePriceProductAttributesTable->deleteAll([
             'PurchasePriceProductAttributes.product_attribute_id' => $productAttributeId,
         ]);
 
-        $this->BarcodeProductAttributes->deleteAll([
+        $barcodeProductAttributesTable = FactoryLocator::get('Table')->get('BarcodeProductAttributes');
+        $barcodeProductAttributesTable->deleteAll([
             'BarcodeProductAttributes.product_attribute_id' => $productAttributeId,
         ]);
 
         // deleteAll can only get primary key as condition
-        $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
-        $this->StockAvailables->setPrimaryKey('id_product_attribute');
-        $this->StockAvailables->deleteAll([
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $originalPrimaryKey = $stockAvailablesTable->getPrimaryKey();
+        $stockAvailablesTable->setPrimaryKey('id_product_attribute');
+        $stockAvailablesTable->deleteAll([
             'StockAvailables.id_product_attribute' => $productAttributeId,
         ]);
-        $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
+        $stockAvailablesTable->setPrimaryKey($originalPrimaryKey);
 
-        $this->StockAvailables->updateQuantityForMainProduct($productId);
+        $stockAvailablesTable->updateQuantityForMainProduct($productId);
     }
 
 
@@ -130,18 +129,18 @@ class ProductAttributesTable extends AppTable
         $statement->execute($params);
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
-        $this->Product = FactoryLocator::get('Table')->get('Products');
-        $this->Product->save(
-            $this->Product->patchEntity(
-                $this->Product->get($productId),
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $productsTable->save(
+            $productsTable->patchEntity(
+                $productsTable->get($productId),
                 [
                     'price' => 0,
                 ]
             )
         );
 
-        $this->BarcodeProduct = FactoryLocator::get('Table')->get('BarcodeProducts');
-        $this->BarcodeProduct->deleteAll([
+        $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+        $barcodeProductsTable->deleteAll([
             'BarcodeProducts.product_id' => $productId,
         ]);
 
@@ -155,7 +154,7 @@ class ProductAttributesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
 
-        $this->StockAvailables = FactoryLocator::get('Table')->get('StockAvailables');
-        $this->StockAvailables->updateQuantityForMainProduct($productId);
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable->updateQuantityForMainProduct($productId);
     }
 }

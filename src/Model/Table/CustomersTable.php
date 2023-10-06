@@ -400,12 +400,6 @@ class CustomersTable extends AppTable
         return 'SUBSTRING(SHA1(CONCAT(' . $this->aliasField('id_customer') .', "' .  Security::getSalt() . '", "customer")), 1, 6)';
     }
 
-    /**
-     * bindings with email as foreign key was tricky...
-     *
-     * @param array $customer
-     * @return boolean
-     */
     public function getManufacturerRecord($customer)
     {
         $mm = FactoryLocator::get('Table')->get('Manufacturers');
@@ -420,10 +414,6 @@ class CustomersTable extends AppTable
         return $manufacturer;
     }
 
-    /**
-     * @param int $customerId
-     * @return string
-     */
     public function setNewPassword($customerId)
     {
         $ph = new DefaultPasswordHasher();
@@ -441,10 +431,6 @@ class CustomersTable extends AppTable
         return $newPassword;
     }
 
-    /**
-     * @param int $customerId
-     * @return array
-     */
     public function getManufacturerByCustomerId($customerId)
     {
         $customer = $this->find('all', [
@@ -626,8 +612,9 @@ class CustomersTable extends AppTable
         ]);
         $customers = $this->addCustomersNameForOrderSelect($customers);
         $customers->select($this);
+        $addressCustomersTable = FactoryLocator::get('Table')->get('AddressCustomers');
         if (! $includeManufacturers) {
-            $customers->select($this->AddressCustomers);
+            $customers->select($addressCustomersTable);
         }
 
         $customers = $customers->toArray();

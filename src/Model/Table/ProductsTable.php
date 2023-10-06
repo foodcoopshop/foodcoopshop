@@ -40,7 +40,6 @@ class ProductsTable extends AppTable
     public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
 
     protected $Catalog;
-    protected $CategoryProducts;
     protected $Configuration;
     protected $Manufacturer;
     protected $Unit;
@@ -379,18 +378,19 @@ class ProductsTable extends AppTable
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
+            $depositProductsTable = FactoryLocator::get('Table')->get('DepositProducts');
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $this->DepositProducts->find('all', [
+                $oldDeposit = $depositProductsTable->find('all', [
                     'conditions' => [
                         'id_product_attribute' => $ids['attributeId']
                     ]
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $entity = $this->DepositProducts->newEntity([]);
+                    $entity = $depositProductsTable->newEntity([]);
                 } else {
-                    $this->DepositProducts->setPrimaryKey('id_product_attribute');
-                    $entity = $this->DepositProducts->get($oldDeposit->id_product_attribute);
+                    $depositProductsTable->setPrimaryKey('id_product_attribute');
+                    $entity = $depositProductsTable->get($oldDeposit->id_product_attribute);
                 }
 
                 $deposit2save = [
@@ -399,16 +399,16 @@ class ProductsTable extends AppTable
                 ];
             } else {
                 // deposit is set for productId
-                $oldDeposit = $this->DepositProducts->find('all', [
+                $oldDeposit = $depositProductsTable->find('all', [
                     'conditions' => [
                         'id_product' => $productId
                     ]
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $entity = $this->DepositProducts->newEntity([]);
+                    $entity = $depositProductsTable->newEntity([]);
                 } else {
-                    $entity = $this->DepositProducts->get($oldDeposit->id_product);
+                    $entity = $depositProductsTable->get($oldDeposit->id_product);
                 }
 
                 $deposit2save = [
@@ -417,11 +417,11 @@ class ProductsTable extends AppTable
                 ];
             }
 
-            $this->DepositProducts->setPrimaryKey('id');
-            $result = $this->DepositProducts->save(
-                $this->DepositProducts->patchEntity($entity, $deposit2save)
+            $depositProductsTable->setPrimaryKey('id');
+            $result = $depositProductsTable->save(
+                $depositProductsTable->patchEntity($entity, $deposit2save)
             );
-            $this->DepositProducts->setPrimaryKey('id_product');
+            $depositProductsTable->setPrimaryKey('id_product');
             $success |= is_object($result);
         }
 
@@ -887,10 +887,11 @@ class ProductsTable extends AppTable
             });
         }
 
+        $depositProductsTable = FactoryLocator::get('Table')->get('DepositProducts');
         $query
         ->select('Products.id_product')->distinct()
         ->select($this) // Products
-        ->select($this->DepositProducts)
+        ->select($depositProductsTable)
         ->select('Images.id_image')
         ->select($this->Taxes)
         ->select($this->Manufacturers)
@@ -1510,11 +1511,12 @@ class ProductsTable extends AppTable
         }
 
         // INSERT CATEGORY_PRODUCTS
-        $this->CategoryProducts->save(
-            $this->CategoryProducts->newEntity(
+        $categoryProuductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProuductsTable->save(
+            $categoryProuductsTable->newEntity(
                 [
                     'id_category' => Configure::read('app.categoryAllProducts'),
-                    'id_product' => $newProductId
+                    'id_product' => $newProductId,
                 ]
             )
         );

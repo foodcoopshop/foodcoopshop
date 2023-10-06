@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,10 +34,10 @@ class FeedbacksController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getFeedbackList());
         }
 
-        $this->Feedback = $this->getTableLocator()->get('Feedbacks');
-        $this->Customer = $this->getTableLocator()->get('Customers');
+        $feedbacksTable = FactoryLocator::get('Table')->get('Feedbacks');
+        $customersTable = FactoryLocator::get('Table')->get('Customers');
 
-        $feedbacks = $this->Feedback->find('all', [
+        $feedbacks = $feedbacksTable->find('all', [
             'conditions' => [
                 'DATE_FORMAT(Feedbacks.approved, \'%Y-%m-%d\') <> \'1970-01-01\'',
                 'Customers.active' => APP_ON,
@@ -54,15 +55,15 @@ class FeedbacksController extends FrontendController
             'manufacturers' => [],
         ];
         foreach($feedbacks as &$feedback) {
-            $manufacturer = $this->Customer->getManufacturerByCustomerId($feedback->customer_id);
+            $manufacturer = $customersTable->getManufacturerByCustomerId($feedback->customer_id);
             if (!empty($manufacturer)) {
                 $feedback->manufacturer = $manufacturer;
-                $feedback->privatized_name = $this->Feedback->getManufacturerPrivacyType($feedback);
+                $feedback->privatized_name = $feedbacksTable->getManufacturerPrivacyType($feedback);
                 if ($manufacturer->active == APP_ON) {
                     $preparedFeedbacks['manufacturers'][] = $feedback;
                 }
             } else {
-                $feedback->privatized_name = $this->Feedback->getCustomerPrivacyType($feedback);
+                $feedback->privatized_name = $feedbacksTable->getCustomerPrivacyType($feedback);
                 $preparedFeedbacks['customers'][] = $feedback;
             }
         }

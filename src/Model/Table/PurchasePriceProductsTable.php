@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Traits\ProductAndAttributeEntityTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
+use AssetCompress\Factory;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
@@ -221,7 +222,8 @@ class PurchasePriceProductsTable extends AppTable
             $oldPurchasePriceTaxRate = $oldProduct->purchase_price_product->tax->rate;
         }
 
-        $tax = $this->Taxes->find('all', [
+        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+        $tax = $taxesTable->find('all', [
             'conditions' => [
                 'Taxes.id_tax' => $taxId,
             ]

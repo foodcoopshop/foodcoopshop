@@ -22,5 +22,11 @@ parameters:
           path: %currentWorkingDirectory%/plugins/Admin/templates
         - message: '#Variable \$.* might not be defined#'
           path: %currentWorkingDirectory%/plugins/Network/templates
+        - message: '#Access to an undefined property#'
+          path: %currentWorkingDirectory%/src/View/Helper
+        - message: '#Access to an undefined property#'
+          path: %currentWorkingDirectory%/plugins/Network/src/View/Helper
+        - message: '#Access to an undefined property#'
+          path: %currentWorkingDirectory%/src/Controller/Component
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

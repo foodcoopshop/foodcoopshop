@@ -34,6 +34,7 @@ class CustomersController extends FrontendController
 {
 
     protected $Customer;
+    protected $BlogPost;
     protected $Sanitize;
     protected $ActionLog;
 
