@@ -1500,9 +1500,7 @@ class ProductsTable extends AppTable
         }
 
         $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
-
         if ($barcode != '') {
-            $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
             $barcodeEntity2Save = $barcodeProductsTable->newEntity([
                 'barcode' => $barcode,
             ], ['validate' => true]);
