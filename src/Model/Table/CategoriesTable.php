@@ -84,7 +84,9 @@ class CategoriesTable extends AppTable
             }
             $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString . $childrenIdsString;
             if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item->children, $renderParentIdAndChildrenIdContainers, str_repeat('-', $this->getLevel($item) + 1) . ' ');
+                $this->flattenNestedArrayWithChildren($item->children, $renderParentIdAndChildrenIdContainers, str_repeat('-',
+                /** @phpstan-ignore-next-line */
+                $this->getLevel($item) + 1) . ' ');
             }
         }
 

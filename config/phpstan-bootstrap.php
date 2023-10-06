@@ -1,10 +1,6 @@
 <?php
 declare(strict_types=1);
 
-namespace Admin\Controller;
-
-use App\Controller\AppController;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -12,26 +8,12 @@ use App\Controller\AppController;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.7.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-class AdminAppController extends AppController
-{
-
-    protected $ActionLog;
-
-    public function isAuthorized($user)
-    {
-        return $this->AppAuth->user();
-    }
-
-    public function setReferer()
-    {
-        $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
-    }
-
-}
+require __DIR__ . '/paths.php';
+require __DIR__ . '/app_config.php';

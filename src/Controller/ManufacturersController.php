@@ -26,6 +26,10 @@ use Cake\Http\Exception\NotFoundException;
 class ManufacturersController extends FrontendController
 {
 
+    protected $Manufacturer;
+    protected $Catalog;
+    protected $BlogPost;
+
     public function beforeFilter(EventInterface $event)
     {
 
@@ -56,7 +60,7 @@ class ManufacturersController extends FrontendController
     {
 
         $conditions = [
-            'Manufacturers.active' => APP_ON
+            'Manufacturers.active' => APP_ON,
         ];
         if (! $this->AppAuth->user()) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
@@ -73,7 +77,7 @@ class ManufacturersController extends FrontendController
             ]
         ])->select($this->Manufacturer);
 
-        if (empty($manufacturers)) {
+        if (empty($manufacturers->toArray())) {
             throw new RecordNotFoundException('no manufacturers available');
         }
 
@@ -105,7 +109,7 @@ class ManufacturersController extends FrontendController
             ]
         ])
         ->select($this->Manufacturer)
-        ->select($this->Manufacturers->AddressManufacturers)
+        ->select($this->Manufacturer->AddressManufacturers)
         ->first();
 
         if (empty($manufacturer)) {

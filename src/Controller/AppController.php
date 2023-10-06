@@ -27,6 +27,9 @@ class AppController extends Controller
 {
 
     public $protectEmailAddresses = false;
+    protected $AppAuth;
+    protected $Customer;
+    protected $Manufacturer;
 
     public function initialize(): void
     {
@@ -119,6 +122,7 @@ class AppController extends Controller
 
         $isMobile = false;
         if (PHP_SAPI !== 'cli') {
+            /** @phpstan-ignore-next-line */
             $isMobile = Browser::isMobile() && !Browser::isTablet();
         }
         $this->set('isMobile', $isMobile);

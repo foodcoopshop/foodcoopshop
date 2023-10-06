@@ -33,6 +33,11 @@ use Cake\Http\Exception\NotFoundException;
 class CustomersController extends FrontendController
 {
 
+    protected $Customer;
+    protected $BlogPost;
+    protected $Sanitize;
+    protected $ActionLog;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -100,7 +105,7 @@ class CustomersController extends FrontendController
 
         $errors = $patchedEntity->getErrors();
         if (isset($errors['terms_of_use_accepted_date'])) {
-            $this->AppFlash->setFlashError($errors['terms_of_use_accepted_date']['equals']);
+            $this->Flash->error($errors['terms_of_use_accepted_date']['equals']);
         }
 
         if (empty($errors)) {
@@ -149,7 +154,7 @@ class CustomersController extends FrontendController
             ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
-                $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf(), 'mimetype' => 'application/pdf']]);
             }
             $email->addToQueue();
 

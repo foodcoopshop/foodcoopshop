@@ -22,6 +22,9 @@ use Cake\Http\Exception\NotFoundException;
 class TaxesController extends AdminAppController
 {
 
+    protected $Tax;
+    protected $Sanitize;
+    
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin();

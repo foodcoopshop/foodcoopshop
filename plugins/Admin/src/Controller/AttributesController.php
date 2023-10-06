@@ -22,6 +22,10 @@ use Cake\Http\Exception\NotFoundException;
 class AttributesController extends AdminAppController
 {
 
+    protected $Attribute;
+    protected $ProductAttributeCombination;
+    protected $Sanitize;
+
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();

@@ -21,6 +21,13 @@ use Cake\Core\Configure;
 
 trait IndexTrait {
 
+    protected $Attribute;
+    protected $Category;
+    protected $Tax;
+    protected $StorageLocation;
+    protected $SyncManufacturer;
+    protected $SyncDomain;
+
     public function index()
     {
         $productId = h($this->getRequest()->getQuery('productId', ''));
@@ -53,7 +60,7 @@ trait IndexTrait {
         $this->set('isPriceZero', $isPriceZero);
 
         if ($manufacturerId != '') {
-            $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, $productId, $manufacturerId, $active, $categoryId, $isQuantityMinFilterSet, $isPriceZero, false, $this);
+            $preparedProducts = $this->Product->getProductsForBackend($productId, $manufacturerId, $active, $categoryId, $isQuantityMinFilterSet, $isPriceZero, false, $this);
         } else {
             $preparedProducts = [];
         }

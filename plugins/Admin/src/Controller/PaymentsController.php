@@ -27,6 +27,14 @@ use App\Lib\Error\Exception\InvalidParameterException;
  */
 class PaymentsController extends AdminAppController
 {
+    
+    protected $allowedPaymentTypes = [];
+    protected $Payment;
+    protected $paymentType;
+    protected $Customer;
+    protected $Manufacturer;
+    protected $OrderDetail;
+    protected $Sanitize;
 
     public $customerId;
 
@@ -293,7 +301,7 @@ class PaymentsController extends AdminAppController
         if (in_array($type, [
             'product',
             'payback',
-        ])) {
+        ]) && isset($customerId)) {
             $customer = $this->Customer->find('all', [
                 'conditions' => [
                     'Customers.id_customer' => $customerId
@@ -340,8 +348,8 @@ class PaymentsController extends AdminAppController
             [
                 'status' => APP_ON,
                 'type' => $type,
-                'id_customer' => $customerId,
-                'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
+                'id_customer' => $customerId ?? 0,
+                'id_manufacturer' => $manufacturerId ?? 0,
                 'date_add' => $dateAddForEntity,
                 'date_changed' => FrozenTime::now(),
                 'amount' => $amount,
@@ -369,7 +377,7 @@ class PaymentsController extends AdminAppController
 
         $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $newPayment->id, 'payments', $message);
 
-        if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer'])) {
+        if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer']) && isset($customer) && isset($manufacturer)) {
             $message .= '. ';
             $message .= match($actionLogType) {
                 'deposit_customer' => __d('admin', 'The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']),

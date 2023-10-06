@@ -27,6 +27,11 @@ use Cake\Utility\Inflector;
 class ConfigurationsController extends AdminAppController
 {
 
+    protected $Configuration;
+    protected $Sanitize;
+    protected $SyncDomain;
+    protected $Tax;
+    
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin();

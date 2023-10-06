@@ -52,6 +52,8 @@ class OrderDetailsController extends AdminAppController
     use OrderForDifferentCustomerTrait;
     use ProfitTrait;
 
+    protected $OrderDetail;
+
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {

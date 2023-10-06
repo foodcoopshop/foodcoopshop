@@ -24,6 +24,10 @@ class FrontendController extends AppController
 {
 
     public $protectEmailAddresses = true;
+    protected $Category;
+    protected $Catalog;
+    protected $OrderDetail;
+    protected $Page;
 
     public function isAuthorized($user)
     {

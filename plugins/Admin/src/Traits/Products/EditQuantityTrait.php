@@ -109,7 +109,9 @@ trait EditQuantityTrait {
                         $newValue = $newValue == '' ? __d('admin', 'empty') : $newValue;
                         break;
                 }
-                $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $newValue . '</b>';
+                if (isset($translatedFieldName)) {
+                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $newValue . '</b>';
+                }
             }
 
             $this->ActionLog->customSave(

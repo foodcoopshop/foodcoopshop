@@ -23,6 +23,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
 
 trait EditPickupDayTrait {
 
+    protected $PickupDay;
+    
     public function editPickupDay()
     {
         $this->RequestHandler->renderAs($this, 'json');

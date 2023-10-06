@@ -35,6 +35,7 @@ trait EditProductsPickedUpTrait {
         $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
 
         $errorMessages = [];
+        $result = false;
         foreach($customerIds as $customerId) {
 
             if ($state) {

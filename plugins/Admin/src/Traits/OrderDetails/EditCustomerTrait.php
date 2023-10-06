@@ -24,6 +24,8 @@ trait EditCustomerTrait {
 
     use UpdateOrderDetailsTrait;
 
+    protected $Customer;
+
     public function editCustomer()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -82,6 +84,7 @@ trait EditCustomerTrait {
 
         $originalProductAmount = $oldOrderDetail->product_amount;
         $newAmountForOldOrderDetail = $oldOrderDetail->product_amount - $amount;
+        $productPurchasePrice = 0;
 
         if ($newAmountForOldOrderDetail > 0) {
 

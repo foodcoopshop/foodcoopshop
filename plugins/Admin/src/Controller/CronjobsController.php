@@ -23,6 +23,9 @@ use Cake\ORM\Query;
 class CronjobsController extends AdminAppController
 {
 
+    protected $Cronjob;
+    protected $Sanitize;
+
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin();
@@ -30,8 +33,8 @@ class CronjobsController extends AdminAppController
 
     public function index()
     {
-        $this->Cronjobs = $this->getTableLocator()->get('Cronjobs');
-        $cronjobs = $this->Cronjobs->find('available');
+        $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
+        $cronjobs = $this->Cronjob->find('available');
 
         $cronjobs->contain([
             'CronjobLogs' => function (Query $q) {

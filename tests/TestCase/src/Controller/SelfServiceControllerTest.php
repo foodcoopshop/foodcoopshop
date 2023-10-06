@@ -340,7 +340,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart('350-13', 2, 1);
 
         $this->Cart = $this->getTableLocator()->get('Carts');
-        $this->finishSelfServiceCart(1, 1, $this->Cart::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT);
+        $this->finishSelfServiceCart(1, 1);
 
         $carts = $this->Cart->find('all', [
             'conditions' => [

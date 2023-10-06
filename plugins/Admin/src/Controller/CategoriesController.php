@@ -24,6 +24,9 @@ use Admin\Traits\UploadTrait;
 class CategoriesController extends AdminAppController
 {
 
+    protected $Category;
+    protected $Sanitize;
+    
     use UploadTrait;
     
     public function isAuthorized($user)

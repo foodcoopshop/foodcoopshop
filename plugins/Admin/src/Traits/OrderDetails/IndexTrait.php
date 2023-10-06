@@ -25,6 +25,8 @@ use App\Controller\Component\StringComponent;
 
 trait IndexTrait {
 
+    protected $Invoice;
+
     public function index()
     {
 
@@ -189,7 +191,7 @@ trait IndexTrait {
         ])->toArray();
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
+        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy);
         $this->set('orderDetails', $orderDetails);
 
         $sums = [
@@ -252,6 +254,8 @@ trait IndexTrait {
     private function prepareGroupedOrderDetails($orderDetails, $groupBy)
     {
 
+        $preparedOrderDetails = [];
+        
         switch ($groupBy) {
             case 'customer':
                 $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);

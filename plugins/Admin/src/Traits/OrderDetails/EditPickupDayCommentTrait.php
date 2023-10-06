@@ -21,6 +21,8 @@ use Cake\Core\Configure;
 
 trait EditPickupDayCommentTrait {
 
+    protected $PickupDay;
+
     public function editPickupDayComment()
     {
         $this->RequestHandler->renderAs($this, 'json');

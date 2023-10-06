@@ -32,6 +32,11 @@ use Admin\Traits\UploadTrait;
 class CustomersController extends AdminAppController
 {
 
+    protected $Customer;
+    protected $OrderDetail;
+    protected $Payment;
+    protected $Sanitize;
+
     use UploadTrait;
     
     public function isAuthorized($user)
@@ -427,7 +432,7 @@ class CustomersController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('Customers.delete_image'))) {
-                $this->deleteUploadedImage($customer->id_customer, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
+                $this->deleteUploadedImage($customer->id_customer, Configure::read('app.htmlHelper')->getCustomerThumbsPath());
             }
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -501,7 +506,7 @@ class CustomersController extends AdminAppController
             ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
-                $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf(), 'mimetype' => 'application/pdf']]);
             }
             $email->addToQueue();
 

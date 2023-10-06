@@ -28,6 +28,12 @@ use Cake\I18n\FrozenTime;
 class InvoicesController extends AdminAppController
 {
 
+    protected $Customer;
+    protected $Invoice;
+    protected $OrderDetail;
+    protected $PickupDay;
+    protected $Payment;
+
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {

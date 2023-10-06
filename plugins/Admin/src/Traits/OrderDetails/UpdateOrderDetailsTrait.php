@@ -19,6 +19,8 @@ namespace Admin\Traits\OrderDetails;
 
 trait UpdateOrderDetailsTrait {
 
+    protected $StockAvailable;
+
     private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity)
     {
         $orderDetailUnit2save = [

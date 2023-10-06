@@ -21,6 +21,8 @@ use Cake\I18n\FrozenTime;
 
 trait DeleteTrait {
 
+    protected $OrderDetail;
+
     public function delete()
     {
         $this->RequestHandler->renderAs($this, 'json');

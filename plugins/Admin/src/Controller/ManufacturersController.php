@@ -32,6 +32,17 @@ use Admin\Traits\UploadTrait;
 class ManufacturersController extends AdminAppController
 {
 
+    protected $Catalog;
+    protected $Customer;
+    protected $Feedback;
+    protected $Manufacturer;
+    protected $Payment;
+    protected $Product;
+    protected $OrderDetail;
+    protected $Tax;
+    protected $Sanitize;
+    protected $SyncDomain;
+
     use UploadTrait;
 
     public function isAuthorized($user)

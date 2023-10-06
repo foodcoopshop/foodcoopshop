@@ -197,6 +197,8 @@ class DeliveryRhythm
             $currentWeekday = 0;
         }
 
+        $dateDiff = 0;
+
         if ($currentWeekday == self::getDeliveryWeekday()) {
             $dateDiff = -1 - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
         }
@@ -224,7 +226,6 @@ class DeliveryRhythm
         }
 
         $date = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
-
 
         return $date;
     }

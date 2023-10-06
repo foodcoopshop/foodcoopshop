@@ -139,8 +139,11 @@ class InvoicesTable extends AppTable
                     $taxRatesSums[$trt]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
                 }
 
+                /** @phpstan-ignore-next-line */
                 $taxRates[$trt][$taxRate]['sum_price_excl'] = round($taxRates[$trt][$taxRate]['sum_price_excl'], 2);
+                /** @phpstan-ignore-next-line */
                 $taxRates[$trt][$taxRate]['sum_tax'] = round($taxRates[$trt][$taxRate]['sum_tax'], 2);
+                /** @phpstan-ignore-next-line */
                 $taxRates[$trt][$taxRate]['sum_price_incl'] = round($taxRates[$trt][$taxRate]['sum_price_incl'], 2);
                 $taxRatesSums[$trt]['sum_price_excl'] = round($taxRatesSums[$trt]['sum_price_excl'], 2);
                 $taxRatesSums[$trt]['sum_tax'] = round($taxRatesSums[$trt]['sum_tax'], 2);
@@ -217,6 +220,10 @@ class InvoicesTable extends AppTable
     {
 
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
+        $manufacturerName = [];
+        $productName = [];
+        $deliveryDay = [];
+        
         foreach($orderDetails as $orderDetail) {
             $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
             $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
