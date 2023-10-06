@@ -60,7 +60,8 @@ class CartProductsTable extends AppTable
     public function add($appAuth, $productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
     {
 
-        $initialProductId = $this->Products->getCompositeProductIdAndAttributeId($productId, $attributeId);
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $initialProductId = $productsTable->getCompositeProductIdAndAttributeId($productId, $attributeId);
 
         // allow -1 and 1 to MAX_PRODUCT_AMOUNT_FOR_CART
         if ($amount == 0 || $amount < - 1 || $amount > MAX_CART_PRODUCT_AMOUNT) {
@@ -73,7 +74,7 @@ class CartProductsTable extends AppTable
         }
 
         // get product data from database
-        $product = $this->Products->find('all', [
+        $product = $productsTable->find('all', [
             'conditions' => [
                 'Products.id_product' => (int) $productId
             ],
@@ -233,7 +234,7 @@ class CartProductsTable extends AppTable
 
         $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
             $appAuth,
-            $this->Products,
+            $productsTable,
             $product->manufacturer->active,
             $product->manufacturer->no_delivery_days,
             $product->next_delivery_day,
@@ -265,7 +266,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $message = $this->isGlobalDeliveryBreakEnabled($appAuth, $this->Products, $product->next_delivery_day, $product->name);
+        $message = $this->isGlobalDeliveryBreakEnabled($appAuth, $productsTable, $product->next_delivery_day, $product->name);
         if ($message != true) {
             return [
                 'status' => 0,
@@ -415,7 +416,8 @@ class CartProductsTable extends AppTable
         }
 
         $result = $this->deleteAll($cartProduct2remove);
-        $result |= $this->CartProductUnits->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
+        $cartProductUnitsTable = FactoryLocator::get('Table')->get('CartProductUnits');
+        $result |= $cartProductUnitsTable->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
 
         return $result;
     }

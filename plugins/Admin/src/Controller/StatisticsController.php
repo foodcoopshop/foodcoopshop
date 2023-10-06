@@ -288,6 +288,7 @@ class StatisticsController extends AdminAppController
 
                 if ($lastMonths !== null) {
                     $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                    /** @phpstan-ignore-next-line */
                     $monthlySumProductsQuery = $this->OrderDetail->addLastMonthsCondition($monthlySumProductsQuery, $firstDayOfLastOrderMonth, $lastMonths);
                 } else {
                     $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);

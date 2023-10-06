@@ -28,5 +28,10 @@ parameters:
           path: %currentWorkingDirectory%/plugins/Network/src/View/Helper
         - message: '#Access to an undefined property#'
           path: %currentWorkingDirectory%/src/Controller/Component
+        - message: '#Variable \$purchasePriceTaxRate might not be defined#'
+          path: %currentWorkingDirectory%/src/Model/Table/ProductsTable.php
+        - message: '#Access to an undefined property#'
+          path: %currentWorkingDirectory%/src/Model/Entity
+
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

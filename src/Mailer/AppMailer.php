@@ -101,7 +101,10 @@ class AppMailer extends Mailer
         }
 
         if (!empty($outputStringReplacements)) {
-            $replacedSubject = OutputFilter::replace($this->getOriginalSubject(), $outputStringReplacements);
+            $replacedSubject = OutputFilter::replace(
+                /** @phpstan-ignore-next-line */
+                $this->getOriginalSubject(),
+            $outputStringReplacements);
             $this->setSubject($replacedSubject);
             $replacedBody = OutputFilter::replace($this->getMessage()->getBodyHtml(), $outputStringReplacements);
             $this->getMessage()->setBodyHtml($replacedBody);

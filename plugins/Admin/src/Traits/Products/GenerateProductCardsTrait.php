@@ -26,11 +26,11 @@ trait GenerateProductCardsTrait {
     public function generateProductCards()
     {
         $productIds = h($this->getRequest()->getQuery('productIds'));
-        $productIds = explode(',', $productIds);
-
-        if (empty($productIds)) {
-            throw new InvalidParameterException('no product id passed');
+        if ($productIds == '') {
+            throw new InvalidParameterException('no product ids passed');
         }
+
+        $productIds = explode(',', $productIds);
 
         $this->Product = $this->getTableLocator()->get('Products');
         $products = $this->Product->getProductsForBackend($productIds, 'all', 'all', '', false, false, true);

@@ -279,9 +279,11 @@ class CartComponent extends Component
                 break;
         }
 
-        $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
-        $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
-        $this->getController()->Flash->success($message);
+        if (isset($actionLogType) && isset($messageForActionLog) && isset($message)) {
+            $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
+            $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
+            $this->getController()->Flash->success($message);
+        }
 
         return $cart;
     }
@@ -602,7 +604,7 @@ class CartComponent extends Component
             return $cart;
         }
 
-        $cart = $this->saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay, $products);
+        $cart = $this->saveCart($cart, $orderDetails2save, $stockAvailable2saveData, $stockAvailable2saveConditions, $customerSelectedPickupDay ?? null, $products);
         return $cart;
 
     }

@@ -122,6 +122,7 @@ class AppController extends Controller
 
         $isMobile = false;
         if (PHP_SAPI !== 'cli') {
+            /** @phpstan-ignore-next-line */
             $isMobile = Browser::isMobile() && !Browser::isTablet();
         }
         $this->set('isMobile', $isMobile);

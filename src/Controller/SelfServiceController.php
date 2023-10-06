@@ -100,8 +100,8 @@ class SelfServiceController extends FrontendController
             }
 
             if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
-                $this->CartProduct = $this->getTableLocator()->get('CartProducts');
-                $result = $this->CartProduct->add($this->AppAuth, $products[0]->id_product, $attributeId, 1);
+                $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+                $result = $cartProductsTable->add($this->AppAuth, $products[0]->id_product, $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
