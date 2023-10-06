@@ -1029,13 +1029,13 @@ class DeliveryRhythmTest extends AppCakeTestCase
 
     private function assertGetOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected)
     {
-        $result = DeliveryRhythm::getOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected);
+        $result = DeliveryRhythm::getOrderPeriodFirstDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected)
     {
-        $result = DeliveryRhythm::getOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected);
+        $result = DeliveryRhythm::getOrderPeriodLastDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 

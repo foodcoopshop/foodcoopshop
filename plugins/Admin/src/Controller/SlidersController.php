@@ -24,6 +24,9 @@ class SlidersController extends AdminAppController
 {
 
     use UploadTrait;
+
+    protected $Slider;
+    protected $Sanitize;
     
     public function add()
     {

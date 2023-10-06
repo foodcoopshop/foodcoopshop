@@ -29,13 +29,11 @@ echo '<pre>';
 echo '</pre>';
 echo '<br /><br />';
 
-if (isset($_REQUEST)) {
-    echo '<b>Request</b><br />';
-    echo '<pre>';
-        print_r($_REQUEST);
-    echo '</pre>';
-    echo '<br /><br />';
-}
+echo '<b>Request</b><br />';
+echo '<pre>';
+    print_r($_REQUEST);
+echo '</pre>';
+echo '<br /><br />';
 
 echo '<b>User</b><br />';
 echo '<pre>';

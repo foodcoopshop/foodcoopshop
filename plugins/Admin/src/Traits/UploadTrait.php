@@ -57,9 +57,13 @@ trait UploadTrait {
             $image->save($thumbsFileName, 100);
         }
 
-        return $imageId . $options['suffix'] . '.' . $extension;
+        if (isset($options)) {
+            return $imageId . $options['suffix'] . '.' . $extension;
+        }
+
+        return false;
 
     }
-    
+
 }
 

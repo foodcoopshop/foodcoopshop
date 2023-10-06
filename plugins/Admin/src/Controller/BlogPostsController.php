@@ -28,6 +28,11 @@ class BlogPostsController extends AdminAppController
 
     use UploadTrait;
 
+    protected $BlogPost;
+    protected $Customer;
+    protected $Manufacturer;
+    protected $Sanitize;
+
     public function isAuthorized($user)
     {
         if (!Configure::read('app.isBlogFeatureEnabled')) {
@@ -92,6 +97,10 @@ class BlogPostsController extends AdminAppController
             ]
         ])->first();
 
+        if (empty($blogPost)) {
+            throw new NotFoundException;
+        }
+
         // defaults for edit
         $showOnStartPageUntil = $blogPost->show_on_start_page_until;
         if ($blogPost->show_on_start_page_until && $blogPost->show_on_start_page_until->isPast()) {
@@ -102,9 +111,6 @@ class BlogPostsController extends AdminAppController
             'show_on_start_page_until' => $showOnStartPageUntil,
         ]);
 
-        if (empty($blogPost)) {
-            throw new NotFoundException;
-        }
         $this->set('title_for_layout', __d('admin', 'Edit_blog_post'));
         $this->_processForm($blogPost, true);
     }

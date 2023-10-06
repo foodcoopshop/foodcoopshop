@@ -26,6 +26,8 @@ use Cake\ORM\Exception\PersistenceFailedException;
 class ReportsController extends AdminAppController
 {
 
+    protected $Payment;
+
     public function isAuthorized($user)
     {
         if (isset($this->getRequest()->getParam('pass')[0])) {

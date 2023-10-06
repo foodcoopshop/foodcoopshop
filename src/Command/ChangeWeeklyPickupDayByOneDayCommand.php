@@ -54,8 +54,10 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
             $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
         }
 
-        $params = ['newWeeklyPickupDay' => $newWeeklyPickupDay];
-        $statement->execute($params);
+        if (isset($newWeeklyPickupDay)) {
+            $params = ['newWeeklyPickupDay' => $newWeeklyPickupDay];
+            $statement->execute($params);
+        }
 
         $this->Configuration->loadConfigurations();
 
@@ -70,15 +72,19 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
             $statement = $this->Product->getConnection()->prepare(
                 "UPDATE fcs_product SET delivery_rhythm_send_order_list_weekday = :newDeliveryRhythmSendOrderListWeekday WHERE id_product = :productId;"
             );
-            $params = [
-                'newDeliveryRhythmSendOrderListWeekday' => $newDeliveryRhythmSendOrderListWeekday,
-                'productId' => $product->id_product
-            ];
-            $statement->execute($params);
+            if (isset($newDeliveryRhythmSendOrderListWeekday)) {
+                $params = [
+                    'newDeliveryRhythmSendOrderListWeekday' => $newDeliveryRhythmSendOrderListWeekday,
+                    'productId' => $product->id_product
+                ];
+                $statement->execute($params);
+            }
         }
 
-        $io->out('Changed FCS_WEEKLY_PICKUP_DAY to ' . Configure::read('app.timeHelper')->getWeekdayName($newWeeklyPickupDay) . '.');
-
+        if (isset($newWeeklyPickupDay)) {
+            $io->out('Changed FCS_WEEKLY_PICKUP_DAY to ' . Configure::read('app.timeHelper')->getWeekdayName($newWeeklyPickupDay) . '.');
+        }
+        
         return static::CODE_SUCCESS;
 
     }

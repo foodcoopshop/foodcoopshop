@@ -22,6 +22,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
 
 trait EditPriceTrait {
 
+    protected $Sanitize;
+
     public function editPrice()
     {
         $this->RequestHandler->renderAs($this, 'json');

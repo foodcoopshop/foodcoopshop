@@ -38,10 +38,10 @@ class ProductsTable extends AppTable
     use ProductCacheClearAfterSaveAndDeleteTrait;
     use ProductImportTrait;
 
-    private $Catalog;
-    private $Configuration;
-    private $Manufacturer;
-    private $Unit;
+    protected $Catalog;
+    protected $Configuration;
+    protected $Manufacturer;
+    protected $Unit;
 
     public function initialize(array $config): void
     {
@@ -190,15 +190,22 @@ class ProductsTable extends AppTable
                     }
 
                     $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($context['data']['delivery_rhythm_first_delivery_day'])));
-                    $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+
+                    if (isset($ordinal)) {
+                        $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+                    }
 
                     $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(DeliveryRhythm::getDeliveryWeekday());
-                    $message = __('The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month.', [
-                        $ordinalForWeekday,
-                        $deliveryWeekdayName,
-                    ]);
+                    if (isset($ordinalForWeekday)) {
+                        $message = __('The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month.', [
+                            $ordinalForWeekday,
+                            $deliveryWeekdayName,
+                        ]);
+                    }
 
-                    if ($calculatedPickupDay != $value) {
+                    if (isset($calculatedPickupDay)
+                        && isset($message)
+                        && $calculatedPickupDay != $value) {
                         return $message;
                     }
 
@@ -376,18 +383,19 @@ class ProductsTable extends AppTable
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
+            $depositProductsTable = FactoryLocator::get('Table')->get('DepositProducts');
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $this->DepositProducts->find('all', [
+                $oldDeposit = $depositProductsTable->find('all', [
                     'conditions' => [
                         'id_product_attribute' => $ids['attributeId']
                     ]
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $entity = $this->DepositProducts->newEntity([]);
+                    $entity = $depositProductsTable->newEntity([]);
                 } else {
-                    $this->DepositProducts->setPrimaryKey('id_product_attribute');
-                    $entity = $this->DepositProducts->get($oldDeposit->id_product_attribute);
+                    $depositProductsTable->setPrimaryKey('id_product_attribute');
+                    $entity = $depositProductsTable->get($oldDeposit->id_product_attribute);
                 }
 
                 $deposit2save = [
@@ -396,16 +404,16 @@ class ProductsTable extends AppTable
                 ];
             } else {
                 // deposit is set for productId
-                $oldDeposit = $this->DepositProducts->find('all', [
+                $oldDeposit = $depositProductsTable->find('all', [
                     'conditions' => [
                         'id_product' => $productId
                     ]
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $entity = $this->DepositProducts->newEntity([]);
+                    $entity = $depositProductsTable->newEntity([]);
                 } else {
-                    $entity = $this->DepositProducts->get($oldDeposit->id_product);
+                    $entity = $depositProductsTable->get($oldDeposit->id_product);
                 }
 
                 $deposit2save = [
@@ -414,11 +422,11 @@ class ProductsTable extends AppTable
                 ];
             }
 
-            $this->DepositProducts->setPrimaryKey('id');
-            $result = $this->DepositProducts->save(
-                $this->DepositProducts->patchEntity($entity, $deposit2save)
+            $depositProductsTable->setPrimaryKey('id');
+            $result = $depositProductsTable->save(
+                $depositProductsTable->patchEntity($entity, $deposit2save)
             );
-            $this->DepositProducts->setPrimaryKey('id_product');
+            $depositProductsTable->setPrimaryKey('id_product');
             $success |= is_object($result);
         }
 
@@ -454,6 +462,7 @@ class ProductsTable extends AppTable
         }
 
         $success = false;
+        $productAttributesTable = FactoryLocator::get('Table')->get('ProductAttributes');
         foreach ($products as $product) {
 
             $productId = key($product);
@@ -477,7 +486,7 @@ class ProductsTable extends AppTable
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $result = $this->ProductAttributes->updateAll([
+                $result = $productAttributesTable->updateAll([
                     'price' => $netPrice
                 ], [
                     'id_product_attribute' => $ids['attributeId']
@@ -539,12 +548,14 @@ class ProductsTable extends AppTable
     public function changeQuantity($products)
     {
 
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+
         foreach ($products as $product) {
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
-            $entity = $this->StockAvailables->newEntity($product[$productId]);
+            $entity = $stockAvailablesTable->newEntity($product[$productId]);
             if ($entity->hasErrors()) {
-                throw new InvalidParameterException(join(' ', $this->StockAvailables->getAllValidationErrors($entity)));
+                throw new InvalidParameterException(join(' ', $stockAvailablesTable->getAllValidationErrors($entity)));
             }
         }
 
@@ -552,7 +563,7 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                $entity = $this->StockAvailables->find('all', [
+                $entity = $stockAvailablesTable->find('all', [
                     'conditions' => [
                         'id_product_attribute' => $ids['attributeId'],
                         'id_product' => $ids['productId']
@@ -562,17 +573,17 @@ class ProductsTable extends AppTable
                     Log::error('entity was empty: productId: ' . $ids['productId'] . ' / attributeId: ' . $ids['attributeId']);
                     continue;
                 }
-                $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
-                $this->StockAvailables->setPrimaryKey('id_product_attribute');
-                $this->StockAvailables->save(
-                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                $originalPrimaryKey = $stockAvailablesTable->getPrimaryKey();
+                $stockAvailablesTable->setPrimaryKey('id_product_attribute');
+                $stockAvailablesTable->save(
+                    $stockAvailablesTable->patchEntity($entity, $product[$productId])
                 );
-                $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
-                $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
+                $stockAvailablesTable->setPrimaryKey($originalPrimaryKey);
+                $stockAvailablesTable->updateQuantityForMainProduct($ids['productId']);
             } else {
-                $entity = $this->StockAvailables->get($ids['productId']);
-                $this->StockAvailables->save(
-                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                $entity = $stockAvailablesTable->get($ids['productId']);
+                $stockAvailablesTable->save(
+                    $stockAvailablesTable->patchEntity($entity, $product[$productId])
                 );
             }
         }
@@ -715,7 +726,8 @@ class ProductsTable extends AppTable
             }
 
             if (isset($name['barcode'])) {
-                $barcodeProductEntity = $this->BarcodeProducts->newEntity(
+                $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+                $barcodeProductEntity = $barcodeProductsTable->newEntity(
                     [
                         'barcode' => $name['barcode'],
                     ],
@@ -742,7 +754,7 @@ class ProductsTable extends AppTable
                 $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
             }
 
-            if (isset($name['barcode'])) {
+            if (isset($name['barcode']) && isset($barcode)) {
                 $tmpProduct2Save['barcode_product'] = [
                     'product_id' => $ids['productId'],
                     'barcode' => $name['barcode'],
@@ -776,7 +788,7 @@ class ProductsTable extends AppTable
         return false;
     }
 
-    public function getProductsForBackend($appAuth, $productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];
@@ -881,24 +893,32 @@ class ProductsTable extends AppTable
             });
         }
 
+        $depositProductsTable = FactoryLocator::get('Table')->get('DepositProducts');
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $purchasePriceProductsTable = FactoryLocator::get('Table')->get('PurchasePriceProducts');
+        $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
+        $unitProductsTable = FactoryLocator::get('Table')->get('UnitProducts');
+
         $query
         ->select('Products.id_product')->distinct()
         ->select($this) // Products
-        ->select($this->DepositProducts)
+        ->select($depositProductsTable)
         ->select('Images.id_image')
-        ->select($this->Taxes)
-        ->select($this->Manufacturers)
-        ->select($this->UnitProducts)
-        ->select($this->StockAvailables);
+        ->select($taxesTable)
+        ->select($manufacturersTable)
+        ->select($unitProductsTable)
+        ->select($stockAvailablesTable);
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $query->select($this->PurchasePriceProducts);
+            $query->select($purchasePriceProductsTable);
         }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $this->Catalog = new Catalog();
             $query->select(['system_bar_code' => $this->Catalog->getProductIdentifierField()]);
-            $query->select($this->BarcodeProducts);
+            $query->select($barcodeProductsTable);
         }
 
         if ($controller) {
@@ -1012,7 +1032,7 @@ class ProductsTable extends AppTable
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
 
                 $product->purchase_price_is_zero = true;
-                $product->purchase_price_is_set = $this->PurchasePriceProducts->isPurchasePriceSet($product);
+                $product->purchase_price_is_set = $purchasePriceProductsTable->isPurchasePriceSet($product);
 
                 if (empty($product->purchase_price_product) || $product->purchase_price_product->tax_id === null) {
                     $product->purchase_price_product = (object) [
@@ -1038,7 +1058,7 @@ class ProductsTable extends AppTable
 
                     if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                         if (!is_null($product->unit->purchase_price_incl_per_unit)) {
-                            $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                            $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
                                 Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
                                 $taxRate,
                                 Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->purchase_price_incl_per_unit, $product->unit_product->quantity_in_units, $product->unit_product->amount),
@@ -1052,7 +1072,7 @@ class ProductsTable extends AppTable
                             }
                         }
                     } else {
-                        $product->surcharge_percent = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                        $product->surcharge_percent = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
                             $product->gross_price,
                             $taxRate,
                             $product->purchase_gross_price,
@@ -1165,8 +1185,8 @@ class ProductsTable extends AppTable
                     }
 
                     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-
-                        $preparedProduct['purchase_price_is_set'] = $this->ProductAttributes->PurchasePriceProductAttributes->isPurchasePriceSet($attribute);
+                        $productAttributesTable = FactoryLocator::get('Table')->get('ProductAttributes');
+                        $preparedProduct['purchase_price_is_set'] = $productAttributesTable->PurchasePriceProductAttributes->isPurchasePriceSet($attribute);
                         $preparedProduct['purchase_price_is_zero'] = true;
 
                         $purchasePrice = $attribute->purchase_price_product_attribute->price ?? null;
@@ -1181,7 +1201,7 @@ class ProductsTable extends AppTable
 
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                             if (!is_null($attribute->unit_product_attribute->purchase_price_incl_per_unit)) {
-                                $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                                $preparedProduct['surcharge_percent'] = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
                                     Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
                                     $taxRate,
                                     Configure::read('app.pricePerUnitHelper')->getPricePerUnit($attribute->unit_product_attribute->purchase_price_incl_per_unit, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount),
@@ -1195,7 +1215,7 @@ class ProductsTable extends AppTable
                                 }
                             }
                         } else {
-                            $preparedProduct['surcharge_percent'] = $this->PurchasePriceProducts->calculateSurchargeBySellingPriceGross(
+                            $preparedProduct['surcharge_percent'] = $purchasePriceProductsTable->calculateSurchargeBySellingPriceGross(
                                 $grossPrice,
                                 $taxRate,
                                 $preparedProduct['purchase_gross_price'],
@@ -1332,7 +1352,8 @@ class ProductsTable extends AppTable
 
     public function setDefaultAttributeId($productId, $productAttributeId)
     {
-        $productAttributes = $this->ProductAttributes->find('all', [
+        $productAttributesTable = FactoryLocator::get('Table')->get('ProductAttributes');
+        $productAttributes = $productAttributesTable->find('all', [
             'conditions' => [
                 'ProductAttributes.id_product' => $productId,
             ]
@@ -1344,7 +1365,7 @@ class ProductsTable extends AppTable
         }
 
         // first set all associated attributes to 0
-        $this->ProductAttributes->updateAll([
+        $productAttributesTable->updateAll([
             'default_on' => 0
         ], [
             'id_product_attribute IN (' . join(', ', $productAttributeIds) . ')',
@@ -1355,7 +1376,7 @@ class ProductsTable extends AppTable
             'ProductAttributes.id_product_attribute' => $productAttributeId,
         ])->first();
         $productAttributeEntity->default_on = APP_ON;
-        $this->ProductAttributes->save($productAttributeEntity);
+        $productAttributesTable->save($productAttributeEntity);
     }
 
     public function changeImage($products)
@@ -1409,10 +1430,11 @@ class ProductsTable extends AppTable
                 ]
             ])->first();
 
+            $imagesTable = FactoryLocator::get('Table')->get('Images');
             if (empty($product->image)) {
                 // product does not yet have image => create the necessary record
-                $image = $this->Images->save(
-                    $this->Images->newEntity(
+                $image = $imagesTable->save(
+                    $imagesTable->newEntity(
                         ['id_product' => $ids['productId']]
                     )
                 );
@@ -1438,7 +1460,7 @@ class ProductsTable extends AppTable
             } else {
 
                 // delete db records
-                $this->Images->deleteAll([
+                $imagesTable->deleteAll([
                     'Images.id_image' => $image->id_image
                 ]);
 
@@ -1477,8 +1499,11 @@ class ProductsTable extends AppTable
             return $productEntity;
         }
 
+        $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+
         if ($barcode != '') {
-            $barcodeEntity2Save = $this->BarcodeProducts->newEntity([
+            $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
+            $barcodeEntity2Save = $barcodeProductsTable->newEntity([
                 'barcode' => $barcode,
             ], ['validate' => true]);
             if ($barcodeEntity2Save->hasErrors()) {
@@ -1489,35 +1514,38 @@ class ProductsTable extends AppTable
         $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
 
-        if ($barcode != '') {
+        if ($barcode != '' && isset($barcodeEntity2Save)) {
             $barcodeEntity2Save->product_id = $newProductId;
-            $this->BarcodeProducts->save($barcodeEntity2Save);
+            $barcodeProductsTable->save($barcodeEntity2Save);
         }
 
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $entity2Save = $this->PurchasePriceProducts->getEntityToSaveByProductId($newProductId);
-            $patchedEntity = $this->PurchasePriceProducts->patchEntity(
+            $purchasePriceProductsTable = FactoryLocator::get('Table')->get('PurchasePriceProducts');
+            $entity2Save = $purchasePriceProductsTable->getEntityToSaveByProductId($newProductId);
+            $patchedEntity = $purchasePriceProductsTable->patchEntity(
                 $entity2Save,
                 [
                     'tax_id' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id_purchase_price),
                 ],
             );
-            $this->PurchasePriceProducts->save($patchedEntity);
+            $purchasePriceProductsTable->save($patchedEntity);
         }
 
         // INSERT CATEGORY_PRODUCTS
-        $this->CategoryProducts->save(
-            $this->CategoryProducts->newEntity(
+        $categoryProuductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProuductsTable->save(
+            $categoryProuductsTable->newEntity(
                 [
                     'id_category' => Configure::read('app.categoryAllProducts'),
-                    'id_product' => $newProductId
+                    'id_product' => $newProductId,
                 ]
             )
         );
 
         // INSERT STOCK AVAILABLE
-        $this->StockAvailables->save(
-            $this->StockAvailables->newEntity(
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable->save(
+            $stockAvailablesTable->newEntity(
                 [
                     'id_product' => $newProductId,
                     'quantity' => $defaultQuantity

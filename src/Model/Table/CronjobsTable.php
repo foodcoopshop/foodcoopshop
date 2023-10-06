@@ -12,7 +12,7 @@ use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
 use App\Lib\Error\Exception\InvalidParameterException;
-use Queue\Console\Io;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -210,7 +210,8 @@ class CronjobsTable extends AppTable
             $this->cronjobRunDay = (int) Configure::read('app.timeHelper')->getTimeObjectUTC(date(Configure::read('DateFormat.DatabaseWithTimeAlt')))->toUnixString();
         }
 
-        $this->CronjobLogs->deleteOldLogs($this->cronjobRunDay);
+        $cronjobLogsTable = FactoryLocator::get('Table')->get('CronjobLogs');
+        $cronjobLogsTable->deleteOldLogs($this->cronjobRunDay);
 
         $cronjobs = $this->find('all', [
             'conditions' => [
@@ -240,7 +241,7 @@ class CronjobsTable extends AppTable
             ]);
             $cronjobNotBeforeTimeWithCronjobRunDay->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($cronjobNotBeforeTimeWithCronjobRunDay->getTimestamp()) . ' seconds');
 
-            $cronjobLog = $this->CronjobLogs->find('all', [
+            $cronjobLog = $cronjobLogsTable->find('all', [
                 'conditions' => [
                     'CronjobLogs.cronjob_id' => $cronjob->id,
                 ],
@@ -289,14 +290,15 @@ class CronjobsTable extends AppTable
         $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(
             $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')
         ));
-        $entity = $this->CronjobLogs->newEntity(
+        $cronjobLogsTable = FactoryLocator::get('Table')->get('CronjobLogs');
+        $entity = $cronjobLogsTable->newEntity(
             [
                 'cronjob_id' => $cronjob->id,
                 'created' => $databasePreparedCronjobRunDay,
                 'success' => CronjobLogsTable::RUNNING,
             ]
         );
-        $this->CronjobLogs->save($entity);
+        $cronjobLogsTable->save($entity);
 
         try {
             $args = new Arguments([], [], []);
@@ -308,7 +310,7 @@ class CronjobsTable extends AppTable
         }
 
         $entity->success = $success;
-        $this->CronjobLogs->save($entity);
+        $cronjobLogsTable->save($entity);
 
         return [
             'name' => $cronjob->getOriginalValues()['name'],

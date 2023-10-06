@@ -32,7 +32,7 @@ class CartsTable extends AppTable
     public const CART_SELF_SERVICE_PAYMENT_TYPE_CASH   = 1;
     public const CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT = 2;
 
-    private $Product;
+    protected $Product;
 
     public function initialize(array $config): void
     {
@@ -158,7 +158,7 @@ class CartsTable extends AppTable
         ])->toArray();
 
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType, $appAuth);
+            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId, $cartType, $appAuth);
         }
 
         $preparedCart = [
@@ -429,7 +429,7 @@ class CartsTable extends AppTable
             );
             $productData['usesQuantityInUnits'] = true;
 
-            $productData['quantityInUnits'] = isset($unitProduct) ? $unitProduct->quantity_in_units : 0;
+            $productData['quantityInUnits'] = $unitProduct->quantity_in_units ?? 0;
             $productQuantityInUnits = $unitProduct->quantity_in_units * $cartProduct->amount;
             $markAsSaved = APP_OFF;
             if (!is_null($orderedQuantityInUnits)) {

@@ -22,6 +22,8 @@ use Cake\Database\Expression\QueryExpression;
 
 trait ProfitTrait {
 
+    protected $PurchasePrice;
+
     public function profit()
     {
 

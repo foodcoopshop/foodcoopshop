@@ -119,6 +119,7 @@ class SendOrderListsCommand extends AppCommand
             foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
 
                 // avoid generating empty order lists
+                /** @phpstan-ignore-next-line */
                 if (empty($orderDetails)) {
                     continue;
                 }

@@ -23,6 +23,10 @@ use Cake\Event\EventInterface;
 class SelfServiceController extends FrontendController
 {
 
+    protected $Catalog;
+    protected $Category;
+    protected $Invoice;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -96,8 +100,8 @@ class SelfServiceController extends FrontendController
             }
 
             if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
-                $this->CartProduct = $this->getTableLocator()->get('CartProducts');
-                $result = $this->CartProduct->add($this->AppAuth, $products[0]->id_product, $attributeId, 1);
+                $cartProductsTable = $this->getTableLocator()->get('CartProducts');
+                $result = $cartProductsTable->add($this->AppAuth, $products[0]->id_product, $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
@@ -153,7 +157,7 @@ class SelfServiceController extends FrontendController
                             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
                         }
                     }
-                    if (!$this->AppAuth->user('invoices_per_email_enabled')) {
+                    if (!$this->AppAuth->user('invoices_per_email_enabled') && isset($invoiceRoute)) {
                         $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
                     }
                 }

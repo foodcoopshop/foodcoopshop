@@ -22,6 +22,11 @@ use Cake\Core\Configure;
 class DepositsController extends AdminAppController
 {
 
+    protected $Customer;
+    protected $Manufacturer;
+    protected $Payment;
+    protected $OrderDetail;
+
     public $manufacturerId;
 
     public function isAuthorized($user)
@@ -187,7 +192,7 @@ class DepositsController extends AdminAppController
 
         $this->set('years', array_unique($years));
 
-        $this->Cutomers = $this->getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
         $paymentDepositDelta += $this->Customer->getDepositBalanceForCustomers(APP_OFF);
         $paymentDepositDelta += $this->Customer->getDepositBalanceForDeletedCustomers();

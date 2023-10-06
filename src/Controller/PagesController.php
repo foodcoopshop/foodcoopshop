@@ -27,6 +27,11 @@ use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 class PagesController extends FrontendController
 {
 
+    protected $BlogPost;
+    protected $Page;
+    protected $Slider;
+    protected $Catalog;
+    
     public function beforeFilter(EventInterface $event)
     {
 

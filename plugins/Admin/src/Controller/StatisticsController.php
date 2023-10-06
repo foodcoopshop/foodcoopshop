@@ -24,6 +24,9 @@ class StatisticsController extends AdminAppController
 {
 
     public $manufacturerId;
+    protected $Manufacturer;
+    protected $OrderDetail;
+    protected $PurchasePrice;
 
     public function isAuthorized($user)
     {
@@ -280,10 +283,12 @@ class StatisticsController extends AdminAppController
         // START prepare pie chart
         if ($manufacturerId == 'all') {
             $data = [];
+            
             foreach($manufacturers as $manufacturer) {
 
                 if ($lastMonths !== null) {
                     $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                    /** @phpstan-ignore-next-line */
                     $monthlySumProductsQuery = $this->OrderDetail->addLastMonthsCondition($monthlySumProductsQuery, $firstDayOfLastOrderMonth, $lastMonths);
                 } else {
                     $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);

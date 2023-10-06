@@ -26,7 +26,7 @@ class AppAuthComponent extends AuthComponent
     public $components = [
         'Flash',
         'RequestHandler',
-        'Cart'
+        'Cart',
     ];
 
     public function flash($message): void
@@ -79,8 +79,8 @@ class AppAuthComponent extends AuthComponent
 
     public function getLastOrderDetailsForDropdown()
     {
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $dropdownData = $this->OrderDetail->getLastOrderDetailsForDropdown($this->getUserId());
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getUserId());
         return $dropdownData;
     }
 
@@ -89,8 +89,8 @@ class AppAuthComponent extends AuthComponent
         if (empty($this->user())) {
             return [];
         }
-        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $futureOrderDetails = $this->OrderDetail->getFutureOrdersByCustomerId($this->getUserId());
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getUserId());
         return $futureOrderDetails;
     }
 
@@ -240,8 +240,8 @@ class AppAuthComponent extends AuthComponent
 
     public function getCreditBalance()
     {
-        $c = FactoryLocator::get('Table')->get('Customers');
-        return $c->getCreditBalance($this->getUserId());
+        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        return $customersTable->getCreditBalance($this->getUserId());
     }
 
     public function isOrderForDifferentCustomerMode()
@@ -277,13 +277,13 @@ class AppAuthComponent extends AuthComponent
 
     public function getCartType()
     {
-        $cart = FactoryLocator::get('Table')->get('Carts');
-        $cartType = $cart::CART_TYPE_WEEKLY_RHYTHM;
+        $cartsTable = FactoryLocator::get('Table')->get('Carts');
+        $cartType = $cartsTable::CART_TYPE_WEEKLY_RHYTHM;
         if ($this->isOrderForDifferentCustomerMode()) {
-            $cartType = $cart::CART_TYPE_INSTANT_ORDER;
+            $cartType = $cartsTable::CART_TYPE_INSTANT_ORDER;
         }
         if ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer()) {
-            $cartType = $cart::CART_TYPE_SELF_SERVICE;
+            $cartType = $cartsTable::CART_TYPE_SELF_SERVICE;
         }
         return $cartType;
     }
@@ -301,8 +301,8 @@ class AppAuthComponent extends AuthComponent
 
         $cartType = $this->getCartType();
 
-        $cart = FactoryLocator::get('Table')->get('Carts');
-        return $cart->getCart($this, $cartType);
+        $cartsTable = FactoryLocator::get('Table')->get('Carts');
+        return $cartsTable->getCart($this, $cartType);
     }
 
 }

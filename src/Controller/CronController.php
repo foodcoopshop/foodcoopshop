@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Event\EventInterface;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,10 +32,9 @@ class CronController extends AppController
     {
 
         $this->RequestHandler->renderAs($this, 'json');
+        $cronjobsTable = FactoryLocator::get('Table')->get('Cronjobs');
 
-        $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
-
-        $executedCronjobs = $this->Cronjob->run();
+        $executedCronjobs = $cronjobsTable->run();
         $this->set([
             'executedCronjobs' => $executedCronjobs,
         ]);

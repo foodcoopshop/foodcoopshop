@@ -25,6 +25,10 @@ use Cake\Event\EventInterface;
 class CategoriesController extends FrontendController
 {
 
+    protected $BlogPost;
+    protected $Catalog;
+    protected $Category;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);

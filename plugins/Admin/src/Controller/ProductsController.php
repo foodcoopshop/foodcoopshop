@@ -70,6 +70,8 @@ class ProductsController extends AdminAppController
     use ImportTrait;
     use SaveUploadedImageTrait;
 
+    protected $Product;
+
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {

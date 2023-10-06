@@ -23,6 +23,10 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 class FeedbacksController extends AdminAppController
 {
 
+    protected $Customer;
+    protected $Feedback;
+    protected $Sanitize;
+
     public $customerId;
     public $isOwnForm;
 

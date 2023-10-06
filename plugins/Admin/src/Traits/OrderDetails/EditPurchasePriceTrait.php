@@ -21,6 +21,10 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 
 trait EditPurchasePriceTrait {
 
+    protected $OrderDetail;
+    protected $Product;
+    protected $Tax;
+
     public function editPurchasePrice($orderDetailId)
     {
         $this->set('title_for_layout', __d('admin', 'Edit_purchase_price'));
