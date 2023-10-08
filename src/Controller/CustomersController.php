@@ -97,7 +97,7 @@ class CustomersController extends FrontendController
             [
                 'Customers' => [
                     'terms_of_use_accepted_date_checkbox' => $this->getRequest()->getData('Customers.terms_of_use_accepted_date_checkbox'),
-                    'terms_of_use_accepted_date' => FrozenDate::now()
+                    'terms_of_use_accepted_date' => date('Y-m-d'),
                 ]
             ],
             ['validate' => 'termsOfUse']
@@ -344,7 +344,7 @@ class CustomersController extends FrontendController
                 'Customers' => [
                     'active' => 0,
                     'id_default_group' => CUSTOMER_GROUP_MEMBER,
-                    'terms_of_use_accepted_date' => FrozenDate::now(),
+                    'terms_of_use_accepted_date' => date('Y-m-d'),
                     'passwd' => $ph->hash($newPassword)
                 ]
             ]

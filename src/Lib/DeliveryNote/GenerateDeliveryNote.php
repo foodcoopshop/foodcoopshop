@@ -73,7 +73,7 @@ class GenerateDeliveryNote {
 
         $column = 1;
         foreach($headlines as $headline) {
-            $sheet->setCellValueByColumnAndRow($column, 1, $headline['name']);
+            $sheet->setCellValue([$column, 1], $headline['name']);
             $this->setAlignmentForCell($sheet, $column, 1, $headline['alignment']);
             $this->setBoldForCell($sheet, $column, 1);
             if (isset($headline['width'])) {
@@ -115,36 +115,36 @@ class GenerateDeliveryNote {
             $taxRates[$taxRate]['sum_tax'] += $orderDetail->SumPurchasePriceTax;
             $taxRates[$taxRate]['sum_price_gross'] += $orderDetail->SumPurchasePriceGross;
 
-            $sheet->setCellValueByColumnAndRow(1, $row, $orderDetail->SumAmount);
-            $sheet->setCellValueByColumnAndRow(2, $row, html_entity_decode($orderDetail->ProductName));
-            $sheet->setCellValueByColumnAndRow(3, $row, $netPerPiece);
+            $sheet->setCellValue([1, $row], $orderDetail->SumAmount);
+            $sheet->setCellValue([2, $row], html_entity_decode($orderDetail->ProductName));
+            $sheet->setCellValue([3, $row], $netPerPiece);
             $this->setNumberFormatForCell($sheet, 3, $row);
-            $sheet->setCellValueByColumnAndRow(4, $row, $orderDetail->SumWeight);
-            $sheet->setCellValueByColumnAndRow(5, $row, $orderDetail->Unit);
-            $sheet->setCellValueByColumnAndRow(6, $row, $orderDetail->PurchasePriceTaxRate);
-            $sheet->setCellValueByColumnAndRow(7, $row, $orderDetail->SumPurchasePriceNet);
+            $sheet->setCellValue([4, $row], $orderDetail->SumWeight);
+            $sheet->setCellValue([5, $row], $orderDetail->Unit);
+            $sheet->setCellValue([6, $row], $orderDetail->PurchasePriceTaxRate);
+            $sheet->setCellValue([7, $row], $orderDetail->SumPurchasePriceNet);
             $this->setNumberFormatForCell($sheet, 7, $row);
-            $sheet->setCellValueByColumnAndRow(8, $row, $orderDetail->SumPurchasePriceTax);
+            $sheet->setCellValue([8, $row], $orderDetail->SumPurchasePriceTax);
             $this->setNumberFormatForCell($sheet, 8, $row);
-            $sheet->setCellValueByColumnAndRow(9, $row, $orderDetail->SumPurchasePriceGross);
+            $sheet->setCellValue([9, $row], $orderDetail->SumPurchasePriceGross);
             $this->setNumberFormatForCell($sheet, 9, $row);
             $row++;
         }
 
         // add row with sums
         $row++;
-        $sheet->setCellValueByColumnAndRow(1, $row, $totalSumAmount);
+        $sheet->setCellValue([1, $row], $totalSumAmount);
         $this->setBoldForCell($sheet, 1, $row);
 
-        $sheet->setCellValueByColumnAndRow(7, $row, $totalSumPurchasePriceNet);
+        $sheet->setCellValue([7, $row], $totalSumPurchasePriceNet);
         $this->setNumberFormatForCell($sheet, 7, $row);
         $this->setBoldForCell($sheet, 7, $row);
 
-        $sheet->setCellValueByColumnAndRow(8, $row, $totalSumPurchasePriceTax);
+        $sheet->setCellValue([8, $row], $totalSumPurchasePriceTax);
         $this->setNumberFormatForCell($sheet, 8, $row);
         $this->setBoldForCell($sheet, 8, $row);
 
-        $sheet->setCellValueByColumnAndRow(9, $row, $totalSumPurchasePriceGross);
+        $sheet->setCellValue([9, $row], $totalSumPurchasePriceGross);
         $this->setNumberFormatForCell($sheet, 9, $row);
         $this->setBoldForCell($sheet, 9, $row);
 
@@ -155,14 +155,14 @@ class GenerateDeliveryNote {
             // add rows for sums / tax rates
             $row++;
             $row++;
-            $sheet->setCellValueByColumnAndRow(2, $row, __('Tax_rates_overview_table'));
+            $sheet->setCellValue([2, $row], __('Tax_rates_overview_table'));
             foreach($taxRates as $taxRate => $trt) {
-                $sheet->setCellValueByColumnAndRow(6, $row, $taxRate);
-                $sheet->setCellValueByColumnAndRow(7, $row, $trt['sum_price_net']);
+                $sheet->setCellValue([6, $row], $taxRate);
+                $sheet->setCellValue([7, $row], $trt['sum_price_net']);
                 $this->setNumberFormatForCell($sheet, 7, $row);
-                $sheet->setCellValueByColumnAndRow(8, $row, $trt['sum_tax']);
+                $sheet->setCellValue([8, $row], $trt['sum_tax']);
                 $this->setNumberFormatForCell($sheet, 8, $row);
-                $sheet->setCellValueByColumnAndRow(9, $row, $trt['sum_price_gross']);
+                $sheet->setCellValue([9, $row], $trt['sum_price_gross']);
                 $this->setNumberFormatForCell($sheet, 9, $row);
                 $row++;
             }
@@ -170,7 +170,7 @@ class GenerateDeliveryNote {
 
         $row++;
         $row++;
-        $sheet->setCellValueByColumnAndRow(2, $row, __('All_amounts_in_{0}.', [Configure::read('app.currencyName')]));
+        $sheet->setCellValue([2, $row], __('All_amounts_in_{0}.', [Configure::read('app.currencyName')]));
 
         return $spreadsheet;
 
