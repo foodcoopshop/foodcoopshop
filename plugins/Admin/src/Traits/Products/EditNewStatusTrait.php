@@ -46,7 +46,7 @@ trait EditNewStatusTrait {
 
         $product->created = FrozenTime::now();
         if ($status == APP_OFF) {
-            $product->created = FrozenTime::now()->subDay((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
+            $product->created = FrozenTime::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
         }
         $this->Product->save($product);
 
