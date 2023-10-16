@@ -217,7 +217,7 @@ $this->element('addScript', [
         <?php if (!empty($lastMigration)) { ?>
         <tr>
             <td><?php echo __d('admin', 'Last_executed_migration'); ?></td>
-            <td><?php echo $lastMigration['migration_name'] . ' ' . $lastMigration['version']; ?></td>
+            <td><?php echo $lastMigration[0][0] . ' ' . $lastMigration[0][1]; ?></td>
         </tr>
         <?php } ?>
 
