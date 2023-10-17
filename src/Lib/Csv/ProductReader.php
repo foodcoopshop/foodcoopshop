@@ -40,6 +40,7 @@ class ProductReader extends Reader {
     private function formatColumns($record) {
         $record['PriceGross'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['PriceGross']);
         $record['TaxRate'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['TaxRate']);
+        $record['Deposit'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['Deposit']);
         return $record;
     }
 
@@ -61,6 +62,7 @@ class ProductReader extends Reader {
                 $record['Status'],
                 $record['PriceGross'],
                 $record['TaxRate'],
+                $record['Deposit'],
                 $record['Barcode'],
                 $record['Quantity'],
             );

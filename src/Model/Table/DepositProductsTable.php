@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
+use Cake\Validation\Validator;
+use App\Model\Traits\NumberRangeValidatorTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,6 +24,7 @@ class DepositProductsTable extends AppTable
 {
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
+    use NumberRangeValidatorTrait;
 
     public function initialize(array $config): void
     {
@@ -29,4 +32,11 @@ class DepositProductsTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
     }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator = $this->getNumberRangeValidator($validator, 'deposit', 0, 100);
+        return $validator;
+    }
+
 }
