@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use AssetCompress\Factory;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,6 +48,35 @@ class TaxesTable extends AppTable
         $taxes = array_keys($taxes);
         sort($taxes);
         return $taxes;
+    }
+
+    public function getNetPriceAndTaxId($grossPrice, $taxRate)
+    {
+
+        $taxId = false;
+        $calculatedTaxRate = 0;
+
+        if ($taxRate == 0) {
+            $taxId = 0;
+        } else {
+            $tax = $this->find('all', [
+                'conditions' => [
+                    'Taxes.active' => APP_ON,
+                    'Taxes.rate' => $taxRate,
+                ],
+            ])->first();
+            if (!empty($tax)) {
+                $taxId = $tax->id_tax;
+                $calculatedTaxRate = $tax->rate;
+            }
+        }
+
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+        return [
+            'netPrice' => $productsTable->getNetPrice($grossPrice, $calculatedTaxRate),
+            'taxId' => $taxId,
+        ];
+
     }
 
     public function getForDropdown($useRateAsKey = false)

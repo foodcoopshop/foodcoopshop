@@ -39,35 +39,6 @@ trait ProductImportTrait
         return $validator;
     }
 
-    public function getNetPriceAndTaxId($grossPrice, $taxRate)
-    {
-
-        $taxId = false;
-        $calculatedTaxRate = 0;
-
-        if ($taxRate == 0) {
-            $taxId = 0;
-        } else {
-            $taxesTable = FactoryLocator::get('Table')->get('Taxes');
-            $tax = $taxesTable->find('all', [
-                'conditions' => [
-                    'Taxes.active' => APP_ON,
-                    'Taxes.rate' => $taxRate,
-                ],
-            ])->first();
-            if (!empty($tax)) {
-                $taxId = $tax->id_tax;
-                $calculatedTaxRate = $tax->rate;
-            }
-        }
-
-        return [
-            'netPrice' => $this->getNetPrice($grossPrice, $calculatedTaxRate),
-            'taxId' => $taxId,
-        ];
-
-    }
-    
     public function getValidatedEntity(
         $manufacturerId,
         $productName,
@@ -84,7 +55,8 @@ trait ProductImportTrait
         $quantity,
     ) {
 
-        $netPriceAndTaxId = $this->getNetPriceAndTaxId($grossPrice, $taxRate);
+        $taxesTable = FactoryLocator::get('Table')->get('Taxes');
+        $netPriceAndTaxId = $taxesTable->getNetPriceAndTaxId($grossPrice, $taxRate);
 
         $productEntity = $this->newEntity(
             [
