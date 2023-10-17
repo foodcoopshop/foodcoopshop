@@ -51,7 +51,7 @@ class ProductsTable extends AppTable
         $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
         ]);
-        $this->belongsTo('StockAvailables', [
+        $this->hasOne('StockAvailables', [
             'foreignKey' => 'id_product'
         ]);
         $this->belongsTo('PurchasePriceProducts', [
@@ -60,8 +60,8 @@ class ProductsTable extends AppTable
                 'PurchasePriceProducts.product_attribute_id = 0',
             ],
         ]);
-        $this->belongsTo('BarcodeProducts', [
-            'foreignKey' => 'id_product',
+        $this->hasOne('BarcodeProducts', [
+            'foreignKey' => 'product_id',
             'conditions' => [
                 'BarcodeProducts.product_attribute_id = 0',
             ],
