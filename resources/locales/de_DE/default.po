@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-10-05 14:09+0200\n"
+"POT-Creation-Date: 2023-10-17 15:36+0200\n"
 "PO-Revision-Date: 2023-10-05 14:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2080,9 +2080,6 @@ msgstr "Das Produkt um {0} kann nicht in den Warenkorb gelegt werden, bitte lade
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
 msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Die Lieferpause kann erst gespeichert werden, wenn du die Produkte stornierst oder der Abholtag geändert wird."
 
-msgid "Please_enter_a_price."
-msgstr "Bitte gib einen Preis ein."
-
 msgid "Manufacturer_not_found."
 msgstr "Der Hersteller wurde nicht gefunden."
 
@@ -2817,6 +2814,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Please_enter_a_price."
+#~ msgstr "Bitte gib einen Preis ein."
 
 #~ msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
 #~ msgstr "Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden."

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2023-10-05 14:09+0200\n"
-"PO-Revision-Date: 2023-06-15 21:32+0200\n"
+"PO-Revision-Date: 2023-10-17 15:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -735,13 +735,11 @@ msgstr "Produkte"
 msgid "All_products"
 msgstr "Alle Produkte"
 
-#, fuzzy
 msgid "Product_import"
-msgstr "Produkt-Nr."
+msgstr "Produkt-Import"
 
-#, fuzzy
 msgid "Product_import_successful."
-msgstr "Das Produkt wurde erfolgreich geändert."
+msgstr "Der Produkt-Import war erfolgreich."
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
@@ -1826,9 +1824,8 @@ msgstr "Dein Kontostand"
 msgid "Back_to_member_overview"
 msgstr "Zurück zur Mitglieder-Übersicht"
 
-#, fuzzy
 msgid "Upload_CSV_file_with_products"
-msgstr "CSV-Datei mit Überweisungen hochladen"
+msgstr "CSV-Datei mit Produktdaten hochladen"
 
 msgid "chose_manufacturer..."
 msgstr "Hersteller auswählen..."
@@ -2223,9 +2220,8 @@ msgstr "Das Produkt kann erst bestellt werden, sobald der Einkaufspreis hinterle
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"
 
-#, fuzzy
 msgid "Import_products"
-msgstr "produkte"
+msgstr "Produkte importieren"
 
 msgid "Selected_products"
 msgstr "Markierte Produkte"

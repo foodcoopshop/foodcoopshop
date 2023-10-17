@@ -35,7 +35,7 @@ trait ImportTrait {
 
             try {
                 $productEntities = $reader->import($manufacturerId);
-                $this->Flash->success(__d('admin', 'Product_import_successful.' . count($productEntities)));
+                $this->Flash->success(__d('admin', 'Product_import_successful. ' . count($productEntities) . 'x'));
             } catch(\Exception $e) {
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
                 $this->redirect($this->referer());
