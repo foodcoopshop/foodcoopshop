@@ -8,6 +8,7 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Validation\Validator;
 use App\Model\Entity\Product;
 use App\Model\Traits\NumberRangeValidatorTrait;
+use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -102,6 +103,11 @@ trait ProductImportTrait
                 ],
                 'stock_available' => [
                     'quantity' => $quantity,
+                ],
+                'category_products' => [
+                    [
+                        'id_category' => Configure::read('app.categoryAllProducts'),
+                    ],
                 ],
             ],
             [
