@@ -62,6 +62,7 @@ class ProductReader extends Reader {
                 $record['PriceGross'],
                 $record['TaxRate'],
                 $record['Barcode'],
+                $record['Quantity'],
             );
         }
 

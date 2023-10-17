@@ -35,7 +35,7 @@ class ProductReaderTest extends AppCakeTestCase
 
         $this->assertCount(2, $records);
 
-        $columnCount = 10;
+        $columnCount = 12;
         $this->assertEquals($columnCount, count($records[0]));
         $this->assertEquals($columnCount, count($records[1]));
 
@@ -48,7 +48,8 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals('1', $records[0]['Status']);
         $this->assertEquals(23.3, $records[0]['PriceGross']);
         $this->assertEquals(10, $records[0]['TaxRate']);
-        $this->assertEquals('2345678901235', $records[0]['Barcode']);
+        $this->assertEquals('1919191919191', $records[0]['Barcode']);
+        $this->assertEquals('10', $records[0]['Quantity']);
     }
 
     public function testImportWithErrors()
@@ -69,12 +70,14 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals($productActiveErrorMessage, $errorsA['active']['inList']);
         $this->assertEquals($productIdTaxWrongErrorMessage, $errorsA['id_tax']['inList']);
         $this->assertEquals($barcodeErrorMessage, $errorsA['barcode_product']['barcode']['lengthBetween']);
+        $this->assertEquals('Der Lagerstand muss eine Zahl sein.', $errorsA['stock_available']['quantity']['numeric']);
 
         $errorsB = $productEntities[1]->getErrors();
         $this->assertEquals($productNameErrorMessage, $errorsB['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsB['active']['inList']);
         $this->assertEquals($productPriceWrongErrorMessage, $errorsB['price']['greaterThanOrEqual']);
         $this->assertEquals($barcodeErrorMessage, $errorsB['barcode_product']['barcode']['lengthBetween']);
+        $this->assertEquals('Bitte gib eine Zahl zwischen -5.000 und 5.000 an. Feld: Lagerstand / verfügbare Menge', $errorsA['stock_available']['quantity']['lessThanOrEqual']);
 
         $productsTable = $this->getTableLocator()->get('Products');
         $this->assertCount(13, $productsTable->find('all'));
@@ -87,7 +90,6 @@ class ProductReaderTest extends AppCakeTestCase
         $this->reader->configureType();
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
-
         $this->assertCount(2, $productEntities);
 
         $productsTable = $this->getTableLocator()->get('Products');
@@ -104,7 +106,8 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals(1, $productEntities[0]->active);
         $this->assertEquals(21.181818, $productEntities[0]->price);
         $this->assertEquals(2, $productEntities[0]->id_tax);
-        $this->assertEquals('2345678901235', $productEntities[0]->barcode_product->barcode);
+        $this->assertEquals('1919191919191', $productEntities[0]->barcode_product->barcode);
+        $this->assertEquals(10, $productEntities[0]->stock_available->quantity);
 
         // second product
         $this->assertEquals(0, $productEntities[1]->id_tax);

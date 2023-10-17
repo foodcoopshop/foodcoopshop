@@ -79,6 +79,7 @@ trait ProductImportTrait
         $grossPrice,
         $taxRate,
         $barcode,
+        $quantity,
     ) {
 
         $netPriceAndTaxId = $this->getNetPriceAndTaxId($grossPrice, $taxRate);
@@ -98,6 +99,9 @@ trait ProductImportTrait
                 'price' => $netPriceAndTaxId['netPrice'],
                 'barcode_product' => [
                     'barcode' => $barcode,
+                ],
+                'stock_available' => [
+                    'quantity' => $quantity,
                 ],
             ],
             [
