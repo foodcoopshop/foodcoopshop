@@ -1530,9 +1530,9 @@ class ProductsTable extends AppTable
         }
 
         // INSERT CATEGORY_PRODUCTS
-        $categoryProuductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
-        $categoryProuductsTable->save(
-            $categoryProuductsTable->newEntity(
+        $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProductsTable->save(
+            $categoryProductsTable->newEntity(
                 [
                     'id_category' => Configure::read('app.categoryAllProducts'),
                     'id_product' => $newProductId,
