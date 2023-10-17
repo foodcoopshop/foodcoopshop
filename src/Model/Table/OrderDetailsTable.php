@@ -29,8 +29,7 @@ class OrderDetailsTable extends AppTable
     use ProductCacheClearAfterSaveAndDeleteTrait;
 
     protected $Manufacturer;
-    protected $OrderDetailUnits;
-    
+
     public function initialize(array $config): void
     {
         $this->setTable('order_detail');
@@ -187,7 +186,7 @@ class OrderDetailsTable extends AppTable
 
     public function getTotalOrderDetails(string $pickupDay, int $productId, int $attributeId)
     {
-        
+
         if ($pickupDay == 'delivery-rhythm-triggered-delivery-break') {
             return null;
         }
@@ -480,11 +479,12 @@ class OrderDetailsTable extends AppTable
         $this->delete($orderDetail);
 
         if (!empty($orderDetail->order_detail_unit)) {
-            $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
+            $orderDetailUnitsTable = FactoryLocator::get('Table')->get('OrderDetailUnits');
+            $orderDetailUnitsTable->delete($orderDetail->order_detail_unit);
         }
 
-        $orderDetailPurchasePricesTable = FactoryLocator::get('Table')->get('OrderDetailPurchasePrices');
         if (!empty($orderDetail->order_detail_purchase_price)) {
+            $orderDetailPurchasePricesTable = FactoryLocator::get('Table')->get('OrderDetailPurchasePrices');
             $orderDetailPurchasePricesTable->delete($orderDetail->order_detail_purchase_price);
         }
 
