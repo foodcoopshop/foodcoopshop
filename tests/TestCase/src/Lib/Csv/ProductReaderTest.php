@@ -42,7 +42,7 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $records[0]['Description']);
         $this->assertEquals('1 kg', $records[0]['Unity']);
         $this->assertEquals('1', $records[0]['IsDeclarationOk']);
-        $this->assertEquals('1', $records[0]['StorageLocationId']);
+        $this->assertEquals('Keine Kühlung', $records[0]['StorageLocation']);
         $this->assertEquals('1', $records[0]['Status']);
         $this->assertEquals(23.3, $records[0]['PriceGross']);
         $this->assertEquals(10, $records[0]['TaxRate']);
@@ -71,6 +71,7 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals($barcodeErrorMessage, $errorsA['barcode_product']['barcode']['lengthBetween']);
         $this->assertEquals('Der Lagerstand muss eine Zahl sein.', $errorsA['stock_available']['quantity']['numeric']);
         $this->assertEquals('Bitte gib eine Zahl zwischen 0 und 100 an.', $errorsA['deposit_product']['deposit']['lessThanOrEqual']);
+        $this->assertEquals('Folgende Werte sind gültig: Keine Kühlung, Kühlschrank, Tiefkühler', $errorsA['id_storage_location'][0]);
 
         $errorsB = $productEntities[1]->getErrors();
         $this->assertEquals($productNameErrorMessage, $errorsB['name']['minLength']);

@@ -1,3 +1,3 @@
-ProductName;DescriptionShort;Description;Unity;IsDeclarationOk;StorageLocationId;Status;PriceGross;TaxRate;Deposit;Barcode;Quantity
-B;frisch geerntet;Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund;1 kg;1;1;b;;5;x;invalid-barcode;x
-H;frisch geerntet;Himbeeren haben viel Vitamin C und sind sehr gesund;0,5 kg;1;1;3;-5;10;-2;invalid-barcode;8555
+ProductName;DescriptionShort;Description;Unity;IsDeclarationOk;StorageLocation;Status;PriceGross;TaxRate;Deposit;Barcode;Quantity
+B;frisch geerntet;Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund;1 kg;1;Falscher Kühlschrank;b;;5;x;invalid-barcode;x
+H;frisch geerntet;Himbeeren haben viel Vitamin C und sind sehr gesund;0,5 kg;1;Falscher Kühlschrank;3;-5;10;-2;invalid-barcode;8555

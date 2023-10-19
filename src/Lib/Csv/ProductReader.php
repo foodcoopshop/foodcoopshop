@@ -60,7 +60,7 @@ class ProductReader extends Reader {
                 $record['Description'],
                 $record['Unity'],
                 $record['IsDeclarationOk'],
-                $record['StorageLocationId'],
+                $record['StorageLocation'],
                 $record['Status'],
                 $record['PriceGross'],
                 $record['TaxRate'],

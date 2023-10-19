@@ -33,9 +33,11 @@ trait ProductImportTrait
         $validator = $this->validationName($validator);
         $validator->inList('active', Product::ALLOWED_STATUSES, __('The_following_values_are_valid:') . ' ' . implode(', ', Product::ALLOWED_STATUSES));
         $validator = $this->getNumberRangeValidator($validator, 'price', 0, 2000);
+
         $taxesTable = FactoryLocator::get('Table')->get('Taxes');
         $allowedTaxIds = $taxesTable->getValidTaxIds();
         $validator->inList('id_tax', $allowedTaxIds, __('The_following_values_are_valid:') . ' ' . implode(', ', $allowedTaxIds));
+                
         return $validator;
     }
 
@@ -46,7 +48,7 @@ trait ProductImportTrait
         $description,
         $unity,
         $isDeclarationOk,
-        $idStorageLocation,
+        $storageLocation,
         $status,
         $grossPrice,
         $taxRate,
@@ -58,6 +60,13 @@ trait ProductImportTrait
         $taxesTable = FactoryLocator::get('Table')->get('Taxes');
         $netPriceAndTaxId = $taxesTable->getNetPriceAndTaxId($grossPrice, $taxRate);
 
+        $storageLocationsTable = FactoryLocator::get('Table')->get('StorageLocations');
+        $storageLocation = $storageLocationsTable->find('all', [
+            'conditions' => [
+                'StorageLocations.name' => $storageLocation,
+            ]
+        ])->first();
+
         $productEntity = $this->newEntity(
             [
                 'id_manufacturer' => $manufacturerId,
@@ -67,7 +76,7 @@ trait ProductImportTrait
                 'description' => $description,
                 'unity' => $unity,
                 'is_declaration_ok' => $isDeclarationOk,
-                'id_storage_location' => $idStorageLocation,
+                'id_storage_location' => $storageLocation->id ?? null,
                 'active' => $status,
                 'id_tax' => $netPriceAndTaxId['taxId'],
                 'price' => $netPriceAndTaxId['netPrice'],
@@ -99,6 +108,11 @@ trait ProductImportTrait
         ])->first();
         if (empty($manufacturer)) {
             $productEntity->setError('id_manufacturer', __('Manufacturer_not_found.'));
+        }
+
+        if (empty($storageLocation)) {
+            $allowedStorageLocations = array_values($storageLocationsTable->getForDropdown());
+            $productEntity->setError('id_storage_location', __('The_following_values_are_valid:') . ' ' . join(', ', $allowedStorageLocations));
         }
 
         return $productEntity;
