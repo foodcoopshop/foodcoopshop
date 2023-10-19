@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-05 14:09+0200\n"
+"POT-Creation-Date: 2023-10-19 10:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -737,7 +737,7 @@ msgstr ""
 msgid "Product_import"
 msgstr ""
 
-msgid "Product_import_successful."
+msgid "Product_import_successful. "
 msgstr ""
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."

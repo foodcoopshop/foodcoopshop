@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-10-17 15:36+0200\n"
-"PO-Revision-Date: 2023-10-05 14:10+0200\n"
+"POT-Creation-Date: 2023-10-19 10:32+0200\n"
+"PO-Revision-Date: 2023-10-19 10:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1293,6 +1293,12 @@ msgstr "The product {0} was added to your cart."
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
+
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr "The structure of the uploaded file is not valid."
+
+msgid "Row: {0}"
+msgstr "Row: {0}"
 
 msgid "net_per_piece_abbr"
 msgstr "net/piece"

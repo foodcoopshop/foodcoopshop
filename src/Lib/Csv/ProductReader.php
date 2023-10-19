@@ -22,6 +22,8 @@ use Cake\Core\Configure;
 
 class ProductReader extends Reader {
 
+    public const COLUMN_COUNT = 12;
+
     public function configureType(): void
     {
         $this->setDelimiter(';');

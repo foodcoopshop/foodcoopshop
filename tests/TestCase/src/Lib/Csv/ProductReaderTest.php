@@ -34,10 +34,8 @@ class ProductReaderTest extends AppCakeTestCase
         $records = $this->reader->getPreparedRecords();
 
         $this->assertCount(2, $records);
-
-        $columnCount = 13;
-        $this->assertEquals($columnCount, count($records[0]));
-        $this->assertEquals($columnCount, count($records[1]));
+        $this->assertEquals(ProductReader::COLUMN_COUNT, count($records[0]));
+        $this->assertEquals(ProductReader::COLUMN_COUNT, count($records[1]));
 
         $this->assertEquals('Brombeeren', $records[0]['ProductName']);
         $this->assertEquals('frisch geerntet <script>alert(\'evil\')</script>', $records[0]['DescriptionShort']);
