@@ -462,21 +462,21 @@
         },
         {
             "name": "dereuromark/cakephp-queue",
-            "version": "6.7.2",
+            "version": "6.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-queue.git",
-                "reference": "3f23bcc989f914d218d52c296ce8404e7371eedf"
+                "reference": "50ab21d8c9cd97692a7cec62f230b21832b52494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/3f23bcc989f914d218d52c296ce8404e7371eedf",
-                "reference": "3f23bcc989f914d218d52c296ce8404e7371eedf",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/50ab21d8c9cd97692a7cec62f230b21832b52494",
+                "reference": "50ab21d8c9cd97692a7cec62f230b21832b52494",
                 "shasum": ""
             },
             "require": {
-                "brick/varexporter": "^0.3.5",
-                "cakephp/cakephp": "^4.3.0",
+                "brick/varexporter": "^0.3.5 || ^0.4.0",
+                "cakephp/cakephp": "^4.4.0",
                 "php": ">=7.4"
             },
             "require-dev": {
@@ -530,7 +530,7 @@
                 "issues": "https://github.com/dereuromark/cakephp-queue/issues",
                 "source": "https://github.com/dereuromark/cakephp-queue"
             },
-            "time": "2023-07-24T10:44:45+00:00"
+            "time": "2023-10-25T17:33:05+00:00"
         },
         {
             "name": "druidfi/mysqldump-php",
