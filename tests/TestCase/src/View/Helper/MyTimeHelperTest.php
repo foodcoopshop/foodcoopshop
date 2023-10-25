@@ -69,4 +69,15 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testConvertSecondsInMinutesAndSeconds()
+    {
+        $this->assertEquals('1 Sekunde', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(1));
+        $this->assertEquals('59 Sekunden', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(59));
+        $this->assertEquals('1 Minute 1 Sekunde', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(61));
+        $this->assertEquals('1 Minute 59 Sekunden', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(119));
+        $this->assertEquals('2 Minuten 1 Sekunde', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(121));
+        $this->assertEquals('2 Minuten 59 Sekunden', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(179));
+        $this->assertEquals('1 Minute 30,5 Sekunden', $this->MyTimeHelper->convertSecondsInMinutesAndSeconds(90.5));
+    }
+
 }
