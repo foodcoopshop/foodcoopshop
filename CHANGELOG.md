@@ -6,6 +6,13 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v3.6.1
+
+### Security fix
+- Security-Fix für das Netzwerk-Modul [PR#972](https://github.com/foodcoopshop/foodcoopshop/pull/972)
+
+Datum: 02.11.2022 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.0...v3.6.1)
+
 ## v3.6.0
 
 ### Neue Datenschutz-Funktionen
