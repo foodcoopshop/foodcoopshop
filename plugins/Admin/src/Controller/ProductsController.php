@@ -75,6 +75,9 @@ class ProductsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'myImport':
+                return $this->AppAuth->isManufacturer();
+                break;
             case 'generateProductCards':
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
@@ -82,11 +85,9 @@ class ProductsController extends AdminAppController
             case 'calculateSellingPriceWithSurcharge':
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
-            case 'detectMissingProductImages':
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
-                    return true;
-                }
-                return false;
+            case 'import':
+                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+                break;
             case 'editPrice':
             case 'editDeposit':
             case 'editTax':

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use Admin\Traits\ManufacturerIdTrait;
 use App\Lib\Csv\ProductReader;
 
 /**
@@ -21,8 +22,19 @@ use App\Lib\Csv\ProductReader;
 
 trait ImportTrait {
 
-    public function import($manufacturerId)
+    use ManufacturerIdTrait;
+
+    public function myImport()
     {
+        $this->manufacturerId = $this->AppAuth->getManufacturerId();
+        $this->import();
+        $this->render('import');
+    }
+
+    public function import()
+    {
+
+        $manufacturerId = $this->getManufacturerId();
 
         $this->set('title_for_layout', __d('admin', 'Product_import'));
 

@@ -25,7 +25,12 @@ if (!empty($products)) {
     $buttons[] = '<hr class="dropdown-divider" />';
     $buttons[] = $this->element('productList/button/deleteSelectedProducts');
     $buttons[] = '<hr class="dropdown-divider" />';
-    $buttons[] = '<a class="dropdown-item" href="/admin/products/import/' . $manufacturerId . '"><i class="fa-fw fas fa-file-import ok"></i> ' . __d('admin', 'Import_products') . '</a>';
+    if ($appAuth->isManufacturer()) {
+        $productImportUrl = $this->Slug->getMyProductImport();
+    } else {
+        $productImportUrl = $this->Slug->getProductImport($manufacturerId);
+    }
+    $buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import ok"></i> ' . __d('admin', 'Import_products') . '</a>';
 }
 
 echo $this->element('dropdownWithButtons', [

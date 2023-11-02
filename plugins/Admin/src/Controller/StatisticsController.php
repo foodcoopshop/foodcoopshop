@@ -5,6 +5,7 @@ namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
+use Admin\Traits\ManufacturerIdTrait;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +24,8 @@ use Cake\Core\Configure;
 class StatisticsController extends AdminAppController
 {
 
-    public $manufacturerId;
+    use ManufacturerIdTrait;
+
     protected $Manufacturer;
     protected $OrderDetail;
     protected $PurchasePrice;
@@ -35,22 +37,6 @@ class StatisticsController extends AdminAppController
             'myIndex' => !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isManufacturer(),
              default => $this->AppAuth->isManufacturer(),
         };
-    }
-
-    /**
-     * $this->manufacturerId needs to be set in calling method
-     * @return int
-     */
-    private function getManufacturerId()
-    {
-        $manufacturerId = 'all';
-        if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
-        }
-        if ($this->manufacturerId > 0) {
-            $manufacturerId = $this->manufacturerId;
-        }
-        return $manufacturerId;
     }
 
     public function myIndex()
