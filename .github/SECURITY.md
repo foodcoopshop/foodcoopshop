@@ -12,4 +12,4 @@
 
 ## Reporting a Vulnerability
 
-Write an email to office@foodcoopshop.com
+If you found a security issue, please use the button "Report a vulnerability" or write an email to office@foodcoopshop.com. Your report will be confidentially forwarded to the developers. We will contact you as soon as possible and discuss the next steps with you.
