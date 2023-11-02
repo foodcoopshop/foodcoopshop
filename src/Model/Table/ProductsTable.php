@@ -1370,7 +1370,10 @@ class ProductsTable extends AppTable
             }
 
             if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
-                if (!RemoteFile::exists($imageFromRemoteServer)) {
+                $syncDomainsTable = FactoryLocator::get('Table')->get('Network.SyncDomains');
+                $syncDomains = $syncDomainsTable->getActiveSyncDomains()->toArray();
+                $syncDomains = Hash::extract($syncDomains, '{n}.domain');
+                if (!RemoteFile::exists($imageFromRemoteServer, $syncDomains)) {
                     throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
                 }
             } else {
@@ -1380,9 +1383,9 @@ class ProductsTable extends AppTable
                 }
             }
 
-            $imageSize = getimagesize($imageFromRemoteServer);
-            if ($imageSize === false) {
-                throw new InvalidParameterException('file is not not an image: ' . $imageFromRemoteServer);
+            $mimeContentType = mime_content_type($imageFromRemoteServer);
+            if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
+                throw new InvalidParameterException('file is not an image: ' . $imageFromRemoteServer);
             }
         }
 

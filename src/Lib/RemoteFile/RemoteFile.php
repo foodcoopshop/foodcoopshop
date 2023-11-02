@@ -18,8 +18,10 @@ namespace App\Lib\RemoteFile;
 
 class RemoteFile
 {
-    public static function exists(string $remoteFile): bool
+    public static function exists(string $remoteFile, $allowedHosts = []): bool
     {
+
+        self::verifyAllowedHosts($allowedHosts, $remoteFile);
 
         $ch = curl_init($remoteFile);
         curl_setopt($ch, CURLOPT_NOBODY, true);
@@ -33,6 +35,18 @@ class RemoteFile
 
         return false;
 
+    }
+
+    private static function verifyAllowedHosts($allowedHosts, $remoteFile)
+    {
+        if (empty($allowedHosts)) {
+            throw new \Exception('allowedHosts must be set');
+        } else {
+            $host = parse_url($remoteFile, PHP_URL_HOST);
+            if (!in_array($host, $allowedHosts)) {
+                throw new \Exception('invalid host');
+             }
+        }
     }
 
 }
