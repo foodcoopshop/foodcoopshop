@@ -46,6 +46,28 @@ class ProductReader extends Reader {
         return $record;
     }
 
+    public function getAllErrors($entities)
+    {
+        $errors = [];
+        foreach($entities as $entity) {
+            if ($entity->hasErrors()) {
+                $errors[] = $entity->getErrors();
+            }
+        }
+        return $errors;
+    }
+
+    public function areAllEntitiesValid($entities)
+    {
+        $allEntitiesValid = true;
+        foreach($entities as $entity) {
+            if ($entity->hasErrors()) {
+                $allEntitiesValid = false;
+            }
+        }
+        return $allEntitiesValid;
+    }
+
     public function import($manufacturerId)
     {
         $records = $this->getPreparedRecords();
@@ -70,13 +92,7 @@ class ProductReader extends Reader {
             );
         }
 
-        $allProductEntitiesValid = true;
-        foreach($validatedProductEntities as $validatedProductEntity) {
-            if ($validatedProductEntity->hasErrors()) {
-                $allProductEntitiesValid = false;
-            }
-        }
-
+        $allProductEntitiesValid = $this->areAllEntitiesValid($validatedProductEntities);
         if ($allProductEntitiesValid) {
             $savedProductEntities = [];
             foreach($validatedProductEntities as $validatedProductEntity) {

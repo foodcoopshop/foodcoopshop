@@ -5,6 +5,8 @@ namespace Admin\Traits\Products;
 
 use Admin\Traits\ManufacturerIdTrait;
 use App\Lib\Csv\ProductReader;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,8 +37,19 @@ trait ImportTrait {
     {
 
         $manufacturerId = $this->getManufacturerId();
+        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturer = $manufacturersTable->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => (int) $manufacturerId,
+            ]
+        ])->first();
 
-        $this->set('title_for_layout', __d('admin', 'Product_import'));
+        if (empty($manufacturer)) {
+            throw new RecordNotFoundException('manufacturer not found or not active');
+        }
+        $this->set('manufacturer', $manufacturer);
+
+        $this->set('title_for_layout', __d('admin', 'Product_import_for_{0}', [$manufacturer->name]));
 
         if (!empty($this->getRequest()->getData('upload'))) {
 
@@ -45,12 +58,28 @@ trait ImportTrait {
             $reader = ProductReader::createFromString($content);
             $reader->configureType();
 
-            try {
-                $productEntities = $reader->import($manufacturerId);
+            $productEntities = $reader->import($manufacturerId);
+            $this->set('productEntities', $productEntities);
+            
+            if ($reader->areAllEntitiesValid($productEntities)) {
                 $this->Flash->success(__d('admin', 'Product_import_successful.' . ' ' . count($productEntities) . 'x'));
-            } catch(\Exception $e) {
-                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
-                $this->redirect($this->referer());
+            } else {
+                $errors = $reader->getAllErrors($productEntities);
+                foreach($errors as $row => $error) {
+                    $errorMessage = __('Product') . ' ' . $row + 1 . '<br />';
+                    foreach($error as $fieldName => $messages) {
+                        $errorMessage .= $fieldName . ': ';
+                        foreach($messages as $errorType => $message) {
+                            if (is_array($message)) {
+                                $message = implode(' / ', $message);
+                            }
+                            $errorMessage .= $errorType . ': ' . $message;
+                        }
+                        $errorMessage .= '<br />';
+                    }
+                    $errorRows[] = '<li>' . $errorMessage . '</li>';
+                }
+                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.') . '<br /><ul>' . implode('', $errorRows) . '</ul>');
             }
 
         }

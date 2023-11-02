@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-10-19 10:32+0200\n"
+"POT-Creation-Date: 2023-11-02 21:29+0100\n"
 "PO-Revision-Date: 2023-10-19 10:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1296,9 +1296,6 @@ msgstr "Deine Einkaufstasche war leer."
 
 msgid "The_structure_of_the_uploaded_file_is_not_valid."
 msgstr "Die Struktur der hochgeladenen Datei ist nicht gültig."
-
-msgid "Row: {0}"
-msgstr "Zeile: {0}"
 
 msgid "net_per_piece_abbr"
 msgstr "netto/St."
@@ -2820,6 +2817,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Row: {0}"
+#~ msgstr "Zeile: {0}"
 
 #~ msgid "Please_enter_a_price."
 #~ msgstr "Bitte gib einen Preis ein."

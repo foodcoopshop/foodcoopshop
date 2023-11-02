@@ -19,23 +19,67 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
 ]);
+?>
 
- if (empty($csvRecords)) {
-     echo $this->Form->create(null, [
-         'type' => 'file',
-         'id' => 'csv-upload',
-     ]);
-     echo $this->Form->control('upload', [
-         'type' => 'file',
-         'accept' => '.csv',
-         'onchange' => 'form.submit()',
-         'label' => __d('admin', 'Upload_CSV_file_with_products') . ': ',
-     ]);
-     echo $this->Form->end();
- }
- 
- echo '<button type="submit" class="btn btn-success">
-         <i class="fas fa-check"></i> ' . __d('admin', 'Save') . '
-     </button>';
- 
- echo $this->Form->end();
+<div class="filter-container">
+    <h1><?php echo $title_for_layout; ?></h1>
+    <div class="right">
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]); ?>
+    </div>
+</div>
+
+<div class="product-import-wrapper">
+
+<?php if (!isset($productEntities)) { ?>
+
+    <div class="template-download-link-wrapper"">
+        <?php
+        echo $this->MyHtml->link(
+            '<i class="fas fa-download"></i> '. __d('admin', 'Download_empty_CSV_template'),
+            '/templates/product-import-template.csv',
+            [
+                'class' => 'btn btn-success',
+                'style' => 'padding: 15px 30px',
+                'escape' => false,
+            ],
+        );
+        ?>
+    </div>
+
+<?php } ?>
+
+    <?php
+
+        echo $this->Form->create(null, [
+            'type' => 'file',
+            'id' => 'csv-upload',
+        ]);
+        echo $this->Form->control('upload', [
+            'type' => 'file',
+            'accept' => '.csv',
+            'onchange' => 'form.submit()',
+            'label' => __d('admin', 'Upload_changed_CSV_file_with_products') . ': ',
+            'style' => 'padding-left:5px',
+        ]);
+        echo $this->Form->end();
+
+        /*
+        echo '<button type="submit" class="btn btn-success">
+                <i class="fas fa-check"></i> ' . __d('admin', 'Save') . '
+            </button>';
+        */
+
+        echo $this->Form->end();
+
+        echo $this->MyHtml->link(
+            '<i class="fas fa-arrow-left"></i> ' . __d('admin', 'Back_to_product_page'),
+            $this->Slug->getProductAdmin($appAuth->isManufacturer() ? '' : $manufacturer->id_manufacturer),
+            [
+                'class' => 'btn btn-outline-light',
+                'escape' => false,
+            ],
+        );
+
+    ?>
+
+</div>
