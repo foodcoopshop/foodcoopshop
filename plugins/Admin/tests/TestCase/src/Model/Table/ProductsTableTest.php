@@ -96,11 +96,25 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeImage($products);
-        } catch (InvalidParameterException $e) {
+        } catch (Exception $e) {
             $exceptionThrown = true;
         }
 
         $this->assertSame(true, $exceptionThrown);
+    }
+
+    public function testChangeImageInvalidDomain()
+    {
+        $productId = 346;
+        $products = [
+            [$productId => 'https://localhost:8080/img/tests/test-image.jpg']
+        ];
+
+        try {
+            $this->Product->changeImage($products);
+        } catch (Exception $e) {
+            $this->assertEquals('invalid host', $e->getMessage());
+        }
     }
 
     public function testChangeImageNonExistingFile()
@@ -113,7 +127,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeImage($products);
-        } catch (InvalidParameterException $e) {
+        } catch (Exception $e) {
             $exceptionThrown = true;
         }
 

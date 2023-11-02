@@ -1370,7 +1370,10 @@ class ProductsTable extends AppTable
             }
 
             if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
-                if (!RemoteFile::exists($imageFromRemoteServer)) {
+                $syncDomainsTable = FactoryLocator::get('Table')->get('Network.SyncDomains');
+                $syncDomains = $syncDomainsTable->getActiveSyncDomains()->toArray();
+                $syncDomains = Hash::extract($syncDomains, '{n}.domain');
+                if (!RemoteFile::exists($imageFromRemoteServer, $syncDomains)) {
                     throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
                 }
             } else {
