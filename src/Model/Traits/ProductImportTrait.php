@@ -112,7 +112,7 @@ trait ProductImportTrait
             $productEntity->setError('id_manufacturer', __('Manufacturer_not_found.'));
         }
 
-        if (empty($storageLocation)) {
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && empty($storageLocation)) {
             $allowedStorageLocations = array_values($storageLocationsTable->getForDropdown());
             $productEntity->setError('id_storage_location', __('The_following_values_are_valid:') . ' ' . join(', ', $allowedStorageLocations));
         }
