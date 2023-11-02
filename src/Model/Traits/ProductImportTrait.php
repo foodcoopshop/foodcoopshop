@@ -60,12 +60,14 @@ trait ProductImportTrait
         $taxesTable = FactoryLocator::get('Table')->get('Taxes');
         $netPriceAndTaxId = $taxesTable->getNetPriceAndTaxId($grossPrice, $taxRate);
 
-        $storageLocationsTable = FactoryLocator::get('Table')->get('StorageLocations');
-        $storageLocation = $storageLocationsTable->find('all', [
-            'conditions' => [
-                'StorageLocations.name' => $storageLocation,
-            ]
-        ])->first();
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            $storageLocationsTable = FactoryLocator::get('Table')->get('StorageLocations');
+            $storageLocation = $storageLocationsTable->find('all', [
+                'conditions' => [
+                    'StorageLocations.name' => $storageLocation,
+                ]
+            ])->first();
+        }
 
         $productEntity = $this->newEntity(
             [
@@ -76,7 +78,7 @@ trait ProductImportTrait
                 'description' => $description,
                 'unity' => $unity,
                 'is_declaration_ok' => $isDeclarationOk,
-                'id_storage_location' => $storageLocation->id ?? null,
+                'id_storage_location' => $storageLocation->id ?? 0,
                 'active' => $status,
                 'id_tax' => $netPriceAndTaxId['taxId'],
                 'price' => $netPriceAndTaxId['netPrice'],
