@@ -170,16 +170,16 @@
         },
         {
             "name": "cakephp/chronos",
-            "version": "2.4.2",
+            "version": "2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "79b58b76899cdba114ea45d18c79f8af9a9192b0"
+                "reference": "96f28ddfceba2ff56e0d2405c28d789bd546ff55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/79b58b76899cdba114ea45d18c79f8af9a9192b0",
-                "reference": "79b58b76899cdba114ea45d18c79f8af9a9192b0",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/96f28ddfceba2ff56e0d2405c28d789bd546ff55",
+                "reference": "96f28ddfceba2ff56e0d2405c28d789bd546ff55",
                 "shasum": ""
             },
             "require": {
@@ -224,7 +224,7 @@
                 "issues": "https://github.com/cakephp/chronos/issues",
                 "source": "https://github.com/cakephp/chronos"
             },
-            "time": "2023-10-10T11:22:20+00:00"
+            "time": "2023-10-17T08:00:24+00:00"
         },
         {
             "name": "cakephp/migrations",
@@ -462,21 +462,21 @@
         },
         {
             "name": "dereuromark/cakephp-queue",
-            "version": "6.7.2",
+            "version": "6.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-queue.git",
-                "reference": "3f23bcc989f914d218d52c296ce8404e7371eedf"
+                "reference": "50ab21d8c9cd97692a7cec62f230b21832b52494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/3f23bcc989f914d218d52c296ce8404e7371eedf",
-                "reference": "3f23bcc989f914d218d52c296ce8404e7371eedf",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/50ab21d8c9cd97692a7cec62f230b21832b52494",
+                "reference": "50ab21d8c9cd97692a7cec62f230b21832b52494",
                 "shasum": ""
             },
             "require": {
-                "brick/varexporter": "^0.3.5",
-                "cakephp/cakephp": "^4.3.0",
+                "brick/varexporter": "^0.3.5 || ^0.4.0",
+                "cakephp/cakephp": "^4.4.0",
                 "php": ">=7.4"
             },
             "require-dev": {
@@ -530,20 +530,20 @@
                 "issues": "https://github.com/dereuromark/cakephp-queue/issues",
                 "source": "https://github.com/dereuromark/cakephp-queue"
             },
-            "time": "2023-07-24T10:44:45+00:00"
+            "time": "2023-10-25T17:33:05+00:00"
         },
         {
             "name": "druidfi/mysqldump-php",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/druidfi/mysqldump-php.git",
-                "reference": "15da1dd26e638674bc73fd963b33b26282c14c96"
+                "reference": "f8d881a7ddb5f023c30a0da76d5178cf2e7066ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/druidfi/mysqldump-php/zipball/15da1dd26e638674bc73fd963b33b26282c14c96",
-                "reference": "15da1dd26e638674bc73fd963b33b26282c14c96",
+                "url": "https://api.github.com/repos/druidfi/mysqldump-php/zipball/f8d881a7ddb5f023c30a0da76d5178cf2e7066ee",
+                "reference": "f8d881a7ddb5f023c30a0da76d5178cf2e7066ee",
                 "shasum": ""
             },
             "require": {
@@ -568,7 +568,7 @@
             "authors": [
                 {
                     "name": "Druid.fi",
-                    "email": "info@druid.fi"
+                    "homepage": "https://github.com/druidfi"
                 },
                 {
                     "name": "Diego Torres",
@@ -592,9 +592,9 @@
             ],
             "support": {
                 "issues": "https://github.com/druidfi/mysqldump-php/issues",
-                "source": "https://github.com/druidfi/mysqldump-php/tree/1.0.2"
+                "source": "https://github.com/druidfi/mysqldump-php/tree/1.0.3"
             },
-            "time": "2022-12-31T09:51:45+00:00"
+            "time": "2023-05-20T06:09:59+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -3820,23 +3820,23 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "4.9.4",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "663491edec4a6b9111f1cf4733ebd471450df71e"
+                "reference": "65918d04944af4c923d15c31ea60f941207788de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/663491edec4a6b9111f1cf4733ebd471450df71e",
-                "reference": "663491edec4a6b9111f1cf4733ebd471450df71e",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/65918d04944af4c923d15c31ea60f941207788de",
+                "reference": "65918d04944af4c923d15c31ea60f941207788de",
                 "shasum": ""
             },
             "require": {
-                "cakephp/cakephp": "^4.4.0",
+                "cakephp/cakephp": "^4.5.0",
                 "cakephp/chronos": "^2.0",
                 "composer/composer": "^1.3 | ^2.0",
-                "jdorn/sql-formatter": "^1.2",
+                "doctrine/sql-formatter": "^1.1.3",
                 "php": ">=7.4"
             },
             "require-dev": {
@@ -3874,6 +3874,7 @@
             "keywords": [
                 "cakephp",
                 "debug",
+                "dev",
                 "kit"
             ],
             "support": {
@@ -3882,7 +3883,7 @@
                 "issues": "https://github.com/cakephp/debug_kit/issues",
                 "source": "https://github.com/cakephp/debug_kit"
             },
-            "time": "2023-07-05T16:04:04+00:00"
+            "time": "2023-10-23T16:03:16+00:00"
         },
         {
             "name": "cakephp/twig-view",
@@ -4650,6 +4651,58 @@
             "time": "2022-12-30T00:23:10+00:00"
         },
         {
+            "name": "doctrine/sql-formatter",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/sql-formatter.git",
+                "reference": "25a06c7bf4c6b8218f47928654252863ffc890a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/25a06c7bf4c6b8218f47928654252863ffc890a5",
+                "reference": "25a06c7bf4c6b8218f47928654252863ffc890a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4"
+            },
+            "bin": [
+                "bin/sql-formatter"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\SqlFormatter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Dorn",
+                    "email": "jeremy@jeremydorn.com",
+                    "homepage": "https://jeremydorn.com/"
+                }
+            ],
+            "description": "a PHP SQL highlighting library",
+            "homepage": "https://github.com/doctrine/sql-formatter/",
+            "keywords": [
+                "highlight",
+                "sql"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/sql-formatter/issues",
+                "source": "https://github.com/doctrine/sql-formatter/tree/1.1.3"
+            },
+            "time": "2022-05-23T21:33:49+00:00"
+        },
+        {
             "name": "ergebnis/phpstan-rules",
             "version": "2.1.0",
             "source": {
@@ -4784,60 +4837,6 @@
                 "source": "https://github.com/jasny/twig-extensions"
             },
             "time": "2019-12-10T16:04:23+00:00"
-        },
-        {
-            "name": "jdorn/sql-formatter",
-            "version": "v1.2.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jdorn/sql-formatter.git",
-                "reference": "64990d96e0959dff8e059dfcdc1af130728d92bc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/64990d96e0959dff8e059dfcdc1af130728d92bc",
-                "reference": "64990d96e0959dff8e059dfcdc1af130728d92bc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "lib"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Dorn",
-                    "email": "jeremy@jeremydorn.com",
-                    "homepage": "http://jeremydorn.com/"
-                }
-            ],
-            "description": "a PHP SQL highlighting library",
-            "homepage": "https://github.com/jdorn/sql-formatter/",
-            "keywords": [
-                "highlight",
-                "sql"
-            ],
-            "support": {
-                "issues": "https://github.com/jdorn/sql-formatter/issues",
-                "source": "https://github.com/jdorn/sql-formatter/tree/v1.2.17"
-            },
-            "time": "2014-01-12T16:20:24+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -5128,16 +5127,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.38",
+            "version": "1.10.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "5302bb402c57f00fb3c2c015bac86e0827e4b691"
+                "reference": "d9dedb0413f678b4d03cbc2279a48f91592c97c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/5302bb402c57f00fb3c2c015bac86e0827e4b691",
-                "reference": "5302bb402c57f00fb3c2c015bac86e0827e4b691",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d9dedb0413f678b4d03cbc2279a48f91592c97c4",
+                "reference": "d9dedb0413f678b4d03cbc2279a48f91592c97c4",
                 "shasum": ""
             },
             "require": {
@@ -5186,7 +5185,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-06T14:19:14+00:00"
+            "time": "2023-10-17T15:46:26+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

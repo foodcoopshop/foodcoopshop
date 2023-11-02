@@ -88,19 +88,31 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeImageInvalidImage()
     {
+        $file = WWW_ROOT . '/css/global.css';
         $productId = 346;
         $products = [
-            [$productId => Configure::read('App.fullBaseUrl') . '/css/global.css']
+            [$productId => $file]
         ];
-        $exceptionThrown = false;
 
         try {
             $this->Product->changeImage($products);
-        } catch (InvalidParameterException $e) {
-            $exceptionThrown = true;
+        } catch (Exception $e) {
+            $this->assertEquals('file is not an image: ' . $file, $e->getMessage());
         }
+    }
 
-        $this->assertSame(true, $exceptionThrown);
+    public function testChangeImageInvalidDomain()
+    {
+        $productId = 346;
+        $products = [
+            [$productId => 'https://localhost:8080/img/tests/test-image.jpg']
+        ];
+
+        try {
+            $this->Product->changeImage($products);
+        } catch (Exception $e) {
+            $this->assertEquals('invalid host', $e->getMessage());
+        }
     }
 
     public function testChangeImageNonExistingFile()
@@ -113,7 +125,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeImage($products);
-        } catch (InvalidParameterException $e) {
+        } catch (Exception $e) {
             $exceptionThrown = true;
         }
 
