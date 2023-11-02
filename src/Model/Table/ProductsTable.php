@@ -1383,9 +1383,9 @@ class ProductsTable extends AppTable
                 }
             }
 
-            $imageSize = getimagesize($imageFromRemoteServer);
-            if ($imageSize === false) {
-                throw new InvalidParameterException('file is not not an image: ' . $imageFromRemoteServer);
+            $mimeContentType = mime_content_type($imageFromRemoteServer);
+            if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
+                throw new InvalidParameterException('file is not an image: ' . $imageFromRemoteServer);
             }
         }
 

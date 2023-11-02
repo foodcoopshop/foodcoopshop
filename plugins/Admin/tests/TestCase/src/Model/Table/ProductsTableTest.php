@@ -88,19 +88,17 @@ class ProductsTableTest extends AppCakeTestCase
 
     public function testChangeImageInvalidImage()
     {
+        $file = WWW_ROOT . '/css/global.css';
         $productId = 346;
         $products = [
-            [$productId => Configure::read('App.fullBaseUrl') . '/css/global.css']
+            [$productId => $file]
         ];
-        $exceptionThrown = false;
 
         try {
             $this->Product->changeImage($products);
         } catch (Exception $e) {
-            $exceptionThrown = true;
+            $this->assertEquals('file is not an image: ' . $file, $e->getMessage());
         }
-
-        $this->assertSame(true, $exceptionThrown);
     }
 
     public function testChangeImageInvalidDomain()
