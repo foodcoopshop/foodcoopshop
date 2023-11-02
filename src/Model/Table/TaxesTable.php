@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use AssetCompress\Factory;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;

@@ -65,6 +65,7 @@ trait ImportTrait {
                 $this->Flash->success(__d('admin', 'Product_import_successful.' . ' ' . count($productEntities) . 'x'));
             } else {
                 $errors = $reader->getAllErrors($productEntities);
+                $errorRows = [];
                 foreach($errors as $row => $error) {
                     $errorMessage = __('Product') . ' ' . $row + 1 . '<br />';
                     foreach($error as $fieldName => $messages) {
