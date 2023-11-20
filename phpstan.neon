@@ -1,7 +1,7 @@
 parameters:
     level: 1
     bootstrapFiles:
-        - %currentWorkingDirectory%/config/phpstan-bootstrap.php
+        - config/phpstan-bootstrap.php
     fileExtensions:
         - php
     paths:
@@ -17,21 +17,21 @@ parameters:
     ignoreErrors:
         - message: '#Constant ACCESS_DENIED_MESSAGE not found.#'
         - message: '#Variable \$.* might not be defined#'
-          path: %currentWorkingDirectory%/templates
+          path: templates
         - message: '#Variable \$.* might not be defined#'
-          path: %currentWorkingDirectory%/plugins/Admin/templates
+          path: plugins/Admin/templates
         - message: '#Variable \$.* might not be defined#'
-          path: %currentWorkingDirectory%/plugins/Network/templates
+          path: plugins/Network/templates
         - message: '#Access to an undefined property#'
-          path: %currentWorkingDirectory%/src/View/Helper
+          path: src/View/Helper
         - message: '#Access to an undefined property#'
-          path: %currentWorkingDirectory%/plugins/Network/src/View/Helper
+          path: plugins/Network/src/View/Helper
         - message: '#Access to an undefined property#'
-          path: %currentWorkingDirectory%/src/Controller/Component
+          path: src/Controller/Component
         - message: '#Variable \$purchasePriceTaxRate might not be defined#'
-          path: %currentWorkingDirectory%/src/Model/Table/ProductsTable.php
+          path: src/Model/Table/ProductsTable.php
         - message: '#Access to an undefined property#'
-          path: %currentWorkingDirectory%/src/Model/Entity
+          path: src/Model/Entity
 
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
