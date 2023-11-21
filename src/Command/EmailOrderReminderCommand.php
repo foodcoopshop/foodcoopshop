@@ -73,8 +73,11 @@ class EmailOrderReminderCommand extends AppCommand
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
+        $diffOrderCreatedAndDeliveryDayInDays = 6;
+        $exp = new QueryExpression();
         $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
-            (new QueryExpression())->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
+            $exp->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
+            $exp->lte('DATEDIFF(ActiveOrderDetails.pickup_day, DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\'))', $diffOrderCreatedAndDeliveryDayInDays),
         ]);
 
         $customers = $this->Customer->find('all', [
