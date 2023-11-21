@@ -108,6 +108,7 @@ return [
         'selfServiceModeShowOnlyStockProducts' => true,
         'selfServiceModeAutoGenerateInvoice' => true,
         'showOrderedProductsTotalAmountInCatalog' => false,
+        'applyOpenOrderCheckForOrderReminder' => true,
 
         /**
          * id of the category "all products"

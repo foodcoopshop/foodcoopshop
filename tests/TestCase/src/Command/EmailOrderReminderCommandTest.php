@@ -126,6 +126,31 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
         $this->assertMailCount(0);
     }
 
+    public function testApplyOpenOrderCheckForOrderReminderFalse()
+    {
+        Configure::write('app.applyOpenOrderCheckForOrderReminder', false);
+        $pickupDay = '2019-11-08';
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+
+        $this->OrderDetail->updateAll(['created' => '2019-11-08 00:00:00',], []);
+
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get(1),
+                [
+                    'pickup_day' => $pickupDay,
+                ]
+            )
+        );
+        $this->exec('email_order_reminder 2019-11-05');
+        $this->runAndAssertQueue();
+        $this->assertMailCount(3);
+        $this->assertMailContainsHtmlAt(0, 'heute');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailAdmin'));
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
+    }
+
     public function tearDown(): void
     {
         parent::tearDown();

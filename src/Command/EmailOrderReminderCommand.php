@@ -73,12 +73,14 @@ class EmailOrderReminderCommand extends AppCommand
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $diffOrderCreatedAndDeliveryDayInDays = 6;
-        $exp = new QueryExpression();
-        $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
-            $exp->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
-            $exp->lte('DATEDIFF(ActiveOrderDetails.pickup_day, DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\'))', $diffOrderCreatedAndDeliveryDayInDays),
-        ]);
+        if (Configure::read('app.applyOpenOrderCheckForOrderReminder')) {
+            $diffOrderCreatedAndDeliveryDayInDays = 6;
+            $exp = new QueryExpression();
+            $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
+                $exp->eq('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $nextDeliveryDay),
+                $exp->lte('DATEDIFF(ActiveOrderDetails.pickup_day, DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\'))', $diffOrderCreatedAndDeliveryDayInDays),
+            ]);
+        }
 
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
@@ -93,8 +95,10 @@ class EmailOrderReminderCommand extends AppCommand
         $outString = '';
         foreach ($customers as $customer) {
             // customer has open orders, do not send email
-            if (count($customer->active_order_details) > 0) {
-                continue;
+            if (Configure::read('app.applyOpenOrderCheckForOrderReminder')) {
+                if (count($customer->active_order_details) > 0) {
+                    continue;
+                }
             }
 
             $email = new AppMailer();
