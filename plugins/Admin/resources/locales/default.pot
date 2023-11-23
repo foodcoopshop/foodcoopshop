@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-23 09:22+0100\n"
+"POT-Creation-Date: 2023-11-23 09:55+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -762,9 +762,6 @@ msgid "Tax_rate"
 msgstr ""
 
 msgid "Deposit"
-msgstr ""
-
-msgid "Quantity"
 msgstr ""
 
 msgid "Product_import_for_{0}"
@@ -1830,6 +1827,9 @@ msgid "Your_credit_balance"
 msgstr ""
 
 msgid "Back_to_member_overview"
+msgstr ""
+
+msgid "docs_route_product_import"
 msgstr ""
 
 msgid "Download_empty_CSV_template"

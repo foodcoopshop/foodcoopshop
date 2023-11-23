@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 09:22+0100\n"
-"PO-Revision-Date: 2023-11-23 09:24+0100\n"
+"POT-Creation-Date: 2023-11-23 09:55+0100\n"
+"PO-Revision-Date: 2023-11-23 09:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -764,9 +764,6 @@ msgstr "Steuersatz"
 
 msgid "Deposit"
 msgstr "Pfand"
-
-msgid "Quantity"
-msgstr "Verfügbare Menge"
 
 msgid "Product_import_for_{0}"
 msgstr "Produkt-Import für {0}"
@@ -1842,6 +1839,9 @@ msgstr "Dein Kontostand"
 msgid "Back_to_member_overview"
 msgstr "Zurück zur Mitglieder-Übersicht"
 
+msgid "docs_route_product_import"
+msgstr "produkt-import.html"
+
 msgid "Download_empty_CSV_template"
 msgstr "Vorlage downloaden"
 
@@ -2484,15 +2484,14 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#~ msgid "Quantity"
+#~ msgstr "Verfügbare Menge"
+
 #~ msgid "More"
 #~ msgstr "Mehr"
 
 #~ msgid "Selected_products"
 #~ msgstr "Markierte Produkte"
-
-#, fuzzy
-#~ msgid "docs_route_product_import"
-#~ msgstr "produkte"
 
 #~ msgid "Print"
 #~ msgstr "Drucken"

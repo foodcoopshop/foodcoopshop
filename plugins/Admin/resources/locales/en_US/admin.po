@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 09:22+0100\n"
+"POT-Creation-Date: 2023-11-23 09:55+0100\n"
 "PO-Revision-Date: 2023-11-23 09:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -764,9 +764,6 @@ msgstr "Tax rate"
 
 msgid "Deposit"
 msgstr "Deposit"
-
-msgid "Quantity"
-msgstr "Available quantity"
 
 msgid "Product_import_for_{0}"
 msgstr "Product import for {0}"
@@ -1839,6 +1836,9 @@ msgstr "Your credit balance"
 msgid "Back_to_member_overview"
 msgstr "Back to member overview"
 
+msgid "docs_route_product_import"
+msgstr "products"
+
 msgid "Download_empty_CSV_template"
 msgstr "Download empty CSV template"
 
@@ -2481,14 +2481,14 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "Product_ID"
 msgstr "ProductID"
 
+#~ msgid "Quantity"
+#~ msgstr "Available quantity"
+
 #~ msgid "More"
 #~ msgstr "More"
 
 #~ msgid "Selected_products"
 #~ msgstr "Selected products"
-
-#~ msgid "docs_route_product_import"
-#~ msgstr "products"
 
 #~ msgid "Print"
 #~ msgstr "Print"
