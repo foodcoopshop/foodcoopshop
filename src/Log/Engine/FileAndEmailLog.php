@@ -55,12 +55,15 @@ class FileAndEmailLog extends FileLog
             '{"email":{"unique"',
             '{"email":{"exists"',
             '{"email":{"_empty"',
+            '{"email":{"email":',
             '{"delivery_rhythm_',
             '{"quantity_in_units"',
             '{"email":{"account_inactive"',
             '{"short_description":{"maxLength":',
             '{"firstname":{"_empty":',
+            '{"firstname":{"custom":',
             '{"lastname":{"_empty":',
+            '{"lastname":{"custom":',
             '{"name":{"lengthBetween":',
             __('You_are_not_signed_in.'),
             '{"default_quantity_after_sending_order_lists":{"greaterThanOrEqual":',
@@ -83,6 +86,9 @@ class FileAndEmailLog extends FileLog
             'Form tampering protection token validation failed',
             'General error: 1205 Lock wait timeout exceeded',
             'Communication link failure: 1053 Server shutdown in progress',
+            '{"barcode":{"lengthBetween":',
+            '`FormProtector` instance has not been created.',
+            'invalid-image',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
