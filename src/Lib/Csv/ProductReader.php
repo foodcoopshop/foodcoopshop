@@ -34,14 +34,15 @@ class ProductReader extends Reader {
         $records = $this->getRecords();
         $records = iterator_to_array($records);
         $records = array_values($records); // reindex array as 0 is dropped by iterator_to_array
-        $preparedRecords = array_map([$this, 'formatColumns'], $records);
+        $preparedRecords = array_map([$this, 'formatColumnsAndSetDefaultValues'], $records);
         return $preparedRecords;
     }
 
-    private function formatColumns($record) {
+    private function formatColumnsAndSetDefaultValues($record) {
         $record[__('Gross_price')] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Gross_price')]);
-        $record[__('Tax_rate')] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Tax_rate')]);
-        $record[__('Deposit')] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Deposit')]);
+        $record[__('Tax_rate')] = $record[__('Tax_rate')] ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Tax_rate')]) : 0;
+        $record[__('Deposit')] = $record[__('Deposit')] ? Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Deposit')]) : 0;
+        $record[__('Product_declaration')] = $record[__('Product_declaration')] != '' ? $record[__('Product_declaration')] : 0;
         return $record;
     }
 

@@ -35,6 +35,7 @@ class DepositProductsTable extends AppTable
 
     public function validationDefault(Validator $validator): Validator
     {
+        $validator->allowEmptyString('deposit');
         $validator = $this->getNumberRangeValidator($validator, 'deposit', 0, 100);
         return $validator;
     }

@@ -37,7 +37,7 @@ trait ProductImportTrait
         $taxesTable = FactoryLocator::get('Table')->get('Taxes');
         $allowedTaxIds = $taxesTable->getValidTaxIds();
         $validator->inList('id_tax', $allowedTaxIds, __('The_following_values_are_valid:') . ' ' . implode(', ', $allowedTaxIds));
-                
+
         return $validator;
     }
 
@@ -48,7 +48,7 @@ trait ProductImportTrait
         $description,
         $unity,
         $isDeclarationOk,
-        $storageLocation,
+        $storageLocationString,
         $status,
         $grossPrice,
         $taxRate,
@@ -61,9 +61,9 @@ trait ProductImportTrait
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
             $storageLocationsTable = FactoryLocator::get('Table')->get('StorageLocations');
-            $storageLocation = $storageLocationsTable->find('all', [
+            $storageLocationEntity = $storageLocationsTable->find('all', [
                 'conditions' => [
-                    'StorageLocations.name' => $storageLocation,
+                    'StorageLocations.name' => $storageLocationString,
                 ]
             ])->first();
         }
@@ -77,7 +77,7 @@ trait ProductImportTrait
                 'description' => $description,
                 'unity' => $unity,
                 'is_declaration_ok' => $isDeclarationOk,
-                'id_storage_location' => $storageLocation->id ?? 0,
+                'id_storage_location' => $storageLocationEntity->id ?? 0,
                 'active' => $status,
                 'id_tax' => $netPriceAndTaxId['taxId'],
                 'price' => $netPriceAndTaxId['netPrice'],
@@ -86,6 +86,7 @@ trait ProductImportTrait
                 ],
                 'stock_available' => [
                     'quantity' => $quantity,
+                    'always_available' => $quantity == 0 ? 1 : 0,
                 ],
                 'category_products' => [
                     [
@@ -108,7 +109,7 @@ trait ProductImportTrait
             $productEntity->setError('id_manufacturer', __('Manufacturer_not_found.'));
         }
 
-        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && empty($storageLocation)) {
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS') && empty($storageLocationEntity) && $storageLocationString != '') {
             $allowedStorageLocations = array_values($storageLocationsTable->getForDropdown());
             $productEntity->setError('id_storage_location', __('The_following_values_are_valid:') . ' ' . join(', ', $allowedStorageLocations));
         }

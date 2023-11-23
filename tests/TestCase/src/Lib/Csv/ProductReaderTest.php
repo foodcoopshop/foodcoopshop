@@ -117,6 +117,8 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals(0, $productEntities[1]->id_tax);
         $this->assertEquals(0, $productEntities[1]->active);
         $this->assertEquals(1.4, $productEntities[1]->price);
+        $this->assertEquals(0, $productEntities[1]->stock_available->quantity);
+        $this->assertEquals(1, $productEntities[1]->stock_available->always_available);
     }
 
 }
