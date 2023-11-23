@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-23 09:03+0100\n"
+"POT-Creation-Date: 2023-11-23 09:22+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -734,6 +734,39 @@ msgstr ""
 msgid "All_products"
 msgstr ""
 
+msgid "Name"
+msgstr ""
+
+msgid "Description_short"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Unit"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "Storage_location"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Gross_price"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
 msgid "Product_import_for_{0}"
 msgstr ""
 
@@ -786,9 +819,6 @@ msgid "Save"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Name"
 msgstr ""
 
 msgid "Weight_unit"
@@ -912,9 +942,6 @@ msgid "No_parent_category_(highest_level)"
 msgstr ""
 
 msgid "Delete_category?"
-msgstr ""
-
-msgid "Description"
 msgstr ""
 
 msgid "docs_route_settings"
@@ -1145,9 +1172,6 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-msgid "Status"
-msgstr ""
-
 msgid "Feedback"
 msgstr ""
 
@@ -1236,9 +1260,6 @@ msgid "docs_route_infos_for_success"
 msgstr ""
 
 msgid "Deposit_overview_for_all_manufacturers"
-msgstr ""
-
-msgid "Deposit"
 msgstr ""
 
 msgid "There_is_no_{0}_available."
@@ -1670,9 +1691,6 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-msgid "Tax_rate"
-msgstr ""
-
 msgid "Purchase_price_tax_excl"
 msgstr ""
 
@@ -1844,9 +1862,6 @@ msgstr ""
 msgid "Name_and_categories"
 msgstr ""
 
-msgid "Product_declaration"
-msgstr ""
-
 msgid "Stock_product"
 msgstr ""
 
@@ -1869,9 +1884,6 @@ msgid "New?"
 msgstr ""
 
 msgid "Delivery_rhythm"
-msgstr ""
-
-msgid "Storage_location"
 msgstr ""
 
 msgid "Added_on"
@@ -2090,7 +2102,7 @@ msgstr ""
 msgid "Picked_up"
 msgstr ""
 
-msgid "More"
+msgid "Actions"
 msgstr ""
 
 msgid "Delivery_days"
@@ -2217,9 +2229,6 @@ msgid "change_tax_rate"
 msgstr ""
 
 msgid "Import_products"
-msgstr ""
-
-msgid "Actions"
 msgstr ""
 
 msgid "Dear_financial_responsible"

@@ -36,7 +36,7 @@ $this->element('addScript', [
         <?php
         echo $this->MyHtml->link(
             '<i class="fas fa-download"></i> '. __d('admin', 'Download_empty_CSV_template'),
-            '/templates/product-import-template.csv',
+            '/admin/products/downloadImportTemplate',
             [
                 'class' => 'btn btn-success',
                 'style' => 'padding: 15px 30px',

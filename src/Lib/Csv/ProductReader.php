@@ -26,7 +26,6 @@ class ProductReader extends Reader {
 
     public function configureType(): void
     {
-        $this->setDelimiter(';');
         $this->setHeaderOffset(0);
     }
 
@@ -40,9 +39,9 @@ class ProductReader extends Reader {
     }
 
     private function formatColumns($record) {
-        $record['PriceGross'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['PriceGross']);
-        $record['TaxRate'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['TaxRate']);
-        $record['Deposit'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record['Deposit']);
+        $record[__('Gross_price')] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Gross_price')]);
+        $record[__('Tax_rate')] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Tax_rate')]);
+        $record[__('Deposit')] = Configure::read('app.numberHelper')->parseFloatRespectingLocale($record[__('Deposit')]);
         return $record;
     }
 
@@ -77,17 +76,17 @@ class ProductReader extends Reader {
         foreach($records as $record) {
             $validatedProductEntities[] = $productTable->getValidatedEntity(
                 $manufacturerId,
-                $record['ProductName'],
-                $record['DescriptionShort'],
-                $record['Description'],
-                $record['Unity'],
-                $record['IsDeclarationOk'],
-                $record['StorageLocation'],
-                $record['Status'],
-                $record['PriceGross'],
-                $record['TaxRate'],
-                $record['Deposit'],
-                $record['Quantity'],
+                $record[__('Name')],
+                $record[__('Description_short')],
+                $record[__('Description')],
+                $record[__('Unit')],
+                $record[__('Product_declaration')],
+                $record[__('Storage_location')],
+                $record[__('Status')],
+                $record[__('Gross_price')],
+                $record[__('Tax_rate')],
+                $record[__('Deposit')],
+                $record[__('Amount')],
             );
         }
 

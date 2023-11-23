@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 09:03+0100\n"
-"PO-Revision-Date: 2023-11-23 09:03+0100\n"
+"POT-Creation-Date: 2023-11-23 09:22+0100\n"
+"PO-Revision-Date: 2023-11-23 09:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -735,6 +735,39 @@ msgstr "Products"
 msgid "All_products"
 msgstr "All products"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Description_short"
+msgstr "Description short"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Unit"
+msgstr "Unit"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "Storage_location"
+msgstr "Storage location"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Gross_price"
+msgstr "Gross price"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Quantity"
+msgstr "Available quantity"
+
 msgid "Product_import_for_{0}"
 msgstr "Product import for {0}"
 
@@ -788,9 +821,6 @@ msgstr "Save"
 
 msgid "Cancel"
 msgstr "Cancel"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Weight_unit"
 msgstr "Weight unit"
@@ -914,9 +944,6 @@ msgstr "No parent category (top level)"
 
 msgid "Delete_category?"
 msgstr "Delete category?"
-
-msgid "Description"
-msgstr "Description"
 
 msgid "docs_route_settings"
 msgstr "settings"
@@ -1146,9 +1173,6 @@ msgstr "Show all years"
 msgid "Group"
 msgstr "Group"
 
-msgid "Status"
-msgstr "Status"
-
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -1238,9 +1262,6 @@ msgstr "infos-for-success"
 
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Deposit overview for all manufacturers"
-
-msgid "Deposit"
-msgstr "Deposit"
 
 msgid "There_is_no_{0}_available."
 msgstr "There is no {0} available."
@@ -1677,9 +1698,6 @@ msgstr "Member"
 msgid "Product"
 msgstr "Product"
 
-msgid "Tax_rate"
-msgstr "Tax rate"
-
 msgid "Purchase_price_tax_excl"
 msgstr "Purchase price tax excl."
 
@@ -1851,9 +1869,6 @@ msgstr "Synchronize products"
 msgid "Name_and_categories"
 msgstr "Name and categories"
 
-msgid "Product_declaration"
-msgstr "Product declaration"
-
 msgid "Stock_product"
 msgstr "Stock product"
 
@@ -1877,9 +1892,6 @@ msgstr "New?"
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
-
-msgid "Storage_location"
-msgstr "Storage location"
 
 msgid "Added_on"
 msgstr "Added on"
@@ -2097,8 +2109,8 @@ msgstr "Click to change weight"
 msgid "Picked_up"
 msgstr "Picked up"
 
-msgid "More"
-msgstr "More"
+msgid "Actions"
+msgstr "Actions"
 
 msgid "Delivery_days"
 msgstr "Delivery days"
@@ -2225,9 +2237,6 @@ msgstr "change tax rate"
 
 msgid "Import_products"
 msgstr "Import products"
-
-msgid "Actions"
-msgstr "Actions"
 
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
@@ -2472,6 +2481,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "Product_ID"
 msgstr "ProductID"
 
+#~ msgid "More"
+#~ msgstr "More"
+
 #~ msgid "Selected_products"
 #~ msgstr "Selected products"
 
@@ -2646,9 +2658,6 @@ msgstr "ProductID"
 #~ msgid "net_per_piece_abbr"
 #~ msgstr "net/piece"
 
-#~ msgid "Unit"
-#~ msgstr "Unit"
-
 #~ msgid "Tax_rates_overview_table"
 #~ msgstr "Tax overview total"
 
@@ -2769,9 +2778,6 @@ msgstr "ProductID"
 
 #~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 #~ msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
-
-#~ msgid "Quantity"
-#~ msgstr "Available quantity"
 
 #, fuzzy
 #~ msgid "customer"

@@ -7,6 +7,7 @@ use Admin\Traits\ManufacturerIdTrait;
 use App\Lib\Csv\ProductReader;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\FactoryLocator;
+use League\Csv\Writer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +26,43 @@ use Cake\Datasource\FactoryLocator;
 trait ImportTrait {
 
     use ManufacturerIdTrait;
+
+    public function downloadImportTemplate()
+    {
+        $columns = [
+            __d('admin', 'Name'),
+            __d('admin', 'Description_short'),
+            __d('admin', 'Description'),
+            __d('admin', 'Unit'),
+            __d('admin', 'Product_declaration'),
+            __d('admin', 'Storage_location'),
+            __d('admin', 'Status'),
+            __d('admin', 'Gross_price'),
+            __d('admin', 'Tax_rate'),
+            __d('admin', 'Deposit'),
+            __d('admin', 'Amount'),
+        ];
+
+        $writer = Writer::createFromString();
+        $writer->insertOne($columns);
+
+        // force download
+        $this->RequestHandler->renderAs(
+            $this,
+            'csv',
+            [
+                'charset' => 'UTF-8'
+            ],
+        );
+        $this->disableAutoRender();
+
+        $response = $this->response;
+        $response = $response->withStringBody($writer->toString());
+        $response = $response->withDownload('product-import-template.csv');
+
+        return $response;
+
+    }
 
     public function myImport()
     {

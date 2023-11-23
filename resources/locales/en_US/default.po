@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-02 21:29+0100\n"
-"PO-Revision-Date: 2023-10-19 10:35+0200\n"
+"POT-Creation-Date: 2023-11-23 09:22+0100\n"
+"PO-Revision-Date: 2023-11-23 09:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -1297,11 +1297,20 @@ msgstr "Your shopping bag was empty."
 msgid "The_structure_of_the_uploaded_file_is_not_valid."
 msgstr "The structure of the uploaded file is not valid."
 
-msgid "net_per_piece_abbr"
-msgstr "net/piece"
+msgid "Gross_price"
+msgstr "Gross price"
 
 msgid "Tax_rate"
 msgstr "Tax rate"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "net_per_piece_abbr"
+msgstr "net/piece"
 
 msgid "net"
 msgstr "net"

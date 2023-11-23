@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-02 21:29+0100\n"
+"POT-Creation-Date: 2023-11-23 09:22+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1292,10 +1292,19 @@ msgstr ""
 msgid "The_structure_of_the_uploaded_file_is_not_valid."
 msgstr ""
 
-msgid "net_per_piece_abbr"
+msgid "Gross_price"
 msgstr ""
 
 msgid "Tax_rate"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "net_per_piece_abbr"
 msgstr ""
 
 msgid "net"

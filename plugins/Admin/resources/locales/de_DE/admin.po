@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 09:03+0100\n"
-"PO-Revision-Date: 2023-11-23 09:03+0100\n"
+"POT-Creation-Date: 2023-11-23 09:22+0100\n"
+"PO-Revision-Date: 2023-11-23 09:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -735,6 +735,39 @@ msgstr "Produkte"
 msgid "All_products"
 msgstr "Alle Produkte"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Description_short"
+msgstr "Kurze Beschreibung"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Unit"
+msgstr "Einheit"
+
+msgid "Product_declaration"
+msgstr "Produktdeklaration"
+
+msgid "Storage_location"
+msgstr "Lagerort"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Gross_price"
+msgstr "Bruttopreis"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Quantity"
+msgstr "Verfügbare Menge"
+
 msgid "Product_import_for_{0}"
 msgstr "Produkt-Import für {0}"
 
@@ -788,9 +821,6 @@ msgstr "Speichern"
 
 msgid "Cancel"
 msgstr "Abbrechen"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Weight_unit"
 msgstr "Gewichtseinheit"
@@ -914,9 +944,6 @@ msgstr "Keine (oberste Ebene)"
 
 msgid "Delete_category?"
 msgstr "Kategorie löschen?"
-
-msgid "Description"
-msgstr "Beschreibung"
 
 msgid "docs_route_settings"
 msgstr "settings"
@@ -1146,9 +1173,6 @@ msgstr "Alle Jahre anzeigen"
 msgid "Group"
 msgstr "Gruppe"
 
-msgid "Status"
-msgstr "Status"
-
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -1238,9 +1262,6 @@ msgstr "wichtige-infos-zum-gelingen"
 
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Pfand-Übersicht für alle Hersteller"
-
-msgid "Deposit"
-msgstr "Pfand"
 
 msgid "There_is_no_{0}_available."
 msgstr "Es wurde noch kein {0} erfasst."
@@ -1680,9 +1701,6 @@ msgstr "Mitglied"
 msgid "Product"
 msgstr "Produkt"
 
-msgid "Tax_rate"
-msgstr "Steuersatz"
-
 msgid "Purchase_price_tax_excl"
 msgstr "Einkaufspreis netto"
 
@@ -1854,9 +1872,6 @@ msgstr "Produkte synchronisieren"
 msgid "Name_and_categories"
 msgstr "Name und Kategorien"
 
-msgid "Product_declaration"
-msgstr "Produktdeklaration"
-
 msgid "Stock_product"
 msgstr "Lagerprodukt"
 
@@ -1880,9 +1895,6 @@ msgstr "Neu?"
 
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
-
-msgid "Storage_location"
-msgstr "Lagerort"
 
 msgid "Added_on"
 msgstr "Eingetragen am"
@@ -2100,8 +2112,8 @@ msgstr "Zum Ändern des Gewichtes anklicken"
 msgid "Picked_up"
 msgstr "Abgeholt"
 
-msgid "More"
-msgstr "Mehr"
+msgid "Actions"
+msgstr "Aktionen"
 
 msgid "Delivery_days"
 msgstr "Liefertage"
@@ -2228,9 +2240,6 @@ msgstr "Steuersatz ändern"
 
 msgid "Import_products"
 msgstr "Produkte importieren"
-
-msgid "Actions"
-msgstr "Aktionen"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
@@ -2475,6 +2484,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#~ msgid "More"
+#~ msgstr "Mehr"
+
 #~ msgid "Selected_products"
 #~ msgstr "Markierte Produkte"
 
@@ -2656,9 +2668,6 @@ msgstr "Produkt-Nr."
 #~ msgid "net_per_piece_abbr"
 #~ msgstr "netto/St."
 
-#~ msgid "Unit"
-#~ msgstr "Einheit"
-
 #~ msgid "Tax_rates_overview_table"
 #~ msgstr "Steuerübersicht Gesamt"
 
@@ -2777,9 +2786,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 #~ msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links auswählst und auf den Button ganz unten klickst."
-
-#~ msgid "Quantity"
-#~ msgstr "Verfügbare Menge"
 
 #, fuzzy
 #~ msgid "customer"

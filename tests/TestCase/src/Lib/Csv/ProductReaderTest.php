@@ -37,17 +37,17 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals(ProductReader::COLUMN_COUNT, count($records[0]));
         $this->assertEquals(ProductReader::COLUMN_COUNT, count($records[1]));
 
-        $this->assertEquals('Brombeeren', $records[0]['ProductName']);
-        $this->assertEquals('frisch geerntet <script>alert(\'evil\')</script>', $records[0]['DescriptionShort']);
-        $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $records[0]['Description']);
-        $this->assertEquals('1 kg', $records[0]['Unity']);
-        $this->assertEquals('1', $records[0]['IsDeclarationOk']);
-        $this->assertEquals('Keine Kühlung', $records[0]['StorageLocation']);
+        $this->assertEquals('Brombeeren', $records[0]['Name']);
+        $this->assertEquals('frisch geerntet <script>alert(\'evil\')</script>', $records[0]['Kurze Beschreibung']);
+        $this->assertEquals('Brombeeren haben viel <b>Vitamin C</b> und sind sehr gesund', $records[0]['Beschreibung']);
+        $this->assertEquals('1 kg', $records[0]['Einheit']);
+        $this->assertEquals('1', $records[0]['Produktdeklaration']);
+        $this->assertEquals('Keine Kühlung', $records[0]['Lagerort']);
         $this->assertEquals('1', $records[0]['Status']);
-        $this->assertEquals(23.3, $records[0]['PriceGross']);
-        $this->assertEquals(10, $records[0]['TaxRate']);
-        $this->assertEquals(0.5, $records[0]['Deposit']);
-        $this->assertEquals('10', $records[0]['Quantity']);
+        $this->assertEquals(23.3, $records[0]['Bruttopreis']);
+        $this->assertEquals(10, $records[0]['Steuersatz']);
+        $this->assertEquals(0.5, $records[0]['Pfand']);
+        $this->assertEquals('10', $records[0]['Anzahl']);
     }
 
     public function testImportWithErrors()
