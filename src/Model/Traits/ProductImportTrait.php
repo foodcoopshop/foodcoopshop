@@ -53,7 +53,6 @@ trait ProductImportTrait
         $grossPrice,
         $taxRate,
         $deposit,
-        $barcode,
         $quantity,
     ) {
 
@@ -84,9 +83,6 @@ trait ProductImportTrait
                 'price' => $netPriceAndTaxId['netPrice'],
                 'deposit_product' => [
                     'deposit' => $deposit,
-                ],
-                'barcode_product' => [
-                    'barcode' => $barcode,
                 ],
                 'stock_available' => [
                     'quantity' => $quantity,

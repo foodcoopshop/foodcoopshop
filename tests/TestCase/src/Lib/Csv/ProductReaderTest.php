@@ -47,7 +47,6 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals(23.3, $records[0]['PriceGross']);
         $this->assertEquals(10, $records[0]['TaxRate']);
         $this->assertEquals(0.5, $records[0]['Deposit']);
-        $this->assertEquals('1919191919191', $records[0]['Barcode']);
         $this->assertEquals('10', $records[0]['Quantity']);
     }
 
@@ -66,12 +65,10 @@ class ProductReaderTest extends AppCakeTestCase
         $productActiveErrorMessage = 'Folgende Werte sind gültig: 0, 1';
         $productPriceWrongErrorMessage = 'Bitte gib eine Zahl zwischen 0 und 2.000 an.';
         $productIdTaxWrongErrorMessage = 'Folgende Werte sind gültig: 0, 1, 2, 3';
-        $barcodeErrorMessage = 'Die Länge des Barcodes muss genau 13 Zeichen betragen.';
 
         $this->assertEquals($productNameErrorMessage, $errorsA['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsA['active']['inList']);
         $this->assertEquals($productIdTaxWrongErrorMessage, $errorsA['id_tax']['inList']);
-        $this->assertEquals($barcodeErrorMessage, $errorsA['barcode_product']['barcode']['lengthBetween']);
         $this->assertEquals('Der Lagerstand muss eine Zahl sein.', $errorsA['stock_available']['quantity']['numeric']);
         $this->assertEquals('Bitte gib eine Zahl zwischen 0 und 100 an.', $errorsA['deposit_product']['deposit']['lessThanOrEqual']);
         $this->assertEquals('Folgende Werte sind gültig: Keine Kühlung, Kühlschrank, Tiefkühler', $errorsA['id_storage_location'][0]);
@@ -80,7 +77,6 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals($productNameErrorMessage, $errorsB['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsB['active']['inList']);
         $this->assertEquals($productPriceWrongErrorMessage, $errorsB['price']['greaterThanOrEqual']);
-        $this->assertEquals($barcodeErrorMessage, $errorsB['barcode_product']['barcode']['lengthBetween']);
         $this->assertEquals('Bitte gib eine Zahl zwischen -5.000 und 5.000 an. Feld: Lagerstand / verfügbare Menge', $errorsA['stock_available']['quantity']['lessThanOrEqual']);
         
         $productsTable = $this->getTableLocator()->get('Products');
@@ -113,7 +109,6 @@ class ProductReaderTest extends AppCakeTestCase
         $this->assertEquals(1, $productEntities[0]->active);
         $this->assertEquals(21.181818, $productEntities[0]->price);
         $this->assertEquals(2, $productEntities[0]->id_tax);
-        $this->assertEquals('1919191919191', $productEntities[0]->barcode_product->barcode);
         $this->assertEquals(10, $productEntities[0]->stock_available->quantity);
         $this->assertEquals(20, $productEntities[0]->category_products[0]->id_category);
         $this->assertEquals(0.5, $productEntities[0]->deposit_product->deposit);

@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 
 class ProductReader extends Reader {
 
-    public const COLUMN_COUNT = 12;
+    public const COLUMN_COUNT = 11;
 
     public function configureType(): void
     {
@@ -87,7 +87,6 @@ class ProductReader extends Reader {
                 $record['PriceGross'],
                 $record['TaxRate'],
                 $record['Deposit'],
-                $record['Barcode'],
                 $record['Quantity'],
             );
         }
