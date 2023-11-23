@@ -59,6 +59,9 @@ class ProductReader extends Reader {
     public function areAllEntitiesValid($entities)
     {
         $allEntitiesValid = true;
+        if (empty($entities)) {
+            return false;
+        }
         foreach($entities as $entity) {
             if ($entity->hasErrors()) {
                 $allEntitiesValid = false;
