@@ -8,6 +8,7 @@ use App\Lib\Csv\ProductReader;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\FactoryLocator;
 use League\Csv\Writer;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -100,7 +101,11 @@ trait ImportTrait {
             $this->set('productEntities', $productEntities);
             
             if ($reader->areAllEntitiesValid($productEntities)) {
-                $this->Flash->success(__d('admin', 'Product_import_successful.') . ' ' . count($productEntities) . 'x');
+                $messageString = __d('admin', 'Product_import_successful.') . ' ' . count($productEntities) . 'x';
+                $this->Flash->success($messageString);
+                $actionLogsTable = FactoryLocator::get('Table')->get('ActionLogs');
+                $actionLogsTable->customSave('product_added', $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'products', $messageString);
+                Log::error($messageString . print_r($productEntities, true));
             } else {
                 $errors = $reader->getAllErrors($productEntities);
                 $errorRows = [];
