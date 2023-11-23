@@ -105,18 +105,20 @@ trait ImportTrait {
                 $errors = $reader->getAllErrors($productEntities);
                 $errorRows = [];
                 foreach($errors as $row => $error) {
-                    $errorMessage = __('Product') . ' ' . $row + 1 . '<br />';
+                    $header = '<b style="line-height:40px;">' . (!empty($productEntities[$row]['name']) ? $productEntities[$row]['name'] : __('Product') . ' ' . $row + 1) . '</b><br />';
+                    $errorMessage = '';
                     foreach($error as $fieldName => $messages) {
-                        $errorMessage .= $fieldName . ': ';
+                        $errorMessage .= '<li>' . $fieldName . ': ';
                         foreach($messages as $errorType => $message) {
                             if (is_array($message)) {
+                                $message = array_unique($message);
                                 $message = implode(' / ', $message);
                             }
                             $errorMessage .= $errorType . ': ' . $message;
                         }
-                        $errorMessage .= '<br />';
+                        $errorMessage .= '</li>';
                     }
-                    $errorRows[] = '<li>' . $errorMessage . '</li>';
+                    $errorRows[] = $header . $errorMessage;
                 }
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.') . '<br /><ul>' . implode('', $errorRows) . '</ul>');
             }
