@@ -22,7 +22,6 @@ if (!empty($products)) {
     $buttons[] = $this->element('productList/button/generateProductCardsOfSelectedProducts');
     $buttons[] = $this->element('productList/button/editStatusForSelectedProducts');
     $buttons[] = $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
-    $buttons[] = '<hr class="dropdown-divider" />';
     $buttons[] = $this->element('productList/button/deleteSelectedProducts');
     $buttons[] = '<hr class="dropdown-divider" />';
     if ($appAuth->isManufacturer()) {
@@ -36,7 +35,7 @@ if (!empty($products)) {
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,
     'buttons' => $buttons,
-    'label' => __d('admin', 'Selected_products') . '...'
+    'label' => __d('admin', 'Actions') . '...'
 ]);
 
 ?>

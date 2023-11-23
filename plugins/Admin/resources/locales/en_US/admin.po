@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-02 21:33+0100\n"
-"PO-Revision-Date: 2023-11-02 21:33+0100\n"
+"POT-Creation-Date: 2023-11-23 09:03+0100\n"
+"PO-Revision-Date: 2023-11-23 09:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2226,8 +2226,8 @@ msgstr "change tax rate"
 msgid "Import_products"
 msgstr "Import products"
 
-msgid "Selected_products"
-msgstr "Selected products"
+msgid "Actions"
+msgstr "Actions"
 
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
@@ -2471,6 +2471,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Selected_products"
+#~ msgstr "Selected products"
 
 #~ msgid "docs_route_product_import"
 #~ msgstr "products"
