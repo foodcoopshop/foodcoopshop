@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-23 09:55+0100\n"
+"POT-Creation-Date: 2023-11-23 11:39+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -746,15 +746,6 @@ msgstr ""
 msgid "Unit"
 msgstr ""
 
-msgid "Product_declaration"
-msgstr ""
-
-msgid "Storage_location"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
 msgid "Gross_price"
 msgstr ""
 
@@ -764,10 +755,19 @@ msgstr ""
 msgid "Deposit"
 msgstr ""
 
+msgid "Status"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "Storage_location"
+msgstr ""
+
 msgid "Product_import_for_{0}"
 msgstr ""
 
-msgid "Product_import_successful. "
+msgid "Product_import_successful."
 msgstr ""
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 09:55+0100\n"
-"PO-Revision-Date: 2023-11-23 09:57+0100\n"
+"POT-Creation-Date: 2023-11-23 11:39+0100\n"
+"PO-Revision-Date: 2023-11-23 11:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -747,15 +747,6 @@ msgstr "Beschreibung"
 msgid "Unit"
 msgstr "Einheit"
 
-msgid "Product_declaration"
-msgstr "Produktdeklaration"
-
-msgid "Storage_location"
-msgstr "Lagerort"
-
-msgid "Status"
-msgstr "Status"
-
 msgid "Gross_price"
 msgstr "Bruttopreis"
 
@@ -765,10 +756,19 @@ msgstr "Steuersatz"
 msgid "Deposit"
 msgstr "Pfand"
 
+msgid "Status"
+msgstr "Status"
+
+msgid "Product_declaration"
+msgstr "Produktdeklaration"
+
+msgid "Storage_location"
+msgstr "Lagerort"
+
 msgid "Product_import_for_{0}"
 msgstr "Produkt-Import für {0}"
 
-msgid "Product_import_successful. "
+msgid "Product_import_successful."
 msgstr "Der Produkt-Import war erfolgreich."
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."

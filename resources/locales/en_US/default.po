@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 09:22+0100\n"
+"POT-Creation-Date: 2023-11-23 11:39+0100\n"
 "PO-Revision-Date: 2023-11-23 09:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1303,11 +1303,11 @@ msgstr "Gross price"
 msgid "Tax_rate"
 msgstr "Tax rate"
 
-msgid "Description"
-msgstr "Description"
-
 msgid "Product_declaration"
 msgstr "Product declaration"
+
+msgid "Description"
+msgstr "Description"
 
 msgid "net_per_piece_abbr"
 msgstr "net/piece"

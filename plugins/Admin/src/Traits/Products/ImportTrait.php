@@ -34,13 +34,13 @@ trait ImportTrait {
             __d('admin', 'Description_short'),
             __d('admin', 'Description'),
             __d('admin', 'Unit'),
-            __d('admin', 'Product_declaration'),
-            __d('admin', 'Storage_location'),
-            __d('admin', 'Status'),
             __d('admin', 'Gross_price'),
             __d('admin', 'Tax_rate'),
             __d('admin', 'Deposit'),
             __d('admin', 'Amount'),
+            __d('admin', 'Status'),
+            __d('admin', 'Product_declaration'),
+            __d('admin', 'Storage_location'),
         ];
 
         $writer = Writer::createFromString();
