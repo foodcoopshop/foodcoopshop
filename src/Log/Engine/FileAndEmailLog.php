@@ -89,6 +89,7 @@ class FileAndEmailLog extends FileLog
             '{"barcode":{"lengthBetween":',
             '`FormProtector` instance has not been created.',
             'invalid-image',
+            '{"postcode":{"validFormat"',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
