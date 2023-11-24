@@ -36,7 +36,8 @@ trait ProductImportTrait
 
         $taxesTable = FactoryLocator::get('Table')->get('Taxes');
         $allowedTaxIds = $taxesTable->getValidTaxIds();
-        $validator->inList('id_tax', $allowedTaxIds, __('The_following_values_are_valid:') . ' ' . implode(', ', $allowedTaxIds));
+        $allowedTaxRates = $taxesTable->getValidTaxRatesWithoutPercentSign();
+        $validator->inList('id_tax', $allowedTaxIds, __('The_following_values_are_valid:') . ' ' . implode(', ', $allowedTaxRates));
 
         return $validator;
     }

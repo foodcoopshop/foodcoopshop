@@ -49,6 +49,16 @@ class TaxesTable extends AppTable
         return $taxes;
     }
 
+    public function getValidTaxRatesWithoutPercentSign() {
+        $taxes = $this->getForDropdown();
+        $taxes = array_values($taxes);
+        $taxes = array_map(function($tax) {
+            return str_replace('%', '', $tax);
+        }, $taxes);
+        sort($taxes);
+        return $taxes;
+    }
+
     public function getNetPriceAndTaxId($grossPrice, $taxRate)
     {
 
@@ -92,7 +102,7 @@ class TaxesTable extends AppTable
         $preparedTaxes = [];
         if (Configure::read('app.isZeroTaxEnabled')) {
             $preparedTaxes = [
-                0 => '0 %'
+                0 => '0%'
             ];
         }
         foreach ($taxes as $tax) {

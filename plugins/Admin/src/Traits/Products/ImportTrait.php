@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Admin\Traits\Products;
@@ -24,27 +25,37 @@ use Cake\Log\Log;
  * @link          https://www.foodcoopshop.com
  */
 
-trait ImportTrait {
+trait ImportTrait
+{
 
     use ManufacturerIdTrait;
 
+    private $columnsFieldMap = [];
+
+    public function initializeImportTrait()
+    {
+        $this->columnsFieldMap = [
+            __d('admin', 'Name') => 'name',
+            __d('admin', 'Description_short') => 'description_short',
+            __d('admin', 'Description') => 'description',
+            __d('admin', 'Unit') => 'unity',
+            __d('admin', 'Gross_price') => 'price',
+            __d('admin', 'Tax_rate') => 'id_tax',
+            __d('admin', 'Deposit') => 'product_deposit',
+            __d('admin', 'Amount') => 'stock_available',
+            __d('admin', 'Status') => 'active',
+            __d('admin', 'Product_declaration') => 'is_declaration_ok',
+            __d('admin', 'Storage_location') => 'id_storage_location',
+        ];
+    }
+
     public function downloadImportTemplate()
     {
-        $columns = [
-            __d('admin', 'Name'),
-            __d('admin', 'Description_short'),
-            __d('admin', 'Description'),
-            __d('admin', 'Unit'),
-            __d('admin', 'Gross_price'),
-            __d('admin', 'Tax_rate'),
-            __d('admin', 'Deposit'),
-            __d('admin', 'Amount'),
-            __d('admin', 'Status'),
-            __d('admin', 'Product_declaration'),
-            __d('admin', 'Storage_location'),
-        ];
+
+        $this->initializeImportTrait();
 
         $writer = Writer::createFromString();
+        $columns = array_keys($this->columns);
         $writer->insertOne($columns);
 
         // force download
@@ -62,7 +73,6 @@ trait ImportTrait {
         $response = $response->withDownload('product-import-template.csv');
 
         return $response;
-
     }
 
     public function myImport()
@@ -74,6 +84,8 @@ trait ImportTrait {
 
     public function import()
     {
+
+        $this->initializeImportTrait();
 
         $manufacturerId = $this->getManufacturerId();
         $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
@@ -99,7 +111,7 @@ trait ImportTrait {
 
             $productEntities = $reader->import($manufacturerId);
             $this->set('productEntities', $productEntities);
-            
+
             if ($reader->areAllEntitiesValid($productEntities)) {
                 $messageString = __d('admin', 'Product_import_successful.') . ' ' . count($productEntities) . 'x';
                 $this->Flash->success($messageString);
@@ -109,20 +121,21 @@ trait ImportTrait {
             } else {
                 $errors = $reader->getAllErrors($productEntities);
                 $errorRows = [];
-                foreach($errors as $row => $error) {
+                foreach ($errors as $row => $error) {
                     if (empty($error)) {
                         continue;
                     }
                     $header = '<b style="line-height:40px;">' . (!empty($productEntities[$row]['name']) ? $productEntities[$row]['name'] : __('Product') . ' ' . $row + 1) . '</b><br />';
                     $errorMessage = '';
-                    foreach($error as $fieldName => $messages) {
-                        $errorMessage .= '<li>' . $fieldName . ': ';
-                        foreach($messages as $errorType => $message) {
+                    foreach ($error as $fieldName => $messages) {
+                        $mappedFieldName = array_search($fieldName, $this->columnsFieldMap);
+                        $errorMessage .= '<li><u>' . $mappedFieldName . '</u>: ';
+                        foreach ($messages as $errorType => $message) {
                             if (is_array($message)) {
                                 $message = array_unique($message);
                                 $message = implode(' / ', $message);
                             }
-                            $errorMessage .= $errorType . ': ' . $message;
+                            $errorMessage .= $message;
                         }
                         $errorMessage .= '</li>';
                     }
@@ -130,9 +143,6 @@ trait ImportTrait {
                 }
                 $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.') . '<br /><ul>' . implode('', $errorRows) . '</ul>');
             }
-
         }
-
     }
-
 }

@@ -64,7 +64,7 @@ class ProductReaderTest extends AppCakeTestCase
         $productNameErrorMessage = 'Der Name des Produktes muss aus mindestens 2 Zeichen bestehen.';
         $productActiveErrorMessage = 'Folgende Werte sind gültig: 0, 1';
         $productPriceWrongErrorMessage = 'Bitte gib eine Zahl zwischen 0 und 2.000 an.';
-        $productIdTaxWrongErrorMessage = 'Folgende Werte sind gültig: 0, 1, 2, 3';
+        $productIdTaxWrongErrorMessage = 'Folgende Werte sind gültig: 0, 10, 13, 20';
 
         $this->assertEquals($productNameErrorMessage, $errorsA['name']['minLength']);
         $this->assertEquals($productActiveErrorMessage, $errorsA['active']['inList']);
