@@ -48,13 +48,13 @@ trait ProductImportTrait
         $descriptionShort,
         $description,
         $unity,
-        $isDeclarationOk,
-        $storageLocationString,
-        $status,
         $grossPrice,
         $taxRate,
         $deposit,
         $quantity,
+        $status,
+        $isDeclarationOk,
+        $storageLocationString,
     ) {
 
         $taxesTable = FactoryLocator::get('Table')->get('Taxes');

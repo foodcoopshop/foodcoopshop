@@ -86,13 +86,13 @@ class ProductReader extends Reader {
                 $record[__('Description_short')],
                 $record[__('Description')],
                 $record[__('Unit')],
-                $record[__('Product_declaration')],
-                $record[__('Storage_location')],
-                $record[__('Status')],
                 $record[__('Gross_price')],
                 $record[__('Tax_rate')],
                 $record[__('Deposit')],
                 $record[__('Amount')],
+                $record[__('Status')],
+                $record[__('Product_declaration')],
+                $record[__('Storage_location')],
             );
         }
 
