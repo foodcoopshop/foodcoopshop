@@ -55,7 +55,7 @@ trait ImportTrait
         $this->initializeImportTrait();
 
         $writer = Writer::createFromString();
-        $columns = array_keys($this->columns);
+        $columns = array_keys($this->columnsFieldMap);
         $writer->insertOne($columns);
 
         // force download
