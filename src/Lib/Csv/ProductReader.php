@@ -52,6 +52,8 @@ class ProductReader extends Reader {
         foreach($entities as $entity) {
             if ($entity->hasErrors()) {
                 $errors[] = $entity->getErrors();
+            } else {
+                $errors[] = [];
             }
         }
         return $errors;

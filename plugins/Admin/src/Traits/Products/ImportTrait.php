@@ -110,6 +110,9 @@ trait ImportTrait {
                 $errors = $reader->getAllErrors($productEntities);
                 $errorRows = [];
                 foreach($errors as $row => $error) {
+                    if (empty($error)) {
+                        continue;
+                    }
                     $header = '<b style="line-height:40px;">' . (!empty($productEntities[$row]['name']) ? $productEntities[$row]['name'] : __('Product') . ' ' . $row + 1) . '</b><br />';
                     $errorMessage = '';
                     foreach($error as $fieldName => $messages) {
