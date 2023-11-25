@@ -101,18 +101,19 @@ class ActionLogsController extends AdminAppController
 
         // customers are only allowed to see their own data
         if ($this->AppAuth->isCustomer()) {
-            $tmpCondition  =  '(';
-                $tmpCondition .= 'Customers.id_customer = '.$this->AppAuth->getUserId();
-                // order of first and lastname can be changed Configure::read('app.customerMainNamePart')
-                $customerNameForRegex = $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname');
+            $customerNameForRegex = $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname');
             if (Configure::read('app.customerMainNamePart') == 'lastname') {
                 $customerNameForRegex = $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname');
             }
-                $tmpCondition .= ' OR ActionLogs.text REGEXP \'' . $customerNameForRegex . '\'';
-            $tmpCondition .= ')';
-            $conditions[] = $tmpCondition;
+            $conditions[] = [
+                'OR' => [
+                    'Customers.id_customer' => $this->AppAuth->getUserId(),
+                    'ActionLogs.text REGEXP' => preg_quote($customerNameForRegex), // preg_quote needed to escape special characters like *
+                ],
+            ];
+
             // never show cronjob logs for customers
-            $conditions[] = 'ActionLogs.type NOT REGEXP \'^cronjob_\'';
+            $conditions['ActionLogs.type NOT REGEXP'] = '^cronjob_';
         }
 
         $types = [];
