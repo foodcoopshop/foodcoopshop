@@ -6,6 +6,7 @@ namespace Network\Model\Table;
 use App\Model\Table\AppTable;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -59,6 +60,19 @@ class SyncDomainsTable extends AppTable
     {
         return $this->getSyncDomains(APP_ON);
     }
+
+    public function getActiveSyncDomainHosts()
+    {
+        $syncDomains = $this->getActiveSyncDomains()->toArray();
+        if (empty($syncDomains)) {
+            return [];
+        }
+        $syncDomains = Hash::extract($syncDomains, '{n}.domain');
+        $syncDomainHosts = array_map(function ($syncDomain) {
+            return parse_url($syncDomain, PHP_URL_HOST);
+        }, $syncDomains);
+        return $syncDomainHosts;
+    }    
 
     /**
      * @param array $appAuth
