@@ -25,6 +25,13 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Als neue Cookie-Banner-Library wird jetzt [https://github.com/Alex-D/Cookies-EU-banner](https://github.com/Alex-D/Cookies-EU-banner) verwendet. [I#962](https://github.com/foodcoopshop/foodcoopshop/issues/962) / [PR#963](https://github.com/foodcoopshop/foodcoopshop/pull/963) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Als neuer WYSIWYG-Editor wird jetzt [https://xdsoft.net/jodit/](https://xdsoft.net/jodit/) verwendet. [I#858](https://github.com/foodcoopshop/foodcoopshop/issues/858) / [PR#967](https://github.com/foodcoopshop/foodcoopshop/pull/967) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+## v3.6.2
+
+### Bug fix
+- Bugfix für das Netzwerk-Modul
+
+Datum: 27.11.2023 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.1...v3.6.2)
+
 ## v3.6.1
 
 ### Security fix
