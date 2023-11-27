@@ -1358,6 +1358,14 @@ class ProductsTable extends AppTable
         $this->ProductAttributes->save($productAttributeEntity);
     }
 
+    private function checkImageContentType($image)
+    {
+        $mimeContentType = mime_content_type($image);
+        if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
+            throw new InvalidParameterException('file is not an image: ' . $image);
+        }
+    }
+
     public function changeImage($products)
     {
 
@@ -1371,22 +1379,22 @@ class ProductsTable extends AppTable
 
             if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
                 $syncDomainsTable = FactoryLocator::get('Table')->get('Network.SyncDomains');
-                $syncDomains = $syncDomainsTable->getActiveSyncDomains()->toArray();
-                $syncDomains = Hash::extract($syncDomains, '{n}.domain');
-                if (!RemoteFile::exists($imageFromRemoteServer, $syncDomains)) {
+                $syncDomainHosts = $syncDomainsTable->getActiveSyncDomainHosts();
+                if (!RemoteFile::exists($imageFromRemoteServer, $syncDomainHosts)) {
                     throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
                 }
+                $tmpLocalImagePath = TMP . 'tmp-image';
+                copy($imageFromRemoteServer, $tmpLocalImagePath);
+                $this->checkImageContentType($tmpLocalImagePath);
+                unset($tmpLocalImagePath);
             } else {
                 $remoteImage = file_exists($imageFromRemoteServer);
                 if (!$remoteImage) {
                     throw new InvalidParameterException('local image not existing: ' . $imageFromRemoteServer);
                 }
+                $this->checkImageContentType($imageFromRemoteServer);
             }
 
-            $mimeContentType = mime_content_type($imageFromRemoteServer);
-            if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
-                throw new InvalidParameterException('file is not an image: ' . $imageFromRemoteServer);
-            }
         }
 
         $success = false;

@@ -6,6 +6,13 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v3.6.2
+
+### Bug fix
+- Bugfix für das Netzwerk-Modul
+
+Datum: 27.11.2023 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.1...v3.6.2)
+
 ## v3.6.1
 
 ### Security fix
