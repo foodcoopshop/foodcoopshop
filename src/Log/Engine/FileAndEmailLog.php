@@ -90,6 +90,7 @@ class FileAndEmailLog extends FileLog
             '`FormProtector` instance has not been created.',
             'invalid-image',
             '{"postcode":{"validFormat"',
+            '{"value":{"noDeliveryDaysOrdersExist"',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
