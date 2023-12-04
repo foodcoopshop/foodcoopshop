@@ -975,6 +975,15 @@ body.manufacturers .generate-order-lists-tooltip a.btn {
     text-align: left;
     text-decoration: none ! important;
 }
+body.products .product-import-wrapper {
+    padding: 10px;
+}
+body.products .product-import-wrapper .input.file {
+    display: inline;
+}
+body.products .product-import-wrapper > * {
+    margin-bottom: 10px;
+}
 .dropdown {
     float: left;
 }

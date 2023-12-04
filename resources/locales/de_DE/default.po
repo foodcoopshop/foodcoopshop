@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-18 14:52+0200\n"
-"PO-Revision-Date: 2023-09-18 14:56+0200\n"
+"POT-Creation-Date: 2023-11-23 11:39+0100\n"
+"PO-Revision-Date: 2023-11-23 09:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -1294,11 +1294,23 @@ msgstr "Das Produkt {0} wurde in deine Einkaufstasche gelegt."
 msgid "Your_shopping_bag_was_empty."
 msgstr "Deine Einkaufstasche war leer."
 
-msgid "net_per_piece_abbr"
-msgstr "netto/St."
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr "Die Struktur der hochgeladenen Datei ist nicht gültig."
+
+msgid "Gross_price"
+msgstr "Bruttopreis"
 
 msgid "Tax_rate"
 msgstr "Steuersatz"
+
+msgid "Product_declaration"
+msgstr "Produktdeklaration"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "net_per_piece_abbr"
+msgstr "netto/St."
 
 msgid "net"
 msgstr "netto"
@@ -2080,6 +2092,9 @@ msgstr "Das Produkt um {0} kann nicht in den Warenkorb gelegt werden, bitte lade
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
 msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Die Lieferpause kann erst gespeichert werden, wenn du die Produkte stornierst oder der Abholtag geändert wird."
 
+msgid "Manufacturer_not_found."
+msgstr "Der Hersteller wurde nicht gefunden."
+
 msgid "member"
 msgstr "Mitglied"
 
@@ -2812,6 +2827,12 @@ msgstr "getätigt am"
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
+#~ msgid "Row: {0}"
+#~ msgstr "Zeile: {0}"
+
+#~ msgid "Please_enter_a_price."
+#~ msgstr "Bitte gib einen Preis ein."
+
 #~ msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
 #~ msgstr "Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden."
 
@@ -3056,9 +3077,6 @@ msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 #~ msgstr "Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen."
-
-#~ msgid "Please_enter_a_price."
-#~ msgstr "Bitte gib einen Preis ein."
 
 #~ msgid "Delivered_weight_needs_to_be_greater_than_0."
 #~ msgstr "Das Liefergewicht muss größer als 0 sein."

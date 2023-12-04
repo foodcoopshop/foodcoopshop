@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-09-12 09:00+0200\n"
+"POT-Creation-Date: 2023-12-04 17:38+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -734,6 +734,45 @@ msgstr ""
 msgid "All_products"
 msgstr ""
 
+msgid "Name"
+msgstr ""
+
+msgid "Description_short"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Unit"
+msgstr ""
+
+msgid "Gross_price"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "Storage_location"
+msgstr ""
+
+msgid "Product_import_for_{0}"
+msgstr ""
+
+msgid "Product_import_successful."
+msgstr ""
+
+msgid "The_uploaded_file_was_empty._Please_add_products_and_upload_again."
+msgstr ""
+
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr ""
 
@@ -780,9 +819,6 @@ msgid "Save"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Name"
 msgstr ""
 
 msgid "Weight_unit"
@@ -906,9 +942,6 @@ msgid "No_parent_category_(highest_level)"
 msgstr ""
 
 msgid "Delete_category?"
-msgstr ""
-
-msgid "Description"
 msgstr ""
 
 msgid "docs_route_settings"
@@ -1139,9 +1172,6 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-msgid "Status"
-msgstr ""
-
 msgid "Feedback"
 msgstr ""
 
@@ -1230,9 +1260,6 @@ msgid "docs_route_infos_for_success"
 msgstr ""
 
 msgid "Deposit_overview_for_all_manufacturers"
-msgstr ""
-
-msgid "Deposit"
 msgstr ""
 
 msgid "There_is_no_{0}_available."
@@ -1664,9 +1691,6 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-msgid "Tax_rate"
-msgstr ""
-
 msgid "Purchase_price_tax_excl"
 msgstr ""
 
@@ -1808,6 +1832,21 @@ msgstr ""
 msgid "Back_to_member_overview"
 msgstr ""
 
+msgid "docs_route_product_import"
+msgstr ""
+
+msgid "Read_guide_for_product_import"
+msgstr ""
+
+msgid "Download_empty_CSV_template"
+msgstr ""
+
+msgid "Upload_changed_template_with_products"
+msgstr ""
+
+msgid "Back_to_product_page"
+msgstr ""
+
 msgid "chose_manufacturer..."
 msgstr ""
 
@@ -1827,9 +1866,6 @@ msgid "Synchronize_products"
 msgstr ""
 
 msgid "Name_and_categories"
-msgstr ""
-
-msgid "Product_declaration"
 msgstr ""
 
 msgid "Stock_product"
@@ -1854,9 +1890,6 @@ msgid "New?"
 msgstr ""
 
 msgid "Delivery_rhythm"
-msgstr ""
-
-msgid "Storage_location"
 msgstr ""
 
 msgid "Added_on"
@@ -2075,7 +2108,7 @@ msgstr ""
 msgid "Picked_up"
 msgstr ""
 
-msgid "More"
+msgid "Actions"
 msgstr ""
 
 msgid "Delivery_days"
@@ -2201,7 +2234,7 @@ msgstr ""
 msgid "change_tax_rate"
 msgstr ""
 
-msgid "Selected_products"
+msgid "Import_products"
 msgstr ""
 
 msgid "Dear_financial_responsible"

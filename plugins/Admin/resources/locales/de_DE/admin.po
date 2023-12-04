@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-12 09:00+0200\n"
-"PO-Revision-Date: 2023-06-15 21:32+0200\n"
+"POT-Creation-Date: 2023-12-04 17:38+0100\n"
+"PO-Revision-Date: 2023-12-04 17:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -735,6 +735,45 @@ msgstr "Produkte"
 msgid "All_products"
 msgstr "Alle Produkte"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Description_short"
+msgstr "Kurze Beschreibung"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Unit"
+msgstr "Einheit"
+
+msgid "Gross_price"
+msgstr "Bruttopreis"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Product_declaration"
+msgstr "Produktdeklaration"
+
+msgid "Storage_location"
+msgstr "Lagerort"
+
+msgid "Product_import_for_{0}"
+msgstr "Produkt-Import für {0}"
+
+msgid "Product_import_successful."
+msgstr "Der Produkt-Import war erfolgreich."
+
+msgid "The_uploaded_file_was_empty._Please_add_products_and_upload_again."
+msgstr "Die hochgeladene Datei war leer. Bitte füge deine Produkte hinzu und lade die Datei erneut hoch."
+
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
 
@@ -782,9 +821,6 @@ msgstr "Speichern"
 
 msgid "Cancel"
 msgstr "Abbrechen"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Weight_unit"
 msgstr "Gewichtseinheit"
@@ -908,9 +944,6 @@ msgstr "Keine (oberste Ebene)"
 
 msgid "Delete_category?"
 msgstr "Kategorie löschen?"
-
-msgid "Description"
-msgstr "Beschreibung"
 
 msgid "docs_route_settings"
 msgstr "settings"
@@ -1140,9 +1173,6 @@ msgstr "Alle Jahre anzeigen"
 msgid "Group"
 msgstr "Gruppe"
 
-msgid "Status"
-msgstr "Status"
-
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -1232,9 +1262,6 @@ msgstr "wichtige-infos-zum-gelingen"
 
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Pfand-Übersicht für alle Hersteller"
-
-msgid "Deposit"
-msgstr "Pfand"
 
 msgid "There_is_no_{0}_available."
 msgstr "Es wurde noch kein {0} erfasst."
@@ -1674,9 +1701,6 @@ msgstr "Mitglied"
 msgid "Product"
 msgstr "Produkt"
 
-msgid "Tax_rate"
-msgstr "Steuersatz"
-
 msgid "Purchase_price_tax_excl"
 msgstr "Einkaufspreis netto"
 
@@ -1818,6 +1842,21 @@ msgstr "Dein Kontostand"
 msgid "Back_to_member_overview"
 msgstr "Zurück zur Mitglieder-Übersicht"
 
+msgid "docs_route_product_import"
+msgstr "produkt-import.html"
+
+msgid "Read_guide_for_product_import"
+msgstr "Anleitung für Produkt-Import durchlesen"
+
+msgid "Download_empty_CSV_template"
+msgstr "Vorlage downloaden"
+
+msgid "Upload_changed_template_with_products"
+msgstr "Ausgefüllte Vorlage mit Produktdaten hochladen"
+
+msgid "Back_to_product_page"
+msgstr "Zurück zu den Produkten"
+
 msgid "chose_manufacturer..."
 msgstr "Hersteller auswählen..."
 
@@ -1838,9 +1877,6 @@ msgstr "Produkte synchronisieren"
 
 msgid "Name_and_categories"
 msgstr "Name und Kategorien"
-
-msgid "Product_declaration"
-msgstr "Produktdeklaration"
 
 msgid "Stock_product"
 msgstr "Lagerprodukt"
@@ -1865,9 +1901,6 @@ msgstr "Neu?"
 
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
-
-msgid "Storage_location"
-msgstr "Lagerort"
 
 msgid "Added_on"
 msgstr "Eingetragen am"
@@ -2085,8 +2118,8 @@ msgstr "Zum Ändern des Gewichtes anklicken"
 msgid "Picked_up"
 msgstr "Abgeholt"
 
-msgid "More"
-msgstr "Mehr"
+msgid "Actions"
+msgstr "Aktionen"
 
 msgid "Delivery_days"
 msgstr "Liefertage"
@@ -2211,8 +2244,8 @@ msgstr "Das Produkt kann erst bestellt werden, sobald der Einkaufspreis hinterle
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"
 
-msgid "Selected_products"
-msgstr "Markierte Produkte"
+msgid "Import_products"
+msgstr "Produkte importieren"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
@@ -2457,6 +2490,18 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#~ msgid "Read_help"
+#~ msgstr "Anleitung durchlesen"
+
+#~ msgid "Quantity"
+#~ msgstr "Verfügbare Menge"
+
+#~ msgid "More"
+#~ msgstr "Mehr"
+
+#~ msgid "Selected_products"
+#~ msgstr "Markierte Produkte"
+
 #~ msgid "Print"
 #~ msgstr "Drucken"
 
@@ -2631,9 +2676,6 @@ msgstr "Produkt-Nr."
 #~ msgid "net_per_piece_abbr"
 #~ msgstr "netto/St."
 
-#~ msgid "Unit"
-#~ msgstr "Einheit"
-
 #~ msgid "Tax_rates_overview_table"
 #~ msgstr "Steuerübersicht Gesamt"
 
@@ -2752,13 +2794,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 #~ msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links auswählst und auf den Button ganz unten klickst."
-
-#, fuzzy
-#~ msgid "Feedback_to_product"
-#~ msgstr "produkte"
-
-#~ msgid "Quantity"
-#~ msgstr "Verfügbare Menge"
 
 #, fuzzy
 #~ msgid "customer"

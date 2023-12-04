@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace Admin\Controller;
+
+use Admin\Traits\ManufacturerIdTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 
@@ -22,6 +24,8 @@ use Cake\Core\Configure;
 class DepositsController extends AdminAppController
 {
 
+    use ManufacturerIdTrait;
+
     protected $Customer;
     protected $Manufacturer;
     protected $Payment;
@@ -37,21 +41,6 @@ class DepositsController extends AdminAppController
             'myIndex', 'myDetail' => Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer(),
              default => Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer(),
         };
-    }
-
-    /**
-     * $this->manufacturerId needs to be set in calling method
-     * @return int
-     */
-    private function getManufacturerId()
-    {
-        $manufacturerId = '';
-        if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
-        } if ($this->manufacturerId > 0) {
-            $manufacturerId = $this->manufacturerId;
-        }
-        return $manufacturerId;
     }
 
     public function overviewDiagram()
@@ -221,6 +210,9 @@ class DepositsController extends AdminAppController
     public function index()
     {
         $manufacturerId = $this->getManufacturerId();
+        if ($manufacturerId == 'all') {
+            $manufacturerId = '';
+        }
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());

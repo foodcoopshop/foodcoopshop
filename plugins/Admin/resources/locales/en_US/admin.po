@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-12 09:00+0200\n"
-"PO-Revision-Date: 2023-06-15 21:32+0200\n"
+"POT-Creation-Date: 2023-12-04 17:38+0100\n"
+"PO-Revision-Date: 2023-12-04 17:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -735,6 +735,45 @@ msgstr "Products"
 msgid "All_products"
 msgstr "All products"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Description_short"
+msgstr "Description short"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Unit"
+msgstr "Unit"
+
+msgid "Gross_price"
+msgstr "Gross price"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "Storage_location"
+msgstr "Storage location"
+
+msgid "Product_import_for_{0}"
+msgstr "Product import for {0}"
+
+msgid "Product_import_successful."
+msgstr "The product import was successful."
+
+msgid "The_uploaded_file_was_empty._Please_add_products_and_upload_again."
+msgstr "The uploaded file was empty. Please add products and upload again."
+
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr "A new image was uploaded to product {0} from manufacturer {1}."
 
@@ -782,9 +821,6 @@ msgstr "Save"
 
 msgid "Cancel"
 msgstr "Cancel"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Weight_unit"
 msgstr "Weight unit"
@@ -908,9 +944,6 @@ msgstr "No parent category (top level)"
 
 msgid "Delete_category?"
 msgstr "Delete category?"
-
-msgid "Description"
-msgstr "Description"
 
 msgid "docs_route_settings"
 msgstr "settings"
@@ -1140,9 +1173,6 @@ msgstr "Show all years"
 msgid "Group"
 msgstr "Group"
 
-msgid "Status"
-msgstr "Status"
-
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -1232,9 +1262,6 @@ msgstr "infos-for-success"
 
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Deposit overview for all manufacturers"
-
-msgid "Deposit"
-msgstr "Deposit"
 
 msgid "There_is_no_{0}_available."
 msgstr "There is no {0} available."
@@ -1671,9 +1698,6 @@ msgstr "Member"
 msgid "Product"
 msgstr "Product"
 
-msgid "Tax_rate"
-msgstr "Tax rate"
-
 msgid "Purchase_price_tax_excl"
 msgstr "Purchase price tax excl."
 
@@ -1815,6 +1839,21 @@ msgstr "Your credit balance"
 msgid "Back_to_member_overview"
 msgstr "Back to member overview"
 
+msgid "docs_route_product_import"
+msgstr "products"
+
+msgid "Read_guide_for_product_import"
+msgstr "Read guide for product import"
+
+msgid "Download_empty_CSV_template"
+msgstr "Download empty CSV template"
+
+msgid "Upload_changed_template_with_products"
+msgstr "Upload changed template file with products."
+
+msgid "Back_to_product_page"
+msgstr "Back to products"
+
 msgid "chose_manufacturer..."
 msgstr "chose manufacturer..."
 
@@ -1835,9 +1874,6 @@ msgstr "Synchronize products"
 
 msgid "Name_and_categories"
 msgstr "Name and categories"
-
-msgid "Product_declaration"
-msgstr "Product declaration"
 
 msgid "Stock_product"
 msgstr "Stock product"
@@ -1862,9 +1898,6 @@ msgstr "New?"
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
-
-msgid "Storage_location"
-msgstr "Storage location"
 
 msgid "Added_on"
 msgstr "Added on"
@@ -2082,8 +2115,8 @@ msgstr "Click to change weight"
 msgid "Picked_up"
 msgstr "Picked up"
 
-msgid "More"
-msgstr "More"
+msgid "Actions"
+msgstr "Actions"
 
 msgid "Delivery_days"
 msgstr "Delivery days"
@@ -2208,8 +2241,8 @@ msgstr "The purchase price was not yet set, only then the product can be ordered
 msgid "change_tax_rate"
 msgstr "change tax rate"
 
-msgid "Selected_products"
-msgstr "Selected products"
+msgid "Import_products"
+msgstr "Import products"
 
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
@@ -2454,6 +2487,18 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "Product_ID"
 msgstr "ProductID"
 
+#~ msgid "Read_help"
+#~ msgstr "Read help"
+
+#~ msgid "Quantity"
+#~ msgstr "Available quantity"
+
+#~ msgid "More"
+#~ msgstr "More"
+
+#~ msgid "Selected_products"
+#~ msgstr "Selected products"
+
 #~ msgid "Print"
 #~ msgstr "Print"
 
@@ -2622,9 +2667,6 @@ msgstr "ProductID"
 #~ msgid "net_per_piece_abbr"
 #~ msgstr "net/piece"
 
-#~ msgid "Unit"
-#~ msgstr "Unit"
-
 #~ msgid "Tax_rates_overview_table"
 #~ msgstr "Tax overview total"
 
@@ -2745,13 +2787,6 @@ msgstr "ProductID"
 
 #~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 #~ msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
-
-#, fuzzy
-#~ msgid "Feedback_to_product"
-#~ msgstr "products"
-
-#~ msgid "Quantity"
-#~ msgstr "Available quantity"
 
 #, fuzzy
 #~ msgid "customer"

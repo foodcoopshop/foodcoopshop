@@ -12,10 +12,11 @@ use Cake\Validation\Validator;
 use App\Lib\RemoteFile\RemoteFile;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
-use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
+use App\Model\Traits\ProductImportTrait;
+use App\Model\Entity\Product;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,9 +36,7 @@ class ProductsTable extends AppTable
 
     use AllowOnlyOneWeekdayValidatorTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
-
-    public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
-    public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
+    use ProductImportTrait;
 
     protected $Catalog;
     protected $Configuration;
@@ -52,7 +51,7 @@ class ProductsTable extends AppTable
         $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
         ]);
-        $this->belongsTo('StockAvailables', [
+        $this->hasOne('StockAvailables', [
             'foreignKey' => 'id_product'
         ]);
         $this->belongsTo('PurchasePriceProducts', [
@@ -61,8 +60,8 @@ class ProductsTable extends AppTable
                 'PurchasePriceProducts.product_attribute_id = 0',
             ],
         ]);
-        $this->belongsTo('BarcodeProducts', [
-            'foreignKey' => 'id_product',
+        $this->hasOne('BarcodeProducts', [
+            'foreignKey' => 'product_id',
             'conditions' => [
                 'BarcodeProducts.product_attribute_id = 0',
             ],
@@ -311,8 +310,7 @@ class ProductsTable extends AppTable
                 throw new InvalidParameterException('change status is not allowed for product attributes');
             }
             $status = $product[$ids['productId']];
-            $allowed = [APP_OFF, APP_ON];
-            if (!in_array($status, $allowed, true)) { // last param for type check
+            if (!in_array($status, Product::ALLOWED_STATUSES, true)) { // last param for type check
                 throw new InvalidParameterException('Products.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
             } else {
                 $products2save[] = [
@@ -441,11 +439,10 @@ class ProductsTable extends AppTable
      *  (
      *      [0] => Array
      *          (
-     *              [
-     *                  productId] => [
-     *                      'gross_price' => (float) price
-     *                      'product unit fields'
-     *                  ]
+     *              [productId] => [
+*                      'gross_price' => (float) price
+*                      'product unit fields'
+*                   ]
      *          )
      *  )
      * @return boolean $success
@@ -533,7 +530,7 @@ class ProductsTable extends AppTable
         }
 
         return (bool) $success;
-        
+
     }
 
     /**
@@ -715,11 +712,10 @@ class ProductsTable extends AppTable
             if ($ids['attributeId'] > 0) {
                 throw new InvalidParameterException('change name is not allowed for product attributes');
             }
-            $newName = StringComponent::removeSpecialChars(strip_tags(trim($name['name'])));
 
             $productEntity = $this->newEntity(
                 [
-                    'name' => $newName,
+                    'name' => $name['name'],
                 ],
                 [
                     'validate' => 'name',
@@ -731,10 +727,9 @@ class ProductsTable extends AppTable
 
             if (isset($name['barcode'])) {
                 $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
-                $barcode = StringComponent::removeSpecialChars(strip_tags(trim($name['barcode'])));
                 $barcodeProductEntity = $barcodeProductsTable->newEntity(
                     [
-                        'barcode' => $barcode,
+                        'barcode' => $name['barcode'],
                     ],
                     [
                         'validate' => true
@@ -747,10 +742,10 @@ class ProductsTable extends AppTable
 
             $tmpProduct2Save = [
                 'id_product' => $ids['productId'],
-                'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
-                'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
-                'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity']))),
+                'name' => $name['name'],
+                'description_short' => $name['description_short'],
+                'description' => $name['description'],
+                'unity' => $name['unity'],
             ];
             if (isset($name['is_declaration_ok'])) {
                 $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
@@ -759,10 +754,10 @@ class ProductsTable extends AppTable
                 $tmpProduct2Save['id_storage_location'] = $name['id_storage_location'];
             }
 
-            if (isset($name['barcode']) && isset($barcode)) {
+            if (isset($name['barcode'])) {
                 $tmpProduct2Save['barcode_product'] = [
                     'product_id' => $ids['productId'],
-                    'barcode' => $barcode,
+                    'barcode' => $name['barcode'],
                 ];
             }
             $products2save[] = $tmpProduct2Save;
@@ -1020,10 +1015,13 @@ class ProductsTable extends AppTable
             }
 
             $product->unchanged_name = $product->name;
+
+            $product->nameSetterMethodEnabled = false;
             $product->name = '<span class="product-name">' . $product->name . '</span>';
             if (!empty($additionalProductNameInfos)) {
                 $product->name = $product->name . ': ' . join(', ', $additionalProductNameInfos);
             }
+            $product->nameSetterMethodEnabled = true;
 
             if (empty($product->tax)) {
                 $product->tax = (object) [
@@ -1495,16 +1493,16 @@ class ProductsTable extends AppTable
             [
                 'id_manufacturer' => $manufacturer->id_manufacturer,
                 'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
-                'name' => StringComponent::removeSpecialChars(strip_tags(trim($productName))),
+                'name' => $productName,
                 'delivery_rhythm_send_order_list_weekday' => DeliveryRhythm::getSendOrderListsWeekday(),
-                'description_short' => StringComponent::prepareWysiwygEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
-                'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
-                'unity' => StringComponent::removeSpecialChars(strip_tags(trim($unity))),
+                'description_short' => $descriptionShort,
+                'description' => $description,
+                'unity' => $unity,
                 'is_declaration_ok' => $isDeclarationOk,
                 'id_storage_location' => $idStorageLocation,
             ],
             [
-                'validate' => 'name'
+                'validate' => 'name',
             ]
         );
 
@@ -1513,9 +1511,7 @@ class ProductsTable extends AppTable
         }
 
         $barcodeProductsTable = FactoryLocator::get('Table')->get('BarcodeProducts');
-
         if ($barcode != '') {
-            $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
             $barcodeEntity2Save = $barcodeProductsTable->newEntity([
                 'barcode' => $barcode,
             ], ['validate' => true]);
@@ -1545,9 +1541,9 @@ class ProductsTable extends AppTable
         }
 
         // INSERT CATEGORY_PRODUCTS
-        $categoryProuductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
-        $categoryProuductsTable->save(
-            $categoryProuductsTable->newEntity(
+        $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
+        $categoryProductsTable->save(
+            $categoryProductsTable->newEntity(
                 [
                     'id_category' => Configure::read('app.categoryAllProducts'),
                     'id_product' => $newProductId,

@@ -60,7 +60,7 @@ $buttons[] = $this->element('orderDetailList/button/filterByCartTypeEnabled', [
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,
     'buttons' => $buttons,
-    'label' => __d('admin', 'More') . '...',
+    'label' => __d('admin', 'Actions') . '...',
 ]);
 
 ?>

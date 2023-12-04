@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-09-18 14:52+0200\n"
+"POT-Creation-Date: 2023-11-23 11:39+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1289,10 +1289,22 @@ msgstr ""
 msgid "Your_shopping_bag_was_empty."
 msgstr ""
 
-msgid "net_per_piece_abbr"
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr ""
+
+msgid "Gross_price"
 msgstr ""
 
 msgid "Tax_rate"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "net_per_piece_abbr"
 msgstr ""
 
 msgid "net"
@@ -2073,6 +2085,9 @@ msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1}
 msgstr ""
 
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
+msgstr ""
+
+msgid "Manufacturer_not_found."
 msgstr ""
 
 msgid "member"

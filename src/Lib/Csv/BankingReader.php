@@ -56,7 +56,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
     {
         $this->configureType();
         if (!$this->checkStructure()) {
-            throw new \Exception('structure of csv is not valid');
+            throw new \Exception(__('The_structure_of_the_uploaded_file_is_not_valid.'));
         }
 
         $records = $this->getRecords();

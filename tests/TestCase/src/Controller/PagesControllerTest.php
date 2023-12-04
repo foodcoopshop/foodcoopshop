@@ -117,6 +117,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getConfigurationEdit(544),
             $this->Slug->getCronjobsList(),
             $this->Slug->getCronjobEdit(1),
+            $this->Slug->getProductImport(4),
         ];
 
         $this->assertPagesForErrors($testUrls);
@@ -137,6 +138,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getMyStatistics(),
             $this->Slug->getManufacturerProfile(),
             $this->Slug->getProductAdmin(),
+            $this->Slug->getMyProductImport(),
         ];
 
         $this->assertPagesForErrors($testUrls);

@@ -143,6 +143,18 @@ class SlugHelper extends Helper
         return $url;
     }
 
+    public function getProductImport($manufacturerId = '') {
+        $url = '/admin/products/import';
+        if ($manufacturerId != '') {
+            $url .= '?manufacturerId='.$manufacturerId;
+        }
+        return $url;
+    }
+
+    public function getMyProductImport()
+    {
+        return '/admin/products/myImport';
+    }
 
     public function getMyDepositList()
     {

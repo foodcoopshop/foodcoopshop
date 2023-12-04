@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-09-18 14:52+0200\n"
-"PO-Revision-Date: 2023-09-18 14:57+0200\n"
+"POT-Creation-Date: 2023-11-23 11:39+0100\n"
+"PO-Revision-Date: 2023-11-23 09:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -1294,11 +1294,23 @@ msgstr "The product {0} was added to your cart."
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
 
-msgid "net_per_piece_abbr"
-msgstr "net/piece"
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr "The structure of the uploaded file is not valid."
+
+msgid "Gross_price"
+msgstr "Gross price"
 
 msgid "Tax_rate"
 msgstr "Tax rate"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "net_per_piece_abbr"
+msgstr "net/piece"
 
 msgid "net"
 msgstr "net"
@@ -2080,6 +2092,9 @@ msgstr "The product ({0}) can't be added to your cart. Please add new credit, yo
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
 msgstr "The following delivery day(s) already contain orders: {0}. To save the delivery break, either cancel them or change the pickup day."
 
+msgid "Manufacturer_not_found."
+msgstr "The manufacturer was not found."
+
 msgid "member"
 msgstr "Member"
 
@@ -2812,6 +2827,12 @@ msgstr "placed on"
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
 
+#~ msgid "Row: {0}"
+#~ msgstr "Row: {0}"
+
+#~ msgid "Please_enter_a_price."
+#~ msgstr "Please enter a price."
+
 #~ msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
 #~ msgstr "We sent your new pasword to you. It needs to be activated!"
 
@@ -3058,9 +3079,6 @@ msgstr "The prices include the VAT."
 
 #~ msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 #~ msgstr "The amount can only be decreased. To increase, please order product again."
-
-#~ msgid "Please_enter_a_price."
-#~ msgstr "Please enter a price."
 
 #~ msgid "Delivered_weight_needs_to_be_greater_than_0."
 #~ msgstr "The delivered weight needs to be greater than 0."

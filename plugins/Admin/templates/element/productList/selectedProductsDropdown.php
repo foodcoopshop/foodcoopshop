@@ -22,14 +22,20 @@ if (!empty($products)) {
     $buttons[] = $this->element('productList/button/generateProductCardsOfSelectedProducts');
     $buttons[] = $this->element('productList/button/editStatusForSelectedProducts');
     $buttons[] = $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
-    $buttons[] = '<hr class="dropdown-divider" />';
     $buttons[] = $this->element('productList/button/deleteSelectedProducts');
+    $buttons[] = '<hr class="dropdown-divider" />';
+    if ($appAuth->isManufacturer()) {
+        $productImportUrl = $this->Slug->getMyProductImport();
+    } else {
+        $productImportUrl = $this->Slug->getProductImport($manufacturerId);
+    }
+    $buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import ok"></i> ' . __d('admin', 'Import_products') . '</a>';
 }
 
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,
     'buttons' => $buttons,
-    'label' => __d('admin', 'Selected_products') . '...'
+    'label' => __d('admin', 'Actions') . '...'
 ]);
 
 ?>
