@@ -267,7 +267,7 @@ class CartProductsTable extends AppTable
         }
 
         $message = $this->isGlobalDeliveryBreakEnabled($appAuth, $productsTable, $product->next_delivery_day, $product->name);
-        if ($message != true) {
+        if ($message !== true) {
             return [
                 'status' => 0,
                 'msg' => $message,
