@@ -141,7 +141,12 @@ trait ImportTrait
                     }
                     $errorRows[] = $header . $errorMessage;
                 }
-                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.') . '<br /><ul>' . implode('', $errorRows) . '</ul>');
+                if (empty($errors)) {
+                    $errorMessage = __d('admin', 'The_uploaded_file_was_empty._Please_add_products_and_upload_again.');
+                } else {
+                    $errorMessage = __d('admin', 'The_uploaded_file_is_not_valid.') . '<br /><ul>' . implode('', $errorRows) . '</ul>';
+                }
+                $this->Flash->error($errorMessage);
             }
         }
     }

@@ -30,46 +30,56 @@ $this->element('addScript', [
 
 <div class="product-import-wrapper">
 
-<?php if (!isset($productEntities)) { ?>
-
-    <div class="template-download-link-wrapper"">
-        <?php
-        echo $this->MyHtml->link(
-            '<i class="fas fa-download"></i> '. __d('admin', 'Download_empty_CSV_template'),
-            '/admin/products/downloadImportTemplate',
-            [
-                'class' => 'btn btn-success',
-                'style' => 'padding: 15px 30px',
-                'escape' => false,
-            ],
-        );
-        echo '<br /><br />';
-        echo $this->element('helpIcon', ['link' => $this->Html->getDocsUrl(__d('admin', 'docs_route_product_import'))]);
-        ?>
-    </div>
-
-<?php } ?>
 
     <?php
 
-        echo $this->Form->create(null, [
-            'type' => 'file',
-            'id' => 'csv-upload',
-        ]);
+    echo $this->Form->create(null, [
+        'type' => 'file',
+        'id' => 'csv-upload',
+    ]);
+
+    ?>
+
+    <div>1. 
+    <?php
+        echo $this->MyHtml->link(
+            __d('admin', 'Read_guide_for_product_import'),
+            $this->Html->getDocsUrl(__d('admin', 'docs_route_product_import')),
+            [
+                'escape' => false,
+                'target' => '_blank',
+            ],
+        );
+    ?>
+    </div>
+
+    <div>2.
+    <?php
+        echo $this->MyHtml->link(
+            __d('admin', 'Download_empty_CSV_template'),
+            '/admin/products/downloadImportTemplate',
+            [
+                'escape' => false,
+            ],
+        );
+    ?>
+    </div>
+
+    <div>3.
+    
+    <?php
         echo $this->Form->control('upload', [
             'type' => 'file',
             'accept' => '.csv',
             'onchange' => 'form.submit()',
-            'label' => __d('admin', 'Upload_changed_CSV_file_with_products') . ': ',
-            'style' => 'padding-left:5px',
+            'label' => __d('admin', 'Upload_changed_template_with_products') . ': ',
+            'style' => 'padding-left:5px;',
         ]);
-        echo $this->Form->end();
+        ?>
+    </div>
 
-        /*
-        echo '<button type="submit" class="btn btn-success">
-                <i class="fas fa-check"></i> ' . __d('admin', 'Save') . '
-            </button>';
-        */
+        <?php 
+        echo $this->Form->end();
 
         echo $this->MyHtml->link(
             '<i class="fas fa-arrow-left"></i> ' . __d('admin', 'Back_to_product_page'),

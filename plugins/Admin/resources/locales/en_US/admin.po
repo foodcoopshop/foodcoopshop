@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 11:39+0100\n"
-"PO-Revision-Date: 2023-11-23 11:40+0100\n"
+"POT-Creation-Date: 2023-12-04 17:38+0100\n"
+"PO-Revision-Date: 2023-12-04 17:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -770,6 +770,9 @@ msgstr "Product import for {0}"
 
 msgid "Product_import_successful."
 msgstr "The product import was successful."
+
+msgid "The_uploaded_file_was_empty._Please_add_products_and_upload_again."
+msgstr "The uploaded file was empty. Please add products and upload again."
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr "A new image was uploaded to product {0} from manufacturer {1}."
@@ -1839,11 +1842,14 @@ msgstr "Back to member overview"
 msgid "docs_route_product_import"
 msgstr "products"
 
+msgid "Read_guide_for_product_import"
+msgstr "Read guide for product import"
+
 msgid "Download_empty_CSV_template"
 msgstr "Download empty CSV template"
 
-msgid "Upload_changed_CSV_file_with_products"
-msgstr "Upload changed CSV file with products."
+msgid "Upload_changed_template_with_products"
+msgstr "Upload changed template file with products."
 
 msgid "Back_to_product_page"
 msgstr "Back to products"
@@ -2480,6 +2486,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Read_help"
+#~ msgstr "Read help"
 
 #~ msgid "Quantity"
 #~ msgstr "Available quantity"
