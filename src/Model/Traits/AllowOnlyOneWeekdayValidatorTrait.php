@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Traits;
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -26,14 +26,14 @@ trait AllowOnlyOneWeekdayValidatorTrait
     {
         $validator->add($field, 'allow-only-one-weekday', [
             'rule' => function ($value, $context) {
-            if (DeliveryRhythm::getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
+            if (DeliveryRhythmService::getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
                 return false;
             }
             return true;
             },
             'message' => __('{0}_needs_to_be_a_{1}.', [
                 $fieldName,
-                Configure::read('app.timeHelper')->getWeekdayName(DeliveryRhythm::getDeliveryWeekday())
+                Configure::read('app.timeHelper')->getWeekdayName(DeliveryRhythmService::getDeliveryWeekday())
             ])
         ]);
         return $validator;

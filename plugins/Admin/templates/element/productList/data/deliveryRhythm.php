@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
 
 echo '<td class="delivery-rhythm">';
@@ -70,7 +70,7 @@ echo '<td class="delivery-rhythm">';
                 echo $sendOrderListWeekdayElement;
 
                 if ($product->delivery_rhythm_type != 'individual') {
-                    if ($product->delivery_rhythm_send_order_list_weekday != DeliveryRhythm::getSendOrderListsWeekday()) {
+                    if ($product->delivery_rhythm_send_order_list_weekday != DeliveryRhythmService::getSendOrderListsWeekday()) {
                         $elementsToRender[] = __d('admin', 'Last_order_weekday') . ': ' . $this->Time->getWeekdayName($lastOrderWeekday) . ' ' . __d('admin', 'midnight');
                     }
                 }

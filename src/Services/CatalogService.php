@@ -23,11 +23,12 @@ use Cake\Core\Configure;
 use Cake\Database\Query;
 use Cake\Utility\Security;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Expression\StringExpression;
 
-class CatalogService {
+class CatalogService
+{
 
     protected $Customer;
     protected $Manufacturer;
@@ -387,7 +388,7 @@ class CatalogService {
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $pickupDay = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
+            $pickupDay = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $appAuth);
             if (empty($product->product_attributes)) {
                 $product->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
             } else {
@@ -438,7 +439,7 @@ class CatalogService {
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $deliveryDate = DeliveryRhythm::getNextPickupDayForProduct($product);
+            $deliveryDate = DeliveryRhythmService::getNextPickupDayForProduct($product);
 
             // deactivates the product if it can not be ordered this week
             if ($deliveryDate == 'delivery-rhythm-triggered-delivery-break') {
@@ -536,7 +537,7 @@ class CatalogService {
                 $products[$i]->deposit_product->deposit = 0;
             }
 
-            $products[$i]->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
+            $products[$i]->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $appAuth);
 
             foreach ($product->product_attributes as &$attribute) {
 

@@ -6,7 +6,7 @@ namespace App\Model\Table;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use App\Model\Traits\CartValidatorTrait;
 
 /**
@@ -108,7 +108,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $product->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $appAuth);
+        $product->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $appAuth);
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
@@ -335,7 +335,7 @@ class CartProductsTable extends AppTable
     {
         $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = DeliveryRhythm::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
+            $cartProduct->pickup_day = DeliveryRhythmService::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
         }
 
         $pickupDays = [];

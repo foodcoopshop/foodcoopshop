@@ -22,7 +22,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class DeliveryNoteService {
+class DeliveryNoteService
+{
 
     public function getSpreadsheet($orderDetails)
     {

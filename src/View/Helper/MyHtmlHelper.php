@@ -9,7 +9,7 @@ use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use App\Lib\OutputFilter\OutputFilter;
 use App\Model\Table\CartsTable;
 
@@ -149,7 +149,7 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         if ($deliveryRhythmType == 'month') {
-            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName(DeliveryRhythm::getDeliveryWeekday());
+            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName(DeliveryRhythmService::getDeliveryWeekday());
             if ($deliveryRhythmCount > 0) {
                 $deliveryRhythmString = __('every_{0}_{1}_of_a_month', [
                     $this->MyNumber->ordinal($deliveryRhythmCount),
@@ -171,7 +171,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getSendOrderListsWeekdayOptions()
     {
-        $defaultSendOrderListsWeekday = DeliveryRhythm::getSendOrderListsWeekday();
+        $defaultSendOrderListsWeekday = DeliveryRhythmService::getSendOrderListsWeekday();
         $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
         $weekday2 = $this->MyTime->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
         $weekday1 = $this->MyTime->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Traits;
 
 use Cake\Datasource\FactoryLocator;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Cake\Validation\Validator;
 use App\Model\Entity\Product;
 use App\Model\Traits\NumberRangeValidatorTrait;
@@ -73,7 +73,7 @@ trait ProductImportTrait
             [
                 'id_manufacturer' => $manufacturerId,
                 'name' => $productName,
-                'delivery_rhythm_send_order_list_weekday' => DeliveryRhythm::getSendOrderListsWeekday(),
+                'delivery_rhythm_send_order_list_weekday' => DeliveryRhythmService::getSendOrderListsWeekday(),
                 'description_short' => $descriptionShort,
                 'description' => $description,
                 'unity' => $unity,

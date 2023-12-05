@@ -6,7 +6,7 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use App\Controller\Component\StringComponent;
 
 /**
@@ -50,7 +50,7 @@ trait IndexTrait {
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $pickupDay[0] = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
                 } else {
-                    $pickupDay[0] = DeliveryRhythm::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+                    $pickupDay[0] = DeliveryRhythmService::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
                 }
             }
         }

@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Database\Expression\QueryExpression;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 
 class PickupReminderCommand extends AppCommand
 {
@@ -60,7 +60,7 @@ class PickupReminderCommand extends AppCommand
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        $nextPickupDay = DeliveryRhythm::getDeliveryDay(strtotime($this->cronjobRunDay));
+        $nextPickupDay = DeliveryRhythmService::getDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextPickupDay);
         $diffOrderAndPickupInDays = 6;
 

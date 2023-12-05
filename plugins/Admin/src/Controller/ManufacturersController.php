@@ -10,7 +10,7 @@ use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Admin\Traits\UploadTrait;
 use App\Services\CatalogService;
 use App\Services\DeliveryNoteService;
@@ -265,7 +265,7 @@ class ManufacturersController extends AdminAppController
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $defaultDate = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         } else {
-            $defaultDate = DeliveryRhythm::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $defaultDate = DeliveryRhythmService::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
         return $defaultDate;
     }
@@ -429,7 +429,7 @@ class ManufacturersController extends AdminAppController
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            $noDeliveryBreakOptions = DeliveryRhythm::getNextWeeklyDeliveryDays();
+            $noDeliveryBreakOptions = DeliveryRhythmService::getNextWeeklyDeliveryDays();
             $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
         }
 

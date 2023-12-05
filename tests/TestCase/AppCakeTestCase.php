@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase;
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use App\Lib\Folder\Folder;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
@@ -238,7 +238,7 @@ abstract class AppCakeTestCase extends TestCase
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
                 'customer_id' => $this->getUserId(),
-                'pickup_day' => !is_null($pickupDay) ? $pickupDay : DeliveryRhythm::getDeliveryDateByCurrentDayForDb(),
+                'pickup_day' => !is_null($pickupDay) ? $pickupDay : DeliveryRhythmService::getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment,
             ];
         }

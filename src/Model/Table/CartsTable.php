@@ -7,7 +7,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -96,7 +96,7 @@ class CartsTable extends AppTable
     {
         $validator->add($field, 'allow-only-defined-pickup-days', [
             'rule' => function ($value, $context) {
-            if (!in_array($value, array_keys(DeliveryRhythm::getNextDailyDeliveryDays(21)))
+            if (!in_array($value, array_keys(DeliveryRhythmService::getNextDailyDeliveryDays(21)))
                 || in_array($value, Configure::read('app.htmlHelper')->getGlobalNoDeliveryDaysAsArray())) {
                     return false;
                 }
@@ -190,7 +190,7 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            $nextDeliveryDay = DeliveryRhythm::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
+            $nextDeliveryDay = DeliveryRhythmService::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
             if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
                 $dateFormattedWithWeekday = __('Delivery_break');
             } else {

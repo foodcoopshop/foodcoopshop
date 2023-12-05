@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
@@ -72,7 +72,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
         $cronjobRunDay = '2019-02-27';
-        $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($cronjobRunDay));
+        $pickupDay = DeliveryRhythmService::getNextDeliveryDay(strtotime($cronjobRunDay));
 
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(
@@ -112,7 +112,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListsIfMoreOrdersAvailable()
     {
         $cronjobRunDay = '2018-01-31';
-        $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($cronjobRunDay));
+        $pickupDay = DeliveryRhythmService::getNextDeliveryDay(strtotime($cronjobRunDay));
         $this->changeManufacturer(5, 'anonymize_customers', 1);
 
         $this->exec('send_order_lists ' . $cronjobRunDay);
@@ -141,7 +141,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
     public function testSendOrderListsWithSendOrderListFalse()
     {
         $cronjobRunDay = '2018-01-31';
-        $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($cronjobRunDay));
+        $pickupDay = DeliveryRhythmService::getNextDeliveryDay(strtotime($cronjobRunDay));
 
         $this->changeManufacturer(5, 'anonymize_customers', 1);
         $this->changeManufacturer(4, 'send_order_list', 0);

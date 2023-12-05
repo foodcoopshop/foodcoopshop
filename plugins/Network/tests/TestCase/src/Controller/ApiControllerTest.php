@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Network\Test\TestCase;
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use Cake\Core\Configure;
@@ -61,7 +61,7 @@ class ApiControllerTest extends AppCakeTestCase
 
         $preparedResponse = str_replace(
             [
-                DeliveryRhythm::getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
+                DeliveryRhythmService::getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
                 json_encode(Configure::read('App.fullBaseUrl')),
             ],
             [
@@ -105,7 +105,7 @@ class ApiControllerTest extends AppCakeTestCase
             'delivery_rhythm_count' => '1',
             'is_stock_product' => '0',
         ]);
-        $nextDeliveryDay = DeliveryRhythm::getNextPickupDayForProduct($dummyProduct);
+        $nextDeliveryDay = DeliveryRhythmService::getNextPickupDayForProduct($dummyProduct);
 
         $this->configRequest([
             'environment' => [

@@ -8,7 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -265,8 +265,8 @@ class CartsController extends FrontendController
 
         $formattedDeliveryDate = strtotime($deliveryDate);
 
-        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
-        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythm::getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
+        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythmService::getOrderPeriodFirstDayByDeliveryDay($formattedDeliveryDate)));
+        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythmService::getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());

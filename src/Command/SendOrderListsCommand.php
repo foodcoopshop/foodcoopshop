@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Command;
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
@@ -50,7 +50,7 @@ class SendOrderListsCommand extends AppCommand
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $pickupDay = $this->cronjobRunDay;
         } else {
-            $pickupDay = DeliveryRhythm::getNextDeliveryDay(strtotime($this->cronjobRunDay));
+            $pickupDay = DeliveryRhythmService::getNextDeliveryDay(strtotime($this->cronjobRunDay));
         }
 
         // 1) get all manufacturers (not only active ones)

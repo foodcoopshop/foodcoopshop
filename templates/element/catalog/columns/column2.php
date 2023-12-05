@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use Cake\Core\Configure;
 
 echo '<div class="heading">';
@@ -51,7 +51,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
     if (!$appAuth->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
 
-        $lastOrderDay = DeliveryRhythm::getLastOrderDay(
+        $lastOrderDay = DeliveryRhythmService::getLastOrderDay(
             $product->next_delivery_day,
             $product->delivery_rhythm_type,
             $product->delivery_rhythm_count,
@@ -61,7 +61,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
         if (!($product->delivery_rhythm_type == 'week'
             && $product->delivery_rhythm_count == 1
-            && DeliveryRhythm::getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
+            && DeliveryRhythmService::getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
             )
             && $lastOrderDay != ''
             ) {
@@ -95,7 +95,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
     if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isOrderForDifferentCustomerMode()) {
         if (
             $product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break'
-            && strtotime($product->next_delivery_day) != DeliveryRhythm::getDeliveryDayByCurrentDay()
+            && strtotime($product->next_delivery_day) != DeliveryRhythmService::getDeliveryDayByCurrentDay()
             ) {
                 $weeksAsFloat = (strtotime($product->next_delivery_day) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
                 $fullWeeks = (int) ($weeksAsFloat / 7);

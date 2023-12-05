@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 use App\Lib\HelloCash\HelloCash;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
@@ -357,7 +357,7 @@ class CartService
                 'contain' => $contain,
             ])->first();
 
-            $product->next_delivery_day = DeliveryRhythm::getNextDeliveryDayForProduct($product, $this->AppAuth);
+            $product->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $this->AppAuth);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;

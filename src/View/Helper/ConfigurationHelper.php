@@ -8,7 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
-use App\Lib\DeliveryRhythm\DeliveryRhythm;
+use App\Services\DeliveryRhythmService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -50,9 +50,9 @@ class ConfigurationHelper extends Helper
                 break;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                    $values = DeliveryRhythm::getNextDailyDeliveryDays(365);
+                    $values = DeliveryRhythmService::getNextDailyDeliveryDays(365);
                 } else {
-                    $values = DeliveryRhythm::getNextWeeklyDeliveryDays();
+                    $values = DeliveryRhythmService::getNextWeeklyDeliveryDays();
                 }
                 return $values;
                 break;
