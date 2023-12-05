@@ -14,14 +14,15 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\DeliveryNote;
+ namespace App\Services;
+
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class GenerateDeliveryNote {
+class DeliveryNoteService {
 
     public function getSpreadsheet($orderDetails)
     {

@@ -7,7 +7,6 @@ use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use App\Lib\Folder\Folder;
-use App\Lib\Catalog\Catalog;
 use Cake\Validation\Validator;
 use App\Lib\RemoteFile\RemoteFile;
 use Cake\Datasource\FactoryLocator;
@@ -17,6 +16,7 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
+use App\Services\CatalogService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,7 +38,6 @@ class ProductsTable extends AppTable
     use ProductCacheClearAfterSaveAndDeleteTrait;
     use ProductImportTrait;
 
-    protected $Catalog;
     protected $Configuration;
     protected $Manufacturer;
     protected $Unit;
@@ -916,8 +915,8 @@ class ProductsTable extends AppTable
         }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $this->Catalog = new Catalog();
-            $query->select(['system_bar_code' => $this->Catalog->getProductIdentifierField()]);
+            $catalogService = new CatalogService();
+            $query->select(['system_bar_code' => $catalogService->getProductIdentifierField()]);
             $query->select($barcodeProductsTable);
         }
 

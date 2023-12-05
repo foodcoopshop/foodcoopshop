@@ -6,10 +6,10 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
-use App\Lib\Catalog\Catalog;
 use Cake\Core\Configure;
 use Cake\Utility\Security;
 use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
+use App\Services\CatalogService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,7 +30,6 @@ class PagesController extends FrontendController
     protected $BlogPost;
     protected $Page;
     protected $Slider;
-    protected $Catalog;
     
     public function beforeFilter(EventInterface $event)
     {
@@ -97,9 +96,9 @@ class PagesController extends FrontendController
 
         $products = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $this->Catalog = new Catalog();
-            $products = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-            $products = $this->Catalog->prepareProducts($this->AppAuth, $products);
+            $catalogService = new CatalogService();
+            $products = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
+            $products = $catalogService->prepareProducts($this->AppAuth, $products);
         }
         $this->set('newProducts', $products);
 

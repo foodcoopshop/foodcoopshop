@@ -16,12 +16,12 @@ declare(strict_types=1);
  */
 namespace App\Command;
 
-use App\Lib\DeliveryNote\GenerateDeliveryNote;
 use App\Mailer\AppMailer;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
+use App\Services\DeliveryNoteService;
 
 class SendDeliveryNotesCommand extends AppCommand
 {
@@ -78,9 +78,9 @@ class SendDeliveryNotesCommand extends AppCommand
             $newData .= html_entity_decode($manufacturer->name);
             $actionLogDatas[] = $newData;
 
-            $generateDeliverNotes = new GenerateDeliveryNote();
-            $spreadsheet = $generateDeliverNotes->getSpreadsheet($orderDetails);
-            $manufacturer->deliverNotesFilename = $generateDeliverNotes->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
+            $deliverNoteService = new DeliveryNoteService();
+            $spreadsheet = $deliverNoteService->getSpreadsheet($orderDetails);
+            $manufacturer->deliverNotesFilename = $deliverNoteService->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
 
             $manufacturersWithData[] = $manufacturer;
 

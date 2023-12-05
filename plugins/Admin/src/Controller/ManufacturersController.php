@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\Catalog\Catalog;
-use App\Lib\DeliveryNote\GenerateDeliveryNote;
 use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
@@ -14,6 +12,8 @@ use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Admin\Traits\UploadTrait;
+use App\Services\CatalogService;
+use App\Services\DeliveryNoteService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -330,8 +330,8 @@ class ManufacturersController extends AdminAppController
         $this->Feedback = $this->getTableLocator()->get('Feedbacks');
 
         foreach ($manufacturers as $manufacturer) {
-            $this->Catalog = new Catalog();
-            $manufacturer->product_count = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
+            $catalogService = new CatalogService();
+            $manufacturer->product_count = $catalogService->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
@@ -395,15 +395,15 @@ class ManufacturersController extends AdminAppController
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo);
 
-        $generateDeliverNotes = new GenerateDeliveryNote();
-        $spreadsheet = $generateDeliverNotes->getSpreadsheet($orderDetails);
+        $deliverNoteService = new DeliveryNoteService();
+        $spreadsheet = $deliverNoteService->getSpreadsheet($orderDetails);
 
-        $filename = $generateDeliverNotes->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
+        $filename = $deliverNoteService->writeSpreadsheetAsFile($spreadsheet, $dateFrom, $dateTo, $manufacturer->name);
 
         $this->response = $this->response->withHeader('Content-Disposition', 'inline;filename="'.$filename.'"');
         $this->response = $this->response->withFile(TMP . $filename);
 
-        $generateDeliverNotes->deleteTmpFile($filename);
+        $deliverNoteService->deleteTmpFile($filename);
 
         return $this->response;
 

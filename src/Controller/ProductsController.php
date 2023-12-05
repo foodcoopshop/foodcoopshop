@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\Catalog\Catalog;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
+use App\Services\CatalogService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +25,6 @@ use Cake\Core\Configure;
 class ProductsController extends FrontendController
 {
 
-    protected $Catalog;
     protected $Product;
 
     public function beforeFilter(EventInterface $event)
@@ -59,9 +58,9 @@ class ProductsController extends FrontendController
     {
         $productId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Catalog = new Catalog();
-        $product = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
-        $product = $this->Catalog->prepareProducts($this->AppAuth, $product);
+        $catalogService = new CatalogService();
+        $product = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
+        $product = $catalogService->prepareProducts($this->AppAuth, $product);
 
         if (empty($product) || !isset($product[0])) {
             throw new RecordNotFoundException('product not found');

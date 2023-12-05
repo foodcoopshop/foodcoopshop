@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Lib\Catalog\Catalog;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use App\Model\Traits\MultipleEmailsRuleTrait;
 use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
+use App\Services\CatalogService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +31,6 @@ class ManufacturersTable extends AppTable
     use MultipleEmailsRuleTrait;
     use NoDeliveryDaysOrdersExistTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
-
-    protected $Catalog;
 
     public function initialize(array $config): void
     {
@@ -295,8 +293,8 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $this->Catalog = new Catalog();
-                $additionalInfo = $this->Catalog->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
+                $catalogService = new CatalogService();
+                $additionalInfo = $catalogService->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer, false, 1);
             if ($noDeliveryDaysString != '') {

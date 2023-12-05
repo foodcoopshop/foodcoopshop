@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\Catalog\Catalog;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use App\Services\CatalogService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,7 +27,6 @@ class ManufacturersController extends FrontendController
 {
 
     protected $Manufacturer;
-    protected $Catalog;
     protected $BlogPost;
 
     public function beforeFilter(EventInterface $event)
@@ -82,9 +81,9 @@ class ManufacturersController extends FrontendController
         }
 
         if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $this->Catalog = new Catalog();
+            $catalogService = new CatalogService();
             foreach ($manufacturers as $manufacturer) {
-                $manufacturer->product_count = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
+                $manufacturer->product_count = $catalogService->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
             }
         }
 
@@ -123,9 +122,9 @@ class ManufacturersController extends FrontendController
         }
 
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $this->Catalog = new Catalog();
-            $products = $this->Catalog->getProductsByManufacturerId($this->AppAuth, $manufacturerId);
-            $manufacturer['Products'] = $this->Catalog->prepareProducts($this->AppAuth, $products);
+            $catalogService = new CatalogService();
+            $products = $catalogService->getProductsByManufacturerId($this->AppAuth, $manufacturerId);
+            $manufacturer['Products'] = $catalogService->prepareProducts($this->AppAuth, $products);
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');

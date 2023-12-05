@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Lib\Catalog\Catalog;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use App\Services\CatalogService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +25,6 @@ class FrontendController extends AppController
 
     public $protectEmailAddresses = true;
     protected $Category;
-    protected $Catalog;
     protected $OrderDetail;
     protected $Page;
 
@@ -65,9 +64,9 @@ class FrontendController extends AppController
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->Category = $this->getTableLocator()->get('Categories');
-            $this->Catalog = new Catalog();
-            $allProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
-            $newProductsCount = $this->Catalog->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
+            $catalogService = new CatalogService();
+            $allProductsCount = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
+            $newProductsCount = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu($this->AppAuth);
             array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('app.slugHelper')->getNewProducts(),

@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Catalog;
+namespace App\Services;
 
 use Cake\I18n\I18n;
 use Cake\Cache\Cache;
@@ -27,7 +27,7 @@ use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Expression\StringExpression;
 
-class Catalog {
+class CatalogService {
 
     protected $Customer;
     protected $Manufacturer;
