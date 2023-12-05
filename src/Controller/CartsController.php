@@ -108,13 +108,13 @@ class CartsController extends FrontendController
 
         $this->set('title_for_layout', __('Finish_cart'));
 
-        if ($this->AppAuth->Cart->isCartEmpty()) {
+        if ($this->AppAuth->CartService->isCartEmpty()) {
             $this->Flash->error(__('Your_cart_was_empty.'));
             $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
             return;
         }
 
-        $cart = $this->AppAuth->Cart->finish();
+        $cart = $this->AppAuth->CartService->finish();
 
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
@@ -209,7 +209,7 @@ class CartsController extends FrontendController
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
 
-        $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
+        $existingCartProduct = $this->AppAuth->CartService->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
             $message = __('Product_{0}_was_not_available_in_cart.', [$ids['productId']]);
             $this->set([
@@ -246,7 +246,7 @@ class CartsController extends FrontendController
     {
         $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->removeAll($this->AppAuth->Cart->getCartId(), $this->AppAuth->getUserId());
+        $cartProductTable->removeAll($this->AppAuth->CartService->getCartId(), $this->AppAuth->getUserId());
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
 

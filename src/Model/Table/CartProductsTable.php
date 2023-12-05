@@ -93,7 +93,7 @@ class CartProductsTable extends AppTable
         ])
         ->first();
 
-        $existingCartProduct = $appAuth->Cart->getProduct($initialProductId);
+        $existingCartProduct = $appAuth->CartService->getProduct($initialProductId);
         $combinedAmount = $amount;
         if ($existingCartProduct) {
             $combinedAmount = $existingCartProduct['amount'] + $amount;

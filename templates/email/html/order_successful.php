@@ -57,7 +57,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
 
-        <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
+        <?php if ($appAuth->CartService->getProductsWithUnitCount() > 0) { ?>
             <tr><td style="padding-top:20px;">
                 * <?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
             </td></tr>
@@ -67,7 +67,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
         <?php if (Configure::read('app.showTaxInOrderConfirmationEmail')) { ?>
 
             <tr><td style="padding-top:20px;">
-                <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
+                <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->CartService->getTaxSum()); ?>
             </td></tr>
 
         <?php } ?>

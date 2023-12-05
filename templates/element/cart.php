@@ -25,9 +25,9 @@ if (!$appAuth->user() || $appAuth->isManufacturer()) {
     return;
 }
 
-if ($appAuth->Cart->getProducts() !== null) {
+if ($appAuth->CartService->getProducts() !== null) {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"
+        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->CartService->getProducts()))."');"
     ]);
 
     if (!empty($cartErrors)) {

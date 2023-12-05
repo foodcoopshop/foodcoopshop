@@ -6,6 +6,7 @@ namespace App\Controller\Component;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use App\Services\CartService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,21 +24,16 @@ use Cake\Datasource\FactoryLocator;
 class AppAuthComponent extends AuthComponent
 {
 
-    public $components = [
-        'Flash',
-        'RequestHandler',
-        'Cart',
-    ];
+    public $CartService;
 
-    public function flash($message): void
+    public function initialize(array $config): void
     {
-        $this->Flash->error($message);
+        parent::initialize($config);
+        $this->CartService = new CartService();
+        $this->CartService->setAppAuth($this);
     }
 
-    /**
-     * @return boolean
-     */
-    public function termsOfUseAccepted()
+    public function termsOfUseAccepted(): bool
     {
         $formattedAcceptedDate = $this->user('terms_of_use_accepted_date')->i18nFormat(Configure::read('DateFormat.Database'));
         return $formattedAcceptedDate >= Configure::read('app.termsOfUseLastUpdate');
@@ -290,7 +286,7 @@ class AppAuthComponent extends AuthComponent
 
     public function setCart($cart)
     {
-        $this->Cart->cart = $cart;
+        $this->CartService->cart = $cart;
     }
 
     public function getCart()

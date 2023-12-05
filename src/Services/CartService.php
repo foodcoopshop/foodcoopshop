@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Component;
+namespace App\Services;
 
 use App\Lib\DeliveryRhythm\DeliveryRhythm;
 use App\Lib\HelloCash\HelloCash;
@@ -11,10 +11,10 @@ use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
 use App\Mailer\AppMailer;
 use App\Model\Traits\CartValidatorTrait;
-use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
+use App\Controller\Component\StringComponent;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,23 +30,41 @@ use Cake\Datasource\FactoryLocator;
  * @link          https://www.foodcoopshop.com
  */
 
-class CartComponent extends Component
+class CartService
 {
 
     use CartValidatorTrait;
 
     protected $ActionLog;
     protected $Attribute;
+    protected $Cart;
     protected $Invoice;
     protected $Manufacturer;
     protected $Product;
+    protected $PickupDay;
+    protected $OrderDetail;
 
-    public $components = [
-        'AppAuth',
-        'RequestHandler'
-    ];
+    private $AppAuth;
+    private $request;
+    private $controller;
 
     public $cart = null;
+
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+        $this->request = $controller->getRequest();
+    }
+
+    public function setAppAuth($appAuth)
+    {
+        $this->AppAuth = $appAuth;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
 
     public function getProducts()
     {
@@ -122,7 +140,7 @@ class CartComponent extends Component
         return $patchedEntity;
     }
 
-    public function getUniqueManufacturers()
+    public function getUniqueManufacturers(): array
     {
         $manufactures = [];
         foreach ($this->getProducts() as $product) {
@@ -133,11 +151,6 @@ class CartComponent extends Component
         return $manufactures;
     }
 
-    /**
-     *
-     * @param string $productId
-     *            - possible value: 34-423 (productId, attributeId)
-     */
     public function getProduct($productId)
     {
         foreach ($this->getProducts() as $product) {
@@ -209,16 +222,16 @@ class CartComponent extends Component
                 break;
             case $this->Cart::CART_TYPE_INSTANT_ORDER;
                 $actionLogType = 'instant_order_added';
-                $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                $userIdForActionLog = $this->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>'
+                        '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>'
                     ]);
                 } else {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>',
                         '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                     ]);
                 }
@@ -267,10 +280,10 @@ class CartComponent extends Component
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
 
                 if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
-                    $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                    $userIdForActionLog = $this->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
                     $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
-                        $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['name'],
-                        '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        $this->request->getSession()->read('Auth.originalLoggedCustomer')['name'],
+                        '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>',
                         Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
                     ]);
                 } else {
@@ -282,7 +295,7 @@ class CartComponent extends Component
         if (isset($actionLogType) && isset($messageForActionLog) && isset($message)) {
             $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
-            $this->getController()->Flash->success($message);
+            $this->controller->Flash->success($message);
         }
 
         return $cart;
@@ -506,7 +519,7 @@ class CartComponent extends Component
 
             $customerSelectedPickupDay = null;
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                $customerSelectedPickupDay = h($this->getController()->getRequest()->getData('Carts.pickup_day'));
+                $customerSelectedPickupDay = h($this->request->getData('Carts.pickup_day'));
                 $orderDetail2save['pickup_day'] = $customerSelectedPickupDay;
             }
 
@@ -554,7 +567,7 @@ class CartComponent extends Component
             }
         }
 
-        $this->getController()->set('cartErrors', $cartErrors);
+        $this->controller->set('cartErrors', $cartErrors);
         $options = [];
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
@@ -566,13 +579,13 @@ class CartComponent extends Component
                 ]
             ];
             $fixedPickupDayRequest = [];
-            $pickupEntities = $this->getController()->getRequest()->getData('Carts.pickup_day_entities');
+            $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
                     $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
-                $this->getController()->setRequest($this->getController()->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
+                $this->controller->setRequest($this->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
                 $this->sendOrderCommentNotificationToPlatformOwner($pickupEntities);
             }
         }
@@ -588,7 +601,7 @@ class CartComponent extends Component
 
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
-            $this->getController()->getRequest()->getData(),
+            $this->request->getData(),
             $options
         );
 
@@ -596,11 +609,11 @@ class CartComponent extends Component
         if ($cart['Cart']->hasErrors()) {
             $formErrors = true;
         }
-        $this->getController()->set('cart', $cart['Cart']); // to show error messages in form (from validation)
-        $this->getController()->set('formErrors', $formErrors);
+        $this->controller->set('cart', $cart['Cart']); // to show error messages in form (from validation)
+        $this->controller->set('formErrors', $formErrors);
 
         if (!empty($cartErrors) || !empty($formErrors)) {
-            $this->getController()->Flash->error(__('Errors_occurred.'));
+            $this->controller->Flash->error(__('Errors_occurred.'));
             return $cart;
         }
 
@@ -609,7 +622,7 @@ class CartComponent extends Component
 
     }
 
-    private function prepareOrderDetailPurchasePrices($ids, $product, $cartProduct)
+    private function prepareOrderDetailPurchasePrices($ids, $product, $cartProduct): array
     {
 
         $amount = $cartProduct['amount'];
@@ -671,7 +684,7 @@ class CartComponent extends Component
 
     }
 
-    private function saveOrderDetails($orderDetails2save)
+    private function saveOrderDetails($orderDetails2save): void
     {
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $this->OrderDetail->saveMany(
@@ -679,7 +692,7 @@ class CartComponent extends Component
         );
     }
 
-    private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions)
+    private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions): void
     {
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = 0;
@@ -699,11 +712,7 @@ class CartComponent extends Component
         }
     }
 
-    /**
-     * @param $cartProducts
-     * @return array
-     */
-    private function sendInstantOrderNotificationToManufacturers($cartProducts)
+    private function sendInstantOrderNotificationToManufacturers($cartProducts): array
     {
 
         if (!$this->AppAuth->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
@@ -748,7 +757,7 @@ class CartComponent extends Component
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'cart' => ['CartProducts' => $cartProducts],
-                    'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->request->getSession()->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
@@ -894,7 +903,7 @@ class CartComponent extends Component
             'cart' => $cartGroupedByPickupDay,
             'pickupDayEntities' => $pickupDayEntities,
             'appAuth' => $this->AppAuth,
-            'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
+            'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null
         ]);
 
         if (Configure::read('app.rightOfWithdrawalEnabled')) {

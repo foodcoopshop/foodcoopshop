@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use hisorange\BrowserDetect\Parser as Browser;
+use App\Services\CartService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,7 +44,6 @@ class AppController extends Controller
             'clear' => true
         ]);
         $this->loadComponent('String');
-        $this->loadComponent('Cart');
 
         $authenticate = [
             'Form' => [
@@ -73,7 +73,7 @@ class AppController extends Controller
                 'Controller'
             ],
             'authenticate' => $authenticate,
-            'storage' => 'Session'
+            'storage' => 'Session',
         ]);
 
         $this->paginate = [
@@ -156,6 +156,8 @@ class AppController extends Controller
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
+
+        $this->AppAuth->CartService->setController($this);
 
         parent::beforeFilter($event);
     }
