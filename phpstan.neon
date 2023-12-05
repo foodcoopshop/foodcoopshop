@@ -26,8 +26,6 @@ parameters:
           path: src/View/Helper
         - message: '#Access to an undefined property#'
           path: plugins/Network/src/View/Helper
-        - message: '#Access to an undefined property#'
-          path: src/Controller/Component
         - message: '#Variable \$purchasePriceTaxRate might not be defined#'
           path: src/Model/Table/ProductsTable.php
         - message: '#Access to an undefined property#'
