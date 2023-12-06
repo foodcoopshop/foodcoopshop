@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Lib\OutputFilter\OutputFilter;
+use App\Services\OutputFilter\OutputFilterService;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use hisorange\BrowserDetect\Parser as Browser;
-use App\Services\CartService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -168,11 +167,11 @@ class AppController extends Controller
 
         $newOutput = $this->response->getBody()->__toString();
         if ($this->protectEmailAddresses) {
-            $newOutput = OutputFilter::protectEmailAdresses($newOutput);
+            $newOutput = OutputFilterService::protectEmailAdresses($newOutput);
         }
         
         if (Configure::check('app.outputStringReplacements')) {
-            $newOutput = OutputFilter::replace($newOutput, Configure::read('app.outputStringReplacements'));
+            $newOutput = OutputFilterService::replace($newOutput, Configure::read('app.outputStringReplacements'));
         }
         $this->response = $this->response->withStringBody($newOutput);
     }

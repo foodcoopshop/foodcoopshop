@@ -10,7 +10,7 @@ use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
 use App\Services\DeliveryRhythmService;
-use App\Lib\OutputFilter\OutputFilter;
+use App\Services\OutputFilter\OutputFilterService;
 use App\Model\Table\CartsTable;
 
 /**
@@ -887,7 +887,7 @@ class MyHtmlHelper extends HtmlHelper
         }
         $url .= $deliveryDay . '_' . StringComponent::slugify($manufacturerName) . '_' . $manufacturerId . __('_Order_list_filename_') . $groupTypeLabel . '_' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '-' . $currentDate . '.pdf';
         if (Configure::check('app.outputStringReplacements')) {
-            $url = OutputFilter::replace($url, Configure::read('app.outputStringReplacements'));
+            $url = OutputFilterService::replace($url, Configure::read('app.outputStringReplacements'));
         }
         return $url;
     }

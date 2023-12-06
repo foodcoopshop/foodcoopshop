@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\OutputFilter;
+namespace App\Services\OutputFilter;
 
 use App\Controller\Component\StringComponent;
 
@@ -25,10 +25,10 @@ use App\Controller\Component\StringComponent;
  * Example to be set in custom_config.php
  *
  * 'outputStringReplacements' => [
- *     'Manfacturers' => 'Producers',
+ *     'Manufacturers' => 'Producers',
  *  ]
  */
-class OutputFilter
+class OutputFilterService
 {
     public static function replace(string $text, array $searchAndReplace): string
     {

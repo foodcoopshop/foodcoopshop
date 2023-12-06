@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Lib\OutputFilter\OutputFilter;
+use App\Services\OutputFilter\OutputFilterService;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
@@ -383,7 +383,7 @@ class LocalizedController extends Controller
     {
         parent::afterFilter($event);
         if (Configure::check('app.outputStringReplacements')) {
-            $newOutput = OutputFilter::replace($this->response->getBody()->__toString(), Configure::read('app.outputStringReplacements'));
+            $newOutput = OutputFilterService::replace($this->response->getBody()->__toString(), Configure::read('app.outputStringReplacements'));
             $this->response = $this->response->withStringBody($newOutput);
         }
     }

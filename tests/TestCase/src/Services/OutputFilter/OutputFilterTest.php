@@ -15,10 +15,10 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\OutputFilter\OutputFilter;
+use App\Services\OutputFilter\OutputFilterService;
 use App\Test\TestCase\AppCakeTestCase;
 
-class OutputFilterTest extends AppCakeTestCase
+class OutputFilterServiceTest extends AppCakeTestCase
 {
 
     /**
@@ -26,7 +26,7 @@ class OutputFilterTest extends AppCakeTestCase
      */
     public function testProtectEmailAdresses(string $input, int $count)
     {
-        $result = OutputFilter::protectEmailAdresses($input);
+        $result = OutputFilterService::protectEmailAdresses($input);
         preg_match_all('/javascript protected email address/', $result, $matches);
         $this->assertEquals(count($matches[0]), $count);
     }

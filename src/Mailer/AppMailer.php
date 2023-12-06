@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace App\Mailer;
 
-use Cake\ORM\Query;
 use Cake\Mailer\Mailer;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\OutputFilter\OutputFilter;
+use App\Services\OutputFilter\OutputFilterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -101,12 +100,13 @@ class AppMailer extends Mailer
         }
 
         if (!empty($outputStringReplacements)) {
-            $replacedSubject = OutputFilter::replace(
+            $replacedSubject = OutputFilterService::replace(
                 /** @phpstan-ignore-next-line */
                 $this->getOriginalSubject(),
-            $outputStringReplacements);
+                $outputStringReplacements,
+            );
             $this->setSubject($replacedSubject);
-            $replacedBody = OutputFilter::replace($this->getMessage()->getBodyHtml(), $outputStringReplacements);
+            $replacedBody = OutputFilterService::replace($this->getMessage()->getBodyHtml(), $outputStringReplacements);
             $this->getMessage()->setBodyHtml($replacedBody);
         }
 

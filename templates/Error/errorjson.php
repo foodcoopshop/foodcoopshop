@@ -15,11 +15,11 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\OutputFilter\OutputFilter;
+use App\Services\OutputFilter\OutputFilterService;
 use Cake\Core\Configure;
 
 if (Configure::check('app.outputStringReplacements')) {
-    $response['msg'] = OutputFilter::replace($response['msg'], Configure::read('app.outputStringReplacements'));
+    $response['msg'] = OutputFilterService::replace($response['msg'], Configure::read('app.outputStringReplacements'));
 }
 
 echo json_encode($response);

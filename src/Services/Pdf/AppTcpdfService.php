@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Services\Pdf;
 
-use App\Lib\OutputFilter\OutputFilter;
+use App\Services\OutputFilter\OutputFilterService;
 use Cake\Core\Configure;
 use TCPDF;
 use App\Controller\Component\StringComponent;
@@ -45,7 +45,7 @@ abstract class AppTcpdfService extends TCPDF
         $html = StringComponent::removeEmojis($html);
 
         if (Configure::check('app.outputStringReplacements')) {
-            $html = OutputFilter::replace($html, Configure::read('app.outputStringReplacements'));
+            $html = OutputFilterService::replace($html, Configure::read('app.outputStringReplacements'));
         }
 
         // in generate_order_confirmation.ctp::88 $this->MyNumber->formatAsCurrency leads to empty output
