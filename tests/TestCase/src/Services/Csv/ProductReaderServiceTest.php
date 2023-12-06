@@ -14,10 +14,10 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Lib\Csv\ProductReader;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Services\Csv\ProductReaderService;
 
-class ProductReaderTest extends AppCakeTestCase
+class ProductReaderServiceTest extends AppCakeTestCase
 {
 
     private $reader = null;
@@ -29,13 +29,13 @@ class ProductReaderTest extends AppCakeTestCase
 
     public function testReadCsv()
     {
-        $this->reader = ProductReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
+        $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
         $this->reader->configureType();
         $records = $this->reader->getPreparedRecords();
 
         $this->assertCount(2, $records);
-        $this->assertEquals(ProductReader::COLUMN_COUNT, count($records[0]));
-        $this->assertEquals(ProductReader::COLUMN_COUNT, count($records[1]));
+        $this->assertEquals(ProductReaderService::COLUMN_COUNT, count($records[0]));
+        $this->assertEquals(ProductReaderService::COLUMN_COUNT, count($records[1]));
 
         $this->assertEquals('Brombeeren', $records[0]['Name']);
         $this->assertEquals('frisch geerntet <script>alert(\'evil\')</script>', $records[0]['Kurze Beschreibung']);
@@ -55,7 +55,7 @@ class ProductReaderTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
 
-        $this->reader = ProductReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-invalid.csv');
+        $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-invalid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);
@@ -89,7 +89,7 @@ class ProductReaderTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
 
-        $this->reader = ProductReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
+        $this->reader = ProductReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'productCsvExports' . DS . 'test-products-valid.csv');
         $this->reader->configureType();
         $manufacturerId = 5;
         $productEntities = $this->reader->import($manufacturerId);

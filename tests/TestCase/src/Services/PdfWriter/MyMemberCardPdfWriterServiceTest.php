@@ -19,7 +19,7 @@ use App\Services\PdfWriter\MyMemberCardPdfWriterService;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 
-class MyMemberCardPdfWriterTest extends AppCakeTestCase
+class MyMemberCardPdfWriterServiceTest extends AppCakeTestCase
 {
 
     public function testPdfContent()

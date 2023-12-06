@@ -21,7 +21,7 @@ use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 
-class OrderDetailsPdfWriterTest extends AppCakeTestCase
+class OrderDetailsPdfWriterServiceTest extends AppCakeTestCase
 {
 
     public function testPdfContent()

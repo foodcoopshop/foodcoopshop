@@ -14,13 +14,13 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Csv;
+namespace App\Services\Csv;
 
 use League\Csv\Reader;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 
-class ProductReader extends Reader {
+class ProductReaderService extends Reader {
 
     public const COLUMN_COUNT = 11;
 

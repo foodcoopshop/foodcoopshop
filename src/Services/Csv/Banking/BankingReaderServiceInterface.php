@@ -14,9 +14,9 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Csv;
+namespace App\Services\Csv\Banking;
 
-interface BankingReaderInterface {
+interface BankingReaderServiceInterface {
 
     public function checkStructureForRecord($record): bool;
 

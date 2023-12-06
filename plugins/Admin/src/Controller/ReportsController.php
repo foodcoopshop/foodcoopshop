@@ -9,6 +9,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
+use App\Services\Csv\Banking\BankingReaderServiceFactory;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -57,8 +58,8 @@ class ReportsController extends AdminAppController
 
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
-            $bankClassName = 'App\\Lib\\Csv\\' . Configure::read('app.bankNameForCreditSystem') . 'BankingReader';
-            $reader = $bankClassName::createFromString($content);
+            $bankingReaderService = BankingReaderServiceFactory::get(Configure::read('app.bankNameForCreditSystem'));
+            $reader = $bankingReaderService::createFromString($content);
 
             if ($reader->csvHasIsoFormat) {
                 $reader->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');

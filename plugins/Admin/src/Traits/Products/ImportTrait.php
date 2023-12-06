@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Admin\Traits\ManufacturerIdTrait;
-use App\Lib\Csv\ProductReader;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\FactoryLocator;
 use League\Csv\Writer;
 use Cake\Log\Log;
+use App\Services\Csv\ProductReaderService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -106,7 +106,7 @@ trait ImportTrait
 
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
-            $reader = ProductReader::createFromString($content);
+            $reader = ProductReaderService::createFromString($content);
             $reader->configureType();
 
             $productEntities = $reader->import($manufacturerId);

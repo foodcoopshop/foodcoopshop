@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Csv;
+namespace App\Services\Csv\Banking;
 
 use App\Model\Entity\Customer;
 use Cake\Datasource\FactoryLocator;
@@ -23,7 +23,7 @@ use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use League\Csv\Reader;
 
-abstract class BankingReader extends Reader implements BankingReaderInterface {
+abstract class BankingReaderService extends Reader implements BankingReaderServiceInterface {
 
     public $csvHasIsoFormat = false;
 

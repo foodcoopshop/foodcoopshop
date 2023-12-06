@@ -14,11 +14,11 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Lib\Csv\SparkasseBankingReader;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
+use App\Services\Csv\Banking\GlsBankBankingReaderService;
 
-class SparkasseBankingReaderTest extends AppCakeTestCase
+class GlsBankBankingReaderServiceTest extends AppCakeTestCase
 {
 
     public function tearDown(): void
@@ -28,14 +28,14 @@ class SparkasseBankingReaderTest extends AppCakeTestCase
 
     public function testRead()
     {
-        $reader = SparkasseBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse.csv');
+        $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
         }
 
-        $this->assertEquals('2023-06-14 00:00:00.000000', $records[0]['date']);
-        $this->assertEquals(100, $records[0]['amount']);
+        $this->assertEquals('2022-03-09 00:00:00.000000', $records[0]['date']);
+        $this->assertEquals(200, $records[0]['amount']);
         $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_id_customer']);
 
         $this->assertEquals(1, count($records));
@@ -43,13 +43,13 @@ class SparkasseBankingReaderTest extends AppCakeTestCase
 
     public function testCheckStructureNotOk()
     {
-        $reader = SparkasseBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse-wrong-structure.csv');
+        $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
     public function testCheckStructureOk()
     {
-        $reader = SparkasseBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse.csv');
+        $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');
         $this->assertTrue($reader->checkStructure());
     }
 
