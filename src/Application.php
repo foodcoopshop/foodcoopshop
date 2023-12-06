@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/AGPL-3.0
  */
+
 namespace App;
 
 use Cake\Core\Configure;
@@ -37,6 +38,9 @@ use Authentication\AuthenticationServiceProviderInterface;
 use Authorization\AuthorizationServiceProviderInterface;
 use Cake\Http\ServerRequest;
 use App\Policy\RequestPolicy;
+use Authorization\Exception\MissingIdentityException;
+use Authorization\Exception\ForbiddenException;
+use Authentication\Identifier\Resolver\OrmResolver;
 
 /**
  * Application setup class.
@@ -48,11 +52,6 @@ class Application extends BaseApplication
     implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
 
-    /**
-     * Load all the application configuration and bootstrap logic.
-     *
-     * @return void
-     */
     public function bootstrap(): void
     {
         // Call parent to load bootstrap from files.
@@ -88,12 +87,6 @@ class Application extends BaseApplication
 
     }
 
-    /**
-     * Setup the middleware queue your application will use.
-     *
-     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
-     * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
-     */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
 
@@ -150,13 +143,6 @@ class Application extends BaseApplication
         return $middlewareQueue;
     }
 
-    /**
-     * Bootrapping for CLI application.
-     *
-     * That is when running commands.
-     *
-     * @return void
-     */
     protected function bootstrapCli(): void
     {
         try {
@@ -168,7 +154,6 @@ class Application extends BaseApplication
         $this->addPlugin('Migrations');
         $this->addPlugin('Queue', ['bootstrap' => true]);
 
-        // Load more plugins here
     }
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
