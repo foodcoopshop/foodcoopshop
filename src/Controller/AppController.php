@@ -27,6 +27,8 @@ class AppController extends Controller
 {
 
     public $protectEmailAddresses = false;
+    public $loggedUser = null;
+    
     protected $AppAuth;
     protected $Customer;
     protected $Manufacturer;
@@ -36,6 +38,7 @@ class AppController extends Controller
 
         parent::initialize();
 
+        $this->loadComponent('Authentication.Authentication');
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false
         ]);
@@ -44,6 +47,7 @@ class AppController extends Controller
         ]);
         $this->loadComponent('String');
 
+        /*
         $authenticate = [
             'Form' => [
                 'userModel' => 'Customers',
@@ -74,8 +78,9 @@ class AppController extends Controller
             'authenticate' => $authenticate,
             'storage' => 'Session',
         ]);
+*/
 
-        $this->paginate = [
+    $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000
         ];
@@ -93,7 +98,8 @@ class AppController extends Controller
      */
     private function validateAuthentication()
     {
-        if ($this->AppAuth->user()) {
+        
+        if (0 && $this->AppAuth->user()) {
             $this->Customer = $this->getTableLocator()->get('Customers');
             $query = $this->Customer->find('all', [
                 'conditions' => [
@@ -110,14 +116,32 @@ class AppController extends Controller
         }
     }
 
+    protected function isLoggedIn(): bool
+    {
+        return $this->loggedUser !== null;
+    }
+
+    protected function isAdmin(): bool
+    {
+        return $this->isLoggedIn() && $this->loggedUser->isAdmin();
+    }
+
     public function beforeFilter(EventInterface $event)
     {
 
+        $this->loggedUser = $this->request->getAttribute('identity');
+        if (!empty($this->loggedUser)) {
+            $this->loggedUser = $this->loggedUser->getOriginalData();
+        }
+        $this->set('loggedUser', $this->loggedUser);
+
         $this->validateAuthentication();
 
+        /*
         if (!$this->getRequest()->is('json') && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
+        */
 
         $isMobile = false;
         if (PHP_SAPI !== 'cli') {
@@ -127,7 +151,7 @@ class AppController extends Controller
         $this->set('isMobile', $isMobile);
 
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
-        if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
+        if ($this->isLoggedIn() && !empty($rememberMeCookie)) {
             $value = json_decode($rememberMeCookie);
             if (isset($value->auto_login_hash)) {
                 $this->Customer = $this->getTableLocator()->get('Customers');
@@ -140,12 +164,12 @@ class AppController extends Controller
                     ]
                 ])->first();
                 if (!empty($customer)) {
-                    $this->AppAuth->setUser($customer);
+                    $this->loggedUser = $customer;
                 }
             }
         }
 
-        if ($this->AppAuth->isManufacturer()) {
+        if (0 && $this->AppAuth->isManufacturer()) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
@@ -156,7 +180,7 @@ class AppController extends Controller
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
 
-        $this->AppAuth->CartService->setController($this);
+        //$this->AppAuth->CartService->setController($this);
 
         parent::beforeFilter($event);
     }
@@ -192,7 +216,7 @@ class AppController extends Controller
             ]
         ])->first();
         if (!empty($customer)) {
-            $this->AppAuth->setUser($customer);
+            $this->loggedUser = $customer;
         }
     }
 

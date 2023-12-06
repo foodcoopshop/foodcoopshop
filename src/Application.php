@@ -24,6 +24,19 @@ use Cake\Routing\Middleware\RoutingMiddleware;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Middleware\RequestAuthorizationMiddleware;
+use Psr\Http\Message\ServerRequestInterface;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\Policy\MapResolver;
+use Authorization\AuthorizationService;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Cake\Http\ServerRequest;
+use App\Policy\RequestPolicy;
 
 /**
  * Application setup class.
@@ -32,6 +45,7 @@ use Cake\Http\Middleware\CsrfProtectionMiddleware;
  * want to use in your application.
  */
 class Application extends BaseApplication
+    implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
 
     /**
@@ -44,6 +58,9 @@ class Application extends BaseApplication
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
+        $this->addPlugin('Authentication');
+        $this->addPlugin('Authorization');
+        
         if (Configure::read('debug')) {
             $this->addPlugin('Bake');
             Configure::write('DebugKit.forceEnable', true);
@@ -90,9 +107,6 @@ class Application extends BaseApplication
         });
         
         $middlewareQueue
-        // Catch any exceptions in the lower layers,
-        // and make an error page/response
-        ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
 
         // Handle plugin/theme assets like CakePHP normally does.
         ->add(new AssetMiddleware([
@@ -108,7 +122,30 @@ class Application extends BaseApplication
         // creating the middleware instance specify the cache config name by
         // using it's second constructor argument:
         // `new RoutingMiddleware($this, '_cake_routes_')`
-        ->add(new RoutingMiddleware($this));
+        ->add(new RoutingMiddleware($this))
+
+        ->add(new AuthenticationMiddleware($this))
+
+        ->add(
+            new AuthorizationMiddleware($this, [
+                'unauthorizedHandler' => [
+                    'className' => 'CustomRedirect',
+                    'url' => Configure::read('app.slugHelper')->getLogin(),
+                    'exceptions' => [
+                        MissingIdentityException::class,
+                        ForbiddenException::class,
+                    ],
+                ],
+            ])
+        )
+
+        ->add(new RequestAuthorizationMiddleware())
+
+        // Catch any exceptions in the lower layers,
+        // and make an error page/response
+        ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
+
+        ;
 
         return $middlewareQueue;
     }
@@ -133,4 +170,44 @@ class Application extends BaseApplication
 
         // Load more plugins here
     }
+
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+    {
+        $service = new AuthenticationService();
+
+        $service->setConfig([
+            'queryParam' => 'redirect',
+        ]);
+
+        $service->loadIdentifier('Authentication.Password', [
+            'resolver' => [
+                'className' => OrmResolver::class,
+                'userModel' => 'Customers',
+                'finder' => 'auth', // CustomersTable::findAuth
+            ],
+            'fields' => [
+                'username' => 'email',
+                'password' => 'passwd'
+            ],
+        ]);
+        
+        // Load the authenticators
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form', [
+            'fields' => [
+                'username' => 'email',
+                'password' => 'passwd'
+            ],
+        ]);
+
+        return $service;
+    }
+
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        $mapResolver = new MapResolver();
+        $mapResolver->map(ServerRequest::class, RequestPolicy::class);
+        return new AuthorizationService($mapResolver);
+    }
+
 }

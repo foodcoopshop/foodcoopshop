@@ -33,7 +33,9 @@
         "tecnickcom/tcpdf": "^6.4",
         "hisorange/browser-detect": "^4.4",
         "phpoffice/phpspreadsheet": "1.*",
-        "druidfi/mysqldump-php": "^1.0"
+        "druidfi/mysqldump-php": "^1.0",
+        "cakephp/authentication": "^2.10",
+        "cakephp/authorization": "^2.4"
     },
     "require-dev": {
         "cakephp/debug_kit": "^4.0",

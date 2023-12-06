@@ -75,7 +75,7 @@ class BlogPostsTable extends AppTable
         $conditions = [
             'BlogPosts.active' => APP_ON,
         ];
-        if (! $appAuth->user()) {
+        if (0 && !$appAuth->user()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }

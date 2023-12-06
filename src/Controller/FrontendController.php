@@ -122,7 +122,7 @@ class FrontendController extends AppController
         if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized
         } else {
-            $this->AppAuth->allow();
+            //$this->AppAuth->allow();
         }
 
         /*
@@ -130,11 +130,11 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired orderCustomer
          */
-        if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
+        if (0 && $this->AppAuth->isOrderForDifferentCustomerMode()) {
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
             $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.orderCustomer'));
         }
-        if (!empty($this->AppAuth->user())) {
+        if (0 && $this->isLoggedIn()) {
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->AppAuth->getCreditBalance();
@@ -150,6 +150,6 @@ class FrontendController extends AppController
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
             $this->set('futureOrderDetails', $futureOrderDetails);
         }
-        $this->AppAuth->setCart($this->AppAuth->getCart());
+        //$this->AppAuth->setCart($this->AppAuth->getCart());
     }
 }

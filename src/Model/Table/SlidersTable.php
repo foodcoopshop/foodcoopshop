@@ -44,7 +44,7 @@ class SlidersTable extends AppTable
             'Sliders.active' => APP_ON
         ];
 
-        if (! $appAuth->user()) {
+        if (0 && !$appAuth->user()) {
             $conditions['Sliders.is_private'] = APP_OFF;
         }
 
