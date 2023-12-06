@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Lib\PdfWriter\ProductCardsPdfWriter;
+use App\Services\PdfWriter\ProductCardsPdfWriterService;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 
@@ -63,7 +63,7 @@ trait GenerateProductCardsTrait {
         if (empty($preparedProducts)) {
             throw new InvalidParameterException('no stock product selected');
         }
-        $pdfWriter = new ProductCardsPdfWriter();
+        $pdfWriter = new ProductCardsPdfWriterService();
         $pdfWriter->setFilename(__d('admin', 'Products').'.pdf');
         $pdfWriter->setData([
             'products' => $preparedProducts

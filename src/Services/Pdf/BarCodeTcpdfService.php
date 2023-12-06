@@ -14,9 +14,9 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Pdf;
+namespace App\Services\Pdf;
 
-class BarCodeTcpdf extends AppTcpdf
+class BarCodeTcpdfService extends AppTcpdfService
 {
 
     public $barCodeStyle = [

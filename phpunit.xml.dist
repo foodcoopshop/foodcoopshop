@@ -3,7 +3,7 @@
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
     colors="true"
     processIsolation="false"
-    stopOnFailure="false"
+    stopOnFailure="true"
     verbose="true"
     bootstrap="./tests/bootstrap.php"
     >

@@ -5,8 +5,8 @@ namespace Admin\Controller;
 
 use App\Services\HelloCash\HelloCashService;
 use App\Services\Invoice\GenerateInvoiceToCustomerService;
-use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
-use App\Lib\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter;
+use App\Services\PdfWriter\InvoiceToCustomerPdfWriterService;
+use App\Services\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
@@ -230,9 +230,9 @@ class InvoicesController extends AdminAppController
             $newInvoiceDate = 'xx.xx.xxxx';
 
             if (!Configure::read('appDb.FCS_TAX_BASED_ON_NET_INVOICE_SUM')) {
-                $pdfWriter = new InvoiceToCustomerPdfWriter();
+                $pdfWriter = new InvoiceToCustomerPdfWriterService();
             } else {
-                $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter();
+                $pdfWriter = new InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService();
             }
             $pdfWriter->prepareAndSetData($invoiceData, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
 

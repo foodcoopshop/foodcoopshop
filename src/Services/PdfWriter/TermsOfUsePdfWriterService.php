@@ -8,20 +8,23 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.5.0
+ * @since         FoodCoopShop 3.1.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Pdf;
+namespace App\Services\PdfWriter;
 
-interface CustomerInvoiceTcpdfInterface {
+use App\Services\Pdf\ListTcpdfService;
 
-    public function setHeaders();
+class TermsOfUsePdfWriterService extends PdfWriterService
+{
 
-    public function prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax);
+    public function __construct()
+    {
+        $this->setPdfLibrary(new ListTcpdfService());
+    }
 
 }
 
-?>

@@ -14,17 +14,9 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
-use App\Lib\Pdf\ListTcpdf;
-
-class OrderConfirmationPdfWriter extends PdfWriter
+class OrderListByCustomerPdfWriterService extends OrderListPdfWriterService
 {
 
-    public function __construct()
-    {
-        $this->setPdfLibrary(new ListTcpdf());
-    }
-
 }
-

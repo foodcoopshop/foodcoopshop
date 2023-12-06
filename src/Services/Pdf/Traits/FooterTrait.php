@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Lib\Pdf;
+namespace App\Services\Pdf\Traits;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;

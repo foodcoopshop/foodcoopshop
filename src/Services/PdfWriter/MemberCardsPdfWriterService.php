@@ -14,16 +14,20 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
-use App\Lib\Pdf\ListTcpdf;
+use App\Services\Pdf\BarCodeTcpdfService;
+use App\Services\PdfWriter\Traits\MemberCardDataTrait;
 
-class GeneralTermsAndConditionsPdfWriter extends PdfWriter
+class MemberCardsPdfWriterService extends PdfWriterService
 {
+
+    use MemberCardDataTrait;
 
     public function __construct()
     {
-        $this->setPdfLibrary(new ListTcpdf());
+        $this->plugin = 'Admin';
+        $this->setPdfLibrary(new BarCodeTcpdfService());
     }
 
 }

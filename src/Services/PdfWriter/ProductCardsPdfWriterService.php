@@ -14,9 +14,18 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
-class OrderListByCustomerPdfWriter extends OrderListPdfWriter
+use App\Services\Pdf\BarCodeTcpdfService;
+
+class ProductCardsPdfWriterService extends PdfWriterService
 {
 
+    public function __construct()
+    {
+        $this->plugin = 'Admin';
+        $this->setPdfLibrary(new BarCodeTcpdfService('L'));
+    }
+
 }
+

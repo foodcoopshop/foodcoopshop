@@ -7,7 +7,7 @@ use Queue\Queue\Task;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
+use App\Services\PdfWriter\InvoiceToManufacturerPdfWriterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -58,7 +58,7 @@ class GenerateInvoiceForManufacturerTask extends Task {
         $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
         $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
-        $pdfWriter = new InvoiceToManufacturerPdfWriter();
+        $pdfWriter = new InvoiceToManufacturerPdfWriterService();
         $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriodMonthAndYear, $invoiceDate, $manufacturer->anonymize_customers);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();

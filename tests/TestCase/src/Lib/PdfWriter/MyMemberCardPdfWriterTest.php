@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\PdfWriter\MyMemberCardPdfWriter;
+use App\Services\PdfWriter\MyMemberCardPdfWriterService;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 
@@ -25,7 +25,7 @@ class MyMemberCardPdfWriterTest extends AppCakeTestCase
     public function testPdfContent()
     {
         $customerIds = [Configure::read('test.customerId')];
-        $pdfWriter = new MyMemberCardPdfWriter();
+        $pdfWriter = new MyMemberCardPdfWriterService();
         $pdfWriter->setData([
             'customers' => $pdfWriter->getMemberCardCustomerData($customerIds),
         ]);

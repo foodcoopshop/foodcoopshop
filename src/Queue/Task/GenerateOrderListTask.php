@@ -7,8 +7,8 @@ use Queue\Queue\Task;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\PdfWriter\OrderListByProductPdfWriter;
-use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
+use App\Services\PdfWriter\OrderListByProductPdfWriterService;
+use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,7 +35,7 @@ class GenerateOrderListTask extends Task {
 
     private function generateOrderListProduct($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
     {
-        $pdfWriter = new OrderListByProductPdfWriter();
+        $pdfWriter = new OrderListByProductPdfWriterService();
         $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
             $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists, $isAnonymized
         );
@@ -47,7 +47,7 @@ class GenerateOrderListTask extends Task {
 
     private function generateOrderListCustomer($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
     {
-        $pdfWriter = new OrderListByCustomerPdfWriter();
+        $pdfWriter = new OrderListByCustomerPdfWriterService();
         $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
             $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists, $isAnonymized
         );

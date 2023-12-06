@@ -19,7 +19,7 @@ use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
-use App\Lib\PdfWriter\OrderDetailsPdfWriter;
+use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -156,7 +156,7 @@ class OrderDetailsController extends AdminAppController
     {
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
         $order = $this->getRequest()->getQuery('order') ?? null;
-        $pdfWriter = new OrderDetailsPdfWriter();
+        $pdfWriter = new OrderDetailsPdfWriterService();
         $pdfWriter->prepareAndSetData($this->AppAuth, $pickupDay, $order);
         die($pdfWriter->writeInline());
     }

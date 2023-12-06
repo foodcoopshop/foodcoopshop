@@ -14,14 +14,14 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Pdf;
+namespace App\Services\Pdf;
 
 use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use TCPDF;
 use App\Controller\Component\StringComponent;
 
-abstract class AppTcpdf extends TCPDF
+abstract class AppTcpdfService extends TCPDF
 {
 
     public $table = '';

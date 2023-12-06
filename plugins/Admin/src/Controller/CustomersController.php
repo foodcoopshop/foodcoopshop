@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Lib\PdfWriter\MyMemberCardPdfWriter;
-use App\Lib\PdfWriter\MemberCardsPdfWriter;
-use App\Lib\PdfWriter\TermsOfUsePdfWriter;
+use App\Services\PdfWriter\MyMemberCardPdfWriterService;
+use App\Services\PdfWriter\MemberCardsPdfWriterService;
+use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
@@ -90,7 +90,7 @@ class CustomersController extends AdminAppController
     public function generateMyMemberCard()
     {
         $customerId = $this->AppAuth->getUserId();
-        $pdfWriter = new MyMemberCardPdfWriter();
+        $pdfWriter = new MyMemberCardPdfWriterService();
         $customers = $pdfWriter->getMemberCardCustomerData($customerId);
         $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
         $pdfWriter->setData([
@@ -103,7 +103,7 @@ class CustomersController extends AdminAppController
     {
         $customerIds = h($this->getRequest()->getQuery('customerIds'));
         $customerIds = explode(',', $customerIds);
-        $pdfWriter = new MemberCardsPdfWriter();
+        $pdfWriter = new MemberCardsPdfWriterService();
         $pdfWriter->setFilename(__d('admin', 'Members') . ' ' . Configure::read('appDb.FCS_APP_NAME').'.pdf');
         $pdfWriter->setData([
             'customers' => $pdfWriter->getMemberCardCustomerData($customerIds),
@@ -458,7 +458,7 @@ class CustomersController extends AdminAppController
 
     private function generateTermsOfUsePdf()
     {
-        $pdfWriter = new TermsOfUsePdfWriter();
+        $pdfWriter = new TermsOfUsePdfWriterService();
         return $pdfWriter->writeAttachment();
     }
 

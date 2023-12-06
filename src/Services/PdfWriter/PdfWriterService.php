@@ -14,12 +14,12 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
 use Cake\Utility\Inflector;
 use Cake\View\ViewBuilder;
 
-abstract class PdfWriter
+abstract class PdfWriterService
 {
 
     protected $pdfLibrary;
@@ -28,13 +28,13 @@ abstract class PdfWriter
     protected $filename = '';
     public $templateFile = null;
 
-    public function setPdfLibrary($pdfLibrary): PdfWriter
+    public function setPdfLibrary($pdfLibrary): PdfWriterService
     {
         $this->pdfLibrary = $pdfLibrary;
         return $this;
     }
 
-    public function setData($data): PdfWriter
+    public function setData($data): PdfWriterService
     {
         $this->data = array_merge($this->data, $data);
         return $this;
@@ -45,7 +45,7 @@ abstract class PdfWriter
         return $this->filename;
     }
 
-    public function setFilename($filename): PdfWriter
+    public function setFilename($filename): PdfWriterService
     {
         $this->filename = $filename;
         return $this;

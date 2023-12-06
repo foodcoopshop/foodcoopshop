@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
-use App\Lib\PdfWriter\OrderListByProductPdfWriter;
-use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
+use App\Services\PdfWriter\InvoiceToManufacturerPdfWriterService;
+use App\Services\PdfWriter\OrderListByProductPdfWriterService;
+use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
@@ -596,7 +596,7 @@ class ManufacturersController extends AdminAppController
 
         $newInvoiceNumber = 'xxx';
 
-        $pdfWriter = new InvoiceToManufacturerPdfWriter();
+        $pdfWriter = new InvoiceToManufacturerPdfWriterService();
         $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx', $manufacturer->anonymize_customers);
         if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
@@ -630,13 +630,13 @@ class ManufacturersController extends AdminAppController
     public function getOrderListByProduct()
     {
 
-        $pdfWriter = new OrderListByProductPdfWriter();
+        $pdfWriter = new OrderListByProductPdfWriterService();
         return $this->getOrderList('product', $pdfWriter);
     }
 
     public function getOrderListByCustomer()
     {
-        $pdfWriter = new OrderListByCustomerPdfWriter();
+        $pdfWriter = new OrderListByCustomerPdfWriterService();
         return $this->getOrderList('customer', $pdfWriter);
     }
 

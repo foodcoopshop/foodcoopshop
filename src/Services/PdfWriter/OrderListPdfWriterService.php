@@ -14,15 +14,15 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
-use App\Lib\Pdf\ListTcpdf;
+use App\Services\Pdf\ListTcpdfService;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\PdfWriter\Traits\SetSumTrait;
+use App\Services\PdfWriter\Traits\SetSumTrait;
 
-abstract class OrderListPdfWriter extends PdfWriter
+abstract class OrderListPdfWriterService extends PdfWriterService
 {
 
     use SetSumTrait;
@@ -32,7 +32,7 @@ abstract class OrderListPdfWriter extends PdfWriter
     public function __construct()
     {
         $this->plugin = 'Admin';
-        $this->setPdfLibrary(new ListTcpdf());
+        $this->setPdfLibrary(new ListTcpdfService());
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
     }
 
@@ -43,9 +43,10 @@ abstract class OrderListPdfWriter extends PdfWriter
         $type = str_replace('OrderListBy', '', $reflect->getShortName());
         $type = str_replace('PdfWriter', '', $type);
         $type = strtolower($type);
+        $type = str_replace('service', '', $type);
 
         if (!in_array($type, ['customer', 'product'])) {
-            throw new InvalidParameterException('type not valid');
+            throw new InvalidParameterException('type not valid: ' . $type);
         }
 
         $manufacturer = $this->Manufacturer->find('all', [

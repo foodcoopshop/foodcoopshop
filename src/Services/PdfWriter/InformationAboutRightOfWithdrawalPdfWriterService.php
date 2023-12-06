@@ -14,20 +14,18 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
-use App\Lib\Pdf\BarCodeTcpdf;
-use App\Lib\PdfWriter\Traits\MemberCardDataTrait;
+use App\Services\Pdf\ListTcpdfService;
+use App\Services\PdfWriter\PdfWriterService;
 
-class MyMemberCardPdfWriter extends PdfWriter
+class InformationAboutRightOfWithdrawalPdfWriterService extends PdfWriterService
 {
-
-    use MemberCardDataTrait;
 
     public function __construct()
     {
-        $this->plugin = 'Admin';
-        $this->setPdfLibrary(new BarCodeTcpdf());
+        $this->setFilename(__('Filename_Information-about-right-of-withdrawal').'.pdf');
+        $this->setPdfLibrary(new ListTcpdfService());
     }
 
 }

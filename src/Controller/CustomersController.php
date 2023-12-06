@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\PdfWriter\TermsOfUsePdfWriter;
+use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -78,7 +78,7 @@ class CustomersController extends FrontendController
 
     private function generateTermsOfUsePdf()
     {
-        $pdfWriter = new TermsOfUsePdfWriter();
+        $pdfWriter = new TermsOfUsePdfWriterService();
         return $pdfWriter->writeAttachment();
     }
 

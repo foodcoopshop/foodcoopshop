@@ -14,11 +14,13 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Pdf;
+namespace App\Services\Pdf;
 
 use Cake\Core\Configure;
+use App\Services\Pdf\Traits\FooterTrait;
+use App\Services\Pdf\Traits\TaxSumTableTrait;
 
-abstract class CustomerInvoiceBaseTcpdf extends AppTcpdf implements CustomerInvoiceTcpdfInterface
+abstract class CustomerInvoiceBaseTcpdfService extends AppTcpdfService implements CustomerInvoiceTcpdfServiceInterface
 {
 
     use FooterTrait;

@@ -14,14 +14,14 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
-use App\Lib\Pdf\ListTcpdf;
+use App\Services\Pdf\ListTcpdfService;
 use Cake\Core\Configure;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\FactoryLocator;
 
-class OrderDetailsPdfWriter extends PdfWriter
+class OrderDetailsPdfWriterService extends PdfWriterService
 {
 
     public $OrderDetail;
@@ -29,7 +29,7 @@ class OrderDetailsPdfWriter extends PdfWriter
     public function __construct()
     {
         $this->plugin = 'Admin';
-        $this->setPdfLibrary(new ListTcpdf());
+        $this->setPdfLibrary(new ListTcpdfService());
     }
 
     public function prepareAndSetData($appAuth, $pickupDay, $order)

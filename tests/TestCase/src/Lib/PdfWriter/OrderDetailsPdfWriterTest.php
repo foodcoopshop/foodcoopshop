@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 use App\Controller\Component\AppAuthComponent;
 use App\Test\TestCase\AppCakeTestCase;
-use App\Lib\PdfWriter\OrderDetailsPdfWriter;
+use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 
@@ -31,7 +31,7 @@ class OrderDetailsPdfWriterTest extends AppCakeTestCase
         $order = 'storageLocation';
         $appAuth = new AppAuthComponent(new ComponentRegistry(new Controller()));
 
-        $pdfWriter = new OrderDetailsPdfWriter();
+        $pdfWriter = new OrderDetailsPdfWriterService();
         $pdfWriter->prepareAndSetData($appAuth, $pickupDay, $order);
         $html = $pdfWriter->writeHtml();
 

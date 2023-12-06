@@ -14,11 +14,11 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Pdf;
+namespace App\Services\Pdf;
 
 use Cake\Core\Configure;
 
-class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf extends CustomerInvoiceBaseTcpdf
+class CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService extends CustomerInvoiceBaseTcpdfService
 {
 
     public function setHeaders()

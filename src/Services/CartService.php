@@ -6,9 +6,9 @@ namespace App\Services;
 use App\Services\DeliveryRhythmService;
 use App\Services\HelloCash\HelloCashService;
 use App\Services\Invoice\GenerateInvoiceToCustomerService;
-use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
-use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
-use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
+use App\Services\PdfWriter\GeneralTermsAndConditionsPdfWriterService;
+use App\Services\PdfWriter\InformationAboutRightOfWithdrawalPdfWriterService;
+use App\Services\PdfWriter\OrderConfirmationPdfWriterService;
 use App\Mailer\AppMailer;
 use App\Model\Traits\CartValidatorTrait;
 use Cake\Core\Configure;
@@ -951,7 +951,7 @@ class CartService
             $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
         }
 
-        $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
+        $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriterService();
         $pdfWriter->setData([
             'products' => $products,
             'appAuth' => $this->AppAuth,
@@ -967,7 +967,7 @@ class CartService
      */
     private function generateGeneralTermsAndConditions()
     {
-        $pdfWriter = new GeneralTermsAndConditionsPdfWriter();
+        $pdfWriter = new GeneralTermsAndConditionsPdfWriterService();
         return $pdfWriter->writeAttachment();
     }
 
@@ -999,7 +999,7 @@ class CartService
             ];
         }
 
-        $pdfWriter = new OrderConfirmationPdfWriter();
+        $pdfWriter = new OrderConfirmationPdfWriterService();
         $pdfWriter->setData([
             'appAuth' => $this->AppAuth,
             'cart' => $cart,

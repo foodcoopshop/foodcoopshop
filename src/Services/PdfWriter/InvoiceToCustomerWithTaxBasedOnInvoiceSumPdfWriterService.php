@@ -14,12 +14,12 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\PdfWriter;
+namespace App\Services\PdfWriter;
 
-use App\Lib\Pdf\CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf;
+use App\Services\Pdf\CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService;
 use Cake\Datasource\FactoryLocator;
 
-class InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter extends PdfWriter
+class InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService extends PdfWriterService
 {
 
     public $Invoice;
@@ -27,9 +27,9 @@ class InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter extends PdfWriter
     public function __construct()
     {
         $this->plugin = 'Admin';
-        $this->setPdfLibrary(new CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdf());
+        $this->setPdfLibrary(new CustomerInvoiceWithTaxBasedOnInvoiceSumTcpdfService());
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
-        $this->templateFile = DS . 'pdf' . DS . 'invoice_to_customer';
+        $this->templateFile = DS . 'pdf' . DS . 'invoice_to_customer_service';
     }
 
     public function prepareAndSetData($data, $paidInCash, $newInvoiceNumber, $invoiceDate)
