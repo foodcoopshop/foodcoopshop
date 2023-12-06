@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Lib\HelloCash;
+namespace App\Services\HelloCash;
 
 class HelloCashApiException extends \Exception
 {

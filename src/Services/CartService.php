@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Services\DeliveryRhythmService;
-use App\Lib\HelloCash\HelloCash;
-use App\Lib\Invoice\GenerateInvoiceToCustomer;
+use App\Services\HelloCash\HelloCashService;
+use App\Services\Invoice\GenerateInvoiceToCustomerService;
 use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
 use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
@@ -255,13 +255,13 @@ class CartService
                             $paidInCash = 1;
                         }
                         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                            $helloCash = new HelloCash();
-                            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+                            $helloCashService = new HelloCashService();
+                            $responseObject = $helloCashService->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
                             $invoiceId = $responseObject->invoice_id;
                             $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
                         } else {
-                            $invoiceToCustomer = new GenerateInvoiceToCustomer();
-                            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+                            $invoiceToCustomerService = new GenerateInvoiceToCustomerService();
+                            $newInvoice = $invoiceToCustomerService->run($invoiceData, $currentDay, $paidInCash);
                             $invoiceId = $newInvoice->id;
                             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
                         }

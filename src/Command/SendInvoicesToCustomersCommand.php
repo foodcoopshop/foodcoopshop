@@ -16,8 +16,8 @@ declare(strict_types=1);
  */
 namespace App\Command;
 
-use App\Lib\HelloCash\HelloCash;
-use App\Lib\Invoice\GenerateInvoiceToCustomer;
+use App\Services\HelloCash\HelloCashService;
+use App\Services\Invoice\GenerateInvoiceToCustomerService;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
@@ -41,7 +41,7 @@ class SendInvoicesToCustomersCommand extends AppCommand
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoiceToCustomer = new GenerateInvoiceToCustomer();
+        $invoiceToCustomerService = new GenerateInvoiceToCustomerService();
 
         if (!$args->getArgumentAt(0)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
@@ -61,7 +61,7 @@ class SendInvoicesToCustomersCommand extends AppCommand
         ]);
 
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-            $helloCash = new HelloCash();
+            $helloCashService = new HelloCashService();
         }
 
         $i = 0;
@@ -74,10 +74,10 @@ class SendInvoicesToCustomersCommand extends AppCommand
             }
 
             if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
-                $helloCash->generateInvoice($data, $this->cronjobRunDay, false, false);
+                $helloCashService->generateInvoice($data, $this->cronjobRunDay, false, false);
                 sleep(4); // the Hello Cash API handels max 60 requests per minute, one generateInvoice call uses up to 5 requests
             } else {
-                $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
+                $invoiceToCustomerService->run($data, $this->cronjobRunDay, false);
             }
             $i++;
 

@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Invoice;
+namespace App\Services\Invoice;
 
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use App\Lib\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter;
@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenDate;
 
-class GenerateInvoiceToCustomer
+class GenerateInvoiceToCustomerService
 {
 
     public $Customer;
@@ -81,19 +81,19 @@ class GenerateInvoiceToCustomer
 
         if ($data->invoices_per_email_enabled) {
             $this->Customer = FactoryLocator::get('Table')->get('Customers');
-            $sendInvoiceToCustomer = new SendInvoiceToCustomer();
-            $sendInvoiceToCustomer->isCancellationInvoice = $data->is_cancellation_invoice;
-            $sendInvoiceToCustomer->customerName = $data->name;
-            $sendInvoiceToCustomer->customerEmail = $data->email;
-            $sendInvoiceToCustomer->invoicePdfFile = $invoicePdfFile;
-            $sendInvoiceToCustomer->invoiceNumber = $invoiceNumber;
-            $sendInvoiceToCustomer->invoiceSumPriceIncl = $data->sumPriceIncl;
-            $sendInvoiceToCustomer->invoiceDate = $invoiceDate;
-            $sendInvoiceToCustomer->invoiceId = $newInvoice->id;
-            $sendInvoiceToCustomer->originalInvoiceId = null;
-            $sendInvoiceToCustomer->creditBalance = $this->Customer->getCreditBalance($data->id_customer);
-            $sendInvoiceToCustomer->paidInCash = $paidInCash;
-            $sendInvoiceToCustomer->run();
+            $sendInvoiceToCustomerService = new SendInvoiceToCustomerService();
+            $sendInvoiceToCustomerService->isCancellationInvoice = $data->is_cancellation_invoice;
+            $sendInvoiceToCustomerService->customerName = $data->name;
+            $sendInvoiceToCustomerService->customerEmail = $data->email;
+            $sendInvoiceToCustomerService->invoicePdfFile = $invoicePdfFile;
+            $sendInvoiceToCustomerService->invoiceNumber = $invoiceNumber;
+            $sendInvoiceToCustomerService->invoiceSumPriceIncl = $data->sumPriceIncl;
+            $sendInvoiceToCustomerService->invoiceDate = $invoiceDate;
+            $sendInvoiceToCustomerService->invoiceId = $newInvoice->id;
+            $sendInvoiceToCustomerService->originalInvoiceId = null;
+            $sendInvoiceToCustomerService->creditBalance = $this->Customer->getCreditBalance($data->id_customer);
+            $sendInvoiceToCustomerService->paidInCash = $paidInCash;
+            $sendInvoiceToCustomerService->run();
         }
 
         return $newInvoice;

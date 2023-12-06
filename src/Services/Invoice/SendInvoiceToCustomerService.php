@@ -15,12 +15,12 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Lib\Invoice;
+namespace App\Services\Invoice;
 
-use App\Lib\HelloCash\HelloCash;
+use App\Services\HelloCash\HelloCashService;
 use App\Mailer\AppMailer;
 
-class SendInvoiceToCustomer
+class SendInvoiceToCustomerService
 {
 
     public $customerName;
@@ -71,14 +71,14 @@ class SendInvoiceToCustomer
         if (!empty($invoicePdfFile)) {
             $email->addAttachments([$invoicePdfFile]);
         } else {
-            $helloCash = new HelloCash();
+            $helloCashService = new HelloCashService();
             $attachmentPrefix = __('Invoice');
             if ($isCancellationInvoice) {
                 $attachmentPrefix = __('Cancellation_invoice');
             }
             $email->addAttachments([
                 str_replace(' ', '_', $attachmentPrefix) . '_' . $invoiceNumber . '.pdf' => [
-                    'data' => $helloCash->getInvoice($originalInvoiceId, $isCancellationInvoice)->getStringBody(),
+                    'data' => $helloCashService->getInvoice($originalInvoiceId, $isCancellationInvoice)->getStringBody(),
                     'mimetype' => 'application/pdf',
                 ],
             ]);

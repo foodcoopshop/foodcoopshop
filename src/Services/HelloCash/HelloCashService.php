@@ -14,15 +14,15 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\HelloCash;
+namespace App\Services\HelloCash;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\Invoice\SendInvoiceToCustomer;
+use App\Services\Invoice\SendInvoiceToCustomerService;
 
-class HelloCash
+class HelloCashService
 {
 
     protected $Customer;
@@ -270,19 +270,19 @@ class HelloCash
     protected function sendInvoiceToCustomer($customer, $invoice, $isCancellationInvoice, $paidInCash)
     {
         $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $sendInvoiceToCustomer = new SendInvoiceToCustomer();
-        $sendInvoiceToCustomer->isCancellationInvoice = $isCancellationInvoice;
-        $sendInvoiceToCustomer->customerName = $customer->name;
-        $sendInvoiceToCustomer->customerEmail = $customer->email;
-        $sendInvoiceToCustomer->invoicePdfFile = '';
-        $sendInvoiceToCustomer->invoiceNumber = $invoice->invoice_number;
-        $sendInvoiceToCustomer->invoiceSumPriceIncl = $invoice->sumPriceIncl;
-        $sendInvoiceToCustomer->invoiceDate = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-        $sendInvoiceToCustomer->invoiceId = $invoice->id;
-        $sendInvoiceToCustomer->originalInvoiceId = $invoice->original_invoice_id ?? null;
-        $sendInvoiceToCustomer->creditBalance = $this->Customer->getCreditBalance($customer->id_customer);
-        $sendInvoiceToCustomer->paidInCash = $paidInCash;
-        $sendInvoiceToCustomer->run();
+        $sendInvoiceToCustomerService = new SendInvoiceToCustomerService();
+        $sendInvoiceToCustomerService->isCancellationInvoice = $isCancellationInvoice;
+        $sendInvoiceToCustomerService->customerName = $customer->name;
+        $sendInvoiceToCustomerService->customerEmail = $customer->email;
+        $sendInvoiceToCustomerService->invoicePdfFile = '';
+        $sendInvoiceToCustomerService->invoiceNumber = $invoice->invoice_number;
+        $sendInvoiceToCustomerService->invoiceSumPriceIncl = $invoice->sumPriceIncl;
+        $sendInvoiceToCustomerService->invoiceDate = $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        $sendInvoiceToCustomerService->invoiceId = $invoice->id;
+        $sendInvoiceToCustomerService->originalInvoiceId = $invoice->original_invoice_id ?? null;
+        $sendInvoiceToCustomerService->creditBalance = $this->Customer->getCreditBalance($customer->id_customer);
+        $sendInvoiceToCustomerService->paidInCash = $paidInCash;
+        $sendInvoiceToCustomerService->run();
     }
 
     protected function prepareTaxesFromResponse($responseObject, $cancellation)

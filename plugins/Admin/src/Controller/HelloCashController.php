@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Lib\HelloCash\HelloCash;
+use App\Services\HelloCash\HelloCashService;
 use Cake\Core\Configure;
 
 /**
@@ -22,13 +22,13 @@ use Cake\Core\Configure;
 class HelloCashController extends AdminAppController
 {
 
-    protected $helloCash;
+    protected $helloCashService;
     protected $Invoice;
 
     public function initialize(): void
     {
         parent::initialize();
-        $this->helloCash = new HelloCash();
+        $this->helloCashService = new HelloCashService();
     }
 
     public function isAuthorized($user)
@@ -55,7 +55,7 @@ class HelloCashController extends AdminAppController
     public function getReceipt($invoiceId, $cancellation)
     {
         $this->disableAutoRender();
-        $response = $this->helloCash->getReceipt($invoiceId, $cancellation);
+        $response = $this->helloCashService->getReceipt($invoiceId, $cancellation);
         $this->response = $this->response->withStringBody($response);
         return $this->response;
     }
@@ -63,7 +63,7 @@ class HelloCashController extends AdminAppController
     public function getInvoice($invoiceId, $cancellation)
     {
         $this->disableAutoRender();
-        $response = $this->helloCash->getInvoice($invoiceId, $cancellation);
+        $response = $this->helloCashService->getInvoice($invoiceId, $cancellation);
 
         $headerA = 'Content-Type';
         $this->response = $this->response->withHeader($headerA, $response->getHeader($headerA));

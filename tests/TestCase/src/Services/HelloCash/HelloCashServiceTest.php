@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Lib\HelloCash\HelloCash;
+use App\Services\HelloCash\HelloCashService;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
@@ -23,7 +23,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Utility\Hash;
 
-class HelloCashTest extends AppCakeTestCase
+class HelloCashServiceTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
@@ -31,7 +31,7 @@ class HelloCashTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
 
-    protected $HelloCash;
+    protected $HelloCashService;
     protected $Invoice;
 
     public function setUp(): void
@@ -42,18 +42,18 @@ class HelloCashTest extends AppCakeTestCase
         parent::setUp();
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_HELLO_CASH_API_ENABLED', 1);
-        $this->HelloCash = new HelloCash();
+        $this->HelloCashService = new HelloCashService();
         $this->Invoice = $this->getTableLocator()->get('Invoices');
     }
 
     public function testGetUsers() {
-        $this->HelloCash = new HelloCash();
-        $response = $this->HelloCash->getRestClient()->get(
+        $this->HelloCashService = new HelloCashService();
+        $response = $this->HelloCashService->getRestClient()->get(
             '/users?limit=1',
             [],
-            $this->HelloCash->getOptions(),
+            $this->HelloCashService->getOptions(),
         );
-        $responseObject = $this->HelloCash->decodeApiResponseAndCheckForErrors($response);
+        $responseObject = $this->HelloCashService->decodeApiResponseAndCheckForErrors($response);
         $this->assertIsObject($responseObject);
         $this->assertNotEmpty($responseObject->users);
         $this->assertObjectHasProperty('user_id', $responseObject->users[0]);
@@ -82,7 +82,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->get($this->Slug->getHelloCashReceipt($invoice->id));
         $this->assertResponseCode(200);
 
-        $receiptHtml = $this->HelloCash->getReceipt($invoice->id, false);
+        $receiptHtml = $this->HelloCashService->getReceipt($invoice->id, false);
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
         $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
@@ -109,7 +109,7 @@ class HelloCashTest extends AppCakeTestCase
 
         $invoice = $this->Invoice->find('all', [])->first();
 
-        $receiptHtml = $this->HelloCash->getReceipt($invoice->id, false);
+        $receiptHtml = $this->HelloCashService->getReceipt($invoice->id, false);
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
         $this->assertRegExpWithUnquotedString('Company Name', $receiptHtml);
@@ -132,7 +132,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
 
         $invoice = $this->Invoice->find('all', [])->first();
-        $this->HelloCash->getInvoice($invoice->id, false);
+        $this->HelloCashService->getInvoice($invoice->id, false);
         $this->runAndAssertQueue();
 
         $this->assertMailCount(2);
@@ -170,7 +170,7 @@ class HelloCashTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
 
         $invoice = $this->Invoice->find('all', [])->first();
-        $this->HelloCash->getInvoice($invoice->id, false);
+        $this->HelloCashService->getInvoice($invoice->id, false);
         $this->runAndAssertQueue();
 
         $this->assertMailCount(1);
@@ -210,7 +210,7 @@ class HelloCashTest extends AppCakeTestCase
         ])->toArray();
         $paymentIds = Hash::extract($payments, '{n}.id');
 
-        $this->HelloCash->getInvoice($invoice->id, false);
+        $this->HelloCashService->getInvoice($invoice->id, false);
 
         $this->ajaxPost(
             '/admin/invoices/cancel/',
@@ -257,7 +257,7 @@ class HelloCashTest extends AppCakeTestCase
             'order' => ['Invoices.created' => 'DESC'],
         ])->first();
 
-        $receiptHtml = $this->HelloCash->getReceipt($invoiceA->id, false);
+        $receiptHtml = $this->HelloCashService->getReceipt($invoiceA->id, false);
 
         $this->assertGreaterThan(0, $invoiceA->customer->user_id_registrierkasse);
 
@@ -276,7 +276,7 @@ class HelloCashTest extends AppCakeTestCase
             ],
             'order' => ['Invoices.created' => 'DESC'],
         ])->first();
-        $receiptHtml = $this->HelloCash->getReceipt($invoiceB->id, false);
+        $receiptHtml = $this->HelloCashService->getReceipt($invoiceB->id, false);
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
         $this->assertRegExpWithUnquotedString($customer->firstname, $receiptHtml);
@@ -306,7 +306,7 @@ class HelloCashTest extends AppCakeTestCase
             ],
         ])->first();
 
-        $this->HelloCash->getReceipt($invoiceA->id, false);
+        $this->HelloCashService->getReceipt($invoiceA->id, false);
         $this->assertNotEquals($customer->user_id_registrierkasse, $invoiceA->customer->user_id_registrierkasse);
 
     }

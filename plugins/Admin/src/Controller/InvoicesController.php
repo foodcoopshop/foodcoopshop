@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Lib\HelloCash\HelloCash;
-use App\Lib\Invoice\GenerateInvoiceToCustomer;
+use App\Services\HelloCash\HelloCashService;
+use App\Services\Invoice\GenerateInvoiceToCustomerService;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use App\Lib\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriter;
 use Cake\Core\Configure;
@@ -118,16 +118,16 @@ class InvoicesController extends AdminAppController
 
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
-            $helloCash = new HelloCash();
-            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
+            $helloCashService = new HelloCashService();
+            $responseObject = $helloCashService->generateInvoice($invoiceData, $currentDay, $paidInCash, false);
             $invoiceId = $responseObject->invoice_id;
             $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
             $invoiceNumber = $responseObject->invoice_number;
 
         } else {
 
-            $invoiceToCustomer = new GenerateInvoiceToCustomer();
-            $newInvoice = $invoiceToCustomer->run($invoiceData, $currentDay, $paidInCash);
+            $invoiceToCustomerService = new GenerateInvoiceToCustomerService();
+            $newInvoice = $invoiceToCustomerService->run($invoiceData, $currentDay, $paidInCash);
             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($newInvoice->filename);
             $invoiceNumber = $newInvoice->invoice_number;
             $invoiceId = $newInvoice->id;
@@ -218,8 +218,8 @@ class InvoicesController extends AdminAppController
 
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
-            $helloCash = new HelloCash();
-            $responseObject = $helloCash->generateInvoice($invoiceData, $currentDay, $paidInCash, true);
+            $helloCashService = new HelloCashService();
+            $responseObject = $helloCashService->generateInvoice($invoiceData, $currentDay, $paidInCash, true);
             $invoiceId = $responseObject->invoice_id;
             $this->redirect(Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId));
             return;
@@ -288,8 +288,8 @@ class InvoicesController extends AdminAppController
 
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {
 
-            $helloCash = new HelloCash();
-            $responseObject = $helloCash->cancelInvoice($invoice->customer->id_customer, $invoice->id, $currentDay);
+            $helloCashService = new HelloCashService();
+            $responseObject = $helloCashService->cancelInvoice($invoice->customer->id_customer, $invoice->id, $currentDay);
             $cancelledInvoiceNumber = $responseObject->invoice_number;
             $invoiceId = $responseObject->cancellation_details->cancellation_number;
             $cancellationInvoiceNumber = $responseObject->cancellation_details->cancellation_number;
@@ -333,8 +333,8 @@ class InvoicesController extends AdminAppController
             $customer->new_invoice_necessary = true;
             $customer->is_cancellation_invoice = true;
 
-            $invoiceToCustomer = new GenerateInvoiceToCustomer();
-            $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);
+            $invoiceToCustomerService = new GenerateInvoiceToCustomerService();
+            $newInvoice = $invoiceToCustomerService->run($customer, $currentDay, $invoice->paid_in_cash);
             $invoiceId = $newInvoice->id;
             $cancelledInvoiceNumber = $invoice->invoice_number;
             $cancellationInvoiceNumber = $newInvoice->invoice_number;
