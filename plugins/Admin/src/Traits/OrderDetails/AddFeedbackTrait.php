@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\OrderDetails;
 
 use App\Mailer\AppMailer;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,10 +42,10 @@ trait AddFeedbackTrait {
 
         try {
             if (empty($orderDetail)) {
-                throw new InvalidParameterException('orderDetail not found: ' . $orderDetailId);
+                throw new \Exception('orderDetail not found: ' . $orderDetailId);
             }
             if (!empty($orderDetail->order_detail_feedback)) {
-                throw new InvalidParameterException('orderDetail already has a feedback: ' . $orderDetailId);
+                throw new \Exception('orderDetail already has a feedback: ' . $orderDetailId);
             }
 
             $entity = $this->OrderDetail->OrderDetailFeedbacks->newEntity(
@@ -57,10 +56,10 @@ trait AddFeedbackTrait {
                 ]
             );
             if ($entity->hasErrors()) {
-                throw new InvalidParameterException(join(' ', $this->OrderDetail->OrderDetailFeedbacks->getAllValidationErrors($entity)));
+                throw new \Exception(join(' ', $this->OrderDetail->OrderDetailFeedbacks->getAllValidationErrors($entity)));
             }
 
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

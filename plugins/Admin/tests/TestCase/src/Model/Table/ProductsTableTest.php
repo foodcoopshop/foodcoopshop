@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
@@ -255,7 +254,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeQuantity($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -327,7 +326,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changePrice($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -345,7 +344,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changePrice($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -410,7 +409,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changePrice($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -464,7 +463,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeDeposit($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -481,7 +480,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 'invalid parameter']
         ];
-        $this->expectException(InvalidParameterException::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
         $this->Product->changeStatus($products);
     }
@@ -491,7 +490,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 5] // invalid status
         ];
-        $this->expectException(InvalidParameterException::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
         $this->Product->changeStatus($products);
     }
@@ -501,7 +500,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             ['60-10' => 0]
         ];
-        $this->expectException(InvalidParameterException::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('change status is not allowed for product attributes');
         $this->Product->changeStatus($products);
     }
@@ -548,7 +547,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeStatus($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -568,7 +567,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeStatus($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -591,7 +590,7 @@ class ProductsTableTest extends AppCakeTestCase
 
         try {
             $this->Product->changeName($products);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             $exceptionThrown = true;
         }
 
@@ -605,7 +604,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             ['60-10' => 0]
         ];
-        $this->expectException(InvalidParameterException::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('change name is not allowed for product attributes');
         $this->Product->changeName($products);
     }

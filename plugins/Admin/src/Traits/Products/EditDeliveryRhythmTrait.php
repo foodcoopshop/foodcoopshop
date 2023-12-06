@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use App\Services\DeliveryRhythmService;
 
@@ -164,7 +163,7 @@ trait EditDeliveryRhythmTrait {
             ]);
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

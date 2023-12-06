@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Services\PdfWriter\ProductCardsPdfWriterService;
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 
 /**
@@ -27,7 +26,7 @@ trait GenerateProductCardsTrait {
     {
         $productIds = h($this->getRequest()->getQuery('productIds'));
         if ($productIds == '') {
-            throw new InvalidParameterException('no product ids passed');
+            throw new \Exception('no product ids passed');
         }
 
         $productIds = explode(',', $productIds);
@@ -61,7 +60,7 @@ trait GenerateProductCardsTrait {
         }
 
         if (empty($preparedProducts)) {
-            throw new InvalidParameterException('no stock product selected');
+            throw new \Exception('no stock product selected');
         }
         $pdfWriter = new ProductCardsPdfWriterService();
         $pdfWriter->setFilename(__d('admin', 'Products').'.pdf');

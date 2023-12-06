@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 
@@ -31,7 +30,7 @@ trait EditNewStatusTrait {
             APP_OFF,
             APP_ON
         ])) {
-            throw new InvalidParameterException('New status needs to be 0 or 1: ' . $status);
+            throw new \Exception('New status needs to be 0 or 1: ' . $status);
         }
 
         $this->Product = $this->getTableLocator()->get('Products');

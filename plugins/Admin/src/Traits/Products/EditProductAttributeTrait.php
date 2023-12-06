@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -73,7 +72,7 @@ trait EditProductAttributeTrait {
                         'validate' => true,
                     ]);
                 if ($entity2Save->hasErrors()) {
-                    throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($entity2Save)));
+                    throw new \Exception(join(' ', $this->Product->getAllValidationErrors($entity2Save)));
                 }
                 $this->Product->ProductAttributes->BarcodeProductAttributes->save($entity2Save);
             } catch (\Exception $e) {

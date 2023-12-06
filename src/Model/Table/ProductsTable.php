@@ -12,7 +12,6 @@ use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use App\Services\CatalogService;
 use App\Services\RemoteFileService;
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
@@ -294,7 +293,7 @@ class ProductsTable extends AppTable
      *               [productId] => (int) status
      *           )
      *   )
-     * @throws InvalidParameterException
+     * @throws \Exception
      * @return boolean $success
      */
     public function changeStatus($products)
@@ -306,11 +305,11 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                throw new InvalidParameterException('change status is not allowed for product attributes');
+                throw new \Exception('change status is not allowed for product attributes');
             }
             $status = $product[$ids['productId']];
             if (!in_array($status, Product::ALLOWED_STATUSES, true)) { // last param for type check
-                throw new InvalidParameterException('Products.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
+                throw new \Exception('Products.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
             } else {
                 $products2save[] = [
                     'id_product' => $ids['productId'],
@@ -366,7 +365,7 @@ class ProductsTable extends AppTable
                 $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
             }
             if ($deposit < 0) {
-                throw new InvalidParameterException('input format not correct: '.$product[$productId]);
+                throw new \Exception('input format not correct: '.$product[$productId]);
             }
         }
 
@@ -456,7 +455,7 @@ class ProductsTable extends AppTable
                 $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
             }
             if ($price < 0) {
-                throw new InvalidParameterException('input format not correct: '.$product[$productId]['gross_price']);
+                throw new \Exception('input format not correct: '.$product[$productId]['gross_price']);
             }
         }
 
@@ -554,7 +553,7 @@ class ProductsTable extends AppTable
             $ids = $this->getProductIdAndAttributeId($productId);
             $entity = $stockAvailablesTable->newEntity($product[$productId]);
             if ($entity->hasErrors()) {
-                throw new InvalidParameterException(join(' ', $stockAvailablesTable->getAllValidationErrors($entity)));
+                throw new \Exception(join(' ', $stockAvailablesTable->getAllValidationErrors($entity)));
             }
         }
 
@@ -608,7 +607,7 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                throw new InvalidParameterException('change delivery_rhythm is not allowed for product attributes');
+                throw new \Exception('change delivery_rhythm is not allowed for product attributes');
             }
             $entity = $this->newEntity(
                 $product[$productId],
@@ -617,7 +616,7 @@ class ProductsTable extends AppTable
                 ]
             );
             if ($entity->hasErrors()) {
-                throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
+                throw new \Exception(join(' ', $this->getAllValidationErrors($entity)));
             } else {
                 $products2save[] = array_merge(
                     ['id_product' => $ids['productId']], $product[$productId]
@@ -654,12 +653,12 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                throw new InvalidParameterException('change is_stock_product is not allowed for product attributes');
+                throw new \Exception('change is_stock_product is not allowed for product attributes');
             }
             $isStockProduct = (int) $product[$ids['productId']];
             $allowed = [APP_OFF, APP_ON];
             if (!in_array($isStockProduct, $allowed, true)) { // last param for type check
-                throw new InvalidParameterException('Products.is_stock_product for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $isStockProduct);
+                throw new \Exception('Products.is_stock_product for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $isStockProduct);
             } else {
                 $products2save[] = [
                     'id_product' => $ids['productId'],
@@ -709,7 +708,7 @@ class ProductsTable extends AppTable
             $name = $product[$productId];
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                throw new InvalidParameterException('change name is not allowed for product attributes');
+                throw new \Exception('change name is not allowed for product attributes');
             }
 
             $productEntity = $this->newEntity(
@@ -721,7 +720,7 @@ class ProductsTable extends AppTable
                 ]
             );
             if ($productEntity->hasErrors()) {
-                throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($productEntity)));
+                throw new \Exception(join(' ', $this->getAllValidationErrors($productEntity)));
             }
 
             if (isset($name['barcode'])) {
@@ -735,7 +734,7 @@ class ProductsTable extends AppTable
                     ]
                 );
                 if ($barcodeProductEntity->hasErrors()) {
-                    throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($barcodeProductEntity)));
+                    throw new \Exception(join(' ', $this->getAllValidationErrors($barcodeProductEntity)));
                 }
             }
 
@@ -1382,7 +1381,7 @@ class ProductsTable extends AppTable
     {
         $mimeContentType = mime_content_type($image);
         if (!in_array($mimeContentType, Configure::read('app.allowedImageMimeTypes'))) {
-            throw new InvalidParameterException('file is not an image: ' . $image);
+            throw new \Exception('file is not an image: ' . $image);
         }
     }
 
@@ -1401,7 +1400,7 @@ class ProductsTable extends AppTable
                 $syncDomainsTable = FactoryLocator::get('Table')->get('Network.SyncDomains');
                 $syncDomainHosts = $syncDomainsTable->getActiveSyncDomainHosts();
                 if (!RemoteFileService::exists($imageFromRemoteServer, $syncDomainHosts)) {
-                    throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
+                    throw new \Exception('remote image not existing: ' . $imageFromRemoteServer);
                 }
                 $tmpLocalImagePath = TMP . 'tmp-image';
                 copy($imageFromRemoteServer, $tmpLocalImagePath);
@@ -1410,7 +1409,7 @@ class ProductsTable extends AppTable
             } else {
                 $remoteImage = file_exists($imageFromRemoteServer);
                 if (!$remoteImage) {
-                    throw new InvalidParameterException('local image not existing: ' . $imageFromRemoteServer);
+                    throw new \Exception('local image not existing: ' . $imageFromRemoteServer);
                 }
                 $this->checkImageContentType($imageFromRemoteServer);
             }

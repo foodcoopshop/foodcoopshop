@@ -456,7 +456,7 @@ class ManufacturersTable extends AppTable
             {$orderDetailCondition}
             ORDER BY {$orderClause}, DATE_FORMAT(od.created, '%d.%m.%Y, %H:%i') DESC;";
 
-        $statement = $this->getConnection()->prepare($sql);
+        $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);
         $result = $statement->fetchAll('assoc');
         return $result;

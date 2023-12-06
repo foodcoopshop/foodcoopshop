@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use App\Lib\Error\Exception\InvalidParameterException;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -78,7 +76,7 @@ trait EditPriceTrait {
                     ]
                 ]
             );
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

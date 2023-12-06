@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 namespace App\Services\PdfWriter\Traits;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Datasource\FactoryLocator;
 
 trait MemberCardDataTrait
@@ -26,7 +25,7 @@ trait MemberCardDataTrait
     {
 
         if (empty($customerIds)) {
-            throw new InvalidParameterException('no customer id passed');
+            throw new \Exception('no customer id passed');
         }
 
         $customerTable = FactoryLocator::get('Table')->get('Customers');

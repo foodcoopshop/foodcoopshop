@@ -40,7 +40,7 @@ trait UpdateActionLogTrait
             'search' => $search,
             'replace' => $search . $replace,
         ];
-        $this->ActionLog->getConnection()->prepare($query)->execute($params);
+        $this->ActionLog->getConnection()->getDriver()->prepare($query)->execute($params);
 
     }
 
@@ -60,7 +60,7 @@ trait UpdateActionLogTrait
             'search' => $search,
             'replace' => $replace,
         ];
-        $this->ActionLog->getConnection()->prepare($query)->execute($params);
+        $this->ActionLog->getConnection()->getDriver()->prepare($query)->execute($params);
 
     }
 

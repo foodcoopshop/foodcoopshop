@@ -11,7 +11,6 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -282,7 +281,7 @@ class CronjobsTable extends AppTable
     {
         $commandName = $cronjob->getOriginalValues()['name'] . 'Command';
         if (!file_exists(ROOT . DS . 'src' . DS . 'Command' . DS . $commandName . '.php')) {
-            throw new InvalidParameterException('command not found: ' . $commandName);
+            throw new \Exception('command not found: ' . $commandName);
         }
         $commandClass = '\\App\\Command\\' . $commandName;
         $command = new $commandClass();
@@ -337,7 +336,7 @@ class CronjobsTable extends AppTable
                 break;
             case 'week':
                 if ($cronjob->weekday == '') {
-                    throw new InvalidParameterException('weekday not available');
+                    throw new \Exception('weekday not available');
                 }
                 $cronjobWeekdayIsCurrentWeekday = $cronjob->weekday == $currentWeekday;
                 if ($cronjobWeekdayIsCurrentWeekday) {
@@ -346,7 +345,7 @@ class CronjobsTable extends AppTable
                 break;
             case 'month':
                 if ($cronjob->day_of_month == '' || $cronjob->day_of_month > 31) {
-                    throw new InvalidParameterException('day of month not available or not valid');
+                    throw new \Exception('day of month not available or not valid');
                 }
                 if ($cronjob->day_of_month == 0) {
                     $cronjob->day_of_month = Configure::read('app.timeHelper')->getNumberOfDays($this->cronjobRunDay);

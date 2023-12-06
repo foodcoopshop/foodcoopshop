@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,7 +29,7 @@ class CronjobLogsTable extends AppTable
 
         $timestamp = (int) $timestamp;
         if ($timestamp <= 0) {
-            throw new InvalidParameterException('invalid timestamp: ' . $timestamp);
+            throw new \Exception('invalid timestamp: ' . $timestamp);
         }
 
         $diffInDays = 60;

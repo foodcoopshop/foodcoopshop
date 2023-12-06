@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use App\Lib\Error\Exception\ConfigFileMissingException;
 use App\Model\Traits\MultipleEmailsRuleTrait;
 use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
@@ -46,7 +45,7 @@ class ConfigurationsTable extends AppTable
     {
         $versionFileWithPath = ROOT . DS . 'VERSION.txt';
         if (!file_exists($versionFileWithPath)) {
-            throw new ConfigFileMissingException('version file not found: ' . $versionFileWithPath);
+            throw new \Exception('version file not found: ' . $versionFileWithPath);
         }
         $file = fopen($versionFileWithPath, "r");
         $version = fgets($file);

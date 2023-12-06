@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,7 +29,7 @@ trait CalculateSellingChargeWithSurchargeTrait {
 
         $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));
         if ($surcharge < 0) {
-            throw new InvalidParameterException(__d('admin', 'Surcharge_needs_to_be_greater_than_0.'));
+            throw new \Exception(__d('admin', 'Surcharge_needs_to_be_greater_than_0.'));
         }
 
         try {

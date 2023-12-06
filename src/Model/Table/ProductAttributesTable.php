@@ -125,7 +125,7 @@ class ProductAttributesTable extends AppTable
             'attributeId' => (int) $attributeId,
             'productAttributeId' => (int) $productAttributeId,
         ];
-        $statement = $this->getConnection()->prepare($sql);
+        $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
@@ -151,7 +151,7 @@ class ProductAttributesTable extends AppTable
             'productAttributeId' => (int) $productAttributeId,
             'quantity' => (int) $defaultQuantity,
         ];
-        $statement = $this->getConnection()->prepare($sql);
+        $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);
 
         $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');

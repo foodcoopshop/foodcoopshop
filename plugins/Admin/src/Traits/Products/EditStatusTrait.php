@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -61,7 +60,7 @@ trait EditStatusTrait {
 
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Validation\Validator;
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 
 /**
@@ -55,7 +54,7 @@ class UnitsTable extends AppTable
      * @param string $name
      * @param int $amount
      * @param double $quantityInUnits
-     * @throws InvalidParameterException
+     * @throws \Exception
      * @return $result
      */
     public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits) {
@@ -92,7 +91,7 @@ class UnitsTable extends AppTable
         );
 
         if ($entity->hasErrors()) {
-            throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
+            throw new \Exception(join(' ', $this->getAllValidationErrors($entity)));
         }
 
         $result = $this->save($patchedEntity);

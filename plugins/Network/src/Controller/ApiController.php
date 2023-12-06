@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Controller\Controller;
 use Cake\Database\Expression\QueryExpression;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -126,7 +125,7 @@ class ApiController extends Controller
         $productsData = $this->getRequest()->getData('data.data');
 
         if (empty($productsData)) {
-            throw new InvalidParameterException('Keine Produkte vorhanden.');
+            throw new \Exception('Keine Produkte vorhanden.');
         }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -156,7 +155,7 @@ class ApiController extends Controller
                 ]
             ])->count();
             if (!$manufacturerIsOwner) {
-                throw new InvalidParameterException('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerName());
+                throw new \Exception('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerName());
             }
 
             if ($productIds['attributeId'] == 0) {
@@ -295,7 +294,7 @@ class ApiController extends Controller
                     } else {
                         $syncFieldsError[] = $fieldName;
                     }
-                } catch (InvalidParameterException $e) {
+                } catch (\Exception $e) {
                     $syncFieldsError[] = $fieldName;
                 }
             }
@@ -322,7 +321,7 @@ class ApiController extends Controller
                     } else {
                         $syncFieldsError[] = $fieldName;
                     }
-                } catch (InvalidParameterException $e) {
+                } catch (\Exception $e) {
                     $syncFieldsError[] = $fieldName;
                 }
             }
@@ -358,7 +357,7 @@ class ApiController extends Controller
                     } else {
                         $syncFieldsError[] = $fieldName;
                     }
-                } catch (InvalidParameterException $e) {
+                } catch (\Exception $e) {
                     $syncFieldsError[] = $fieldName;
                 }
             }

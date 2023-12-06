@@ -10,7 +10,6 @@ use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -217,9 +216,9 @@ class PaymentsController extends AdminAppController
                 ['validate' => 'add']
             );
             if ($entity->hasErrors()) {
-                throw new InvalidParameterException($this->Payment->getAllValidationErrors($entity)[0]);
+                throw new \Exception($this->Payment->getAllValidationErrors($entity)[0]);
             }
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

@@ -72,7 +72,7 @@ class StockAvailablesTable extends AppTable
         $params = [
             'productId' => $productId
         ];
-        $statement = $this->getConnection()->prepare($query);
+        $statement = $this->getConnection()->getDriver()->prepare($query);
         $statement->execute($params);
     }
 }

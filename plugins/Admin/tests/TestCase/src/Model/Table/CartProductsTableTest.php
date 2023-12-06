@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 
@@ -33,7 +32,7 @@ class CartProductsTableTest extends AppCakeTestCase
 
     public function testRemoveAllWithWrongCartId()
     {
-        $this->expectException(InvalidParameterException::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('wrong cartId: 0');
         $this->CartProduct->removeAll('bla', Configure::read('test.superadminId'));
     }
@@ -42,7 +41,7 @@ class CartProductsTableTest extends AppCakeTestCase
     {
         $cartId = 1;
         $customerId = Configure::read('test.adminId');
-        $this->expectException(InvalidParameterException::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('no cart found for cartId: 1 and customerId: 88');
         $this->CartProduct->removeAll($cartId, $customerId);
     }

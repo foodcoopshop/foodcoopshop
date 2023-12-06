@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Admin\Traits\ManufacturerIdTrait;
 
@@ -64,7 +63,7 @@ class StatisticsController extends AdminAppController
         if (preg_match('`last-months-`', $range)) {
             $lastMonths = preg_replace('`last-months-`', '', $range);
             if (!in_array($lastMonths, [12,24])) {
-                throw new InvalidParameterException($lastMonths . ' not valid as last-months parameter');
+                throw new \Exception($lastMonths . ' not valid as last-months parameter');
             }
         }
 

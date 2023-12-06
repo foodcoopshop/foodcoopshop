@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 
@@ -57,14 +56,14 @@ trait EditTaxTrait {
             $validTaxIds = Hash::extract($taxes, '{n}.id_tax');
             $validTaxIds[] = 0;
             if (!in_array($taxId, $validTaxIds)) {
-                throw new InvalidParameterException('invalid taxId: ' . $taxId);
+                throw new \Exception('invalid taxId: ' . $taxId);
             }
 
             $changedTaxInfoForMessage = [];
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                 $purchasePriceTaxId = (int) $this->getRequest()->getData('purchasePriceTaxId');
                 if (!in_array($purchasePriceTaxId, $validTaxIds)) {
-                    throw new InvalidParameterException('invalid purchasePriceTaxId: ' . $purchasePriceTaxId);
+                    throw new \Exception('invalid purchasePriceTaxId: ' . $purchasePriceTaxId);
                 }
                 $changedTaxInfoForMessage = $this->Product->PurchasePriceProducts->savePurchasePriceTax($purchasePriceTaxId, $productId, $oldProduct);
             }
@@ -155,7 +154,7 @@ trait EditTaxTrait {
             ]);
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

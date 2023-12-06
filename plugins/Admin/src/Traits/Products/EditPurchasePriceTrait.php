@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 
 /**
@@ -55,7 +54,7 @@ trait EditPurchasePriceTrait {
         try {
 
             if (empty($oldProduct)) {
-                throw new InvalidParameterException('product not existing: id ' . $productId);
+                throw new \Exception('product not existing: id ' . $productId);
             }
 
             if (empty($oldProduct->purchase_price_product)) {
@@ -99,7 +98,7 @@ trait EditPurchasePriceTrait {
                     ],
                 );
                 if ($patchedEntity->hasErrors()) {
-                    throw new InvalidParameterException(join(' ', $unitTable->getAllValidationErrors($patchedEntity)));
+                    throw new \Exception(join(' ', $unitTable->getAllValidationErrors($patchedEntity)));
                 }
                 $unitTable->save($patchedEntity);
                 $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->purchase_price_incl_per_unit ?? 0, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
@@ -113,7 +112,7 @@ trait EditPurchasePriceTrait {
                     ],
                 );
                 if ($patchedEntity->hasErrors()) {
-                    throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($patchedEntity)));
+                    throw new \Exception(join(' ', $this->Product->getAllValidationErrors($patchedEntity)));
                 }
                 $purchaseTable->save($patchedEntity);
                 $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($oldProduct->purchase_price_product->price, $taxRate));

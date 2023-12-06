@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Services\DeliveryRhythmService;
 use App\Model\Traits\CartValidatorTrait;
 
@@ -374,7 +373,7 @@ class CartProductsTable extends AppTable
     {
         $cartId = (int) $cartId;
         if (!$cartId > 0) {
-            throw new InvalidParameterException('wrong cartId: ' . $cartId);
+            throw new \Exception('wrong cartId: ' . $cartId);
         }
         // deleteAll cannot check associations
         $this->Cart = FactoryLocator::get('Table')->get('Carts');
@@ -385,7 +384,7 @@ class CartProductsTable extends AppTable
             ]
         ])->first();
         if (empty($cart)) {
-            throw new InvalidParameterException('no cart found for cartId: ' . $cartId . ' and customerId: ' . $customerId);
+            throw new \Exception('no cart found for cartId: ' . $cartId . ' and customerId: ' . $customerId);
         }
         $cartProduct2remove = [
             'CartProducts.id_cart' => $cartId
@@ -397,7 +396,7 @@ class CartProductsTable extends AppTable
     {
         $cartId = (int) $cartId;
         if (!$cartId > 0) {
-            throw new InvalidParameterException('wrong cartId: ' . $cartId);
+            throw new \Exception('wrong cartId: ' . $cartId);
         }
         $cartProduct2remove = [
             'CartProducts.id_product' => $productId,

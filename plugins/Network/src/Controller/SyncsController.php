@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 
@@ -69,10 +68,10 @@ class SyncsController extends AppController
         $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
 
         if (empty($syncDomain)) {
-            throw new InvalidParameterException('the domain ' . $product['domain'] . ' was not found.');
+            throw new \Exception('the domain ' . $product['domain'] . ' was not found.');
         }
         if (!$this->Product->isOwner($localProductIds['productId'], $this->AppAuth->getManufacturerId())) {
-            throw new InvalidParameterException('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerId());
+            throw new \Exception('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerId());
         }
 
         return $syncDomain;
@@ -87,7 +86,7 @@ class SyncsController extends AppController
 
         try {
             $syncDomain = $this->doModifyProductChecks($product);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 
@@ -167,7 +166,7 @@ class SyncsController extends AppController
 
         try {
             $syncDomain = $this->doModifyProductChecks($product);
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

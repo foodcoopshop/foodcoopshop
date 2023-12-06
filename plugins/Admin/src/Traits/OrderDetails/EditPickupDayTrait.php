@@ -5,7 +5,6 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,7 +36,7 @@ trait EditPickupDayTrait {
 
         try {
             if (empty($orderDetailIds)) {
-                throw new InvalidParameterException('error - no order detail id passed');
+                throw new \Exception('error - no order detail id passed');
             }
             $errorMessages = [];
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -51,7 +50,7 @@ trait EditPickupDayTrait {
                 ]
             ]);
             if ($orderDetails->count() != count($orderDetailIds)) {
-                throw new InvalidParameterException('error - order details wrong');
+                throw new \Exception('error - order details wrong');
             }
 
             $oldPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($orderDetails->toArray()[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))));
@@ -71,7 +70,7 @@ trait EditPickupDayTrait {
                 $errorMessages = array_merge($errorMessages, $this->OrderDetail->getAllValidationErrors($entity));
             }
             if (!empty($errorMessages)) {
-                throw new InvalidParameterException(join('<br />', $errorMessages));
+                throw new \Exception(join('<br />', $errorMessages));
             }
 
             $customers = [];
@@ -133,7 +132,7 @@ trait EditPickupDayTrait {
             ]);
             $this->viewBuilder()->setOption('serialize', ['result', 'status', 'msg']);
 
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

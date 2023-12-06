@@ -526,7 +526,7 @@ class OrderDetailsTable extends AppTable
             default => 'ORDER BY od.pickup_day DESC;',
         };
 
-        $statement = $this->getConnection()->prepare($sql);
+        $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);
         $orderDetails = $statement->fetchAll('assoc');
 
@@ -553,7 +553,7 @@ class OrderDetailsTable extends AppTable
             'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom)
         ];
 
-        $statement = $this->getConnection()->prepare($sql);
+        $statement = $this->getConnection()->getDriver()->prepare($sql);
         $statement->execute($params);
         $orderDetails = $statement->fetchAll('assoc');
 

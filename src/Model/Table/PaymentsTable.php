@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\NumberRangeValidatorTrait;
 
 /**
@@ -151,7 +150,7 @@ class PaymentsTable extends AppTable
     public function getManufacturerDepositSumByCalendarWeekAndType($type)
     {
         if (!in_array($type, ['empty_glasses', 'money'])) {
-            throw new InvalidParameterException('wrong type: was ' . $type);
+            throw new \Exception('wrong type: was ' . $type);
         }
         $conditions = $this->getManufacturerDepositConditions();
         $conditions['Payments.text'] = $type;

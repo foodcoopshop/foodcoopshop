@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

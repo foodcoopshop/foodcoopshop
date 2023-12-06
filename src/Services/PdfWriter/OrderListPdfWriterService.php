@@ -19,7 +19,6 @@ namespace App\Services\PdfWriter;
 use App\Services\Pdf\ListTcpdfService;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Services\PdfWriter\Traits\SetSumTrait;
 
 abstract class OrderListPdfWriterService extends PdfWriterService
@@ -46,7 +45,7 @@ abstract class OrderListPdfWriterService extends PdfWriterService
         $type = str_replace('service', '', $type);
 
         if (!in_array($type, ['customer', 'product'])) {
-            throw new InvalidParameterException('type not valid: ' . $type);
+            throw new \Exception('type not valid: ' . $type);
         }
 
         $manufacturer = $this->Manufacturer->find('all', [

@@ -21,7 +21,6 @@ use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 class ChangeWeeklyPickupDayByOneDayCommand extends Command
 {
@@ -33,17 +32,17 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
     {
 
         if (empty($args->getArguments())) {
-            throw new InvalidParameterException('args not set');
+            throw new \Exception('args not set');
         }
 
         if (!in_array($args->getArgumentAt(0), ['increase', 'decrease'])) {
-            throw new InvalidParameterException('args wrong');
+            throw new \Exception('args wrong');
         }
 
         $this->Product = $this->getTableLocator()->get('Products');
         $this->Configuration = $this->getTableLocator()->get('Configurations');
 
-        $statement = $this->Product->getConnection()->prepare(
+        $statement = $this->Product->getConnection()->getDriver()->prepare(
             "UPDATE fcs_configuration SET value = :newWeeklyPickupDay WHERE name = 'FCS_WEEKLY_PICKUP_DAY';"
         );
 
@@ -69,7 +68,7 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
             if ($args->getArgumentAt(0) == 'decrease') {
                 $newDeliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday);
             }
-            $statement = $this->Product->getConnection()->prepare(
+            $statement = $this->Product->getConnection()->getDriver()->prepare(
                 "UPDATE fcs_product SET delivery_rhythm_send_order_list_weekday = :newDeliveryRhythmSendOrderListWeekday WHERE id_product = :productId;"
             );
             if (isset($newDeliveryRhythmSendOrderListWeekday)) {

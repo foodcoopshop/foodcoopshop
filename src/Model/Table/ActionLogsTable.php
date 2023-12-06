@@ -501,13 +501,13 @@ class ActionLogsTable extends AppTable
 
     public function removeCustomerNameFromAllActionLogs($customerName) {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
-        $statement = $this->getConnection()->prepare($query);
+        $statement = $this->getConnection()->getDriver()->prepare($query);
         return $statement->execute();
     }
 
     public function removeCustomerEmailFromAllActionLogs($email) {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $email . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerEmail().'\')';
-        $statement = $this->getConnection()->prepare($query);
+        $statement = $this->getConnection()->getDriver()->prepare($query);
         return $statement->execute();
     }
 

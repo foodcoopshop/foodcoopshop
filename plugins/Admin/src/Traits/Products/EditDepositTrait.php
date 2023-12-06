@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 
 /**
@@ -48,7 +47,7 @@ trait EditDepositTrait {
                     [$originalProductId => $this->getRequest()->getData('deposit')]
                 ]
             );
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

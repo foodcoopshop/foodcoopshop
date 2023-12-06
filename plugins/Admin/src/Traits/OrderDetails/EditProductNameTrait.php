@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
-use App\Lib\Error\Exception\InvalidParameterException;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -44,9 +42,9 @@ trait EditProductNameTrait {
             );
             if ($entity->hasErrors()) {
                 $errorMessages = $this->OrderDetail->getAllValidationErrors($entity);
-                throw new InvalidParameterException(join('<br />', $errorMessages));
+                throw new \Exception(join('<br />', $errorMessages));
             }
-        } catch (InvalidParameterException $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 

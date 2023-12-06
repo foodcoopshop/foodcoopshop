@@ -8,18 +8,24 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.5.0
+ * @since         FoodCoopShop 3.6.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Lib\Error\Exception;
+namespace App\Command;
 
-use Cake\Core\Exception\CakeException;
+use Cake\Console\Arguments;
+use Cake\Console\ConsoleIo;
 
-class NotCompatibleException extends CakeException
+class TestCronjobWithExceptionCommand extends AppCommand
 {
+
+    public function execute(Arguments $args, ConsoleIo $io)
+    {
+        throw new \Exception();
+    }
 
 }

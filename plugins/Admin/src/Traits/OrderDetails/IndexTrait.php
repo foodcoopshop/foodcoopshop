@@ -5,7 +5,6 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
-use App\Lib\Error\Exception\InvalidParameterException;
 use App\Services\DeliveryRhythmService;
 use App\Controller\Component\StringComponent;
 
@@ -39,7 +38,7 @@ trait IndexTrait {
             if (in_array('pickupDay', array_keys($this->getRequest()->getQueryParams()))) {
                 $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
                 if ($pickupDay == '') {
-                    throw new InvalidParameterException('parameter pickupDay must not be empty');
+                    throw new \Exception('parameter pickupDay must not be empty');
                 }
                 $explodedPickupDay = explode(',', $pickupDay[0]); // param can be passed comma separated
                 if (count($explodedPickupDay) == 2) {
