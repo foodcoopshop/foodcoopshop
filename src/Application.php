@@ -41,6 +41,7 @@ use App\Policy\RequestPolicy;
 use Authorization\Exception\MissingIdentityException;
 use Authorization\Exception\ForbiddenException;
 use Authentication\Identifier\Resolver\OrmResolver;
+use Authentication\Identifier\IdentifierInterface;
 
 /**
  * Application setup class.
@@ -164,25 +165,24 @@ class Application extends BaseApplication
             'queryParam' => 'redirect',
         ]);
 
+        $fields = [
+            IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+            IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd'
+        ];
+        
+        // Load the authenticators
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form', [
+            'fields' => $fields,
+        ]);
+
         $service->loadIdentifier('Authentication.Password', [
             'resolver' => [
                 'className' => OrmResolver::class,
                 'userModel' => 'Customers',
                 'finder' => 'auth', // CustomersTable::findAuth
             ],
-            'fields' => [
-                'username' => 'email',
-                'password' => 'passwd'
-            ],
-        ]);
-        
-        // Load the authenticators
-        $service->loadAuthenticator('Authentication.Session');
-        $service->loadAuthenticator('Authentication.Form', [
-            'fields' => [
-                'username' => 'email',
-                'password' => 'passwd'
-            ],
+            'fields' => $fields,
         ]);
 
         return $service;
