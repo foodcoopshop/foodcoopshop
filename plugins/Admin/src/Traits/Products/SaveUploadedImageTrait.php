@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use App\Lib\Folder\Folder;
+use App\Services\FolderService;
 use Intervention\Image\ImageManagerStatic as Image;
 
 /**
@@ -58,7 +58,7 @@ trait SaveUploadedImageTrait {
         $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
         $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
 
-        Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
+        FolderService::nonRecursivelyRemoveAllFiles($thumbsPath);
         if (!file_exists($thumbsPath)) {
             mkdir($thumbsPath, 0755, true);
         }

@@ -14,9 +14,9 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Folder;
+namespace App\Services;
 
-class Folder
+class FolderService
 {
 
     public static function nonRecursivelyRemoveAllFiles(string $dir): void

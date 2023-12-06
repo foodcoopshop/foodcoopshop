@@ -6,17 +6,17 @@ namespace App\Model\Table;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
-use App\Lib\Folder\Folder;
+use App\Services\FolderService;
 use Cake\Validation\Validator;
-use App\Lib\RemoteFile\RemoteFile;
 use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
+use App\Services\CatalogService;
+use App\Services\RemoteFileService;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
-use App\Services\CatalogService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -1400,7 +1400,7 @@ class ProductsTable extends AppTable
             if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
                 $syncDomainsTable = FactoryLocator::get('Table')->get('Network.SyncDomains');
                 $syncDomainHosts = $syncDomainsTable->getActiveSyncDomainHosts();
-                if (!RemoteFile::exists($imageFromRemoteServer, $syncDomainHosts)) {
+                if (!RemoteFileService::exists($imageFromRemoteServer, $syncDomainHosts)) {
                     throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
                 }
                 $tmpLocalImagePath = TMP . 'tmp-image';
@@ -1457,7 +1457,7 @@ class ProductsTable extends AppTable
 
             if ($imageFromRemoteServer != 'no-image') {
 
-                Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
+                FolderService::nonRecursivelyRemoveAllFiles($thumbsPath);
                 if (!file_exists($thumbsPath)) {
                     mkdir($thumbsPath, 0755, true);
                 }
@@ -1474,7 +1474,7 @@ class ProductsTable extends AppTable
                     'Images.id_image' => $image->id_image
                 ]);
 
-                Folder::nonRecursivelyRemoveAllFiles($thumbsPath);
+                FolderService::nonRecursivelyRemoveAllFiles($thumbsPath);
 
             }
         }

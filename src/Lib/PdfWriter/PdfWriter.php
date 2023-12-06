@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 namespace App\Lib\PdfWriter;
 
-use App\Lib\Folder\Folder;
 use Cake\Utility\Inflector;
 use Cake\View\ViewBuilder;
 

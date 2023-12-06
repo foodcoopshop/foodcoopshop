@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase;
 
 use App\Services\DeliveryRhythmService;
-use App\Lib\Folder\Folder;
+use App\Services\FolderService;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\QueueTrait;
@@ -377,7 +377,7 @@ abstract class AppCakeTestCase extends TestCase
 
     private function prepareSendingOrderListsOrInvoices($contentFolder)
     {
-        Folder::rrmdir($contentFolder);
+        FolderService::rrmdir($contentFolder);
         mkdir($contentFolder, 0755, true);
         $file = fopen($contentFolder . DS . '.gitignore', 'w');
         fwrite($file, '/*

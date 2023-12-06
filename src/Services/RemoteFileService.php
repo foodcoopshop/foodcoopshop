@@ -14,9 +14,9 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\RemoteFile;
+namespace App\Services;
 
-class RemoteFile
+class RemoteFileService
 {
     public static function exists(string $remoteFile, $allowedHosts = []): bool
     {
