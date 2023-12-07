@@ -18,12 +18,12 @@ namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use App\Services\Traits\RequestAwareTrait;
+use App\Traits\AppRequestAwareTrait;
 
 class DeliveryRhythmService
 {
 
-    use RequestAwareTrait;
+    use AppRequestAwareTrait;
 
     public function getSendOrderListsWeekday()
     {

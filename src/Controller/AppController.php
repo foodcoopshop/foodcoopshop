@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Services\OutputFilter\OutputFilterService;
+use App\Traits\AppRequestAwareTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
@@ -25,6 +26,8 @@ use hisorange\BrowserDetect\Parser as Browser;
  */
 class AppController extends Controller
 {
+
+    use AppRequestAwareTrait;
 
     public $protectEmailAddresses = false;
     public $loggedUser = null;
@@ -48,17 +51,6 @@ class AppController extends Controller
         $this->loadComponent('String');
 
         /*
-        $authenticate = [
-            'Form' => [
-                'userModel' => 'Customers',
-                'fields' => [
-                    'username' => 'email',
-                    'password' => 'passwd'
-                ],
-                'finder' => 'auth' // CustomersTable::findAuth
-            ]
-        ];
-
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $authenticate['BarCode'] = [
                 'userModel' => 'Customers',
@@ -68,19 +60,9 @@ class AppController extends Controller
                 'finder' => 'auth' // CustomersTable::findAuth
             ];
         }
+        */
 
-        $this->loadComponent('AppAuth', [
-            'loginAction' => Configure::read('app.slugHelper')->getLogin(),
-            'authError' => ACCESS_DENIED_MESSAGE,
-            'authorize' => [
-                'Controller'
-            ],
-            'authenticate' => $authenticate,
-            'storage' => 'Session',
-        ]);
-*/
-
-    $this->paginate = [
+        $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000
         ];
@@ -92,53 +74,16 @@ class AppController extends Controller
         $this->set('appAuth', $this->AppAuth);
     }
 
-    /**
-     * check valid login on each request
-     * logged in user should be logged out if deleted or deactivated by admin
-     */
-    private function validateAuthentication()
-    {
-        
-        if (0 && $this->AppAuth->user()) {
-            $this->Customer = $this->getTableLocator()->get('Customers');
-            $query = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.email' => $this->AppAuth->getEmail()
-                ]
-            ]);
-            $query = $this->Customer->findAuth($query, []);
-            if (empty($query->first())) {
-                $this->Flash->error(__('You_have_been_signed_out_automatically.'));
-                $this->AppAuth->logout();
-                $this->response = $this->response->withCookie((new Cookie('remember_me')));
-                $this->redirect(Configure::read('app.slugHelper')->getHome());
-            }
-        }
-    }
-
-    protected function isLoggedIn(): bool
-    {
-        return $this->loggedUser !== null;
-    }
-
-    protected function isAdmin(): bool
-    {
-        return $this->isLoggedIn() && $this->loggedUser->isAdmin();
-    }
-
     public function beforeFilter(EventInterface $event)
     {
 
         $this->loggedUser = $this->request->getAttribute('identity');
         $this->set('loggedUser', $this->loggedUser);
 
-        $this->validateAuthentication();
-
-        /*
-        if (!$this->getRequest()->is('json') && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
+        $this->setAppRequest($this->request);
+        if (!$this->getRequest()->is('json') && !$this->isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
-        */
 
         $isMobile = false;
         if (PHP_SAPI !== 'cli') {

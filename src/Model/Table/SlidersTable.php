@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Services\Traits\RequestAwareTrait;
+use App\Traits\AppRequestAwareTrait;
 use Cake\Validation\Validator;
 
 /**
@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
 class SlidersTable extends AppTable
 {
 
-    use RequestAwareTrait;
+    use AppRequestAwareTrait;
 
     public function initialize(array $config): void
     {

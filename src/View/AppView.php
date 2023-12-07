@@ -57,5 +57,7 @@ class AppView extends View
         $this->loadHelper('Text');
         $this->loadHelper('AssetCompress.AssetCompress');
         $this->loadHelper('PricePerUnit');
+        $this->loadHelper('Authentication.Identity');
+
     }
 }

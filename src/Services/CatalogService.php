@@ -26,12 +26,12 @@ use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Expression\StringExpression;
-use App\Services\Traits\RequestAwareTrait;
+use App\Traits\AppRequestAwareTrait;
 
 class CatalogService
 {
 
-    use RequestAwareTrait;
+    use AppRequestAwareTrait;
     
     protected $Customer;
     protected $Manufacturer;
@@ -389,7 +389,7 @@ class CatalogService
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
 
         $deliveryRhytmService = new DeliveryRhythmService();
-        $deliveryRhytmService->setRequest($this->request);
+        $deliveryRhytmService->setAppRequest($this->appRequest);
         $i = -1;
         foreach($products as $product) {
             $i++;
@@ -442,7 +442,7 @@ class CatalogService
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $deliveryRhythmService = new DeliveryRhythmService();
-        $deliveryRhythmService->setRequest($this->request);
+        $deliveryRhythmService->setAppRequest($this->appRequest);
         $i = -1;
         foreach($products as $product) {
             $i++;
@@ -514,7 +514,7 @@ class CatalogService
             ];
 
             // START: override shopping with purchase prices / zero prices
-            $this->Customer->setRequest($this->request);
+            $this->Customer->setRequest($this->appRequest);
             $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice(
                 $products[$i]->id_product,
                 $products[$i]->price,
@@ -545,7 +545,7 @@ class CatalogService
             }
 
             $deliveryRhythmService = new DeliveryRhythmService();
-            $deliveryRhythmService->setRequest($this->request);
+            $deliveryRhythmService->setAppRequest($this->appRequest);
             $products[$i]->next_delivery_day = $deliveryRhythmService->getNextDeliveryDayForProduct($product);
 
             foreach ($product->product_attributes as &$attribute) {

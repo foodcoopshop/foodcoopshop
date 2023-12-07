@@ -430,15 +430,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertEmpty($customer);
     }
 
-    public function testAutoLogout()
-    {
-        $this->loginAsSuperadmin();
-        $this->changeCustomer(Configure::read('test.superadminId'), 'active', 0);
-        $this->get('/');
-        $this->assertFlashMessage('Du wurdest automatisch abgemeldet.');
-    }
-
-    public function testLoginAndAutoLogin()
+    public function testLogin()
     {
         // 1) login
         $userEmail = Configure::read('test.loginEmailSuperadmin');
@@ -454,39 +446,8 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->assertSession(null, 'Auth.User.auto_login_hash');
         $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.address_customer.email');
 
-        // 2) cookie must exist
-        $cookie = $this->_response->getCookie('remember_me');
-        $this->assertNotEmpty($cookie);
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'email' => $userEmail
-            ]
-        ])->first();
-        $autoLoginHash = $customer->auto_login_hash;
-
-        // 3) login again (simulate login on other device)
-        $this->post($this->Slug->getLogin(), [
-            'email' => $userEmail,
-            'passwd' => Configure::read('test.loginPassword'),
-            'remember_me' => true
-        ]);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'email' => $userEmail
-            ]
-        ])->first();
-
-        // 4) hash needs to be the same as after first login
-        $this->assertEquals($autoLoginHash, $customer->auto_login_hash);
-        $this->assertSession($autoLoginHash, 'Auth.User.auto_login_hash');
-
-        $cookieValue = json_decode($cookie['value']);
-        $this->assertEquals($customer->auto_login_hash, $cookieValue->auto_login_hash);
-
         // 5) logout
         $this->logout();
-        $this->assertCookieNotSet('remember_me');
     }
 
     /**

@@ -16,21 +16,21 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-// TODO REFACTOR AUTH
-return;
+
 $menu = [];
 
 $adminName = __('Admin_area');
 $profileSlug = $this->Slug->getCustomerProfile();
-$userName = $loggedUser->get('firstname') . ' ' . $loggedUser->get('lastname');
+$userName = $this->Identity->get('firstname') . ' ' . $this->Identity->get('lastname');
 if (Configure::read('app.customerMainNamePart') == 'lastname') {
-    $userName = $loggedUser->get('lastname') . ' ' . $loggedUser->get('firstname');
+    $userName = $this->Identity->get('lastname') . ' ' . $this->Identity->get('firstname');
 }
-if ($loggedUser->get('is_company')) {
-    $userName = $loggedUser->get('firstname');
+if ($this->Identity->get('is_company')) {
+    $userName = $this->Identity->get('firstname');
 }
 
-if ($loggedUser->isManufacturer()) {
+// TODO REFACTOR AUTH
+if (0 && $loggedUser->isManufacturer()) {
     $profileSlug = $this->Slug->getManufacturerProfile();
     $adminName = __('Manufacturer_area');
     $userName = $appAuth->getManufacturerName();
@@ -40,24 +40,26 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
 ]);
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw far fa-moon', 'class' => ['color-mode-toggle']]];
-if ($appAuth->user()) {
-    if (!$appAuth->isOrderForDifferentCustomerMode()) {
+if (!$this->Identity->isLoggedIn()) {
+    if (0 && !$appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
     }
-    if ($appAuth->isOrderForDifferentCustomerMode()) {
+    if (0 && $appAuth->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
     }
 }
-
-if ($appAuth->user() && !$appAuth->isCustomer() && !$appAuth->isOrderForDifferentCustomerMode()) {
+if ($this->Identity->isLoggedIn()) {
+    pr($this->Identity->get('firstname'));
+}
+if ($this->Identity->isLoggedIn() && 0 && !$appAuth->isCustomer() && !$appAuth->isOrderForDifferentCustomerMode()) {
     $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
 }
 
-if ($appAuth->isCustomer()) {
+if (0 && $appAuth->isCustomer()) {
     $menu[1]['children'] = $this->Menu->getCustomerMenuElements($appAuth);
 }
 
-if (!$appAuth->isOrderForDifferentCustomerMode()) {
+if (0 && !$appAuth->isOrderForDifferentCustomerMode()) {
 
     $selfServiceMenuElement = null;
     if (!$appAuth->isManufacturer() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {

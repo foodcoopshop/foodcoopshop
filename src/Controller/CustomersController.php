@@ -10,11 +10,7 @@ use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
-use Cake\Http\Cookie\Cookie;
-use Cake\I18n\FrozenDate;
 use Cake\Log\Log;
-use Cake\Utility\Security;
-use DateTime;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -41,6 +37,12 @@ class CustomersController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated([
+            'login',
+            'logout',
+        ]);
+
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
             $this->FormProtection->setConfig('validate', false);
         }
@@ -279,7 +281,7 @@ class CustomersController extends FrontendController
         $enableBarCodeLogin = false;
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-            && ($this->AppAuth->isSelfServiceModeByUrl() || $this->AppAuth->isSelfServiceModeByReferer())
+            && ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer())
             ) {
                 $this->viewBuilder()->setLayout('self_service');
                 $title = __('Sign_in_for_self_service');
@@ -300,36 +302,18 @@ class CustomersController extends FrontendController
          * login start
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
-            if ($this->AppAuth->user()) {
+
+            if ($this->isLoggedIn()) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
             }
 
             if ($this->getRequest()->is('post')) {
-                
-                $customer = $this->AppAuth->identify();
-                if ($customer) {
-                    $this->AppAuth->setUser($customer);
-                    $this->redirect($this->AppAuth->redirectUrl());
+                $result = $this->Authentication->getResult();
+                if ($result->isValid()) {
+                    $target = $this->Authentication->getLoginRedirect() ?? Configure::read('app.slugHelper')->getHome();
+                    $this->redirect($target);
                 } else {
                     $this->Flash->error(__('Signing_in_failed_account_inactive_or_password_wrong?'));
-                }
-
-                if (!empty($this->getRequest()->getData('remember_me')) &&
-                    $this->getRequest()->getData('remember_me') &&
-                    !empty($customer)) {
-                    $customer = $this->Customer->get($customer['id_customer']);
-                    if ($customer->auto_login_hash == '') {
-                        $customer->auto_login_hash = Security::hash((string) rand());
-                        $this->Customer->save($customer);
-                    }
-                    $cookie = (new Cookie('remember_me'))
-                    ->withValue(
-                        [
-                            'auto_login_hash' => $customer->auto_login_hash
-                        ]
-                    )
-                    ->withExpiry(new DateTime('+30 day'));
-                    $this->setResponse($this->getResponse()->withCookie($cookie));
                 }
             }
         }
@@ -471,9 +455,8 @@ class CustomersController extends FrontendController
     {
         $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));
-        $this->response = $this->response->withCookie((new Cookie('remember_me')));
 
-        $this->AppAuth->logout();
+        $this->Authentication->logout();
         $redirectUrl = '/';
         if ($this->request->getQuery('redirect')) {
             $redirectUrl = $this->request->getQuery('redirect');

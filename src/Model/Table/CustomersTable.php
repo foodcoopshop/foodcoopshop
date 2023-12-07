@@ -5,7 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Auth\DefaultPasswordHasher;
 use App\Controller\Component\StringComponent;
-use App\Services\Traits\RequestAwareTrait;
+use App\Traits\AppRequestAwareTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Security;
@@ -29,7 +29,7 @@ use Cake\Utility\Hash;
 class CustomersTable extends AppTable
 {
 
-    use RequestAwareTrait;
+    use AppRequestAwareTrait;
     
     protected $Product;
 

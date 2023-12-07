@@ -35,6 +35,11 @@ class PagesController extends FrontendController
     {
 
         parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated([
+            'home',
+        ]);
+
         switch ($this->getRequest()->getParam('action')) {
             case 'detail':
                 $pageId = (int) $this->getRequest()->getParam('idAndSlug');
@@ -60,46 +65,22 @@ class PagesController extends FrontendController
     public function home()
     {
 
-        /**
-         * START: security keys check
-         */
-        $securityErrors = 0;
-        if (Configure::read('app.discourseSsoEnabled') && Configure::read('app.discourseSsoSecret') == '') {
-            echo '<p>Please copy this <b>app.discourseSsoSecret</b> to your custom_config.php: '.StringComponent::createRandomString(20).'</p>';
-            $securityErrors++;
-        }
-        if (Security::getSalt() == '') {
-            echo '<p>Please copy this <b>Security => salt</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
-            $securityErrors++;
-        }
-        if (Configure::read('App.fullBaseUrl') == '') {
-            echo '<p>Please copy <b>' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
-            $securityErrors++;
-        }
-        if ($securityErrors > 0) {
-            die('<p><b>Security errors: '.$securityErrors.'</b></p>');
-        }
-
-        /**
-         * END: security keys check
-         */
-
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $this->BlogPost->setRequest($this->request);
+        $this->BlogPost->setAppRequest($this->request);
         $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $this->Slider->setRequest($this->request);
+        $this->Slider->setAppRequest($this->request);
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
 
         $products = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $catalogService = new CatalogService();
-            $catalogService->setRequest($this->request);
+            $catalogService->setAppRequest($this->request);
             $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
             $products = $catalogService->prepareProducts($products);
         }

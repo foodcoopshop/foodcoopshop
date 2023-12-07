@@ -7,7 +7,7 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use App\Services\CatalogService;
-use App\Services\Traits\RequestAwareTrait;
+use App\Traits\AppRequestAwareTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,7 +26,7 @@ class CategoriesTable extends AppTable
 {
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
-    use RequestAwareTrait;
+    use AppRequestAwareTrait;
 
     public function initialize(array $config): void
     {
@@ -168,7 +168,7 @@ class CategoriesTable extends AppTable
     private function buildItemForTree($item, $index)
     {
         $catalogService = new CatalogService();
-        $catalogService->setRequest($this->request);
+        $catalogService->setAppRequest($this->appRequest);
         $productCount = $catalogService->getProducts($item->id_category, false, '', 0, true);
 
         $tmpMenuItem = [

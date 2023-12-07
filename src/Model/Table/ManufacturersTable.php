@@ -10,7 +10,7 @@ use Cake\Validation\Validator;
 use App\Model\Traits\MultipleEmailsRuleTrait;
 use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use App\Services\CatalogService;
-use App\Services\Traits\RequestAwareTrait;
+use App\Traits\AppRequestAwareTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,7 +32,7 @@ class ManufacturersTable extends AppTable
     use MultipleEmailsRuleTrait;
     use NoDeliveryDaysOrdersExistTrait;
     use ProductCacheClearAfterSaveAndDeleteTrait;
-    use RequestAwareTrait;
+    use AppRequestAwareTrait;
 
     public function initialize(array $config): void
     {
@@ -296,7 +296,7 @@ class ManufacturersTable extends AppTable
             $additionalInfo = '';
             if ($this->isLoggedIn() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $catalogService = new CatalogService();
-                $catalogService->setRequest($this->request);
+                $catalogService->setAppRequest($this->appRequest);
                 $additionalInfo = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer, false, 1);

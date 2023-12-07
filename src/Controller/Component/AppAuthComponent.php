@@ -190,23 +190,6 @@ class AppAuthComponent extends AuthComponent
         return $customersTable->getCreditBalance($this->getUserId());
     }
 
-    public function isSelfServiceModeByReferer()
-    {
-        $result = false;
-        $serverParams = $this->getController()->getRequest()->getServerParams();
-        $requestUriAllowed = [
-            '/' . __('route_cart') . '/ajaxAdd/',
-            '/' . __('route_cart') . '/ajaxRemove/'
-        ];
-        if (isset($serverParams['HTTP_REFERER'])) {
-            $result = preg_match('`' . preg_quote(Configure::read('App.fullBaseUrl')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
-        }
-        if (!in_array($serverParams['REQUEST_URI'], $requestUriAllowed)) {
-            $result = false;
-        }
-        return $result;
-    }
-
     public function getCartType()
     {
         $cartsTable = FactoryLocator::get('Table')->get('Carts');

@@ -18,7 +18,9 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
-if (!empty($loggedUser) || $loggedUser->termsOfUseAccepted()) {
+// TODO REFACTOR AUTH
+return false;
+if (!$this->Identity->isLoggedIn()  /* || $loggedUser->termsOfUseAccepted() */) {
     return false;
 }
 

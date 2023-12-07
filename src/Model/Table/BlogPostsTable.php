@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Model\Table;
 
-use App\Services\Traits\RequestAwareTrait;
+use App\Traits\AppRequestAwareTrait;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
@@ -24,7 +24,7 @@ use Cake\Validation\Validator;
 class BlogPostsTable extends AppTable
 {
 
-    use RequestAwareTrait;
+    use AppRequestAwareTrait;
     
     public function initialize(array $config): void
     {

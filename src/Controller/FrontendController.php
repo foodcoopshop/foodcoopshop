@@ -65,10 +65,10 @@ class FrontendController extends AppController
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->isLoggedIn()) {
             $this->Category = $this->getTableLocator()->get('Categories');
             $catalogService = new CatalogService();
-            $catalogService->setRequest($this->request);
+            $catalogService->setAppRequest($this->request);
             $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
-            $this->Category->setRequest($this->request);
+            $this->Category->setAppRequest($this->request);
             $categoriesForMenu = $this->Category->getForMenu();
             array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('app.slugHelper')->getNewProducts(),
@@ -90,7 +90,7 @@ class FrontendController extends AppController
         $manufacturersForMenu = [];
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $this->Manufacturer->setRequest($this->request);
+            $this->Manufacturer->setAppRequest($this->request);
             $manufacturersForMenu = $this->Manufacturer->getForMenu();
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }

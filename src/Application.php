@@ -42,6 +42,10 @@ use Authorization\Exception\MissingIdentityException;
 use Authorization\Exception\ForbiddenException;
 use Authentication\Identifier\Resolver\OrmResolver;
 use Authentication\Identifier\IdentifierInterface;
+use DateTime;
+use Cake\Http\Middleware\EncryptedCookieMiddleware;
+use Cake\Utility\Security;
+use App\Controller\Component\StringComponent;
 
 /**
  * Application setup class.
@@ -53,10 +57,35 @@ class Application extends BaseApplication
     implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
 
+    public function checkMandatorySettings()
+    {
+        $securityErrors = 0;
+        if (Configure::read('app.discourseSsoEnabled') && Configure::read('app.discourseSsoSecret') == '') {
+            echo '<p>Please copy this <b>app.discourseSsoSecret</b> to your custom_config.php: '.StringComponent::createRandomString(20).'</p>';
+            $securityErrors++;
+        }
+        if (Security::getSalt() == '') {
+            echo '<p>Please copy this <b>Security => salt</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
+            $securityErrors++;
+        }
+        if (Configure::read('App.fullBaseUrl') == '') {
+            echo '<p>Please copy <b>' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
+            $securityErrors++;
+        }
+        if (Configure::read('Security.cookieKey') == '') {
+            echo '<p>Please copy this <b>Security => cookieKey</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
+            $securityErrors++;
+        }
+        if ($securityErrors > 0) {
+            die('<p><b>Security errors: '.$securityErrors.'</b></p>');
+        }
+    }
+
     public function bootstrap(): void
     {
-        // Call parent to load bootstrap from files.
         parent::bootstrap();
+
+        $this->checkMandatorySettings();
 
         $this->addPlugin('Authentication');
         $this->addPlugin('Authorization');
@@ -118,6 +147,11 @@ class Application extends BaseApplication
         // `new RoutingMiddleware($this, '_cake_routes_')`
         ->add(new RoutingMiddleware($this))
 
+        ->add (new EncryptedCookieMiddleware(
+            ['CookieAuth'],
+            Configure::read('Security.cookieKey')
+        ))
+
         ->add(new AuthenticationMiddleware($this))
 
         ->add(
@@ -146,6 +180,9 @@ class Application extends BaseApplication
 
     protected function bootstrapCli(): void
     {
+
+        $this->checkMandatorySettings();
+
         try {
             $this->addPlugin('Bake');
         } catch (MissingPluginException $e) {
@@ -170,8 +207,10 @@ class Application extends BaseApplication
             IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd'
         ];
         
-        // Load the authenticators
-        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Session', [
+            'identify' => true,
+        ]);
+
         $service->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
         ]);
@@ -183,6 +222,14 @@ class Application extends BaseApplication
                 'finder' => 'auth', // CustomersTable::findAuth
             ],
             'fields' => $fields,
+        ]);
+
+        $service->loadAuthenticator('Authentication.Cookie', [
+            'fields' => $fields,
+            'loginUrl' => Configure::read('app.slugHelper')->getLogin(),
+            'cookie' => [
+                'expires' => new DateTime('+30 day'),
+            ],
         ]);
 
         return $service;
