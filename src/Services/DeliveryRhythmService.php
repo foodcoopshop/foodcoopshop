@@ -18,11 +18,14 @@ namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use App\Services\Traits\RequestAwareTrait;
 
 class DeliveryRhythmService
 {
 
-    public static function getSendOrderListsWeekday()
+    use RequestAwareTrait;
+
+    public function getSendOrderListsWeekday()
     {
         $sendOrderListsWeekday = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
         if ($sendOrderListsWeekday < 0) {
@@ -31,36 +34,36 @@ class DeliveryRhythmService
         return $sendOrderListsWeekday;
     }
 
-    public static function getDeliveryDateByCurrentDayForDb()
+    public function getDeliveryDateByCurrentDayForDb()
     {
-        $deliveryDate = self::getDeliveryDayByCurrentDay();
+        $deliveryDate = $this->getDeliveryDayByCurrentDay();
         $deliveryDate = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $deliveryDate);
         return $deliveryDate;
     }
 
-    public static function getNextWeeklyDeliveryDays($maxDays=52)
+    public function getNextWeeklyDeliveryDays($maxDays=52)
     {
-        $nextDeliveryDay = self::getDeliveryDateByCurrentDayForDb();
+        $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
         return Configure::read('app.timeHelper')->getWeekdayFormattedDaysList($nextDeliveryDay, $maxDays, 7);
     }
 
-    public static function getNextDailyDeliveryDays($maxDays)
+    public function getNextDailyDeliveryDays($maxDays)
     {
         $nextDeliveryDay = Configure::read('app.timeHelper')->getTomorrowForDatabase();
         return Configure::read('app.timeHelper')->getWeekdayFormattedDaysList($nextDeliveryDay, $maxDays, 1);
     }
 
-    public static function getDeliveryDayByCurrentDay()
+    public function getDeliveryDayByCurrentDay()
     {
-        return self::getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+        return $this->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
     }
 
-    public static function getDeliveryWeekday()
+    public function getDeliveryWeekday()
     {
         return Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY');
     }
 
-    public static function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
+    public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
     {
 
         if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
@@ -83,42 +86,42 @@ class DeliveryRhythmService
 
     }
 
-    public static function getDbFormattedPickupDayByDbFormattedDate($date, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
+    public function getDbFormattedPickupDayByDbFormattedDate($date, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
     {
         if (is_null($sendOrderListsWeekday)) {
-            $sendOrderListsWeekday = self::getSendOrderListsWeekday();
+            $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         }
-        $pickupDay = self::getDeliveryDay(strtotime($date), $sendOrderListsWeekday, $deliveryRhythmType, $deliveryRhythmCount);
+        $pickupDay = $this->getDeliveryDay(strtotime($date), $sendOrderListsWeekday, $deliveryRhythmType, $deliveryRhythmCount);
         $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
         return $pickupDay;
     }
 
-    public static function getFormattedNextDeliveryDay($day)
+    public function getFormattedNextDeliveryDay($day)
     {
-        return date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(self::getNextDeliveryDay($day)));
+        return date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
     }
 
-    public static function getOrderPeriodFirstDayByDeliveryDay(int $deliveryDay)
+    public function getOrderPeriodFirstDayByDeliveryDay(int $deliveryDay)
     {
-        if (self::hasSaturdayThursdayConfig()) {
+        if ($this->hasSaturdayThursdayConfig()) {
             $deliveryDay = strtotime('-7 days', $deliveryDay);
         }
-        return self::getOrderPeriodFirstDay($deliveryDay);
+        return $this->getOrderPeriodFirstDay($deliveryDay);
     }
     
-    public static function getOrderPeriodLastDayByDeliveryDay(int $deliveryDay)
+    public function getOrderPeriodLastDayByDeliveryDay(int $deliveryDay)
     {
-        if (self::hasSaturdayThursdayConfig()) {
+        if ($this->hasSaturdayThursdayConfig()) {
             $deliveryDay = strtotime('-7 days', $deliveryDay);
         }
-        return self::getOrderPeriodLastDay($deliveryDay);
+        return $this->getOrderPeriodLastDay($deliveryDay);
     }
 
-    public static function getNextDeliveryDay($day)
+    public function getNextDeliveryDay($day)
     {
-        $orderPeriodFirstDay = self::getOrderPeriodFirstDay($day);
-        $deliveryDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), self::getDeliveryDay(strtotime($orderPeriodFirstDay)));
-        if (self::hasSaturdayThursdayConfig()) {
+        $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
+        $deliveryDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
+        if ($this->hasSaturdayThursdayConfig()) {
             $deliveryDay = date(
                 Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'),
                 strtotime($deliveryDay . '-7 days'),
@@ -127,7 +130,7 @@ class DeliveryRhythmService
         return $deliveryDay;
     }
 
-    public static function getDeliveryDay($orderDay, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
+    public function getDeliveryDay($orderDay, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
     {
         if (is_null($deliveryRhythmType)) {
             $deliveryRhythmType = 'week';
@@ -137,11 +140,11 @@ class DeliveryRhythmService
         }
 
         if (is_null($sendOrderListsWeekday)) {
-            $sendOrderListsWeekday = self::getSendOrderListsWeekday();
+            $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         }
 
-        $daysToAddToOrderPeriodLastDay = self::getDaysToAddToOrderPeriodLastDay();
-        $deliveryDate = strtotime(self::getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        $daysToAddToOrderPeriodLastDay = $this->getDaysToAddToOrderPeriodLastDay();
+        $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
 
         $weekdayOrderDay = Configure::read('app.timeHelper')->formatAsWeekday($orderDay);
         $weekdayOrderDay = $weekdayOrderDay % 7;
@@ -149,7 +152,7 @@ class DeliveryRhythmService
         $weekdayDeliveryDate = Configure::read('app.timeHelper')->formatAsWeekday($deliveryDate);
         $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
 
-        if (self::hasSaturdayThursdayConfig()) {
+        if ($this->hasSaturdayThursdayConfig()) {
             $calculateNextDeliveryDay = $weekdayOrderDay == 6 || (
                 $weekdayOrderDay == 5 && $sendOrderListsWeekday == 5
             );
@@ -166,17 +169,17 @@ class DeliveryRhythmService
         return $deliveryDate;
     }
 
-    public static function getOrderPeriodFirstDay($day)
+    public function getOrderPeriodFirstDay($day)
     {
 
         $currentWeekday = Configure::read('app.timeHelper')->formatAsWeekday($day);
-        $dateDiff = 7 - self::getSendOrderListsWeekday() + $currentWeekday;
+        $dateDiff = 7 - $this->getSendOrderListsWeekday() + $currentWeekday;
         $date = strtotime('-' . $dateDiff . ' day ', $day);
 
-        if (self::hasSaturdayThursdayConfig()) {
-            $addOneWeekCondition = in_array($currentWeekday, [6,7]) && self::getDeliveryWeekday();
+        if ($this->hasSaturdayThursdayConfig()) {
+            $addOneWeekCondition = in_array($currentWeekday, [6,7]) && $this->getDeliveryWeekday();
         } else {
-            $addOneWeekCondition = $currentWeekday > self::getDeliveryWeekday();
+            $addOneWeekCondition = $currentWeekday > $this->getDeliveryWeekday();
         }
 
         if ($addOneWeekCondition) {
@@ -188,7 +191,7 @@ class DeliveryRhythmService
         return $date;
     }
 
-    public static function getOrderPeriodLastDay($day)
+    public function getOrderPeriodLastDay($day)
     {
 
         $currentWeekday = Configure::read('app.timeHelper')->formatAsWeekday($day);
@@ -199,29 +202,29 @@ class DeliveryRhythmService
 
         $dateDiff = 0;
 
-        if ($currentWeekday == self::getDeliveryWeekday()) {
+        if ($currentWeekday == $this->getDeliveryWeekday()) {
             $dateDiff = -1 - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
         }
-        if ($currentWeekday == (self::getDeliveryWeekday() + 1) % 7) {
+        if ($currentWeekday == ($this->getDeliveryWeekday() + 1) % 7) {
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 5;
         }
-        if ($currentWeekday == (self::getDeliveryWeekday() + 2) % 7) {
+        if ($currentWeekday == ($this->getDeliveryWeekday() + 2) % 7) {
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 4;
         }
-        if ($currentWeekday == (self::getDeliveryWeekday() + 3) % 7) {
+        if ($currentWeekday == ($this->getDeliveryWeekday() + 3) % 7) {
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 3;
         }
-        if ($currentWeekday == (self::getDeliveryWeekday() + 4) % 7) {
+        if ($currentWeekday == ($this->getDeliveryWeekday() + 4) % 7) {
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 2;
         }
-        if ($currentWeekday == (self::getDeliveryWeekday() + 5) % 7) {
+        if ($currentWeekday == ($this->getDeliveryWeekday() + 5) % 7) {
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 1;
         }
-        if ($currentWeekday == (self::getDeliveryWeekday() + 6) % 7) {
+        if ($currentWeekday == ($this->getDeliveryWeekday() + 6) % 7) {
             $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1);
         }
 
-        if (self::hasSaturdayThursdayConfig() && $dateDiff < 0) {
+        if ($this->hasSaturdayThursdayConfig() && $dateDiff < 0) {
             $dateDiff += 7;
         }
 
@@ -230,19 +233,19 @@ class DeliveryRhythmService
         return $date;
     }
 
-    public static function getNextDeliveryDayForProduct($product, $appAuth)
+    public function getNextDeliveryDayForProduct($product)
     {
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $nextDeliveryDay = '1970-01-01';
-        } elseif ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
+        } elseif ($this->isOrderForDifferentCustomerMode() || $this->isSelfServiceModeByUrl()) {
             $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         } else {
-            $nextDeliveryDay = self::getNextPickupDayForProduct($product);
+            $nextDeliveryDay = $this->getNextPickupDayForProduct($product);
         }
         return $nextDeliveryDay;
     }
 
-    public static function getNextPickupDayForProduct($product, $currentDay=null)
+    public function getNextPickupDayForProduct($product, $currentDay=null)
     {
 
         if (is_null($currentDay)) {
@@ -254,7 +257,7 @@ class DeliveryRhythmService
             $sendOrderListsWeekday = $product->delivery_rhythm_send_order_list_weekday;
         }
 
-        $pickupDay = self::getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
+        $pickupDay = $this->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
 
         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
             return $pickupDay;
@@ -262,7 +265,7 @@ class DeliveryRhythmService
 
         if (Configure::read('appDb.FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY')) {
             if ($product->delivery_rhythm_type == 'week' && $product->delivery_rhythm_count == 1) {
-                $regularPickupDay = self::getDbFormattedPickupDayByDbFormattedDate($currentDay);
+                $regularPickupDay = $this->getDbFormattedPickupDayByDbFormattedDate($currentDay);
                 if ($pickupDay != $regularPickupDay) {
                     return 'delivery-rhythm-triggered-delivery-break';
                 }
@@ -316,14 +319,14 @@ class DeliveryRhythmService
 
     }
 
-    public static function getDaysToAddToOrderPeriodLastDay()
+    public function getDaysToAddToOrderPeriodLastDay()
     {
         return Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
     }
 
-    public static function hasSaturdayThursdayConfig()
+    public function hasSaturdayThursdayConfig()
     {
-        return self::compareConfig(4, 5);
+        return $this->compareConfig(4, 5);
     }
 
     private static function compareConfig($weeklyPickupDay, $defaultSendOrderListsDayDelta)

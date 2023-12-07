@@ -16,19 +16,21 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-
+// TODO REFACTOR AUTH
+return;
 $menu = [];
 
 $adminName = __('Admin_area');
 $profileSlug = $this->Slug->getCustomerProfile();
-$userName = $appAuth->user('firstname') . ' ' . $appAuth->user('lastname');
+$userName = $loggedUser->get('firstname') . ' ' . $loggedUser->get('lastname');
 if (Configure::read('app.customerMainNamePart') == 'lastname') {
-    $userName = $appAuth->user('lastname') . ' ' . $appAuth->user('firstname');
+    $userName = $loggedUser->get('lastname') . ' ' . $loggedUser->get('firstname');
 }
-if ($appAuth->user('is_company')) {
-    $userName = $appAuth->user('firstname');
+if ($loggedUser->get('is_company')) {
+    $userName = $loggedUser->get('firstname');
 }
-if ($appAuth->isManufacturer()) {
+
+if ($loggedUser->isManufacturer()) {
     $profileSlug = $this->Slug->getManufacturerProfile();
     $adminName = __('Manufacturer_area');
     $userName = $appAuth->getManufacturerName();

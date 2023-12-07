@@ -20,7 +20,8 @@ use Cake\Core\Configure;
     echo $this->element('renderJs', ['configs' => ['frontend']]);
 
 
-    if ($appAuth->isOrderForDifferentCustomerMode()) {
+    // TODO REFACTOR AUTH
+    if (0 && $appAuth->isOrderForDifferentCustomerMode()) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace').".Helper.initShowLoaderOnContentChange();"
         ]);

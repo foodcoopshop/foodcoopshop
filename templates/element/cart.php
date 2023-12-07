@@ -17,6 +17,10 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
+// TODO REFACTOR AUTH
+return;
+
+
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
 ]);

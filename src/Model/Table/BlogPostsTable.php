@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Model\Table;
 
+use App\Services\Traits\RequestAwareTrait;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
@@ -23,6 +24,8 @@ use Cake\Validation\Validator;
 class BlogPostsTable extends AppTable
 {
 
+    use RequestAwareTrait;
+    
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -65,7 +68,7 @@ class BlogPostsTable extends AppTable
         return $next;
     }
 
-    public function findBlogPosts($appAuth, $manufacturerId = null, $showOnStartPage = false)
+    public function findBlogPosts($manufacturerId = null, $showOnStartPage = false)
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
@@ -75,7 +78,7 @@ class BlogPostsTable extends AppTable
         $conditions = [
             'BlogPosts.active' => APP_ON,
         ];
-        if (0 && !$appAuth->user()) {
+        if (!$this->isLoggedIn()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }

@@ -85,20 +85,23 @@ class PagesController extends FrontendController
          */
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $this->BlogPost->setRequest($this->request);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $sliders = $this->Slider->getForHome($this->AppAuth);
+        $this->Slider->setRequest($this->request);
+        $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
 
         $products = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $catalogService = new CatalogService();
-            $products = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-            $products = $catalogService->prepareProducts($this->AppAuth, $products);
+            $catalogService->setRequest($this->request);
+            $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
+            $products = $catalogService->prepareProducts($products);
         }
         $this->set('newProducts', $products);
 

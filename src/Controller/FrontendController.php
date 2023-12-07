@@ -62,12 +62,14 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $categoriesForMenu = [];
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->isLoggedIn()) {
             $this->Category = $this->getTableLocator()->get('Categories');
             $catalogService = new CatalogService();
-            $allProductsCount = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
-            $newProductsCount = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
-            $categoriesForMenu = $this->Category->getForMenu($this->AppAuth);
+            $catalogService->setRequest($this->request);
+            $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
+            $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
+            $this->Category->setRequest($this->request);
+            $categoriesForMenu = $this->Category->getForMenu();
             array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                 'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
@@ -88,7 +90,8 @@ class FrontendController extends AppController
         $manufacturersForMenu = [];
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
+            $this->Manufacturer->setRequest($this->request);
+            $manufacturersForMenu = $this->Manufacturer->getForMenu();
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
 
@@ -96,7 +99,7 @@ class FrontendController extends AppController
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
-        if (! $this->AppAuth->user()) {
+        if (!$this->isLoggedIn()) {
             $conditions['Pages.is_private'] = APP_OFF;
         }
 

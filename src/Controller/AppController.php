@@ -130,9 +130,6 @@ class AppController extends Controller
     {
 
         $this->loggedUser = $this->request->getAttribute('identity');
-        if (!empty($this->loggedUser)) {
-            $this->loggedUser = $this->loggedUser->getOriginalData();
-        }
         $this->set('loggedUser', $this->loggedUser);
 
         $this->validateAuthentication();

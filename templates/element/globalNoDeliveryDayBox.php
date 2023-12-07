@@ -17,6 +17,9 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
+// TODO REFACTOR AUTH
+return;
+
 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
     return;
 }

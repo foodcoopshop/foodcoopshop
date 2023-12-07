@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Auth\DefaultPasswordHasher;
 use App\Controller\Component\StringComponent;
+use App\Services\Traits\RequestAwareTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Security;
@@ -28,6 +29,8 @@ use Cake\Utility\Hash;
 class CustomersTable extends AppTable
 {
 
+    use RequestAwareTrait;
+    
     protected $Product;
 
     public function initialize(array $config): void
@@ -262,7 +265,7 @@ class CustomersTable extends AppTable
         return $result;
     }
 
-    public function getModifiedProductPricesByShoppingPrice($appAuth, $productId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedProductPricesByShoppingPrice($productId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [
@@ -271,7 +274,7 @@ class CustomersTable extends AppTable
             'deposit' => $deposit,
         ];
 
-        if ($appAuth->user('shopping_price') == 'PP') {
+        if ($this->getLoggedUser('shopping_price') == 'PP') {
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
                 'conditions' => [
@@ -296,7 +299,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ($appAuth->user('shopping_price') == 'ZP') {
+        if ($this->getLoggedUser('shopping_price') == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;
@@ -306,7 +309,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getModifiedAttributePricesByShoppingPrice($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedAttributePricesByShoppingPrice($productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [
@@ -315,7 +318,7 @@ class CustomersTable extends AppTable
             'deposit' => $deposit,
         ];
 
-        if ($appAuth->user('shopping_price') == 'PP') {
+        if ($this->getLoggedUser('shopping_price') == 'PP') {
 
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
@@ -351,7 +354,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ($appAuth->user('shopping_price') == 'ZP') {
+        if ($this->getLoggedUser('shopping_price') == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;

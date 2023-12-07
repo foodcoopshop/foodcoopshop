@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Services\Traits\RequestAwareTrait;
 use Cake\Validation\Validator;
 
 /**
@@ -21,6 +22,8 @@ use Cake\Validation\Validator;
 class SlidersTable extends AppTable
 {
 
+    use RequestAwareTrait;
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -37,14 +40,14 @@ class SlidersTable extends AppTable
         return $validator;
     }
 
-    public function getForHome($appAuth)
+    public function getForHome()
     {
 
         $conditions = [
             'Sliders.active' => APP_ON
         ];
 
-        if (0 && !$appAuth->user()) {
+        if (!$this->isLoggedIn()) {
             $conditions['Sliders.is_private'] = APP_OFF;
         }
 

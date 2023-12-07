@@ -33,12 +33,6 @@ class AppAuthComponent extends AuthComponent
         $this->CartService->setAppAuth($this);
     }
 
-    public function termsOfUseAccepted(): bool
-    {
-        $formattedAcceptedDate = $this->user('terms_of_use_accepted_date')->i18nFormat(Configure::read('DateFormat.Database'));
-        return $formattedAcceptedDate >= Configure::read('app.termsOfUseLastUpdate');
-    }
-
     public function getUserId()
     {
         return $this->user('id_customer');
@@ -102,50 +96,6 @@ class AppAuthComponent extends AuthComponent
             Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')
             >= $grossPrice;
         return $hasEnoughCreditForProduct;
-    }
-
-    private function setManufacturer()
-    {
-        if (!empty($this->user()) &&
-            !is_null($this->getController()->getRequest()->getSession()->read('Auth')) &&
-            array_key_exists('Manufacturer', $this->getController()->getRequest()->getSession()->read('Auth'))) {
-            return;
-        }
-
-        if (!empty($this->user())) {
-            $mm = FactoryLocator::get('Table')->get('Manufacturers');
-            $manufacturer = $mm->find('all', [
-                'conditions' => [
-                    'AddressManufacturers.email' => $this->user('email'),
-                    'AddressManufacturers.id_manufacturer > ' . APP_OFF
-                ],
-                'contain' => [
-                    'AddressManufacturers',
-                    'Customers.AddressCustomers',
-                ]
-            ])->first();
-            if (!is_null($manufacturer)) {
-                $manufacturer = $manufacturer->toArray();
-            }
-            $this->getController()->getRequest()->getSession()->write('Auth.Manufacturer', $manufacturer);
-        }
-    }
-
-    public function isSuperadmin(): bool
-    {
-        if ($this->isManufacturer()) {
-            return false;
-        }
-        if ($this->user('id_default_group') == CUSTOMER_GROUP_SUPERADMIN) {
-            return true;
-        }
-        return false;
-    }
-
-    public function isManufacturer(): bool
-    {
-        $this->setManufacturer();
-        return !empty($this->getController()->getRequest()->getSession()->read('Auth.Manufacturer'));
     }
 
     public function getManufacturerId()
@@ -238,20 +188,6 @@ class AppAuthComponent extends AuthComponent
     {
         $customersTable = FactoryLocator::get('Table')->get('Customers');
         return $customersTable->getCreditBalance($this->getUserId());
-    }
-
-    public function isOrderForDifferentCustomerMode()
-    {
-        return $this->getController()->getRequest()->getSession()->read('Auth.orderCustomer');
-    }
-
-    public function isSelfServiceModeByUrl()
-    {
-        $result = $this->getController()->getRequest()->getPath() == '/' . __('route_self_service');
-        if (!empty($this->getController()->getRequest()->getQuery('redirect'))) {
-            $result |= preg_match('`' . '/' . __('route_self_service') . '`', $this->getController()->getRequest()->getQuery('redirect'));
-        }
-        return $result;
     }
 
     public function isSelfServiceModeByReferer()
