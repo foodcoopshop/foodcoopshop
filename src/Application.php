@@ -207,20 +207,21 @@ class Application extends BaseApplication
             IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd'
         ];
         
-        $service->loadAuthenticator('Authentication.Session', [
-            'identify' => true,
-        ]);
-
-        $service->loadAuthenticator('Authentication.Form', [
-            'fields' => $fields,
-        ]);
-
         $service->loadIdentifier('Authentication.Password', [
             'resolver' => [
                 'className' => OrmResolver::class,
                 'userModel' => 'Customers',
                 'finder' => 'auth', // CustomersTable::findAuth
             ],
+            'fields' => $fields,
+        ]);
+
+        $service->loadAuthenticator('Authentication.Session', [
+            'fields' => [IdentifierInterface::CREDENTIAL_USERNAME => 'email'],
+            'identify' => true,
+        ]);
+
+        $service->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
         ]);
 
