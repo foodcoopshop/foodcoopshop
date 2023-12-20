@@ -298,7 +298,7 @@ class CustomersController extends FrontendController
             $this->protectEmailAddresses = false; 
         }
 
-            /**
+        /**
          * login start
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
