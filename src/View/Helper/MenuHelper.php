@@ -142,14 +142,16 @@ class MenuHelper extends Helper
         return $naviElement;
     }
 
-    public function getAuthMenuElement($appAuth)
+    public function getAuthMenuElement($isLoggedIn, $userName)
     {
         $menuElement = [];
-        if ($appAuth->user()) {
+        if ($isLoggedIn) {
+            /*
             $userName = $appAuth->getAbbreviatedUserName();
             if ($appAuth->isManufacturer()) {
                 $userName = $appAuth->getManufacturerName();
             }
+            */
             if ($this->getView()->getPlugin() != '') {
                 $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             } else {

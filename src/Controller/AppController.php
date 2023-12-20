@@ -81,6 +81,10 @@ class AppController extends Controller
         $this->set('loggedUser', $this->loggedUser);
 
         $this->setAppRequest($this->request);
+        $this->set('isOrderForDifferentCustomerMode', $this->isOrderForDifferentCustomerMode());
+        $this->set('isSelfServiceModeByUrl', $this->isSelfServiceModeByUrl());
+        $this->set('isSelfServiceModeByReferer', $this->isSelfServiceModeByReferer());
+
         if (!$this->getRequest()->is('json') && !$this->isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }

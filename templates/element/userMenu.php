@@ -40,18 +40,15 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".ColorMode.initToggle();"
 ]);
 $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon' => 'ok fa-fw far fa-moon', 'class' => ['color-mode-toggle']]];
-if (!$this->Identity->isLoggedIn()) {
-    if (0 && !$appAuth->isOrderForDifferentCustomerMode()) {
+if ($this->Identity->isLoggedIn()) {
+    if (!$isOrderForDifferentCustomerMode) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
     }
-    if (0 && $appAuth->isOrderForDifferentCustomerMode()) {
+    if ($isOrderForDifferentCustomerMode) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
     }
 }
-if ($this->Identity->isLoggedIn()) {
-    pr($this->Identity->get('firstname'));
-}
-if ($this->Identity->isLoggedIn() && 0 && !$appAuth->isCustomer() && !$appAuth->isOrderForDifferentCustomerMode()) {
+if ($this->Identity->isLoggedIn() && 0 && !$appAuth->isCustomer() && !$isOrderForDifferentCustomerMode) {
     $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
 }
 
@@ -59,10 +56,10 @@ if (0 && $appAuth->isCustomer()) {
     $menu[1]['children'] = $this->Menu->getCustomerMenuElements($appAuth);
 }
 
-if (0 && !$appAuth->isOrderForDifferentCustomerMode()) {
+if (!$isOrderForDifferentCustomerMode) {
 
     $selfServiceMenuElement = null;
-    if (!$appAuth->isManufacturer() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
+    if (0 && !$appAuth->isManufacturer() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
         $selfServiceMenuElement = [
             'slug' => $this->Slug->getSelfService(),
             'name' => __('Self_service'),
@@ -72,8 +69,8 @@ if (0 && !$appAuth->isOrderForDifferentCustomerMode()) {
         ];
     }
 
-    $authMenuElement = $this->Menu->getAuthMenuElement($appAuth);
-    if ($appAuth->user()) {
+    $authMenuElement = $this->Menu->getAuthMenuElement($this->Identity->isLoggedIn(), $userName);
+    if ($this->Identity->isLoggedIn()) {
         if (!is_null($selfServiceMenuElement)) {
             $menu[1]['children'][] = $selfServiceMenuElement;
         }
