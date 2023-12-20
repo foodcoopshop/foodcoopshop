@@ -8,7 +8,6 @@ use App\Traits\AppRequestAwareTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\Http\Cookie\Cookie;
 use hisorange\BrowserDetect\Parser as Browser;
 
 /**
