@@ -92,25 +92,6 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
 
-        $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
-        if ($this->isLoggedIn() && !empty($rememberMeCookie)) {
-            $value = json_decode($rememberMeCookie);
-            if (isset($value->auto_login_hash)) {
-                $this->Customer = $this->getTableLocator()->get('Customers');
-                $customer = $this->Customer->find('all', [
-                    'conditions' => [
-                        'Customers.auto_login_hash' => $value->auto_login_hash
-                    ],
-                    'contain' => [
-                        'AddressCustomers'
-                    ]
-                ])->first();
-                if (!empty($customer)) {
-                    $this->loggedUser = $customer;
-                }
-            }
-        }
-
         if (0 && $this->AppAuth->isManufacturer()) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [

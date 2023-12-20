@@ -303,8 +303,10 @@ class CustomersController extends FrontendController
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
 
-            if ($this->isLoggedIn()) {
-                $this->Flash->error(__('You_are_already_signed_in.'));
+            if ($this->getRequest()->is('get')) {
+                if ($this->isLoggedIn()) {
+                    $this->Flash->error(__('You_are_already_signed_in.'));
+                }
             }
 
             if ($this->getRequest()->is('post')) {
@@ -316,6 +318,7 @@ class CustomersController extends FrontendController
                     $this->Flash->error(__('Signing_in_failed_account_inactive_or_password_wrong?'));
                 }
             }
+
         }
 
         /**
@@ -343,7 +346,7 @@ class CustomersController extends FrontendController
                 return;
             }
 
-            if ($this->AppAuth->user()) {
+            if ($this->isLoggedIn()) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
