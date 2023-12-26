@@ -998,50 +998,50 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
 
     private function assertGetNextPickupDayForProduct($product, $currentDay, $expectedResult)
     {
-        $result = DeliveryRhythmService::getNextPickupDayForProduct($product, $currentDay);
+        $result = (new DeliveryRhythmService())->getNextPickupDayForProduct($product, $currentDay);
         $this->assertEquals($expectedResult, $result);
     }
 
     private function assertGetOrderPeriodFirstDay($currentDay, $expected)
     {
-        $result = DeliveryRhythmService::getOrderPeriodFirstDay(strtotime($currentDay));
+        $result = (new DeliveryRhythmService())->getOrderPeriodFirstDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetOrderPeriodLastDay($currentDay, $expected)
     {
-        $result = DeliveryRhythmService::getOrderPeriodLastDay(strtotime($currentDay));
+        $result = (new DeliveryRhythmService())->getOrderPeriodLastDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetDeliveryDay($currentDay, $expected)
     {
-        $result = DeliveryRhythmService::getDeliveryDay(strtotime($currentDay));
+        $result = (new DeliveryRhythmService())->getDeliveryDay(strtotime($currentDay));
         $result = date($this->MyTimeHelper->getI18Format('DateShortAlt'), $result);
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetFormattedNextDeliveryDay($currentDay, $expected)
     {
-        $result = DeliveryRhythmService::getFormattedNextDeliveryDay(strtotime($currentDay));
+        $result = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetOrderPeriodFirstDayByDeliveryDay($deliveryDay, $expected)
     {
-        $result = DeliveryRhythmService::getOrderPeriodFirstDayByDeliveryDay($deliveryDay);
+        $result = (new DeliveryRhythmService())->getOrderPeriodFirstDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetOrderPeriodLastDayByDeliveryDay($deliveryDay, $expected)
     {
-        $result = DeliveryRhythmService::getOrderPeriodLastDayByDeliveryDay($deliveryDay);
+        $result = (new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($deliveryDay);
         $this->assertEquals($expected, $result);
     }
 
     private function assertGetLastOrderDay($product, $expected)
     {
-        $result = DeliveryRhythmService::getLastOrderDay(
+        $result = (new DeliveryRhythmService())->getLastOrderDay(
             $product['next_delivery_day'],
             $product['delivery_rhythm_type'],
             $product['delivery_rhythm_count'],

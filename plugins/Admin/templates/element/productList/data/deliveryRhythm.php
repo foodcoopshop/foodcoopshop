@@ -70,7 +70,7 @@ echo '<td class="delivery-rhythm">';
                 echo $sendOrderListWeekdayElement;
 
                 if ($product->delivery_rhythm_type != 'individual') {
-                    if ($product->delivery_rhythm_send_order_list_weekday != DeliveryRhythmService::getSendOrderListsWeekday()) {
+                    if ($product->delivery_rhythm_send_order_list_weekday != (new DeliveryRhythmService())->getSendOrderListsWeekday()) {
                         $elementsToRender[] = __d('admin', 'Last_order_weekday') . ': ' . $this->Time->getWeekdayName($lastOrderWeekday) . ' ' . __d('admin', 'midnight');
                     }
                 }

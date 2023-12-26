@@ -193,7 +193,7 @@ class ProductsTable extends AppTable
                         $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
                     }
 
-                    $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(DeliveryRhythmService::getDeliveryWeekday());
+                    $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName((new DeliveryRhythmService())->getDeliveryWeekday());
                     if (isset($ordinalForWeekday)) {
                         $message = __('The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month.', [
                             $ordinalForWeekday,
@@ -1492,7 +1492,7 @@ class ProductsTable extends AppTable
                 'id_manufacturer' => $manufacturer->id_manufacturer,
                 'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
                 'name' => $productName,
-                'delivery_rhythm_send_order_list_weekday' => DeliveryRhythmService::getSendOrderListsWeekday(),
+                'delivery_rhythm_send_order_list_weekday' => (new DeliveryRhythmService())->getSendOrderListsWeekday(),
                 'description_short' => $descriptionShort,
                 'description' => $description,
                 'unity' => $unity,

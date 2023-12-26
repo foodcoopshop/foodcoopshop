@@ -73,7 +73,7 @@ trait ProductImportTrait
             [
                 'id_manufacturer' => $manufacturerId,
                 'name' => $productName,
-                'delivery_rhythm_send_order_list_weekday' => DeliveryRhythmService::getSendOrderListsWeekday(),
+                'delivery_rhythm_send_order_list_weekday' => (new DeliveryRhythmService())->getSendOrderListsWeekday(),
                 'description_short' => $descriptionShort,
                 'description' => $description,
                 'unity' => $unity,

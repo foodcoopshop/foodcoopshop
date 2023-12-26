@@ -75,7 +75,7 @@ trait EditDeliveryRhythmTrait {
         $product2update['delivery_rhythm_order_possible_until'] = '';
         $product2update['delivery_rhythm_send_order_list_day'] = '';
         if ($deliveryRhythmSendOrderListWeekday == '') {
-            $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, DeliveryRhythmService::getSendOrderListsWeekday());
+            $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, (new DeliveryRhythmService())->getSendOrderListsWeekday());
         }
         $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $deliveryRhythmSendOrderListWeekday);
 
@@ -111,7 +111,7 @@ trait EditDeliveryRhythmTrait {
                     $additionalMessages[] = __d('admin', 'Order_list_is_not_sent');
                 }
             } else {
-                if ($product2update['delivery_rhythm_send_order_list_weekday'] != DeliveryRhythmService::getSendOrderListsWeekday()) {
+                if ($product2update['delivery_rhythm_send_order_list_weekday'] != (new DeliveryRhythmService())->getSendOrderListsWeekday()) {
                     $additionalMessages[] =  __d('admin', 'Last_order_weekday') . ': <b>' . Configure::read('app.timeHelper')->getWeekdayName(
                         $deliveryRhythmSendOrderListWeekday) . ' ' . __d('admin', 'midnight')
                         . '</b>';

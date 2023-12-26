@@ -45,7 +45,7 @@ class ListsController extends AdminAppController
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $dateFrom = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         } else {
-            $dateFrom = DeliveryRhythmService::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $dateFrom = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
 
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {

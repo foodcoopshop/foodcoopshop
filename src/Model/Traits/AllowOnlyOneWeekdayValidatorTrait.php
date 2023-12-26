@@ -26,14 +26,14 @@ trait AllowOnlyOneWeekdayValidatorTrait
     {
         $validator->add($field, 'allow-only-one-weekday', [
             'rule' => function ($value, $context) {
-            if (DeliveryRhythmService::getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
+            if ((new DeliveryRhythmService())->getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
                 return false;
             }
             return true;
             },
             'message' => __('{0}_needs_to_be_a_{1}.', [
                 $fieldName,
-                Configure::read('app.timeHelper')->getWeekdayName(DeliveryRhythmService::getDeliveryWeekday())
+                Configure::read('app.timeHelper')->getWeekdayName((new DeliveryRhythmService())->getDeliveryWeekday())
             ])
         ]);
         return $validator;

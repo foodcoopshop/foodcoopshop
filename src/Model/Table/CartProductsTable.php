@@ -111,7 +111,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $product->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $orderCustomerService);
+        $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $orderCustomerService);
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
@@ -338,7 +338,7 @@ class CartProductsTable extends AppTable
     {
         $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = DeliveryRhythmService::getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
+            $cartProduct->pickup_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
         }
 
         $pickupDays = [];

@@ -200,7 +200,7 @@ $this->element('addScript', [
                 echo '<td>';
                     echo match($configuration->name) {
                         'FCS_WEEKLY_PICKUP_DAY' => $this->MyTime->getWeekdayName($configuration->value),
-                        'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA' => $configuration->value . ' (' . $this->MyTime->getWeekdayName(DeliveryRhythmService::getSendOrderListsWeekday()) . ')',
+                        'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA' => $configuration->value . ' (' . $this->MyTime->getWeekdayName((new DeliveryRhythmService)->getSendOrderListsWeekday()) . ')',
                         default => $configuration->value,
                     };
                 echo '</td>';

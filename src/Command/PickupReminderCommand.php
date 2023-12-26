@@ -60,7 +60,7 @@ class PickupReminderCommand extends AppCommand
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        $nextPickupDay = DeliveryRhythmService::getDeliveryDay(strtotime($this->cronjobRunDay));
+        $nextPickupDay = (new DeliveryRhythmService())->getDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextPickupDay);
         $diffOrderAndPickupInDays = 6;
 

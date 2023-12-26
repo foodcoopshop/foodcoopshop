@@ -29,7 +29,7 @@ $this->element('addScript', ['script' => "
 
 echo '<div class="select-pickup-day-wrapper">';
 
-    $preparedDeliveryDays = DeliveryRhythmService::getNextDailyDeliveryDays(21);
+    $preparedDeliveryDays = (new DeliveryRhythmService())->getNextDailyDeliveryDays(21);
     $formattedToDatabaseDeliveryDays = $this->Html->getGlobalNoDeliveryDaysAsArray();
 
     $i = 0;

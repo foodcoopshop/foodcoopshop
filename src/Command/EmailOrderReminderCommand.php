@@ -54,7 +54,7 @@ class EmailOrderReminderCommand extends AppCommand
             'delivery_rhythm_count' => '1',
             'is_stock_product' => '0',
         ]);
-        $nextDeliveryDay = DeliveryRhythmService::getNextPickupDayForProduct($dummyProduct, $this->cronjobRunDay);
+        $nextDeliveryDay = (new DeliveryRhythmService())->getNextPickupDayForProduct($dummyProduct, $this->cronjobRunDay);
 
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
             $this->Product = $this->getTableLocator()->get('Products');
@@ -108,7 +108,7 @@ class EmailOrderReminderCommand extends AppCommand
             ->setViewVars([
                 'customer' => $customer,
                 'newsletterCustomer' => $customer,
-                'lastOrderDayAsString' => (DeliveryRhythmService::getSendOrderListsWeekday() - date('N', strtotime($this->cronjobRunDay))) == 1 ? __('today') : __('tomorrow')
+                'lastOrderDayAsString' => ((new DeliveryRhythmService())->getSendOrderListsWeekday() - date('N', strtotime($this->cronjobRunDay))) == 1 ? __('today') : __('tomorrow')
             ])
             ->addToQueue();
 

@@ -49,7 +49,7 @@ trait IndexTrait {
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $pickupDay[0] = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
                 } else {
-                    $pickupDay[0] = DeliveryRhythmService::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+                    $pickupDay[0] = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
                 }
             }
         }

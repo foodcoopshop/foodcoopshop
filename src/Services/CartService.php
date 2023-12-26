@@ -360,7 +360,7 @@ class CartService
                 'contain' => $contain,
             ])->first();
 
-            $product->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $orderCustomerService);
+            $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $orderCustomerService);
             $products[] = $product;
 
             $stockAvailableQuantity = $product->stock_available->quantity;

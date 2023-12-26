@@ -265,7 +265,7 @@ class ManufacturersController extends AdminAppController
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $defaultDate = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         } else {
-            $defaultDate = DeliveryRhythmService::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $defaultDate = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
         return $defaultDate;
     }
@@ -429,7 +429,7 @@ class ManufacturersController extends AdminAppController
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-            $noDeliveryBreakOptions = DeliveryRhythmService::getNextWeeklyDeliveryDays();
+            $noDeliveryBreakOptions = (new DeliveryRhythmService())->getNextWeeklyDeliveryDays();
             $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
         }
 

@@ -151,7 +151,7 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         if ($deliveryRhythmType == 'month') {
-            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName(DeliveryRhythmService::getDeliveryWeekday());
+            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName((new DeliveryRhythmService())->getDeliveryWeekday());
             if ($deliveryRhythmCount > 0) {
                 $deliveryRhythmString = __('every_{0}_{1}_of_a_month', [
                     $this->MyNumber->ordinal($deliveryRhythmCount),
@@ -173,7 +173,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getSendOrderListsWeekdayOptions()
     {
-        $defaultSendOrderListsWeekday = DeliveryRhythmService::getSendOrderListsWeekday();
+        $defaultSendOrderListsWeekday = (new DeliveryRhythmService())->getSendOrderListsWeekday();
         $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
         $weekday2 = $this->MyTime->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
         $weekday1 = $this->MyTime->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);

@@ -96,7 +96,7 @@ class CartsTable extends AppTable
     {
         $validator->add($field, 'allow-only-defined-pickup-days', [
             'rule' => function ($value, $context) {
-            if (!in_array($value, array_keys(DeliveryRhythmService::getNextDailyDeliveryDays(21)))
+            if (!in_array($value, array_keys((new DeliveryRhythmService())->getNextDailyDeliveryDays(21)))
                 || in_array($value, Configure::read('app.htmlHelper')->getGlobalNoDeliveryDaysAsArray())) {
                     return false;
                 }
@@ -190,7 +190,7 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            $nextDeliveryDay = DeliveryRhythmService::getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
+            $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
             if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
                 $dateFormattedWithWeekday = __('Delivery_break');
             } else {

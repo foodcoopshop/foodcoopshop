@@ -200,7 +200,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithDeliveryBreak()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythmService::getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
