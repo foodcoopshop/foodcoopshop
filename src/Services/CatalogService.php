@@ -519,7 +519,6 @@ class CatalogService
             ];
 
             // START: override shopping with purchase prices / zero prices
-            $this->Customer->setRequest($this->appRequest);
             $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice(
                 $products[$i]->id_product,
                 $products[$i]->price,
@@ -549,8 +548,7 @@ class CatalogService
                 $products[$i]->deposit_product->deposit = 0;
             }
 
-            $deliveryRhythmService = new DeliveryRhythmService();
-            $products[$i]->next_delivery_day = $deliveryRhythmService->getNextDeliveryDayForProduct($product);
+            $products[$i]->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
 
             foreach ($product->product_attributes as &$attribute) {
 

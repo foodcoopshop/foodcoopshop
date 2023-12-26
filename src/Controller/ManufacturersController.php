@@ -48,7 +48,7 @@ class ManufacturersController extends FrontendController
                         'Manufacturers.active' => APP_ON
                     ]
                 ])->first();
-                if (!empty($manufacturer) && !$this->identity->user() && $manufacturer->is_private) {
+                if (!empty($manufacturer) && !$this->identity->isLoggedIn() && $manufacturer->is_private) {
                     $this->identity->deny($this->getRequest()->getParam('action'));
                 }
                 break;
@@ -61,7 +61,7 @@ class ManufacturersController extends FrontendController
         $conditions = [
             'Manufacturers.active' => APP_ON,
         ];
-        if (! $this->identity->user()) {
+        if (! $this->identity->isLoggedIn()) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
@@ -80,10 +80,10 @@ class ManufacturersController extends FrontendController
             throw new RecordNotFoundException('no manufacturers available');
         }
 
-        if ($this->identity->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($this->identity->isLoggedIn() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $catalogService = new CatalogService();
             foreach ($manufacturers as $manufacturer) {
-                $manufacturer->product_count = $catalogService->getProductsByManufacturerId($this->identity, $manufacturer->id_manufacturer, true);
+                $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
         }
 
@@ -121,10 +121,10 @@ class ManufacturersController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         }
 
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->isLoggedIn()) {
             $catalogService = new CatalogService();
-            $products = $catalogService->getProductsByManufacturerId($this->identity, $manufacturerId);
-            $manufacturer['Products'] = $catalogService->prepareProducts($this->identity, $products);
+            $products = $catalogService->getProductsByManufacturerId($manufacturerId);
+            $manufacturer['Products'] = $catalogService->prepareProducts($products);
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');

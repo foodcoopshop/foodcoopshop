@@ -50,12 +50,12 @@ class PagesController extends FrontendController
                         'Pages.active' => APP_ON
                     ]
                 ])->first();
-                if (!empty($page) && !$this->identity->user() && $page->is_private) {
+                if (!empty($page) && !$this->identity->isLoggedIn() && $page->is_private) {
                     $this->identity->deny($this->getRequest()->getParam('action'));
                 }
                 break;
             case 'discourseSso':
-                if (!$this->identity->user()) {
+                if (!$this->identity->isLoggedIn()) {
                     $this->identity->deny($this->getRequest()->getParam('action'));
                 }
                 break;
@@ -76,7 +76,7 @@ class PagesController extends FrontendController
         $this->set('sliders', $sliders);
 
         $products = [];
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->isLoggedIn()) {
             $catalogService = new CatalogService();
             $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
             $products = $catalogService->prepareProducts($products);
@@ -113,7 +113,7 @@ class PagesController extends FrontendController
         }
 
         $conditionsForChildren = ['Pages.active' => APP_ON];
-        if (!$this->identity->user()) {
+        if (!$this->identity->isLoggedIn()) {
             $conditionsForChildren['Pages.is_private'] = APP_OFF;
         }
         $page['children'] = $this->Page->find('children', [
@@ -139,7 +139,7 @@ class PagesController extends FrontendController
 
     public function discourseSso()
     {
-        $user = $this->identity->user();
+        $user = $this->identity->isLoggedIn();
         if (!$user) {
             die('No User');
         }

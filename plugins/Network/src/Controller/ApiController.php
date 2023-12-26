@@ -429,7 +429,7 @@ class ApiController extends Controller
                 'domain' => Configure::read('App.fullBaseUrl'),
                 'variableMemberFee' => $variableMemberFee
             ],
-            'loggedUser' => $this->identity->user(),
+            'loggedUser' => $this->identity->isLoggedIn(),
             'products' => $preparedProducts
         ]);
         $this->viewBuilder()->setOption('serialize', ['app', 'loggedUser', 'products']);

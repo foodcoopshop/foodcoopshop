@@ -29,7 +29,7 @@ class SelfServiceController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->identity->user())) {
+        if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->identity->isLoggedIn())) {
             $this->identity->deny($this->getRequest()->getParam('action'));
         }
     }
@@ -54,7 +54,7 @@ class SelfServiceController extends FrontendController
         }
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->identity, true);
+        $categoriesForSelect = $this->Category->getForSelect(null, false, false, true);
 
         $catalogService = new CatalogService();
         $allProductsCount = $catalogService->getProducts($this->identity, Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));

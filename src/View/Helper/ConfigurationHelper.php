@@ -61,7 +61,7 @@ class ConfigurationHelper extends Helper
                 break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $productModel = FactoryLocator::get('Table')->get('Products');
-                return $productModel->getForDropdown($identity, 0);
+                return $productModel->getForDropdown(0);
                 break;
         }
     }

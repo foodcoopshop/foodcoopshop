@@ -11,6 +11,7 @@ use Cake\Utility\Security;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Utility\Hash;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -271,7 +272,9 @@ class CustomersTable extends AppTable
             'deposit' => $deposit,
         ];
 
-        if ($this->getLoggedUser('shopping_price') == 'PP') {
+        $identity = (new IdentityService())->getIdentity();
+        
+        if ($identity->get('shopping_price') == 'PP') {
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
                 'conditions' => [
@@ -296,7 +299,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ($this->getLoggedUser('shopping_price') == 'ZP') {
+        if ($identity->get('shopping_price') == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;

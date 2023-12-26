@@ -122,7 +122,7 @@ class CategoriesTable extends AppTable
         return $categories;
     }
 
-    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $identity=null, $showProductCount=false)
+    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $showProductCount=false)
     {
         $conditions = [];
         if ($excludeCategoryId) {
@@ -142,7 +142,7 @@ class CategoriesTable extends AppTable
         if ($showProductCount) {
             $catalogService = new CatalogService();
             foreach($flattenedCategories as $categoryId => $category) {
-                $productCount = $catalogService->getProducts($identity, $categoryId, false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));	
+                $productCount = $catalogService->getProducts($categoryId, false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));	
                 $flattenedCategories[$categoryId] .= ' (' . $productCount . ')';
             }
         }

@@ -40,11 +40,11 @@ class PaymentsController extends AdminAppController
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {
-            'overview' => Configure::read('app.htmlHelper')->paymentIsCashless() && $this->identity->user() && ! $this->identity->isManufacturer(),
+            'overview' => Configure::read('app.htmlHelper')->paymentIsCashless() && $this->identity->isLoggedIn() && ! $this->identity->isManufacturer(),
             'product' => $this->identity->isSuperadmin(),
             'edit', 'previewEmail' => $this->identity->isSuperadmin(),
-            'add', 'changeState' => $this->identity->user(),
-             default => $this->identity->user() && ! $this->identity->isManufacturer(),
+            'add', 'changeState' => $this->identity->isLoggedIn(),
+             default => $this->identity->isLoggedIn() && ! $this->identity->isManufacturer(),
         };
     }
 

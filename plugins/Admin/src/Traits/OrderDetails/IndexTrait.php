@@ -82,7 +82,7 @@ trait IndexTrait {
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->identity, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
+        $odParams = $this->OrderDetail->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
         if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {

@@ -54,7 +54,7 @@ class ManufacturersController extends AdminAppController
                 $this->identity->isSuperadmin() || $this->identity->isAdmin(),
             'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->identity->isSuperadmin(),
             'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->identity->isSuperadmin() || $this->identity->isAdmin()),
-             default =>  $this->identity->user(),
+             default =>  $this->identity->isLoggedIn(),
         };
     }
 

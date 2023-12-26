@@ -30,7 +30,7 @@ class PagesController extends AdminAppController
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {
-            'home' => $this->identity->user(),
+            'home' => $this->identity->isLoggedIn(),
              default => $this->identity->isSuperadmin() || $this->identity->isAdmin(),
         };
     }

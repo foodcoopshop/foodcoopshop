@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -116,6 +117,8 @@ class CartsTable extends AppTable
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
+        
+        $identity = (new IdentityService())->getIdentity();        
         $customerId = $identity->getUserId();
 
         $cart = $this->find('all', [
@@ -267,7 +270,7 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    private function addPurchasePricePerUnitProductData($identity, $productData, $unitProduct)
+    private function addPurchasePricePerUnitProductData($productData, $unitProduct)
     {
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             if (!empty($unitProduct)) {
@@ -438,7 +441,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($identity, $productData, $unitProduct);
+            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProduct);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -450,8 +453,10 @@ class CartsTable extends AppTable
 
     }
 
-    private function prepareProductAttribute($identity, $cartProduct): array
+    private function prepareProductAttribute($cartProduct): array
     {
+
+        $identity = (new IdentityService())->getIdentity();
 
         $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
         $taxRate = $cartProduct->product->tax->rate ?? 0;
@@ -463,7 +468,7 @@ class CartsTable extends AppTable
         if (!empty($unitProductAttribute)) {
             $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $cm->getModifiedAttributePricesByShoppingPrice($identity, $cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedAttributePricesByShoppingPrice($cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
         $cartProduct->product_attribute->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProductAttribute)) {
             $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
@@ -542,7 +547,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($identity, $productData, $unitProductAttribute);
+            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProductAttribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

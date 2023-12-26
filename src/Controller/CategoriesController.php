@@ -31,7 +31,7 @@ class CategoriesController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if (! (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->user())) {
+        if (! (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->isLoggedIn())) {
             $this->identity->deny($this->getRequest()->getParam('action'));
         } else {
             $this->identity->allow($this->getRequest()->getParam('action'));

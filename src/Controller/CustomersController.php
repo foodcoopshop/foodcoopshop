@@ -51,7 +51,7 @@ class CustomersController extends FrontendController
 
     public function profileImage()
     {
-        if (!$this->identity->user() || $this->identity->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
+        if (!$this->identity->isLoggedIn() || $this->identity->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
             throw new NotFoundException('image not found');
         }
 

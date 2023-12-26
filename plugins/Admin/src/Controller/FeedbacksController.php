@@ -33,7 +33,7 @@ class FeedbacksController extends AdminAppController
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {
-            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->identity->user(),
+            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->identity->isLoggedIn(),
              default => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->identity->isSuperadmin(),
         };
     }

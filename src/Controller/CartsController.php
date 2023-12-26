@@ -51,7 +51,7 @@ class CartsController extends FrontendController
      */
     private function ajaxIsAuthorized()
     {
-        if (empty($this->identity->user())) {
+        if (empty($this->identity->isLoggedIn())) {
             throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_sign_in_or_register</a>.', [
                 Configure::read('app.slugHelper')->getLogin()
             ]));
@@ -63,7 +63,7 @@ class CartsController extends FrontendController
 
     public function isAuthorized($user)
     {
-        return $this->identity->user() && !$this->identity->isManufacturer();
+        return $this->identity->isLoggedIn() && !$this->identity->isManufacturer();
     }
 
     public function detail()

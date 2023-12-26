@@ -46,7 +46,7 @@ class ProductsController extends FrontendController
 
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
-              && !$this->identity->user()
+              && !$this->identity->isLoggedIn()
               && (!empty($product->manufacturer) && $product->manufacturer->is_private)
               )
             ) {

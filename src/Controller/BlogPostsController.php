@@ -44,7 +44,7 @@ class BlogPostsController extends FrontendController
                         'Manufacturers'
                     ]
                 ])->first();
-                if (!empty($blogPost) && !$this->identity->user()
+                if (!empty($blogPost) && !$this->identity->isLoggedIn()
                     && ($blogPost->is_private || (!empty($blogPost->manufacturer) && $blogPost->manufacturer->is_private))
                     ) {
                         $this->identity->deny($this->getRequest()->getParam('action'));
@@ -83,7 +83,7 @@ class BlogPostsController extends FrontendController
 
         // START find neighbors
         array_pop($conditions); // do not filter last condition element blogPostId
-        if (!$this->identity->user()) {
+        if (!$this->identity->isLoggedIn()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }

@@ -16,6 +16,7 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -1243,8 +1244,9 @@ class ProductsTable extends AppTable
         return $preparedProducts;
     }
 
-    public function getForDropdown($identity, $manufacturerId)
+    public function getForDropdown($manufacturerId)
     {
+        $identity = (new IdentityService())->getIdentity();
         $conditions = [];
 
         if ($identity->isManufacturer()) {

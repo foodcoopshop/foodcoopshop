@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
 use Cake\Database\Expression\QueryExpression;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -783,10 +784,12 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    public function getOrderDetailParams($identity, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
+    public function getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
     {
         $conditions = [];
 
+        $identity = (new IdentityService())->getIdentity();
+        
         $exp = new QueryExpression();
         if (count($pickupDay) == 2) {
             $conditions[] = $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
