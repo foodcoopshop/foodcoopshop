@@ -22,7 +22,7 @@ echo $this->element('email/tableHead'); ?>
                 <p>
                     <?php 
                         echo __('New_order_comment__was_written_by_{0}_for_{1}', [
-                            $appAuth->getUsername(),
+                            $identity->name,
                             $formattedPickupDay,
                         ]) . ':';
                     ?>

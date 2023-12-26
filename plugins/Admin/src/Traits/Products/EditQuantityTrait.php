@@ -115,7 +115,7 @@ trait EditQuantityTrait {
 
             $this->ActionLog->customSave(
                 'product_quantity_changed',
-                $this->AppAuth->getUserId(),
+                $this->identity->getUserId(),
                 $productId,
                 'products',
                 __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}.', [

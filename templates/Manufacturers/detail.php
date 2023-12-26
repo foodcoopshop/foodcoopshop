@@ -28,7 +28,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
-    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
 if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
@@ -42,7 +42,7 @@ if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
 <h1><?php echo $manufacturer->name; ?>
 
 <?php
-if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity->isLoggedIn()) {
     echo '<span>'.count($manufacturer['Products']) . ' ' . __('found') . '</span>';
 }
 ?>
@@ -60,11 +60,11 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
 
         echo $manufacturer->description;
 
-    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+    if ($identity->isSuperadmin() || $identity->isAdmin()) {
+        if ($identity->isSuperadmin() || $identity->isAdmin()) {
             $manufacturerEditSlug = $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer);
         }
-        if ($appAuth->isManufacturer() && $appAuth->getManufacturerId() == $manufacturer->id_manufacturer) {
+        if ($identity->isManufacturer() && $identity->getManufacturerId() == $manufacturer->id_manufacturer) {
             $manufacturerEditSlug = $this->Slug->getManufacturerProfile();
         }
     }
@@ -92,7 +92,7 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
     ]);
 }
 
-if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl()) {
+if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl()) {
     $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
     if ($manufacturerNoDeliveryDaysString != '') {
         echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
@@ -111,7 +111,7 @@ if (!empty($manufacturer['Products'])) {
         ],
         [
             'cache' => [
-                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth, $this->request),
+                'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
             ],
         ]
         );

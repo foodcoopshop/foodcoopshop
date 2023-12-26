@@ -26,7 +26,7 @@ class AdminAppController extends AppController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->user();
+        return $this->identity->isLoggedIn();
     }
 
     public function setReferer()

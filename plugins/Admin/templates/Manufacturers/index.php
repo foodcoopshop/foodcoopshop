@@ -82,7 +82,7 @@ echo '<tr class="sort">';
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo '<th></th>';
     }
-    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
         echo '<th>'.__d('admin', 'Feedback').'</th>';
     }
     if (Configure::read('app.showManufacturerListAndDetailPage')) {
@@ -310,7 +310,7 @@ foreach ($manufacturers as $manufacturer) {
         }
     }
 
-    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
         echo '<td align="center">';
         if (!empty($manufacturer->feedback)) {
             $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');

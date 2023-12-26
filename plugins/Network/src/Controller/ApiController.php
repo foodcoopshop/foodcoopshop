@@ -86,7 +86,7 @@ class ApiController extends Controller
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isManufacturer();
+        return $this->identity->isManufacturer();
     }
 
     private function getProductDetailLinks($productsData)
@@ -151,11 +151,11 @@ class ApiController extends Controller
             $manufacturerIsOwner = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productIds['productId'],
-                    'Products.id_manufacturer' => $this->AppAuth->getManufacturerId()
+                    'Products.id_manufacturer' => $this->identity->getManufacturerId()
                 ]
             ])->count();
             if (!$manufacturerIsOwner) {
-                throw new \Exception('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerName());
+                throw new \Exception('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->identity->getManufacturerName());
             }
 
             if ($productIds['attributeId'] == 0) {
@@ -201,7 +201,7 @@ class ApiController extends Controller
             }
             if (isset($product['price'])) {
 
-                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->AppAuth->getManufacturerVariableMemberFee());
+                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->identity->getManufacturerVariableMemberFee());
 
                 if ($variableMemberFee > 0) {
 
@@ -390,7 +390,7 @@ class ApiController extends Controller
             }
 
             if ($actionLogMessage != '') {
-                $this->ActionLog->customSave('product_remotely_changed', $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage);
+                $this->ActionLog->customSave('product_remotely_changed', $this->identity->getUserId(), 0, 'products', $actionLogMessage);
             }
         }
 
@@ -419,9 +419,9 @@ class ApiController extends Controller
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
-            $this->AppAuth->getManufacturerVariableMemberFee()
+            $this->identity->getManufacturerVariableMemberFee()
         );
-        $preparedProducts = $this->Product->getProductsForBackend('', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
+        $preparedProducts = $this->Product->getProductsForBackend('', $this->identity->getManufacturerId(), 'all', '', false, false, true);
 
         $this->set([
             'app' => [
@@ -429,7 +429,7 @@ class ApiController extends Controller
                 'domain' => Configure::read('App.fullBaseUrl'),
                 'variableMemberFee' => $variableMemberFee
             ],
-            'loggedUser' => $this->AppAuth->user(),
+            'loggedUser' => $this->identity->user(),
             'products' => $preparedProducts
         ]);
         $this->viewBuilder()->setOption('serialize', ['app', 'loggedUser', 'products']);
@@ -454,7 +454,7 @@ class ApiController extends Controller
         }
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $conditions = [
-            'Products.id_manufacturer' => $this->AppAuth->getManufacturerId(),
+            'Products.id_manufacturer' => $this->identity->getManufacturerId(),
         ];
         $exp = new QueryExpression();
         $conditions[] = $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', $formattedPickupDay);

@@ -32,15 +32,15 @@ class StatisticsController extends AdminAppController
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {
-            'index' => $this->AppAuth->isSuperadmin() || ($this->AppAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins')),
-            'myIndex' => !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isManufacturer(),
-             default => $this->AppAuth->isManufacturer(),
+            'index' => $this->identity->isSuperadmin() || ($this->identity->isAdmin() && Configure::read('app.showStatisticsForAdmins')),
+            'myIndex' => !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isManufacturer(),
+             default => $this->identity->isManufacturer(),
         };
     }
 
     public function myIndex()
     {
-        $this->manufacturerId = $this->AppAuth->getManufacturerId();
+        $this->manufacturerId = $this->identity->getManufacturerId();
         $this->index();
         $this->render('index');
     }
@@ -69,7 +69,7 @@ class StatisticsController extends AdminAppController
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = [];
-        if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+        if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
             $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
         }
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Manufacturer->getForDropdown());

@@ -42,7 +42,7 @@ if ($groupBy == '' || $groupBy == 'product') {
                 $icon = 'fas fa-comment-dots';
                 echo '<i class="' . $icon . ' ok product-feedback-button" title="'.h($productFeedback).'"></i>';
             } else {
-                if (!$appAuth->isManufacturer()) {
+                if (!$identity->isManufacturer()) {
                     echo $this->Html->link(
                         '<i class="' . $icon . ' ok"></i>',
                         'javascript:void(0);',
@@ -57,7 +57,7 @@ if ($groupBy == '' || $groupBy == 'product') {
             }
         }
 
-        if ($appAuth->isSuperadmin() && $editRecordAllowed) {
+        if ($identity->isSuperadmin() && $editRecordAllowed) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 'javascript:void(0);',
@@ -86,7 +86,7 @@ if ($groupBy == '' || $groupBy == 'product') {
     echo '</td>';
 }
 
-echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
+echo '<td class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
 if ($groupBy == '') {
     echo $this->MyHtml->link(
         $orderDetail->product->manufacturer->name,

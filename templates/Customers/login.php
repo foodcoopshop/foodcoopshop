@@ -76,7 +76,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     <?php echo $this->Form->end(); ?>
 
 
-    <?php if (!$this->Identity->isLoggedIn() && $enableRegistrationForm) { ?>
+    <?php if (!$identity->isLoggedIn() && $enableRegistrationForm) { ?>
         <?php
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace').".Helper.initRegistrationForm('".$this->request->is('post')."');"

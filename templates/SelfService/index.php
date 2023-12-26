@@ -28,16 +28,16 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();".
-    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($appAuth->getFutureOrderDetails()))."');"
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
-if (!$isMobile && !$appAuth->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
+if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
     ]);
 }
 
-if ($appAuth->isSelfServiceModeByUrl()) {
+if ($orderCustomerService->isSelfServiceModeByUrl()) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"
     ]);
@@ -46,7 +46,7 @@ if ($appAuth->isSelfServiceModeByUrl()) {
 echo $this->element('autoPrintInvoice');
 
 if ($isMobile) {
-    if ($appAuth->user('use_camera_for_barcode_scanning')) {
+    if ($identity->get('use_camera_for_barcode_scanning')) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);".
             Configure::read('app.jsNamespace') . ".Mobile.showSelfServiceCart();"
@@ -62,7 +62,7 @@ if ($isMobile) {
 
 if ($this->request->getSession()->read('highlightedProductId')) {
 
-    if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
+    if ($isMobile && $identity->get('use_camera_for_barcode_scanning')) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductIdForMobileBarcodeScanning('" . $this->request->getSession()->read('highlightedProductId') . "');"
         ]);
@@ -79,7 +79,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 <div class="header">
     <h2>
     <?php
-        if ($appAuth->isOrderForDifferentCustomerMode()) {
+        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
             echo __('Stock_products');
         } else {
             echo __('Self_service');
@@ -121,7 +121,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         ],
         [
             'cache' => [
-                'key' => $this->Html->buildElementProductCacheKey($product, $appAuth, $this->request),
+                'key' => $this->Html->buildElementProductCacheKey($product, $identity, $this->request),
             ],
         ]
         );
@@ -149,7 +149,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        if (!$appAuth->isOrderForDifferentCustomerMode()) {
+        if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
         }
@@ -159,7 +159,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
     </button>
     <?php echo $this->Form->end(); ?>
-    <?php if ($isMobile && !$appAuth->user('use_camera_for_barcode_scanning')) { ?>
+    <?php if ($isMobile && !$identity->get('use_camera_for_barcode_scanning')) { ?>
         <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>
     <?php } ?>
 </div>

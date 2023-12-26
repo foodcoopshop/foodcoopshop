@@ -75,8 +75,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
         Inflector::singularize(Inflector::tableize($this->request->getParam('action')))
     ];
 
-    // TODO REFACTOR AUTH
-    if (0 && $loggedUser->isSuperadmin()) {
+    if ($identity->isSuperadmin()) {
         $bodyClasses[] = 'superadmin';
     }
 ?>

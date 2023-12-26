@@ -17,7 +17,7 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-if (!$this->Html->paymentIsCashless() || !$appAuth->user() || $appAuth->isSelfServiceCustomer()) {
+if (!$this->Html->paymentIsCashless() || !$identity->isLoggedIn() || $identity->isSelfServiceCustomer()) {
     return;
 }
 ?>
@@ -29,7 +29,7 @@ if (!$this->Html->paymentIsCashless() || !$appAuth->user() || $appAuth->isSelfSe
     echo '<div id="add-payment-deposit-form" class="add-payment-form">';
 
         echo '<h3>'.__('Add_deposit').'</h3>';
-        echo '<p>'.__('Add_deposit_amount_for_{0}', ['<b>' . $appAuth->getUsername() . '</b>']).':</p>';
+        echo '<p>'.__('Add_deposit_amount_for_{0}', ['<b>' . $identity->name . '</b>']).':</p>';
 
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             echo '<p><b>'.__('The_entered_deposit_will_not_show_up_in_the_cart.').'</b></p>';
@@ -46,7 +46,7 @@ if (!$this->Html->paymentIsCashless() || !$appAuth->user() || $appAuth->isSelfSe
         ]);
 
         echo $this->Form->hidden('Payments.customerId', [
-            'value' => $appAuth->getUserId()
+            'value' => $identity->getUserId()
         ]);
 
     echo '</div>';

@@ -50,7 +50,7 @@ trait AddFeedbackTrait {
 
             $entity = $this->OrderDetail->OrderDetailFeedbacks->newEntity(
                 [
-                    'customer_id' => $this->AppAuth->getUserId(),
+                    'customer_id' => $this->identity->getUserId(),
                     'id_order_detail' => $orderDetailId,
                     'text' => $orderDetailFeedback,
                 ]
@@ -75,7 +75,7 @@ trait AddFeedbackTrait {
         )
         ->setViewVars([
             'orderDetail' => $orderDetail,
-            'appAuth' => $this->AppAuth,
+            'identity' => $this->identity,
             'orderDetailFeedback' => $orderDetailFeedback,
         ]);
         $email->customerAnonymizationForManufacturers = false;
@@ -89,7 +89,7 @@ trait AddFeedbackTrait {
             '<b>' . $orderDetail->customer->name . '</b>',
             '<b>' . $orderDetail->product_name . '</b>',
         ]);
-        $this->ActionLog->customSave('order_detail_feedback_added', $this->AppAuth->getUserId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
+        $this->ActionLog->customSave('order_detail_feedback_added', $this->identity->getUserId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
 
         $this->set([
             'result' => $result,

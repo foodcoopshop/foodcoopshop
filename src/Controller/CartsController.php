@@ -38,7 +38,7 @@ class CartsController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->AppAuth->allow([
+        $this->identity->allow([
             'generateRightOfWithdrawalInformationPdf',
             'ajaxAdd',
             'ajaxRemove',
@@ -51,19 +51,19 @@ class CartsController extends FrontendController
      */
     private function ajaxIsAuthorized()
     {
-        if (empty($this->AppAuth->user())) {
+        if (empty($this->identity->user())) {
             throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_sign_in_or_register</a>.', [
                 Configure::read('app.slugHelper')->getLogin()
             ]));
         }
-        if ($this->AppAuth->isManufacturer()) {
+        if ($this->identity->isManufacturer()) {
             throw new ForbiddenException(__('No_access_for_manufacturers.'));
         }
     }
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->user() && !$this->AppAuth->isManufacturer();
+        return $this->identity->user() && !$this->identity->isManufacturer();
     }
 
     public function detail()
@@ -73,7 +73,7 @@ class CartsController extends FrontendController
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
 
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $cart = $this->AppAuth->getCart();
+            $cart = $this->identity->getCart();
 
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $cart['Cart']->pickup_day_entities) {
                 $cart['Cart']->pickup_day_entities[0]->comment = '';
@@ -88,7 +88,7 @@ class CartsController extends FrontendController
     {
         $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriterService();
         $pdfWriter->setData([
-            'appAuth' => $this->AppAuth
+            'identity' => $this->identity
         ]);
         die($pdfWriter->writeInline());
     }
@@ -108,13 +108,13 @@ class CartsController extends FrontendController
 
         $this->set('title_for_layout', __('Finish_cart'));
 
-        if ($this->AppAuth->CartService->isCartEmpty()) {
+        if ($this->identity->CartService->isCartEmpty()) {
             $this->Flash->error(__('Your_cart_was_empty.'));
             $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
             return;
         }
 
-        $cart = $this->AppAuth->CartService->finish();
+        $cart = $this->identity->CartService->finish();
 
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
@@ -134,7 +134,7 @@ class CartsController extends FrontendController
         $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => $cartId,
-                'Carts.id_customer' => $this->AppAuth->getUserId()
+                'Carts.id_customer' => $this->identity->getUserId()
             ]
         ])->first();
 
@@ -144,7 +144,7 @@ class CartsController extends FrontendController
         $this->set('cart', $cart);
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
@@ -176,7 +176,7 @@ class CartsController extends FrontendController
 
     private function doManufacturerCheck($productId)
     {
-        if ($this->AppAuth->isManufacturer()) {
+        if ($this->identity->isManufacturer()) {
             $message = __('No_access_for_manufacturers.');
             $this->log($message);
             $this->set([
@@ -206,10 +206,10 @@ class CartsController extends FrontendController
         $this->Product = $this->getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
 
-        $cart = $this->AppAuth->getCart();
-        $this->AppAuth->setCart($cart);
+        $cart = $this->identity->getCart();
+        $this->identity->setCart($cart);
 
-        $existingCartProduct = $this->AppAuth->CartService->getProduct($initialProductId);
+        $existingCartProduct = $this->identity->CartService->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
             $message = __('Product_{0}_was_not_available_in_cart.', [$ids['productId']]);
             $this->set([
@@ -246,8 +246,8 @@ class CartsController extends FrontendController
     {
         $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->removeAll($this->AppAuth->CartService->getCartId(), $this->AppAuth->getUserId());
-        $this->AppAuth->setCart($this->AppAuth->getCart());
+        $cartProductTable->removeAll($this->identity->CartService->getCartId(), $this->identity->getUserId());
+        $this->identity->setCart($this->identity->getCart());
     }
 
     public function addOrderToCart()
@@ -269,13 +269,13 @@ class CartsController extends FrontendController
         $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(DeliveryRhythmService::getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());
+        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getUserId());
 
         $errorMessages = [];
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
             foreach($orderDetails as $orderDetail) {
-                $result = $cartProductTable->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
+                $result = $cartProductTable->add($this->identity, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;
@@ -308,7 +308,7 @@ class CartsController extends FrontendController
     public function addLastOrderToCart()
     {
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->AppAuth->getUserId());
+        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->identity->getUserId());
         if (empty($orderDetails)) {
             $message = __('There_are_no_orders_available.');
             $this->Flash->error($message);
@@ -342,7 +342,7 @@ class CartsController extends FrontendController
 
         $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $result = $cartProductTable->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
+        $result = $cartProductTable->add($this->identity, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -355,7 +355,8 @@ class CartsController extends FrontendController
             ];
         }
 
-        if ($this->AppAuth->isSelfServiceModeByReferer()) {
+        $orderCustomerService = $this->getOrderCustomerService();
+        if ($orderCustomerService->isSelfServiceModeByReferer()) {
             $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
         }
 

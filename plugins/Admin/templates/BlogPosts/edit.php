@@ -86,7 +86,7 @@ echo '<div class="blog-post-image-wrapper">';
         ]
     );
     $defaultImageExplanationText = __d('admin', 'If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown.');
-    if ($appAuth->isManufacturer()) {
+    if ($identity->isManufacturer()) {
         $defaultImageExplanationText = __d('admin', 'If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown.');
     }
     echo '<span class="small">' . $defaultImageExplanationText . '</span>';
@@ -103,7 +103,7 @@ echo '<div class="warning">';
     ]);
 echo '</div>';
 
-if (Configure::read('app.showManufacturerListAndDetailPage') && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
+if (Configure::read('app.showManufacturerListAndDetailPage') && ($identity->isSuperadmin() || $identity->isAdmin())) {
     echo $this->Form->control('BlogPosts.id_manufacturer', [
         'type' => 'select',
         'label' => __d('admin', 'Manufacturer'),
@@ -132,7 +132,7 @@ echo $this->Form->control('BlogPosts.active', [
     'type' => 'checkbox'
 ]);
 
-if (($appAuth->isSuperadmin() || $appAuth->isAdmin()) && $this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
+if (($identity->isSuperadmin() || $identity->isAdmin()) && $this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
     echo $this->Form->control('BlogPosts.update_modified_field', [
         'label' => __d('admin', 'Move_on_first_place?') . ' <span class="after small">'.__d('admin', 'If_checked_the_blog_post_will_be_set_to_first_place_of_list.').'</span>',
         'type' => 'checkbox',

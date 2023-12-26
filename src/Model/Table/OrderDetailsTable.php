@@ -783,7 +783,7 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
+    public function getOrderDetailParams($identity, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
     {
         $conditions = [];
 
@@ -827,16 +827,16 @@ class OrderDetailsTable extends AppTable
         }
 
         // override params that manufacturer is not allowed to change
-        if ($appAuth->isManufacturer()) {
-            $conditions['Products.id_manufacturer'] = $appAuth->getManufacturerId();
+        if ($identity->isManufacturer()) {
+            $conditions['Products.id_manufacturer'] = $identity->getManufacturerId();
             if ($customerId =! '') {
                 unset($conditions['OrderDetails.id_customer']);
             }
         }
 
         // customers are only allowed to see their own data
-        if ($appAuth->isCustomer()) {
-            $conditions['OrderDetails.id_customer'] = $appAuth->getUserId();
+        if ($identity->isCustomer()) {
+            $conditions['OrderDetails.id_customer'] = $identity->getUserId();
         }
 
         $odParams = [

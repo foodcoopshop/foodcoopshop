@@ -82,7 +82,7 @@ trait EditProductPriceTrait {
                 'oldOrderDetail' => $oldOrderDetail,
                 'newsletterCustomer' => $oldOrderDetail->customer,
                 'newOrderDetail' => $newOrderDetail,
-                'appAuth' => $this->AppAuth,
+                'identity' => $this->identity,
                 'editPriceReason' => $editPriceReason,
             ]);
             $email->addToQueue();
@@ -91,7 +91,7 @@ trait EditProductPriceTrait {
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-        if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+        if (! $this->identity->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $orderDetailForManufacturerEmail = $oldOrderDetail;
             $orderDetailForManufacturerEmail->customer = $oldOrderDetail->product->manufacturer->address_manufacturer;
             $email = new AppMailer();
@@ -101,7 +101,7 @@ trait EditProductPriceTrait {
             ->setViewVars([
                 'oldOrderDetail' => $orderDetailForManufacturerEmail,
                 'newOrderDetail' => $newOrderDetail,
-                'appAuth' => $this->AppAuth,
+                'identity' => $this->identity,
                 'editPriceReason' => $editPriceReason,
             ]);
             $email->addToQueue();
@@ -117,7 +117,7 @@ trait EditProductPriceTrait {
         }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->ActionLog->customSave('order_detail_product_price_changed', $this->identity->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $orderDetailId);

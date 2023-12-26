@@ -25,7 +25,7 @@ class CronController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->AppAuth->allow('index');
+        $this->identity->allow('index');
     }
 
     public function index()

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Traits\AppRequestAwareTrait;
 use Cake\Validation\Validator;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,8 +21,6 @@ use Cake\Validation\Validator;
  */
 class SlidersTable extends AppTable
 {
-
-    use AppRequestAwareTrait;
 
     public function initialize(array $config): void
     {
@@ -47,7 +45,8 @@ class SlidersTable extends AppTable
             'Sliders.active' => APP_ON
         ];
 
-        if (!$this->isLoggedIn()) {
+        $identity = (new IdentityService())->getIdentity();
+        if (!$identity->isLoggedIn()) {
             $conditions['Sliders.is_private'] = APP_OFF;
         }
 

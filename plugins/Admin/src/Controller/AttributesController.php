@@ -28,7 +28,7 @@ class AttributesController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+        return $this->identity->isSuperadmin() || $this->identity->isAdmin();
     }
 
     public function add()
@@ -107,7 +107,7 @@ class AttributesController extends AdminAppController
                 $actionLogType = 'attribute_deleted';
             }
             $message = __d('admin', 'The_attribute_{0}_has_been_{1}.', ['<b>' . $attribute->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $attribute->id_attribute);

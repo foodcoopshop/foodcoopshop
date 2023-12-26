@@ -76,13 +76,13 @@ trait IndexTrait {
         $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
 
         $groupBy = h($this->getRequest()->getQuery('groupBy', null));
-        if ($this->AppAuth->isManufacturer() && $groupBy != 'product') {
+        if ($this->identity->isManufacturer() && $groupBy != 'product') {
             $groupBy = '';
         }
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->identity, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
         if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
@@ -240,7 +240,7 @@ trait IndexTrait {
         $groupByForDropdown = [
             'product' => __d('admin', 'Group_by_product')
         ];
-        if (!$this->AppAuth->isManufacturer()) {
+        if (!$this->identity->isManufacturer()) {
             $groupByForDropdown['customer'] = __d('admin', 'Group_by_member');
             $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
         }

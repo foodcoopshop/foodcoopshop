@@ -21,7 +21,7 @@ use Cake\Core\Configure;
     <tbody>
         <tr>
             <td style="font-weight:bold;font-size:18px;padding-bottom:20px;">
-                <?php echo __('Hello'); ?> <?php echo $appAuth->getUsername(); ?>,
+                <?php echo __('Hello'); ?> <?php echo $identity->name; ?>,
             </td>
         </tr>
         <tr>
@@ -57,7 +57,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
 
             <?php if (Configure::read('app.showTaxInOrderConfirmationEmail')) { ?>
 
-                <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->CartService->getTaxSum()); ?>
+                <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($identity->CartService->getTaxSum()); ?>
             </td></tr>
 
         <tr><td>
@@ -80,7 +80,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
         <?php } ?>
 
         <?php
-            if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') && isset($appAuth) && !$appAuth->user('newsletter_enabled')) {
+            if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED') && isset($identity) && !$identity->get('newsletter_enabled')) {
                 echo '<tr><td style="font-size:12px;">';
                     echo __('You_can_subscribe_our_newsletter_<a href="{0}">in_the_admin_areas_menu_point_my_data</a>.', [Configure::read('App.fullBaseUrl') . $this->Slug->getCustomerProfile()]);
                 echo '</td></tr>';

@@ -113,7 +113,7 @@ class SlidersController extends AdminAppController
                 $actionLogType = 'slider_deleted';
             }
             $message = __d('admin', 'The_slider_{0}_has_been_{1}.', ['<b>' . $slider->id_slider . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'sliders', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $slider->id_slider, 'sliders', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $slider->id_slider);

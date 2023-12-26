@@ -18,9 +18,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
-// TODO REFACTOR AUTH
-return false;
-if (!$this->Identity->isLoggedIn()  /* || $loggedUser->termsOfUseAccepted() */) {
+if (!$identity->isLoggedIn()  || $identity->termsOfUseAccepted()) {
     return false;
 }
 
@@ -29,7 +27,7 @@ $this->element('addScript', ['script' =>
 ]);
 ?>
 <div class="accept-updated-terms-of-use-form">
-    <h2><?php echo __('Hello'); ?> <?php echo $appAuth->getUserFirstname(); ?>,</h2>
+    <h2><?php echo __('Hello'); ?> <?php echo $identity->firstname; ?>,</h2>
     <?php
         $termsOfUseTermsLink = '<a class="terms-of-use-overlay" href="javascript:void(0);" data-element-selector="#terms-of-use">'.__('terms_and_conditions').'</a>';
     ?>
@@ -43,7 +41,7 @@ $this->element('addScript', ['script' =>
             ]
         );
            echo '<div id="terms-of-use" class="hide">';
-           if ($appAuth->isManufacturer()) {
+           if ($identity->isManufacturer()) {
             echo $this->element('legal/'.I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUseForManufacturers');
            } else {
             echo $this->element('legal/'.I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');

@@ -36,17 +36,17 @@ $myEditLink = $this->Html->link(
 
 $showWriteFeedbackLink = true;
 
-if ($appAuth->user()) {
+if ($identity->isLoggedIn()) {
 
-    if ($appAuth->isManufacturer()) {
+    if ($identity->isManufacturer()) {
         foreach($feedbacks['manufacturers'] as $feedback) {
-            if ($appAuth->getUserId() == $feedback->customer_id) {
+            if ($identity->getUserId() == $feedback->customer_id) {
                 $showWriteFeedbackLink = false;
             }
         }
     } else {
         foreach($feedbacks['customers'] as $feedback) {
-            if ($appAuth->getUserId() == $feedback->customer_id) {
+            if ($identity->getUserId() == $feedback->customer_id) {
                 $showWriteFeedbackLink = false;
             }
         }
@@ -75,7 +75,7 @@ if (!empty($feedbacks['customers'])) {
     foreach($feedbacks['customers'] as $feedback) {
 
         $additionalMetaData = '';
-        if ($appAuth->isSuperadmin()) {
+        if ($identity->isSuperadmin()) {
             $additionalMetaData = $this->Html->link(
                 '<i class="fas fa-pencil-alt"></i>',
                 $this->Slug->getFeedbackForm($feedback->customer_id),
@@ -86,7 +86,7 @@ if (!empty($feedbacks['customers'])) {
                 ],
             );
         }
-        if ($appAuth->user() && $feedback->customer_id == $appAuth->getUserId()) {
+        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getUserId()) {
             $additionalMetaData = $myEditLink;
         }
 
@@ -103,7 +103,7 @@ if (!empty($feedbacks['manufacturers'])) {
     foreach($feedbacks['manufacturers'] as $feedback) {
 
         $additionalMetaData = '';
-        if ($appAuth->isSuperadmin()) {
+        if ($identity->isSuperadmin()) {
             $additionalMetaData = $this->Html->link(
                 '<i class="fas fa-pencil-alt"></i>',
                 $this->Slug->getFeedbackForm($feedback->customer_id),
@@ -114,7 +114,7 @@ if (!empty($feedbacks['manufacturers'])) {
                 ],
             );
         }
-        if ($appAuth->user() && $feedback->customer_id == $appAuth->getUserId()) {
+        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getUserId()) {
             $additionalMetaData = $myEditLink;
         }
 

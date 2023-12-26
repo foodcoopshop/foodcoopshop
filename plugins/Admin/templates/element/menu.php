@@ -18,13 +18,13 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
-if (! $appAuth->user() || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
+if (! $identity->user() || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
     return;
 }
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
-$myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($appAuth);
+$myFeedbackMenuElement = $this->Menu->getMyFeedbackMenuElement($identity);
 $orderDetailsGroupedByCustomerMenuElement = $this->Menu->getOrderDetailsGroupByCustomerMenuElement();
 $changedOrderedProductsMenuElement = $this->Menu->getChangedOrderedProductsMenuElement();
 $customerProfileMenuElement = $this->Menu->getCustomerProfileMenuElement();
@@ -68,15 +68,15 @@ $menu[] = [
     ]
 ];
 
-if ($appAuth->isCustomer()) {
-    $menu = array_merge($menu, $this->Menu->getCustomerMenuElements($appAuth));
+if ($identity->isCustomer()) {
+    $menu = array_merge($menu, $this->Menu->getCustomerMenuElements($identity));
 }
 
-if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+if ($identity->isSuperadmin() || $identity->isAdmin()) {
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
     $orderDetailsGroupedByCustomerMenuElement['children'][] = $orderListsMenuElement;
 
-    if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+    if ($identity->isSuperadmin() && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $invoicesMenuElement = [
             'slug' => Configure::read('app.slugHelper')->getInvoices(),
             'name' => __d('admin', 'Invoices'),
@@ -113,7 +113,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         ];
     }
 
-    if ($appAuth->isSuperadmin() || ($appAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'))) {
+    if ($identity->isSuperadmin() || ($identity->isAdmin() && Configure::read('app.showStatisticsForAdmins'))) {
         $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getStatistics(),
             'name' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ? __d('admin', 'Turnover_and_profit_statistics') : __d('admin', 'Turnover_statistics'),
@@ -179,7 +179,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         ]
     ];
 
-    if ($appAuth->isSuperadmin()) {
+    if ($identity->isSuperadmin()) {
 
         $reportSlug = null;
 
@@ -215,7 +215,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $homepageAdministrationElement;
 }
 
-if ($appAuth->isManufacturer()) {
+if ($identity->isManufacturer()) {
     $orderDetailsMenuElement = [
         'slug' => $this->Slug->getOrderDetailsList(),
         'name' => __d('admin', 'Orders'),
@@ -249,7 +249,7 @@ if ($appAuth->isManufacturer()) {
     ];
     if (Configure::read('app.isDepositEnabled') && date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $od = FactoryLocator::get('Table')->get('OrderDetails');
-        $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
+        $sumDepositDelivered = $od->getDepositSum($identity->getManufacturerId(), false);
         if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
             $menu[] = [
                 'slug' => $this->Slug->getMyDepositList(),
@@ -283,11 +283,11 @@ if ($appAuth->isManufacturer()) {
 }
 
 // for all users
-$menu[] = $this->Menu->getAuthMenuElement($appAuth);
+$menu[] = $this->Menu->getAuthMenuElement($identity);
 
 $footerHtml = '';
-if ($appAuth->isManufacturer() && !empty($appAuth->getManufacturerCustomer()) && !empty($appAuth->getManufacturerCustomer()['address_customer'])) {
-    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->getManufacturerCustomer()['name'] . ', ' . $appAuth->getManufacturerCustomer()['email']. ', ' . $appAuth->getManufacturerCustomer()['address_customer']['phone_mobile'];
+if ($identity->isManufacturer() && !empty($identity->getManufacturerCustomer()) && !empty($identity->getManufacturerCustomer()['address_customer'])) {
+    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $identity->getManufacturerCustomer()['name'] . ', ' . $identity->getManufacturerCustomer()['email']. ', ' . $identity->getManufacturerCustomer()['address_customer']['phone_mobile'];
 }
 echo $this->Menu->render($menu, [
     'id' => 'menu',

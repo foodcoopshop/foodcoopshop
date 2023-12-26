@@ -29,7 +29,7 @@ class SyncDomainsController extends AppController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isSuperadmin();
+        return $this->identity->isSuperadmin();
     }
 
     public function beforeFilter(EventInterface $event)
@@ -114,7 +114,7 @@ class SyncDomainsController extends AppController
                 $actionLogType = 'remote_foodcoop_deleted';
             }
             $message = __d('network', 'The_remote_foodcoop_{0}_has_been_{1}.', ['<b>' . $syncDomain->domain. '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $syncDomain->id, 'sync_domains', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $syncDomain->id, 'sync_domains', $message);
             $this->Flash->success($message);
 
             $this->redirect($this->getPreparedReferer());

@@ -12,6 +12,7 @@ use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Http\Exception\NotFoundException;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -50,7 +51,7 @@ class CustomersController extends FrontendController
 
     public function profileImage()
     {
-        if (!$this->AppAuth->user() || $this->AppAuth->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
+        if (!$this->identity->user() || $this->identity->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
             throw new NotFoundException('image not found');
         }
 
@@ -95,7 +96,7 @@ class CustomersController extends FrontendController
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $patchedEntity = $this->Customer->patchEntity(
-            $this->Customer->get($this->AppAuth->getUserId()),
+            $this->Customer->get($this->identity->getUserId()),
             [
                 'Customers' => [
                     'terms_of_use_accepted_date_checkbox' => $this->getRequest()->getData('Customers.terms_of_use_accepted_date_checkbox'),
@@ -150,7 +151,7 @@ class CustomersController extends FrontendController
             $email->setTo($customer->email)
             ->setSubject(__('Your_email_address_has_been_activated_successfully.'))
             ->setViewVars([
-                'appAuth' => $this->AppAuth,
+                'identity' => $this->identity,
                 'data' => $customer,
                 'newPassword' => $newPassword,
             ]);
@@ -280,8 +281,9 @@ class CustomersController extends FrontendController
         $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
 
+        $orderCustomerService = new OrderCustomerService();
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-            && ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer())
+            && ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer())
             ) {
                 $this->viewBuilder()->setLayout('self_service');
                 $title = __('Sign_in_for_self_service');
@@ -304,7 +306,7 @@ class CustomersController extends FrontendController
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
 
             if ($this->getRequest()->is('get')) {
-                if ($this->isLoggedIn()) {
+                if ($this->identity->isLoggedIn()) {
                     $this->Flash->error(__('You_are_already_signed_in.'));
                 }
             }
@@ -346,7 +348,7 @@ class CustomersController extends FrontendController
                 return;
             }
 
-            if ($this->isLoggedIn()) {
+            if ($this->identity->isLoggedIn()) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
@@ -415,7 +417,7 @@ class CustomersController extends FrontendController
                     $email->setTo($this->getRequest()->getData('Customers.address_customer.email'))
                         ->setSubject(__('Welcome'))
                         ->setViewVars([
-                        'appAuth' => $this->AppAuth,
+                        'identity' => $this->identity,
                         'data' => $newCustomer,
                         'newsletterCustomer' => $newCustomer,
                         'newPassword' => $newPassword
@@ -430,7 +432,7 @@ class CustomersController extends FrontendController
                         $email->setTo(explode(',', Configure::read('appDb.FCS_REGISTRATION_NOTIFICATION_EMAILS')))
                             ->setSubject(__('New_registration_{0}', [$newCustomer->firstname . ' ' . $newCustomer->lastname]))
                             ->setViewVars([
-                            'appAuth' => $this->AppAuth,
+                            'identity' => $this->identity,
                                 'data' => $newCustomer
                             ])
                             ->addToQueue();
@@ -450,7 +452,7 @@ class CustomersController extends FrontendController
         $this->set('title_for_layout', __('Account_created_successfully'));
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, true);
         $this->set('blogPosts', $blogPosts);
     }
 

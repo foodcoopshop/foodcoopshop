@@ -57,10 +57,10 @@ echo $this->Form->hidden('Payments.customerId', [
 ]);
 echo '<br />';
 
-if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
+if ($paymentType == 'product' && $identity->isSuperadmin()) {
     echo '<p style="margin-top:10px;">'.__d('admin', 'If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
     $i = 0;
-    foreach ($this->Html->getSuperadminProductPaymentTexts($appAuth) as $paymentTextKey => $paymentText) {
+    foreach ($this->Html->getSuperadminProductPaymentTexts($identity) as $paymentTextKey => $paymentText) {
         echo '<div class="radio-wrapper">';
             $checked = '';
         if ($i == 0) {
@@ -78,7 +78,7 @@ if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
 
 echo '</div>';
 
-if ($appAuth->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+if ($identity->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
     echo $this->element('payment/personalTransactionCode', ['personalTransactionCode' => $personalTransactionCode]);
 }
 

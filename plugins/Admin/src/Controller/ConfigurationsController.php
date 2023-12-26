@@ -34,7 +34,7 @@ class ConfigurationsController extends AdminAppController
     
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isSuperadmin();
+        return $this->identity->isSuperadmin();
     }
 
     public function edit($configurationId)
@@ -108,7 +108,7 @@ class ConfigurationsController extends AdminAppController
             $configuration = $this->Configuration->save($configuration);
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
-            $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
+            $this->ActionLog->customSave('configuration_changed', $this->identity->getUserId(), $configuration->id_configuration, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
             $this->redirect($this->getPreparedReferer());
         }
 
@@ -125,7 +125,7 @@ class ConfigurationsController extends AdminAppController
         $email = new AppMailer();
         $email
             ->setViewVars([
-                'appAuth' => $this->AppAuth
+                'identity' => $this->identity
             ]);
 
         switch ($configurationName) {

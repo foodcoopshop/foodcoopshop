@@ -36,10 +36,10 @@ class DepositsController extends AdminAppController
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {
-            'overviewDiagram' => Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin(),
-            'index', 'detail' => Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
-            'myIndex', 'myDetail' => Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer(),
-             default => Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer(),
+            'overviewDiagram' => Configure::read('app.isDepositEnabled') && $this->identity->isSuperadmin(),
+            'index', 'detail' => Configure::read('app.isDepositEnabled') && $this->identity->isSuperadmin() || $this->identity->isAdmin(),
+            'myIndex', 'myDetail' => Configure::read('app.isDepositEnabled') && $this->identity->isManufacturer(),
+             default => Configure::read('app.isDepositEnabled') && $this->identity->isManufacturer(),
         };
     }
 
@@ -195,14 +195,14 @@ class DepositsController extends AdminAppController
 
     public function myIndex()
     {
-        $this->manufacturerId = $this->AppAuth->getManufacturerId();
+        $this->manufacturerId = $this->identity->getManufacturerId();
         $this->index();
         $this->render('index');
     }
 
     public function myDetail($monthAndYear)
     {
-        $this->manufacturerId = $this->AppAuth->getManufacturerId();
+        $this->manufacturerId = $this->identity->getManufacturerId();
         $this->detail($monthAndYear);
         $this->render('detail');
     }
@@ -286,7 +286,7 @@ class DepositsController extends AdminAppController
         $this->set('deposits', $deposits);
 
         $title = 'Pfandkonto für ';
-        if ($this->AppAuth->isManufacturer()) {
+        if ($this->identity->isManufacturer()) {
             $title .= $manufacturer->name;
         }
         $this->set('title_for_layout', $title);

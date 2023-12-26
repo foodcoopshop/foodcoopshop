@@ -1243,12 +1243,12 @@ class ProductsTable extends AppTable
         return $preparedProducts;
     }
 
-    public function getForDropdown($appAuth, $manufacturerId)
+    public function getForDropdown($identity, $manufacturerId)
     {
         $conditions = [];
 
-        if ($appAuth->isManufacturer()) {
-            $manufacturerId = $appAuth->getManufacturerId();
+        if ($identity->isManufacturer()) {
+            $manufacturerId = $identity->getManufacturerId();
         }
 
         if ($manufacturerId > 0) {

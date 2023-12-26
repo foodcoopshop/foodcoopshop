@@ -26,27 +26,32 @@ use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Expression\StringExpression;
-use App\Traits\AppRequestAwareTrait;
+use App\Services\IdentityService;
 
 class CatalogService
 {
 
-    use AppRequestAwareTrait;
-    
     protected $Customer;
     protected $Manufacturer;
     protected $Product;
     protected $ProductAttribute;
     protected $OrderDetail;
+    protected $identity;
+
+    public function __construct()
+    {
+        $this->identity = (new IdentityService())->getIdentity();
+    }
 
     public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
 
+        $orderCustomerService = new OrderCustomerService();
         $cacheKey = join('_', [
             'Catalog_getProducts',
             'categoryId-' . $categoryId,
-            'isLoggedIn-' . ((int) $this->isLoggedIn()),
-            'forDifferentCustomer-' . ($this->isOrderForDifferentCustomerMode() || $this->isSelfServiceModeByUrl()),
+            'isLoggedIn-' . ((int) $this->identity->isLoggedIn()),
+            'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
@@ -98,7 +103,8 @@ class CatalogService
         $query = $this->addManufacturerIdFilter($query, $manufacturerId);
 
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-            if ($appAuth->isOrderForDifferentCustomerMode()) {
+            $orderCustomerService = new OrderCustomerService();
+            if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
                 $getOnlyStockProducts = true;
             }
         }
@@ -183,7 +189,7 @@ class CatalogService
 
     protected function addDefaultConditions($query)
     {
-        if (!$this->isLoggedIn()) {
+        if (!$this->identity->isLoggedIn()) {
             $query->where([
                 'Manufacturers.is_private' => APP_OFF,
             ]);
@@ -378,7 +384,7 @@ class CatalogService
             return $products;
         }
 
-        if (!$this->isLoggedIn()) {
+        if (!$this->identity->isLoggedIn()) {
             return $products;
         }
 
@@ -389,7 +395,6 @@ class CatalogService
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
 
         $deliveryRhytmService = new DeliveryRhythmService();
-        $deliveryRhytmService->setAppRequest($this->appRequest);
         $i = -1;
         foreach($products as $product) {
             $i++;
@@ -436,13 +441,13 @@ class CatalogService
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products)
     {
 
-        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $this->isOrderForDifferentCustomerMode() || $this->isSelfServiceModeByUrl()) {
+        $orderCustomerService = new OrderCustomerService();
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
             return $products;
         }
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $deliveryRhythmService = new DeliveryRhythmService();
-        $deliveryRhythmService->setAppRequest($this->appRequest);
         $i = -1;
         foreach($products as $product) {
             $i++;
@@ -545,7 +550,6 @@ class CatalogService
             }
 
             $deliveryRhythmService = new DeliveryRhythmService();
-            $deliveryRhythmService->setAppRequest($this->appRequest);
             $products[$i]->next_delivery_day = $deliveryRhythmService->getNextDeliveryDayForProduct($product);
 
             foreach ($product->product_attributes as &$attribute) {

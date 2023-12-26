@@ -51,7 +51,7 @@ trait EditStatusTrait {
                 $actionLogType = 'product_set_active';
             }
             $this->Flash->success($actionLogMessage);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage . '<br />Ids: ' . join(',', $productIds));
+            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), 0, 'products', $actionLogMessage . '<br />Ids: ' . join(',', $productIds));
 
             $this->set([
                 'status' => 1,
@@ -99,7 +99,7 @@ trait EditStatusTrait {
 
         $this->Flash->success($actionLogMessage);
 
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
     }

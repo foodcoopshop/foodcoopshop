@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 echo '<div class="pickup-day-filter-wrapper'.(count($pickupDay) == 2 ? ' two-pickup-days' : '') . '">';
     echo '<b>';
-    if ($appAuth->isManufacturer()) {
+    if ($identity->isManufacturer()) {
         if (count($pickupDay) == 1) {
             echo __d('admin', 'Delivery_day');
         } else {

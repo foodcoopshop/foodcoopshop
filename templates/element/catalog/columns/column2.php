@@ -49,7 +49,7 @@ echo '</div>';
 
 if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
-    if (!$appAuth->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
+    if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
 
         $lastOrderDay = DeliveryRhythmService::getLastOrderDay(
             $product->next_delivery_day,
@@ -72,11 +72,11 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
     }
 
-    if (!$appAuth->isSelfServiceModeByUrl()) {
+    if (!$orderCustomerService->isSelfServiceModeByUrl()) {
         echo '<br />'.__('Pickup_day').': ';
     }
     echo '<span class="pickup-day">';
-    if ($appAuth->isOrderForDifferentCustomerMode()) {
+    if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
         $pickupDayDetailText = __('Instant_order');
     } else {
         $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
@@ -89,10 +89,10 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
     }
     echo '</span>';
-    if (!$appAuth->isSelfServiceModeByUrl()) {
+    if (!$orderCustomerService->isSelfServiceModeByUrl()) {
         echo ' (' . $pickupDayDetailText . ')';
     }
-    if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isOrderForDifferentCustomerMode()) {
+    if (!$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
         if (
             $product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break'
             && strtotime($product->next_delivery_day) != DeliveryRhythmService::getDeliveryDayByCurrentDay()
@@ -124,11 +124,11 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     }
 }
 
-if (!$appAuth->isOrderForDifferentCustomerMode()) {
-    if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product->id_manufacturer == $appAuth->getManufacturerId())) {
+if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+    if ($identity->isSuperadmin() || ($identity->isManufacturer() && $product->id_manufacturer == $identity->getManufacturerId())) {
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt"></i>',
-            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
+            $this->Slug->getProductAdmin(($identity->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
             [
                 'class' => 'btn btn-outline-light edit-shortcut-button',
                 'title' => __('Edit'),

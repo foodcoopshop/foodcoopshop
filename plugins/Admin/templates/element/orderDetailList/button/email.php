@@ -16,9 +16,9 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
-if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer()) {
+if ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isManufacturer()) {
 
-    if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+    if ($identity->isManufacturer() && $identity->getManufacturerAnonymizeCustomers()) {
         return;
     }
 

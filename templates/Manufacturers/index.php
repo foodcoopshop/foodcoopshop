@@ -24,7 +24,7 @@ $this->element('addScript', ['script' =>
 
 <h1><?php echo __('Manufacturers'); ?>
 <?php
-if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity->isLoggedIn()) {
     echo '<span>'.$manufacturers->count() . ' ' . __('found') . '</span>';
 }
 ?>
@@ -55,7 +55,7 @@ foreach ($manufacturers as $manufacturer) {
             ).'</h4>';
             echo $manufacturer->short_description;
 
-            if (!$appAuth->isOrderForDifferentCustomerMode() && !$appAuth->isSelfServiceModeByUrl()) {
+            if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl()) {
                 $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
                 if ($manufacturerNoDeliveryDaysString != '') {
                     echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
@@ -66,11 +66,11 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '<div class="c3">';
             $manufacturerDetailLinkName  = __('Show_manufacturer_profile');
-            if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+            if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity->isLoggedIn()) {
                 $manufacturerDetailLinkName = __('Show_products');
             }
             echo $this->Html->link(
-                $manufacturerDetailLinkName . ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
+                $manufacturerDetailLinkName . ($identity->isLoggedIn() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
                 $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
                 ['class' => 'btn btn-outline-light']
             );

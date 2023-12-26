@@ -44,10 +44,10 @@ class BlogPostsController extends FrontendController
                         'Manufacturers'
                     ]
                 ])->first();
-                if (!empty($blogPost) && !$this->AppAuth->user()
+                if (!empty($blogPost) && !$this->identity->user()
                     && ($blogPost->is_private || (!empty($blogPost->manufacturer) && $blogPost->manufacturer->is_private))
                     ) {
-                        $this->AppAuth->deny($this->getRequest()->getParam('action'));
+                        $this->identity->deny($this->getRequest()->getParam('action'));
                 }
                 break;
         }
@@ -83,7 +83,7 @@ class BlogPostsController extends FrontendController
 
         // START find neighbors
         array_pop($conditions); // do not filter last condition element blogPostId
-        if (!$this->AppAuth->user()) {
+        if (!$this->identity->user()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
@@ -104,7 +104,7 @@ class BlogPostsController extends FrontendController
     public function index()
     {
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, false);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, false);
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', __('Blog_archive'));
     }

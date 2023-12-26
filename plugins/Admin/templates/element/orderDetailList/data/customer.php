@@ -21,7 +21,7 @@ if ($groupBy != '') {
 
 echo '<td class="customer-field">';
     if ($editRecordAllowed
-        && ($appAuth->isAdmin() || $appAuth->isSuperadmin())
+        && ($identity->isAdmin() || $identity->isSuperadmin())
         && $this->Html->getNameRespectingIsDeleted($orderDetail->customer)
             != $this->Html->getDeletedCustomerName()) {
             echo $this->Html->link(
@@ -35,7 +35,7 @@ echo '<td class="customer-field">';
             );
     }
     $customerName = $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
-    if ($appAuth->isManufacturer() && $appAuth->getManufacturerAnonymizeCustomers()) {
+    if ($identity->isManufacturer() && $identity->getManufacturerAnonymizeCustomers()) {
         $customerName = $this->Html->anonymizeCustomerName($customerName, $orderDetail->id_customer);
     }
     echo '<span class="customer-name-for-dialog">' . $customerName . '</span>';

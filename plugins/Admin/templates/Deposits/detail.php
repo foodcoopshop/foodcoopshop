@@ -90,7 +90,7 @@ foreach ($payments as $payment) {
 echo '</table>';
 
 echo '<div class="bottom-button-container">';
-if ($appAuth->isManufacturer()) {
+if ($identity->isManufacturer()) {
     $depositOverviewUrl = $this->Slug->getMyDepositList();
 } else {
     $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);

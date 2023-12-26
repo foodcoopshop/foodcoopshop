@@ -26,7 +26,7 @@ trait LoginTrait
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
-        $loggedUser = $customerTable->find('all', [
+        $identity = $customerTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $userId
             ],
@@ -37,7 +37,7 @@ trait LoginTrait
 
         return [
             'Auth' => [
-                'User' => $loggedUser
+                'User' => $identity,
             ]
         ];
     }
@@ -98,11 +98,11 @@ trait LoginTrait
 
     public function getUserId()
     {
-        $loggedUser = $this->user();
-        if (empty($loggedUser)) {
+        $identity = $this->user();
+        if (empty($identity)) {
             return [];
         }
-        return $loggedUser['id_customer'];
+        return $identity['id_customer'];
     }
 
     /**

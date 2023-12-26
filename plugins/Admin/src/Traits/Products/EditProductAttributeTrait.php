@@ -57,7 +57,7 @@ trait EditProductAttributeTrait {
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
-            $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+            $this->ActionLog->customSave('product_attribute_deleted', $this->identity->getUserId(), $productId, 'products', $actionLogMessage);
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         } else {
             try {
@@ -83,7 +83,7 @@ trait EditProductAttributeTrait {
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
             ]);
-            $this->ActionLog->customSave('product_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+            $this->ActionLog->customSave('product_attribute_changed', $this->identity->getUserId(), $productId, 'products', $actionLogMessage);
             $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeId);
         }
         $this->Flash->success($actionLogMessage);

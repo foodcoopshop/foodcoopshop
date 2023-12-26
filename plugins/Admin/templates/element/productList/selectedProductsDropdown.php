@@ -24,7 +24,7 @@ if (!empty($products)) {
     $buttons[] = $this->element('productList/button/editDeliveryRhythmForSelectedProducts');
     $buttons[] = $this->element('productList/button/deleteSelectedProducts');
     $buttons[] = '<hr class="dropdown-divider" />';
-    if ($appAuth->isManufacturer()) {
+    if ($identity->isManufacturer()) {
         $productImportUrl = $this->Slug->getMyProductImport();
     } else {
         $productImportUrl = $this->Slug->getProductImport($manufacturerId);

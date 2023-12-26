@@ -25,7 +25,7 @@ use App\Services\DeliveryRhythmService;
  */
 class ConfigurationHelper extends Helper
 {
-    public function getConfigurationDropdownOptions($name, $appAuth)
+    public function getConfigurationDropdownOptions($name, $identity)
     {
         switch ($name) {
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
@@ -61,7 +61,7 @@ class ConfigurationHelper extends Helper
                 break;
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $productModel = FactoryLocator::get('Table')->get('Products');
-                return $productModel->getForDropdown($appAuth, 0);
+                return $productModel->getForDropdown($identity, 0);
                 break;
         }
     }
@@ -79,9 +79,9 @@ class ConfigurationHelper extends Helper
         ];
     }
 
-    public function getConfigurationDropdownOption($name, $value, $appAuth)
+    public function getConfigurationDropdownOption($name, $value, $identity)
     {
-        return self::getConfigurationDropdownOptions($name, $appAuth)[$value];
+        return self::getConfigurationDropdownOptions($name, $identity)[$value];
     }
 
     public function getConfigurationMultipleDropdownOptions($name, $value)

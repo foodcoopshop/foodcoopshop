@@ -46,11 +46,11 @@ class ProductsController extends FrontendController
 
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
-              && !$this->AppAuth->user()
+              && !$this->identity->user()
               && (!empty($product->manufacturer) && $product->manufacturer->is_private)
               )
             ) {
-                $this->AppAuth->deny($this->getRequest()->getParam('action'));
+                $this->identity->deny($this->getRequest()->getParam('action'));
         }
     }
 
@@ -59,8 +59,8 @@ class ProductsController extends FrontendController
         $productId = (int) $this->getRequest()->getParam('pass')[0];
 
         $catalogService = new CatalogService();
-        $product = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
-        $product = $catalogService->prepareProducts($this->AppAuth, $product);
+        $product = $catalogService->getProducts($this->identity, Configure::read('app.categoryAllProducts'), false, '', $productId);
+        $product = $catalogService->prepareProducts($this->identity, $product);
 
         if (empty($product) || !isset($product[0])) {
             throw new RecordNotFoundException('product not found');

@@ -26,7 +26,7 @@ $this->element('addScript', [
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1 style="width:100%;margin-bottom:5px;"><?php echo $title_for_layout; ?></h1>
         <?php
-        if (!$appAuth->isManufacturer()) {
+        if (!$identity->isManufacturer()) {
             echo $this->Form->control('manufacturerId', [
             'type' => 'select',
             'label' => '',

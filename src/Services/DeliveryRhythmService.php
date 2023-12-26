@@ -18,12 +18,9 @@ namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use App\Traits\AppRequestAwareTrait;
 
 class DeliveryRhythmService
 {
-
-    use AppRequestAwareTrait;
 
     public function getSendOrderListsWeekday()
     {
@@ -233,11 +230,11 @@ class DeliveryRhythmService
         return $date;
     }
 
-    public function getNextDeliveryDayForProduct($product)
+    public function getNextDeliveryDayForProduct($product, $orderCustomerService)
     {
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $nextDeliveryDay = '1970-01-01';
-        } elseif ($this->isOrderForDifferentCustomerMode() || $this->isSelfServiceModeByUrl()) {
+        } elseif ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
             $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         } else {
             $nextDeliveryDay = $this->getNextPickupDayForProduct($product);

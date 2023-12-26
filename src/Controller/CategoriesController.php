@@ -31,22 +31,22 @@ class CategoriesController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if (! (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
-            $this->AppAuth->deny($this->getRequest()->getParam('action'));
+        if (! (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->user())) {
+            $this->identity->deny($this->getRequest()->getParam('action'));
         } else {
-            $this->AppAuth->allow($this->getRequest()->getParam('action'));
+            $this->identity->allow($this->getRequest()->getParam('action'));
         }
     }
 
     public function newProducts()
     {
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-        $products = $catalogService->prepareProducts($this->AppAuth, $products);
+        $products = $catalogService->getProducts($this->identity, Configure::read('app.categoryAllProducts'), true);
+        $products = $catalogService->prepareProducts($this->identity, $products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('New_products'));
@@ -68,12 +68,12 @@ class CategoriesController extends FrontendController
         $this->set('keyword', $keyword);
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
-        $products = $catalogService->prepareProducts($this->AppAuth, $products);
+        $products = $catalogService->getProducts($this->identity, Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $catalogService->prepareProducts($this->identity, $products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('Search') . ' "' . $keyword . '"');
@@ -104,12 +104,12 @@ class CategoriesController extends FrontendController
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts($this->AppAuth, $categoryId);
-        $products = $catalogService->prepareProducts($this->AppAuth, $products);
+        $products = $catalogService->getProducts($this->identity, $categoryId);
+        $products = $catalogService->prepareProducts($this->identity, $products);
 
         $this->set('products', $products);
 

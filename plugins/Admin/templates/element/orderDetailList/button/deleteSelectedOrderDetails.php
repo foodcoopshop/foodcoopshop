@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
-if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
+if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0 && (!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".ModalOrderDetailDelete.initBulk();"
     ]);

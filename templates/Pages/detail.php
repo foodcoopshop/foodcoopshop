@@ -40,7 +40,7 @@ if (!empty($page['children'])) {
     }
 }
 
-if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+if ($identity->isSuperadmin() || $identity->isAdmin()) {
     echo $this->Html->link(
         '<i class="fas fa-pencil-alt"></i>',
         $this->Slug->getPageEdit($page->id_page),

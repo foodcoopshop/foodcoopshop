@@ -135,10 +135,10 @@ if (count($payments) == 0) {
 
         echo '<td style="text-align:center;">';
         $deletablePaymentTypes = ['product'];
-        if ((!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) && Configure::read('app.isDepositEnabled')) {
+        if ((!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) && Configure::read('app.isDepositEnabled')) {
             $deletablePaymentTypes[] = 'deposit';
         }
-        if ($appAuth->isSuperadmin()) {
+        if ($identity->isSuperadmin()) {
             $deletablePaymentTypes[] = 'payback';
         }
         if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON && (is_null($payment['invoice_id']) || $payment['invoice_id'] == 0)) {

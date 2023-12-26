@@ -76,23 +76,23 @@ class ProductsController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'myImport':
-                return $this->AppAuth->isManufacturer();
+                return $this->identity->isManufacturer();
                 break;
             case 'generateProductCards':
-                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->identity->isSuperadmin() || $this->identity->isAdmin());
                 break;
             case 'editPurchasePrice':
             case 'calculateSellingPriceWithSurcharge':
-                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($this->identity->isSuperadmin() || $this->identity->isAdmin());
                 break;
             case 'import':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+                return $this->identity->isSuperadmin() || $this->identity->isAdmin();
                 break;
             case 'editPrice':
             case 'editDeposit':
             case 'editTax':
                 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-                    if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                    if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
                         if ((!empty($this->getRequest()->getData('productId')) && !$this->productExists())
                             || !$this->manufacturerIsProductOwner()) {
                             $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
@@ -101,7 +101,7 @@ class ProductsController extends AdminAppController
                         return true;
                     }
                 } else {
-                    if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()) {
+                    if ($this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isManufacturer()) {
                         if ((!empty($this->getRequest()->getData('productId')) && !$this->productExists())
                             || !$this->manufacturerIsProductOwner()) {
                             $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
@@ -116,14 +116,14 @@ class ProductsController extends AdminAppController
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
-                return $this->AppAuth->user();
+                return $this->identity->user();
                 break;
             default:
                 if (!empty($this->getRequest()->getData('productId')) && !$this->productExists()) {
                     $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                     return false;
                 }
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
                     return true;
                 }
                 if (!$this->manufacturerIsProductOwner()) {
@@ -149,7 +149,7 @@ class ProductsController extends AdminAppController
 
     protected function manufacturerIsProductOwner()
     {
-        if (!$this->AppAuth->isManufacturer()) {
+        if (!$this->identity->isManufacturer()) {
             return true;
         }
 
@@ -181,7 +181,7 @@ class ProductsController extends AdminAppController
                     'Products.id_product' => $productId
                 ]
             ])->first();
-            if (empty($product) || $product->id_manufacturer != $this->AppAuth->getManufacturerId()) {
+            if (empty($product) || $product->id_manufacturer != $this->identity->getManufacturerId()) {
                 $result = false;
                 break;
             }

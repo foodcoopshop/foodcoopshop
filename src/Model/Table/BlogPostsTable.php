@@ -2,11 +2,11 @@
 declare(strict_types=1);
 namespace App\Model\Table;
 
-use App\Traits\AppRequestAwareTrait;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
 use Cake\Validation\Validator;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,8 +24,6 @@ use Cake\Validation\Validator;
 class BlogPostsTable extends AppTable
 {
 
-    use AppRequestAwareTrait;
-    
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -78,7 +76,10 @@ class BlogPostsTable extends AppTable
         $conditions = [
             'BlogPosts.active' => APP_ON,
         ];
-        if (!$this->isLoggedIn()) {
+
+        $identity = (new IdentityService())->getIdentity();
+        
+        if (!$identity->isLoggedIn()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }

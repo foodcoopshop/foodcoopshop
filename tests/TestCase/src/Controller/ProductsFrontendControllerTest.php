@@ -182,6 +182,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
                 'id_product' => $productId,
             ],
         ])->first();
+        // TODO refactor this
         $nextDeliveryDay = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $this);
         $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
@@ -199,6 +200,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
                 'id_product' => $productId,
             ],
         ])->first();
+        // TODO refactor this
         $nextDeliveryDay = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $this);
 
         $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (3);';

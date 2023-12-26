@@ -59,19 +59,19 @@ class OrderDetailsController extends AdminAppController
         switch ($this->getRequest()->getParam('action')) {
             case 'profit';
             case 'editPurchasePrice';
-                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
+                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->identity->isSuperadmin();
                 break;
             case 'editProductName':
-                return $this->AppAuth->isSuperadmin();
+                return $this->identity->isSuperadmin();
                 break;
             case 'addFeedback';
                 if (!Configure::read('appDb.FCS_FEEDBACK_TO_PRODUCTS_ENABLED')) {
                     return false;
                 }
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer()) {
+                if ($this->identity->isCustomer()) {
                     $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
                     $orderDetail = $this->OrderDetail->find('all', [
                         'conditions' => [
@@ -79,7 +79,7 @@ class OrderDetailsController extends AdminAppController
                         ]
                     ])->first();
                     if (!empty($orderDetail)) {
-                        if ($orderDetail->id_customer == $this->AppAuth->getUserId()) {
+                        if ($orderDetail->id_customer == $this->identity->getUserId()) {
                             return true;
                         }
                     }
@@ -92,10 +92,10 @@ class OrderDetailsController extends AdminAppController
             case 'editProductAmount':
             case 'editProductQuantity':
             case 'editCustomer':
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
                     return true;
                 }
-                if ($this->getRequest()->getParam('action') == 'editCustomer' && ($this->AppAuth->isManufacturer() || $this->AppAuth->isCustomer())) {
+                if ($this->getRequest()->getParam('action') == 'editCustomer' && ($this->identity->isManufacturer() || $this->identity->isCustomer())) {
                     return false;
                 }
                 /*
@@ -114,7 +114,7 @@ class OrderDetailsController extends AdminAppController
                 }
                 return false;
             case 'index':
-                if ($this->AppAuth->isCustomer() && !Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
+                if ($this->identity->isCustomer() && !Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
                     return false;
                 }
                 return true;
@@ -130,7 +130,7 @@ class OrderDetailsController extends AdminAppController
      */
     private function checkOrderDetailIdAccess($orderDetailId)
     {
-        if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
+        if ($this->identity->isCustomer() || $this->identity->isManufacturer()) {
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $orderDetail = $this->OrderDetail->find('all', [
                 'conditions' => [
@@ -141,10 +141,10 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
             if (!empty($orderDetail)) {
-                if ($this->AppAuth->isManufacturer() && $orderDetail->product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
+                if ($this->identity->isManufacturer() && $orderDetail->product->id_manufacturer == $this->identity->getManufacturerId()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer() && !Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
+                if ($this->identity->isCustomer() && !Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $this->identity->getUserId()) {
                     return true;
                 }
             }
@@ -157,7 +157,7 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
         $order = $this->getRequest()->getQuery('order') ?? null;
         $pdfWriter = new OrderDetailsPdfWriterService();
-        $pdfWriter->prepareAndSetData($this->AppAuth, $pickupDay, $order);
+        $pdfWriter->prepareAndSetData($this->identity, $pickupDay, $order);
         die($pdfWriter->writeInline());
     }
 

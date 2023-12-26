@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 
-if (!($pricePerUnitEnabled && $appAuth->isSelfServiceModeByUrl())) {
+if (!($pricePerUnitEnabled && $orderCustomerService->isSelfServiceModeByUrl())) {
     return;
 }
 ?>

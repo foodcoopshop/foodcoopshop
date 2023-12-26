@@ -27,7 +27,7 @@ class TaxesController extends AdminAppController
     
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isSuperadmin();
+        return $this->identity->isSuperadmin();
     }
 
     public function add()
@@ -101,7 +101,7 @@ class TaxesController extends AdminAppController
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_tax_rate_{0}_has_been_{1}.', ['<b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $tax->id_tax, 'taxes', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $tax->id_tax);

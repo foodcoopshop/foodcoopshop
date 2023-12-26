@@ -78,36 +78,33 @@ class ActionLogsController extends AdminAppController
         }
 
         // manufacturers should only see their own product logs
-        if ($this->AppAuth->isManufacturer()) {
-            $conditions[] = '( (BlogPosts.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
-                ' OR Products.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
-                ' OR Payments.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
-                ' OR Manufacturers.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ') '.
+        if ($this->identity->isManufacturer()) {
+            $conditions[] = '( (BlogPosts.id_manufacturer = ' . $this->identity->getManufacturerId() .
+                ' OR Products.id_manufacturer = ' . $this->identity->getManufacturerId() .
+                ' OR Payments.id_manufacturer = ' . $this->identity->getManufacturerId() .
+                ' OR Manufacturers.id_manufacturer = ' . $this->identity->getManufacturerId() . ') '.
                 ' OR (ActionLogs.object_type = "order_details"
                      AND ActionLogs.object_id IN (
                          SELECT id_order_detail
                          FROM fcs_order_detail od
                           INNER JOIN fcs_product p ON p.id_product = od.product_id
-                         WHERE p.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
+                         WHERE p.id_manufacturer = ' . $this->identity->getManufacturerId() .
                     ') '.
                 ') '.
-              ' OR (ActionLogs.customer_id = ' .$this->AppAuth->getUserId().') )';
+              ' OR (ActionLogs.customer_id = ' .$this->identity->getUserId().') )';
 
-            if ($this->AppAuth->getManufacturerAnonymizeCustomers()) {
+            if ($this->identity->getManufacturerAnonymizeCustomers()) {
                 $conditions['ActionLogs.type NOT IN'] = $this->ActionLog->getHiddenTypesForManufacturersWithEnabledAnonymization();
             }
 
         }
 
         // customers are only allowed to see their own data
-        if ($this->AppAuth->isCustomer()) {
-            $customerNameForRegex = $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname');
-            if (Configure::read('app.customerMainNamePart') == 'lastname') {
-                $customerNameForRegex = $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname');
-            }
+        if ($this->identity->isCustomer()) {
+            $customerNameForRegex = $this->identity->name;
             $conditions[] = [
                 'OR' => [
-                    'Customers.id_customer' => $this->AppAuth->getUserId(),
+                    'Customers.id_customer' => $this->identity->getUserId(),
                     'ActionLogs.text REGEXP' => preg_quote($customerNameForRegex), // preg_quote needed to escape special characters like *
                 ],
             ];

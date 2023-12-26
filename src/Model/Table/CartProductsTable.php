@@ -7,6 +7,8 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use App\Model\Traits\CartValidatorTrait;
+use App\Services\OrderCustomerService;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -56,9 +58,11 @@ class CartProductsTable extends AppTable
      * @param int $amount
      * @return array || boolean
      */
-    public function add($appAuth, $productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
+    public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
     {
 
+        $identity = (new IdentityService())->getIdentity();
+        $orderCustomerService = new OrderCustomerService();
         $productsTable = FactoryLocator::get('Table')->get('Products');
         $initialProductId = $productsTable->getCompositeProductIdAndAttributeId($productId, $attributeId);
 
@@ -92,7 +96,7 @@ class CartProductsTable extends AppTable
         ])
         ->first();
 
-        $existingCartProduct = $appAuth->CartService->getProduct($initialProductId);
+        $existingCartProduct = $identity->CartService->getProduct($initialProductId);
         $combinedAmount = $amount;
         if ($existingCartProduct) {
             $combinedAmount = $existingCartProduct['amount'] + $amount;
@@ -107,7 +111,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $product->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $appAuth);
+        $product->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $orderCustomerService);
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
@@ -161,7 +165,7 @@ class CartProductsTable extends AppTable
             $product->tax->rate ?? 0,
         );
 
-        $result = $this->validateMinimalCreditBalance($appAuth, $prices['gross_with_deposit']);
+        $result = $this->validateMinimalCreditBalance($identity, $prices['gross_with_deposit']);
         if ($result !== true) {
             return [
                 'status' => 0,
@@ -200,7 +204,7 @@ class CartProductsTable extends AppTable
                         ];
                     }
 
-                    $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $attribute, 'unit_product_attribute', $orderedQuantityInUnits);
+                    $result = $this->validateQuantityInUnitsForSelfServiceMode($orderCustomerService, $attribute, 'unit_product_attribute', $orderedQuantityInUnits);
                     if ($result !== true) {
                         return [
                             'status' => 0,
@@ -232,7 +236,7 @@ class CartProductsTable extends AppTable
         }
 
         $message = $this->isManufacturerActiveOrManufacturerHasDeliveryBreak(
-            $appAuth,
+            $orderCustomerService,
             $productsTable,
             $product->manufacturer->active,
             $product->manufacturer->no_delivery_days,
@@ -250,7 +254,7 @@ class CartProductsTable extends AppTable
         }
 
         $message = $this->isProductBulkOrderStillPossible(
-            $appAuth,
+            $identity,
             $product->manufacturer->stock_management_enabled,
             $product->is_stock_product,
             $product->delivery_rhythm_type,
@@ -265,7 +269,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $message = $this->isGlobalDeliveryBreakEnabled($appAuth, $productsTable, $product->next_delivery_day, $product->name);
+        $message = $this->isGlobalDeliveryBreakEnabled($orderCustomerService, $productsTable, $product->next_delivery_day, $product->name);
         if ($message !== true) {
             return [
                 'status' => 0,
@@ -274,7 +278,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits);
+        $result = $this->validateQuantityInUnitsForSelfServiceMode($orderCustomerService, $product, 'unit_product', $orderedQuantityInUnits);
         if ($result !== true) {
             return [
                 'status' => 0,
@@ -283,7 +287,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($appAuth, $product->next_delivery_day, $product->name);
+        $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($orderCustomerService, $product->next_delivery_day, $product->name);
         if ($message !== true) {
             return [
                 'status' => 0,
@@ -293,8 +297,8 @@ class CartProductsTable extends AppTable
         }
 
         // update amount if cart product already exists
-        $cart = $appAuth->getCart();
-        $appAuth->setCart($cart);
+        $cart = $identity->getCart();
+        $identity->setCart($cart);
 
         $cartProduct2save = [
             'id_product' => $productId,
@@ -330,11 +334,11 @@ class CartProductsTable extends AppTable
 
     }
 
-    public function setPickupDays($cartProducts, $customerId, $cartType, $appAuth)
+    public function setPickupDays($cartProducts, $customerId, $orderCustomerService)
     {
         $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
         foreach($cartProducts as &$cartProduct) {
-            $cartProduct->pickup_day = DeliveryRhythmService::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
+            $cartProduct->pickup_day = DeliveryRhythmService::getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
         }
 
         $pickupDays = [];

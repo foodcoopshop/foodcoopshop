@@ -50,13 +50,13 @@ class PagesController extends FrontendController
                         'Pages.active' => APP_ON
                     ]
                 ])->first();
-                if (!empty($page) && !$this->AppAuth->user() && $page->is_private) {
-                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
+                if (!empty($page) && !$this->identity->user() && $page->is_private) {
+                    $this->identity->deny($this->getRequest()->getParam('action'));
                 }
                 break;
             case 'discourseSso':
-                if (!$this->AppAuth->user()) {
-                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
+                if (!$this->identity->user()) {
+                    $this->identity->deny($this->getRequest()->getParam('action'));
                 }
                 break;
         }
@@ -66,21 +66,18 @@ class PagesController extends FrontendController
     {
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $this->BlogPost->setAppRequest($this->request);
         $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $this->Slider->setAppRequest($this->request);
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
 
         $products = [];
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->user()) {
             $catalogService = new CatalogService();
-            $catalogService->setAppRequest($this->request);
             $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
             $products = $catalogService->prepareProducts($products);
         }
@@ -116,7 +113,7 @@ class PagesController extends FrontendController
         }
 
         $conditionsForChildren = ['Pages.active' => APP_ON];
-        if (!$this->AppAuth->user()) {
+        if (!$this->identity->user()) {
             $conditionsForChildren['Pages.is_private'] = APP_OFF;
         }
         $page['children'] = $this->Page->find('children', [
@@ -142,7 +139,7 @@ class PagesController extends FrontendController
 
     public function discourseSso()
     {
-        $user = $this->AppAuth->user();
+        $user = $this->identity->user();
         if (!$user) {
             die('No User');
         }

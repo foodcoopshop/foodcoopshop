@@ -103,7 +103,7 @@ trait EditPriceTrait {
             $newPrice
         ]);
 
-        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        $this->ActionLog->customSave('product_price_changed', $this->identity->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->set([

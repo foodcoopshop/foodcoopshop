@@ -22,13 +22,13 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 
-if (!empty($appAuth->CartService->getProducts())) {
+if (!empty($identity->CartService->getProducts())) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Cart.scrollToCartFinishButton();"
     ]);
 }
 
-if (!$appAuth->termsOfUseAccepted()) {
+if (!$identity->termsOfUseAccepted()) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace') . ".Helper.disableButton($('#CartsDetailForm button.btn-success'));"
     ]);
@@ -48,10 +48,10 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     <p class="no-products"><?php echo __('Your_cart_is_empty'); ?>.</p>
     <p class="products"></p>
 
-    <?php if (!empty($appAuth->CartService->getProducts())) { ?>
+    <?php if (!empty($identity->CartService->getProducts())) { ?>
 
         <div class="sums-wrapper">
-            <?php if ($appAuth->CartService->getDepositSum() > 0) { ?>
+            <?php if ($identity->CartService->getDepositSum() > 0) { ?>
                 <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods');?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
                 <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             <?php } ?>
@@ -61,7 +61,7 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
 
         <p class="tax-sum-wrapper"><?php echo __('Including_vat'); ?>: <span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
 
-        <?php if ($appAuth->CartService->getProductsWithUnitCount() > 0) { ?>
+        <?php if ($identity->CartService->getProductsWithUnitCount() > 0) { ?>
             <p>
                 <?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
             </p>

@@ -12,6 +12,7 @@ use App\Controller\Component\StringComponent;
 use App\Services\DeliveryRhythmService;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Model\Table\CartsTable;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -58,8 +59,9 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function buildElementProductCacheKey($product, $appAuth, $request)
+    public function buildElementProductCacheKey($product, $identity, $request)
     {
+        $orderCustomerService = new OrderCustomerService();
         $orderCustomer = $request->getSession()->read('Auth.orderCustomer');
         if (empty($orderCustomer)) {
             $orderCustomer = $request->getSession()->read('Auth.User');
@@ -67,11 +69,11 @@ class MyHtmlHelper extends HtmlHelper
         $elementCacheKey = join('_', [
             'product',
             'productId' => $product['id_product'],
-            'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
-            'isManufacturer-' . ($appAuth->isManufacturer() ? 1 : 0),
-            'isSuperadmin-' . ($appAuth->isSuperadmin() ? 1 : 0),
-            'isSelfServiceModeByUrl-' . ($appAuth->isSelfServiceModeByUrl() ? 1 : 0),
-            'isOrderForDifferentCustomerMode-' . ($appAuth->isOrderForDifferentCustomerMode() ? 1 : 0),
+            'isLoggedIn-' . (empty($identity->user() ? 0 : 1)),
+            'isManufacturer-' . ($identity->isManufacturer() ? 1 : 0),
+            'isSuperadmin-' . ($identity->isSuperadmin() ? 1 : 0),
+            'isSelfServiceModeByUrl-' . ($orderCustomerService->isSelfServiceModeByUrl() ? 1 : 0),
+            'isOrderForDifferentCustomerMode-' . ($orderCustomerService->isOrderForDifferentCustomerMode() ? 1 : 0),
             $orderCustomer['shopping_price'] ?? 'SP',
             'date-' . date('Y-m-d'),
         ]);
@@ -632,7 +634,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getPaymentTexts()[$paymentType];
     }
 
-    public function getSuperadminProductPaymentTexts($appAuth)
+    public function getSuperadminProductPaymentTexts($identity)
     {
         $paymentTexts = [
             'product' => self::getPaymentText('product'),

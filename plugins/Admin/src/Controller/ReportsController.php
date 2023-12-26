@@ -34,10 +34,10 @@ class ReportsController extends AdminAppController
         if (isset($this->getRequest()->getParam('pass')[0])) {
             if($this->getRequest()->getParam('pass')[0] == 'deposit') {
                 // allow deposit for cash configuration
-                return $this->AppAuth->isSuperadmin();
+                return $this->identity->isSuperadmin();
             }
         }
-        return $this->AppAuth->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();
+        return $this->identity->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();
     }
 
     public function beforeFilter(EventInterface $event)
@@ -112,7 +112,7 @@ class ReportsController extends AdminAppController
                             'approval' => APP_ON,
                             'id_customer' => $csvPayment->id_customer ?? $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
-                            'created_by' => $this->AppAuth->getUserId(),
+                            'created_by' => $this->identity->getUserId(),
                         ],
                         [
                             'validate' => 'csvImportSave',
@@ -159,7 +159,7 @@ class ReportsController extends AdminAppController
                                         'customer' => $customer,
                                         'newsletterCustomer' => $customer,
                                         'csvPayment' => $csvPayment,
-                                        'appAuth' => $this->AppAuth,
+                                        'identity' => $this->identity,
                                     ]);
                                     $email->addToQueue();
                                 }
@@ -180,7 +180,7 @@ class ReportsController extends AdminAppController
                             ]);
                             $this->Flash->success($message);
                             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-                            $this->ActionLog->customSave('payment_product_csv_imported', $this->AppAuth->getUserId(), 0, 'payments', $message);
+                            $this->ActionLog->customSave('payment_product_csv_imported', $this->identity->getUserId(), 0, 'payments', $message);
                             $this->redirect($this->referer());
                         }
 

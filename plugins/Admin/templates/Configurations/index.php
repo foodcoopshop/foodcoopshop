@@ -100,7 +100,7 @@ $this->element('addScript', [
 
                 echo match($configuration->type) {
                     'number', 'text', 'textarea', 'textarea_big' => $configuration->value,
-                    'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value, $appAuth),
+                    'dropdown' => $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value, $identity),
                     'multiple_dropdown' => $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value),
                     'boolean' => (bool) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no'),
                 };

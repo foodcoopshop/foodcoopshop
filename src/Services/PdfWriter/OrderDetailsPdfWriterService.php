@@ -32,11 +32,11 @@ class OrderDetailsPdfWriterService extends PdfWriterService
         $this->setPdfLibrary(new ListTcpdfService());
     }
 
-    public function prepareAndSetData($appAuth, $pickupDay, $order)
+    public function prepareAndSetData($identity, $pickupDay, $order)
     {
 
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($appAuth, '', '', '', $pickupDay, '', '');
+        $odParams = $this->OrderDetail->getOrderDetailParams($identity, '', '', '', $pickupDay, '', '');
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([

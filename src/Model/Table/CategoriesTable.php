@@ -7,7 +7,6 @@ use App\Model\Traits\ProductCacheClearAfterSaveAndDeleteTrait;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use App\Services\CatalogService;
-use App\Traits\AppRequestAwareTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,7 +25,6 @@ class CategoriesTable extends AppTable
 {
 
     use ProductCacheClearAfterSaveAndDeleteTrait;
-    use AppRequestAwareTrait;
 
     public function initialize(array $config): void
     {
@@ -124,7 +122,7 @@ class CategoriesTable extends AppTable
         return $categories;
     }
 
-    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $appAuth=null, $showProductCount=false)
+    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false, $identity=null, $showProductCount=false)
     {
         $conditions = [];
         if ($excludeCategoryId) {
@@ -144,7 +142,7 @@ class CategoriesTable extends AppTable
         if ($showProductCount) {
             $catalogService = new CatalogService();
             foreach($flattenedCategories as $categoryId => $category) {
-                $productCount = $catalogService->getProducts($appAuth, $categoryId, false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));	
+                $productCount = $catalogService->getProducts($identity, $categoryId, false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));	
                 $flattenedCategories[$categoryId] .= ' (' . $productCount . ')';
             }
         }
@@ -168,7 +166,6 @@ class CategoriesTable extends AppTable
     private function buildItemForTree($item, $index)
     {
         $catalogService = new CatalogService();
-        $catalogService->setAppRequest($this->appRequest);
         $productCount = $catalogService->getProducts($item->id_category, false, '', 0, true);
 
         $tmpMenuItem = [

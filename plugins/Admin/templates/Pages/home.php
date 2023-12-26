@@ -34,7 +34,7 @@ echo $this->Flash->render();
 echo $this->Flash->render('auth');
 echo '<br /><br />';
 $adminNameGreeting = __d('admin', 'to_the_admin_area');
-if ($appAuth->isManufacturer()) {
+if ($identity->isManufacturer()) {
     $adminNameGreeting = __d('admin', 'to_the_manufacturer_area');
 }
 echo '<h1>'.__d('admin', 'Welcome') . '<br />' . $adminNameGreeting . '</h1>';

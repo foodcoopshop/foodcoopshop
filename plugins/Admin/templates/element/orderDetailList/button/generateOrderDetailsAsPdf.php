@@ -26,7 +26,7 @@ if (count($orderDetails) == 0) {
         Configure::read('app.jsNamespace').".Helper.disableButton($('.generate-order-details-as-pdf'));"
     ]);
 }
-if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
+if (count($pickupDay) == 1 && $groupBy == 'customer' && ($identity->isSuperadmin() || $identity->isAdmin())) {
     echo '<a href="/admin/order-details/orderDetailsAsPdf.pdf?'.$orderParam.'pickupDay='.$pickupDay[0].'" target="blank" class="generate-order-details-as-pdf dropdown-item"><i class="fa-fw far fa-file-pdf"></i> '.__d('admin', 'Orders_as_pdf').'</a>';
 }
 

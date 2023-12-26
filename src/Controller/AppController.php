@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Services\OrderCustomerService;
+use App\Services\IdentityService;
 use App\Services\OutputFilter\OutputFilterService;
-use App\Traits\AppRequestAwareTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
@@ -25,13 +26,10 @@ use hisorange\BrowserDetect\Parser as Browser;
  */
 class AppController extends Controller
 {
-
-    use AppRequestAwareTrait;
-
+#
     public $protectEmailAddresses = false;
-    public $loggedUser = null;
+    public $identity = null;
     
-    protected $AppAuth;
     protected $Customer;
     protected $Manufacturer;
 
@@ -67,24 +65,17 @@ class AppController extends Controller
         ];
     }
 
-    public function beforeRender(EventInterface $event)
-    {
-        parent::beforeRender($event);
-        $this->set('appAuth', $this->AppAuth);
-    }
-
     public function beforeFilter(EventInterface $event)
     {
 
-        $this->loggedUser = $this->request->getAttribute('identity');
-        $this->set('loggedUser', $this->loggedUser);
+        $identity = (new IdentityService())->getIdentity();
+        $this->identity = $identity;
+        $this->set('identity', $identity);
 
-        $this->setAppRequest($this->request);
-        $this->set('isOrderForDifferentCustomerMode', $this->isOrderForDifferentCustomerMode());
-        $this->set('isSelfServiceModeByUrl', $this->isSelfServiceModeByUrl());
-        $this->set('isSelfServiceModeByReferer', $this->isSelfServiceModeByReferer());
+        $orderCustomerService = new OrderCustomerService();
+        $this->set('orderCustomerService', $orderCustomerService);
 
-        if (!$this->getRequest()->is('json') && !$this->isOrderForDifferentCustomerMode()) {
+        if (!$this->getRequest()->is('json') && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
 
@@ -95,18 +86,16 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
 
-        if (0 && $this->AppAuth->isManufacturer()) {
+        if ($identity->isManufacturer()) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
-                    'Manufacturers.id_manufacturer' => $this->AppAuth->getManufacturerId()
+                    'Manufacturers.id_manufacturer' => $identity->getManufacturerId()
                 ]
             ])->first();
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
-
-        //$this->AppAuth->CartService->setController($this);
 
         parent::beforeFilter($event);
     }
@@ -130,21 +119,23 @@ class AppController extends Controller
      * keep this method in a controller - does not work with AppAuthComponent::login
      * updates login data (after profile change for customer and manufacturer)
      */
+    /*
     protected function renewAuthSession()
     {
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
-                'Customers.id_customer' => $this->AppAuth->getUserId()
+                'Customers.id_customer' => $this->identity->getUserId()
             ],
             'contain' => [
                 'AddressCustomers'
             ]
         ])->first();
         if (!empty($customer)) {
-            $this->loggedUser = $customer;
+            $this->identity = $customer; ???
         }
     }
+    */
 
     public function getPreparedReferer()
     {
@@ -184,7 +175,7 @@ class AppController extends Controller
     }
 
     /**
-     * needs to be implemented if $this->AppAuth->authorize = ['Controller'] is used
+     * needs to be implemented if $this->identity->authorize = ['Controller'] is used
      */
     public function isAuthorized($user)
     {

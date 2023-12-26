@@ -42,8 +42,8 @@ trait IndexTrait {
         }
 
         // always filter by manufacturer id so that no other products than the own are shown
-        if ($this->AppAuth->isManufacturer()) {
-            $manufacturerId = $this->AppAuth->getManufacturerId();
+        if ($this->identity->isManufacturer()) {
+            $manufacturerId = $this->identity->getManufacturerId();
         }
         $this->set('manufacturerId', $manufacturerId);
 
@@ -102,12 +102,12 @@ trait IndexTrait {
             $this->set('storageLocationsForForDropdown', $storageLocationsForForDropdown);
         }
 
-        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
+        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->identity->isManufacturer()) {
             $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
             $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->addHelper('Network.Network');
-            $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
-            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->getManufacturerEnabledSyncDomains());
+            $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->identity);
+            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
             $this->set('showSyncProductsButton', $showSyncProductsButton);
         }

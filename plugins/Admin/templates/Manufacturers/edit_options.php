@@ -45,7 +45,7 @@ $this->element('addScript', [
 <?php
 
 $url = $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer);
-if ($appAuth->isManufacturer()) {
+if ($identity->isManufacturer()) {
     $url = $this->Slug->getManufacturerMyOptions();
 }
 echo $this->Form->create($manufacturer, [
@@ -61,7 +61,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
     echo $this->Form->control('Manufacturers.active', [
         'label' => ''.__d('admin', 'Active').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer).').'</span>',
-        'disabled' => ($appAuth->isManufacturer() ? 'disabled' : ''),
+        'disabled' => ($identity->isManufacturer() ? 'disabled' : ''),
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -92,7 +92,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     echo '<h2>'.__d('admin', 'Notifications').'</h2>';
 
     echo $this->Form->control('Manufacturers.send_order_list', [
-        'label' => __d('admin', 'Order_lists_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_the_orders_per_email.') . '</span>',
+        'label' => __d('admin', 'Order_lists_by_email').' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_the_orders_per_email.') . '</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -105,7 +105,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
     if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo $this->Form->control('Manufacturers.send_invoice', [
-            'label' => __d('admin', 'Invoices_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_invoice_every_month_by_email.').'</span>',
+            'label' => __d('admin', 'Invoices_by_email').' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_invoice_every_month_by_email.').'</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
@@ -114,7 +114,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
     if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
         echo $this->Form->control('Manufacturers.send_delivery_notes', [
-            'label' => __d('admin', 'Delivery_notes_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_delivery_note_every_month_by_email.').'</span>',
+            'label' => __d('admin', 'Delivery_notes_by_email').' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_delivery_note_every_month_by_email.').'</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
@@ -122,7 +122,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     }
 
     echo $this->Form->control('Manufacturers.send_ordered_product_deleted_notification', [
-        'label' => __d('admin', 'Cancellations').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_cancellation.').'</span>',
+        'label' => __d('admin', 'Cancellations').' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_cancellation.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -135,14 +135,14 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         $changeQuantityOrPriceInfoText = __d('admin', 'to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product.');
     }
     echo $this->Form->control('Manufacturers.send_ordered_product_price_changed_notification', [
-        'label' => $changeQuantityOrPriceLabel . ' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . $changeQuantityOrPriceInfoText.'</span>',
+        'label' => $changeQuantityOrPriceLabel . ' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . $changeQuantityOrPriceInfoText.'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
     echo $this->Form->control('Manufacturers.send_ordered_product_amount_changed_notification', [
-        'label' => __d('admin', 'Adaptions_of_the_ordered_amount').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product.').'</span>',
+        'label' => __d('admin', 'Adaptions_of_the_ordered_amount').' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -150,7 +150,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
     if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo $this->Form->control('Manufacturers.send_instant_order_notification', [
-            'label' => __d('admin', 'Instant_orders').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' .__d('admin', 'to_receive_an_email_on_every_instant_order.').'</span>',
+            'label' => __d('admin', 'Instant_orders').' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' .__d('admin', 'to_receive_an_email_on_every_instant_order.').'</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
@@ -159,7 +159,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
     echo '<h2>'.__d('admin', 'Other_settings').'</h2>';
 
-    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
+    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && !$identity->isManufacturer()) {
         echo $this->Form->control('Manufacturers.variable_member_fee', [
         'label' => __d('admin', 'Variable_member_fee_in').' % <span class="after small">'.__d('admin', 'The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed.').'</span>',
         'class' => 'short',
@@ -193,11 +193,11 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
     if ($manufacturer->stock_management_enabled) {
         echo $this->Form->control('Manufacturers.send_product_sold_out_limit_reached_for_manufacturer', [
-            'label' => __d('admin', 'Sold_out_limit_reached_notification_for_manufacturer?').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',
+            'label' => __d('admin', 'Sold_out_limit_reached_notification_for_manufacturer?').' <span class="after small">'.($identity->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
-        if (!$appAuth->isManufacturer()) {
+        if (!$identity->isManufacturer()) {
             echo $this->Form->control('Manufacturers.send_product_sold_out_limit_reached_for_contact_person', [
                 'label' => __d('admin', 'Sold_out_limit_reached_notification_for_contact_person?').' <span class="after small">'. __d('admin', 'The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',
                 'type' => 'checkbox',
@@ -211,7 +211,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         ]);
     }
 
-    if (!$appAuth->isManufacturer()) {
+    if (!$identity->isManufacturer()) {
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($manufacturer->id_customer != '' ? $manufacturer->id_customer : '0') . ", 0, 0, 'select#manufacturers-id-customer');"
@@ -242,7 +242,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         echo '<div class="sc"></div>';
     }
 
-    if (!$appAuth->isManufacturer()) {
+    if (!$identity->isManufacturer()) {
         echo $this->Form->control('Manufacturers.anonymize_customers', [
         'label' => __d('admin', 'Anonymize_customers?').' <span class="after small">'.__d('admin', 'Customer_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer.').'</a></span>',
         'type' => 'checkbox',

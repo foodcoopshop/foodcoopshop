@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-if ($appAuth->isOrderForDifferentCustomerMode()) {
+if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
     return false;
 }
 

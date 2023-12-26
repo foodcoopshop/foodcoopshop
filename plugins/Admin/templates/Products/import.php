@@ -83,7 +83,7 @@ $this->element('addScript', [
 
         echo $this->MyHtml->link(
             '<i class="fas fa-arrow-left"></i> ' . __d('admin', 'Back_to_product_page'),
-            $this->Slug->getProductAdmin($appAuth->isManufacturer() ? '' : $manufacturer->id_manufacturer),
+            $this->Slug->getProductAdmin($identity->isManufacturer() ? '' : $manufacturer->id_manufacturer),
             [
                 'class' => 'btn btn-outline-light',
                 'escape' => false,

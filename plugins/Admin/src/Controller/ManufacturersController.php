@@ -48,13 +48,13 @@ class ManufacturersController extends AdminAppController
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {
-            'profile', 'myOptions' => $this->AppAuth->isManufacturer(),
-            'index', 'add' => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+            'profile', 'myOptions' => $this->identity->isManufacturer(),
+            'index', 'add' => $this->identity->isSuperadmin() || $this->identity->isAdmin(),
             'edit', 'editOptions', 'getOrderListByProduct', 'getOrderListByCustomer', 'getInvoice' => 
-                $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
-            'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin(),
-            'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()),
-             default =>  $this->AppAuth->user(),
+                $this->identity->isSuperadmin() || $this->identity->isAdmin(),
+            'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->identity->isSuperadmin(),
+            'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->identity->isSuperadmin() || $this->identity->isAdmin()),
+             default =>  $this->identity->user(),
         };
     }
 
@@ -66,7 +66,7 @@ class ManufacturersController extends AdminAppController
 
     public function profile()
     {
-        $this->edit($this->AppAuth->getManufacturerId());
+        $this->edit($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
         $this->set('title_for_layout', __d('admin', 'Edit_profile'));
         if (empty($this->getRequest()->getData())) {
@@ -201,7 +201,7 @@ class ManufacturersController extends AdminAppController
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
@@ -236,8 +236,8 @@ class ManufacturersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        if ($this->AppAuth->isManufacturer()) {
-            $manufacturerId = $this->AppAuth->getManufacturerId();
+        if ($this->identity->isManufacturer()) {
+            $manufacturerId = $this->identity->getManufacturerId();
         } else {
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
@@ -331,7 +331,7 @@ class ManufacturersController extends AdminAppController
 
         foreach ($manufacturers as $manufacturer) {
             $catalogService = new CatalogService();
-            $manufacturer->product_count = $catalogService->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
+            $manufacturer->product_count = $catalogService->getProductsByManufacturerId($this->identity, $manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
@@ -369,7 +369,7 @@ class ManufacturersController extends AdminAppController
 
     public function myOptions()
     {
-        $this->editOptions($this->AppAuth->getManufacturerId());
+        $this->editOptions($this->identity->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
         $this->set('title_for_layout', __d('admin', 'Edit_settings'));
         if (empty($this->getRequest()->getData())) {
@@ -462,7 +462,7 @@ class ManufacturersController extends AdminAppController
             $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
 
-        if (!$this->AppAuth->isManufacturer()) {
+        if (!$this->identity->isManufacturer()) {
             $this->Customer = $this->getTableLocator()->get('Customers');
         }
 
@@ -472,7 +472,7 @@ class ManufacturersController extends AdminAppController
             $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->addHelper('Network.Network');
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
-            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
+            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->identity);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
 
@@ -483,7 +483,7 @@ class ManufacturersController extends AdminAppController
 
         // if checkbox is disabled, false is returned even if checkbox is active
         // as i could not find out how to unset a specific request data index, override with value from database
-        if ($this->AppAuth->isManufacturer()) {
+        if ($this->identity->isManufacturer()) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
         }
 
@@ -505,7 +505,7 @@ class ManufacturersController extends AdminAppController
             $this->render('edit_options');
         } else {
             // values that are the same as default values => null
-            if (!$this->AppAuth->isManufacturer()) {
+            if (!$this->identity->isManufacturer()) {
                 // only admins and superadmins are allowed to change variable_member_fee
                 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->getRequest()->getData('Manufacturers.variable_member_fee') == Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
                     $this->setRequest($this->getRequest()->withoutData('Manufacturers.variable_member_fee'));
@@ -547,7 +547,7 @@ class ManufacturersController extends AdminAppController
             }
 
             // remove post data that could theoretically be added
-            if ($this->AppAuth->isManufacturer()) {
+            if ($this->identity->isManufacturer()) {
                 $this->setRequest($this->getRequest()->withoutData('Manufacturers.variable_member_fee'));
                 $this->setRequest($this->getRequest()->withoutData('Manufacturers.id_customer'));
             }
@@ -574,7 +574,7 @@ class ManufacturersController extends AdminAppController
             $this->Flash->success($message);
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $this->ActionLog->customSave('manufacturer_options_changed', $this->identity->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
             $this->redirect($this->getPreparedReferer());
         }

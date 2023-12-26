@@ -98,9 +98,9 @@ class FileAndEmailLog extends FileLog
         }
 
         $session = new AppSession();
-        $loggedUser = [];
+        $identity = [];
         if ($session->read('Auth.User.id_customer') !== null) {
-            $loggedUser = $session->read('Auth');
+            $identity = $session->read('Auth');
         }
 
         $subject = Configure::read('App.fullBaseUrl') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
@@ -112,7 +112,7 @@ class FileAndEmailLog extends FileLog
             $email->setSubject($subject)
             ->setViewVars([
                 'message' => $message,
-                'loggedUser' => $loggedUser,
+                'identity' => $identity,
             ])
             ->send();
         } catch (SocketException $e) {

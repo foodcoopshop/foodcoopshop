@@ -80,7 +80,7 @@ trait EditCategoriesTrait {
 
         $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+        $this->ActionLog->customSave('product_categories_changed', $this->identity->getUserId(), $productId, 'products', $messageString);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 

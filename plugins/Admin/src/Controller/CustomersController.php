@@ -42,12 +42,12 @@ class CustomersController extends AdminAppController
     public function isAuthorized($user)
     {
         return match($this->getRequest()->getParam('action')) {
-            'generateMemberCards' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()),
-            'generateMyMemberCard' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer()),
-            'creditBalanceSum', 'delete' =>  $this->AppAuth->isSuperadmin(),
-            'profile' => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer(),
-            'changePassword', 'ajaxGetCustomersForDropdown' => $this->AppAuth->user(),
-             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
+            'generateMemberCards' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->identity->isSuperadmin() || $this->identity->isAdmin()),
+            'generateMyMemberCard' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isCustomer()),
+            'creditBalanceSum', 'delete' =>  $this->identity->isSuperadmin(),
+            'profile' => $this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isCustomer(),
+            'changePassword', 'ajaxGetCustomersForDropdown' => $this->identity->isLoggedIn(),
+             default => $this->identity->isSuperadmin() || $this->identity->isAdmin(),
         };
     }
 
@@ -59,11 +59,11 @@ class CustomersController extends AdminAppController
         $includeOfflineCustomers = (bool) $includeOfflineCustomers;
 
         $conditions = [];
-        if ($this->AppAuth->isCustomer()) {
-            $conditions = ['Customers.id_customer' => $this->AppAuth->getUserId()];
+        if ($this->identity->isCustomer()) {
+            $conditions = ['Customers.id_customer' => $this->identity->getUserId()];
         }
 
-        if ($this->AppAuth->isSuperadmin()) {
+        if ($this->identity->isSuperadmin()) {
             $includeOfflineCustomers = true;
         }
 
@@ -89,7 +89,7 @@ class CustomersController extends AdminAppController
 
     public function generateMyMemberCard()
     {
-        $customerId = $this->AppAuth->getUserId();
+        $customerId = $this->identity->getUserId();
         $pdfWriter = new MyMemberCardPdfWriterService();
         $customers = $pdfWriter->getMemberCardCustomerData($customerId);
         $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
@@ -118,7 +118,7 @@ class CustomersController extends AdminAppController
 
         $this->RequestHandler->renderAs($this, 'json');
 
-        if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
+        if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->identity->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
             $this->log($message);
             $this->set([
@@ -137,7 +137,7 @@ class CustomersController extends AdminAppController
         ])->first();
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
-        if ($this->AppAuth->getGroupId() < $oldCustomer->id_default_group) {
+        if ($this->identity->getGroupId() < $oldCustomer->id_default_group) {
             $message = 'logged user has lower groupId than the user he wants to edit: customerId: ' . $oldCustomer->id_customer . ', groupId: ' . $oldCustomer->id_default_group;
             $this->log($message);
             $this->set([
@@ -163,7 +163,7 @@ class CustomersController extends AdminAppController
         ]);
         $this->Flash->success($messageString);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
+        $this->ActionLog->customSave('customer_group_changed', $this->identity->getUserId(), $customerId, 'customers', $messageString);
 
         $this->set([
             'status' => 1,
@@ -178,7 +178,7 @@ class CustomersController extends AdminAppController
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
-                'Customers.id_customer' => $this->AppAuth->getUserId()
+                'Customers.id_customer' => $this->identity->getUserId()
             ]
         ])->first();
 
@@ -209,20 +209,20 @@ class CustomersController extends AdminAppController
                     )
                 );
 
-            if ($this->AppAuth->isManufacturer()) {
-                $message = __d('admin', 'The_manufacturer_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getManufacturerName() . '</b>']);
+            if ($this->identity->isManufacturer()) {
+                $message = __d('admin', 'The_manufacturer_{0}_has_changed_his_password.', ['<b>' . $this->identity->getManufacturerName() . '</b>']);
                 $actionLogType = 'manufacturer_password_changed';
-                $actionLogId = $this->AppAuth->getManufacturerId();
+                $actionLogId = $this->identity->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->AppAuth->getUsername() . '</b>']);
+                $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->identity->getUsername() . '</b>']);
                 $actionLogType = 'customer_password_changed';
-                $actionLogId = $this->AppAuth->getUserId();
+                $actionLogId = $this->identity->getUserId();
                 $actionLogModel = 'customers';
             }
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
             $this->redirect($this->referer());
         }
@@ -235,9 +235,9 @@ class CustomersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
+        $isOwnProfile = $this->identity->getUserId() == $customerId;
 
-        if (!$this->AppAuth->isSuperadmin()) {
+        if (!$this->identity->isSuperadmin()) {
             throw new ForbiddenException('deleting user ' . $customerId . 'denied');
         }
 
@@ -324,14 +324,14 @@ class CustomersController extends AdminAppController
             $message = __d('admin', 'Your_account_has_been_deleted_successfully.');
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
         } else {
-            $message = __d('admin', '{0}_has_deleted_an_account.', [$this->AppAuth->getUsername()]);
+            $message = __d('admin', '{0}_has_deleted_an_account.', [$this->identity->getUsername()]);
             $redirectUrl = $this->getRequest()->getData('referer');
         }
-        $this->ActionLog->customSave('customer_deleted', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
+        $this->ActionLog->customSave('customer_deleted', $this->identity->getUserId(), $customer->id_customer, 'customers', $message);
         $this->Flash->success($message);
 
         if ($isOwnProfile) {
-            $this->AppAuth->logout();
+            $this->identity->logout();
         }
 
         $this->set([
@@ -346,7 +346,7 @@ class CustomersController extends AdminAppController
     public function profile()
     {
         $this->set('title_for_layout', __d('admin', 'Edit_my_profile'));
-        $this->_processForm($this->AppAuth->getUserId());
+        $this->_processForm($this->identity->getUserId());
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
@@ -367,7 +367,7 @@ class CustomersController extends AdminAppController
     private function _processForm($customerId)
     {
 
-        $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
+        $isOwnProfile = $this->identity->getUserId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
 
         $this->Customer = $this->getTableLocator()->get('Customers');
@@ -441,7 +441,7 @@ class CustomersController extends AdminAppController
             } else {
                 $message = __d('admin', 'The_profile_of_{0}_was_changed.', ['<b>' . $customer->name . '</b>']);
             }
-            $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
+            $this->ActionLog->customSave('customer_profile_changed', $this->identity->getUserId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $customer->id_customer);
@@ -499,7 +499,7 @@ class CustomersController extends AdminAppController
             $email->setTo($customer->email)
             ->setSubject(__d('admin', 'Your_account_was_activated'))
             ->setViewVars([
-                'appAuth' => $this->AppAuth,
+                'identity' => $this->identity,
                 'data' => $customer,
                 'newsletterCustomer' => $customer,
                 'newPassword' => $newPassword,
@@ -516,7 +516,7 @@ class CustomersController extends AdminAppController
         $this->Flash->success($message);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $customerId, 'customer', $message);
+        $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
     }
@@ -550,7 +550,7 @@ class CustomersController extends AdminAppController
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
+        $this->ActionLog->customSave('customer_comment_changed', $this->identity->getUserId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
 
         $this->set([
             'status' => 1,
