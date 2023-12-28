@@ -14,6 +14,7 @@ use App\Services\DeliveryRhythmService;
 use Admin\Traits\UploadTrait;
 use App\Services\CatalogService;
 use App\Services\DeliveryNoteService;
+use App\Traits\RenewAuthSessionTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -44,6 +45,7 @@ class ManufacturersController extends AdminAppController
     protected $SyncDomain;
 
     use UploadTrait;
+    use RenewAuthSessionTrait;
 
     public function isAuthorized($user)
     {

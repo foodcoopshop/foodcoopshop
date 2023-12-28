@@ -13,6 +13,7 @@ use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\OrderCustomerService;
+use App\Traits\RenewAuthSessionTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,6 +35,8 @@ class CustomersController extends FrontendController
     protected $BlogPost;
     protected $Sanitize;
     protected $ActionLog;
+
+    use RenewAuthSessionTrait;
 
     public function beforeFilter(EventInterface $event)
     {

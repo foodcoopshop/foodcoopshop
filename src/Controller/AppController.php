@@ -115,28 +115,6 @@ class AppController extends Controller
         $this->response = $this->response->withStringBody($newOutput);
     }
 
-    /**
-     * keep this method in a controller - does not work with AppAuthComponent::login
-     * updates login data (after profile change for customer and manufacturer)
-     */
-    /*
-    protected function renewAuthSession()
-    {
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->identity->getUserId()
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
-        ])->first();
-        if (!empty($customer)) {
-            $this->identity = $customer; ???
-        }
-    }
-    */
-
     public function getPreparedReferer()
     {
         return htmlspecialchars_decode($this->getRequest()->getData('referer'));

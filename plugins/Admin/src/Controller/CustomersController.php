@@ -14,6 +14,7 @@ use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Admin\Traits\UploadTrait;
+use App\Traits\RenewAuthSessionTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,6 +39,7 @@ class CustomersController extends AdminAppController
     protected $Sanitize;
 
     use UploadTrait;
+    use RenewAuthSessionTrait;
     
     public function isAuthorized($user)
     {
