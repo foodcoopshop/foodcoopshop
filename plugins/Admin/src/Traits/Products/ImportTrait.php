@@ -116,7 +116,7 @@ trait ImportTrait
                 $messageString = __d('admin', 'Product_import_successful.') . ' ' . count($productEntities) . 'x';
                 $this->Flash->success($messageString);
                 $actionLogsTable = FactoryLocator::get('Table')->get('ActionLogs');
-                $actionLogsTable->customSave('product_added', $this->identity->getUserId(), $manufacturer->id_manufacturer, 'products', $messageString);
+                $actionLogsTable->customSave('product_added', $this->identity->getId(), $manufacturer->id_manufacturer, 'products', $messageString);
                 Log::error($messageString . print_r($productEntities, true));
             } else {
                 $errors = $reader->getAllErrors($productEntities);

@@ -99,7 +99,7 @@ class CustomersController extends FrontendController
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $patchedEntity = $this->Customer->patchEntity(
-            $this->Customer->get($this->identity->getUserId()),
+            $this->Customer->get($this->identity->getId()),
             [
                 'Customers' => [
                     'terms_of_use_accepted_date_checkbox' => $this->getRequest()->getData('Customers.terms_of_use_accepted_date_checkbox'),

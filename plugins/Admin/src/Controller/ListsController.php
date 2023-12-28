@@ -205,7 +205,7 @@ class ListsController extends AdminAppController
             $positionInvoiceString = strpos($string, '_' . __d('admin', 'Invoice') . '_');
             $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
             $customerId = end($splittedFileName);
-            if ($customerId != $this->identity->getUserId()) {
+            if ($customerId != $this->identity->getId()) {
                 throw new UnauthorizedException();
             }
         }

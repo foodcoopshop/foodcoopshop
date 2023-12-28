@@ -839,7 +839,7 @@ class OrderDetailsTable extends AppTable
 
         // customers are only allowed to see their own data
         if ($identity->isCustomer()) {
-            $conditions['OrderDetails.id_customer'] = $identity->getUserId();
+            $conditions['OrderDetails.id_customer'] = $identity->getId();
         }
 
         $odParams = [

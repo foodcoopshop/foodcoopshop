@@ -102,7 +102,7 @@ trait DeleteTrait {
             count($productIds)
         ]);
         $this->Flash->success($message);
-        $this->ActionLog->customSave('product_deleted', $this->identity->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
+        $this->ActionLog->customSave('product_deleted', $this->identity->getId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
 
         $this->set([
             'status' => 1,

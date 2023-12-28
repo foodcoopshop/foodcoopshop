@@ -203,7 +203,7 @@ class ManufacturersController extends AdminAppController
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
@@ -576,7 +576,7 @@ class ManufacturersController extends AdminAppController
             $this->Flash->success($message);
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('manufacturer_options_changed', $this->identity->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            $this->ActionLog->customSave('manufacturer_options_changed', $this->identity->getId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
             $this->redirect($this->getPreparedReferer());
         }

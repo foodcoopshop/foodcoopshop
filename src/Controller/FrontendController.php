@@ -149,7 +149,7 @@ class FrontendController extends AppController
             $this->set('paymentType', $this->identity->isSelfServiceCustomer() ? $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH : $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT);
 
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getUserId());
+            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());
             $this->set('futureOrderDetails', $futureOrderDetails);
         }
         //$this->identity->setCart($this->identity->getCart());

@@ -237,7 +237,7 @@ abstract class AppCakeTestCase extends TestCase
 
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
-                'customer_id' => $this->getUserId(),
+                'customer_id' => $this->getId(),
                 'pickup_day' => !is_null($pickupDay) ? $pickupDay : (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment,
             ];

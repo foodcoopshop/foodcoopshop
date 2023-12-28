@@ -162,7 +162,7 @@ class Customer extends Entity implements IdentityInterface
     }
 
 
-    public function getUserId()
+    public function getId()
     {
         return $this->get('id_customer');
     }
@@ -194,7 +194,7 @@ class Customer extends Entity implements IdentityInterface
     public function getLastOrderDetailsForDropdown()
     {
         $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
-        $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getUserId());
+        $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getId());
         return $dropdownData;
     }
 
@@ -204,7 +204,7 @@ class Customer extends Entity implements IdentityInterface
             return [];
         }
         $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
-        $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getUserId());
+        $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getId());
         return $futureOrderDetails;
     }
 
@@ -263,7 +263,7 @@ class Customer extends Entity implements IdentityInterface
     public function getCreditBalance()
     {
         $customersTable = FactoryLocator::get('Table')->get('Customers');
-        return $customersTable->getCreditBalance($this->getUserId());
+        return $customersTable->getCreditBalance($this->getId());
     }
 
     public function getCartType()

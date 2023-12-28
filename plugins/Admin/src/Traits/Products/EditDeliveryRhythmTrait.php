@@ -142,7 +142,7 @@ trait EditDeliveryRhythmTrait {
                 if (!empty($additionalMessages)) {
                     $messageString .= ' ' . join(', ', $additionalMessages);
                 }
-                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->identity->getUserId(), $productId, 'products', $messageString);
+                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->identity->getId(), $productId, 'products', $messageString);
                 $this->getRequest()->getSession()->write('highlightedRowId', $productId);
             } else {
                 $messageString = __d('admin', 'Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}.', [
@@ -152,7 +152,7 @@ trait EditDeliveryRhythmTrait {
                 if (!empty($additionalMessages)) {
                     $messageString .= ' ' . join(', ', $additionalMessages);
                 }
-                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->identity->getUserId(), 0, 'products', $messageString . ' Ids: ' . join(', ', $productIds));
+                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->identity->getId(), 0, 'products', $messageString . ' Ids: ' . join(', ', $productIds));
             }
 
             $this->Flash->success($messageString);

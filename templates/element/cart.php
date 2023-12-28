@@ -142,7 +142,7 @@ if ($identity->CartService->getProducts() !== null) {
                     foreach($futureOrderDetails as $futureOrderDetail) {
                         $links[] = $this->Html->link(
                             $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' (' . $futureOrderDetail->orderDetailsCount . ')' ,
-                            '/admin/order-details?customerId='.$identity->getUserId().'&pickupDay[]=' . $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))
+                            '/admin/order-details?customerId='.$identity->getId().'&pickupDay[]=' . $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))
                         );
                     }
                     echo join(' / ', $links);

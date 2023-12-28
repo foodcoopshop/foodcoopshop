@@ -390,7 +390,7 @@ class ApiController extends Controller
             }
 
             if ($actionLogMessage != '') {
-                $this->ActionLog->customSave('product_remotely_changed', $this->identity->getUserId(), 0, 'products', $actionLogMessage);
+                $this->ActionLog->customSave('product_remotely_changed', $this->identity->getId(), 0, 'products', $actionLogMessage);
             }
         }
 

@@ -203,7 +203,7 @@ trait EditCustomerTrait {
         }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_detail_customer_changed', $this->identity->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->ActionLog->customSave('order_detail_customer_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
         $this->set([

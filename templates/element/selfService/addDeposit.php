@@ -46,7 +46,7 @@ if (!$this->Html->paymentIsCashless() || !$identity->isLoggedIn() || $identity->
         ]);
 
         echo $this->Form->hidden('Payments.customerId', [
-            'value' => $identity->getUserId()
+            'value' => $identity->getId()
         ]);
 
     echo '</div>';

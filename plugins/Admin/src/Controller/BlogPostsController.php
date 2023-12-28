@@ -137,7 +137,7 @@ class BlogPostsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
-        $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->identity->getUserId()));
+        $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->identity->getId()));
 
         if ($this->identity->isManufacturer()) {
             $this->setRequest($this->getRequest()->withData('BlogPosts.id_manufacturer', $this->identity->getManufacturerId()));
@@ -185,7 +185,7 @@ class BlogPostsController extends AdminAppController
                 $actionLogType = 'blog_post_deleted';
             }
             $message = __d('admin', 'The_blog_post_{0}_has_been_{1}.', ['<b>' . $blogPost->title . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $blogPost->id_blog_post, 'blog_posts', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $blogPost->id_blog_post);

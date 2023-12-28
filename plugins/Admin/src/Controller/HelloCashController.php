@@ -43,7 +43,7 @@ class HelloCashController extends AdminAppController
                 $invoice = $this->Invoice->find('all', [
                     'conditions' => [
                         'Invoices.id' => $invoiceId,
-                        'Invoices.id_customer' => $this->identity->getUserId(),
+                        'Invoices.id_customer' => $this->identity->getId(),
                     ],
                 ])->first();
                 $isAllowed = !empty($invoice);

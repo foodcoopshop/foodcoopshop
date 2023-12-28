@@ -134,7 +134,7 @@ class PaymentsController extends AdminAppController
                 $payment,
                 [
                     'date_changed' => FrozenTime::now(),
-                    'changed_by' => $this->identity->getUserId()
+                    'changed_by' => $this->identity->getId()
                 ]
             );
             $payment = $this->Payment->save($payment);
@@ -166,7 +166,7 @@ class PaymentsController extends AdminAppController
                 $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
             }
 
-            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $payment->id, 'payments', $message . ' (PaymentId: ' . $payment->id.')');
+            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $payment->id, 'payments', $message . ' (PaymentId: ' . $payment->id.')');
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $payment->id);
@@ -306,11 +306,11 @@ class PaymentsController extends AdminAppController
                     'Customers.id_customer' => $customerId
                 ]
             ])->first();
-            if ($this->identity->isSuperadmin() && $this->identity->getUserId() != $customerId) {
+            if ($this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
                 $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
             }
             // security check
-            if (!$this->identity->isSuperadmin() && $this->identity->getUserId() != $customerId) {
+            if (!$this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
                 $msg = 'user without superadmin privileges tried to insert payment for another user: ' . $customerId;
                 $this->set([
                     'status' => 0,
@@ -353,7 +353,7 @@ class PaymentsController extends AdminAppController
                 'date_changed' => FrozenTime::now(),
                 'amount' => $amount,
                 'text' => $text,
-                'created_by' => $this->identity->getUserId(),
+                'created_by' => $this->identity->getId(),
             ]
         );
 
@@ -374,7 +374,7 @@ class PaymentsController extends AdminAppController
             '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>',
         ]);
 
-        $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->identity->getUserId(), $newPayment->id, 'payments', $message);
+        $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->identity->getId(), $newPayment->id, 'payments', $message);
 
         if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer']) && isset($customer) && isset($manufacturer)) {
             $message .= '. ';
@@ -449,7 +449,7 @@ class PaymentsController extends AdminAppController
             Configure::read('app.numberHelper')->formatAsCurrency($payment->amount),
             Configure::read('app.htmlHelper')->getPaymentText($payment->type)]
         );
-        if ($this->identity->isSuperadmin() && $this->identity->getUserId() != $payment->id_customer) {
+        if ($this->identity->isSuperadmin() && $this->identity->getId() != $payment->id_customer) {
             if (isset($payment->customer->name)) {
                 $username = $payment->customer->name;
             } else {
@@ -462,7 +462,7 @@ class PaymentsController extends AdminAppController
             ]);
         }
 
-        $this->ActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->identity->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
+        $this->ActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->identity->getId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
         $this->Flash->success($message);
 
@@ -490,7 +490,7 @@ class PaymentsController extends AdminAppController
 
     public function overview()
     {
-        $this->customerId = $this->identity->getUserId();
+        $this->customerId = $this->identity->getId();
         $this->paymentType = 'product';
 
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {

@@ -40,13 +40,13 @@ if ($identity->isLoggedIn()) {
 
     if ($identity->isManufacturer()) {
         foreach($feedbacks['manufacturers'] as $feedback) {
-            if ($identity->getUserId() == $feedback->customer_id) {
+            if ($identity->getId() == $feedback->customer_id) {
                 $showWriteFeedbackLink = false;
             }
         }
     } else {
         foreach($feedbacks['customers'] as $feedback) {
-            if ($identity->getUserId() == $feedback->customer_id) {
+            if ($identity->getId() == $feedback->customer_id) {
                 $showWriteFeedbackLink = false;
             }
         }
@@ -86,7 +86,7 @@ if (!empty($feedbacks['customers'])) {
                 ],
             );
         }
-        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getUserId()) {
+        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getId()) {
             $additionalMetaData = $myEditLink;
         }
 
@@ -114,7 +114,7 @@ if (!empty($feedbacks['manufacturers'])) {
                 ],
             );
         }
-        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getUserId()) {
+        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getId()) {
             $additionalMetaData = $myEditLink;
         }
 

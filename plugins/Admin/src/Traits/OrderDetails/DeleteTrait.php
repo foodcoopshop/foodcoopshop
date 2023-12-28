@@ -118,7 +118,7 @@ trait DeleteTrait {
             }
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_cancelled', $this->identity->getUserId(), $orderDetail->product_id, 'products', $message);
+            $this->ActionLog->customSave('order_detail_cancelled', $this->identity->getId(), $orderDetail->product_id, 'products', $message);
         }
 
         $flashMessage = $message;

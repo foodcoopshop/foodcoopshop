@@ -79,7 +79,7 @@ class OrderDetailsController extends AdminAppController
                         ]
                     ])->first();
                     if (!empty($orderDetail)) {
-                        if ($orderDetail->id_customer == $this->identity->getUserId()) {
+                        if ($orderDetail->id_customer == $this->identity->getId()) {
                             return true;
                         }
                     }
@@ -144,7 +144,7 @@ class OrderDetailsController extends AdminAppController
                 if ($this->identity->isManufacturer() && $orderDetail->product->id_manufacturer == $this->identity->getManufacturerId()) {
                     return true;
                 }
-                if ($this->identity->isCustomer() && !Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $this->identity->getUserId()) {
+                if ($this->identity->isCustomer() && !Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $this->identity->getId()) {
                     return true;
                 }
             }

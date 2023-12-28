@@ -53,7 +53,7 @@ trait EditPickupDayCommentTrait {
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_comment_changed', $this->identity->getUserId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
+        $this->ActionLog->customSave('order_comment_changed', $this->identity->getId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
 
         $this->set([
             'result' => $result,

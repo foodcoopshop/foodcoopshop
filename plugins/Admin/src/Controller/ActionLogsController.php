@@ -91,7 +91,7 @@ class ActionLogsController extends AdminAppController
                          WHERE p.id_manufacturer = ' . $this->identity->getManufacturerId() .
                     ') '.
                 ') '.
-              ' OR (ActionLogs.customer_id = ' .$this->identity->getUserId().') )';
+              ' OR (ActionLogs.customer_id = ' .$this->identity->getId().') )';
 
             if ($this->identity->getManufacturerAnonymizeCustomers()) {
                 $conditions['ActionLogs.type NOT IN'] = $this->ActionLog->getHiddenTypesForManufacturersWithEnabledAnonymization();
@@ -104,7 +104,7 @@ class ActionLogsController extends AdminAppController
             $customerNameForRegex = $this->identity->name;
             $conditions[] = [
                 'OR' => [
-                    'Customers.id_customer' => $this->identity->getUserId(),
+                    'Customers.id_customer' => $this->identity->getId(),
                     'ActionLogs.text REGEXP' => preg_quote($customerNameForRegex), // preg_quote needed to escape special characters like *
                 ],
             ];

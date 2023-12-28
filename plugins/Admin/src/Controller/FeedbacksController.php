@@ -65,7 +65,7 @@ class FeedbacksController extends AdminAppController
 
     public function myFeedback()
     {
-        $this->customerId = $this->identity->getUserId();
+        $this->customerId = $this->identity->getId();
         $this->set('title_for_layout', __d('admin', 'My_feedback'));
         $this->isOwnForm = true;
         $this->_processForm();
@@ -186,7 +186,7 @@ class FeedbacksController extends AdminAppController
                         __d('admin', 'deleted'),
                     ]);
                 }
-                $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $feedback->id, 'feedbacks', $message);
+                $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                 $this->Flash->success($message);
                 $this->redirect($this->getPreparedReferer());
                 return;
@@ -212,7 +212,7 @@ class FeedbacksController extends AdminAppController
                             '<b>' . $userNameForActionLog . '</b>',
                             __d('admin', 'approved'),
                         ]);
-                        $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $feedback->id, 'feedbacks', $message);
+                        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                     }
                 }
             }
@@ -243,7 +243,7 @@ class FeedbacksController extends AdminAppController
             $isDirty = $feedback->isDirty('text') || $feedback->isDirty('privacy_type');
             $feedback = $this->Feedback->save($feedback);
             if (!$isEditMode || $isDirty) {
-                $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $feedback->id, 'feedbacks', $message);
+                $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
             }
 
             $this->Flash->success($message);

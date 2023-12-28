@@ -134,7 +134,7 @@ class CartsController extends FrontendController
         $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => $cartId,
-                'Carts.id_customer' => $this->identity->getUserId()
+                'Carts.id_customer' => $this->identity->getId()
             ]
         ])->first();
 
@@ -246,7 +246,7 @@ class CartsController extends FrontendController
     {
         $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->removeAll($this->identity->CartService->getCartId(), $this->identity->getUserId());
+        $cartProductTable->removeAll($this->identity->CartService->getCartId(), $this->identity->getId());
         $this->identity->setCart($this->identity->getCart());
     }
 
@@ -269,7 +269,7 @@ class CartsController extends FrontendController
         $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate((new DeliveryRhythmService())->getOrderPeriodLastDayByDeliveryDay($formattedDeliveryDate)));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getUserId());
+        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->identity->getId());
 
         $errorMessages = [];
         $loadedProducts = count($orderDetails);
@@ -308,7 +308,7 @@ class CartsController extends FrontendController
     public function addLastOrderToCart()
     {
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->identity->getUserId());
+        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->identity->getId());
         if (empty($orderDetails)) {
             $message = __('There_are_no_orders_available.');
             $this->Flash->error($message);

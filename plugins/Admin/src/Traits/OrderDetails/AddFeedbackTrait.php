@@ -50,7 +50,7 @@ trait AddFeedbackTrait {
 
             $entity = $this->OrderDetail->OrderDetailFeedbacks->newEntity(
                 [
-                    'customer_id' => $this->identity->getUserId(),
+                    'customer_id' => $this->identity->getId(),
                     'id_order_detail' => $orderDetailId,
                     'text' => $orderDetailFeedback,
                 ]
@@ -89,7 +89,7 @@ trait AddFeedbackTrait {
             '<b>' . $orderDetail->customer->name . '</b>',
             '<b>' . $orderDetail->product_name . '</b>',
         ]);
-        $this->ActionLog->customSave('order_detail_feedback_added', $this->identity->getUserId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
+        $this->ActionLog->customSave('order_detail_feedback_added', $this->identity->getId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
 
         $this->set([
             'result' => $result,

@@ -148,7 +148,7 @@ class InvoicesController extends AdminAppController
                         'date_changed' => FrozenTime::now(),
                         'amount' => abs($invoiceData->sumPriceIncl),
                         'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
-                        'created_by' => $this->identity->getUserId(),
+                        'created_by' => $this->identity->getId(),
                     ]
                 );
                 $this->Payment->save($paymentEntity);
@@ -184,7 +184,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . '<br />' . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_added', $this->identity->getUserId(), $invoiceId, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_added', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
 
         $this->redirect($this->referer());
 
@@ -398,7 +398,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_cancelled', $this->identity->getUserId(), $invoiceId, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
@@ -424,7 +424,7 @@ class InvoicesController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $customerId = $this->identity->getUserId();
+        $customerId = $this->identity->getId();
 
         $this->set('customerId', $customerId);
 

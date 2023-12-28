@@ -62,7 +62,7 @@ class CustomersController extends AdminAppController
 
         $conditions = [];
         if ($this->identity->isCustomer()) {
-            $conditions = ['Customers.id_customer' => $this->identity->getUserId()];
+            $conditions = ['Customers.id_customer' => $this->identity->getId()];
         }
 
         if ($this->identity->isSuperadmin()) {
@@ -91,7 +91,7 @@ class CustomersController extends AdminAppController
 
     public function generateMyMemberCard()
     {
-        $customerId = $this->identity->getUserId();
+        $customerId = $this->identity->getId();
         $pdfWriter = new MyMemberCardPdfWriterService();
         $customers = $pdfWriter->getMemberCardCustomerData($customerId);
         $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
@@ -165,7 +165,7 @@ class CustomersController extends AdminAppController
         ]);
         $this->Flash->success($messageString);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('customer_group_changed', $this->identity->getUserId(), $customerId, 'customers', $messageString);
+        $this->ActionLog->customSave('customer_group_changed', $this->identity->getId(), $customerId, 'customers', $messageString);
 
         $this->set([
             'status' => 1,
@@ -180,7 +180,7 @@ class CustomersController extends AdminAppController
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
-                'Customers.id_customer' => $this->identity->getUserId()
+                'Customers.id_customer' => $this->identity->getId()
             ]
         ])->first();
 
@@ -219,12 +219,12 @@ class CustomersController extends AdminAppController
             } else {
                 $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->identity->getUsername() . '</b>']);
                 $actionLogType = 'customer_password_changed';
-                $actionLogId = $this->identity->getUserId();
+                $actionLogId = $this->identity->getId();
                 $actionLogModel = 'customers';
             }
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $actionLogId, $actionLogModel, $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
             $this->redirect($this->referer());
         }
@@ -237,7 +237,7 @@ class CustomersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $isOwnProfile = $this->identity->getUserId() == $customerId;
+        $isOwnProfile = $this->identity->getId() == $customerId;
 
         if (!$this->identity->isSuperadmin()) {
             throw new ForbiddenException('deleting user ' . $customerId . 'denied');
@@ -329,7 +329,7 @@ class CustomersController extends AdminAppController
             $message = __d('admin', '{0}_has_deleted_an_account.', [$this->identity->getUsername()]);
             $redirectUrl = $this->getRequest()->getData('referer');
         }
-        $this->ActionLog->customSave('customer_deleted', $this->identity->getUserId(), $customer->id_customer, 'customers', $message);
+        $this->ActionLog->customSave('customer_deleted', $this->identity->getId(), $customer->id_customer, 'customers', $message);
         $this->Flash->success($message);
 
         if ($isOwnProfile) {
@@ -348,7 +348,7 @@ class CustomersController extends AdminAppController
     public function profile()
     {
         $this->set('title_for_layout', __d('admin', 'Edit_my_profile'));
-        $this->_processForm($this->identity->getUserId());
+        $this->_processForm($this->identity->getId());
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
@@ -369,7 +369,7 @@ class CustomersController extends AdminAppController
     private function _processForm($customerId)
     {
 
-        $isOwnProfile = $this->identity->getUserId() == $customerId;
+        $isOwnProfile = $this->identity->getId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
 
         $this->Customer = $this->getTableLocator()->get('Customers');
@@ -443,7 +443,7 @@ class CustomersController extends AdminAppController
             } else {
                 $message = __d('admin', 'The_profile_of_{0}_was_changed.', ['<b>' . $customer->name . '</b>']);
             }
-            $this->ActionLog->customSave('customer_profile_changed', $this->identity->getUserId(), $customer->id_customer, 'customers', $message);
+            $this->ActionLog->customSave('customer_profile_changed', $this->identity->getId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $customer->id_customer);
@@ -518,7 +518,7 @@ class CustomersController extends AdminAppController
         $this->Flash->success($message);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave($actionLogType, $this->identity->getUserId(), $customerId, 'customer', $message);
+        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
     }
@@ -552,7 +552,7 @@ class CustomersController extends AdminAppController
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('customer_comment_changed', $this->identity->getUserId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
+        $this->ActionLog->customSave('customer_comment_changed', $this->identity->getId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
 
         $this->set([
             'status' => 1,

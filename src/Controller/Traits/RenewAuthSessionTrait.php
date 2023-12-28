@@ -24,7 +24,7 @@ trait RenewAuthSessionTrait {
         $customerTable = $this->getTableLocator()->get('Customers');
         $customer = $customerTable->find('all', [
             'conditions' => [
-                'Customers.id_customer' => $this->identity->getUserId()
+                'Customers.id_customer' => $this->identity->getId()
             ],
             'contain' => [
                 'AddressCustomers',

@@ -58,7 +58,7 @@ trait AddProductAttributeTrait {
                 '<b>' . $oldProduct->manufacturer->name . '</b>'
             ]);
             $this->Flash->success($actionLogMessage);
-            $this->ActionLog->customSave('product_attribute_added', $this->identity->getUserId(), $oldProduct->id_product, 'products', $actionLogMessage);
+            $this->ActionLog->customSave('product_attribute_added', $this->identity->getId(), $oldProduct->id_product, 'products', $actionLogMessage);
         }
         
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);

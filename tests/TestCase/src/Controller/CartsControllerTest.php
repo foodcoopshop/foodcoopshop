@@ -1256,7 +1256,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->deposit, $deposit);
         $this->assertEquals($orderDetail->total_price_tax_excl, $totalPriceTaxExcl);
         $this->assertEquals($orderDetail->total_price_tax_incl, $totalPriceTaxIncl);
-        $this->assertEquals($orderDetail->id_customer, $this->getUserId());
+        $this->assertEquals($orderDetail->id_customer, $this->getId());
         $this->assertEquals($orderDetail->order_state, ORDER_STATE_ORDER_PLACED);
         $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), $pickupDay);
         $this->assertEquals($orderDetail->tax_unit_amount, $taxUnitAmount);

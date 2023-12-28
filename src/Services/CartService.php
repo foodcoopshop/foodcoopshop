@@ -210,7 +210,7 @@ class CartService
         $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
 
         $cartType = $this->identity->getCartType();
-        $userIdForActionLog = $this->identity->getUserId();
+        $userIdForActionLog = $this->identity->getId();
 
         $orderCustomerService = new OrderCustomerService();
         switch($cartType) {
@@ -248,7 +248,7 @@ class CartService
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
                     $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
                     $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-                    $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->identity->getUserId(), $currentDay);
+                    $invoiceData = $this->Invoice->getDataForCustomerInvoice($this->identity->getId(), $currentDay);
 
                     if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
                         $paidInCash = 0;
@@ -512,7 +512,7 @@ class CartService
                 'tax_total_amount' => $cartProduct['tax'],
                 'tax_rate' => $product->tax->rate ?? 0,
                 'order_state' => ORDER_STATE_ORDER_PLACED,
-                'id_customer' => $this->identity->getUserId(),
+                'id_customer' => $this->identity->getId(),
                 'id_cart_product' => $cartProduct['cartProductId'],
                 'pickup_day' => $cartProduct['pickupDay'],
                 'deposit' => $cartProduct['deposit'],

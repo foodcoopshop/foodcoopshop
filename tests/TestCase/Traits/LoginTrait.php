@@ -96,7 +96,7 @@ trait LoginTrait
         $this->session($sessionData);
     }
 
-    public function getUserId()
+    public function getId()
     {
         $identity = $this->user();
         if (empty($identity)) {
