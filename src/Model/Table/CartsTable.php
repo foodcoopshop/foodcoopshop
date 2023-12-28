@@ -118,7 +118,7 @@ class CartsTable extends AppTable
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
         
-        $identity = (new IdentityService())->getIdentity();        
+        $identity = (new IdentityService())->getIdentity();
         $customerId = $identity->getUserId();
 
         $cart = $this->find('all', [

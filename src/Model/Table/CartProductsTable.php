@@ -165,7 +165,7 @@ class CartProductsTable extends AppTable
             $product->tax->rate ?? 0,
         );
 
-        $result = $this->validateMinimalCreditBalance($identity, $prices['gross_with_deposit']);
+        $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit']);
         if ($result !== true) {
             return [
                 'status' => 0,
