@@ -109,13 +109,13 @@ class CartsController extends FrontendController
 
         $this->set('title_for_layout', __('Finish_cart'));
 
-        if ($this->identity->CartService->isCartEmpty()) {
+        if ($this->identity->isCartEmpty()) {
             $this->Flash->error(__('Your_cart_was_empty.'));
             $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
             return;
         }
 
-        $cart = $this->identity->CartService->finish();
+        $cart = $this->identity->finish();
 
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
@@ -247,7 +247,7 @@ class CartsController extends FrontendController
     {
         $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $cartProductTable->removeAll($this->identity->CartService->getCartId(), $this->identity->getId());
+        $cartProductTable->removeAll($this->identity->getCartId(), $this->identity->getId());
         $this->identity->setCart($this->identity->getCart());
     }
 

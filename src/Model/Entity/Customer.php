@@ -357,7 +357,7 @@ class Customer extends Entity implements IdentityInterface
         return $this->cart['Cart']->id_cart;
     }
 
-    public function markAsSaved()
+    public function markCartAsSaved()
     {
         if ($this->cart === null) {
             return false;

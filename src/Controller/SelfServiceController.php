@@ -129,13 +129,13 @@ class SelfServiceController extends FrontendController
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
 
-            if ($this->identity->CartService->isCartEmpty()) {
+            if ($this->identity->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;
             }
 
-            $cart = $this->identity->CartService->finish();
+            $cart = $this->identity->finish();
 
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
 

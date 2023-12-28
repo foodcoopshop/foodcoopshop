@@ -108,7 +108,7 @@ class CartService
 
         $cart = $this->identity->getCart(); // to get attached order details
         $this->identity->setCart($cart);
-        $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
+        $cart['Cart'] = $this->identity->markCartAsSaved(); // modified timestamp is needed later on!
 
         $cartType = $this->identity->getCartType();
         $userIdForActionLog = $this->identity->getId();
@@ -118,7 +118,7 @@ class CartService
             case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
                 $actionLogType = 'customer_order_finished';
                 $message = __('Your_order_has_been_placed_succesfully.');
-                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
                 $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
                 $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
                 break;
@@ -127,12 +127,12 @@ class CartService
                 $userIdForActionLog = $this->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
-                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
                         '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>'
                     ]);
                 } else {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
-                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
                         '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>',
                         '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                     ]);
@@ -179,14 +179,14 @@ class CartService
                 if (isset($invoiceRoute)) {
                     $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('App.fullBaseUrl') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
                 }
-                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
 
                 if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
                     $userIdForActionLog = $this->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
                     $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
                         $this->request->getSession()->read('Auth.originalLoggedCustomer')['name'],
                         '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>',
-                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
                     ]);
                 } else {
                     $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
@@ -216,11 +216,11 @@ class CartService
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
-        foreach ($this->getProducts() as $cartProduct) {
+        foreach ($this->identity->getProducts() as $cartProduct) {
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
                 $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
-                $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->getCartId());
+                $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->identity->getCartId());
                 $productWithAmount0Found = true;
             }
         }
@@ -251,7 +251,7 @@ class CartService
 
         $contain = $this->getProductContain();
 
-        foreach ($this->getProducts() as $cartProduct) {
+        foreach ($this->identity->getProducts() as $cartProduct) {
 
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
             $product = $this->Product->find('all', [
@@ -821,7 +821,7 @@ class CartService
         }
         if (Configure::read('app.generalTermsAndConditionsEnabled')) {
             $generalTermsAndConditionsFiles = [];
-            $uniqueManufacturers = $this->getUniqueManufacturers();
+            $uniqueManufacturers = $this->identity->getUniqueManufacturers();
             foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
                 $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
                 if ($src !== false) {

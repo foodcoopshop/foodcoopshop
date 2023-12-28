@@ -179,9 +179,9 @@ class CartsTable extends AppTable
             }
 
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
-                $productData = $this->prepareProductAttribute($identity, $cartProduct);
+                $productData = $this->prepareProductAttribute($cartProduct);
             } else {
-                $productData = $this->prepareMainProduct($identity, $cartProduct);
+                $productData = $this->prepareMainProduct($cartProduct);
             }
 
             $productImageData = Configure::read('app.htmlHelper')->getProductImageSrcWithManufacturerImageFallback(
@@ -352,7 +352,7 @@ class CartsTable extends AppTable
         return $prices;
     }
 
-    private function prepareMainProduct($identity, $cartProduct): array
+    private function prepareMainProduct($cartProduct): array
     {
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
@@ -457,8 +457,6 @@ class CartsTable extends AppTable
 
     private function prepareProductAttribute($cartProduct): array
     {
-
-        $identity = (new IdentityService())->getIdentity();
 
         $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
         $taxRate = $cartProduct->product->tax->rate ?? 0;
