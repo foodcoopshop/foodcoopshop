@@ -40,18 +40,18 @@ if ($identity->isLoggedIn()) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
     }
 }
-if ($identity->isLoggedIn() && 0 && !$identity->isCustomer() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+if ($identity->isLoggedIn() && !$identity->isCustomer() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
     $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
 }
 
-if (0 && $identity->isCustomer()) {
+if ($identity->isCustomer()) {
     $menu[1]['children'] = $this->Menu->getCustomerMenuElements($identity);
 }
 
 if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
 
     $selfServiceMenuElement = null;
-    if (0 && !$identity->isManufacturer() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
+    if (!$identity->isManufacturer() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
         $selfServiceMenuElement = [
             'slug' => $this->Slug->getSelfService(),
             'name' => __('Self_service'),
