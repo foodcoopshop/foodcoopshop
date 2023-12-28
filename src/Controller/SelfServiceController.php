@@ -100,7 +100,7 @@ class SelfServiceController extends FrontendController
 
             if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
                 $cartProductsTable = $this->getTableLocator()->get('CartProducts');
-                $result = $cartProductsTable->add($this->identity, $products[0]->id_product, $attributeId, 1);
+                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
@@ -156,7 +156,7 @@ class SelfServiceController extends FrontendController
                             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
                         }
                     }
-                    if (!$this->identity->user('invoices_per_email_enabled') && isset($invoiceRoute)) {
+                    if (!$this->identity->get('invoices_per_email_enabled') && isset($invoiceRoute)) {
                         $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
                     }
                 }

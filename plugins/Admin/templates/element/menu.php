@@ -18,7 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
-if (! $identity->user() || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
+if (! $identity->isLoggedIn() || in_array($this->request->getParam('action'), ['iframeInstantOrder', 'iframeSelfServiceOrder'])) {
     return;
 }
 

@@ -31,7 +31,7 @@ $initialGeneralTermsAndConditionLink = '<a href="javascript:void(0);" class="ope
 $generalTermsAndConditionsLinks = [$initialGeneralTermsAndConditionLink];
 $customGeneralTermsAndConditionsLinks = [];
 
-$uniqueManufacturers = $identity->CartService->getUniqueManufacturers();
+$uniqueManufacturers = $identity->getUniqueManufacturers();
 foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
     $src = $this->MyHtml->getManufacturerTermsOfUseSrc($manufacturerId);
     if ($src !== false) {

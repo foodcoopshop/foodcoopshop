@@ -177,7 +177,7 @@ class MenuHelper extends Helper
 
     public function getMyFeedbackMenuElement($identity)
     {
-        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->user()) {
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isLoggedIn()) {
             return [
                 'slug' => Configure::read('app.slugHelper')->getMyFeedbackForm(),
                 'name' => __('Feedback'),

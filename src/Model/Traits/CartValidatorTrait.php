@@ -127,18 +127,18 @@ trait CartValidatorTrait
         return $result;
     }
 
-    public function validateMinimalCreditBalance($grossPrice): bool|string
+    public function validateMinimalCreditBalance($grossPrice, $orderCustomerService): bool|string
     {
 
         $identity = (new IdentityService())->getIdentity();
         
         // implementation for purchase price check is too much work, so simply do not validate at all (enough for now)
-        if ($identity->user('shopping_price') != 'SP') {
+        if ($identity->get('shopping_price') != 'SP') {
             return true;
         }
 
         $result = true;
-        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$identity->isOrderForDifferentCustomerMode()) {
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
             if (!$identity->hasEnoughCreditForProduct($grossPrice)) {
                 $result = __('The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2}).', [
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($grossPrice).'</b>',

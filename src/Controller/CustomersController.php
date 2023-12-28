@@ -455,7 +455,7 @@ class CustomersController extends FrontendController
         $this->set('title_for_layout', __('Account_created_successfully'));
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
     }
 

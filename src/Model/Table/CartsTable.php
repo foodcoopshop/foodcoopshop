@@ -9,6 +9,7 @@ use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
 use App\Services\IdentityService;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -113,7 +114,7 @@ class CartsTable extends AppTable
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
 
-    public function getCart($orderCustomerService, $cartType): array
+    public function getCart($identity, $cartType): array
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -160,6 +161,7 @@ class CartsTable extends AppTable
             ]
         ])->toArray();
 
+        $orderCustomerService = new OrderCustomerService();
         if (!empty($cartProducts)) {
             $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId, $orderCustomerService);
         }
@@ -364,7 +366,7 @@ class CartsTable extends AppTable
         if (!empty($unitProduct)) {
             $priceInclPerUnit = $unitProduct->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $cm->getModifiedProductPricesByShoppingPrice($identity, $cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedProductPricesByShoppingPrice($cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
         $cartProduct->product->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProduct)) {
             $unitProduct->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];

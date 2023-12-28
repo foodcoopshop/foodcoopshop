@@ -388,7 +388,8 @@ class CatalogService
             return $products;
         }
 
-        if ($this->isOrderForDifferentCustomerMode() || $this->isSelfServiceModeByUrl()) {
+        $orderCustomerService = new OrderCustomerService();
+        if ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
             return $products;
         }
 
@@ -398,7 +399,7 @@ class CatalogService
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $pickupDay = $deliveryRhytmService->getNextDeliveryDayForProduct($product);
+            $pickupDay = $deliveryRhytmService->getNextDeliveryDayForProduct($product, $orderCustomerService);
             if (empty($product->product_attributes)) {
                 $product->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
             } else {

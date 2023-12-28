@@ -50,10 +50,10 @@ class CartService
 
     public $cart = null;
 
-    public function setController($controller)
+    public function __construct()
     {
-        $this->controller = $controller;
-        $this->request = $controller->getRequest();
+        $identity = (new IdentityService())->getIdentity();
+        $this->setIdentity($identity);
     }
 
     public function setIdentity($identity)
@@ -61,114 +61,15 @@ class CartService
         $this->identity = $identity;
     }
 
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+        $this->request = $controller->getRequest();
+    }
+
     public function getRequest()
     {
         return $this->request;
-    }
-
-    public function getProducts()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartProducts'];
-        }
-        return null;
-    }
-
-    public function getProductsWithUnitCount()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['ProductsWithUnitCount'];
-        }
-        return 0;
-    }
-
-    public function getProductAndDepositSum()
-    {
-        return $this->getProductSum() + $this->getDepositSum();
-    }
-
-    public function getTaxSum()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartTaxSum'];
-        }
-        return 0;
-    }
-
-    public function getDepositSum()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartDepositSum'];
-        }
-        return 0;
-    }
-
-    public function getProductSum()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartProductSum'];
-        }
-        return 0;
-    }
-
-    public function getProductSumExcl()
-    {
-        if ($this->cart !== null) {
-            return $this->cart['CartProductSumExcl'];
-        }
-        return 0;
-    }
-
-    public function getCartId()
-    {
-        return $this->cart['Cart']->id_cart;
-    }
-
-    public function markAsSaved()
-    {
-        if ($this->cart === null) {
-            return false;
-        }
-        $cc = FactoryLocator::get('Table')->get('Carts');
-        $patchedEntity = $cc->patchEntity(
-            $cc->get($this->getCartId()), [
-                'status' => APP_OFF,
-            ],
-            ['validate' => false],
-        );
-        $cc->save($patchedEntity);
-        return $patchedEntity;
-    }
-
-    public function getUniqueManufacturers(): array
-    {
-        $manufactures = [];
-        foreach ($this->getProducts() as $product) {
-            $manufactures[$product['manufacturerId']] = [
-                'name' => $product['manufacturerName']
-            ];
-        }
-        return $manufactures;
-    }
-
-    public function getProduct($productId)
-    {
-        foreach ($this->getProducts() as $product) {
-            if ($product['productId'] == $productId) {
-                return $product;
-                break;
-            }
-        }
-        return false;
-    }
-
-    public function isCartEmpty()
-    {
-        $isEmpty = false;
-        if (empty($this->getProducts())) {
-            $isEmpty = true;
-        }
-        return $isEmpty;
     }
 
     protected function getProductContain(): array
@@ -537,7 +438,7 @@ class CartService
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
                 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
-                    && in_array($this->identity->user('shopping_price'), ['PP', 'SP'])
+                    && in_array($this->identity->get('shopping_price'), ['PP', 'SP'])
                     && isset($cartProduct['purchasePriceInclPerUnit'])
                     ) {
                     $orderDetail2save['order_detail_unit']['purchase_price_incl_per_unit'] = $cartProduct['purchasePriceInclPerUnit'];
@@ -545,7 +446,7 @@ class CartService
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
-                && in_array($this->identity->user('shopping_price'), ['PP', 'SP'])
+                && in_array($this->identity->get('shopping_price'), ['PP', 'SP'])
                 ) {
                 $orderDetailPurchasePrices = $this->prepareOrderDetailPurchasePrices($ids, $product, $cartProduct);
                 $orderDetail2save['order_detail_purchase_price'] = $orderDetailPurchasePrices;
@@ -718,7 +619,9 @@ class CartService
     private function sendInstantOrderNotificationToManufacturers($cartProducts): array
     {
 
-        if (!$this->identity->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        $orderCustomerService = new OrderCustomerService();
+        
+        if (!$orderCustomerService->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             return [];
         }
 
@@ -894,7 +797,7 @@ class CartService
     private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities)
     {
 
-        if (!$this->identity->user('active')) {
+        if (!$this->identity->get('active')) {
             return false;
         }
 

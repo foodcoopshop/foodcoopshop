@@ -152,6 +152,6 @@ class FrontendController extends AppController
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());
             $this->set('futureOrderDetails', $futureOrderDetails);
         }
-        //$this->identity->setCart($this->identity->getCart());
+        $this->identity->setCart($this->identity->getCart());
     }
 }

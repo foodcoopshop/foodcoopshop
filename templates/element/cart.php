@@ -25,9 +25,9 @@ if (!$identity->isLoggedIn() || $identity->isManufacturer()) {
     return;
 }
 
-if ($identity->CartService->getProducts() !== null) {
+if ($identity->getProducts() !== null) {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($identity->CartService->getProducts()))."');"
+        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($identity->getProducts()))."');"
     ]);
 
     if (!empty($cartErrors)) {

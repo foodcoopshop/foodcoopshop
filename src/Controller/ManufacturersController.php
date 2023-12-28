@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\CatalogService;
@@ -28,32 +27,6 @@ class ManufacturersController extends FrontendController
 
     protected $Manufacturer;
     protected $BlogPost;
-
-    public function beforeFilter(EventInterface $event)
-    {
-
-        parent::beforeFilter($event);
-
-        if (!Configure::read('app.showManufacturerListAndDetailPage')) {
-            throw new NotFoundException();
-        }
-
-        switch ($this->getRequest()->getParam('action')) {
-            case 'detail':
-                $manufacturerId = (int) $this->getRequest()->getParam('pass')[0];
-                $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-                $manufacturer = $this->Manufacturer->find('all', [
-                    'conditions' => [
-                        'Manufacturers.id_manufacturer' => $manufacturerId,
-                        'Manufacturers.active' => APP_ON
-                    ]
-                ])->first();
-                if (!empty($manufacturer) && !$this->identity->isLoggedIn() && $manufacturer->is_private) {
-                    $this->identity->deny($this->getRequest()->getParam('action'));
-                }
-                break;
-        }
-    }
 
     public function index()
     {
@@ -128,7 +101,7 @@ class ManufacturersController extends FrontendController
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, $manufacturerId, true);
+        $blogPosts = $this->BlogPost->findBlogPosts($manufacturerId, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('manufacturer', $manufacturer);

@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\Datasource\FactoryLocator;
 use Cake\Routing\Router;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +26,7 @@ use Cake\Routing\Router;
 class Customer extends Entity implements IdentityInterface
 {
 
-    public $CartService;
+    public $cart = null;
 
     protected $_virtual = ['name'];
 
@@ -270,10 +271,12 @@ class Customer extends Entity implements IdentityInterface
     {
         $cartsTable = FactoryLocator::get('Table')->get('Carts');
         $cartType = $cartsTable::CART_TYPE_WEEKLY_RHYTHM;
-        if ($this->isOrderForDifferentCustomerMode()) {
+
+        $orderCustomerService = new OrderCustomerService();
+        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
             $cartType = $cartsTable::CART_TYPE_INSTANT_ORDER;
         }
-        if ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer()) {
+        if ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer()) {
             $cartType = $cartsTable::CART_TYPE_SELF_SERVICE;
         }
         return $cartType;
@@ -281,12 +284,12 @@ class Customer extends Entity implements IdentityInterface
 
     public function setCart($cart)
     {
-        $this->CartService->cart = $cart;
+        $this->cart = $cart;
     }
 
     public function getCart()
     {
-        if (! $this->get()) {
+        if (!$this->isLoggedIn()) {
             return null;
         }
 
@@ -294,6 +297,111 @@ class Customer extends Entity implements IdentityInterface
 
         $cartsTable = FactoryLocator::get('Table')->get('Carts');
         return $cartsTable->getCart($this, $cartType);
+    }
+
+    public function getProducts()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartProducts'];
+        }
+        return null;
+    }
+
+    public function getProductsWithUnitCount()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['ProductsWithUnitCount'];
+        }
+        return 0;
+    }
+
+    public function getProductAndDepositSum()
+    {
+        return $this->getProductSum() + $this->getDepositSum();
+    }
+
+    public function getTaxSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartTaxSum'];
+        }
+        return 0;
+    }
+
+    public function getDepositSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartDepositSum'];
+        }
+        return 0;
+    }
+
+    public function getProductSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartProductSum'];
+        }
+        return 0;
+    }
+
+    public function getProductSumExcl()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartProductSumExcl'];
+        }
+        return 0;
+    }
+
+    public function getCartId()
+    {
+        return $this->cart['Cart']->id_cart;
+    }
+
+    public function markAsSaved()
+    {
+        if ($this->cart === null) {
+            return false;
+        }
+        $cc = FactoryLocator::get('Table')->get('Carts');
+        $patchedEntity = $cc->patchEntity(
+            $cc->get($this->getCartId()), [
+                'status' => APP_OFF,
+            ],
+            ['validate' => false],
+        );
+        $cc->save($patchedEntity);
+        return $patchedEntity;
+    }
+
+    public function getUniqueManufacturers(): array
+    {
+        $manufactures = [];
+        foreach ($this->getProducts() as $product) {
+            $manufactures[$product['manufacturerId']] = [
+                'name' => $product['manufacturerName']
+            ];
+        }
+        return $manufactures;
+    }
+
+    public function getProduct($productId)
+    {
+        foreach ($this->getProducts() as $product) {
+            if ($product['productId'] == $productId) {
+                return $product;
+                break;
+            }
+        }
+        return false;
+    }
+
+    public function isCartEmpty()
+    {
+        $isEmpty = false;
+        if (empty($this->getProducts())) {
+            $isEmpty = true;
+        }
+        return $isEmpty;
     }
 
 }

@@ -7,7 +7,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
-use Cake\Utility\Security;
 use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 use App\Services\CatalogService;
 
@@ -40,26 +39,6 @@ class PagesController extends FrontendController
             'home',
         ]);
 
-        switch ($this->getRequest()->getParam('action')) {
-            case 'detail':
-                $pageId = (int) $this->getRequest()->getParam('idAndSlug');
-                $this->Page = $this->getTableLocator()->get('Pages');
-                $page = $this->Page->find('all', [
-                    'conditions' => [
-                        'Pages.id_page' => $pageId,
-                        'Pages.active' => APP_ON
-                    ]
-                ])->first();
-                if (!empty($page) && !$this->identity->isLoggedIn() && $page->is_private) {
-                    $this->identity->deny($this->getRequest()->getParam('action'));
-                }
-                break;
-            case 'discourseSso':
-                if (!$this->identity->isLoggedIn()) {
-                    $this->identity->deny($this->getRequest()->getParam('action'));
-                }
-                break;
-        }
     }
 
     public function home()

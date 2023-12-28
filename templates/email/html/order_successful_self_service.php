@@ -57,7 +57,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
 
             <?php if (Configure::read('app.showTaxInOrderConfirmationEmail')) { ?>
 
-                <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($identity->CartService->getTaxSum()); ?>
+                <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($identity->getTaxSum()); ?>
             </td></tr>
 
         <tr><td>

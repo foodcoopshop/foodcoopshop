@@ -9,6 +9,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use App\Services\DeliveryRhythmService;
+use App\Services\OrderCustomerService;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -38,7 +39,7 @@ class CartsController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->identity->allow([
+        $this->Authentication->allowUnauthenticated([
             'generateRightOfWithdrawalInformationPdf',
             'ajaxAdd',
             'ajaxRemove',
@@ -51,7 +52,7 @@ class CartsController extends FrontendController
      */
     private function ajaxIsAuthorized()
     {
-        if (empty($this->identity->isLoggedIn())) {
+        if (!($this->identity->isLoggedIn())) {
             throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_sign_in_or_register</a>.', [
                 Configure::read('app.slugHelper')->getLogin()
             ]));
@@ -144,7 +145,7 @@ class CartsController extends FrontendController
         $this->set('cart', $cart);
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->identity, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
@@ -209,7 +210,7 @@ class CartsController extends FrontendController
         $cart = $this->identity->getCart();
         $this->identity->setCart($cart);
 
-        $existingCartProduct = $this->identity->CartService->getProduct($initialProductId);
+        $existingCartProduct = $this->identity->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
             $message = __('Product_{0}_was_not_available_in_cart.', [$ids['productId']]);
             $this->set([
@@ -275,7 +276,7 @@ class CartsController extends FrontendController
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
             foreach($orderDetails as $orderDetail) {
-                $result = $cartProductTable->add($this->identity, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
+                $result = $cartProductTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;
@@ -342,7 +343,7 @@ class CartsController extends FrontendController
 
         $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $result = $cartProductTable->add($this->identity, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
+        $result = $cartProductTable->add($ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -355,8 +356,7 @@ class CartsController extends FrontendController
             ];
         }
 
-        $orderCustomerService = $this->getOrderCustomerService();
-        if ($orderCustomerService->isSelfServiceModeByReferer()) {
+        if ((new OrderCustomerService())->isSelfServiceModeByReferer()) {
             $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
         }
 

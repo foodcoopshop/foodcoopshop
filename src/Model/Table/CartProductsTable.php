@@ -63,6 +63,7 @@ class CartProductsTable extends AppTable
 
         $identity = (new IdentityService())->getIdentity();
         $orderCustomerService = new OrderCustomerService();
+        
         $productsTable = FactoryLocator::get('Table')->get('Products');
         $initialProductId = $productsTable->getCompositeProductIdAndAttributeId($productId, $attributeId);
 
@@ -96,7 +97,7 @@ class CartProductsTable extends AppTable
         ])
         ->first();
 
-        $existingCartProduct = $identity->CartService->getProduct($initialProductId);
+        $existingCartProduct = $identity->getProduct($initialProductId);
         $combinedAmount = $amount;
         if ($existingCartProduct) {
             $combinedAmount = $existingCartProduct['amount'] + $amount;
@@ -165,7 +166,7 @@ class CartProductsTable extends AppTable
             $product->tax->rate ?? 0,
         );
 
-        $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit']);
+        $result = $this->validateMinimalCreditBalance($prices['gross_with_deposit'], $orderCustomerService);
         if ($result !== true) {
             return [
                 'status' => 0,
@@ -254,7 +255,7 @@ class CartProductsTable extends AppTable
         }
 
         $message = $this->isProductBulkOrderStillPossible(
-            $identity,
+            $orderCustomerService,
             $product->manufacturer->stock_management_enabled,
             $product->is_stock_product,
             $product->delivery_rhythm_type,

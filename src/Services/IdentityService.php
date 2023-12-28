@@ -36,10 +36,6 @@ class IdentityService
             $customerTable = FactoryLocator::get('Table')->get('Customers');
             $identity = $customerTable->newEmptyEntity();
         }
-        
-        $identity->CartService = new CartService();
-        $identity->CartService->setIdentity($this);
-
         return $identity;
     }
 
