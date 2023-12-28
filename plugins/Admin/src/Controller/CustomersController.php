@@ -14,7 +14,7 @@ use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Admin\Traits\UploadTrait;
-use App\Traits\RenewAuthSessionTrait;
+use App\Controller\Traits\RenewAuthSessionTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

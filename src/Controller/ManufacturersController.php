@@ -8,6 +8,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\CatalogService;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,6 +28,17 @@ class ManufacturersController extends FrontendController
 
     protected $Manufacturer;
     protected $BlogPost;
+
+    public function beforeFilter(EventInterface $event)
+    {
+
+        parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated([
+            'index',
+        ]);
+
+    }
 
     public function index()
     {

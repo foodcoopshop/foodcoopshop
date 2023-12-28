@@ -14,7 +14,7 @@ use App\Services\DeliveryRhythmService;
 use Admin\Traits\UploadTrait;
 use App\Services\CatalogService;
 use App\Services\DeliveryNoteService;
-use App\Traits\RenewAuthSessionTrait;
+use App\Controller\Traits\RenewAuthSessionTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

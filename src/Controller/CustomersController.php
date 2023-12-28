@@ -13,7 +13,7 @@ use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\OrderCustomerService;
-use App\Traits\RenewAuthSessionTrait;
+use App\Controller\Traits\RenewAuthSessionTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
