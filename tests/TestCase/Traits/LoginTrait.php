@@ -36,9 +36,7 @@ trait LoginTrait
         ])->first()->toArray();
 
         return [
-            'Auth' => [
-                'User' => $identity,
-            ]
+            'Auth' => $identity,
         ];
     }
 
