@@ -45,6 +45,9 @@ class CustomersController extends FrontendController
         $this->Authentication->allowUnauthenticated([
             'login',
             'logout',
+            'registration',
+            'registrationSuccessful',
+            'newPasswordRequest',
         ]);
 
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {

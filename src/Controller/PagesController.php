@@ -32,13 +32,14 @@ class PagesController extends FrontendController
     
     public function beforeFilter(EventInterface $event)
     {
-
         parent::beforeFilter($event);
-
         $this->Authentication->allowUnauthenticated([
             'home',
+            'detail',
+            'privacyPolicy',
+            'termsOfUse',
+            'listOfAllergens',
         ]);
-
     }
 
     public function home()

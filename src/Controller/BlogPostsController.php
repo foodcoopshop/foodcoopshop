@@ -7,6 +7,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +24,15 @@ use Cake\Datasource\FactoryLocator;
  */
 class BlogPostsController extends FrontendController
 {
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated([
+            'index',
+            'detail',
+        ]);
+    }
 
     public function detail()
     {

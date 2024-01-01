@@ -31,13 +31,11 @@ class ManufacturersController extends FrontendController
 
     public function beforeFilter(EventInterface $event)
     {
-
         parent::beforeFilter($event);
-
         $this->Authentication->allowUnauthenticated([
             'index',
+            'detail',
         ]);
-
     }
 
     public function index()
