@@ -198,23 +198,33 @@ class Application extends BaseApplication
     {
         $service = new AuthenticationService();
 
-        $service->setConfig([
-            'queryParam' => 'redirect',
-        ]);
-
         $fields = [
             IdentifierInterface::CREDENTIAL_USERNAME => 'email',
             IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd'
         ];
+
+        $ormResolver = [
+            'className' => OrmResolver::class,
+            'userModel' => 'Customers',
+            'finder' => 'auth', // CustomersTable::findAuth
+        ];
+
+        $service->setConfig([
+            'queryParam' => 'redirect',
+        ]);
         
         $service->loadIdentifier('Authentication.Password', [
-            'resolver' => [
-                'className' => OrmResolver::class,
-                'userModel' => 'Customers',
-                'finder' => 'auth', // CustomersTable::findAuth
-            ],
+            'resolver' => $ormResolver,
             'fields' => $fields,
         ]);
+
+        if (strpos($request->getPath(), '/api') === 0) {
+            $service->loadAuthenticator('Authentication.HttpBasic', [
+                'resolver' => $ormResolver,
+                'fields' => $fields,
+            ]);
+            return $service;
+        }
 
         $service->loadAuthenticator('Authentication.Session', [
             'fields' => [IdentifierInterface::CREDENTIAL_USERNAME => 'email'],

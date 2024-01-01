@@ -27,8 +27,8 @@ class Customer extends Entity implements IdentityInterface
 {
 
     public $cart = null;
-
     protected $_virtual = ['name'];
+    protected $_hidden = ['passwd'];
 
     public function getIdentifier()
     {

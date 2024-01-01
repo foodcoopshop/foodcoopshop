@@ -4,7 +4,7 @@
         "domain": "{{serverName}}",
         "variableMemberFee": 0
     },
-    "loggedUser": {
+    "identity": {
         "id_customer": 89,
         "id_default_group": 4,
         "is_company": 0,
@@ -13,7 +13,6 @@
         "email": "fcs-demo-gemuese-hersteller@mailinator.com",
         "tmp_new_passwd": null,
         "activate_new_password_code": null,
-        "auto_login_hash": null,
         "email_order_reminder_enabled": 0,
         "terms_of_use_accepted_date": "2018-08-03",
         "activate_email_code": null,

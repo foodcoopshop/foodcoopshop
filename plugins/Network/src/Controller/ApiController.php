@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Controller\Controller;
 use Cake\Database\Expression\QueryExpression;
+use App\Services\IdentityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,34 +31,12 @@ class ApiController extends Controller
     protected $Product;
     protected $OrderDetail;
     protected $Sanitize;
+    protected $identity;
 
     public function initialize(): void
     {
-
         parent::initialize();
-
         $this->loadComponent('RequestHandler');
-
-        $this->loadComponent('AppAuth', [
-            'authError' => ACCESS_DENIED_MESSAGE,
-            'authorize' => [
-                'Controller'
-            ],
-            'authenticate' => [
-                'Basic' => [
-                    'userModel' => 'Customers',
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'passwd'
-                    ],
-                    'finder' => 'auth' // CustomersTable::findAuth
-                ]
-            ],
-            // stateless authentication
-            'unauthorizedRedirect' => false,
-            'storage' => 'Memory'
-        ]);
-
     }
 
     public function beforeFilter(EventInterface $event)
@@ -72,6 +51,10 @@ class ApiController extends Controller
             }
         }
 
+        $identity = (new IdentityService())->getIdentity();
+        $this->identity = $identity;
+        $this->set('identity', $identity);
+
         $this->RequestHandler->renderAs($this, 'json');
 
         $this->response = $this->response->withHeader('Access-Control-Allow-Origin', '*');
@@ -82,11 +65,6 @@ class ApiController extends Controller
             return $this->getResponse();
         }
 
-    }
-
-    public function isAuthorized($user)
-    {
-        return $this->identity->isManufacturer();
     }
 
     private function getProductDetailLinks($productsData)
@@ -429,10 +407,10 @@ class ApiController extends Controller
                 'domain' => Configure::read('App.fullBaseUrl'),
                 'variableMemberFee' => $variableMemberFee
             ],
-            'loggedUser' => $this->identity->isLoggedIn(),
+            'identity' => $this->identity->toArray(),
             'products' => $preparedProducts
         ]);
-        $this->viewBuilder()->setOption('serialize', ['app', 'loggedUser', 'products']);
+        $this->viewBuilder()->setOption('serialize', ['app', 'identity', 'products']);
     }
 
     public function getOrders()

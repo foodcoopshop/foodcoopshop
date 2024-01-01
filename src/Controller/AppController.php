@@ -153,11 +153,4 @@ class AppController extends Controller
         }
     }
 
-    /**
-     * needs to be implemented if $this->identity->authorize = ['Controller'] is used
-     */
-    public function isAuthorized($user)
-    {
-        return true;
-    }
 }
