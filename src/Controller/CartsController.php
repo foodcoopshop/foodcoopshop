@@ -11,6 +11,7 @@ use Cake\Http\Exception\ForbiddenException;
 use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
 use Cake\Datasource\FactoryLocator;
+use App\Services\CartService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -115,11 +116,13 @@ class CartsController extends FrontendController
             return;
         }
 
-        $cart = $this->identity->finish();
+        $cartService = new CartService();
+        $cartService->setController($this);
+        $cartService->finish();
 
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
-            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cart['Cart']->id_cart));
+            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($this->identity->getCart()['Cart']->id_cart));
             return;
         }
 

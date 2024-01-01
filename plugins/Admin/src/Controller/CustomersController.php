@@ -217,7 +217,7 @@ class CustomersController extends AdminAppController
                 $actionLogId = $this->identity->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->identity->getUsername() . '</b>']);
+                $message = __d('admin', '{0}_has_changed_the_password.', ['<b>' . $this->identity->name . '</b>']);
                 $actionLogType = 'customer_password_changed';
                 $actionLogId = $this->identity->getId();
                 $actionLogModel = 'customers';
@@ -326,7 +326,7 @@ class CustomersController extends AdminAppController
             $message = __d('admin', 'Your_account_has_been_deleted_successfully.');
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
         } else {
-            $message = __d('admin', '{0}_has_deleted_an_account.', [$this->identity->getUsername()]);
+            $message = __d('admin', '{0}_has_deleted_an_account.', [$this->identity->name]);
             $redirectUrl = $this->getRequest()->getData('referer');
         }
         $this->ActionLog->customSave('customer_deleted', $this->identity->getId(), $customer->id_customer, 'customers', $message);

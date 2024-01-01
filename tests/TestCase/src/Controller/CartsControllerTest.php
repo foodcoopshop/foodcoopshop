@@ -420,7 +420,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToCart($this->productId3, 1);
         $this->checkCartStatus();
-
+        
         $this->Product->save(
             $this->Product->patchEntity(
                 $this->Product->get($this->productId3),
@@ -433,11 +433,11 @@ class CartsControllerTest extends AppCakeTestCase
         $manufacturerId = 5;
         $this->changeManufacturerNoDeliveryDays($manufacturerId, (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
-        
+
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
-        $this->assertEquals($this->productId3, $cart->cart_products[0]->id_product);        
+        $this->assertEquals($this->productId3, $cart->cart_products[0]->id_product);
     }
 
     public function testGlobalDeliveryBreakActivatedWhileShopping()

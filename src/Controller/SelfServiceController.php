@@ -6,6 +6,7 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use App\Services\CatalogService;
+use App\Services\CartService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -135,7 +136,9 @@ class SelfServiceController extends FrontendController
                 return;
             }
 
-            $cart = $this->identity->finish();
+            $cartService = new CartService();
+            $cartService->setController($this);
+            $cartService->finish();
 
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
 

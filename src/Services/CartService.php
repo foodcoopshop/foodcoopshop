@@ -118,7 +118,7 @@ class CartService
             case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
                 $actionLogType = 'customer_order_finished';
                 $message = __('Your_order_has_been_placed_succesfully.');
-                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
                 $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
                 $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
                 break;
@@ -179,7 +179,7 @@ class CartService
                 if (isset($invoiceRoute)) {
                     $message .= '<a onclick="'.h(Configure::read('app.jsNamespace') . '.Helper.openPrintDialogForFile("'.Configure::read('App.fullBaseUrl') . $invoiceRoute. '");'). '" class="btn-flash-message btn-flash-message-print-invoice btn btn-outline-light" href="javascript:void(0);"><i class="fas ok fa-print"></i> '.__('Print_receipt').'</a>';
                 }
-                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
 
                 if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
                     $userIdForActionLog = $this->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
@@ -779,7 +779,7 @@ class CartService
             $email->viewBuilder()->setTemplate('order_comment_notification');
             $email->setTo(Configure::read('appDb.FCS_APP_EMAIL'))
             ->setSubject(__('New_order_comment__was_written_by_{0}_for_{1}', [
-                $this->identity->getUsername(),
+                $this->identity->name,
                 $formattedPickupDay,
             ]))
             ->setViewVars([

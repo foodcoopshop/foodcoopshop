@@ -221,7 +221,7 @@ abstract class AppCakeTestCase extends TestCase
     {
         $this->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
-            'amount' => $amount
+            'amount' => $amount,
         ]);
         return $this->getJsonDecodedContent();
     }

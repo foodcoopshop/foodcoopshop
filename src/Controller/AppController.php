@@ -91,7 +91,7 @@ class AppController extends Controller
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
-                    'Manufacturers.id_manufacturer' => $identity->getManufacturerId()
+                    'Manufacturers.id_manufacturer' => $identity->getManufacturerId(),
                 ]
             ])->first();
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);

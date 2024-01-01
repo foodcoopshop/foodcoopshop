@@ -20,7 +20,6 @@ use Cake\Routing\Router;
 use App\Model\Entity\Customer;
 use Cake\Datasource\FactoryLocator;
 use Authorization\Identity;
-use App\Services\CartService;
 
 class IdentityService
 {

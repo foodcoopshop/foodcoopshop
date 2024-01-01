@@ -114,7 +114,10 @@ class Customer extends Entity implements IdentityInterface
     public function isManufacturer(): bool
     {
         $this->setManufacturer();
-        return Router::getRequest() && !empty(Router::getRequest()->getSession()->read('AuthManufacturer'));
+        if (Router::getRequest()) {
+            return !empty(Router::getRequest()->getSession()->read('AuthManufacturer'));
+        }
+        return false;
     }
 
     public function getManufacturerId()
@@ -122,7 +125,7 @@ class Customer extends Entity implements IdentityInterface
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-        return Router::getRequest() && Router::getRequest()->getSession()->read('AuthManufacturer.id_manufacturer');
+        return Router::getRequest()->getSession()->read('AuthManufacturer.id_manufacturer');
     }
 
     public function getManufacturerName()
@@ -130,7 +133,7 @@ class Customer extends Entity implements IdentityInterface
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-        return Router::getRequest() && Router::getRequest()->getSession()->read('AuthManufacturer.name');
+        return Router::getRequest()->getSession()->read('AuthManufacturer.name');
     }
 
     public function getManufacturerAnonymizeCustomers()
@@ -138,7 +141,7 @@ class Customer extends Entity implements IdentityInterface
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-        return Router::getRequest() && Router::getRequest()->getSession()->read('AuthManufacturer.anonymize_customers');
+        return Router::getRequest()->getSession()->read('AuthManufacturer.anonymize_customers');
     }
 
     public function getManufacturerVariableMemberFee()
@@ -146,7 +149,7 @@ class Customer extends Entity implements IdentityInterface
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-        return Router::getRequest() && Router::getRequest()->getSession()->read('AuthManufacturer.variable_member_fee');
+        return Router::getRequest()->getSession()->read('AuthManufacturer.variable_member_fee');
     }
 
     public function getManufacturerEnabledSyncDomains()
@@ -154,7 +157,7 @@ class Customer extends Entity implements IdentityInterface
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-        return Router::getRequest() && Router::getRequest()->getSession()->read('AuthManufacturer.enabled_sync_domains');
+        return Router::getRequest()->getSession()->read('AuthManufacturer.enabled_sync_domains');
     }
 
     public function getManufacturerCustomer()
@@ -162,7 +165,7 @@ class Customer extends Entity implements IdentityInterface
         if (! $this->isManufacturer()) {
             throw new \Exception('logged user is no manufacturer');
         }
-        return Router::getRequest() && Router::getRequest()->getSession()->read('AuthManufacturer.customer');
+        return Router::getRequest()->getSession()->read('AuthManufacturer.customer');
     }
 
     public function getId()
