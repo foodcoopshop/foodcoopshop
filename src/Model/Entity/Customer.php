@@ -309,7 +309,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->cart !== null) {
             return $this->cart['CartProducts'];
         }
-        return null;
+        return [];
     }
 
     public function getProductsWithUnitCount()
@@ -374,8 +374,8 @@ class Customer extends Entity implements IdentityInterface
             ],
             ['validate' => false],
         );
-        $cc->save($patchedEntity);
-        return $patchedEntity;
+        $savedCart = $cc->save($patchedEntity);
+        return $savedCart;
     }
 
     public function getUniqueManufacturers(): array

@@ -69,7 +69,8 @@ class CustomersController extends AdminAppController
             $includeOfflineCustomers = true;
         }
 
-        $customers = $this->Customer->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions);
+        $customerTable = $this->getTableLocator()->get('Customers');
+        $customers = $customerTable->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions);
         $customersForDropdown = [];
         foreach ($customers as $key => $ps) {
             $customersForDropdown[] = '<optgroup label="' . $key . '">';

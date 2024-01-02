@@ -117,12 +117,13 @@ class CartsController extends FrontendController
         }
 
         $cartService = new CartService();
+        $cartId = $this->identity->getCartId();
         $cartService->setController($this);
         $cartService->finish();
 
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
-            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($this->identity->getCart()['Cart']->id_cart));
+            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cartId));
             return;
         }
 

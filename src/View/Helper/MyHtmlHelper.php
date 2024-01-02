@@ -62,7 +62,7 @@ class MyHtmlHelper extends HtmlHelper
     public function buildElementProductCacheKey($product, $identity, $request)
     {
         $orderCustomerService = new OrderCustomerService();
-        $orderCustomer = $request->getSession()->read('Auth.orderCustomer');
+        $orderCustomer = $request->getSession()->read('AuthOrderCustomer');
         if (empty($orderCustomer)) {
             $orderCustomer = $request->getSession()->read('Auth.User');
         }

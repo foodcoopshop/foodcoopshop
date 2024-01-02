@@ -90,7 +90,7 @@ trait LoginTrait
     public function loginAsSuperadminAddOrderCustomerToSession($session)
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
-        $sessionData['Auth']['orderCustomer'] = $session['Auth']['orderCustomer'];
+        $sessionData['AuthOrderCustomer'] = $session['AuthOrderCustomer'];
         $this->session($sessionData);
     }
 
@@ -109,7 +109,7 @@ trait LoginTrait
      */
     public function isOrderForDifferentCustomerMode()
     {
-        return $this->getSession()->read('Auth.orderCustomer');
+        return $this->getSession()->read('AuthOrderCustomer');
     }
 
     /**
@@ -126,6 +126,6 @@ trait LoginTrait
         if (empty($this->_session)) {
             return [];
         }
-        return $this->_session['Auth']['User'];
+        return $this->_session['Auth'];
     }
 }

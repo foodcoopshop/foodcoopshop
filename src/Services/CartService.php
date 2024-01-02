@@ -15,6 +15,8 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
 use App\Controller\Component\StringComponent;
+use Cake\Http\Client\Request;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -53,6 +55,12 @@ class CartService
     public function __construct()
     {
         $identity = (new IdentityService())->getIdentity();
+
+        $orderCustomerService = new OrderCustomerService();
+        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+            $identity = Router::getRequest()->getSession()->read('AuthOrderCustomer');
+        }
+
         $this->setIdentity($identity);
     }
 
@@ -109,7 +117,7 @@ class CartService
         $cart = $this->identity->getCart(); // to get attached order details
         $this->identity->setCart($cart);
         $cart['Cart'] = $this->identity->markCartAsSaved(); // modified timestamp is needed later on!
-
+        
         $cartType = $this->identity->getCartType();
         $userIdForActionLog = $this->identity->getId();
 
@@ -124,16 +132,16 @@ class CartService
                 break;
             case $this->Cart::CART_TYPE_INSTANT_ORDER;
                 $actionLogType = 'instant_order_added';
-                $userIdForActionLog = $this->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                $userIdForActionLog = $this->request->getSession()->read('AuthOriginalIdentity')['id_customer'];
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
-                        '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>'
+                        '<b>' . $this->request->getSession()->read('AuthOrderCustomer')->name . '</b>'
                     ]);
                 } else {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
-                        '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        '<b>' . $this->request->getSession()->read('AuthOrderCustomer')->name . '</b>',
                         '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                     ]);
                 }
@@ -182,10 +190,10 @@ class CartService
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
 
                 if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-                    $userIdForActionLog = $this->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                    $userIdForActionLog = $this->request->getSession()->read('AuthOriginalIdentity')['id_customer'];
                     $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
-                        $this->request->getSession()->read('Auth.originalLoggedCustomer')['name'],
-                        '<b>' . $this->request->getSession()->read('Auth.orderCustomer')->name . '</b>',
+                        $this->request->getSession()->read('AuthOriginalIdentity')['name'],
+                        '<b>' . $this->request->getSession()->read('AuthOrderCustomer')->name . '</b>',
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
                     ]);
                 } else {
@@ -663,7 +671,7 @@ class CartService
                 ->setViewVars([
                     'identity' => $this->identity,
                     'cart' => ['CartProducts' => $cartProducts],
-                    'originalLoggedCustomer' => $this->request->getSession()->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->request->getSession()->read('AuthOriginalIdentity'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
@@ -809,7 +817,7 @@ class CartService
             'cart' => $cartGroupedByPickupDay,
             'pickupDayEntities' => $pickupDayEntities,
             'identity' => $this->identity,
-            'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null
+            'originalLoggedCustomer' => $this->request->getSession()->check('AuthOriginalIdentity') ? $this->request->getSession()->read('AuthOriginalIdentity') : null
         ]);
 
         if (Configure::read('app.rightOfWithdrawalEnabled')) {

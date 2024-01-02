@@ -36,15 +36,15 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer')) {
-            $this->identity->setUser($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer'));
+        if ($this->getRequest()->getSession()->read('AuthOriginalIdentity')) {
+            $this->Authentication->setIdentity($this->getRequest()->getSession()->read('AuthOriginalIdentity'));
         }
     }
 
     protected function destroyOrderCustomer()
     {
-        $this->getRequest()->getSession()->delete('Auth.orderCustomer');
-        $this->getRequest()->getSession()->delete('Auth.originalLoggedCustomer');
+        $this->getRequest()->getSession()->delete('AuthOrderCustomer');
+        $this->getRequest()->getSession()->delete('AuthOriginalIdentity');
     }
 
     // is not called on ajax actions!
@@ -127,15 +127,18 @@ class FrontendController extends AppController
         }
 
         /*
-         * changed the acutally logged in customer to the desired orderCustomer
-         * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
+         * changes the identity to the desired orderCustomer
+         * but only in controller beforeFilter()
+         * beforeRender() sets the customer back to the original one
          * this means, in views $identity ALWAYS returns the original customer, in controllers ALWAYS the desired orderCustomer
          */
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-            $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->identity);
-            $this->identity->setUser($this->getRequest()->getSession()->read('Auth.orderCustomer'));
+            $this->getRequest()->getSession()->write('AuthOriginalIdentity', $this->identity);
+            $newIdentity = $this->getRequest()->getSession()->read('AuthOrderCustomer');
+            $this->Authentication->setIdentity($newIdentity);
         }
+
         if ($this->identity->isLoggedIn()) {
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
@@ -152,6 +155,8 @@ class FrontendController extends AppController
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());
             $this->set('futureOrderDetails', $futureOrderDetails);
         }
+
         $this->identity->setCart($this->identity->getCart());
+
     }
 }

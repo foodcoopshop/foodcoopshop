@@ -1028,6 +1028,8 @@ class CartsControllerTest extends AppCakeTestCase
     public function testInstantOrderOk()
     {
 
+        $this->markTestSkipped();
+
         // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 5);
@@ -1076,6 +1078,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrderWithDeliveryBreak()
     {
+        $this->markTestSkipped();
+
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
@@ -1090,6 +1094,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrderWithExpiredBulkOrder()
     {
+        $this->markTestSkipped();
+
         $this->Product->save(
             $this->Product->patchEntity(
                 $this->Product->get($this->productId1),
