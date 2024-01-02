@@ -155,13 +155,14 @@ trait IndexTrait {
                 $query->select(['Manufacturers.name']);
                 break;
             default:
-                $query = $this->Customer->addCustomersNameForOrderSelect($query);
+                $customerTable = $this->getTableLocator()->get('Customers');
+                $query = $customerTable->addCustomersNameForOrderSelect($query);
                 $query->select($this->OrderDetail);
                 $query->select($this->OrderDetail->CartProducts); // need to be called before ->Carts
                 $query->select($this->OrderDetail->CartProducts->Carts);
                 $query->select($this->OrderDetail->OrderDetailUnits);
                 $query->select($this->OrderDetail->OrderDetailFeedbacks);
-                $query->select($this->Customer);
+                $query->select($customerTable);
                 $query->select($this->OrderDetail->Products);
                 $query->select($this->OrderDetail->Products->Manufacturers);
                 $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);

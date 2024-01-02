@@ -97,7 +97,8 @@ class InvoicesController extends AdminAppController
         $customerId = h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
-        $customer = $this->Customer->find('all', [
+        $customerTable = $this->getTableLocator()->get('Customers');
+        $customer = $customerTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
             ],
@@ -107,7 +108,7 @@ class InvoicesController extends AdminAppController
             throw new \Exception('customer not found');
         }
 
-        $invoiceData = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        $invoiceData = $customerTable->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         if (!$invoiceData->new_invoice_necessary) {
             $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
             $this->redirect($this->referer());
@@ -201,7 +202,8 @@ class InvoicesController extends AdminAppController
             $currentDay = $this->getRequest()->getQuery('currentDay');
         }
 
-        $customer = $this->Customer->find('all', [
+        $customerTable = $this->getTableLocator()->get('Customers');
+        $customer = $customerTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
             ],
@@ -211,7 +213,7 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        $invoiceData = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
+        $invoiceData = $customerTable->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$invoiceData->new_invoice_necessary) {
             die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
         }
