@@ -48,6 +48,9 @@ class CustomersController extends FrontendController
             'registration',
             'registrationSuccessful',
             'newPasswordRequest',
+            'activateNewPassword',
+            'activateEmailAddress',
+            'profileImage',
         ]);
 
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {

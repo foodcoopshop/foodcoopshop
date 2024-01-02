@@ -30,28 +30,9 @@ class ProductsController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-
-        $this->Product = $this->getTableLocator()->get('Products');
-        $productId = (int) $this->getRequest()->getParam('pass')[0];
-
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId,
-                'Products.active' => APP_ON
-            ],
-            'contain' => [
-                'Manufacturers'
-            ]
-        ])->first();
-
-        if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
-              !empty($product)
-              && !$this->identity->isLoggedIn()
-              && (!empty($product->manufacturer) && $product->manufacturer->is_private)
-              )
-            ) {
-                $this->identity->deny($this->getRequest()->getParam('action'));
-        }
+        $this->Authentication->allowUnauthenticated([
+            'detail',
+        ]);
     }
 
     public function detail()
