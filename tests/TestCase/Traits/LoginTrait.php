@@ -96,7 +96,7 @@ trait LoginTrait
 
     public function getId()
     {
-        $identity = $this->user();
+        $identity = $this->getUser();
         if (empty($identity)) {
             return [];
         }
@@ -121,7 +121,7 @@ trait LoginTrait
         return $this->isSelfServiceModeByUrl;
     }
 
-    public function user()
+    public function getUser()
     {
         if (empty($this->_session)) {
             return [];
