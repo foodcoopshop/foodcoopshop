@@ -7,13 +7,16 @@ use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
-use Authorization\Exception\ForbiddenException;
 
 class OrderDetailsPolicy implements RequestPolicyInterface
 {
 
     public function canAccess($identity, ServerRequest $request)
     {
+
+        if ($identity === null) {
+            return false;
+        }
 
         switch ($request->getParam('action')) {
             case 'profit';
