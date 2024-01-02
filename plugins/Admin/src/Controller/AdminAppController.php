@@ -24,11 +24,6 @@ class AdminAppController extends AppController
 
     protected $ActionLog;
 
-    public function isAuthorized($user)
-    {
-        return $this->identity->isLoggedIn();
-    }
-
     public function setReferer()
     {
         $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
