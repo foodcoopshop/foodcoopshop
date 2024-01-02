@@ -29,7 +29,7 @@ class ProductsPolicy implements RequestPolicyInterface
 
         if (!Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
-              && !$identity !== null
+              && $identity === null
               && (!empty($product->manufacturer) && $product->manufacturer->is_private)
               )
             ) {

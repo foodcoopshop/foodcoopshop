@@ -20,15 +20,15 @@ class PagesPolicy implements RequestPolicyInterface
                 $page = $pageTable->find('all', [
                     'conditions' => [
                         'Pages.id_page' => $pageId,
-                        'Pages.active' => APP_ON
+                        'Pages.active' => APP_ON,
                     ]
                 ])->first();
-                if (!empty($page) && !$identity !== null && $page->is_private) {
+                if (!empty($page) && $identity === null && $page->is_private) {
                     return false;
                 }
                 break;
             case 'discourseSso':
-                if (!$identity !== null) {
+                if ($identity !== null) {
                     return false;
                 }
                 break;
