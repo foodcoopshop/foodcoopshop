@@ -5,7 +5,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\I18n\FrozenDate;
 use Admin\Traits\UploadTrait;
 
@@ -32,38 +31,6 @@ class BlogPostsController extends AdminAppController
     protected $Customer;
     protected $Manufacturer;
     protected $Sanitize;
-
-    public function isAuthorized($user)
-    {
-        if (!Configure::read('app.isBlogFeatureEnabled')) {
-            return false;
-        }
-        switch ($this->getRequest()->getParam('action')) {
-            case 'edit':
-                if ($this->identity->isSuperadmin() || $this->identity->isAdmin()) {
-                    return true;
-                }
-                // manufacturer owner check
-                if ($this->identity->isManufacturer()) {
-                    $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-                    $blogPost = $this->BlogPost->find('all', [
-                        'conditions' => [
-                            'BlogPosts.id_blog_post' => $this->getRequest()->getParam('pass')[0]
-                        ]
-                    ])->first();
-                    if (empty($blogPost)) {
-                        throw new RecordNotFoundException();
-                    }
-                    if ($blogPost->id_manufacturer != $this->identity->getManufacturerId()) {
-                        return false;
-                    }
-                    return true;
-                }
-                break;
-            default:
-                return $this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isManufacturer();
-        }
-    }
 
     public function add()
     {

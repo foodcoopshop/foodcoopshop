@@ -26,11 +26,6 @@ class CronjobsController extends AdminAppController
     protected $Cronjob;
     protected $Sanitize;
 
-    public function isAuthorized($user)
-    {
-        return $this->identity->isSuperadmin();
-    }
-
     public function index()
     {
         $this->Cronjob = $this->getTableLocator()->get('Cronjobs');

@@ -29,11 +29,6 @@ class CategoriesController extends AdminAppController
     
     use UploadTrait;
     
-    public function isAuthorized($user)
-    {
-        return $this->identity->isSuperadmin() || $this->identity->isAdmin();
-    }
-
     public function add()
     {
         $this->Category = $this->getTableLocator()->get('Categories');

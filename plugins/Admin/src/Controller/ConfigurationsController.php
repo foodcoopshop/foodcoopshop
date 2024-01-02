@@ -32,11 +32,6 @@ class ConfigurationsController extends AdminAppController
     protected $SyncDomain;
     protected $Tax;
     
-    public function isAuthorized($user)
-    {
-        return $this->identity->isSuperadmin();
-    }
-
     public function edit($configurationId)
     {
 

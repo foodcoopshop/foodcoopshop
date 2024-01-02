@@ -29,17 +29,6 @@ class ReportsController extends AdminAppController
 
     protected $Payment;
 
-    public function isAuthorized($user)
-    {
-        if (isset($this->getRequest()->getParam('pass')[0])) {
-            if($this->getRequest()->getParam('pass')[0] == 'deposit') {
-                // allow deposit for cash configuration
-                return $this->identity->isSuperadmin();
-            }
-        }
-        return $this->identity->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();
-    }
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);

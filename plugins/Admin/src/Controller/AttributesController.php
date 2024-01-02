@@ -26,11 +26,6 @@ class AttributesController extends AdminAppController
     protected $ProductAttributeCombination;
     protected $Sanitize;
 
-    public function isAuthorized($user)
-    {
-        return $this->identity->isSuperadmin() || $this->identity->isAdmin();
-    }
-
     public function add()
     {
         $this->Attribute = $this->getTableLocator()->get('Attributes');

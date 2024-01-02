@@ -33,16 +33,6 @@ class DepositsController extends AdminAppController
 
     public $manufacturerId;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'overviewDiagram' => Configure::read('app.isDepositEnabled') && $this->identity->isSuperadmin(),
-            'index', 'detail' => Configure::read('app.isDepositEnabled') && $this->identity->isSuperadmin() || $this->identity->isAdmin(),
-            'myIndex', 'myDetail' => Configure::read('app.isDepositEnabled') && $this->identity->isManufacturer(),
-             default => Configure::read('app.isDepositEnabled') && $this->identity->isManufacturer(),
-        };
-    }
-
     public function overviewDiagram()
     {
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();

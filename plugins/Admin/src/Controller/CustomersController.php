@@ -41,18 +41,6 @@ class CustomersController extends AdminAppController
     use UploadTrait;
     use RenewAuthSessionTrait;
     
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'generateMemberCards' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->identity->isSuperadmin() || $this->identity->isAdmin()),
-            'generateMyMemberCard' => Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isCustomer()),
-            'creditBalanceSum', 'delete' =>  $this->identity->isSuperadmin(),
-            'profile' => $this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isCustomer(),
-            'changePassword', 'ajaxGetCustomersForDropdown' => $this->identity->isLoggedIn(),
-             default => $this->identity->isSuperadmin() || $this->identity->isAdmin(),
-        };
-    }
-
     public function ajaxGetCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -577,27 +565,28 @@ class CustomersController extends AdminAppController
         $this->set('dateTo', $dateTo);
 
         $this->Payment = $this->getTableLocator()->get('Payments');
+        $customerTable = $this->getTableLocator()->get('Customers');
 
-        $paymentProductDelta = $this->Customer->getProductBalanceForCustomers(APP_ON);
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
+        $paymentProductDelta = $customerTable->getProductBalanceForCustomers(APP_ON);
+        $paymentDepositDelta = $customerTable->getDepositBalanceForCustomers(APP_ON);
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_credits_of_activated_members'),
-            'count' => count($this->Customer->getCustomerIdsWithStatus(APP_ON)),
+            'count' => count($customerTable->getCustomerIdsWithStatus(APP_ON)),
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
             'payment_deposit_delta' => $paymentDepositDelta * -1
         ];
 
-        $paymentProductDelta = $this->Customer->getProductBalanceForCustomers(APP_OFF);
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_OFF);
+        $paymentProductDelta = $customerTable->getProductBalanceForCustomers(APP_OFF);
+        $paymentDepositDelta = $customerTable->getDepositBalanceForCustomers(APP_OFF);
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_credits_of_deactivated_members'),
-            'count' => count($this->Customer->getCustomerIdsWithStatus(APP_OFF)),
+            'count' => count($customerTable->getCustomerIdsWithStatus(APP_OFF)),
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
             'payment_deposit_delta' => $paymentDepositDelta * -1
         ];
 
-        $paymentProductDelta = $this->Customer->getProductBalanceForDeletedCustomers();
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForDeletedCustomers();
+        $paymentProductDelta = $customerTable->getProductBalanceForDeletedCustomers();
+        $paymentDepositDelta = $customerTable->getDepositBalanceForDeletedCustomers();
         $customers[] = [
             'customer_type' => __d('admin', 'Sum_of_credits_of_deleted_members'),
             'count' => 0,
