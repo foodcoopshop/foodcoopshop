@@ -15,14 +15,15 @@ class RequestPolicy implements RequestPolicyInterface
         $plugin = $request->getParam('plugin');
         $controller = $request->getParam('controller');
 
+        $policy = 'App\\Policy\\' . $controller . 'Policy';
+
         if ($plugin == 'DebugKit') {
             return true;
         }
 
-        $policy = match($plugin) {
-            'Admin' => 'App\\Policy\\AdminPolicy',
-            default => 'App\\Policy\\' . $controller . 'Policy',
-        };
+        if ($plugin == 'Admin') {
+            $policy = 'Admin\\Policy\\' . $controller . 'Policy';
+        }
 
         if (class_exists($policy)) {
             return (new $policy())->canAccess($identity, $request);

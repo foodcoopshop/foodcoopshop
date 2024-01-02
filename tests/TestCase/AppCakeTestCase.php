@@ -152,12 +152,9 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertEquals(1, $response->status);
     }
 
-    /**
-     * called with json request, Controller::isAuthorized false redirects to home
-     */
     protected function assertNotPerfectlyImplementedAccessRestricted()
     {
-        $this->assertEquals(Configure::read('App.fullBaseUrl') . '/' , $this->_response->getHeaderLine('Location'));
+        $this->assertEquals($this->Slug->getLogin() , $this->_response->getHeaderLine('Location'));
     }
 
     /**
