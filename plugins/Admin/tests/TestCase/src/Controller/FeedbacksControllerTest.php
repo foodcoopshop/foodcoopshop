@@ -73,9 +73,6 @@ class FeedbacksControllerTest extends AppCakeTestCase
 
     public function testSaveFeedbackAsManufacturerAndApproveBySuperadmin()
     {
-
-        $this->markTestSkipped();
-
         $this->loginAsMeatManufacturer();
         $text = 'This is my feedback';
         $privacyType = 10;
@@ -93,7 +90,6 @@ class FeedbacksControllerTest extends AppCakeTestCase
         $this->assertResponseContains($text);
         $this->assertResponseContains('Demo Fleisch-Hersteller, Scharnstein');
         $this->assertResponseContains('Feedback von Herstellern');
-
     }
 
     public function testSaveAndDeleteFeedbackByAdmin()
