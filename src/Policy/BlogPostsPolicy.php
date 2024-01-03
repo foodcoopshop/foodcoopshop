@@ -26,7 +26,7 @@ class BlogPostsPolicy implements RequestPolicyInterface
                         'Manufacturers'
                     ]
                 ])->first();
-                if (!empty($blogPost) && !$identity !== null
+                if (!empty($blogPost) && $identity === null
                     && ($blogPost->is_private || (!empty($blogPost->manufacturer) && $blogPost->manufacturer->is_private))
                     ) {
                         return false;

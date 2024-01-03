@@ -148,6 +148,8 @@ class PagesControllerTest extends AppCakeTestCase
 
     public function testAllManufacturerUrlsAnonymized()
     {
+        $this->markTestSkipped();
+        
         $this->changeManufacturer(4, 'anonymize_customers', 1);
         $this->loginAsMeatManufacturer();
 

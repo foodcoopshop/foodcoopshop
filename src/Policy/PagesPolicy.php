@@ -28,7 +28,7 @@ class PagesPolicy implements RequestPolicyInterface
                 }
                 break;
             case 'discourseSso':
-                if ($identity !== null) {
+                if ($identity === null) {
                     return false;
                 }
                 break;

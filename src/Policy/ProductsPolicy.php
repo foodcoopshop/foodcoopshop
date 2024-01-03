@@ -7,6 +7,7 @@ use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 class ProductsPolicy implements RequestPolicyInterface
 {
@@ -27,9 +28,12 @@ class ProductsPolicy implements RequestPolicyInterface
             ]
         ])->first();
 
+        if (empty($product)) {
+            throw new RecordNotFoundException('product not found');
+        }
+
         if (!Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
-              !empty($product)
-              && $identity === null
+              $identity === null
               && (!empty($product->manufacturer) && $product->manufacturer->is_private)
               )
             ) {
@@ -37,7 +41,7 @@ class ProductsPolicy implements RequestPolicyInterface
         }
 
         return true;
-        
+
     }
 
 }

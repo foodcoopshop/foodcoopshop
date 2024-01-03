@@ -29,7 +29,7 @@ class ManufacturersPolicy implements RequestPolicyInterface
                         'Manufacturers.active' => APP_ON,
                     ]
                 ])->first();
-                if (!empty($manufacturer) && !$identity !== null && $manufacturer->is_private) {
+                if (!empty($manufacturer) && $identity === null && $manufacturer->is_private) {
                     return false;
                 }
                 break;
