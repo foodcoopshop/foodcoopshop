@@ -29,6 +29,8 @@ class ToolsPolicy implements RequestPolicyInterface
             return false;
         }
 
+        return true;
+        
     }
 
 }
