@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
-$showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $identity->isLoggedIn();
+$showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $identity !== null;
 
 $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $orderCustomerService->isOrderForDifferentCustomerMode(),

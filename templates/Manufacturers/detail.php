@@ -27,9 +27,14 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
-    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
-    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
+
+if ($identity !== null) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
+    ]);
+}
 
 if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
     $this->element('addScript', ['script' =>
@@ -42,7 +47,7 @@ if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
 <h1><?php echo $manufacturer->name; ?>
 
 <?php
-if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity->isLoggedIn()) {
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
     echo '<span>'.count($manufacturer['Products']) . ' ' . __('found') . '</span>';
 }
 ?>
@@ -60,7 +65,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity->isLogged
 
         echo $manufacturer->description;
 
-    if ($identity->isSuperadmin() || $identity->isAdmin()) {
+    if ($identity !== null && ($identity->isSuperadmin() || $identity->isAdmin())) {
         if ($identity->isSuperadmin() || $identity->isAdmin()) {
             $manufacturerEditSlug = $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer);
         }

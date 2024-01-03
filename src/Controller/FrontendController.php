@@ -58,7 +58,7 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $categoriesForMenu = [];
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->isLoggedIn()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $this->Category = $this->getTableLocator()->get('Categories');
             $catalogService = new CatalogService();
             $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
@@ -92,7 +92,7 @@ class FrontendController extends AppController
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
-        if (!$this->identity->isLoggedIn()) {
+        if ($this->identity === null) {
             $conditions['Pages.is_private'] = APP_OFF;
         }
 
@@ -128,7 +128,7 @@ class FrontendController extends AppController
             $this->Authentication->setIdentity($newIdentity);
         }
 
-        if ($this->identity->isLoggedIn()) {
+        if ($this->identity !== null) {
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->identity->getCreditBalance();
@@ -143,9 +143,10 @@ class FrontendController extends AppController
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());
             $this->set('futureOrderDetails', $futureOrderDetails);
-        }
 
-        $this->identity->setCart($this->identity->getCart());
+            $this->identity->setCart($this->identity->getCart());
+            
+        }
 
     }
 }

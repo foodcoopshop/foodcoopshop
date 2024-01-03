@@ -36,7 +36,7 @@ echo $this->element('layout/header');
             <div class="left-wrapper">
                 <?php
                     $logoutButton = $this->Menu->getAuthMenuElement($identity);
-                    if ($identity->isLoggedIn()) { ?>
+                    if ($identity !== null) { ?>
                         <a class="btn btn-success <?php echo join(' ', $logoutButton['options']['class']); ?>" href="<?php echo $logoutButton['slug']; ?>"><i class="fas fa-fw fa-sign-out-alt"></i><?php echo $logoutButton['name']; ?></a> <span class="user-name-wrapper"><?php echo $identity->name; ?>
                         <?php if (Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) { ?>
                              - </span><?php echo str_replace('X', '<span class="auto-logout-timer"></span>', __('Auto_logout_in_X_sec')); ?>

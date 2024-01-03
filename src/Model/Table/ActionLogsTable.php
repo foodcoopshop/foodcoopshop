@@ -5,7 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use App\Services\IdentityService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -539,7 +539,7 @@ class ActionLogsTable extends AppTable
     public function getTypesForDropdown()
     {
         $result = [];
-        $identity = (new IdentityService())->getIdentity();
+        $identity = Router::getRequest()->getAttribute('identity');
         foreach ($this->types as $type => $value) {
             if ($identity->isManufacturer()) {
                 if (isset($value['access']) && in_array('manufacturer', $value['access'])) {

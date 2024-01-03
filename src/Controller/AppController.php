@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Services\OrderCustomerService;
-use App\Services\IdentityService;
 use App\Services\OutputFilter\OutputFilterService;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
@@ -69,7 +68,7 @@ class AppController extends Controller
     public function beforeFilter(EventInterface $event)
     {
 
-        $identity = (new IdentityService())->getIdentity();
+        $identity = $this->getRequest()->getAttribute('identity');
         $this->identity = $identity;
         $this->set('identity', $identity);
 
@@ -87,7 +86,7 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
 
-        if ($identity->isManufacturer()) {
+        if ($identity !== null && $identity->isManufacturer()) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [

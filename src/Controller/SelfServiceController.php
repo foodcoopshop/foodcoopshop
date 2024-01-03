@@ -30,7 +30,7 @@ class SelfServiceController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->identity->isLoggedIn())) {
+        if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->identity !== null)) {
             $this->identity->deny($this->getRequest()->getParam('action'));
         }
     }

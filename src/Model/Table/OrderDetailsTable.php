@@ -9,7 +9,7 @@ use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
 use Cake\Database\Expression\QueryExpression;
-use App\Services\IdentityService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -788,7 +788,7 @@ class OrderDetailsTable extends AppTable
     {
         $conditions = [];
 
-        $identity = (new IdentityService())->getIdentity();
+        $identity = Router::getRequest()->getAttribute('identity');
         
         $exp = new QueryExpression();
         if (count($pickupDay) == 2) {
@@ -830,7 +830,7 @@ class OrderDetailsTable extends AppTable
         }
 
         // override params that manufacturer is not allowed to change
-        if ($identity->isManufacturer()) {
+        if ($identity !== null && $identity->isManufacturer()) {
             $conditions['Products.id_manufacturer'] = $identity->getManufacturerId();
             if ($customerId =! '') {
                 unset($conditions['OrderDetails.id_customer']);
@@ -838,7 +838,7 @@ class OrderDetailsTable extends AppTable
         }
 
         // customers are only allowed to see their own data
-        if ($identity->isCustomer()) {
+        if ($identity !== null && $identity->isCustomer()) {
             $conditions['OrderDetails.id_customer'] = $identity->getId();
         }
 

@@ -40,16 +40,18 @@ if (!empty($page['children'])) {
     }
 }
 
-if ($identity->isSuperadmin() || $identity->isAdmin()) {
-    echo $this->Html->link(
-        '<i class="fas fa-pencil-alt"></i>',
-        $this->Slug->getPageEdit($page->id_page),
-        [
-            'class' => 'btn btn-outline-light edit-shortcut-button',
-            'title' => __('Edit'),
-            'escape' => false
-        ]
-    );
+if ($identity !== null) {
+    if ($identity->isSuperadmin() || $identity->isAdmin()) {
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt"></i>',
+            $this->Slug->getPageEdit($page->id_page),
+            [
+                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'title' => __('Edit'),
+                'escape' => false
+            ]
+        );
+    }
 }
 
 echo $page->content;

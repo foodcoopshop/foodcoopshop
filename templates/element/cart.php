@@ -21,7 +21,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
 ]);
 
-if (!$identity->isLoggedIn() || $identity->isManufacturer()) {
+if ($identity === null || $identity->isManufacturer()) {
     return;
 }
 
@@ -94,7 +94,7 @@ if ($identity->getProducts() !== null) {
             }
         }
 
-        if ($identity->isLoggedIn() && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
+        if ($identity !== null && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
             $class = ['payment'];
             if ($creditBalance < 0) {
                 $class[] = 'negative';

@@ -145,7 +145,7 @@ class MenuHelper extends Helper
     public function getAuthMenuElement($identity)
     {
         $menuElement = [];
-        if ($identity->isLoggedIn()) {
+        if ($identity !== null) {
             if ($this->getView()->getPlugin() != '') {
                 $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$identity->name.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             } else {
@@ -177,7 +177,7 @@ class MenuHelper extends Helper
 
     public function getMyFeedbackMenuElement($identity)
     {
-        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isLoggedIn()) {
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null) {
             return [
                 'slug' => Configure::read('app.slugHelper')->getMyFeedbackForm(),
                 'name' => __('Feedback'),

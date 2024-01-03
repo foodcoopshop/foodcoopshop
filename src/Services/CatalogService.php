@@ -26,7 +26,7 @@ use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Expression\StringExpression;
-use App\Services\IdentityService;
+use Cake\Routing\Router;
 
 class CatalogService
 {
@@ -40,7 +40,7 @@ class CatalogService
 
     public function __construct()
     {
-        $this->identity = (new IdentityService())->getIdentity();
+        $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
     public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
@@ -50,7 +50,7 @@ class CatalogService
         $cacheKey = join('_', [
             'Catalog_getProducts',
             'categoryId-' . $categoryId,
-            'isLoggedIn-' . ((int) $this->identity->isLoggedIn()),
+            'isLoggedIn-' . ((int) ($this->identity !== null)),
             'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . substr(md5($keyword), 0, 10),
@@ -189,7 +189,7 @@ class CatalogService
 
     protected function addDefaultConditions($query)
     {
-        if (!$this->identity->isLoggedIn()) {
+        if ($this->identity === null) {
             $query->where([
                 'Manufacturers.is_private' => APP_OFF,
             ]);
@@ -384,7 +384,7 @@ class CatalogService
             return $products;
         }
 
-        if (!$this->identity->isLoggedIn()) {
+        if ($this->identity === null) {
             return $products;
         }
 

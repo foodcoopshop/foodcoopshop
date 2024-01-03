@@ -65,7 +65,7 @@ class BlogPostsController extends FrontendController
 
         // START find neighbors
         array_pop($conditions); // do not filter last condition element blogPostId
-        if (!$this->identity->isLoggedIn()) {
+        if ($this->identity === null) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }

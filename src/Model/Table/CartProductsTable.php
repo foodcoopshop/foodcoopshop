@@ -8,7 +8,7 @@ use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use App\Model\Traits\CartValidatorTrait;
 use App\Services\OrderCustomerService;
-use App\Services\IdentityService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -61,7 +61,7 @@ class CartProductsTable extends AppTable
     public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
     {
 
-        $identity = (new IdentityService())->getIdentity();
+        $identity = Router::getRequest()->getAttribute('identity');
         $orderCustomerService = new OrderCustomerService();
         
         $productsTable = FactoryLocator::get('Table')->get('Products');

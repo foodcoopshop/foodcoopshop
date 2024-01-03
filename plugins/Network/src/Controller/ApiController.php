@@ -7,7 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Controller\Controller;
 use Cake\Database\Expression\QueryExpression;
-use App\Services\IdentityService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -51,7 +51,7 @@ class ApiController extends Controller
             }
         }
 
-        $identity = (new IdentityService())->getIdentity();
+        $identity = Router::getRequest()->getAttribute('identity');
         $this->identity = $identity;
         $this->set('identity', $identity);
 

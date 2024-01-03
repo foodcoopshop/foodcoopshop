@@ -125,15 +125,17 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
 }
 
 if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
-    if ($identity->isSuperadmin() || ($identity->isManufacturer() && $product->id_manufacturer == $identity->getManufacturerId())) {
-        echo $this->Html->link(
-            '<i class="fas fa-pencil-alt"></i>',
-            $this->Slug->getProductAdmin(($identity->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
-            [
-                'class' => 'btn btn-outline-light edit-shortcut-button',
-                'title' => __('Edit'),
-                'escape' => false
-            ]
-            );
+    if ($identity !== null) {
+        if ($identity->isSuperadmin() || ($identity->isManufacturer() && $product->id_manufacturer == $identity->getManufacturerId())) {
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt"></i>',
+                $this->Slug->getProductAdmin(($identity->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
+                [
+                    'class' => 'btn btn-outline-light edit-shortcut-button',
+                    'title' => __('Edit'),
+                    'escape' => false
+                ]
+                );
+        }
     }
 }

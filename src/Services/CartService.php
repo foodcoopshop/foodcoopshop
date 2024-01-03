@@ -54,7 +54,7 @@ class CartService
 
     public function __construct()
     {
-        $identity = (new IdentityService())->getIdentity();
+        $identity = Router::getRequest()->getAttribute('identity');
 
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {

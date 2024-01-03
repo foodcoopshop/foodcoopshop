@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Traits;
 
 use Cake\Core\Configure;
-use App\Services\IdentityService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -130,7 +130,7 @@ trait CartValidatorTrait
     public function validateMinimalCreditBalance($grossPrice, $orderCustomerService): bool|string
     {
 
-        $identity = (new IdentityService())->getIdentity();
+        $identity = Router::getRequest()->getAttribute('identity');
         
         // implementation for purchase price check is too much work, so simply do not validate at all (enough for now)
         if ($identity->get('shopping_price') != 'SP') {

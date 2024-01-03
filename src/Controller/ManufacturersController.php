@@ -44,7 +44,7 @@ class ManufacturersController extends FrontendController
         $conditions = [
             'Manufacturers.active' => APP_ON,
         ];
-        if (! $this->identity->isLoggedIn()) {
+        if (! $this->identity !== null) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
@@ -63,7 +63,7 @@ class ManufacturersController extends FrontendController
             throw new RecordNotFoundException('no manufacturers available');
         }
 
-        if ($this->identity->isLoggedIn() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($this->identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $catalogService = new CatalogService();
             foreach ($manufacturers as $manufacturer) {
                 $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
@@ -104,7 +104,7 @@ class ManufacturersController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         }
 
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity->isLoggedIn()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $catalogService = new CatalogService();
             $products = $catalogService->getProductsByManufacturerId($manufacturerId);
             $manufacturer['Products'] = $catalogService->prepareProducts($products);

@@ -36,7 +36,7 @@ $myEditLink = $this->Html->link(
 
 $showWriteFeedbackLink = true;
 
-if ($identity->isLoggedIn()) {
+if ($identity !== null) {
 
     if ($identity->isManufacturer()) {
         foreach($feedbacks['manufacturers'] as $feedback) {
@@ -86,7 +86,7 @@ if (!empty($feedbacks['customers'])) {
                 ],
             );
         }
-        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getId()) {
+        if ($identity !== null && $feedback->customer_id == $identity->getId()) {
             $additionalMetaData = $myEditLink;
         }
 
@@ -114,7 +114,7 @@ if (!empty($feedbacks['manufacturers'])) {
                 ],
             );
         }
-        if ($identity->isLoggedIn() && $feedback->customer_id == $identity->getId()) {
+        if ($identity !== null && $feedback->customer_id == $identity->getId()) {
             $additionalMetaData = $myEditLink;
         }
 

@@ -20,8 +20,9 @@ use Cake\I18n\I18n;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ]);
-if ($identity->isManufacturer()) {
-    echo $this->element('legal/'.I18n::getLocale().'/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUseForManufacturers');
-} else {
-    echo $this->element('legal/'.I18n::getLocale().'/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');
+
+$folder = '/termsOfUse';
+if ($identity != null && $identity->isManufacturer()) {
+    $folder = '/termsOfUseForManufacturers';
 }
+echo $this->element('legal/'.I18n::getLocale().'/' . $this->Html->getLegalTextsSubfolder() . $folder);

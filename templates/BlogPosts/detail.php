@@ -48,16 +48,18 @@ if ($blogPost->short_description != '') {
     echo '</i></p>';
     echo '<div class="sc"></div>';
 
-if ($identity->isSuperadmin() || $identity->isAdmin()) {
-    echo $this->Html->link(
-        '<i class="fas fa-pencil-alt"></i>',
-        $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
-        [
-            'class' => 'btn btn-outline-light edit-shortcut-button',
-            'title' => __('Edit'),
-            'escape' => false
-        ]
-    );
+if ($identity !== null) {
+    if ($identity->isSuperadmin() || $identity->isAdmin()) {
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt"></i>',
+            $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
+            [
+                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'title' => __('Edit'),
+                'escape' => false
+            ]
+        );
+    }
 }
 
 if (!empty($neighbors['prev']) || !empty($neighbors['next'])) {

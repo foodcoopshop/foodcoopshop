@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Validation\Validator;
-use App\Services\IdentityService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,8 +45,8 @@ class SlidersTable extends AppTable
             'Sliders.active' => APP_ON
         ];
 
-        $identity = (new IdentityService())->getIdentity();
-        if (!$identity->isLoggedIn()) {
+        $identity = Router::getRequest()->getAttribute('identity');
+        if ($identity === null) {
             $conditions['Sliders.is_private'] = APP_OFF;
         }
 

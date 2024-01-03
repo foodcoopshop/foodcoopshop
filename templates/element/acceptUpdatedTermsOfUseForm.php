@@ -18,7 +18,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
-if (!$identity->isLoggedIn()  || $identity->termsOfUseAccepted()) {
+if ($identity === null  || $identity->termsOfUseAccepted()) {
     return false;
 }
 

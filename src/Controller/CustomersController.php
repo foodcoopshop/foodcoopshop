@@ -60,7 +60,7 @@ class CustomersController extends FrontendController
 
     public function profileImage()
     {
-        if (!$this->identity->isLoggedIn() || $this->identity->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
+        if ($this->identity === null || $this->identity->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
             throw new NotFoundException('image not found');
         }
 
@@ -315,7 +315,7 @@ class CustomersController extends FrontendController
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
 
             if ($this->getRequest()->is('get')) {
-                if ($this->identity->isLoggedIn()) {
+                if ($this->identity !== null) {
                     $this->Flash->error(__('You_are_already_signed_in.'));
                 }
             }
@@ -357,7 +357,7 @@ class CustomersController extends FrontendController
                 return;
             }
 
-            if ($this->identity->isLoggedIn()) {
+            if ($this->identity !== null) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }

@@ -8,8 +8,8 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
-use App\Services\IdentityService;
 use App\Services\OrderCustomerService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -119,7 +119,7 @@ class CartsTable extends AppTable
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
         
-        $identity = (new IdentityService())->getIdentity();
+        $identity = Router::getRequest()->getAttribute('identity');
         $customerId = $identity->getId();
 
         $cart = $this->find('all', [

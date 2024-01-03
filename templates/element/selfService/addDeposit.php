@@ -17,7 +17,7 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-if (!$this->Html->paymentIsCashless() || !$identity->isLoggedIn() || $identity->isSelfServiceCustomer()) {
+if (!$this->Html->paymentIsCashless() || $identity === null || $identity->isSelfServiceCustomer()) {
     return;
 }
 ?>

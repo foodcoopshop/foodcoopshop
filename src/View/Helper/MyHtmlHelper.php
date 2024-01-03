@@ -69,9 +69,9 @@ class MyHtmlHelper extends HtmlHelper
         $elementCacheKey = join('_', [
             'product',
             'productId' => $product['id_product'],
-            'isLoggedIn-' . ($identity->isLoggedIn() ? 0 : 1),
-            'isManufacturer-' . ($identity->isManufacturer() ? 1 : 0),
-            'isSuperadmin-' . ($identity->isSuperadmin() ? 1 : 0),
+            'isLoggedIn-' . ($identity !== null ? 0 : 1),
+            'isManufacturer-' . ($identity !== null && $identity->isManufacturer() ? 1 : 0),
+            'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0),
             'isSelfServiceModeByUrl-' . ($orderCustomerService->isSelfServiceModeByUrl() ? 1 : 0),
             'isOrderForDifferentCustomerMode-' . ($orderCustomerService->isOrderForDifferentCustomerMode() ? 1 : 0),
             $orderCustomer['shopping_price'] ?? 'SP',
