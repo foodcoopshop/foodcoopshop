@@ -29,21 +29,6 @@ class SyncsController extends AppController
     protected $SyncProduct;
     protected $Product;
 
-    public function isAuthorized($user)
-    {
-        if (!$this->identity->isManufacturer()) {
-            return false;
-        }
-
-        $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
-        $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
-        $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->identity);
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains(
-            $this->identity->getManufacturerEnabledSyncDomains()
-        );
-        return $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
-    }
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);

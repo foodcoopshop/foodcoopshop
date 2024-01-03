@@ -117,18 +117,44 @@ class Application extends BaseApplication
 
     }
 
+    private function getApiUrls()
+    {
+        return [
+            '/api/getProducts.json',
+            '/api/updateProducts.json',
+            '/api/getOrders.json',
+        ];
+    }
+
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
 
         $csrf = new CsrfProtectionMiddleware();
 
+        $isApiRequest = false;
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $isApiRequest = in_array($_SERVER['REQUEST_URI'], $this->getApiUrls());
+        }
+
         // Token check will be skipped when callback returns `true`.
-        $csrf->skipCheckCallback(function ($request) {
-            if (in_array($request->getPath(), ['/api/getProducts.json', '/api/updateProducts.json', '/api/getOrders.json'])) {
-                return true;
-            }
+        $csrf->skipCheckCallback(function ($isApiRequest) {
+            return $isApiRequest;
         });
-        
+
+        $authorizationMiddlewareConfig = [];
+        if ($isApiRequest) {
+            $authorizationMiddlewareConfig = [
+                'unauthorizedHandler' => [
+                    'className' => 'CustomRedirect',
+                    'url' => Configure::read('app.slugHelper')->getLogin(),
+                    'exceptions' => [
+                        MissingIdentityException::class,
+                        ForbiddenException::class,
+                    ],
+                ],
+            ];
+        }
+
         $middlewareQueue
 
         // Handle plugin/theme assets like CakePHP normally does.
@@ -154,18 +180,7 @@ class Application extends BaseApplication
 
         ->add(new AuthenticationMiddleware($this))
 
-        ->add(
-            new AuthorizationMiddleware($this, [
-                'unauthorizedHandler' => [
-                    'className' => 'CustomRedirect',
-                    'url' => Configure::read('app.slugHelper')->getLogin(),
-                    'exceptions' => [
-                        MissingIdentityException::class,
-                        ForbiddenException::class,
-                    ],
-                ],
-            ])
-        )
+        ->add(new AuthorizationMiddleware($this, $authorizationMiddlewareConfig))
 
         ->add(new RequestAuthorizationMiddleware())
 
@@ -218,10 +233,12 @@ class Application extends BaseApplication
             'fields' => $fields,
         ]);
 
-        if (strpos($request->getPath(), '/api') === 0) {
+        $isApiRequest = in_array($request->getPath(), $this->getApiUrls());
+        if ($isApiRequest) {
             $service->loadAuthenticator('Authentication.HttpBasic', [
                 'resolver' => $ormResolver,
                 'fields' => $fields,
+                'realm' => $request->getServerParams()['SERVER_NAME'] ?? 'FCS',
             ]);
             return $service;
         }

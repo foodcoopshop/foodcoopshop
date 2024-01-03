@@ -27,11 +27,6 @@ class SyncDomainsController extends AppController
     protected $Sanitize;
     protected $SyncDomain;
 
-    public function isAuthorized($user)
-    {
-        return $this->identity->isSuperadmin();
-    }
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
