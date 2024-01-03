@@ -63,11 +63,6 @@ class CartsController extends FrontendController
         }
     }
 
-    public function isAuthorized($user)
-    {
-        return $this->identity->isLoggedIn() && !$this->identity->isManufacturer();
-    }
-
     public function detail()
     {
         $this->set('title_for_layout', __('Your_cart'));

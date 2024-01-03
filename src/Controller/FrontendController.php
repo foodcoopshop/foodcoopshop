@@ -29,11 +29,6 @@ class FrontendController extends AppController
     protected $OrderDetail;
     protected $Page;
 
-    public function isAuthorized($user)
-    {
-        return true;
-    }
-
     protected function resetOriginalLoggedCustomer()
     {
         if ($this->getRequest()->getSession()->read('AuthOriginalIdentity')) {
@@ -119,12 +114,6 @@ class FrontendController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-
-        if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
-            // do not allow but call isAuthorized
-        } else {
-            //$this->identity->allow();
-        }
 
         /*
          * changes the identity to the desired orderCustomer
