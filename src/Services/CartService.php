@@ -763,7 +763,7 @@ class CartService
     {
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');
-        $email->setTo($this->identity->getEmail())
+        $email->setTo($this->identity->email)
         ->setSubject(__('Your_purchase'))
         ->setViewVars([
             'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
@@ -811,7 +811,7 @@ class CartService
 
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful');
-        $email->setTo($this->identity->getEmail())
+        $email->setTo($this->identity->email)
         ->setSubject(__('Order_confirmation'))
         ->setViewVars([
             'cart' => $cartGroupedByPickupDay,

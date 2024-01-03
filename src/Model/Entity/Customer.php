@@ -27,7 +27,7 @@ class Customer extends Entity implements IdentityInterface
 {
 
     public $cart = null;
-    protected $_virtual = ['name'];
+    protected $_virtual = ['name', 'manufacturer'];
     protected $_hidden = ['passwd'];
 
     public function getIdentifier()
@@ -38,6 +38,28 @@ class Customer extends Entity implements IdentityInterface
     public function getOriginalData()
     {
         return $this;
+    }
+
+    protected function _getManufacturer()
+    {
+
+        if ($this->isNew()) {
+            return null;
+        }
+
+        $mm = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturer = $mm->find('all', [
+            'conditions' => [
+                'AddressManufacturers.email' => $this->email,
+                'AddressManufacturers.id_manufacturer > ' . APP_OFF,
+            ],
+            'contain' => [
+                'AddressManufacturers',
+                'Customers.AddressCustomers',
+            ]
+        ])->first();
+        return $manufacturer;
+
     }
 
     protected function _getName()
@@ -52,7 +74,7 @@ class Customer extends Entity implements IdentityInterface
         }
 
         if ($this->isManufacturer()) {
-            $name = $this->getManufacturerName();
+            $name = $this->manufacturer->name;
         }
 
         return $name;
@@ -60,7 +82,7 @@ class Customer extends Entity implements IdentityInterface
 
     public function termsOfUseAccepted(): bool
     {
-        $formattedAcceptedDate = $this->get('terms_of_use_accepted_date')->i18nFormat(Configure::read('DateFormat.Database'));
+        $formattedAcceptedDate = $this->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database'));
         return $formattedAcceptedDate >= Configure::read('app.termsOfUseLastUpdate');
     }
 
@@ -80,121 +102,76 @@ class Customer extends Entity implements IdentityInterface
         return false;
     }
     
-    private function setManufacturer()
-    {
-
-        if (!$this->isNew() &&
-            Router::getRequest() && 
-            (!is_null(Router::getRequest()->getSession()->read('Auth')) &&
-            !empty(Router::getRequest()->getSession()->read('AuthManufacturer')))) {
-            return;
-        }
-
-        if (!$this->isNew()) {
-            $mm = FactoryLocator::get('Table')->get('Manufacturers');
-            $manufacturer = $mm->find('all', [
-                'conditions' => [
-                    'AddressManufacturers.email' => $this->get('email'),
-                    'AddressManufacturers.id_manufacturer > ' . APP_OFF
-                ],
-                'contain' => [
-                    'AddressManufacturers',
-                    'Customers.AddressCustomers',
-                ]
-            ])->first();
-            if (!is_null($manufacturer)) {
-                $manufacturer = $manufacturer->toArray();
-            }
-            if (Router::getRequest()) {
-                Router::getRequest()->getSession()->write('AuthManufacturer', $manufacturer);
-            }
-        }
-    }
-
     public function isManufacturer(): bool
     {
-        $this->setManufacturer();
-        if (Router::getRequest()) {
-            return !empty(Router::getRequest()->getSession()->read('AuthManufacturer'));
-        }
-        return false;
+        return isset($this->manufacturer);
     }
 
     public function getManufacturerId()
     {
-        if (! $this->isManufacturer()) {
-            throw new \Exception('logged user is no manufacturer');
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
         }
-        return Router::getRequest()->getSession()->read('AuthManufacturer.id_manufacturer');
+        return $this->manufacturer->id_manufacturer;
     }
 
     public function getManufacturerName()
     {
-        if (! $this->isManufacturer()) {
-            throw new \Exception('logged user is no manufacturer');
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
         }
-        return Router::getRequest()->getSession()->read('AuthManufacturer.name');
+        return $this->manufacturer->name;
     }
 
     public function getManufacturerAnonymizeCustomers()
     {
-        if (! $this->isManufacturer()) {
-            throw new \Exception('logged user is no manufacturer');
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
         }
-        return Router::getRequest()->getSession()->read('AuthManufacturer.anonymize_customers');
+        return $this->manufacturer->anonymize_customers;
     }
 
     public function getManufacturerVariableMemberFee()
     {
-        if (! $this->isManufacturer()) {
-            throw new \Exception('logged user is no manufacturer');
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
         }
-        return Router::getRequest()->getSession()->read('AuthManufacturer.variable_member_fee');
+        return $this->manufacturer->variable_member_fee;
     }
 
     public function getManufacturerEnabledSyncDomains()
     {
-        if (! $this->isManufacturer()) {
-            throw new \Exception('logged user is no manufacturer');
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
         }
-        return Router::getRequest()->getSession()->read('AuthManufacturer.enabled_sync_domains');
+        return $this->manufacturer->enabled_sync_domains;
     }
 
     public function getManufacturerCustomer()
     {
-        if (! $this->isManufacturer()) {
-            throw new \Exception('logged user is no manufacturer');
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
         }
-        return Router::getRequest()->getSession()->read('AuthManufacturer.customer');
+        return $this->manufacturer->customer;
     }
 
     public function getId()
     {
-        return $this->get('id_customer');
-    }
-
-    public function getUserFirstname()
-    {
-        return $this->get('firstname');
-    }
-
-    public function getEmail()
-    {
-        return $this->get('email');
+        return $this->id_customer;
     }
 
     public function getAbbreviatedUserName()
     {
-        $result = $this->get('firstname') . ' ' . substr($this->get('lastname'), 0, 1) . '.';
-        if ($this->get('is_company')) {
-            $result = $this->get('firstname');
+        $result = $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
+        if ($this->is_company) {
+            $result = $this->firstname;
         }
         return $result;
     }
 
     public function getGroupId()
     {
-        return $this->get('id_default_group');
+        return $this->id_default_group;
     }
 
     public function getLastOrderDetailsForDropdown()
@@ -233,7 +210,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->get('id_default_group') == CUSTOMER_GROUP_ADMIN) {
+        if ($this->getGroupId() == CUSTOMER_GROUP_ADMIN) {
             return true;
         }
         return false;
@@ -244,11 +221,10 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if (in_array($this->get('id_default_group'), [
+        if (in_array($this->getGroupId(), [
             CUSTOMER_GROUP_MEMBER,
             CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER,
-            ],
-            )
+            ])
         ) {
             return true;
         }
@@ -260,7 +236,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->get('id_default_group') == CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER) {
+        if ($this->getGroupId() == CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER) {
             return true;
         }
         return false;
