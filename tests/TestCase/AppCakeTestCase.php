@@ -143,7 +143,7 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function assertRedirectToLoginPage()
     {
-        $this->assertRegExpWithUnquotedString(Configure::read('App.fullBaseUrl') .  $this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
+        $this->assertRegExpWithUnquotedString($this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
     }
 
     protected function assertJsonOk()

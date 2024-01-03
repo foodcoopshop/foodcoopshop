@@ -142,7 +142,7 @@ class Application extends BaseApplication
         });
 
         $authorizationMiddlewareConfig = [];
-        if ($isApiRequest) {
+        if (!$isApiRequest) {
             $authorizationMiddlewareConfig = [
                 'unauthorizedHandler' => [
                     'className' => 'CustomRedirect',
