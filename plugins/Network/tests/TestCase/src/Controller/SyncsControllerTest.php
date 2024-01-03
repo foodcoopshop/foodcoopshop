@@ -47,7 +47,7 @@ class SyncsControllerTest extends AppCakeTestCase
     {
         $this->loginAsMeatManufacturer();
         $this->get($this->Network->getSyncProducts());
-        $this->assertResponseCode(403);
+        $this->assertRedirectToLoginPage();
     }
 
     public function testDenyAccessIfVariableMemberFeeDisabledAndManufacturerHasNoSyncDomains()
@@ -56,7 +56,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $this->changeManufacturer($manufacturerId, 'enabled_sync_domains', null);
         $this->loginAsVegetableManufacturer();
         $this->get($this->Network->getSyncProducts());
-        $this->assertResponseCode(403);
+        $this->assertRedirectToLoginPage();
     }
 
     public function testAllowAccessProductsIfVariableMemberFeeDisabled()

@@ -7,6 +7,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use App\Services\CatalogService;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,6 +27,16 @@ class CategoriesController extends FrontendController
 
     protected $BlogPost;
     protected $Category;
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated([
+            'newProducts',
+            'search',
+            'detail',
+        ]);
+    }
 
     public function newProducts()
     {
