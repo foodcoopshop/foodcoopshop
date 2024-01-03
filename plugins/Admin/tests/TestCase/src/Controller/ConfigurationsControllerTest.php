@@ -100,7 +100,6 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     public function testShowProductsForGuestsDisabledAndLoggedIn()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), true);
     }

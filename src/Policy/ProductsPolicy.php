@@ -32,12 +32,13 @@ class ProductsPolicy implements RequestPolicyInterface
             throw new RecordNotFoundException('product not found');
         }
 
-        if (!Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
-              $identity === null
-              && (!empty($product->manufacturer) && $product->manufacturer->is_private)
-              )
-            ) {
+        if ($identity === null) {
+            if (!Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 return false;
+            }
+            if (!empty($product->manufacturer) && $product->manufacturer->is_private) {
+                return false;
+            }
         }
 
         return true;
