@@ -58,7 +58,7 @@ class CartService
 
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-            $identity = Router::getRequest()->getSession()->read('AuthOrderCustomer');
+            $identity = Router::getRequest()->getSession()->read('AuthOrderIdentity');
         }
 
         $this->setIdentity($identity);
@@ -136,12 +136,12 @@ class CartService
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
-                        '<b>' . $this->request->getSession()->read('AuthOrderCustomer')->name . '</b>'
+                        '<b>' . $this->request->getSession()->read('AuthOrderIdentity')->name . '</b>'
                     ]);
                 } else {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
-                        '<b>' . $this->request->getSession()->read('AuthOrderCustomer')->name . '</b>',
+                        '<b>' . $this->request->getSession()->read('AuthOrderIdentity')->name . '</b>',
                         '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                     ]);
                 }
@@ -193,7 +193,7 @@ class CartService
                     $userIdForActionLog = $this->request->getSession()->read('AuthOriginalIdentity')['id_customer'];
                     $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
                         $this->request->getSession()->read('AuthOriginalIdentity')['name'],
-                        '<b>' . $this->request->getSession()->read('AuthOrderCustomer')->name . '</b>',
+                        '<b>' . $this->request->getSession()->read('AuthOrderIdentity')->name . '</b>',
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
                     ]);
                 } else {

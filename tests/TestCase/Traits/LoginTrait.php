@@ -90,7 +90,7 @@ trait LoginTrait
     public function loginAsSuperadminAddOrderCustomerToSession($session)
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
-        $sessionData['AuthOrderCustomer'] = $session['AuthOrderCustomer'];
+        $sessionData['AuthOrderIdentity'] = $session['AuthOrderIdentity'];
         $this->session($sessionData);
     }
 
@@ -105,11 +105,10 @@ trait LoginTrait
 
     /**
      * used in CartsControllerTest::checkCartStatus
-     * mocks AppAuthComponent
      */
     public function isOrderForDifferentCustomerMode()
     {
-        return $this->getSession()->read('AuthOrderCustomer');
+        return $this->getSession()->read('AuthOrderIdentity');
     }
 
     /**

@@ -36,6 +36,18 @@ class OrderDetailsPolicy implements RequestPolicyInterface
             case 'editPurchasePrice';
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $identity->isSuperadmin();
                 break;
+            case 'initInstantOrder':
+            case 'initSelfServiceOrder':
+            case 'iframeInstantOrder':
+            case 'iframeSelfServiceOrder':
+                if ($identity->isSuperadmin() || $identity->isAdmin()) {
+                    return true;
+                }
+                if ($identity->isCustomer() && !Configure::read('app.isCustomerAllowedToEditOwnOrders')) {
+                    return true;
+                }
+                return false;
+                break;
             case 'editProductName':
                 return $identity->isSuperadmin();
                 break;
@@ -97,6 +109,8 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 return false;
                 break;
         }
+
+        return true;
 
     }
 

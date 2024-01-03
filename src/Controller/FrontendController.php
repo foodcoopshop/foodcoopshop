@@ -38,7 +38,7 @@ class FrontendController extends AppController
 
     protected function destroyOrderCustomer()
     {
-        $this->getRequest()->getSession()->delete('AuthOrderCustomer');
+        $this->getRequest()->getSession()->delete('AuthOrderIdentity');
         $this->getRequest()->getSession()->delete('AuthOriginalIdentity');
     }
 
@@ -124,7 +124,7 @@ class FrontendController extends AppController
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
             $this->getRequest()->getSession()->write('AuthOriginalIdentity', $this->identity);
-            $newIdentity = $this->getRequest()->getSession()->read('AuthOrderCustomer');
+            $newIdentity = $this->getRequest()->getSession()->read('AuthOrderIdentity');
             $this->Authentication->setIdentity($newIdentity);
         }
 

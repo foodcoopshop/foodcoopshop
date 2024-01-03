@@ -18,7 +18,6 @@ use Admin\Traits\OrderDetails\IndexTrait;
 use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
 use Cake\Core\Configure;
-use Cake\Http\Exception\ForbiddenException;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 
 /**
