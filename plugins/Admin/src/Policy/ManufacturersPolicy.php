@@ -37,7 +37,7 @@ class ManufacturersPolicy implements RequestPolicyInterface
                 $identity->isSuperadmin() || $identity->isAdmin(),
             'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $identity->isSuperadmin(),
             'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($identity->isSuperadmin() || $identity->isAdmin()),
-             default =>  $identity->isLoggedIn(),
+             default =>  $identity === null
         };
 
     }

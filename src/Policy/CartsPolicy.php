@@ -11,7 +11,7 @@ class CartsPolicy implements RequestPolicyInterface
 
     public function canAccess($identity, ServerRequest $request)
     {
-        return $identity != null && !$identity->isManufacturer();
+        return true;
     }
 
 }
