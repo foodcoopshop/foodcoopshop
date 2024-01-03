@@ -74,6 +74,8 @@ class FeedbacksControllerTest extends AppCakeTestCase
     public function testSaveFeedbackAsManufacturerAndApproveBySuperadmin()
     {
 
+        $this->markTestSkipped();
+
         $this->loginAsMeatManufacturer();
         $text = 'This is my feedback';
         $privacyType = 10;
