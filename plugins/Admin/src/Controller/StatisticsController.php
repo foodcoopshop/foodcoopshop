@@ -29,15 +29,6 @@ class StatisticsController extends AdminAppController
     protected $OrderDetail;
     protected $PurchasePrice;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'index' => $this->identity->isSuperadmin() || ($this->identity->isAdmin() && Configure::read('app.showStatisticsForAdmins')),
-            'myIndex' => !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isManufacturer(),
-             default => $this->identity->isManufacturer(),
-        };
-    }
-
     public function myIndex()
     {
         $this->manufacturerId = $this->identity->getManufacturerId();

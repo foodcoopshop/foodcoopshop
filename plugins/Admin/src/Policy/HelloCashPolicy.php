@@ -20,7 +20,7 @@ use Cake\Core\Configure;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class FeedbacksPolicy implements RequestPolicyInterface
+class HelloCashPolicy implements RequestPolicyInterface
 {
 
     public function canAccess($identity, ServerRequest $request)
@@ -30,11 +30,24 @@ class FeedbacksPolicy implements RequestPolicyInterface
             return false;
         }
 
-        return match($request->getParam('action')) {
-            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null,
-             default => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin(),
-        };
-    
+        $isAllowed = Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') &&
+            Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED') &&
+            ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer());
+
+        if ($identity->isCustomer()) {
+            $invoiceId = $request->getParam('pass')[0];
+            $invoiceTable = $this->getTableLocator()->get('Invoices');
+            $invoice = $invoiceTable->find('all', [
+                'conditions' => [
+                    'Invoices.id' => $invoiceId,
+                    'Invoices.id_customer' => $identity->getId(),
+                ],
+            ])->first();
+            $isAllowed = !empty($invoice);
+        }
+
+        return $isAllowed;
+        
     }
 
 }

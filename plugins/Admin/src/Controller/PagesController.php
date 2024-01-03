@@ -27,14 +27,6 @@ class PagesController extends AdminAppController
     protected $Page;
     protected $Sanitize;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'home' => $this->identity->isLoggedIn(),
-             default => $this->identity->isSuperadmin() || $this->identity->isAdmin(),
-        };
-    }
-
     public function home()
     {
         $this->set('title_for_layout', __d('admin', 'Home'));

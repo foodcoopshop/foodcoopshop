@@ -47,19 +47,6 @@ class ManufacturersController extends AdminAppController
     use UploadTrait;
     use RenewAuthSessionTrait;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'profile', 'myOptions' => $this->identity->isManufacturer(),
-            'index', 'add' => $this->identity->isSuperadmin() || $this->identity->isAdmin(),
-            'edit', 'editOptions', 'getOrderListByProduct', 'getOrderListByCustomer', 'getInvoice' => 
-                $this->identity->isSuperadmin() || $this->identity->isAdmin(),
-            'getDeliveryNote' => Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->identity->isSuperadmin(),
-            'getInvoice' => !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && ($this->identity->isSuperadmin() || $this->identity->isAdmin()),
-             default =>  $this->identity->isLoggedIn(),
-        };
-    }
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);

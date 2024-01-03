@@ -34,18 +34,6 @@ class InvoicesController extends AdminAppController
     protected $PickupDay;
     protected $Payment;
 
-    public function isAuthorized($user)
-    {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'myInvoices':
-                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !$this->identity->isManufacturer();
-                break;
-            default:
-                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isSuperadmin();
-                break;
-        }
-    }
-
     public function downloadAsZipFile()
     {
 

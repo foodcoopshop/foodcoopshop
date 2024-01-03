@@ -20,7 +20,7 @@ use Cake\Core\Configure;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class FeedbacksPolicy implements RequestPolicyInterface
+class ListsPolicy implements RequestPolicyInterface
 {
 
     public function canAccess($identity, ServerRequest $request)
@@ -31,10 +31,11 @@ class FeedbacksPolicy implements RequestPolicyInterface
         }
 
         return match($request->getParam('action')) {
-            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null,
-             default => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin(),
+            'getInvoice' => (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isLoggedIn()) ||
+                ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isManufacturer()),
+             default => $identity->isSuperadmin() || $identity->isAdmin() || $identity->isManufacturer(),
         };
-    
+
     }
 
 }

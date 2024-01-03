@@ -26,15 +26,6 @@ class ListsController extends AdminAppController
 
     protected $Manufacturer;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'getInvoice' => (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isLoggedIn()) ||
-                ($this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isManufacturer()),
-             default => $this->identity->isSuperadmin() || $this->identity->isAdmin() || $this->identity->isManufacturer(),
-        };
-    }
-
     public function orderLists()
     {
 

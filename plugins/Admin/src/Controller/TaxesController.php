@@ -25,11 +25,6 @@ class TaxesController extends AdminAppController
     protected $Tax;
     protected $Sanitize;
     
-    public function isAuthorized($user)
-    {
-        return $this->identity->isSuperadmin();
-    }
-
     public function add()
     {
         $this->Tax = $this->getTableLocator()->get('Taxes');

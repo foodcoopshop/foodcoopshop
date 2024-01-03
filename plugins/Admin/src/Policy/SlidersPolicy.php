@@ -5,7 +5,6 @@ namespace Admin\Policy;
 
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
-use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,7 +19,7 @@ use Cake\Core\Configure;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class FeedbacksPolicy implements RequestPolicyInterface
+class SlidersPolicy implements RequestPolicyInterface
 {
 
     public function canAccess($identity, ServerRequest $request)
@@ -30,11 +29,8 @@ class FeedbacksPolicy implements RequestPolicyInterface
             return false;
         }
 
-        return match($request->getParam('action')) {
-            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null,
-             default => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin(),
-        };
-    
+        return $identity->isSuperadmin() || $identity->isAdmin();
+
     }
 
 }
