@@ -135,7 +135,7 @@ class FrontendController extends AppController
                 $this->set('creditBalance', $creditBalance);
             }
 
-            $this->set('shoppingPrice', $this->identity->get('shopping_price'));
+            $this->set('shoppingPrice', $this->identity->shopping_price);
 
             $cartsTable = $this->getTableLocator()->get('Carts');
             $this->set('paymentType', $this->identity->isSelfServiceCustomer() ? $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH : $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT);

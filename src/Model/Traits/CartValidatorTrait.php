@@ -133,7 +133,7 @@ trait CartValidatorTrait
         $identity = Router::getRequest()->getAttribute('identity');
         
         // implementation for purchase price check is too much work, so simply do not validate at all (enough for now)
-        if ($identity->get('shopping_price') != 'SP') {
+        if ($identity->shopping_price != 'SP') {
             return true;
         }
 

@@ -46,7 +46,7 @@ if ($orderCustomerService->isSelfServiceModeByUrl()) {
 echo $this->element('autoPrintInvoice');
 
 if ($isMobile) {
-    if ($identity->get('use_camera_for_barcode_scanning')) {
+    if ($identity->use_camera_for_barcode_scanning) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);".
             Configure::read('app.jsNamespace') . ".Mobile.showSelfServiceCart();"
@@ -62,7 +62,7 @@ if ($isMobile) {
 
 if ($this->request->getSession()->read('highlightedProductId')) {
 
-    if ($isMobile && $identity->get('use_camera_for_barcode_scanning')) {
+    if ($isMobile && $identity->use_camera_for_barcode_scanning) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductIdForMobileBarcodeScanning('" . $this->request->getSession()->read('highlightedProductId') . "');"
         ]);
@@ -159,7 +159,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         <i class="fa-fw fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
     </button>
     <?php echo $this->Form->end(); ?>
-    <?php if ($isMobile && !$identity->get('use_camera_for_barcode_scanning')) { ?>
+    <?php if ($isMobile && !$identity->use_camera_for_barcode_scanning) { ?>
         <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>
     <?php } ?>
 </div>
