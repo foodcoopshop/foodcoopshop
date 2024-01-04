@@ -32,6 +32,9 @@ class SelfServiceController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated([
+            'index',
+        ]);
         $this->cartService = new CartService($this);
     }
 
@@ -58,7 +61,7 @@ class SelfServiceController extends FrontendController
         $categoriesForSelect = $this->Category->getForSelect(null, false, false, true);
 
         $catalogService = new CatalogService();
-        $allProductsCount = $catalogService->getProducts($this->identity, Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
         $categoriesForSelect = [
             Configure::read('app.categoryAllProducts') => __('All_products') . ' (' . $allProductsCount . ')',
         ] + $categoriesForSelect;
@@ -68,8 +71,8 @@ class SelfServiceController extends FrontendController
         if ($categoryId == 0 && $keyword != '') {
             $categoryIdForSearch = Configure::read('app.categoryAllProducts');
         }
-        $products = $catalogService->getProducts($this->identity, $categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
-        $products = $catalogService->prepareProducts($this->identity, $products);
+        $products = $catalogService->getProducts($categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $products = $catalogService->prepareProducts($products);
 
         $this->set('products', $products);
 
@@ -136,9 +139,7 @@ class SelfServiceController extends FrontendController
                 return;
             }
 
-            $cartService = new CartService();
-            $cartService->setController($this);
-            $cartService->finish();
+            $this->cartService->finish();
 
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
 

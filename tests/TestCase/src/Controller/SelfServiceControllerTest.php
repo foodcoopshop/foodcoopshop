@@ -36,12 +36,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use LoginTrait;
     use EmailTrait;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->markTestSkipped();
-    }
-
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
         $this->enableRetainFlashMessages();
@@ -61,6 +55,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testBarCodeLoginAsSuperadminValid()
     {
+        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
         $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
@@ -280,6 +275,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
+
+        $this->markTestSkipped();
 
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
