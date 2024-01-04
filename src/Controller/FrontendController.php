@@ -32,7 +32,6 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-
         $OriginalIdentity = $this->getRequest()->getSession()->read('OriginalIdentity');
         if ($OriginalIdentity) {
             $this->Authentication->setIdentity($OriginalIdentity);
