@@ -47,18 +47,6 @@ class AppController extends Controller
         ]);
         $this->loadComponent('String');
 
-        /*
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $authenticate['BarCode'] = [
-                'userModel' => 'Customers',
-                'fields' => [
-                    'identifier' => 'barCode'
-                ],
-                'finder' => 'auth' // CustomersTable::findAuth
-            ];
-        }
-        */
-
         $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000
