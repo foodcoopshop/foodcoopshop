@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use Cake\Log\Log;
 
 $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);
@@ -97,7 +96,6 @@ if (!empty($manufacturers)) {
                 $customerAddress .= ', ' . $identity->address_customer->address2;
             }
             $customerAddress .= ', '.$identity->address_customer->postcode . ' ' . $identity->address_customer->city;
-            Log::error($customerAddress);
             $html = '<p>'.__('Address_of_consumer(s)').': '.$customerAddress.'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
