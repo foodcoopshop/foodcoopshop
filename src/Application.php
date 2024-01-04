@@ -215,7 +215,8 @@ class Application extends BaseApplication
 
         $fields = [
             IdentifierInterface::CREDENTIAL_USERNAME => 'email',
-            IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd'
+            IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd',
+            //IdentifierInterface::CREDENTIAL_TOKEN    => 'barCode',
         ];
 
         $ormResolver = [
@@ -232,6 +233,13 @@ class Application extends BaseApplication
             'resolver' => $ormResolver,
             'fields' => $fields,
         ]);
+
+        /*
+        $service->loadIdentifier('App.BarCode', [
+            'fields' => $fields,
+            'resolver' => $ormResolver,
+        ]);
+        */
 
         $isApiRequest = in_array($request->getPath(), $this->getApiUrls());
         if ($isApiRequest) {

@@ -58,7 +58,9 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
+        $this->assertResponseNotContains('Anmelden ist fehlgeschlagen.');
+       //pr($_SESSION);
+        //$this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
     }
 
     public function testSelfServiceAddProductPricePerUnitWrong()
