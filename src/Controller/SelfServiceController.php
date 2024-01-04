@@ -139,7 +139,7 @@ class SelfServiceController extends FrontendController
                 return;
             }
 
-            $this->cartService->finish();
+            $cart = $this->cartService->finish();
 
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
 
@@ -160,6 +160,7 @@ class SelfServiceController extends FrontendController
                             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
                         }
                     }
+
                     if (!$this->identity->invoices_per_email_enabled && isset($invoiceRoute)) {
                         $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
                     }

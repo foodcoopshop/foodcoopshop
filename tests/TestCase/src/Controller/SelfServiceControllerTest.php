@@ -268,9 +268,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
-
-        $this->markTestSkipped();
-
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
