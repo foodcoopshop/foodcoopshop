@@ -86,17 +86,6 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
 
-        if ($identity !== null && $identity->isManufacturer()) {
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $identity->getManufacturerId(),
-                ]
-            ])->first();
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
-            $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
-        }
-
         parent::beforeFilter($event);
     }
 
