@@ -131,6 +131,7 @@ class FrontendController extends AppController
             $this->Authentication->setIdentity($newIdentity);
             Router::setRequest($this->getRequest());
             $this->identity = $newIdentity;
+            $this->set('identity', $newIdentity);
         }
 
         if ($this->identity !== null) {

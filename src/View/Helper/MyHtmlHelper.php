@@ -59,13 +59,9 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function buildElementProductCacheKey($product, $identity, $request)
+    public function buildElementProductCacheKey($product, $identity)
     {
         $orderCustomerService = new OrderCustomerService();
-        $orderCustomer = $request->getSession()->read('OrderIdentity');
-        if (empty($orderCustomer)) {
-            $orderCustomer = $request->getSession()->read('Auth.User');
-        }
         $elementCacheKey = join('_', [
             'product',
             'productId' => $product['id_product'],
@@ -74,7 +70,7 @@ class MyHtmlHelper extends HtmlHelper
             'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0),
             'isSelfServiceModeByUrl-' . ($orderCustomerService->isSelfServiceModeByUrl() ? 1 : 0),
             'isOrderForDifferentCustomerMode-' . ($orderCustomerService->isOrderForDifferentCustomerMode() ? 1 : 0),
-            $orderCustomer['shopping_price'] ?? 'SP',
+            ($identity != null ? $identity->shopping_price : 'SP'),
             'date-' . date('Y-m-d'),
         ]);
         return $elementCacheKey;

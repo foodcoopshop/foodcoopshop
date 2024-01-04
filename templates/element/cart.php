@@ -64,7 +64,7 @@ if ($identity->getProducts() !== null) {
                 Configure::read('app.jsNamespace').".ModalOrderForDifferentCustomerCancel.init();"
             ]);
             echo '<p class="cart-extra-info order-for-different-customer-info">';
-                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('OrderIdentity')->name.'</b>']);
+                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$identity->name.'</b>']);
                 if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
                     echo ' ' . __('Only_stock_products_are_shown.');
                 }

@@ -35,23 +35,22 @@ $menu[] = ['slug' => 'javascript:void(0)', 'name' => '', 'options' => ['fa-icon'
 if ($identity !== null) {
     if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName, 'options' => ['fa-icon' => 'ok fa-fw fa-user']];
-    }
-    if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-        $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
+    } else {
+        $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $this->request->getSession()->read('OriginalIdentity')->name];
     }
 }
 if ($identity !== null && !$identity->isCustomer() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
     $menu[1]['children'][] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['fa-icon' => 'ok fa-fw fa-gear']];
 }
 
-if ($identity !== null && $identity->isCustomer()) {
+if ($identity !== null && $identity->isCustomer() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
     $menu[1]['children'] = $this->Menu->getCustomerMenuElements($identity);
 }
 
 if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
 
     $selfServiceMenuElement = null;
-    if ($identity !== null && !$identity->isManufacturer() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
+    if (($identity === null || !$identity->isManufacturer()) && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
         $selfServiceMenuElement = [
             'slug' => $this->Slug->getSelfService(),
             'name' => __('Self_service'),

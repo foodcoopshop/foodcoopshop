@@ -56,13 +56,6 @@ class CartService
         $this->identity = Router::getRequest()->getAttribute('identity');
         $this->request  = Router::getRequest();
         $this->controller = $controller;
-
-        /*
-        $orderCustomerService = new OrderCustomerService();
-        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-            $identity = Router::getRequest()->getSession()->read('OrderIdentity');
-        }
-        */
     }
 
     public function getRequest()
@@ -126,12 +119,12 @@ class CartService
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
-                        '<b>' . $this->request->getSession()->read('OrderIdentity')->name . '</b>'
+                        '<b>' . $this->identity->name . '</b>'
                     ]);
                 } else {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
-                        '<b>' . $this->request->getSession()->read('OrderIdentity')->name . '</b>',
+                        '<b>' . $this->identity->name . '</b>',
                         '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                     ]);
                 }
@@ -183,7 +176,7 @@ class CartService
                     $userIdForActionLog = $this->request->getSession()->read('OriginalIdentity')['id_customer'];
                     $messageForActionLog = __('{0}_has_placed_a_new_order_for_{1}_({2}).', [
                         $this->request->getSession()->read('OriginalIdentity')['name'],
-                        '<b>' . $this->request->getSession()->read('OrderIdentity')->name . '</b>',
+                        '<b>' . $this->identity->name . '</b>',
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
                     ]);
                 } else {
