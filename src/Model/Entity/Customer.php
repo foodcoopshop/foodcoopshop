@@ -7,7 +7,6 @@ use Authentication\IdentityInterface;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\Datasource\FactoryLocator;
-use Cake\Routing\Router;
 use App\Services\OrderCustomerService;
 
 /**
@@ -42,11 +41,6 @@ class Customer extends Entity implements IdentityInterface
 
     protected function _getManufacturer()
     {
-
-        if ($this->isNew()) {
-            return null;
-        }
-
         $mm = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
@@ -59,7 +53,6 @@ class Customer extends Entity implements IdentityInterface
             ]
         ])->first();
         return $manufacturer;
-
     }
 
     protected function _getName()
@@ -86,17 +79,12 @@ class Customer extends Entity implements IdentityInterface
         return $formattedAcceptedDate >= Configure::read('app.termsOfUseLastUpdate');
     }
 
-    public function isLoggedIn(): bool
-    {
-        return !$this->isNew();
-    }
-
     public function isSuperadmin(): bool
     {
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->get('id_default_group') == CUSTOMER_GROUP_SUPERADMIN) {
+        if ($this->id_default_group == CUSTOMER_GROUP_SUPERADMIN) {
             return true;
         }
         return false;
@@ -183,9 +171,6 @@ class Customer extends Entity implements IdentityInterface
 
     public function getFutureOrderDetails()
     {
-        if ($this->isNew()) {
-            return [];
-        }
         $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
         $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getId());
         return $futureOrderDetails;
@@ -270,12 +255,7 @@ class Customer extends Entity implements IdentityInterface
 
     public function getCart()
     {
-        if (!$this->isLoggedIn()) {
-            return null;
-        }
-
         $cartType = $this->getCartType();
-
         $cartsTable = FactoryLocator::get('Table')->get('Carts');
         return $cartsTable->getCart($this, $cartType);
     }
