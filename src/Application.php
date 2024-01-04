@@ -253,6 +253,7 @@ class Application extends BaseApplication
         ]);
 
         $service->loadAuthenticator('App.AppForm', [
+            'loginUrl' => Configure::read('app.slugHelper')->getLogin(),
             'fields' => $fields,
         ]);
 

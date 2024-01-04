@@ -41,6 +41,9 @@ class Customer extends Entity implements IdentityInterface
 
     protected function _getManufacturer()
     {
+        if ($this->isNew()) {
+            return null;
+        }
         $mm = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
