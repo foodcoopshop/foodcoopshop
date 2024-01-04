@@ -36,7 +36,7 @@ class FrontendController extends AppController
         $OriginalIdentity = $this->getRequest()->getSession()->read('OriginalIdentity');
         if ($OriginalIdentity) {
             $this->Authentication->setIdentity($OriginalIdentity);
-            Router::setRequest($this->getRequest($OriginalIdentity));
+            Router::setRequest($this->getRequest());
         }
     }
 
