@@ -218,8 +218,6 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailHtmlProductCatalogInstantOrder()
     {
-        $this->markTestSkipped();
-        
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);

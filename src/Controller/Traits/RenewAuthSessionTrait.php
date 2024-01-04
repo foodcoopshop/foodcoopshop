@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Traits;
 
+use Cake\Routing\Router;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -32,6 +34,7 @@ trait RenewAuthSessionTrait {
         ])->first();
         if (!empty($customer)) {
             $this->Authentication->setIdentity($customer);
+            Router::setRequest($this->getRequest());
         }
     }
 

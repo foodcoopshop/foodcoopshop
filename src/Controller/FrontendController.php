@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use App\Services\CatalogService;
 use App\Services\OrderCustomerService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +32,11 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->getRequest()->getSession()->read('AuthOriginalIdentity')) {
-            $this->Authentication->setIdentity($this->getRequest()->getSession()->read('AuthOriginalIdentity'));
+
+        $authOriginalIdentity = $this->getRequest()->getSession()->read('AuthOriginalIdentity');
+        if ($authOriginalIdentity) {
+            $this->Authentication->setIdentity($authOriginalIdentity);
+            Router::setRequest($this->getRequest($authOriginalIdentity));
         }
     }
 
@@ -126,6 +130,8 @@ class FrontendController extends AppController
             $this->getRequest()->getSession()->write('AuthOriginalIdentity', $this->identity);
             $newIdentity = $this->getRequest()->getSession()->read('AuthOrderIdentity');
             $this->Authentication->setIdentity($newIdentity);
+            Router::setRequest($this->getRequest());
+            $this->identity = $newIdentity;
         }
 
         if ($this->identity !== null) {
@@ -145,7 +151,7 @@ class FrontendController extends AppController
             $this->set('futureOrderDetails', $futureOrderDetails);
 
             $this->identity->setCart($this->identity->getCart());
-            
+
         }
 
     }
