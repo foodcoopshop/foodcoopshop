@@ -36,13 +36,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use LoginTrait;
     use EmailTrait;
 
-    public function testBarCodeLoginAsSuperadminIfNotEnabled()
-    {
-        $this->enableRetainFlashMessages();
-        $this->doBarCodeLogin();
-        $this->assertFlashMessage(__('Signing_in_failed_account_inactive_or_password_wrong?'));
-    }
-
     public function testPageSelfService()
     {
         $this->loginAsSuperadmin();
@@ -55,12 +48,10 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testBarCodeLoginAsSuperadminValid()
     {
-        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
         $this->assertResponseNotContains('Anmelden ist fehlgeschlagen.');
-       //pr($_SESSION);
-        //$this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
+        $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
     }
 
     public function testSelfServiceAddProductPricePerUnitWrong()

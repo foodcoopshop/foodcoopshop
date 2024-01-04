@@ -27,6 +27,12 @@ class BarCodeIdentifier extends AbstractIdentifier
     use ResolverAwareTrait;
     use LocatorAwareTrait;
 
+    protected $_defaultConfig = [
+        'fields' => [
+            IdentifierInterface::CREDENTIAL_TOKEN => 'barCode',
+        ],
+    ];
+    
     public function getIdentifierField($table)
     {
         return $table->getBarcodeFieldString();
