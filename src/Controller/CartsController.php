@@ -34,6 +34,8 @@ class CartsController extends FrontendController
     protected $OrderDetail;
     protected $Product;
 
+    protected $cartService;
+
     /**
      * allowing ajaxActions is ok as they are separately checked in ajaxIsAuthorized
      */
@@ -46,6 +48,9 @@ class CartsController extends FrontendController
             'ajaxRemove',
             'ajaxDeleteOrderForDifferentCustomer',
         ]);
+
+        $this->cartService = new CartService($this);
+
     }
 
     /**
@@ -111,10 +116,8 @@ class CartsController extends FrontendController
             return;
         }
 
-        $cartService = new CartService();
         $cartId = $this->identity->getCartId();
-        $cartService->setController($this);
-        $cartService->finish();
+        $this->cartService->finish();
 
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();

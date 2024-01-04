@@ -15,7 +15,6 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
 use App\Controller\Component\StringComponent;
-use Cake\Http\Client\Request;
 use Cake\Routing\Router;
 
 /**
@@ -52,27 +51,18 @@ class CartService
 
     public $cart = null;
 
-    public function __construct()
+    public function __construct($controller)
     {
-        $identity = Router::getRequest()->getAttribute('identity');
+        $this->identity = Router::getRequest()->getAttribute('identity');
+        $this->request  = Router::getRequest();
+        $this->controller = $controller;
 
+        /*
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
             $identity = Router::getRequest()->getSession()->read('AuthOrderIdentity');
         }
-
-        $this->setIdentity($identity);
-    }
-
-    public function setIdentity($identity)
-    {
-        $this->identity = $identity;
-    }
-
-    public function setController($controller)
-    {
-        $this->controller = $controller;
-        $this->request = $controller->getRequest();
+        */
     }
 
     public function getRequest()

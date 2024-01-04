@@ -27,12 +27,12 @@ class SelfServiceController extends FrontendController
     protected $Category;
     protected $Invoice;
 
+    protected $cartService;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->identity !== null)) {
-            $this->identity->deny($this->getRequest()->getParam('action'));
-        }
+        $this->cartService = new CartService($this);
     }
 
     public function index()
