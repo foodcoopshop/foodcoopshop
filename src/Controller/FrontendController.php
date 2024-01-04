@@ -33,17 +33,17 @@ class FrontendController extends AppController
     protected function resetOriginalLoggedCustomer()
     {
 
-        $authOriginalIdentity = $this->getRequest()->getSession()->read('AuthOriginalIdentity');
-        if ($authOriginalIdentity) {
-            $this->Authentication->setIdentity($authOriginalIdentity);
-            Router::setRequest($this->getRequest($authOriginalIdentity));
+        $OriginalIdentity = $this->getRequest()->getSession()->read('OriginalIdentity');
+        if ($OriginalIdentity) {
+            $this->Authentication->setIdentity($OriginalIdentity);
+            Router::setRequest($this->getRequest($OriginalIdentity));
         }
     }
 
     protected function destroyOrderCustomer()
     {
-        $this->getRequest()->getSession()->delete('AuthOrderIdentity');
-        $this->getRequest()->getSession()->delete('AuthOriginalIdentity');
+        $this->getRequest()->getSession()->delete('OrderIdentity');
+        $this->getRequest()->getSession()->delete('OriginalIdentity');
     }
 
     // is not called on ajax actions!
@@ -127,8 +127,8 @@ class FrontendController extends AppController
          */
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-            $this->getRequest()->getSession()->write('AuthOriginalIdentity', $this->identity);
-            $newIdentity = $this->getRequest()->getSession()->read('AuthOrderIdentity');
+            $this->getRequest()->getSession()->write('OriginalIdentity', $this->identity);
+            $newIdentity = $this->getRequest()->getSession()->read('OrderIdentity');
             $this->Authentication->setIdentity($newIdentity);
             Router::setRequest($this->getRequest());
             $this->identity = $newIdentity;

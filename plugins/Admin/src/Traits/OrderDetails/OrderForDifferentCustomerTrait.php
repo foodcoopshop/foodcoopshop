@@ -40,7 +40,7 @@ trait OrderForDifferentCustomerTrait {
         ])->first();
 
         if (! empty($orderCustomer)) {
-            $this->getRequest()->getSession()->write('AuthOrderIdentity', $orderCustomer);
+            $this->getRequest()->getSession()->write('OrderIdentity', $orderCustomer);
         } else {
             $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
         }

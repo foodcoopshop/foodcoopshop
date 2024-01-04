@@ -24,7 +24,7 @@ class OrderCustomerService
 
     public function isOrderForDifferentCustomerMode()
     {
-        return Router::getRequest()->getSession()->read('AuthOrderIdentity');
+        return Router::getRequest()->getSession()->read('OrderIdentity');
     }
 
     public function isSelfServiceModeByUrl()
