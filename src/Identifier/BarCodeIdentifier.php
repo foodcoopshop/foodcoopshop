@@ -29,7 +29,7 @@ class BarCodeIdentifier extends AbstractIdentifier
 
     protected $_defaultConfig = [
         'fields' => [
-            IdentifierInterface::CREDENTIAL_TOKEN => 'barCode',
+            IdentifierInterface::CREDENTIAL_TOKEN => 'barcode',
         ],
     ];
     
@@ -40,7 +40,7 @@ class BarCodeIdentifier extends AbstractIdentifier
 
     public function identify(array $credentials)
     {
-
+        
         $barCode = $credentials[IdentifierInterface::CREDENTIAL_TOKEN] ?? '';
         if (empty($barCode)) {
             return null;

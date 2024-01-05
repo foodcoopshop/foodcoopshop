@@ -46,7 +46,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace').".SelfService.initLoginForm();"
         ]);
-        echo $this->Form->control('barCode', ['type' => 'text', 'label' => __('Scan_member_card')]);
+        echo $this->Form->control('barcode', ['type' => 'text', 'label' => __('Scan_member_card')]);
         echo '<h2><span>'.__('or').'</span></h2>';
     }
 
