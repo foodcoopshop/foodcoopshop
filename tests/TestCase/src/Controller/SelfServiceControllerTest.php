@@ -48,10 +48,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testBarCodeLoginAsSuperadminValid()
     {
-        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->assertFlashMessageAt(0, 'Anmelden ist fehlgeschlagen.');
         $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
     }
 
