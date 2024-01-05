@@ -98,6 +98,12 @@ class FileAndEmailLog extends FileLog
             return false;
         }
 
+        $identity = null;
+        $request = Router::getRequest();
+        if ($request !== null) {
+            $identity = $request->getAttribute('identity');
+        }
+
         $subject = Configure::read('App.fullBaseUrl') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
             $email = new Mailer(false);
@@ -107,7 +113,7 @@ class FileAndEmailLog extends FileLog
             $email->setSubject($subject)
             ->setViewVars([
                 'message' => $message,
-                'identity' => Router::getRequest()->getAttribute('identity'),
+                'identity' => $identity,
             ])
             ->send();
         } catch (SocketException $e) {
