@@ -441,7 +441,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     private function doBarCodeLogin()
     {
         $this->post($this->Slug->getLogin(), [
-            'barCode' => Configure::read('test.superadminBarCode')
+            'barcode' => Configure::read('test.superadminBarCode')
         ]);
     }
 
