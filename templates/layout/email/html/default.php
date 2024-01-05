@@ -67,18 +67,15 @@ use Cake\Core\Configure;
                     <?php if (isset($identity) && $identity !== null) { ?>
                         <br /><br /><?php echo __('Signed_in'); ?>:
                             <?php
-                            if ($identity !== null) {
                                 if ($identity->isManufacturer()) {
                                     echo $identity->getManufacturerName();
                                 } else {
-                                    if (isset($originalLoggedCustomer) && !is_null($originalLoggedCustomer)) {
-                                        // for shop orders
-                                        echo $originalLoggedCustomer['name'];
+                                    if ($this->request->getSession()->read('OriginalIdentity')) {
+                                        echo $this->request->getSession()->read('OriginalIdentity')->name;
                                     } else {
                                         echo $identity->name;
                                     }
                                 }
-                            }
                             ?>
                     <?php } else { ?>
                         <br />
