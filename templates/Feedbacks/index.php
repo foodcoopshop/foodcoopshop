@@ -75,7 +75,7 @@ if (!empty($feedbacks['customers'])) {
     foreach($feedbacks['customers'] as $feedback) {
 
         $additionalMetaData = '';
-        if ($identity->isSuperadmin()) {
+        if ($identity !== null && $identity->isSuperadmin()) {
             $additionalMetaData = $this->Html->link(
                 '<i class="fas fa-pencil-alt"></i>',
                 $this->Slug->getFeedbackForm($feedback->customer_id),
