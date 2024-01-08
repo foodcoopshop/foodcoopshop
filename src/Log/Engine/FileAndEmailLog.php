@@ -92,6 +92,7 @@ class FileAndEmailLog extends FileLog
             'invalid-image',
             '{"postcode":{"validFormat"',
             '{"value":{"noDeliveryDaysOrdersExist"',
+            'Undefined variable \$isMobile', //mostly caused by bots
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
