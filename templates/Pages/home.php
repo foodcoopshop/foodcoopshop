@@ -47,16 +47,21 @@ if (!empty($newProducts)) {
         Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
         Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
-        Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
-        Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
+        Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
     ]);
-    
+
+    if ($identity !== null) {
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
+        ]);
+    }
+
     if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.ordered-products-total-amount');"
         ]);
     }
-    
+
     $isFirstElement = empty($blogPosts) || $blogPosts->count() == 0;
     echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:10px;' : '') . '">';
         echo __('New_products');
