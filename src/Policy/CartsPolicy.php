@@ -24,6 +24,17 @@ class CartsPolicy implements RequestPolicyInterface
 
     public function canAccess($identity, ServerRequest $request)
     {
+        switch ($request->getParam('action')) {
+            case 'emptyCart':
+            case 'addOrderToCart':
+            case 'addLastOrderToCart':
+            case 'detail':
+            case 'finish':
+            case 'orderSuccessful':
+                return $identity !== null;
+                break;
+        }
+
         return true;
     }
 
