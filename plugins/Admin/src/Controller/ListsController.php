@@ -26,15 +26,6 @@ class ListsController extends AdminAppController
 
     protected $Manufacturer;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'getInvoice' => (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->user()) ||
-                ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()),
-             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer(),
-        };
-    }
-
     public function orderLists()
     {
 
@@ -45,7 +36,7 @@ class ListsController extends AdminAppController
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $dateFrom = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         } else {
-            $dateFrom = DeliveryRhythmService::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $dateFrom = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
 
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
@@ -77,17 +68,17 @@ class ListsController extends AdminAppController
                 continue;
             }
 
-            if ($this->AppAuth->isManufacturer() && $manufacturerId != $this->AppAuth->getManufacturerId()) {
+            if ($this->identity->isManufacturer() && $manufacturerId != $this->identity->getManufacturerId()) {
                 continue;
             }
 
             $isAnonymized = $this->isAnonymized($name);
 
-            if ($this->AppAuth->isManufacturer()) {
-                if ($this->AppAuth->getManufacturerAnonymizeCustomers() && !$isAnonymized) {
+            if ($this->identity->isManufacturer()) {
+                if ($this->identity->getManufacturerAnonymizeCustomers() && !$isAnonymized) {
                     continue;
                 }
-                if (!$this->AppAuth->getManufacturerAnonymizeCustomers() && $isAnonymized) {
+                if (!$this->identity->getManufacturerAnonymizeCustomers() && $isAnonymized) {
                     continue;
                 }
             }
@@ -120,7 +111,7 @@ class ListsController extends AdminAppController
                 $listLabel = __d('admin', 'Anonymized_order_list');
                 $listIcon = 'fa-eye-slash';
             }
-            if ($this->AppAuth->isManufacturer()) {
+            if ($this->identity->isManufacturer()) {
                 $listLabel = __d('admin', 'Show_order_list');
                 $listIcon = 'fa-arrow-right';
             }
@@ -176,18 +167,18 @@ class ListsController extends AdminAppController
     {
         $filenameWithPath = Configure::read('app.folder_order_lists') . DS . h($this->getRequest()->getQuery('file'));
 
-        if ($this->AppAuth->isManufacturer()) {
+        if ($this->identity->isManufacturer()) {
             preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|'.__d('admin', 'member').'|Artikel)/', h($this->getRequest()->getQuery('file')), $matches);
             if (!empty($matches[1])) {
                 $splittedFileName = $this->splitOrderDetailStringIntoParts(h($this->getRequest()->getQuery('file')), $matches[1]);
                 $manufacturerId = $splittedFileName['manufacturerId'];
-                if ($manufacturerId != $this->AppAuth->getManufacturerId()) {
+                if ($manufacturerId != $this->identity->getManufacturerId()) {
                     throw new UnauthorizedException('manufacturer is not allowed to open order list of other manufacturers');
                 }
-                if ($this->AppAuth->getManufacturerAnonymizeCustomers() && !$this->isAnonymized($filenameWithPath)) {
+                if ($this->identity->getManufacturerAnonymizeCustomers() && !$this->isAnonymized($filenameWithPath)) {
                     throw new UnauthorizedException('manufacturer is not allowed to open order list with clear text data');
                 }
-                if (!$this->AppAuth->getManufacturerAnonymizeCustomers() && $this->isAnonymized($filenameWithPath)) {
+                if (!$this->identity->getManufacturerAnonymizeCustomers() && $this->isAnonymized($filenameWithPath)) {
                     throw new UnauthorizedException('manufacturer is not allowed to open order list with anonymized data');
                 }
             }
@@ -200,12 +191,12 @@ class ListsController extends AdminAppController
     {
         $filenameWithPath = Configure::read('app.folder_invoices') . DS . h($this->getRequest()->getQuery('file'));
 
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isCustomer()) {
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->identity->isCustomer()) {
             $string = h($this->getRequest()->getQuery('file'));
             $positionInvoiceString = strpos($string, '_' . __d('admin', 'Invoice') . '_');
             $splittedFileName = explode('_', substr($string, 0, $positionInvoiceString));
             $customerId = end($splittedFileName);
-            if ($customerId != $this->AppAuth->getUserId()) {
+            if ($customerId != $this->identity->getId()) {
                 throw new UnauthorizedException();
             }
         }

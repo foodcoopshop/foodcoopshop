@@ -6,6 +6,7 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use App\Services\CatalogService;
+use App\Services\CartService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,12 +27,15 @@ class SelfServiceController extends FrontendController
     protected $Category;
     protected $Invoice;
 
+    protected $cartService;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->AppAuth->user())) {
-            $this->AppAuth->deny($this->getRequest()->getParam('action'));
-        }
+        $this->Authentication->allowUnauthenticated([
+            'index',
+        ]);
+        $this->cartService = new CartService($this);
     }
 
     public function index()
@@ -54,10 +58,10 @@ class SelfServiceController extends FrontendController
         }
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $categoriesForSelect = $this->Category->getForSelect(null, false, false, $this->AppAuth, true);
+        $categoriesForSelect = $this->Category->getForSelect(null, false, false, true);
 
         $catalogService = new CatalogService();
-        $allProductsCount = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
         $categoriesForSelect = [
             Configure::read('app.categoryAllProducts') => __('All_products') . ' (' . $allProductsCount . ')',
         ] + $categoriesForSelect;
@@ -67,8 +71,8 @@ class SelfServiceController extends FrontendController
         if ($categoryId == 0 && $keyword != '') {
             $categoryIdForSearch = Configure::read('app.categoryAllProducts');
         }
-        $products = $catalogService->getProducts($this->AppAuth, $categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
-        $products = $catalogService->prepareProducts($this->AppAuth, $products);
+        $products = $catalogService->getProducts($categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $products = $catalogService->prepareProducts($products);
 
         $this->set('products', $products);
 
@@ -100,7 +104,7 @@ class SelfServiceController extends FrontendController
 
             if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
                 $cartProductsTable = $this->getTableLocator()->get('CartProducts');
-                $result = $cartProductsTable->add($this->AppAuth, $products[0]->id_product, $attributeId, 1);
+                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
@@ -123,19 +127,19 @@ class SelfServiceController extends FrontendController
         }
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
-            $cart = $this->AppAuth->getCart();
+            $cart = $this->identity->getCart();
             $this->set('cart', $cart['Cart']);
         }
 
         if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
 
-            if ($this->AppAuth->CartService->isCartEmpty()) {
+            if ($this->identity->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;
             }
 
-            $cart = $this->AppAuth->CartService->finish();
+            $cart = $this->cartService->finish();
 
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
 
@@ -156,7 +160,8 @@ class SelfServiceController extends FrontendController
                             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);
                         }
                     }
-                    if (!$this->AppAuth->user('invoices_per_email_enabled') && isset($invoiceRoute)) {
+
+                    if (!$this->identity->invoices_per_email_enabled && isset($invoiceRoute)) {
                         $this->request->getSession()->write('invoiceRouteForAutoPrint', $invoiceRoute);
                     }
                 }

@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\Query;
 use Cake\Validation\Validator;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -65,7 +66,7 @@ class BlogPostsTable extends AppTable
         return $next;
     }
 
-    public function findBlogPosts($appAuth, $manufacturerId = null, $showOnStartPage = false)
+    public function findBlogPosts($manufacturerId = null, $showOnStartPage = false)
     {
 
         if (!Configure::read('app.isBlogFeatureEnabled')) {
@@ -75,7 +76,10 @@ class BlogPostsTable extends AppTable
         $conditions = [
             'BlogPosts.active' => APP_ON,
         ];
-        if (! $appAuth->user()) {
+
+        $identity = Router::getRequest()->getAttribute('identity');
+        
+        if ($identity === null) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }

@@ -21,7 +21,7 @@ echo '<th class="right">';
 echo $this->Paginator->sort('sum_amount', __d('admin', 'Amount'));
 echo '</th>';
 
-echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
+echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
 echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
 echo '</th>';
 

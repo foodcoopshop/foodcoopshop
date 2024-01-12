@@ -186,7 +186,7 @@ if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
 
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     && (
-        !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') || $appAuth->isSuperadmin())
+        !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') || $identity->isSuperadmin())
     ) {
     echo '<div class="sc"></div>';
     echo '<h2 style="margin-top:20px;">' . __d('admin', 'Self_service_mode') . '</h2>';
@@ -200,12 +200,12 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
     ]);
 }
 
-if ($appAuth->isSuperadmin()) {
+if ($identity->isSuperadmin()) {
 
     echo '<div class="sc"></div>';
     echo '<h2>'.__d('admin', 'Superadmin_functions').'</h2>';
 
-    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
         echo $this->Form->control('Customers.shopping_price', [
             'type' => 'select',
             'label' => __d('admin', 'Prices'),

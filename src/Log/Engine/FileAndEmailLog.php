@@ -9,6 +9,7 @@ use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Mailer;
 use Cake\Network\Exception\SocketException;
 use Cake\Utility\Text;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -91,16 +92,17 @@ class FileAndEmailLog extends FileLog
             'invalid-image',
             '{"postcode":{"validFormat"',
             '{"value":{"noDeliveryDaysOrdersExist"',
+            'Undefined variable \$isMobile', //mostly caused by bots
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;
         }
 
-        $session = new AppSession();
-        $loggedUser = [];
-        if ($session->read('Auth.User.id_customer') !== null) {
-            $loggedUser = $session->read('Auth');
+        $identity = null;
+        $request = Router::getRequest();
+        if ($request !== null) {
+            $identity = $request->getAttribute('identity');
         }
 
         $subject = Configure::read('App.fullBaseUrl') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
@@ -112,7 +114,7 @@ class FileAndEmailLog extends FileLog
             $email->setSubject($subject)
             ->setViewVars([
                 'message' => $message,
-                'loggedUser' => $loggedUser,
+                'identity' => $identity,
             ])
             ->send();
         } catch (SocketException $e) {

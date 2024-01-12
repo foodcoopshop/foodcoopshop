@@ -88,14 +88,14 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
 
-            $html = '<p>'.__('Name_of_consumer(s)').': '.$appAuth->getUsername().'</p>';
+            $html = '<p>'.__('Name_of_consumer(s)').': '.$identity->name.'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
 
-            $customerAddress = $appAuth->user('AddressCustomers.address1');
-            if ($appAuth->user('AddressCustomers.address2') != '') {
-                $customerAddress .= ', '.$appAuth->user('AddressCustomers.address2');
+            $customerAddress = $identity->address_customer->address1;
+            if ($identity->address_customer->address2 != '') {
+                $customerAddress .= ', ' . $identity->address_customer->address2;
             }
-            $customerAddress .= ', '.$appAuth->user('AddressCustomers.postcode') . ' ' . $appAuth->user('AddressCustomers.city');
+            $customerAddress .= ', '.$identity->address_customer->postcode . ' ' . $identity->address_customer->city;
             $html = '<p>'.__('Address_of_consumer(s)').': '.$customerAddress.'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);

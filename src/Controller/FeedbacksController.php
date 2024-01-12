@@ -6,6 +6,7 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Datasource\FactoryLocator;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +24,14 @@ use Cake\Datasource\FactoryLocator;
 class FeedbacksController extends FrontendController
 {
 
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated([
+            'index',
+        ]);
+    }
+    
     public function index()
     {
 

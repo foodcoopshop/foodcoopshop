@@ -49,9 +49,9 @@ echo '</div>';
 
 if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
-    if (!$appAuth->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
+    if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
 
-        $lastOrderDay = DeliveryRhythmService::getLastOrderDay(
+        $lastOrderDay = (new DeliveryRhythmService())->getLastOrderDay(
             $product->next_delivery_day,
             $product->delivery_rhythm_type,
             $product->delivery_rhythm_count,
@@ -61,7 +61,7 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
         if (!($product->delivery_rhythm_type == 'week'
             && $product->delivery_rhythm_count == 1
-            && DeliveryRhythmService::getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
+            && (new DeliveryRhythmService())->getSendOrderListsWeekday() == $product->delivery_rhythm_send_order_list_weekday
             )
             && $lastOrderDay != ''
             ) {
@@ -72,11 +72,11 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
     }
 
-    if (!$appAuth->isSelfServiceModeByUrl()) {
+    if (!$orderCustomerService->isSelfServiceModeByUrl()) {
         echo '<br />'.__('Pickup_day').': ';
     }
     echo '<span class="pickup-day">';
-    if ($appAuth->isOrderForDifferentCustomerMode()) {
+    if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
         $pickupDayDetailText = __('Instant_order');
     } else {
         $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
@@ -89,13 +89,13 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product->next_delivery_day));
     }
     echo '</span>';
-    if (!$appAuth->isSelfServiceModeByUrl()) {
+    if (!$orderCustomerService->isSelfServiceModeByUrl()) {
         echo ' (' . $pickupDayDetailText . ')';
     }
-    if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isOrderForDifferentCustomerMode()) {
+    if (!$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
         if (
             $product->next_delivery_day != 'delivery-rhythm-triggered-delivery-break'
-            && strtotime($product->next_delivery_day) != DeliveryRhythmService::getDeliveryDayByCurrentDay()
+            && strtotime($product->next_delivery_day) != (new DeliveryRhythmService())->getDeliveryDayByCurrentDay()
             ) {
                 $weeksAsFloat = (strtotime($product->next_delivery_day) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
                 $fullWeeks = (int) ($weeksAsFloat / 7);
@@ -124,16 +124,18 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     }
 }
 
-if (!$appAuth->isOrderForDifferentCustomerMode()) {
-    if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product->id_manufacturer == $appAuth->getManufacturerId())) {
-        echo $this->Html->link(
-            '<i class="fas fa-pencil-alt"></i>',
-            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
-            [
-                'class' => 'btn btn-outline-light edit-shortcut-button',
-                'title' => __('Edit'),
-                'escape' => false
-            ]
-            );
+if (!$orderCustomerService->isOrderForDifferentCustomerMode()) {
+    if ($identity !== null) {
+        if ($identity->isSuperadmin() || ($identity->isManufacturer() && $product->id_manufacturer == $identity->getManufacturerId())) {
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt"></i>',
+                $this->Slug->getProductAdmin(($identity->isSuperadmin() ? $product->id_manufacturer : null), $product->id_product),
+                [
+                    'class' => 'btn btn-outline-light edit-shortcut-button',
+                    'title' => __('Edit'),
+                    'escape' => false
+                ]
+                );
+        }
     }
 }

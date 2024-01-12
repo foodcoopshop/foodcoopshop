@@ -27,7 +27,7 @@ $this->element('addScript', [
 
 $idForUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufacturer : StringComponent::createRandomString(6);
 
-if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+if ($identity->isAdmin() || $identity->isSuperadmin()) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Editor.initSmall('manufacturers-short-description');"
     ]);
@@ -57,7 +57,7 @@ if (!empty($manufacturer->id_manufacturer)) {
 
 <?php
 
-if ($appAuth->isManufacturer()) {
+if ($identity->isManufacturer()) {
     $url = $this->Slug->getManufacturerProfile();
 } else {
     if ($isEditMode) {
@@ -79,7 +79,7 @@ if ($appAuth->isManufacturer()) {
 
     $imprintString = '';
     if (Configure::read('app.showManufacturerImprint')) {
-        if ($appAuth->isManufacturer()) {
+        if ($identity->isManufacturer()) {
             $imprintString = __d('admin', 'in_your_imprint');
         } else {
             $imprintString = __d('admin', 'in_the_imprint_of_the_manufacturer');
@@ -115,7 +115,7 @@ if ($appAuth->isManufacturer()) {
     if ($isEditMode) {
         $buttonOptions = ['class' => 'btn btn-outline-light', 'escape' => false];
         $buttonIcon = '<i class="fas fa-cog"></i> ';
-        if ($appAuth->isManufacturer()) {
+        if ($identity->isManufacturer()) {
             $optionsLink = $this->Html->link($buttonIcon . __d('admin', 'To_your_settings'), $this->Slug->getManufacturerMyOptions(), $buttonOptions);
         } else {
             $optionsLink = $this->Html->link($buttonIcon . __d('admin', 'To_the_settings_of_manufacturer'), $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer), $buttonOptions);
@@ -169,7 +169,7 @@ if ($appAuth->isManufacturer()) {
             ]);
         echo '</div>';
 
-        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+        if ($identity->isSuperadmin() || $identity->isAdmin()) {
             echo '<div style="margin-top:10px;"></div>';
             echo $this->Form->control('Manufacturers.short_description', [
                 'type' => 'textarea',

@@ -29,21 +29,6 @@ class SyncsController extends AppController
     protected $SyncProduct;
     protected $Product;
 
-    public function isAuthorized($user)
-    {
-        if (!$this->AppAuth->isManufacturer()) {
-            return false;
-        }
-
-        $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
-        $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
-        $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains(
-            $this->AppAuth->getManufacturerEnabledSyncDomains()
-        );
-        return $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
-    }
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -70,8 +55,8 @@ class SyncsController extends AppController
         if (empty($syncDomain)) {
             throw new \Exception('the domain ' . $product['domain'] . ' was not found.');
         }
-        if (!$this->Product->isOwner($localProductIds['productId'], $this->AppAuth->getManufacturerId())) {
-            throw new \Exception('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerId());
+        if (!$this->Product->isOwner($localProductIds['productId'], $this->identity->getManufacturerId())) {
+            throw new \Exception('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->identity->getManufacturerId());
         }
 
         return $syncDomain;
@@ -126,7 +111,7 @@ class SyncsController extends AppController
     public function products()
     {
 
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->getManufacturerEnabledSyncDomains());
+        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
         $this->set('syncDomains', $syncDomains);
 
         $matchedProducts = $this->getLocalSyncProducts();
@@ -200,11 +185,11 @@ class SyncsController extends AppController
     public function productData()
     {
 
-        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->getManufacturerEnabledSyncDomains());
+        $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
         $this->set('syncDomains', $syncDomains);
 
         $this->SyncProduct = $this->getTableLocator()->get('Network.SyncProducts');
-        $syncProducts = $this->SyncProduct->findAllSyncProducts($this->AppAuth->getManufacturerId());
+        $syncProducts = $this->SyncProduct->findAllSyncProducts($this->identity->getManufacturerId());
         $preparedSyncProducts = [];
         foreach ($syncProducts as $syncProduct) {
             $preparedSyncProducts[$syncProduct->sync_domain->domain][] = [
@@ -255,7 +240,7 @@ class SyncsController extends AppController
     private function getLocalSyncProducts()
     {
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend('', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
+        $products = $this->Product->getProductsForBackend('', $this->identity->getManufacturerId(), 'all', '', false, false, true);
         $matchedProducts = $this->markProductsAsSynced($products);
         return $matchedProducts;
     }
@@ -263,7 +248,7 @@ class SyncsController extends AppController
     private function markProductsAsSynced($products)
     {
 
-        $syncProducts = $this->SyncProduct->findAllSyncProducts($this->AppAuth->getManufacturerId());
+        $syncProducts = $this->SyncProduct->findAllSyncProducts($this->identity->getManufacturerId());
 
         foreach ($products as $product) {
             $syncCount = 0;

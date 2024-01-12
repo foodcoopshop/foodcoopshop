@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
-if ($appAuth->isManufacturer() || empty($products) || !Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+if ($identity->isManufacturer() || empty($products) || !Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
     return false;
 }
 

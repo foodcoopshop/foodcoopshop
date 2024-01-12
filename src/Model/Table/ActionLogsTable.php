@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -535,13 +536,14 @@ class ActionLogsTable extends AppTable
         return $this->save($this->newEntity($data2save));
     }
 
-    public function getTypesForDropdown($appAuth)
+    public function getTypesForDropdown()
     {
         $result = [];
+        $identity = Router::getRequest()->getAttribute('identity');
         foreach ($this->types as $type => $value) {
-            if ($appAuth->isManufacturer()) {
+            if ($identity->isManufacturer()) {
                 if (isset($value['access']) && in_array('manufacturer', $value['access'])) {
-                    if ($appAuth->getManufacturerAnonymizeCustomers() && in_array('manufacturerAnonymizationEnabled', $value['access'])) {
+                    if ($identity->getManufacturerAnonymizeCustomers() && in_array('manufacturerAnonymizationEnabled', $value['access'])) {
                         continue;
                     }
                     $result[$type] = $value['name'];

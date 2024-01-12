@@ -140,7 +140,7 @@ trait EditTaxTrait {
                         '<b>' . Configure::read('app.numberHelper')->formatTaxRate($info['newTaxRate']) . '%</b>',
                     ]);
                 }
-                $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+                $this->ActionLog->customSave('product_tax_changed', $this->identity->getId(), $productId, 'products', $messageString);
             } else {
                 $messageString = __d('admin', 'Nothing_changed.');
             }

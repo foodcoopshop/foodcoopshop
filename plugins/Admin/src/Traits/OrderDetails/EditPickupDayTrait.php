@@ -98,7 +98,7 @@ trait EditPickupDayTrait {
                         'orderDetails' => $orderDetails,
                         'customer' => $orderDetails[0]->customer,
                         'newsletterCustomer' => $orderDetails[0]->customer,
-                        'appAuth' => $this->AppAuth,
+                        'identity' => $this->identity,
                         'oldPickupDay' => $oldPickupDay,
                         'newPickupDay' => $newPickupDay,
                         'editPickupDayReason' => $editPickupDayReason,
@@ -123,7 +123,7 @@ trait EditPickupDayTrait {
             $this->Flash->success($message);
 
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_pickup_day_changed', $this->AppAuth->getUserId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
+            $this->ActionLog->customSave('order_detail_pickup_day_changed', $this->identity->getId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
 
             $this->set([
                 'result' => [],

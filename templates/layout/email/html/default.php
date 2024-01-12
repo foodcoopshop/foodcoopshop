@@ -64,19 +64,18 @@ use Cake\Core\Configure;
                         echo '<a href="mailto:'.Configure::read('appDb.FCS_APP_EMAIL').'">'.Configure::read('appDb.FCS_APP_EMAIL').'</a><br />';
                         echo '<a href="'.Configure::read('App.fullBaseUrl').'">'.$this->MyHtml->getHostWithoutProtocol(Configure::read('App.fullBaseUrl')).'</a>';
                     ?>
-                    <?php if (isset($appAuth) && $appAuth->user()) { ?>
+                    <?php if (isset($identity) && $identity !== null) { ?>
                         <br /><br /><?php echo __('Signed_in'); ?>:
                             <?php
-                            if ($appAuth->isManufacturer()) {
-                                echo $appAuth->getManufacturerName();
-                            } else {
-                                if (isset($originalLoggedCustomer) && !is_null($originalLoggedCustomer)) {
-                                    // for shop orders
-                                    echo $originalLoggedCustomer['name'];
+                                if ($identity->isManufacturer()) {
+                                    echo $identity->getManufacturerName();
                                 } else {
-                                    echo $appAuth->getUsername();
+                                    if ($this->request->getSession()->read('OriginalIdentity')) {
+                                        echo $this->request->getSession()->read('OriginalIdentity')->name;
+                                    } else {
+                                        echo $identity->name;
+                                    }
                                 }
-                            }
                             ?>
                     <?php } else { ?>
                         <br />

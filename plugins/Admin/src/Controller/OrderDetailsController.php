@@ -18,7 +18,6 @@ use Admin\Traits\OrderDetails\IndexTrait;
 use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
 use Cake\Core\Configure;
-use Cake\Http\Exception\ForbiddenException;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 
 /**
@@ -54,110 +53,12 @@ class OrderDetailsController extends AdminAppController
 
     protected $OrderDetail;
 
-    public function isAuthorized($user)
-    {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'profit';
-            case 'editPurchasePrice';
-                return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $this->AppAuth->isSuperadmin();
-                break;
-            case 'editProductName':
-                return $this->AppAuth->isSuperadmin();
-                break;
-            case 'addFeedback';
-                if (!Configure::read('appDb.FCS_FEEDBACK_TO_PRODUCTS_ENABLED')) {
-                    return false;
-                }
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
-                    return true;
-                }
-                if ($this->AppAuth->isCustomer()) {
-                    $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-                    $orderDetail = $this->OrderDetail->find('all', [
-                        'conditions' => [
-                            'OrderDetails.id_order_detail' => $this->getRequest()->getData('orderDetailId')
-                        ]
-                    ])->first();
-                    if (!empty($orderDetail)) {
-                        if ($orderDetail->id_customer == $this->AppAuth->getUserId()) {
-                            return true;
-                        }
-                    }
-                }
-                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
-                return false;
-                break;
-            case 'delete':
-            case 'editProductPrice':
-            case 'editProductAmount':
-            case 'editProductQuantity':
-            case 'editCustomer':
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
-                    return true;
-                }
-                if ($this->getRequest()->getParam('action') == 'editCustomer' && ($this->AppAuth->isManufacturer() || $this->AppAuth->isCustomer())) {
-                    return false;
-                }
-                /*
-                 * START customer/manufacturer OWNER check
-                 * param orderDetailId / orderDetailIds is passed via ajaxCall
-                 */
-                if (!empty($this->getRequest()->getData('orderDetailIds'))) {
-                    $accessAllowed = false;
-                    foreach ($this->getRequest()->getData('orderDetailIds') as $orderDetailId) {
-                        $accessAllowed |= $this->checkOrderDetailIdAccess($orderDetailId);
-                    }
-                    return $accessAllowed;
-                }
-                if (!empty($this->getRequest()->getData('orderDetailId'))) {
-                    return $this->checkOrderDetailIdAccess($this->getRequest()->getData('orderDetailId'));
-                }
-                return false;
-            case 'index':
-                if ($this->AppAuth->isCustomer() && !Configure::read('app.isCustomerAllowedToViewOwnOrders')) {
-                    return false;
-                }
-                return true;
-            default:
-                return parent::isAuthorized($user);
-                break;
-        }
-    }
-
-    /**
-     * @param int $orderDetailId
-     * @return boolean
-     */
-    private function checkOrderDetailIdAccess($orderDetailId)
-    {
-        if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $orderDetail = $this->OrderDetail->find('all', [
-                'conditions' => [
-                    'OrderDetails.id_order_detail' => $orderDetailId
-                ],
-                'contain' => [
-                    'Products'
-                ]
-            ])->first();
-            if (!empty($orderDetail)) {
-                if ($this->AppAuth->isManufacturer() && $orderDetail->product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
-                    return true;
-                }
-                if ($this->AppAuth->isCustomer() && !Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public function orderDetailsAsPdf()
     {
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
         $order = $this->getRequest()->getQuery('order') ?? null;
         $pdfWriter = new OrderDetailsPdfWriterService();
-        $pdfWriter->prepareAndSetData($this->AppAuth, $pickupDay, $order);
+        $pdfWriter->prepareAndSetData($this->identity, $pickupDay, $order);
         die($pdfWriter->writeInline());
     }
 

@@ -12,6 +12,7 @@ use App\Controller\Component\StringComponent;
 use App\Services\DeliveryRhythmService;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Model\Table\CartsTable;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -58,21 +59,18 @@ class MyHtmlHelper extends HtmlHelper
         return false;
     }
 
-    public function buildElementProductCacheKey($product, $appAuth, $request)
+    public function buildElementProductCacheKey($product, $identity)
     {
-        $orderCustomer = $request->getSession()->read('Auth.orderCustomer');
-        if (empty($orderCustomer)) {
-            $orderCustomer = $request->getSession()->read('Auth.User');
-        }
+        $orderCustomerService = new OrderCustomerService();
         $elementCacheKey = join('_', [
             'product',
             'productId' => $product['id_product'],
-            'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
-            'isManufacturer-' . ($appAuth->isManufacturer() ? 1 : 0),
-            'isSuperadmin-' . ($appAuth->isSuperadmin() ? 1 : 0),
-            'isSelfServiceModeByUrl-' . ($appAuth->isSelfServiceModeByUrl() ? 1 : 0),
-            'isOrderForDifferentCustomerMode-' . ($appAuth->isOrderForDifferentCustomerMode() ? 1 : 0),
-            $orderCustomer['shopping_price'] ?? 'SP',
+            'isLoggedIn-' . ($identity !== null ? 0 : 1),
+            'isManufacturer-' . ($identity !== null && $identity->isManufacturer() ? 1 : 0),
+            'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0),
+            'isSelfServiceModeByUrl-' . ($orderCustomerService->isSelfServiceModeByUrl() ? 1 : 0),
+            'isOrderForDifferentCustomerMode-' . ($orderCustomerService->isOrderForDifferentCustomerMode() ? 1 : 0),
+            ($identity != null ? $identity->shopping_price : 'SP'),
             'date-' . date('Y-m-d'),
         ]);
         return $elementCacheKey;
@@ -149,7 +147,7 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         if ($deliveryRhythmType == 'month') {
-            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName(DeliveryRhythmService::getDeliveryWeekday());
+            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName((new DeliveryRhythmService())->getDeliveryWeekday());
             if ($deliveryRhythmCount > 0) {
                 $deliveryRhythmString = __('every_{0}_{1}_of_a_month', [
                     $this->MyNumber->ordinal($deliveryRhythmCount),
@@ -171,7 +169,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getSendOrderListsWeekdayOptions()
     {
-        $defaultSendOrderListsWeekday = DeliveryRhythmService::getSendOrderListsWeekday();
+        $defaultSendOrderListsWeekday = (new DeliveryRhythmService())->getSendOrderListsWeekday();
         $weekday3 = $this->MyTime->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
         $weekday2 = $this->MyTime->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
         $weekday1 = $this->MyTime->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);
@@ -632,7 +630,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getPaymentTexts()[$paymentType];
     }
 
-    public function getSuperadminProductPaymentTexts($appAuth)
+    public function getSuperadminProductPaymentTexts($identity)
     {
         $paymentTexts = [
             'product' => self::getPaymentText('product'),

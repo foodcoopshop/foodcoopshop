@@ -26,7 +26,7 @@ trait LoginTrait
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
-        $loggedUser = $customerTable->find('all', [
+        $identity = $customerTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $userId
             ],
@@ -36,9 +36,7 @@ trait LoginTrait
         ])->first()->toArray();
 
         return [
-            'Auth' => [
-                'User' => $loggedUser
-            ]
+            'Auth' => $identity,
         ];
     }
 
@@ -92,26 +90,25 @@ trait LoginTrait
     public function loginAsSuperadminAddOrderCustomerToSession($session)
     {
         $sessionData =  $this->login(Configure::read('test.superadminId'));
-        $sessionData['Auth']['orderCustomer'] = $session['Auth']['orderCustomer'];
+        $sessionData['OrderIdentity'] = $session['OrderIdentity'];
         $this->session($sessionData);
     }
 
-    public function getUserId()
+    public function getId()
     {
-        $loggedUser = $this->user();
-        if (empty($loggedUser)) {
+        $identity = $this->getUser();
+        if (empty($identity)) {
             return [];
         }
-        return $loggedUser['id_customer'];
+        return $identity['id_customer'];
     }
 
     /**
      * used in CartsControllerTest::checkCartStatus
-     * mocks AppAuthComponent
      */
     public function isOrderForDifferentCustomerMode()
     {
-        return $this->getSession()->read('Auth.orderCustomer');
+        return $this->getSession()->read('OrderIdentity');
     }
 
     /**
@@ -123,11 +120,11 @@ trait LoginTrait
         return $this->isSelfServiceModeByUrl;
     }
 
-    public function user()
+    public function getUser()
     {
         if (empty($this->_session)) {
             return [];
         }
-        return $this->_session['Auth']['User'];
+        return $this->_session['Auth'];
     }
 }

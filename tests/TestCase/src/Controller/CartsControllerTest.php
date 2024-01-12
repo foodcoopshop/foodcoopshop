@@ -409,7 +409,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $manufacturerId = 5;
-        $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythmService::getDeliveryDateByCurrentDayForDb());
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
         $this->checkValidationError();
         $this->assertMatchesRegularExpression('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->_response->getBody()->__toString());
@@ -420,7 +420,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToCart($this->productId3, 1);
         $this->checkCartStatus();
-
+        
         $this->Product->save(
             $this->Product->patchEntity(
                 $this->Product->get($this->productId3),
@@ -431,13 +431,13 @@ class CartsControllerTest extends AppCakeTestCase
         );
 
         $manufacturerId = 5;
-        $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythmService::getDeliveryDateByCurrentDayForDb());
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
-        
+
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
-        $this->assertEquals($this->productId3, $cart->cart_products[0]->id_product);        
+        $this->assertEquals($this->productId3, $cart->cart_products[0]->id_product);
     }
 
     public function testGlobalDeliveryBreakActivatedWhileShopping()
@@ -445,7 +445,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythmService::getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->finishCart(0, 0);
         $this->checkValidationError();
@@ -730,7 +730,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
-        $pickupDay = DeliveryRhythmService::getDeliveryDateByCurrentDayForDb();
+        $pickupDay = (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb();
 
         // check order_details for product1 (index 2!)
         $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 10, $pickupDay);
@@ -887,7 +887,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
-        $pickupDay = DeliveryRhythmService::getDeliveryDateByCurrentDayForDb();
+        $pickupDay = (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb();
 
         // check order_details
         $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
@@ -1027,7 +1027,6 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrderOk()
     {
-
         // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 5);
@@ -1046,6 +1045,15 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->addProductToCart($this->productId2, 3); // attribute
         $this->addProductToCart(349, 1); // stock product - no notification!
+
+        $cartTable = FactoryLocator::get('Table')->get('Carts');
+        $cart = $cartTable->find()->where(
+            [
+                'Carts.id_customer' => Configure::read('test.customerId'),
+                'Carts.cart_type' => $cartTable::CART_TYPE_INSTANT_ORDER,
+            ]
+        )->contain(['CartProducts'])->first();
+        $this->assertCount(2, $cart->cart_products);
 
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -1076,7 +1084,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrderWithDeliveryBreak()
     {
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythmService::getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
@@ -1256,7 +1264,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->deposit, $deposit);
         $this->assertEquals($orderDetail->total_price_tax_excl, $totalPriceTaxExcl);
         $this->assertEquals($orderDetail->total_price_tax_incl, $totalPriceTaxIncl);
-        $this->assertEquals($orderDetail->id_customer, $this->getUserId());
+        $this->assertEquals($orderDetail->id_customer, $this->getId());
         $this->assertEquals($orderDetail->order_state, ORDER_STATE_ORDER_PLACED);
         $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), $pickupDay);
         $this->assertEquals($orderDetail->tax_unit_amount, $taxUnitAmount);

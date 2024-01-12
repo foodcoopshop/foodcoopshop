@@ -78,7 +78,7 @@ trait EditDepositTrait {
             Configure::read('app.numberHelper')->formatAsCurrency($deposit)
         ]);
 
-        $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        $this->ActionLog->customSave('product_deposit_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->Flash->success($actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);

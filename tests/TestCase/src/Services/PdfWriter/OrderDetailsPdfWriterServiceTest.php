@@ -15,11 +15,8 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Controller\Component\AppAuthComponent;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
-use Cake\Controller\ComponentRegistry;
-use Cake\Controller\Controller;
 
 class OrderDetailsPdfWriterServiceTest extends AppCakeTestCase
 {
@@ -29,10 +26,9 @@ class OrderDetailsPdfWriterServiceTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS', 1);
         $pickupDay = ['2018-02-02'];
         $order = 'storageLocation';
-        $appAuth = new AppAuthComponent(new ComponentRegistry(new Controller()));
 
         $pdfWriter = new OrderDetailsPdfWriterService();
-        $pdfWriter->prepareAndSetData($appAuth, $pickupDay, $order);
+        $pdfWriter->prepareAndSetData($pickupDay, $order);
         $html = $pdfWriter->writeHtml();
 
         $this->assertRegExpWithUnquotedString('<b>Lagerort: Keine Kühlung', $html);

@@ -55,11 +55,9 @@ return [
         ],
     ],
 
-    /**
-     * A random string used in security hashing methods.
-     */
     'Security' => [
-        'salt' => '3f4c77c698213b1ee8d0eca929340b69ee555c7585c99a17347991c8c9260f44'
+        'salt' => '3f4c77c698213b1ee8d0eca929340b69ee555c7585c99a17347991c8c9260f44',
+        'cookieKey' => '74f7008a3495e51ff7fc6a4c26291127342597738a51e725f4c6610655609a72',
     ],
 
     'Cache' => [

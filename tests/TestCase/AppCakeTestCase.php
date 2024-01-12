@@ -143,7 +143,7 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function assertRedirectToLoginPage()
     {
-        $this->assertRegExpWithUnquotedString(Configure::read('App.fullBaseUrl') .  $this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
+        $this->assertRegExpWithUnquotedString($this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
     }
 
     protected function assertJsonOk()
@@ -152,12 +152,9 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertEquals(1, $response->status);
     }
 
-    /**
-     * called with json request, Controller::isAuthorized false redirects to home
-     */
     protected function assertNotPerfectlyImplementedAccessRestricted()
     {
-        $this->assertEquals(Configure::read('App.fullBaseUrl') . '/' , $this->_response->getHeaderLine('Location'));
+        $this->assertEquals($this->Slug->getLogin() , $this->_response->getHeaderLine('Location'));
     }
 
     /**
@@ -221,7 +218,7 @@ abstract class AppCakeTestCase extends TestCase
     {
         $this->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
-            'amount' => $amount
+            'amount' => $amount,
         ]);
         return $this->getJsonDecodedContent();
     }
@@ -237,8 +234,8 @@ abstract class AppCakeTestCase extends TestCase
 
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
-                'customer_id' => $this->getUserId(),
-                'pickup_day' => !is_null($pickupDay) ? $pickupDay : DeliveryRhythmService::getDeliveryDateByCurrentDayForDb(),
+                'customer_id' => $this->getId(),
+                'pickup_day' => !is_null($pickupDay) ? $pickupDay : (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment,
             ];
         }
@@ -319,15 +316,6 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
-    /**
-     * @param int $customerId
-     * @param int $amount - strange behavior: posting a string '64,32' leads to '64.32' in controller
-     * @param string $type
-     * @param int $manufacturerId optional
-     * @param string $text optional
-     * @param date $dateAdd optional
-     * @return string
-     */
     protected function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0)
     {
         $this->ajaxPost('/admin/payments/add', [

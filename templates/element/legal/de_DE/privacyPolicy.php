@@ -106,7 +106,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 <p>Eigene Cookies:</p>
 <ul>
     <li>
-        remember_me<br />
+        CookieAuth<br />
         Dauer: 30 Tage<br />
         Zweck: Speichert, ob der Benutzer die Log-In-Wiedererkennungsfunktion "Angemeldet bleiben" verwendet.
     </li>

@@ -49,7 +49,7 @@ trait IndexTrait {
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
                     $pickupDay[0] = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
                 } else {
-                    $pickupDay[0] = DeliveryRhythmService::getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+                    $pickupDay[0] = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
                 }
             }
         }
@@ -76,13 +76,13 @@ trait IndexTrait {
         $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
 
         $groupBy = h($this->getRequest()->getQuery('groupBy', null));
-        if ($this->AppAuth->isManufacturer() && $groupBy != 'product') {
+        if ($this->identity->isManufacturer() && $groupBy != 'product') {
             $groupBy = '';
         }
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
+        $odParams = $this->OrderDetail->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
         if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
@@ -155,13 +155,14 @@ trait IndexTrait {
                 $query->select(['Manufacturers.name']);
                 break;
             default:
-                $query = $this->Customer->addCustomersNameForOrderSelect($query);
+                $customerTable = $this->getTableLocator()->get('Customers');
+                $query = $customerTable->addCustomersNameForOrderSelect($query);
                 $query->select($this->OrderDetail);
                 $query->select($this->OrderDetail->CartProducts); // need to be called before ->Carts
                 $query->select($this->OrderDetail->CartProducts->Carts);
                 $query->select($this->OrderDetail->OrderDetailUnits);
                 $query->select($this->OrderDetail->OrderDetailFeedbacks);
-                $query->select($this->Customer);
+                $query->select($customerTable);
                 $query->select($this->OrderDetail->Products);
                 $query->select($this->OrderDetail->Products->Manufacturers);
                 $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
@@ -240,7 +241,7 @@ trait IndexTrait {
         $groupByForDropdown = [
             'product' => __d('admin', 'Group_by_product')
         ];
-        if (!$this->AppAuth->isManufacturer()) {
+        if (!$this->identity->isManufacturer()) {
             $groupByForDropdown['customer'] = __d('admin', 'Group_by_member');
             $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
         }

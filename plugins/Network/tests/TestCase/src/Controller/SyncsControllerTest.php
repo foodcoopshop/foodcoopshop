@@ -47,7 +47,7 @@ class SyncsControllerTest extends AppCakeTestCase
     {
         $this->loginAsMeatManufacturer();
         $this->get($this->Network->getSyncProducts());
-        $this->assertAccessDeniedFlashMessage();
+        $this->assertRedirectToLoginPage();
     }
 
     public function testDenyAccessIfVariableMemberFeeDisabledAndManufacturerHasNoSyncDomains()
@@ -56,7 +56,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $this->changeManufacturer($manufacturerId, 'enabled_sync_domains', null);
         $this->loginAsVegetableManufacturer();
         $this->get($this->Network->getSyncProducts());
-        $this->assertAccessDeniedFlashMessage();
+        $this->assertRedirectToLoginPage();
     }
 
     public function testAllowAccessProductsIfVariableMemberFeeDisabled()
@@ -138,10 +138,6 @@ class SyncsControllerTest extends AppCakeTestCase
         $this->assertResponseOk();
     }
 
-    /**
-     * @param int $productId
-     * @return string
-     */
     private function deleteProductRelation($localProductId, $remoteProductId, $productName)
     {
         $this->ajaxPost($this->Network->getDeleteProductRelation(), [
@@ -156,10 +152,6 @@ class SyncsControllerTest extends AppCakeTestCase
         return $this->getJsonDecodedContent();
     }
 
-    /**
-     * @param int $productId
-     * @return string
-     */
     private function saveProductRelation($localProductId, $remoteProductId, $productName, $domain)
     {
         $this->ajaxPost($this->Network->getSaveProductRelation(), [

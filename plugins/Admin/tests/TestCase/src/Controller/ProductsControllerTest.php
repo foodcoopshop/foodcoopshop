@@ -509,7 +509,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testDeleteProductAccessLoggedOut()
     {
         $this->deleteProduct(364);
-        $this->assertResponseCode(403);
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testDeleteProductAccessLoggedInAsWrongManufacturer()

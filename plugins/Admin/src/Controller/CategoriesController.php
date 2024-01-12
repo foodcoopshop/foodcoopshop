@@ -29,11 +29,6 @@ class CategoriesController extends AdminAppController
     
     use UploadTrait;
     
-    public function isAuthorized($user)
-    {
-        return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
-    }
-
     public function add()
     {
         $this->Category = $this->getTableLocator()->get('Categories');
@@ -132,7 +127,7 @@ class CategoriesController extends AdminAppController
                 $messageSuffix = __d('admin', 'deleted');
             }
             $message = __d('admin', 'The_category_{0}_has_been_{1}.', ['<b>' . $category->name . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'categories', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $category->id_category, 'categories', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $category->id_category);

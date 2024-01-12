@@ -104,7 +104,7 @@ echo $this->Form->control('Feedbacks.privacy_type', [
     'escape' => false,
 ]);
 
-if (isset($feedback->approved_checkbox) && $appAuth->isSuperadmin()) {
+if (isset($feedback->approved_checkbox) && $identity->isSuperadmin()) {
     echo $this->Form->control('Feedbacks.approved_checkbox', [
         'label' => __d('admin', 'Approved') . ' <span class="after small">'.__d('admin', 'Only_superadmins_can_approve_feedbacks.').'</span>',
         'type' => 'checkbox',

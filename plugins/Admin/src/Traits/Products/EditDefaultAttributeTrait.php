@@ -52,7 +52,7 @@ trait EditDefaultAttributeTrait {
             '<b>' . $productAttribute->product_attribute_combination->attribute->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        $this->ActionLog->customSave('product_default_attribute_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
     }

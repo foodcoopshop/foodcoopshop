@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
-if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || $appAuth->isManufacturer() || empty($products)) {
+if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') || $identity->isManufacturer() || empty($products)) {
     return false;
 }
 

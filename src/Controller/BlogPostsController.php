@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 use Cake\Event\EventInterface;
 
 /**
@@ -24,33 +25,13 @@ use Cake\Event\EventInterface;
 class BlogPostsController extends FrontendController
 {
 
-    protected $BlogPost;
-
     public function beforeFilter(EventInterface $event)
     {
-
         parent::beforeFilter($event);
-
-        switch ($this->getRequest()->getParam('action')) {
-            case 'detail':
-                $blogPostId = (int) $this->getRequest()->getParam('pass')[0];
-                $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-                $blogPost = $this->BlogPost->find('all', [
-                    'conditions' => [
-                        'BlogPosts.id_blog_post' => $blogPostId,
-                        'BlogPosts.active' => APP_ON
-                    ],
-                    'contain' => [
-                        'Manufacturers'
-                    ]
-                ])->first();
-                if (!empty($blogPost) && !$this->AppAuth->user()
-                    && ($blogPost->is_private || (!empty($blogPost->manufacturer) && $blogPost->manufacturer->is_private))
-                    ) {
-                        $this->AppAuth->deny($this->getRequest()->getParam('action'));
-                }
-                break;
-        }
+        $this->Authentication->allowUnauthenticated([
+            'index',
+            'detail',
+        ]);
     }
 
     public function detail()
@@ -62,7 +43,8 @@ class BlogPostsController extends FrontendController
         ];
         $conditions['BlogPosts.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
-        $blogPost = $this->BlogPost->find('all', [
+        $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
+        $blogPost = $blogPostTable->find('all', [
             'conditions' => $conditions,
             'contain' => [
                 'Manufacturers'
@@ -83,7 +65,7 @@ class BlogPostsController extends FrontendController
 
         // START find neighbors
         array_pop($conditions); // do not filter last condition element blogPostId
-        if (!$this->AppAuth->user()) {
+        if ($this->identity === null) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
@@ -93,8 +75,8 @@ class BlogPostsController extends FrontendController
             'showOnStartPage' => !is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast(),
         ];
         $neighbors = [
-            'prev' => $this->BlogPost->find('neighborPrev', $options)->contain('Manufacturers')->where($conditions)->first(),
-            'next' => $this->BlogPost->find('neighborNext', $options)->contain('Manufacturers')->where($conditions)->first(),
+            'prev' => $blogPostTable->find('neighborPrev', $options)->contain('Manufacturers')->where($conditions)->first(),
+            'next' => $blogPostTable->find('neighborNext', $options)->contain('Manufacturers')->where($conditions)->first(),
         ];
         $this->set('neighbors', $neighbors);
 
@@ -103,8 +85,8 @@ class BlogPostsController extends FrontendController
 
     public function index()
     {
-        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, false);
+        $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
+        $blogPosts = $blogPostTable->findBlogPosts(null, false);
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', __('Blog_archive'));
     }

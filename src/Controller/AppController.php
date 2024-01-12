@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Services\OrderCustomerService;
 use App\Services\OutputFilter\OutputFilterService;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\Http\Cookie\Cookie;
 use hisorange\BrowserDetect\Parser as Browser;
 
 /**
@@ -25,9 +25,11 @@ use hisorange\BrowserDetect\Parser as Browser;
  */
 class AppController extends Controller
 {
-
+#
     public $protectEmailAddresses = false;
-    protected $AppAuth;
+    public $identity = null;
+    
+    public $Authentication;
     protected $Customer;
     protected $Manufacturer;
 
@@ -36,6 +38,7 @@ class AppController extends Controller
 
         parent::initialize();
 
+        $this->loadComponent('Authentication.Authentication');
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false
         ]);
@@ -44,78 +47,23 @@ class AppController extends Controller
         ]);
         $this->loadComponent('String');
 
-        $authenticate = [
-            'Form' => [
-                'userModel' => 'Customers',
-                'fields' => [
-                    'username' => 'email',
-                    'password' => 'passwd'
-                ],
-                'finder' => 'auth' // CustomersTable::findAuth
-            ]
-        ];
-
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $authenticate['BarCode'] = [
-                'userModel' => 'Customers',
-                'fields' => [
-                    'identifier' => 'barCode'
-                ],
-                'finder' => 'auth' // CustomersTable::findAuth
-            ];
-        }
-
-        $this->loadComponent('AppAuth', [
-            'loginAction' => Configure::read('app.slugHelper')->getLogin(),
-            'authError' => ACCESS_DENIED_MESSAGE,
-            'authorize' => [
-                'Controller'
-            ],
-            'authenticate' => $authenticate,
-            'storage' => 'Session',
-        ]);
-
         $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000
         ];
     }
 
-    public function beforeRender(EventInterface $event)
-    {
-        parent::beforeRender($event);
-        $this->set('appAuth', $this->AppAuth);
-    }
-
-    /**
-     * check valid login on each request
-     * logged in user should be logged out if deleted or deactivated by admin
-     */
-    private function validateAuthentication()
-    {
-        if ($this->AppAuth->user()) {
-            $this->Customer = $this->getTableLocator()->get('Customers');
-            $query = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.email' => $this->AppAuth->getEmail()
-                ]
-            ]);
-            $query = $this->Customer->findAuth($query, []);
-            if (empty($query->first())) {
-                $this->Flash->error(__('You_have_been_signed_out_automatically.'));
-                $this->AppAuth->logout();
-                $this->response = $this->response->withCookie((new Cookie('remember_me')));
-                $this->redirect(Configure::read('app.slugHelper')->getHome());
-            }
-        }
-    }
-
     public function beforeFilter(EventInterface $event)
     {
 
-        $this->validateAuthentication();
+        $identity = $this->getRequest()->getAttribute('identity');
+        $this->identity = $identity;
+        $this->set('identity', $identity);
 
-        if (!$this->getRequest()->is('json') && !$this->AppAuth->isOrderForDifferentCustomerMode()) {
+        $orderCustomerService = new OrderCustomerService();
+        $this->set('orderCustomerService', $orderCustomerService);
+
+        if (!$this->getRequest()->is('json') && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
             $this->loadComponent('FormProtection');
         }
 
@@ -125,38 +73,6 @@ class AppController extends Controller
             $isMobile = Browser::isMobile() && !Browser::isTablet();
         }
         $this->set('isMobile', $isMobile);
-
-        $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
-        if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
-            $value = json_decode($rememberMeCookie);
-            if (isset($value->auto_login_hash)) {
-                $this->Customer = $this->getTableLocator()->get('Customers');
-                $customer = $this->Customer->find('all', [
-                    'conditions' => [
-                        'Customers.auto_login_hash' => $value->auto_login_hash
-                    ],
-                    'contain' => [
-                        'AddressCustomers'
-                    ]
-                ])->first();
-                if (!empty($customer)) {
-                    $this->AppAuth->setUser($customer);
-                }
-            }
-        }
-
-        if ($this->AppAuth->isManufacturer()) {
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $this->AppAuth->getManufacturerId()
-                ]
-            ])->first();
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
-            $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
-        }
-
-        $this->AppAuth->CartService->setController($this);
 
         parent::beforeFilter($event);
     }
@@ -174,26 +90,6 @@ class AppController extends Controller
             $newOutput = OutputFilterService::replace($newOutput, Configure::read('app.outputStringReplacements'));
         }
         $this->response = $this->response->withStringBody($newOutput);
-    }
-
-    /**
-     * keep this method in a controller - does not work with AppAuthComponent::login
-     * updates login data (after profile change for customer and manufacturer)
-     */
-    protected function renewAuthSession()
-    {
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->AppAuth->getUserId()
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
-        ])->first();
-        if (!empty($customer)) {
-            $this->AppAuth->setUser($customer);
-        }
     }
 
     public function getPreparedReferer()
@@ -233,11 +129,4 @@ class AppController extends Controller
         }
     }
 
-    /**
-     * needs to be implemented if $this->AppAuth->authorize = ['Controller'] is used
-     */
-    public function isAuthorized($user)
-    {
-        return true;
-    }
 }

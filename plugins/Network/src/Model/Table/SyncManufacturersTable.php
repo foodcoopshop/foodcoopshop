@@ -22,12 +22,12 @@ use App\Model\Table\ManufacturersTable;
 class SyncManufacturersTable extends ManufacturersTable
 {
 
-    public function isAllowedToUseAsMasterFoodcoop($appAuth)
+    public function isAllowedToUseAsMasterFoodcoop($identity)
     {
         $isAllowed =
-            $appAuth->isManufacturer() &&
+            $identity->isManufacturer() &&
             $this->getOptionVariableMemberFee(
-                $appAuth->getManufacturerVariableMemberFee()
+                $identity->getManufacturerVariableMemberFee()
             ) == 0;
         return $isAllowed;
     }

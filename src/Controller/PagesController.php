@@ -7,7 +7,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
-use Cake\Utility\Security;
 use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 use App\Services\CatalogService;
 
@@ -33,72 +32,34 @@ class PagesController extends FrontendController
     
     public function beforeFilter(EventInterface $event)
     {
-
         parent::beforeFilter($event);
-        switch ($this->getRequest()->getParam('action')) {
-            case 'detail':
-                $pageId = (int) $this->getRequest()->getParam('idAndSlug');
-                $this->Page = $this->getTableLocator()->get('Pages');
-                $page = $this->Page->find('all', [
-                    'conditions' => [
-                        'Pages.id_page' => $pageId,
-                        'Pages.active' => APP_ON
-                    ]
-                ])->first();
-                if (!empty($page) && !$this->AppAuth->user() && $page->is_private) {
-                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
-                }
-                break;
-            case 'discourseSso':
-                if (!$this->AppAuth->user()) {
-                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
-                }
-                break;
-        }
+        $this->Authentication->allowUnauthenticated([
+            'home',
+            'detail',
+            'privacyPolicy',
+            'termsOfUse',
+            'listOfAllergens',
+        ]);
     }
 
     public function home()
     {
 
-        /**
-         * START: security keys check
-         */
-        $securityErrors = 0;
-        if (Configure::read('app.discourseSsoEnabled') && Configure::read('app.discourseSsoSecret') == '') {
-            echo '<p>Please copy this <b>app.discourseSsoSecret</b> to your custom_config.php: '.StringComponent::createRandomString(20).'</p>';
-            $securityErrors++;
-        }
-        if (Security::getSalt() == '') {
-            echo '<p>Please copy this <b>Security => salt</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
-            $securityErrors++;
-        }
-        if (Configure::read('App.fullBaseUrl') == '') {
-            echo '<p>Please copy <b>' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
-            $securityErrors++;
-        }
-        if ($securityErrors > 0) {
-            die('<p><b>Security errors: '.$securityErrors.'</b></p>');
-        }
-
-        /**
-         * END: security keys check
-         */
-
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $sliders = $this->Slider->getForHome($this->AppAuth);
+        $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
 
         $products = [];
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $catalogService = new CatalogService();
-            $products = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-            $products = $catalogService->prepareProducts($this->AppAuth, $products);
+            $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
+            $products = $catalogService->prepareProducts($products);
         }
         $this->set('newProducts', $products);
 
@@ -132,7 +93,7 @@ class PagesController extends FrontendController
         }
 
         $conditionsForChildren = ['Pages.active' => APP_ON];
-        if (!$this->AppAuth->user()) {
+        if ($this->identity === null) {
             $conditionsForChildren['Pages.is_private'] = APP_OFF;
         }
         $page['children'] = $this->Page->find('children', [
@@ -158,7 +119,7 @@ class PagesController extends FrontendController
 
     public function discourseSso()
     {
-        $user = $this->AppAuth->user();
+        $user = $this->identity !== null;
         if (!$user) {
             die('No User');
         }

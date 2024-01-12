@@ -6,8 +6,8 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
-use Cake\Event\EventInterface;
 use App\Services\CatalogService;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,22 +31,22 @@ class CategoriesController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if (! (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
-            $this->AppAuth->deny($this->getRequest()->getParam('action'));
-        } else {
-            $this->AppAuth->allow($this->getRequest()->getParam('action'));
-        }
+        $this->Authentication->allowUnauthenticated([
+            'newProducts',
+            'search',
+            'detail',
+        ]);
     }
 
     public function newProducts()
     {
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
-        $products = $catalogService->prepareProducts($this->AppAuth, $products);
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
+        $products = $catalogService->prepareProducts($products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('New_products'));
@@ -68,12 +68,12 @@ class CategoriesController extends FrontendController
         $this->set('keyword', $keyword);
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
-        $products = $catalogService->prepareProducts($this->AppAuth, $products);
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $catalogService->prepareProducts($products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', __('Search') . ' "' . $keyword . '"');
@@ -104,12 +104,12 @@ class CategoriesController extends FrontendController
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts($this->AppAuth, $categoryId);
-        $products = $catalogService->prepareProducts($this->AppAuth, $products);
+        $products = $catalogService->getProducts($categoryId);
+        $products = $catalogService->prepareProducts($products);
 
         $this->set('products', $products);
 

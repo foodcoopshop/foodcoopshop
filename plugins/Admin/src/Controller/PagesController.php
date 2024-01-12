@@ -27,14 +27,6 @@ class PagesController extends AdminAppController
     protected $Page;
     protected $Sanitize;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'home' => $this->AppAuth->user(),
-             default => $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin(),
-        };
-    }
-
     public function home()
     {
         $this->set('title_for_layout', __d('admin', 'Home'));
@@ -116,7 +108,7 @@ class PagesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
         $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'))));
-        $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->AppAuth->getUserId()));
+        $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->identity->getId()));
 
         if ($this->getRequest()->getData('Pages.id_parent') == '') {
             $this->request = $this->request->withData('Pages.id_parent', 0);
@@ -146,7 +138,7 @@ class PagesController extends AdminAppController
                 $actionLogType = 'page_deleted';
             }
             $message = __d('admin', 'The_page_{0}_has_been_{1}.', ['<b>' . $page->title . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'pages', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $page->id_page, 'pages', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $page->id_page);

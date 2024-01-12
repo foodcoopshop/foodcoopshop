@@ -71,18 +71,18 @@ class SyncDomainsTable extends AppTable
         return $syncDomainHosts;
     }
 
-    public function isAllowedEditManufacturerOptionsDropdown($appAuth)
+    public function isAllowedEditManufacturerOptionsDropdown($identity)
     {
 
         $isAllowed = false;
-        if ($appAuth->isSuperadmin()) {
+        if ($identity->isSuperadmin()) {
             $isAllowed = true;
         }
 
-        if ($appAuth->isManufacturer()) {
+        if ($identity->isManufacturer()) {
             $manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
             $isAllowed = $manufacturer->getOptionVariableMemberFee(
-                $appAuth->getManufacturerVariableMemberFee()
+                $identity->getManufacturerVariableMemberFee()
             ) == 0;
         }
 

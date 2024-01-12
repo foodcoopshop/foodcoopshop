@@ -64,7 +64,7 @@ trait DeleteImageTrait {
         ]);
 
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        $this->ActionLog->customSave('product_image_deleted', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 

@@ -131,7 +131,7 @@ trait EditPurchasePriceTrait {
                 $oldPrice,
                 $newPrice,
             ]);
-            $this->ActionLog->customSave('product_purchase_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+            $this->ActionLog->customSave('product_purchase_price_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
         }
         $this->Flash->success($messageString);
 

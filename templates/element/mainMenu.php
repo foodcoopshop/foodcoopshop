@@ -18,7 +18,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 $menu = [];
-if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
     $menu[] = [
         'name' => __('Products'), 'slug' => $this->Slug->getAllProducts(),
         'children' => $categoriesForMenu

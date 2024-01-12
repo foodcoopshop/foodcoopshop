@@ -6,6 +6,8 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use App\Services\CatalogService;
+use App\Services\OrderCustomerService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,22 +30,19 @@ class FrontendController extends AppController
     protected $OrderDetail;
     protected $Page;
 
-    public function isAuthorized($user)
-    {
-        return true;
-    }
-
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer')) {
-            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer'));
+        $OriginalIdentity = $this->getRequest()->getSession()->read('OriginalIdentity');
+        if ($OriginalIdentity) {
+            $this->Authentication->setIdentity($OriginalIdentity);
+            Router::setRequest($this->getRequest());
         }
     }
 
     protected function destroyOrderCustomer()
     {
-        $this->getRequest()->getSession()->delete('Auth.orderCustomer');
-        $this->getRequest()->getSession()->delete('Auth.originalLoggedCustomer');
+        $this->getRequest()->getSession()->delete('OrderIdentity');
+        $this->getRequest()->getSession()->delete('OriginalIdentity');
     }
 
     // is not called on ajax actions!
@@ -62,12 +61,12 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $categoriesForMenu = [];
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $this->Category = $this->getTableLocator()->get('Categories');
             $catalogService = new CatalogService();
-            $allProductsCount = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
-            $newProductsCount = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
-            $categoriesForMenu = $this->Category->getForMenu($this->AppAuth);
+            $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
+            $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
+            $categoriesForMenu = $this->Category->getForMenu();
             array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                 'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
@@ -88,7 +87,7 @@ class FrontendController extends AppController
         $manufacturersForMenu = [];
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
+            $manufacturersForMenu = $this->Manufacturer->getForMenu();
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
 
@@ -96,7 +95,7 @@ class FrontendController extends AppController
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
-        if (! $this->AppAuth->user()) {
+        if ($this->identity === null) {
             $conditions['Pages.is_private'] = APP_OFF;
         }
 
@@ -119,37 +118,41 @@ class FrontendController extends AppController
     {
         parent::beforeFilter($event);
 
-        if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
-            // do not allow but call isAuthorized
-        } else {
-            $this->AppAuth->allow();
+        /*
+         * changes the identity to the desired orderCustomer
+         * but only in controller beforeFilter()
+         * beforeRender() sets the customer back to the original one
+         * this means, in views $identity ALWAYS returns the original customer, in controllers ALWAYS the desired orderCustomer
+         */
+        $orderCustomerService = new OrderCustomerService();
+        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+            $this->getRequest()->getSession()->write('OriginalIdentity', $this->identity);
+            $newIdentity = $this->getRequest()->getSession()->read('OrderIdentity');
+            $this->Authentication->setIdentity($newIdentity);
+            Router::setRequest($this->getRequest());
+            $this->identity = $newIdentity;
+            $this->set('identity', $newIdentity);
         }
 
-        /*
-         * changed the acutally logged in customer to the desired orderCustomer
-         * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
-         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired orderCustomer
-         */
-        if ($this->AppAuth->isOrderForDifferentCustomerMode()) {
-            $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.orderCustomer'));
-        }
-        if (!empty($this->AppAuth->user())) {
+        if ($this->identity !== null) {
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $creditBalance = $this->AppAuth->getCreditBalance();
+                $creditBalance = $this->identity->getCreditBalance();
                 $this->set('creditBalance', $creditBalance);
             }
 
-            $this->set('shoppingPrice', $this->AppAuth->user('shopping_price'));
+            $this->set('shoppingPrice', $this->identity->shopping_price);
 
             $cartsTable = $this->getTableLocator()->get('Carts');
-            $this->set('paymentType', $this->AppAuth->isSelfServiceCustomer() ? $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH : $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT);
+            $this->set('paymentType', $this->identity->isSelfServiceCustomer() ? $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH : $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT);
 
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
+            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());
             $this->set('futureOrderDetails', $futureOrderDetails);
+
+            $this->identity->setCart($this->identity->getCart());
+
         }
-        $this->AppAuth->setCart($this->AppAuth->getCart());
+
     }
 }

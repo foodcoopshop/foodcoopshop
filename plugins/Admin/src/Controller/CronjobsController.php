@@ -26,11 +26,6 @@ class CronjobsController extends AdminAppController
     protected $Cronjob;
     protected $Sanitize;
 
-    public function isAuthorized($user)
-    {
-        return $this->AppAuth->isSuperadmin();
-    }
-
     public function index()
     {
         $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
@@ -94,7 +89,7 @@ class CronjobsController extends AdminAppController
             $cronjob = $this->Cronjob->save($cronjob);
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_cronjob_{0}_has_been_changed.', ['<b>' . $cronjob->name . '</b>']);
-            $this->ActionLog->customSave('cronjob_changed', $this->AppAuth->getUserId(), $cronjob->id, 'cronjobs', $message);
+            $this->ActionLog->customSave('cronjob_changed', $this->identity->getId(), $cronjob->id, 'cronjobs', $message);
             $this->Flash->success($message);
 
             $this->redirect($this->getPreparedReferer());

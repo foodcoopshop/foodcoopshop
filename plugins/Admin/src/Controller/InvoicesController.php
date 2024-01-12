@@ -34,18 +34,6 @@ class InvoicesController extends AdminAppController
     protected $PickupDay;
     protected $Payment;
 
-    public function isAuthorized($user)
-    {
-        switch ($this->getRequest()->getParam('action')) {
-            case 'myInvoices':
-                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && !$this->AppAuth->isManufacturer();
-                break;
-            default:
-                return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
-                break;
-        }
-    }
-
     public function downloadAsZipFile()
     {
 
@@ -97,7 +85,8 @@ class InvoicesController extends AdminAppController
         $customerId = h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
-        $customer = $this->Customer->find('all', [
+        $customerTable = $this->getTableLocator()->get('Customers');
+        $customer = $customerTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
             ],
@@ -107,7 +96,7 @@ class InvoicesController extends AdminAppController
             throw new \Exception('customer not found');
         }
 
-        $invoiceData = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        $invoiceData = $customerTable->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         if (!$invoiceData->new_invoice_necessary) {
             $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
             $this->redirect($this->referer());
@@ -148,7 +137,7 @@ class InvoicesController extends AdminAppController
                         'date_changed' => FrozenTime::now(),
                         'amount' => abs($invoiceData->sumPriceIncl),
                         'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
-                        'created_by' => $this->AppAuth->getUserId(),
+                        'created_by' => $this->identity->getId(),
                     ]
                 );
                 $this->Payment->save($paymentEntity);
@@ -184,7 +173,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . '<br />' . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_added', $this->AppAuth->getUserId(), $invoiceId, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_added', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
 
         $this->redirect($this->referer());
 
@@ -201,7 +190,8 @@ class InvoicesController extends AdminAppController
             $currentDay = $this->getRequest()->getQuery('currentDay');
         }
 
-        $customer = $this->Customer->find('all', [
+        $customerTable = $this->getTableLocator()->get('Customers');
+        $customer = $customerTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
             ],
@@ -211,7 +201,7 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        $invoiceData = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
+        $invoiceData = $customerTable->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$invoiceData->new_invoice_necessary) {
             die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
         }
@@ -398,7 +388,7 @@ class InvoicesController extends AdminAppController
         $this->Flash->success($messageString . $linkToInvoice);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('invoice_cancelled', $this->AppAuth->getUserId(), $invoiceId, 'invoices', $messageString);
+        $this->ActionLog->customSave('invoice_cancelled', $this->identity->getId(), $invoiceId, 'invoices', $messageString);
 
         $this->set([
             'status' => 1,
@@ -424,7 +414,7 @@ class InvoicesController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $customerId = $this->AppAuth->getUserId();
+        $customerId = $this->identity->getId();
 
         $this->set('customerId', $customerId);
 

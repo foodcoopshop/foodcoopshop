@@ -41,7 +41,7 @@ use Cake\Core\Configure;
 
     <?php
     echo '<h2 class="info">';
-        if ($appAuth->isManufacturer()) {
+        if ($identity->isManufacturer()) {
             echo __d('admin', 'Here_you_find_the_unchanged_order_lists_that_were_sent_to_you.');
         } else {
             echo __d('admin', 'Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers.');

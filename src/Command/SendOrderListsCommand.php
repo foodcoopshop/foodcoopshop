@@ -50,7 +50,7 @@ class SendOrderListsCommand extends AppCommand
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             $pickupDay = $this->cronjobRunDay;
         } else {
-            $pickupDay = DeliveryRhythmService::getNextDeliveryDay(strtotime($this->cronjobRunDay));
+            $pickupDay = (new DeliveryRhythmService())->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         }
 
         // 1) get all manufacturers (not only active ones)

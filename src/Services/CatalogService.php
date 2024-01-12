@@ -26,6 +26,7 @@ use Cake\Datasource\FactoryLocator;
 use App\Services\DeliveryRhythmService;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Expression\StringExpression;
+use Cake\Routing\Router;
 
 class CatalogService
 {
@@ -35,15 +36,22 @@ class CatalogService
     protected $Product;
     protected $ProductAttribute;
     protected $OrderDetail;
+    protected $identity;
 
-    public function getProducts($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
+    public function __construct()
+    {
+        $this->identity = Router::getRequest()->getAttribute('identity');
+    }
+
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
     {
 
+        $orderCustomerService = new OrderCustomerService();
         $cacheKey = join('_', [
             'Catalog_getProducts',
             'categoryId-' . $categoryId,
-            'isLoggedIn-' . (empty($appAuth->user() ? 0 : 1)),
-            'forDifferentCustomer-' . ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()),
+            'isLoggedIn-' . ((int) ($this->identity !== null)),
+            'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
             'filterByNewProducts-' . $filterByNewProducts,
             'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
@@ -54,11 +62,11 @@ class CatalogService
         $products = Cache::read($cacheKey);
 
         if ($products === null) {
-            $query = $this->getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId);
+            $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId);
             $products = $query->toArray();
-            $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
+            $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
-            $products = $this->addOrderedProductsTotalAmount($products, $appAuth);
+            $products = $this->addOrderedProductsTotalAmount($products);
             Cache::write($cacheKey, $products);
         }
 
@@ -70,12 +78,12 @@ class CatalogService
 
     }
 
-    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
+    public function getProductsByManufacturerId($manufacturerId, $countMode = false)
     {
-        return $this->getProducts($appAuth, '', false, '', 0, $countMode, false, $manufacturerId);
+        return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId);
     }
 
-    protected function getQuery($appAuth, $categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
+    protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
@@ -87,7 +95,7 @@ class CatalogService
         } else {
             $query = $this->addOrderKeyword($query, $keyword);
         }
-        $query = $this->addDefaultConditions($query, $appAuth);
+        $query = $this->addDefaultConditions($query);
         $query = $this->addSelectFields($query);
         $query = $this->addPurchasePriceIsSetFilter($query);
         $query = $this->addProductIdFilter($query, $productId);
@@ -95,7 +103,8 @@ class CatalogService
         $query = $this->addManufacturerIdFilter($query, $manufacturerId);
 
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-            if ($appAuth->isOrderForDifferentCustomerMode()) {
+            $orderCustomerService = new OrderCustomerService();
+            if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
                 $getOnlyStockProducts = true;
             }
         }
@@ -178,9 +187,9 @@ class CatalogService
         return $query;
     }
 
-    protected function addDefaultConditions($query, $appAuth)
+    protected function addDefaultConditions($query)
     {
-        if (empty($appAuth->user())) {
+        if ($this->identity === null) {
             $query->where([
                 'Manufacturers.is_private' => APP_OFF,
             ]);
@@ -368,27 +377,29 @@ class CatalogService
 
     }
 
-    protected function addOrderedProductsTotalAmount($products, $appAuth)
+    protected function addOrderedProductsTotalAmount($products)
     {
 
         if (!Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
             return $products;
         }
 
-        if (!$appAuth->user()) {
+        if ($this->identity === null) {
             return $products;
         }
 
-        if ($appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
+        $orderCustomerService = new OrderCustomerService();
+        if ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
             return $products;
         }
 
         $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
 
+        $deliveryRhytmService = new DeliveryRhythmService();
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $pickupDay = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $appAuth);
+            $pickupDay = $deliveryRhytmService->getNextDeliveryDayForProduct($product, $orderCustomerService);
             if (empty($product->product_attributes)) {
                 $product->ordered_total_amount = $this->OrderDetail->getTotalOrderDetails($pickupDay, $product->id_product, 0);
             } else {
@@ -428,18 +439,20 @@ class CatalogService
         return $products;
     }
 
-    protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
+    protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products)
     {
 
-        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $appAuth->isOrderForDifferentCustomerMode() || $appAuth->isSelfServiceModeByUrl()) {
+        $orderCustomerService = new OrderCustomerService();
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
             return $products;
         }
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
+        $deliveryRhythmService = new DeliveryRhythmService();
         $i = -1;
         foreach($products as $product) {
             $i++;
-            $deliveryDate = DeliveryRhythmService::getNextPickupDayForProduct($product);
+            $deliveryDate = $deliveryRhythmService->getNextPickupDayForProduct($product);
 
             // deactivates the product if it can not be ordered this week
             if ($deliveryDate == 'delivery-rhythm-triggered-delivery-break') {
@@ -485,7 +498,7 @@ class CatalogService
         return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 4)';
     }
 
-    public function prepareProducts($appAuth, $products)
+    public function prepareProducts($products)
     {
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
@@ -508,7 +521,6 @@ class CatalogService
 
             // START: override shopping with purchase prices / zero prices
             $modifiedProductPricesByShoppingPrice = $this->Customer->getModifiedProductPricesByShoppingPrice(
-                $appAuth,
                 $products[$i]->id_product,
                 $products[$i]->price,
                 $products[$i]->unit_product->price_incl_per_unit,
@@ -537,7 +549,7 @@ class CatalogService
                 $products[$i]->deposit_product->deposit = 0;
             }
 
-            $products[$i]->next_delivery_day = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $appAuth);
+            $products[$i]->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, new OrderCustomerService());
 
             foreach ($product->product_attributes as &$attribute) {
 
@@ -557,7 +569,7 @@ class CatalogService
                 }
 
                 // START: override shopping with purchase prices / zero prices
-                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($appAuth, $attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attribute->unit_product_attribute->price_incl_per_unit, $attribute->deposit_product_attribute->deposit, $taxRate);
+                $modifiedAttributePricesByShoppingPrice = $this->Customer->getModifiedAttributePricesByShoppingPrice($attribute->id_product, $attribute->id_product_attribute, $attribute->price, $attribute->unit_product_attribute->price_incl_per_unit, $attribute->deposit_product_attribute->deposit, $taxRate);
 
                 $attribute->selling_prices = [
                     'gross_price' => $this->Product->getGrossPrice($attribute->price, $taxRate),

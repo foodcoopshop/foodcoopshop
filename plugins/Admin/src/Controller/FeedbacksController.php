@@ -30,14 +30,6 @@ class FeedbacksController extends AdminAppController
     public $customerId;
     public $isOwnForm;
 
-    public function isAuthorized($user)
-    {
-        return match($this->getRequest()->getParam('action')) {
-            'myFeedback' => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->user(),
-             default => Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $this->AppAuth->isSuperadmin(),
-        };
-    }
-
     private function getCustomerId()
     {
         $customerId = '';
@@ -65,7 +57,7 @@ class FeedbacksController extends AdminAppController
 
     public function myFeedback()
     {
-        $this->customerId = $this->AppAuth->getUserId();
+        $this->customerId = $this->identity->getId();
         $this->set('title_for_layout', __d('admin', 'My_feedback'));
         $this->isOwnForm = true;
         $this->_processForm();
@@ -125,7 +117,7 @@ class FeedbacksController extends AdminAppController
             ]
         ])->first();
 
-        if (!empty($feedback) && $this->AppAuth->isSuperadmin()) {
+        if (!empty($feedback) && $this->identity->isSuperadmin()) {
             $feedback->approved_checkbox = $this->Feedback->isApproved($feedback);
         }
 
@@ -186,7 +178,7 @@ class FeedbacksController extends AdminAppController
                         __d('admin', 'deleted'),
                     ]);
                 }
-                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+                $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                 $this->Flash->success($message);
                 $this->redirect($this->getPreparedReferer());
                 return;
@@ -197,11 +189,11 @@ class FeedbacksController extends AdminAppController
             $valueForNotApproved = FrozenTime::createFromDate(1970, 01, 01);
 
             $feedback->approved = $valueForApproved;
-            if ($feedback->isDirty('text') && !($this->AppAuth->isAdmin() || $this->AppAuth->isSuperadmin())) {
+            if ($feedback->isDirty('text') && !($this->identity->isAdmin() || $this->identity->isSuperadmin())) {
                 $feedback->approved = $valueForNotApproved;
             }
 
-            if ($isEditMode && $this->AppAuth->isSuperadmin()) {
+            if ($isEditMode && $this->identity->isSuperadmin()) {
                 $feedback->approved = $valueForNotApproved;
                 if ($feedback->approved_checkbox) {
                     $wasApproved = $this->Feedback->isApproved($oldFeedback);
@@ -212,12 +204,12 @@ class FeedbacksController extends AdminAppController
                             '<b>' . $userNameForActionLog . '</b>',
                             __d('admin', 'approved'),
                         ]);
-                        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+                        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
                     }
                 }
             }
 
-            if (!($this->AppAuth->isAdmin() || $this->AppAuth->isSuperadmin())) {
+            if (!($this->identity->isAdmin() || $this->identity->isSuperadmin())) {
                 $feedback->approved = $valueForNotApproved;
             }
 
@@ -243,7 +235,7 @@ class FeedbacksController extends AdminAppController
             $isDirty = $feedback->isDirty('text') || $feedback->isDirty('privacy_type');
             $feedback = $this->Feedback->save($feedback);
             if (!$isEditMode || $isDirty) {
-                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $feedback->id, 'feedbacks', $message);
+                $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $feedback->id, 'feedbacks', $message);
             }
 
             $this->Flash->success($message);

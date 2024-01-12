@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Authentication\IdentityInterface;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
+use Cake\Datasource\FactoryLocator;
+use App\Services\OrderCustomerService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -19,21 +22,350 @@ use Cake\ORM\Entity;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Customer extends Entity
+class Customer extends Entity implements IdentityInterface
 {
 
-    protected $_virtual = ['name'];
+    public $cart = null;
+    protected $_virtual = ['name', 'manufacturer'];
+    protected $_hidden = ['passwd'];
+
+    public function getIdentifier()
+    {
+        return $this->id_customer;
+    }
+
+    public function getOriginalData()
+    {
+        return $this;
+    }
+
+    protected function _getManufacturer()
+    {
+        if ($this->isNew()) {
+            return null;
+        }
+        $mm = FactoryLocator::get('Table')->get('Manufacturers');
+        $manufacturer = $mm->find('all', [
+            'conditions' => [
+                'AddressManufacturers.email' => $this->email,
+                'AddressManufacturers.id_manufacturer > ' . APP_OFF,
+            ],
+            'contain' => [
+                'AddressManufacturers',
+                'Customers.AddressCustomers',
+            ]
+        ])->first();
+        return $manufacturer;
+    }
 
     protected function _getName()
     {
-        $virtualNameFields = $this->firstname . ' ' . $this->lastname;
+        $name = $this->firstname . ' ' . $this->lastname;
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            $virtualNameFields = $this->lastname . ' ' . $this->firstname;
+            $name = $this->lastname . ' ' . $this->firstname;
         }
+
         if ($this->is_company) {
-            $virtualNameFields = $this->firstname;
+            $name = $this->firstname;
         }
-        return $virtualNameFields;
+
+        if ($this->isManufacturer()) {
+            $name = $this->manufacturer->name;
+        }
+
+        return $name;
+    }
+
+    public function termsOfUseAccepted(): bool
+    {
+        $formattedAcceptedDate = $this->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database'));
+        return $formattedAcceptedDate >= Configure::read('app.termsOfUseLastUpdate');
+    }
+
+    public function isSuperadmin(): bool
+    {
+        if ($this->isManufacturer()) {
+            return false;
+        }
+        if ($this->id_default_group == CUSTOMER_GROUP_SUPERADMIN) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function isManufacturer(): bool
+    {
+        return isset($this->manufacturer);
+    }
+
+    public function getManufacturerId()
+    {
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
+        }
+        return $this->manufacturer->id_manufacturer;
+    }
+
+    public function getManufacturerName()
+    {
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
+        }
+        return $this->manufacturer->name;
+    }
+
+    public function getManufacturerAnonymizeCustomers()
+    {
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
+        }
+        return $this->manufacturer->anonymize_customers;
+    }
+
+    public function getManufacturerVariableMemberFee()
+    {
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
+        }
+        return $this->manufacturer->variable_member_fee;
+    }
+
+    public function getManufacturerEnabledSyncDomains()
+    {
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
+        }
+        return $this->manufacturer->enabled_sync_domains;
+    }
+
+    public function getManufacturerCustomer()
+    {
+        if (!$this->isManufacturer()) {
+            throw new \Exception('user is no manufacturer');
+        }
+        return $this->manufacturer->customer;
+    }
+
+    public function getId()
+    {
+        return $this->id_customer;
+    }
+
+    public function getAbbreviatedUserName()
+    {
+        $result = $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
+        if ($this->is_company) {
+            $result = $this->firstname;
+        }
+        return $result;
+    }
+
+    public function getGroupId()
+    {
+        return $this->id_default_group;
+    }
+
+    public function getLastOrderDetailsForDropdown()
+    {
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $dropdownData = $orderDetailsTable->getLastOrderDetailsForDropdown($this->getId());
+        return $dropdownData;
+    }
+
+    public function getFutureOrderDetails()
+    {
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $futureOrderDetails = $orderDetailsTable->getFutureOrdersByCustomerId($this->getId());
+        return $futureOrderDetails;
+    }
+
+    public function getCreditBalanceMinusCurrentCartSum()
+    {
+        return $this->getCreditBalance() - $this->getCart()['CartProductSum'] - $this->getCart()['CartDepositSum'];
+    }
+
+    public function hasEnoughCreditForProduct($grossPrice)
+    {
+        $hasEnoughCreditForProduct =
+            $this->getCreditBalanceMinusCurrentCartSum() -
+            Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')
+            >= $grossPrice;
+        return $hasEnoughCreditForProduct;
+    }
+
+    public function isAdmin(): bool
+    {
+        if ($this->isManufacturer()) {
+            return false;
+        }
+        if ($this->getGroupId() == CUSTOMER_GROUP_ADMIN) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isCustomer(): bool
+    {
+        if ($this->isManufacturer()) {
+            return false;
+        }
+        if (in_array($this->getGroupId(), [
+            CUSTOMER_GROUP_MEMBER,
+            CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER,
+            ])
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isSelfServiceCustomer(): bool
+    {
+        if ($this->isManufacturer()) {
+            return false;
+        }
+        if ($this->getGroupId() == CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getCreditBalance()
+    {
+        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        return $customersTable->getCreditBalance($this->getId());
+    }
+
+    public function getCartType()
+    {
+        $cartsTable = FactoryLocator::get('Table')->get('Carts');
+        $cartType = $cartsTable::CART_TYPE_WEEKLY_RHYTHM;
+
+        $orderCustomerService = new OrderCustomerService();
+        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+            $cartType = $cartsTable::CART_TYPE_INSTANT_ORDER;
+        }
+        if ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer()) {
+            $cartType = $cartsTable::CART_TYPE_SELF_SERVICE;
+        }
+        return $cartType;
+    }
+
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
+    }
+
+    public function getCart()
+    {
+        $cartType = $this->getCartType();
+        $cartsTable = FactoryLocator::get('Table')->get('Carts');
+        return $cartsTable->getCart($this, $cartType);
+    }
+
+    public function getProducts()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartProducts'];
+        }
+        return [];
+    }
+
+    public function getProductsWithUnitCount()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['ProductsWithUnitCount'];
+        }
+        return 0;
+    }
+
+    public function getProductAndDepositSum()
+    {
+        return $this->getProductSum() + $this->getDepositSum();
+    }
+
+    public function getTaxSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartTaxSum'];
+        }
+        return 0;
+    }
+
+    public function getDepositSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartDepositSum'];
+        }
+        return 0;
+    }
+
+    public function getProductSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartProductSum'];
+        }
+        return 0;
+    }
+
+    public function getProductSumExcl()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartProductSumExcl'];
+        }
+        return 0;
+    }
+
+    public function getCartId()
+    {
+        return $this->cart['Cart']->id_cart;
+    }
+
+    public function markCartAsSaved()
+    {
+        if ($this->cart === null) {
+            return false;
+        }
+        $cc = FactoryLocator::get('Table')->get('Carts');
+        $patchedEntity = $cc->patchEntity(
+            $cc->get($this->getCartId()), [
+                'status' => APP_OFF,
+            ],
+            ['validate' => false],
+        );
+        $savedCart = $cc->save($patchedEntity);
+        return $savedCart;
+    }
+
+    public function getUniqueManufacturers(): array
+    {
+        $manufactures = [];
+        foreach ($this->getProducts() as $product) {
+            $manufactures[$product['manufacturerId']] = [
+                'name' => $product['manufacturerName']
+            ];
+        }
+        return $manufactures;
+    }
+
+    public function getProduct($productId)
+    {
+        foreach ($this->getProducts() as $product) {
+            if ($product['productId'] == $productId) {
+                return $product;
+                break;
+            }
+        }
+        return false;
+    }
+
+    public function isCartEmpty()
+    {
+        $isEmpty = false;
+        if (empty($this->getProducts())) {
+            $isEmpty = true;
+        }
+        return $isEmpty;
     }
 
 }

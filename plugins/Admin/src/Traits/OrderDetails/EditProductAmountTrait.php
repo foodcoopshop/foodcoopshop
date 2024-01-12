@@ -91,7 +91,7 @@ trait EditProductAmountTrait {
             'oldOrderDetail' => $oldOrderDetail,
             'newsletterCustomer' => $oldOrderDetail->customer,
             'newOrderDetail' => $newOrderDetail,
-            'appAuth' => $this->AppAuth,
+            'identity' => $this->identity,
             'editAmountReason' => $editAmountReason
         ]);
         $email->addToQueue();
@@ -101,7 +101,7 @@ trait EditProductAmountTrait {
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_amount_changed_notification);
 
-        if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductAmountChangedNotification) {
+        if (! $this->identity->isManufacturer() && $oldOrderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductAmountChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
@@ -128,7 +128,7 @@ trait EditProductAmountTrait {
         }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_detail_product_amount_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->ActionLog->customSave('order_detail_product_amount_changed', $this->identity->getId(), $orderDetailId, 'order_details', $message);
 
         $this->Flash->success($message);
 

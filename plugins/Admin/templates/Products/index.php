@@ -28,7 +28,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".ModalProductDepositEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductNameEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#products');" .
-            Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $identity->isManufacturer() . ");" .
             Configure::read('app.jsNamespace') . ".Helper.setIsSelfServiceModeEnabled(" . Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') . ");" .
             Configure::read('app.jsNamespace') . ".ModalProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
@@ -55,7 +55,7 @@ use Cake\Core\Configure;
             ]);
         }
 
-        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !$appAuth->isManufacturer()) {
+        if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && !$identity->isManufacturer()) {
             $this->element('addScript', [
                 'script' => Configure::read('app.jsNamespace') . ".ModalProductPurchasePriceEdit.init();"
             ]);
@@ -74,7 +74,7 @@ use Cake\Core\Configure;
                     'options' => [],
                 ]);
             }
-            if (! $appAuth->isManufacturer()) {
+            if (! $identity->isManufacturer()) {
                 echo $this->Form->control('manufacturerId', [
                     'type' => 'select',
                     'label' => '',
@@ -85,7 +85,7 @@ use Cake\Core\Configure;
             } else {
                 echo $this->Form->hidden('manufacturerId', [
                     'id' => 'manufacturerid',
-                    'val' => $appAuth->getManufacturerId(),
+                    'val' => $identity->getManufacturerId(),
                 ]);
             }
             echo $this->Form->control('active', [
@@ -189,7 +189,7 @@ use Cake\Core\Configure;
         $showSellingPriceTax = false;
         $showPurchasePrice = false;
         $showPurchasePriceTax = false;
-        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+        if ($identity->isSuperadmin() || $identity->isAdmin()) {
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
                 $showSellingPriceAndDeposit = true;
                 $showPurchasePrice = true;
@@ -205,7 +205,7 @@ use Cake\Core\Configure;
             }
         }
 
-        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $appAuth->isManufacturer()) {
+        if (!Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && $identity->isManufacturer()) {
             $showSellingPriceAndDeposit = true;
             $showSellingPriceTax = true;
             echo '<th>'.__d('admin', 'Price').'</th>';

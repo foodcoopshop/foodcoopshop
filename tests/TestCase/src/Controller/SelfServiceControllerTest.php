@@ -36,13 +36,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use LoginTrait;
     use EmailTrait;
 
-    public function testBarCodeLoginAsSuperadminIfNotEnabled()
-    {
-        $this->enableRetainFlashMessages();
-        $this->doBarCodeLogin();
-        $this->assertFlashMessage(__('Signing_in_failed_account_inactive_or_password_wrong?'));
-    }
-
     public function testPageSelfService()
     {
         $this->loginAsSuperadmin();
@@ -57,7 +50,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->assertEquals($_SESSION['Auth']['User']['id_customer'], Configure::read('test.superadminId'));
+        $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
     }
 
     public function testSelfServiceAddProductPricePerUnitWrong()
@@ -200,7 +193,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithDeliveryBreak()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', DeliveryRhythmService::getDeliveryDateByCurrentDayForDb());
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
@@ -274,7 +267,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
-
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
@@ -449,7 +441,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     private function doBarCodeLogin()
     {
         $this->post($this->Slug->getLogin(), [
-            'barCode' => Configure::read('test.superadminBarCode')
+            'barcode' => Configure::read('test.superadminBarCode')
         ]);
     }
 

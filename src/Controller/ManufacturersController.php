@@ -5,10 +5,10 @@ namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\CatalogService;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,28 +31,11 @@ class ManufacturersController extends FrontendController
 
     public function beforeFilter(EventInterface $event)
     {
-
         parent::beforeFilter($event);
-
-        if (!Configure::read('app.showManufacturerListAndDetailPage')) {
-            throw new NotFoundException();
-        }
-
-        switch ($this->getRequest()->getParam('action')) {
-            case 'detail':
-                $manufacturerId = (int) $this->getRequest()->getParam('pass')[0];
-                $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-                $manufacturer = $this->Manufacturer->find('all', [
-                    'conditions' => [
-                        'Manufacturers.id_manufacturer' => $manufacturerId,
-                        'Manufacturers.active' => APP_ON
-                    ]
-                ])->first();
-                if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer->is_private) {
-                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
-                }
-                break;
-        }
+        $this->Authentication->allowUnauthenticated([
+            'index',
+            'detail',
+        ]);
     }
 
     public function index()
@@ -61,7 +44,7 @@ class ManufacturersController extends FrontendController
         $conditions = [
             'Manufacturers.active' => APP_ON,
         ];
-        if (! $this->AppAuth->user()) {
+        if (! $this->identity !== null) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
@@ -80,10 +63,10 @@ class ManufacturersController extends FrontendController
             throw new RecordNotFoundException('no manufacturers available');
         }
 
-        if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($this->identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $catalogService = new CatalogService();
             foreach ($manufacturers as $manufacturer) {
-                $manufacturer->product_count = $catalogService->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
+                $manufacturer->product_count = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
         }
 
@@ -121,14 +104,14 @@ class ManufacturersController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         }
 
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $catalogService = new CatalogService();
-            $products = $catalogService->getProductsByManufacturerId($this->AppAuth, $manufacturerId);
-            $manufacturer['Products'] = $catalogService->prepareProducts($this->AppAuth, $products);
+            $products = $catalogService->getProductsByManufacturerId($manufacturerId);
+            $manufacturer['Products'] = $catalogService->prepareProducts($products);
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, $manufacturerId, true);
+        $blogPosts = $this->BlogPost->findBlogPosts($manufacturerId, true);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('manufacturer', $manufacturer);

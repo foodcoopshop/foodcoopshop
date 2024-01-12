@@ -142,16 +142,12 @@ class MenuHelper extends Helper
         return $naviElement;
     }
 
-    public function getAuthMenuElement($appAuth)
+    public function getAuthMenuElement($identity)
     {
         $menuElement = [];
-        if ($appAuth->user()) {
-            $userName = $appAuth->getAbbreviatedUserName();
-            if ($appAuth->isManufacturer()) {
-                $userName = $appAuth->getManufacturerName();
-            }
+        if ($identity !== null) {
             if ($this->getView()->getPlugin() != '') {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$identity->name.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             } else {
                 $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             }
@@ -179,9 +175,9 @@ class MenuHelper extends Helper
         return [];
     }
 
-    public function getMyFeedbackMenuElement($appAuth)
+    public function getMyFeedbackMenuElement($identity)
     {
-        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->user()) {
+        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity !== null) {
             return [
                 'slug' => Configure::read('app.slugHelper')->getMyFeedbackForm(),
                 'name' => __('Feedback'),
@@ -259,14 +255,14 @@ class MenuHelper extends Helper
         ];
     }
 
-    public function getCustomerMenuElements($appAuth) {
+    public function getCustomerMenuElements($identity) {
 
         $menu = [];
 
         $paymentProductMenuElement = $this->getPaymentProductMenuElement();
         $orderDetailsGroupedByCustomerMenuElement = $this->getOrderDetailsGroupByCustomerMenuElement();
         $changedOrderedProductsMenuElement = $this->getChangedOrderedProductsMenuElement();
-        $myFeedbackMenuElement = $this->getMyFeedbackMenuElement($appAuth);
+        $myFeedbackMenuElement = $this->getMyFeedbackMenuElement($identity);
         $customerProfileMenuElement = $this->getCustomerProfileMenuElement();
         $actionLogsMenuElement = $this->getActionLogsMenuElement();
         $changePasswordMenuElement = $this->getChangePasswordMenuElement();

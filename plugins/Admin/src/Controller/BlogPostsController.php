@@ -5,7 +5,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\I18n\FrozenDate;
 use Admin\Traits\UploadTrait;
 
@@ -32,38 +31,6 @@ class BlogPostsController extends AdminAppController
     protected $Customer;
     protected $Manufacturer;
     protected $Sanitize;
-
-    public function isAuthorized($user)
-    {
-        if (!Configure::read('app.isBlogFeatureEnabled')) {
-            return false;
-        }
-        switch ($this->getRequest()->getParam('action')) {
-            case 'edit':
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
-                    return true;
-                }
-                // manufacturer owner check
-                if ($this->AppAuth->isManufacturer()) {
-                    $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-                    $blogPost = $this->BlogPost->find('all', [
-                        'conditions' => [
-                            'BlogPosts.id_blog_post' => $this->getRequest()->getParam('pass')[0]
-                        ]
-                    ])->first();
-                    if (empty($blogPost)) {
-                        throw new RecordNotFoundException();
-                    }
-                    if ($blogPost->id_manufacturer != $this->AppAuth->getManufacturerId()) {
-                        return false;
-                    }
-                    return true;
-                }
-                break;
-            default:
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
-        }
-    }
 
     public function add()
     {
@@ -137,13 +104,13 @@ class BlogPostsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
-        $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->AppAuth->getUserId()));
+        $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->identity->getId()));
 
-        if ($this->AppAuth->isManufacturer()) {
-            $this->setRequest($this->getRequest()->withData('BlogPosts.id_manufacturer', $this->AppAuth->getManufacturerId()));
+        if ($this->identity->isManufacturer()) {
+            $this->setRequest($this->getRequest()->withData('BlogPosts.id_manufacturer', $this->identity->getManufacturerId()));
         }
 
-        if (!$this->getRequest()->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer() && $isEditMode) {
+        if (!$this->getRequest()->getData('BlogPosts.update_modified_field') && !$this->identity->isManufacturer() && $isEditMode) {
             $this->BlogPost->removeBehavior('Timestamp');
         }
 
@@ -185,7 +152,7 @@ class BlogPostsController extends AdminAppController
                 $actionLogType = 'blog_post_deleted';
             }
             $message = __d('admin', 'The_blog_post_{0}_has_been_{1}.', ['<b>' . $blogPost->title . '</b>', $messageSuffix]);
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $blogPost->id_blog_post, 'blog_posts', $message);
+            $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $blogPost->id_blog_post);
@@ -214,8 +181,8 @@ class BlogPostsController extends AdminAppController
         }
         $this->set('manufacturerId', $manufacturerId);
 
-        if ($this->AppAuth->isManufacturer()) {
-            $manufacturerId = $this->AppAuth->getManufacturerId();
+        if ($this->identity->isManufacturer()) {
+            $manufacturerId = $this->identity->getManufacturerId();
         }
         if ($manufacturerId != '') {
             $conditions = [

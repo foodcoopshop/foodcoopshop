@@ -10,12 +10,10 @@ use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
-use Cake\Http\Cookie\Cookie;
-use Cake\I18n\FrozenDate;
 use Cake\Log\Log;
-use Cake\Utility\Security;
-use DateTime;
 use Cake\Http\Exception\NotFoundException;
+use App\Services\OrderCustomerService;
+use App\Controller\Traits\RenewAuthSessionTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,17 +36,31 @@ class CustomersController extends FrontendController
     protected $Sanitize;
     protected $ActionLog;
 
+    use RenewAuthSessionTrait;
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
+
+        $this->Authentication->allowUnauthenticated([
+            'login',
+            'logout',
+            'registration',
+            'registrationSuccessful',
+            'newPasswordRequest',
+            'activateNewPassword',
+            'activateEmailAddress',
+            'profileImage',
+        ]);
+
+        if (!$this->getRequest()->is('json') && $this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
             $this->FormProtection->setConfig('validate', false);
         }
     }
 
     public function profileImage()
     {
-        if (!$this->AppAuth->user() || $this->AppAuth->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
+        if ($this->identity === null || $this->identity->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
             throw new NotFoundException('image not found');
         }
 
@@ -93,7 +105,7 @@ class CustomersController extends FrontendController
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $patchedEntity = $this->Customer->patchEntity(
-            $this->Customer->get($this->AppAuth->getUserId()),
+            $this->Customer->get($this->identity->getId()),
             [
                 'Customers' => [
                     'terms_of_use_accepted_date_checkbox' => $this->getRequest()->getData('Customers.terms_of_use_accepted_date_checkbox'),
@@ -148,7 +160,7 @@ class CustomersController extends FrontendController
             $email->setTo($customer->email)
             ->setSubject(__('Your_email_address_has_been_activated_successfully.'))
             ->setViewVars([
-                'appAuth' => $this->AppAuth,
+                'identity' => $this->identity,
                 'data' => $customer,
                 'newPassword' => $newPassword,
             ]);
@@ -278,8 +290,9 @@ class CustomersController extends FrontendController
         $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
 
+        $orderCustomerService = new OrderCustomerService();
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-            && ($this->AppAuth->isSelfServiceModeByUrl() || $this->AppAuth->isSelfServiceModeByReferer())
+            && ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer())
             ) {
                 $this->viewBuilder()->setLayout('self_service');
                 $title = __('Sign_in_for_self_service');
@@ -296,42 +309,27 @@ class CustomersController extends FrontendController
             $this->protectEmailAddresses = false; 
         }
 
-            /**
+        /**
          * login start
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
-            if ($this->AppAuth->user()) {
-                $this->Flash->error(__('You_are_already_signed_in.'));
+
+            if ($this->getRequest()->is('get')) {
+                if ($this->identity !== null) {
+                    $this->Flash->error(__('You_are_already_signed_in.'));
+                }
             }
 
             if ($this->getRequest()->is('post')) {
-                
-                $customer = $this->AppAuth->identify();
-                if ($customer) {
-                    $this->AppAuth->setUser($customer);
-                    $this->redirect($this->AppAuth->redirectUrl());
+                $result = $this->Authentication->getResult();
+                if ($result->isValid()) {
+                    $target = $this->Authentication->getLoginRedirect() ?? Configure::read('app.slugHelper')->getHome();
+                    $this->redirect($target);
                 } else {
                     $this->Flash->error(__('Signing_in_failed_account_inactive_or_password_wrong?'));
                 }
-
-                if (!empty($this->getRequest()->getData('remember_me')) &&
-                    $this->getRequest()->getData('remember_me') &&
-                    !empty($customer)) {
-                    $customer = $this->Customer->get($customer['id_customer']);
-                    if ($customer->auto_login_hash == '') {
-                        $customer->auto_login_hash = Security::hash((string) rand());
-                        $this->Customer->save($customer);
-                    }
-                    $cookie = (new Cookie('remember_me'))
-                    ->withValue(
-                        [
-                            'auto_login_hash' => $customer->auto_login_hash
-                        ]
-                    )
-                    ->withExpiry(new DateTime('+30 day'));
-                    $this->setResponse($this->getResponse()->withCookie($cookie));
-                }
             }
+
         }
 
         /**
@@ -359,7 +357,7 @@ class CustomersController extends FrontendController
                 return;
             }
 
-            if ($this->AppAuth->user()) {
+            if ($this->identity !== null) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
@@ -428,7 +426,7 @@ class CustomersController extends FrontendController
                     $email->setTo($this->getRequest()->getData('Customers.address_customer.email'))
                         ->setSubject(__('Welcome'))
                         ->setViewVars([
-                        'appAuth' => $this->AppAuth,
+                        'identity' => $this->identity,
                         'data' => $newCustomer,
                         'newsletterCustomer' => $newCustomer,
                         'newPassword' => $newPassword
@@ -443,7 +441,7 @@ class CustomersController extends FrontendController
                         $email->setTo(explode(',', Configure::read('appDb.FCS_REGISTRATION_NOTIFICATION_EMAILS')))
                             ->setSubject(__('New_registration_{0}', [$newCustomer->firstname . ' ' . $newCustomer->lastname]))
                             ->setViewVars([
-                            'appAuth' => $this->AppAuth,
+                            'identity' => $this->identity,
                                 'data' => $newCustomer
                             ])
                             ->addToQueue();
@@ -463,7 +461,7 @@ class CustomersController extends FrontendController
         $this->set('title_for_layout', __('Account_created_successfully'));
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, true);
+        $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
     }
 
@@ -471,9 +469,8 @@ class CustomersController extends FrontendController
     {
         $this->getRequest()->getSession()->destroy();
         $this->Flash->success(__('You_have_been_signed_out.'));
-        $this->response = $this->response->withCookie((new Cookie('remember_me')));
 
-        $this->AppAuth->logout();
+        $this->Authentication->logout();
         $redirectUrl = '/';
         if ($this->request->getQuery('redirect')) {
             $redirectUrl = $this->request->getQuery('redirect');

@@ -115,7 +115,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $manufacturerId = 5;
-        $this->changeManufacturerNoDeliveryDays($manufacturerId, DeliveryRhythmService::getDeliveryDateByCurrentDayForDb());
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->get($this->Slug->getProductDetail($productId, 'Artischocke'));
         $this->assertResponseContains('<i class="fas fa-fw fa-lg fa-times"></i> Lieferpause!');
     }
@@ -182,7 +182,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
                 'id_product' => $productId,
             ],
         ])->first();
-        $nextDeliveryDay = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $this);
+        // TODO refactor this
+        $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
         $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
@@ -199,7 +200,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
                 'id_product' => $productId,
             ],
         ])->first();
-        $nextDeliveryDay = DeliveryRhythmService::getNextDeliveryDayForProduct($product, $this);
+        // TODO refactor this
+        $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
 
         $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (3);';
         $params = [

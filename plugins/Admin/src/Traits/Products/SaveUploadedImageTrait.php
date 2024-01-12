@@ -80,7 +80,7 @@ trait SaveUploadedImageTrait {
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        $this->ActionLog->customSave('product_image_added', $this->identity->getId(), $productId, 'products', $actionLogMessage);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 

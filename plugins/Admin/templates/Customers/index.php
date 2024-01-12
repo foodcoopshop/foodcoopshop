@@ -84,7 +84,7 @@ if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
 }
-if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
     echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
@@ -121,7 +121,7 @@ foreach ($customers as $customer) {
 
         $customerName = $this->Html->getNameRespectingIsDeleted($customer);
 
-        if ($appAuth->isSuperadmin()) {
+        if ($identity->isSuperadmin()) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 $this->Slug->getCustomerEdit($customer->id_customer),
@@ -169,7 +169,7 @@ foreach ($customers as $customer) {
 
     echo '<td>';
 
-    if ($appAuth->getGroupId() >= $customer->id_default_group) {
+    if ($identity->getGroupId() >= $customer->id_default_group) {
         echo '<div class="table-cell-wrapper group">';
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt ok"></i>',
@@ -235,7 +235,7 @@ foreach ($customers as $customer) {
         $negativeClass = $customer->credit_balance < 0 ? 'negative' : '';
         echo '<td style="text-align:center" class="' . $negativeClass . '">';
 
-        if ($appAuth->isSuperadmin()) {
+        if ($identity->isSuperadmin()) {
             $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
             echo $this->Html->link(
                 $creditBalanceHtml,
@@ -282,7 +282,7 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
         echo '<td align="center">';
         if (!empty($customer->feedback)) {
             $feedbackTable = FactoryLocator::get('Table')->get('Feedbacks');
@@ -408,7 +408,7 @@ echo '<div class="hide">';
     echo $this->Form->control('selectGroupId', [
         'type' => 'select',
         'label' => '',
-        'options' => $this->Html->getAuthDependentGroups($appAuth->getGroupId())
+        'options' => $this->Html->getAuthDependentGroups($identity->getGroupId())
     ]);
 echo '</div>';
 

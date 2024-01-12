@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
 use Cake\Database\Expression\QueryExpression;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -343,8 +344,8 @@ class OrderDetailsTable extends AppTable
         $i = 1;
         while($foundOrders < $ordersToLoad) {
 
-            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythmService::getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
-            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(DeliveryRhythmService::getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime((new DeliveryRhythmService())->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime((new DeliveryRhythmService())->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
 
             // stop trying to search for valid orders if year is two years ago
             // one year is not enough for usage in first weeks of january
@@ -355,7 +356,7 @@ class OrderDetailsTable extends AppTable
             $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
 
             if (count($orderDetails) > 0) {
-                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', DeliveryRhythmService::getDeliveryDay($dateTo)));
+                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', (new DeliveryRhythmService())->getDeliveryDay($dateTo)));
                 $result[$deliveryDay] = __('Pickup_day') . ' ' . $deliveryDay . ' - ' . __('{0,plural,=1{1_product} other{#_products}}', [count($orderDetails)]);
                 $foundOrders++;
             }
@@ -783,10 +784,12 @@ class OrderDetailsTable extends AppTable
         }
     }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
+    public function getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
     {
         $conditions = [];
 
+        $identity = Router::getRequest()->getAttribute('identity');
+        
         $exp = new QueryExpression();
         if (count($pickupDay) == 2) {
             $conditions[] = $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
@@ -827,16 +830,16 @@ class OrderDetailsTable extends AppTable
         }
 
         // override params that manufacturer is not allowed to change
-        if ($appAuth->isManufacturer()) {
-            $conditions['Products.id_manufacturer'] = $appAuth->getManufacturerId();
+        if ($identity !== null && $identity->isManufacturer()) {
+            $conditions['Products.id_manufacturer'] = $identity->getManufacturerId();
             if ($customerId =! '') {
                 unset($conditions['OrderDetails.id_customer']);
             }
         }
 
         // customers are only allowed to see their own data
-        if ($appAuth->isCustomer()) {
-            $conditions['OrderDetails.id_customer'] = $appAuth->getUserId();
+        if ($identity !== null && $identity->isCustomer()) {
+            $conditions['OrderDetails.id_customer'] = $identity->getId();
         }
 
         $odParams = [

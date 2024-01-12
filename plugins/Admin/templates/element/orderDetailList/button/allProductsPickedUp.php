@@ -22,7 +22,7 @@ if (isset($renderAsButtonInDropdown) && $renderAsButtonInDropdown) {
     $class = 'dropdown-item';
 }
 
-if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer())) {
+if (count($pickupDay) == 1 && $groupBy == 'customer' && ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer())) {
     $this->element('addScript', [ 'script' =>
         Configure::read('app.jsNamespace').".ModalOrderDetailAllProductsPickedUp.initPickedUpForAllCustomers();" .
         Configure::read('app.jsNamespace').".ModalOrderDetailAllProductsPickedUp.initPickedUpGroupedByCustomer();"

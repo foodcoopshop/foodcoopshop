@@ -21,13 +21,13 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
 ]);
 
-if (!$appAuth->user() || $appAuth->isManufacturer()) {
+if ($identity === null || $identity->isManufacturer()) {
     return;
 }
 
-if ($appAuth->CartService->getProducts() !== null) {
+if ($identity->getProducts() !== null) {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->CartService->getProducts()))."');"
+        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($identity->getProducts()))."');"
     ]);
 
     if (!empty($cartErrors)) {
@@ -59,12 +59,12 @@ if ($appAuth->CartService->getProducts() !== null) {
     <div class="inner">
 
         <?php
-        if ($appAuth->isOrderForDifferentCustomerMode()) {
+        if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace').".ModalOrderForDifferentCustomerCancel.init();"
             ]);
             echo '<p class="cart-extra-info order-for-different-customer-info">';
-                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.orderCustomer')->name.'</b>']);
+                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$identity->name.'</b>']);
                 if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
                     echo ' ' . __('Only_stock_products_are_shown.');
                 }
@@ -78,8 +78,8 @@ if ($appAuth->CartService->getProducts() !== null) {
             echo '</p>';
         }
 
-        if ($showLoadLastOrderDetailsDropdown && !$appAuth->isOrderForDifferentCustomerMode()) {
-            $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
+        if ($showLoadLastOrderDetailsDropdown && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+            $lastOrderDetails = $identity->getLastOrderDetailsForDropdown();
             if (!empty($lastOrderDetails)) {
                 $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
                 $this->element('addScript', ['script' =>
@@ -94,7 +94,7 @@ if ($appAuth->CartService->getProducts() !== null) {
             }
         }
 
-        if ($appAuth->user() && $this->Html->paymentIsCashless() && !$appAuth->isSelfServiceCustomer()) {
+        if ($identity !== null && $this->Html->paymentIsCashless() && !$identity->isSelfServiceCustomer()) {
             $class = ['payment'];
             if ($creditBalance < 0) {
                 $class[] = 'negative';
@@ -142,7 +142,7 @@ if ($appAuth->CartService->getProducts() !== null) {
                     foreach($futureOrderDetails as $futureOrderDetail) {
                         $links[] = $this->Html->link(
                             $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' (' . $futureOrderDetail->orderDetailsCount . ')' ,
-                            '/admin/order-details?customerId='.$appAuth->getUserId().'&pickupDay[]=' . $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))
+                            '/admin/order-details?customerId='.$identity->getId().'&pickupDay[]=' . $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))
                         );
                     }
                     echo join(' / ', $links);

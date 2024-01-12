@@ -64,7 +64,7 @@ trait EditNewStatusTrait {
         }
 
         $this->Flash->success($actionLogMessage);
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+        $this->ActionLog->customSave($actionLogType, $this->identity->getId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());

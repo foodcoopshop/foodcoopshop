@@ -53,14 +53,14 @@ if (isset($customerId)) {
 }
 
 if (isset($manufacturerId)) {
-    if ($appAuth->isAdmin() || $appAuth->isManufacturer()) {
+    if ($identity->isAdmin() || $identity->isManufacturer()) {
         echo '<p style="margin-top:10px;">'.__d('admin', 'Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer.').'</p>';
         echo $this->Form->hidden('Payments.text', [
             'value' => 'empty_glasses'
         ]);
     }
 
-    if ($appAuth->isSuperadmin()) {
+    if ($identity->isSuperadmin()) {
         echo '<p style="margin-top:10px;">'.__d('admin', 'Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?').'</p>';
         foreach ($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
             echo '<div class="radio-wrapper">';

@@ -8,6 +8,8 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 use App\Services\DeliveryRhythmService;
+use App\Services\OrderCustomerService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -96,7 +98,7 @@ class CartsTable extends AppTable
     {
         $validator->add($field, 'allow-only-defined-pickup-days', [
             'rule' => function ($value, $context) {
-            if (!in_array($value, array_keys(DeliveryRhythmService::getNextDailyDeliveryDays(21)))
+            if (!in_array($value, array_keys((new DeliveryRhythmService())->getNextDailyDeliveryDays(21)))
                 || in_array($value, Configure::read('app.htmlHelper')->getGlobalNoDeliveryDaysAsArray())) {
                     return false;
                 }
@@ -112,11 +114,13 @@ class CartsTable extends AppTable
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
 
-    public function getCart($appAuth, $cartType): array
+    public function getCart($identity, $cartType): array
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
-        $customerId = $appAuth->getUserId();
+        
+        $identity = Router::getRequest()->getAttribute('identity');
+        $customerId = $identity->getId();
 
         $cart = $this->find('all', [
             'conditions' => [
@@ -157,8 +161,9 @@ class CartsTable extends AppTable
             ]
         ])->toArray();
 
+        $orderCustomerService = new OrderCustomerService();
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId, $cartType, $appAuth);
+            $cart->pickup_day_entities = $cartProductsTable->setPickupDays($cartProducts, $customerId, $orderCustomerService);
         }
 
         $preparedCart = [
@@ -174,9 +179,9 @@ class CartsTable extends AppTable
             }
 
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
-                $productData = $this->prepareProductAttribute($appAuth, $cartProduct);
+                $productData = $this->prepareProductAttribute($cartProduct);
             } else {
-                $productData = $this->prepareMainProduct($appAuth, $cartProduct);
+                $productData = $this->prepareMainProduct($cartProduct);
             }
 
             $productImageData = Configure::read('app.htmlHelper')->getProductImageSrcWithManufacturerImageFallback(
@@ -190,7 +195,7 @@ class CartsTable extends AppTable
             $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
 
-            $nextDeliveryDay = DeliveryRhythmService::getNextDeliveryDayForProduct($cartProduct->product, $appAuth);
+            $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($cartProduct->product, $orderCustomerService);
             if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
                 $dateFormattedWithWeekday = __('Delivery_break');
             } else {
@@ -267,7 +272,7 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    private function addPurchasePricePerUnitProductData($appAuth, $productData, $unitProduct)
+    private function addPurchasePricePerUnitProductData($productData, $unitProduct)
     {
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
             if (!empty($unitProduct)) {
@@ -347,7 +352,7 @@ class CartsTable extends AppTable
         return $prices;
     }
 
-    private function prepareMainProduct($appAuth, $cartProduct): array
+    private function prepareMainProduct($cartProduct): array
     {
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
@@ -361,7 +366,7 @@ class CartsTable extends AppTable
         if (!empty($unitProduct)) {
             $priceInclPerUnit = $unitProduct->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $cm->getModifiedProductPricesByShoppingPrice($appAuth, $cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedProductPricesByShoppingPrice($cartProduct->id_product, $cartProduct->product->price, $priceInclPerUnit, $deposit, $taxRate);
         $cartProduct->product->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProduct)) {
             $unitProduct->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
@@ -438,7 +443,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProduct);
+            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProduct);
 
         }
         $productData['unity_with_unit'] = $unity;
@@ -450,7 +455,7 @@ class CartsTable extends AppTable
 
     }
 
-    private function prepareProductAttribute($appAuth, $cartProduct): array
+    private function prepareProductAttribute($cartProduct): array
     {
 
         $unitProductAttribute = $cartProduct->product_attribute->unit_product_attribute;
@@ -463,7 +468,7 @@ class CartsTable extends AppTable
         if (!empty($unitProductAttribute)) {
             $priceInclPerUnit = $unitProductAttribute->price_incl_per_unit;
         }
-        $modifiedProductPricesByShoppingPrice = $cm->getModifiedAttributePricesByShoppingPrice($appAuth, $cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
+        $modifiedProductPricesByShoppingPrice = $cm->getModifiedAttributePricesByShoppingPrice($cartProduct->id_product, $cartProduct->id_product_attribute, $cartProduct->product_attribute->price, $priceInclPerUnit, $deposit, $taxRate);
         $cartProduct->product_attribute->price = $modifiedProductPricesByShoppingPrice['price'];
         if (!empty($unitProductAttribute)) {
             $unitProductAttribute->price_incl_per_unit = $modifiedProductPricesByShoppingPrice['price_incl_per_unit'];
@@ -542,7 +547,7 @@ class CartsTable extends AppTable
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
             $productData['markAsSaved'] = $markAsSaved;
-            $productData = $this->addPurchasePricePerUnitProductData($appAuth, $productData, $unitProductAttribute);
+            $productData = $this->addPurchasePricePerUnitProductData($productData, $unitProductAttribute);
 
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;

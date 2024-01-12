@@ -11,6 +11,7 @@ use Cake\Utility\Security;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Utility\Hash;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,7 +28,7 @@ use Cake\Utility\Hash;
  */
 class CustomersTable extends AppTable
 {
-
+    
     protected $Product;
 
     public function initialize(array $config): void
@@ -262,7 +263,7 @@ class CustomersTable extends AppTable
         return $result;
     }
 
-    public function getModifiedProductPricesByShoppingPrice($appAuth, $productId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedProductPricesByShoppingPrice($productId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [
@@ -271,7 +272,13 @@ class CustomersTable extends AppTable
             'deposit' => $deposit,
         ];
 
-        if ($appAuth->user('shopping_price') == 'PP') {
+        $identity = Router::getRequest()->getAttribute('identity');
+        
+        if ($identity === null) {
+            return $result;
+        }
+
+        if ($identity->shopping_price == 'PP') {
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
                 'conditions' => [
@@ -293,10 +300,9 @@ class CustomersTable extends AppTable
                 $priceInclPerUnitGrossWithSellingPriceTax = $this->Product->getGrossPrice($priceInclPerUnitNet, $taxRate);
                 $result['price_incl_per_unit'] = $priceInclPerUnitGrossWithSellingPriceTax;
             }
-
         }
 
-        if ($appAuth->user('shopping_price') == 'ZP') {
+        if ($identity->shopping_price == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;
@@ -306,7 +312,7 @@ class CustomersTable extends AppTable
 
     }
 
-    public function getModifiedAttributePricesByShoppingPrice($appAuth, $productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
+    public function getModifiedAttributePricesByShoppingPrice($productId, $productAttributeId, $price, $priceInclPerUnit, $deposit, $taxRate)
     {
 
         $result = [
@@ -315,7 +321,13 @@ class CustomersTable extends AppTable
             'deposit' => $deposit,
         ];
 
-        if ($appAuth->user('shopping_price') == 'PP') {
+        $identity = Router::getRequest()->getAttribute('identity');
+
+        if ($identity === null) {
+            return $result;
+        }
+
+        if ($identity->shopping_price == 'PP') {
 
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all', [
@@ -351,7 +363,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ($appAuth->user('shopping_price') == 'ZP') {
+        if ($identity->shopping_price == 'ZP') {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;

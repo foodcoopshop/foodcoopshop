@@ -25,7 +25,7 @@ echo '<th>';
     echo $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product'));
 echo '</th>';
 
-echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
+echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
     echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
 echo '</th>';
 

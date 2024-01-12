@@ -25,7 +25,7 @@ use Cake\Core\Configure;
             $('input.datepicker').datepicker();".
             Configure::read('app.jsNamespace').".Admin.init();" .
             Configure::read('app.jsNamespace').".Helper.setFullBaseUrl('" . Configure::read('App.fullBaseUrl') . "');" .
-            Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $identity->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
             Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);
@@ -58,7 +58,7 @@ use Cake\Core\Configure;
         ]);
     }
 
-    if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
+    if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init(" . ($this->MyHtml->paymentIsCashless() ? '1' : '0') . ");".
@@ -84,13 +84,13 @@ use Cake\Core\Configure;
                 ]);
             ?>
             <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_products'), 'options' => []]); ?>
-            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
+            <?php if ($identity->isSuperadmin() || $identity->isAdmin() || $identity->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
             <?php } ?>
-            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
+            <?php if ($identity->isSuperadmin() || $identity->isAdmin()) { ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'placeholder' => __d('admin', 'all_members'), 'options' => []]); ?>
             <?php } ?>
-            <?php if ($appAuth->isCustomer()) { ?>
+            <?php if ($identity->isCustomer()) { ?>
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
@@ -107,8 +107,8 @@ use Cake\Core\Configure;
             if (
                 Configure::read('app.isDepositEnabled') &&
                 $this->Html->paymentIsCashless() &&
-                !$appAuth->isManufacturer() &&
-                (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
+                !$identity->isManufacturer() &&
+                (!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                     $showCustomerDropdown = false;
                     if (!empty($orderDetails) && isset($orderDetails[0]->id_customer)) {
                         $customerIdForDepositOverlay = $orderDetails[0]->id_customer;
@@ -130,12 +130,12 @@ use Cake\Core\Configure;
                     echo '</div>';
             }
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-                if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+                if ($identity->isAdmin() || $identity->isSuperadmin()) {
                     echo $this->element('addSelfServiceOrderButton');
                 }
             }
 
-            if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || ($appAuth->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
+            if (!$identity->isManufacturer() && ($identity->isAdmin() || $identity->isSuperadmin() || ($identity->isCustomer() && Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
                 echo $this->element('addInstantOrderButton');
             }
             
@@ -183,7 +183,7 @@ foreach ($orderDetails as $orderDetail) {
 
     $editRecordAllowed = $groupBy == '' && (
         in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]))
-        && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
+        && (!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
 
     $rowClasses = [];
     if (isset($orderDetail->row_class)) {
@@ -278,7 +278,7 @@ if ($groupBy != 'customer') {
     echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['amount'], 0) . 'x</b></td>';
 }
 if ($groupBy == '') {
-    if ($appAuth->isManufacturer()) {
+    if ($identity->isManufacturer()) {
         echo '<td></td>';
     } else {
         echo '<td colspan="2"></td>';
@@ -307,7 +307,7 @@ if ($groupBy == 'customer') {
     echo '<td>'.$showAllOrderDetailsLink.'</td>';
 }
 if ($groupBy == 'product') {
-    if ($appAuth->isManufacturer()) {
+    if ($identity->isManufacturer()) {
         echo '<td></td>';
     } else {
         echo '<td colspan="2"></td>';
@@ -329,7 +329,7 @@ if ($groupBy != 'customer') {
     if (count($pickupDay) == 1) {
         echo '<td></td>';
     }
-    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
         echo '<td></td>';
     }
 }

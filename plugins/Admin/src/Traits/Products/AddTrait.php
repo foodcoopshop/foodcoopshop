@@ -38,8 +38,8 @@ trait AddTrait {
 
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
-        if ($this->AppAuth->isManufacturer()) {
-            $manufacturerId = $this->AppAuth->getManufacturerId();
+        if ($this->identity->isManufacturer()) {
+            $manufacturerId = $this->identity->getManufacturerId();
         }
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
@@ -75,7 +75,7 @@ trait AddTrait {
             '<b>' . $manufacturer->name . '</b>',
         ]);
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $productEntity->id_product, 'products', $messageString);
+        $this->ActionLog->customSave('product_added', $this->identity->getId(), $productEntity->id_product, 'products', $messageString);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productEntity->id_product);
 

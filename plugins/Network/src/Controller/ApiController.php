@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Controller\Controller;
 use Cake\Database\Expression\QueryExpression;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,34 +31,12 @@ class ApiController extends Controller
     protected $Product;
     protected $OrderDetail;
     protected $Sanitize;
+    protected $identity;
 
     public function initialize(): void
     {
-
         parent::initialize();
-
         $this->loadComponent('RequestHandler');
-
-        $this->loadComponent('AppAuth', [
-            'authError' => ACCESS_DENIED_MESSAGE,
-            'authorize' => [
-                'Controller'
-            ],
-            'authenticate' => [
-                'Basic' => [
-                    'userModel' => 'Customers',
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'passwd'
-                    ],
-                    'finder' => 'auth' // CustomersTable::findAuth
-                ]
-            ],
-            // stateless authentication
-            'unauthorizedRedirect' => false,
-            'storage' => 'Memory'
-        ]);
-
     }
 
     public function beforeFilter(EventInterface $event)
@@ -72,6 +51,10 @@ class ApiController extends Controller
             }
         }
 
+        $identity = Router::getRequest()->getAttribute('identity');
+        $this->identity = $identity;
+        $this->set('identity', $identity);
+
         $this->RequestHandler->renderAs($this, 'json');
 
         $this->response = $this->response->withHeader('Access-Control-Allow-Origin', '*');
@@ -82,11 +65,6 @@ class ApiController extends Controller
             return $this->getResponse();
         }
 
-    }
-
-    public function isAuthorized($user)
-    {
-        return $this->AppAuth->isManufacturer();
     }
 
     private function getProductDetailLinks($productsData)
@@ -151,11 +129,11 @@ class ApiController extends Controller
             $manufacturerIsOwner = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productIds['productId'],
-                    'Products.id_manufacturer' => $this->AppAuth->getManufacturerId()
+                    'Products.id_manufacturer' => $this->identity->getManufacturerId()
                 ]
             ])->count();
             if (!$manufacturerIsOwner) {
-                throw new \Exception('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerName());
+                throw new \Exception('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->identity->getManufacturerName());
             }
 
             if ($productIds['attributeId'] == 0) {
@@ -201,7 +179,7 @@ class ApiController extends Controller
             }
             if (isset($product['price'])) {
 
-                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->AppAuth->getManufacturerVariableMemberFee());
+                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->identity->getManufacturerVariableMemberFee());
 
                 if ($variableMemberFee > 0) {
 
@@ -390,7 +368,7 @@ class ApiController extends Controller
             }
 
             if ($actionLogMessage != '') {
-                $this->ActionLog->customSave('product_remotely_changed', $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage);
+                $this->ActionLog->customSave('product_remotely_changed', $this->identity->getId(), 0, 'products', $actionLogMessage);
             }
         }
 
@@ -419,9 +397,9 @@ class ApiController extends Controller
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
-            $this->AppAuth->getManufacturerVariableMemberFee()
+            $this->identity->getManufacturerVariableMemberFee()
         );
-        $preparedProducts = $this->Product->getProductsForBackend('', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
+        $preparedProducts = $this->Product->getProductsForBackend('', $this->identity->getManufacturerId(), 'all', '', false, false, true);
 
         $this->set([
             'app' => [
@@ -429,10 +407,10 @@ class ApiController extends Controller
                 'domain' => Configure::read('App.fullBaseUrl'),
                 'variableMemberFee' => $variableMemberFee
             ],
-            'loggedUser' => $this->AppAuth->user(),
+            'identity' => $this->identity->toArray(),
             'products' => $preparedProducts
         ]);
-        $this->viewBuilder()->setOption('serialize', ['app', 'loggedUser', 'products']);
+        $this->viewBuilder()->setOption('serialize', ['app', 'identity', 'products']);
     }
 
     public function getOrders()
@@ -454,7 +432,7 @@ class ApiController extends Controller
         }
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $conditions = [
-            'Products.id_manufacturer' => $this->AppAuth->getManufacturerId(),
+            'Products.id_manufacturer' => $this->identity->getManufacturerId(),
         ];
         $exp = new QueryExpression();
         $conditions[] = $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', $formattedPickupDay);

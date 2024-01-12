@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
 use App\Model\Traits\MultipleEmailsRuleTrait;
 use App\Model\Traits\NoDeliveryDaysOrdersExistTrait;
 use App\Services\CatalogService;
+use Cake\Routing\Router;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -221,7 +222,7 @@ class ManufacturersTable extends AppTable
     }
 
     /**
-     * @param $string $sendOrderListCc
+     * @param string $sendOrderListCc
      * @return array
      */
     public function getOptionSendOrderListCc($sendOrderListCc)
@@ -266,13 +267,14 @@ class ManufacturersTable extends AppTable
         return $customer;
     }
 
-    public function getForMenu($appAuth)
+    public function getForMenu()
     {
 
         $conditions = [
             'Manufacturers.active' => APP_ON
         ];
-        if (! $appAuth->user()) {
+        $identity = Router::getRequest()->getAttribute('identity');
+        if ($identity === null) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
@@ -292,14 +294,14 @@ class ManufacturersTable extends AppTable
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
-            if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            if ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $catalogService = new CatalogService();
-                $additionalInfo = $catalogService->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
+                $additionalInfo = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer, false, 1);
             if ($noDeliveryDaysString != '') {
                 $noDeliveryDaysString = __('Delivery_break') . ': ' . $noDeliveryDaysString;
-                if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                if ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                     $additionalInfo .= ' - ';
                 }
                 $additionalInfo .= $noDeliveryDaysString;

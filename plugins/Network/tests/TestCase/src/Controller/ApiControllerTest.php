@@ -44,7 +44,10 @@ class ApiControllerTest extends AppCakeTestCase
             ]
         ]);
         $this->get('/api/getProducts.json');
-        $this->assertResponseCode(403);
+
+        // $_SERVER is not available in tests, therefore the logic in Application.php is not executed
+        // in real world ther is no redirect to login page
+        $this->assertRedirectToLoginPage();
     }
 
     public function testGetProductsAsManufacturer()
@@ -61,7 +64,7 @@ class ApiControllerTest extends AppCakeTestCase
 
         $preparedResponse = str_replace(
             [
-                DeliveryRhythmService::getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
+                (new DeliveryRhythmService())->getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
                 json_encode(Configure::read('App.fullBaseUrl')),
             ],
             [
@@ -105,7 +108,7 @@ class ApiControllerTest extends AppCakeTestCase
             'delivery_rhythm_count' => '1',
             'is_stock_product' => '0',
         ]);
-        $nextDeliveryDay = DeliveryRhythmService::getNextPickupDayForProduct($dummyProduct);
+        $nextDeliveryDay = (new DeliveryRhythmService())->getNextPickupDayForProduct($dummyProduct);
 
         $this->configRequest([
             'environment' => [

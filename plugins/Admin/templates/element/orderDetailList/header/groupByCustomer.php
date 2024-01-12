@@ -36,7 +36,7 @@ if (count($pickupDay) == 1) {
     echo '<th>'.__d('admin', 'Picked_up').'</th>';
 }
 
-if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
+if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $identity->isSuperadmin()) {
     echo '<th>'.__d('admin', 'Invoice').'</th>';
 }
 

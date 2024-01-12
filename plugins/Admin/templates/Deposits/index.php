@@ -28,7 +28,7 @@ $this->element('addScript', [
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php
-        if (!$appAuth->isManufacturer()) {
+        if (!$identity->isManufacturer()) {
             echo $this->Form->control('manufacturerId', [
             'type' => 'select',
             'label' => '',
@@ -103,7 +103,7 @@ echo '<div class="add-payment-deposit-wrapper">';
                     if (isset($deposit['returned'])) {
                         echo $this->Html->link(
                             '<i class="fas fa-search ok"></i> ' . __d('admin', 'Details'),
-                            $appAuth->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear),
+                            $identity->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear),
                             [
                                 'class' => 'btn btn-outline-light',
                                 'title' => __d('admin', 'Show_details'),

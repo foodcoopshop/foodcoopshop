@@ -30,28 +30,9 @@ class ProductsController extends FrontendController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-
-        $this->Product = $this->getTableLocator()->get('Products');
-        $productId = (int) $this->getRequest()->getParam('pass')[0];
-
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId,
-                'Products.active' => APP_ON
-            ],
-            'contain' => [
-                'Manufacturers'
-            ]
-        ])->first();
-
-        if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
-              !empty($product)
-              && !$this->AppAuth->user()
-              && (!empty($product->manufacturer) && $product->manufacturer->is_private)
-              )
-            ) {
-                $this->AppAuth->deny($this->getRequest()->getParam('action'));
-        }
+        $this->Authentication->allowUnauthenticated([
+            'detail',
+        ]);
     }
 
     public function detail()
@@ -59,8 +40,8 @@ class ProductsController extends FrontendController
         $productId = (int) $this->getRequest()->getParam('pass')[0];
 
         $catalogService = new CatalogService();
-        $product = $catalogService->getProducts($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
-        $product = $catalogService->prepareProducts($this->AppAuth, $product);
+        $product = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', $productId);
+        $product = $catalogService->prepareProducts($product);
 
         if (empty($product) || !isset($product[0])) {
             throw new RecordNotFoundException('product not found');
