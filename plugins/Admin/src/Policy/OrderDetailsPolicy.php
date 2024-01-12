@@ -106,11 +106,11 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 }
                 return true;
             default:
-                return false;
+                return $identity !== null;
                 break;
         }
 
-        return true;
+        return $identity !== null;
 
     }
 
