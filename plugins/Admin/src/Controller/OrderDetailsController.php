@@ -58,7 +58,7 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
         $order = $this->getRequest()->getQuery('order') ?? null;
         $pdfWriter = new OrderDetailsPdfWriterService();
-        $pdfWriter->prepareAndSetData($this->identity, $pickupDay, $order);
+        $pdfWriter->prepareAndSetData($pickupDay, $order);
         die($pdfWriter->writeInline());
     }
 
