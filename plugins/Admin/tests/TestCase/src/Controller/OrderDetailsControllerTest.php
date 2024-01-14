@@ -41,4 +41,24 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedFlashMessage();
     }
 
+    public function testEditProductsPickedUp()
+    {
+        $this->loginAsSuperadmin();
+        $result = $this->editProductsPickedUp([Configure::read('test.superadminId')], '2018-02-02', APP_ON);
+        $this->assertEquals(1, $result->result->products_picked_up);
+    }
+
+    private function editProductsPickedUp($customerIds, $pickupDay, $state)
+    {
+        $this->ajaxPost(
+            '/admin/order-details/editProductsPickedUp/',
+            [
+                'customerIds' => $customerIds,
+                'pickupDay' => $pickupDay,
+                'state' => $state,
+            ]
+        );
+        return $this->getJsonDecodedContent();
+    }
+
 }
