@@ -54,10 +54,8 @@ class SlidersController extends AdminAppController
         }
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $slider = $this->Slider->find('all', [
-            'conditions' => [
-                'Sliders.id_slider' => $sliderId
-            ]
+        $slider = $this->Slider->find('all', conditions: [
+            'Sliders.id_slider' => $sliderId
         ])->first();
 
         if (empty($slider)) {
@@ -130,9 +128,7 @@ class SlidersController extends AdminAppController
         ];
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $query = $this->Slider->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->Slider->find('all', conditions: $conditions);
         $sliders = $this->paginate($query, [
             'sortableFields' => [
                 'Sliders.position', 'Sliders.active', 'Sliders.link', 'Sliders.is_private'

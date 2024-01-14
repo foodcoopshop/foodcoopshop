@@ -103,10 +103,8 @@ class ProductAttributesTable extends AppTable
     {
         $defaultQuantity = 0;
 
-        $productAttributesCount = $this->find('all', [
-            'conditions' => [
-                'ProductAttributes.id_product' => $productId,
-            ]
+        $productAttributesCount = $this->find('all', conditions: [
+            'ProductAttributes.id_product' => $productId,
         ])->count();
 
         $newAttribute = $this->save(

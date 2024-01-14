@@ -5,7 +5,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\I18n\FrozenDate;
 use Admin\Traits\UploadTrait;
 
 /**
@@ -58,10 +57,8 @@ class BlogPostsController extends AdminAppController
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPost = $this->BlogPost->find('all', [
-            'conditions' => [
-                'BlogPosts.id_blog_post' => $blogPostId
-            ]
+        $blogPost = $this->BlogPost->find('all', conditions: [
+            'BlogPosts.id_blog_post' => $blogPostId
         ])->first();
 
         if (empty($blogPost)) {
@@ -116,7 +113,7 @@ class BlogPostsController extends AdminAppController
 
         $this->setRequest(
             $this->getRequest()->withData('BlogPosts.show_on_start_page_until',
-            FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
+            \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
         ));
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
 
@@ -193,12 +190,11 @@ class BlogPostsController extends AdminAppController
         $conditions[] = 'BlogPosts.active > ' . APP_DEL;
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $query = $this->BlogPost->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Customers',
-                'Manufacturers'
-            ]
+        $query = $this->BlogPost->find('all',
+        conditions: $conditions,
+        contain: [
+            'Customers',
+            'Manufacturers'
         ]);
         $blogPosts = $this->paginate($query, [
             'sortableFields' => [

@@ -93,17 +93,16 @@ class ManufacturersTable extends AppTable
 
     public function getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId)
     {
-        $manufacturer = $this->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId,
-            ],
-            'order' => [
-                'Manufacturers.name' => 'ASC',
-            ],
-            'contain' => [
-                'AddressManufacturers',
-                'Customers.AddressCustomers',
-            ],
+        $manufacturer = $this->find('all',
+        conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId,
+        ],
+        order: [
+            'Manufacturers.name' => 'ASC',
+        ],
+        contain: [
+            'AddressManufacturers',
+            'Customers.AddressCustomers',
         ])->first();
         return $manufacturer;
     }
@@ -278,17 +277,16 @@ class ManufacturersTable extends AppTable
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
-        $manufacturers = $this->find('all', [
-            'fields' => [
-                'Manufacturers.id_manufacturer',
-                'Manufacturers.name',
-                'Manufacturers.no_delivery_days'
-            ],
-            'order' => [
-                'Manufacturers.name' => 'ASC'
-            ],
-            'conditions' => $conditions
-        ]);
+        $manufacturers = $this->find('all',
+        fields: [
+            'Manufacturers.id_manufacturer',
+            'Manufacturers.name',
+            'Manufacturers.no_delivery_days'
+        ],
+        order: [
+            'Manufacturers.name' => 'ASC'
+        ],
+        conditions: $conditions);
 
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
@@ -349,10 +347,8 @@ class ManufacturersTable extends AppTable
 
     public function getForDropdown()
     {
-        $manufacturers = $this->find('all', [
-            'order' => [
-                'Manufacturers.name' => 'ASC'
-            ]
+        $manufacturers = $this->find('all', order: [
+            'Manufacturers.name' => 'ASC'
         ]);
 
         $offlineManufacturers = [];

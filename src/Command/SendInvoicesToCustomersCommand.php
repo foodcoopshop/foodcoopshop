@@ -50,14 +50,13 @@ class SendInvoicesToCustomersCommand extends AppCommand
         }
 
         $this->Customer->dropManufacturersInNextFind();
-        $customers = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.active' => APP_ON,
-                'Customers.shopping_price <> "ZP"',
-            ],
-            'contain' => [
-                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ],
+        $customers = $this->Customer->find('all',
+        conditions: [
+            'Customers.active' => APP_ON,
+            'Customers.shopping_price <> "ZP"',
+        ],
+        contain: [
+            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
         ]);
 
         if (Configure::read('appDb.FCS_HELLO_CASH_API_ENABLED')) {

@@ -50,10 +50,8 @@ class TaxesController extends AdminAppController
         }
 
         $this->Tax = $this->getTableLocator()->get('Taxes');
-        $tax = $this->Tax->find('all', [
-            'conditions' => [
-                'Taxes.id_tax' => $taxId
-            ]
+        $tax = $this->Tax->find('all', conditions: [
+            'Taxes.id_tax' => $taxId
         ])->first();
 
         if (empty($tax)) {
@@ -113,9 +111,7 @@ class TaxesController extends AdminAppController
         ];
 
         $this->Tax = $this->getTableLocator()->get('Taxes');
-        $query = $this->Tax->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->Tax->find('all', conditions: $conditions);
         $taxes = $this->paginate($query, [
             'sortableFields' => [
                 'Taxes.rate', 'Taxes.position'

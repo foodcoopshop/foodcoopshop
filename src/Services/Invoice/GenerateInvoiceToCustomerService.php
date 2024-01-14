@@ -20,7 +20,6 @@ use App\Services\PdfWriter\InvoiceToCustomerPdfWriterService;
 use App\Services\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterService;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenDate;
 
 class GenerateInvoiceToCustomerService
 {
@@ -44,7 +43,7 @@ class GenerateInvoiceToCustomerService
             throw new \Exception('safety check if data available - should always be checked before triggering this queue');
         }
 
-        $invoiceDate = (new FrozenDate($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        $invoiceDate = (new \Cake\I18n\Date($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
 
         $year = Configure::read('app.timeHelper')->getYearFromDbDate($currentDay);
         $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer($year, $this->Invoice->getLastInvoiceForCustomer());

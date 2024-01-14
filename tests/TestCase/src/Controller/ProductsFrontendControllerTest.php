@@ -195,10 +195,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         $productId = 60;
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'id_product' => $productId,
-            ],
+        $product = $this->Product->find('all', conditions: [
+            'id_product' => $productId,
         ])->first();
         // TODO refactor this
         $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);

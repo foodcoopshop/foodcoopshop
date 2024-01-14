@@ -52,7 +52,7 @@ class BlogPostsTable extends AppTable
     public function findNeighborPrev(Query $query, array $options): Query
     {
         $previous = $this->find()
-            ->orderAsc($this->getAlias().'.modified')
+            ->orderByAsc($this->getAlias().'.modified')
             ->where($this->getAlias() . '.modified > \'' . $options['modified'] . '\'');
         $previous = $this->getConditionShowOnStartPage($previous, $options['showOnStartPage']);
         return $previous;
@@ -60,7 +60,7 @@ class BlogPostsTable extends AppTable
     public function findNeighborNext(Query $query, array $options): Query
     {
         $next = $this->find()
-            ->orderDesc($this->getAlias().'.modified')
+            ->orderByDesc($this->getAlias().'.modified')
             ->where($this->getAlias() . '.modified < \'' . $options['modified'] . '\'');
         $next = $this->getConditionShowOnStartPage($next, $options['showOnStartPage']);
         return $next;
@@ -87,14 +87,13 @@ class BlogPostsTable extends AppTable
             $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
         }
 
-        $blogPosts = $this->find('all', [
-            'conditions' => $conditions,
-            'order' => [
-                'BlogPosts.modified' => 'DESC',
-            ],
-            'contain' => [
-                'Manufacturers',
-            ],
+        $blogPosts = $this->find('all',
+        conditions: $conditions,
+        order: [
+            'BlogPosts.modified' => 'DESC',
+        ],
+        contain: [
+            'Manufacturers',
         ]);
 
         $blogPosts = $this->getConditionShowOnStartPage($blogPosts, $showOnStartPage);

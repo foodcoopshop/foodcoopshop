@@ -8,7 +8,6 @@ use Cake\ORM\Query;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
@@ -212,10 +211,8 @@ class CronjobsTable extends AppTable
         $cronjobLogsTable = FactoryLocator::get('Table')->get('CronjobLogs');
         $cronjobLogsTable->deleteOldLogs($this->cronjobRunDay);
 
-        $cronjobs = $this->find('all', [
-            'conditions' => [
-                'Cronjobs.active' => APP_ON,
-            ]
+        $cronjobs = $this->find('all', conditions: [
+            'Cronjobs.active' => APP_ON,
         ])->all();
 
         $executedCronjobs = [];
@@ -226,11 +223,11 @@ class CronjobsTable extends AppTable
                 continue;
             }
 
-            $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
+            $cronjobRunDayObject = new \Cake\I18n\DateTime($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
             $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');
 
-            $cronjobNotBeforeTimeWithCronjobRunDay = FrozenTime::createFromArray([
+            $cronjobNotBeforeTimeWithCronjobRunDay = \Cake\I18n\DateTime::createFromArray([
                 'year' => $cronjobRunDayObject->year,
                 'month' => $cronjobRunDayObject->month,
                 'day' => $cronjobRunDayObject->day,

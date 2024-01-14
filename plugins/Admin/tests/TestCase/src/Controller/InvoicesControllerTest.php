@@ -46,10 +46,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
-                'Invoices.id_customer' => $customerId,
-            ],
+        $invoice = $this->Invoice->find('all', conditions: [
+            'Invoices.id_customer' => $customerId,
         ])->first();
 
         $this->assertEquals($invoice->paid_in_cash, $paidInCash);
@@ -74,10 +72,8 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
-                'Invoices.id_customer' => $customerId,
-            ],
+        $invoice = $this->Invoice->find('all', conditions: [
+            'Invoices.id_customer' => $customerId,
         ])->first();
 
         $this->exec('send_invoices_to_customers');
@@ -101,22 +97,19 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
-                'Invoices.id_customer' => $customerId,
-            ],
-            'contain' => [
-                'OrderDetails',
-                'InvoiceTaxes',
-            ],
+        $invoice = $this->Invoice->find('all',
+        conditions: [
+            'Invoices.id_customer' => $customerId,
+        ],
+        contain: [
+            'OrderDetails',
+            'InvoiceTaxes',
         ])->first();
         $orderDetailIds = Hash::extract($invoice, 'order_details.{n}.id_order_detail');
 
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.invoice_id' => $invoice->id,
-            ],
+        $payments = $this->Payment->find('all', conditions: [
+            'Payments.invoice_id' => $invoice->id,
         ])->toArray();
         $paymentIds = Hash::extract($payments, '{n}.id');
 

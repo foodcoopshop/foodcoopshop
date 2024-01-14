@@ -81,9 +81,7 @@ class StatisticsController extends AdminAppController
             $conditions[] = 'Manufacturers.id_manufacturer > 0';
         }
 
-        $manufacturers = $this->Manufacturer->find('all', [
-            'conditions' => $conditions
-        ])->toArray();
+        $manufacturers = $this->Manufacturer->find('all', conditions: $conditions)->toArray();
         $this->set('manufacturers', $manufacturers);
 
         if ($manufacturerId != 'all') {
@@ -259,7 +257,7 @@ class StatisticsController extends AdminAppController
         // START prepare pie chart
         if ($manufacturerId == 'all') {
             $data = [];
-            
+
             foreach($manufacturers as $manufacturer) {
 
                 if ($lastMonths !== null) {

@@ -7,7 +7,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 
 /**
@@ -54,18 +53,17 @@ class InvoicesTable extends AppTable
     public function getLatestInvoicesForCustomer($customerId)
     {
 
-        $invoices = $this->find('all', [
-            'conditions' => [
-                'Invoices.id_customer' => $customerId,
-            ],
-            'order' => [
-                'Invoices.created' => 'DESC'
-            ],
-            'contain' => [
-                'InvoiceTaxes',
-            ],
-            'limit' => 5,
-        ])->toArray();
+        $invoices = $this->find('all',
+        conditions: [
+            'Invoices.id_customer' => $customerId,
+        ],
+        order: [
+            'Invoices.created' => 'DESC'
+        ],
+        contain: [
+            'InvoiceTaxes',
+        ],
+        limit: 5)->toArray();
 
         foreach($invoices as &$invoice) {
 
@@ -382,13 +380,12 @@ class InvoicesTable extends AppTable
 
     public function getLastInvoiceForCustomer()
     {
-        $lastInvoice = $this->find('all', [
-            'conditions' => [
-                'id_customer > 0',
-            ],
-            'order' => [
-                'id' => 'DESC'
-            ]
+        $lastInvoice = $this->find('all',
+        conditions: [
+            'id_customer > 0',
+        ],
+        order: [
+            'id' => 'DESC'
         ])->first();
         return $lastInvoice;
     }
@@ -401,7 +398,7 @@ class InvoicesTable extends AppTable
             'id_customer' => $customerId,
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFile,
-            'created' => new FrozenTime($currentDay),
+            'created' => new \Cake\I18n\DateTime($currentDay),
             'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
             'email_status' => $invoicesPerEmailEnabled ? null : __('deactivated'),

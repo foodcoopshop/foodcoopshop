@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -43,9 +42,9 @@ trait EditNewStatusTrait {
             ]
         ])->first();
 
-        $product->created = FrozenTime::now();
+        $product->created = \Cake\I18n\DateTime::now();
         if ($status == APP_OFF) {
-            $product->created = FrozenTime::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
+            $product->created = \Cake\I18n\DateTime::now()->subDays((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1);
         }
         $this->Product->save($product);
 

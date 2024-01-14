@@ -133,11 +133,9 @@ class CartsController extends FrontendController
         $cartId = (int) $this->getRequest()->getParam('pass')[0];
 
         $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => $cartId,
-                'Carts.id_customer' => $this->identity->getId()
-            ]
+        $cart = $this->Cart->find('all', conditions: [
+            'Carts.id_cart' => $cartId,
+            'Carts.id_customer' => $this->identity->getId()
         ])->first();
 
         if (empty($cart)) {

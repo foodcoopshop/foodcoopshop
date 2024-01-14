@@ -5,7 +5,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 
@@ -395,7 +394,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
             $this->Payment->patchEntity(
                 $this->Payment->get($paymentId),
                 [
-                    'date_add' => new FrozenDate(),
+                    'date_add' => new \Cake\I18n\Date(),
                     'approval' => APP_OFF
                 ]
             )

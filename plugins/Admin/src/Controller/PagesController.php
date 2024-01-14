@@ -61,10 +61,8 @@ class PagesController extends AdminAppController
         }
 
         $this->Page = $this->getTableLocator()->get('Pages');
-        $page = $this->Page->find('all', [
-            'conditions' => [
-                'Pages.id_page' => $pageId
-            ]
+        $page = $this->Page->find('all', conditions: [
+            'Pages.id_page' => $pageId
         ])->first();
 
         if (empty($page)) {
@@ -72,12 +70,10 @@ class PagesController extends AdminAppController
         }
         $this->set('title_for_layout', __d('admin', 'Edit_page'));
 
-        $pageChildren = $this->Page->find('all', [
-            'conditions' => [
-                'Pages.active > ' . APP_DEL
-            ]
+        $pageChildren = $this->Page->find('all', conditions: [
+            'Pages.active > ' . APP_DEL
         ])
-        ->find('children', ['for' => $pageId]);
+        ->find('children', for: $pageId);
 
         $disabledSelectPageIds = [(int) $pageId];
         foreach ($pageChildren as $pageChild) {
@@ -164,9 +160,7 @@ class PagesController extends AdminAppController
         $conditions[] = 'Pages.active > ' . APP_DEL;
 
         $this->Page = $this->getTableLocator()->get('Pages');
-        $totalPagesCount = $this->Page->find('all', [
-            'conditions' => $conditions
-        ])->count();
+        $totalPagesCount = $this->Page->find('all', conditions: $conditions)->count();
         $this->set('totalPagesCount', $totalPagesCount);
 
         $pages = $this->Page->getThreaded($conditions);

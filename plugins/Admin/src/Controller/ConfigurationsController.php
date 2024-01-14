@@ -42,10 +42,8 @@ class ConfigurationsController extends AdminAppController
         }
 
         $this->Configuration = $this->getTableLocator()->get('Configurations');
-        $configuration = $this->Configuration->find('all', [
-            'conditions' => [
-                'Configurations.id_configuration' => $configurationId
-            ]
+        $configuration = $this->Configuration->find('all', conditions: [
+            'Configurations.id_configuration' => $configurationId
         ])->first();
 
         if (empty($configuration)) {
@@ -161,10 +159,8 @@ class ConfigurationsController extends AdminAppController
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations(['type != "hidden"']));
         $this->Tax = $this->getTableLocator()->get('Taxes');
-        $defaultTax = $this->Tax->find('all', [
-            'conditions' => [
-                'Taxes.id_tax' => Configure::read('app.defaultTaxId')
-            ]
+        $defaultTax = $this->Tax->find('all', conditions: [
+            'Taxes.id_tax' => Configure::read('app.defaultTaxId')
         ])->first();
         $this->set('defaultTax', $defaultTax);
 

@@ -44,6 +44,8 @@ use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
 
+require CAKE . 'functions.php';
+
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
  *

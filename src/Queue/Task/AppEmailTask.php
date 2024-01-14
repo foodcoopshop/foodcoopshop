@@ -19,7 +19,6 @@ namespace App\Queue\Task;
 
 use Queue\Queue\Task\EmailTask;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenTime;
 use Throwable;
 
 class AppEmailTask extends EmailTask
@@ -65,7 +64,7 @@ class AppEmailTask extends EmailTask
             $invoiceId = $afterRunParams['invoiceId'];
             $invoiceEntity = $invoiceTable->patchEntity(
                 $invoiceTable->get($invoiceId), [
-                    'email_status' => FrozenTime::now(),
+                    'email_status' => \Cake\I18n\DateTime::now(),
                 ]
             );
             $invoiceTable->save($invoiceEntity);

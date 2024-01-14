@@ -7,7 +7,6 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
 use App\Services\Csv\Banking\BankingReaderServiceFactory;
 
@@ -97,7 +96,7 @@ class ReportsController extends AdminAppController
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
-                            'date_transaction_add' => new FrozenTime($csvPayment->date),
+                            'date_transaction_add' => new \Cake\I18n\DateTime($csvPayment->date),
                             'approval' => APP_ON,
                             'id_customer' => $csvPayment->id_customer ?? $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
@@ -219,14 +218,13 @@ class ReportsController extends AdminAppController
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
 
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $query = $this->Payment->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Customers',
-                'Manufacturers',
-                'CreatedByCustomers',
-                'ChangedByCustomers'
-            ]
+        $query = $this->Payment->find('all',
+        conditions: $conditions,
+        contain: [
+            'Customers',
+            'Manufacturers',
+            'CreatedByCustomers',
+            'ChangedByCustomers'
         ]);
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\Datasource\FactoryLocator;
 use App\Services\OrderCustomerService;
+use ArrayAccess;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,15 +27,15 @@ class Customer extends Entity implements IdentityInterface
 {
 
     public $cart = null;
-    protected $_virtual = ['name', 'manufacturer'];
-    protected $_hidden = ['passwd'];
+    protected array $_virtual = ['name', 'manufacturer'];
+    protected array $_hidden = ['passwd'];
 
-    public function getIdentifier()
+    public function getIdentifier(): array|string|int|null
     {
         return $this->id_customer;
     }
 
-    public function getOriginalData()
+    public function getOriginalData(): ArrayAccess|array
     {
         return $this;
     }

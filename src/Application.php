@@ -46,6 +46,7 @@ use DateTime;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Utility\Security;
 use App\Controller\Component\StringComponent;
+use Authentication\Identifier\AbstractIdentifier;
 
 /**
  * Application setup class.
@@ -214,8 +215,8 @@ class Application extends BaseApplication
         $service = new AuthenticationService();
 
         $fields = [
-            IdentifierInterface::CREDENTIAL_USERNAME => 'email',
-            IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd',
+            AbstractIdentifier::CREDENTIAL_USERNAME => 'email',
+            AbstractIdentifier::CREDENTIAL_PASSWORD => 'passwd',
         ];
 
         $ormResolver = [
@@ -250,7 +251,7 @@ class Application extends BaseApplication
         }
 
         $service->loadAuthenticator('Authentication.Session', [
-            'fields' => [IdentifierInterface::CREDENTIAL_USERNAME => 'email'],
+            'fields' => [AbstractIdentifier::CREDENTIAL_USERNAME => 'email'],
             'identify' => true,
         ]);
 

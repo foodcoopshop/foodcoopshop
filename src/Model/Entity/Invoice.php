@@ -21,7 +21,7 @@ use Cake\ORM\Entity;
 class Invoice extends Entity
 {
 
-    protected $_virtual = ['sum_price_excl', 'sum_tax', 'sum_price_incl'];
+    protected array $_virtual = ['sum_price_excl', 'sum_tax', 'sum_price_incl'];
 
     protected $sum_price_excl;
 

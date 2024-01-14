@@ -250,11 +250,9 @@ class ProductsTable extends AppTable
      */
     public function isOwner($productId, $manufacturerId)
     {
-        $found = $this->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId,
-                'Products.id_manufacturer' => $manufacturerId
-            ]
+        $found = $this->find('all', conditions: [
+            'Products.id_product' => $productId,
+            'Products.id_manufacturer' => $manufacturerId
         ])->count();
         return (bool) $found;
     }
@@ -471,13 +469,12 @@ class ProductsTable extends AppTable
             }
 
             $ids = $this->getProductIdAndAttributeId($productId);
-            $productEntity = $this->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $ids['productId'],
-                ],
-                'contain' => [
-                    'Taxes',
-                ]
+            $productEntity = $this->find('all',
+            conditions: [
+                'Products.id_product' => $ids['productId'],
+            ],
+            contain: [
+                'Taxes',
             ])->first();
             $taxRate = $productEntity->tax->rate ?? 0;
 
@@ -880,11 +877,10 @@ class ProductsTable extends AppTable
             'Products.name' => 'ASC'
         ];
 
-        $query = $this->find('all', [
-            'conditions' => $conditions,
-            'contain' => $contain,
-            'order' => ($controller === null ? $order : null)
-        ]);
+        $query = $this->find('all',
+        conditions: $conditions,
+        contain: $contain,
+        order: $controller === null ? $order : null);
 
         if ($categoryId != '') {
             $query->matching('CategoryProducts', function ($q) use ($categoryId) {
@@ -1258,15 +1254,14 @@ class ProductsTable extends AppTable
         }
 
         // ->find('list') a does not return associated model data
-        $products = $this->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Manufacturers',
-            ],
-            'order' => [
-                'Products.active' => 'DESC',
-                'Products.name' => 'ASC'
-            ]
+        $products = $this->find('all',
+        conditions: $conditions,
+        contain: [
+            'Manufacturers',
+        ],
+        order: [
+            'Products.active' => 'DESC',
+            'Products.name' => 'ASC'
         ]);
 
         $onlineProducts = [];
@@ -1432,13 +1427,12 @@ class ProductsTable extends AppTable
             $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
             $extension = strtolower(pathinfo($imageFromRemoteServer, PATHINFO_EXTENSION));
 
-            $product = $this->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $ids['productId']
-                ],
-                'contain' => [
-                    'Images'
-                ]
+            $product = $this->find('all',
+            conditions: [
+                'Products.id_product' => $ids['productId']
+            ],
+            contain: [
+                'Images'
             ])->first();
 
             $imagesTable = FactoryLocator::get('Table')->get('Images');
@@ -1562,10 +1556,8 @@ class ProductsTable extends AppTable
             )
         );
 
-        $newProduct = $this->find('all', [
-            'conditions' => [
-                'Products.id_product' => $newProductId
-            ]
+        $newProduct = $this->find('all', conditions: [
+            'Products.id_product' => $newProductId
         ])->first();
 
         return $productEntity;

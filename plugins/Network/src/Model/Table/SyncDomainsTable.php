@@ -45,10 +45,8 @@ class SyncDomainsTable extends AppTable
 
     public function getSyncDomains($minStatus = APP_OFF)
     {
-        $syncDomains = $this->find('all', [
-            'conditions' => [
-                'SyncDomains.active >= ' . $minStatus
-            ]
+        $syncDomains = $this->find('all', conditions: [
+            'SyncDomains.active >= ' . $minStatus
         ]);
         return $syncDomains;
     }
@@ -116,12 +114,11 @@ class SyncDomainsTable extends AppTable
 
     public function getForDropdown()
     {
-        $syncDomains = $this->find('all', [
-            'conditions' => [
-                'SyncDomains.active' => APP_ON
-            ],
-            'fields' => ['SyncDomains.id', 'SyncDomains.domain']
-        ]);
+        $syncDomains = $this->find('all',
+        conditions: [
+            'SyncDomains.active' => APP_ON
+        ],
+        fields: ['SyncDomains.id', 'SyncDomains.domain']);
         $result = [];
         foreach ($syncDomains as $syncDomain) {
             $result[$syncDomain->id] = $syncDomain->domain;

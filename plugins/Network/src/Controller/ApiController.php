@@ -73,13 +73,12 @@ class ApiController extends Controller
         $this->Product = $this->getTableLocator()->get('Products');
         foreach ($productsData as $originalProduct) {
             $productIds = $this->Product->getProductIdAndAttributeId($originalProduct['remoteProductId']);
-            $product = $this->Product->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $productIds['productId'],
-                ],
-                'contain' => [
-                    'ProductAttributes.ProductAttributeCombinations.Attributes'
-                ]
+            $product = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $productIds['productId'],
+            ],
+            contain: [
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
             ])->first();
             if ($productIds['attributeId'] == 0) {
                 $linkName = $product->name;
@@ -126,11 +125,9 @@ class ApiController extends Controller
 
             $productIds = $this->Product->getProductIdAndAttributeId($product['remoteProductId']);
 
-            $manufacturerIsOwner = $this->Product->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $productIds['productId'],
-                    'Products.id_manufacturer' => $this->identity->getManufacturerId()
-                ]
+            $manufacturerIsOwner = $this->Product->find('all', conditions: [
+                'Products.id_product' => $productIds['productId'],
+                'Products.id_manufacturer' => $this->identity->getManufacturerId()
             ])->count();
             if (!$manufacturerIsOwner) {
                 throw new \Exception('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->identity->getManufacturerName());
@@ -437,12 +434,11 @@ class ApiController extends Controller
         $exp = new QueryExpression();
         $conditions[] = $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', $formattedPickupDay);
 
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Products',
-                'OrderDetailUnits',
-            ],
+        $orderDetails = $this->OrderDetail->find('all',
+        conditions: $conditions,
+        contain: [
+            'Products',
+            'OrderDetailUnits',
         ]);
 
         $preparedOrders = [];

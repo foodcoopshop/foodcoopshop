@@ -331,10 +331,8 @@ class ManufacturersController extends AdminAppController
             if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
                 $customer = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
                 if (!empty($customer)) {
-                    $manufacturer->feedback = $this->Feedback->find('all', [
-                        'conditions' => [
-                            'Feedbacks.customer_id' => $customer->id_customer,
-                        ]
+                    $manufacturer->feedback = $this->Feedback->find('all', conditions: [
+                        'Feedbacks.customer_id' => $customer->id_customer,
                     ])->first();
                 }
                 $manufacturer->customer_record_id = $customer->id_customer ?? 0;

@@ -48,10 +48,8 @@ class AttributesController extends AdminAppController
         }
 
         $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $attribute = $this->Attribute->find('all', [
-            'conditions' => [
-                'Attributes.id_attribute' => $attributeId
-            ]
+        $attribute = $this->Attribute->find('all', conditions: [
+            'Attributes.id_attribute' => $attributeId
         ])->first();
 
         $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
@@ -119,9 +117,7 @@ class AttributesController extends AdminAppController
         ];
 
         $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $query = $this->Attribute->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->Attribute->find('all', conditions: $conditions);
         $attributes = $this->paginate($query, [
             'sortableFields' => [
                 'Attributes.name', 'Attributes.modified', 'Attributes.can_be_used_as_unit'

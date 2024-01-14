@@ -33,7 +33,7 @@ class CronjobsController extends AdminAppController
 
         $cronjobs->contain([
             'CronjobLogs' => function (Query $q) {
-                $q->orderDesc('CronjobLogs.created');
+                $q->orderByDesc('CronjobLogs.created');
                 return $q;
             }
         ]);
@@ -45,10 +45,8 @@ class CronjobsController extends AdminAppController
     public function edit($cronjobId)
     {
         $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
-        $cronjob = $this->Cronjob->find('available', [
-            'conditions' => [
-                'Cronjobs.id' => $cronjobId,
-            ]
+        $cronjob = $this->Cronjob->find('available', conditions: [
+            'Cronjobs.id' => $cronjobId,
         ])->first();
 
         if (empty($cronjob)) {

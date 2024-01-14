@@ -54,10 +54,8 @@ class CategoriesController extends AdminAppController
         }
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $category = $this->Category->find('all', [
-            'conditions' => [
-                'Categories.id_category' => $categoryId
-            ]
+        $category = $this->Category->find('all', conditions: [
+            'Categories.id_category' => $categoryId
         ])->first();
 
         if (empty($category)) {
@@ -65,7 +63,7 @@ class CategoriesController extends AdminAppController
         }
         $this->set('title_for_layout', __d('admin', 'Edit_category'));
 
-        $categoryChildren = $this->Category->find('all')->find('children', ['for' => $categoryId]);
+        $categoryChildren = $this->Category->find('all')->find('children', for: $categoryId);
 
         $disabledSelectCategoryIds = [(int) $categoryId];
         foreach ($categoryChildren as $categoryChild) {
@@ -144,9 +142,7 @@ class CategoriesController extends AdminAppController
         $conditions[] = $this->Category->getExcludeCondition();
         $conditions[] = 'Categories.active > ' . APP_DEL;
 
-        $totalCategoriesCount = $this->Category->find('all', [
-            'conditions' => $conditions
-        ])->count();
+        $totalCategoriesCount = $this->Category->find('all', conditions: $conditions)->count();
         $this->set('totalCategoriesCount', $totalCategoriesCount);
 
         $categories = $this->Category->getThreaded($conditions);

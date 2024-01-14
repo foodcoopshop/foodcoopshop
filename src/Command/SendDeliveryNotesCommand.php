@@ -52,17 +52,16 @@ class SendDeliveryNotesCommand extends AppCommand
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
-        $manufacturers = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.send_delivery_notes' => APP_ON,
-            ],
-            'contain' => [
-                'AddressManufacturers',
-                'Customers.AddressCustomers',
-            ],
-            'order' => [
-                'Manufacturers.name' => 'ASC',
-            ]
+        $manufacturers = $this->Manufacturer->find('all',
+        conditions: [
+            'Manufacturers.send_delivery_notes' => APP_ON,
+        ],
+        contain: [
+            'AddressManufacturers',
+            'Customers.AddressCustomers',
+        ],
+        order: [
+            'Manufacturers.name' => 'ASC',
         ]);
 
         $actionLogDatas = [];

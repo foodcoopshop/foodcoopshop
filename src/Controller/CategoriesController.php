@@ -86,11 +86,9 @@ class CategoriesController extends FrontendController
         $categoryId = (int) $this->getRequest()->getParam('pass')[0];
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $category = $this->Category->find('all', [
-            'conditions' => [
-                'Categories.id_category' => $categoryId,
-                'Categories.active' => APP_ON,
-            ]
+        $category = $this->Category->find('all', conditions: [
+            'Categories.id_category' => $categoryId,
+            'Categories.active' => APP_ON,
         ])->first();
 
         if (empty($category)) {

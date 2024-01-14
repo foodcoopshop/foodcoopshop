@@ -375,13 +375,12 @@ class CustomersTable extends AppTable
 
     public function getPersonalTransactionCode($customerId): string
     {
-        $customer = $this->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId,
-            ],
-            'fields' => [
-                'personalTransactionCode' => $this->getPersonalTransactionCodeField(),
-            ],
+        $customer = $this->find('all',
+        conditions: [
+            'Customers.id_customer' => $customerId,
+        ],
+        fields: [
+            'personalTransactionCode' => $this->getPersonalTransactionCodeField(),
         ])->first();
         return $customer->personalTransactionCode;
     }
@@ -445,10 +444,8 @@ class CustomersTable extends AppTable
 
     public function getManufacturerByCustomerId($customerId)
     {
-        $customer = $this->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ]
+        $customer = $this->find('all', conditions: [
+            'Customers.id_customer' => $customerId
         ])->first();
         if (!empty($customer)) {
             return $this->getManufacturerRecord($customer);
@@ -559,12 +556,11 @@ class CustomersTable extends AppTable
         ];
         $conditions[] = $this->getConditionToExcludeHostingUser();
         $this->dropManufacturersInNextFind();
-        $query = $this->find('all', [
-            'contain' => [
-                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ],
-            'conditions' => $conditions
-        ]);
+        $query = $this->find('all',
+        contain: [
+            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+        ],
+        conditions: $conditions);
 
         $customerIds = [];
         foreach($query as $customer) {
@@ -617,11 +613,10 @@ class CustomersTable extends AppTable
 
         $conditions = array_merge($conditions, $this->getConditionToExcludeHostingUser());
 
-        $customers = $this->find('all', [
-            'conditions' => $conditions,
-            'order' => $this->getCustomerOrderClause(),
-            'contain' => $contain
-        ]);
+        $customers = $this->find('all',
+        conditions: $conditions,
+        order: $this->getCustomerOrderClause(),
+        contain: $contain);
         $customers = $this->addCustomersNameForOrderSelect($customers);
         $customers->select($this);
         $addressCustomersTable = FactoryLocator::get('Table')->get('AddressCustomers');
@@ -635,10 +630,8 @@ class CustomersTable extends AppTable
             $validOrderDetails = $this->getAssociation('ValidOrderDetails');
             $i = 0;
             foreach($customers as $customer) {
-                $customers[$i]->validOrderDetailCount = $validOrderDetails->find('all', [
-                    'conditions' => [
-                        'id_customer' => $customers[$i]->id_customer
-                    ]
+                $customers[$i]->validOrderDetailCount = $validOrderDetails->find('all', conditions: [
+                    'id_customer' => $customers[$i]->id_customer
                 ])->count();
                 $i++;
             }

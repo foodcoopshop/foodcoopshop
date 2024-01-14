@@ -83,8 +83,6 @@ abstract class AppCakeTestCase extends TestCase
             $this->enableCsrfToken();
         }
 
-        $this->useCommandRunner();
-
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();
     }

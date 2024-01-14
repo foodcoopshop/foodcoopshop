@@ -12,7 +12,6 @@ use App\Services\PdfWriter\OrderConfirmationPdfWriterService;
 use App\Mailer\AppMailer;
 use App\Model\Traits\CartValidatorTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
 use App\Controller\Component\StringComponent;
 use Cake\Routing\Router;
@@ -477,7 +476,7 @@ class CartService
             $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
-                    $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+                    $pickupDay['pickup_day'] = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
                 $this->controller->setRequest($this->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
@@ -764,7 +763,7 @@ class CartService
             if ($pickupDay['comment'] == '') {
                 continue;
             }
-            $formattedPickupDay = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+            $formattedPickupDay = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
             $formattedPickupDay = $formattedPickupDay->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('order_comment_notification');

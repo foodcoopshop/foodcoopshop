@@ -213,10 +213,8 @@ class DepositsController extends AdminAppController
             return;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
@@ -293,10 +291,8 @@ class DepositsController extends AdminAppController
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);
 

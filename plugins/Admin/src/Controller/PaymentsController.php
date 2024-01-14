@@ -6,8 +6,6 @@ namespace Admin\Controller;
 use App\Mailer\AppMailer;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
-use Cake\I18n\FrozenDate;
-use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 
@@ -122,7 +120,7 @@ class PaymentsController extends AdminAppController
             $payment = $this->Payment->patchEntity(
                 $payment,
                 [
-                    'date_changed' => FrozenTime::now(),
+                    'date_changed' => \Cake\I18n\DateTime::now(),
                     'changed_by' => $this->identity->getId()
                 ]
             );
@@ -320,15 +318,15 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        $dateAddForEntity = FrozenTime::now();
+        $dateAddForEntity = \Cake\I18n\DateTime::now();
         $paymentPastDate = false;
         if ($dateAdd > 0) {
-            $dateAddForEntity = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
+            $dateAddForEntity = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
             $paymentPastDate = true;
         }
         if ($dateAddForEntity->isToday()) {
             $paymentPastDate = false;
-            $dateAddForEntity = FrozenTime::now(); // always save time for today, even if it's explicitely passed
+            $dateAddForEntity = \Cake\I18n\DateTime::now(); // always save time for today, even if it's explicitely passed
         }
 
         // add entry in table payments
@@ -339,7 +337,7 @@ class PaymentsController extends AdminAppController
                 'id_customer' => $customerId ?? 0,
                 'id_manufacturer' => $manufacturerId ?? 0,
                 'date_add' => $dateAddForEntity,
-                'date_changed' => FrozenTime::now(),
+                'date_changed' => \Cake\I18n\DateTime::now(),
                 'amount' => $amount,
                 'text' => $text,
                 'created_by' => $this->identity->getId(),
@@ -418,7 +416,7 @@ class PaymentsController extends AdminAppController
                 $payment,
                 [
                     'status' => APP_DEL,
-                    'date_changed' => FrozenTime::now()
+                    'date_changed' => \Cake\I18n\DateTime::now()
                 ]
             )
         );
@@ -569,9 +567,9 @@ class PaymentsController extends AdminAppController
                     $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
                     $monthAndYear[0] = (int) $monthAndYear[0];
                     $monthAndYear[1] = (int) $monthAndYear[1];
-                    $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
+                    $frozenDateFrom = \Cake\I18n\Date::create($monthAndYear[0], $monthAndYear[1], 1);
                     $lastDayOfMonth = (int) Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
-                    $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
+                    $frozenDateTo = \Cake\I18n\Date::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                     $payments[] = [
                         'dateRaw' => $frozenDateFrom,
                         'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),

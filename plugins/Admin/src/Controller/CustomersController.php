@@ -121,10 +121,8 @@ class CustomersController extends AdminAppController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $oldCustomer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ]
+        $oldCustomer = $this->Customer->find('all', conditions: [
+            'Customers.id_customer' => $customerId
         ])->first();
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
@@ -167,10 +165,8 @@ class CustomersController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Change_password'));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->identity->getId()
-            ]
+        $customer = $this->Customer->find('all', conditions: [
+            'Customers.id_customer' => $this->identity->getId()
         ])->first();
 
         if (empty($this->getRequest()->getData())) {
@@ -237,14 +233,13 @@ class CustomersController extends AdminAppController
 
         try {
 
-            $customer = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.id_customer' => $customerId
-                ],
-                'contain' => [
-                    'Manufacturers',
-                    'ActiveOrderDetails'
-                ]
+            $customer = $this->Customer->find('all',
+            conditions: [
+                'Customers.id_customer' => $customerId
+            ],
+            contain: [
+                'Manufacturers',
+                'ActiveOrderDetails'
             ])->first();
 
             if (empty($customer)) {
@@ -268,14 +263,12 @@ class CustomersController extends AdminAppController
             }
 
             if (Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers')) {
-                $notApprovedPaymentsCount = $this->Payment->find('all', [
-                    'conditions' => [
-                        'id_customer' => $customerId,
-                        'approval < ' => APP_ON,
-                        'status' => APP_ON,
-                        'type' => 'product',
-                        'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
-                    ]
+                $notApprovedPaymentsCount = $this->Payment->find('all', conditions: [
+                    'id_customer' => $customerId,
+                    'approval < ' => APP_ON,
+                    'status' => APP_ON,
+                    'type' => 'product',
+                    'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
                 ])->count();
                 if ($notApprovedPaymentsCount > 0) {
                     $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
@@ -362,13 +355,12 @@ class CustomersController extends AdminAppController
         $this->set('isOwnProfile', $isOwnProfile);
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $customerId
+        ],
+        contain: [
+            'AddressCustomers'
         ])->first();
 
         if (empty($customer)) {
@@ -463,13 +455,12 @@ class CustomersController extends AdminAppController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $customerId
+        ],
+        contain: [
+            'AddressCustomers'
         ])->first();
 
         $customer->active = $status;
@@ -520,13 +511,12 @@ class CustomersController extends AdminAppController
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $oldCustomer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
+        $oldCustomer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $customerId
+        ],
+        contain: [
+            'AddressCustomers'
         ])->first();
 
         $this->Customer->AddressCustomers->save(
@@ -678,10 +668,9 @@ class CustomersController extends AdminAppController
             $contain[] = 'Feedbacks';
         }
 
-        $query = $this->Customer->find('all', [
-            'conditions' => $conditions,
-            'contain' => $contain,
-        ]);
+        $query = $this->Customer->find('all',
+        conditions: $conditions,
+        contain: $contain);
         $query = $this->Customer->addCustomersNameForOrderSelect($query);
         $query->select($this->Customer);
         $query->select($this->Customer->AddressCustomers);

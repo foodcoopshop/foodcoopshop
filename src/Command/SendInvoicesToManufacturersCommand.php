@@ -21,7 +21,6 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
-use Cake\I18n\FrozenTime;
 
 class SendInvoicesToManufacturersCommand extends AppCommand
 {
@@ -49,22 +48,19 @@ class SendInvoicesToManufacturersCommand extends AppCommand
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
 
         // 1) get all manufacturers (not only active ones)
-        $manufacturers = $this->Manufacturer->find('all', [
-            'order' => [
-                'Manufacturers.name' => 'ASC'
-            ],
-            'contain' => [
-                'Invoices',
-                'AddressManufacturers',
-            ]
+        $manufacturers = $this->Manufacturer->find('all',
+        order: [
+            'Manufacturers.name' => 'ASC'
+        ],
+        contain: [
+            'Invoices',
+            'AddressManufacturers',
         ])->toArray();
 
         // 2) get all order details with pickup day in the given date range
-        $orderDetails = $this->OrderDetail->find('all', [
-            'contain' => [
-                'Products.Manufacturers',
-                'Products'
-            ]
+        $orderDetails = $this->OrderDetail->find('all', contain: [
+            'Products.Manufacturers',
+            'Products'
         ]);
         $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
@@ -114,7 +110,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
             $outString .= __('Generated_invoices') . ': 0';
         }
         $outString .= $actionLogDatas;
-        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new FrozenTime($this->cronjobRunDay));
+        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new \Cake\I18n\DateTime($this->cronjobRunDay));
         $io->out($outString);
 
         // 6) trigger queue invoice generation

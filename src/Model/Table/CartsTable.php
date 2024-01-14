@@ -122,12 +122,10 @@ class CartsTable extends AppTable
         $identity = Router::getRequest()->getAttribute('identity');
         $customerId = $identity->getId();
 
-        $cart = $this->find('all', [
-            'conditions' => [
-                'Carts.status' => APP_ON,
-                'Carts.id_customer' => $customerId,
-                'Carts.cart_type' => $cartType,
-            ]
+        $cart = $this->find('all', conditions: [
+            'Carts.status' => APP_ON,
+            'Carts.id_customer' => $customerId,
+            'Carts.cart_type' => $cartType,
         ])->first();
 
         if (empty($cart)) {

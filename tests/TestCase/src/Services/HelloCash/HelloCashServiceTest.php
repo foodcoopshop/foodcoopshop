@@ -203,10 +203,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $orderDetailIds = Hash::extract($invoice, 'order_details.{n}.id_order_detail');
 
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.invoice_id' => $invoice->id,
-            ],
+        $payments = $this->Payment->find('all', conditions: [
+            'Payments.invoice_id' => $invoice->id,
         ])->toArray();
         $paymentIds = Hash::extract($payments, '{n}.id');
 

@@ -49,14 +49,13 @@ class ManufacturersController extends FrontendController
         }
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturers = $this->Manufacturer->find('all', [
-            'conditions' => $conditions,
-            'order' => [
-                'Manufacturers.name' => 'ASC'
-            ],
-            'contain' => [
-                'AddressManufacturers'
-            ]
+        $manufacturers = $this->Manufacturer->find('all',
+        conditions: $conditions,
+        order: [
+            'Manufacturers.name' => 'ASC'
+        ],
+        contain: [
+            'AddressManufacturers'
         ])->select($this->Manufacturer);
 
         if (empty($manufacturers->toArray())) {
@@ -84,11 +83,10 @@ class ManufacturersController extends FrontendController
         ];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'AddressManufacturers'
-            ]
+        $manufacturer = $this->Manufacturer->find('all',
+        conditions: $conditions,
+        contain: [
+            'AddressManufacturers'
         ])
         ->select($this->Manufacturer)
         ->select($this->Manufacturer->AddressManufacturers)

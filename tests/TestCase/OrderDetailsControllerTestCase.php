@@ -85,11 +85,9 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->Product = $this->getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($productIds);
         $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
-        $changedStockAvailable = $this->StockAvailable->find('all', [
-            'conditions' => [
-                'StockAvailables.id_product' => $ids['productId'],
-                'StockAvailables.id_product_attribute' => $ids['attributeId'],
-            ]
+        $changedStockAvailable = $this->StockAvailable->find('all', conditions: [
+            'StockAvailables.id_product' => $ids['productId'],
+            'StockAvailables.id_product_attribute' => $ids['attributeId'],
         ])->first();
         $quantity = $changedStockAvailable->quantity;
         $this->assertEquals($expectedAmount, $quantity, 'amount was not corrected properly');

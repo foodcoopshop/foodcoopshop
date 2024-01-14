@@ -46,11 +46,10 @@ class CheckCreditBalanceCommand extends AppCommand
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
-        $customers = $this->Customer->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
-            ]
+        $customers = $this->Customer->find('all',
+        conditions: $conditions,
+        contain: [
+            'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
 
@@ -61,18 +60,17 @@ class CheckCreditBalanceCommand extends AppCommand
         $lastCsvUploadDate = null;
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
             $paymentTable = $this->getTableLocator()->get('Payments');
-            $payment = $paymentTable->find('all', [
-                'fields' => [
-                    'Payments.date_add',
-                ],
-                'conditions' => [
-                    'Payments.type' => 'product',
-                    'Payments.date_transaction_add IS NOT NULL',
+            $payment = $paymentTable->find('all',
+            fields: [
+                'Payments.date_add',
+            ],
+            conditions: [
+                'Payments.type' => 'product',
+                'Payments.date_transaction_add IS NOT NULL',
 
-                ],
-                'order' => [
-                    'Payments.date_add' => 'DESC',
-                ]
+            ],
+            order: [
+                'Payments.date_add' => 'DESC',
             ])->first();
             if (!empty($payment)) {
                 $lastCsvUploadDate = $payment->date_add;

@@ -70,10 +70,8 @@ class CustomersController extends FrontendController
         $extension = strtolower(pathinfo($this->request->getParam('imageSrc'), PATHINFO_EXTENSION));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
+        $customer = $this->Customer->find('all', conditions: [
+            'Customers.id_customer' => $customerId
         ])->first();
         if (empty($customer)) {
             throw new NotFoundException('customer not found');
@@ -137,13 +135,12 @@ class CustomersController extends FrontendController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.activate_email_code' => $emailActivationCode,
-            ],
-            'contain' => [
-                'AddressCustomers',
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.activate_email_code' => $emailActivationCode,
+        ],
+        contain: [
+            'AddressCustomers',
         ])->first();
 
         if (empty($customer)) {
@@ -245,10 +242,8 @@ class CustomersController extends FrontendController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.activate_new_password_code' => $activateNewPasswordCode,
-            ],
+        $customer = $this->Customer->find('all', conditions: [
+            'Customers.activate_new_password_code' => $activateNewPasswordCode,
         ])->first();
 
         if (empty($customer)) {

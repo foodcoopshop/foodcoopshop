@@ -34,10 +34,8 @@ class OrderDetailsControllerEditPurchasePriceTest extends OrderDetailsController
         $this->assertFlashMessage('Der Einkaufspreis wurde erfolgreich gespeichert.');
 
         $this->OrderDetailPurchasePrice = $this->getTableLocator()->get('OrderDetailPurchasePrices');
-        $odpp = $this->OrderDetailPurchasePrice->find('all', [
-            'conditions' => [
-                'OrderDetailPurchasePrices.id_order_detail' => $orderDetailId,
-            ],
+        $odpp = $this->OrderDetailPurchasePrice->find('all', conditions: [
+            'OrderDetailPurchasePrices.id_order_detail' => $orderDetailId,
         ])->first();
         $this->assertEquals($odpp->tax_rate, $newTaxRate);
         $this->assertEquals($odpp->total_price_tax_excl, $newPriceExcl);

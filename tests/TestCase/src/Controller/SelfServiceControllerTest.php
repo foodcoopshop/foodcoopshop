@@ -104,10 +104,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(1, 1);
 
         $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'order' => [
-                'Carts.id_cart' => 'DESC'
-            ],
+        $cart = $this->Cart->find('all', order: [
+            'Carts.id_cart' => 'DESC'
         ])->first();
 
         $cart = $this->getCartById($cart->id_cart);
@@ -136,10 +134,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(1, 1);
 
         $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'order' => [
-                'Carts.id_cart' => 'DESC'
-            ],
+        $cart = $this->Cart->find('all', order: [
+            'Carts.id_cart' => 'DESC'
         ])->first();
 
         $cart = $this->getCartById($cart->id_cart);
@@ -172,10 +168,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(1, 1);
 
         $this->Cart = $this->getTableLocator()->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'order' => [
-                'Carts.id_cart' => 'DESC'
-            ],
+        $cart = $this->Cart->find('all', order: [
+            'Carts.id_cart' => 'DESC'
         ])->first();
         $cart = $this->getCartById($cart->id_cart);
 
@@ -198,7 +192,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
     }
 
@@ -334,16 +328,15 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->finishSelfServiceCart(1, 1);
 
-        $carts = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_customer' => Configure::read('test.customerId'),
-            ],
-            'order' => [
-                'Carts.id_cart' => 'DESC'
-            ],
-            'contain' => [
-                'CartProducts.OrderDetails',
-            ]
+        $carts = $this->Cart->find('all',
+        conditions: [
+            'Carts.id_customer' => Configure::read('test.customerId'),
+        ],
+        order: [
+            'Carts.id_cart' => 'DESC'
+        ],
+        contain: [
+            'CartProducts.OrderDetails',
         ])->toArray();
 
         $this->assertEquals(2, count($carts[0]->cart_products));
@@ -362,7 +355,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertEquals($invoiceCount, 0);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertEquals('carts', $actionLogs[0]->object_type);
         $this->assertEquals($carts[0]->id_cart, $actionLogs[0]->object_id);
         $this->assertEquals($actionLogs[0]->text, 'Demo Superadmin hat eine neue Bestellung für <b>Demo Mitglied</b> getätigt (9,00 €).');

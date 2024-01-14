@@ -8,6 +8,8 @@ use Authorization\Policy\RequestPolicyInterface;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Authorization\Policy\ResultInterface;
+use Authorization\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +27,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 class BlogPostsPolicy implements RequestPolicyInterface
 {
 
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
         if ($identity === null) {

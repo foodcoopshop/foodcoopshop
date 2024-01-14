@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use Cake\I18n\FrozenTime;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -84,7 +82,7 @@ trait DeleteTrait {
         // 1) set field active to -1
         $this->Product->updateAll([
             'active' => APP_DEL,
-            'modified' => FrozenTime::now() // timestamp behavior does not work here...
+            'modified' => \Cake\I18n\DateTime::now() // timestamp behavior does not work here...
         ], [
             'id_product IN' => $productIds
         ]);

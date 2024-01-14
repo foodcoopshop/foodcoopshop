@@ -82,12 +82,11 @@ class EmailOrderReminderCommand extends AppCommand
             ]);
         }
 
-        $customers = $this->Customer->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'ActiveOrderDetails',
-                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-            ]
+        $customers = $this->Customer->find('all',
+        conditions: $conditions,
+        contain: [
+            'ActiveOrderDetails',
+            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
 

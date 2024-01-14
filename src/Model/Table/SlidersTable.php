@@ -50,11 +50,10 @@ class SlidersTable extends AppTable
             $conditions['Sliders.is_private'] = APP_OFF;
         }
 
-        $slides = $this->find('all', [
-            'conditions' => $conditions,
-            'order' => [
-                'Sliders.position' => 'ASC'
-            ]
+        $slides = $this->find('all',
+        conditions: $conditions,
+        order: [
+            'Sliders.position' => 'ASC'
         ]);
 
         return $slides;

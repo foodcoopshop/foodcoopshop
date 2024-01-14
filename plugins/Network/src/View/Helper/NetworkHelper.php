@@ -22,7 +22,7 @@ use Cake\View\Helper;
 class NetworkHelper extends Helper
 {
 
-    public $helpers = ['MyHtml'];
+    public array $helpers = ['MyHtml'];
 
     public function getTabs()
     {

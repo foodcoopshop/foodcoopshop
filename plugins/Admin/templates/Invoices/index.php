@@ -171,7 +171,7 @@ echo '<table class="list invoices-table no-clone-last-row">';
                     echo '<i class="fa fa-times not-ok"></i>';
                 } else {
                     try {
-                        $dateNTimeObject = FrozenTime::createFromFormat(Configure::read('DateFormat.DatabaseWithTimeAlt'), $invoice->email_status);
+                        $dateNTimeObject = \Cake\I18n\DateTime::createFromFormat(Configure::read('DateFormat.DatabaseWithTimeAlt'), $invoice->email_status);
                         $emailStatusString = $dateNTimeObject->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
                     } catch(InvalidArgumentException $e) {
                         $emailStatusString = $invoice->email_status;

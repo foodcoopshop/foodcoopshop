@@ -66,17 +66,16 @@ class PagesTable extends AppTable
 
     public function getThreaded($conditions = [])
     {
-        $pages = $this->find('threaded', [
-            'parentField' => 'id_parent',
-            'conditions' => $conditions,
-            'order' => [
-                'Pages.menu_type' => 'DESC',
-                'Pages.position' => 'ASC',
-                'Pages.title' => 'ASC'
-            ],
-            'contain' => [
-                'Customers'
-            ]
+        $pages = $this->find('threaded',
+        parentField: 'id_parent',
+        conditions: $conditions,
+        order: [
+            'Pages.menu_type' => 'DESC',
+            'Pages.position' => 'ASC',
+            'Pages.title' => 'ASC'
+        ],
+        contain: [
+            'Customers'
         ]);
         return $pages;
     }

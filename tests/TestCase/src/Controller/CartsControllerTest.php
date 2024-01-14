@@ -18,7 +18,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use App\Services\DeliveryRhythmService;
@@ -1076,7 +1075,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailMilkManufacturer'));
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertEquals('carts', $actionLogs[0]->object_type);
         $this->assertEquals($cart->id_cart, $actionLogs[0]->object_id);
         $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
@@ -1092,7 +1091,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
 
@@ -1105,7 +1104,7 @@ class CartsControllerTest extends AppCakeTestCase
                     'delivery_rhythm_type' => 'individual',
                     'delivery_rhythm_count' => '0',
                     'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-03')
                 ]
             )
         );
@@ -1117,7 +1116,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
 
