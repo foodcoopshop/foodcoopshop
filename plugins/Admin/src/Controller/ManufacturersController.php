@@ -312,7 +312,7 @@ class ManufacturersController extends AdminAppController
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ]
-        ])->toArray();
+        ]);
 
         // extract all email addresses for button
         $emailAddresses = [];

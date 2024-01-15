@@ -62,6 +62,7 @@ echo '<tr class="sort">';
     echo $this->element('rowMarker/rowMarkerAll', [
         'enabled' => true,
     ]);
+    $this->Paginator->setPaginated($manufacturers);
     echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
     echo '<th>Logo</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Name')) . '</th>';
