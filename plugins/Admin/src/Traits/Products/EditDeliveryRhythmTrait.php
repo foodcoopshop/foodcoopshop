@@ -5,6 +5,7 @@ namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
 use App\Services\DeliveryRhythmService;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,9 +27,9 @@ trait EditDeliveryRhythmTrait {
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $productIds = $this->getRequest()->getData('productIds');
         $deliveryRhythmTypeCombined = $this->getRequest()->getData('deliveryRhythmType');

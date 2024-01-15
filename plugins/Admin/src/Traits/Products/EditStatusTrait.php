@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use App\Services\SanitizeService;
+
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,9 +26,9 @@ trait EditStatusTrait {
     {
         $this->request = $this->request->withParam('_ext', 'json');
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $productIds = $this->request->getData('productIds');
         $status = (int) $this->request->getData('status');

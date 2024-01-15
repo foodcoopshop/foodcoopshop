@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use App\Services\SanitizeService;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -127,9 +128,9 @@ class FeedbacksController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['text'])));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['text'])));
 
         if (!$isEditMode) {
             $feedback = $this->Feedback->newEntity(
