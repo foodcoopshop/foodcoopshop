@@ -440,9 +440,6 @@ class ApiController extends Controller
             'OrderDetailUnits',
         ]);
 
-        pr($orderDetails->toArray());
-        exit;
-
         $preparedOrders = [];
         foreach($orderDetails as $orderDetail) {
             $preparedOrder = [
