@@ -59,17 +59,11 @@ trait ImportTrait
         $writer->insertOne($columns);
 
         // force download
-        $this->RequestHandler->renderAs(
-            $this,
-            'csv',
-            [
-                'charset' => 'UTF-8'
-            ],
-        );
         $this->disableAutoRender();
 
         $response = $this->response;
         $response = $response->withStringBody($writer->toString());
+        $response = $response->withCharset('UTF-8');
         $response = $response->withDownload('product-import-template.csv');
 
         return $response;

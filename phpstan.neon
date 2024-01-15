@@ -31,7 +31,5 @@ parameters:
           path: src/Model/Table/ProductsTable.php
         - message: '#Access to an undefined property#'
           path: src/Model/Entity
-        - message: '#Access to an undefined property.*\$(RequestHandler)#'
-          path: .
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule

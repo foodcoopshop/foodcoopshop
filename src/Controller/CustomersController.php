@@ -77,13 +77,16 @@ class CustomersController extends FrontendController
             throw new NotFoundException('customer not found');
         }
 
-        $this->RequestHandler->renderAs($this, $extension);
+        $this->request = $this->request->withParam('_ext', $extension);
         $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc');
-
         if (!file_exists($imagePath)) {
             throw new NotFoundException('image not found');
         }
         $this->set('imagePath', $imagePath);
+
+        $response = $this->response->withType($extension);
+        $response = $response->withStringBody(file_get_contents($imagePath));
+        return $response;
     }
 
     private function generateTermsOfUsePdf()
