@@ -250,7 +250,7 @@ class CronjobsTable extends AppTable
             })->first();
 
             $executeCronjob = true;
-            $timeIntervalObject = $cronjobNotBeforeTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
+            $timeIntervalObject = $cronjobNotBeforeTimeWithCronjobRunDay->modify('- 1' . $cronjob->time_interval);
 
             if (!(empty($cronjobLog) || $cronjobLog->success == CronjobLogsTable::FAILURE || $cronjobLog->created->lessThan($timeIntervalObject))) {
                 $executeCronjob = false;
