@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
+use App\Services\SanitizeService;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 
@@ -78,9 +79,9 @@ class SyncDomainsController extends AppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $syncDomain = $this->SyncDomain->patchEntity(
             $syncDomain,

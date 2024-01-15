@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace Network\Controller;
 
+use App\Services\SanitizeService;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Controller\Controller;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,13 +32,12 @@ class ApiController extends Controller
     protected $Manufacturer;
     protected $Product;
     protected $OrderDetail;
-    protected $Sanitize;
     protected $identity;
 
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadComponent('RequestHandler');
+        $this->addViewClasses([JsonView::class]);
     }
 
     public function beforeFilter(EventInterface $event)
@@ -54,8 +55,6 @@ class ApiController extends Controller
         $identity = Router::getRequest()->getAttribute('identity');
         $this->identity = $identity;
         $this->set('identity', $identity);
-
-        $this->RequestHandler->renderAs($this, 'json');
 
         $this->response = $this->response->withHeader('Access-Control-Allow-Origin', '*');
         $this->response = $this->response->withHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
@@ -413,9 +412,9 @@ class ApiController extends Controller
     public function getOrders()
     {
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
@@ -441,9 +440,11 @@ class ApiController extends Controller
             'OrderDetailUnits',
         ]);
 
+        pr($orderDetails->toArray());
+        exit;
+
         $preparedOrders = [];
-        foreach($orderDetails as $orderDetail)
-        {
+        foreach($orderDetails as $orderDetail) {
             $preparedOrder = [
                 'id' => $orderDetail->id_order_detail,
                 'product_id' => $orderDetail->product_id,

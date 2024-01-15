@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Component;
 
+use App\Services\SanitizeService;
 use Cake\Controller\Component;
 use Cake\Utility\Text;
 
@@ -65,7 +66,8 @@ class StringComponent extends Component
 
     public static function prepareWysiwygEditorHtml($string, $allowedTags): string
     {
-        $string = SanitizeComponent::stripBase64DataFromImageTag($string);
+        $sanitizeService = new SanitizeService();
+        $string = $sanitizeService->stripBase64DataFromImageTag($string);
         return strip_tags(htmlspecialchars_decode(trim($string)), $allowedTags);
     }
 
