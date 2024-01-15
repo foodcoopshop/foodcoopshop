@@ -21,7 +21,7 @@ trait EditProductNameTrait {
 
     public function editProductName()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productName = strip_tags(html_entity_decode($this->getRequest()->getData('productName')));

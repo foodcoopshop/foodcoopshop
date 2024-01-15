@@ -8,6 +8,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,6 +35,12 @@ class PaymentsController extends AdminAppController
     protected $Sanitize;
 
     public $customerId;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     public function beforeFilter(EventInterface $event)
     {
@@ -166,7 +173,7 @@ class PaymentsController extends AdminAppController
 
     public function add()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
         $type = $this->getRequest()->getData('type');
         if (!is_null($type)) {
             $type = trim($type);
@@ -385,7 +392,7 @@ class PaymentsController extends AdminAppController
 
     public function changeState()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $paymentId = $this->getRequest()->getData('paymentId');
 

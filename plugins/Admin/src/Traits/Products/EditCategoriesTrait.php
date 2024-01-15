@@ -24,7 +24,7 @@ trait EditCategoriesTrait {
 
     public function editCategories()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = (int) $this->getRequest()->getData('productId');
         $selectedCategories = [];

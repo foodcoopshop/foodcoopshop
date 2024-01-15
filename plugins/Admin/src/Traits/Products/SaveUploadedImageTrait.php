@@ -25,7 +25,7 @@ trait SaveUploadedImageTrait {
 
     public function saveUploadedImageProduct()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = $this->getRequest()->getData('objectId');
         $filename = $this->getRequest()->getData('filename');

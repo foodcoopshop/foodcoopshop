@@ -23,7 +23,7 @@ trait DeleteTrait {
 
     public function delete()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productIds = $this->getRequest()->getData('productIds');
         $products = $this->Product->find('all', [

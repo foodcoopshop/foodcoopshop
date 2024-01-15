@@ -10,6 +10,7 @@ use App\Services\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterSer
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,6 +33,12 @@ class InvoicesController extends AdminAppController
     protected $OrderDetail;
     protected $PickupDay;
     protected $Payment;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     public function downloadAsZipFile()
     {
@@ -235,13 +242,12 @@ class InvoicesController extends AdminAppController
             die($pdfWriter->writeInline());
         }
 
-
     }
 
     public function cancel()
     {
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $invoiceId = h($this->getRequest()->getData('invoiceId'));
 

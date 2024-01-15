@@ -24,7 +24,7 @@ trait CalculateSellingChargeWithSurchargeTrait {
     public function calculateSellingPriceWithSurcharge()
     {
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
         $productIds = $this->getRequest()->getData('productIds');
 
         $surcharge = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('surcharge'));

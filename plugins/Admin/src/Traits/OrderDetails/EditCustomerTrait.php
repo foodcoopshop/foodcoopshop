@@ -28,7 +28,7 @@ trait EditCustomerTrait {
 
     public function editCustomer()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $customerId = (int) $this->getRequest()->getData('customerId');

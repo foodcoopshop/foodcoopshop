@@ -27,7 +27,7 @@ trait EditProductPriceTrait {
 
     public function editProductPrice()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $editPriceReason = strip_tags(html_entity_decode($this->getRequest()->getData('editPriceReason')));

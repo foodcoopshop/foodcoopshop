@@ -22,7 +22,7 @@ trait GetProductsForDropdownTrait {
 
     public function ajaxGetProductsForDropdown($manufacturerId = 0)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $products = $this->Product->getForDropdown($manufacturerId);
         $productsForDropdown = [];

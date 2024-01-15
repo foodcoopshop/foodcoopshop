@@ -21,9 +21,16 @@ use Cake\Event\EventInterface;
  * @link          https://www.foodcoopshop.com
  */
 use Intervention\Image\ImageManagerStatic as Image;
+use Cake\View\JsonView;
 
 class ToolsController extends AdminAppController
 {
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     public function beforeFilter(EventInterface $event)
     {
@@ -34,7 +41,7 @@ class ToolsController extends AdminAppController
 
     public function doTmpFileUpload()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         // check if uploaded file is pdf
         $upload = $this->getRequest()->getData('upload');
@@ -66,7 +73,7 @@ class ToolsController extends AdminAppController
 
     public function doTmpImageUpload()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         // check if uploaded file is image file
         $upload = $this->getRequest()->getData('upload');
@@ -106,7 +113,7 @@ class ToolsController extends AdminAppController
 
     public function rotateImage()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         // check if uploaded file is image file
         $uploadedFile = $_SERVER['DOCUMENT_ROOT'] . $this->getRequest()->getData('filename');

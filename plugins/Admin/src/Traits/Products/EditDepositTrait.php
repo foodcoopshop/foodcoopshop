@@ -23,7 +23,7 @@ trait EditDepositTrait {
 
     public function editDeposit()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $originalProductId = $this->getRequest()->getData('productId');
 

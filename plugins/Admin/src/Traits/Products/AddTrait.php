@@ -25,7 +25,7 @@ trait AddTrait {
 
     public function add()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $manufacturerId = $this->getRequest()->getData('manufacturerId');
         $productName = $this->getRequest()->getData('name');

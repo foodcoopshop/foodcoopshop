@@ -12,6 +12,7 @@ use App\Services\DeliveryRhythmService;
 use App\Services\OrderCustomerService;
 use Cake\Datasource\FactoryLocator;
 use App\Services\CartService;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,6 +36,12 @@ class CartsController extends FrontendController
     protected $Product;
 
     protected $cartService;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     /**
      * allowing ajaxActions is ok as they are separately checked in ajaxIsAuthorized
@@ -161,7 +168,7 @@ class CartsController extends FrontendController
             return $this->sendAjaxError($e);
         }
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -197,7 +204,7 @@ class CartsController extends FrontendController
             return $this->sendAjaxError($e);
         }
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $initialProductId = $this->getRequest()->getData('productId');
 
@@ -328,7 +335,7 @@ class CartsController extends FrontendController
             return $this->sendAjaxError($e);
         }
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $initialProductId = $this->getRequest()->getData('productId');
 

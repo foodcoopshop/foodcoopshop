@@ -23,7 +23,7 @@ trait EditProductsPickedUpTrait {
 
     public function editProductsPickedUp()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $customerIds = $this->getRequest()->getData('customerIds');
         $state = (int) $this->getRequest()->getData('state');

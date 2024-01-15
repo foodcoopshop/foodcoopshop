@@ -19,6 +19,7 @@ use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
 use Cake\Core\Configure;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
+use Cake\View\JsonView;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -53,6 +54,12 @@ class OrderDetailsController extends AdminAppController
 
     protected $OrderDetail;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
+
     public function orderDetailsAsPdf()
     {
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
@@ -64,7 +71,7 @@ class OrderDetailsController extends AdminAppController
 
     public function setElFinderUploadPath($orderDetailId)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $_SESSION['ELFINDER'] = [
             'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/order_details/" . $orderDetailId,

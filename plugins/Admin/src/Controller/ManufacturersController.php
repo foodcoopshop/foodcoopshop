@@ -15,6 +15,7 @@ use Admin\Traits\UploadTrait;
 use App\Services\CatalogService;
 use App\Services\DeliveryNoteService;
 use App\Controller\Traits\RenewAuthSessionTrait;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -46,6 +47,12 @@ class ManufacturersController extends AdminAppController
 
     use UploadTrait;
     use RenewAuthSessionTrait;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     public function beforeFilter(EventInterface $event)
     {
@@ -223,7 +230,7 @@ class ManufacturersController extends AdminAppController
 
     public function setElFinderUploadPath($manufacturerId)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         if ($this->identity->isManufacturer()) {
             $manufacturerId = $this->identity->getManufacturerId();

@@ -6,6 +6,7 @@ namespace Network\Controller;
 use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,6 +30,12 @@ class SyncsController extends AppController
     protected $SyncProduct;
     protected $Product;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
+    
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -65,7 +72,7 @@ class SyncsController extends AppController
     public function ajaxSaveProductRelation()
     {
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $product = $this->getRequest()->getData('product');
 
@@ -145,7 +152,7 @@ class SyncsController extends AppController
     public function ajaxDeleteProductRelation()
     {
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $product = $this->getRequest()->getData('product');
 

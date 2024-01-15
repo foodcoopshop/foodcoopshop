@@ -25,7 +25,7 @@ trait EditPickupDayCommentTrait {
 
     public function editPickupDayComment()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $customerId = $this->getRequest()->getData('customerId');
         $pickupDay = $this->getRequest()->getData('pickupDay');

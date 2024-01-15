@@ -22,7 +22,7 @@ trait EditNameTrait {
 
     public function editName()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = $this->getRequest()->getData('productId');
 

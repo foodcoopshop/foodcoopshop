@@ -15,6 +15,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -41,9 +42,15 @@ class CustomersController extends AdminAppController
     use UploadTrait;
     use RenewAuthSessionTrait;
     
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
+
     public function ajaxGetCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $includeManufacturers = (bool) $includeManufacturers;
         $includeOfflineCustomers = (bool) $includeOfflineCustomers;
@@ -107,7 +114,7 @@ class CustomersController extends AdminAppController
         $customerId = (int) $this->getRequest()->getData('customerId');
         $groupId = (int) $this->getRequest()->getData('groupId');
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->identity->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
@@ -220,7 +227,7 @@ class CustomersController extends AdminAppController
 
     public function delete(int $customerId)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $isOwnProfile = $this->identity->getId() == $customerId;
 
@@ -290,7 +297,6 @@ class CustomersController extends AdminAppController
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
-
 
         $this->Customer->deleteAll(['id_customer' => $customerId]);
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
@@ -505,7 +511,7 @@ class CustomersController extends AdminAppController
 
     public function editComment()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $customerId = $this->getRequest()->getData('customerId');
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));

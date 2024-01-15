@@ -28,7 +28,7 @@ trait DeleteTrait {
 
     public function delete()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
         $cancellationReason = strip_tags(html_entity_decode($this->getRequest()->getData('cancellationReason')));

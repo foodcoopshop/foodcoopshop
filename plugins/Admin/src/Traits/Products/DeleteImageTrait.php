@@ -26,7 +26,7 @@ trait DeleteImageTrait {
      */
     public function deleteImage($productId)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = (int) $productId;
 

@@ -22,7 +22,7 @@ trait EditIsStockProductTrait {
 
     public function editIsStockProduct()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $originalProductId = $this->getRequest()->getData('productId');
 

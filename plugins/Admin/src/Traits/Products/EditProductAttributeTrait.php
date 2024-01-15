@@ -23,7 +23,7 @@ trait EditProductAttributeTrait {
 
     public function editProductAttribute()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = h($this->getRequest()->getData('productId'));
         $productAttributeId = h($this->getRequest()->getData('productAttributeId'));
