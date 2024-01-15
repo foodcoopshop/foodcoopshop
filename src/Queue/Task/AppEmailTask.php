@@ -24,7 +24,7 @@ use Throwable;
 class AppEmailTask extends EmailTask
 {
 
-    public $timeout = 300;
+    public ?int $timeout = 300;
 
     use UpdateActionLogTrait;
 

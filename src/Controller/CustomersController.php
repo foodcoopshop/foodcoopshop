@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use App\Mailer\AppMailer;
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;

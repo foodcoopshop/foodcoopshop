@@ -7,7 +7,7 @@ use App\Services\PdfWriter\MyMemberCardPdfWriterService;
 use App\Services\PdfWriter\MemberCardsPdfWriterService;
 use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use App\Mailer\AppMailer;
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;

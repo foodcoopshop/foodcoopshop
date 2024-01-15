@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;

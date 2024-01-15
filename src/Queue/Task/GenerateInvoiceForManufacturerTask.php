@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use Cake\Datasource\FactoryLocator;
 use App\Services\PdfWriter\InvoiceToManufacturerPdfWriterService;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,11 +32,11 @@ class GenerateInvoiceForManufacturerTask extends Task {
 
     public $OrderDetail;
 
-    public $QueuedJobs;
+    public QueuedJobsTable $QueuedJobs;
 
-    public $timeout = 30;
+    public ?int $timeout = 30;
 
-    public $retries = 2;
+    public ?int $retries = 2;
 
     public function run(array $data, $jobId) : void
     {

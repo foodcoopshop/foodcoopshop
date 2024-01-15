@@ -1,7 +1,7 @@
 parameters:
     level: 1
     bootstrapFiles:
-        - config/phpstan-bootstrap.php
+        - config/bootstrap.php
     fileExtensions:
         - php
     paths:
@@ -30,6 +30,7 @@ parameters:
           path: src/Model/Table/ProductsTable.php
         - message: '#Access to an undefined property#'
           path: src/Model/Entity
-
+        - message: '#Access to an undefined property.*\$(RequestHandler)#'
+          path: .
 rules:
     - Ergebnis\PHPStan\Rules\Files\DeclareStrictTypesRule
