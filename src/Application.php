@@ -206,7 +206,7 @@ class Application extends BaseApplication
         }
 
         $this->addPlugin('Migrations');
-        $this->addPlugin('Queue', ['bootstrap' => true]);
+        $this->addPlugin('Queue');
 
     }
 
