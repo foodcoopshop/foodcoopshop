@@ -27,11 +27,11 @@ trait EditProductNameTrait {
         $productName = strip_tags(html_entity_decode($this->getRequest()->getData('productName')));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $oldOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId,
             ],
-        ])->first();
+        )->first();
         $oldName = $oldOrderDetail->product_name;
 
         try {

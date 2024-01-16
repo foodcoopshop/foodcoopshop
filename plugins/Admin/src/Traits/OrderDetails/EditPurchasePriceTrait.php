@@ -36,17 +36,17 @@ trait EditPurchasePriceTrait {
         $this->setFormReferer();
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $orderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
                 'Products.Manufacturers',
             ]
-        ])->first();
+        )->first();
 
         if (empty($orderDetail)) {
             throw new RecordNotFoundException('order detail not found');

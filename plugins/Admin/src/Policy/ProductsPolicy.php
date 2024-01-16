@@ -95,11 +95,11 @@ class ProductsPolicy implements RequestPolicyInterface
         $productTable = FactoryLocator::get('Table')->get('Products');
         $ids = $productTable->getProductIdAndAttributeId($request->getData('productId'));
         $productId = $ids['productId'];
-        $product = $productTable->find('all', [
-            'conditions' => [
+        $product = $productTable->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ]
-        ])->first();
+        )->first();
         return !empty($product);
     }
 
@@ -134,11 +134,11 @@ class ProductsPolicy implements RequestPolicyInterface
         }
         $result = true;
         foreach($productIds as $productId) {
-            $product = $productTable->find('all', [
-                'conditions' => [
+            $product = $productTable->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ]
-            ])->first();
+            )->first();
             if (empty($product) || $product->id_manufacturer != $identity->getManufacturerId()) {
                 $result = false;
                 break;

@@ -50,16 +50,16 @@ trait EditProductPriceTrait {
         }
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $oldOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
             ]
-        ])->first();
+        )->first();
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);

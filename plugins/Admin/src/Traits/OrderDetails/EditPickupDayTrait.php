@@ -41,15 +41,15 @@ trait EditPickupDayTrait {
             }
             $errorMessages = [];
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $orderDetails = $this->OrderDetail->find('all', [
-                'conditions' => [
+            $orderDetails = $this->OrderDetail->find('all',
+                conditions: [
                     'OrderDetails.id_order_detail IN' => $orderDetailIds
                 ],
-                'contain' => [
+                contain: [
                     'Customers',
                     'Products.Manufacturers'
                 ]
-            ]);
+            );
             if ($orderDetails->count() != count($orderDetailIds)) {
                 throw new \Exception('error - order details wrong');
             }

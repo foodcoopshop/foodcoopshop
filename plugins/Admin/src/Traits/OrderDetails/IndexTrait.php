@@ -119,11 +119,11 @@ trait IndexTrait {
                 break;
         }
 
-        $query = $this->OrderDetail->find('all', [
-            'conditions' => $odParams['conditions'],
-            'contain' => $contain,
-            'group' => $group,
-        ]);
+        $query = $this->OrderDetail->find('all',
+            conditions:  $odParams['conditions'],
+            contain:  $contain,
+            group:  $group,
+        );
 
         $this->OrderDetail->getAssociation('CartProducts.Carts')->setJoinType('INNER');
         $query->contain(['CartProducts.Carts' => function ($q) use ($cartType) {

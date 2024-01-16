@@ -53,14 +53,13 @@ class PaymentsController extends AdminAppController
     public function previewEmail($paymentId, $approval)
     {
 
-        $payment = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id' => $paymentId,
-                'Payments.type' => 'product'
-            ],
-            'contain' => [
-                'Customers'
-            ]
+        $payment = $this->Payment->find('all',
+        conditions: [
+            'Payments.id' => $paymentId,
+            'Payments.type' => 'product'
+        ],
+        contain: [
+            'Customers'
         ])->first();
         if (empty($payment)) {
             throw new RecordNotFoundException('payment not found');
@@ -92,15 +91,14 @@ class PaymentsController extends AdminAppController
 
         $this->setFormReferer();
 
-        $payment = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id' => $paymentId,
-                'Payments.type IN' => ['product', 'payback'],
-            ],
-            'contain' => [
-                'Customers',
-                'ChangedByCustomers'
-            ]
+        $payment = $this->Payment->find('all',
+        conditions: [
+            'Payments.id' => $paymentId,
+            'Payments.type IN' => ['product', 'payback'],
+        ],
+        contain: [
+            'Customers',
+            'ChangedByCustomers'
         ])->first();
 
         if (empty($payment)) {
@@ -233,10 +231,8 @@ class PaymentsController extends AdminAppController
             $customerId = (int) $this->getRequest()->getData('customerId');
             if ($customerId > 0) {
                 $userType = 'customer';
-                $customer = $this->Customer->find('all', [
-                    'conditions' => [
-                        'Customers.id_customer' => $customerId
-                    ]
+                $customer = $this->Customer->find('all', conditions: [
+                    'Customers.id_customer' => $customerId
                 ])->first();
                 if (empty($customer)) {
                     $msg = 'customer id not correct: ' . $customerId;
@@ -254,10 +250,8 @@ class PaymentsController extends AdminAppController
 
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
-                $manufacturer = $this->Manufacturer->find('all', [
-                    'conditions' => [
-                        'Manufacturers.id_manufacturer' => $manufacturerId
-                    ]
+                $manufacturer = $this->Manufacturer->find('all', conditions: [
+                    'Manufacturers.id_manufacturer' => $manufacturerId
                 ])->first();
 
                 if (empty($manufacturer)) {
@@ -295,10 +289,8 @@ class PaymentsController extends AdminAppController
             'product',
             'payback',
         ]) && isset($customerId)) {
-            $customer = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.id_customer' => $customerId
-                ]
+            $customer = $this->Customer->find('all', conditions: [
+                'Customers.id_customer' => $customerId
             ])->first();
             if ($this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
                 $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
@@ -396,15 +388,14 @@ class PaymentsController extends AdminAppController
 
         $paymentId = $this->getRequest()->getData('paymentId');
 
-        $payment = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id' => $paymentId,
-                'Payments.approval <> ' . APP_ON
-            ],
-            'contain' => [
-                'Customers',
-                'Manufacturers'
-            ]
+        $payment = $this->Payment->find('all',
+        conditions: [
+            'Payments.id' => $paymentId,
+            'Payments.approval <> ' . APP_ON
+        ],
+        contain: [
+            'Customers',
+            'Manufacturers'
         ])->first();
 
         if (empty($payment)) {
@@ -534,13 +525,12 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->getCustomerId()
-            ],
-            'contain' => [
-               'Payments'
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $this->getCustomerId()
+        ],
+        contain: [
+           'Payments'
         ])->first();
 
         $payments = [];

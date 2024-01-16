@@ -74,18 +74,18 @@ trait UpdateOrderDetailsTrait {
             $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
         );
 
-        $newOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $newOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.StockAvailables',
                 'Products.Manufacturers',
                 'ProductAttributes.StockAvailables',
                 'OrderDetailUnits'
             ]
-        ])->first();
+        )->first();
 
         return $newOrderDetail;
     }

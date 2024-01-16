@@ -40,12 +40,12 @@ class HelloCashPolicy implements RequestPolicyInterface
         if ($identity->isCustomer()) {
             $invoiceId = $request->getParam('pass')[0];
             $invoiceTable = FactoryLocator::get('Table')->get('Invoices');
-            $invoice = $invoiceTable->find('all', [
-                'conditions' => [
+            $invoice = $invoiceTable->find('all',
+                conditions : [
                     'Invoices.id' => $invoiceId,
                     'Invoices.id_customer' => $identity->getId(),
                 ],
-            ])->first();
+            )->first();
             $isAllowed = !empty($invoice);
         }
 

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Policy;
 
+use App\Model\Table\BlogPostsTable;
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Core\Configure;
@@ -46,11 +47,11 @@ class BlogPostsPolicy implements RequestPolicyInterface
                 // manufacturer owner check
                 if ($identity->isManufacturer()) {
                     $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
-                    $blogPost = $blogPostTable->find('all', [
-                        'conditions' => [
+                    $blogPost = $blogPostTable->find('all',
+                    conditions:  [
                             'BlogPosts.id_blog_post' => $request->getParam('pass')[0],
                         ],
-                    ])->first();
+                    )->first();
                     if (empty($blogPost)) {
                         throw new RecordNotFoundException();
                     }

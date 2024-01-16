@@ -28,14 +28,14 @@ trait DeleteTrait {
         $this->request = $this->request->withParam('_ext', 'json');
 
         $productIds = $this->getRequest()->getData('productIds');
-        $products = $this->Product->find('all', [
-            'conditions' => [
+        $products = $this->Product->find('all',
+            conditions: [
                 'Products.id_product IN' => $productIds
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ]);
+        );
         $preparedProductsForActionLog = [];
         foreach($products as $product) {
             $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
@@ -44,15 +44,15 @@ trait DeleteTrait {
         try {
             // check if open order exist
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $query = $this->OrderDetail->find('all', [
-                'conditions' => [
+            $query = $this->OrderDetail->find('all',
+                conditions: [
                     'OrderDetails.product_id IN' => $productIds,
                     'OrderDetails.order_state IN' => [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]
                 ],
-                'contain' => [
+                contain: [
                     'Products'
                 ]
-            ]);
+            );
             $query->select(
                 [
                     'orderDetailsCount' => $query->func()->count('OrderDetails.product_id'),

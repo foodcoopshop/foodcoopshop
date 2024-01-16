@@ -34,11 +34,11 @@ trait EditPickupDayCommentTrait {
         $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'id_customer' => $customerId
             ]
-        ])->first();
+        )->first();
 
         $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $result = $this->PickupDay->insertOrUpdate(

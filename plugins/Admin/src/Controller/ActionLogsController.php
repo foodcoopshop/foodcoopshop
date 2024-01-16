@@ -120,15 +120,14 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('types', $types);
 
-        $query = $this->ActionLog->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Customers',
-                'Products',
-                'Manufacturers',
-                'BlogPosts',
-                'Payments'
-            ]
+        $query = $this->ActionLog->find('all',
+        conditions: $conditions,
+        contain: [
+            'Customers',
+            'Products',
+            'Manufacturers',
+            'BlogPosts',
+            'Payments'
         ]);
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

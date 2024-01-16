@@ -29,16 +29,16 @@ trait AddFeedbackTrait {
         $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b><i><img>'));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $orderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailFeedbacks'
             ]
-        ])->first();
+        )->first();
 
         try {
             if (empty($orderDetail)) {

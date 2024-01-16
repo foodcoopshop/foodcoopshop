@@ -56,10 +56,8 @@ class SyncsController extends AppController
 
     private function doModifyProductChecks($product)
     {
-        $syncDomain = $this->SyncDomain->find('all', [
-            'conditions' => [
-                'SyncDomains.domain' => $product['domain']
-            ]
+        $syncDomain = $this->SyncDomain->find('all', conditions: [
+            'SyncDomains.domain' => $product['domain']
         ])->first();
 
         $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);

@@ -93,7 +93,7 @@ use Cake\Core\Configure;
             <?php if ($identity->isCustomer()) { ?>
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
-            <?php } ?>
+<?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <?php
                 if ($filterByCartTypeEnabled) {

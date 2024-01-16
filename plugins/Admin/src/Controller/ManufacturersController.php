@@ -40,7 +40,6 @@ use Network\Model\Table\SyncDomainsTable;
 
 class ManufacturersController extends AdminAppController
 {
-
     protected FeedbacksTable $Feedback;
     protected PaymentsTable $Payment;
     protected ProductsTable $Product;
@@ -102,13 +101,12 @@ class ManufacturersController extends AdminAppController
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'AddressManufacturers'
-            ]
+        $manufacturer = $this->Manufacturer->find('all',
+        conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
+        ],
+        contain: [
+            'AddressManufacturers'
         ])->first();
 
         if (empty($manufacturer)) {
@@ -238,10 +236,8 @@ class ManufacturersController extends AdminAppController
         if ($this->identity->isManufacturer()) {
             $manufacturerId = $this->identity->getManufacturerId();
         } else {
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId
-                ]
+            $manufacturer = $this->Manufacturer->find('all', conditions: [
+                'Manufacturers.id_manufacturer' => $manufacturerId
             ])->first();
             $manufacturerId = $manufacturer->id_manufacturer;
         }
@@ -297,12 +293,11 @@ class ManufacturersController extends AdminAppController
             ];
         }
 
-        $query = $this->Manufacturer->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'AddressManufacturers',
-                'Customers'
-            ]
+        $query = $this->Manufacturer->find('all',
+        conditions: $conditions,
+        contain: [
+            'AddressManufacturers',
+            'Customers'
         ])
         ->select($this->Manufacturer)
         ->select($this->Manufacturer->Customers)
@@ -356,10 +351,8 @@ class ManufacturersController extends AdminAppController
 
     private function getOptionVariableMemberFee($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         return $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
     }
@@ -383,10 +376,8 @@ class ManufacturersController extends AdminAppController
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -411,10 +402,8 @@ class ManufacturersController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         if (empty($manufacturer)) {
@@ -585,10 +574,8 @@ class ManufacturersController extends AdminAppController
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         $newInvoiceNumber = 'xxx';
@@ -644,10 +631,8 @@ class ManufacturersController extends AdminAppController
         $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         if (!in_array('isAnonymized', array_keys($this->getRequest()->getQueryParams()))) {

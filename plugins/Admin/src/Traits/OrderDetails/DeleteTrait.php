@@ -45,11 +45,11 @@ trait DeleteTrait {
         $message = '';
         
         foreach ($orderDetailIds as $orderDetailId) {
-            $orderDetail = $this->OrderDetail->find('all', [
-                'conditions' => [
+            $orderDetail = $this->OrderDetail->find('all',
+                conditions: [
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
-                'contain' => [
+                contain: [
                     'Customers',
                     'Products.StockAvailables',
                     'Products.Manufacturers',
@@ -58,7 +58,7 @@ trait DeleteTrait {
                     'OrderDetailUnits',
                     'OrderDetailPurchasePrices',
                 ]
-            ])->first();
+            )->first();
 
             $message = __d('admin', 'Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled.', [
                 '<b>' . $orderDetail->product_name . '</b>',

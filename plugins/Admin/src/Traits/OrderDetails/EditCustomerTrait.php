@@ -35,24 +35,24 @@ trait EditCustomerTrait {
         $sendEmailToCustomers = (bool) $this->getRequest()->getData('sendEmailToCustomers');
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $oldOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.Manufacturers',
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
             ]
-        ])->first();
+        )->first();
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $newCustomer = $this->Customer->find('all', [
-            'conditions' => [
+        $newCustomer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId
             ]
-        ])->first();
+        )->first();
 
         $errors = [];
         if (empty($newCustomer)) {

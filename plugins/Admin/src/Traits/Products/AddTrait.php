@@ -41,11 +41,11 @@ trait AddTrait {
         }
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
+        $manufacturer = $this->Manufacturer->find('all',
+            conditions: [
+                'Manufacturers.id_manufacturer' => $manufacturerId,
             ]
-        ])->first();
+        )->first();
 
         try {
             if (empty($manufacturer)) {

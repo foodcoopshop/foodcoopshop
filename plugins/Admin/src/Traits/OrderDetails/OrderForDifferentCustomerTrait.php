@@ -30,14 +30,14 @@ trait OrderForDifferentCustomerTrait {
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $orderCustomer = $this->Customer->find('all', [
-            'conditions' => [
+        $orderCustomer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers'
             ]
-        ])->first();
+        )->first();
 
         if (! empty($orderCustomer)) {
             $this->getRequest()->getSession()->write('OrderIdentity', $orderCustomer);

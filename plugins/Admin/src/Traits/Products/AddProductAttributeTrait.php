@@ -21,27 +21,27 @@ trait AddProductAttributeTrait {
 
     public function addProductAttribute($productId, $productAttributeId)
     {
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         $this->Product->ProductAttributes->add($productId, $productAttributeId);
 
         // get new data
-        $newProduct = $this->Product->find('all', [
-            'conditions' => [
+        $newProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
-        ])->first();
+        )->first();
         foreach ($newProduct->product_attributes as $attribute) {
             if ($attribute->product_attribute_combination->id_attribute == $productAttributeId) {
                 $productAttributeIdForHighlighting = $attribute->product_attribute_combination->id_product_attribute;

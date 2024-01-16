@@ -62,11 +62,11 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 }
                 if ($identity->isCustomer()) {
                     $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-                    $orderDetail = $orderDetailTable->find('all', [
-                        'conditions' => [
+                    $orderDetail = $orderDetailTable->find('all',
+                        conditions:  [
                             'OrderDetails.id_order_detail' => $request->getData('orderDetailId')
                         ]
-                    ])->first();
+                    )->first();
                     if (!empty($orderDetail)) {
                         if ($orderDetail->id_customer == $identity->getId()) {
                             return true;
@@ -120,14 +120,14 @@ class OrderDetailsPolicy implements RequestPolicyInterface
     {
         if ($identity->isCustomer() || $identity->isManufacturer()) {
             $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-            $orderDetail = $orderDetailTable->find('all', [
-                'conditions' => [
+            $orderDetail = $orderDetailTable->find('all',
+                conditions: [
                     'OrderDetails.id_order_detail' => $orderDetailId,
                 ],
-                'contain' => [
+                contain: [
                     'Products'
                 ]
-            ])->first();
+            )->first();
             if (!empty($orderDetail)) {
                 if ($identity->isManufacturer() && $orderDetail->product->id_manufacturer == $identity->getManufacturerId()) {
                     return true;

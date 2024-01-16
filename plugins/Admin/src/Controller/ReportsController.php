@@ -130,10 +130,8 @@ class ReportsController extends AdminAppController
                             if ($csvPayment->isDirty('selected') && $csvPayment->getOriginal('selected') == 0) {
                                 unset($csvPayments[$i]);
                             } else {
-                                $customer = $this->Payment->Customers->find('all', [
-                                    'conditions' => [
-                                        'id_customer' => $csvPayment->id_customer,
-                                    ]
+                                $customer = $this->Customer->find('all', conditions: [
+                                    'id_customer' => $csvPayment->id_customer,
                                 ])->first();
                                 $sumAmount += $csvPayment->amount;
 

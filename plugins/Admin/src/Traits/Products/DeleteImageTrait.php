@@ -41,15 +41,15 @@ trait DeleteImageTrait {
             return;
         }
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Images',
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         $this->Product->changeImage(
             [

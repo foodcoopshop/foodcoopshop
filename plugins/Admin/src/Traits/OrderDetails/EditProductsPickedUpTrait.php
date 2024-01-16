@@ -40,17 +40,17 @@ trait EditProductsPickedUpTrait {
 
             if ($state) {
 
-                $orderDetailsWithUnchangedWeight = $this->OrderDetail->find('all', [
-                    'conditions' => [
+                $orderDetailsWithUnchangedWeight = $this->OrderDetail->find('all',
+                    conditions: [
                         'OrderDetails.id_customer' => $customerId,
                         'OrderDetails.pickup_day' => $pickupDay,
                         'OrderDetailUnits.mark_as_saved' => APP_OFF,
                     ],
-                    'contain' => [
+                    contain: [
                         'OrderDetailUnits',
                         'Customers',
                     ]
-                ])->toArray();
+                )->toArray();
 
                 if (count($orderDetailsWithUnchangedWeight) > 0) {
                     $errorMessages[] = [

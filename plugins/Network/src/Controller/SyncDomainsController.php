@@ -57,10 +57,8 @@ class SyncDomainsController extends AppController
             throw new NotFoundException;
         }
 
-        $syncDomain = $this->SyncDomain->find('all', [
-            'conditions' => [
-                'SyncDomains.id' => $syncDomainId
-            ]
+        $syncDomain = $this->SyncDomain->find('all', conditions: [
+            'SyncDomains.id' => $syncDomainId
         ])->first();
 
         if (empty($syncDomain)) {
