@@ -15,6 +15,9 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
+use App\Model\Table\CustomersTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
 use Cake\View\JsonView;
 use App\Services\SanitizeService;
 
@@ -35,10 +38,8 @@ use App\Services\SanitizeService;
 class CustomersController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $OrderDetail;
-    protected $Payment;
-    protected $Sanitize;
+    protected OrderDetailsTable $OrderDetail;
+    protected PaymentsTable $Payment;
 
     use UploadTrait;
     use RenewAuthSessionTrait;

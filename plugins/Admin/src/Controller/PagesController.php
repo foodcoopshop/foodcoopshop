@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Model\Table\PagesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
@@ -24,9 +25,7 @@ use App\Services\SanitizeService;
 class PagesController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $Page;
-    protected $Sanitize;
+    protected PagesTable $Page;
 
     public function home()
     {

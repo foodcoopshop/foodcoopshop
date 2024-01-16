@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
@@ -28,12 +30,9 @@ class PaymentsController extends AdminAppController
 {
     
     protected $allowedPaymentTypes = [];
-    protected $Payment;
     protected $paymentType;
-    protected $Customer;
-    protected $Manufacturer;
-    protected $OrderDetail;
-    protected $Sanitize;
+    protected PaymentsTable $Payment;
+    protected OrderDetailsTable $OrderDetail;
 
     public $customerId;
 

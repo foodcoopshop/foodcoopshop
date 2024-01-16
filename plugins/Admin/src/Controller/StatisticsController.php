@@ -5,6 +5,8 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Admin\Traits\ManufacturerIdTrait;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PurchasePriceProductsTable;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -25,9 +27,8 @@ class StatisticsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    protected $Manufacturer;
-    protected $OrderDetail;
-    protected $PurchasePrice;
+    protected OrderDetailsTable $OrderDetail;
+    protected PurchasePriceProductsTable $PurchasePriceProduct;
 
     public function myIndex()
     {
@@ -217,8 +218,8 @@ class StatisticsController extends AdminAppController
         } else {
             $totalNetTurnover = $totalTurnover + $totalNetProfit;
             $this->set('totalNetTurnover', $totalNetTurnover);
-            $this->PurchasePrice = $this->getTableLocator()->get('PurchasePriceProducts');
-            $averageSurcharge = $this->PurchasePrice->calculateSurchargeBySellingPriceNet($totalNetTurnover, $totalTurnover);
+            $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
+            $averageSurcharge = $this->PurchasePriceProduct->calculateSurchargeBySellingPriceNet($totalNetTurnover, $totalTurnover);
             $this->set('averageSurcharge', $averageSurcharge);
         }
 

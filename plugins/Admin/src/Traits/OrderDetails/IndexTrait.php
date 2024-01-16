@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use App\Services\DeliveryRhythmService;
 use App\Controller\Component\StringComponent;
+use App\Model\Table\InvoicesTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,7 @@ use App\Controller\Component\StringComponent;
 
 trait IndexTrait {
 
-    protected $Invoice;
+    protected InvoicesTable $Invoice;
 
     public function index()
     {

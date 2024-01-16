@@ -15,8 +15,14 @@ use Admin\Traits\UploadTrait;
 use App\Services\CatalogService;
 use App\Services\DeliveryNoteService;
 use App\Controller\Traits\RenewAuthSessionTrait;
+use App\Model\Table\FeedbacksTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
+use App\Model\Table\ProductsTable;
+use App\Model\Table\TaxesTable;
 use Cake\View\JsonView;
 use App\Services\SanitizeService;
+use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,16 +41,12 @@ use App\Services\SanitizeService;
 class ManufacturersController extends AdminAppController
 {
 
-    protected $Catalog;
-    protected $Customer;
-    protected $Feedback;
-    protected $Manufacturer;
-    protected $Payment;
-    protected $Product;
-    protected $OrderDetail;
-    protected $Tax;
-    protected $Sanitize;
-    protected $SyncDomain;
+    protected FeedbacksTable $Feedback;
+    protected PaymentsTable $Payment;
+    protected ProductsTable $Product;
+    protected OrderDetailsTable $OrderDetail;
+    protected TaxesTable $Tax;
+    protected SyncDomainsTable $SyncDomain;
 
     use UploadTrait;
     use RenewAuthSessionTrait;

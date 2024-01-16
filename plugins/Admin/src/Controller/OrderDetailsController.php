@@ -17,6 +17,7 @@ use Admin\Traits\OrderDetails\EditPurchasePriceTrait;
 use Admin\Traits\OrderDetails\IndexTrait;
 use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
+use App\Model\Table\OrderDetailsTable;
 use Cake\Core\Configure;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 use Cake\View\JsonView;
@@ -52,7 +53,7 @@ class OrderDetailsController extends AdminAppController
     use OrderForDifferentCustomerTrait;
     use ProfitTrait;
 
-    protected $OrderDetail;
+    protected OrderDetailsTable $OrderDetail;
 
     public function initialize(): void
     {

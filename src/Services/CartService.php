@@ -14,6 +14,14 @@ use App\Model\Traits\CartValidatorTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Controller\Component\StringComponent;
+use App\Model\Table\ActionLogsTable;
+use App\Model\Table\AttributesTable;
+use App\Model\Table\CartsTable;
+use App\Model\Table\InvoicesTable;
+use App\Model\Table\ManufacturersTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PickupDaysTable;
+use App\Model\Table\ProductsTable;
 use Cake\Routing\Router;
 
 /**
@@ -35,14 +43,14 @@ class CartService
 
     use CartValidatorTrait;
 
-    protected $ActionLog;
-    protected $Attribute;
-    protected $Cart;
-    protected $Invoice;
-    protected $Manufacturer;
-    protected $Product;
-    protected $PickupDay;
-    protected $OrderDetail;
+    protected ActionLogsTable $ActionLog;
+    protected AttributesTable $Attribute;
+    protected CartsTable $Cart;
+    protected InvoicesTable $Invoice;
+    protected ManufacturersTable $Manufacturer;
+    protected ProductsTable $Product;
+    protected PickupDaysTable $PickupDay;
+    protected OrderDetailsTable $OrderDetail;
 
     private $identity;
     private $request;

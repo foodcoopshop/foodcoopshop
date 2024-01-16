@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
+use App\Model\Table\BlogPostsTable;
 use App\Services\SanitizeService;
 
 /**
@@ -27,10 +28,7 @@ class BlogPostsController extends AdminAppController
 
     use UploadTrait;
 
-    protected $BlogPost;
-    protected $Customer;
-    protected $Manufacturer;
-    protected $Sanitize;
+    protected BlogPostsTable $BlogPost;
 
     public function add()
     {

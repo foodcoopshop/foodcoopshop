@@ -24,8 +24,6 @@ use App\Services\DeliveryRhythmService;
 class ListsController extends AdminAppController
 {
 
-    protected $Manufacturer;
-
     public function orderLists()
     {
 

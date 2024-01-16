@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
+use App\Model\Table\SlidersTable;
 use App\Services\SanitizeService;
 
 /**
@@ -26,8 +27,7 @@ class SlidersController extends AdminAppController
 
     use UploadTrait;
 
-    protected $Slider;
-    protected $Sanitize;
+    protected SlidersTable $Slider;
     
     public function add()
     {

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\PickupDaysTable;
 use Cake\Core\Configure;
 
 /**
@@ -21,7 +22,7 @@ use Cake\Core\Configure;
 
 trait EditPickupDayCommentTrait {
 
-    protected $PickupDay;
+    protected PickupDaysTable $PickupDay;
 
     public function editPickupDayComment()
     {

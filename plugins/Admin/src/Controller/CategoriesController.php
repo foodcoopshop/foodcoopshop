@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
+use App\Model\Table\CategoriesTable;
 use App\Services\SanitizeService;
 
 /**
@@ -25,8 +26,7 @@ use App\Services\SanitizeService;
 class CategoriesController extends AdminAppController
 {
 
-    protected $Category;
-    protected $Sanitize;
+    protected CategoriesTable $Category;
     
     use UploadTrait;
     

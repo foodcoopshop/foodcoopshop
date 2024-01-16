@@ -6,10 +6,13 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Mailer\AppMailer;
+use App\Model\Table\ConfigurationsTable;
+use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use App\Services\SanitizeService;
+use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,10 +31,9 @@ use App\Services\SanitizeService;
 class ConfigurationsController extends AdminAppController
 {
 
-    protected $Configuration;
-    protected $Sanitize;
-    protected $SyncDomain;
-    protected $Tax;
+    protected ConfigurationsTable $Configuration;
+    protected SyncDomainsTable $SyncDomain;
+    protected TaxesTable $Tax;
     
     public function edit($configurationId)
     {

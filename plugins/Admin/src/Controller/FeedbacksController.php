@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace Admin\Controller;
+
+use App\Model\Table\FeedbacksTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use App\Services\SanitizeService;
 
@@ -22,9 +24,7 @@ use App\Services\SanitizeService;
 class FeedbacksController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $Feedback;
-    protected $Sanitize;
+    protected FeedbacksTable $Feedback;
 
     public $customerId;
     public $isOwnForm;

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
@@ -23,8 +24,7 @@ use App\Services\SanitizeService;
 class TaxesController extends AdminAppController
 {
 
-    protected $Tax;
-    protected $Sanitize;
+    protected TaxesTable $Tax;
     
     public function add()
     {

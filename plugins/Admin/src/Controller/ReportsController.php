@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
+use App\Model\Table\PaymentsTable;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
@@ -26,7 +27,7 @@ use App\Services\Csv\Banking\BankingReaderServiceFactory;
 class ReportsController extends AdminAppController
 {
 
-    protected $Payment;
+    protected PaymentsTable $Payment;
 
     public function beforeFilter(EventInterface $event)
     {

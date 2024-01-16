@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\PurchasePriceProductsTable;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 
@@ -22,7 +23,7 @@ use Cake\Database\Expression\QueryExpression;
 
 trait ProfitTrait {
 
-    protected $PurchasePrice;
+    protected PurchasePriceProductsTable $PurchasePriceProduct;
 
     public function profit()
     {
@@ -128,13 +129,13 @@ trait ProfitTrait {
         }
         $this->set('orderDetails', $orderDetails);
 
-        $this->PurchasePrice = $this->getTableLocator()->get('PurchasePriceProducts');
+        $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
         $this->set('sums', [
             'amount' => $sumAmount,
             'purchasePrice' => $sumPurchasePrice,
             'sellingPrice' => $sumSellingPrice,
             'profit' => $sumProfit,
-            'surcharge' => $this->PurchasePrice->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
+            'surcharge' => $this->PurchasePriceProduct->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
         ]);
 
         $this->set('title_for_layout', __d('admin', 'Profit'));

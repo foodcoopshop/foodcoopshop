@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\InvoicesTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
+use App\Model\Table\PickupDaysTable;
 use App\Services\HelloCash\HelloCashService;
 use App\Services\Invoice\GenerateInvoiceToCustomerService;
 use App\Services\PdfWriter\InvoiceToCustomerPdfWriterService;
@@ -28,11 +32,10 @@ use Cake\View\JsonView;
 class InvoicesController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $Invoice;
-    protected $OrderDetail;
-    protected $PickupDay;
-    protected $Payment;
+    protected InvoicesTable $Invoice;
+    protected OrderDetailsTable $OrderDetail;
+    protected PickupDaysTable $PickupDay;
+    protected PaymentsTable $Payment;
 
     public function initialize(): void
     {

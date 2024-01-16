@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\AttributesTable;
+use App\Model\Table\ProductAttributeCombinationsTable;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\SanitizeService;
 
@@ -23,9 +25,8 @@ use App\Services\SanitizeService;
 class AttributesController extends AdminAppController
 {
 
-    protected $Attribute;
-    protected $ProductAttributeCombination;
-    protected $Sanitize;
+    protected AttributesTable $Attribute;
+    protected ProductAttributeCombinationsTable $ProductAttributeCombination;
 
     public function add()
     {

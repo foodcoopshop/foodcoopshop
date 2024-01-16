@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\StockAvailablesTable;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,7 +21,7 @@ namespace Admin\Traits\OrderDetails;
 
 trait UpdateOrderDetailsTrait {
 
-    protected $StockAvailable;
+    protected StockAvailablesTable $StockAvailable;
 
     private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity)
     {

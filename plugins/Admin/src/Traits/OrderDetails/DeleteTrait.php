@@ -24,8 +24,6 @@ trait DeleteTrait {
 
     use UpdateOrderDetailsTrait;
 
-    protected $Manufacturer;
-
     public function delete()
     {
         $this->request = $this->request->withParam('_ext', 'json');

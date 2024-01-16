@@ -23,8 +23,6 @@ use Cake\Event\EventInterface;
 class ActionLogsController extends AdminAppController
 {
 
-    protected $Customer;
-
     public function beforeFilter(EventInterface $event)
     {
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');

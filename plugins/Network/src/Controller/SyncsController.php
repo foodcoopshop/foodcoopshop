@@ -4,9 +4,14 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
+use App\Model\Table\ConfigurationsTable;
+use App\Model\Table\ProductsTable;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\View\JsonView;
+use Network\Model\Table\SyncDomainsTable;
+use Network\Model\Table\SyncManufacturersTable;
+use Network\Model\Table\SyncProductsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,11 +29,11 @@ use Cake\View\JsonView;
 class SyncsController extends AppController
 {
 
-    protected $Configuration;
-    protected $SyncDomain;
-    protected $SyncManufacturer;
-    protected $SyncProduct;
-    protected $Product;
+    protected ConfigurationsTable $Configuration;
+    protected SyncDomainsTable $SyncDomain;
+    protected SyncManufacturersTable $SyncManufacturer;
+    protected SyncProductsTable $SyncProduct;
+    protected ProductsTable $Product;
 
     public function initialize(): void
     {

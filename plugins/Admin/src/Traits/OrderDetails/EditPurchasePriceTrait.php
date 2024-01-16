@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\ProductsTable;
+use App\Model\Table\TaxesTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
@@ -21,9 +23,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 
 trait EditPurchasePriceTrait {
 
-    protected $OrderDetail;
-    protected $Product;
-    protected $Tax;
+    protected ProductsTable $Product;
+    protected TaxesTable $Tax;
 
     public function editPurchasePrice($orderDetailId)
     {

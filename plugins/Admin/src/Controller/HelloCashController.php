@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\InvoicesTable;
 use App\Services\HelloCash\HelloCashService;
-use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +23,7 @@ class HelloCashController extends AdminAppController
 {
 
     protected $helloCashService;
-    protected $Invoice;
+    protected InvoicesTable $Invoice;
 
     public function initialize(): void
     {

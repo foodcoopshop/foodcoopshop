@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use App\Model\Table\OrderDetailsTable;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,7 +21,7 @@ namespace Admin\Traits\Products;
 
 trait DeleteTrait {
 
-    protected $OrderDetail;
+    protected OrderDetailsTable $OrderDetail;
 
     public function delete()
     {

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\CronjobsTable;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Query;
 use App\Services\SanitizeService;
@@ -24,8 +25,7 @@ use App\Services\SanitizeService;
 class CronjobsController extends AdminAppController
 {
 
-    protected $Cronjob;
-    protected $Sanitize;
+    protected CronjobsTable $Cronjob;
 
     public function index()
     {

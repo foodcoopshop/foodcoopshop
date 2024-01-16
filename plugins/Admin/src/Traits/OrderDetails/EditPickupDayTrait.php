@@ -5,6 +5,7 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
+use App\Model\Table\PickupDaysTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use App\Mailer\AppMailer;
 
 trait EditPickupDayTrait {
 
-    protected $PickupDay;
+    protected PickupDaysTable $PickupDay;
     
     public function editPickupDay()
     {

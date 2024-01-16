@@ -3,7 +3,13 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use App\Model\Table\AttributesTable;
+use App\Model\Table\CategoriesTable;
+use App\Model\Table\StorageLocationsTable;
+use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
+use Network\Model\Table\SyncDomainsTable;
+use Network\Model\Table\SyncManufacturersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,12 +27,12 @@ use Cake\Core\Configure;
 
 trait IndexTrait {
 
-    protected $Attribute;
-    protected $Category;
-    protected $Tax;
-    protected $StorageLocation;
-    protected $SyncManufacturer;
-    protected $SyncDomain;
+    protected AttributesTable $Attribute;
+    protected CategoriesTable $Category;
+    protected TaxesTable $Tax;
+    protected StorageLocationsTable $StorageLocation;
+    protected SyncManufacturersTable $SyncManufacturer;
+    protected SyncDomainsTable $SyncDomain;
 
     public function index()
     {

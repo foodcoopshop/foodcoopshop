@@ -21,8 +21,6 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 
 trait AddTrait {
 
-    protected $Manufacturer;
-
     public function add()
     {
         $this->request = $this->request->withParam('_ext', 'json');

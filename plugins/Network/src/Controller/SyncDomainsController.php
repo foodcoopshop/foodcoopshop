@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
+use App\Model\Table\ActionLogsTable;
 use App\Services\SanitizeService;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,9 +26,8 @@ use Cake\Http\Exception\NotFoundException;
 class SyncDomainsController extends AppController
 {
 
-    protected $ActionLog;
-    protected $Sanitize;
-    protected $SyncDomain;
+    protected ActionLogsTable $ActionLog;
+    protected SyncDomainsTable $SyncDomain;
 
     public function beforeFilter(EventInterface $event)
     {

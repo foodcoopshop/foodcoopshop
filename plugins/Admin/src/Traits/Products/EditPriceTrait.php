@@ -21,8 +21,6 @@ use App\Services\SanitizeService;
 
 trait EditPriceTrait {
 
-    protected $Sanitize;
-
     public function editPrice()
     {
         $this->request = $this->request->withParam('_ext', 'json');
