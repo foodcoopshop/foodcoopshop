@@ -213,7 +213,7 @@ class ReportsController extends AdminAppController
             $conditions['Payments.id_customer'] = $customerId;
         }
 
-        // exluce "empty_glasses" deposit payments for manufacturers
+        // exclude "empty_glasses" deposit payments for manufacturers
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
 
         $this->Payment = $this->getTableLocator()->get('Payments');

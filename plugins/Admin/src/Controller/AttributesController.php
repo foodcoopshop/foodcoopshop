@@ -127,7 +127,7 @@ class AttributesController extends AdminAppController
             'order' => [
                 'Attributes.name' => 'ASC'
             ]
-        ])->toArray();
+        ]);
 
         $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
         foreach ($attributes as $attribute) {

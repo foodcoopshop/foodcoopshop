@@ -202,7 +202,7 @@ class BlogPostsController extends AdminAppController
             'order' => [
                 'BlogPosts.modified' => 'DESC'
             ]
-        ])->toArray();
+        ]);
 
         foreach ($blogPosts as $blogPost) {
             if (!empty($blogPost->customer)) {

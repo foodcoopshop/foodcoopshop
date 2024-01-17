@@ -709,7 +709,7 @@ class CustomersController extends AdminAppController
                 'last_pickup_day',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
-        ])->toArray();
+        ]);
 
         $i = 0;
         $this->Payment = $this->getTableLocator()->get('Payments');

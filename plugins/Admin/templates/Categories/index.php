@@ -48,9 +48,8 @@ use Cake\Core\Configure;
 <?php
 
 echo '<table class="list">';
-
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Categories.id_category', __d('admin', 'ID')) . '</th>';
+echo '<th class="hide"></th>';
 echo '<th></th>';
 echo '<th>'.__d('admin', 'Name').'</th>';
 echo '<th>'.__d('admin', 'Modified_on').'</th>';

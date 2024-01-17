@@ -485,7 +485,7 @@ class InvoicesController extends AdminAppController
                 'Invoices.created' => 'DESC',
                 'Invoices.id' => 'DESC',
             ]
-        ])->toArray();
+        ]);
 
         $this->set('invoices', $invoices);
 
