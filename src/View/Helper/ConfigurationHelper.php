@@ -94,11 +94,11 @@ class ConfigurationHelper extends Helper
             case 'FCS_MEMBER_FEE_PRODUCTS':
                 $value = explode(',', $value);
                 $productModel = FactoryLocator::get('Table')->get('Products');
-                $products = $productModel->find('all', [
-                    'conditions' => [
+                $products = $productModel->find('all',
+                    conditions: [
                         'Products.id_product IN' => $value,
                     ]
-                ])->toArray();
+                )->toArray();
                 return join(', ', Hash::extract($products, '{n}.name'));
                 break;
         }

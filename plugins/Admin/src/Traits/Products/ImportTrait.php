@@ -83,11 +83,11 @@ trait ImportTrait
 
         $manufacturerId = $this->getManufacturerId();
         $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $manufacturersTable->find('all', [
-            'conditions' => [
+        $manufacturer = $manufacturersTable->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => (int) $manufacturerId,
             ]
-        ])->first();
+        )->first();
 
         if (empty($manufacturer)) {
             throw new RecordNotFoundException('manufacturer not found or not active');

@@ -76,14 +76,14 @@ trait EditStatusTrait {
             ]
         );
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_deactivated.', [
             '<b>' . $product->name . '</b>',

@@ -70,7 +70,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $invoice = $this->Invoice->find('all', [])->first();
+        $invoice = $this->Invoice->find('all')->first();
 
         // not-owning user must not be able to download receipt
         $this->loginAsCustomer();
@@ -107,7 +107,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $invoice = $this->Invoice->find('all', [])->first();
+        $invoice = $this->Invoice->find('all')->first();
 
         $receiptHtml = $this->HelloCashService->getReceipt($invoice->id, false);
 
@@ -131,7 +131,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoice = $this->Invoice->find('all', [])->first();
+        $invoice = $this->Invoice->find('all')->first();
         $this->HelloCashService->getInvoice($invoice->id, false);
         $this->runAndAssertQueue();
 
@@ -140,14 +140,14 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailContainsHtmlAt(1, 'Guthaben beträgt <b>61,97 €</b>');
 
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
+        $invoice = $this->Invoice->find('all',
+            conditions: [
                 'Invoices.id' => $invoice->id,
             ],
-            'contain' => [
+            contain: [
                 'InvoiceTaxes',
             ]
-        ])->first();
+        )->first();
         $this->assertGreaterThan(1, $invoice->id);
 
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 10, 33.69, 3.38, 37.07);
@@ -169,20 +169,20 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoice = $this->Invoice->find('all', [])->first();
+        $invoice = $this->Invoice->find('all')->first();
         $this->HelloCashService->getInvoice($invoice->id, false);
         $this->runAndAssertQueue();
 
         $this->assertMailCount(1);
 
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
+        $invoice = $this->Invoice->find('all',
+            conditions: [
                 'Invoices.id' => $invoice->id,
             ],
-            'contain' => [
+            contain: [
                 'InvoiceTaxes',
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($invoice->email_status, 'deaktiviert');
     }
 
@@ -194,12 +194,12 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoice = $this->Invoice->find('all', [
-            'contain' => [
+        $invoice = $this->Invoice->find('all',
+            contain: [
                 'InvoiceTaxes',
                 'OrderDetails',
             ],
-        ])->first();
+        )->first();
         $orderDetailIds = Hash::extract($invoice, 'order_details.{n}.id_order_detail');
 
         $this->Payment = $this->getTableLocator()->get('Payments');
@@ -219,14 +219,14 @@ class HelloCashServiceTest extends AppCakeTestCase
         $response = json_decode($this->_response->getBody()->__toString());
         $this->runAndAssertQueue();
 
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
+        $invoice = $this->Invoice->find('all',
+            conditions: [
                 'Invoices.id' => $response->invoiceId,
             ],
-            'contain' => [
+            contain: [
                 'CancelledInvoices',
             ]
-        ])->first();
+        )->first();
         $this->assertNotNull($invoice->email_status);
 
         $this->assertMailCount(3);
@@ -248,12 +248,12 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoiceA = $this->Invoice->find('all', [
-            'contain' => [
+        $invoiceA = $this->Invoice->find('all',
+            contain: [
                 'Customers',
             ],
-            'order' => ['Invoices.created' => 'DESC'],
-        ])->first();
+            order: ['Invoices.created' => 'DESC'],
+        )->first();
 
         $receiptHtml = $this->HelloCashService->getReceipt($invoiceA->id, false);
 
@@ -268,12 +268,12 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoiceB = $this->Invoice->find('all', [
-            'contain' => [
+        $invoiceB = $this->Invoice->find('all',
+            contain: [
                 'Customers',
             ],
-            'order' => ['Invoices.created' => 'DESC'],
-        ])->first();
+            order: ['Invoices.created' => 'DESC'],
+        )->first();
         $receiptHtml = $this->HelloCashService->getReceipt($invoiceB->id, false);
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
@@ -298,11 +298,11 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $invoiceA = $this->Invoice->find('all', [
-            'contain' => [
+        $invoiceA = $this->Invoice->find('all',
+            contain: [
                 'Customers',
             ],
-        ])->first();
+        )->first();
 
         $this->HelloCashService->getReceipt($invoiceA->id, false);
         $this->assertNotEquals($customer->user_id_registrierkasse, $invoiceA->customer->user_id_registrierkasse);

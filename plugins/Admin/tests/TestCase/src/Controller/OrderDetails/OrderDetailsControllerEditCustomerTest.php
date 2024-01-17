@@ -105,15 +105,15 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, 3, true);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
 
-        $changedOrderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $changedOrderDetails = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail IN' => [$orderDetailId, 5],
             ],
-            'contain' => [
+            contain: [
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
             ]
-        ])->toArray();
+        )->toArray();
 
         $this->assertEquals(10.29, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
         $this->assertEquals(9.12, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);

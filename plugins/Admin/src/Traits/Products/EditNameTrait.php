@@ -26,14 +26,14 @@ trait EditNameTrait {
 
         $productId = $this->getRequest()->getData('productId');
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         try {
             $this->Product->changeName(

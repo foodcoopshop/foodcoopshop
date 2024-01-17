@@ -85,11 +85,11 @@ trait IndexTrait {
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (is_int($manufacturerId)) {
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
+            $manufacturer = $this->Manufacturer->find('all',
+                conditions: [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ]
-            ])
+            )
             ->select($this->Product->Manufacturers)
             ->first();
             $this->set('manufacturer', $manufacturer);

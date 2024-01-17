@@ -46,16 +46,16 @@ class Customer extends Entity implements IdentityInterface
             return null;
         }
         $mm = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $mm->find('all', [
-            'conditions' => [
+        $manufacturer = $mm->find('all',
+            conditions: [
                 'AddressManufacturers.email' => $this->email,
                 'AddressManufacturers.id_manufacturer > ' . APP_OFF,
             ],
-            'contain' => [
+            contain: [
                 'AddressManufacturers',
                 'Customers.AddressCustomers',
             ]
-        ])->first();
+        )->first();
         return $manufacturer;
     }
 

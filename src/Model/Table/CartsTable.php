@@ -138,15 +138,15 @@ class CartsTable extends AppTable
         }
 
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
-        $cartProducts = $cartProductsTable->find('all', [
-            'conditions' => [
+        $cartProducts = $cartProductsTable->find('all',
+            conditions: [
                 'CartProducts.id_cart' => $cart->id_cart,
                 'CartProducts.amount > 0',
             ],
-            'order' => [
+            order: [
                 'Products.name',
             ],
-            'contain' => [
+            contain: [
                 'CartProductUnits',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
@@ -157,7 +157,7 @@ class CartsTable extends AppTable
                 'Products.Images',
                 'Products.Taxes',
             ]
-        ])->toArray();
+        )->toArray();
 
         $orderCustomerService = new OrderCustomerService();
         if (!empty($cartProducts)) {

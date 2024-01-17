@@ -275,11 +275,11 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->runAndAssertQueue();
         $this->assertSessionHasKey('invoiceRouteForAutoPrint');
 
-        $cart = $this->Cart->find('all', [
-            'order' => [
+        $cart = $this->Cart->find('all',
+            order: [
                 'Carts.id_cart' => 'DESC'
             ],
-        ])->first();
+        )->first();
         $cart = $this->getCartById($cart->id_cart);
 
         $this->assertEquals(2, count($cart->cart_products));
@@ -312,11 +312,11 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->logout();
 
         $this->loginAsSuperadmin();
-        $testCustomer = $this->Customer->find('all', [
-            'conditions' => [
+        $testCustomer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => Configure::read('test.customerId'),
             ]
-        ])->first();
+        )->first();
         $this->get($this->Slug->getOrderDetailsList().'/initSelfServiceOrder/' . Configure::read('test.customerId'));
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
@@ -329,15 +329,16 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->finishSelfServiceCart(1, 1);
 
         $carts = $this->Cart->find('all',
-        conditions: [
-            'Carts.id_customer' => Configure::read('test.customerId'),
-        ],
-        order: [
-            'Carts.id_cart' => 'DESC'
-        ],
-        contain: [
-            'CartProducts.OrderDetails',
-        ])->toArray();
+            conditions: [
+                'Carts.id_customer' => Configure::read('test.customerId'),
+            ],
+            order: [
+                'Carts.id_cart' => 'DESC'
+            ],
+            contain: [
+                'CartProducts.OrderDetails',
+            ],
+        )->toArray();
 
         $this->assertEquals(2, count($carts[0]->cart_products));
         $this->assertEquals(1, count($carts[1]->cart_products));

@@ -54,24 +54,24 @@ class AppMailer extends Mailer
         foreach($this->getTo() as $email) {
             
             $addressManufacturerTable = FactoryLocator::get('Table')->get('AddressManufacturers');
-            $addressManufacturer = $addressManufacturerTable->find('all', [
-                'conditions' => [
+            $addressManufacturer = $addressManufacturerTable->find('all',
+                conditions: [
                     'AddressManufacturers.email' => $email,
                     'AddressManufacturers.id_manufacturer > 0',
                 ],
-                'contain' => [
+                contain: [
                     'Manufacturers',
                 ],
-            ])->first();
+            )->first();
             
             if (!empty($addressManufacturer) && $addressManufacturer->manufacturer->anonymize_customers) {
                 $customersTable = FactoryLocator::get('Table')->get('Customers');
                 $customersTable->dropManufacturersInNextFind();
-                $customers = $customersTable->find('all', [
-                    'contain' => [
+                $customers = $customersTable->find('all',
+                    contain: [
                         'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
                     ],
-                ]);
+                );
                 foreach($customers as $customer) {
                     // eg. greeting is ALWAYS firstname - lastname (not respecting app.customerMainNamePart)
                     $replaceArrays = [

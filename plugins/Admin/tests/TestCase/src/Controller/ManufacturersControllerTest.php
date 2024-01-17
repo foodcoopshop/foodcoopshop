@@ -99,14 +99,14 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertFlashMessage('Der Hersteller <b>Test Manufacturer</b> wurde erstellt.');
 
         // get inserted manufacturer from database and check detail page for patterns
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
+        $manufacturer = $this->Manufacturer->find('all',
+            conditions: [
                 'Manufacturers.name' => $this->manufacturerData['Manufacturers']['name']
             ],
-            'contain' => [
+            contain: [
                 'AddressManufacturers'
             ]
-        ])->first();
+        )->first();
 
         $this->get($this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         $this->assertResponseContains('<h1>' . $manufacturer->name);
@@ -179,11 +179,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         );
 
-        $manufacturerNew = $this->Manufacturer->find('all', [
-            'conditions' => [
+        $manufacturerNew = $this->Manufacturer->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
-        ])->first();
+        )->first();
 
         $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturerNew->send_order_list);
         $this->assertEquals($sendOrderList, $newSendOrderList, 'saving option send_order_list failed');
@@ -270,11 +270,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->assertFlashMessage('Die Einstellungen des Herstellers <b>Demo Milch-Hersteller</b> wurden erfolgreich gespeichert.');
 
-        $manufacturerNew = $this->Manufacturer->find('all', [
-            'conditions' => [
+        $manufacturerNew = $this->Manufacturer->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
-        ])->first();
+        )->first();
 
         $this->assertEquals($noDeliveryDays, $manufacturerNew->no_delivery_days);
 
@@ -402,14 +402,14 @@ class ManufacturersControllerTest extends AppCakeTestCase
         );
         $this->assertFlashMessage('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.');
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
+        $manufacturer = $this->Manufacturer->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ],
-            'contain' => [
+            contain: [
                 'AddressManufacturers'
             ]
-        ])->first();
+        )->first();
         $this->doTestCustomerRecord($manufacturer);
 
         $this->logout();

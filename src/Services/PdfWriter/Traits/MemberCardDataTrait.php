@@ -30,18 +30,18 @@ trait MemberCardDataTrait
 
         $customerTable = FactoryLocator::get('Table')->get('Customers');
         $customerTable->dropManufacturersInNextFind();
-        $customers = $customerTable->find('all', [
-            'fields' => [
+        $customers = $customerTable->find('all',
+            fields: [
                 'system_bar_code' => $customerTable->getBarcodeFieldString(),
             ],
-            'conditions' => [
+            conditions: [
                 'Customers.id_customer IN' => $customerIds,
             ],
-            'order' => $customerTable->getCustomerOrderClause(),
-            'contain' => [
+            order: $customerTable->getCustomerOrderClause(),
+            contain: [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
-        ]);
+        );
         $customers = $customerTable->addCustomersNameForOrderSelect($customers);
         $customers->select($customerTable);
         $customers->select($customerTable->AddressCustomers);

@@ -31,16 +31,16 @@ trait EditProductAttributeTrait {
         $barcode = $this->getRequest()->getData('barcode') ?? '';
         $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers',
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
             ]
-        ])->first();
+        )->first();
 
         $attributeName = '';
         foreach ($oldProduct->product_attributes as $attribute) {

@@ -26,14 +26,14 @@ trait LoginTrait
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
-        $identity = $customerTable->find('all', [
-            'conditions' => [
+        $identity = $customerTable->find('all',
+            conditions: [
                 'Customers.id_customer' => $userId
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
             ]
-        ])->first()->toArray();
+        )->first()->toArray();
 
         return [
             'Auth' => $identity,

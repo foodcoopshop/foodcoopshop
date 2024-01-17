@@ -33,15 +33,15 @@ class ProductsPolicy implements RequestPolicyInterface
         $productId = (int) $request->getParam('pass')[0];
         $productTable = FactoryLocator::get('Table')->get('Products');
 
-        $product = $productTable->find('all', [
-            'conditions' => [
+        $product = $productTable->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
                 'Products.active' => APP_ON,
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers',
             ]
-        ])->first();
+        )->first();
 
         if (empty($product)) {
             throw new RecordNotFoundException('product not found');

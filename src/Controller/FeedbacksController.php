@@ -46,18 +46,18 @@ class FeedbacksController extends FrontendController
         $feedbacksTable = FactoryLocator::get('Table')->get('Feedbacks');
         $customersTable = FactoryLocator::get('Table')->get('Customers');
 
-        $feedbacks = $feedbacksTable->find('all', [
-            'conditions' => [
+        $feedbacks = $feedbacksTable->find('all',
+            conditions: [
                 'DATE_FORMAT(Feedbacks.approved, \'%Y-%m-%d\') <> \'1970-01-01\'',
                 'Customers.active' => APP_ON,
             ],
-            'contain' => [
+            contain: [
                 'Customers.AddressCustomers',
             ],
-            'order' => [
+            order: [
                 'Feedbacks.approved' => 'DESC',
             ],
-        ])->toArray();
+        )->toArray();
 
         $preparedFeedbacks = [
             'customers' => [],

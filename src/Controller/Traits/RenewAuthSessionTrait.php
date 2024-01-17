@@ -24,14 +24,14 @@ trait RenewAuthSessionTrait {
     protected function renewAuthSession()
     {
         $customerTable = $this->getTableLocator()->get('Customers');
-        $customer = $customerTable->find('all', [
-            'conditions' => [
+        $customer = $customerTable->find('all',
+            conditions: [
                 'Customers.id_customer' => $this->identity->getId()
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
             ]
-        ])->first();
+        )->first();
         if (!empty($customer)) {
             $this->Authentication->setIdentity($customer);
             Router::setRequest($this->getRequest());

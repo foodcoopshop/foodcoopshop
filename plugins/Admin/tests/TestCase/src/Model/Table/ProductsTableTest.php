@@ -43,14 +43,14 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->Product->changeImage($products);
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Images'
             ]
-        ])->first();
+        )->first();
         $imageId = $product->image->id_image;
 
         $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($imageId);
@@ -67,14 +67,14 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->Product->changeImage($products);
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Images'
             ]
-        ])->first();
+        )->first();
 
         $this->assertTrue(empty($product->image));
 
@@ -198,11 +198,11 @@ class ProductsTableTest extends AppCakeTestCase
     public function testAddProduct()
     {
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
+        $manufacturer = $this->Manufacturer->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
-        ])->first();
+        )->first();
 
         $name = 'New product <b>test</b>';
         $descriptionShort = 'description short<img src="test.jpg" />';
@@ -213,16 +213,16 @@ class ProductsTableTest extends AppCakeTestCase
         $barcode = '1234567890123';
         $newProduct = $this->Product->add($manufacturer, $name, $descriptionShort, $description, $unity, $isDeclarationOk, $idStorageLocation, $barcode);
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $newProduct->id_product
             ],
-            'contain' => [
+            contain: [
                 'CategoryProducts',
                 'StockAvailables',
                 'BarcodeProducts',
             ]
-        ])->first();
+        )->first();
 
         $this->assertEquals($product->id_product, $newProduct->id_product);
         $this->assertEquals($product->id_manufacturer, $manufacturerId);
@@ -642,14 +642,14 @@ class ProductsTableTest extends AppCakeTestCase
         foreach ($products as $product) {
 
             $productId = key($product);
-            $changedProduct = $this->Product->find('all', [
-                'conditions' => [
+            $changedProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId,
                 ],
-                'contain' => [
+                contain: [
                     'BarcodeProducts',
                 ]
-            ])->first();
+            )->first();
             $this->assertEquals($expectedResults['name'], $changedProduct->name);
             $this->assertEquals($expectedResults['unity'], $changedProduct->unity);
             $this->assertEquals($expectedResults['description'], $changedProduct->description);
@@ -684,12 +684,12 @@ class ProductsTableTest extends AppCakeTestCase
                 );
                 $contain = ['ProductAttributes.StockAvailables'];
             }
-            $changedProduct = $this->Product->find('all', [
-                'conditions' => [
+            $changedProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ],
-                'contain' => $contain
-            ])->first();
+                contain: $contain
+            )->first();
             if ($productAndAttributeId['attributeId'] == 0) {
                 $result = $changedProduct->stock_available->quantity;
             } else {
@@ -719,12 +719,12 @@ class ProductsTableTest extends AppCakeTestCase
                 );
             }
 
-            $changedProduct = $this->Product->find('all', [
-                'conditions' => [
+            $changedProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ],
-                'contain' => $contain,
-            ])->first();
+                contain: $contain,
+            )->first();
 
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct->deposit_product;
@@ -754,12 +754,12 @@ class ProductsTableTest extends AppCakeTestCase
                 );
                 $contain[] = 'ProductAttributes';
             }
-            $changedProduct = $this->Product->find('all', [
-                'conditions' => [
+            $changedProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ],
-                'contain' => $contain,
-            ])->first();
+                contain: $contain,
+            )->first();
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct;
             } else {
@@ -778,11 +778,11 @@ class ProductsTableTest extends AppCakeTestCase
             if ($forceUseThisStatus) {
                 $expectedStatus = $forceUseThisStatus;
             }
-            $changedProduct = $this->Product->find('all', [
-                'conditions' => [
+            $changedProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId,
                 ]
-            ])->first();
+            )->first();
             $this->assertEquals($expectedStatus, $changedProduct->active, 'changing the active flag did not work');
         }
     }

@@ -47,14 +47,14 @@ trait EditDeliveryRhythmTrait {
         }
 
         if ($singleEditMode) {
-            $oldProduct = $this->Product->find('all', [
-                'conditions' => [
+            $oldProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ],
-                'contain' => [
+                contain: [
                     'Manufacturers'
                 ]
-            ])->first();
+            )->first();
         }
 
         $deliveryRhythmCount = $splittedDeliveryRhythmType[0];

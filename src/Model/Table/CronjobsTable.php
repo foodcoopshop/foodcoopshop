@@ -237,14 +237,14 @@ class CronjobsTable extends AppTable
             ]);
             $cronjobNotBeforeTimeWithCronjobRunDay->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($cronjobNotBeforeTimeWithCronjobRunDay->getTimestamp()) . ' seconds');
 
-            $cronjobLog = $cronjobLogsTable->find('all', [
-                'conditions' => [
+            $cronjobLog = $cronjobLogsTable->find('all',
+                conditions: [
                     'CronjobLogs.cronjob_id' => $cronjob->id,
                 ],
-                'order' => [
+                order: [
                     'CronjobLogs.created' => 'DESC'
                 ]
-            ])
+            )
             ->where(function (QueryExpression $exp) use ($cronjobRunDayObject) {
                 return $exp->eq('DATE_FORMAT(CronjobLogs.created, \'%Y-%m-%d\')', $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.Database')));
             })->first();

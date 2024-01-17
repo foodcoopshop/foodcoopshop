@@ -42,11 +42,11 @@ class ProductsControllerTest extends AppCakeTestCase
         $productId = 60;
         $status = APP_OFF;
         $this->get('/admin/products/editStatus/' . $productId . '/' . $status);
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($product->active, $status);
     }
 
@@ -59,11 +59,11 @@ class ProductsControllerTest extends AppCakeTestCase
             'productIds' => $productIds,
             'status' => APP_OFF,
         ]);
-        $products = $this->Product->find('all', [
-            'conditions' => [
+        $products = $this->Product->find('all',
+            conditions: [
                 'Products.id_product IN' => $productIds,
             ]
-        ]);
+        );
         foreach ($products as $product) {
             $this->assertEquals($product->active, $status);
         }
@@ -90,11 +90,11 @@ class ProductsControllerTest extends AppCakeTestCase
             'productIds' => $productIds,
             'status' => $status,
         ]);
-        $products = $this->Product->find('all', [
-            'conditions' => [
+        $products = $this->Product->find('all',
+            conditions: [
                 'Products.id_product IN' => $productIds,
             ]
-        ]);
+        );
         foreach ($products as $product) {
             $this->assertEquals($product->active, $status);
         }
@@ -152,14 +152,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'UnitProducts'
             ]
-        ])->first();
+        )->first();
         $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
     }
 
@@ -471,11 +471,11 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm($productId, '1-month', '03.08.2018');
         $this->assertJsonOk();
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($product->delivery_rhythm_type, 'month');
         $this->assertEquals($product->delivery_rhythm_count, 1);
         $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')), '03.08.2018');
@@ -562,11 +562,11 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->ajaxPost('/admin/products/delete', [
             'productIds' => [$productId]
         ]);
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ]
-        ])->first();
+        )->first();
         return $product;
     }
 
@@ -580,17 +580,17 @@ class ProductsControllerTest extends AppCakeTestCase
             'purchasePrice' => $price,
         ]);
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $ids['productId'],
             ],
-            'contain' => [
+            contain: [
                 'ProductAttributes.PurchasePriceProductAttributes',
                 'ProductAttributes.UnitProductAttributes',
                 'PurchasePriceProducts',
                 'UnitProducts',
             ],
-        ])->first();
+        )->first();
 
         return $product;
 
@@ -618,17 +618,17 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->ajaxPost('/admin/products/editTax', $data);
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ],
-            'contain' => [
+            contain: [
                 'Taxes',
                 'ProductAttributes.PurchasePriceProductAttributes',
                 'Manufacturers',
                 'PurchasePriceProducts',
             ],
-        ])->first();
+        )->first();
         $this->assertEquals($product->id_tax, $expectedSellingPriceTaxId);
 
         if ($expectedPurchasePriceTaxId === 'empty') {
@@ -672,11 +672,11 @@ class ProductsControllerTest extends AppCakeTestCase
             $i++;
         }
 
-        $image = $this->Image->find('all', [
-            'conditions' => [
+        $image = $this->Image->find('all',
+            conditions: [
                 'Images.id_image' => $imageId,
             ],
-        ])->first();
+        )->first();
         $this->assertNotEmpty($image);
         
         // START delete image
@@ -687,11 +687,11 @@ class ProductsControllerTest extends AppCakeTestCase
             $this->assertFalse(file_exists($thumbsFileName));
         }
 
-        $image = $this->Image->find('all', [
-            'conditions' => [
+        $image = $this->Image->find('all',
+            conditions: [
                 'Images.id_image' => $imageId,
             ],
-        ])->first();
+        )->first();
         $this->assertEmpty($image);
 
     }

@@ -37,11 +37,11 @@ trait EditPurchasePriceTrait {
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers',
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
@@ -50,7 +50,7 @@ trait EditPurchasePriceTrait {
                 'PurchasePriceProducts.Taxes',
                 'ProductAttributes.PurchasePriceProductAttributes',
             ],
-        ])->first();
+        )->first();
 
         try {
 

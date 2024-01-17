@@ -110,9 +110,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
         $this->assertFlashMessage('Wir haben dir soeben den Aktivierungslink für dein neues Passwort gesendet.');
 
-        $customer = $this->Customer->find('all', [
-            'email' => Configure::read('test.loginEmailCustomer')
-        ])->first();
+        $customer = $this->Customer->find('all',
+            conditions: [
+                'Customers.email' => Configure::read('test.loginEmailCustomer')
+            ]
+        )->first();
 
         $this->get($this->Slug->getActivateNewPassword('non-existing-code'));
         $this->assertFlashMessage('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
@@ -229,11 +231,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->registrationDataEmpty['Customers']['is_company'] = true;
         $email = 'new-foodcoopshop-member-1@mailinator.com';
         $this->saveAndCheckValidCustomer($this->registrationDataEmpty, $email);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.email' => $email,
             ],
-        ])->first();
+        )->first();
         $this->assertTrue((bool) $customer->is_company);
     }
 
@@ -287,11 +289,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->get(Configure::read('app.slugHelper')->getActivateEmailAddress($customer->activate_email_code));
         $this->runAndAssertQueue();
 
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.email' => $email,
             ],
-        ])->first();
+        )->first();
         $this->assertNull($customer->activate_email_code);
         $this->assertEquals(true, (bool) $customer->active);
 
@@ -336,14 +338,14 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $data['Customers']['address_customer']['phone'] = $customerPhone;
 
         $this->addCustomer($data);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.email' => $customerAddressEmail
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
             ]
-        ])->first();
+        )->first();
 
         // check customer record
         $this->assertEquals(false, (bool) $customer->active);
@@ -377,11 +379,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
         $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch nicht mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li>', $response->msg);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
-        ])->first();
+        )->first();
         $this->assertNotEmpty($customer);
     }
 
@@ -406,11 +408,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         ]);
         $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('<li>Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten 2 Jahren: 1.</li>', $response->msg);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
-        ])->first();
+        )->first();
         $this->assertNotEmpty($customer);
     }
 
@@ -421,11 +423,11 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
         ]);
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
-        ])->first();
+        )->first();
         $this->assertEmpty($customer);
     }
 

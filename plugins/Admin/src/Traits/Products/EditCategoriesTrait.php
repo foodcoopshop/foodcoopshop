@@ -35,14 +35,14 @@ trait EditCategoriesTrait {
         $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'all-products'
         $selectedCategories = array_unique($selectedCategories);
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
         $categoryProductsTable->deleteAll([
@@ -54,11 +54,11 @@ trait EditCategoriesTrait {
         $data = [];
         foreach ($selectedCategories as $selectedCategoryId) {
             // only add if entry of passed id exists in category table
-            $oldCategory = $this->Category->find('all', [
-                'conditions' => [
+            $oldCategory = $this->Category->find('all',
+                conditions: [
                     'Categories.id_category' => $selectedCategoryId
                 ]
-            ])->first();
+            )->first();
             if (! empty($oldCategory)) {
                 // do not track "all-products"
                 if ($selectedCategoryId != Configure::read('app.categoryAllProducts')) {

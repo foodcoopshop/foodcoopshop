@@ -40,19 +40,19 @@ trait EditTaxTrait {
                 $contain[] = 'PurchasePriceProducts.Taxes';
                 $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
             }
-            $oldProduct = $this->Product->find('all', [
-                'conditions' => [
+            $oldProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ],
-                'contain' => $contain,
-            ])->first();
+                contain: $contain,
+            )->first();
 
             $this->Tax = $this->getTableLocator()->get('Taxes');
-            $taxes = $this->Tax->find('all', [
-                'conditions' => [
+            $taxes = $this->Tax->find('all',
+                conditions: [
                     'Taxes.deleted' => APP_OFF,
                 ]
-            ])->toArray();
+            )->toArray();
             $validTaxIds = Hash::extract($taxes, '{n}.id_tax');
             $validTaxIds[] = 0;
             if (!in_array($taxId, $validTaxIds)) {

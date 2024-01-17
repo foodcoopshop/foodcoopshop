@@ -49,14 +49,14 @@ class CustomersControllerTest extends AppCakeTestCase
         ];
         $this->post($this->Slug->getCustomerEdit(Configure::read('test.superadminId')), $data);
 
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => Configure::read('test.superadminId'),
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
             ],
-        ])->first();
+        )->first();
 
         $this->assertEquals($data['Customers']['firstname'], $customer->firstname);
         $this->assertEquals($data['Customers']['lastname'], $customer->lastname);

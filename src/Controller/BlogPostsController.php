@@ -44,12 +44,12 @@ class BlogPostsController extends FrontendController
         $conditions['BlogPosts.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
         $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
-        $blogPost = $blogPostTable->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
+        $blogPost = $blogPostTable->find('all',
+            conditions: $conditions,
+            contain: [
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         if (empty($blogPost)) {
             throw new RecordNotFoundException('blogPost not found');

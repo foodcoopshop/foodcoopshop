@@ -29,18 +29,18 @@ trait EditIsStockProductTrait {
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'StockAvailables',
                 'Manufacturers',
                 'ProductAttributes',
                 'ProductAttributes.StockAvailables',
                 'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
-        ])->first();
+        )->first();
 
         try {
             $this->Product->changeIsStockProduct(

@@ -34,11 +34,11 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $orderDetailId = 4;
         $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);
 
-        $changedOrderDetailPurchasePrices = $this->OrderDetail->OrderDetailPurchasePrices->find('all', [
-            'conditions' => [
+        $changedOrderDetailPurchasePrices = $this->OrderDetail->OrderDetailPurchasePrices->find('all',
+            conditions: [
                 'OrderDetailPurchasePrices.id_order_detail IN' => [$orderDetailId],
             ],
-        ])->toArray();
+        )->toArray();
         $this->assertEmpty($changedOrderDetailPurchasePrices);
     }
 

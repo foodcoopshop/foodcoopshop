@@ -59,14 +59,14 @@ trait ProfitTrait {
         $this->set('productId', $productId);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all', [
-            'contain' => [
+        $orderDetails = $this->OrderDetail->find('all',
+            contain: [
                 'Customers',
                 'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
                 'Products.Manufacturers',
             ],
-        ]);
+        );
 
         $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));

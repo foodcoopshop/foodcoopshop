@@ -144,11 +144,11 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>20,50 €'
         );
 
-        $payment = $this->Payment->find('all', [
-            'order' => [
+        $payment = $this->Payment->find('all',
+            order: [
                 'Payments.id' => 'DESC' ,
             ]
-        ])->first();
+        )->first();
         $this->assertEquals(APP_ON, $payment->approval);
     }
 
@@ -169,11 +169,11 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>20,50 €'
         );
 
-        $payment = $this->Payment->find('all', [
-            'order' => [
+        $payment = $this->Payment->find('all',
+            order: [
                 'Payments.id' => 'DESC' ,
             ]
-        ])->first();
+        )->first();
         $this->assertEquals(APP_OFF, $payment->approval);
     }
 
@@ -392,11 +392,11 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
 
         $jsonDecodedContent = $this->addPayment(0, $amountToAdd, 'deposit', $manufacturerId, $depositText, $dateAdd);
-        $payment = $this->Payment->find('all', [
-            'conditions' => [
+        $payment = $this->Payment->find('all',
+            conditions: [
                 'Payments.id' =>  $jsonDecodedContent->paymentId,
             ]
-        ])->first();
+        )->first();
 
         $this->assertEquals(1, $payment->status);
         $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
@@ -425,12 +425,12 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
     {
-        $lastActionLog = $this->ActionLog->find('all', [
-            'conditions' => [
+        $lastActionLog = $this->ActionLog->find('all',
+            conditions: [
                 'ActionLogs.customer_id' => $customerId
             ],
-            'order' => ['ActionLogs.date' => 'DESC']
-        ])->toArray();
+            order: ['ActionLogs.date' => 'DESC']
+        )->toArray();
         $this->assertEquals($expectedType, $lastActionLog[0]->type, 'cake action log type not correct');
         $this->assertEquals($expectedObjectType, $lastActionLog[0]->object_type, 'cake action log object type not correct');
         $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]->text, 'cake action log text not correct');

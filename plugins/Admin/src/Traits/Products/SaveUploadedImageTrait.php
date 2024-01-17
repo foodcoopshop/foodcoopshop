@@ -31,15 +31,15 @@ trait SaveUploadedImageTrait {
         $filename = $this->getRequest()->getData('filename');
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Images',
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         if (empty($product->image)) {
             // product does not yet have image => create the necessary record

@@ -74,11 +74,11 @@ foreach($csvPayments as $csvPayment) {
     echo $this->Form->hidden('Payments.'.$i.'.original_id_customer');
     if ($csvPayment->original_id_customer > 0) {
         $customerModel = FactoryLocator::get('Table')->get('Customers');
-        $customer = $customerModel->find('all', [
-            'conditions' => [
+        $customer = $customerModel->find('all',
+            conditions: [
                 'id_customer' => $csvPayment->original_id_customer
             ]
-        ])->first();
+        )->first();
         echo $customer->name;
     } else {
         echo $this->Form->control('Payments.'.$i.'.id_customer', [

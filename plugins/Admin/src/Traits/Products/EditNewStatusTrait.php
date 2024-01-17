@@ -33,14 +33,14 @@ trait EditNewStatusTrait {
         }
 
         $this->Product = $this->getTableLocator()->get('Products');
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         $product->created = \Cake\I18n\DateTime::now();
         if ($status == APP_OFF) {

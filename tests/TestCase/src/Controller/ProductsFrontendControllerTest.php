@@ -177,12 +177,11 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $productId = 60;
         $this->get($this->Slug->getProductDetail($productId, 'Milch'));
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'id_product' => $productId,
             ],
-        ])->first();
-        // TODO refactor this
+        )->first();
         $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
         $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
@@ -195,10 +194,11 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         $productId = 60;
-        $product = $this->Product->find('all', conditions: [
-            'id_product' => $productId,
-        ])->first();
-        // TODO refactor this
+        $product = $this->Product->find('all',
+            conditions: [
+                'id_product' => $productId,
+            ],
+        )->first();
         $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
 
         $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (3);';
