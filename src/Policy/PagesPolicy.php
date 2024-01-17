@@ -32,12 +32,12 @@ class PagesPolicy implements RequestPolicyInterface
             case 'detail':
                 $pageId = (int) $request->getParam('idAndSlug');
                 $pageTable = FactoryLocator::get('Table')->get('Pages');
-                $page = $pageTable->find('all', [
-                    'conditions' => [
+                $page = $pageTable->find('all',
+                    conditions: [
                         'Pages.id_page' => $pageId,
                         'Pages.active' => APP_ON,
                     ]
-                ])->first();
+                )->first();
                 if (!empty($page) && $identity === null && $page->is_private) {
                     return false;
                 }

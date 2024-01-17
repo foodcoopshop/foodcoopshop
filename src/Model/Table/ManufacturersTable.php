@@ -249,11 +249,11 @@ class ManufacturersTable extends AppTable
             return [];
         }
 
-        $customer = $cm->find('all', [
-            'conditions' => [
-                'Customers.email' => $email
+        $customer = $cm->find('all',
+            conditions: [
+                'Customers.email' => $email,
             ]
-        ])->first();
+        )->first();
 
         if (empty($customer->address_customer->id_address)) {
             return $customer;

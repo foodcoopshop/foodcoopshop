@@ -29,11 +29,11 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = FactoryLocator::get('Table')->get('Customers');
-        $query = $customerModel->find('all', [
-            'fields' => [
+        $query = $customerModel->find('all',
+            fields: [
                 'personalTransactionCode' => $customerModel->getPersonalTransactionCodeField(),
             ]
-        ]);
+        );
         $personalTransactionCodes = $query->all()->extract('personalTransactionCode')->toArray();
 
         $regex = '/' . join('|', $personalTransactionCodes) .  '/';
@@ -41,11 +41,11 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
 
         $foundCustomer = null;
         if (!empty($matches[0][0])) {
-            $foundCustomer = $customerModel->find('all', [
-                'conditions' => [
+            $foundCustomer = $customerModel->find('all',
+                conditions: [
                     $customerModel->getPersonalTransactionCodeField() . ' = :personalTransactionCode'
                 ]
-            ])->bind(':personalTransactionCode', $matches[0][0], 'string')
+            )->bind(':personalTransactionCode', $matches[0][0], 'string')
             ->first();
         }
         return $foundCustomer;

@@ -32,15 +32,15 @@ class BlogPostsPolicy implements RequestPolicyInterface
             case 'detail':
                 $blogPostId = (int) $request->getParam('pass')[0];
                 $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
-                $blogPost = $blogPostTable->find('all', [
-                    'conditions' => [
+                $blogPost = $blogPostTable->find('all',
+                    conditions: [
                         'BlogPosts.id_blog_post' => $blogPostId,
                         'BlogPosts.active' => APP_ON
                     ],
-                    'contain' => [
+                    contain: [
                         'Manufacturers'
                     ]
-                ])->first();
+                )->first();
                 if (!empty($blogPost) && $identity === null
                     && ($blogPost->is_private || (!empty($blogPost->manufacturer) && $blogPost->manufacturer->is_private))
                     ) {

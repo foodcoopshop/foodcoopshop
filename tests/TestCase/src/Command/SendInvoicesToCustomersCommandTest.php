@@ -147,14 +147,14 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $pdfFilenameWithPath = DS . '2018' . DS . '02' . DS . $pdfFilenameWithoutPath;
         $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilenameWithPath);
 
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
+        $invoice = $this->Invoice->find('all',
+            conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
-            'contain' => [
+            contain: [
                 'InvoiceTaxes',
             ],
-        ])->first();
+        )->first();
 
         $this->assertEquals($invoice->id, 1);
         $this->assertEquals($invoice->id_manufacturer, 0);

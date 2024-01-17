@@ -96,11 +96,11 @@ class PurchasePriceProductsTable extends AppTable
     {
 
         $productTable = FactoryLocator::get('Table')->get('Products');
-        $products = $productTable->find('all', [
-            'conditions' => [
+        $products = $productTable->find('all',
+            conditions: [
                 'Products.id_product IN' => $productIds,
             ],
-            'contain' => [
+            contain: [
                 'Taxes',
                 'Manufacturers',
                 'ProductAttributes.PurchasePriceProductAttributes',
@@ -109,7 +109,7 @@ class PurchasePriceProductsTable extends AppTable
                 'PurchasePriceProducts.Taxes',
                 'UnitProducts',
             ]
-        ]);
+        );
 
         $preparedProductsForActionLog = [];
         $preparedProductData = [];
@@ -223,11 +223,11 @@ class PurchasePriceProductsTable extends AppTable
         }
 
         $taxesTable = FactoryLocator::get('Table')->get('Taxes');
-        $tax = $taxesTable->find('all', [
-            'conditions' => [
+        $tax = $taxesTable->find('all',
+            conditions: [
                 'Taxes.id_tax' => $taxId,
             ]
-        ])->first();
+        )->first();
 
         $taxRate = 0;
         if (! empty($tax)) {

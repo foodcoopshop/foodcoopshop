@@ -180,11 +180,11 @@ class CustomersTable extends AppTable
         $validator->add('email', 'account_inactive', [
             'rule' => function ($value, $context) {
                 $ct = FactoryLocator::get('Table')->get('Customers');
-                $record  = $ct->find('all', [
-                    'conditions' => [
-                        'email' => $value
-                    ]
-                ])->first();
+                $record  = $ct->find('all',
+                    conditions: [
+                        'email' => $value,
+                    ],
+                )->first();
                 if (!empty($record) && !$record->active) {
                     return false;
                 }
@@ -280,15 +280,15 @@ class CustomersTable extends AppTable
 
         if ($identity->shopping_price == 'PP') {
             $this->Product = FactoryLocator::get('Table')->get('Products');
-            $purchasePrices = $this->Product->find('all', [
-                'conditions' => [
+            $purchasePrices = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId,
                 ],
-                'contain' => [
+                contain: [
                     'PurchasePriceProducts.Taxes',
                     'UnitProducts',
                 ]
-            ])->first();
+            )->first();
 
             if (!empty($purchasePrices->purchase_price_product)) {
                 $result['price'] = $purchasePrices->purchase_price_product->price;
@@ -330,16 +330,16 @@ class CustomersTable extends AppTable
         if ($identity->shopping_price == 'PP') {
 
             $this->Product = FactoryLocator::get('Table')->get('Products');
-            $purchasePrices = $this->Product->find('all', [
-                'conditions' => [
+            $purchasePrices = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId,
                 ],
-                'contain' => [
+                contain: [
                     'PurchasePriceProducts.Taxes',
                     'ProductAttributes.PurchasePriceProductAttributes',
                     'ProductAttributes.UnitProductAttributes',
                 ]
-            ])->first();
+            )->first();
 
             $foundPurchasePriceProductAttribute = null;
             foreach ($purchasePrices->product_attributes as $purchasePriceProductAttribute) {
@@ -414,14 +414,14 @@ class CustomersTable extends AppTable
     public function getManufacturerRecord($customer)
     {
         $mm = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $mm->find('all', [
-            'conditions' => [
+        $manufacturer = $mm->find('all',
+            conditions: [
                 'AddressManufacturers.email' => $customer->email
             ],
-            'contain' => [
+            contain: [
                 'AddressManufacturers'
             ]
-        ])->first();
+        )->first();
         return $manufacturer;
     }
 
@@ -468,14 +468,14 @@ class CustomersTable extends AppTable
         $productBalanceSum = 0;
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
 
-        $query = $orderDetailTable->find('all', [
-            'contain' => [
-                'Customers'
+        $query = $orderDetailTable->find('all',
+            conditions: [
+                'Customers.id_customer IS NULL',
             ],
-            'conditions' => [
-                'Customers.id_customer IS NULL'
-            ]
-        ]);
+            contain: [
+                'Customers',
+            ],
+        );
         $query->select('OrderDetails.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
         $query->group('OrderDetails.id_customer');
 
@@ -513,14 +513,14 @@ class CustomersTable extends AppTable
 
         $paymentTable = FactoryLocator::get('Table')->get('Payments');
 
-        $query = $paymentTable->find('all', [
-            'contain' => [
+        $query = $paymentTable->find('all',
+            conditions: [
+                'Customers.id_customer IS NULL'
+            ],
+            contain: [
                 'Customers'
             ],
-            'conditions' => [
-                'Customers.id_customer IS NULL'
-            ]
-        ]);
+        );
         $query->select('Payments.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
         $query->group('Payments.id_customer');
 

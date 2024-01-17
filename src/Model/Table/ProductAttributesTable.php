@@ -56,11 +56,11 @@ class ProductAttributesTable extends AppTable
     {
 
         $productAttributeCombinationsTable = FactoryLocator::get('Table')->get('ProductAttributeCombinations');
-        $pac = $productAttributeCombinationsTable->find('all', [
-            'conditions' => [
+        $pac = $productAttributeCombinationsTable->find('all',
+            conditions: [
                 'ProductAttributeCombinations.id_product_attribute' => $productAttributeId,
             ]
-        ])->first();
+        )->first();
         $productAttributeId = $pac->id_product_attribute;
 
         $this->deleteAll([

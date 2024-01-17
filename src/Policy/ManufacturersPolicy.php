@@ -38,12 +38,12 @@ class ManufacturersPolicy implements RequestPolicyInterface
             case 'detail':
                 $manufacturerId = (int) $request->getParam('pass')[0];
                 $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
-                $manufacturer = $manufacturerTable->find('all', [
-                    'conditions' => [
+                $manufacturer = $manufacturerTable->find('all',
+                    conditions: [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
                         'Manufacturers.active' => APP_ON,
                     ]
-                ])->first();
+                )->first();
                 if (!empty($manufacturer) && $identity === null && $manufacturer->is_private) {
                     return false;
                 }

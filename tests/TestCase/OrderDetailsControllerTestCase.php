@@ -69,14 +69,14 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         if (!$this->mockCart) {
             return false;
         }
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => $this->mockCart->id_cart
+        $cart = $this->Cart->find('all',
+            conditions: [
+                'Carts.id_cart' => $this->mockCart->id_cart,
             ],
-            'contain' => [
+            contain: [
                 'CartProducts.OrderDetails.OrderDetailUnits',
-            ]
-        ])->first();
+            ],
+        )->first();
         return $cart;
     }
 
@@ -94,14 +94,14 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     }
 
     protected function getOrderDetailsFromDatabase($orderDetailIds) {
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail IN' => $orderDetailIds
+        $orderDetails = $this->OrderDetail->find('all',
+            conditions: [
+                'OrderDetails.id_order_detail IN' => $orderDetailIds,
             ],
-            'contain' => [
+            contain: [
                 'OrderDetailUnits',
-            ]
-        ])->toArray();
+            ],
+        )->toArray();
         return $orderDetails;
     }
 

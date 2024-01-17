@@ -334,25 +334,25 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $product1 = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId1
+        $product1 = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $productId1,
             ],
-            'contain' => [
-                'StockAvailables'
+            contain: [
+                'StockAvailables',
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($defaultQuantity, $product1->stock_available->default_quantity_after_sending_order_lists);
         $this->assertEquals($defaultQuantity, $product1->stock_available->quantity);
 
-        $product2 = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $this->Product->getProductIdAndAttributeId($productId2)['productId']
+        $product2 = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $this->Product->getProductIdAndAttributeId($productId2)['productId'],
             ],
-            'contain' => [
-                'ProductAttributes.StockAvailables'
+            contain: [
+                'ProductAttributes.StockAvailables',
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->default_quantity_after_sending_order_lists);
         $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->quantity);
     }
@@ -506,11 +506,11 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     private function assertOrderDetailState($orderDetailId, $expectedOrderState)
     {
-        $newOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail' => $orderDetailId
-            ]
-        ])->first();
+        $newOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
+                'OrderDetails.id_order_detail' => $orderDetailId,
+            ],
+        )->first();
         $this->assertEquals($expectedOrderState, $newOrderDetail->order_state);
     }
 

@@ -78,11 +78,11 @@ class CartProductsTable extends AppTable
         }
 
         // get product data from database
-        $product = $productsTable->find('all', [
-            'conditions' => [
+        $product = $productsTable->find('all',
+            conditions: [
                 'Products.id_product' => (int) $productId
             ],
-            'contain' => [
+            contain: [
                 'DepositProducts',
                 'Manufacturers',
                 'StockAvailables',
@@ -94,7 +94,7 @@ class CartProductsTable extends AppTable
                 'ProductAttributes.UnitProductAttributes',
                 'Taxes',
             ]
-        ])
+        )
         ->first();
 
         $existingCartProduct = $identity->getProduct($initialProductId);
@@ -345,15 +345,15 @@ class CartProductsTable extends AppTable
         $pickupDays = [];
         $uniquePickupDays = $pickupDayTable->getUniquePickupDays($cartProducts);
         if (!empty($uniquePickupDays)) {
-            $pickupDays = $pickupDayTable->find('all', [
-                'conditions' => [
+            $pickupDays = $pickupDayTable->find('all',
+                conditions: [
                     'PickupDays.customer_id' => $customerId,
                     'PickupDays.pickup_day IN' => $uniquePickupDays
                 ],
-                'order' => [
+                order: [
                     'PickupDays.pickup_day' => 'ASC'
                 ]
-            ]);
+            );
 
             $existingPickupDays = [];
             foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
@@ -382,12 +382,12 @@ class CartProductsTable extends AppTable
         }
         // deleteAll cannot check associations
         $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
+        $cart = $this->Cart->find('all',
+            conditions: [
                 'Carts.id_cart' => $cartId,
                 'Carts.id_customer' => $customerId
             ]
-        ])->first();
+        )->first();
         if (empty($cart)) {
             throw new \Exception('no cart found for cartId: ' . $cartId . ' and customerId: ' . $customerId);
         }

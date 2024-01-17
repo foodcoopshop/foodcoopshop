@@ -65,14 +65,14 @@ class HelloCashService
         ];
 
         $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId,
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
             ]
-        ])->first();
+        )->first();
 
         $response = $this->getRestClient()->post(
             '/invoices/' . $originalInvoiceId . '/cancellation',
@@ -309,14 +309,14 @@ class HelloCashService
     {
 
         $this->Customer = FactoryLocator::get('Table')->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId,
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
             ],
-        ])->first();
+        )->first();
 
         $data = [
             'user_firstname' => $customer->firstname,

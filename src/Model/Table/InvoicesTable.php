@@ -171,11 +171,11 @@ class InvoicesTable extends AppTable
     {
 
         $customersTable = FactoryLocator::get('Table')->get('Customers');
-        $customer = $customersTable->find('all', [
-            'conditions' => [
+        $customer = $customersTable->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId,
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
                 'ActiveOrderDetails' => function (Query $q) use ($currentDay) {
                     $q->where(function (QueryExpression $exp) use ($currentDay) {
@@ -186,7 +186,7 @@ class InvoicesTable extends AppTable
                 'ActiveOrderDetails.OrderDetailUnits',
                 'ActiveOrderDetails.Products.Manufacturers',
             ]
-        ])->first();
+        )->first();
 
         // fetch returned deposit
         $paymentsTable = FactoryLocator::get('Table')->get('Payments');

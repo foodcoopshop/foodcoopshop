@@ -42,15 +42,15 @@ trait NoDeliveryDaysOrdersExistTrait
             $value = explode(',', $value);
         }
 
-        $query = $orderDetailsTable->find('all', [
-            'conditions' => [
+        $query = $orderDetailsTable->find('all',
+            conditions: [
                 'pickup_day IN' => $value
             ],
-            'group' => 'pickup_day',
-            'contain' => [
+            group: 'pickup_day',
+            contain: [
                 'Products'
             ]
-        ]);
+        );
         $query->select(
             [
                 'PickupDayCount' => $query->func()->count('OrderDetails.pickup_day'),

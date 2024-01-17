@@ -181,14 +181,14 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $originalQuantity = 2;
         $this->doPrepareAlwaysAvailable($this->productId2, $originalQuantity);
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $this->Product->getProductIdAndAttributeId($this->productId2)['productId'],
             ],
-            'contain' => [
-                'ProductAttributes.StockAvailables'
-            ]
-        ])->first();
+            contain: [
+                'ProductAttributes.StockAvailables',
+            ],
+        )->first();
         // quantity must not have changed
         $this->assertEquals($originalQuantity, $product->product_attributes[0]->stock_available->quantity);
     }
@@ -197,14 +197,14 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $originalQuantity = 2;
         $this->doPrepareAlwaysAvailable($this->productId1, $originalQuantity);
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $this->productId1,
             ],
-            'contain' => [
-                'StockAvailables'
-            ]
-        ])->first();
+            contain: [
+                'StockAvailables',
+            ],
+        )->first();
         // quantity must not have changed
         $this->assertEquals($originalQuantity, $product->stock_available->quantity);
     }
@@ -1032,11 +1032,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->logout();
 
         $this->loginAsSuperadmin();
-        $testCustomer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => Configure::read('test.customerId')
-            ]
-        ])->first();
+        $testCustomer = $this->Customer->find('all',
+            conditions: [
+                'Customers.id_customer' => Configure::read('test.customerId'),
+            ],
+        )->first();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
@@ -1210,11 +1210,11 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatusAfterFinish()
     {
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => 1
-            ]
-        ])->first();
+        $cart = $this->Cart->find('all',
+            conditions: [
+                'Carts.id_cart' => 1,
+            ],
+        )->first();
         $this->assertEquals($cart->status, 0, 'cake cart status wrong');
     }
 
@@ -1244,12 +1244,12 @@ class CartsControllerTest extends AppCakeTestCase
         $ids = $this->Product->getProductIdAndAttributeId($productId);
 
         // get changed product
-        $stockAvailable = $this->StockAvailable->find('all', [
-            'conditions' => [
+        $stockAvailable = $this->StockAvailable->find('all',
+            conditions: [
                 'StockAvailables.id_product' => $ids['productId'],
-                'StockAvailables.id_product_attribute' => $ids['attributeId']
-            ]
-        ])->first();
+                'StockAvailables.id_product_attribute' => $ids['attributeId'],
+            ],
+        )->first();
 
         // stock available check of changed product
         $this->assertEquals($stockAvailable->quantity, $result, 'stockavailable quantity wrong');
