@@ -394,7 +394,6 @@ class InvoicesTable extends AppTable
     {
 
         $invoiceData = [
-            'id' => !empty($invoiceId) ? $invoiceId : null,
             'id_customer' => $customerId,
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFile,
@@ -403,6 +402,11 @@ class InvoicesTable extends AppTable
             'invoice_taxes' => [],
             'email_status' => $invoicesPerEmailEnabled ? null : __('deactivated'),
         ];
+
+        if (!empty($invoiceId)) {
+            $invoiceData['id'] = $invoiceId;
+        }
+
         foreach($taxRates as $taxRate => $values) {
             $invoiceData['invoice_taxes'][] = [
                 'tax_rate' => $taxRate,

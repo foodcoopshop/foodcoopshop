@@ -205,7 +205,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $params = [
             'pickupDay' => $nextDeliveryDay,
         ];
-        $statement = $this->dbConnection->prepare($query);
+        $statement = $this->dbConnection->getDriver()->prepare($query);
         $statement->execute($params);
         
         $this->loginAsCustomer();
