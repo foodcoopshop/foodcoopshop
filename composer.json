@@ -29,7 +29,7 @@
         "studio-42/elfinder": "^2.1",
         "ezyang/htmlpurifier": "^4.16",
         "league/csv": "^9.5",
-        "dereuromark/cakephp-queue": "^7.0",
+        "dereuromark/cakephp-queue": "^7.1",
         "tecnickcom/tcpdf": "^6.4",
         "hisorange/browser-detect": "^4.4",
         "phpoffice/phpspreadsheet": "1.*",
