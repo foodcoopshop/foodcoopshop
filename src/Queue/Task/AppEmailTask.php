@@ -58,7 +58,6 @@ class AppEmailTask extends Task
 				throw new QueueException('Could not send email.');
 			}
 
-			return;
 		}
 
         } catch(Throwable $e) {
