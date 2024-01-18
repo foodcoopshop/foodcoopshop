@@ -28,8 +28,6 @@ use Admin\Traits\Products\IndexTrait;
 use Admin\Traits\Products\SaveUploadedImageTrait;
 use App\Model\Table\ProductsTable;
 use Cake\Event\EventInterface;
-use Cake\Core\Configure;
-use Cake\Http\Exception\ForbiddenException;
 use Cake\View\JsonView;
 
 /**
