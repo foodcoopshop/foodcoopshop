@@ -54,7 +54,6 @@ use Cake\Core\Configure;
 
 <?php
 
-$this->Paginator->setPaginated($actionLogs);
 echo '<table class="list no-hover">';
 echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('ActionLogs.id', 'ID') . '</th>';

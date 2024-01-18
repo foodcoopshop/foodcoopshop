@@ -51,7 +51,6 @@ echo $this->element('navTabs/configurationNavTabs', [
     'key' => 'tax_rates',
 ]);
 
-$this->Paginator->setPaginated($taxes);
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">'.__d('admin', 'ID').'</th>';

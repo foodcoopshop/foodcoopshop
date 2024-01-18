@@ -63,7 +63,6 @@ use Cake\Core\Configure;
 
 <?php
 
-$this->Paginator->setPaginated($blogPosts);
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide"></th>';
