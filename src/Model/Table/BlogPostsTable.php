@@ -49,23 +49,6 @@ class BlogPostsTable extends AppTable
         return $validator;
     }
 
-    public function findNeighborPrev(Query $query, array $options): Query
-    {
-        $previous = $this->find()
-            ->orderByAsc($this->getAlias().'.modified')
-            ->where($this->getAlias() . '.modified > \'' . $options['modified'] . '\'');
-        $previous = $this->getConditionShowOnStartPage($previous, $options['showOnStartPage']);
-        return $previous;
-    }
-    public function findNeighborNext(Query $query, array $options): Query
-    {
-        $next = $this->find()
-            ->orderByDesc($this->getAlias().'.modified')
-            ->where($this->getAlias() . '.modified < \'' . $options['modified'] . '\'');
-        $next = $this->getConditionShowOnStartPage($next, $options['showOnStartPage']);
-        return $next;
-    }
-
     public function findBlogPosts($manufacturerId = null, $showOnStartPage = false)
     {
 
