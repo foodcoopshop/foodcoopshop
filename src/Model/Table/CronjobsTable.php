@@ -184,7 +184,7 @@ class CronjobsTable extends AppTable
 
     }
 
-    public function findAvailable(Query $query, array $options)
+    public function findAvailable(Query $query)
     {
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             $query->where(['name <> "SendInvoicesToManufacturers"']);
