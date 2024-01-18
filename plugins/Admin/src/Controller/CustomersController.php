@@ -736,7 +736,7 @@ class CustomersController extends AdminAppController
                 $path .= '_sort';
                 $type = 'locale';
             }
-            $customers = Hash::sort($customers, $path, $this->getRequest()->getQuery('direction'), [
+            $customers = Hash::sort($customers->toArray(), $path, $this->getRequest()->getQuery('direction'), [
                 'type' => $type,
                 'ignoreCase' => true,
             ]);
