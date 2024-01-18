@@ -109,7 +109,7 @@ trait EditCustomerTrait {
             // 2) copy old order detail and modify it
             $newEntity = $oldOrderDetail;
             $newEntity->setNew(true);
-            $newEntity->id_order_detail = null;
+            unset($newEntity->id_order_detail);
             $newEntity->id_customer = $customerId;
             $savedEntity = $this->OrderDetail->save($newEntity, [
                 'associated' => false
