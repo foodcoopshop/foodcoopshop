@@ -122,6 +122,8 @@ class ReportsController extends AdminAppController
 
                 if (!$paymentsHaveErrors && $saveRecords) {
 
+                    $this->Customer = $this->getTableLocator()->get('Customers');
+
                     $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
 
                         $i = 0;
