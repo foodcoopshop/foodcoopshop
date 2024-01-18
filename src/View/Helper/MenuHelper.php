@@ -146,8 +146,12 @@ class MenuHelper extends Helper
     {
         $menuElement = [];
         if ($identity !== null) {
+            $userName = $identity->getAbbreviatedUserName();
+            if ($identity->isManufacturer()) {
+                $userName = $identity->getManufacturerName();
+            }
             if ($this->getView()->getPlugin() != '') {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$identity->name.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             } else {
                 $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             }
