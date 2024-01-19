@@ -480,12 +480,26 @@ class LegacyPaginatorHelper extends Helper
 
         $paging = ['sort' => $key, 'direction' => $dir, 'page' => 1];
 
+        $url = $this->generateUrl($paging, $options['model'], $url);    
+
         $vars = [
             'text' => $options['escape'] ? h($title) : $title,
-            'url' => $this->generateUrl($paging, $options['model'], $url),
+            'url' => $this->applyDirtyLegacyFixForChangingDirection($url),
         ];
 
         return $this->templater()->format($template, $vars);
+    }
+
+    private function applyDirtyLegacyFixForChangingDirection($url)
+    {
+        $currentUrl = $this->_View->getRequest()->getRequestTarget();
+        if (preg_match('/direction=asc/', $currentUrl)) {
+            $newUrl = preg_replace('/direction=asc/', 'direction=desc', $url);
+        }
+        if (preg_match('/direction=desc/', $currentUrl)) {
+            $newUrl = preg_replace('/direction=desc/', 'direction=asc', $url);
+        }
+        return $newUrl ?? $url;
     }
 
     /**
@@ -516,7 +530,7 @@ class LegacyPaginatorHelper extends Helper
             'fullBase' => false,
         ];
 
-        return $this->Url->build($this->generateUrlParams($options, $model, $url), $urlOptions);
+        return  $this->Url->build($this->generateUrlParams($options, $model, $url), $urlOptions);
     }
 
     /**
