@@ -48,7 +48,7 @@ class AppView extends View
             'className' => 'MyNumber',
         ]);
         $this->loadHelper('Paginator', [
-            'className' => 'LegacyPaginator',
+            'className' => 'ArraySupportingSortOnlyPaginator',
         ]);
         $this->loadHelper('Form', [
             'widgets' => [
