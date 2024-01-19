@@ -47,9 +47,6 @@ class AppView extends View
         $this->loadHelper('Number', [
             'className' => 'MyNumber',
         ]);
-        $this->loadHelper('Paginator', [
-            'className' => 'ArraySupportingSortOnlyPaginator',
-        ]);
         $this->loadHelper('Form', [
             'widgets' => [
                 '_default' => ['MyBasic'],

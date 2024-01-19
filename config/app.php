@@ -189,9 +189,6 @@ return [
         'skipLog' => [],
         'log' => true,
         'trace' => true,
-        'ignoredDeprecationPaths' => [
-            'vendor' . DS . 'dereuromark' . DS . 'cakephp-queue' . DS . '*',
-        ],
     ],
 
     /*

@@ -57,6 +57,7 @@ use Cake\Datasource\FactoryLocator;
 
 <?php
 
+$this->Paginator->setPaginated($manufacturers);
 echo '<table class="list">';
 echo '<tr class="sort">';
     echo $this->element('rowMarker/rowMarkerAll', [

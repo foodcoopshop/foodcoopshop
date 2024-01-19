@@ -323,19 +323,24 @@ class ArraySupportingSortOnlyPaginatorHelper extends Helper
 
         $paging = ['sort' => $key, 'direction' => $dir, 'page' => 1];
 
-        $url = $this->generateUrl($paging, $options['model'], $url);    
+        $url = $this->generateUrl($paging, $options['model'], $url);
 
-        $vars = [
-            'text' => $options['escape'] ? h($title) : $title,
-            'url' => $this->applyFixForChangingDirection($url),
-        ];
-
-        return $this->templater()->format($template, $vars);
+        $currentUrl = $this->_View->getRequest()->getRequestTarget();
+        $url = $this->applyFixForChangingDirection($currentUrl, $url, $key);
+        if (preg_match('/' . $key . '/', $currentUrl)) {
+            $options['class'] = $this->_View->getRequest()->getQueryParams()['direction'] ?? '';
+        }
+        $options['escape'] = false;
+        $result = $this->Html->link($title, $url, $options);
+        return $result;
     }
 
-    private function applyFixForChangingDirection($url)
+    private function applyFixForChangingDirection($currentUrl, $url, $key)
     {
-        $currentUrl = $this->_View->getRequest()->getRequestTarget();
+        if (!preg_match('/' . $key . '/', $currentUrl)) {
+            return $url;
+        }
+
         if (preg_match('/direction=asc/', $currentUrl)) {
             $newUrl = preg_replace('/direction=asc/', 'direction=desc', $url);
         }

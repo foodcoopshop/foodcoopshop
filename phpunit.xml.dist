@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" colors="true" processIsolation="false" stopOnFailure="false" bootstrap="./tests/bootstrap.php" cacheDirectory=".phpunit.cache">
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+  colors="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  bootstrap="./tests/bootstrap.php"
+  cacheDirectory=".phpunit.cache" 
+  displayDetailsOnTestsThatTriggerDeprecations="true"
+  >
   <php>
     <ini name="memory_limit" value="-1"/>
     <ini name="apc.enable_cli" value="1"/>

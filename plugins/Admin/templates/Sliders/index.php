@@ -44,6 +44,7 @@ $this->element('highlightRowAfterEdit', [
 
 <?php
 
+$this->Paginator->setPaginated($sliders);
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
