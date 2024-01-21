@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\ORM\AppMarshaller;
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Marshaller;
 use Cake\ORM\Table;
 
@@ -28,6 +29,9 @@ class AppTable extends Table
     public function initialize(array $config): void
     {
         $this->setTable($this->tablePrefix . $this->getTable());
+        if ((PHP_SAPI == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
+            $this->setConnection(ConnectionManager::get('test'));
+        }
         parent::initialize($config);
     }
 
