@@ -75,6 +75,8 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 }
                 return false;
                 break;
+            case 'setElFinderUploadPath':
+                return $identity !== null && !$identity->isManufacturer();
             case 'delete':
             case 'editProductPrice':
             case 'editProductAmount':
