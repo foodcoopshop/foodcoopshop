@@ -33,10 +33,6 @@ $this->element('addScript', ['script' =>
         <li><?php echo __('Please_pick_up_the_ordered_products_at:_{0}', ['<b>'.str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()).'</b>']); ?></li>
     <?php } ?>
 
-    <?php if ($this->Html->paymentIsCashless()) { ?>
-        <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>"><?php echo __('Increase_credit'); ?></a></li>
-    <?php } ?>
-
 </ul>
 
 <?php
