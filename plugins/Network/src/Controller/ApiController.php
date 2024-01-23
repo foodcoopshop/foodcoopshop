@@ -41,17 +41,10 @@ class ApiController extends Controller
 
     public function beforeFilter(EventInterface $event)
     {
-
         $identity = Router::getRequest()->getAttribute('identity');
         $this->identity = $identity;
         $this->set('identity', $identity);
-
         $this->RequestHandler->renderAs($this, 'json');
-
-        if ($this->getRequest()->is('options')) {
-            return $this->getResponse();
-        }
-
     }
 
     private function getProductDetailLinks($productsData)
