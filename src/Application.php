@@ -136,9 +136,22 @@ class Application extends BaseApplication
             $isApiRequest = in_array($_SERVER['REQUEST_URI'], $this->getApiUrls());
         }
 
+        if ($isApiRequest) {
+
+            // q&d solution to enable CORS for api requests
+            @header('Access-Control-Allow-Origin: *');
+            @header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+            @header('Access-Control-Allow-Headers: Content-Type, Authorization');
+            if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+                exit;
+            }
+
+        }
+
         // Token check will be skipped when callback returns `true`.
-        $csrf->skipCheckCallback(function ($isApiRequest) {
-            return $isApiRequest;
+        $apiUrls = $this->getApiUrls();
+        $csrf->skipCheckCallback(function ($request) use ($apiUrls) {
+            return in_array($request->getPath(), $apiUrls);
         });
 
         $authorizationMiddlewareConfig = [];
@@ -241,6 +254,16 @@ class Application extends BaseApplication
 
         $isApiRequest = in_array($request->getPath(), $this->getApiUrls());
         if ($isApiRequest) {
+
+            // enables basic authentication with php in cgi mode
+            if (isset($_SERVER['HTTP_AUTHORIZATION']))
+            {
+                $ha = base64_decode( substr($_SERVER['HTTP_AUTHORIZATION'],6) );
+                if (isset($ha[0]) && isset($ha[1])) {
+                    list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
+                }
+            }
+
             $service->loadAuthenticator('Authentication.HttpBasic', [
                 'resolver' => $ormResolver,
                 'fields' => $fields,
