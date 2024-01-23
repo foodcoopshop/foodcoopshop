@@ -46,7 +46,7 @@ use DateTime;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Utility\Security;
 use App\Controller\Component\StringComponent;
-
+use App\Middleware\CorsMiddleware;
 /**
  * Application setup class.
  *
@@ -155,6 +155,10 @@ class Application extends BaseApplication
             ];
         }
 
+        if ($isApiRequest) {
+            $middlewareQueue->add(new CorsMiddleware());
+        }
+
         $middlewareQueue
 
         // Handle plugin/theme assets like CakePHP normally does.
@@ -241,6 +245,16 @@ class Application extends BaseApplication
 
         $isApiRequest = in_array($request->getPath(), $this->getApiUrls());
         if ($isApiRequest) {
+
+            // enables basic authentication with php in cgi mode
+            if (isset($_SERVER['HTTP_AUTHORIZATION']))
+            {
+                $ha = base64_decode( substr($_SERVER['HTTP_AUTHORIZATION'],6) );
+                if (isset($ha[0]) && isset($ha[1])) {
+                    list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
+                }
+            }
+
             $service->loadAuthenticator('Authentication.HttpBasic', [
                 'resolver' => $ormResolver,
                 'fields' => $fields,
