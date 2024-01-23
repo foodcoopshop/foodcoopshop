@@ -137,7 +137,7 @@ class Application extends BaseApplication
         }
 
         if ($isApiRequest) {
-            
+
             // q&d solution to enable CORS for api requests
             @header('Access-Control-Allow-Origin: *');
             @header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
@@ -145,16 +145,7 @@ class Application extends BaseApplication
             if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
                 exit;
             }
-    
-            // enables basic authentication with php in cgi mode
-            if (isset($_SERVER['HTTP_AUTHORIZATION']))
-            {
-                $ha = base64_decode( substr($_SERVER['HTTP_AUTHORIZATION'],6) );
-                if (isset($ha[0]) && isset($ha[1])) {
-                    list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
-                }
-            }
-            
+
         }
 
         // Token check will be skipped when callback returns `true`.
