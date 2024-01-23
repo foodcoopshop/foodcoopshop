@@ -42,15 +42,6 @@ class ApiController extends Controller
     public function beforeFilter(EventInterface $event)
     {
 
-        // enables basic authentication with php in cgi mode
-        if (isset($_SERVER['HTTP_AUTHORIZATION']))
-        {
-            $ha = base64_decode( substr($_SERVER['HTTP_AUTHORIZATION'],6) );
-            if (isset($ha[0]) && isset($ha[1])) {
-                list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
-            }
-        }
-
         $identity = Router::getRequest()->getAttribute('identity');
         $this->identity = $identity;
         $this->set('identity', $identity);

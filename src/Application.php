@@ -47,6 +47,7 @@ use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Utility\Security;
 use App\Controller\Component\StringComponent;
 use App\Middleware\CorsMiddleware;
+
 /**
  * Application setup class.
  *
@@ -128,7 +129,6 @@ class Application extends BaseApplication
 
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-
         $csrf = new CsrfProtectionMiddleware();
 
         $isApiRequest = false;
@@ -137,8 +137,9 @@ class Application extends BaseApplication
         }
 
         // Token check will be skipped when callback returns `true`.
-        $csrf->skipCheckCallback(function ($isApiRequest) {
-            return $isApiRequest;
+        $apiUrls = $this->getApiUrls();
+        $csrf->skipCheckCallback(function ($request) use ($apiUrls) {
+            return in_array($request->getPath(), $apiUrls);
         });
 
         $authorizationMiddlewareConfig = [];
@@ -155,9 +156,9 @@ class Application extends BaseApplication
             ];
         }
 
-        if ($isApiRequest) {
-            $middlewareQueue->add(new CorsMiddleware());
-        }
+        $middlewareQueue->add(new CorsMiddleware([
+            'apiUrls' => $this->getApiUrls(),
+        ]));
 
         $middlewareQueue
 
