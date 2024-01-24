@@ -48,10 +48,8 @@ class ListsControllerTest extends AppCakeTestCase
         $this->generateInvoice($customerId, $paidInCash);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
-                'Invoices.id_customer' => $customerId,
-            ],
+        $invoice = $this->Invoice->find('all', conditions: [
+            'Invoices.id_customer' => $customerId,
         ])->first();
 
         $this->loginAsCustomer();

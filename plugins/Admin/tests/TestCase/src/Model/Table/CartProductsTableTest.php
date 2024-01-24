@@ -57,15 +57,15 @@ class CartProductsTableTest extends AppCakeTestCase
 
     private function getCartWithCartProducts($cartId, $customerId)
     {
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
+        $cart = $this->Cart->find('all',
+            conditions: [
                 'Carts.id_cart' => $cartId,
                 'Carts.id_customer' => $customerId
             ],
-            'contain' => [
+            contain: [
                 'CartProducts'
             ]
-        ])->first();
+        )->first();
         return $cart;
     }
 

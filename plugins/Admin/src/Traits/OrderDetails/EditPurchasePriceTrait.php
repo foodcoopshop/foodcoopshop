@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\ProductsTable;
+use App\Model\Table\TaxesTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
@@ -12,7 +14,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -21,9 +23,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 
 trait EditPurchasePriceTrait {
 
-    protected $OrderDetail;
-    protected $Product;
-    protected $Tax;
+    protected ProductsTable $Product;
+    protected TaxesTable $Tax;
 
     public function editPurchasePrice($orderDetailId)
     {
@@ -35,17 +36,17 @@ trait EditPurchasePriceTrait {
         $this->setFormReferer();
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $orderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
                 'Products.Manufacturers',
             ]
-        ])->first();
+        )->first();
 
         if (empty($orderDetail)) {
             throw new RecordNotFoundException('order detail not found');

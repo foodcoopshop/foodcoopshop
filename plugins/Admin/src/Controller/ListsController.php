@@ -24,8 +24,6 @@ use App\Services\DeliveryRhythmService;
 class ListsController extends AdminAppController
 {
 
-    protected $Manufacturer;
-
     public function orderLists()
     {
 
@@ -91,10 +89,8 @@ class ListsController extends AdminAppController
                 return;
             }
 
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId
-                ]
+            $manufacturer = $this->Manufacturer->find('all', conditions: [
+                'Manufacturers.id_manufacturer' => $manufacturerId
             ])->first();
 
             $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists') . DS, '', $name);

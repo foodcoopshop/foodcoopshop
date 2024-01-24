@@ -6,6 +6,8 @@ namespace Admin\Policy;
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Core\Configure;
+use Authorization\Policy\ResultInterface;
+use Authorization\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -14,7 +16,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -23,7 +25,7 @@ use Cake\Core\Configure;
 class PaymentsPolicy implements RequestPolicyInterface
 {
 
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
         if ($identity === null) {

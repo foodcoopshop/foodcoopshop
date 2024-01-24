@@ -62,6 +62,7 @@ use Cake\Datasource\FactoryLocator;
 
 <?php
 
+$this->Paginator->setPaginated($customers);
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo $this->element('rowMarker/rowMarkerAll', [

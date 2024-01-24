@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\Routing\Router;
 
 /**
@@ -531,7 +530,7 @@ class ActionLogsTable extends AppTable
             'object_id' => $objectId,
             'object_type' => $objectType,
             'text' => $text,
-            'date' => is_null($time) ? FrozenTime::now() : $time
+            'date' => is_null($time) ? \Cake\I18n\DateTime::now() : $time
         ];
         return $this->save($this->newEntity($data2save));
     }

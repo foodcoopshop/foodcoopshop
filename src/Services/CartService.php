@@ -12,9 +12,16 @@ use App\Services\PdfWriter\OrderConfirmationPdfWriterService;
 use App\Mailer\AppMailer;
 use App\Model\Traits\CartValidatorTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\Datasource\FactoryLocator;
 use App\Controller\Component\StringComponent;
+use App\Model\Table\ActionLogsTable;
+use App\Model\Table\AttributesTable;
+use App\Model\Table\CartsTable;
+use App\Model\Table\InvoicesTable;
+use App\Model\Table\ManufacturersTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PickupDaysTable;
+use App\Model\Table\ProductsTable;
 use Cake\Routing\Router;
 
 /**
@@ -36,14 +43,14 @@ class CartService
 
     use CartValidatorTrait;
 
-    protected $ActionLog;
-    protected $Attribute;
-    protected $Cart;
-    protected $Invoice;
-    protected $Manufacturer;
-    protected $Product;
-    protected $PickupDay;
-    protected $OrderDetail;
+    protected ActionLogsTable $ActionLog;
+    protected AttributesTable $Attribute;
+    protected CartsTable $Cart;
+    protected InvoicesTable $Invoice;
+    protected ManufacturersTable $Manufacturer;
+    protected ProductsTable $Product;
+    protected PickupDaysTable $PickupDay;
+    protected OrderDetailsTable $OrderDetail;
 
     private $identity;
     private $request;
@@ -245,12 +252,12 @@ class CartService
         foreach ($this->identity->getProducts() as $cartProduct) {
 
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
-            $product = $this->Product->find('all', [
-                'conditions' => [
+            $product = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $ids['productId']
                 ],
-                'contain' => $contain,
-            ])->first();
+                contain: $contain,
+            )->first();
 
             $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $orderCustomerService);
             $products[] = $product;
@@ -299,11 +306,11 @@ class CartService
                             $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         }
 
-                        $attributeEntity = $this->Attribute->find('all', [
-                            'conditions' => [
+                        $attributeEntity = $this->Attribute->find('all',
+                            conditions: [
                                 'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute,
                             ]
-                        ])->first();
+                        )->first();
         
                         $errorMessage = $this->isAmountAvailableAttribute(
                             $product->is_stock_product,
@@ -477,7 +484,7 @@ class CartService
             $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
-                    $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+                    $pickupDay['pickup_day'] = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
                 $this->controller->setRequest($this->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
@@ -592,9 +599,9 @@ class CartService
         $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = 0;
         foreach($stockAvailable2saveConditions as $condition) {
-            $stockAvailableEntity = $this->Product->StockAvailables->find('all', [
-                'conditions' => $condition,
-            ])->first();
+            $stockAvailableEntity = $this->Product->StockAvailables->find('all',
+                conditions: $condition,
+            )->first();
             $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
             $originalPrimaryKey = $this->Product->StockAvailables->getPrimaryKey();
             if ($condition['id_product_attribute'] > 0) {
@@ -628,14 +635,14 @@ class CartService
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
 
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId
+            $manufacturer = $this->Manufacturer->find('all',
+                conditions: [
+                    'Manufacturers.id_manufacturer' => $manufacturerId,
                 ],
-                'contain' => [
-                    'AddressManufacturers'
+                contain: [
+                    'AddressManufacturers',
                 ]
-            ])->first();
+            )->first();
 
             $depositSum = 0;
             $productSum = 0;
@@ -671,18 +678,18 @@ class CartService
     private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
     {
         $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => $cartId
+        $cart = $this->Cart->find('all',
+            conditions: [
+                'Carts.id_cart' => $cartId,
             ],
-            'contain' => [
+            contain: [
                 'CartProducts.Products.Manufacturers.AddressManufacturers',
                 'CartProducts.Products.Manufacturers.Customers.AddressCustomers',
                 'CartProducts.Products.StockAvailables',
                 'CartProducts.ProductAttributes.StockAvailables',
-                'CartProducts.OrderDetails'
+                'CartProducts.OrderDetails',
             ]
-        ])->first();
+        )->first();
 
         foreach($cart->cart_products as $cartProduct) {
             $stockAvailable = $cartProduct->product->stock_available;
@@ -764,7 +771,7 @@ class CartService
             if ($pickupDay['comment'] == '') {
                 continue;
             }
-            $formattedPickupDay = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+            $formattedPickupDay = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
             $formattedPickupDay = $formattedPickupDay->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('order_comment_notification');
@@ -878,16 +885,16 @@ class CartService
 
         $manufacturers = [];
         $this->Cart = FactoryLocator::get('Table')->get('Carts');
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
+        $cart = $this->Cart->find('all',
+            conditions: [
                 'Carts.id_cart' => $cart['Cart']->id_cart,
             ],
-            'contain' => [
+            contain: [
                 'CartProducts.OrderDetails',
                 'CartProducts.Products',
-                'CartProducts.Products.Manufacturers.AddressManufacturers'
-            ]
-        ])->first();
+                'CartProducts.Products.Manufacturers.AddressManufacturers',
+            ],
+        )->first();
 
         foreach ($cart->cart_products as $cartProduct) {
             $manufacturers[$cartProduct->product->id_manufacturer] = [

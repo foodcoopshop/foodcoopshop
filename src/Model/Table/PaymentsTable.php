@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
-use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
 use App\Model\Traits\NumberRangeValidatorTrait;
 
@@ -92,11 +91,9 @@ class PaymentsTable extends AppTable
 
     public function isAlreadyImported(string $transactionText, string $date): bool
     {
-        $alreadyImported = $this->find('all', [
-            'conditions' => [
-                'date_transaction_add' => new FrozenTime($date),
-                'status' => APP_ON,
-            ]
+        $alreadyImported = $this->find('all', conditions: [
+            'date_transaction_add' => new \Cake\I18n\DateTime($date),
+            'status' => APP_ON,
         ])
         ->where(function ($exp, $query) use ($transactionText) {
             return $exp->or([
@@ -135,11 +132,10 @@ class PaymentsTable extends AppTable
      */
     public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear)
     {
-        $paymentSum = $this->find('all', [
-            'conditions' => $this->getManufacturerDepositConditions($manufacturerId),
-            'order' => [
-                'Payments.date_add' => 'DESC',
-            ]
+        $paymentSum = $this->find('all',
+        conditions: $this->getManufacturerDepositConditions($manufacturerId),
+        order: [
+            'Payments.date_add' => 'DESC',
         ]);
         $paymentSum->where(function (QueryExpression $exp) use ($monthAndYear) {
             return $exp->eq('DATE_FORMAT(Payments.date_add, \'%Y-%c\')', $monthAndYear);
@@ -155,9 +151,7 @@ class PaymentsTable extends AppTable
         $conditions = $this->getManufacturerDepositConditions();
         $conditions['Payments.text'] = $type;
 
-        $query = $this->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->find('all', conditions: $conditions);
 
         $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
         $query->select([
@@ -172,26 +166,22 @@ class PaymentsTable extends AppTable
 
     public function getCustomerDepositNotBilled($customerId)
     {
-        $payments = $this->find('all', [
-            'conditions' => [
-                'Payments.status' => APP_ON,
-                '(Payments.invoice_id IS NULL OR Payments.invoice_id = 0)',
-                'Payments.type' => 'deposit',
-                'Payments.id_manufacturer' => 0,
-                'Payments.id_customer' => $customerId,
-            ]
+        $payments = $this->find('all', conditions: [
+            'Payments.status' => APP_ON,
+            '(Payments.invoice_id IS NULL OR Payments.invoice_id = 0)',
+            'Payments.type' => 'deposit',
+            'Payments.id_manufacturer' => 0,
+            'Payments.id_customer' => $customerId,
         ])->toArray();
         return $payments;
     }
 
     public function getCustomerDepositSumByCalendarWeek()
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'Payments.status' => APP_ON,
-                'Payments.type' => 'deposit',
-                'Payments.id_manufacturer' => 0,
-            ]
+        $query = $this->find('all', conditions: [
+            'Payments.status' => APP_ON,
+            'Payments.type' => 'deposit',
+            'Payments.id_manufacturer' => 0,
         ]);
         $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
         $query->select([
@@ -213,9 +203,7 @@ class PaymentsTable extends AppTable
         $conditions = $this->getManufacturerDepositConditions();
         $conditions['Payments.text'] = 'money';
 
-        $query = $this->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->find('all', conditions: $conditions);
 
         $query->select(['sumManufacturerMoneyDeposit' => $query->func()->sum('Payments.amount')]);
         $query->group('Payments.text');
@@ -238,11 +226,10 @@ class PaymentsTable extends AppTable
 
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
 
-        $query = $this->find('all', [
-            'conditions' => $conditions,
-            'order' => $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payments.date_add' => 'DESC'],
-            'group' => $groupByMonth ? 'monthAndYear' : null,
-        ]);
+        $query = $this->find('all',
+        conditions: $conditions,
+        order: $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payments.date_add' => 'DESC'],
+        group: $groupByMonth ? 'monthAndYear' : null);
 
         $query->select(
             ['sumDepositReturned' => $query->func()->sum('Payments.amount')],
@@ -289,9 +276,7 @@ class PaymentsTable extends AppTable
 
         $conditions['Payments.type'] = $type;
 
-        $query = $this->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->find('all', conditions: $conditions);
         $query->select(
             ['SumAmount' => $query->func()->sum('Payments.amount')]
         );

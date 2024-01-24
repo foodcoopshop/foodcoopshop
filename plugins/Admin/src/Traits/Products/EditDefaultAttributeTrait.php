@@ -12,7 +12,7 @@ use App\Controller\Component\StringComponent;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -28,23 +28,23 @@ trait EditDefaultAttributeTrait {
 
         $this->Product->setDefaultAttributeId($productId, $productAttributeId);
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers',
             ]
-        ])->first();
+        )->first();
 
-        $productAttribute = $this->Product->ProductAttributes->find('all', [
-            'conditions' => [
+        $productAttribute = $this->Product->ProductAttributes->find('all',
+            conditions: [
                 'ProductAttributes.id_product_attribute' => $productAttributeId
             ],
-            'contain' => [
+            contain: [
                 'ProductAttributeCombinations.Attributes'
             ]
-        ])->first();
+        )->first();
 
         $actionLogMessage = __d('admin', 'The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
             '<b>' . $product->name . '</b>',

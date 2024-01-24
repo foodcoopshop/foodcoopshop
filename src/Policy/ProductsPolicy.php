@@ -8,6 +8,8 @@ use Authorization\Policy\RequestPolicyInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Authorization\Policy\ResultInterface;
+use Authorization\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -16,7 +18,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -25,21 +27,21 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 class ProductsPolicy implements RequestPolicyInterface
 {
 
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
         $productId = (int) $request->getParam('pass')[0];
         $productTable = FactoryLocator::get('Table')->get('Products');
 
-        $product = $productTable->find('all', [
-            'conditions' => [
+        $product = $productTable->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
                 'Products.active' => APP_ON,
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers',
             ]
-        ])->first();
+        )->first();
 
         if (empty($product)) {
             throw new RecordNotFoundException('product not found');

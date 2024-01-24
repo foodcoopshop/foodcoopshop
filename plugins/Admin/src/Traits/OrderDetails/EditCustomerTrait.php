@@ -13,7 +13,7 @@ use App\Mailer\AppMailer;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -24,11 +24,9 @@ trait EditCustomerTrait {
 
     use UpdateOrderDetailsTrait;
 
-    protected $Customer;
-
     public function editCustomer()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $customerId = (int) $this->getRequest()->getData('customerId');
@@ -37,24 +35,24 @@ trait EditCustomerTrait {
         $sendEmailToCustomers = (bool) $this->getRequest()->getData('sendEmailToCustomers');
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $oldOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.Manufacturers',
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
             ]
-        ])->first();
+        )->first();
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $newCustomer = $this->Customer->find('all', [
-            'conditions' => [
+        $newCustomer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => $customerId
             ]
-        ])->first();
+        )->first();
 
         $errors = [];
         if (empty($newCustomer)) {
@@ -111,7 +109,7 @@ trait EditCustomerTrait {
             // 2) copy old order detail and modify it
             $newEntity = $oldOrderDetail;
             $newEntity->setNew(true);
-            $newEntity->id_order_detail = null;
+            unset($newEntity->id_order_detail);
             $newEntity->id_customer = $customerId;
             $savedEntity = $this->OrderDetail->save($newEntity, [
                 'associated' => false

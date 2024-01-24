@@ -39,18 +39,18 @@ class AppView extends View
     {
         parent::initialize();
         $this->loadHelper('Html', [
-            'className' => 'MyHtml'
+            'className' => 'MyHtml',
         ]);
         $this->loadHelper('Time', [
-            'className' => 'MyTime'
+            'className' => 'MyTime',
         ]);
         $this->loadHelper('Number', [
-            'className' => 'MyNumber'
+            'className' => 'MyNumber',
         ]);
         $this->loadHelper('Form', [
             'widgets' => [
-                '_default' => ['MyBasic']
-            ]
+                '_default' => ['MyBasic'],
+            ],
         ]);
         $this->loadHelper('Menu');
         $this->loadHelper('Slug');

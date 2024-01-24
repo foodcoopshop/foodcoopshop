@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use App\Services\FolderService;
@@ -250,11 +249,9 @@ class ProductsTable extends AppTable
      */
     public function isOwner($productId, $manufacturerId)
     {
-        $found = $this->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId,
-                'Products.id_manufacturer' => $manufacturerId
-            ]
+        $found = $this->find('all', conditions: [
+            'Products.id_product' => $productId,
+            'Products.id_manufacturer' => $manufacturerId
         ])->count();
         return (bool) $found;
     }
@@ -384,11 +381,11 @@ class ProductsTable extends AppTable
 
             $depositProductsTable = FactoryLocator::get('Table')->get('DepositProducts');
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $depositProductsTable->find('all', [
-                    'conditions' => [
+                $oldDeposit = $depositProductsTable->find('all',
+                    conditions: [
                         'id_product_attribute' => $ids['attributeId']
                     ]
-                ])->first();
+                )->first();
 
                 if (empty($oldDeposit)) {
                     $entity = $depositProductsTable->newEntity([]);
@@ -403,11 +400,11 @@ class ProductsTable extends AppTable
                 ];
             } else {
                 // deposit is set for productId
-                $oldDeposit = $depositProductsTable->find('all', [
-                    'conditions' => [
+                $oldDeposit = $depositProductsTable->find('all',
+                    conditions: [
                         'id_product' => $productId
                     ]
-                ])->first();
+                )->first();
 
                 if (empty($oldDeposit)) {
                     $entity = $depositProductsTable->newEntity([]);
@@ -471,13 +468,12 @@ class ProductsTable extends AppTable
             }
 
             $ids = $this->getProductIdAndAttributeId($productId);
-            $productEntity = $this->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $ids['productId'],
-                ],
-                'contain' => [
-                    'Taxes',
-                ]
+            $productEntity = $this->find('all',
+            conditions: [
+                'Products.id_product' => $ids['productId'],
+            ],
+            contain: [
+                'Taxes',
             ])->first();
             $taxRate = $productEntity->tax->rate ?? 0;
 
@@ -562,16 +558,12 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
-                $entity = $stockAvailablesTable->find('all', [
-                    'conditions' => [
+                $entity = $stockAvailablesTable->find('all',
+                    conditions: [
                         'id_product_attribute' => $ids['attributeId'],
-                        'id_product' => $ids['productId']
+                        'id_product' => $ids['productId'],
                     ],
-                ])->first();
-                if (is_null($entity)) {
-                    Log::error('entity was empty: productId: ' . $ids['productId'] . ' / attributeId: ' . $ids['attributeId']);
-                    continue;
-                }
+                )->first();
                 $originalPrimaryKey = $stockAvailablesTable->getPrimaryKey();
                 $stockAvailablesTable->setPrimaryKey('id_product_attribute');
                 $stockAvailablesTable->save(
@@ -880,11 +872,10 @@ class ProductsTable extends AppTable
             'Products.name' => 'ASC'
         ];
 
-        $query = $this->find('all', [
-            'conditions' => $conditions,
-            'contain' => $contain,
-            'order' => ($controller === null ? $order : null)
-        ]);
+        $query = $this->find('all',
+        conditions: $conditions,
+        contain: $contain,
+        order: $controller === null ? $order : null);
 
         if ($categoryId != '') {
             $query->matching('CategoryProducts', function ($q) use ($categoryId) {
@@ -1258,15 +1249,14 @@ class ProductsTable extends AppTable
         }
 
         // ->find('list') a does not return associated model data
-        $products = $this->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Manufacturers',
-            ],
-            'order' => [
-                'Products.active' => 'DESC',
-                'Products.name' => 'ASC'
-            ]
+        $products = $this->find('all',
+        conditions: $conditions,
+        contain: [
+            'Manufacturers',
+        ],
+        order: [
+            'Products.active' => 'DESC',
+            'Products.name' => 'ASC'
         ]);
 
         $onlineProducts = [];
@@ -1353,11 +1343,11 @@ class ProductsTable extends AppTable
     public function setDefaultAttributeId($productId, $productAttributeId)
     {
         $productAttributesTable = FactoryLocator::get('Table')->get('ProductAttributes');
-        $productAttributes = $productAttributesTable->find('all', [
-            'conditions' => [
+        $productAttributes = $productAttributesTable->find('all',
+            conditions: [
                 'ProductAttributes.id_product' => $productId,
             ]
-        ]);
+        );
 
         $productAttributeIds = [];
         foreach ($productAttributes as $attribute) {
@@ -1432,13 +1422,12 @@ class ProductsTable extends AppTable
             $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
             $extension = strtolower(pathinfo($imageFromRemoteServer, PATHINFO_EXTENSION));
 
-            $product = $this->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $ids['productId']
-                ],
-                'contain' => [
-                    'Images'
-                ]
+            $product = $this->find('all',
+            conditions: [
+                'Products.id_product' => $ids['productId']
+            ],
+            contain: [
+                'Images'
             ])->first();
 
             $imagesTable = FactoryLocator::get('Table')->get('Images');
@@ -1562,10 +1551,8 @@ class ProductsTable extends AppTable
             )
         );
 
-        $newProduct = $this->find('all', [
-            'conditions' => [
-                'Products.id_product' => $newProductId
-            ]
+        $newProduct = $this->find('all', conditions: [
+            'Products.id_product' => $newProductId
         ])->first();
 
         return $productEntity;

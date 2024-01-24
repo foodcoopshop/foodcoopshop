@@ -71,10 +71,8 @@ class PickupDaysTable extends AppTable
     {
         $this->setPrimaryKey(['customer_id', 'pickup_day']);
 
-        $pickupDayEntity = $this->find('all', [
-            'conditions' => [
-                $conditions
-            ]
+        $pickupDayEntity = $this->find('all', conditions: [
+            $conditions
         ])->first();
 
         if (empty($pickupDayEntity)) {

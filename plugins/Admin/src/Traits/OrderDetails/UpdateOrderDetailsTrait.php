@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\StockAvailablesTable;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -10,7 +12,7 @@ namespace Admin\Traits\OrderDetails;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -19,7 +21,7 @@ namespace Admin\Traits\OrderDetails;
 
 trait UpdateOrderDetailsTrait {
 
-    protected $StockAvailable;
+    protected StockAvailablesTable $StockAvailable;
 
     private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity)
     {
@@ -72,18 +74,18 @@ trait UpdateOrderDetailsTrait {
             $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
         );
 
-        $newOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $newOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.StockAvailables',
                 'Products.Manufacturers',
                 'ProductAttributes.StockAvailables',
                 'OrderDetailUnits'
             ]
-        ])->first();
+        )->first();
 
         return $newOrderDetail;
     }

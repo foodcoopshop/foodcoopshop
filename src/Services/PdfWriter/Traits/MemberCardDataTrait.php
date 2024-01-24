@@ -8,7 +8,7 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -30,18 +30,18 @@ trait MemberCardDataTrait
 
         $customerTable = FactoryLocator::get('Table')->get('Customers');
         $customerTable->dropManufacturersInNextFind();
-        $customers = $customerTable->find('all', [
-            'fields' => [
+        $customers = $customerTable->find('all',
+            fields: [
                 'system_bar_code' => $customerTable->getBarcodeFieldString(),
             ],
-            'conditions' => [
+            conditions: [
                 'Customers.id_customer IN' => $customerIds,
             ],
-            'order' => $customerTable->getCustomerOrderClause(),
-            'contain' => [
+            order: $customerTable->getCustomerOrderClause(),
+            contain: [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
-        ]);
+        );
         $customers = $customerTable->addCustomersNameForOrderSelect($customers);
         $customers->select($customerTable);
         $customers->select($customerTable->AddressCustomers);

@@ -20,7 +20,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\DeliveryRhythmConfigsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\View\Helper\MyTimeHelper;
-use Cake\I18n\FrozenDate;
 use Cake\View\View;
 use Cake\TestSuite\IntegrationTestTrait;
 
@@ -322,7 +321,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
             'delivery_rhythm_type' => 'individual',
             'delivery_rhythm_count' => 0,
             'delivery_rhythm_send_order_list_weekday' => 3,
-            'delivery_rhythm_order_possible_until' => new FrozenDate('2020-12-12'),
+            'delivery_rhythm_order_possible_until' => new \Cake\I18n\Date('2020-12-12'),
         ];
         $this->assertGetLastOrderDay($product, '2020-12-12');
     }
@@ -334,7 +333,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-11-02'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-11-02'),
                     'is_stock_product' => '0',
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
@@ -355,7 +354,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '1',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-11-02'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-11-02'),
                     'is_stock_product' => '0',
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
@@ -415,7 +414,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                 [
                     'delivery_rhythm_type' => 'week',
                     'delivery_rhythm_count' => '2',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2022-09-08'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2022-09-08'),
                     'is_stock_product' => '0',
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
@@ -501,7 +500,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2021-02-05'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2021-02-05'),
                     'delivery_rhythm_send_order_list_weekday' => 0,
                 ]
             ),
@@ -524,7 +523,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2021-02-05'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2021-02-05'),
                     'delivery_rhythm_send_order_list_weekday' => 0,
                 ]
             ),
@@ -587,7 +586,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                         'stock_management_enabled' => '0',
                     ],
                     'delivery_rhythm_send_order_list_weekday' => 1,
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2019-03-01'),
                 ]
             ),
             'currentDay' => '2019-02-25',
@@ -609,7 +608,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                         'stock_management_enabled' => '0',
                     ],
                     'delivery_rhythm_send_order_list_weekday' => 1,
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2019-03-01'),
                 ]
             ),
             'currentDay' => '2019-02-25',
@@ -630,7 +629,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                         'stock_management_enabled' => '0',
                     ],
                     'delivery_rhythm_send_order_list_weekday' => 4,
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2019-03-01'),
                 ]
             ),
             'currentDay' => '2019-03-08',
@@ -651,7 +650,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                         'stock_management_enabled' => '0',
                     ],
                     'delivery_rhythm_send_order_list_weekday' => 1,
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2020-10-02'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2020-10-02'),
                 ]
             ),
             'currentDay' => '2020-09-28',
@@ -671,7 +670,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-10'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-10'),
                 ]
             ),
             'currentDay' => '2018-08-14',
@@ -692,7 +691,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-10'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-10'),
                 ]
             ),
             'currentDay' => '2018-08-14',
@@ -712,7 +711,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-07-06'),
                 ]
             ),
             'currentDay' => '2018-09-15',
@@ -733,7 +732,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-07-06'),
                 ]
             ),
             'currentDay' => '2018-09-15',
@@ -753,7 +752,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-03'),
                 ]
             ),
             'currentDay' => '2018-08-14',
@@ -774,7 +773,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-03'),
                 ]
             ),
             'currentDay' => '2018-08-14',
@@ -794,7 +793,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-22'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2019-03-22'),
                 ]
             ),
             'currentDay' => '2019-03-15',
@@ -814,7 +813,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-03'),
                 ]
             ),
             'currentDay' => '2018-08-07',
@@ -904,7 +903,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $data = [
             'product' => $this->Product->newEntity(
                 [
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2021-02-26'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2021-02-26'),
                     'delivery_rhythm_type' => 'month',
                     'delivery_rhythm_count' => '0',
                     'is_stock_product' => '0',
@@ -987,7 +986,7 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
                     'manufacturer' => [
                         'stock_management_enabled' => '0',
                     ],
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03'),
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-03'),
                 ]
             ),
             'currentDay' => '2017-08-07',

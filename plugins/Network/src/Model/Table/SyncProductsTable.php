@@ -53,16 +53,15 @@ class SyncProductsTable extends AppTable
 
     public function findAllSyncProducts($manufacturerId)
     {
-        $syncProducts = $this->find('all', [
-            'conditions' => [
-                'SyncProducts.sync_domain_id > 0',
-                'SyncDomains.active' => APP_ON,
-                'Products.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'SyncDomains',
-                'Products'
-            ]
+        $syncProducts = $this->find('all',
+        conditions: [
+            'SyncProducts.sync_domain_id > 0',
+            'SyncDomains.active' => APP_ON,
+            'Products.id_manufacturer' => $manufacturerId
+        ],
+        contain: [
+            'SyncDomains',
+            'Products'
         ]);
         $syncProducts = $this->addDashSeparatedProductIds($syncProducts);
         return $syncProducts;

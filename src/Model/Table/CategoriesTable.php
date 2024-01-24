@@ -112,12 +112,11 @@ class CategoriesTable extends AppTable
             $this->getExcludeCondition()
         ]);
 
-        $categories = $this->find('threaded', [
-            'parentField' => 'id_parent',
-            'conditions' => $conditions,
-            'order' => [
-                'Categories.name' => 'ASC'
-            ]
+        $categories = $this->find('threaded',
+        parentField: 'id_parent',
+        conditions: $conditions,
+        order: [
+            'Categories.name' => 'ASC'
         ]);
         return $categories;
     }

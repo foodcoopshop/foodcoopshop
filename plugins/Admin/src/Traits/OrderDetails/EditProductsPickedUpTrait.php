@@ -12,7 +12,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -23,7 +23,7 @@ trait EditProductsPickedUpTrait {
 
     public function editProductsPickedUp()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $customerIds = $this->getRequest()->getData('customerIds');
         $state = (int) $this->getRequest()->getData('state');
@@ -40,17 +40,17 @@ trait EditProductsPickedUpTrait {
 
             if ($state) {
 
-                $orderDetailsWithUnchangedWeight = $this->OrderDetail->find('all', [
-                    'conditions' => [
+                $orderDetailsWithUnchangedWeight = $this->OrderDetail->find('all',
+                    conditions: [
                         'OrderDetails.id_customer' => $customerId,
                         'OrderDetails.pickup_day' => $pickupDay,
                         'OrderDetailUnits.mark_as_saved' => APP_OFF,
                     ],
-                    'contain' => [
+                    contain: [
                         'OrderDetailUnits',
                         'Customers',
                     ]
-                ])->toArray();
+                )->toArray();
 
                 if (count($orderDetailsWithUnchangedWeight) > 0) {
                     $errorMessages[] = [

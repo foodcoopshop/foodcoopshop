@@ -101,14 +101,14 @@ class InvoicesTableTest extends AppCakeTestCase
         $paidInCash = 1;
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoices = $this->Invoice->find('all', [
-            'conditions' => [
+        $invoices = $this->Invoice->find('all',
+            conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
-            'contain' => [
+            contain: [
                 'InvoiceTaxes',
             ]
-        ])->toArray();
+        )->toArray();
 
         $result = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
 
@@ -198,14 +198,14 @@ class InvoicesTableTest extends AppCakeTestCase
         $paidInCash = 0;
         $this->generateInvoice($customerId, $paidInCash);
 
-        $invoices = $this->Invoice->find('all', [
-            'conditions' => [
+        $invoices = $this->Invoice->find('all',
+            conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
-            'contain' => [
+            contain: [
                 'InvoiceTaxes',
             ]
-        ])->toArray();
+        )->toArray();
 
         $result = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
 

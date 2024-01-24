@@ -64,6 +64,7 @@ $colspan = 3;
 if ($useCsvUpload) {
     $colspan++;
 }
+$this->Paginator->setPaginated($payments);
 if (in_array($paymentType, ['product', 'payback'])) {
     echo '<th style="width:25px;"></th>';
     echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', __d('admin', 'Status')) . '</th>';

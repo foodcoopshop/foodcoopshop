@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\AppController;
+use App\Model\Table\ActionLogsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,7 +23,7 @@ use App\Controller\AppController;
 class AdminAppController extends AppController
 {
 
-    protected $ActionLog;
+    protected ActionLogsTable $ActionLog;
 
     public function setReferer()
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
+use App\Services\SanitizeService;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -11,7 +12,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -20,26 +21,24 @@ use Cake\Core\Configure;
 
 trait EditPriceTrait {
 
-    protected $Sanitize;
-
     public function editPrice()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $originalProductId = $this->getRequest()->getData('productId');
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers',
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
@@ -47,7 +46,7 @@ trait EditPriceTrait {
                 'UnitProducts',
                 'Taxes',
             ]
-        ])->first();
+        )->first();
 
         if ($ids['attributeId'] > 0) {
             // override values for messages

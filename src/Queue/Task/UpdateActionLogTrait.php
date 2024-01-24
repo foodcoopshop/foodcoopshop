@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Queue\Task;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -30,7 +29,7 @@ trait UpdateActionLogTrait
         $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
 
         $search = 'data-identifier="'.$identifier.'"';
-        $now = new FrozenTime();
+        $now = new \Cake\I18n\DateTime();
         $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         $replace = 'title="' . $now . ' / JobId: ' . $jobId . ' / ' . h($errorMessage) . '"';
 
@@ -50,7 +49,7 @@ trait UpdateActionLogTrait
         $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
 
         $search = 'not-ok" data-identifier="'.$identifier.'"';
-        $now = new FrozenTime();
+        $now = new \Cake\I18n\DateTime();
         $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         $replace = 'ok" title="' . $now . ' / JobId: ' . $jobId . '"';
 

@@ -29,7 +29,6 @@ class AppController extends Controller
     public $protectEmailAddresses = false;
     public $identity = null;
     
-    public $Authentication;
     protected $Customer;
     protected $Manufacturer;
 
@@ -39,9 +38,6 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Authentication.Authentication');
-        $this->loadComponent('RequestHandler', [
-            'enableBeforeRedirect' => false
-        ]);
         $this->loadComponent('Flash', [
             'clear' => true
         ]);

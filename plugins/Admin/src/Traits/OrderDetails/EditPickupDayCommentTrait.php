@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\PickupDaysTable;
 use Cake\Core\Configure;
 
 /**
@@ -12,7 +13,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -21,11 +22,11 @@ use Cake\Core\Configure;
 
 trait EditPickupDayCommentTrait {
 
-    protected $PickupDay;
+    protected PickupDaysTable $PickupDay;
 
     public function editPickupDayComment()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $customerId = $this->getRequest()->getData('customerId');
         $pickupDay = $this->getRequest()->getData('pickupDay');
@@ -33,11 +34,11 @@ trait EditPickupDayCommentTrait {
         $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'id_customer' => $customerId
             ]
-        ])->first();
+        )->first();
 
         $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $result = $this->PickupDay->insertOrUpdate(

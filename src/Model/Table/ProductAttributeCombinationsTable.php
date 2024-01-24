@@ -37,15 +37,14 @@ class ProductAttributeCombinationsTable extends AppTable
 
     public function getCombinationCounts($attributeId)
     {
-        $combinations = $this->find('all', [
-            'conditions' => [
-                'Attributes.id_attribute' => $attributeId
-            ],
-            'contain' => [
-                'Attributes',
-                'ProductAttributes.Products',
-                'ProductAttributes.Products.Manufacturers'
-            ]
+        $combinations = $this->find('all',
+        conditions: [
+            'Attributes.id_attribute' => $attributeId
+        ],
+        contain: [
+            'Attributes',
+            'ProductAttributes.Products',
+            'ProductAttributes.Products.Manufacturers'
         ]);
 
         $result = [

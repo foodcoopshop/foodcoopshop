@@ -76,11 +76,10 @@ class PagesController extends FrontendController
         ];
 
         $this->Page = $this->getTableLocator()->get('Pages');
-        $page = $this->Page->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Customers'
-            ]
+        $page = $this->Page->find('all',
+        conditions: $conditions,
+        contain: [
+            'Customers'
         ])->first();
 
         if (empty($page)) {
@@ -96,15 +95,14 @@ class PagesController extends FrontendController
         if ($this->identity === null) {
             $conditionsForChildren['Pages.is_private'] = APP_OFF;
         }
-        $page['children'] = $this->Page->find('children', [
-            'for' => $pageId,
-            'direct' => true,
-            'parentField' => 'id_parent',
-            'conditions' => $conditionsForChildren,
-            'order' => [
-                'Pages.position' => 'ASC',
-                'Pages.title' => 'ASC'
-            ]
+        $page['children'] = $this->Page->find('children',
+        for: $pageId,
+        direct: true,
+        parentField: 'id_parent',
+        conditions: $conditionsForChildren,
+        order: [
+            'Pages.position' => 'ASC',
+            'Pages.title' => 'ASC'
         ]);
 
         $correctSlug = StringComponent::slugify($page->title);

@@ -7,6 +7,8 @@ use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use Authorization\Policy\ResultInterface;
+use Authorization\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -15,7 +17,7 @@ use Cake\Datasource\FactoryLocator;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -24,7 +26,7 @@ use Cake\Datasource\FactoryLocator;
 class HelloCashPolicy implements RequestPolicyInterface
 {
 
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
         if ($identity === null) {
@@ -38,12 +40,12 @@ class HelloCashPolicy implements RequestPolicyInterface
         if ($identity->isCustomer()) {
             $invoiceId = $request->getParam('pass')[0];
             $invoiceTable = FactoryLocator::get('Table')->get('Invoices');
-            $invoice = $invoiceTable->find('all', [
-                'conditions' => [
+            $invoice = $invoiceTable->find('all',
+                conditions : [
                     'Invoices.id' => $invoiceId,
                     'Invoices.id_customer' => $identity->getId(),
                 ],
-            ])->first();
+            )->first();
             $isAllowed = !empty($invoice);
         }
 

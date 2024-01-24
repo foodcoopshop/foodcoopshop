@@ -8,6 +8,8 @@ use Cake\Database\Expression\QueryExpression;
 use Authentication\Identifier\AbstractIdentifier;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Authentication\Identifier\IdentifierInterface;
+use Authentication\Identifier\TokenIdentifier;
+use ArrayAccess;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -16,7 +18,7 @@ use Authentication\Identifier\IdentifierInterface;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -27,9 +29,9 @@ class BarCodeIdentifier extends AbstractIdentifier
     use ResolverAwareTrait;
     use LocatorAwareTrait;
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'fields' => [
-            IdentifierInterface::CREDENTIAL_TOKEN => 'barcode',
+            TokenIdentifier::CREDENTIAL_TOKEN => 'barcode',
         ],
     ];
     
@@ -38,10 +40,10 @@ class BarCodeIdentifier extends AbstractIdentifier
         return $table->getBarcodeFieldString();
     }
 
-    public function identify(array $credentials)
+    public function identify(array $credentials): ArrayAccess|array|null
     {
-        
-        $barCode = $credentials[IdentifierInterface::CREDENTIAL_TOKEN] ?? '';
+
+        $barCode = $credentials[TokenIdentifier::CREDENTIAL_TOKEN] ?? '';
         if (empty($barCode)) {
             return null;
         }

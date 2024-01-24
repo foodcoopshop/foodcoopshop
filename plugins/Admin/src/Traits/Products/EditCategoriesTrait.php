@@ -13,7 +13,7 @@ use Cake\Datasource\FactoryLocator;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -24,7 +24,7 @@ trait EditCategoriesTrait {
 
     public function editCategories()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = (int) $this->getRequest()->getData('productId');
         $selectedCategories = [];
@@ -35,14 +35,14 @@ trait EditCategoriesTrait {
         $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'all-products'
         $selectedCategories = array_unique($selectedCategories);
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         $categoryProductsTable = FactoryLocator::get('Table')->get('CategoryProducts');
         $categoryProductsTable->deleteAll([
@@ -54,11 +54,11 @@ trait EditCategoriesTrait {
         $data = [];
         foreach ($selectedCategories as $selectedCategoryId) {
             // only add if entry of passed id exists in category table
-            $oldCategory = $this->Category->find('all', [
-                'conditions' => [
+            $oldCategory = $this->Category->find('all',
+                conditions: [
                     'Categories.id_category' => $selectedCategoryId
                 ]
-            ])->first();
+            )->first();
             if (! empty($oldCategory)) {
                 // do not track "all-products"
                 if ($selectedCategoryId != Configure::read('app.categoryAllProducts')) {

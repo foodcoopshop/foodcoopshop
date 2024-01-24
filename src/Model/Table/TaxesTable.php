@@ -68,11 +68,9 @@ class TaxesTable extends AppTable
         if ($taxRate == 0) {
             $taxId = 0;
         } else {
-            $tax = $this->find('all', [
-                'conditions' => [
-                    'Taxes.active' => APP_ON,
-                    'Taxes.rate' => $taxRate,
-                ],
+            $tax = $this->find('all', conditions: [
+                'Taxes.active' => APP_ON,
+                'Taxes.rate' => $taxRate,
             ])->first();
             if (!empty($tax)) {
                 $taxId = $tax->id_tax;
@@ -90,13 +88,12 @@ class TaxesTable extends AppTable
 
     public function getForDropdown($useRateAsKey = false)
     {
-        $taxes = $this->find('all', [
-            'conditions' => [
-                'Taxes.active' => APP_ON
-            ],
-            'order' => [
-                'Taxes.rate' => 'ASC'
-            ]
+        $taxes = $this->find('all',
+        conditions: [
+            'Taxes.active' => APP_ON
+        ],
+        order: [
+            'Taxes.rate' => 'ASC'
         ]);
 
         $preparedTaxes = [];

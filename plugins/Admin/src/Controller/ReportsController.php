@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
+use App\Model\Table\PaymentsTable;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
 use App\Services\Csv\Banking\BankingReaderServiceFactory;
 
@@ -27,7 +27,7 @@ use App\Services\Csv\Banking\BankingReaderServiceFactory;
 class ReportsController extends AdminAppController
 {
 
-    protected $Payment;
+    protected PaymentsTable $Payment;
 
     public function beforeFilter(EventInterface $event)
     {
@@ -97,7 +97,7 @@ class ReportsController extends AdminAppController
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
-                            'date_transaction_add' => new FrozenTime($csvPayment->date),
+                            'date_transaction_add' => new \Cake\I18n\DateTime($csvPayment->date),
                             'approval' => APP_ON,
                             'id_customer' => $csvPayment->id_customer ?? $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
@@ -122,6 +122,8 @@ class ReportsController extends AdminAppController
 
                 if (!$paymentsHaveErrors && $saveRecords) {
 
+                    $this->Customer = $this->getTableLocator()->get('Customers');
+
                     $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
 
                         $i = 0;
@@ -130,10 +132,8 @@ class ReportsController extends AdminAppController
                             if ($csvPayment->isDirty('selected') && $csvPayment->getOriginal('selected') == 0) {
                                 unset($csvPayments[$i]);
                             } else {
-                                $customer = $this->Payment->Customers->find('all', [
-                                    'conditions' => [
-                                        'id_customer' => $csvPayment->id_customer,
-                                    ]
+                                $customer = $this->Customer->find('all', conditions: [
+                                    'id_customer' => $csvPayment->id_customer,
                                 ])->first();
                                 $sumAmount += $csvPayment->amount;
 
@@ -215,18 +215,17 @@ class ReportsController extends AdminAppController
             $conditions['Payments.id_customer'] = $customerId;
         }
 
-        // exluce "empty_glasses" deposit payments for manufacturers
+        // exclude "empty_glasses" deposit payments for manufacturers
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
 
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $query = $this->Payment->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Customers',
-                'Manufacturers',
-                'CreatedByCustomers',
-                'ChangedByCustomers'
-            ]
+        $query = $this->Payment->find('all',
+        conditions: $conditions,
+        contain: [
+            'Customers',
+            'Manufacturers',
+            'CreatedByCustomers',
+            'ChangedByCustomers'
         ]);
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {

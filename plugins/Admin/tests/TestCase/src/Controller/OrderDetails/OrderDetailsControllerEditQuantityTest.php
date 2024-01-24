@@ -76,15 +76,15 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
 
-        $changedOrderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $changedOrderDetails = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail IN' => [$orderDetailId],
             ],
-            'contain' => [
+            contain: [
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
             ]
-        ])->toArray();
+        )->toArray();
 
         $this->assertEquals(7.85, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
         $this->assertEquals(6.95, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);

@@ -5,6 +5,7 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
+use App\Model\Table\PickupDaysTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -13,7 +14,7 @@ use App\Mailer\AppMailer;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -22,11 +23,11 @@ use App\Mailer\AppMailer;
 
 trait EditPickupDayTrait {
 
-    protected $PickupDay;
+    protected PickupDaysTable $PickupDay;
     
     public function editPickupDay()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
         $pickupDay = $this->getRequest()->getData('pickupDay');
@@ -40,15 +41,15 @@ trait EditPickupDayTrait {
             }
             $errorMessages = [];
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $orderDetails = $this->OrderDetail->find('all', [
-                'conditions' => [
+            $orderDetails = $this->OrderDetail->find('all',
+                conditions: [
                     'OrderDetails.id_order_detail IN' => $orderDetailIds
                 ],
-                'contain' => [
+                contain: [
                     'Customers',
                     'Products.Manufacturers'
                 ]
-            ]);
+            );
             if ($orderDetails->count() != count($orderDetailIds)) {
                 throw new \Exception('error - order details wrong');
             }

@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use App\Mailer\AppMailer;
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
@@ -14,6 +14,7 @@ use Cake\Log\Log;
 use Cake\Http\Exception\NotFoundException;
 use App\Services\OrderCustomerService;
 use App\Controller\Traits\RenewAuthSessionTrait;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,7 +34,6 @@ class CustomersController extends FrontendController
 
     protected $Customer;
     protected $BlogPost;
-    protected $Sanitize;
     protected $ActionLog;
 
     use RenewAuthSessionTrait;
@@ -70,22 +70,23 @@ class CustomersController extends FrontendController
         $extension = strtolower(pathinfo($this->request->getParam('imageSrc'), PATHINFO_EXTENSION));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
+        $customer = $this->Customer->find('all', conditions: [
+            'Customers.id_customer' => $customerId
         ])->first();
         if (empty($customer)) {
             throw new NotFoundException('customer not found');
         }
 
-        $this->RequestHandler->renderAs($this, $extension);
+        $this->request = $this->request->withParam('_ext', $extension);
         $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc');
-
         if (!file_exists($imagePath)) {
             throw new NotFoundException('image not found');
         }
         $this->set('imagePath', $imagePath);
+
+        $response = $this->response->withType($extension);
+        $response = $response->withStringBody(file_get_contents($imagePath));
+        return $response;
     }
 
     private function generateTermsOfUsePdf()
@@ -137,13 +138,12 @@ class CustomersController extends FrontendController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.activate_email_code' => $emailActivationCode,
-            ],
-            'contain' => [
-                'AddressCustomers',
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.activate_email_code' => $emailActivationCode,
+        ],
+        contain: [
+            'AddressCustomers',
         ])->first();
 
         if (empty($customer)) {
@@ -188,9 +188,9 @@ class CustomersController extends FrontendController
 
         if (!empty($this->getRequest()->getData())) {
 
-            $this->loadComponent('Sanitize');
-            $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-            $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+            $sanitizeService = new SanitizeService();
+            $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+            $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
             $customer = $this->Customer->patchEntity(
                 $customer,
@@ -245,10 +245,8 @@ class CustomersController extends FrontendController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.activate_new_password_code' => $activateNewPasswordCode,
-            ],
+        $customer = $this->Customer->find('all', conditions: [
+            'Customers.activate_new_password_code' => $activateNewPasswordCode,
         ])->first();
 
         if (empty($customer)) {
@@ -364,9 +362,9 @@ class CustomersController extends FrontendController
 
             if (! empty($this->getRequest()->getData())) {
 
-                $this->loadComponent('Sanitize');
-                $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-                $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+                $sanitizeService = new SanitizeService();
+                $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+                $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
                 $this->setRequest($this->getRequest()->withData('Customers.email', $this->getRequest()->getData('Customers.address_customer.email')));
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));

@@ -18,7 +18,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use App\Services\DeliveryRhythmService;
@@ -182,14 +181,14 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $originalQuantity = 2;
         $this->doPrepareAlwaysAvailable($this->productId2, $originalQuantity);
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $this->Product->getProductIdAndAttributeId($this->productId2)['productId'],
             ],
-            'contain' => [
-                'ProductAttributes.StockAvailables'
-            ]
-        ])->first();
+            contain: [
+                'ProductAttributes.StockAvailables',
+            ],
+        )->first();
         // quantity must not have changed
         $this->assertEquals($originalQuantity, $product->product_attributes[0]->stock_available->quantity);
     }
@@ -198,14 +197,14 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $originalQuantity = 2;
         $this->doPrepareAlwaysAvailable($this->productId1, $originalQuantity);
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $this->productId1,
             ],
-            'contain' => [
-                'StockAvailables'
-            ]
-        ])->first();
+            contain: [
+                'StockAvailables',
+            ],
+        )->first();
         // quantity must not have changed
         $this->assertEquals($originalQuantity, $product->stock_available->quantity);
     }
@@ -1033,11 +1032,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->logout();
 
         $this->loginAsSuperadmin();
-        $testCustomer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => Configure::read('test.customerId')
-            ]
-        ])->first();
+        $testCustomer = $this->Customer->find('all',
+            conditions: [
+                'Customers.id_customer' => Configure::read('test.customerId'),
+            ],
+        )->first();
         $this->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->loginAsSuperadminAddOrderCustomerToSession($_SESSION);
         $this->get($this->_response->getHeaderLine('Location'));
@@ -1076,7 +1075,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailMilkManufacturer'));
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertEquals('carts', $actionLogs[0]->object_type);
         $this->assertEquals($cart->id_cart, $actionLogs[0]->object_id);
         $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
@@ -1092,7 +1091,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
 
@@ -1105,7 +1104,7 @@ class CartsControllerTest extends AppCakeTestCase
                     'delivery_rhythm_type' => 'individual',
                     'delivery_rhythm_count' => '0',
                     'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-03')
                 ]
             )
         );
@@ -1117,7 +1116,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
 
@@ -1211,11 +1210,11 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatusAfterFinish()
     {
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => 1
-            ]
-        ])->first();
+        $cart = $this->Cart->find('all',
+            conditions: [
+                'Carts.id_cart' => 1,
+            ],
+        )->first();
         $this->assertEquals($cart->status, 0, 'cake cart status wrong');
     }
 
@@ -1245,12 +1244,12 @@ class CartsControllerTest extends AppCakeTestCase
         $ids = $this->Product->getProductIdAndAttributeId($productId);
 
         // get changed product
-        $stockAvailable = $this->StockAvailable->find('all', [
-            'conditions' => [
+        $stockAvailable = $this->StockAvailable->find('all',
+            conditions: [
                 'StockAvailables.id_product' => $ids['productId'],
-                'StockAvailables.id_product_attribute' => $ids['attributeId']
-            ]
-        ])->first();
+                'StockAvailables.id_product_attribute' => $ids['attributeId'],
+            ],
+        )->first();
 
         // stock available check of changed product
         $this->assertEquals($stockAvailable->quantity, $result, 'stockavailable quantity wrong');

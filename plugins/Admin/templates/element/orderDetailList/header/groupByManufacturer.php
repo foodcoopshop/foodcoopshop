@@ -17,21 +17,25 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
+$paginator = $this->loadHelper('Paginator', [
+    'className' => 'ArraySupportingSortOnlyPaginator',
+]);
+
 echo '<th class="right">';
-echo $this->Paginator->sort('sum_amount', __d('admin', 'Amount'));
+echo $paginator->sort('sum_amount', __d('admin', 'Amount'));
 echo '</th>';
 
 echo '<th class="' . ($identity->isManufacturer() ? 'hide' : '') . '">';
-echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
+echo $paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
 echo '</th>';
 
 echo '<th class="right">';
-echo $this->Paginator->sort('sum_price', __d('admin', 'Price'));
+echo $paginator->sort('sum_price', __d('admin', 'Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositEnabled')) {
     echo '<th>';
-    echo $this->Paginator->sort('sum_deposit', __d('admin', 'Deposit'));
+    echo $paginator->sort('sum_deposit', __d('admin', 'Deposit'));
     echo '</th>';
 }
 ?>

@@ -4,8 +4,14 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
+use App\Model\Table\ConfigurationsTable;
+use App\Model\Table\ProductsTable;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\View\JsonView;
+use Network\Model\Table\SyncDomainsTable;
+use Network\Model\Table\SyncManufacturersTable;
+use Network\Model\Table\SyncProductsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,12 +29,18 @@ use Cake\Event\EventInterface;
 class SyncsController extends AppController
 {
 
-    protected $Configuration;
-    protected $SyncDomain;
-    protected $SyncManufacturer;
-    protected $SyncProduct;
-    protected $Product;
+    protected ConfigurationsTable $Configuration;
+    protected SyncDomainsTable $SyncDomain;
+    protected SyncManufacturersTable $SyncManufacturer;
+    protected SyncProductsTable $SyncProduct;
+    protected ProductsTable $Product;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
+    
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -44,10 +56,8 @@ class SyncsController extends AppController
 
     private function doModifyProductChecks($product)
     {
-        $syncDomain = $this->SyncDomain->find('all', [
-            'conditions' => [
-                'SyncDomains.domain' => $product['domain']
-            ]
+        $syncDomain = $this->SyncDomain->find('all', conditions: [
+            'SyncDomains.domain' => $product['domain']
         ])->first();
 
         $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
@@ -65,7 +75,7 @@ class SyncsController extends AppController
     public function ajaxSaveProductRelation()
     {
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $product = $this->getRequest()->getData('product');
 
@@ -145,7 +155,7 @@ class SyncsController extends AppController
     public function ajaxDeleteProductRelation()
     {
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $product = $this->getRequest()->getData('product');
 

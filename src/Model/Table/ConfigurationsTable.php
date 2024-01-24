@@ -213,12 +213,11 @@ class ConfigurationsTable extends AppTable
         $conditions = array_merge([
             'active' => APP_ON
         ], $customConditions);
-        $configurations = $this->find('all', [
-            'fields' => ['id_configuration', 'name', 'value', 'type', 'text'],
-            'conditions' => $conditions,
-            'order' => [
-                'position' => 'ASC'
-            ]
+        $configurations = $this->find('all',
+        fields: ['id_configuration', 'name', 'value', 'type', 'text'],
+        conditions: $conditions,
+        order: [
+            'position' => 'ASC'
         ]);
         return $configurations;
     }

@@ -7,6 +7,8 @@ use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
+use Authorization\Policy\ResultInterface;
+use Authorization\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -15,7 +17,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -24,7 +26,7 @@ use Cake\Core\Configure;
 class ProductsPolicy implements RequestPolicyInterface
 {
 
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
         if ($identity === null) {
@@ -93,11 +95,11 @@ class ProductsPolicy implements RequestPolicyInterface
         $productTable = FactoryLocator::get('Table')->get('Products');
         $ids = $productTable->getProductIdAndAttributeId($request->getData('productId'));
         $productId = $ids['productId'];
-        $product = $productTable->find('all', [
-            'conditions' => [
+        $product = $productTable->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ]
-        ])->first();
+        )->first();
         return !empty($product);
     }
 
@@ -132,11 +134,11 @@ class ProductsPolicy implements RequestPolicyInterface
         }
         $result = true;
         foreach($productIds as $productId) {
-            $product = $productTable->find('all', [
-                'conditions' => [
+            $product = $productTable->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ]
-            ])->first();
+            )->first();
             if (empty($product) || $product->id_manufacturer != $identity->getManufacturerId()) {
                 $result = false;
                 break;

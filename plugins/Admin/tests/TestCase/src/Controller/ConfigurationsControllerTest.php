@@ -34,12 +34,12 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     protected function changeConfigurationEditForm($configKey, $newValue)
     {
         $this->loginAsSuperadmin();
-        $configuration = $this->Configuration->find('all', [
-            'conditions' => [
+        $configuration = $this->Configuration->find('all',
+            conditions: [
                 'Configurations.active' => APP_ON,
                 'Configurations.name' => $configKey
             ]
-        ])->first();
+        )->first();
         $this->post('/admin/configurations/edit/'.$configuration->id_configuration, [
            'Configurations' => [
                'value' => $newValue
@@ -66,11 +66,11 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $newValue = '<b>HalloHallo</b>';
         $this->changeConfigurationEditForm($configurationName, $newValue);
         $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
-        $configuration = $this->Configuration->find('all', [
-            'conditions' => [
+        $configuration = $this->Configuration->find('all',
+            conditions: [
                 'Configurations.name' => $configurationName
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($configuration->value, $newValue, 'html tags stripped');
     }
 
@@ -78,11 +78,11 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');
         $this->assertFlashMessage('Die Einstellung wurde erfolgreich geändert.');
-        $configuration = $this->Configuration->find('all', [
-            'conditions' => [
+        $configuration = $this->Configuration->find('all',
+            conditions: [
                 'Configurations.name' => 'FCS_APP_NAME'
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($configuration->value, 'HalloHallo', 'html tags not stripped');
     }
 

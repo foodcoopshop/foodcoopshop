@@ -17,15 +17,18 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use Queue\Queue\Task\EmailTask;
 use Cake\Datasource\FactoryLocator;
-use Cake\I18n\FrozenTime;
 use Throwable;
+use Queue\Model\QueueException;
+use Cake\Mailer\TransportFactory;
+use Cake\Mailer\Message;
+use Cake\Log\Log;
+use Queue\Queue\Task;
 
-class AppEmailTask extends EmailTask
+class AppEmailTask extends Task
 {
 
-    public $timeout = 300;
+    public ?int $timeout = 300;
 
     use UpdateActionLogTrait;
 
@@ -33,7 +36,30 @@ class AppEmailTask extends EmailTask
 
         try {
             $afterRunParams = $data['afterRunParams'];
-            parent::run($data, $jobId);
+
+            if (!isset($data['settings'])) {
+                throw new QueueException('Queue Email task called without settings data.');
+            }
+    
+            $message = $data['settings'];
+		    if ($message && is_object($message) && $message instanceof Message) {
+			try {
+				$transport = TransportFactory::get($data['transport'] ?? 'default');
+				$result = $transport->send($message);
+			} catch (Throwable $e) {
+				$error = $e->getMessage();
+				$error .= ' (line ' . $e->getLine() . ' in ' . $e->getFile() . ')' . PHP_EOL . $e->getTraceAsString();
+				Log::write('error', $error);
+
+				throw $e;
+			}
+
+			if (!$result) {
+				throw new QueueException('Could not send email.');
+			}
+
+		}
+
         } catch(Throwable $e) {
             if (!empty($data['afterRunParams'])) {
                 if (isset($afterRunParams['actionLogId']) && isset($afterRunParams['actionLogIdentifier']) ) {
@@ -65,7 +91,7 @@ class AppEmailTask extends EmailTask
             $invoiceId = $afterRunParams['invoiceId'];
             $invoiceEntity = $invoiceTable->patchEntity(
                 $invoiceTable->get($invoiceId), [
-                    'email_status' => FrozenTime::now(),
+                    'email_status' => \Cake\I18n\DateTime::now(),
                 ]
             );
             $invoiceTable->save($invoiceEntity);

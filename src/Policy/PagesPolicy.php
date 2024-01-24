@@ -6,6 +6,8 @@ namespace App\Policy;
 use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Datasource\FactoryLocator;
+use Authorization\Policy\ResultInterface;
+use Authorization\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -14,7 +16,7 @@ use Cake\Datasource\FactoryLocator;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -23,19 +25,19 @@ use Cake\Datasource\FactoryLocator;
 class PagesPolicy implements RequestPolicyInterface
 {
 
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
         switch ($request->getParam('action')) {
             case 'detail':
                 $pageId = (int) $request->getParam('idAndSlug');
                 $pageTable = FactoryLocator::get('Table')->get('Pages');
-                $page = $pageTable->find('all', [
-                    'conditions' => [
+                $page = $pageTable->find('all',
+                    conditions: [
                         'Pages.id_page' => $pageId,
                         'Pages.active' => APP_ON,
                     ]
-                ])->first();
+                )->first();
                 if (!empty($page) && $identity === null && $page->is_private) {
                     return false;
                 }

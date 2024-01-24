@@ -45,10 +45,10 @@ class OrderDetailsPdfWriterService extends PdfWriterService
             $odParams['contain'][] = 'PickupDayEntities';
         }
 
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => $odParams['conditions'],
-            'contain' => $odParams['contain'],
-        ])->toArray();
+        $orderDetails = $this->OrderDetail->find('all',
+            conditions: $odParams['conditions'],
+            contain: $odParams['contain'],
+        )->toArray();
 
         $storageLocation = [];
         $customerName = [];

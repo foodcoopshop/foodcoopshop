@@ -69,14 +69,14 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         if (!$this->mockCart) {
             return false;
         }
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => $this->mockCart->id_cart
+        $cart = $this->Cart->find('all',
+            conditions: [
+                'Carts.id_cart' => $this->mockCart->id_cart,
             ],
-            'contain' => [
+            contain: [
                 'CartProducts.OrderDetails.OrderDetailUnits',
-            ]
-        ])->first();
+            ],
+        )->first();
         return $cart;
     }
 
@@ -85,25 +85,23 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->Product = $this->getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($productIds);
         $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
-        $changedStockAvailable = $this->StockAvailable->find('all', [
-            'conditions' => [
-                'StockAvailables.id_product' => $ids['productId'],
-                'StockAvailables.id_product_attribute' => $ids['attributeId'],
-            ]
+        $changedStockAvailable = $this->StockAvailable->find('all', conditions: [
+            'StockAvailables.id_product' => $ids['productId'],
+            'StockAvailables.id_product_attribute' => $ids['attributeId'],
         ])->first();
         $quantity = $changedStockAvailable->quantity;
         $this->assertEquals($expectedAmount, $quantity, 'amount was not corrected properly');
     }
 
     protected function getOrderDetailsFromDatabase($orderDetailIds) {
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail IN' => $orderDetailIds
+        $orderDetails = $this->OrderDetail->find('all',
+            conditions: [
+                'OrderDetails.id_order_detail IN' => $orderDetailIds,
             ],
-            'contain' => [
+            contain: [
                 'OrderDetailUnits',
-            ]
-        ])->toArray();
+            ],
+        )->toArray();
         return $orderDetails;
     }
 

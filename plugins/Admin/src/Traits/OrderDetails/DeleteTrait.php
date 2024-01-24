@@ -13,7 +13,7 @@ use App\Mailer\AppMailer;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -24,11 +24,9 @@ trait DeleteTrait {
 
     use UpdateOrderDetailsTrait;
 
-    protected $Manufacturer;
-
     public function delete()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
         $cancellationReason = strip_tags(html_entity_decode($this->getRequest()->getData('cancellationReason')));
@@ -47,11 +45,11 @@ trait DeleteTrait {
         $message = '';
         
         foreach ($orderDetailIds as $orderDetailId) {
-            $orderDetail = $this->OrderDetail->find('all', [
-                'conditions' => [
+            $orderDetail = $this->OrderDetail->find('all',
+                conditions: [
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
-                'contain' => [
+                contain: [
                     'Customers',
                     'Products.StockAvailables',
                     'Products.Manufacturers',
@@ -60,7 +58,7 @@ trait DeleteTrait {
                     'OrderDetailUnits',
                     'OrderDetailPurchasePrices',
                 ]
-            ])->first();
+            )->first();
 
             $message = __d('admin', 'Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled.', [
                 '<b>' . $orderDetail->product_name . '</b>',

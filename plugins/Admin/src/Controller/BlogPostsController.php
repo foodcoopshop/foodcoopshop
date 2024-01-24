@@ -5,8 +5,9 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\I18n\FrozenDate;
 use Admin\Traits\UploadTrait;
+use App\Model\Table\BlogPostsTable;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,10 +28,7 @@ class BlogPostsController extends AdminAppController
 
     use UploadTrait;
 
-    protected $BlogPost;
-    protected $Customer;
-    protected $Manufacturer;
-    protected $Sanitize;
+    protected BlogPostsTable $BlogPost;
 
     public function add()
     {
@@ -58,10 +56,8 @@ class BlogPostsController extends AdminAppController
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $blogPost = $this->BlogPost->find('all', [
-            'conditions' => [
-                'BlogPosts.id_blog_post' => $blogPostId
-            ]
+        $blogPost = $this->BlogPost->find('all', conditions: [
+            'BlogPosts.id_blog_post' => $blogPostId
         ])->first();
 
         if (empty($blogPost)) {
@@ -100,9 +96,9 @@ class BlogPostsController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
         $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->identity->getId()));
 
@@ -116,7 +112,7 @@ class BlogPostsController extends AdminAppController
 
         $this->setRequest(
             $this->getRequest()->withData('BlogPosts.show_on_start_page_until',
-            FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
+            \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
         ));
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
 
@@ -193,12 +189,11 @@ class BlogPostsController extends AdminAppController
         $conditions[] = 'BlogPosts.active > ' . APP_DEL;
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
-        $query = $this->BlogPost->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Customers',
-                'Manufacturers'
-            ]
+        $query = $this->BlogPost->find('all',
+        conditions: $conditions,
+        contain: [
+            'Customers',
+            'Manufacturers'
         ]);
         $blogPosts = $this->paginate($query, [
             'sortableFields' => [
@@ -207,7 +202,7 @@ class BlogPostsController extends AdminAppController
             'order' => [
                 'BlogPosts.modified' => 'DESC'
             ]
-        ])->toArray();
+        ]);
 
         foreach ($blogPosts as $blogPost) {
             if (!empty($blogPost->customer)) {

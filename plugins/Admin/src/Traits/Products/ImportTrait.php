@@ -18,7 +18,7 @@ use App\Services\Csv\ProductReaderService;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -59,17 +59,11 @@ trait ImportTrait
         $writer->insertOne($columns);
 
         // force download
-        $this->RequestHandler->renderAs(
-            $this,
-            'csv',
-            [
-                'charset' => 'UTF-8'
-            ],
-        );
         $this->disableAutoRender();
 
         $response = $this->response;
         $response = $response->withStringBody($writer->toString());
+        $response = $response->withCharset('UTF-8');
         $response = $response->withDownload('product-import-template.csv');
 
         return $response;
@@ -89,11 +83,11 @@ trait ImportTrait
 
         $manufacturerId = $this->getManufacturerId();
         $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $manufacturersTable->find('all', [
-            'conditions' => [
+        $manufacturer = $manufacturersTable->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => (int) $manufacturerId,
             ]
-        ])->first();
+        )->first();
 
         if (empty($manufacturer)) {
             throw new RecordNotFoundException('manufacturer not found or not active');

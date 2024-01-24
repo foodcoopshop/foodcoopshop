@@ -2,8 +2,6 @@
 declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\I18n\FrozenDate;
-use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
@@ -50,8 +48,8 @@ class PickupReminderCommandTest extends AppCakeTestCase
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get(2),
                 [
-                    'created' => FrozenTime::create(2018,3,9,0,0,0),
-                    'pickup_day' => FrozenDate::create(2018,3,16)
+                    'created' => \Cake\I18n\DateTime::create(2018,3,9,0,0,0),
+                    'pickup_day' => \Cake\I18n\Date::create(2018,3,16)
                 ]
             )
         );
@@ -74,8 +72,8 @@ class PickupReminderCommandTest extends AppCakeTestCase
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get(2),
                 [
-                    'created' => FrozenTime::create(2018,3,9,0,0,0),
-                    'pickup_day' => FrozenDate::create(2018,3,16)
+                    'created' => \Cake\I18n\DateTime::create(2018,3,9,0,0,0),
+                    'pickup_day' => \Cake\I18n\Date::create(2018,3,16)
                 ]
             )
         );
@@ -91,8 +89,8 @@ class PickupReminderCommandTest extends AppCakeTestCase
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get(1),
                 [
-                    'created' => FrozenTime::create(2018,3,9,0,0,0),
-                    'pickup_day' => FrozenDate::create(2018,3,28)
+                    'created' => \Cake\I18n\DateTime::create(2018,3,9,0,0,0),
+                    'pickup_day' => \Cake\I18n\Date::create(2018,3,28)
                 ]
             )
         );

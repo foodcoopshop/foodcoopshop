@@ -69,18 +69,18 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->editOrderDetailAmount($cart->cart_products[1]->order_detail->id_order_detail, 1, $this->editAmountReason);
         $this->editOrderDetailAmount($cart->cart_products[0]->order_detail->id_order_detail, 2, $this->editAmountReason);
 
-        $changedOrderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $changedOrderDetails = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail IN' => [
                     $cart->cart_products[0]->order_detail->id_order_detail,
                     $cart->cart_products[1]->order_detail->id_order_detail,
                 ],
             ],
-            'contain' => [
+            contain: [
                 'OrderDetailUnits',
                 'OrderDetailPurchasePrices',
             ]
-        ])->toArray();
+        )->toArray();
 
         $this->assertEquals(8.4, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_incl);
         $this->assertEquals(7.43, $changedOrderDetails[0]->order_detail_purchase_price->total_price_tax_excl);

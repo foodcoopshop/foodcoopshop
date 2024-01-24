@@ -17,7 +17,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -62,11 +62,11 @@ trait ProductImportTrait
 
         if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
             $storageLocationsTable = FactoryLocator::get('Table')->get('StorageLocations');
-            $storageLocationEntity = $storageLocationsTable->find('all', [
-                'conditions' => [
+            $storageLocationEntity = $storageLocationsTable->find('all',
+                conditions: [
                     'StorageLocations.name' => $storageLocationString,
                 ]
-            ])->first();
+            )->first();
         }
 
         $productEntity = $this->newEntity(
@@ -101,11 +101,11 @@ trait ProductImportTrait
         );
 
         $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $manufacturerTable->find('all', [
-            'conditions' => [
+        $manufacturer = $manufacturerTable->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId,
             ]
-        ])->first();
+        )->first();
         if (empty($manufacturer)) {
             $productEntity->setError('id_manufacturer', __('Manufacturer_not_found.'));
         }

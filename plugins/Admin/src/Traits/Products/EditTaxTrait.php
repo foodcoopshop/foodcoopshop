@@ -13,7 +13,7 @@ use Cake\Utility\Hash;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -24,7 +24,7 @@ trait EditTaxTrait {
 
     public function editTax()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = (int) $this->getRequest()->getData('productId');
         $taxId = (int) $this->getRequest()->getData('taxId');
@@ -40,19 +40,19 @@ trait EditTaxTrait {
                 $contain[] = 'PurchasePriceProducts.Taxes';
                 $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
             }
-            $oldProduct = $this->Product->find('all', [
-                'conditions' => [
+            $oldProduct = $this->Product->find('all',
+                conditions: [
                     'Products.id_product' => $productId
                 ],
-                'contain' => $contain,
-            ])->first();
+                contain: $contain,
+            )->first();
 
             $this->Tax = $this->getTableLocator()->get('Taxes');
-            $taxes = $this->Tax->find('all', [
-                'conditions' => [
+            $taxes = $this->Tax->find('all',
+                conditions: [
                     'Taxes.deleted' => APP_OFF,
                 ]
-            ])->toArray();
+            )->toArray();
             $validTaxIds = Hash::extract($taxes, '{n}.id_tax');
             $validTaxIds[] = 0;
             if (!in_array($taxId, $validTaxIds)) {

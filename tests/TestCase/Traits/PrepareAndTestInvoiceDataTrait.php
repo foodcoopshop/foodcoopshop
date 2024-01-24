@@ -64,11 +64,11 @@ trait PrepareAndTestInvoiceDataTrait
     {
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $orderDetails = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail IN' => $orderDetailIds,
             ],
-        ])->toArray();
+        )->toArray();
         $this->assertEquals(5, count($orderDetails));
 
         foreach($orderDetails as $orderDetail) {
@@ -86,11 +86,11 @@ trait PrepareAndTestInvoiceDataTrait
     {
 
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $payments = $this->Payment->find('all', [
-            'conditions' => [
+        $payments = $this->Payment->find('all',
+            conditions: [
                 'Payments.id IN' => $paymentIds,
             ],
-        ])->toArray();
+        )->toArray();
         $this->assertEquals(2, count($payments));
 
         foreach($payments as $payment) {
@@ -103,11 +103,11 @@ trait PrepareAndTestInvoiceDataTrait
     public function getAndAssertOrderDetailsAfterInvoiceGeneration($invoiceId, $expectedCount)
     {
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $orderDetails = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_invoice' => $invoiceId,
             ],
-        ])->toArray();
+        )->toArray();
 
         $this->assertEquals($expectedCount, count($orderDetails));
         foreach($orderDetails as $orderDetail) {

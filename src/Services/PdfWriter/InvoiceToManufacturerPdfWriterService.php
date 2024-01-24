@@ -38,14 +38,14 @@ class InvoiceToManufacturerPdfWriterService extends PdfWriterService
     public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate, $isAnonymized)
     {
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
+        $manufacturer = $this->Manufacturer->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ],
-            'contain' => [
+            contain: [
                 'AddressManufacturers'
             ],
-        ])->first();
+        )->first();
 
         $productResults = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
         if ($isAnonymized) {

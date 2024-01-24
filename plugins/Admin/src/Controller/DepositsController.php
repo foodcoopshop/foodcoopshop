@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use Admin\Traits\ManufacturerIdTrait;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 
@@ -26,10 +28,8 @@ class DepositsController extends AdminAppController
 
     use ManufacturerIdTrait;
 
-    protected $Customer;
-    protected $Manufacturer;
-    protected $Payment;
-    protected $OrderDetail;
+    protected PaymentsTable $Payment;
+    protected OrderDetailsTable $OrderDetail;
 
     public $manufacturerId;
 
@@ -213,10 +213,8 @@ class DepositsController extends AdminAppController
             return;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
@@ -293,10 +291,8 @@ class DepositsController extends AdminAppController
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         $this->set('manufacturer', $manufacturer);
 

@@ -6,7 +6,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 
@@ -90,7 +89,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
 
-        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -98,7 +97,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormatted);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
-        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -124,7 +123,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->assertMailCount(3);
 
-        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -156,7 +155,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
 
-        $pickupDayFormatted = new FrozenDate($pickupDay);
+        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -206,10 +205,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         // 3) assert action log
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLogs = $this->ActionLog->find('all', [
-            'conditions' => [
-                'type' => 'cronjob_send_order_lists'
-            ]
+        $actionLogs = $this->ActionLog->find('all', conditions: [
+            'type' => 'cronjob_send_order_lists'
         ])->toArray();
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 1 Produkt / 1,82 €<br />Verschickte Bestelllisten: 1', $actionLogs[1]->text);
 
@@ -285,10 +282,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         // 2) assert action log
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $actionLog = $this->ActionLog->find('all', [
-            'conditions' => [
-                'type' => 'cronjob_send_order_lists'
-            ]
+        $actionLog = $this->ActionLog->find('all', conditions: [
+            'type' => 'cronjob_send_order_lists'
         ])->first();
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 2 Produkte / 2,00 €', $actionLog->text);
         $this->assertRegExpWithUnquotedString('Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 11.10.2019<br />Verschickte Bestelllisten: 2', $actionLog->text);
@@ -339,25 +334,25 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $product1 = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId1
+        $product1 = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $productId1,
             ],
-            'contain' => [
-                'StockAvailables'
+            contain: [
+                'StockAvailables',
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($defaultQuantity, $product1->stock_available->default_quantity_after_sending_order_lists);
         $this->assertEquals($defaultQuantity, $product1->stock_available->quantity);
 
-        $product2 = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $this->Product->getProductIdAndAttributeId($productId2)['productId']
+        $product2 = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $this->Product->getProductIdAndAttributeId($productId2)['productId'],
             ],
-            'contain' => [
-                'ProductAttributes.StockAvailables'
+            contain: [
+                'ProductAttributes.StockAvailables',
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->default_quantity_after_sending_order_lists);
         $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->quantity);
     }
@@ -489,8 +484,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
                     $this->OrderDetail->patchEntity(
                         $this->OrderDetail->get($orderDetailId),
                         [
-                            'pickup_day' => new FrozenDate($pickupDay),
-                            'created' => new FrozenDate('2020-11-05'),
+                            'pickup_day' => new \Cake\I18n\Date($pickupDay),
+                            'created' => new \Cake\I18n\Date('2020-11-05'),
                         ]
                     )
                 );
@@ -511,11 +506,11 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
     private function assertOrderDetailState($orderDetailId, $expectedOrderState)
     {
-        $newOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order_detail' => $orderDetailId
-            ]
-        ])->first();
+        $newOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
+                'OrderDetails.id_order_detail' => $orderDetailId,
+            ],
+        )->first();
         $this->assertEquals($expectedOrderState, $newOrderDetail->order_state);
     }
 

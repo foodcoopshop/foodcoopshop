@@ -5,7 +5,8 @@ namespace App\Authenticator;
 
 use Authentication\Authenticator\FormAuthenticator;
 use Psr\Http\Message\ServerRequestInterface;
-use Authentication\Identifier\IdentifierInterface;
+use Authentication\Identifier\AbstractIdentifier;
+use Authentication\Identifier\TokenIdentifier;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -14,7 +15,7 @@ use Authentication\Identifier\IdentifierInterface;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -23,12 +24,12 @@ use Authentication\Identifier\IdentifierInterface;
 class AppFormAuthenticator extends FormAuthenticator
 {
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'urlChecker' => 'Authentication.Default',
         'fields' => [
-            IdentifierInterface::CREDENTIAL_USERNAME => 'email',
-            IdentifierInterface::CREDENTIAL_PASSWORD => 'passwd',
-            IdentifierInterface::CREDENTIAL_TOKEN => 'barcode',
+            AbstractIdentifier::CREDENTIAL_USERNAME => 'email',
+            AbstractIdentifier::CREDENTIAL_PASSWORD => 'passwd',
+            TokenIdentifier::CREDENTIAL_TOKEN => 'barcode',
         ],
     ];
 

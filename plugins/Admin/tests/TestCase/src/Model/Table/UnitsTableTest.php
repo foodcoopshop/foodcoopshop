@@ -119,11 +119,11 @@ class UnitsTableTest extends AppCakeTestCase
     {
         $result = $this->doSave();
         $this->assertNotEmpty($result);
-        $unit = $this->Unit->find('all', [
-            'conditions' => [
+        $unit = $this->Unit->find('all',
+            conditions: [
                 'id_product' => $this->productId
             ]
-        ])->first();
+        )->first();
         $this->assertEquals($this->productId, $unit->id_product, 'id_product not saved correctly');
         $this->assertEquals($this->productAttributeId, $unit->id_product_attribute, 'id_product_attribute not saved correctly');
         $this->assertEquals($this->pricePerUnitEnabled, $unit->price_per_unit_enabled, 'price_per_unit_enabled not saved correctly');

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\OrderDetails;
 
+use App\Model\Table\PurchasePriceProductsTable;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 
@@ -13,7 +14,7 @@ use Cake\Database\Expression\QueryExpression;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -22,7 +23,7 @@ use Cake\Database\Expression\QueryExpression;
 
 trait ProfitTrait {
 
-    protected $PurchasePrice;
+    protected PurchasePriceProductsTable $PurchasePriceProduct;
 
     public function profit()
     {
@@ -58,14 +59,14 @@ trait ProfitTrait {
         $this->set('productId', $productId);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->find('all', [
-            'contain' => [
+        $orderDetails = $this->OrderDetail->find('all',
+            contain: [
                 'Customers',
                 'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
                 'Products.Manufacturers',
             ],
-        ]);
+        );
 
         $orderDetails->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
@@ -128,13 +129,13 @@ trait ProfitTrait {
         }
         $this->set('orderDetails', $orderDetails);
 
-        $this->PurchasePrice = $this->getTableLocator()->get('PurchasePriceProducts');
+        $this->PurchasePriceProduct = $this->getTableLocator()->get('PurchasePriceProducts');
         $this->set('sums', [
             'amount' => $sumAmount,
             'purchasePrice' => $sumPurchasePrice,
             'sellingPrice' => $sumSellingPrice,
             'profit' => $sumProfit,
-            'surcharge' => $this->PurchasePrice->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
+            'surcharge' => $this->PurchasePriceProduct->calculateSurchargeBySellingPriceGross($sumSellingPrice, 0, $sumPurchasePrice, 0),
         ]);
 
         $this->set('title_for_layout', __d('admin', 'Profit'));

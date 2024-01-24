@@ -12,7 +12,7 @@ use App\Controller\Component\StringComponent;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -23,7 +23,7 @@ trait EditProductAttributeTrait {
 
     public function editProductAttribute()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = h($this->getRequest()->getData('productId'));
         $productAttributeId = h($this->getRequest()->getData('productAttributeId'));
@@ -31,16 +31,16 @@ trait EditProductAttributeTrait {
         $barcode = $this->getRequest()->getData('barcode') ?? '';
         $barcode = StringComponent::removeSpecialChars(strip_tags(trim($barcode)));
 
-        $oldProduct = $this->Product->find('all', [
-            'conditions' => [
+        $oldProduct = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers',
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
             ]
-        ])->first();
+        )->first();
 
         $attributeName = '';
         foreach ($oldProduct->product_attributes as $attribute) {

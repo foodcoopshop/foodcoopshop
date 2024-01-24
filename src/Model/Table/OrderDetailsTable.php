@@ -82,18 +82,17 @@ class OrderDetailsTable extends AppTable
 
     public function getOrderDetailsForDeliveryNotes($manufacturerId, $dateFrom, $dateTo)
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'Products.id_manufacturer' => $manufacturerId,
-            ],
-            'contain' => [
-                'Products.Manufacturers.AddressManufacturers',
-                'OrderDetailPurchasePrices',
-                'OrderDetailUnits',
-            ],
-            'order' => [
-                'ProductName' => 'ASC',
-            ],
+        $query = $this->find('all',
+        conditions: [
+            'Products.id_manufacturer' => $manufacturerId,
+        ],
+        contain: [
+            'Products.Manufacturers.AddressManufacturers',
+            'OrderDetailPurchasePrices',
+            'OrderDetailUnits',
+        ],
+        order: [
+            'ProductName' => 'ASC',
         ]);
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom));
@@ -120,13 +119,12 @@ class OrderDetailsTable extends AppTable
 
     public function getLastPickupDay($customerId)
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-            ],
-            'order' => [
-                'OrderDetails.pickup_day' => 'DESC'
-            ]
+        $query = $this->find('all',
+        conditions: [
+            'OrderDetails.id_customer' => $customerId,
+        ],
+        order: [
+            'OrderDetails.pickup_day' => 'DESC'
         ])->first();
         return $query;
     }
@@ -137,14 +135,13 @@ class OrderDetailsTable extends AppTable
         if ($manufacturerId != 'all') {
             $conditions['Products.id_manufacturer'] = $manufacturerId;
         }
-        $orderDetail = $this->find('all', [
-            'conditions' => $conditions,
-            'order' => [
-                'OrderDetails.pickup_day' => $sort,
-            ],
-            'contain' => [
-                'Products',
-            ],
+        $orderDetail = $this->find('all',
+        conditions: $conditions,
+        order: [
+            'OrderDetails.pickup_day' => $sort,
+        ],
+        contain: [
+            'Products',
         ])->first();
         return $orderDetail;
     }
@@ -192,12 +189,10 @@ class OrderDetailsTable extends AppTable
             return null;
         }
 
-        $query = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.pickup_day' => $pickupDay,
-                'OrderDetails.product_id' => $productId,
-                'OrderDetails.product_attribute_id' => $attributeId,
-            ],
+        $query = $this->find('all', conditions: [
+            'OrderDetails.pickup_day' => $pickupDay,
+            'OrderDetails.product_id' => $productId,
+            'OrderDetails.product_attribute_id' => $attributeId,
         ]);
         $query->select([
             'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
@@ -216,13 +211,12 @@ class OrderDetailsTable extends AppTable
 
     public function getOrderDetailsForOrderListPreview($pickupDay)
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.pickup_day' => $pickupDay,
-            ],
-            'contain' => [
-                'Products',
-            ]
+        $query = $this->find('all',
+        conditions: [
+            'OrderDetails.pickup_day' => $pickupDay,
+        ],
+        contain: [
+            'Products',
         ]);
         return $query;
     }
@@ -238,9 +232,7 @@ class OrderDetailsTable extends AppTable
                 'OrderDetails.id_customer' => $customerId,
                 'OrderDetails.product_id IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')),
             ];
-            $query = $this->find('all', [
-                'conditions' => $conditions,
-            ]);
+            $query = $this->find('all', conditions: $conditions);
             if ($year != '') {
                 $query->where(function (QueryExpression $exp) use ($year) {
                     return $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year);
@@ -264,12 +256,10 @@ class OrderDetailsTable extends AppTable
 
     public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay, $customerCanSelectPickupDay)
     {
-        $query = $this->find('all', [
-            'contain' => [
-                'Products.Manufacturers',
-                'Products.StockAvailables',
-                'ProductAttributes.StockAvailables'
-            ]
+        $query = $this->find('all', contain: [
+            'Products.Manufacturers',
+            'Products.StockAvailables',
+            'ProductAttributes.StockAvailables'
         ]);
         $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
         $query->where(['IF(Manufacturers.include_stock_products_in_order_lists = 0, (Products.is_stock_product = 0 OR Manufacturers.stock_management_enabled = 0), 1)']);
@@ -379,24 +369,22 @@ class OrderDetailsTable extends AppTable
 
     public function getFutureOrdersByCustomerId($customerId)
     {
-        $futureOrders = $this->find('all', [
-            'conditions' => $this->getFutureOrdersConditions($customerId),
-            'order' => [
-                'OrderDetails.product_id' => 'ASC',
-                'OrderDetails.pickup_day' => 'ASC',
-            ]
+        $futureOrders = $this->find('all',
+        conditions: $this->getFutureOrdersConditions($customerId),
+        order: [
+            'OrderDetails.product_id' => 'ASC',
+            'OrderDetails.pickup_day' => 'ASC',
         ]);
         return $futureOrders;
     }
 
     public function getGroupedFutureOrdersByCustomerId($customerId)
     {
-        $query = $this->find('all', [
-            'fields' => ['OrderDetails.pickup_day'],
-            'conditions' => $this->getFutureOrdersConditions($customerId),
-            'order' => [
-                'OrderDetails.pickup_day' => 'ASC'
-            ]
+        $query = $this->find('all',
+        fields: ['OrderDetails.pickup_day'],
+        conditions: $this->getFutureOrdersConditions($customerId),
+        order: [
+            'OrderDetails.pickup_day' => 'ASC'
         ]);
         $query->select(
             ['orderDetailsCount' => $query->func()->count('OrderDetails.pickup_day')]
@@ -409,13 +397,12 @@ class OrderDetailsTable extends AppTable
     {
 
         // update with condition on association does not work with ->update or ->updateAll
-        $orderDetails = $this->find('all', [
-            'conditions' => [
-                'Products.id_manufacturer' => $manufacturerId,
-            ],
-            'contain' => [
-                'Products',
-            ]
+        $orderDetails = $this->find('all',
+        conditions: [
+            'Products.id_manufacturer' => $manufacturerId,
+        ],
+        contain: [
+            'Products',
         ])
         ->where(function (QueryExpression $exp) use ($oldOrderStates) {
             return $exp->in('OrderDetails.order_state', $oldOrderStates);
@@ -449,23 +436,22 @@ class OrderDetailsTable extends AppTable
             'Carts.status' => APP_OFF,
         ]);
 
-        $orderDetails = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-            ],
-            'fields' => [
-                'OrderDetails.id_order_detail',
-                'OrderDetails.product_id',
-                'OrderDetails.product_attribute_id',
-                'OrderDetails.product_amount',
-            ],
-            'order' => [
-                'OrderDetails.created' => 'DESC',
-            ],
-            'contain' => [
-                'CartProducts.Carts',
-                'Products.Manufacturers',
-            ]
+        $orderDetails = $this->find('all',
+        conditions: [
+            'OrderDetails.id_customer' => $customerId,
+        ],
+        fields: [
+            'OrderDetails.id_order_detail',
+            'OrderDetails.product_id',
+            'OrderDetails.product_attribute_id',
+            'OrderDetails.product_amount',
+        ],
+        order: [
+            'OrderDetails.created' => 'DESC',
+        ],
+        contain: [
+            'CartProducts.Carts',
+            'Products.Manufacturers',
         ])->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
             $exp->gte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate(date('Y-m-d', $dateFrom)));
             $exp->lte('DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate(date('Y-m-d', $dateTo)));
@@ -567,10 +553,8 @@ class OrderDetailsTable extends AppTable
 
     private function prepareSumProduct($customerId)
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-            ],
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer' => $customerId,
         ])
         ->where(function (QueryExpression $exp) {
             return $exp->in('OrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless());
@@ -580,10 +564,8 @@ class OrderDetailsTable extends AppTable
 
     public function getDifferentPickupDayCountByCustomerId($customerId)
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-            ],
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer' => $customerId,
         ]);
         $query->select([
             'different_pickup_day_count' => $query->func()->count('DISTINCT(OrderDetails.pickup_day)'),
@@ -593,10 +575,8 @@ class OrderDetailsTable extends AppTable
 
     public function getCountByCustomerId($customerId)
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-            ],
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer' => $customerId,
         ]);
         return $query->count();
     }
@@ -623,11 +603,10 @@ class OrderDetailsTable extends AppTable
             $conditions[] = 'Products.id_manufacturer > 0';
         }
 
-        $query = $this->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Products',
-            ]
+        $query = $this->find('all',
+        conditions: $conditions,
+        contain: [
+            'Products',
         ]);
 
         if ($year != '') {
@@ -655,10 +634,8 @@ class OrderDetailsTable extends AppTable
 
     public function getSumDeposit($customerId)
     {
-        $query = $this->find('all', [
-            'conditions' => [
-                'OrderDetails.id_customer' => $customerId,
-            ],
+        $query = $this->find('all', conditions: [
+            'OrderDetails.id_customer' => $customerId,
         ]);
         $query = $this->setOrderStateCondition($query, Configure::read('app.htmlHelper')->getOrderStatesCashless());
         $query->where(function (QueryExpression $exp) {

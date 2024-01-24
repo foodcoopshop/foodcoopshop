@@ -6,6 +6,8 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
+use App\Model\Table\SlidersTable;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,8 +27,7 @@ class SlidersController extends AdminAppController
 
     use UploadTrait;
 
-    protected $Slider;
-    protected $Sanitize;
+    protected SlidersTable $Slider;
     
     public function add()
     {
@@ -54,10 +55,8 @@ class SlidersController extends AdminAppController
         }
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $slider = $this->Slider->find('all', [
-            'conditions' => [
-                'Sliders.id_slider' => $sliderId
-            ]
+        $slider = $this->Slider->find('all', conditions: [
+            'Sliders.id_slider' => $sliderId
         ])->first();
 
         if (empty($slider)) {
@@ -78,9 +77,9 @@ class SlidersController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $slider = $this->Slider->patchEntity($slider, $this->getRequest()->getData());
         if ($slider->hasErrors()) {
@@ -130,9 +129,7 @@ class SlidersController extends AdminAppController
         ];
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $query = $this->Slider->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->Slider->find('all', conditions: $conditions);
         $sliders = $this->paginate($query, [
             'sortableFields' => [
                 'Sliders.position', 'Sliders.active', 'Sliders.link', 'Sliders.is_private'

@@ -20,7 +20,6 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\TestSuite\EmailTrait;
 
 class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
@@ -148,18 +147,18 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $pdfFilenameWithPath = DS . '2018' . DS . '02' . DS . $pdfFilenameWithoutPath;
         $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilenameWithPath);
 
-        $invoice = $this->Invoice->find('all', [
-            'conditions' => [
+        $invoice = $this->Invoice->find('all',
+            conditions: [
                 'Invoices.id_customer' => $customerId,
             ],
-            'contain' => [
+            contain: [
                 'InvoiceTaxes',
             ],
-        ])->first();
+        )->first();
 
         $this->assertEquals($invoice->id, 1);
         $this->assertEquals($invoice->id_manufacturer, 0);
-        $this->assertEquals($invoice->created, new FrozenTime($cronjobRunDay));
+        $this->assertEquals($invoice->created, new \Cake\I18n\DateTime($cronjobRunDay));
         $this->assertEquals($invoice->invoice_number, '2018-000001');
         $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilenameWithPath));
 

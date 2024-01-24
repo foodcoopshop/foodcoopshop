@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\View\Helper\TimeHelper;
 
 /**
@@ -81,7 +80,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC($time)
     {
-        $timeObject = FrozenTime::createFromTimestamp(strtotime($time), 'UTC');
+        $timeObject = \Cake\I18n\DateTime::createFromTimestamp(strtotime($time), 'UTC');
         return $timeObject;
     }
 

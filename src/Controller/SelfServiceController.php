@@ -151,10 +151,8 @@ class SelfServiceController extends FrontendController
                         $invoiceRoute = Configure::read('app.slugHelper')->getHelloCashReceipt($invoiceId);
                     } else {
                         $this->Invoice = $this->getTableLocator()->get('Invoices');
-                        $invoice = $this->Invoice->find('all', [
-                            'conditions' => [
-                                'Invoices.id' => $invoiceId,
-                            ],
+                        $invoice = $this->Invoice->find('all', conditions: [
+                            'Invoices.id' => $invoiceId,
                         ])->first();
                         if (!empty($invoice)) {
                             $invoiceRoute = Configure::read('app.slugHelper')->getInvoiceDownloadRoute($invoice->filename);

@@ -9,7 +9,7 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -49,14 +49,14 @@ class CustomersControllerTest extends AppCakeTestCase
         ];
         $this->post($this->Slug->getCustomerEdit(Configure::read('test.superadminId')), $data);
 
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
+        $customer = $this->Customer->find('all',
+            conditions: [
                 'Customers.id_customer' => Configure::read('test.superadminId'),
             ],
-            'contain' => [
+            contain: [
                 'AddressCustomers',
             ],
-        ])->first();
+        )->first();
 
         $this->assertEquals($data['Customers']['firstname'], $customer->firstname);
         $this->assertEquals($data['Customers']['lastname'], $customer->lastname);

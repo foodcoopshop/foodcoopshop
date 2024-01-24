@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-    colors="true"
-    processIsolation="false"
-    stopOnFailure="false"
-    verbose="true"
-    bootstrap="./tests/bootstrap.php"
-    >
-  <coverage>
-    <include>
-      <directory>./src/</directory>
-      <directory>./templates/</directory>
-      <directory>./plugins/Admin/src/</directory>
-      <directory>./plugins/Admin/templates/</directory>
-      <directory>./plugins/Network/src/</directory>
-      <directory>./plugins/Network/templates/</directory>
-    </include>
-  </coverage>
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+  colors="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  bootstrap="./tests/bootstrap.php"
+  cacheDirectory=".phpunit.cache" 
+  displayDetailsOnTestsThatTriggerDeprecations="true"
+  displayDetailsOnTestsThatTriggerWarnings="true"
+  >
   <php>
     <ini name="memory_limit" value="-1"/>
     <ini name="apc.enable_cli" value="1"/>
@@ -29,4 +22,14 @@
       <directory>./plugins/Network/tests/TestCase/</directory>
     </testsuite>
   </testsuites>
+  <source>
+    <include>
+      <directory>./src/</directory>
+      <directory>./templates/</directory>
+      <directory>./plugins/Admin/src/</directory>
+      <directory>./plugins/Admin/templates/</directory>
+      <directory>./plugins/Network/src/</directory>
+      <directory>./plugins/Network/templates/</directory>
+    </include>
+  </source>
 </phpunit>

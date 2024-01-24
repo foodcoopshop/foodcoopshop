@@ -29,7 +29,7 @@ class AppTable extends Table
     public function initialize(array $config): void
     {
         $this->setTable($this->tablePrefix . $this->getTable());
-        if ((php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
+        if ((PHP_SAPI == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
             $this->setConnection(ConnectionManager::get('test'));
         }
         parent::initialize($config);

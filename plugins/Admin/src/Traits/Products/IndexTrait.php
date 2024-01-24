@@ -3,7 +3,13 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use App\Model\Table\AttributesTable;
+use App\Model\Table\CategoriesTable;
+use App\Model\Table\StorageLocationsTable;
+use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
+use Network\Model\Table\SyncDomainsTable;
+use Network\Model\Table\SyncManufacturersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -12,7 +18,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -21,12 +27,12 @@ use Cake\Core\Configure;
 
 trait IndexTrait {
 
-    protected $Attribute;
-    protected $Category;
-    protected $Tax;
-    protected $StorageLocation;
-    protected $SyncManufacturer;
-    protected $SyncDomain;
+    protected AttributesTable $Attribute;
+    protected CategoriesTable $Category;
+    protected TaxesTable $Tax;
+    protected StorageLocationsTable $StorageLocation;
+    protected SyncManufacturersTable $SyncManufacturer;
+    protected SyncDomainsTable $SyncDomain;
 
     public function index()
     {
@@ -79,11 +85,11 @@ trait IndexTrait {
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (is_int($manufacturerId)) {
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
+            $manufacturer = $this->Manufacturer->find('all',
+                conditions: [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ]
-            ])
+            )
             ->select($this->Product->Manufacturers)
             ->first();
             $this->set('manufacturer', $manufacturer);

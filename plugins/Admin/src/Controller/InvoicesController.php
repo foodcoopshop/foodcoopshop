@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\InvoicesTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
+use App\Model\Table\PickupDaysTable;
 use App\Services\HelloCash\HelloCashService;
 use App\Services\Invoice\GenerateInvoiceToCustomerService;
 use App\Services\PdfWriter\InvoiceToCustomerPdfWriterService;
@@ -10,7 +14,7 @@ use App\Services\PdfWriter\InvoiceToCustomerWithTaxBasedOnInvoiceSumPdfWriterSer
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
-use Cake\I18n\FrozenTime;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,11 +32,16 @@ use Cake\I18n\FrozenTime;
 class InvoicesController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $Invoice;
-    protected $OrderDetail;
-    protected $PickupDay;
-    protected $Payment;
+    protected InvoicesTable $Invoice;
+    protected OrderDetailsTable $OrderDetail;
+    protected PickupDaysTable $PickupDay;
+    protected PaymentsTable $Payment;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     public function downloadAsZipFile()
     {
@@ -86,10 +95,8 @@ class InvoicesController extends AdminAppController
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
         $customerTable = $this->getTableLocator()->get('Customers');
-        $customer = $customerTable->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId,
-            ],
+        $customer = $customerTable->find('all', conditions: [
+            'Customers.id_customer' => $customerId,
         ])->first();
 
         if (empty($customer)) {
@@ -133,8 +140,8 @@ class InvoicesController extends AdminAppController
                         'type' => $invoiceData->sumPriceIncl > 0 ? 'product' : 'payback',
                         'id_customer' => $customerId,
                         'id_manufacturer' => 0,
-                        'date_add' => FrozenTime::now(),
-                        'date_changed' => FrozenTime::now(),
+                        'date_add' => \Cake\I18n\DateTime::now(),
+                        'date_changed' => \Cake\I18n\DateTime::now(),
                         'amount' => abs($invoiceData->sumPriceIncl),
                         'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
                         'created_by' => $this->identity->getId(),
@@ -191,10 +198,8 @@ class InvoicesController extends AdminAppController
         }
 
         $customerTable = $this->getTableLocator()->get('Customers');
-        $customer = $customerTable->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId,
-            ],
+        $customer = $customerTable->find('all', conditions: [
+            'Customers.id_customer' => $customerId,
         ])->first();
 
         if (empty($customer)) {
@@ -240,13 +245,12 @@ class InvoicesController extends AdminAppController
             die($pdfWriter->writeInline());
         }
 
-
     }
 
     public function cancel()
     {
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $invoiceId = h($this->getRequest()->getData('invoiceId'));
 
@@ -255,16 +259,15 @@ class InvoicesController extends AdminAppController
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Payment = $this->getTableLocator()->get('Payments');
 
-        $invoice = $this->Invoice->find('all', [
-            'contain' => [
-                'Payments',
-                'Customers',
-                'OrderDetails.OrderDetailUnits',
-                'OrderDetails.Products.Manufacturers',
-            ],
-            'conditions' => [
-                'Invoices.id' => $invoiceId,
-            ],
+        $invoice = $this->Invoice->find('all',
+        contain: [
+            'Payments',
+            'Customers',
+            'OrderDetails.OrderDetailUnits',
+            'OrderDetails.Products.Manufacturers',
+        ],
+        conditions: [
+            'Invoices.id' => $invoiceId,
         ])->first();
 
         if (empty($invoice)) {
@@ -302,13 +305,12 @@ class InvoicesController extends AdminAppController
 
             $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
 
-            $customer = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.id_customer' => $invoice->id_customer,
-                ],
-                'contain' => [
-                    'AddressCustomers',
-                ]
+            $customer = $this->Customer->find('all',
+            conditions: [
+                'Customers.id_customer' => $invoice->id_customer,
+            ],
+            contain: [
+                'AddressCustomers',
             ])->first();
 
             $customer->id_customer = $invoice->customer->id_customer;
@@ -343,7 +345,7 @@ class InvoicesController extends AdminAppController
                 $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
                 $this->Payment->updateAll([
                     'status' => APP_DEL,
-                    'date_changed' => FrozenTime::now(),
+                    'date_changed' => \Cake\I18n\DateTime::now(),
                     'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
                 ], [
                     'type IN' => ['product', 'payback'],
@@ -462,13 +464,11 @@ class InvoicesController extends AdminAppController
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
 
-        $query = $this->Invoice->find('all', [
-            'contain' => [
-                'InvoiceTaxes',
-                'Customers',
-                'CancellationInvoices',
-                'CancelledInvoices',
-            ],
+        $query = $this->Invoice->find('all', contain: [
+            'InvoiceTaxes',
+            'Customers',
+            'CancellationInvoices',
+            'CancelledInvoices',
         ]);
         $query = $this->setInvoiceConditions($query, $dateFrom, $dateTo, $customerId);
 
@@ -485,7 +485,7 @@ class InvoicesController extends AdminAppController
                 'Invoices.created' => 'DESC',
                 'Invoices.id' => 'DESC',
             ]
-        ])->toArray();
+        ]);
 
         $this->set('invoices', $invoices);
 

@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,8 +24,7 @@ use Cake\Http\Exception\NotFoundException;
 class TaxesController extends AdminAppController
 {
 
-    protected $Tax;
-    protected $Sanitize;
+    protected TaxesTable $Tax;
     
     public function add()
     {
@@ -50,10 +51,8 @@ class TaxesController extends AdminAppController
         }
 
         $this->Tax = $this->getTableLocator()->get('Taxes');
-        $tax = $this->Tax->find('all', [
-            'conditions' => [
-                'Taxes.id_tax' => $taxId
-            ]
+        $tax = $this->Tax->find('all', conditions: [
+            'Taxes.id_tax' => $taxId
         ])->first();
 
         if (empty($tax)) {
@@ -74,9 +73,9 @@ class TaxesController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $tax = $this->Tax->patchEntity($tax, $this->getRequest()->getData());
         if ($tax->hasErrors()) {
@@ -113,9 +112,7 @@ class TaxesController extends AdminAppController
         ];
 
         $this->Tax = $this->getTableLocator()->get('Taxes');
-        $query = $this->Tax->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->Tax->find('all', conditions: $conditions);
         $taxes = $this->paginate($query, [
             'sortableFields' => [
                 'Taxes.rate', 'Taxes.position'

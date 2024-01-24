@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Services\Pdf\Traits;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,7 +31,7 @@ trait FooterTrait
         $this->SetFontSize(10);
         $this->Cell(0, 10, $this->infoTextForFooter , 0, false, 'L', 0, '', 0, false, 'T', 'M');
         $this->Ln(4);
-        $now = new FrozenTime();
+        $now = new \Cake\I18n\DateTime();
         $textForFooterRight =
         __('Generated_on_{0}', [
             $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))

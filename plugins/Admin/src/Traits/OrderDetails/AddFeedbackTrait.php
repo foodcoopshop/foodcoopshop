@@ -12,7 +12,7 @@ use App\Mailer\AppMailer;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -23,22 +23,22 @@ trait AddFeedbackTrait {
 
     public function addFeedback()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b><i><img>'));
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $orderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailFeedbacks'
             ]
-        ])->first();
+        )->first();
 
         try {
             if (empty($orderDetail)) {

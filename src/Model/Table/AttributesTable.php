@@ -45,10 +45,8 @@ class AttributesTable extends AppTable
 
     public function getForDropdown()
     {
-        $attributes = $this->find('all', [
-            'order' => [
-                'Attributes.name' => 'ASC'
-            ]
+        $attributes = $this->find('all', order: [
+            'Attributes.name' => 'ASC'
         ]);
 
         $attributesForDropdown = [];

@@ -61,15 +61,15 @@ class CartsTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         if (Configure::read('app.rightOfWithdrawalEnabled')) {
-            $validator->requirePresence('cancellation_terms_accepted', __('Please_accept_the_information_about_right_of_withdrawal'));
+            $validator->requirePresence('cancellation_terms_accepted', true, __('Please_accept_the_information_about_right_of_withdrawal'));
             $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
         }
         if (Configure::read('app.generalTermsAndConditionsEnabled')) {
-            $validator->requirePresence('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
+            $validator->requirePresence('general_terms_and_conditions_accepted', true, __('Please_accept_the_general_terms_and_conditions.'));
             $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
         }
         if (Configure::read('app.promiseToPickUpProductsCheckboxEnabled')) {
-            $validator->requirePresence('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
+            $validator->requirePresence('promise_to_pickup_products', true, __('Please_promise_to_pick_up_the_ordered_products.'));
             $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
         }
         $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
@@ -122,12 +122,10 @@ class CartsTable extends AppTable
         $identity = Router::getRequest()->getAttribute('identity');
         $customerId = $identity->getId();
 
-        $cart = $this->find('all', [
-            'conditions' => [
-                'Carts.status' => APP_ON,
-                'Carts.id_customer' => $customerId,
-                'Carts.cart_type' => $cartType,
-            ]
+        $cart = $this->find('all', conditions: [
+            'Carts.status' => APP_ON,
+            'Carts.id_customer' => $customerId,
+            'Carts.cart_type' => $cartType,
         ])->first();
 
         if (empty($cart)) {
@@ -140,15 +138,15 @@ class CartsTable extends AppTable
         }
 
         $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
-        $cartProducts = $cartProductsTable->find('all', [
-            'conditions' => [
+        $cartProducts = $cartProductsTable->find('all',
+            conditions: [
                 'CartProducts.id_cart' => $cart->id_cart,
                 'CartProducts.amount > 0',
             ],
-            'order' => [
+            order: [
                 'Products.name',
             ],
-            'contain' => [
+            contain: [
                 'CartProductUnits',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
@@ -159,7 +157,7 @@ class CartsTable extends AppTable
                 'Products.Images',
                 'Products.Taxes',
             ]
-        ])->toArray();
+        )->toArray();
 
         $orderCustomerService = new OrderCustomerService();
         if (!empty($cartProducts)) {

@@ -51,11 +51,10 @@ class PickupReminderCommand extends AppCommand
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $customers = $this->Customer->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
-            ]
+        $customers = $this->Customer->find('all',
+        conditions: $conditions,
+        contain: [
+            'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -69,18 +68,17 @@ class PickupReminderCommand extends AppCommand
         $exp = new QueryExpression();
         foreach ($customers as $customer) {
 
-            $futureOrderDetails = $this->OrderDetail->find('all', [
-                'conditions' => [
-                    'OrderDetails.id_customer' => $customer->id_customer,
-                    $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', date('Y-m-d', $nextPickupDay)),
-                    $exp->gt('DATEDIFF(OrderDetails.pickup_day, DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\'))', $diffOrderAndPickupInDays),
-                ],
-                'contain' => [
-                    'Products.Manufacturers'
-                ],
-                'order' => [
-                    'OrderDetails.product_name' => 'ASC'
-                ]
+            $futureOrderDetails = $this->OrderDetail->find('all',
+            conditions: [
+                'OrderDetails.id_customer' => $customer->id_customer,
+                $exp->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', date('Y-m-d', $nextPickupDay)),
+                $exp->gt('DATEDIFF(OrderDetails.pickup_day, DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\'))', $diffOrderAndPickupInDays),
+            ],
+            contain: [
+                'Products.Manufacturers'
+            ],
+            order: [
+                'OrderDetails.product_name' => 'ASC'
             ])->toArray();
 
             if (empty($futureOrderDetails)) {

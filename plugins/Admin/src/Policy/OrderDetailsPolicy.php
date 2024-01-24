@@ -7,6 +7,8 @@ use Cake\Http\ServerRequest;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
+use Authorization\Policy\ResultInterface;
+use Authorization\IdentityInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -15,7 +17,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -24,7 +26,7 @@ use Cake\Core\Configure;
 class OrderDetailsPolicy implements RequestPolicyInterface
 {
 
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
         if ($identity === null) {
@@ -60,11 +62,11 @@ class OrderDetailsPolicy implements RequestPolicyInterface
                 }
                 if ($identity->isCustomer()) {
                     $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-                    $orderDetail = $orderDetailTable->find('all', [
-                        'conditions' => [
+                    $orderDetail = $orderDetailTable->find('all',
+                        conditions:  [
                             'OrderDetails.id_order_detail' => $request->getData('orderDetailId')
                         ]
-                    ])->first();
+                    )->first();
                     if (!empty($orderDetail)) {
                         if ($orderDetail->id_customer == $identity->getId()) {
                             return true;
@@ -120,14 +122,14 @@ class OrderDetailsPolicy implements RequestPolicyInterface
     {
         if ($identity->isCustomer() || $identity->isManufacturer()) {
             $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-            $orderDetail = $orderDetailTable->find('all', [
-                'conditions' => [
+            $orderDetail = $orderDetailTable->find('all',
+                conditions: [
                     'OrderDetails.id_order_detail' => $orderDetailId,
                 ],
-                'contain' => [
+                contain: [
                     'Products'
                 ]
-            ])->first();
+            )->first();
             if (!empty($orderDetail)) {
                 if ($identity->isManufacturer() && $orderDetail->product->id_manufacturer == $identity->getManufacturerId()) {
                     return true;

@@ -4,8 +4,11 @@ declare(strict_types=1);
 namespace Network\Controller;
 
 use App\Controller\AppController;
+use App\Model\Table\ActionLogsTable;
+use App\Services\SanitizeService;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,9 +26,8 @@ use Cake\Http\Exception\NotFoundException;
 class SyncDomainsController extends AppController
 {
 
-    protected $ActionLog;
-    protected $Sanitize;
-    protected $SyncDomain;
+    protected ActionLogsTable $ActionLog;
+    protected SyncDomainsTable $SyncDomain;
 
     public function beforeFilter(EventInterface $event)
     {
@@ -55,10 +57,8 @@ class SyncDomainsController extends AppController
             throw new NotFoundException;
         }
 
-        $syncDomain = $this->SyncDomain->find('all', [
-            'conditions' => [
-                'SyncDomains.id' => $syncDomainId
-            ]
+        $syncDomain = $this->SyncDomain->find('all', conditions: [
+            'SyncDomains.id' => $syncDomainId
         ])->first();
 
         if (empty($syncDomain)) {
@@ -78,9 +78,9 @@ class SyncDomainsController extends AppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $syncDomain = $this->SyncDomain->patchEntity(
             $syncDomain,

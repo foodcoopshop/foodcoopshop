@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Component;
-
-use Cake\Controller\Component;
+namespace App\Services;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -18,13 +16,9 @@ use Cake\Controller\Component;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class SanitizeComponent extends Component
+class SanitizeService
 {
 
-    /**
-     * @param array $array
-     * @return array
-     */
     public function trimRecursive($data, $excludedFields = [])
     {
         array_walk_recursive($data, function (&$item, $key) use ($excludedFields) {
@@ -35,17 +29,12 @@ class SanitizeComponent extends Component
         return $data;
     }
 
-    public static function stripBase64DataFromImageTag($item)
+    public function stripBase64DataFromImageTag($item)
     {
         $item = preg_replace('/src="(data:image\/[^;]+;base64[^"]+)"/i', 'src="invalid-image"', $item);
         return $item;
     }
 
-
-    /**
-     * @param array $array
-     * @return array
-     */
     public function stripTagsAndPurifyRecursive($data, $excludedFields = [])
     {
         $config = \HTMLPurifier_Config::createDefault();
@@ -62,7 +51,7 @@ class SanitizeComponent extends Component
                     $item = strip_tags($item);
                 }
                 // avoid xss attacks
-                $item = self::stripBase64DataFromImageTag($item);
+                $item = $this->stripBase64DataFromImageTag($item);
                 $item = $purifier->purify($item);
             }
         });

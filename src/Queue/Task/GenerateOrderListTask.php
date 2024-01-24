@@ -9,6 +9,7 @@ use App\Mailer\AppMailer;
 use Cake\Datasource\FactoryLocator;
 use App\Services\PdfWriter\OrderListByProductPdfWriterService;
 use App\Services\PdfWriter\OrderListByCustomerPdfWriterService;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,9 +30,9 @@ class GenerateOrderListTask extends Task {
     use UpdateActionLogTrait;
     
     public $Manufacturer;
-    public $QueuedJobs;
-    public $timeout = 30;
-    public $retries = 2;
+    public QueuedJobsTable $QueuedJobs;
+    public ?int $timeout = 30;
+    public ?int $retries = 2;
 
     private function generateOrderListProduct($isAnonymized, $manufacturer, $pickupDayDbFormat, $currentDateForOrderLists, $orderDetailIds): string
     {

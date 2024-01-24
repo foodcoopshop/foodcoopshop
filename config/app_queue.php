@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 $connection = 'default';
 $exitwhennothingtodo = false;
-if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
+if (PHP_SAPI == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
     $connection = 'test';
     $exitwhennothingtodo = true;
 }

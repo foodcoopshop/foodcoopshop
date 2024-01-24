@@ -47,6 +47,7 @@ use Cake\Utility\Hash;
 
 <?php
 
+$this->Paginator->setPaginated($attributes);
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">'.__d('admin', 'ID').'</th>';

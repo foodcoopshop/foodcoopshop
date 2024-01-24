@@ -6,6 +6,8 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
+use App\Model\Table\CategoriesTable;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,8 +26,7 @@ use Admin\Traits\UploadTrait;
 class CategoriesController extends AdminAppController
 {
 
-    protected $Category;
-    protected $Sanitize;
+    protected CategoriesTable $Category;
     
     use UploadTrait;
     
@@ -54,10 +55,8 @@ class CategoriesController extends AdminAppController
         }
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $category = $this->Category->find('all', [
-            'conditions' => [
-                'Categories.id_category' => $categoryId
-            ]
+        $category = $this->Category->find('all', conditions: [
+            'Categories.id_category' => $categoryId
         ])->first();
 
         if (empty($category)) {
@@ -65,7 +64,7 @@ class CategoriesController extends AdminAppController
         }
         $this->set('title_for_layout', __d('admin', 'Edit_category'));
 
-        $categoryChildren = $this->Category->find('all')->find('children', ['for' => $categoryId]);
+        $categoryChildren = $this->Category->find('all')->find('children', for: $categoryId);
 
         $disabledSelectCategoryIds = [(int) $categoryId];
         foreach ($categoryChildren as $categoryChild) {
@@ -88,9 +87,9 @@ class CategoriesController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['description'])));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['description'])));
 
         if ($this->getRequest()->getData('Categories.id_parent') == '') {
             $this->request = $this->request->withData('Categories.id_parent', 0);
@@ -144,9 +143,7 @@ class CategoriesController extends AdminAppController
         $conditions[] = $this->Category->getExcludeCondition();
         $conditions[] = 'Categories.active > ' . APP_DEL;
 
-        $totalCategoriesCount = $this->Category->find('all', [
-            'conditions' => $conditions
-        ])->count();
+        $totalCategoriesCount = $this->Category->find('all', conditions: $conditions)->count();
         $this->set('totalCategoriesCount', $totalCategoriesCount);
 
         $categories = $this->Category->getThreaded($conditions);

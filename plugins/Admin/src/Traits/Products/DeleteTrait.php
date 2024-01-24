@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use Cake\I18n\FrozenTime;
+use App\Model\Table\OrderDetailsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -12,7 +12,7 @@ use Cake\I18n\FrozenTime;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -21,21 +21,21 @@ use Cake\I18n\FrozenTime;
 
 trait DeleteTrait {
 
-    protected $OrderDetail;
+    protected OrderDetailsTable $OrderDetail;
 
     public function delete()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productIds = $this->getRequest()->getData('productIds');
-        $products = $this->Product->find('all', [
-            'conditions' => [
+        $products = $this->Product->find('all',
+            conditions: [
                 'Products.id_product IN' => $productIds
             ],
-            'contain' => [
+            contain: [
                 'Manufacturers'
             ]
-        ]);
+        );
         $preparedProductsForActionLog = [];
         foreach($products as $product) {
             $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
@@ -44,15 +44,15 @@ trait DeleteTrait {
         try {
             // check if open order exist
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $query = $this->OrderDetail->find('all', [
-                'conditions' => [
+            $query = $this->OrderDetail->find('all',
+                conditions: [
                     'OrderDetails.product_id IN' => $productIds,
                     'OrderDetails.order_state IN' => [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]
                 ],
-                'contain' => [
+                contain: [
                     'Products'
                 ]
-            ]);
+            );
             $query->select(
                 [
                     'orderDetailsCount' => $query->func()->count('OrderDetails.product_id'),
@@ -84,7 +84,7 @@ trait DeleteTrait {
         // 1) set field active to -1
         $this->Product->updateAll([
             'active' => APP_DEL,
-            'modified' => FrozenTime::now() // timestamp behavior does not work here...
+            'modified' => \Cake\I18n\DateTime::now() // timestamp behavior does not work here...
         ], [
             'id_product IN' => $productIds
         ]);

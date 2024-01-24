@@ -12,7 +12,7 @@ use Cake\Core\Configure;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -26,7 +26,7 @@ trait DeleteImageTrait {
      */
     public function deleteImage($productId)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $productId = (int) $productId;
 
@@ -41,15 +41,15 @@ trait DeleteImageTrait {
             return;
         }
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId
             ],
-            'contain' => [
+            contain: [
                 'Images',
                 'Manufacturers'
             ]
-        ])->first();
+        )->first();
 
         $this->Product->changeImage(
             [

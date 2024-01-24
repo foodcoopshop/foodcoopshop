@@ -48,14 +48,14 @@ abstract class OrderListPdfWriterService extends PdfWriterService
             throw new \Exception('type not valid: ' . $type);
         }
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
+        $manufacturer = $this->Manufacturer->find('all',
+            conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ],
-            'contain' => [
+            contain: [
                 'AddressManufacturers'
             ],
-        ])->first();
+        )->first();
 
         $results = $this->Manufacturer->getDataForInvoiceOrOrderList(
             $manufacturerId,

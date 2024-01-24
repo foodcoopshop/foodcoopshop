@@ -7,7 +7,7 @@ use App\Services\PdfWriter\MyMemberCardPdfWriterService;
 use App\Services\PdfWriter\MemberCardsPdfWriterService;
 use App\Services\PdfWriter\TermsOfUsePdfWriterService;
 use App\Mailer\AppMailer;
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
@@ -15,6 +15,11 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
+use App\Model\Table\CustomersTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
+use Cake\View\JsonView;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,17 +38,21 @@ use App\Controller\Traits\RenewAuthSessionTrait;
 class CustomersController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $OrderDetail;
-    protected $Payment;
-    protected $Sanitize;
+    protected OrderDetailsTable $OrderDetail;
+    protected PaymentsTable $Payment;
 
     use UploadTrait;
     use RenewAuthSessionTrait;
     
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
+
     public function ajaxGetCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $includeManufacturers = (bool) $includeManufacturers;
         $includeOfflineCustomers = (bool) $includeOfflineCustomers;
@@ -107,7 +116,7 @@ class CustomersController extends AdminAppController
         $customerId = (int) $this->getRequest()->getData('customerId');
         $groupId = (int) $this->getRequest()->getData('groupId');
 
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->identity->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
@@ -121,10 +130,8 @@ class CustomersController extends AdminAppController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $oldCustomer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ]
+        $oldCustomer = $this->Customer->find('all', conditions: [
+            'Customers.id_customer' => $customerId
         ])->first();
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
@@ -167,10 +174,8 @@ class CustomersController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Change_password'));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->identity->getId()
-            ]
+        $customer = $this->Customer->find('all', conditions: [
+            'Customers.id_customer' => $this->identity->getId()
         ])->first();
 
         if (empty($this->getRequest()->getData())) {
@@ -224,7 +229,7 @@ class CustomersController extends AdminAppController
 
     public function delete(int $customerId)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $isOwnProfile = $this->identity->getId() == $customerId;
 
@@ -237,14 +242,13 @@ class CustomersController extends AdminAppController
 
         try {
 
-            $customer = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.id_customer' => $customerId
-                ],
-                'contain' => [
-                    'Manufacturers',
-                    'ActiveOrderDetails'
-                ]
+            $customer = $this->Customer->find('all',
+            conditions: [
+                'Customers.id_customer' => $customerId
+            ],
+            contain: [
+                'Manufacturers',
+                'ActiveOrderDetails'
             ])->first();
 
             if (empty($customer)) {
@@ -268,14 +272,12 @@ class CustomersController extends AdminAppController
             }
 
             if (Configure::read('app.applyPaymentsOkCheckOnDeletingCustomers')) {
-                $notApprovedPaymentsCount = $this->Payment->find('all', [
-                    'conditions' => [
-                        'id_customer' => $customerId,
-                        'approval < ' => APP_ON,
-                        'status' => APP_ON,
-                        'type' => 'product',
-                        'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
-                    ]
+                $notApprovedPaymentsCount = $this->Payment->find('all', conditions: [
+                    'id_customer' => $customerId,
+                    'approval < ' => APP_ON,
+                    'status' => APP_ON,
+                    'type' => 'product',
+                    'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
                 ])->count();
                 if ($notApprovedPaymentsCount > 0) {
                     $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
@@ -297,7 +299,6 @@ class CustomersController extends AdminAppController
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
-
 
         $this->Customer->deleteAll(['id_customer' => $customerId]);
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
@@ -362,13 +363,12 @@ class CustomersController extends AdminAppController
         $this->set('isOwnProfile', $isOwnProfile);
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $customerId
+        ],
+        contain: [
+            'AddressCustomers'
         ])->first();
 
         if (empty($customer)) {
@@ -382,9 +382,9 @@ class CustomersController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $this->setRequest($this->getRequest()->withData('Customers.email', $this->getRequest()->getData('Customers.address_customer.email')));
         $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
@@ -463,13 +463,12 @@ class CustomersController extends AdminAppController
         }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $customerId
+        ],
+        contain: [
+            'AddressCustomers'
         ])->first();
 
         $customer->active = $status;
@@ -514,19 +513,18 @@ class CustomersController extends AdminAppController
 
     public function editComment()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $customerId = $this->getRequest()->getData('customerId');
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
 
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $oldCustomer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
+        $oldCustomer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $customerId
+        ],
+        contain: [
+            'AddressCustomers'
         ])->first();
 
         $this->Customer->AddressCustomers->save(
@@ -678,10 +676,9 @@ class CustomersController extends AdminAppController
             $contain[] = 'Feedbacks';
         }
 
-        $query = $this->Customer->find('all', [
-            'conditions' => $conditions,
-            'contain' => $contain,
-        ]);
+        $query = $this->Customer->find('all',
+        conditions: $conditions,
+        contain: $contain);
         $query = $this->Customer->addCustomersNameForOrderSelect($query);
         $query->select($this->Customer);
         $query->select($this->Customer->AddressCustomers);
@@ -712,7 +709,7 @@ class CustomersController extends AdminAppController
                 'last_pickup_day',
             ],
             'order' => $this->Customer->getCustomerOrderClause(),
-        ])->toArray();
+        ]);
 
         $i = 0;
         $this->Payment = $this->getTableLocator()->get('Payments');
@@ -739,7 +736,7 @@ class CustomersController extends AdminAppController
                 $path .= '_sort';
                 $type = 'locale';
             }
-            $customers = Hash::sort($customers, $path, $this->getRequest()->getQuery('direction'), [
+            $customers = Hash::sort($customers->toArray(), $path, $this->getRequest()->getQuery('direction'), [
                 'type' => $type,
                 'ignoreCase' => true,
             ]);

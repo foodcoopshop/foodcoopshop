@@ -2,9 +2,10 @@
 declare(strict_types=1);
 
 namespace Admin\Controller;
-use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
+
+use App\Model\Table\FeedbacksTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use App\Services\SanitizeService;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -23,9 +24,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 class FeedbacksController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $Feedback;
-    protected $Sanitize;
+    protected FeedbacksTable $Feedback;
 
     public $customerId;
     public $isOwnForm;
@@ -44,13 +43,12 @@ class FeedbacksController extends AdminAppController
     private function getCustomer()
     {
         $this->Customer = $this->getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->customerId,
-            ],
-            'contain' => [
-                'AddressCustomers',
-            ],
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $this->customerId,
+        ],
+        contain: [
+            'AddressCustomers',
         ])->first();
         return $customer;
     }
@@ -108,13 +106,12 @@ class FeedbacksController extends AdminAppController
         $this->set('privacyTypes', $privacyTypes);
         $this->set('isManufacturer', $isManufacturer);
 
-        $feedback = $this->Feedback->find('all', [
-            'conditions' => [
-                'Feedbacks.customer_id' => $customerId,
-            ],
-            'contain' => [
-                'Customers',
-            ]
+        $feedback = $this->Feedback->find('all',
+        conditions: [
+            'Feedbacks.customer_id' => $customerId,
+        ],
+        contain: [
+            'Customers',
         ])->first();
 
         if (!empty($feedback) && $this->identity->isSuperadmin()) {
@@ -131,9 +128,9 @@ class FeedbacksController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['text'])));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['text'])));
 
         if (!$isEditMode) {
             $feedback = $this->Feedback->newEntity(
@@ -185,8 +182,8 @@ class FeedbacksController extends AdminAppController
             }
 
             $oldFeedback = clone $feedback;
-            $valueForApproved = FrozenTime::now();
-            $valueForNotApproved = FrozenTime::createFromDate(1970, 01, 01);
+            $valueForApproved = \Cake\I18n\DateTime::now();
+            $valueForNotApproved = \Cake\I18n\DateTime::createFromDate(1970, 01, 01);
 
             $feedback->approved = $valueForApproved;
             if ($feedback->isDirty('text') && !($this->identity->isAdmin() || $this->identity->isSuperadmin())) {

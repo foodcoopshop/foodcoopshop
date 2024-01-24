@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\CronjobsTable;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Query;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,8 +25,7 @@ use Cake\ORM\Query;
 class CronjobsController extends AdminAppController
 {
 
-    protected $Cronjob;
-    protected $Sanitize;
+    protected CronjobsTable $Cronjob;
 
     public function index()
     {
@@ -33,7 +34,7 @@ class CronjobsController extends AdminAppController
 
         $cronjobs->contain([
             'CronjobLogs' => function (Query $q) {
-                $q->orderDesc('CronjobLogs.created');
+                $q->orderByDesc('CronjobLogs.created');
                 return $q;
             }
         ]);
@@ -45,10 +46,8 @@ class CronjobsController extends AdminAppController
     public function edit($cronjobId)
     {
         $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
-        $cronjob = $this->Cronjob->find('available', [
-            'conditions' => [
-                'Cronjobs.id' => $cronjobId,
-            ]
+        $cronjob = $this->Cronjob->find('available', conditions: [
+            'Cronjobs.id' => $cronjobId,
         ])->first();
 
         if (empty($cronjob)) {
@@ -66,9 +65,9 @@ class CronjobsController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $validationName = $cronjob->getOriginalValues()['name'];
         if (!method_exists($this->Cronjob, 'validation'.$validationName)) {

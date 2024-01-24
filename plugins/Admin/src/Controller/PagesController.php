@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Model\Table\PagesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,9 +25,7 @@ use Cake\Http\Exception\NotFoundException;
 class PagesController extends AdminAppController
 {
 
-    protected $Customer;
-    protected $Page;
-    protected $Sanitize;
+    protected PagesTable $Page;
 
     public function home()
     {
@@ -61,10 +61,8 @@ class PagesController extends AdminAppController
         }
 
         $this->Page = $this->getTableLocator()->get('Pages');
-        $page = $this->Page->find('all', [
-            'conditions' => [
-                'Pages.id_page' => $pageId
-            ]
+        $page = $this->Page->find('all', conditions: [
+            'Pages.id_page' => $pageId
         ])->first();
 
         if (empty($page)) {
@@ -72,12 +70,10 @@ class PagesController extends AdminAppController
         }
         $this->set('title_for_layout', __d('admin', 'Edit_page'));
 
-        $pageChildren = $this->Page->find('all', [
-            'conditions' => [
-                'Pages.active > ' . APP_DEL
-            ]
+        $pageChildren = $this->Page->find('all', conditions: [
+            'Pages.active > ' . APP_DEL
         ])
-        ->find('children', ['for' => $pageId]);
+        ->find('children', for: $pageId);
 
         $disabledSelectPageIds = [(int) $pageId];
         foreach ($pageChildren as $pageChild) {
@@ -103,9 +99,9 @@ class PagesController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
         $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'))));
         $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->identity->getId()));
@@ -164,9 +160,7 @@ class PagesController extends AdminAppController
         $conditions[] = 'Pages.active > ' . APP_DEL;
 
         $this->Page = $this->getTableLocator()->get('Pages');
-        $totalPagesCount = $this->Page->find('all', [
-            'conditions' => $conditions
-        ])->count();
+        $totalPagesCount = $this->Page->find('all', conditions: $conditions)->count();
         $this->set('totalPagesCount', $totalPagesCount);
 
         $pages = $this->Page->getThreaded($conditions);

@@ -43,14 +43,14 @@ class ProductAttributesTableTest extends AppCakeTestCase
 
         $this->ProductAttribute->add($productId, $attributeId);
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ],
-            'contain' => [
+            contain: [
                 'ProductAttributes.StockAvailables',
             ]
-        ])->first();
+        )->first();
 
         $this->assertEquals($product->product_attributes[0]->default_on, 1);
         $this->assertEquals($product->product_attributes[0]->price, 0);
@@ -73,14 +73,14 @@ class ProductAttributesTableTest extends AppCakeTestCase
         ]);
         $this->assertJsonOk();
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ],
-            'contain' => [
+            contain: [
                 'ProductAttributes.BarcodeProductAttributes',
             ]
-        ])->first();
+        )->first();
 
         $this->assertEquals($product->product_attributes[0]->barcode_product_attribute->barcode, $barcode);
 
@@ -99,14 +99,14 @@ class ProductAttributesTableTest extends AppCakeTestCase
         ]);
         $this->assertJsonOk();
 
-        $product = $this->Product->find('all', [
-            'conditions' => [
+        $product = $this->Product->find('all',
+            conditions: [
                 'Products.id_product' => $productId,
             ],
-            'contain' => [
+            contain: [
                 'ProductAttributes.BarcodeProductAttributes',
             ]
-        ])->first();
+        )->first();
 
         $this->assertEquals(count($product->product_attributes), 2);
         $this->assertEmpty($product->product_attributes[0]->barcode_product_attribute);

@@ -5,7 +5,6 @@ use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
@@ -84,7 +83,7 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
             $this->Payment->patchEntity(
                 $this->Payment->get(1),
                 [
-                    'date_transaction_add' => new FrozenTime('2020-06-22 10:22:30'),
+                    'date_transaction_add' => new \Cake\I18n\DateTime('2020-06-22 10:22:30'),
                 ]
             )
         );

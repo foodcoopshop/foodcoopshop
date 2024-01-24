@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Log\Engine;
 
-use App\Network\AppSession;
 use Cake\Core\Configure;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Mailer;
@@ -107,7 +106,7 @@ class FileAndEmailLog extends FileLog
 
         $subject = Configure::read('App.fullBaseUrl') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
-            $email = new Mailer(false);
+            $email = new Mailer(null);
             $email->setProfile('debug');
             $email->setTo(Configure::read('app.debugEmail'))
             ->viewBuilder()->setTemplate('debug');

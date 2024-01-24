@@ -19,7 +19,6 @@ namespace App\Services\Csv\Banking;
 use App\Model\Entity\Customer;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use League\Csv\Reader;
 
@@ -30,11 +29,11 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = FactoryLocator::get('Table')->get('Customers');
-        $query = $customerModel->find('all', [
-            'fields' => [
+        $query = $customerModel->find('all',
+            fields: [
                 'personalTransactionCode' => $customerModel->getPersonalTransactionCodeField(),
             ]
-        ]);
+        );
         $personalTransactionCodes = $query->all()->extract('personalTransactionCode')->toArray();
 
         $regex = '/' . join('|', $personalTransactionCodes) .  '/';
@@ -42,11 +41,11 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
 
         $foundCustomer = null;
         if (!empty($matches[0][0])) {
-            $foundCustomer = $customerModel->find('all', [
-                'conditions' => [
+            $foundCustomer = $customerModel->find('all',
+                conditions: [
                     $customerModel->getPersonalTransactionCodeField() . ' = :personalTransactionCode'
                 ]
-            ])->bind(':personalTransactionCode', $matches[0][0], 'string')
+            )->bind(':personalTransactionCode', $matches[0][0], 'string')
             ->first();
         }
         return $foundCustomer;
@@ -75,7 +74,7 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
             $preparedRecord = [];
             $preparedRecord['content'] = h($record['content']);
             $preparedRecord['amount'] = $amount;
-            $date = new FrozenTime($record['date']);
+            $date = new \Cake\I18n\DateTime($record['date']);
             $preparedRecord['date'] = $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));
 
             $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);

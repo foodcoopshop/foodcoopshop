@@ -17,6 +17,10 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 
+$paginator = $this->loadHelper('Paginator', [
+    'className' => 'ArraySupportingSortOnlyPaginator',
+]);
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         $('input.datepicker').datepicker();" .
@@ -58,14 +62,14 @@ echo '<h2 style="margin-top:10px;">' . __d('admin', 'Net_profit') . '</h2>';
 echo '<table class="list profit-table">';
 
     echo '<tr class="sort">';
-        echo '<th>' . $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight')) . '</th>';
+        echo '<th>' . $paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
+        echo '<th style="text-align:right;">' . $paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount')) . '</th>';
+        echo '<th>' . $paginator->sort('OrderDetails.product_name', __d('admin', 'Product')) . '</th>';
+        echo '<th>' . $paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight')) . '</th>';
         echo '<th>' . __d('admin', 'Manufacturer') . '</th>';
-        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetails.total_price_tax_excl', __d('admin', 'Selling_price')) . '</th>';
-        echo '<th style="text-align:right;">' . $this->Paginator->sort('OrderDetailPurchasePrices.total_price_tax_excl', __d('admin', 'Purchase_price')) . '</th>';
+        echo '<th>' . $paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
+        echo '<th style="text-align:right;">' . $paginator->sort('OrderDetails.total_price_tax_excl', __d('admin', 'Selling_price')) . '</th>';
+        echo '<th style="text-align:right;">' . $paginator->sort('OrderDetailPurchasePrices.total_price_tax_excl', __d('admin', 'Purchase_price')) . '</th>';
         echo '<th style="text-align:right;">' . __d('admin', 'Profit') . '</th>';
     echo '</tr>';
 

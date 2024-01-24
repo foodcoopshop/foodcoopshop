@@ -23,8 +23,6 @@ use Cake\Event\EventInterface;
 class ActionLogsController extends AdminAppController
 {
 
-    protected $Customer;
-
     public function beforeFilter(EventInterface $event)
     {
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -122,15 +120,14 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('types', $types);
 
-        $query = $this->ActionLog->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Customers',
-                'Products',
-                'Manufacturers',
-                'BlogPosts',
-                'Payments'
-            ]
+        $query = $this->ActionLog->find('all',
+        conditions: $conditions,
+        contain: [
+            'Customers',
+            'Products',
+            'Manufacturers',
+            'BlogPosts',
+            'Payments'
         ]);
 
         $query->where(function (QueryExpression $exp) use ($dateFrom, $dateTo) {
@@ -146,7 +143,7 @@ class ActionLogsController extends AdminAppController
             'order' => [
                 'ActionLogs.id' => 'DESC',
             ]
-        ])->toArray();
+        ]);
         foreach ($actionLogs as $actionLog) {
             if (!empty($actionLog->customer)) {
                 $manufacturer = $this->Customer->getManufacturerRecord($actionLog->customer);

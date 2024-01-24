@@ -6,9 +6,13 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Mailer\AppMailer;
+use App\Model\Table\ConfigurationsTable;
+use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
+use App\Services\SanitizeService;
+use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,10 +31,9 @@ use Cake\Utility\Inflector;
 class ConfigurationsController extends AdminAppController
 {
 
-    protected $Configuration;
-    protected $Sanitize;
-    protected $SyncDomain;
-    protected $Tax;
+    protected ConfigurationsTable $Configuration;
+    protected SyncDomainsTable $SyncDomain;
+    protected TaxesTable $Tax;
     
     public function edit($configurationId)
     {
@@ -42,10 +45,8 @@ class ConfigurationsController extends AdminAppController
         }
 
         $this->Configuration = $this->getTableLocator()->get('Configurations');
-        $configuration = $this->Configuration->find('all', [
-            'conditions' => [
-                'Configurations.id_configuration' => $configurationId
-            ]
+        $configuration = $this->Configuration->find('all', conditions: [
+            'Configurations.id_configuration' => $configurationId
         ])->first();
 
         if (empty($configuration)) {
@@ -67,11 +68,11 @@ class ConfigurationsController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
 
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
-            $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+            $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         }
         if (in_array($configuration->name, ['FCS_FACEBOOK_URL', 'FCS_INSTAGRAM_URL'])) {
             $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
@@ -161,10 +162,8 @@ class ConfigurationsController extends AdminAppController
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations(['type != "hidden"']));
         $this->Tax = $this->getTableLocator()->get('Taxes');
-        $defaultTax = $this->Tax->find('all', [
-            'conditions' => [
-                'Taxes.id_tax' => Configure::read('app.defaultTaxId')
-            ]
+        $defaultTax = $this->Tax->find('all', conditions: [
+            'Taxes.id_tax' => Configure::read('app.defaultTaxId')
         ])->first();
         $this->set('defaultTax', $defaultTax);
 

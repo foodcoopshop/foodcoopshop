@@ -15,6 +15,14 @@ use Admin\Traits\UploadTrait;
 use App\Services\CatalogService;
 use App\Services\DeliveryNoteService;
 use App\Controller\Traits\RenewAuthSessionTrait;
+use App\Model\Table\FeedbacksTable;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
+use App\Model\Table\ProductsTable;
+use App\Model\Table\TaxesTable;
+use Cake\View\JsonView;
+use App\Services\SanitizeService;
+use Network\Model\Table\SyncDomainsTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,20 +40,21 @@ use App\Controller\Traits\RenewAuthSessionTrait;
 
 class ManufacturersController extends AdminAppController
 {
-
-    protected $Catalog;
-    protected $Customer;
-    protected $Feedback;
-    protected $Manufacturer;
-    protected $Payment;
-    protected $Product;
-    protected $OrderDetail;
-    protected $Tax;
-    protected $Sanitize;
-    protected $SyncDomain;
+    protected FeedbacksTable $Feedback;
+    protected PaymentsTable $Payment;
+    protected ProductsTable $Product;
+    protected OrderDetailsTable $OrderDetail;
+    protected TaxesTable $Tax;
+    protected SyncDomainsTable $SyncDomain;
 
     use UploadTrait;
     use RenewAuthSessionTrait;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     public function beforeFilter(EventInterface $event)
     {
@@ -92,13 +101,12 @@ class ManufacturersController extends AdminAppController
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'AddressManufacturers'
-            ]
+        $manufacturer = $this->Manufacturer->find('all',
+        conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
+        ],
+        contain: [
+            'AddressManufacturers'
         ])->first();
 
         if (empty($manufacturer)) {
@@ -117,9 +125,9 @@ class ManufacturersController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['description', 'short_description'])));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['description', 'short_description'])));
 
         $iban = $this->getRequest()->getData('Manufacturers.iban') ?? '';
         $this->setRequest($this->getRequest()->withData('Manufacturers.iban', str_replace(' ', '', $iban)));
@@ -223,15 +231,13 @@ class ManufacturersController extends AdminAppController
 
     public function setElFinderUploadPath($manufacturerId)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         if ($this->identity->isManufacturer()) {
             $manufacturerId = $this->identity->getManufacturerId();
         } else {
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId
-                ]
+            $manufacturer = $this->Manufacturer->find('all', conditions: [
+                'Manufacturers.id_manufacturer' => $manufacturerId
             ])->first();
             $manufacturerId = $manufacturer->id_manufacturer;
         }
@@ -287,12 +293,11 @@ class ManufacturersController extends AdminAppController
             ];
         }
 
-        $query = $this->Manufacturer->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'AddressManufacturers',
-                'Customers'
-            ]
+        $query = $this->Manufacturer->find('all',
+        conditions: $conditions,
+        contain: [
+            'AddressManufacturers',
+            'Customers'
         ])
         ->select($this->Manufacturer)
         ->select($this->Manufacturer->Customers)
@@ -305,7 +310,7 @@ class ManufacturersController extends AdminAppController
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ]
-        ])->toArray();
+        ]);
 
         // extract all email addresses for button
         $emailAddresses = [];
@@ -331,10 +336,8 @@ class ManufacturersController extends AdminAppController
             if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
                 $customer = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
                 if (!empty($customer)) {
-                    $manufacturer->feedback = $this->Feedback->find('all', [
-                        'conditions' => [
-                            'Feedbacks.customer_id' => $customer->id_customer,
-                        ]
+                    $manufacturer->feedback = $this->Feedback->find('all', conditions: [
+                        'Feedbacks.customer_id' => $customer->id_customer,
                     ])->first();
                 }
                 $manufacturer->customer_record_id = $customer->id_customer ?? 0;
@@ -348,10 +351,8 @@ class ManufacturersController extends AdminAppController
 
     private function getOptionVariableMemberFee($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
         return $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
     }
@@ -375,10 +376,8 @@ class ManufacturersController extends AdminAppController
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -403,10 +402,8 @@ class ManufacturersController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         if (empty($manufacturer)) {
@@ -476,9 +473,9 @@ class ManufacturersController extends AdminAppController
             $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,
@@ -577,10 +574,8 @@ class ManufacturersController extends AdminAppController
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         $newInvoiceNumber = 'xxx';
@@ -636,10 +631,8 @@ class ManufacturersController extends AdminAppController
         $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
+        $manufacturer = $this->Manufacturer->find('all', conditions: [
+            'Manufacturers.id_manufacturer' => $manufacturerId
         ])->first();
 
         if (!in_array('isAnonymized', array_keys($this->getRequest()->getQueryParams()))) {

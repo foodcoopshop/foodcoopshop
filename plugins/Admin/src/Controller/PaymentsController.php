@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
+use App\Model\Table\OrderDetailsTable;
+use App\Model\Table\PaymentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
-use Cake\I18n\FrozenDate;
-use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\View\JsonView;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,14 +30,17 @@ class PaymentsController extends AdminAppController
 {
     
     protected $allowedPaymentTypes = [];
-    protected $Payment;
     protected $paymentType;
-    protected $Customer;
-    protected $Manufacturer;
-    protected $OrderDetail;
-    protected $Sanitize;
+    protected PaymentsTable $Payment;
+    protected OrderDetailsTable $OrderDetail;
 
     public $customerId;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
 
     public function beforeFilter(EventInterface $event)
     {
@@ -48,14 +53,13 @@ class PaymentsController extends AdminAppController
     public function previewEmail($paymentId, $approval)
     {
 
-        $payment = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id' => $paymentId,
-                'Payments.type' => 'product'
-            ],
-            'contain' => [
-                'Customers'
-            ]
+        $payment = $this->Payment->find('all',
+        conditions: [
+            'Payments.id' => $paymentId,
+            'Payments.type' => 'product'
+        ],
+        contain: [
+            'Customers'
         ])->first();
         if (empty($payment)) {
             throw new RecordNotFoundException('payment not found');
@@ -87,15 +91,14 @@ class PaymentsController extends AdminAppController
 
         $this->setFormReferer();
 
-        $payment = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id' => $paymentId,
-                'Payments.type IN' => ['product', 'payback'],
-            ],
-            'contain' => [
-                'Customers',
-                'ChangedByCustomers'
-            ]
+        $payment = $this->Payment->find('all',
+        conditions: [
+            'Payments.id' => $paymentId,
+            'Payments.type IN' => ['product', 'payback'],
+        ],
+        contain: [
+            'Customers',
+            'ChangedByCustomers'
         ])->first();
 
         if (empty($payment)) {
@@ -122,7 +125,7 @@ class PaymentsController extends AdminAppController
             $payment = $this->Payment->patchEntity(
                 $payment,
                 [
-                    'date_changed' => FrozenTime::now(),
+                    'date_changed' => \Cake\I18n\DateTime::now(),
                     'changed_by' => $this->identity->getId()
                 ]
             );
@@ -168,7 +171,7 @@ class PaymentsController extends AdminAppController
 
     public function add()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
         $type = $this->getRequest()->getData('type');
         if (!is_null($type)) {
             $type = trim($type);
@@ -188,8 +191,8 @@ class PaymentsController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
 
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
@@ -228,10 +231,8 @@ class PaymentsController extends AdminAppController
             $customerId = (int) $this->getRequest()->getData('customerId');
             if ($customerId > 0) {
                 $userType = 'customer';
-                $customer = $this->Customer->find('all', [
-                    'conditions' => [
-                        'Customers.id_customer' => $customerId
-                    ]
+                $customer = $this->Customer->find('all', conditions: [
+                    'Customers.id_customer' => $customerId
                 ])->first();
                 if (empty($customer)) {
                     $msg = 'customer id not correct: ' . $customerId;
@@ -249,10 +250,8 @@ class PaymentsController extends AdminAppController
 
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
-                $manufacturer = $this->Manufacturer->find('all', [
-                    'conditions' => [
-                        'Manufacturers.id_manufacturer' => $manufacturerId
-                    ]
+                $manufacturer = $this->Manufacturer->find('all', conditions: [
+                    'Manufacturers.id_manufacturer' => $manufacturerId
                 ])->first();
 
                 if (empty($manufacturer)) {
@@ -290,10 +289,8 @@ class PaymentsController extends AdminAppController
             'product',
             'payback',
         ]) && isset($customerId)) {
-            $customer = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.id_customer' => $customerId
-                ]
+            $customer = $this->Customer->find('all', conditions: [
+                'Customers.id_customer' => $customerId
             ])->first();
             if ($this->identity->isSuperadmin() && $this->identity->getId() != $customerId) {
                 $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
@@ -320,15 +317,15 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        $dateAddForEntity = FrozenTime::now();
+        $dateAddForEntity = \Cake\I18n\DateTime::now();
         $paymentPastDate = false;
         if ($dateAdd > 0) {
-            $dateAddForEntity = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
+            $dateAddForEntity = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
             $paymentPastDate = true;
         }
         if ($dateAddForEntity->isToday()) {
             $paymentPastDate = false;
-            $dateAddForEntity = FrozenTime::now(); // always save time for today, even if it's explicitely passed
+            $dateAddForEntity = \Cake\I18n\DateTime::now(); // always save time for today, even if it's explicitely passed
         }
 
         // add entry in table payments
@@ -339,7 +336,7 @@ class PaymentsController extends AdminAppController
                 'id_customer' => $customerId ?? 0,
                 'id_manufacturer' => $manufacturerId ?? 0,
                 'date_add' => $dateAddForEntity,
-                'date_changed' => FrozenTime::now(),
+                'date_changed' => \Cake\I18n\DateTime::now(),
                 'amount' => $amount,
                 'text' => $text,
                 'created_by' => $this->identity->getId(),
@@ -387,19 +384,18 @@ class PaymentsController extends AdminAppController
 
     public function changeState()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $paymentId = $this->getRequest()->getData('paymentId');
 
-        $payment = $this->Payment->find('all', [
-            'conditions' => [
-                'Payments.id' => $paymentId,
-                'Payments.approval <> ' . APP_ON
-            ],
-            'contain' => [
-                'Customers',
-                'Manufacturers'
-            ]
+        $payment = $this->Payment->find('all',
+        conditions: [
+            'Payments.id' => $paymentId,
+            'Payments.approval <> ' . APP_ON
+        ],
+        contain: [
+            'Customers',
+            'Manufacturers'
         ])->first();
 
         if (empty($payment)) {
@@ -418,7 +414,7 @@ class PaymentsController extends AdminAppController
                 $payment,
                 [
                     'status' => APP_DEL,
-                    'date_changed' => FrozenTime::now()
+                    'date_changed' => \Cake\I18n\DateTime::now()
                 ]
             )
         );
@@ -529,13 +525,12 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $this->getCustomerId()
-            ],
-            'contain' => [
-               'Payments'
-            ]
+        $customer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => $this->getCustomerId()
+        ],
+        contain: [
+           'Payments'
         ])->first();
 
         $payments = [];
@@ -569,9 +564,9 @@ class PaymentsController extends AdminAppController
                     $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
                     $monthAndYear[0] = (int) $monthAndYear[0];
                     $monthAndYear[1] = (int) $monthAndYear[1];
-                    $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
+                    $frozenDateFrom = \Cake\I18n\Date::create($monthAndYear[0], $monthAndYear[1], 1);
                     $lastDayOfMonth = (int) Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
-                    $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
+                    $frozenDateTo = \Cake\I18n\Date::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                     $payments[] = [
                         'dateRaw' => $frozenDateFrom,
                         'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),

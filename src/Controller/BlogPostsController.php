@@ -44,12 +44,12 @@ class BlogPostsController extends FrontendController
         $conditions['BlogPosts.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
         $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
-        $blogPost = $blogPostTable->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Manufacturers'
+        $blogPost = $blogPostTable->find('all',
+            conditions: $conditions,
+            contain: [
+                'Manufacturers',
             ]
-        ])->first();
+        )->first();
 
         if (empty($blogPost)) {
             throw new RecordNotFoundException('blogPost not found');
@@ -70,13 +70,20 @@ class BlogPostsController extends FrontendController
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
 
-        $options = [
-            'modified' => $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-            'showOnStartPage' => !is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast(),
-        ];
+        $modified = $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'));
+        $showOnStartPage = !is_null($blogPost->show_on_start_page_until) && !$blogPost->show_on_start_page_until->isPast();
+
+        $prevBlogPost = $blogPostTable->find()->contain('Manufacturers')->where($conditions);
+        $prevBlogPost = $blogPostTable->getConditionShowOnStartPage($prevBlogPost, $showOnStartPage);
+        $prevBlogPost = $prevBlogPost->orderByAsc($blogPostTable->aliasField('modified'))->where([$blogPostTable->aliasField('modified >') => $modified]);
+
+        $nextBlogPost = $blogPostTable->find()->contain('Manufacturers')->where($conditions);
+        $nextBlogPost = $blogPostTable->getConditionShowOnStartPage($nextBlogPost, $showOnStartPage);
+        $nextBlogPost = $nextBlogPost->orderByDesc($blogPostTable->aliasField('modified'))->where([$blogPostTable->aliasField('modified <') => $modified]);
+        
         $neighbors = [
-            'prev' => $blogPostTable->find('neighborPrev', $options)->contain('Manufacturers')->where($conditions)->first(),
-            'next' => $blogPostTable->find('neighborNext', $options)->contain('Manufacturers')->where($conditions)->first(),
+            'prev' => $prevBlogPost->first(),
+            'next' => $nextBlogPost->first(),
         ];
         $this->set('neighbors', $neighbors);
 

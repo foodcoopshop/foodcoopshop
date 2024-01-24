@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Table\AttributesTable;
+use App\Model\Table\ProductAttributeCombinationsTable;
 use Cake\Http\Exception\NotFoundException;
+use App\Services\SanitizeService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,9 +25,8 @@ use Cake\Http\Exception\NotFoundException;
 class AttributesController extends AdminAppController
 {
 
-    protected $Attribute;
-    protected $ProductAttributeCombination;
-    protected $Sanitize;
+    protected AttributesTable $Attribute;
+    protected ProductAttributeCombinationsTable $ProductAttributeCombination;
 
     public function add()
     {
@@ -48,10 +50,8 @@ class AttributesController extends AdminAppController
         }
 
         $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $attribute = $this->Attribute->find('all', [
-            'conditions' => [
-                'Attributes.id_attribute' => $attributeId
-            ]
+        $attribute = $this->Attribute->find('all', conditions: [
+            'Attributes.id_attribute' => $attributeId
         ])->first();
 
         $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
@@ -75,9 +75,9 @@ class AttributesController extends AdminAppController
             return;
         }
 
-        $this->loadComponent('Sanitize');
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
+        $sanitizeService = new SanitizeService();
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($sanitizeService->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $attribute = $this->Attribute->patchEntity($attribute, $this->getRequest()->getData());
         if ($attribute->hasErrors()) {
@@ -119,9 +119,7 @@ class AttributesController extends AdminAppController
         ];
 
         $this->Attribute = $this->getTableLocator()->get('Attributes');
-        $query = $this->Attribute->find('all', [
-            'conditions' => $conditions
-        ]);
+        $query = $this->Attribute->find('all', conditions: $conditions);
         $attributes = $this->paginate($query, [
             'sortableFields' => [
                 'Attributes.name', 'Attributes.modified', 'Attributes.can_be_used_as_unit'
@@ -129,7 +127,7 @@ class AttributesController extends AdminAppController
             'order' => [
                 'Attributes.name' => 'ASC'
             ]
-        ])->toArray();
+        ]);
 
         $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
         foreach ($attributes as $attribute) {

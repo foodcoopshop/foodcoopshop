@@ -68,9 +68,7 @@ class UnitsTable extends AppTable
             'id_product_attribute' => $productAttributeId
         ];
 
-        $entity = $this->find('all', [
-            'conditions' => $idCondition
-        ])->first();
+        $entity = $this->find('all', conditions: $idCondition)->first();
 
         if (empty($entity)) {
             $entity = $this->newEntity($idCondition);

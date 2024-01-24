@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Cake\Datasource\FactoryLocator;
 
 if (empty($csvRecords)) {
@@ -75,11 +74,11 @@ foreach($csvPayments as $csvPayment) {
     echo $this->Form->hidden('Payments.'.$i.'.original_id_customer');
     if ($csvPayment->original_id_customer > 0) {
         $customerModel = FactoryLocator::get('Table')->get('Customers');
-        $customer = $customerModel->find('all', [
-            'conditions' => [
+        $customer = $customerModel->find('all',
+            conditions: [
                 'id_customer' => $csvPayment->original_id_customer
             ]
-        ])->first();
+        )->first();
         echo $customer->name;
     } else {
         echo $this->Form->control('Payments.'.$i.'.id_customer', [
@@ -109,7 +108,7 @@ foreach($csvPayments as $csvPayment) {
 
     echo '<td style="text-align:right;">';
     echo $this->Form->hidden('Payments.'.$i.'.date');
-    $date = new FrozenTime($csvPayment->date);
+    $date = new \Cake\I18n\DateTime($csvPayment->date);
     echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
     echo '</td>';
 

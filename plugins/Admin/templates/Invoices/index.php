@@ -117,7 +117,7 @@ echo $this->Html->link(
 );
 
 echo '<table class="list invoices-table no-clone-last-row">';
-
+$this->Paginator->setPaginated($invoices);
     echo '<tr class="sort">';
         echo '<th>' . $this->Paginator->sort('Invoices.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.created', __d('admin', 'Invoice_date')) . '</th>';
@@ -171,7 +171,7 @@ echo '<table class="list invoices-table no-clone-last-row">';
                     echo '<i class="fa fa-times not-ok"></i>';
                 } else {
                     try {
-                        $dateNTimeObject = FrozenTime::createFromFormat(Configure::read('DateFormat.DatabaseWithTimeAlt'), $invoice->email_status);
+                        $dateNTimeObject = \Cake\I18n\DateTime::createFromFormat(Configure::read('DateFormat.DatabaseWithTimeAlt'), $invoice->email_status);
                         $emailStatusString = $dateNTimeObject->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
                     } catch(InvalidArgumentException $e) {
                         $emailStatusString = $invoice->email_status;

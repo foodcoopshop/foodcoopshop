@@ -20,7 +20,6 @@ use App\Services\DeliveryRhythmService;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\Utility\Hash;
 
 class SendOrderListsCommand extends AppCommand
@@ -54,14 +53,13 @@ class SendOrderListsCommand extends AppCommand
         }
 
         // 1) get all manufacturers (not only active ones)
-        $manufacturers = $this->Manufacturer->find('all', [
-            'order' => [
-                'Manufacturers.name' => 'ASC'
-            ],
-            'contain' => [
-                'AddressManufacturers',
-                'Customers.AddressCustomers'
-            ],
+        $manufacturers = $this->Manufacturer->find('all',
+        order: [
+            'Manufacturers.name' => 'ASC'
+        ],
+        contain: [
+            'AddressManufacturers',
+            'Customers.AddressCustomers'
         ])->toArray();
 
         // 2) get all order details with pickup day in the given date range
@@ -124,7 +122,7 @@ class SendOrderListsCommand extends AppCommand
                     continue;
                 }
 
-                $pickupDayFormatted = new FrozenDate($pickupDayDbFormat);
+                $pickupDayFormatted = new \Cake\I18n\Date($pickupDayDbFormat);
                 $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
                     Configure::read('app.timeHelper')->getI18Format('DateLong2')
                 );
@@ -183,7 +181,7 @@ class SendOrderListsCommand extends AppCommand
                 if (in_array($manufacturer->id_manufacturer, array_keys($tmpActionLogDatas))) {
                     ksort($tmpActionLogDatas[$manufacturer->id_manufacturer]);
                     foreach($tmpActionLogDatas[$manufacturer->id_manufacturer] as $pickupDayDbFormat => $tmpActionLogData) {
-                        $pickupDayFormatted = new FrozenDate($pickupDayDbFormat);
+                        $pickupDayFormatted = new \Cake\I18n\Date($pickupDayDbFormat);
                         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
                         $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormatted;
                         $newData = '- <i class="fas fa-book not-ok" data-identifier="generate-order-list-'.$identifier.'"></i> <i class="fas fa-envelope not-ok" data-identifier="send-order-list-'.$identifier.'"></i> ';

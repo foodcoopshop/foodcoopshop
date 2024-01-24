@@ -13,7 +13,7 @@ use App\Mailer\AppMailer;
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.7.0
+ * @since         FoodCoopShop 4.0.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -26,7 +26,7 @@ trait EditProductQuantityTrait {
 
     public function editProductQuantity()
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        $this->request = $this->request->withParam('_ext', 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
@@ -46,18 +46,18 @@ trait EditProductQuantityTrait {
         }
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $oldOrderDetail = $this->OrderDetail->find('all', [
-            'conditions' => [
+        $oldOrderDetail = $this->OrderDetail->find('all',
+            conditions: [
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
-            'contain' => [
+            contain: [
                 'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailPurchasePrices',
                 'OrderDetailUnits',
             ]
-        ])->first();
+        )->first();
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;

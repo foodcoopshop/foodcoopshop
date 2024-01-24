@@ -26,9 +26,9 @@ use Admin\Traits\Products\GetProductsForDropdownTrait;
 use Admin\Traits\Products\ImportTrait;
 use Admin\Traits\Products\IndexTrait;
 use Admin\Traits\Products\SaveUploadedImageTrait;
+use App\Model\Table\ProductsTable;
 use Cake\Event\EventInterface;
-use Cake\Core\Configure;
-use Cake\Http\Exception\ForbiddenException;
+use Cake\View\JsonView;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -70,8 +70,14 @@ class ProductsController extends AdminAppController
     use ImportTrait;
     use SaveUploadedImageTrait;
 
-    protected $Product;
+    protected ProductsTable $Product;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->addViewClasses([JsonView::class]);
+    }
+    
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);

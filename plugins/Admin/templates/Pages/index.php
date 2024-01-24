@@ -52,7 +52,7 @@ use Cake\Core\Configure;
 echo '<table class="list">';
 
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Pages.id_page', 'ID') . '</th>';
+echo '<th class="hide"></th>';
 echo '<th></th>';
 echo '<th>'.__d('admin', 'Title').'</th>';
 echo '<th>'.__d('admin', 'Menu').'</th>';

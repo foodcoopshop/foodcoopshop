@@ -83,8 +83,6 @@ abstract class AppCakeTestCase extends TestCase
             $this->enableCsrfToken();
         }
 
-        $this->useCommandRunner();
-
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();
     }
@@ -262,12 +260,12 @@ abstract class AppCakeTestCase extends TestCase
             $contain[] = 'CartProducts.OrderDetails.OrderDetailPurchasePrices';
         }
 
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
+        $cart = $this->Cart->find('all',
+            conditions: [
                 'Carts.id_cart' => $cartId,
             ],
-            'contain' => $contain,
-        ])->first();
+            contain: $contain,
+        )->first();
 
         return $cart;
     }

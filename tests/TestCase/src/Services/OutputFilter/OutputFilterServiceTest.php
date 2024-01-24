@@ -31,7 +31,7 @@ class OutputFilterServiceTest extends AppCakeTestCase
         $this->assertEquals(count($matches[0]), $count);
     }
 
-    public function protectEmailAdressesDataProvider()
+    public static function protectEmailAdressesDataProvider()
     {
         return [
             'two-equal-emails-separated-with-space' => [

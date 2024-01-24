@@ -22,11 +22,11 @@ trait ProductAndAttributeEntityTrait
 
     public function getEntityToSaveByProductAttributeId($productAttributeId)
     {
-        $entity2Save = $this->find('all', [
-            'conditions' => [
+        $entity2Save = $this->find('all',
+            conditions: [
                 'product_attribute_id' => $productAttributeId,
             ],
-        ])->first();
+        )->first();
         if (empty($entity2Save)) {
             $entity2Save = $this->newEntity(['product_attribute_id' => $productAttributeId]);
         }
@@ -35,11 +35,11 @@ trait ProductAndAttributeEntityTrait
 
     public function getEntityToSaveByProductId($productId)
     {
-        $entity2Save = $this->find('all', [
-            'conditions' => [
+        $entity2Save = $this->find('all',
+            conditions: [
                 'product_id' => $productId,
             ],
-        ])->first();
+        )->first();
         if (empty($entity2Save)) {
             $entity2Save = $this->newEntity(['product_id' => $productId]);
         }
