@@ -586,8 +586,10 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     border-radius: 3px;
 }
 .pw .amount-wrapper .below-input {
-    float: right;
+    width: 100%;
+    display: block;
     clear: both;
+    text-align: right;
 }
 .pw .c3 i.is-stock-product {
     float: right;
