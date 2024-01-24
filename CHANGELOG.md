@@ -17,6 +17,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Hello-Cash-API: Umstellung der Authentifizierung auf Token. [I#968](https://github.com/foodcoopshop/foodcoopshop/issues/968) / [PR#969](https://github.com/foodcoopshop/foodcoopshop/pull/969) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wenn ein Mitglied eine offene Bestellung hat, die vor mehr als 6 Tagen getätigt wurde (z.B. Vorbestellung Fleisch), bekommt es jetzt auch eine Bestellerinnerung. [I#976](https://github.com/foodcoopshop/foodcoopshop/issues/976) / [PR#977](https://github.com/foodcoopshop/foodcoopshop/pull/977) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Neue Produkt-Import-Funktion mittels CSV-Upload, [hier gehts zur Doku](https://foodcoopshop.github.io/de/produkt-import.html). [I#953](https://github.com/foodcoopshop/foodcoopshop/issues/953) / [PR#982](https://github.com/foodcoopshop/foodcoopshop/pull/982) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Support für Upload von Bildern im WEBP-Format. [PR#993](https://github.com/foodcoopshop/foodcoopshop/pull/993) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 
 ### Steigerung der Code-Qualität
 - Codecov wird jetzt als [Code-Coverage-Tool](https://codecov.io/gh/foodcoopshop/foodcoopshop) verwendet, der Report wird mit PCOV generiert. [I#641](https://github.com/foodcoopshop/foodcoopshop/issues/641) / [PR#964](https://github.com/foodcoopshop/foodcoopshop/pull/964) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
