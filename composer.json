@@ -24,7 +24,7 @@
         "cakephp/migrations": "^4.0",
         "cakephp/plugin-installer": "~2.0",
         "markstory/asset_compress": "5.*",
-        "intervention/image": "2.*",
+        "intervention/image": "3.*",
         "cviebrock/discourse-php": "^0.9.3",
         "studio-42/elfinder": "^2.1",
         "ezyang/htmlpurifier": "^4.16",

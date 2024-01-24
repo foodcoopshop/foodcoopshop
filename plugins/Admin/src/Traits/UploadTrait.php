@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits;
 
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,16 +46,19 @@ trait UploadTrait {
             $filename = $explodedFilename[0];
         }
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $manager = new ImageManager(new Driver());
 
         foreach ($imageSizes as $thumbSize => $options) {
-            $image = Image::make(WWW_ROOT . $filename);
+            $image = $manager->read(WWW_ROOT . $filename);
             // make portrait images smaller
-            if ($image->getHeight() > $image->getWidth()) {
-                $thumbSize = round($thumbSize * ($image->getWidth() / $image->getHeight()), 0);
+            if ($image->height() > $image->width()) {
+                $thumbSize = (int) round($thumbSize * ($image->width() / $image->height()), 0);
             }
-            $image->widen($thumbSize);
+            $image->scale($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $image->save($thumbsFileName, 100);
+            $image
+                ->encodeByMediaType(quality: 100)
+                ->save($thumbsFileName);
         }
 
         if (isset($options)) {
