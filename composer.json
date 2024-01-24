@@ -31,7 +31,7 @@
         "league/csv": "^9.5",
         "dereuromark/cakephp-queue": "^7.1",
         "tecnickcom/tcpdf": "^6.4",
-        "hisorange/browser-detect": "^4.4",
+        "hisorange/browser-detect": "5.*",
         "phpoffice/phpspreadsheet": "1.*",
         "druidfi/mysqldump-php": "^1.0",
         "cakephp/authentication": "^3.0",
