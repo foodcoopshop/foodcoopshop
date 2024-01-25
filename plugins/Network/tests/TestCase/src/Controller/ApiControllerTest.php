@@ -77,6 +77,73 @@ class ApiControllerTest extends AppCakeTestCase
         $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $preparedResponse);
     }
 
+    public function testUpdateProductsAsManufacturer()
+    {
+        $this->configRequest([
+            'environment' => [
+                'PHP_AUTH_USER' => Configure::read('test.loginEmailVegetableManufacturer'),
+                'PHP_AUTH_PW' => Configure::read('test.loginPassword'),
+            ]
+        ]);
+
+        $productId = 346;
+
+        $data = [
+            'data' => [
+                'data' => [
+                    '0' => [
+                        'image' => 'no-image',
+                        'remoteProductId' => $productId,
+                        'name' => [
+                            'name' => 'Kantwurst',
+                            'unity' => '',
+                            'description' => '',
+                            'description_short' => 'Superscharfe Wurst',
+                            'is_declaration_ok' => 0,
+                        ],
+                        'is_stock_product' => 0,
+                        'quantity' => [
+                            'stock_available_quantity' => 5,
+                            'stock_available_quantity_limit' => 0,
+                            'stock_available_sold_out_limit' => '',
+                            'stock_available_always_available' => 0,
+                            'stock_available_default_quantity_after_sending_order_lists' => '',
+                        ],
+                        'price' => [
+                            'gross_price' => 0,
+                        ],
+                        'deposit' => 0,
+                        'delivery_rhythm' => [
+                            'delivery_rhythm_type' => 'week',
+                            'delivery_rhythm_count' => 1,
+                            'delivery_rhythm_first_delivery_day' => '',
+                            'delivery_rhythm_order_possible_until' => '',
+                        ],
+                        'active' => 1,
+                    ],
+                ],
+            ],
+        ];
+
+        $this->post('/api/updateProducts.json', $data);
+        $this->assertResponseOk();
+        $this->assertJsonOk();
+        $this->assertResponseContains('Es wurden 1 Produkt und 0 Varianten (Bild, Name, Lagerprodukt, Anzahl, Preis, Pfand, Lieferrhythmus, Status) erfolgreich synchronisiert.');
+
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->find('all',
+            conditions: [
+                'Products.id_product' => $productId,
+            ],
+            contain: [
+                'StockAvailables',
+            ],
+        )->first();
+        $this->assertEquals('Kantwurst', $product->name);
+        $this->assertEquals('Superscharfe Wurst', $product->description_short);
+        $this->assertEquals(5, $product->stock_available->quantity);
+    }
+
     public function testGetOrdersWrongPickupDayFormat()
     {
         $this->configRequest([
