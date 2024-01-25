@@ -100,6 +100,28 @@ class ProductsControllerTest extends AppCakeTestCase
         }
     }
 
+    public function testEditProductCategoriesOk()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 60;
+        $categories = [16];
+        $this->ajaxPost('/admin/products/editCategories', [
+            'productId' => $productId,
+            'selectedCategories' => $categories,
+        ]);
+        $product = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $productId,
+            ],
+            contain: [
+                'CategoryProducts',
+            ],
+        )->first();;
+        $this->assertCount(2, $product->category_products);
+        $this->assertEquals(16, $product->category_products[0]->id_category);
+        $this->assertEquals(Configure::read('app.categoryAllProducts'), $product->category_products[1]->id_category);
+    }
+
     public function testEditSellingPriceWithInvalidPriceAsSuperadmin()
     {
         $this->loginAsSuperadmin();
