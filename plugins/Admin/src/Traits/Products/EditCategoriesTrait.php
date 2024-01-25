@@ -71,11 +71,8 @@ trait EditCategoriesTrait {
             }
         }
         if (!empty($data)) {
-            $tmpPrimaryKey = $categoryProductsTable->getPrimaryKey();
-            $categoryProductsTable->setPrimaryKey(null);
             $categoryProducts = $categoryProductsTable->newEntities($data);
             $categoryProductsTable->saveMany($categoryProducts);
-            $categoryProductsTable->setPrimaryKey($tmpPrimaryKey);
         }
 
         $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
