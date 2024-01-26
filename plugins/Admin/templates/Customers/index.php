@@ -17,6 +17,10 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
+$paginator = $this->loadHelper('Paginator', [
+    'className' => 'ArraySupportingSortOnlyPaginator',
+]);
+
 ?>
 <div id="customers-list">
     <?php
@@ -62,36 +66,35 @@ use Cake\Datasource\FactoryLocator;
 
 <?php
 
-$this->Paginator->setPaginated($customers);
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo $this->element('rowMarker/rowMarkerAll', [
     'enabled' => true
 ]);
-echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('CustomerNameForOrder', __d('admin', 'Name')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
+echo '<th>' . $paginator->sort('Customers.id_customer', 'ID') . '</th>';
+echo '<th>' . $paginator->sort('CustomerNameForOrder', __d('admin', 'Name')) . '</th>';
+echo '<th>' . $paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
+echo '<th>' . $paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
+echo '<th>' . $paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>' . $this->Paginator->sort('credit_balance',  __d('admin', 'Credit'), ['direction' => 'desc']) . '</th>';
+    echo '<th>' . $paginator->sort('credit_balance',  __d('admin', 'Credit'), ['direction' => 'desc']) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Order_reminder')) . '</th>';
+    echo '<th>' . $paginator->sort('Customers.email_order_reminder_enabled',  __d('admin', 'Order_reminder')) . '</th>';
 }
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>' . $this->Paginator->sort('Customers.check_credit_reminder_enabled',  __d('admin', 'Check_credit_reminder')) . '</th>';
+    echo '<th>' . $paginator->sort('Customers.check_credit_reminder_enabled',  __d('admin', 'Check_credit_reminder')) . '</th>';
 }
 if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
-    echo '<th>' . $this->Paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
+    echo '<th>' . $paginator->sort('Customers.newsletter_enabled',  __d('admin', 'Newsletter')) . '</th>';
 }
 if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED') && $identity->isSuperadmin()) {
-    echo '<th>' . $this->Paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
+    echo '<th>' . $paginator->sort('Feedbacks.modified',  __d('admin', 'Feedback')) . '</th>';
 }
-echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
-echo '<th>' . $this->Paginator->sort('last_pickup_day',  __d('admin', 'Last_pickup_day'), ['direction' => 'desc']) . '</th>';
+echo '<th>' . $paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
+echo '<th>' . $paginator->sort('last_pickup_day',  __d('admin', 'Last_pickup_day'), ['direction' => 'desc']) . '</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    echo '<th>' . $this->Paginator->sort('member_fee', __d('admin', 'Member_fee')) . '</th>';
+    echo '<th>' . $paginator->sort('member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     echo '<th>' . $this->Paginator->sort('Customers.shopping_price', __d('admin', 'Prices')) . '</th>';
