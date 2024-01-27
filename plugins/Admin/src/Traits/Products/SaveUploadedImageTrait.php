@@ -5,7 +5,8 @@ namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
 use App\Services\FolderService;
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -63,16 +64,19 @@ trait SaveUploadedImageTrait {
             mkdir($thumbsPath, 0755, true);
         }
 
+        $manager = new ImageManager(new Driver());
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
 
-            $physicalImage = Image::make(WWW_ROOT . $filename);
+            $physicalImage = $manager->read(WWW_ROOT . $filename);
             // make portrait images smaller
-            if ($physicalImage->getHeight() > $physicalImage->getWidth()) {
-                $thumbSize = round($thumbSize * ($physicalImage->getWidth() / $physicalImage->getHeight()), 0);
+            if ($physicalImage->height() > $physicalImage->width()) {
+                $thumbSize = (int) round($thumbSize * ($physicalImage->width() / $physicalImage->height()), 0);
             }
-            $physicalImage->widen($thumbSize);
+            $physicalImage->scale($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
-            $physicalImage->save($thumbsFileName, 100);
+            $physicalImage
+                ->encodeByMediaType(quality: 100)
+                ->save($thumbsFileName);
         }
 
         $actionLogMessage = __d('admin', 'A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [

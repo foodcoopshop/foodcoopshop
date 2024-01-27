@@ -61,6 +61,7 @@ return [
             'JPG' => 'image/jpeg', // keep jpg as first element for best performance
             'PNG' => 'image/png',
             'GIF'=> 'image/gif',
+            'WEBP'=> 'image/webp',
         ],
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
         'uploadedFilesDir' => DS . 'files' . DS . 'files',

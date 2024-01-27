@@ -20,7 +20,9 @@ use Cake\Event\EventInterface;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Intervention\Image\ImageManagerStatic as Image;
+
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use Cake\View\JsonView;
 
 class ToolsController extends AdminAppController
@@ -97,12 +99,11 @@ class ToolsController extends AdminAppController
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
 
-        Image::make(WWW_ROOT . $filenameWithPath)
-            ->widen($this->getMaxTmpUploadFileSize(), function ($constraint) {
-                // prevent upsizing
-                $constraint->upsize();
-            })
-            ->save(WWW_ROOT . $filenameWithPath, 100);
+        $manager = new ImageManager(new Driver());
+        $manager->read(WWW_ROOT . $filenameWithPath)
+            ->resizeDown($this->getMaxTmpUploadFileSize())
+            ->encodeByMediaType(quality: 100)
+            ->save(WWW_ROOT . $filenameWithPath);
 
         $this->set([
             'status' => 1,
@@ -150,9 +151,11 @@ class ToolsController extends AdminAppController
             return;
         }
 
-        Image::make($uploadedFile)
+        $manager = new ImageManager(new Driver());
+        $manager->read($uploadedFile)
             ->rotate($directionInDegrees)
-            ->save($uploadedFile, 100);
+            ->encodeByMediaType(quality: 100)
+            ->save($uploadedFile);
 
         $rotatedImageSrc = $this->getRequest()->getData('filename') . '?' . StringComponent::createRandomString(3);
 
