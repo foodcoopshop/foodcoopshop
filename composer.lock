@@ -1738,16 +1738,16 @@
         },
         {
             "name": "markstory/mini-asset",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/markstory/mini-asset.git",
-                "reference": "bbca6033fb2d14fcb2ac66ba9b13fc98c7e06032"
+                "reference": "e8dce4ae16a84f40cb66a1e5c91bdfd05877110a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/markstory/mini-asset/zipball/bbca6033fb2d14fcb2ac66ba9b13fc98c7e06032",
-                "reference": "bbca6033fb2d14fcb2ac66ba9b13fc98c7e06032",
+                "url": "https://api.github.com/repos/markstory/mini-asset/zipball/e8dce4ae16a84f40cb66a1e5c91bdfd05877110a",
+                "reference": "e8dce4ae16a84f40cb66a1e5c91bdfd05877110a",
                 "shasum": ""
             },
             "require": {
@@ -1757,7 +1757,7 @@
             "require-dev": {
                 "cakephp/cakephp-codesniffer": "^5.0",
                 "laminas/laminas-diactoros": "~2.0",
-                "phpunit/phpunit": "^8.5 | ^9.3",
+                "phpunit/phpunit": "^9.3",
                 "squizlabs/php_codesniffer": "*"
             },
             "suggest": {
@@ -1804,7 +1804,7 @@
                 "issues": "https://github.com/markstory/mini-asset/issues",
                 "source": "https://github.com/markstory/mini-asset"
             },
-            "time": "2023-09-29T22:05:27+00:00"
+            "time": "2024-01-27T18:15:09+00:00"
         },
         {
             "name": "matomo/device-detector",
