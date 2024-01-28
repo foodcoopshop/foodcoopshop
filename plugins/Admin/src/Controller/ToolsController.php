@@ -101,7 +101,7 @@ class ToolsController extends AdminAppController
 
         $manager = new ImageManager(new Driver());
         $manager->read(WWW_ROOT . $filenameWithPath)
-            ->resizeDown($this->getMaxTmpUploadFileSize())
+            ->scaleDown($this->getMaxTmpUploadFileSize())
             ->encodeByMediaType(quality: 100)
             ->save(WWW_ROOT . $filenameWithPath);
 
