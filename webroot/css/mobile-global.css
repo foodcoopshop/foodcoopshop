@@ -110,7 +110,7 @@
         color: #fff ! important;
         padding: 4px 5px;
         display: block;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid #dfdfdf;
     }
     .sb-left li.footer {
         word-break: break-word;
