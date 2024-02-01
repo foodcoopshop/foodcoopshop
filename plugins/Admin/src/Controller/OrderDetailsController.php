@@ -21,7 +21,6 @@ use App\Model\Table\OrderDetailsTable;
 use Cake\Core\Configure;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 use Cake\View\JsonView;
-use Cake\Event\EventInterface;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop

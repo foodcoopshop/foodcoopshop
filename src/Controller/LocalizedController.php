@@ -223,7 +223,7 @@ class LocalizedController extends Controller
                 'ChangePickupDay' => __('Change_pickup_day'),
                 'NewPickupDay' => __('New_pickup_day'),
                 'ChangePickupDayInvoicesInfoText' => __('Change_pickup_day_invoices_info_text'),
-                'ChangePickupDayInvoicesInfoText2' => __('Change_pickup_day_invoices_info_text_2'),
+                'ChangePickupDayResetOrderStateInfoText' => __('Change_pickup_day_invoices_reset_order_state_info_text'),
                 'products' => __('products'),
                 'product' => __('product'),
                 'EmailAddressesSuccessfullyCopiedToClipboard' => __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.'),

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 11:39+0100\n"
-"PO-Revision-Date: 2023-11-23 09:25+0100\n"
+"POT-Creation-Date: 2024-02-01 15:44+0100\n"
+"PO-Revision-Date: 2024-02-01 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -180,9 +180,6 @@ msgstr "Sent order lists"
 msgid "Delivery_day"
 msgstr "Delivery day"
 
-msgid "You_have_been_signed_out_automatically."
-msgstr "You have been signed out automatically."
-
 msgid "Blog_archive"
 msgstr "Blog archive"
 
@@ -230,93 +227,6 @@ msgstr "New products"
 
 msgid "Search"
 msgstr "Search"
-
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Your order was placed successfully."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} has placed a new order ({1})."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Instant order ({0}) successfully placed for {1}."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
-
-msgid "Pickup_day"
-msgstr "Pickup day"
-
-msgid "Thank_you_for_your_purchase!"
-msgstr "Thank you for your purchase!"
-
-msgid "Sign_out"
-msgstr "Sign out"
-
-msgid "Continue_shopping"
-msgstr "Continue shopping"
-
-msgid "Print_receipt"
-msgstr "Print receipt"
-
-msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
-msgstr "{0} has placed a new order for {1} ({2})."
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
-
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr "Please change the amout or remove product from cart to place order."
-
-msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
-msgstr "The product {0} cannot be ordered any more due to interal reasons."
-
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr "Please remove product from cart to place order."
-
-msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
-msgstr "The attribute {0} of the product {1} cannot be ordered any more due to interal reasons."
-
-msgid "The_attribute_does_not_exist."
-msgstr "The attribute does not exist."
-
-msgid "The_product_now_contains_attributes."
-msgstr "The product now contains attributes."
-
-msgid "You_can_add_it_again_after_having_it_deleted."
-msgstr "You can add it again after having it deleted."
-
-msgid "Errors_occurred."
-msgstr "Errors occurred."
-
-msgid "Notification_about_instant_order_order"
-msgstr "Notification about instant order"
-
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr "Low stock for product \"{0}\": {1}"
-
-msgid "Hello"
-msgstr "Hello"
-
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
-
-msgid "Your_purchase"
-msgstr "Your purchase"
-
-msgid "New_order_comment__was_written_by_{0}_for_{1}"
-msgstr "New order comment was written by {0} for {1}"
-
-msgid "Order_confirmation"
-msgstr "Order confirmation"
-
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr "Right-of-withdrawal-information-and-form"
-
-msgid "Filename_Order-confirmation"
-msgstr "Order-confirmation"
-
-msgid "Filename_General-terms-and-conditions"
-msgstr "General-terms-and-conditions"
 
 msgid "Accept_terms_of_use"
 msgstr "Accepting terms of use"
@@ -602,6 +512,9 @@ msgstr "each"
 
 msgid "approx."
 msgstr "approx."
+
+msgid "Pickup_day"
+msgstr "Pickup day"
 
 msgid "Home"
 msgstr "Home"
@@ -912,8 +825,8 @@ msgstr "New pickup day"
 msgid "Change_pickup_day_invoices_info_text"
 msgstr "When you change the pickup day, please consider that the pickup day is relvevant for the automatically generated invoices!"
 
-msgid "Change_pickup_day_invoices_info_text_2"
-msgstr "If there was already an order list generated for the selected products, they won't appear on a new one."
+msgid "Change_pickup_day_invoices_reset_order_state_info_text"
+msgstr "Show products again on future order lists"
 
 msgid "products"
 msgstr "products"
@@ -1293,108 +1206,6 @@ msgstr "The product {0} was added to your cart."
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
-
-msgid "The_structure_of_the_uploaded_file_is_not_valid."
-msgstr "The structure of the uploaded file is not valid."
-
-msgid "Gross_price"
-msgstr "Gross price"
-
-msgid "Tax_rate"
-msgstr "Tax rate"
-
-msgid "Product_declaration"
-msgstr "Product declaration"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "net_per_piece_abbr"
-msgstr "net/piece"
-
-msgid "net"
-msgstr "net"
-
-msgid "VAT"
-msgstr "VAT"
-
-msgid "Tax_rates_overview_table"
-msgstr "Tax rates overview table"
-
-msgid "All_amounts_in_{0}."
-msgstr "All prices in {0}."
-
-msgid "Delivery_note"
-msgstr "Delivery note"
-
-msgid "Delivered_deposit"
-msgstr "Delivered deposit"
-
-msgid "Payment_type_deposit_return"
-msgstr "Deposit return"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Invoice nº {0}, {1}"
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr "Cancellation invoice nº {0}, {1}"
-
-msgid "Invoice"
-msgstr "Invoice"
-
-msgid "Cancellation_invoice"
-msgstr "Cancellation invoice"
-
-msgid "ID"
-msgstr ""
-
-msgid "Price_excl."
-msgstr "Price excl."
-
-msgid "Price_incl."
-msgstr "Price incl."
-
-msgid "Price_net"
-msgstr "Price net"
-
-msgid "Total_sum_net"
-msgstr "Total sum net"
-
-msgid "Value_added_tax"
-msgstr "Value added tax"
-
-msgid "Total_sum_gross"
-msgstr "Total sum gross"
-
-msgid "Generated_on_{0}"
-msgstr "Generated on {0}"
-
-msgid "Page_{0}_of_{1}"
-msgstr "Page {0} of {1}"
-
-msgid "Deleted_member"
-msgstr "Deleted member"
-
-msgid "Order_day"
-msgstr "Order day"
-
-msgid "Deleted_Member"
-msgstr "Deleted member"
-
-msgid "Price_per_weight"
-msgstr "Price per weight"
-
-msgid "Sum_price_excl."
-msgstr "Sum price excl."
-
-msgid "Sum_tax"
-msgstr "Sum tax"
-
-msgid "Sum_price_incl."
-msgstr "Sum price incl."
-
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "You_are_not_signed_in."
 msgstr "Your are not signed in."
@@ -2095,11 +1906,197 @@ msgstr "The following delivery day(s) already contain orders: {0}. To save the d
 msgid "Manufacturer_not_found."
 msgstr "The manufacturer was not found."
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Invoice nº {0}, {1}"
+
 msgid "member"
 msgstr "Member"
 
 msgid "Order_lists_for_the_day"
 msgstr "Order lists for"
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Your order was placed successfully."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} has placed a new order ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Instant order ({0}) successfully placed for {1}."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
+
+msgid "Thank_you_for_your_purchase!"
+msgstr "Thank you for your purchase!"
+
+msgid "Sign_out"
+msgstr "Sign out"
+
+msgid "Continue_shopping"
+msgstr "Continue shopping"
+
+msgid "Print_receipt"
+msgstr "Print receipt"
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} has placed a new order for {1} ({2})."
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Please change the amout or remove product from cart to place order."
+
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "The product {0} cannot be ordered any more due to interal reasons."
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Please remove product from cart to place order."
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "The attribute {0} of the product {1} cannot be ordered any more due to interal reasons."
+
+msgid "The_attribute_does_not_exist."
+msgstr "The attribute does not exist."
+
+msgid "The_product_now_contains_attributes."
+msgstr "The product now contains attributes."
+
+msgid "You_can_add_it_again_after_having_it_deleted."
+msgstr "You can add it again after having it deleted."
+
+msgid "Errors_occurred."
+msgstr "Errors occurred."
+
+msgid "Notification_about_instant_order_order"
+msgstr "Notification about instant order"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Low stock for product \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Hello"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
+
+msgid "Your_purchase"
+msgstr "Your purchase"
+
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
+msgstr "New order comment was written by {0} for {1}"
+
+msgid "Order_confirmation"
+msgstr "Order confirmation"
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr "Right-of-withdrawal-information-and-form"
+
+msgid "Filename_Order-confirmation"
+msgstr "Order-confirmation"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "General-terms-and-conditions"
+
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr "The structure of the uploaded file is not valid."
+
+msgid "Gross_price"
+msgstr "Gross price"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "net_per_piece_abbr"
+msgstr "net/piece"
+
+msgid "net"
+msgstr "net"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Tax_rates_overview_table"
+msgstr "Tax rates overview table"
+
+msgid "All_amounts_in_{0}."
+msgstr "All prices in {0}."
+
+msgid "Delivery_note"
+msgstr "Delivery note"
+
+msgid "Delivered_deposit"
+msgstr "Delivered deposit"
+
+msgid "Payment_type_deposit_return"
+msgstr "Deposit return"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Cancellation invoice nº {0}, {1}"
+
+msgid "Invoice"
+msgstr "Invoice"
+
+msgid "Cancellation_invoice"
+msgstr "Cancellation invoice"
+
+msgid "ID"
+msgstr ""
+
+msgid "Price_excl."
+msgstr "Price excl."
+
+msgid "Price_incl."
+msgstr "Price incl."
+
+msgid "Price_net"
+msgstr "Price net"
+
+msgid "Total_sum_net"
+msgstr "Total sum net"
+
+msgid "Value_added_tax"
+msgstr "Value added tax"
+
+msgid "Total_sum_gross"
+msgstr "Total sum gross"
+
+msgid "Deleted_member"
+msgstr "Deleted member"
+
+msgid "Order_day"
+msgstr "Order day"
+
+msgid "Deleted_Member"
+msgstr "Deleted member"
+
+msgid "Price_per_weight"
+msgstr "Price per weight"
+
+msgid "Generated_on_{0}"
+msgstr "Generated on {0}"
+
+msgid "Page_{0}_of_{1}"
+msgstr "Page {0} of {1}"
+
+msgid "Sum_price_excl."
+msgstr "Sum price excl."
+
+msgid "Sum_tax"
+msgstr "Sum tax"
+
+msgid "Sum_price_incl."
+msgstr "Sum price incl."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Members add their payments manually"
@@ -2349,9 +2346,6 @@ msgstr "The order confirmation was sent to you by e-mail ({0})."
 
 msgid "Please_pick_up_the_ordered_products_at:_{0}"
 msgstr "Please pick up up the ordered products here: {0}"
-
-msgid "Increase_credit"
-msgstr "Increase your credit"
 
 msgid "Scan_member_card"
 msgstr "Scan member card"
@@ -2826,6 +2820,15 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "You_have_been_signed_out_automatically."
+#~ msgstr "You have been signed out automatically."
+
+#~ msgid "Change_pickup_day_invoices_info_text_2"
+#~ msgstr "If there was already an order list generated for the selected products, they won't appear on a new one."
+
+#~ msgid "Increase_credit"
+#~ msgstr "Increase your credit"
 
 #~ msgid "Row: {0}"
 #~ msgstr "Row: {0}"
