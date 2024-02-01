@@ -193,13 +193,16 @@ foodcoopshop.Mobile = {
             menuItems.push(ps.wrap('<li>').parent());
         }
 
-        menuItems.push('<li><a href="/"><i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home + '</a></li>');
+        let homeMenuItemA = $('<a/>').attr('href', '/').html('<i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home);
+        menuItems.push('<li class="home">' + $('<div>').append(homeMenuItemA.clone()).html()  + $('<div>').append($('.color-mode-toggle')).html() + '</li>');
 
         $('#user-menu > li').each(function () {
             var item = $(this);
-            item.find('a').removeClass('btn');
-            item.find('a').removeClass('btn-success');
-            menuItems.push(item);
+            if (item.find('a').length > 0) {
+                item.find('a').removeClass('btn');
+                item.find('a').removeClass('btn-success');
+                menuItems.push(item);
+            }
         });
 
         // if all manufacturers are disabled / set to private - do not include menu item

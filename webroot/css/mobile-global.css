@@ -139,6 +139,16 @@
     .sb-left li.header, .sb-left a:hover, .sb-left a.active {
         color: #fff ! important;
     }
+    .sb-left li.home a {
+        float: left;
+    }
+    .sb-left li.home a:nth-of-type(1) {
+        width: 85%;
+    }
+    .sb-left li.home a:nth-of-type(2) {
+        width: 15%;
+        text-align: right;
+    }
     .sb-left #product-search {
         position: static ! important;
         float: left;
