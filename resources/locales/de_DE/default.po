@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-11-23 11:39+0100\n"
-"PO-Revision-Date: 2023-11-23 09:24+0100\n"
+"POT-Creation-Date: 2024-02-01 15:44+0100\n"
+"PO-Revision-Date: 2024-02-01 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -180,9 +180,6 @@ msgstr "Verschickte Bestelllisten"
 msgid "Delivery_day"
 msgstr "Liefertag"
 
-msgid "You_have_been_signed_out_automatically."
-msgstr "Du wurdest automatisch abgemeldet."
-
 msgid "Blog_archive"
 msgstr "Blog-Archiv"
 
@@ -230,93 +227,6 @@ msgstr "Neue Produkte"
 
 msgid "Search"
 msgstr "Suche"
-
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} hat eine neue Bestellung getätigt ({1})."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
-
-msgid "Pickup_day"
-msgstr "Abholtag"
-
-msgid "Thank_you_for_your_purchase!"
-msgstr "Vielen Dank für deinen Einkauf!"
-
-msgid "Sign_out"
-msgstr "Abmelden"
-
-msgid "Continue_shopping"
-msgstr "Weiter einkaufen"
-
-msgid "Print_receipt"
-msgstr "Beleg drucken"
-
-msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
-msgstr "{0} hat eine neue Bestellung für {1} getätigt ({2})."
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr "Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {0}, du kannst bis {1} bestellen."
-
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr "Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
-
-msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
-msgstr "Das Produkt {0} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
-
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
-
-msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
-msgstr "Die Variante {0} des Produkts {1} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
-
-msgid "The_attribute_does_not_exist."
-msgstr "Die Variante existiert nicht."
-
-msgid "The_product_now_contains_attributes."
-msgstr "Dem Produkt wurden in der Zwischenzeit Varianten hinzugefügt."
-
-msgid "You_can_add_it_again_after_having_it_deleted."
-msgstr "Du kannst es nach dem Löschen erneut hinzufügen."
-
-msgid "Errors_occurred."
-msgstr "Es sind Fehler aufgetreten."
-
-msgid "Notification_about_instant_order_order"
-msgstr "Benachrichtigung über Sofort-Bestellung"
-
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr "Lagerstand für Produkt \"{0}\": {1}"
-
-msgid "Hello"
-msgstr "Hallo"
-
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen abbestellen</a>."
-
-msgid "Your_purchase"
-msgstr "Dein Einkauf"
-
-msgid "New_order_comment__was_written_by_{0}_for_{1}"
-msgstr "Neuer Bestell-Kommentar von {0} für {1}"
-
-msgid "Order_confirmation"
-msgstr "Bestellbestätigung"
-
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr "Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular"
-
-msgid "Filename_Order-confirmation"
-msgstr "Bestelluebersicht"
-
-msgid "Filename_General-terms-and-conditions"
-msgstr "Allgemeine-Geschaeftsbedingungen"
 
 msgid "Accept_terms_of_use"
 msgstr "Nutzungsbedingungen akzeptieren"
@@ -602,6 +512,9 @@ msgstr "je"
 
 msgid "approx."
 msgstr "ca."
+
+msgid "Pickup_day"
+msgstr "Abholtag"
 
 msgid "Home"
 msgstr "Home"
@@ -912,8 +825,8 @@ msgstr "Neuer Abholtag"
 msgid "Change_pickup_day_invoices_info_text"
 msgstr "Bitte berücksichtige beim Ändern des Abholtages, dass dieser die Grundlage für die automatische Erstellung der Rechnung darstellt!"
 
-msgid "Change_pickup_day_invoices_info_text_2"
-msgstr "Achtung: Produkte, für die bereits eine Bestellliste generiert wurde, tauchen niemals auf einer neuen auf!"
+msgid "Change_pickup_day_invoices_reset_order_state_info_text"
+msgstr "Produkte auf zukünftigen Bestelllisten erneut anzeigen"
 
 msgid "products"
 msgstr "Produkte"
@@ -1293,108 +1206,6 @@ msgstr "Das Produkt {0} wurde in deine Einkaufstasche gelegt."
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Deine Einkaufstasche war leer."
-
-msgid "The_structure_of_the_uploaded_file_is_not_valid."
-msgstr "Die Struktur der hochgeladenen Datei ist nicht gültig."
-
-msgid "Gross_price"
-msgstr "Bruttopreis"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
-
-msgid "Product_declaration"
-msgstr "Produktdeklaration"
-
-msgid "Description"
-msgstr "Beschreibung"
-
-msgid "net_per_piece_abbr"
-msgstr "netto/St."
-
-msgid "net"
-msgstr "netto"
-
-msgid "VAT"
-msgstr "USt."
-
-msgid "Tax_rates_overview_table"
-msgstr "Übersichtstabelle nach Steuersatz"
-
-msgid "All_amounts_in_{0}."
-msgstr "Alle Beträge in {0}."
-
-msgid "Delivery_note"
-msgstr "Lieferschein"
-
-msgid "Delivered_deposit"
-msgstr "Pfand geliefert"
-
-msgid "Payment_type_deposit_return"
-msgstr "Pfand-Rückgabe"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Rechnung Nr. {0}, {1}"
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr "Storno-Rechnung Nr. {0}, {1}"
-
-msgid "Invoice"
-msgstr "Rechnung"
-
-msgid "Cancellation_invoice"
-msgstr "Storno-Rechnung"
-
-msgid "ID"
-msgstr ""
-
-msgid "Price_excl."
-msgstr "Preis exkl."
-
-msgid "Price_incl."
-msgstr "Preis inkl."
-
-msgid "Price_net"
-msgstr "Nettopreis"
-
-msgid "Total_sum_net"
-msgstr "Nettosumme"
-
-msgid "Value_added_tax"
-msgstr "Umsatzsteuer"
-
-msgid "Total_sum_gross"
-msgstr "Bruttosumme"
-
-msgid "Generated_on_{0}"
-msgstr "Generiert am {0}"
-
-msgid "Page_{0}_of_{1}"
-msgstr "Seite {0} von {1}"
-
-msgid "Deleted_member"
-msgstr "Gelöschtes Mitglied"
-
-msgid "Order_day"
-msgstr "Bestelltag"
-
-msgid "Deleted_Member"
-msgstr "Gelöschtes Mitglied"
-
-msgid "Price_per_weight"
-msgstr "Preis nach Gewicht"
-
-msgid "Sum_price_excl."
-msgstr "Summe Preis exkl."
-
-msgid "Sum_tax"
-msgstr "Summe Steuer"
-
-msgid "Sum_price_incl."
-msgstr "Summe Preis inkl."
-
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -2095,11 +1906,197 @@ msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}
 msgid "Manufacturer_not_found."
 msgstr "Der Hersteller wurde nicht gefunden."
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Rechnung Nr. {0}, {1}"
+
 msgid "member"
 msgstr "Mitglied"
 
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
+
+msgid "Thank_you_for_your_purchase!"
+msgstr "Vielen Dank für deinen Einkauf!"
+
+msgid "Sign_out"
+msgstr "Abmelden"
+
+msgid "Continue_shopping"
+msgstr "Weiter einkaufen"
+
+msgid "Print_receipt"
+msgstr "Beleg drucken"
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} hat eine neue Bestellung für {1} getätigt ({2})."
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {0}, du kannst bis {1} bestellen."
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "Das Produkt {0} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "Die Variante {0} des Produkts {1} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
+
+msgid "The_attribute_does_not_exist."
+msgstr "Die Variante existiert nicht."
+
+msgid "The_product_now_contains_attributes."
+msgstr "Dem Produkt wurden in der Zwischenzeit Varianten hinzugefügt."
+
+msgid "You_can_add_it_again_after_having_it_deleted."
+msgstr "Du kannst es nach dem Löschen erneut hinzufügen."
+
+msgid "Errors_occurred."
+msgstr "Es sind Fehler aufgetreten."
+
+msgid "Notification_about_instant_order_order"
+msgstr "Benachrichtigung über Sofort-Bestellung"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Lagerstand für Produkt \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Hallo"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen abbestellen</a>."
+
+msgid "Your_purchase"
+msgstr "Dein Einkauf"
+
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
+msgstr "Neuer Bestell-Kommentar von {0} für {1}"
+
+msgid "Order_confirmation"
+msgstr "Bestellbestätigung"
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr "Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular"
+
+msgid "Filename_Order-confirmation"
+msgstr "Bestelluebersicht"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Allgemeine-Geschaeftsbedingungen"
+
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr "Die Struktur der hochgeladenen Datei ist nicht gültig."
+
+msgid "Gross_price"
+msgstr "Bruttopreis"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "Product_declaration"
+msgstr "Produktdeklaration"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "net_per_piece_abbr"
+msgstr "netto/St."
+
+msgid "net"
+msgstr "netto"
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Tax_rates_overview_table"
+msgstr "Übersichtstabelle nach Steuersatz"
+
+msgid "All_amounts_in_{0}."
+msgstr "Alle Beträge in {0}."
+
+msgid "Delivery_note"
+msgstr "Lieferschein"
+
+msgid "Delivered_deposit"
+msgstr "Pfand geliefert"
+
+msgid "Payment_type_deposit_return"
+msgstr "Pfand-Rückgabe"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Storno-Rechnung Nr. {0}, {1}"
+
+msgid "Invoice"
+msgstr "Rechnung"
+
+msgid "Cancellation_invoice"
+msgstr "Storno-Rechnung"
+
+msgid "ID"
+msgstr ""
+
+msgid "Price_excl."
+msgstr "Preis exkl."
+
+msgid "Price_incl."
+msgstr "Preis inkl."
+
+msgid "Price_net"
+msgstr "Nettopreis"
+
+msgid "Total_sum_net"
+msgstr "Nettosumme"
+
+msgid "Value_added_tax"
+msgstr "Umsatzsteuer"
+
+msgid "Total_sum_gross"
+msgstr "Bruttosumme"
+
+msgid "Deleted_member"
+msgstr "Gelöschtes Mitglied"
+
+msgid "Order_day"
+msgstr "Bestelltag"
+
+msgid "Deleted_Member"
+msgstr "Gelöschtes Mitglied"
+
+msgid "Price_per_weight"
+msgstr "Preis nach Gewicht"
+
+msgid "Generated_on_{0}"
+msgstr "Generiert am {0}"
+
+msgid "Page_{0}_of_{1}"
+msgstr "Seite {0} von {1}"
+
+msgid "Sum_price_excl."
+msgstr "Summe Preis exkl."
+
+msgid "Sum_tax"
+msgstr "Summe Steuer"
+
+msgid "Sum_price_incl."
+msgstr "Summe Preis inkl."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Mitglieder tragen die Guthaben-Aufladungen selbst ein"
@@ -2349,9 +2346,6 @@ msgstr "Die Bestellbestätigung wurde per E-Mail an {0} versendet."
 
 msgid "Please_pick_up_the_ordered_products_at:_{0}"
 msgstr "Bitte hole die bestellten Produkte hier ab: {0}"
-
-msgid "Increase_credit"
-msgstr "Guthaben aufladen"
 
 msgid "Scan_member_card"
 msgstr "Mitgliedskarte scannen"
@@ -2826,6 +2820,15 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "You_have_been_signed_out_automatically."
+#~ msgstr "Du wurdest automatisch abgemeldet."
+
+#~ msgid "Change_pickup_day_invoices_info_text_2"
+#~ msgstr "Achtung: Produkte, für die bereits eine Bestellliste generiert wurde, tauchen niemals auf einer neuen auf!"
+
+#~ msgid "Increase_credit"
+#~ msgstr "Guthaben aufladen"
 
 #~ msgid "Row: {0}"
 #~ msgstr "Zeile: {0}"

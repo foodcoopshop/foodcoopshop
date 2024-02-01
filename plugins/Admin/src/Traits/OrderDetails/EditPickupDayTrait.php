@@ -34,6 +34,7 @@ trait EditPickupDayTrait {
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $editPickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('editPickupDayReason')), '<strong><b>'));
         $sendEmail = (bool) $this->getRequest()->getData('sendEmail');
+        $resetOrderState = (bool) $this->getRequest()->getData('resetOrderState');
 
         try {
             if (empty($orderDetailIds)) {
@@ -61,7 +62,7 @@ trait EditPickupDayTrait {
             $entity = $this->OrderDetail->patchEntity(
                 $orderDetails->toArray()[0],
                 [
-                    'pickup_day' => $pickupDay
+                    'pickup_day' => $pickupDay,
                 ],
                 [
                     'validate' => 'pickupDay'
@@ -76,12 +77,16 @@ trait EditPickupDayTrait {
 
             $customers = [];
             foreach ($orderDetails as $orderDetail) {
-                $entity = $this->OrderDetail->patchEntity(
-                    $orderDetail,
-                    [
-                        'pickup_day' => $pickupDay
-                    ]
-                );
+
+                $data = [
+                    'pickup_day' => $pickupDay,
+                ];
+
+                if ($resetOrderState) {
+                    $data['order_state'] = ORDER_STATE_ORDER_PLACED;
+                }
+
+                $entity = $this->OrderDetail->patchEntity($orderDetail, $data);
                 $this->OrderDetail->save($entity);
                 if (!isset($customers[$orderDetail->id_customer])) {
                     $customers[$orderDetail->id_customer] = [];

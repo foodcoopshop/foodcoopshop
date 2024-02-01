@@ -57,15 +57,18 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         html += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
         html += '<input class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
         html += '</div>';
-        html += '<p class="small"><b>' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText2 + '</b></p>';
         html += '<p class="small">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
         html += '<div class="textarea-wrapper">';
         html += '<label for="dialogEditPickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
         html += '<textarea name="dialogEditPickupDayReason" id="dialogEditPickupDayReason"></textarea>';
         html += '</div>';
-        html += '<label class="checkbox">';
+        html += '<label class="checkbox" style="margin-bottom:10px;">';
         html += '<input type="checkbox" name="dialogEditPickupdaySendEmail" id="dialogEditPickupdaySendEmail" value="" />';
         html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.SendEmailToMember + '</span>';
+        html += '</label>';
+        html += '<label class="checkbox">';
+        html += '<input type="checkbox" name="dialogEditPickupdayResetOrderState" id="dialogEditPickupdayResetOrderState" value="" checked="checked" />';
+        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayResetOrderStateInfoText + '</span>';
         html += '</label>';
         return html;
     },
@@ -83,6 +86,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
                 pickupDay: $('#dialogChangePickupDay').val(),
                 editPickupDayReason: $('#dialogEditPickupDayReason').val(),
                 sendEmail: $('#dialogEditPickupdaySendEmail:checked').length > 0 ? 1 : 0,
+                resetOrderState: $('#dialogEditPickupdayResetOrderState:checked').length > 0 ? 1 : 0,
             },
             {
                 onOk: function (data) {

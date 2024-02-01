@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-23 11:39+0100\n"
+"POT-Creation-Date: 2024-02-01 15:44+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -179,9 +179,6 @@ msgstr ""
 msgid "Delivery_day"
 msgstr ""
 
-msgid "You_have_been_signed_out_automatically."
-msgstr ""
-
 msgid "Blog_archive"
 msgstr ""
 
@@ -228,93 +225,6 @@ msgid "New_products"
 msgstr ""
 
 msgid "Search"
-msgstr ""
-
-msgid "Your_order_has_been_placed_succesfully."
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr ""
-
-msgid "Pickup_day"
-msgstr ""
-
-msgid "Thank_you_for_your_purchase!"
-msgstr ""
-
-msgid "Sign_out"
-msgstr ""
-
-msgid "Continue_shopping"
-msgstr ""
-
-msgid "Print_receipt"
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
-msgstr ""
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr ""
-
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr ""
-
-msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
-msgstr ""
-
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr ""
-
-msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
-msgstr ""
-
-msgid "The_attribute_does_not_exist."
-msgstr ""
-
-msgid "The_product_now_contains_attributes."
-msgstr ""
-
-msgid "You_can_add_it_again_after_having_it_deleted."
-msgstr ""
-
-msgid "Errors_occurred."
-msgstr ""
-
-msgid "Notification_about_instant_order_order"
-msgstr ""
-
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr ""
-
-msgid "Hello"
-msgstr ""
-
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr ""
-
-msgid "Your_purchase"
-msgstr ""
-
-msgid "New_order_comment__was_written_by_{0}_for_{1}"
-msgstr ""
-
-msgid "Order_confirmation"
-msgstr ""
-
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr ""
-
-msgid "Filename_Order-confirmation"
-msgstr ""
-
-msgid "Filename_General-terms-and-conditions"
 msgstr ""
 
 msgid "Accept_terms_of_use"
@@ -600,6 +510,9 @@ msgid "for_each"
 msgstr ""
 
 msgid "approx."
+msgstr ""
+
+msgid "Pickup_day"
 msgstr ""
 
 msgid "Home"
@@ -911,7 +824,7 @@ msgstr ""
 msgid "Change_pickup_day_invoices_info_text"
 msgstr ""
 
-msgid "Change_pickup_day_invoices_info_text_2"
+msgid "Change_pickup_day_invoices_reset_order_state_info_text"
 msgstr ""
 
 msgid "products"
@@ -1287,108 +1200,6 @@ msgid "The_product_{0}_was_added_to_your_cart."
 msgstr ""
 
 msgid "Your_shopping_bag_was_empty."
-msgstr ""
-
-msgid "The_structure_of_the_uploaded_file_is_not_valid."
-msgstr ""
-
-msgid "Gross_price"
-msgstr ""
-
-msgid "Tax_rate"
-msgstr ""
-
-msgid "Product_declaration"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "net_per_piece_abbr"
-msgstr ""
-
-msgid "net"
-msgstr ""
-
-msgid "VAT"
-msgstr ""
-
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "All_amounts_in_{0}."
-msgstr ""
-
-msgid "Delivery_note"
-msgstr ""
-
-msgid "Delivered_deposit"
-msgstr ""
-
-msgid "Payment_type_deposit_return"
-msgstr ""
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr ""
-
-msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
-msgstr ""
-
-msgid "Invoice"
-msgstr ""
-
-msgid "Cancellation_invoice"
-msgstr ""
-
-msgid "ID"
-msgstr ""
-
-msgid "Price_excl."
-msgstr ""
-
-msgid "Price_incl."
-msgstr ""
-
-msgid "Price_net"
-msgstr ""
-
-msgid "Total_sum_net"
-msgstr ""
-
-msgid "Value_added_tax"
-msgstr ""
-
-msgid "Total_sum_gross"
-msgstr ""
-
-msgid "Generated_on_{0}"
-msgstr ""
-
-msgid "Page_{0}_of_{1}"
-msgstr ""
-
-msgid "Deleted_member"
-msgstr ""
-
-msgid "Order_day"
-msgstr ""
-
-msgid "Deleted_Member"
-msgstr ""
-
-msgid "Price_per_weight"
-msgstr ""
-
-msgid "Sum_price_excl."
-msgstr ""
-
-msgid "Sum_tax"
-msgstr ""
-
-msgid "Sum_price_incl."
-msgstr ""
-
-msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
 msgid "You_are_not_signed_in."
@@ -2090,10 +1901,196 @@ msgstr ""
 msgid "Manufacturer_not_found."
 msgstr ""
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr ""
+
 msgid "member"
 msgstr ""
 
 msgid "Order_lists_for_the_day"
+msgstr ""
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr ""
+
+msgid "Thank_you_for_your_purchase!"
+msgstr ""
+
+msgid "Sign_out"
+msgstr ""
+
+msgid "Continue_shopping"
+msgstr ""
+
+msgid "Print_receipt"
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr ""
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr ""
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr ""
+
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr ""
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr ""
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr ""
+
+msgid "The_attribute_does_not_exist."
+msgstr ""
+
+msgid "The_product_now_contains_attributes."
+msgstr ""
+
+msgid "You_can_add_it_again_after_having_it_deleted."
+msgstr ""
+
+msgid "Errors_occurred."
+msgstr ""
+
+msgid "Notification_about_instant_order_order"
+msgstr ""
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr ""
+
+msgid "Your_purchase"
+msgstr ""
+
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
+msgstr ""
+
+msgid "Order_confirmation"
+msgstr ""
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr ""
+
+msgid "Filename_Order-confirmation"
+msgstr ""
+
+msgid "Filename_General-terms-and-conditions"
+msgstr ""
+
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr ""
+
+msgid "Gross_price"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "net_per_piece_abbr"
+msgstr ""
+
+msgid "net"
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Tax_rates_overview_table"
+msgstr ""
+
+msgid "All_amounts_in_{0}."
+msgstr ""
+
+msgid "Delivery_note"
+msgstr ""
+
+msgid "Delivered_deposit"
+msgstr ""
+
+msgid "Payment_type_deposit_return"
+msgstr ""
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr ""
+
+msgid "Invoice"
+msgstr ""
+
+msgid "Cancellation_invoice"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Price_excl."
+msgstr ""
+
+msgid "Price_incl."
+msgstr ""
+
+msgid "Price_net"
+msgstr ""
+
+msgid "Total_sum_net"
+msgstr ""
+
+msgid "Value_added_tax"
+msgstr ""
+
+msgid "Total_sum_gross"
+msgstr ""
+
+msgid "Deleted_member"
+msgstr ""
+
+msgid "Order_day"
+msgstr ""
+
+msgid "Deleted_Member"
+msgstr ""
+
+msgid "Price_per_weight"
+msgstr ""
+
+msgid "Generated_on_{0}"
+msgstr ""
+
+msgid "Page_{0}_of_{1}"
+msgstr ""
+
+msgid "Sum_price_excl."
+msgstr ""
+
+msgid "Sum_tax"
+msgstr ""
+
+msgid "Sum_price_incl."
+msgstr ""
+
+msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
 msgid "Customer_adds_payment_manually"
@@ -2343,9 +2340,6 @@ msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr ""
 
 msgid "Please_pick_up_the_ordered_products_at:_{0}"
-msgstr ""
-
-msgid "Increase_credit"
 msgstr ""
 
 msgid "Scan_member_card"
