@@ -36,8 +36,8 @@
     .sb-left li.header,
     .sb-left a:hover,
     .sb-left a.active,
-    .sb-left a:hover i.far,
-    .sb-left a:hover i.fas:not(.gold),
+    .sb-left a:hover i.far:not(.fa-sun),
+    .sb-left a:hover i.fas:not(.gold):not(.fa-moon),
     .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
         background-color: var(--theme-color);
         color: #fff ! important;
@@ -136,6 +136,17 @@
     .sb-slidebar {
         background-color: #fff;
     }
+    .sb-left li {
+        float: left;
+        width: 100%;
+    }
+    .sb-left li a.color-mode-toggle,
+    .sb-left li a.color-mode-toggle i {
+        background-color: transparent ! important;
+    }
+    .sb-left li a.color-mode-toggle i {
+        color: var(--theme-color) ! important;
+    }
     .sb-left li.header, .sb-left a:hover, .sb-left a.active {
         color: #fff ! important;
     }
@@ -153,7 +164,6 @@
         position: static ! important;
         float: left;
         width: 100%;
-        margin-bottom: 5px;
     }
     .sb-left #product-search input {
         padding-left: 8px ! important;
