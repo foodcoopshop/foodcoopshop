@@ -58,6 +58,8 @@ foodcoopshop.ColorMode = {
     enableLightMode: function() {
         $('body').removeClass('dark');
         var icon = $('.color-mode-toggle').find('i');
+        icon.removeClass('fa-moon');
+        icon.addClass('fa-sun');
         icon.removeClass('fas');
         icon.addClass('far');
     },
@@ -65,6 +67,8 @@ foodcoopshop.ColorMode = {
     enableDarkMode: function() {
         $('body').addClass('dark');
         var icon = $('.color-mode-toggle').find('i');
+        icon.removeClass('fa-sun');
+        icon.addClass('fa-moon');
         icon.removeClass('far');
         icon.addClass('fas');
     },
