@@ -1,4 +1,4 @@
-FROM node:18-alpine AS node
+FROM node:20-alpine AS node
 FROM webdevops/php-nginx:8.2-alpine
 
 # https://stackoverflow.com/questions/44447821/how-to-create-a-docker-image-for-php-and-node
@@ -12,7 +12,7 @@ RUN apk update && \
     npm install -g npm-check-updates && \
     npm install -g eslint
     
-RUN npm install -g npm@10.3.0
+RUN npm install -g npm
 
 # avoid permission error on gitpod on running npm install
 RUN npm config set cache /app/tmp --global
