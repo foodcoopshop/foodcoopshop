@@ -13,7 +13,6 @@ return function (RouteBuilder $routes) {
 
         $routes->setExtensions(['pdf', 'js']);
 
-        $routes->connect('/app/*', ['controller' => 'Error']); // throw 404 instead of 401 if app is called directly like /app/module/webproduct/goto/m/m93281782d40b6f1a
         $routes->connect('/', ['controller' => 'Pages', 'action' => 'home']);
 
         $routes->connect('/'.__('route_sign_in'), ['controller' => 'Customers', 'action' => 'login']);
