@@ -83,7 +83,7 @@ class CategoriesController extends FrontendController
 
     public function detail()
     {
-        $categoryId = (int) $this->getRequest()->getParam('pass')[0];
+        $categoryId = (int) $this->getRequest()->getParam('idAndSlug');
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $category = $this->Category->find('all', conditions: [
@@ -96,7 +96,7 @@ class CategoriesController extends FrontendController
         }
 
         $correctSlug = StringComponent::slugify($category->name);
-        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
             $this->redirect(Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name));
         }

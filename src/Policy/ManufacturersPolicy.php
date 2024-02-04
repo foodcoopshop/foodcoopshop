@@ -36,7 +36,7 @@ class ManufacturersPolicy implements RequestPolicyInterface
 
         switch ($request->getParam('action')) {
             case 'detail':
-                $manufacturerId = (int) $request->getParam('pass')[0];
+                $manufacturerId = (int) $request->getParam('idAndSlug');
                 $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
                 $manufacturer = $manufacturerTable->find('all',
                     conditions: [

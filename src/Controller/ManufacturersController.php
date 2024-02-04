@@ -75,7 +75,7 @@ class ManufacturersController extends FrontendController
 
     public function detail()
     {
-        $manufacturerId = (int) $this->getRequest()->getParam('pass')[0];
+        $manufacturerId = (int) $this->getRequest()->getParam('idAndSlug');;
 
         $conditions = [
             'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -97,7 +97,7 @@ class ManufacturersController extends FrontendController
         }
 
         $correctSlug = StringComponent::slugify($manufacturer->name);
-        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
             $this->redirect(Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         }

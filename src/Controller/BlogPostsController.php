@@ -36,7 +36,7 @@ class BlogPostsController extends FrontendController
 
     public function detail()
     {
-        $blogPostId = (int) $this->getRequest()->getParam('pass')[0];
+        $blogPostId = (int) $this->getRequest()->getParam('idAndSlug');
 
         $conditions = [
             'BlogPosts.active' => APP_ON
@@ -56,7 +56,7 @@ class BlogPostsController extends FrontendController
         }
 
         $correctSlug = StringComponent::slugify($blogPost->title);
-        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
             $this->redirect(Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title));
         }

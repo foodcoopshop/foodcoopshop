@@ -37,7 +37,7 @@ class ProductsController extends FrontendController
 
     public function detail()
     {
-        $productId = (int) $this->getRequest()->getParam('pass')[0];
+        $productId = (int) $this->getRequest()->getParam('idAndSlug');
 
         $catalogService = new CatalogService();
         $product = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', $productId);
@@ -50,7 +50,7 @@ class ProductsController extends FrontendController
         $this->set('product', $product[0]);
 
         $correctSlug = StringComponent::slugify($product[0]->name);
-        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('idAndSlug'));
         if ($correctSlug != $givenSlug) {
             $this->redirect(Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]->name));
         }

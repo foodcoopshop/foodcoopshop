@@ -36,13 +36,21 @@ return function (RouteBuilder $routes) {
         if (Configure::read('app.isBlogFeatureEnabled')) {
             $routes->redirect('/'.__('route_news_list_old'), ['controller' => 'BlogPosts', 'action' => 'index']);
             $routes->connect('/'.__('route_news_list'), ['controller' => 'BlogPosts', 'action' => 'index']);
-            $routes->connect('/'.__('route_news_detail').'/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
+            $routes->connect('/'.__('route_news_detail').'/{idAndSlug}', ['controller' => 'BlogPosts', 'action' => 'detail'])
+                ->setPatterns(['idAndSlug' => '[a-zA-Z0-9-]+'])
+                ->setPass(['idAndSlug']);
         }
         $routes->connect('/'.__('route_search').'/*', ['controller' => 'Categories', 'action' => 'search']);
-        $routes->connect('/'.__('route_category').'/*', ['controller' => 'Categories', 'action' => 'detail']);
-        $routes->connect('/'.__('route_product').'/*', ['controller' => 'Products', 'action' => 'detail']);
+        $routes->connect('/'.__('route_category').'/{idAndSlug}', ['controller' => 'Categories', 'action' => 'detail'])
+            ->setPatterns(['idAndSlug' => '[a-zA-Z0-9-]+'])
+            ->setPass(['idAndSlug']);
+        $routes->connect('/'.__('route_product').'/{idAndSlug}', ['controller' => 'Products', 'action' => 'detail'])
+            ->setPatterns(['idAndSlug' => '[a-zA-Z0-9-]+'])
+            ->setPass(['idAndSlug']);
         $routes->connect('/'.__('route_manufacturer_list'), ['controller' => 'Manufacturers', 'action' => 'index']);
-        $routes->connect('/'.__('route_manufacturer_detail').'/*', ['controller' => 'Manufacturers', 'action' => 'detail']);
+        $routes->connect('/'.__('route_manufacturer_detail').'/{idAndSlug}', ['controller' => 'Manufacturers', 'action' => 'detail'])
+        ->setPatterns(['idAndSlug' => '[a-zA-Z0-9-]+'])
+        ->setPass(['idAndSlug']);
         $routes->connect('/'.__('route_content').'/{idAndSlug}', ['controller' => 'Pages', 'action' => 'detail'])
             ->setPatterns(['idAndSlug' => '[a-zA-Z0-9-]+'])
             ->setPass(['idAndSlug']);

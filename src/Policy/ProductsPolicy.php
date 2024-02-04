@@ -30,7 +30,7 @@ class ProductsPolicy implements RequestPolicyInterface
     public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
 
-        $productId = (int) $request->getParam('pass')[0];
+        $productId = (int) $request->getParam('idAndSlug');;
         $productTable = FactoryLocator::get('Table')->get('Products');
 
         $product = $productTable->find('all',

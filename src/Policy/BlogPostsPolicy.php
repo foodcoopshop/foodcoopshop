@@ -30,7 +30,7 @@ class BlogPostsPolicy implements RequestPolicyInterface
 
         switch ($request->getParam('action')) {
             case 'detail':
-                $blogPostId = (int) $request->getParam('pass')[0];
+                $blogPostId = (int) $request->getParam('idAndSlug');
                 $blogPostTable = FactoryLocator::get('Table')->get('BlogPosts');
                 $blogPost = $blogPostTable->find('all',
                     conditions: [
