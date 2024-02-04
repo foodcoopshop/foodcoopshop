@@ -13,6 +13,8 @@ return function (RouteBuilder $routes) {
 
         $routes->setExtensions(['pdf', 'js']);
 
+        $routes->redirect('/app/*', '/404'); // redirect bots (eg. /app/modules/....) to 404, 401 would be returned due to existing AppController
+
         $routes->connect('/', ['controller' => 'Pages', 'action' => 'home']);
 
         $routes->connect('/'.__('route_sign_in'), ['controller' => 'Customers', 'action' => 'login']);
