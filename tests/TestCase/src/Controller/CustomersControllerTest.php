@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 class CustomersControllerTest extends AppCakeTestCase
 {
@@ -66,6 +67,57 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($data['Customers']['address_customer']['city'], $customer->address_customer->city);
         $this->assertEquals($data['Customers']['address_customer']['phone'], $customer->address_customer->phone);
         $this->assertEquals($data['Customers']['address_customer']['phone_mobile'], $customer->address_customer->phone_mobile);
+
+    }
+
+    public function testChangePasswordNotOk()
+    {
+
+        $this->loginAsSuperadmin();
+
+        $data = [
+            'Customers' => [
+                'passwd_old' => 'test',
+                'passwd_1' => '1234567',
+                'passwd_2' => '123',
+            ],
+        ];
+        $this->post($this->Slug->getChangePassword(Configure::read('test.superadminId')), $data);
+        $this->assertResponseContains('Dein altes Passwort ist leider falsch.');
+        $this->assertResponseContains('Die Passwörter stimmen nicht überein.');
+        $this->assertResponseContains('Das Passwort muss aus mindestens 8 Zeichen bestehen.');
+
+    }
+
+    public function testChangePasswordOk()
+    {
+
+        $this->loginAsSuperadmin();
+
+        $oldCustomer = $this->Customer->find('all',
+        conditions: [
+            'Customers.id_customer' => Configure::read('test.superadminId'),
+        ],
+        )->first();
+
+        $newPassword = '12345678';
+        $data = [
+            'Customers' => [
+                'passwd_old' => 'foodcoopshop',
+                'passwd_1' => $newPassword,
+                'passwd_2' => $newPassword,
+            ],
+        ];
+        $this->post($this->Slug->getChangePassword(Configure::read('test.superadminId')), $data);
+        $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich gespeichert.');
+
+        $newCustomer = $this->Customer->find('all',
+            conditions: [
+                'Customers.id_customer' => Configure::read('test.superadminId'),
+            ],
+        )->first();
+        
+        $this->assertNotEquals($oldCustomer->passwd, $newCustomer->passwd);
 
     }
 

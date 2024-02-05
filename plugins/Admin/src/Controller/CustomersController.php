@@ -15,7 +15,6 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Utility\Hash;
 use Admin\Traits\UploadTrait;
 use App\Controller\Traits\RenewAuthSessionTrait;
-use App\Model\Table\CustomersTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\PaymentsTable;
 use Cake\View\JsonView;
@@ -189,7 +188,7 @@ class CustomersController extends AdminAppController
             [
                 'validate' => 'changePassword'
             ]
-            );
+        );
 
         if ($customer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
