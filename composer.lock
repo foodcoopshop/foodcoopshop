@@ -931,16 +931,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "3.3.2",
+            "version": "3.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "8494cc91e3906e36ca58acc3dfe70fa331520b88"
+                "reference": "ad8058f5be94110d72d44958a5e5f4a0705c7471"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/8494cc91e3906e36ca58acc3dfe70fa331520b88",
-                "reference": "8494cc91e3906e36ca58acc3dfe70fa331520b88",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/ad8058f5be94110d72d44958a5e5f4a0705c7471",
+                "reference": "ad8058f5be94110d72d44958a5e5f4a0705c7471",
                 "shasum": ""
             },
             "require": {
@@ -952,6 +952,7 @@
                 "mockery/mockery": "^1.6",
                 "phpstan/phpstan": "^1",
                 "phpunit/phpunit": "^9",
+                "slevomat/coding-standard": "~8.0",
                 "squizlabs/php_codesniffer": "^3.8"
             },
             "suggest": {
@@ -986,7 +987,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image/issues",
-                "source": "https://github.com/Intervention/image/tree/3.3.2"
+                "source": "https://github.com/Intervention/image/tree/3.3.3"
             },
             "funding": [
                 {
@@ -998,7 +999,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-27T19:34:18+00:00"
+            "time": "2024-02-02T15:08:10+00:00"
         },
         {
             "name": "jaybizzle/crawler-detect",
@@ -5459,16 +5460,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.9",
+            "version": "10.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0bd663704f0165c9e76fe4f06ffa6a1ca727fdbe"
+                "reference": "50b8e314b6d0dd06521dc31d1abffa73f25f850c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0bd663704f0165c9e76fe4f06ffa6a1ca727fdbe",
-                "reference": "0bd663704f0165c9e76fe4f06ffa6a1ca727fdbe",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/50b8e314b6d0dd06521dc31d1abffa73f25f850c",
+                "reference": "50b8e314b6d0dd06521dc31d1abffa73f25f850c",
                 "shasum": ""
             },
             "require": {
@@ -5540,7 +5541,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.9"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.10"
             },
             "funding": [
                 {
@@ -5556,7 +5557,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-22T14:35:40+00:00"
+            "time": "2024-02-04T09:07:51+00:00"
         },
         {
             "name": "react/promise",
