@@ -91,13 +91,39 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, '0002');
     }
 
-    public function testGetPreparedTaxRatesForSumTable()
+    public function testGetPreparedTaxRatesForSumTableWithDecimalsInTaxRate()
     {
+
+        $taxesTable = $this->getTableLocator()->get('Taxes');
+        $newTax = $taxesTable->save(
+            $taxesTable->newEntity(
+                [
+                    'rate' => 8.4,
+                ],
+            )
+        );
+
+        $productToAdd = 340; // beuschl, no deposit
+        $productsTable = $this->getTableLocator()->get('Products');
+        $product = $productsTable->get($productToAdd);
+        $product->id_tax = $newTax->id_tax;
+        $productsTable->save($product);
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
         $this->loginAsSuperadmin();
+        $this->addProductToCart($productToAdd, 3);
+        $this->finishCart();
+        $this->logout();
+
         $customerId = Configure::read('test.superadminId');
+
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+        $orderDetailsTable->updateAll(
+            ['pickup_day' => '2018-02-02'],
+            ['id_customer' => $customerId]
+        );
+
         $paidInCash = 1;
         $this->generateInvoice($customerId, $paidInCash);
 
@@ -121,6 +147,11 @@ class InvoicesTableTest extends AppCakeTestCase
                         'sum_tax' => 0,
                         'sum_price_incl' => 4.54,
                     ],
+                    '8.4' => [
+                        'sum_price_excl' => 13.65,
+                        'sum_tax' => 1.14,
+                        'sum_price_incl' => 14.79,
+                    ],
                     '10' => [
                         'sum_price_excl' => 1.65,
                         'sum_tax' => 0.17,
@@ -143,6 +174,11 @@ class InvoicesTableTest extends AppCakeTestCase
                         'sum_tax' => 0,
                         'sum_price_incl' => 4.54,
                     ],
+                    '8.4' => [
+                        'sum_price_excl' => 13.65,
+                        'sum_tax' => 1.14,
+                        'sum_price_incl' => 14.79,
+                    ],
                     '10' => [
                         'sum_price_excl' => 1.65,
                         'sum_tax' => 0.17,
@@ -162,14 +198,14 @@ class InvoicesTableTest extends AppCakeTestCase
             ],
             'taxRatesSums' => [
                 'cash' => [
-                    'sum_price_excl' => 7.58,
-                    'sum_tax' => 0.4,
-                    'sum_price_incl' => 7.98,
+                    'sum_price_excl' => 21.23,
+                    'sum_tax' => 1.54,
+                    'sum_price_incl' => 22.77,
                 ],
                 'total' => [
-                    'sum_price_excl' => 7.58,
-                    'sum_tax' => 0.4,
-                    'sum_price_incl' => 7.98,
+                    'sum_price_excl' => 21.23,
+                    'sum_tax' => 1.54,
+                    'sum_price_incl' => 22.77,
                 ],
             ],
         ];
