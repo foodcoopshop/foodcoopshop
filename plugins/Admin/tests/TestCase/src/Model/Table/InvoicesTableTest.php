@@ -91,9 +91,8 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, '0002');
     }
 
-    public function testGetPreparedTaxRatesForSumTableWithDecimalsInTaxRate()
+    private function createOrdersWithPercentageTaxRate()
     {
-
         $taxesTable = $this->getTableLocator()->get('Taxes');
         $newTax = $taxesTable->save(
             $taxesTable->newEntity(
@@ -109,12 +108,16 @@ class InvoicesTableTest extends AppCakeTestCase
         $product->id_tax = $newTax->id_tax;
         $productsTable->save($product);
 
-        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
-
-        $this->loginAsSuperadmin();
         $this->addProductToCart($productToAdd, 3);
         $this->finishCart();
-        $this->logout();
+    }
+
+    public function testGetPreparedTaxRatesForSumTableWithDecimalsInTaxRate()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->loginAsSuperadmin();
+        $this->createOrdersWithPercentageTaxRate();
 
         $customerId = Configure::read('test.superadminId');
 
