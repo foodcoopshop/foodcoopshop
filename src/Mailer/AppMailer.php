@@ -7,6 +7,7 @@ use Cake\Mailer\Mailer;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use App\Services\OutputFilter\OutputFilterService;
+use Cake\Mailer\Message;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -113,7 +114,9 @@ class AppMailer extends Mailer
         // due to queue_jobs.text field datatype "mediumtext" the limit of emails is 16MB (including attachments)
         $queuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
         $queuedJobs->createJob('AppEmail', [
-            'settings' => $this->getMessage(),
+            'class' => Message::class,
+            'settings' => $this->getMessage()->__serialize(),
+            'serialized' => true,
             'afterRunParams' => $this->afterRunParams,
         ]);
 
