@@ -150,7 +150,7 @@ class InvoicesTableTest extends AppCakeTestCase
                         'sum_tax' => 0,
                         'sum_price_incl' => 4.54,
                     ],
-                    '8.4' => [
+                    '8,4' => [
                         'sum_price_excl' => 13.65,
                         'sum_tax' => 1.14,
                         'sum_price_incl' => 14.79,
@@ -177,7 +177,7 @@ class InvoicesTableTest extends AppCakeTestCase
                         'sum_tax' => 0,
                         'sum_price_incl' => 4.54,
                     ],
-                    '8.4' => [
+                    '8,4' => [
                         'sum_price_excl' => 13.65,
                         'sum_tax' => 1.14,
                         'sum_price_incl' => 14.79,

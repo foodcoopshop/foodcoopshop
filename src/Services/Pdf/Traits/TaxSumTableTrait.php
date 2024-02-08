@@ -47,6 +47,7 @@ trait TaxSumTableTrait
             $html .= '<tr>';
             $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">';
 
+            $taxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale($taxRate);
             $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
             $html .= $formattedTaxRate . '%';
 

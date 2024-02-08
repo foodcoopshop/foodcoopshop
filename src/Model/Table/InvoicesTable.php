@@ -154,10 +154,10 @@ class InvoicesTable extends AppTable
         $taxRates['cash'] = $this->clearZeroArray($taxRates['cash']);
         $taxRates['total'] = $this->clearZeroArray($taxRates['total']);
 
-        ksort($taxRates['cashless']);
-        ksort($taxRates['cash']);
-        ksort($taxRates['total']);
-
+        ksort($taxRates['cashless'], SORT_NUMERIC);
+        ksort($taxRates['cash'], SORT_NUMERIC);
+        ksort($taxRates['total'], SORT_NUMERIC);
+        
         $result = [
             'taxRates' => $taxRates,
             'taxRatesSums' => $this->clearZeroArray($taxRatesSums),
@@ -295,7 +295,7 @@ class InvoicesTable extends AppTable
                 $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
                 $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
                 $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
-                ksort($taxRates);
+                ksort($taxRates, SORT_NUMERIC);
                 $taxRates = $this->clearZeroArray($taxRates);
             }
 
@@ -409,7 +409,7 @@ class InvoicesTable extends AppTable
 
         foreach($taxRates as $taxRate => $values) {
             $invoiceData['invoice_taxes'][] = [
-                'tax_rate' => $taxRate,
+                'tax_rate' => Configure::read('app.numberHelper')->parseFloatRespectingLocale($taxRate),
                 'total_price_tax_excl' => $values['sum_price_excl'],
                 'total_price_tax_incl' => $values['sum_price_incl'],
                 'total_price_tax' => $values['sum_tax'],

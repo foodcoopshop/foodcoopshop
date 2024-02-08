@@ -152,13 +152,14 @@ class DeliveryNoteService
 
         if (count($taxRates) > 1) {
 
-            ksort($taxRates);
+            ksort($taxRates, SORT_NUMERIC);
 
             // add rows for sums / tax rates
             $row++;
             $row++;
             $sheet->setCellValue([2, $row], __('Tax_rates_overview_table'));
             foreach($taxRates as $taxRate => $trt) {
+                $taxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale($taxRate);
                 $sheet->setCellValue([6, $row], $taxRate);
                 $sheet->setCellValue([7, $row], $trt['sum_price_net']);
                 $this->setNumberFormatForCell($sheet, 7, $row);
