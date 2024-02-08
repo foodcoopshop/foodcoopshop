@@ -21,6 +21,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use App\Test\TestCase\Traits\GenerateOrderWithDecimalsInTaxRateTrait;
 
 class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 {
@@ -33,6 +34,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
+    use GenerateOrderWithDecimalsInTaxRateTrait;
 
     public function setUp(): void
     {
@@ -88,6 +90,20 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
+    }
+
+    public function testContentOfInvoiceWithDecimalsInTaxRate()
+    {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $this->generateOrderWithDecimalsInTaxRate($customerId);
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
+
+        $this->get('/admin/invoices/preview.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerWithDecimalsInTaxRate.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
     }
 
     public function testContentOfInvoiceWithTaxBasedOnNetInvoiceSum()

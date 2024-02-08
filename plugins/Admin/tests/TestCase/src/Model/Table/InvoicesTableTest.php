@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\GenerateOrderWithDecimalsInTaxRateTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
@@ -26,6 +27,7 @@ class InvoicesTableTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use LoginTrait;
     use PrepareAndTestInvoiceDataTrait;
+    use GenerateOrderWithDecimalsInTaxRateTrait;
 
     protected $Invoice;
     protected $OrderDetail;
@@ -91,41 +93,13 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->assertEquals($result, '0002');
     }
 
-    private function createOrdersWithPercentageTaxRate()
-    {
-        $taxesTable = $this->getTableLocator()->get('Taxes');
-        $newTax = $taxesTable->save(
-            $taxesTable->newEntity(
-                [
-                    'rate' => 8.4,
-                ],
-            )
-        );
-
-        $productToAdd = 340; // beuschl, no deposit
-        $productsTable = $this->getTableLocator()->get('Products');
-        $product = $productsTable->get($productToAdd);
-        $product->id_tax = $newTax->id_tax;
-        $productsTable->save($product);
-
-        $this->addProductToCart($productToAdd, 3);
-        $this->finishCart();
-    }
-
     public function testGetPreparedTaxRatesForSumTableWithDecimalsInTaxRate()
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->loginAsSuperadmin();
-        $this->createOrdersWithPercentageTaxRate();
-
         $customerId = Configure::read('test.superadminId');
-
-        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
-        $orderDetailsTable->updateAll(
-            ['pickup_day' => '2018-02-02'],
-            ['id_customer' => $customerId]
-        );
+        $this->generateOrderWithDecimalsInTaxRate($customerId);
 
         $paidInCash = 1;
         $this->generateInvoice($customerId, $paidInCash);
