@@ -36,6 +36,7 @@ $html .= '</tr>';
 foreach($taxRates as $taxRate => $data) {
     $html .= '<tr>';
         $html .= '<td>';
+            $taxRate = $this->Number->parseFloatRespectingLocale($taxRate);
             $formattedTaxRate = $this->Number->formatTaxRate($taxRate);
             $html .= $formattedTaxRate . '%';
         $html .= '</td>';
