@@ -57,9 +57,10 @@ foodcoopshop.Helper = {
         return result;
     },
 
-    showLoader: function() {
+    showLoader: function(targetElement) {
         this.removeLoader();
-        $('body').append('<div id="full-page-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');
+        targetElement = targetElement || 'body';
+        $(targetElement).append('<div id="full-page-loader"><i class="fas fa-circle-notch  fa-spin"></i></div>');
     },
 
     removeLoader: function() {
