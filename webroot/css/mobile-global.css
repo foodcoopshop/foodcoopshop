@@ -36,8 +36,8 @@
     .sb-left li.header,
     .sb-left a:hover,
     .sb-left a.active,
-    .sb-left a:hover i.far:not(.fa-sun),
-    .sb-left a:hover i.fas:not(.gold):not(.fa-moon),
+    .sb-left a:hover i.far,
+    .sb-left a:hover i.fas:not(.gold):not(.fa-moon):not(.fa-sun),
     .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
         background-color: var(--theme-color);
         color: #fff ! important;
