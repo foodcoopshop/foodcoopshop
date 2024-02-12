@@ -92,6 +92,17 @@ class EmailOrderReminderCommand extends AppCommand
 
         $i = 0;
         $outString = '';
+
+        $sendOrderListWeekday = ((new DeliveryRhythmService())->getSendOrderListsWeekday() -1) % 7;
+        $cronjobRunWeekday = date('N', strtotime($this->cronjobRunDay)) % 7;
+        $lastOrderDayDiff = $sendOrderListWeekday - $cronjobRunWeekday;
+
+        $lastOrderDayAsString = match($lastOrderDayDiff) {
+            0 => __('today'),
+            1 => __('tomorrow'),
+            default => Configure::read('app.timeHelper')->getWeekdayName($sendOrderListWeekday),
+        };
+
         foreach ($customers as $customer) {
             // customer has open orders, do not send email
             if (Configure::read('app.applyOpenOrderCheckForOrderReminder')) {
@@ -102,13 +113,13 @@ class EmailOrderReminderCommand extends AppCommand
 
             $email = new AppMailer();
             $email->setTo($customer->email)
-            ->viewBuilder()->setTemplate('Admin.email_order_reminder');
+                ->viewBuilder()->setTemplate('Admin.email_order_reminder');
             $email->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
-            ->setViewVars([
-                'customer' => $customer,
-                'newsletterCustomer' => $customer,
-                'lastOrderDayAsString' => ((new DeliveryRhythmService())->getSendOrderListsWeekday() - date('N', strtotime($this->cronjobRunDay))) == 1 ? __('today') : __('tomorrow')
-            ])
+                ->setViewVars([
+                    'customer' => $customer,
+                    'newsletterCustomer' => $customer,
+                    'lastOrderDayAsString' => $lastOrderDayAsString,
+                ])
             ->addToQueue();
 
             $outString .= $customer->name . '<br />';

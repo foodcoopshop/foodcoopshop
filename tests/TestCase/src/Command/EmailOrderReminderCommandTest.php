@@ -40,19 +40,40 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
 
         $this->assertMailSubjectContainsAt(0, 'Bestell-Erinnerung FoodCoop Test');
         $this->assertMailContainsHtmlAt(0, 'Hallo Demo Admin,');
-        $this->assertMailContainsHtmlAt(0, 'ist schon wieder der letzte Bestelltag');
+        $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>morgen Mitternacht</b> bestellt werden.');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailAdmin'));
 
         $this->assertMailSubjectContainsAt(1, 'Bestell-Erinnerung FoodCoop Test');
         $this->assertMailContainsHtmlAt(1, 'Hallo Demo Mitglied,');
-        $this->assertMailContainsHtmlAt(1, 'ist schon wieder der letzte Bestelltag');
+        $this->assertMailContainsHtmlAt(1, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>morgen Mitternacht</b> bestellt werden.');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));
 
         $this->assertMailSubjectContainsAt(2, 'Bestell-Erinnerung FoodCoop Test');
         $this->assertMailContainsHtmlAt(2, 'Hallo Demo Superadmin,');
-        $this->assertMailContainsHtmlAt(2, 'ist schon wieder der letzte Bestelltag');
+        $this->assertMailContainsHtmlAt(2, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>morgen Mitternacht</b> bestellt werden.');
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailSuperadmin'));
 
+    }
+
+    public function testNoActiveOrderServiceCalledSameDayAsLastOrderDay()
+    {
+        $this->exec('email_order_reminder 2024-02-13'); // called on a tuesday
+        $this->runAndAssertQueue();
+        $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>heute Mitternacht</b> bestellt werden.');
+    }
+
+    public function testNoActiveOrderServiceCalledOneDayBeforeLastOrderDay()
+    {
+        $this->exec('email_order_reminder 2024-02-12'); // called on a monday
+        $this->runAndAssertQueue();
+        $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>morgen Mitternacht</b> bestellt werden.');
+    }
+
+    public function testNoActiveOrderServiceCalledTwoDaysBeforeLastOrderDay()
+    {
+        $this->exec('email_order_reminder 2024-02-11'); // called on a sunday
+        $this->runAndAssertQueue();
+        $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>Dienstag Mitternacht</b> bestellt werden.');
     }
 
     public function testDeliveryBreakGlobalEnabledAndNextDeliveryDay()

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-12-04 17:38+0100\n"
+"POT-Creation-Date: 2024-02-12 14:28+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2282,7 +2282,7 @@ msgstr ""
 msgid "Date_when_payment_was_received_on_bank_account"
 msgstr ""
 
-msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
+msgid "The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight."
 msgstr ""
 
 msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."

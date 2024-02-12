@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-01 15:44+0100\n"
+"POT-Creation-Date: 2024-02-12 14:28+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -125,13 +125,13 @@ msgstr ""
 msgid "Sent_emails"
 msgstr ""
 
-msgid "Order_reminder"
-msgstr ""
-
 msgid "today"
 msgstr ""
 
 msgid "tomorrow"
+msgstr ""
+
+msgid "Order_reminder"
 msgstr ""
 
 msgid "Pickup_reminder_for"
