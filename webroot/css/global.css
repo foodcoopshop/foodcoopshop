@@ -35,6 +35,10 @@ body {
 img, iframe {
     border-radius: 5px;
 }
+input[type="radio"],
+input[type="checkbox"] {
+    accent-color: var(--theme-color);
+}
 a {
     color: #333;
 }
