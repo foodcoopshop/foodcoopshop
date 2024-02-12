@@ -193,17 +193,17 @@ class DeliveryNoteService
 
     protected function setAlignmentForCell($sheet, $column, $row, $alignment)
     {
-        $sheet->getStyleByColumnAndRow($column, $row)->getAlignment()->setHorizontal($alignment);
+        $sheet->getStyle([$column, $row, $column, $row])->getAlignment()->setHorizontal($alignment);
     }
 
     protected function setBoldForCell($sheet, $column, $row)
     {
-        $sheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
+        $sheet->getStyle([$column, $row, $column, $row])->getFont()->setBold(true);
     }
 
     protected function setNumberFormatForCell($sheet, $column, $row)
     {
-        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat() ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+        $sheet->getStyle([$column, $row, $column, $row])->getNumberFormat() ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
     }
 
 }
