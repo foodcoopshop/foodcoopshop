@@ -118,6 +118,7 @@ class EmailOrderReminderCommand extends AppCommand
                 ->setViewVars([
                     'customer' => $customer,
                     'newsletterCustomer' => $customer,
+                    'lastOrderDayDiff' => $lastOrderDayDiff,
                     'lastOrderDayAsString' => $lastOrderDayAsString,
                 ])
             ->addToQueue();

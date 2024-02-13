@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-02-12 14:28+0100\n"
-"PO-Revision-Date: 2024-02-12 14:36+0100\n"
+"POT-Creation-Date: 2024-02-13 08:36+0100\n"
+"PO-Revision-Date: 2024-02-13 08:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -2291,6 +2291,9 @@ msgstr "Betrag"
 
 msgid "Date_when_payment_was_received_on_bank_account"
 msgstr "Datum des Zahlungseinganges am Bankkonto"
+
+msgid "Today_is_the_last_order_day_and_you_can_place_your_orders_until_today_midnight."
+msgstr "heute ist der letzte Bestelltag und es kann bis <b>heute Mitternacht</b> bestellt werden."
 
 msgid "The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight."
 msgstr "es sind schon wieder die letzten Bestelltage und es kann bis <b>{0} Mitternacht</b> bestellt werden."

@@ -25,8 +25,13 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
-            <p><?php echo __d('admin', 'The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight.', [$lastOrderDayAsString]); ?></p>
-
+            <><?php
+                if ($lastOrderDayDiff == 0) {
+                    echo __d('admin', 'Today_is_the_last_order_day_and_you_can_place_your_orders_until_today_midnight.');
+                } else {
+                    echo __d('admin', 'The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight.', [$lastOrderDayAsString]);
+                }
+            ?></p>
             <p><?php echo __d('admin', 'Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that.'); ?><br />
                  <a href="<?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart"><?php echo Configure::read('App.fullBaseUrl'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart</a>
             </p>

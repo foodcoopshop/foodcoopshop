@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-02-12 14:28+0100\n"
-"PO-Revision-Date: 2024-02-12 14:32+0100\n"
+"POT-Creation-Date: 2024-02-13 08:36+0100\n"
+"PO-Revision-Date: 2024-02-13 08:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2289,8 +2289,11 @@ msgstr "Amount"
 msgid "Date_when_payment_was_received_on_bank_account"
 msgstr "Date when payment was received on the bank account"
 
+msgid "Today_is_the_last_order_day_and_you_can_place_your_orders_until_today_midnight."
+msgstr "today is the last order day and you can place your orders until <b>today midnight</b>."
+
 msgid "The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight."
-msgstr "The last order days have started and you can place your orders until <b>{0} midnight</b>."
+msgstr "the last order days have started and you can place your orders until <b>{0} midnight</b>."
 
 msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
 msgstr "Do you want to load your last order into your shopping cart? The current cart will be emptied for that."

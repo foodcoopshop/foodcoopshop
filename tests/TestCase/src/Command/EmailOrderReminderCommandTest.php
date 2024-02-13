@@ -33,7 +33,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
 
     public function testNoActiveOrder()
     {
-        $this->exec('email_order_reminder');
+        $this->exec('email_order_reminder 2024-02-12');
         $this->runAndAssertQueue();
 
         $this->assertMailCount(3);
@@ -59,7 +59,7 @@ class EmailOrderReminderCommandTest extends AppCakeTestCase
     {
         $this->exec('email_order_reminder 2024-02-13'); // called on a tuesday
         $this->runAndAssertQueue();
-        $this->assertMailContainsHtmlAt(0, 'es sind schon wieder die letzten Bestelltage und es kann bis <b>heute Mitternacht</b> bestellt werden.');
+        $this->assertMailContainsHtmlAt(0, 'heute ist der letzte Bestelltag und es kann bis <b>heute Mitternacht</b> bestellt werden.');
     }
 
     public function testNoActiveOrderServiceCalledOneDayBeforeLastOrderDay()
