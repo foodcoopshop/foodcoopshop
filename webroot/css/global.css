@@ -86,7 +86,7 @@ body.admin h2 span a:hover,
 .btn-success:active {
     border-color: transparent;
 }
-a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):not(.dropdown-item):hover {
+a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):not(.dropdown-item):hover:not(.pagination-link):hover {
     text-decoration: underline ! important;
 }
 .swiper-button-next,

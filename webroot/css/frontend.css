@@ -1006,6 +1006,25 @@ body.carts #CartsDetailForm {
 #inner-content .next-button {
     float: right;
 }
+.pagination-wrapper {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+.pagination-wrapper a {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 3px;
+    border: 1px solid var(--theme-color);
+    font-size: 14px;
+    opacity: .6;
+    text-decoration: none;
+}
+.pagination-wrapper a:hover,
+.pagination-wrapper a.active {
+    opacity: 1;
+}
 body.carts .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;

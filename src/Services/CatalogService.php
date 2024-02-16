@@ -43,12 +43,19 @@ class CatalogService
     protected OrderDetailsTable $OrderDetail;
     protected $identity;
 
+    const MAX_PRODUCTS_PER_PAGE = 100;
+
     public function __construct()
     {
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
+    public function getPagesCount($totalProductCount)
+    {
+        return ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
+    }
+
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1)
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -68,6 +75,11 @@ class CatalogService
 
         if ($products === null) {
             $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId);
+
+            if (!$countMode) {
+                $query->page($page, self::MAX_PRODUCTS_PER_PAGE);
+            }
+
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
@@ -580,7 +592,7 @@ class CatalogService
                     'gross_price' => $this->Product->getGrossPrice($attribute->price, $taxRate),
                     'price_incl_per_unit' => $attribute->unit_product_attribute->price_incl_per_unit,
                 ];
-    
+
                 $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
                 $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
                 $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];

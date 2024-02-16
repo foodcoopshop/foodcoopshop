@@ -84,6 +84,7 @@ class CategoriesController extends FrontendController
     public function detail()
     {
         $categoryId = (int) $this->getRequest()->getParam('idAndSlug');
+        $page = (int) $this->getRequest()->getQuery('page', 1);
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $category = $this->Category->find('all', conditions: [
@@ -106,10 +107,17 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts($categoryId);
+        $products = $catalogService->getProducts(
+            categoryId: $categoryId,
+            page: $page,
+        );
         $products = $catalogService->prepareProducts($products);
+        $totalProductCount = $catalogService->getProducts($categoryId, false, '', 0, true);
+        $pagesCount = $catalogService->getPagesCount($totalProductCount);
 
         $this->set('products', $products);
+        $this->set('pagesCount', $pagesCount);
+        $this->set('page', $page);
 
         $this->set('category', $category);
 

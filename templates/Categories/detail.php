@@ -91,4 +91,19 @@ foreach ($products as $product) {
     );
 }
 
+if ($pagesCount > 1) {
+    echo '<div class="pagination-wrapper">';
+    for ($i = 1; $i <= $pagesCount; $i++) {
+        echo $this->Html->link(
+            (string) $i,
+            $i > 1 ? $this->getRequest()->getAttribute('here') . '?page=' . $i : $this->getRequest()->getAttribute('here'),
+            [
+                'class' => 'pagination-link' . ($page == $i ? ' active' : ''),
+                'title' => __('Page') . ' ' . $i,
+            ]
+        );
+    }
+    echo '</div>';
+}
+
 ?>
