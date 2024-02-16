@@ -30,6 +30,8 @@ class Customer extends Entity implements IdentityInterface
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];
 
+    private $_manufacturer = 'not-yet-loaded';
+
     public function getIdentifier(): array|string|int|null
     {
         return $this->id_customer;
@@ -45,18 +47,21 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isNew()) {
             return null;
         }
-        $mm = FactoryLocator::get('Table')->get('Manufacturers');
-        $manufacturer = $mm->find('all',
-            conditions: [
-                'AddressManufacturers.email' => $this->email,
-                'AddressManufacturers.id_manufacturer > ' . APP_OFF,
-            ],
-            contain: [
-                'AddressManufacturers',
-                'Customers.AddressCustomers',
-            ]
-        )->first();
-        return $manufacturer;
+
+        if ($this->_manufacturer === 'not-yet-loaded') {
+            $mm = FactoryLocator::get('Table')->get('Manufacturers');
+            $this->_manufacturer = $mm->find('all',
+                conditions: [
+                    'AddressManufacturers.email' => $this->email,
+                    'AddressManufacturers.id_manufacturer > ' . APP_OFF,
+                ],
+                contain: [
+                    'AddressManufacturers',
+                    'Customers.AddressCustomers',
+                ]
+            )->first();
+        }
+        return $this->_manufacturer;
     }
 
     protected function _getName()
@@ -93,7 +98,7 @@ class Customer extends Entity implements IdentityInterface
         }
         return false;
     }
-    
+
     public function isManufacturer(): bool
     {
         return isset($this->manufacturer);
