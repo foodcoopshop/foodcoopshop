@@ -69,6 +69,7 @@ class CatalogService
             'productId-' . $productId,
             'manufacturerId-' . $manufacturerId,
             'getOnlyStockProducts-' . $getOnlyStockProducts,
+            'page-' . $page,
             'date-' . date('Y-m-d'),
         ]);
         $products = Cache::read($cacheKey);
