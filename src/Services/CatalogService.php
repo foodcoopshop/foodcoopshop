@@ -43,7 +43,7 @@ class CatalogService
     protected OrderDetailsTable $OrderDetail;
     protected $identity;
 
-    const MAX_PRODUCTS_PER_PAGE = 100;
+    const MAX_PRODUCTS_PER_PAGE = 50;
 
     public function __construct()
     {

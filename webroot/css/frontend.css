@@ -1012,6 +1012,7 @@ body.carts #CartsDetailForm {
     width: 100%;
     gap: 5px;
     flex-wrap: wrap;
+    padding-top: 15px;
 }
 .pagination-wrapper a {
     padding: 5px 10px;
