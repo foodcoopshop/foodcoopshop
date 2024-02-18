@@ -70,6 +70,7 @@ class CatalogService
             'manufacturerId-' . $manufacturerId,
             'getOnlyStockProducts-' . $getOnlyStockProducts,
             'page-' . $page,
+            'countMode-' . $countMode,
             'date-' . date('Y-m-d'),
         ]);
         $products = Cache::read($cacheKey);
@@ -80,11 +81,11 @@ class CatalogService
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
             $products = $this->addOrderedProductsTotalAmount($products);
-            Cache::write($cacheKey, $products);
             if (!$countMode) {
                 $offset = $page * self::MAX_PRODUCTS_PER_PAGE - self::MAX_PRODUCTS_PER_PAGE;
                 $products = array_slice($products, $offset, self::MAX_PRODUCTS_PER_PAGE);
             }
+            Cache::write($cacheKey, $products);
         }
 
         $result = $products;
