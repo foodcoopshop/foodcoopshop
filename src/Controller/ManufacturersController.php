@@ -75,7 +75,8 @@ class ManufacturersController extends FrontendController
 
     public function detail()
     {
-        $manufacturerId = (int) $this->getRequest()->getParam('idAndSlug');;
+        $manufacturerId = (int) $this->getRequest()->getParam('idAndSlug');
+        $page = (int) $this->getRequest()->getQuery('page', 1);
 
         $conditions = [
             'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -104,8 +105,15 @@ class ManufacturersController extends FrontendController
 
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $catalogService = new CatalogService();
-            $products = $catalogService->getProductsByManufacturerId($manufacturerId);
+            $products = $catalogService->getProductsByManufacturerId($manufacturerId, false, $page);
+            $totalProductCount = $catalogService->getProductsByManufacturerId($manufacturerId, true);
             $manufacturer['Products'] = $catalogService->prepareProducts($products);
+            $pagesCount = $catalogService->getPagesCount($totalProductCount);
+
+            $this->set('totalProductCount', $totalProductCount);
+            $this->set('pagesCount', $pagesCount);
+            $this->set('page', $page);
+
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');

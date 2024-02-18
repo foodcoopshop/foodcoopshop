@@ -75,16 +75,15 @@ class CatalogService
 
         if ($products === null) {
             $query = $this->getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId);
-
-            if (!$countMode) {
-                $query->page($page, self::MAX_PRODUCTS_PER_PAGE);
-            }
-
             $products = $query->toArray();
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
             $products = $this->addOrderedProductsTotalAmount($products);
             Cache::write($cacheKey, $products);
+            if (!$countMode) {
+                $offset = $page * self::MAX_PRODUCTS_PER_PAGE - self::MAX_PRODUCTS_PER_PAGE;
+                $products = array_slice($products, $offset, self::MAX_PRODUCTS_PER_PAGE);
+            }
         }
 
         $result = $products;
@@ -95,9 +94,9 @@ class CatalogService
 
     }
 
-    public function getProductsByManufacturerId($manufacturerId, $countMode = false)
+    public function getProductsByManufacturerId($manufacturerId, $countMode = false, $page = 1)
     {
-        return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId);
+        return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId, $page);
     }
 
     protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)

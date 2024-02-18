@@ -40,14 +40,23 @@ class CategoriesController extends FrontendController
 
     public function newProducts()
     {
+        $page = (int) $this->getRequest()->getQuery('page', 1);
+
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts(null, true);
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
         $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true);
+        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, countMode: true, page: $page);
+        $pagesCount = $catalogService->getPagesCount($totalProductCount);
         $products = $catalogService->prepareProducts($products);
         $this->set('products', $products);
+
+        $this->set('totalProductCount', $totalProductCount);
+        $this->set('products', $products);
+        $this->set('pagesCount', $pagesCount);
+        $this->set('page', $page);
 
         $this->set('title_for_layout', __('New_products'));
 
@@ -56,10 +65,8 @@ class CategoriesController extends FrontendController
 
     public function search()
     {
-        $keyword = '';
-        if (! empty($this->getRequest()->getQuery('keyword'))) {
-            $keyword = h(trim($this->getRequest()->getQuery('keyword')));
-        }
+        $keyword = h(trim($this->getRequest()->getQuery('keyword', '')));
+        $page = (int) $this->getRequest()->getQuery('page', 1);
 
         if ($keyword == '') {
             throw new RecordNotFoundException('no keyword');
@@ -72,9 +79,16 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $catalogService = new CatalogService();
-        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, $keyword, page: $page);
+        $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, $keyword, countMode: true);
+        $pagesCount = $catalogService->getPagesCount($totalProductCount);
         $products = $catalogService->prepareProducts($products);
         $this->set('products', $products);
+
+        $this->set('totalProductCount', $totalProductCount);
+        $this->set('products', $products);
+        $this->set('pagesCount', $pagesCount);
+        $this->set('page', $page);
 
         $this->set('title_for_layout', __('Search') . ' "' . $keyword . '"');
 
@@ -115,6 +129,7 @@ class CategoriesController extends FrontendController
         $totalProductCount = $catalogService->getProducts($categoryId, false, '', 0, true);
         $pagesCount = $catalogService->getPagesCount($totalProductCount);
 
+        $this->set('totalProductCount', $totalProductCount);
         $this->set('products', $products);
         $this->set('pagesCount', $pagesCount);
         $this->set('page', $page);
