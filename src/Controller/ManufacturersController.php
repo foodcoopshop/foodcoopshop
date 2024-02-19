@@ -46,7 +46,7 @@ class ManufacturersController extends FrontendController
         $conditions = [
             'Manufacturers.active' => APP_ON,
         ];
-        if (! $this->identity !== null) {
+        if ($this->identity === null) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
