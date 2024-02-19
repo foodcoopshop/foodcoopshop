@@ -18,7 +18,10 @@ declare(strict_types=1);
 use App\Services\CatalogService;
 
  if ($totalProductCount > CatalogService::MAX_PRODUCTS_PER_PAGE) {
-    echo __('Page') . ' ' . $page . ': ' . count($products) . ' / ' . $totalProductCount;
+    echo __('Page_{0}_of_{1}', [
+        $page,
+        $pagesCount,
+    ]) . ': ' . $totalProductCount;
 } else {
     echo count($products);
 }
