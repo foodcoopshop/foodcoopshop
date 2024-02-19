@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Controller\Traits\PaginatedProductsTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use App\Services\CatalogService;
@@ -25,6 +26,8 @@ use Cake\Event\EventInterface;
 class CategoriesController extends FrontendController
 {
 
+    use PaginatedProductsTrait;
+
     protected $BlogPost;
     protected $Category;
 
@@ -40,6 +43,7 @@ class CategoriesController extends FrontendController
 
     public function newProducts()
     {
+        $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
@@ -53,6 +57,8 @@ class CategoriesController extends FrontendController
         $products = $catalogService->prepareProducts($products);
         $this->set('products', $products);
 
+        $this->throw404IfNoProductsOnPaginatedPageFound($products, $page);
+        
         $this->set('totalProductCount', $totalProductCount);
         $this->set('products', $products);
         $this->set('pagesCount', $pagesCount);
@@ -65,8 +71,9 @@ class CategoriesController extends FrontendController
 
     public function search()
     {
-        $keyword = h(trim($this->getRequest()->getQuery('keyword', '')));
+        $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);
+        $keyword = h(trim($this->getRequest()->getQuery('keyword', '')));
 
         if ($keyword == '') {
             throw new RecordNotFoundException('no keyword');
@@ -83,8 +90,10 @@ class CategoriesController extends FrontendController
         $totalProductCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, $keyword, countMode: true);
         $pagesCount = $catalogService->getPagesCount($totalProductCount);
         $products = $catalogService->prepareProducts($products);
-        $this->set('products', $products);
 
+        $this->throw404IfNoProductsOnPaginatedPageFound($products, $page);
+
+        $this->set('products', $products);
         $this->set('totalProductCount', $totalProductCount);
         $this->set('products', $products);
         $this->set('pagesCount', $pagesCount);
@@ -97,8 +106,9 @@ class CategoriesController extends FrontendController
 
     public function detail()
     {
-        $categoryId = (int) $this->getRequest()->getParam('idAndSlug');
+        $this->redirectIfPageIsSetTo1();
         $page = (int) $this->getRequest()->getQuery('page', 1);
+        $categoryId = (int) $this->getRequest()->getParam('idAndSlug');
 
         $this->Category = $this->getTableLocator()->get('Categories');
         $category = $this->Category->find('all', conditions: [
@@ -128,6 +138,8 @@ class CategoriesController extends FrontendController
         $products = $catalogService->prepareProducts($products);
         $totalProductCount = $catalogService->getProducts($categoryId, false, '', 0, true);
         $pagesCount = $catalogService->getPagesCount($totalProductCount);
+
+        $this->throw404IfNoProductsOnPaginatedPageFound($products, $page);
 
         $this->set('totalProductCount', $totalProductCount);
         $this->set('products', $products);
