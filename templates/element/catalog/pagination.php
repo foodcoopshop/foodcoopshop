@@ -34,7 +34,7 @@ for ($i = 1; $i <= $pagesCount; $i++) {
         (string) $i,
         $i > 1 ? $paginationLink : $this->getRequest()->getAttribute('here'),
         [
-            'class' => 'pagination-link' . ($page == $i ? ' active' : ''),
+            'class' => 'btn btn-outline-light' . ($page == $i ? ' active' : ''),
             'title' => __('Page') . ' ' . $i,
         ]
     );

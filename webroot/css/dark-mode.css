@@ -83,6 +83,7 @@ body.dark .self-service .footer {
     background-color: var(--dark-mode-2nd-bg-color);
     border-color: var(--dark-mode-main-border-color);
 }
+body.dark .btn-outline-light.active,
 body.dark .btn-outline-light:hover,
 body.dark .btn-outline-light:active:focus {
     background-color: var(--dark-mode-2nd-bg-color) ! important;
