@@ -43,12 +43,19 @@ class CatalogService
     protected OrderDetailsTable $OrderDetail;
     protected $identity;
 
+    const MAX_PRODUCTS_PER_PAGE = 50;
+
     public function __construct()
     {
         $this->identity = Router::getRequest()->getAttribute('identity');
     }
 
-    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0)
+    public function getPagesCount($totalProductCount)
+    {
+        return ceil($totalProductCount / self::MAX_PRODUCTS_PER_PAGE);
+    }
+
+    public function getProducts($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false, $manufacturerId = 0, $page = 1)
     {
 
         $orderCustomerService = new OrderCustomerService();
@@ -62,6 +69,8 @@ class CatalogService
             'productId-' . $productId,
             'manufacturerId-' . $manufacturerId,
             'getOnlyStockProducts-' . $getOnlyStockProducts,
+            'page-' . $page,
+            'countMode-' . $countMode,
             'date-' . date('Y-m-d'),
         ]);
         $products = Cache::read($cacheKey);
@@ -72,6 +81,10 @@ class CatalogService
             $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
             $products = $this->removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products);
             $products = $this->addOrderedProductsTotalAmount($products);
+            if (!$countMode) {
+                $offset = $page * self::MAX_PRODUCTS_PER_PAGE - self::MAX_PRODUCTS_PER_PAGE;
+                $products = array_slice($products, $offset, self::MAX_PRODUCTS_PER_PAGE);
+            }
             Cache::write($cacheKey, $products);
         }
 
@@ -83,9 +96,9 @@ class CatalogService
 
     }
 
-    public function getProductsByManufacturerId($manufacturerId, $countMode = false)
+    public function getProductsByManufacturerId($manufacturerId, $countMode = false, $page = 1)
     {
-        return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId);
+        return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId, $page);
     }
 
     protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
@@ -580,7 +593,7 @@ class CatalogService
                     'gross_price' => $this->Product->getGrossPrice($attribute->price, $taxRate),
                     'price_incl_per_unit' => $attribute->unit_product_attribute->price_incl_per_unit,
                 ];
-    
+
                 $attribute->price = $modifiedAttributePricesByShoppingPrice['price'];
                 $attribute->unit_product_attribute->price_incl_per_unit = $modifiedAttributePricesByShoppingPrice['price_incl_per_unit'];
                 $attribute->deposit_product_attribute->deposit = $modifiedAttributePricesByShoppingPrice['deposit'];

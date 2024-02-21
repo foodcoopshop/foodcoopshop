@@ -86,7 +86,7 @@ body.admin h2 span a:hover,
 .btn-success:active {
     border-color: transparent;
 }
-a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):not(.dropdown-item):hover {
+a:not(.btn):not(.btn-arrow):not(.swiper-button-prev):not(.swiper-button-next):not(.dropdown-item):hover:not(.pagination-link):hover {
     text-decoration: underline ! important;
 }
 .swiper-button-next,
@@ -130,10 +130,12 @@ button,
     border-color: #ccc;
 }
 .btn-outline-light:hover,
+.btn-outline-light.active,
 .btn-outline-light:active:focus {
     background-color: #e6e6e6 ! important;
 }
 .btn-outline-light:hover,
+.btn-outline-light.active,
 .btn-outline-light:active,
 .btn-outline-light:focus,
 .btn-outline-light:active:focus {

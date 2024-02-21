@@ -87,7 +87,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
     ?>
     </h2>
     <?php if (!$isMobile) { ?>
-        <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+        <h1><span><?php echo $totalProductCount; ?> <?php echo __('found'); ?></span></h1>
     <?php } ?>
     <?php echo $this->element('productSearch', [
         'action' => __('route_self_service'),
@@ -126,6 +126,13 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         ]
         );
     }
+
+    echo $this->element('catalog/pagination', [
+        'page' => $page,
+        'pagesCount' => $pagesCount,
+        'keyword' => $keyword ?? '',
+        'categoryId' => $categoryId ?? 0,
+    ]);
 
 ?>
 </div>

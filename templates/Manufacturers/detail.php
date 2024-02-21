@@ -42,16 +42,24 @@ if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
     ]);
 }
 
-?>
-
-<h1><?php echo $manufacturer->name; ?>
-
-<?php
-if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
-    echo '<span>'.count($manufacturer['Products']) . ' ' . __('found') . '</span>';
-}
-?>
-</h1>
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) { ?>
+    <h1 class="middle-line">
+        <span class="left"><?php echo $manufacturer->name; ?></span>
+        <span class="middle"></span>
+        <span class="right">
+            <?php
+                echo $this->element('catalog/paginatedProductsHeader', [
+                    'page' => $page,
+                    'pagesCount' => $pagesCount,
+                    'totalProductCount' => $totalProductCount,
+                    'products' => $manufacturer['Products'],
+                ]);
+            ?>
+        </span>
+    </h1>
+<?php } else { ?>
+    <h1><?php echo $manufacturer->name; ?>
+<?php } ?>
 
 <div class="manufacturer-infos">
     <?php
@@ -134,4 +142,12 @@ if (Configure::read('app.showManufacturerImprint')) {
         }
     echo '</div>';
 }
+
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null) {
+    echo $this->element('catalog/pagination', [
+        'page' => $page,
+        'pagesCount' => $pagesCount,
+    ]);
+}
+
 ?>

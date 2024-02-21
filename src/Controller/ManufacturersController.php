@@ -6,9 +6,9 @@ namespace App\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
-use Cake\Http\Exception\NotFoundException;
 use App\Services\CatalogService;
 use Cake\Event\EventInterface;
+use App\Controller\Traits\PaginatedProductsTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +25,8 @@ use Cake\Event\EventInterface;
  */
 class ManufacturersController extends FrontendController
 {
+
+    use PaginatedProductsTrait;
 
     protected $Manufacturer;
     protected $BlogPost;
@@ -75,7 +77,10 @@ class ManufacturersController extends FrontendController
 
     public function detail()
     {
-        $manufacturerId = (int) $this->getRequest()->getParam('idAndSlug');;
+        $manufacturerId = (int) $this->getRequest()->getParam('idAndSlug');
+        $this->redirectIfPageIsSetTo1();
+
+        $page = (int) $this->getRequest()->getQuery('page', 1);
 
         $conditions = [
             'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -104,8 +109,17 @@ class ManufacturersController extends FrontendController
 
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
             $catalogService = new CatalogService();
-            $products = $catalogService->getProductsByManufacturerId($manufacturerId);
+            $products = $catalogService->getProductsByManufacturerId($manufacturerId, false, $page);
+            $totalProductCount = $catalogService->getProductsByManufacturerId($manufacturerId, true);
             $manufacturer['Products'] = $catalogService->prepareProducts($products);
+            $pagesCount = $catalogService->getPagesCount($totalProductCount);
+
+            $this->throw404IfNoProductsOnPaginatedPageFound($manufacturer['Products'], $page);
+    
+            $this->set('totalProductCount', $totalProductCount);
+            $this->set('pagesCount', $pagesCount);
+            $this->set('page', $page);
+
         }
 
         $this->BlogPost = $this->getTableLocator()->get('BlogPosts');

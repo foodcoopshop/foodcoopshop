@@ -69,7 +69,7 @@ body.self_services #content {
     width: 602px;
     margin-left: 10px;
     margin-top: -5px;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
     padding-top: 10px;
     min-height: calc(100vh - 100px - 66px - 2px);
 }

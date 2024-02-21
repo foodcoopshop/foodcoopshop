@@ -1006,6 +1006,17 @@ body.carts #CartsDetailForm {
 #inner-content .next-button {
     float: right;
 }
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding-top: 15px;
+}
+.pagination-wrapper a {
+    width: 32px;
+}
 body.carts .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;

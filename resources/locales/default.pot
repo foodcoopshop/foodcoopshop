@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-12 14:28+0100\n"
+"POT-Creation-Date: 2024-02-19 08:36+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2553,6 +2553,9 @@ msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr ""
 
 msgid "Currently_not_on_stock"
+msgstr ""
+
+msgid "Page"
 msgstr ""
 
 msgid "Selling_price"

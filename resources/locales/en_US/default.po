@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-02-12 14:28+0100\n"
-"PO-Revision-Date: 2024-02-01 15:59+0100\n"
+"POT-Creation-Date: 2024-02-19 08:36+0100\n"
+"PO-Revision-Date: 2024-02-19 08:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2560,6 +2560,9 @@ msgstr "Stock product: order possible only with instant order when picking it up
 msgid "Currently_not_on_stock"
 msgstr "Currently not on stock"
 
+msgid "Page"
+msgstr "Page"
+
 msgid "Selling_price"
 msgstr "Selling price"
 
@@ -2820,6 +2823,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Page_{0}_from_{1}"
+#~ msgstr "Page {0} of {1}"
 
 #~ msgid "You_have_been_signed_out_automatically."
 #~ msgstr "You have been signed out automatically."

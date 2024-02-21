@@ -40,18 +40,13 @@ class SelfServiceController extends FrontendController
 
     public function index()
     {
+        $page = (int) $this->getRequest()->getQuery('page', 1);
 
-        $categoryId = 0;
-        if (!empty($this->getRequest()->getQuery('categoryId'))) {
-            $categoryId = h($this->getRequest()->getQuery('categoryId'));
-        }
+        $categoryId = h($this->getRequest()->getQuery('categoryId', 0));
         $this->set('categoryId', $categoryId);
 
-        $keyword = '';
-        if (!empty($this->getRequest()->getQuery('keyword'))) {
-            $keyword = h(trim($this->getRequest()->getQuery('keyword')));
-            $this->set('keyword', $keyword);
-        }
+        $keyword = h(trim($this->getRequest()->getQuery('keyword', '')));
+        $this->set('keyword', $keyword);
 
         if (!empty($this->getRequest()->getQuery('productWithError'))) {
             $keyword = h(trim($this->getRequest()->getQuery('productWithError')));
@@ -71,8 +66,16 @@ class SelfServiceController extends FrontendController
         if ($categoryId == 0 && $keyword != '') {
             $categoryIdForSearch = Configure::read('app.categoryAllProducts');
         }
-        $products = $catalogService->getProducts($categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $products = $catalogService->getProducts($categoryIdForSearch, false, $keyword, 0, false, Configure::read('app.selfServiceModeShowOnlyStockProducts'), page: $page);
+        $totalProductCount = $catalogService->getProducts($categoryIdForSearch, false, $keyword, 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));
+        $pagesCount = $catalogService->getPagesCount($totalProductCount);
         $products = $catalogService->prepareProducts($products);
+
+        $this->set('totalProductCount', $totalProductCount);
+        $this->set('products', $products);
+        $this->set('pagesCount', $pagesCount);
+        $this->set('page', $page);
+
 
         $this->set('products', $products);
 

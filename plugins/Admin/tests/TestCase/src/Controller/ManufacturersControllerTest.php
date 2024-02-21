@@ -109,7 +109,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         )->first();
 
         $this->get($this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
-        $this->assertResponseContains('<h1>' . $manufacturer->name);
+        $this->assertResponseContains('<span class="left">' . $manufacturer->name);
 
         $this->doTestCustomerRecord($manufacturer);
 
@@ -346,8 +346,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->assertFileDoesNotExist($mediumFile);
         $this->assertFileDoesNotExist($largeFile);
-    }    
-    
+    }
+
     public function testEditMain()
     {
         $this->loginAsSuperadmin();

@@ -183,10 +183,26 @@ class PagesControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $testUrls = [
             $this->Slug->getProductDetail(4234, 'not valid product name'),
-            $this->Slug->getCategoryDetail(4234, 'not valid category name')
+            $this->Slug->getCategoryDetail(4234, 'not valid category name'),
+            $this->Slug->getCategoryDetail(16, 'Fleischprodukte') . '?page=2',
+            $this->Slug->getManufacturerDetail(4, 'Demo Fleisch-Hersteller') . '?page=2',
         ];
         $this->assertPagesFor404($testUrls);
         $this->logout();
+    }
+
+    public function testRedirectIfPage1()
+    {
+        $this->loginAsSuperadmin();
+        $urls = [
+            $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
+            $this->Slug->getManufacturerDetail(4, 'Demo Fleisch-Hersteller'),
+        ];
+        foreach($urls as $url) {
+            $this->get($url . '?page=1');
+            $this->assertRedirectContains($url);
+            $this->assertRedirectNotContains('?page=1');
+        }
     }
 
     public function testPageDetailOnlinePublicLoggedOut()

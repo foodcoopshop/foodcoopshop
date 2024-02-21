@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Services\CatalogService;
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
@@ -42,9 +43,6 @@ if (Configure::read('app.showOrderedProductsTotalAmountInCatalog')) {
     ]);
 }
 
-?>
-
-<?php
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
@@ -55,7 +53,16 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
 <h1 class="middle-line">
     <span class="left"><?php echo $title_for_layout; ?></span>
     <span class="middle"></span>
-    <span class="right"><?php echo count($products); ?> <?php echo __('found'); ?></span>
+    <span class="right">
+        <?php
+            echo $this->element('catalog/paginatedProductsHeader', [
+                'page' => $page,
+                'pagesCount' => $pagesCount,
+                'totalProductCount' => $totalProductCount,
+                'products' => $products,
+            ]);
+        ?>
+    </span>
 </h1>
 
 <?php
@@ -90,5 +97,11 @@ foreach ($products as $product) {
     ]
     );
 }
+
+echo $this->element('catalog/pagination', [
+    'page' => $page,
+    'pagesCount' => $pagesCount,
+    'keyword' => $keyword ?? '',
+]);
 
 ?>

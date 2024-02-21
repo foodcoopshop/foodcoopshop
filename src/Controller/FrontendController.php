@@ -8,6 +8,7 @@ use Cake\Event\EventInterface;
 use App\Services\CatalogService;
 use App\Services\OrderCustomerService;
 use Cake\Routing\Router;
+use Cake\Cache\Cache;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -60,34 +61,57 @@ class FrontendController extends AppController
 
         $this->resetOriginalLoggedCustomer();
 
-        $categoriesForMenu = [];
-        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
-            $this->Category = $this->getTableLocator()->get('Categories');
-            $catalogService = new CatalogService();
-            $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
-            $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
-            $categoriesForMenu = $this->Category->getForMenu();
-            array_unshift($categoriesForMenu, [
-                'slug' => Configure::read('app.slugHelper')->getNewProducts(),
-                'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
-                'options' => [
-                    'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
-                ]
-            ]);
-            array_unshift($categoriesForMenu, [
-                'slug' => Configure::read('app.slugHelper')->getAllProducts(),
-                'name' => __('All_products') . ' <span class="additional-info"> (' . $allProductsCount . ')</span>',
-                'options' => [
-                    'fa-icon' => 'fa-tags'
-                ]
-            ]);
+        $orderCustomerService = new OrderCustomerService();
+        $cacheKey = join('_', [
+            'categoriesForMenu',
+            'date-' . date('Y-m-d'),
+            'isLoggedIn-' . ((int) ($this->identity !== null)),
+            'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+        ]);
+
+        $categoriesForMenu = Cache::read($cacheKey);
+        if ($categoriesForMenu === null) {
+            if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
+                $this->Category = $this->getTableLocator()->get('Categories');
+                $catalogService = new CatalogService();
+                $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
+                $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
+                $categoriesForMenu = $this->Category->getForMenu();
+                array_unshift($categoriesForMenu, [
+                    'slug' => Configure::read('app.slugHelper')->getNewProducts(),
+                    'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
+                    'options' => [
+                        'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
+                    ]
+                ]);
+                array_unshift($categoriesForMenu, [
+                    'slug' => Configure::read('app.slugHelper')->getAllProducts(),
+                    'name' => __('All_products') . ' <span class="additional-info"> (' . $allProductsCount . ')</span>',
+                    'options' => [
+                        'fa-icon' => 'fa-tags'
+                    ]
+                ]);
+            }
+            Cache::write($cacheKey, $categoriesForMenu);
         }
+        $categoriesForMenu = $categoriesForMenu ?? [];
         $this->set('categoriesForMenu', $categoriesForMenu);
 
-        $manufacturersForMenu = [];
+
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
-            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-            $manufacturersForMenu = $this->Manufacturer->getForMenu();
+            $cacheKey = join('_', [
+                'manufacturersForMenu',
+                'date-' . date('Y-m-d'),
+                'isLoggedIn-' . ((int) ($this->identity !== null)),
+                'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+            ]);
+            $manufacturersForMenu = Cache::read($cacheKey);
+            if ($manufacturersForMenu === null) {
+                $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+                $manufacturersForMenu = $this->Manufacturer->getForMenu();
+                Cache::write($cacheKey, $manufacturersForMenu);
+            }
+            $manufacturersForMenu = $manufacturersForMenu ?? [];
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
 
