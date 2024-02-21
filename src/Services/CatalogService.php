@@ -68,7 +68,7 @@ class CatalogService
             'keywords-' . substr(md5($keyword), 0, 10),
             'productId-' . $productId,
             'manufacturerId-' . $manufacturerId,
-            'getOnlyStockProducts-' . $getOnlyStockProducts,
+            'getOnlyStockProducts-' . $this->getOnlyStockProductsRespectingConfiguration($getOnlyStockProducts),
             'page-' . $page,
             'countMode-' . $countMode,
             'date-' . date('Y-m-d'),
@@ -101,6 +101,20 @@ class CatalogService
         return $this->getProducts('', false, '', 0, $countMode, false, $manufacturerId, $page);
     }
 
+    public function getOnlyStockProductsRespectingConfiguration($getOnlyStockProducts)
+    {
+
+        if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
+            $orderCustomerService = new OrderCustomerService();
+            if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
+                $getOnlyStockProducts = true;
+            }
+        }
+
+        return $getOnlyStockProducts;
+
+    }
+
     protected function getQuery($categoryId, $filterByNewProducts, $keyword, $productId, $getOnlyStockProducts, $manufacturerId)
     {
 
@@ -120,13 +134,7 @@ class CatalogService
         $query = $this->addCategoryIdFilter($query, $categoryId);
         $query = $this->addManufacturerIdFilter($query, $manufacturerId);
 
-        if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-            $orderCustomerService = new OrderCustomerService();
-            if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-                $getOnlyStockProducts = true;
-            }
-        }
-
+        $getOnlyStockProducts = $this->getOnlyStockProductsRespectingConfiguration($getOnlyStockProducts);
         $query = $this->addGetOnlyStockProductsFilter($query, $getOnlyStockProducts);
         $query = $this->addNewProductsFilter($query, $filterByNewProducts);
         $query = $this->addKeywordFilter($query, $keyword);

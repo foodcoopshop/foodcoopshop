@@ -61,19 +61,21 @@ class FrontendController extends AppController
 
         $this->resetOriginalLoggedCustomer();
 
+        $catalogService = new CatalogService();
         $orderCustomerService = new OrderCustomerService();
+
         $cacheKey = join('_', [
             'categoriesForMenu',
             'date-' . date('Y-m-d'),
             'isLoggedIn-' . ((int) ($this->identity !== null)),
             'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+            'getOnlyStockProducts-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
         ]);
 
         $categoriesForMenu = Cache::read($cacheKey);
         if ($categoriesForMenu === null) {
             if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->identity !== null) {
                 $this->Category = $this->getTableLocator()->get('Categories');
-                $catalogService = new CatalogService();
                 $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true);
                 $newProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), true, '', 0, true);
                 $categoriesForMenu = $this->Category->getForMenu();
@@ -104,6 +106,7 @@ class FrontendController extends AppController
                 'date-' . date('Y-m-d'),
                 'isLoggedIn-' . ((int) ($this->identity !== null)),
                 'forDifferentCustomer-' . ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()),
+                'getOnlyStockProducts-' . $catalogService->getOnlyStockProductsRespectingConfiguration(false),
             ]);
             $manufacturersForMenu = Cache::read($cacheKey);
             if ($manufacturersForMenu === null) {
