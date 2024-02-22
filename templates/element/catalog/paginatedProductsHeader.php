@@ -21,7 +21,7 @@ use App\Services\CatalogService;
     echo __('Page_{0}_of_{1}', [
         $page,
         $pagesCount,
-    ]) . ': ' . $totalProductCount;
+    ]) . ': ' . $totalProductCount . ' ' . ($totalProductCount == 1 ?  __('Product') : __('Products'));
 } else {
     $productCount = count($products);
     echo $productCount . ' ' . ($productCount == 1 ?  __('Product') : __('Products'));
