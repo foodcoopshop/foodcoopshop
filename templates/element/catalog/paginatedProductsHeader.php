@@ -23,7 +23,8 @@ use App\Services\CatalogService;
         $pagesCount,
     ]) . ': ' . $totalProductCount;
 } else {
-    echo count($products);
+    $productCount = count($products);
+    echo $productCount . ' ' . ($productCount == 1 ?  __('Product') : __('Products'));
 }
 
 echo ' ' . __('found');
