@@ -63,7 +63,7 @@ class CartProductsTable extends AppTable
 
         $identity = Router::getRequest()->getAttribute('identity');
         $orderCustomerService = new OrderCustomerService();
-        
+
         $productsTable = FactoryLocator::get('Table')->get('Products');
         $initialProductId = $productsTable->getCompositeProductIdAndAttributeId($productId, $attributeId);
 
@@ -157,7 +157,6 @@ class CartProductsTable extends AppTable
 
         $cartTable = FactoryLocator::get('Table')->get('Carts');
         $prices = $cartTable->getPricesRespectingPricePerUnit(
-            $product->id_product,
             $price,
             $unitObject,
             $amount,

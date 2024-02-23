@@ -118,7 +118,7 @@ class CartsTable extends AppTable
     {
 
         $this->Product = FactoryLocator::get('Table')->get('Products');
-        
+
         $identity = Router::getRequest()->getAttribute('identity');
         $customerId = $identity->getId();
 
@@ -295,7 +295,7 @@ class CartsTable extends AppTable
         return $count;
     }
 
-    public function getPricesRespectingPricePerUnit($productId, $netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate)
+    public function getPricesRespectingPricePerUnit($netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits, $deposit, $taxRate)
     {
 
         $productsTable = FactoryLocator::get('Table')->get('Products');
@@ -375,7 +375,6 @@ class CartsTable extends AppTable
         // END override shopping with purchase prices / zero prices
 
         $prices = $this->getPricesRespectingPricePerUnit(
-            $cartProduct->id_product,
             $cartProduct->product->price,
             $unitProduct,
             $cartProduct->amount,
@@ -478,7 +477,6 @@ class CartsTable extends AppTable
 
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
         $prices = $this->getPricesRespectingPricePerUnit(
-            $cartProduct->id_product,
             $cartProduct->product_attribute->price,
             $unitProductAttribute,
             $cartProduct->amount,
