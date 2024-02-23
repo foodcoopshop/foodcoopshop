@@ -1350,7 +1350,7 @@ body.blog_posts.detail p.neighbors a {
 .swiper-button-prev:after,
 .swiper-button-next:after {
     font-family: "Font Awesome 6 Free" ! important;
-    font-size: 3em ! important;
+    font-size: 3.2em ! important;
 }
 .swiper-button-next:after {
     content: "\f35a" ! important;
