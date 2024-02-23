@@ -242,12 +242,7 @@ class ProductsTable extends AppTable
         return $this->deliveryBreakEnabledBase($noDeliveryDaysAsString, $deliveryDate);
     }
 
-    /**
-     * @param int $productId
-     * @param int $manufacturerId
-     * @return boolean success
-     */
-    public function isOwner($productId, $manufacturerId)
+    public function isOwner(int $productId, int $manufacturerId): bool
     {
         $found = $this->find('all', conditions: [
             'Products.id_product' => $productId,
@@ -256,10 +251,7 @@ class ProductsTable extends AppTable
         return (bool) $found;
     }
 
-    /**
-     * @param string|int $productId (eg. 4 or '4-10' or '4')
-     */
-    public function getProductIdAndAttributeId($productId): array
+    public function getProductIdAndAttributeId(string|int $productId): array
     {
         $attributeId = 0;
         $explodedProductId = explode('-', (string) $productId);
@@ -273,7 +265,7 @@ class ProductsTable extends AppTable
         ];
     }
 
-    public function getCompositeProductIdAndAttributeId($productId, $attributeId = 0)
+    public function getCompositeProductIdAndAttributeId(int $productId, int $attributeId = 0)
     {
         $compositeId = $productId;
         if ($attributeId > 0) {
@@ -282,19 +274,7 @@ class ProductsTable extends AppTable
         return $compositeId;
     }
 
-    /**
-     * @param array $products
-     * Array
-     *   (
-     *       [0] => Array
-     *           (
-     *               [productId] => (int) status
-     *           )
-     *   )
-     * @throws \Exception
-     * @return boolean $success
-     */
-    public function changeStatus($products)
+    public function changeStatus(array $products): bool
     {
 
         $products2save = [];
@@ -326,11 +306,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    /**
-     * @param string $quantity
-     * @return boolean / int
-     */
-    public function getQuantityAsInteger($quantity)
+    public function getQuantityAsInteger(string|int $quantity): int
     {
         $quantity = trim($quantity);
 
@@ -342,18 +318,7 @@ class ProductsTable extends AppTable
         return $quantity;
     }
 
-    /**
-     * @param array $products
-     *  Array
-     *  (
-     *      [0] => Array
-     *          (
-     *              [productId] => (float) deposit
-     *          )
-     *  )
-     * @return boolean $success
-     */
-    public function changeDeposit($products)
+    public function changeDeposit(array $products): bool
     {
 
         foreach ($products as $product) {
@@ -426,24 +391,10 @@ class ProductsTable extends AppTable
             $success |= is_object($result);
         }
 
-        return $success;
+        return (bool) $success;
     }
 
-    /**
-     * @param array $products
-     *  Array
-     *  (
-     *      [0] => Array
-     *          (
-     *              [productId] => [
-*                      'gross_price' => (float) price
-*                      'product unit fields'
-*                   ]
-     *          )
-     *  )
-     * @return boolean $success
-     */
-    public function changePrice($products)
+    public function changePrice(array $products): bool
     {
 
         foreach ($products as $product) {
@@ -528,19 +479,7 @@ class ProductsTable extends AppTable
 
     }
 
-    /**
-     * @param array $products
-     *  Array
-     *  (
-     *      [0] => Array
-     *          (
-     *              [productId] => [
-     *                  'quantity' => (int) quantity
-     *              ]
-     *          )
-     *  )
-     */
-    public function changeQuantity($products)
+    public function changeQuantity(array $products): void
     {
 
         $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
@@ -580,18 +519,7 @@ class ProductsTable extends AppTable
         }
     }
 
-    /**
-     * @param array $products
-     *  Array
-     *  (
-     *      [0] => Array
-     *          (
-     *              [productId] => (int) delivery_rhythm
-     *          )
-     *  )
-     * @return boolean $success
-     */
-    public function changeDeliveryRhythm($products)
+    public function changeDeliveryRhythm(array $products): bool
     {
 
         $products2save = [];
@@ -627,18 +555,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    /**
-     * @param array $products
-     *  Array
-     *  (
-     *      [0] => Array
-     *          (
-     *              [productId] => (int) is_stock_product
-     *          )
-     *  )
-     * @return boolean $success
-     */
-    public function changeIsStockProduct($products)
+    public function changeIsStockProduct(array $products): bool
     {
 
         $products2save = [];
@@ -671,27 +588,7 @@ class ProductsTable extends AppTable
 
     }
 
-    /**
-     * @param array $products
-     *  Array
-     *  (
-     *      [0] => Array
-     *          (
-     *              [productId] => Array
-     *                  (
-     *                      [name] => Brokkoli-1
-     *                      [description] => grünes Gemüse: Strunk mit Röschen auch angeschwollenen Knospen-1
-     *                      [description_short] => kbA, vom Gemüsehof Wild-Obermayr-1
-     *                      [unity] => ca. 0,4 kg-1
-     *                      [is_declaration_ok] => 1
-     *                      [id_storage_location] => 1
-     *                      [barcode] => '1234567890123'
-     *                  )
-     *          )
-     *  )
-     * @return boolean $success
-     */
-    public function changeName($products)
+    public function changeName(array $products): bool
     {
 
         $products2save = [];
@@ -770,7 +667,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function isNew($date)
+    public function isNew(string $date): bool
     {
         $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
         if (strtotime($showAsNewExpirationDate) > strtotime(date('Y-m-d'))) {
