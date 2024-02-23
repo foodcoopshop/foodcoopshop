@@ -58,7 +58,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $identity !== null)
         </span>
     </h1>
 <?php } else { ?>
-    <h1><?php echo $manufacturer->name; ?>
+    <h1><?php echo $manufacturer->name; ?></h1>
 <?php } ?>
 
 <div class="manufacturer-infos">
