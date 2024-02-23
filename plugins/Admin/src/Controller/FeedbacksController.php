@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use App\Model\Table\FeedbacksTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use App\Services\SanitizeService;
+use Cake\I18n\DateTime;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -182,8 +183,8 @@ class FeedbacksController extends AdminAppController
             }
 
             $oldFeedback = clone $feedback;
-            $valueForApproved = \Cake\I18n\DateTime::now();
-            $valueForNotApproved = \Cake\I18n\DateTime::createFromDate(1970, 01, 01);
+            $valueForApproved = DateTime::now();
+            $valueForNotApproved = DateTime::createFromDate(1970, 01, 01);
 
             $feedback->approved = $valueForApproved;
             if ($feedback->isDirty('text') && !($this->identity->isAdmin() || $this->identity->isSuperadmin())) {

@@ -7,6 +7,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -83,7 +84,7 @@ class CheckCreditBalanceCommandTest extends AppCakeTestCase
             $this->Payment->patchEntity(
                 $this->Payment->get(1),
                 [
-                    'date_transaction_add' => new \Cake\I18n\DateTime('2020-06-22 10:22:30'),
+                    'date_transaction_add' => new DateTime('2020-06-22 10:22:30'),
                 ]
             )
         );

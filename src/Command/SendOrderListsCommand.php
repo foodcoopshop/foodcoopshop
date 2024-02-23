@@ -21,6 +21,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\I18n\Date;
 
 class SendOrderListsCommand extends AppCommand
 {
@@ -122,7 +123,7 @@ class SendOrderListsCommand extends AppCommand
                     continue;
                 }
 
-                $pickupDayFormatted = new \Cake\I18n\Date($pickupDayDbFormat);
+                $pickupDayFormatted = new Date($pickupDayDbFormat);
                 $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
                     Configure::read('app.timeHelper')->getI18Format('DateLong2')
                 );
@@ -181,7 +182,7 @@ class SendOrderListsCommand extends AppCommand
                 if (in_array($manufacturer->id_manufacturer, array_keys($tmpActionLogDatas))) {
                     ksort($tmpActionLogDatas[$manufacturer->id_manufacturer]);
                     foreach($tmpActionLogDatas[$manufacturer->id_manufacturer] as $pickupDayDbFormat => $tmpActionLogData) {
-                        $pickupDayFormatted = new \Cake\I18n\Date($pickupDayDbFormat);
+                        $pickupDayFormatted = new Date($pickupDayDbFormat);
                         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
                         $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormatted;
                         $newData = '- <i class="fas fa-book not-ok" data-identifier="generate-order-list-'.$identifier.'"></i> <i class="fas fa-envelope not-ok" data-identifier="send-order-list-'.$identifier.'"></i> ';

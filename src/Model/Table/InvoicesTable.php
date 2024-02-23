@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
 use Cake\ORM\Query;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -157,7 +158,7 @@ class InvoicesTable extends AppTable
         ksort($taxRates['cashless'], SORT_NUMERIC);
         ksort($taxRates['cash'], SORT_NUMERIC);
         ksort($taxRates['total'], SORT_NUMERIC);
-        
+
         $result = [
             'taxRates' => $taxRates,
             'taxRatesSums' => $this->clearZeroArray($taxRatesSums),
@@ -192,7 +193,7 @@ class InvoicesTable extends AppTable
         $paymentsTable = FactoryLocator::get('Table')->get('Payments');
         $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
 
-        // create empty dummy data for deleted customer 
+        // create empty dummy data for deleted customer
         if (is_null($customer)) {
             $customer = $customersTable->newEmptyEntity();
             $customer->active_order_details = [];
@@ -221,7 +222,7 @@ class InvoicesTable extends AppTable
         $manufacturerName = [];
         $productName = [];
         $deliveryDay = [];
-        
+
         foreach($orderDetails as $orderDetail) {
             $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
             $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
@@ -397,7 +398,7 @@ class InvoicesTable extends AppTable
             'id_customer' => $customerId,
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFile,
-            'created' => new \Cake\I18n\DateTime($currentDay),
+            'created' => new DateTime($currentDay),
             'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
             'email_status' => $invoicesPerEmailEnabled ? null : __('deactivated'),

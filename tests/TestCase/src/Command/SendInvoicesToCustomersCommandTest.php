@@ -72,7 +72,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->assertResponseContains('<td align="left" width="142">Pfand geliefert</td><td align="left" width="81"></td><td align="right" width="58">1,00 €</td><td align="right" width="58">0,00 € (0%)</td><td align="right" width="58">1,00 €</td>');
 
     }
-    
+
     public function testContentOfInvoiceForCompany()
     {
 
@@ -174,7 +174,7 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 
         $this->assertEquals($invoice->id, 1);
         $this->assertEquals($invoice->id_manufacturer, 0);
-        $this->assertEquals($invoice->created, new \Cake\I18n\DateTime($cronjobRunDay));
+        $this->assertEquals($invoice->created, new DateTime($cronjobRunDay));
         $this->assertEquals($invoice->invoice_number, '2018-000001');
         $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilenameWithPath));
 

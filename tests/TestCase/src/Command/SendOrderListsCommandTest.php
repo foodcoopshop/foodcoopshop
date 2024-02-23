@@ -8,6 +8,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
+use Cake\I18n\Date;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -89,7 +90,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
 
-        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
+        $pickupDayFormatted = new Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -97,7 +98,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormatted);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
-        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
+        $pickupDayFormatted = new Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -123,7 +124,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->assertMailCount(3);
 
-        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
+        $pickupDayFormatted = new Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -155,7 +156,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
 
-        $pickupDayFormatted = new \Cake\I18n\Date($pickupDay);
+        $pickupDayFormatted = new Date($pickupDay);
         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
@@ -484,8 +485,8 @@ class SendOrderListsCommandTest extends AppCakeTestCase
                     $this->OrderDetail->patchEntity(
                         $this->OrderDetail->get($orderDetailId),
                         [
-                            'pickup_day' => new \Cake\I18n\Date($pickupDay),
-                            'created' => new \Cake\I18n\Date('2020-11-05'),
+                            'pickup_day' => new Date($pickupDay),
+                            'created' => new Date('2020-11-05'),
                         ]
                     )
                 );
@@ -527,7 +528,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
             $files[] = str_replace(Configure::read('app.folder_order_lists'), '', $object->getPathName());
         }
         sort($files);
-        
+
         $this->assertEquals(count($clearText) + count($anonymous), count($files));
         foreach($clearText as $clearTextIndex) {
             $this->assertDoesNotMatchRegularExpression('/anonymized/', $files[$clearTextIndex]);

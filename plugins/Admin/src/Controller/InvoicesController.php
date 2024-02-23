@@ -15,6 +15,7 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Http\Exception\NotFoundException;
 use Cake\View\JsonView;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -140,8 +141,8 @@ class InvoicesController extends AdminAppController
                         'type' => $invoiceData->sumPriceIncl > 0 ? 'product' : 'payback',
                         'id_customer' => $customerId,
                         'id_manufacturer' => 0,
-                        'date_add' => \Cake\I18n\DateTime::now(),
-                        'date_changed' => \Cake\I18n\DateTime::now(),
+                        'date_add' => DateTime::now(),
+                        'date_changed' => DateTime::now(),
                         'amount' => abs($invoiceData->sumPriceIncl),
                         'approval_comment' => __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $invoiceNumber,
                         'created_by' => $this->identity->getId(),
@@ -345,7 +346,7 @@ class InvoicesController extends AdminAppController
                 $approvalString = __d('admin', 'Paid_in_cash') . ', ' . __d('admin', 'Invoice_number_abbreviation') . ': ' . $cancelledInvoiceNumber;
                 $this->Payment->updateAll([
                     'status' => APP_DEL,
-                    'date_changed' => \Cake\I18n\DateTime::now(),
+                    'date_changed' => DateTime::now(),
                     'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
                 ], [
                     'type IN' => ['product', 'payback'],

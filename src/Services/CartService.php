@@ -23,6 +23,7 @@ use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\PickupDaysTable;
 use App\Model\Table\ProductsTable;
 use Cake\Routing\Router;
+use Cake\I18n\Date;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -107,7 +108,7 @@ class CartService
         $cart = $this->identity->getCart(); // to get attached order details
         $this->identity->setCart($cart);
         $cart['Cart'] = $this->identity->markCartAsSaved(); // modified timestamp is needed later on!
-        
+
         $cartType = $this->identity->getCartType();
         $userIdForActionLog = $this->identity->getId();
 
@@ -267,7 +268,7 @@ class CartService
             if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
                 $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
             }
-            
+
             $message = $this->isAmountAvailableProduct(
                 $product->is_stock_product,
                 $product->manufacturer->stock_management_enabled,
@@ -311,7 +312,7 @@ class CartService
                                 'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute,
                             ]
                         )->first();
-        
+
                         $errorMessage = $this->isAmountAvailableAttribute(
                             $product->is_stock_product,
                             $product->manufacturer->stock_management_enabled,
@@ -484,7 +485,7 @@ class CartService
             $pickupEntities = $this->request->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
-                    $pickupDay['pickup_day'] = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+                    $pickupDay['pickup_day'] = Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
                 $this->controller->setRequest($this->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
@@ -618,7 +619,7 @@ class CartService
     {
 
         $orderCustomerService = new OrderCustomerService();
-        
+
         if (!$orderCustomerService->isOrderForDifferentCustomerMode() || Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             return [];
         }
@@ -771,7 +772,7 @@ class CartService
             if ($pickupDay['comment'] == '') {
                 continue;
             }
-            $formattedPickupDay = \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+            $formattedPickupDay = Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
             $formattedPickupDay = $formattedPickupDay->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('order_comment_notification');

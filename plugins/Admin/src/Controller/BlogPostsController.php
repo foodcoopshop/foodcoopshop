@@ -8,6 +8,7 @@ use Cake\Http\Exception\NotFoundException;
 use Admin\Traits\UploadTrait;
 use App\Model\Table\BlogPostsTable;
 use App\Services\SanitizeService;
+use Cake\I18n\Date;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -112,7 +113,7 @@ class BlogPostsController extends AdminAppController
 
         $this->setRequest(
             $this->getRequest()->withData('BlogPosts.show_on_start_page_until',
-            \Cake\I18n\Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
+            Date::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($this->getRequest()->getData('BlogPosts.show_on_start_page_until')))
         ));
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
 

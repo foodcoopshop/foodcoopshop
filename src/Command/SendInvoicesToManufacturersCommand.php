@@ -21,6 +21,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
+use Cake\I18n\DateTime;
 
 class SendInvoicesToManufacturersCommand extends AppCommand
 {
@@ -110,7 +111,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
             $outString .= __('Generated_invoices') . ': 0';
         }
         $outString .= $actionLogDatas;
-        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new \Cake\I18n\DateTime($this->cronjobRunDay));
+        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new DateTime($this->cronjobRunDay));
         $io->out($outString);
 
         // 6) trigger queue invoice generation

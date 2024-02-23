@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Validation\Validator;
 use App\Model\Traits\NumberRangeValidatorTrait;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -92,7 +93,7 @@ class PaymentsTable extends AppTable
     public function isAlreadyImported(string $transactionText, string $date): bool
     {
         $alreadyImported = $this->find('all', conditions: [
-            'date_transaction_add' => new \Cake\I18n\DateTime($date),
+            'date_transaction_add' => new DateTime($date),
             'status' => APP_ON,
         ])
         ->where(function ($exp, $query) use ($transactionText) {

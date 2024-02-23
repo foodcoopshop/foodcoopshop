@@ -6,9 +6,9 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 use Laminas\Diactoros\UploadedFile;
 use Cake\TestSuite\EmailTrait;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -368,7 +368,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($newPaymentCustomerId, $newPayment->id_customer);
         $this->assertEquals('product', $newPayment->type);
         $this->assertEquals($newPaymentContent, $newPayment->transaction_text);
-        $newPaymentDateFrozen = new \Cake\I18n\DateTime($newPaymentDate);
+        $newPaymentDateFrozen = new DateTime($newPaymentDate);
         $this->assertEquals($newPaymentDateFrozen->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')), $newPayment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')));
         $this->assertEquals(APP_ON, $newPayment->status);
         $this->assertEquals(APP_ON, $newPayment->approval);

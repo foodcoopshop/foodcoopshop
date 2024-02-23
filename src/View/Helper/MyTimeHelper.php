@@ -5,6 +5,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper\TimeHelper;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -80,7 +81,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getTimeObjectUTC($time)
     {
-        $timeObject = \Cake\I18n\DateTime::createFromTimestamp(strtotime($time), 'UTC');
+        $timeObject = DateTime::createFromTimestamp(strtotime($time), 'UTC');
         return $timeObject;
     }
 

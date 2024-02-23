@@ -10,6 +10,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\ORM\Exception\PersistenceFailedException;
 use App\Services\Csv\Banking\BankingReaderServiceFactory;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -97,7 +98,7 @@ class ReportsController extends AdminAppController
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
-                            'date_transaction_add' => new \Cake\I18n\DateTime($csvPayment->date),
+                            'date_transaction_add' => new DateTime($csvPayment->date),
                             'approval' => APP_ON,
                             'id_customer' => $csvPayment->id_customer ?? $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,

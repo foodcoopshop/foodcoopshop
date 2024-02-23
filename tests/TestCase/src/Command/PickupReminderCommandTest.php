@@ -4,6 +4,8 @@ declare(strict_types=1);
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use Cake\I18n\DateTime;
+use Cake\I18n\Date;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -48,8 +50,8 @@ class PickupReminderCommandTest extends AppCakeTestCase
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get(2),
                 [
-                    'created' => \Cake\I18n\DateTime::create(2018,3,9,0,0,0),
-                    'pickup_day' => \Cake\I18n\Date::create(2018,3,16)
+                    'created' => DateTime::create(2018,3,9,0,0,0),
+                    'pickup_day' => Date::create(2018,3,16)
                 ]
             )
         );
@@ -72,8 +74,8 @@ class PickupReminderCommandTest extends AppCakeTestCase
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get(2),
                 [
-                    'created' => \Cake\I18n\DateTime::create(2018,3,9,0,0,0),
-                    'pickup_day' => \Cake\I18n\Date::create(2018,3,16)
+                    'created' => DateTime::create(2018,3,9,0,0,0),
+                    'pickup_day' => Date::create(2018,3,16)
                 ]
             )
         );
@@ -89,8 +91,8 @@ class PickupReminderCommandTest extends AppCakeTestCase
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get(1),
                 [
-                    'created' => \Cake\I18n\DateTime::create(2018,3,9,0,0,0),
-                    'pickup_day' => \Cake\I18n\Date::create(2018,3,28)
+                    'created' => DateTime::create(2018,3,9,0,0,0),
+                    'pickup_day' => Date::create(2018,3,28)
                 ]
             )
         );

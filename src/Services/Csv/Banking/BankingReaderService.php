@@ -21,6 +21,7 @@ use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use League\Csv\Reader;
+use Cake\I18n\DateTime;
 
 abstract class BankingReaderService extends Reader implements BankingReaderServiceInterface {
 
@@ -74,7 +75,7 @@ abstract class BankingReaderService extends Reader implements BankingReaderServi
             $preparedRecord = [];
             $preparedRecord['content'] = h($record['content']);
             $preparedRecord['amount'] = $amount;
-            $date = new \Cake\I18n\DateTime($record['date']);
+            $date = new DateTime($record['date']);
             $preparedRecord['date'] = $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));
 
             $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);

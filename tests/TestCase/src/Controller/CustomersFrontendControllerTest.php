@@ -7,6 +7,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
+use Cake\I18n\Date;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -133,7 +134,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->runAndAssertQueue();
 
         preg_match_all('/\<b\>(.*)\<\/b\>/', TestEmailTransport::getMessages()[1]->getBodyHtml(), $matches);
-        $plainTextPassword = $matches[1][0]; 
+        $plainTextPassword = $matches[1][0];
         $this->post($this->Slug->getLogin(), [
             'email' => Configure::read('test.loginEmailCustomer'),
             'passwd' => $plainTextPassword,
@@ -396,7 +397,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
             $this->Payment->patchEntity(
                 $this->Payment->get($paymentId),
                 [
-                    'date_add' => new \Cake\I18n\Date(),
+                    'date_add' => new Date(),
                     'approval' => APP_OFF
                 ]
             )

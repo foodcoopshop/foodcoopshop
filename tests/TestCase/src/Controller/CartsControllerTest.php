@@ -22,6 +22,7 @@ use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use App\Services\DeliveryRhythmService;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\Date;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -419,7 +420,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToCart($this->productId3, 1);
         $this->checkCartStatus();
-        
+
         $this->Product->save(
             $this->Product->patchEntity(
                 $this->Product->get($this->productId3),
@@ -1104,7 +1105,7 @@ class CartsControllerTest extends AppCakeTestCase
                     'delivery_rhythm_type' => 'individual',
                     'delivery_rhythm_count' => '0',
                     'is_stock_product' => '0',
-                    'delivery_rhythm_first_delivery_day' => new \Cake\I18n\Date('2018-08-03')
+                    'delivery_rhythm_first_delivery_day' => new Date('2018-08-03')
                 ]
             )
         );

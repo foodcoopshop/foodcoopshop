@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\DateTime;
 
 if (empty($csvRecords)) {
     echo $this->Form->create(null, [
@@ -108,7 +109,7 @@ foreach($csvPayments as $csvPayment) {
 
     echo '<td style="text-align:right;">';
     echo $this->Form->hidden('Payments.'.$i.'.date');
-    $date = new \Cake\I18n\DateTime($csvPayment->date);
+    $date = new DateTime($csvPayment->date);
     echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
     echo '</td>';
 

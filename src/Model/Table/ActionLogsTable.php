@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -530,7 +531,7 @@ class ActionLogsTable extends AppTable
             'object_id' => $objectId,
             'object_type' => $objectType,
             'text' => $text,
-            'date' => is_null($time) ? \Cake\I18n\DateTime::now() : $time
+            'date' => is_null($time) ? DateTime::now() : $time
         ];
         return $this->save($this->newEntity($data2save));
     }

@@ -5,6 +5,7 @@ namespace App\Queue\Task;
 
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +30,7 @@ trait UpdateActionLogTrait
         $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
 
         $search = 'data-identifier="'.$identifier.'"';
-        $now = new \Cake\I18n\DateTime();
+        $now = new DateTime();
         $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         $replace = 'title="' . $now . ' / JobId: ' . $jobId . ' / ' . h($errorMessage) . '"';
 
@@ -49,7 +50,7 @@ trait UpdateActionLogTrait
         $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
 
         $search = 'not-ok" data-identifier="'.$identifier.'"';
-        $now = new \Cake\I18n\DateTime();
+        $now = new DateTime();
         $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         $replace = 'ok" title="' . $now . ' / JobId: ' . $jobId . '"';
 

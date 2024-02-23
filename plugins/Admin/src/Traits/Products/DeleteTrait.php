@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use App\Model\Table\OrderDetailsTable;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -84,7 +85,7 @@ trait DeleteTrait {
         // 1) set field active to -1
         $this->Product->updateAll([
             'active' => APP_DEL,
-            'modified' => \Cake\I18n\DateTime::now() // timestamp behavior does not work here...
+            'modified' => DateTime::now() // timestamp behavior does not work here...
         ], [
             'id_product IN' => $productIds
         ]);

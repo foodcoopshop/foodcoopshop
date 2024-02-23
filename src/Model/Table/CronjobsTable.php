@@ -11,6 +11,7 @@ use Cake\Core\Configure;
 use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
+use Cake\I18n\DateTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -223,11 +224,11 @@ class CronjobsTable extends AppTable
                 continue;
             }
 
-            $cronjobRunDayObject = new \Cake\I18n\DateTime($this->cronjobRunDay);
+            $cronjobRunDayObject = new DateTime($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
             $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');
 
-            $cronjobNotBeforeTimeWithCronjobRunDay = \Cake\I18n\DateTime::createFromArray([
+            $cronjobNotBeforeTimeWithCronjobRunDay = DateTime::createFromArray([
                 'year' => $cronjobRunDayObject->year,
                 'month' => $cronjobRunDayObject->month,
                 'day' => $cronjobRunDayObject->day,

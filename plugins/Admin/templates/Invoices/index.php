@@ -171,7 +171,7 @@ $this->Paginator->setPaginated($invoices);
                     echo '<i class="fa fa-times not-ok"></i>';
                 } else {
                     try {
-                        $dateNTimeObject = \Cake\I18n\DateTime::createFromFormat(Configure::read('DateFormat.DatabaseWithTimeAlt'), $invoice->email_status);
+                        $dateNTimeObject = DateTime::createFromFormat(Configure::read('DateFormat.DatabaseWithTimeAlt'), $invoice->email_status);
                         $emailStatusString = $dateNTimeObject->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
                     } catch(InvalidArgumentException $e) {
                         $emailStatusString = $invoice->email_status;
