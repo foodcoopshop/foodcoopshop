@@ -566,20 +566,20 @@ class PaymentsController extends AdminAppController
                     $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
                     $monthAndYear[0] = (int) $monthAndYear[0];
                     $monthAndYear[1] = (int) $monthAndYear[1];
-                    $frozenDateFrom = Date::create($monthAndYear[0], $monthAndYear[1], 1);
+                    $dateFrom = Date::create($monthAndYear[0], $monthAndYear[1], 1);
                     $lastDayOfMonth = (int) Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
-                    $frozenDateTo = Date::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
+                    $dateTo = Date::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                     $payments[] = [
-                        'dateRaw' => $frozenDateFrom,
-                        'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                        'dateRaw' => $dateFrom,
+                        'date' => $dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                         'year' => $monthAndYear[0],
                         'amount' => $orderDetail['SumTotalPaid'] * - 1,
-                        'deposit' => strtotime($frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail['SumDeposit'] * - 1 : 0,
+                        'deposit' => strtotime($dateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail['SumDeposit'] * - 1 : 0,
                         'type' => 'order',
                         'text' => Configure::read('app.htmlHelper')->link(
                             __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
-                            '/admin/order-details/?pickupDay[]=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
-                            '&pickupDay[]=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                            '/admin/order-details/?pickupDay[]=' . $dateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                            '&pickupDay[]=' . $dateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
                             '&customerId=' . $this->getCustomerId(),
                             [
                                 'title' => __d('admin', 'Show_order')
