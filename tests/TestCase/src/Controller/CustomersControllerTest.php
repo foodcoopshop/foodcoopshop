@@ -19,7 +19,6 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 class CustomersControllerTest extends AppCakeTestCase
 {
@@ -28,6 +27,58 @@ class CustomersControllerTest extends AppCakeTestCase
     use LoginTrait;
 
     public $Customer;
+
+    public function testAjaxGetCustomersForDropdownAsSuperadminWithAllManufacturers()
+    {
+        $this->loginAsSuperadmin();
+        $this->ajaxGet('/admin/customers/ajaxGetCustomersForDropdown/1');
+        $response = $this->getJsonDecodedContent();
+        $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="88">Demo Admin</option><option value="87">Demo Mitglied</option><option value="92">Demo Superadmin</option></optgroup><optgroup label="Hersteller: aktiv"><option value="91">Demo Fleisch-Hersteller</option><option value="89">Demo Gemüse-Hersteller</option><option value="90">Demo Milch-Hersteller</option></optgroup><optgroup label="Mitglieder: inaktiv"><option value="93">Demo SB-Kunde</option></optgroup>';
+        $this->assertEquals($expectedHtml, $response->dropdownData);
+    }
+
+    public function testAjaxGetCustomersForDropdownAsCustomerWithAllManufacturers()
+    {
+        $this->loginAsCustomer();
+        $this->ajaxGet('/admin/customers/ajaxGetCustomersForDropdown/1');
+        $response = $this->getJsonDecodedContent();
+        $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="87">Demo Mitglied</option></optgroup>';
+        $this->assertEquals($expectedHtml, $response->dropdownData);
+    }
+
+    public function testAjaxEditGroupAsSuperadmin()
+    {
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.customerId');
+        $this->ajaxPost('/admin/customers/ajaxEditGroup', [
+            'customerId' => $customerId,
+            'groupId' => CUSTOMER_GROUP_ADMIN,
+        ]);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+        ])->first();
+        $this->assertEquals(CUSTOMER_GROUP_ADMIN, $customer->id_default_group);
+    }
+
+    public function testAjaxEditGroupAsAdmin()
+    {
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $this->loginAsAdmin();
+        $customerId = Configure::read('test.customerId');
+        $this->ajaxPost('/admin/customers/ajaxEditGroup', [
+            'customerId' => $customerId,
+            'groupId' => CUSTOMER_GROUP_SUPERADMIN,
+        ]);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+        ])->first();
+        $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group);
+    }
 
     public function testCustomerEdit()
     {
@@ -116,7 +167,7 @@ class CustomersControllerTest extends AppCakeTestCase
                 'Customers.id_customer' => Configure::read('test.superadminId'),
             ],
         )->first();
-        
+
         $this->assertNotEquals($oldCustomer->passwd, $newCustomer->passwd);
 
     }
