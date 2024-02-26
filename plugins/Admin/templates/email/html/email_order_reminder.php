@@ -25,7 +25,7 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
-            <><?php
+            <?php
                 if ($lastOrderDayDiff == 0) {
                     echo __d('admin', 'Today_is_the_last_order_day_and_you_can_place_your_orders_until_today_midnight.');
                 } else {
