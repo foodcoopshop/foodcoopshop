@@ -41,11 +41,6 @@ define('HTTPS_REGEX', '/^https\:\/\//');
 // copied from Cake/Utility/Validation.php with additional $ at the end
 define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/');
 
-// strangely, the constant is undefined in the intervention image library
-if (!defined('IMG_WEBP_LOSSLESS')) {
-    define('IMG_WEBP_LOSSLESS', 101);
-}
-
 return [
     'Email' => [
         'default' => [
