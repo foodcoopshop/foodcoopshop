@@ -6,7 +6,7 @@ namespace Admin\Traits\Products;
 use Cake\Core\Configure;
 use App\Services\FolderService;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

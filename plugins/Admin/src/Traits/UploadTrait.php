@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Admin\Traits;
 
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

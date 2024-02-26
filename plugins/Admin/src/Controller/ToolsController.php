@@ -22,7 +22,7 @@ use Cake\Event\EventInterface;
  */
 
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Imagick\Driver;
 use Cake\View\JsonView;
 
 class ToolsController extends AdminAppController
