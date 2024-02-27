@@ -28,6 +28,7 @@ foodcoopshop.Admin = {
     },
 
     loadGetCreditBalance: function(customerId) {
+        var getCreditBalanceTimeout;
         $('#invoice-for-customer-add-button-' + customerId).hover(function() {
             getCreditBalanceTimeout = setTimeout(function() {
                 foodcoopshop.Helper.ajaxCall(
