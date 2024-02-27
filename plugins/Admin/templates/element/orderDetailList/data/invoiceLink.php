@@ -48,7 +48,7 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
 
         if ($this->Html->paymentIsCashless()) {
             $this->element('addScript', [
-                'script' => Configure::read('app.jsNamespace').".Admin.loadGetCreditBalance('" . $orderDetail['customer_id'] . "');"
+                'script' => Configure::read('app.jsNamespace').".Admin.loadGetCreditBalance(" . $orderDetail['customer_id'] . ");"
             ]);
             $invoicesForTitle .= '<p class="credit-balance-wrapper">';
             $invoicesForTitle .= '<span style="float:left;margin-top:6px;margin-right:5px;">' . __d('admin', 'Credit') . ': </span>';
