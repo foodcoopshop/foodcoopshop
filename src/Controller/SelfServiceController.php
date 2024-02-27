@@ -53,7 +53,7 @@ class SelfServiceController extends FrontendController
         }
 
         $this->Category = $this->getTableLocator()->get('Categories');
-        $categoriesForSelect = $this->Category->getForSelect(null, false, false, true);
+        $categoriesForSelect = $this->Category->getForSelect(null, false, false, false);
 
         $catalogService = new CatalogService();
         $allProductsCount = $catalogService->getProducts(Configure::read('app.categoryAllProducts'), false, '', 0, true, Configure::read('app.selfServiceModeShowOnlyStockProducts'));

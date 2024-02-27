@@ -164,11 +164,8 @@ class CategoriesTable extends AppTable
 
     private function buildItemForTree($item, $index)
     {
-        $catalogService = new CatalogService();
-        $productCount = $catalogService->getProducts($item->id_category, false, '', 0, true);
-
         $tmpMenuItem = [
-            'name' => $item->name . ' <span class="additional-info">(' . $productCount . ')</span>',
+            'name' => $item->name,
             'slug' => Configure::read('app.slugHelper')->getCategoryDetail($item->id_category, $item->name),
             'children' => []
         ];

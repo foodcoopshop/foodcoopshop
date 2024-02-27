@@ -293,8 +293,6 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($identity !== null || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $catalogService = new CatalogService();
-                $additionalInfo = $catalogService->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer, false, 1);
             if ($noDeliveryDaysString != '') {
