@@ -27,6 +27,27 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    loadGetCreditBalance: function(customerId) {
+        $('#invoice-for-customer-add-button-' + customerId).hover(function() {
+            getCreditBalanceTimeout = setTimeout(function() {
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/customers/ajaxGetCreditBalance/' + customerId,
+                    {},
+                    {
+                        onOk: function (data) {
+                            $('#credit-balance-' + customerId).html(data.creditBalance);
+                        },
+                        onError: function (data) {
+                            console.log(data.msg);
+                        }
+                    }
+                )} , 300);
+            }, function() {
+                clearTimeout(getCreditBalanceTimeout);
+            }
+        );
+    },
+
     hasProductAttributes: function(row) {
         return row.next().hasClass('sub-row');
     },

@@ -47,13 +47,17 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
         }
 
         if ($this->Html->paymentIsCashless()) {
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace').".Admin.loadGetCreditBalance('" . $orderDetail['customer_id'] . "');"
+            ]);
             $invoicesForTitle .= '<p class="credit-balance-wrapper">';
             $invoicesForTitle .= '<span style="float:left;margin-top:6px;margin-right:5px;">' . __d('admin', 'Credit') . ': </span>';
                 $invoicesForTitle .= $this->Html->link(
-                    '<span class="'.($orderDetail['creditBalance'] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($orderDetail['creditBalance']) . '</span>',
+                    '<i class="fas fa-circle-notch fa-spin"></i>',
                     $this->Slug->getCreditBalance($orderDetail['customer_id']),
                     [
                         'class' => 'btn btn-outline-light',
+                        'id' => 'credit-balance-' . $orderDetail['customer_id'],
                         'title' => __d('admin', 'Show_credit'),
                         'style' => 'text-decoration:none ! important;',
                         'escape' => false,
@@ -83,6 +87,7 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
                 [
                     'escape' => false,
                     'class' => 'btn btn-outline-light invoice-for-customer-add-button ' . (!$orderDetail['invoiceData']->new_invoice_necessary ? 'disabled' : ''),
+                    'id' => 'invoice-for-customer-add-button-' . $orderDetail['customer_id'],
                 ]
             );
         echo '</span>';

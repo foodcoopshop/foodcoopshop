@@ -49,6 +49,19 @@ class CustomersController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
+    public function ajaxGetCreditBalance($customerId)
+    {
+        $this->request = $this->request->withParam('_ext', 'json');
+        $customersTable = $this->getTableLocator()->get('Customers');
+        $creditBalance = $customersTable->getCreditBalance($customerId);
+
+        $this->set([
+            'status' => 1,
+            'creditBalance' => '<span class="'.($creditBalance < 0 ? 'negative' : '').'">' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '</span>',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'creditBalance']);
+    }
+
     public function ajaxGetCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
     {
         $this->request = $this->request->withParam('_ext', 'json');

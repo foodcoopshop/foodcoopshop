@@ -266,7 +266,6 @@ trait IndexTrait {
                     foreach($preparedOrderDetails as &$orderDetail) {
                         $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id'], Configure::read('app.timeHelper')->getCurrentDateForDatabase());
                         $orderDetail['latestInvoices'] = $this->Invoice->getLatestInvoicesForCustomer($orderDetail['customer_id']);
-                        $orderDetail['creditBalance'] = $this->Customer->getCreditBalance($orderDetail['customer_id']);
                     }
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
