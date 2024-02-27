@@ -28,9 +28,9 @@ foodcoopshop.Admin = {
     },
 
     loadGetCreditBalance: function(customerId) {
-        var getCreditBalanceTimeout;
-        $('#invoice-for-customer-add-button-' + customerId).hover(function() {
-            getCreditBalanceTimeout = setTimeout(function() {
+        var getCreditBalanceTimeouts = [];
+        $('#latest-invoices-tooltip-wrapper-' + customerId).hover(function() {
+            getCreditBalanceTimeouts[customerId] = setTimeout(function() {
                 foodcoopshop.Helper.ajaxCall(
                     '/admin/customers/ajaxGetCreditBalance/' + customerId,
                     {},
@@ -44,7 +44,7 @@ foodcoopshop.Admin = {
                     }
                 )} , 300);
             }, function() {
-                clearTimeout(getCreditBalanceTimeout);
+                clearTimeout(getCreditBalanceTimeouts[customerId]);
             }
         );
     },

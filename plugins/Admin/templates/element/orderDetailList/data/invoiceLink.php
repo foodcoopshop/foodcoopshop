@@ -79,8 +79,8 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
             $invoicesForTitle .= '</p>';
         }
 
-        // use wrapper as tooltipster does not work on disabled elements
-        echo '<span class="latest-invoices-tooltip-wrapper" title="' . h($invoicesForTitle) . '">';
+        // use wrapper as tooltipster and jquery-hover do not work on disabled elements
+        echo '<span class="latest-invoices-tooltip-wrapper" id="latest-invoices-tooltip-wrapper-' . $orderDetail['customer_id'] . '" title="' . h($invoicesForTitle) . '">';
             echo $this->Html->link(
                 '<i class="fas fa-fw ok fa-file-invoice"></i> ' . $invoiceText,
                 'javascript:void(0);',
