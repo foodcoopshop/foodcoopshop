@@ -35,7 +35,7 @@ class HelloCashService
 
     protected $QueuedJobs;
 
-    protected $hostname = 'https://myhellocash.com';
+    protected $hostname = 'https://bookgoodlook.at';
 
     public $restEndpoint;
 
