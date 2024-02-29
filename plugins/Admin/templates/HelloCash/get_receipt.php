@@ -2,6 +2,9 @@
 declare(strict_types=1);
 
 use Cake\Core\Configure;
+
+$isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $helloCashInvoice->invoice_cancellation == 1;
+
 ?>
 <!doctype html>
 <html lang="de">
@@ -281,18 +284,52 @@ use Cake\Core\Configure;
             </div>
         </div>
         
-        <div class="divDotted">
-            <table cellpadding="2" cellspacing="0" class="table-fixed">
-                <tr>
-                    <td width="67%" align="left">Kassier: <?php echo $helloCashInvoice->invoice_cashier; ?></td>
-                    <td width="33%" align="left">Beleg Nr.: <?php echo $helloCashInvoice->invoice_number; ?></td>
-                </tr>
-                <tr>
-                    <td align="left">Dat.: <?php echo date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($helloCashInvoice->invoice_timestamp)); ?></td>
-                    <td align="left">Kassa: 1</td>
-                </tr>
-            </table>
-        </div>
+        <?php /* START CANCELLATION INVOICES */ ?>
+        <?php if ($isCancellationInvoice) { ?>
+            <div class="divDotted break">
+                <h2>Storno</h2>
+                <div style="margin:1mm;">
+                    Beleg Nr.:
+                    <b><?php echo $helloCashInvoice->invoice_number; ?></b> &nbsp;
+                    vom:
+                    <b><?php echo date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($helloCashInvoice->invoice_timestamp)); ?></b>
+                </div>
+            </div>
+
+            <div class="divDotted break">
+                <b>Storno Beleg Nr.: <?php echo $helloCashInvoice->cancellation_details->cancellation_number; ?></b>
+                <div style="margin:1mm;">Erstellt von: <?php echo $helloCashInvoice->cancellation_details->cancellation_cashier; ?></div>
+                <div style="margin:1mm;">Am: 16.02.2024 13:53:55</div>
+            </div>
+
+            <div class="divDotted break">
+                <h2>Storno</h2>
+                <div style="margin:1mm;">
+                    Beleg Nr.:
+                    <b>240000242</b> &nbsp;
+                    vom:
+                    <b>16.02.2024 13:53:17</b>
+                </div>
+            </div>
+            <?php /* END CANCELLATION INVOICES */ ?>
+ 
+        <?php } else { ?>
+
+        <?php /* START NORMAL INVOICES */ ?>
+            <div class="divDotted">
+                <table cellpadding="2" cellspacing="0" class="table-fixed">
+                    <tr>
+                        <td width="67%" align="left">Kassier: <?php echo $helloCashInvoice->invoice_cashier; ?></td>
+                        <td width="33%" align="left">Beleg Nr.: <?php echo $helloCashInvoice->invoice_number; ?></td>
+                    </tr>
+                    <tr>
+                        <td align="left">Dat.: <?php echo date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($helloCashInvoice->invoice_timestamp)); ?></td>
+                        <td align="left">Kassa: 1</td>
+                    </tr>
+                </table>
+            </div>
+        <?php } ?>
+        <?php /* END NORMAL INVOICES */ ?>
         
         <div class="divDotted">
             <table class="table-fixed" cellspacing="4" cellpadding="0">
@@ -303,6 +340,14 @@ use Cake\Core\Configure;
                     <td style="width:25%" align="right"><b>G-Preis</b></td>
                 </tr>
                 <?php foreach($helloCashInvoice->items as $item) { ?>
+
+                    <?php
+                        if ($isCancellationInvoice) {
+                            $item->item_quantity *= -1;
+                            $item->item_total *= -1;
+                        }
+                    ?>
+
                     <tr>
                         <td class="posTd0"><?php echo $this->Number->formatAsDecimal($item->item_quantity, 0); ?></td>
                         <td class="posTd1"><?php echo $item->item_name; ?></td>
@@ -319,6 +364,11 @@ use Cake\Core\Configure;
                 <tr>
                     <td class="text-left" ><b>Summe:</b></td>
                     <td></td>
+                    <?php
+                        if ($isCancellationInvoice) {
+                            $helloCashInvoice->invoice_total *= -1;
+                        }
+                    ?>
                     <td data-testid="total" class="text-right"><b><?php echo $this->Number->formatAsCurrency($helloCashInvoice->invoice_total); ?></b></td>
                 </tr>
             </table>
@@ -343,6 +393,15 @@ use Cake\Core\Configure;
 
                 <?php $helloCashInvoice->taxes = array_reverse($helloCashInvoice->taxes); ?>
                 <?php foreach($helloCashInvoice->taxes as $tax) { ?>
+
+                    <?php
+                    if ($isCancellationInvoice) {
+                        $tax->tax_net *= -1;
+                        $tax->tax_tax *= -1;
+                        $tax->tax_gross *= -1;
+                    }
+                    ?>
+
                     <tr>
                         <td ><?php echo $this->Number->formatAsDecimal($tax->tax_taxRate, 0); ?></td>
                         <td ><?php echo $this->Number->formatAsDecimal($tax->tax_net, 2); ?></td>
@@ -354,7 +413,10 @@ use Cake\Core\Configure;
         </div>
         
         <div class="divDotted break">
-            Zahlungsart: <?php echo $helloCashInvoice->invoice_payment; ?><br/>Bezahlt: <?php echo $this->Number->formatAsCurrency($helloCashInvoice->invoice_total); ?>
+            Zahlungsart: <?php echo $helloCashInvoice->invoice_payment; ?><br/>
+            <?php if (!$isCancellationInvoice) { ?>
+                Bezahlt: <?php echo $this->Number->formatAsCurrency($helloCashInvoice->invoice_total); ?>
+            <?php } ?>
             <?php if ($helloCashInvoice->invoice_payment == 'Guthaben-System') { ?>
                 <br /><b>Der Betrag wurde von deinem Guthaben abgezogen.</b>
             <?php } ?>
@@ -367,16 +429,23 @@ use Cake\Core\Configure;
         <span style="font-size: 2.5mm">
             <?php
             if (!empty($helloCashInvoice->signature)) {
-                if ($helloCashInvoice->signature->signature_code != '') {
-                    $barcodeobj = new TCPDF2DBarcode($helloCashInvoice->signature->signature_code, 'QRCODE,L');
-                    $imgBase64Encoded = base64_encode($barcodeobj->getBarcodePngData(6, 6, [0,0,0]));
-                    echo '<img alt="QR-Code" style="padding:10px;width:110px" src="data:image/png;base64,' . $imgBase64Encoded . '">';
+                if (!$isCancellationInvoice) {
+                    $signatureCode = $helloCashInvoice->signature->signature_code;
+                } else {
+                    $signatureCode = $helloCashInvoice->signature->signature_cancellation_code;
                 }
-                if ($helloCashInvoice->signature->signature_text != '') {
-                    $signatureText = str_replace('RKSV number:', 'RKSV Nummer:', $helloCashInvoice->signature->signature_text);
-                    $signatureText = str_replace('Cash register ID:', 'Kassen-ID:', $signatureText);
-                    echo '<br />' . $signatureText;
+                $barcodeobj = new TCPDF2DBarcode($signatureCode, 'QRCODE,L');
+                $imgBase64Encoded = base64_encode($barcodeobj->getBarcodePngData(6, 6, [0,0,0]));
+                echo '<img alt="QR-Code" style="padding:10px;width:110px" src="data:image/png;base64,' . $imgBase64Encoded . '">';
+            
+                if (!$isCancellationInvoice) {
+                    $signatureText = $helloCashInvoice->signature->signature_text;
+                } else {
+                    $signatureText = $helloCashInvoice->signature->signature_cancellation_text;
                 }
+                $signatureText = str_replace('RKSV number:', 'RKSV Nummer:', $signatureText);
+                $signatureText = str_replace('Cash register ID:', 'Kassen-ID:', $signatureText);
+                echo '<br />' . $signatureText;
             }
             ?>
         </span>
