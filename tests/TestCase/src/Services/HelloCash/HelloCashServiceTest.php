@@ -86,7 +86,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
-        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Bezahlt: 38,03 €', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
@@ -116,7 +117,8 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
         $this->assertRegExpWithUnquotedString('Company Name', $receiptHtml);
         $this->assertRegExpWithUnquotedString('Contact Name', $receiptHtml);
-        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Bezahlt: 38,03 €', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
