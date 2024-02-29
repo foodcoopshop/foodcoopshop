@@ -170,7 +170,7 @@ class HelloCashService
         return $options;
     }
 
-    public function getReceiptOld($invoiceId, $cancellation)
+    public function getReceipt($invoiceId, $cancellation)
     {
         $response = $this->getReceiptOrInvoice('print', $invoiceId, $cancellation);
         $response = $response->getStringBody();
