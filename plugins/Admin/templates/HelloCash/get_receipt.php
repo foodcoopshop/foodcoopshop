@@ -206,12 +206,36 @@ use Cake\Core\Configure;
 <body>
     <div class="rePanel" data-testid="bon-receipt">
         <div class="break">
+            <?php
+                $logoReceipt = '/files/images/logo-receipt.png';
+                if (file_exists(WWW_ROOT . $logoReceipt)) {
+                    $logoReceipt = $logoReceipt . '?' . filemtime(WWW_ROOT . $logoReceipt);
+                    echo "<img style='width:100%' class='logo' alt='Logo' src='" . $logoReceipt . "'>";
+                }
+            ?>
             <h1 style="font-family: bonFont;font-size:3mm"><?php echo $helloCashInvoice->company->name; ?> </h1>
         </div>
 
         <div class="divDotted break">
-            <?php echo $helloCashInvoice->company->street . ' ' . $helloCashInvoice->company->houseNumber; ?><br /><?php echo $helloCashInvoice->company->postalCode; ?> <?php echo $helloCashInvoice->company->city; ?><br />
-            E-Mail: <?php echo $helloCashInvoice->company->email; ?><br />
+            <?php echo $helloCashInvoice->company->street . ' ' . $helloCashInvoice->company->houseNumber; ?><br /><?php echo $helloCashInvoice->company->postalCode; ?> <?php echo $helloCashInvoice->company->city; ?>
+            <br />
+            <?php
+            if (isset($helloCashInvoice->company->companyRegister)) {
+                echo 'UID: ' . $helloCashInvoice->company->companyRegister . '<br />';
+            }
+            if (isset($helloCashInvoice->company->phoneNumber)) {
+                echo 'Tel.:' . $helloCashInvoice->company->phoneNumber . '<br />';
+            }
+            if (isset($helloCashInvoice->company->email)) {
+                echo 'E-Mail: ' . $helloCashInvoice->company->email . '<br />';
+            }
+            if (isset($helloCashInvoice->company->iban)) {
+                echo 'IBAN: ' . $helloCashInvoice->company->iban . '<br />';
+            }
+            if (isset($helloCashInvoice->company->website)) {
+                echo 'Web: ' . $helloCashInvoice->company->website . '<br />';
+            }
+            ?>
         </div>
 
         <div class="divDotted break">
@@ -309,7 +333,7 @@ use Cake\Core\Configure;
         </div>
 
         <div class="break">
-            <img style='width:75%' class='logo' alt='Logo' src='https://bookgoodlook.at/img/salon/112097/112110/logo.png?1709206159'><p>Vielen Dank f&uuml;r deinen Einkauf! Rechnungsdatum = Lieferdatum</p>
+            <p>Vielen Dank f&uuml;r deinen Einkauf! Rechnungsdatum = Lieferdatum</p>
         </div>
 
         <span style="font-size: 2.5mm">
