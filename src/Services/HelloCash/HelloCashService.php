@@ -35,8 +35,6 @@ class HelloCashService
 
     protected $QueuedJobs;
 
-    protected $hostname = 'https://bookgoodlook.at';
-
     public $restEndpoint;
 
     public $locale = 'de_AT';
@@ -48,11 +46,6 @@ class HelloCashService
     public function getRestClient()
     {
         return Client::createFromUrl($this->restEndpoint);
-    }
-
-    protected function getClient()
-    {
-        return Client::createFromUrl($this->hostname);
     }
 
     protected function encodeData($data)
@@ -191,39 +184,6 @@ class HelloCashService
         );
         $responseObject = $this->decodeApiResponseAndCheckForErrors($response);
         return base64_decode($responseObject->pdf_base64_encoded);
-    }
-
-    protected function getReceiptOrInvoice($type, $invoiceId, $cancellation)
-    {
-
-        $httpClient = $this->getClient();
-        $response = $httpClient->post(
-            '/api/salon/login',
-            [
-                'email' => Configure::read('app.helloCashAtCredentials')['username'],
-                'password' => Configure::read('app.helloCashAtCredentials')['password'],
-            ],
-            [
-                'headers' => [
-                    'X-Requested-With' => 'XMLHttpRequest',
-                ],
-            ],
-        );
-
-        $response = $httpClient->get(
-            '/intern/cash-register/invoice/' . $type . '?iid=' . $invoiceId . ($cancellation ? '&cancellation=true' : ''),
-            [],
-            [
-                'cookies' => [
-                    'locale' => 'de_AT',
-                ],
-            ]
-        );
-
-        $response = $this->checkRequestForErrors($response);
-
-        return $response;
-
     }
 
     public function generateInvoice($data, $currentDay, $paidInCash, $isPreview)
