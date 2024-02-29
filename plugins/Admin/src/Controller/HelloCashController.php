@@ -40,6 +40,7 @@ class HelloCashController extends AdminAppController
         $invoice = $invoicesTable->get($invoiceId, [
             'contain' => [
                 'InvoiceTaxes',
+                'Customers',
             ],
         ]);
 

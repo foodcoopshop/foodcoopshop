@@ -1,10 +1,13 @@
+<?php
+use Cake\Core\Configure;
+?>
 <!doctype html>
 <html lang="de">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="robots" content="noindex,nofollow">
     <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon" />
-        <title>Rechnung Nr.: <?php echo $invoice->invoice_number; ?></title>
+        <title>Rechnung Nr.: <?php echo $helloCashInvoice->invoice_number; ?></title>
     <style>
         @media print {
             .no-print, .no-print * {
@@ -202,17 +205,17 @@
 <body>
 <div class="rePanel" data-testid="bon-receipt">
         <div class="break">
-                        <h1 style="font-size:8mm">Dorfladen Online</h1>
+                        <h1 style="font-size:8mm"><?php echo $helloCashInvoice->company->name; ?> </h1>
         </div>
 
         <div class="divDotted break">
-            Am Birkenweg 3<br />4644 Scharnstein<br />Österreich            <br />
+            <?php echo $helloCashInvoice->company->street . ' ' . $helloCashInvoice->company->houseNumber; ?><br /><?php echo $helloCashInvoice->company->postalCode; ?> <?php echo $helloCashInvoice->company->city; ?><br />
 
-                                                                                E-Mail: office@rothauer-it.com<br />                                                        </div>
+                                                                                E-Mail: <?php echo $helloCashInvoice->company->email; ?><br />                                                        </div>
 
                     <div class="divDotted break">
                 <div class ="bold">Kunde<br />
-                                         <?php echo $helloCashInvoice->customer->customer_firstName . ' ' .$helloCashInvoice->customer->customer_surName; ?></div>
+                                         <?php echo $invoice->customer->name; ?></div>
 
                 <div class="bold">
                     <?php echo $helloCashInvoice->customer->customer_street . ', ' . $helloCashInvoice->customer->customer_postalCode . ' ' . $helloCashInvoice->customer->customer_city; ?>                                    </div>
@@ -222,11 +225,11 @@
                     <div class="divDotted">
                 <table cellpadding="2" cellspacing="0" class="table-fixed">
                                             <tr>
-                            <td width="67%" align="left">Kassier: Kassier</td>
-                            <td width="33%" align="left">Beleg Nr.: 2030</td>
+                            <td width="67%" align="left">Kassier: <?php echo $helloCashInvoice->invoice_cashier; ?></td>
+                            <td width="33%" align="left">Beleg Nr.: <?php echo $helloCashInvoice->invoice_number; ?></td>
                         </tr>
                                                     <tr>
-                                <td align="left">Dat.: 27.02.2024 23:34:08</td>
+                                <td align="left">Dat.: <?php echo date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($helloCashInvoice->invoice_timestamp)); ?></td>
                                 <td align="left">Kassa: 1</td>
                             </tr>
                         
@@ -245,19 +248,15 @@
                         <td style="width:25%" align="right"><b>E-Preis</b></td>
                         <td style="width:25%" align="right"><b>G-Preis</b></td>
                     </tr>
-                                            <tr>
-                                                        <td class="posTd0">1</td>
-                            <td class="posTd1">Apfelsaft : 1 l</td>
-                            <td class="posTd2">1,50</td>
-                            <td class="posTd3">1,50</td>
+                    <?php foreach($helloCashInvoice->items as $item) { ?>
+                        <tr>
+                            <td class="posTd0"><?php echo $this->Number->formatAsDecimal($item->item_quantity, 0); ?></td>
+                            <td class="posTd1"><?php echo $item->item_name; ?></td>
+                            <td class="posTd2"><?php echo $this->Number->formatAsDecimal($item->item_price); ?></td>
+                            <td class="posTd3"><?php echo $this->Number->formatAsDecimal($item->item_total); ?></td>
                         </tr>
-                                                                                    <tr>
-                                                        <td class="posTd0">1</td>
-                            <td class="posTd1">Pfand geliefert</td>
-                            <td class="posTd2">0,30</td>
-                            <td class="posTd3">0,30</td>
-                        </tr>
-                                                                        </table>
+                    <?php } ?>
+            </table>
         </div>
 
         <div class="divDotted">
@@ -268,7 +267,8 @@
                 <tr>
                     <td class="text-left" ><b>Summe:</b></td>
                     <td></td>
-                    <td data-testid="total" class="text-right"><b>€ 1,80</b></td>
+                    <td data-testid="total" class="text-right"><b><?php echo $this->Number->formatAsCurrency($helloCashInvoice->invoice_total); ?></b>
+                </td>
                 </tr>
 
             </table>
@@ -291,31 +291,27 @@
                         </td>
                     </tr>
 
-                                            <tr>
-                                                        <td >20                            </td>
-                            <td >
-                                0,25                            </td>
-                            <td >
-                                0,05                            </td>
-                            <td >
-                                0,30                            </td>
+                    <?php $helloCashInvoice->taxes = array_reverse($helloCashInvoice->taxes); ?>
+                    <?php foreach($helloCashInvoice->taxes as $tax) { ?>
+                        <tr>
+                            <td ><?php echo $this->Number->formatAsDecimal($tax->tax_taxRate, 0); ?></td>
+                            <td ><?php echo $this->Number->formatAsDecimal($tax->tax_net, 2); ?></td>
+                            <td ><?php echo $this->Number->formatAsDecimal($tax->tax_tax, 2); ?></td>
+                            <td ><?php echo $this->Number->formatAsDecimal($tax->tax_gross, 2); ?></td>
                         </tr>
-                                            <tr>
-                                                        <td >0                            </td>
-                            <td >
-                                1,50                            </td>
-                            <td >
-                                0,00                            </td>
-                            <td >
-                                1,50                            </td>
-                        </tr>
-                                                        </table>
+                        <?php } ?>
+                </table>
             </div>
         
         
         
         <div class="divDotted break">
-            Zahlungsart: Bar<br/>Bezahlt: 1,80 €        </div>
+            Zahlungsart: <?php echo $helloCashInvoice->invoice_payment; ?><br/>Bezahlt: <?php echo $this->Number->formatAsCurrency($helloCashInvoice->invoice_total); ?>
+            <?php if ($helloCashInvoice->invoice_payment == 'Guthaben-System') { ?>
+                <br /><b>Der Betrag wurde von deinem Guthaben abgezogen.</b>
+            <?php } ?>
+
+        </div>
 
         
         <div class="break">
