@@ -172,11 +172,14 @@ class HelloCashService
 
     public function getReceipt($invoiceId, $cancellation)
     {
-        $response = $this->getReceiptOrInvoice('print', $invoiceId, $cancellation);
-        $response = $response->getStringBody();
-        $response = preg_replace('/src=("|\')\//', 'src=$1' . $this->hostname . '/', $response);
-        $response = preg_replace('/print_frame\(\);/', '', $response);
-        return $response;
+
+        $response = $this->getRestClient()->get(
+            'invoices/' . $invoiceId . '?locale=' . $this->locale . '&cancellation=' . ($cancellation ? 'true' : 'false'),
+            [],
+            $this->getOptions(),
+        );
+        $responseObject = $this->decodeApiResponseAndCheckForErrors($response);
+        return $responseObject;
     }
 
     public function getInvoice($invoiceId, $cancellation)

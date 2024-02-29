@@ -33,10 +33,18 @@ class HelloCashController extends AdminAppController
 
     public function getReceipt($invoiceId, $cancellation)
     {
-        $this->disableAutoRender();
-        $response = $this->helloCashService->getReceipt($invoiceId, $cancellation);
-        $this->response = $this->response->withStringBody($response);
-        return $this->response;
+        $this->viewBuilder()->setLayout('ajax');
+        $helloCashInvoice = $this->helloCashService->getReceipt($invoiceId, $cancellation);
+
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->get($invoiceId, [
+            'contain' => [
+                'InvoiceTaxes',
+            ],
+        ]);
+
+        $this->set('helloCashInvoice', $helloCashInvoice);
+        $this->set('invoice', $invoice);
     }
 
     public function getInvoice($invoiceId, $cancellation)

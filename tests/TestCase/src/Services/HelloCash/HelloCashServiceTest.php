@@ -274,7 +274,9 @@ class HelloCashServiceTest extends AppCakeTestCase
             ],
             order: ['Invoices.created' => 'DESC'],
         )->first();
-        $receiptHtml = $this->HelloCashService->getReceipt($invoiceB->id, false);
+
+        $this->get($this->Slug->getHelloCashReceipt($invoiceB->id, 0));
+        $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
         $this->assertRegExpWithUnquotedString($customer->firstname, $receiptHtml);
