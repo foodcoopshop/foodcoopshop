@@ -74,15 +74,15 @@ class HelloCashServiceTest extends AppCakeTestCase
 
         // not-owning user must not be able to download receipt
         $this->loginAsCustomer();
-        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id));
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
         $this->assertAccessDeniedFlashMessage();
 
         // owning user must be able to download receipt
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id));
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
         $this->assertResponseCode(200);
 
-        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id, 0));
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id, 0));
         $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
@@ -121,7 +121,7 @@ class HelloCashServiceTest extends AppCakeTestCase
 
         $invoice = $this->Invoice->find('all')->first();
 
-        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id, 0));
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id, 0));
         $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
@@ -289,7 +289,7 @@ class HelloCashServiceTest extends AppCakeTestCase
             order: ['Invoices.created' => 'DESC'],
         )->first();
 
-        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoiceB->id, 0));
+        $this->get($this->Slug->getHelloCashReceipt($invoiceB->id, 0));
         $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
