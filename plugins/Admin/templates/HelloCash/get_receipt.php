@@ -201,6 +201,34 @@ use Cake\Core\Configure;
 
         </style>
 
+        <script type="text/javascript">
+            function print_frame() {
+                window.print ? window.print() : document.execCommand('print', false, null)
+            }
+
+            function addEvent(event, elem, func) {
+                if (elem.addEventListener)
+                    elem.addEventListener(event, func, false);
+                else if (elem.attachEvent) {
+                    elem.attachEvent('on' + event, func);
+                } else {
+                    elem['on' + event] = func;
+                }
+            }
+
+            addEvent('DOMContentLoaded', document, function () {
+                var btnPrint = document.getElementById('btn-print');
+
+                if (btnPrint !== null) {
+                    addEvent('click', btnPrint, print_frame);
+                }
+            });
+        </script>
+
+        <script type="text/javascript">
+            window.addEventListener('load', print_frame);
+        </script>
+
     </head>
 
 <body>
