@@ -103,7 +103,6 @@ use Cake\Core\Configure;
             padding: 1.3mm;
         }
 
-        }
         .logo {
             margin: 0 auto;
         }
