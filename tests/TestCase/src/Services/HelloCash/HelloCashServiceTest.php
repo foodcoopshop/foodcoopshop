@@ -74,18 +74,19 @@ class HelloCashServiceTest extends AppCakeTestCase
 
         // not-owning user must not be able to download receipt
         $this->loginAsCustomer();
-        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
+        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id));
         $this->assertAccessDeniedFlashMessage();
 
         // owning user must be able to download receipt
         $this->loginAsSuperadmin();
-        $this->get($this->Slug->getHelloCashReceipt($invoice->id));
+        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id));
         $this->assertResponseCode(200);
 
-        $receiptHtml = $this->HelloCashService->getReceipt($invoice->id, false);
+        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id, 0));
+        $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
-        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
@@ -109,12 +110,13 @@ class HelloCashServiceTest extends AppCakeTestCase
 
         $invoice = $this->Invoice->find('all')->first();
 
-        $receiptHtml = $this->HelloCashService->getReceipt($invoice->id, false);
+        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoice->id, 0));
+        $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
         $this->assertRegExpWithUnquotedString('Company Name', $receiptHtml);
         $this->assertRegExpWithUnquotedString('Contact Name', $receiptHtml);
-        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
@@ -275,7 +277,7 @@ class HelloCashServiceTest extends AppCakeTestCase
             order: ['Invoices.created' => 'DESC'],
         )->first();
 
-        $this->get($this->Slug->getHelloCashReceipt($invoiceB->id, 0));
+        $this->get($this->Slug->getHelloCashReceiptTmpForTests($invoiceB->id, 0));
         $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
@@ -305,8 +307,6 @@ class HelloCashServiceTest extends AppCakeTestCase
                 'Customers',
             ],
         )->first();
-
-        $this->HelloCashService->getReceipt($invoiceA->id, false);
         $this->assertNotEquals($customer->user_id_registrierkasse, $invoiceA->customer->user_id_registrierkasse);
 
     }

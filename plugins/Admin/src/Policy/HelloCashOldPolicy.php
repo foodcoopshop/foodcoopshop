@@ -23,7 +23,7 @@ use Authorization\IdentityInterface;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class HelloCashPolicy implements RequestPolicyInterface
+class HelloCashOldPolicy implements RequestPolicyInterface
 {
 
     public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface

@@ -43,14 +43,19 @@ class SlugHelper extends Helper
         return '/admin/lists/getInvoice?file=' . $invoiceFilename;
     }
 
+    public function getHelloCashReceiptTmpForTests($invoiceId, $cancellation=0)
+    {
+        return '/admin/hello-cash/getReceipt/' . $invoiceId . '/' . $cancellation;
+    }
+    
     public function getHelloCashInvoice($invoiceId, $cancellation=0)
     {
-        return '/admin/hello-cash/getInvoice/' . $invoiceId . '/' . $cancellation;
+        return '/admin/hello-cash-old/getInvoice/' . $invoiceId . '/' . $cancellation;
     }
 
     public function getHelloCashReceipt($invoiceId, $cancellation=0)
     {
-        return '/admin/hello-cash/getReceipt/' . $invoiceId . '/' . $cancellation;
+        return '/admin/hello-cash-old/getReceipt/' . $invoiceId . '/' . $cancellation;
     }
 
     public function getSelfService($keyword = '', $productWithError = '')

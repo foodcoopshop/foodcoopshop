@@ -215,7 +215,13 @@ use Cake\Core\Configure;
 
                     <div class="divDotted break">
                 <div class ="bold">Kunde<br />
-                                         <?php echo $invoice->customer->name; ?></div>
+                    <?php
+                        echo $invoice->customer->name;
+                        if ($invoice->customer->is_company && $invoice->customer->lastname != '') {
+                            echo ', ' . $invoice->customer->lastname;
+                        }
+                    ?>
+                </div>
 
                 <div class="bold">
                     <?php echo $helloCashInvoice->customer->customer_street . ', ' . $helloCashInvoice->customer->customer_postalCode . ' ' . $helloCashInvoice->customer->customer_city; ?>                                    </div>
