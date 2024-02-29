@@ -206,7 +206,7 @@ use Cake\Core\Configure;
 <body>
     <div class="rePanel" data-testid="bon-receipt">
         <div class="break">
-            <h1 style="font-size:8mm"><?php echo $helloCashInvoice->company->name; ?> </h1>
+            <h1 style="font-family: bonFont;font-size:3mm"><?php echo $helloCashInvoice->company->name; ?> </h1>
         </div>
 
         <div class="divDotted break">
@@ -275,7 +275,7 @@ use Cake\Core\Configure;
         <div class="divDotted">
             <table cellspacing="4" cellpadding="0" class="table-fixed">
                 <tr>
-                                                                    <td width='25%'>
+                    <td width='25%'>
                         <b>USt %</b>
                     </td>
                     <td width='25%'>
@@ -311,6 +311,23 @@ use Cake\Core\Configure;
         <div class="break">
             <img style='width:75%' class='logo' alt='Logo' src='https://bookgoodlook.at/img/salon/112097/112110/logo.png?1709206159'><p>Vielen Dank f&uuml;r deinen Einkauf! Rechnungsdatum = Lieferdatum</p>
         </div>
+
+        <span style="font-size: 2.5mm">
+            <?php
+            if (!empty($helloCashInvoice->signature)) {
+                if ($helloCashInvoice->signature->signature_code != '') {
+                    $barcodeobj = new TCPDF2DBarcode($helloCashInvoice->signature->signature_code, 'QRCODE,L');
+                    $imgBase64Encoded = base64_encode($barcodeobj->getBarcodePngData(6, 6, [0,0,0]));
+                    echo '<img alt="QR-Code" style="padding:10px;width:110px" src="data:image/png;base64,' . $imgBase64Encoded . '">';
+                }
+                if ($helloCashInvoice->signature->signature_text != '') {
+                    $signatureText = str_replace('RKSV number:', 'RKSV Nummer:', $helloCashInvoice->signature->signature_text);
+                    $signatureText = str_replace('Cash register ID:', 'Kassen-ID:', $signatureText);
+                    echo '<br />' . $signatureText;
+                }
+            }
+            ?>
+        </span>
 
         <span style="font-size: 2.5mm"></span>
 
