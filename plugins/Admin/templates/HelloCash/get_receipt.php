@@ -254,6 +254,9 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
             if (isset($helloCashInvoice->company->companyRegister)) {
                 echo 'UID: ' . $helloCashInvoice->company->companyRegister . '<br />';
             }
+            if (Configure::check('app.firmenbuchnummer')) {
+                echo 'Firmenbuch: ' . Configure::read('app.firmenbuchnummer') . '<br />';
+            }
             if (isset($helloCashInvoice->company->phoneNumber)) {
                 echo 'Tel.:' . $helloCashInvoice->company->phoneNumber . '<br />';
             }
