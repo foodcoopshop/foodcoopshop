@@ -301,16 +301,6 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
                 <div style="margin:1mm;">Erstellt von: <?php echo $helloCashInvoice->cancellation_details->cancellation_cashier; ?></div>
                 <div style="margin:1mm;">Am: 16.02.2024 13:53:55</div>
             </div>
-
-            <div class="divDotted break">
-                <h2>Storno</h2>
-                <div style="margin:1mm;">
-                    Beleg Nr.:
-                    <b>240000242</b> &nbsp;
-                    vom:
-                    <b>16.02.2024 13:53:17</b>
-                </div>
-            </div>
             <?php /* END CANCELLATION INVOICES */ ?>
  
         <?php } else { ?>
