@@ -39,6 +39,8 @@ class HelloCashService
 
     public $restEndpoint;
 
+    public $locale = 'de_AT';
+
     public function __construct() {
         $this->restEndpoint = Configure::read('app.helloCashRestEndpoint');
     }
@@ -168,7 +170,7 @@ class HelloCashService
         return $options;
     }
 
-    public function getReceipt($invoiceId, $cancellation)
+    public function getReceiptOld($invoiceId, $cancellation)
     {
         $response = $this->getReceiptOrInvoice('print', $invoiceId, $cancellation);
         $response = $response->getStringBody();
@@ -179,7 +181,13 @@ class HelloCashService
 
     public function getInvoice($invoiceId, $cancellation)
     {
-        return $this->getReceiptOrInvoice('pdf', $invoiceId, $cancellation);
+        $response = $this->getRestClient()->get(
+            'invoices/' . $invoiceId . '/pdf?locale=' . $this->locale . '&cancellation=' . ($cancellation ? 'true' : 'false'),
+            [],
+            $this->getOptions(),
+        );
+        $responseObject = $this->decodeApiResponseAndCheckForErrors($response);
+        return base64_decode($responseObject->pdf_base64_encoded);
     }
 
     protected function getReceiptOrInvoice($type, $invoiceId, $cancellation)
