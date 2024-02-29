@@ -60,7 +60,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertObjectHasProperty('user_email', $responseObject->users[0]);
     }
 
-    public function testGenerateReceipt()
+    public function testGenerateReceiptForCustomer()
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
@@ -90,6 +90,16 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bezahlt: 38,03 €', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
+
+        $this->assertRegExpWithUnquotedString('<td>20</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>-3,50</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>-0,70</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>-4,20</td>', $receiptHtml);
+
+        $this->assertRegExpWithUnquotedString('<td>10</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>33,69</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>3,38</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>37,07</td>', $receiptHtml);
 
         $this->runAndAssertQueue();
         $this->assertMailCount(1);
