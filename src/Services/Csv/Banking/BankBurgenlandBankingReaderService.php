@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -15,22 +14,10 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
 namespace App\Services\Csv\Banking;
 
-class BankingReaderServiceFactory {
-
-	const MAP = [
-		'Raiffeisen'      => RaiffeisenBankingReaderService::class,
-		'GlsBank'         => GlsBankBankingReaderService::class,
-		'Sparkasse'       => SparkasseBankingReaderService::class,
-		'Volksbank'       => VolksbankBankingReaderService::class,
-		'BankBurgenland'  => BankBurgenlandBankingReaderService::class,
-	];
-
-	public static function get($alias) {
-		return self::MAP[$alias];
-	}
+class BankBurgenlandBankingReaderService extends VolksbankBankingReaderService {
 
 }
+
 ?>
