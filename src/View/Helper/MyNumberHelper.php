@@ -72,7 +72,7 @@ class MyNumberHelper extends NumberHelper
         return self::formatAsDecimal($amount, 3, true);
     }
 
-    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false): string
+    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false, $minDecimals = null): string
     {
         $options = [
             'locale' => I18n::getLocale()
@@ -81,6 +81,11 @@ class MyNumberHelper extends NumberHelper
             $options = array_merge($options, [
                 'places' => $decimals,
                 'precision' => $decimals
+            ]);
+        }
+        if (!is_null($minDecimals)) {
+            $options = array_merge($options, [
+                'places' => $minDecimals,
             ]);
         }
         $result = self::format($amount, $options);
