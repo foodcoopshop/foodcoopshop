@@ -588,6 +588,15 @@ foodcoopshop.Admin = {
             });
     },
 
+    initCsvUploadPaymentsCustomerDropdowns: function() {
+        let selector = '#csv-records .select-member';
+        $(selector).selectpicker({
+            liveSearch: true,
+            size: 7,
+            title: foodcoopshop.LocalizedJs.admin.PleaseSelectAMember,
+        });
+    },
+
     initSaveCsvUploadPayments : function() {
         $('body.reports.payment form#csv-records button[type="submit"]').on('click', function () {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');

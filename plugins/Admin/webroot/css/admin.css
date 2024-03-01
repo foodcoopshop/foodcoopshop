@@ -869,8 +869,8 @@ body.reports.payment form#csv-records table.list {
     margin-top: 20px;
     margin-bottom: 10px;
 }
-body.reports.payment form#csv-records select {
-    width: 270px;
+body.reports.payment form#csv-records .bootstrap-select.select-member {
+    width: 270px ! important;
 }
 body.reports.payment form#csv-records .error-message {
     margin-left: 0;

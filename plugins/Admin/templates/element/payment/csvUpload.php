@@ -46,9 +46,9 @@ $this->element('addScript', [
     Configure::read('app.jsNamespace') . ".Helper.initTooltip('.transaction-text');" .
     Configure::read('app.jsNamespace') . ".Admin.initSaveCsvUploadPayments();" .
     Configure::read('app.jsNamespace') . ".Admin.initRemoveValidationErrorAfterSelectChange('form#csv-records .select-member');" .
-    Configure::read('app.jsNamespace') . ".Admin.bindSelectCsvRecord('.select-csv-record');"
+    Configure::read('app.jsNamespace') . ".Admin.bindSelectCsvRecord('.select-csv-record');" .
+    Configure::read('app.jsNamespace') . ".Admin.initCsvUploadPaymentsCustomerDropdowns();"
 ]);
-
 echo '<table class="list no-clone-last-row">';
 
 echo '<th style="text-align:center;">'.__d('admin', 'Save').'?</th>';
