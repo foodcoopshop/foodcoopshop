@@ -38,6 +38,9 @@ class HelloCashController extends AdminAppController
 
         $invoicesTable = $this->getTableLocator()->get('Invoices');
         $invoice = $invoicesTable->find(
+            conditions: [
+                'Invoices.id' => $invoiceId,
+            ],
             contain: [
                 'InvoiceTaxes',
                 'Customers',
