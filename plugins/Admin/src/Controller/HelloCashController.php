@@ -37,12 +37,12 @@ class HelloCashController extends AdminAppController
         $helloCashInvoice = $this->helloCashService->getReceipt($invoiceId, $cancellation);
 
         $invoicesTable = $this->getTableLocator()->get('Invoices');
-        $invoice = $invoicesTable->get($invoiceId, [
-            'contain' => [
+        $invoice = $invoicesTable->find(
+            contain: [
                 'InvoiceTaxes',
                 'Customers',
             ],
-        ]);
+        )->first();
 
         $this->set('helloCashInvoice', $helloCashInvoice);
         $this->set('invoice', $invoice);

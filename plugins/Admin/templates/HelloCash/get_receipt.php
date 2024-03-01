@@ -272,15 +272,23 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
         <div class="divDotted break">
             <div class="bold">Kunde<br />
                 <?php
-                    echo $invoice->customer->name;
-                    if ($invoice->customer->is_company && $invoice->customer->lastname != '') {
-                        echo ', ' . $invoice->customer->lastname;
+                    if (!empty($invoice->customer)) {
+                        echo $invoice->customer->name;
+                        if ($invoice->customer->is_company && $invoice->customer->lastname != '') {
+                            echo ', ' . $invoice->customer->lastname;
+                        }
+                    } else {
+                        echo 'TEST';
                     }
                 ?>
             </div>
 
             <div class="bold">
-                <?php echo $helloCashInvoice->customer->customer_street . ', ' . $helloCashInvoice->customer->customer_postalCode . ' ' . $helloCashInvoice->customer->customer_city; ?>
+                <?php
+                    if (!empty($invoice->customer)) {
+                        echo $helloCashInvoice->customer->customer_street . ', ' . $helloCashInvoice->customer->customer_postalCode . ' ' . $helloCashInvoice->customer->customer_city;
+                    }
+                ?>
             </div>
         </div>
         
