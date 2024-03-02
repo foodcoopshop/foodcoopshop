@@ -60,7 +60,7 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->assertObjectHasProperty('user_email', $responseObject->users[0]);
     }
 
-    public function testGenerateReceipt()
+    public function testGenerateReceiptForCustomer()
     {
         $this->changeCustomer(Configure::read('test.superadminId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
@@ -82,12 +82,24 @@ class HelloCashServiceTest extends AppCakeTestCase
         $this->get($this->Slug->getHelloCashReceipt($invoice->id));
         $this->assertResponseCode(200);
 
-        $receiptHtml = $this->HelloCashService->getReceipt($invoice->id, false);
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id, 0));
+        $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
-        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Bezahlt: 38,03 €', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
+
+        $this->assertRegExpWithUnquotedString('<td>20</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>-3,50</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>-0,70</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>-4,20</td>', $receiptHtml);
+
+        $this->assertRegExpWithUnquotedString('<td>10</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>33,69</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>3,38</td>', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('<td>37,07</td>', $receiptHtml);
 
         $this->runAndAssertQueue();
         $this->assertMailCount(1);
@@ -109,12 +121,14 @@ class HelloCashServiceTest extends AppCakeTestCase
 
         $invoice = $this->Invoice->find('all')->first();
 
-        $receiptHtml = $this->HelloCashService->getReceipt($invoice->id, false);
+        $this->get($this->Slug->getHelloCashReceipt($invoice->id, 0));
+        $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertRegExpWithUnquotedString('Beleg Nr.: ' . $invoice->invoice_number, $receiptHtml);
         $this->assertRegExpWithUnquotedString('Company Name', $receiptHtml);
         $this->assertRegExpWithUnquotedString('Contact Name', $receiptHtml);
-        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar<br/>Bezahlt: 38,03 €', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Zahlungsart: Bar', $receiptHtml);
+        $this->assertRegExpWithUnquotedString('Bezahlt: 38,03 €', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd1">Rindfleisch, 1,5kg</td>', $receiptHtml);
         $this->assertRegExpWithUnquotedString('<td class="posTd2">-5,20</td>', $receiptHtml);
 
@@ -274,7 +288,9 @@ class HelloCashServiceTest extends AppCakeTestCase
             ],
             order: ['Invoices.created' => 'DESC'],
         )->first();
-        $receiptHtml = $this->HelloCashService->getReceipt($invoiceB->id, false);
+
+        $this->get($this->Slug->getHelloCashReceipt($invoiceB->id, 0));
+        $receiptHtml = $this->_response->getBody()->__toString();
 
         $this->assertEquals($invoiceA->customer->user_id_registrierkasse, $invoiceB->customer->user_id_registrierkasse);
         $this->assertRegExpWithUnquotedString($customer->firstname, $receiptHtml);
@@ -303,8 +319,6 @@ class HelloCashServiceTest extends AppCakeTestCase
                 'Customers',
             ],
         )->first();
-
-        $this->HelloCashService->getReceipt($invoiceA->id, false);
         $this->assertNotEquals($customer->user_id_registrierkasse, $invoiceA->customer->user_id_registrierkasse);
 
     }

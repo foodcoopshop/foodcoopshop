@@ -29,6 +29,16 @@ class MyNumberHelperTest extends AppCakeTestCase
         $this->MyNumberHelper = new MyNumberHelper(new View());
     }
 
+    public function testFormatAsDecimalThreeDigitsMin2Digits()
+    {
+        $result = $this->MyNumberHelper->formatAsDecimal(100.003, 3, true, 2);
+        $this->assertEquals($result, '100,003');
+        $result = $this->MyNumberHelper->formatAsDecimal(100.01, 3, true, 2);
+        $this->assertEquals($result, '100,01');
+        $result = $this->MyNumberHelper->formatAsDecimal(100.1, 3, true, 2);
+        $this->assertEquals($result, '100,10');
+    }
+
     public function testFormatAsDecimalThreeDigits()
     {
         $result = $this->MyNumberHelper->formatAsDecimal(100, 3);

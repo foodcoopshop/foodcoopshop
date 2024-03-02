@@ -78,7 +78,7 @@ class SendInvoiceToCustomerService
             }
             $email->addAttachments([
                 str_replace(' ', '_', $attachmentPrefix) . '_' . $invoiceNumber . '.pdf' => [
-                    'data' => $helloCashService->getInvoice($originalInvoiceId, $isCancellationInvoice)->getStringBody(),
+                    'data' => $helloCashService->getInvoice($originalInvoiceId, $isCancellationInvoice),
                     'mimetype' => 'application/pdf',
                 ],
             ]);

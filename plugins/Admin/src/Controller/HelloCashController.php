@@ -33,26 +33,37 @@ class HelloCashController extends AdminAppController
 
     public function getReceipt($invoiceId, $cancellation)
     {
-        $this->disableAutoRender();
-        $response = $this->helloCashService->getReceipt($invoiceId, $cancellation);
-        $this->response = $this->response->withStringBody($response);
-        return $this->response;
+        $this->viewBuilder()->setLayout('ajax');
+        $helloCashInvoice = $this->helloCashService->getReceipt($invoiceId, $cancellation);
+
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->find(
+            conditions: [
+                'Invoices.id' => $invoiceId,
+            ],
+            contain: [
+                'InvoiceTaxes',
+                'Customers',
+            ],
+        )->first();
+
+        $this->set('helloCashInvoice', $helloCashInvoice);
+        $this->set('invoice', $invoice);
     }
 
     public function getInvoice($invoiceId, $cancellation)
     {
         $this->disableAutoRender();
-        $response = $this->helloCashService->getInvoice($invoiceId, $cancellation);
+        $pdfAsString = $this->helloCashService->getInvoice($invoiceId, $cancellation);
+        $this->response = $this->response->withType('pdf');
 
-        $headerA = 'Content-Type';
-        $this->response = $this->response->withHeader($headerA, $response->getHeader($headerA));
+        $invoicesTable = $this->getTableLocator()->get('Invoices');
+        $invoice = $invoicesTable->get($invoiceId);
 
-        $headerB = 'Content-Disposition';
-        $this->response = $this->response->withHeader($headerB,
-            str_replace('attachment', 'inline', $response->getHeader($headerB))
-        );
+        $filename = $invoice->invoice_number . '.pdf';
+        $this->response = $this->response->withHeader('Content-Disposition', 'inline; filename="' . $filename . '"');
 
-        $this->response = $this->response->withStringBody($response->getStringBody());
+        $this->response = $this->response->withStringBody($pdfAsString);
         return $this->response;
     }
 
