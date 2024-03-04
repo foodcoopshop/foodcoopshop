@@ -307,7 +307,7 @@ $isCancellationInvoice = isset($helloCashInvoice->invoice_cancellation) && $hell
             <div class="divDotted break">
                 <b>Storno Beleg Nr.: <?php echo $helloCashInvoice->cancellation_details->cancellation_number; ?></b>
                 <div style="margin:1mm;">Erstellt von: <?php echo $helloCashInvoice->cancellation_details->cancellation_cashier; ?></div>
-                <div style="margin:1mm;">Am: 16.02.2024 13:53:55</div>
+                <div style="margin:1mm;">Am: <?php echo date(Configure::read('DateFormat.DateNTimeShortWithSecsAlt'), strtotime($helloCashInvoice->cancellation_details->cancellation_timestamp)); ?></div>
             </div>
             <?php /* END CANCELLATION INVOICES */ ?>
  
