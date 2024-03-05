@@ -16,14 +16,13 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-
-// TODO REFACTOR AUTH
-return;
+use App\Services\OrderCustomerService;
 
 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
     return;
 }
 
+$orderCustomerService = new OrderCustomerService();
 if ($orderCustomerService->isOrderForDifferentCustomerMode() || $orderCustomerService->isSelfServiceModeByUrl()) {
     return;
 }
