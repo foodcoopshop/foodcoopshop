@@ -110,6 +110,7 @@ return [
         'selfServiceModeAutoGenerateInvoice' => true,
         'showOrderedProductsTotalAmountInCatalog' => false,
         'applyOpenOrderCheckForOrderReminder' => true,
+        'changeOpenOrderDetailPriceOnProductPriceChange' => false,
 
         /**
          * id of the category "all products"
