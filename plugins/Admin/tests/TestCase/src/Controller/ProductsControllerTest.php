@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use Cake\Datasource\FactoryLocator;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -172,8 +173,42 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditSellingPriceOfProductAsSuperadminWithAutomaticChangeConfig()
     {
         Configure::write('app.changeOpenOrderDetailPriceOnProductPriceChange', true);
+        
         $this->loginAsSuperadmin();
-        $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
+        
+        $productId = 346;
+        $this->addProductToCart($productId, 5);
+        $this->finishCart();
+
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+
+
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get(1),
+                [
+                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                ]
+            )
+        );
+
+        $this->assertSellingPriceChange($productId, '2,10', '1,909091', '10');
+
+        $openOrderDetails = $orderDetailsTable->find('all',
+            conditions: [
+                $orderDetailsTable->aliasField('product_id') => $productId,
+            ])->toArray();
+
+        // order was billed => no price change
+        $this->assertEquals(1.82, $openOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(1.65, $openOrderDetails[0]->total_price_tax_excl);
+
+        // order was NOT billed => price change
+        $this->assertEquals(10.5, $openOrderDetails[1]->total_price_tax_incl); 
+        $this->assertEquals(9.55, $openOrderDetails[1]->total_price_tax_excl);
+        $this->assertEquals(0.19, $openOrderDetails[1]->tax_unit_amount);
+        $this->assertEquals(0.95, $openOrderDetails[1]->tax_total_amount);
+
     }
 
     public function testEditSellingPricePerUnitOfProductAsSuperadmin()

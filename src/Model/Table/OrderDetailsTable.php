@@ -827,39 +827,39 @@ class OrderDetailsTable extends AppTable
         return $odParams;
     }
 
-    public function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount)
+    public function changeOrderDetailPriceDepositTax($orderDetail, $grossPrice, $productAmount)
     {
 
-        $unitPriceExcl = $this->Products->getNetPrice($productPrice / $productAmount, $oldOrderDetail->tax_rate);
-        $unitTaxAmount = $this->Products->getUnitTax($productPrice, $unitPriceExcl, $productAmount);
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $unitPriceExcl = $productsTable->getNetPrice($grossPrice / $productAmount, $orderDetail->tax_rate);
+        $unitTaxAmount = $productsTable->getUnitTax($grossPrice, $unitPriceExcl, $productAmount);
         $totalTaxAmount = $unitTaxAmount * $productAmount;
-        $totalPriceTaxExcl = $productPrice - $totalTaxAmount;
+        $totalPriceTaxExcl = $grossPrice - $totalTaxAmount;
 
-        // update order details
         $orderDetail2save = [
-            'total_price_tax_incl' => $productPrice,
+            'total_price_tax_incl' => $grossPrice,
             'total_price_tax_excl' => $totalPriceTaxExcl,
             'product_amount' => $productAmount,
-            'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_amount * $productAmount,
+            'deposit' => $orderDetail->deposit / $orderDetail->product_amount * $productAmount,
             'tax_unit_amount' => $unitTaxAmount,
             'tax_total_amount' => $totalTaxAmount,
         ];
 
         $this->save(
-            $this->patchEntity($oldOrderDetail, $orderDetail2save)
+            $this->patchEntity($orderDetail, $orderDetail2save)
         );
 
         $newOrderDetail = $this->find('all',
             conditions: [
-                'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
+                'OrderDetails.id_order_detail' => $orderDetail->id_order_detail,
             ],
             contain: [
                 'Customers',
                 'Products.StockAvailables',
                 'Products.Manufacturers',
                 'ProductAttributes.StockAvailables',
-                'OrderDetailUnits'
-            ]
+                'OrderDetailUnits',
+            ],
         )->first();
 
         return $newOrderDetail;

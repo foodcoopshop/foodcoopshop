@@ -394,6 +394,28 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
+    private function changeOpenOrderDetailPricePerUnit($ids, $grossPrice)
+    {
+
+        if (!Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChange')) {
+            return false;
+        }
+
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $openOrderDetails = $orderDetailsTable->find('all',
+            conditions: [
+                $orderDetailsTable->aliasField('product_id') => $ids['productId'],
+                $orderDetailsTable->aliasField('product_attribute_id') => $ids['attributeId'],
+                $orderDetailsTable->aliasField('order_state NOT IN') => [ORDER_STATE_BILLED_CASH, ORDER_STATE_BILLED_CASHLESS]
+            ]);
+        
+        foreach($openOrderDetails as $openOrderDetail) {
+            $grossPriceTotal = $grossPrice * $openOrderDetail->product_amount;
+            $orderDetailsTable->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal, $openOrderDetail->product_amount);
+        }
+
+    }
+
     public function changePrice(array $products): bool
     {
 
@@ -429,6 +451,8 @@ class ProductsTable extends AppTable
             $taxRate = $productEntity->tax->rate ?? 0;
 
             $netPrice = $this->getNetPrice($price, $taxRate);
+
+            $this->changeOpenOrderDetailPricePerUnit($ids, $price);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
