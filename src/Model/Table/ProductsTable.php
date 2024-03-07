@@ -16,6 +16,7 @@ use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -407,7 +408,7 @@ class ProductsTable extends AppTable
                 $orderDetailsTable->aliasField('product_id') => $ids['productId'],
                 $orderDetailsTable->aliasField('product_attribute_id') => $ids['attributeId'],
                 $orderDetailsTable->aliasField('order_state NOT IN') => [ORDER_STATE_BILLED_CASH, ORDER_STATE_BILLED_CASHLESS],
-                $orderDetailsTable->aliasField('shopping_price') => 'SP',
+                $orderDetailsTable->aliasField('shopping_price') => Customer::SELLING_PRICE,
             ],
             contain: [
                 'OrderDetailUnits',

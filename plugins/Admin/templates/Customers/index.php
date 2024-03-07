@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use App\Model\Entity\Customer;
 
 $paginator = $this->loadHelper('Paginator', [
     'className' => 'ArraySupportingSortOnlyPaginator',
@@ -341,10 +342,10 @@ foreach ($customers as $customer) {
 
     if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         echo '<td style="text-align:right;">';
-            if ($customer->shopping_price == 'PP') {
+            if ($customer->shopping_price == Customer::PURCHASE_PRICE) {
                 echo __d('admin', 'Purchase_price_abbreviation');
             }
-            if ($customer->shopping_price == 'ZP') {
+            if ($customer->shopping_price == Customer::ZERO_PRICE) {
                 echo __d('admin', 'Zero_price_abbreviation');
             }
         echo '</td>';

@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Model\Entity\Customer;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -59,7 +61,7 @@ foreach ($preparedProductAttributes as $attribute) {
     if ($showProductPrice) {
         echo '<div class="line">';
         $tooltip = __('Tax_rate') . ': ' . $this->Number->formatTaxRate($product->tax->rate) . '%';
-        if ($identity === null || $identity->shopping_price != 'SP') {
+        if ($identity === null || $identity->shopping_price != Customer::SELLING_PRICE) {
             $sellingPrice = $attribute->selling_prices['gross_price'];
             if ($attribute->unit_product_attribute->price_per_unit_enabled) {
                 $sellingPrice = $this->PricePerUnit->getPricePerUnit($attribute->selling_prices['price_incl_per_unit'], $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->amount);

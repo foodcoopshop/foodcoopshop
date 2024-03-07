@@ -24,6 +24,7 @@ use App\Model\Table\PickupDaysTable;
 use App\Model\Table\ProductsTable;
 use Cake\Routing\Router;
 use Cake\I18n\Date;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -437,7 +438,7 @@ class CartService
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
                 if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
-                    && in_array($this->identity->shopping_price, ['PP', 'SP'])
+                    && in_array($this->identity->shopping_price, [Customer::PURCHASE_PRICE, Customer::SELLING_PRICE])
                     && isset($cartProduct['purchasePriceInclPerUnit'])
                     ) {
                     $orderDetail2save['order_detail_unit']['purchase_price_incl_per_unit'] = $cartProduct['purchasePriceInclPerUnit'];
@@ -445,7 +446,7 @@ class CartService
             }
 
             if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')
-                && in_array($this->identity->shopping_price, ['PP', 'SP'])
+                && in_array($this->identity->shopping_price, [Customer::PURCHASE_PRICE, Customer::SELLING_PRICE])
                 ) {
                 $orderDetailPurchasePrices = $this->prepareOrderDetailPurchasePrices($ids, $product, $cartProduct);
                 $orderDetail2save['order_detail_purchase_price'] = $orderDetailPurchasePrices;

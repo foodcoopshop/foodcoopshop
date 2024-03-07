@@ -30,6 +30,10 @@ class Customer extends Entity implements IdentityInterface
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];
 
+    const SELLING_PRICE = 'SP';
+    const PURCHASE_PRICE = 'PP';
+    const ZERO_PRICE = 'ZP';
+
     private $_manufacturer = 'not-yet-loaded';
 
     public function getIdentifier(): array|string|int|null
