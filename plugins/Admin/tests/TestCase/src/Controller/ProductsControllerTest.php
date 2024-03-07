@@ -169,8 +169,32 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
     }
 
+    public function testEditSellingPriceOfProductAsSuperadminWithAutomaticChangeConfig()
+    {
+        Configure::write('changeOpenOrderDetailPriceOnProductPriceChange', true);
+        $this->loginAsSuperadmin();
+        $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
+    }
+
     public function testEditSellingPricePerUnitOfProductAsSuperadmin()
     {
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
+        $product = $this->Product->find('all',
+            conditions: [
+                'Products.id_product' => $productId
+            ],
+            contain: [
+                'UnitProducts'
+            ]
+        )->first();
+        $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
+    }
+
+    public function testEditSellingPricePerUnitOfProductAsSuperadminWithAutomaticChangeConfig()
+    {
+        Configure::write('changeOpenOrderDetailPriceOnProductPriceChange', true);
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
