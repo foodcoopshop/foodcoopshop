@@ -93,7 +93,7 @@ trait EditCustomerTrait {
             $productPrice = $pricePerUnit * $newAmountForOldOrderDetail;
 
             $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-            $this->changeOrderDetailPriceDepositTax($object, $productPrice, $newAmountForOldOrderDetail);
+            $this->OrderDetail->changeOrderDetailPriceDepositTax($object, $productPrice, $newAmountForOldOrderDetail);
 
             if (!empty($object->order_detail_unit)) {
                 $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $originalProductAmount * $newAmountForOldOrderDetail;
@@ -116,7 +116,7 @@ trait EditCustomerTrait {
             ]);
 
             $productPrice = $pricePerUnit * $amount;
-            $this->changeOrderDetailPriceDepositTax($savedEntity, $productPrice, $amount);
+            $this->OrderDetail->changeOrderDetailPriceDepositTax($savedEntity, $productPrice, $amount);
 
             if (!empty($newEntity->order_detail_unit)) {
                 $newEntity->order_detail_unit->id_order_detail = $savedEntity->id_order_detail;

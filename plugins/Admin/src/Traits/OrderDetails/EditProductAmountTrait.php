@@ -68,7 +68,7 @@ trait EditProductAmountTrait {
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
 
-        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
+        $newOrderDetail = $this->OrderDetail->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {

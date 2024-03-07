@@ -62,7 +62,7 @@ trait EditProductPriceTrait {
         )->first();
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
+        $newOrderDetail = $this->OrderDetail->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
 
         $message = __d('admin', 'The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
