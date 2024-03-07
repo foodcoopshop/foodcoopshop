@@ -394,7 +394,7 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
-    private function changeOpenOrderDetailPricePerUnit($ids, $grossPrice)
+    private function changeOpenOrderDetailPricePerUnit($ids, $grossPrice, $unitAmount = 0)
     {
 
         if (!Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChange')) {
@@ -406,11 +406,22 @@ class ProductsTable extends AppTable
             conditions: [
                 $orderDetailsTable->aliasField('product_id') => $ids['productId'],
                 $orderDetailsTable->aliasField('product_attribute_id') => $ids['attributeId'],
-                $orderDetailsTable->aliasField('order_state NOT IN') => [ORDER_STATE_BILLED_CASH, ORDER_STATE_BILLED_CASHLESS]
+                $orderDetailsTable->aliasField('order_state NOT IN') => [ORDER_STATE_BILLED_CASH, ORDER_STATE_BILLED_CASHLESS],
+                $orderDetailsTable->aliasField('shopping_price') => 'SP',
+            ],
+            contain: [
+                'OrderDetailUnits',
             ]);
-        
+
         foreach($openOrderDetails as $openOrderDetail) {
             $grossPriceTotal = $grossPrice * $openOrderDetail->product_amount;
+            if (!empty($openOrderDetail->order_detail_unit)) {
+                $grossPriceTotal = Configure::read('app.pricePerUnitHelper')->getPrice(
+                    $grossPrice,
+                    $unitAmount,
+                    $openOrderDetail->order_detail_unit->product_quantity_in_units,
+                );
+            }
             $orderDetailsTable->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal, $openOrderDetail->product_amount);
         }
 
@@ -451,8 +462,6 @@ class ProductsTable extends AppTable
             $taxRate = $productEntity->tax->rate ?? 0;
 
             $netPrice = $this->getNetPrice($price, $taxRate);
-
-            $this->changeOpenOrderDetailPricePerUnit($ids, $price);
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
@@ -496,7 +505,15 @@ class ProductsTable extends AppTable
                     $product[$productId]['unit_product_amount'],
                     $quantityInUnits == -1 ? 0 : $quantityInUnits
                 );
+
+                if ($priceInclPerUnit > 0) {
+                    $this->changeOpenOrderDetailPricePerUnit($ids, $priceInclPerUnit, $product[$productId]['unit_product_amount']);
+                }
+
+            } else {
+                $this->changeOpenOrderDetailPricePerUnit($ids, $price);
             }
+
         }
 
         return (bool) $success;

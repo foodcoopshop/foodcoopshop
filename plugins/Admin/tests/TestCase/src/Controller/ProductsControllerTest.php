@@ -173,16 +173,14 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditSellingPriceOfProductAsSuperadminWithAutomaticChangeConfig()
     {
         Configure::write('app.changeOpenOrderDetailPriceOnProductPriceChange', true);
-        
+
         $this->loginAsSuperadmin();
-        
+
         $productId = 346;
         $this->addProductToCart($productId, 5);
         $this->finishCart();
 
         $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
-
-
         $orderDetailsTable->save(
             $orderDetailsTable->patchEntity(
                 $orderDetailsTable->get(1),
@@ -202,12 +200,14 @@ class ProductsControllerTest extends AppCakeTestCase
         // order was billed => no price change
         $this->assertEquals(1.82, $openOrderDetails[0]->total_price_tax_incl);
         $this->assertEquals(1.65, $openOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(0.17, $openOrderDetails[0]->tax_unit_amount);
+        $this->assertEquals(0.17, $openOrderDetails[0]->tax_total_amount);
 
         // order was NOT billed => price change
-        $this->assertEquals(10.5, $openOrderDetails[1]->total_price_tax_incl); 
-        $this->assertEquals(9.55, $openOrderDetails[1]->total_price_tax_excl);
-        $this->assertEquals(0.19, $openOrderDetails[1]->tax_unit_amount);
-        $this->assertEquals(0.95, $openOrderDetails[1]->tax_total_amount);
+        $this->assertEquals(9.1, $openOrderDetails[1]->total_price_tax_incl);
+        $this->assertEquals(8.25, $openOrderDetails[1]->total_price_tax_excl);
+        $this->assertEquals(0.17, $openOrderDetails[1]->tax_unit_amount);
+        $this->assertEquals(0.85, $openOrderDetails[1]->tax_total_amount);
 
     }
 
@@ -231,17 +231,42 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         Configure::write('app.changeOpenOrderDetailPriceOnProductPriceChange', true);
         $this->loginAsSuperadmin();
-        $productId = 346;
-        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 15, 'g', 100, 50);
-        $product = $this->Product->find('all',
+        $productId = 347;
+
+        $this->addProductToCart($productId, 5);
+        $this->finishCart();
+
+        $this->addProductToCart($productId, 2);
+        $this->finishCart();
+
+        $this->addProductToCart($productId, 1);
+        $this->finishCart();
+
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get(5),
+                [
+                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                ]
+            )
+        );
+
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 2, 'g', 100, 350);
+
+        $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
-                'Products.id_product' => $productId
-            ],
-            contain: [
-                'UnitProducts'
-            ]
-        )->first();
-        $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
+                $orderDetailsTable->aliasField('product_id') => $productId,
+            ])->toArray();
+
+        // order was NOT billed => price change
+        $this->assertEquals(35, $openOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(31.8, $openOrderDetails[0]->total_price_tax_excl);
+
+        // order was NOT billed => price change
+        $this->assertEquals(7, $openOrderDetails[2]->total_price_tax_incl);
+        $this->assertEquals(6.36, $openOrderDetails[2]->total_price_tax_excl);
+
     }
 
     public function testEditSellingPriceOfAttributeAsSuperadmin()
@@ -727,12 +752,12 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testUploadAndDeleteProductImage()
     {
         $this->loginAsAdmin();
-        
+
         $productId = 340;
         $filename = 'img/tests/test-image.jpg';
 
         $this->Image = $this->getTableLocator()->get('Images');
-        
+
         // START upload image
         $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
             'objectId' => $productId,
@@ -759,7 +784,7 @@ class ProductsControllerTest extends AppCakeTestCase
             ],
         )->first();
         $this->assertNotEmpty($image);
-        
+
         // START delete image
         $this->get('/admin/products/deleteImage/' . $productId);
 

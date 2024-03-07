@@ -62,7 +62,7 @@ trait EditProductQuantityTrait {
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
 
-        $newProductPrice = round((float) $oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+        $newProductPrice = Configure::read('app.pricePerUnitHelper')->getPrice($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_amount, $productQuantity);
         if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
             $toleranceFactor = 100;
             $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
