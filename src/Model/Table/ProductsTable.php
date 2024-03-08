@@ -395,7 +395,7 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
-    private function changeOpenOrderDetailPricePerUnit($ids, $grossPrice, $unitAmount = 0)
+    private function changeOpenOrderDetailPricePerUnit($ids, $grossPrice, $unitName = '', $unitAmount = 0, $quantityInUnits = 0)
     {
 
         if (!Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChange')) {
@@ -422,6 +422,17 @@ class ProductsTable extends AppTable
                     $unitAmount,
                     $openOrderDetail->order_detail_unit->product_quantity_in_units,
                 );
+                $orderDetailUnitsTable = FactoryLocator::get('Table')->get('OrderDetailUnits');
+                $patchedEntity = $orderDetailUnitsTable->patchEntity(
+                    $openOrderDetail->order_detail_unit,
+                    [
+                        'price_incl_per_unit' => $grossPrice,
+                        'unit_name' => $unitName,
+                        'unit_amount' => $unitAmount,
+                        'quantity_in_units' => $quantityInUnits,
+                    ],
+                );
+                $orderDetailUnitsTable->save($patchedEntity);
             }
             $orderDetailsTable->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal, $openOrderDetail->product_amount);
         }
@@ -497,18 +508,26 @@ class ProductsTable extends AppTable
                     $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($quantityInUnits);
                 }
 
+                $unitName = $product[$productId]['unit_product_name'];
+                $unitAmount = $product[$productId]['unit_product_amount'];
+
                 $this->Unit->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
                     $product[$productId]['unit_product_price_per_unit_enabled'],
                     $priceInclPerUnit == -1 ? 0 : $priceInclPerUnit,
-                    $product[$productId]['unit_product_name'],
-                    $product[$productId]['unit_product_amount'],
+                    $unitName,
+                    $unitAmount,
                     $quantityInUnits == -1 ? 0 : $quantityInUnits
                 );
 
                 if ($priceInclPerUnit > 0) {
-                    $this->changeOpenOrderDetailPricePerUnit($ids, $priceInclPerUnit, $product[$productId]['unit_product_amount']);
+                    $this->changeOpenOrderDetailPricePerUnit($ids,
+                        $priceInclPerUnit,
+                        $unitName,
+                        $unitAmount,
+                        $quantityInUnits,
+                    );
                 }
 
             } else {

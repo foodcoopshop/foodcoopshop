@@ -252,20 +252,29 @@ class ProductsControllerTest extends AppCakeTestCase
             )
         );
 
-        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 2, 'g', 100, 350);
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 2, 'kg', 50, 350);
 
         $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
                 $orderDetailsTable->aliasField('product_id') => $productId,
+            ],
+            contain: [
+                'OrderDetailUnits',
             ])->toArray();
 
-        // order was NOT billed => price change
-        $this->assertEquals(35, $openOrderDetails[0]->total_price_tax_incl);
-        $this->assertEquals(31.8, $openOrderDetails[0]->total_price_tax_excl);
+        // order was NOT billed => price change and order_detail_unit change
+        $this->assertEquals(70, $openOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(63.65, $openOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(2, $openOrderDetails[0]->order_detail_unit->price_incl_per_unit);
+        $this->assertEquals('kg', $openOrderDetails[0]->order_detail_unit->unit_name);
+        $this->assertEquals(50, $openOrderDetails[0]->order_detail_unit->unit_amount);
 
-        // order was NOT billed => price change
-        $this->assertEquals(7, $openOrderDetails[2]->total_price_tax_incl);
-        $this->assertEquals(6.36, $openOrderDetails[2]->total_price_tax_excl);
+        // order was NOT billed => price change and order_detail_unit change
+        $this->assertEquals(14, $openOrderDetails[2]->total_price_tax_incl);
+        $this->assertEquals(12.73, $openOrderDetails[2]->total_price_tax_excl);
+        $this->assertEquals(2, $openOrderDetails[2]->order_detail_unit->price_incl_per_unit);
+        $this->assertEquals('kg', $openOrderDetails[2]->order_detail_unit->unit_name);
+        $this->assertEquals(50, $openOrderDetails[2]->order_detail_unit->unit_amount);
 
     }
 
