@@ -44,10 +44,6 @@ class ChangeSellingPriceService
     public function changeOpenOrderDetailPricePerUnit(array $ids, float $grossPrice, string $unitName, int $unitAmount, float $quantityInUnits)
     {
 
-        if (!Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChange')) {
-            return false;
-        }
-
         $openOrderDetails = $this->getOpenOrderDetails($ids['productId'], $ids['attributeId']);
         if (empty($openOrderDetails)) {
             return false;
@@ -83,10 +79,6 @@ class ChangeSellingPriceService
 
     public function changeOpenOrderDetailPrice(array $ids, float $grossPrice)
     {
-
-        if (!Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChange')) {
-            return false;
-        }
 
         $openOrderDetails = $this->getOpenOrderDetails($ids['productId'], $ids['attributeId']);
         if (empty($openOrderDetails)) {

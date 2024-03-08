@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-02-19 08:36+0100\n"
-"PO-Revision-Date: 2024-02-19 08:37+0100\n"
+"POT-Creation-Date: 2024-03-08 23:59+0100\n"
+"PO-Revision-Date: 2024-03-09 00:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -981,6 +981,9 @@ msgstr "für"
 
 msgid "approximate_delivery_weight_in_{0}_per_unit"
 msgstr "ungefähres Liefergewicht in {0} pro Einheit"
+
+msgid "Edit_price_change_open_order_details_info_text"
+msgstr "Preise von noch nicht verrechneten Bestellungen mit anpassen?"
 
 msgid "Name"
 msgstr "Name"

@@ -170,10 +170,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
     }
 
-    public function testEditSellingPriceOfProductAsSuperadminWithAutomaticChangeConfig()
+    public function testEditSellingPriceOfProductAsSuperadminWithChangeOpenOrderDetails()
     {
-        Configure::write('app.changeOpenOrderDetailPriceOnProductPriceChange', true);
-
         $this->loginAsSuperadmin();
 
         $productId = 346;
@@ -190,7 +188,7 @@ class ProductsControllerTest extends AppCakeTestCase
             )
         );
 
-        $this->assertSellingPriceChange($productId, '2,10', '1,909091', '10');
+        $this->assertSellingPriceChange($productId, '2,10', '1,909091', '10', changeOpenOrderDetails: true);
 
         $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
@@ -227,9 +225,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
     }
 
-    public function testEditSellingPricePerUnitOfProductAsSuperadminWithAutomaticChangeConfig()
+    public function testEditSellingPricePerUnitOfProductAsSuperadminChangeOpenOrderDetails()
     {
-        Configure::write('app.changeOpenOrderDetailPriceOnProductPriceChange', true);
         $this->loginAsSuperadmin();
         $productId = 347;
 
@@ -252,7 +249,7 @@ class ProductsControllerTest extends AppCakeTestCase
             )
         );
 
-        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 2, 'kg', 50, 350);
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 2, 'kg', 50, 350, changeOpenOrderDetails: true);
 
         $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
@@ -711,11 +708,11 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
-    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
+    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0, $changeOpenOrderDetails = false)
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
-        $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
+        $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits, $changeOpenOrderDetails);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($price, $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);

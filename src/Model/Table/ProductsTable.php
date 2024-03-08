@@ -396,7 +396,7 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
-    public function changePrice(array $products): bool
+    public function changePrice(array $products, $changeOpenOrderDetailPrice = false): bool
     {
 
         foreach ($products as $product) {
@@ -478,7 +478,7 @@ class ProductsTable extends AppTable
                     $quantityInUnits == -1 ? 0 : $quantityInUnits
                 );
 
-                if ($priceInclPerUnit > 0) {
+                if ($changeOpenOrderDetailPrice && $priceInclPerUnit > 0) {
                     (new ChangeSellingPriceService())->changeOpenOrderDetailPricePerUnit(
                         $ids,
                         $priceInclPerUnit,
@@ -489,7 +489,9 @@ class ProductsTable extends AppTable
                 }
 
             } else {
-                (new ChangeSellingPriceService())->changeOpenOrderDetailPrice($ids, $price);
+                if ($changeOpenOrderDetailPrice) {
+                    (new ChangeSellingPriceService())->changeOpenOrderDetailPrice($ids, $price);
+                }
             }
 
         }

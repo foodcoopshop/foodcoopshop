@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-19 08:36+0100\n"
+"POT-Creation-Date: 2024-03-08 23:59+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -975,6 +975,9 @@ msgid "for"
 msgstr ""
 
 msgid "approximate_delivery_weight_in_{0}_per_unit"
+msgstr ""
+
+msgid "Edit_price_change_open_order_details_info_text"
 msgstr ""
 
 msgid "Name"

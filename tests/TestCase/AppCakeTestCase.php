@@ -270,17 +270,7 @@ abstract class AppCakeTestCase extends TestCase
         return $cart;
     }
 
-    /**
-     * @param string $productId
-     * @param double $price
-     * @param boolean $pricePerUnitEnabled
-     * @param number $priceInclPerUnit
-     * @param string $priceUnitName
-     * @param number $priceUnitAmount
-     * @param number $priceQuantityInUnits
-     * @return mixed
-     */
-    protected function changeProductPrice($productId, $price, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
+    protected function changeProductPrice($productId, $price, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0, $changeOpenOrderDetails = false)
     {
         $this->ajaxPost('/admin/products/editPrice', [
             'productId' => $productId,
@@ -289,7 +279,8 @@ abstract class AppCakeTestCase extends TestCase
             'priceInclPerUnit' => $priceInclPerUnit,
             'priceUnitName' => $priceUnitName,
             'priceUnitAmount' => $priceUnitAmount,
-            'priceQuantityInUnits' => $priceQuantityInUnits
+            'priceQuantityInUnits' => $priceQuantityInUnits,
+            'priceChangeOpenOrderDetails' => $changeOpenOrderDetails,
         ]);
         return $this->getJsonDecodedContent();
     }

@@ -58,6 +58,11 @@ foodcoopshop.ModalProductPriceEdit = {
         html += '</select><br />';
         html += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
         html += '</div>';
+        html += '<hr />';
+        html += '<label class="checkbox" style="margin-top:10px ! important;">';
+        html += '<input type="checkbox" name="dialogPriceChangeOpenOrderDetails" id="dialogPriceChangeOpenOrderDetails" value="" />';
+        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.dialogProduct.EditPriceChangeOpenOrderDetailsInfoText + '</span>';
+        html += '</label>';
         html += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
         return html;
     },
@@ -88,7 +93,8 @@ foodcoopshop.ModalProductPriceEdit = {
                 pricePerUnitEnabled: pricePerUnitEnabled,
                 priceUnitName: $('#dialogPriceUnitName').val(),
                 priceUnitAmount: $('#dialogPriceUnitAmount').val(),
-                priceQuantityInUnits : quantityInUnits
+                priceQuantityInUnits : quantityInUnits,
+                priceChangeOpenOrderDetails: $('#dialogPriceChangeOpenOrderDetails:checked').length > 0 ? 1 : 0,
             },
             {
                 onOk: function (data) {

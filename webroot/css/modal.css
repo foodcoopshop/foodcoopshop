@@ -288,7 +288,8 @@ body.iframe_self_service_order {
 #order-detail-product-quantity-edit-form input[type="checkbox"],
 #order-detail-pickup-day-edit input[type="checkbox"],
 #order-detail-product-price-edit-form input[type="checkbox"],
-#order-detail-customer-edit-form input[type="checkbox"] {
+#order-detail-customer-edit-form input[type="checkbox"],
+#modal-product-price-edit input[type="checkbox"] {
     float: left;
 }
 #modal-product-quantity-edit input[type="number"],
