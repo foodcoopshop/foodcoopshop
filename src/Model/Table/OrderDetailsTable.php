@@ -766,7 +766,7 @@ class OrderDetailsTable extends AppTable
         $conditions = [];
 
         $identity = Router::getRequest()->getAttribute('identity');
-        
+
         $exp = new QueryExpression();
         if (count($pickupDay) == 2) {
             $conditions[] = $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));
@@ -825,44 +825,6 @@ class OrderDetailsTable extends AppTable
         ];
 
         return $odParams;
-    }
-
-    public function changeOrderDetailPriceDepositTax($orderDetail, $grossPrice, $productAmount)
-    {
-
-        $productsTable = FactoryLocator::get('Table')->get('Products');
-        $unitPriceExcl = $productsTable->getNetPrice($grossPrice / $productAmount, $orderDetail->tax_rate);
-        $unitTaxAmount = $productsTable->getUnitTax($grossPrice, $unitPriceExcl, $productAmount);
-        $totalTaxAmount = $unitTaxAmount * $productAmount;
-        $totalPriceTaxExcl = $grossPrice - $totalTaxAmount;
-
-        $orderDetail2save = [
-            'total_price_tax_incl' => $grossPrice,
-            'total_price_tax_excl' => $totalPriceTaxExcl,
-            'product_amount' => $productAmount,
-            'deposit' => $orderDetail->deposit / $orderDetail->product_amount * $productAmount,
-            'tax_unit_amount' => $unitTaxAmount,
-            'tax_total_amount' => $totalTaxAmount,
-        ];
-
-        $this->save(
-            $this->patchEntity($orderDetail, $orderDetail2save)
-        );
-
-        $newOrderDetail = $this->find('all',
-            conditions: [
-                'OrderDetails.id_order_detail' => $orderDetail->id_order_detail,
-            ],
-            contain: [
-                'Customers',
-                'Products.StockAvailables',
-                'Products.Manufacturers',
-                'ProductAttributes.StockAvailables',
-                'OrderDetailUnits',
-            ],
-        )->first();
-
-        return $newOrderDetail;
     }
 
 }

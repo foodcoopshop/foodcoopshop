@@ -6,6 +6,7 @@ namespace Admin\Traits\OrderDetails;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
+use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -62,7 +63,7 @@ trait EditProductPriceTrait {
         )->first();
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newOrderDetail = $this->OrderDetail->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
+        $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
 
         $message = __d('admin', 'The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
@@ -128,5 +129,5 @@ trait EditProductPriceTrait {
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
-    
+
 }

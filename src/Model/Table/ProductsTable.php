@@ -17,6 +17,7 @@ use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
 use App\Model\Entity\Customer;
+use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -395,50 +396,6 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
-    private function changeOpenOrderDetailPricePerUnit($ids, $grossPrice, $unitName = '', $unitAmount = 0, $quantityInUnits = 0)
-    {
-
-        if (!Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChange')) {
-            return false;
-        }
-
-        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
-        $openOrderDetails = $orderDetailsTable->find('all',
-            conditions: [
-                $orderDetailsTable->aliasField('product_id') => $ids['productId'],
-                $orderDetailsTable->aliasField('product_attribute_id') => $ids['attributeId'],
-                $orderDetailsTable->aliasField('order_state NOT IN') => [ORDER_STATE_BILLED_CASH, ORDER_STATE_BILLED_CASHLESS],
-                $orderDetailsTable->aliasField('shopping_price') => Customer::SELLING_PRICE,
-            ],
-            contain: [
-                'OrderDetailUnits',
-            ]);
-
-        foreach($openOrderDetails as $openOrderDetail) {
-            $grossPriceTotal = $grossPrice * $openOrderDetail->product_amount;
-            if (!empty($openOrderDetail->order_detail_unit)) {
-                $grossPriceTotal = Configure::read('app.pricePerUnitHelper')->getPrice(
-                    $grossPrice,
-                    $unitAmount,
-                    $openOrderDetail->order_detail_unit->product_quantity_in_units,
-                );
-                $orderDetailUnitsTable = FactoryLocator::get('Table')->get('OrderDetailUnits');
-                $patchedEntity = $orderDetailUnitsTable->patchEntity(
-                    $openOrderDetail->order_detail_unit,
-                    [
-                        'price_incl_per_unit' => $grossPrice,
-                        'unit_name' => $unitName,
-                        'unit_amount' => $unitAmount,
-                        'quantity_in_units' => $quantityInUnits,
-                    ],
-                );
-                $orderDetailUnitsTable->save($patchedEntity);
-            }
-            $orderDetailsTable->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal, $openOrderDetail->product_amount);
-        }
-
-    }
-
     public function changePrice(array $products): bool
     {
 
@@ -509,7 +466,7 @@ class ProductsTable extends AppTable
                 }
 
                 $unitName = $product[$productId]['unit_product_name'];
-                $unitAmount = $product[$productId]['unit_product_amount'];
+                $unitAmount = (int) $product[$productId]['unit_product_amount'];
 
                 $this->Unit->saveUnits(
                     $ids['productId'],
@@ -522,7 +479,8 @@ class ProductsTable extends AppTable
                 );
 
                 if ($priceInclPerUnit > 0) {
-                    $this->changeOpenOrderDetailPricePerUnit($ids,
+                    (new ChangeSellingPriceService())->changeOpenOrderDetailPricePerUnit(
+                        $ids,
                         $priceInclPerUnit,
                         $unitName,
                         $unitAmount,
@@ -531,7 +489,7 @@ class ProductsTable extends AppTable
                 }
 
             } else {
-                $this->changeOpenOrderDetailPricePerUnit($ids, $price);
+                (new ChangeSellingPriceService())->changeOpenOrderDetailPrice($ids, $price);
             }
 
         }
