@@ -207,6 +207,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(0.19, $openOrderDetails[1]->tax_unit_amount);
         $this->assertEquals(0.95, $openOrderDetails[1]->tax_total_amount);
 
+        $this->assertFlashMessage('Der Preis des Produktes <b>Artischocke</b> wurde erfolgreich geändert.<br />Der Preis des folgenden bestellten Produkts wurde angepasst: ID: 4');
+
     }
 
     public function testEditSellingPricePerUnitOfProductAsSuperadmin()
@@ -272,6 +274,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(2, $openOrderDetails[2]->order_detail_unit->price_incl_per_unit);
         $this->assertEquals('kg', $openOrderDetails[2]->order_detail_unit->unit_name);
         $this->assertEquals(50, $openOrderDetails[2]->order_detail_unit->unit_amount);
+
+        $this->assertFlashMessage('Der Preis des Produktes <b>Forelle</b> wurde erfolgreich geändert.<br />Der Preis der folgenden 2 bestellten Produkte wurde angepasst: ID: 4, 6');
 
     }
 

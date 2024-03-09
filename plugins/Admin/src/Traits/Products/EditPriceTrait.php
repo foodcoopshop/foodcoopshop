@@ -56,7 +56,7 @@ trait EditPriceTrait {
         $changedOpenOrderDetailIds = array_map(function($changedOpenOrderDetail) {
             return $changedOpenOrderDetail->id_order_detail;
         }, $changedOpenOrderDetails);
-        $message .= ' ' . join(', ', $changedOpenOrderDetailIds);
+        $message .= ' ID: ' . join(', ', $changedOpenOrderDetailIds);
 
         return $message;
 
