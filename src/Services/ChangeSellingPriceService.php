@@ -41,15 +41,16 @@ class ChangeSellingPriceService
 
     }
 
-    public function changeOpenOrderDetailPricePerUnit(array $ids, float $grossPrice, string $unitName, int $unitAmount, float $quantityInUnits)
+    public function changeOpenOrderDetailPricePerUnit(array $ids, float $grossPrice, string $unitName, int $unitAmount, float $quantityInUnits): array
     {
 
         $openOrderDetails = $this->getOpenOrderDetails($ids['productId'], $ids['attributeId']);
         if (empty($openOrderDetails)) {
-            return false;
+            return [];
         }
 
         $orderDetailUnitsTable = FactoryLocator::get('Table')->get('OrderDetailUnits');
+        $changedOpenOrderDetails = [];
         foreach($openOrderDetails as $openOrderDetail) {
 
             // never change price if price type changed
@@ -73,18 +74,22 @@ class ChangeSellingPriceService
             );
             $orderDetailUnitsTable->save($patchedEntity);
             $this->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal, $openOrderDetail->product_amount);
+            $changedOpenOrderDetails[] = $openOrderDetail;
         }
+
+        return $changedOpenOrderDetails;
 
     }
 
-    public function changeOpenOrderDetailPrice(array $ids, float $grossPrice)
+    public function changeOpenOrderDetailPrice(array $ids, float $grossPrice): array
     {
 
         $openOrderDetails = $this->getOpenOrderDetails($ids['productId'], $ids['attributeId']);
         if (empty($openOrderDetails)) {
-            return false;
+            return [];
         }
 
+        $changedOpenOrderDetails = [];
         foreach($openOrderDetails as $openOrderDetail) {
 
             // never change price if price type changed
@@ -94,7 +99,10 @@ class ChangeSellingPriceService
 
             $grossPriceTotal = $grossPrice * $openOrderDetail->product_amount;
             $this->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal, $openOrderDetail->product_amount);
+            $changedOpenOrderDetails[] = $openOrderDetail;
         }
+
+        return $changedOpenOrderDetails;
 
     }
 

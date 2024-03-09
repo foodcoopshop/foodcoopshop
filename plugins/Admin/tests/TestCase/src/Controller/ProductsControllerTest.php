@@ -202,10 +202,10 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(0.17, $openOrderDetails[0]->tax_total_amount);
 
         // order was NOT billed => price change
-        $this->assertEquals(9.1, $openOrderDetails[1]->total_price_tax_incl);
-        $this->assertEquals(8.25, $openOrderDetails[1]->total_price_tax_excl);
-        $this->assertEquals(0.17, $openOrderDetails[1]->tax_unit_amount);
-        $this->assertEquals(0.85, $openOrderDetails[1]->tax_total_amount);
+        $this->assertEquals(10.5, $openOrderDetails[1]->total_price_tax_incl);
+        $this->assertEquals(9.55, $openOrderDetails[1]->total_price_tax_excl);
+        $this->assertEquals(0.19, $openOrderDetails[1]->tax_unit_amount);
+        $this->assertEquals(0.95, $openOrderDetails[1]->tax_total_amount);
 
     }
 

@@ -5,6 +5,7 @@ namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
 use App\Services\SanitizeService;
+use App\Services\ChangeSellingPriceService;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -20,6 +21,46 @@ use App\Services\SanitizeService;
  */
 
 trait EditPriceTrait {
+
+    private function applyPriceChangeToOpenOrders($ids, $price): string
+    {
+        $changeOpenOrderDetailPrice = (bool) $this->getRequest()->getData('priceChangeOpenOrderDetails');
+        if (!$changeOpenOrderDetailPrice) {
+            return '';
+        }
+
+        if ($this->getRequest()->getData('pricePerUnitEnabled') && $this->getRequest()->getData('priceInclPerUnit')) {
+            $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit'));
+            $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'));
+            $unitName = $this->getRequest()->getData('priceUnitName');
+            $unitAmount = (int) $this->getRequest()->getData('priceUnitAmount');
+            $changedOpenOrderDetails = (new ChangeSellingPriceService())->changeOpenOrderDetailPricePerUnit(
+                $ids,
+                $priceInclPerUnit,
+                $unitName,
+                $unitAmount,
+                $quantityInUnits,
+            );
+        } else {
+            $changedOpenOrderDetails = (new ChangeSellingPriceService())->changeOpenOrderDetailPrice($ids, $price);
+        }
+
+        if (empty($changedOpenOrderDetails)) {
+            return '';
+        }
+
+        $message = __d('admin', 'The_price_of_the_following_{0,plural,=1{1_ordered_product} other{#_ordered_products}}_was_changed:', [
+            count($changedOpenOrderDetails)
+        ]);
+
+        $changedOpenOrderDetailIds = array_map(function($changedOpenOrderDetail) {
+            return $changedOpenOrderDetail->id_order_detail;
+        }, $changedOpenOrderDetails);
+        $message .= ' ' . join(', ', $changedOpenOrderDetailIds);
+
+        return $message;
+
+    }
 
     public function editPrice()
     {
@@ -73,14 +114,20 @@ trait EditPriceTrait {
                             'unit_product_price_per_unit_enabled' => $this->getRequest()->getData('pricePerUnitEnabled'),
                         ]
                     ]
-                ], $this->getRequest()->getData('priceChangeOpenOrderDetails'));
+                ]);
         } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 
         $price = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('price'));
 
-        $this->Flash->success(__d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
+        $successMessage = __d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']);
+        $additionalActionLogMessage = $this->applyPriceChangeToOpenOrders($ids, $price);
+        if ($additionalActionLogMessage != '') {
+            $successMessage .= '<br />' . $additionalActionLogMessage;
+        }
+        $this->Flash->success($successMessage);
+
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
@@ -100,6 +147,9 @@ trait EditPriceTrait {
             $oldPrice,
             $newPrice
         ]);
+        if ($additionalActionLogMessage != '') {
+            $actionLogMessage .= '<br />' . $additionalActionLogMessage;
+        }
 
         $this->ActionLog->customSave('product_price_changed', $this->identity->getId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);

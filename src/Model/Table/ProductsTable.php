@@ -465,33 +465,15 @@ class ProductsTable extends AppTable
                     $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($quantityInUnits);
                 }
 
-                $unitName = $product[$productId]['unit_product_name'];
-                $unitAmount = (int) $product[$productId]['unit_product_amount'];
-
                 $this->Unit->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
                     $product[$productId]['unit_product_price_per_unit_enabled'],
                     $priceInclPerUnit == -1 ? 0 : $priceInclPerUnit,
-                    $unitName,
-                    $unitAmount,
+                    $product[$productId]['unit_product_name'],
+                    $product[$productId]['unit_product_amount'],
                     $quantityInUnits == -1 ? 0 : $quantityInUnits
                 );
-
-                if ($changeOpenOrderDetailPrice && $priceInclPerUnit > 0) {
-                    (new ChangeSellingPriceService())->changeOpenOrderDetailPricePerUnit(
-                        $ids,
-                        $priceInclPerUnit,
-                        $unitName,
-                        $unitAmount,
-                        $quantityInUnits,
-                    );
-                }
-
-            } else {
-                if ($changeOpenOrderDetailPrice) {
-                    (new ChangeSellingPriceService())->changeOpenOrderDetailPrice($ids, $price);
-                }
             }
 
         }
