@@ -6,6 +6,7 @@ namespace App\View\Helper;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\View\Helper;
+use App\Services\OutputFilter\OutputFilterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -236,6 +237,11 @@ class SlugHelper extends Helper
 
     public function getCategoryDetail($categoryId, $name)
     {
+        // if "Produkte" is globally replaced with a word with an umlaut, this umlaut would not be replaced, so replace it here
+        // eg: Produkte => Naturschätze
+        if (Configure::check('app.outputStringReplacements')) {
+            $name = OutputFilterService::replace($name, Configure::read('app.outputStringReplacements'));
+        }
         return '/' . __('route_category') . '/' . $categoryId . '-' . StringComponent::slugify($name);
     }
 
