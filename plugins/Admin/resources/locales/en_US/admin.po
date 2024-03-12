@@ -2101,9 +2101,6 @@ msgstr "Click to change weight"
 msgid "Picked_up"
 msgstr "Picked up"
 
-msgid "Actions"
-msgstr "Actions"
-
 msgid "Delivery_days"
 msgstr "Delivery days"
 

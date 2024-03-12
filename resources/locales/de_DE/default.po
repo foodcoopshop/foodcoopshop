@@ -873,7 +873,7 @@ msgid "Add_product_feedback_explanation_text_{0}."
 msgstr "Dein Feedback wird dem Hersteller {0} nach dem Speichern automatisch per E-Mail geschickt, es ist dann <b>nicht mehr änderbar</b>. Der Hersteller erhält deinen Namen und auch deine E-Mail-Adresse, damit er dir ggfs. zurückschreiben kann."
 
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
-msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links markierst und dann auf den Button ganz unten klickst."
+msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie zuerst links markierst und dann auf den Button \"Aktionen\" oben rechts klickst."
 
 msgid "Generate_invoice"
 msgstr "Rechnung erstellen"
