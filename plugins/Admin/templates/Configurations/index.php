@@ -354,8 +354,8 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.changeOpenOrderDetailPriceOnProductPriceChange</td>
-            <td><?php echo Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChange') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+            <td>app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled</td>
+            <td><?php echo Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
         <tr>
