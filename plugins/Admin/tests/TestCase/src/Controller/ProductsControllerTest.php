@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use Cake\Datasource\FactoryLocator;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -169,6 +170,47 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertSellingPriceChange(346, '2,20', '2,00', '10');
     }
 
+    public function testEditSellingPriceOfProductAsSuperadminWithChangeOpenOrderDetails()
+    {
+        $this->loginAsSuperadmin();
+
+        $productId = 346;
+        $this->addProductToCart($productId, 5);
+        $this->finishCart();
+
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get(1),
+                [
+                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                ]
+            )
+        );
+
+        $this->assertSellingPriceChange($productId, '2,10', '1,909091', '10', changeOpenOrderDetails: true);
+
+        $openOrderDetails = $orderDetailsTable->find('all',
+            conditions: [
+                $orderDetailsTable->aliasField('product_id') => $productId,
+            ])->toArray();
+
+        // order was billed => no price change
+        $this->assertEquals(1.82, $openOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(1.65, $openOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(0.17, $openOrderDetails[0]->tax_unit_amount);
+        $this->assertEquals(0.17, $openOrderDetails[0]->tax_total_amount);
+
+        // order was NOT billed => price change
+        $this->assertEquals(10.5, $openOrderDetails[1]->total_price_tax_incl);
+        $this->assertEquals(9.55, $openOrderDetails[1]->total_price_tax_excl);
+        $this->assertEquals(0.19, $openOrderDetails[1]->tax_unit_amount);
+        $this->assertEquals(0.95, $openOrderDetails[1]->tax_total_amount);
+
+        $this->assertFlashMessage('Der Preis des Produktes <b>Artischocke</b> wurde erfolgreich geändert.<br />Der Preis des folgenden bestellten Produkts wurde angepasst: ID: 4');
+
+    }
+
     public function testEditSellingPricePerUnitOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
@@ -183,6 +225,58 @@ class ProductsControllerTest extends AppCakeTestCase
             ]
         )->first();
         $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
+    }
+
+    public function testEditSellingPricePerUnitOfProductAsSuperadminChangeOpenOrderDetails()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 347;
+
+        $this->addProductToCart($productId, 5);
+        $this->finishCart();
+
+        $this->addProductToCart($productId, 2);
+        $this->finishCart();
+
+        $this->addProductToCart($productId, 1);
+        $this->finishCart();
+
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderDetailsTable->save(
+            $orderDetailsTable->patchEntity(
+                $orderDetailsTable->get(5),
+                [
+                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                ]
+            )
+        );
+
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 2, 'kg', 50, 350, changeOpenOrderDetails: true);
+
+        $openOrderDetails = $orderDetailsTable->find('all',
+            conditions: [
+                $orderDetailsTable->aliasField('product_id') => $productId,
+            ],
+            contain: [
+                'OrderDetailUnits',
+            ])->toArray();
+
+        // order was NOT billed => price change and order_detail_unit change
+        $this->assertEquals(70, $openOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(63.65, $openOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(2, $openOrderDetails[0]->order_detail_unit->price_incl_per_unit);
+        $this->assertEquals('kg', $openOrderDetails[0]->order_detail_unit->unit_name);
+        $this->assertEquals(50, $openOrderDetails[0]->order_detail_unit->unit_amount);
+
+        // order was NOT billed => price change and order_detail_unit change
+        $this->assertEquals(14, $openOrderDetails[2]->total_price_tax_incl);
+        $this->assertEquals(12.73, $openOrderDetails[2]->total_price_tax_excl);
+        $this->assertEquals(2, $openOrderDetails[2]->order_detail_unit->price_incl_per_unit);
+        $this->assertEquals('kg', $openOrderDetails[2]->order_detail_unit->unit_name);
+        $this->assertEquals(50, $openOrderDetails[2]->order_detail_unit->unit_amount);
+
+        $this->assertFlashMessage('Der Preis des Produktes <b>Forelle</b> wurde erfolgreich geändert.<br />Der Preis der folgenden 2 bestellten Produkte wurde angepasst: ID: 4, 6');
+
     }
 
     public function testEditSellingPriceOfAttributeAsSuperadmin()
@@ -618,11 +712,11 @@ class ProductsControllerTest extends AppCakeTestCase
 
     }
 
-    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
+    private function assertSellingPriceChange($productId, $price, $expectedNetPrice, $taxRate, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0, $changeOpenOrderDetails = false)
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
-        $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
+        $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits, $changeOpenOrderDetails);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($price, $taxRate);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice);
@@ -668,12 +762,12 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testUploadAndDeleteProductImage()
     {
         $this->loginAsAdmin();
-        
+
         $productId = 340;
         $filename = 'img/tests/test-image.jpg';
 
         $this->Image = $this->getTableLocator()->get('Images');
-        
+
         // START upload image
         $this->ajaxPost('/admin/products/saveUploadedImageProduct', [
             'objectId' => $productId,
@@ -700,7 +794,7 @@ class ProductsControllerTest extends AppCakeTestCase
             ],
         )->first();
         $this->assertNotEmpty($image);
-        
+
         // START delete image
         $this->get('/admin/products/deleteImage/' . $productId);
 

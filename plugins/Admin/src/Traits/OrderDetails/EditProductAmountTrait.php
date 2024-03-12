@@ -5,6 +5,7 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
+use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -67,8 +68,7 @@ trait EditProductAmountTrait {
         }
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-
-        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
+        $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {

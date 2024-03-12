@@ -13,6 +13,7 @@ use App\Services\DeliveryRhythmService;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Model\Table\CartsTable;
 use App\Services\OrderCustomerService;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -70,7 +71,7 @@ class MyHtmlHelper extends HtmlHelper
             'isSuperadmin-' . ($identity !== null && $identity->isSuperadmin() ? 1 : 0),
             'isSelfServiceModeByUrl-' . ($orderCustomerService->isSelfServiceModeByUrl() ? 1 : 0),
             'isOrderForDifferentCustomerMode-' . ($orderCustomerService->isOrderForDifferentCustomerMode() ? 1 : 0),
-            ($identity != null ? $identity->shopping_price : 'SP'),
+            ($identity != null ? $identity->shopping_price : Customer::SELLING_PRICE),
             'date-' . date('Y-m-d'),
         ]);
         return $elementCacheKey;
@@ -79,11 +80,11 @@ class MyHtmlHelper extends HtmlHelper
     public function getShoppingPricesForDropdown()
     {
         $options = [];
-        $options['SP'] = __('Shopping_with_selling_price');
+        $options[Customer::SELLING_PRICE] = __('Shopping_with_selling_price');
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $options['PP'] = __('Shopping_with_purchase_price');
+            $options[Customer::PURCHASE_PRICE] = __('Shopping_with_purchase_price');
         }
-        $options['ZP'] = __('Shopping_with_zero_price');
+        $options[Customer::ZERO_PRICE] = __('Shopping_with_zero_price');
         return $options;
     }
 

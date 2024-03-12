@@ -87,6 +87,11 @@ class PricePerUnitHelper extends Helper
         return $priceInclPerUnit * $quantityInUnits / $amount;
     }
 
+    public function getPrice($priceInclPerUnit, $unitAmount, $productQuantity)
+    {
+        return round((float) $priceInclPerUnit / $unitAmount * $productQuantity, 2);
+    }
+
     public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount, $showAdaptionMessage=true)
     {
         $infoText = '<div class="line">';

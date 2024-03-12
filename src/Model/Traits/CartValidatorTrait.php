@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Traits;
 
+use App\Model\Entity\Customer;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 
@@ -76,7 +77,7 @@ trait CartValidatorTrait
 
         $result = true;
 
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isSelfServiceModeByReferer() && 
+        if (!$orderCustomerService->isOrderForDifferentCustomerMode() && !$orderCustomerService->isSelfServiceModeByUrl() && !$orderCustomerService->isSelfServiceModeByReferer() &&
             $productsTable->deliveryBreakGlobalEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
             $result = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                 [
@@ -85,7 +86,7 @@ trait CartValidatorTrait
                 ]
             );
         }
-        
+
         return $result;
     }
 
@@ -131,9 +132,9 @@ trait CartValidatorTrait
     {
 
         $identity = Router::getRequest()->getAttribute('identity');
-        
+
         // implementation for purchase price check is too much work, so simply do not validate at all (enough for now)
-        if ($identity->shopping_price != 'SP') {
+        if ($identity->shopping_price != Customer::SELLING_PRICE) {
             return true;
         }
 

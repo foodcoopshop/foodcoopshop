@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Model\Entity\Customer;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
@@ -72,7 +73,7 @@ if ($identity->getProducts() !== null) {
             echo '</p>';
         }
 
-        if (isset($shoppingPrice) && in_array($shoppingPrice, ['PP', 'ZP'])) {
+        if (isset($shoppingPrice) && in_array($shoppingPrice, [Customer::PURCHASE_PRICE, Customer::ZERO_PRICE])) {
             echo '<p class="cart-extra-info shopping-price-info">';
                 echo $this->Html->getShoppingPricesForDropdown()[$shoppingPrice] . ' ' . __('activated');
             echo '</p>';

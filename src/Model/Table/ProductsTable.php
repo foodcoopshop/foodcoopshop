@@ -16,6 +16,8 @@ use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
+use App\Model\Entity\Customer;
+use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -394,7 +396,7 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
-    public function changePrice(array $products): bool
+    public function changePrice(array $products, $changeOpenOrderDetailPrice = false): bool
     {
 
         foreach ($products as $product) {
@@ -473,6 +475,7 @@ class ProductsTable extends AppTable
                     $quantityInUnits == -1 ? 0 : $quantityInUnits
                 );
             }
+
         }
 
         return (bool) $success;

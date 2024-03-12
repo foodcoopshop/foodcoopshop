@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-02-13 08:36+0100\n"
-"PO-Revision-Date: 2024-02-13 08:38+0100\n"
+"POT-Creation-Date: 2024-03-09 21:36+0100\n"
+"PO-Revision-Date: 2024-03-09 21:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -650,6 +650,9 @@ msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
 msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
+
+msgid "The_price_of_the_following_{0,plural,=1{1_ordered_product} other{#_ordered_products}}_was_changed:"
+msgstr "The price {0,plural,=1{of the following ordered product} other{of the following # ordered products}} was adapted:"
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "The price of the product {0} was changed successfully."

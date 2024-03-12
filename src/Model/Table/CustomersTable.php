@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Utility\Hash;
 use Cake\Routing\Router;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +29,7 @@ use Cake\Routing\Router;
  */
 class CustomersTable extends AppTable
 {
-    
+
     protected $Product;
 
     public function initialize(array $config): void
@@ -273,12 +274,12 @@ class CustomersTable extends AppTable
         ];
 
         $identity = Router::getRequest()->getAttribute('identity');
-        
+
         if ($identity === null) {
             return $result;
         }
 
-        if ($identity->shopping_price == 'PP') {
+        if ($identity->shopping_price == Customer::PURCHASE_PRICE) {
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all',
                 conditions: [
@@ -302,7 +303,7 @@ class CustomersTable extends AppTable
             }
         }
 
-        if ($identity->shopping_price == 'ZP') {
+        if ($identity->shopping_price == Customer::ZERO_PRICE) {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;
@@ -327,7 +328,7 @@ class CustomersTable extends AppTable
             return $result;
         }
 
-        if ($identity->shopping_price == 'PP') {
+        if ($identity->shopping_price == Customer::PURCHASE_PRICE) {
 
             $this->Product = FactoryLocator::get('Table')->get('Products');
             $purchasePrices = $this->Product->find('all',
@@ -363,7 +364,7 @@ class CustomersTable extends AppTable
 
         }
 
-        if ($identity->shopping_price == 'ZP') {
+        if ($identity->shopping_price == Customer::ZERO_PRICE) {
             $result['price'] = 0;
             $result['price_incl_per_unit'] = 0;
             $result['deposit'] = 0;

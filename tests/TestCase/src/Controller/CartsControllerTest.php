@@ -23,6 +23,7 @@ use Cake\TestSuite\TestEmailTransport;
 use App\Services\DeliveryRhythmService;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\Date;
+use App\Model\Entity\Customer;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -152,7 +153,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
-        $this->changeCustomer(Configure::read('test.customerId'), 'shopping_price', 'PP');
+        $this->changeCustomer(Configure::read('test.customerId'), 'shopping_price', Customer::PURCHASE_PRICE);
         $this->resetCustomerCreditBalance();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
@@ -927,7 +928,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishCartWithShoppingPricesAreZeroPrices()
     {
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
-        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::ZERO_PRICE);
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
@@ -980,7 +981,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishCartWithShoppingPricesArePurchasePrices()
     {
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
-        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'PP');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::PURCHASE_PRICE);
         $this->loginAsSuperadmin();
         $this->addAllDifferentProductTypesToCart();
         return;

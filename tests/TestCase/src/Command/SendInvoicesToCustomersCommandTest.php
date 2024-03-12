@@ -22,6 +22,7 @@ use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Test\TestCase\Traits\GenerateOrderWithDecimalsInTaxRateTrait;
+use App\Model\Entity\Customer;
 
 class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
 {
@@ -150,12 +151,12 @@ class SendInvoicesToCustomersCommandTest extends AppCakeTestCase
         $this->Invoice = $this->getTableLocator()->get('Invoices');
 
         // never create invoices for zero price users
-        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'ZP');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::ZERO_PRICE);
         $this->exec('send_invoices_to_customers "' . $cronjobRunDay . '"');
         $this->runAndAssertQueue();
         $this->assertEquals(0, count($this->Invoice->find('all')->toArray()));
 
-        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', 'SP');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'shopping_price', Customer::SELLING_PRICE);
         $this->exec('send_invoices_to_customers "' . $cronjobRunDay . '"');
         $this->runAndAssertQueue();
 

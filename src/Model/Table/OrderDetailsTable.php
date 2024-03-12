@@ -766,7 +766,7 @@ class OrderDetailsTable extends AppTable
         $conditions = [];
 
         $identity = Router::getRequest()->getAttribute('identity');
-        
+
         $exp = new QueryExpression();
         if (count($pickupDay) == 2) {
             $conditions[] = $exp->gte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]));

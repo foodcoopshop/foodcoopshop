@@ -50,46 +50,6 @@ trait UpdateOrderDetailsTrait {
         );
     }
 
-    private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount)
-    {
-
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-
-        $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($productPrice / $productAmount, $oldOrderDetail->tax_rate);
-        $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPrice, $unitPriceExcl, $productAmount);
-        $totalTaxAmount = $unitTaxAmount * $productAmount;
-        $totalPriceTaxExcl = $productPrice - $totalTaxAmount;
-
-        // update order details
-        $orderDetail2save = [
-            'total_price_tax_incl' => $productPrice,
-            'total_price_tax_excl' => $totalPriceTaxExcl,
-            'product_amount' => $productAmount,
-            'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_amount * $productAmount,
-            'tax_unit_amount' => $unitTaxAmount,
-            'tax_total_amount' => $totalTaxAmount,
-        ];
-
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
-        );
-
-        $newOrderDetail = $this->OrderDetail->find('all',
-            conditions: [
-                'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
-            ],
-            contain: [
-                'Customers',
-                'Products.StockAvailables',
-                'Products.Manufacturers',
-                'ProductAttributes.StockAvailables',
-                'OrderDetailUnits'
-            ]
-        )->first();
-
-        return $newOrderDetail;
-    }
-
     private function increaseQuantityForProduct($orderDetail, $orderDetailAmountBeforeAmountChange)
     {
 

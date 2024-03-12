@@ -5,6 +5,7 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
+use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -62,7 +63,7 @@ trait EditProductQuantityTrait {
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
 
-        $newProductPrice = round((float) $oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
+        $newProductPrice = Configure::read('app.pricePerUnitHelper')->getPrice($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_amount, $productQuantity);
         if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
             $toleranceFactor = 100;
             $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
@@ -83,7 +84,7 @@ trait EditProductQuantityTrait {
             $productPurchasePrice = round((float) $oldOrderDetail->order_detail_unit->purchase_price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
             $this->changeOrderDetailPurchasePrice($oldOrderDetail->order_detail_purchase_price, $productPurchasePrice, $object->product_amount);
         }
-        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
+        $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
         $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [

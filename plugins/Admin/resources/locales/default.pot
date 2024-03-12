@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-13 08:36+0100\n"
+"POT-Creation-Date: 2024-03-09 21:36+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -648,6 +648,9 @@ msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
 msgstr ""
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr ""
+
+msgid "The_price_of_the_following_{0,plural,=1{1_ordered_product} other{#_ordered_products}}_was_changed:"
 msgstr ""
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
