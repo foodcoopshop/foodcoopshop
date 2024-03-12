@@ -9,7 +9,6 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## Unveröffentlicht
 
 ### Neue Funktionen / Verbesserungen
-- Neue Produkt-Import-Funktion mittels CSV-Upload, [hier gehts zur Doku](https://foodcoopshop.github.io/de/produkt-import.html). [I#953](https://github.com/foodcoopshop/foodcoopshop/issues/953) / [PR#982](https://github.com/foodcoopshop/foodcoopshop/pull/982) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Ändern des Produkt-Preises können jetzt optional automatisch alle Preise von offenen (dh. nicht verrechneten) Bestellungen entsprechend angepasst werden. Das ist unter anderen praktisch bei Sammelbestellungen. [I#1006](https://github.com/foodcoopshop/foodcoopshop/issues/1006) / [I#281](https://github.com/foodcoopshop/foodcoopshop/issues/281) / [PR#1007](https://github.com/foodcoopshop/foodcoopshop/pull/1007) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Beim Ändern des Abholtages von bestellten Produkten gibt es jetzt die Option, dass die Produkte auf zukünftigen Bestelllisten erneut auftauchen. Das war bisher nicht so und hat immer wieder für Verwirrung gesorgt. [I#994](https://github.com/foodcoopshop/foodcoopshop/issues/994) / [PR#995](https://github.com/foodcoopshop/foodcoopshop/pull/995) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Herstellern mit vielen eingetragenen Lieferpausen war das linke Menü ziemlich überladen. Es werden jetzt nur die zwei bzw. drei nächsten Lieferpausen angezeigt. [I#952](https://github.com/foodcoopshop/foodcoopshop/issues/952) / [PR#955](https://github.com/foodcoopshop/foodcoopshop/pull/955) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -31,6 +30,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Steigerung der Code-Qualität
 - Codecov wird jetzt als [Code-Coverage-Tool](https://codecov.io/gh/foodcoopshop/foodcoopshop) verwendet, der Report wird mit PCOV generiert. [I#641](https://github.com/foodcoopshop/foodcoopshop/issues/641) / [PR#964](https://github.com/foodcoopshop/foodcoopshop/pull/964) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Statische Code-Analyse mittels PHPStan: Verbesserung der Code-Qualität auf Level 1. [PR#971](https://github.com/foodcoopshop/foodcoopshop/pull/971) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+### Neue Beta-Funktionen
+- Neue Produkt-Import-Funktion mittels CSV-Upload, [hier gehts zur Doku](https://foodcoopshop.github.io/de/produkt-import.html). [I#953](https://github.com/foodcoopshop/foodcoopshop/issues/953) / [PR#982](https://github.com/foodcoopshop/foodcoopshop/pull/982) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 
 ## v3.6.2
 
