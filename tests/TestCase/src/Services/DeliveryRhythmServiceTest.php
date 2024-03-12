@@ -783,6 +783,30 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
     }
 
+    /*
+    public function test2WeekSendOrderListDayMondayCurrentWeekAllowOrderConfigOn()
+    {
+        $this->changeConfiguration('FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY', 1);
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'manufacturer' => [
+                        'stock_management_enabled' => '0',
+                    ],
+                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_first_delivery_day' => new Date('2023-11-17'),
+                ]
+            ),
+            'currentDay' => '2023-11-07',
+            'result' => 'delivery-rhythm-triggered-delivery-break',
+        ];
+        $this->assertGetNextPickupDayForProduct($data['product'], $data['currentDay'], $data['result']);
+    }
+    */
+
     public function test2WeekD()
     {
         $data = [
