@@ -222,6 +222,16 @@ $this->element('addScript', [
         <?php } ?>
 
         <tr>
+            <td>PHP Version</td>
+            <td><?php echo PHP_VERSION; ?></td>
+        </tr>
+
+        <tr>
+            <td>App.defaultTimezone</td>
+            <td><?php echo Configure::read('App.defaultTimezone'); ?></td>
+        </tr>
+
+        <tr>
             <td>App.fullBaseUrl</td>
             <td><a target="_blank"href="<?php echo Configure::read('App.fullBaseUrl'); ?>"><?php echo Configure::read('App.fullBaseUrl'); ?></a></td>
         </tr>
