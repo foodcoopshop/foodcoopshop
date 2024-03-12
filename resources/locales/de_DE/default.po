@@ -1941,7 +1941,7 @@ msgid "Please_delete_product_from_cart_to_place_order."
 msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
 
 msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
-msgstr "Die Variante {0} des Produkts {1} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
+msgstr "Die Variante {0} des Produktes {1} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
 
 msgid "The_attribute_does_not_exist."
 msgstr "Die Variante existiert nicht."

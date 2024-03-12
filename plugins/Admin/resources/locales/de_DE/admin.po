@@ -635,7 +635,7 @@ msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the
 msgstr "Das Produkt {0} vom Hersteller {1} wird jetzt {2} Tage lang als \"neu\" angezeigt."
 
 msgid "The_price_of_the_following_{0,plural,=1{1_ordered_product} other{#_ordered_products}}_was_changed:"
-msgstr "Der Preis {0,plural,=1{des folgenden bestellten Produkts} other{der folgenden # bestellten Produkte}} wurde angepasst:"
+msgstr "Der Preis {0,plural,=1{des folgenden bestellten Produktes} other{der folgenden # bestellten Produkte}} wurde angepasst:"
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "Der Preis des Produktes {0} wurde erfolgreich geändert."

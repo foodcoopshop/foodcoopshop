@@ -207,7 +207,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals(0.19, $openOrderDetails[1]->tax_unit_amount);
         $this->assertEquals(0.95, $openOrderDetails[1]->tax_total_amount);
 
-        $this->assertFlashMessage('Der Preis des Produktes <b>Artischocke</b> wurde erfolgreich geändert.<br />Der Preis des folgenden bestellten Produkts wurde angepasst: ID: 4');
+        $this->assertFlashMessage('Der Preis des Produktes <b>Artischocke</b> wurde erfolgreich geändert.<br />Der Preis des folgenden bestellten Produktes wurde angepasst: ID: 4');
 
     }
 

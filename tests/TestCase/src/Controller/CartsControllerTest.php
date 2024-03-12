@@ -588,9 +588,9 @@ class CartsControllerTest extends AppCakeTestCase
         // product and missing pp per unit
         $this->assertMatchesRegularExpression('/Das Produkt (.*)Forelle(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
         // attribute and missing pp per piece
-        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Lagerprodukt mit Varianten(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produktes (.*)Lagerprodukt mit Varianten(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
         // attribute and missing pp per unit
-        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produkts (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
+        $this->assertMatchesRegularExpression('/Die Variante (.*)1 kg(.*) des Produktes (.*)Rindfleisch(.*) kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden./', $this->_response->getBody()->__toString());
     }
 
     public function testFinishWithPickupDayCommentNotification()
