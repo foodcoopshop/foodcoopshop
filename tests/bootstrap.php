@@ -32,6 +32,7 @@ $migrator->runMany([
 // 2) run new migrations (located in main folder)
 //$migrator->run([], false); // causes "Going to drop all tables in this source, and re-apply migrations."
 $migrations = new Migrations();
+$migrations->markMigrated('20240313184917_ManufacturerLoginFix', ['connection' => 'test']);
 $migrations->migrate(['connection' => 'test']);
 
 // 3) add test data (generated to fit after run migrations in init folder)
