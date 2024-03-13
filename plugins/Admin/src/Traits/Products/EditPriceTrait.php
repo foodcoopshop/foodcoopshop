@@ -29,6 +29,10 @@ trait EditPriceTrait {
             return '';
         }
 
+        if ($this->identity->isManufacturer()) {
+            return '';
+        }
+
         if ($this->getRequest()->getData('pricePerUnitEnabled') && $this->getRequest()->getData('priceInclPerUnit')) {
             $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit'));
             $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'));

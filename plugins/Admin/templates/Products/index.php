@@ -42,7 +42,7 @@ $paginator = $this->loadHelper('Paginator', [
             Configure::read('app.jsNamespace') . ".ModalProductAttributeAdd.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeSetDefault.init();" .
-            Configure::read('app.jsNamespace') . ".ModalProductPriceEdit.init(".Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled').");" .
+            Configure::read('app.jsNamespace') . ".ModalProductPriceEdit.init(".Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled').", " . !$identity->isManufacturer() . ");" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button, .purchase-price-not-set-info-text');".
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ((int) $manufacturerId > 0 ? $manufacturerId : '0') . ");".
             Configure::read('app.jsNamespace') . ".ModalProductDeliveryRhythmEdit.init();
