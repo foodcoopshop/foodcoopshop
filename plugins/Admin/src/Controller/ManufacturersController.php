@@ -545,6 +545,23 @@ class ManufacturersController extends AdminAppController
             );
             $manufacturer = $this->Manufacturer->save($manufacturer);
 
+            if (!$this->identity->isManufacturer()) {
+                $manufacturer = $this->Manufacturer->find('all',
+                    conditions: [
+                        'Manufacturers.id_manufacturer' => $manufacturer->id_manufacturer,
+                    ],
+                    contain: [
+                        'AddressManufacturers'
+                    ])->first();
+        
+                $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
+                if (!empty($customerRecord)) {
+                    $customersTable = $this->getTableLocator()->get('Customers');
+                    $customerRecord->active = $manufacturer->active;
+                    $customersTable->save($customerRecord);
+                }
+            }
+
             $this->getRequest()->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
 
             if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getManufacturerProfile()) {
