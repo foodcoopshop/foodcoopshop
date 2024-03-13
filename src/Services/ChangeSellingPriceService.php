@@ -63,6 +63,16 @@ class ChangeSellingPriceService
                 $unitAmount,
                 $openOrderDetail->order_detail_unit->product_quantity_in_units,
             );
+
+            $unitChangeFactor = 1;
+            $productQuantityInUnits = $openOrderDetail->order_detail_unit->product_quantity_in_units;
+            if ($openOrderDetail->order_detail_unit->unit_name == 'kg' && $unitName == 'g') {
+                $unitChangeFactor = 1000;
+            }
+            if ($openOrderDetail->order_detail_unit->unit_name == 'g' && $unitName == 'kg') {
+                $unitChangeFactor = 0.001;
+            }
+
             $patchedEntity = $orderDetailUnitsTable->patchEntity(
                 $openOrderDetail->order_detail_unit,
                 [
@@ -70,10 +80,11 @@ class ChangeSellingPriceService
                     'unit_name' => $unitName,
                     'unit_amount' => $unitAmount,
                     'quantity_in_units' => $quantityInUnits,
+                    'product_quantity_in_units' => $productQuantityInUnits * $unitChangeFactor,
                 ],
             );
             $orderDetailUnitsTable->save($patchedEntity);
-            $this->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal, $openOrderDetail->product_amount);
+            $this->changeOrderDetailPriceDepositTax($openOrderDetail, $grossPriceTotal * $unitChangeFactor, $openOrderDetail->product_amount);
             $changedOpenOrderDetails[] = $openOrderDetail;
         }
 

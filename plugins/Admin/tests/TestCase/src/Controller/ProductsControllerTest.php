@@ -251,7 +251,7 @@ class ProductsControllerTest extends AppCakeTestCase
             )
         );
 
-        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 2, 'kg', 50, 350, changeOpenOrderDetails: true);
+        $this->assertSellingPriceChange($productId, 0, 0, 10, true, 150, 'kg', 1, 350, changeOpenOrderDetails: true);
 
         $openOrderDetails = $orderDetailsTable->find('all',
             conditions: [
@@ -262,18 +262,18 @@ class ProductsControllerTest extends AppCakeTestCase
             ])->toArray();
 
         // order was NOT billed => price change and order_detail_unit change
-        $this->assertEquals(70, $openOrderDetails[0]->total_price_tax_incl);
-        $this->assertEquals(63.65, $openOrderDetails[0]->total_price_tax_excl);
-        $this->assertEquals(2, $openOrderDetails[0]->order_detail_unit->price_incl_per_unit);
+        $this->assertEquals(262.5, $openOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(238.65, $openOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(150, $openOrderDetails[0]->order_detail_unit->price_incl_per_unit);
         $this->assertEquals('kg', $openOrderDetails[0]->order_detail_unit->unit_name);
-        $this->assertEquals(50, $openOrderDetails[0]->order_detail_unit->unit_amount);
+        $this->assertEquals(1, $openOrderDetails[0]->order_detail_unit->unit_amount);
 
         // order was NOT billed => price change and order_detail_unit change
-        $this->assertEquals(14, $openOrderDetails[2]->total_price_tax_incl);
-        $this->assertEquals(12.73, $openOrderDetails[2]->total_price_tax_excl);
-        $this->assertEquals(2, $openOrderDetails[2]->order_detail_unit->price_incl_per_unit);
+        $this->assertEquals(52.5, $openOrderDetails[2]->total_price_tax_incl);
+        $this->assertEquals(47.73, $openOrderDetails[2]->total_price_tax_excl);
+        $this->assertEquals(150, $openOrderDetails[2]->order_detail_unit->price_incl_per_unit);
         $this->assertEquals('kg', $openOrderDetails[2]->order_detail_unit->unit_name);
-        $this->assertEquals(50, $openOrderDetails[2]->order_detail_unit->unit_amount);
+        $this->assertEquals(1, $openOrderDetails[2]->order_detail_unit->unit_amount);
 
         $this->assertFlashMessage('Der Preis des Produktes <b>Forelle</b> wurde erfolgreich geändert.<br />Der Preis der folgenden 2 bestellten Produkte wurde angepasst: ID: 4, 6');
 
