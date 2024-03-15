@@ -45,6 +45,17 @@ if ($blogPost->short_description != '') {
 
     echo '<p><i>';
         echo '<br />'.__('Modified_on'). ' ' . $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
+if (!empty($blogPost->manufacturer)) {
+    echo ', ';
+    if ($blogPost->manufacturer->active) {
+        echo $this->Html->link(
+            $blogPost->manufacturer->name,
+            $this->Slug->getManufacturerDetail($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name)
+        );
+    } else {
+        echo $blogPost->manufacturer->name;
+    }
+}
     echo '</i></p>';
     echo '<div class="sc"></div>';
 
