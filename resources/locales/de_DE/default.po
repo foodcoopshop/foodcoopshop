@@ -990,7 +990,7 @@ msgid "Product_declaration_ok?"
 msgstr "Produktdeklaration OK?"
 
 msgid "docs_route_product_declaration"
-msgstr "lebensmittelkennzeichnung"
+msgstr "produkte/lebensmittelkennzeichnung"
 
 msgid "Help"
 msgstr "Hilfe"

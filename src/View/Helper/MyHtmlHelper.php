@@ -257,20 +257,11 @@ class MyHtmlHelper extends HtmlHelper
     }
 
     /**
-     * so far software documentation only exists in DE
-     * @param string $page
-     * @return string
+     * software documentation only exists in DE
      */
-    public function getDocsUrl($page, $languageCode=null)
+    public function getDocsUrl(string $page): string
     {
-        if (is_null($languageCode)) {
-            $languageCode = substr(I18n::getLocale(), 0, 2);
-        }
-        $url = 'https://foodcoopshop.github.io/' . $languageCode . '/';
-        if ($languageCode == 'de' || $page == 'settings') {
-            $url .= $page;
-        }
-        return $url;
+        return 'https://foodcoopshop.github.io/' . $page;
     }
 
     public function getNameRespectingIsDeleted($customer)

@@ -32,13 +32,13 @@
   <span> · </span>
   <a href="https://demo-en.foodcoopshop.com">English Demo</a>
   <span> · </span>
-  <a href="https://foodcoopshop.github.io/en/users.html">Users</a>
+  <a href="https://foodcoopshop.github.io/users">Users</a>
   <span> · </span>
   <a href="https://signal.group/#CjQKIBEXUVQCyyQu3-7kOgvPIuFDcAN_12WPTAWs4L8kkyGZEhBefC_uCkp2pqHpl8XljqlN">Signal Support Group</a>
 </h3>
 
 ## 🤖 Self-hosting / developing
-* 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/en/docker-dev-environment) / [Installation guide](https://foodcoopshop.github.io/en/installation-guide)
+* 🐳 [Docker Dev Environment](https://foodcoopshop.github.io/dev/docker-dev-environment) / [Installation guide](https://foodcoopshop.github.io/dev/installation-guide)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/foodcoopshop/foodcoopshop)
 * Gitpod: When all containers are up and running (takes about 1 minute), open your Bash-terminal (not in the Docker-terminal) and run
@@ -67,7 +67,7 @@
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
 ## ❗ Legal information
-Before installing don't forget to read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
+Before installing don't forget to read the [legal information](https://foodcoopshop.github.io/rechtliches).
 
 ## 😎 Maintainer
 [Mario Rothauer](https://github.com/mrothauer) started the project in 2014 and maintains it.

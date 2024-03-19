@@ -911,7 +911,7 @@ msgid "Delete_blog_post?"
 msgstr "Blog-Artikel löschen?"
 
 msgid "docs_route_wysiwyg_editor"
-msgstr "wysiwyg-editor"
+msgstr "diverses/wysiwyg-editor"
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "Wie verwende ich den Editor?"
@@ -932,7 +932,7 @@ msgid "Delete_category?"
 msgstr "Kategorie löschen?"
 
 msgid "docs_route_settings"
-msgstr "settings"
+msgstr "dev/configuration"
 
 msgid "The_following_settings_can_be_changed_in_the_admin_area."
 msgstr "Die folgenden Einstellungen können im Admin-Bereich geändert werden."
@@ -1208,7 +1208,7 @@ msgid "Delete_deposit_take_back?"
 msgstr "Pfand-Rücknahme löschen?"
 
 msgid "docs_route_deposit"
-msgstr "pfand"
+msgstr "produkte/pfand"
 
 msgid "Please_chose_a_manufacturer."
 msgstr "Bitte wähle einen Hersteller aus."
@@ -1244,7 +1244,7 @@ msgid "Your_deposit_balance"
 msgstr "Dein Pfand-Kontostand"
 
 msgid "docs_route_infos_for_success"
-msgstr "wichtige-infos-zum-gelingen"
+msgstr "diverses/wichtige-infos-zum-gelingen"
 
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Pfand-Übersicht für alle Hersteller"
@@ -1283,7 +1283,7 @@ msgid "Returned_deposit_by_member"
 msgstr "Pfand-Rückgaben (Mitglieder)"
 
 msgid "docs_route_user_feedback"
-msgstr "user-feedback"
+msgstr "diverses/user-feedback"
 
 msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
 msgstr "Dein Feedback ist noch nicht freigeschaltet und daher noch nicht öffentlich sichtbar. Wir bitten um ein wenig Geduld."
@@ -1382,7 +1382,7 @@ msgid "Pickup_day"
 msgstr "Abholtag"
 
 msgid "docs_route_pick_up_products"
-msgstr "abholung-der-produkte"
+msgstr "bestellabwicklung/abholtag"
 
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
 msgstr "Hier findest du die unveränderten Bestelllisten, die an dich verschickt wurden."
@@ -1829,7 +1829,7 @@ msgid "Back_to_member_overview"
 msgstr "Zurück zur Mitglieder-Übersicht"
 
 msgid "docs_route_product_import"
-msgstr "produkt-import.html"
+msgstr "produkte/produkt-import"
 
 msgid "Read_guide_for_product_import"
 msgstr "Anleitung für Produkt-Import durchlesen"
@@ -2111,7 +2111,7 @@ msgid "Delivery_days"
 msgstr "Liefertage"
 
 msgid "docs_route_credit_system_with_csv_upload"
-msgstr "guthaben-system-mit-automatischem-kontoabgleich"
+msgstr "guthaben/automatischer-kontoabgleich"
 
 msgid "Add_new_payment"
 msgstr "Neue Zahlung eintragen"

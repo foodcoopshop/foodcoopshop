@@ -35,7 +35,7 @@ $this->element('addScript', [
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
-            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'), 'en')]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
         </div>
     </div>
 

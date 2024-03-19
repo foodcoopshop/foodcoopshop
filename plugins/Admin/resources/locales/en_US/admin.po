@@ -815,7 +815,7 @@ msgid "Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg)."
 msgstr "Please check, if this attribute represents a weight attribute (e.g. kg)."
 
 msgid "docs_route_products"
-msgstr "products"
+msgstr ""
 
 msgid "Information_needed_for_function_price_per_unit."
 msgstr "Information needed for the function \"Price per unit\"."
@@ -911,7 +911,7 @@ msgid "Delete_blog_post?"
 msgstr "Delete blog post?"
 
 msgid "docs_route_wysiwyg_editor"
-msgstr "wysiwyg-editor"
+msgstr ""
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "How do I use the editor?"
@@ -932,7 +932,7 @@ msgid "Delete_category?"
 msgstr "Delete category?"
 
 msgid "docs_route_settings"
-msgstr "settings"
+msgstr ""
 
 msgid "The_following_settings_can_be_changed_in_the_admin_area."
 msgstr "The following settings can be changed in the admin panel."
@@ -1040,7 +1040,7 @@ msgid "Included_deposit"
 msgstr "Included deposit"
 
 msgid "docs_route_members"
-msgstr "members"
+msgstr ""
 
 msgid "Company_name"
 msgstr "Company name"
@@ -1208,7 +1208,7 @@ msgid "Delete_deposit_take_back?"
 msgstr "Delete deposit take back?"
 
 msgid "docs_route_deposit"
-msgstr "deposit"
+msgstr ""
 
 msgid "Please_chose_a_manufacturer."
 msgstr "Please chose a manufacturer."
@@ -1244,7 +1244,7 @@ msgid "Your_deposit_balance"
 msgstr "Your deposit balance"
 
 msgid "docs_route_infos_for_success"
-msgstr "infos-for-success"
+msgstr ""
 
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Deposit overview for all manufacturers"
@@ -1379,7 +1379,7 @@ msgid "Pickup_day"
 msgstr "Pickup day"
 
 msgid "docs_route_pick_up_products"
-msgstr "pick-up-products"
+msgstr ""
 
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
 msgstr "Here you find the unchanged order lists that were sent to you."
@@ -1394,7 +1394,7 @@ msgid "Order_list_by_member"
 msgstr "Order list by member"
 
 msgid "docs_route_manufacturers"
-msgstr "manufacturers"
+msgstr ""
 
 msgid "General"
 msgstr "General"
@@ -1808,7 +1808,7 @@ msgid "Comment"
 msgstr "Comment"
 
 msgid "docs_route_credit_system"
-msgstr "credit-system"
+msgstr ""
 
 msgid "Add_transfered_credit"
 msgstr "Add transfered credit"
@@ -1826,7 +1826,7 @@ msgid "Back_to_member_overview"
 msgstr "Back to member overview"
 
 msgid "docs_route_product_import"
-msgstr "products"
+msgstr ""
 
 msgid "Read_guide_for_product_import"
 msgstr "Read guide for product import"
@@ -2423,7 +2423,7 @@ msgid "Help_pages"
 msgstr "Online help"
 
 msgid "docs_route_order_handling"
-msgstr "order-handling"
+msgstr ""
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "You can change your imprint by yourself."
