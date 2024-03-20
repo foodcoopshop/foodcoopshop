@@ -834,6 +834,7 @@ body.carts #load-last-order-details,
     padding-top: 0;
 }
 #cart p.product-sum-wrapper,
+#cart b.amount-sum-wrapper,
 .cart p.deposit-sum-wrapper {
     display: none;
 }
@@ -845,17 +846,18 @@ body.carts #load-last-order-details,
 }
 .cart p.product-sum-wrapper span.sum,
 .cart p.deposit-sum-wrapper span.sum,
-.cart p.total-sum-wrapper span.sum,
+.cart p.total-sum-wrapper > span.sum,
 .cart b.payment {
     font-weight: 600;
     float: right;
-    margin-right: 20px;
+    margin-right: 23px;
 }
 .cart p.products span.product span.delete,
 .cart p.products span.product span.price {
     float: right;
 }
-.cart span.product-name {
+.cart span.product-name,
+.cart p.amount-sum-wrapper {
     margin-right: 3px;
 }
 .cart span.product-name-wrapper span.unity {
