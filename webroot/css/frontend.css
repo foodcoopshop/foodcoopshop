@@ -1018,6 +1018,9 @@ body.carts #CartsDetailForm {
     width: 32px;
     padding: 4px 6px;
 }
+.pagination-wrapper span {
+    margin-top: 5px;
+}
 body.carts .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;

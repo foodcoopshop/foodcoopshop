@@ -20,6 +20,9 @@ if ($pagesCount <= 1)  {
 }
 
 echo '<div class="pagination-wrapper">';
+
+echo '<span>' . __('Page') . ':</span>';
+
 for ($i = 1; $i <= $pagesCount; $i++) {
 
     $paginationLink = $this->getRequest()->getAttribute('here') . '?page=' . $i;
