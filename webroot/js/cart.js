@@ -52,6 +52,7 @@ foodcoopshop.Cart = {
         var sum = 0;
         var depositSum = 0;
         var taxSum = 0;
+        var amountSum = 0;
 
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
@@ -59,10 +60,12 @@ foodcoopshop.Cart = {
             sum += cp.price;
             depositSum += cp.deposit;
             taxSum += cp.tax;
+            amountSum += cp.amount;
         }
         this.updateCartProductSum(sum);
         this.updateCartDepositSum(depositSum);
         this.updateCartTaxSum(taxSum);
+        this.updateCartAmountSum(amountSum);
         this.updateCartTotalSum(sum + depositSum);
 
         foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
@@ -273,6 +276,7 @@ foodcoopshop.Cart = {
             var productContainerTmp = productContainer.clone();
             var cartProductSumTmp = $('.cart p.product-sum-wrapper').clone();
             var cartDepositSumTmp = $('.cart p.deposit-sum-wrapper').clone();
+            var cartAmountSumTmp = $('.cart p.amount-sum-wrapper').clone();
             var cartTotalSumTmp = $('.cart p.total-sum-wrapper').clone();
 
             var tmpWrapper = $('#cart p.tmp-wrapper');
@@ -280,6 +284,7 @@ foodcoopshop.Cart = {
             tmpWrapper.append(productContainerTmp);
             tmpWrapper.append(cartProductSumTmp);
             tmpWrapper.append(cartDepositSumTmp);
+            tmpWrapper.append(cartAmountSumTmp);
             tmpWrapper.append(cartTotalSumTmp);
 
             if (productContainer.length > 0) {
@@ -297,6 +302,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Cart.updateCartProductSum(price);
             foodcoopshop.Cart.updateCartDepositSum(deposit);
             foodcoopshop.Cart.updateCartTaxSum(tax * amount);
+            foodcoopshop.Cart.updateCartAmountSum(amount);
             foodcoopshop.Cart.updateCartTotalSum(price + deposit);
 
             var button = productWrapper.find('.ew.active .btn-cart');
@@ -355,10 +361,12 @@ foodcoopshop.Cart = {
 
         var tmpCartProductSum = $('#cart p.tmp-wrapper p.product-sum-wrapper span.sum');
         var tmpCartDepositSum = $('#cart p.tmp-wrapper p.deposit-sum-wrapper span.sum');
+        var tmpCartAmountSum = $('#cart p.tmp-wrapper p.amount-sum-wrapper span.sum');
         var tmpCartTotalSum = $('#cart p.tmp-wrapper p.total-sum-wrapper span.sum');
 
         $('#cart p.product-sum-wrapper span.sum').html(tmpCartProductSum.html());
         $('#cart p.deposit-sum-wrapper span.sum').html(tmpCartDepositSum.html());
+        $('#cart p.amount-sum-wrapper span.sum').html(tmpCartAmountSum.html());
         $('#cart p.total-sum-wrapper span.sum').html(tmpCartTotalSum.html());
 
         if (foodcoopshop.Helper.isMobile()) {
@@ -429,6 +437,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(disabledButtonsDuringUpdateCartRequest);
                         foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit, newTax);
                         foodcoopshop.Cart.updateCartProductSum(newPrice);
+                        foodcoopshop.Cart.updateCartAmountSum(amount);
                         foodcoopshop.Cart.updateCartTaxSum(newTax * amount);
                         if (depositContainer.length > 0) {
                             foodcoopshop.Cart.updateCartDepositSum(newDeposit);
@@ -494,7 +503,7 @@ foodcoopshop.Cart = {
     },
 
     updateCartProductSum: function (amount) {
-        var cartProductSum = $('.cart .sums-wrapper p.product-sum-wrapper span.sum');
+        var cartProductSum = $('.cart .sums-wrapper .product-sum-wrapper span.sum');
         if (cartProductSum.length == 0) {
             return;
         }
@@ -504,9 +513,21 @@ foodcoopshop.Cart = {
         cartProductSum.html(newCartProductSumHtml);
     },
 
+    updateCartAmountSum: function (amount) {
+        var cartAmountSum = $('.cart .sums-wrapper .amount-sum-wrapper > span.sum span.value');
+        if (cartAmountSum.length == 0) {
+            return;
+        }
+        var newCartAmountSumHtml = parseInt(cartAmountSum.html()) + amount;
+        if (newCartAmountSumHtml > 0) {
+            cartAmountSum.closest('.amount-sum-wrapper').show();
+        }
+        cartAmountSum.html(newCartAmountSumHtml);
+    },
+
     updateCartTotalSum: function (amount) {
 
-        var cartTotalSum = $('.cart .sums-wrapper p.total-sum-wrapper span.sum');
+        var cartTotalSum = $('.cart .sums-wrapper .total-sum-wrapper > span.sum');
         if (cartTotalSum.length == 0) {
             return;
         }
@@ -523,7 +544,7 @@ foodcoopshop.Cart = {
     },
 
     updateCartDepositSum: function (amount) {
-        var cartDepositSum = $('.cart .sums-wrapper p.deposit-sum-wrapper span.sum');
+        var cartDepositSum = $('.cart .sums-wrapper .deposit-sum-wrapper span.sum');
         if (cartDepositSum.length == 0) {
             return;
         }
@@ -538,7 +559,7 @@ foodcoopshop.Cart = {
     },
 
     updateCartTaxSum: function (amount) {
-        var cartTaxSum = $('.cart p.tax-sum-wrapper span.sum');
+        var cartTaxSum = $('.cart .tax-sum-wrapper span.sum');
         if (cartTaxSum.length == 0) {
             return;
         }
@@ -581,6 +602,8 @@ foodcoopshop.Cart = {
                         foodcoopshop.Cart.updateCartTaxSum(
                             foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.tax').html()) * -1
                         );
+                        var amountToUpdate = foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.amount .value').html()) * -1;
+                        foodcoopshop.Cart.updateCartAmountSum(amountToUpdate);
                         foodcoopshop.Cart.updateCartTotalSum(priceToUpdate + depositToUpdate);
                     }
                     p.remove();
