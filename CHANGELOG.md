@@ -6,8 +6,6 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht
-
 ## v4.0
 
 ### Neue Funktionen / Verbesserungen
@@ -38,7 +36,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Neue Produkt-Import-Funktion mittels CSV-Upload, [hier gehts zur Doku](https://foodcoopshop.github.io/de/produkt-import.html). [I#953](https://github.com/foodcoopshop/foodcoopshop/issues/953) / [PR#982](https://github.com/foodcoopshop/foodcoopshop/pull/982) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
-Datum: xx.xx.2024 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/19) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.2...v4.0.0)
+Datum: 29.03.2024 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/19) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.2...v4.0.0)
 
 
 ## v3.6.2
