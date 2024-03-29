@@ -50,7 +50,7 @@ foodcoopshop.Helper = {
         document.body.appendChild(temp);
         temp.focus();
         var result = document.execCommand('copy');
-        
+
         temp.blur();
         document.body.removeChild(temp);
 
@@ -774,7 +774,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-v3.6.jpg',
+            '/img/bg-v4.0.jpg',
             {
                 positionY: 'top',
                 transitionDuration: 400
