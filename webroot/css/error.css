@@ -33,7 +33,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 80vh;
 }
 #inner-content {
     margin-top: 0;
@@ -56,9 +56,6 @@ body {
 h2 {
     font-size: 18px;
     text-shadow: 0 0 5px #fff;
-    padding: 5px;
-    width: 500px;
-    margin: 0 auto;
     line-height: 20px;
     border-radius: 5px;
 }
