@@ -138,7 +138,7 @@ class InvoicesTable extends AppTable
                     $taxRatesSums[$trt]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
                 }
 
-                if (isset($taxRate) && !isset($taxRates[$trt][$taxRate])) {
+                if (isset($taxRate) && isset($taxRates[$trt][$taxRate])) {
                     $taxRates[$trt][$taxRate]['sum_price_excl'] = round($taxRates[$trt][$taxRate]['sum_price_excl'], 2);
                     $taxRates[$trt][$taxRate]['sum_tax'] = round($taxRates[$trt][$taxRate]['sum_tax'], 2);
                     $taxRates[$trt][$taxRate]['sum_price_incl'] = round($taxRates[$trt][$taxRate]['sum_price_incl'], 2);
