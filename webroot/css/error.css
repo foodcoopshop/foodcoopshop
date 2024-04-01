@@ -28,9 +28,16 @@ body {
     border: none;
     margin-right: 0;
     margin-top: 0;
+    padding-top: 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 #inner-content {
-    margin-top: 110px;
+    margin-top: 0;
+    padding-bottom: 0;
 }
 #content h1,
 #container {
@@ -42,16 +49,13 @@ body {
     display: none;
 }
 
-body {
-    margin-top: 10px;
-}
 #container {
     display: block;
-    padding: 10px;
+    padding: 0 30px;
 }
 h2 {
     font-size: 18px;
-    background: #fff;
+    text-shadow: 0 0 5px #fff;
     padding: 5px;
     width: 500px;
     margin: 0 auto;
