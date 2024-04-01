@@ -47,8 +47,6 @@ jobs:
       - name: Apply secrets
         run: |
           sed -i 's/HELLO_CASH_TOKEN/${{secrets.HELLO_CASH_TOKEN}}/' ./config/custom_config.php
-          sed -i 's/HELLO_CASH_USERNAME/${{secrets.HELLO_CASH_USERNAME}}/' ./config/custom_config.php
-          sed -i 's/HELLO_CASH_PASSWORD/${{secrets.HELLO_CASH_PASSWORD}}/' ./config/custom_config.php
           sed -i 's/HELLO_CASH_CASHIER_ID/${{secrets.HELLO_CASH_CASHIER_ID}}/' ./config/custom_config.php
 
       - name: Upload files to server

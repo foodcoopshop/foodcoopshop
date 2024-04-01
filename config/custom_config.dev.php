@@ -104,8 +104,6 @@ return [
 
         'helloCashAtCredentials' => [
             'token' => 'HELLO_CASH_TOKEN',
-            'username' => 'HELLO_CASH_USERNAME',
-            'password' => 'HELLO_CASH_PASSWORD',
             'cashier_id' => 'HELLO_CASH_CASHIER_ID',
             'payment_type_cash' => 'Bar',
             'payment_type_cashless' => 'Kreditrechnung',

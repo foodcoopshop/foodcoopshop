@@ -190,8 +190,7 @@ return [
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 
         'helloCashAtCredentials' => [
-            'username' => '',
-            'password' => '',
+            'token' => '',
             'cashier_id' => 0,
             'payment_type_cash' => 'Bar',
             'payment_type_cashless' => 'Guthaben-System',
