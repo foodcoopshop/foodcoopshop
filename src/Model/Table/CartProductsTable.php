@@ -175,8 +175,8 @@ class CartProductsTable extends AppTable
         }
 
         // check if passed optional product/attribute relation exists
+        $attributeIdFound = false;
         if ($attributeId > 0) {
-            $attributeIdFound = false;
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $attributeId) {
 
@@ -278,13 +278,15 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $result = $this->validateQuantityInUnitsForSelfServiceMode($orderCustomerService, $product, 'unit_product', $orderedQuantityInUnits);
-        if ($result !== true) {
-            return [
-                'status' => 0,
-                'msg' => $result,
-                'productId' => $initialProductId
-            ];
+        if (!$attributeIdFound) {
+            $result = $this->validateQuantityInUnitsForSelfServiceMode($orderCustomerService, $product, 'unit_product', $orderedQuantityInUnits);
+            if ($result !== true) {
+                return [
+                    'status' => 0,
+                    'msg' => $result,
+                    'productId' => $initialProductId
+                ];
+            }
         }
 
         $message = $this->hasProductDeliveryRhythmTriggeredDeliveryBreak($orderCustomerService, $product->next_delivery_day, $product->name);
