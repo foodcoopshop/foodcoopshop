@@ -16,13 +16,6 @@ ports:
     onOpen: ignore
   - port: 3321
     onOpen: ignore
-
-image:
-    file: .gitpod.Dockerfile
-
-vscode:
-    extensions:
-        - felixfbecker.php-debug
         
 github:
   prebuilds:

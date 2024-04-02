@@ -77,7 +77,7 @@ return [
 
     'App' => [
         //* BE AWARE: NO TRAILING SLASH!
-        'fullBaseUrl' => 'https://foodcoopsho-foodcoopsho-6c963xj6dtv.ws-eu110.gitpod.io',
+        'fullBaseUrl' => 'http://localhost',
     ],
 
     'app' => [

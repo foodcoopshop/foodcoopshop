@@ -21,5 +21,3 @@ RUN apk add gcc musl-dev make autoconf && \
     pecl install pcov && \
     docker-php-ext-enable pcov && \
     echo 'pcov.directory = /app' >> /usr/local/etc/php/php.ini
-
-RUN sudo install-packages php-xdebug
