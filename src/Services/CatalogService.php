@@ -398,7 +398,7 @@ class CatalogService
                 //check if barcode contains productweight
 				$prefixbarcodewithweight = "27"; //Mario: an welcher globalen Stelle willst du das hinterlegen?
 				if (strpos($keyword, $prefixbarcodewithweight) === 0){
-                    if(false){
+                    if(1==2){
 					$productbarcodewithoutweight = substr($keyword, 0, 7);
 					$productbarcodewithoutweight .= "000000";
                     $or = array_merge($or, [
