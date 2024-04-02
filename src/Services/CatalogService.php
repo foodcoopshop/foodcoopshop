@@ -400,12 +400,10 @@ class CatalogService
 				if (strpos($keyword, $prefixbarcodewithweight) === 0){
 					$productbarcodewithoutweight = substr($keyword, 0, 7);
 					$productbarcodewithoutweight .= "000000";
-                    if(1==2){
                     $or = array_merge($or, [
                         $q->newExpr()->eq('BarcodeProducts.barcode', $productbarcodewithoutweight),
                         $q->newExpr()->eq('BarcodeProductAttributes.barcode', $productbarcodewithoutweight),
                     ]);
-                    }
 				}
             }
             return $exp->or($or);
