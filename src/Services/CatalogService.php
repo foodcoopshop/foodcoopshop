@@ -399,7 +399,7 @@ class CatalogService
 				$prefixbarcodewithweight = "27"; //Mario: an welcher globalen Stelle willst du das hinterlegen?
 				if (strpos($keyword, $prefixbarcodewithweight) === 0){
 					$productbarcodewithoutweight = substr($keyword, 0, 7);
-					$productbarcodewithoutweight += "000000";
+					$productbarcodewithoutweight .= "000000";
                     $or = array_merge($or, [
                         $q->newExpr()->eq('BarcodeProducts.barcode', $productbarcodewithoutweight),
                         $q->newExpr()->eq('BarcodeProductAttributes.barcode', $productbarcodewithoutweight),
