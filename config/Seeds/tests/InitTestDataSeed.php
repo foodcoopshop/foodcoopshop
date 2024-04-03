@@ -398,7 +398,7 @@ INSERT INTO `fcs_units` VALUES
 (6,0,14,0.00,NULL,'kg',1,0,0.000),
 (7,0,15,10.00,6.00,'kg',1,1,0.500),
 (8,351,0,15.00,NULL,'kg',1,1,1.000),
-(9,352,0,12.00,NULL,'kg',1,0,0.000);
+(9,352,0,12.00,NULL,'kg',1,1,1.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_processes` DISABLE KEYS */;
