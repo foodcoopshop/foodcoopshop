@@ -88,9 +88,20 @@ class SelfServiceController extends FrontendController
             $attributeId = (int) substr($keyword, 4, 4);
 
             $customBarcodeFound = false;
-            if (!empty($products[0]->barcode_product) && $keyword == $products[0]->barcode_product->barcode) {
+            if (!empty($products[0]->barcode_product) && ($keyword == $products[0]->barcode_product->barcode)) {
                 $customBarcodeFound = true;
                 $attributeId = 0;
+            }
+            else {
+                $prefixbarcodewithweight = "27"; //Mario: an welcher globalen Stelle willst du das hinterlegen?
+                if (strpos($keyword, $prefixbarcodewithweight) === 0){
+                    $productbarcodewithoutweight = substr($keyword, 0, 7);
+				    $productbarcodewithoutweight += "000000";
+                    if ($productbarcodewithoutweight == $products[0]->barcode_product->barcode){
+                        $customBarcodeFound = true;
+                        $attributeId = 0;
+                    }
+                }
             }
 
             if (!empty($products[0]->product_attributes)) {
@@ -101,6 +112,17 @@ class SelfServiceController extends FrontendController
                             $attributeId = $productAttribute->id_product_attribute;
                             break;
                         }
+                        else {
+                            $prefixbarcodewithweight = "27"; //Mario: an welcher globalen Stelle willst du das hinterlegen?
+                            if (strpos($keyword, $prefixbarcodewithweight) === 0){
+                                $productbarcodewithoutweight = substr($keyword, 0, 7);
+                                $productbarcodewithoutweight += "000000";
+                                if ($productbarcodewithoutweight == $productAttribute->barcode_product_attribute->barcode){
+                                    $customBarcodeFound = true;
+                                    $attributeId = $productAttribute->id_product_attribute;
+                                    break;
+                                }
+                            }
                     }
                 }
             }
