@@ -212,8 +212,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2345678901234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $this->assertFlashMessageAt(0, 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.');
-        $this->assertRedirect($this->Slug->getSelfService('', $barcodeForProduct));
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+        $this->assertRedirect($this->Slug->getSelfService());
     }
 
     public function testSearchByCustomProductBarcodeWithWeight()
