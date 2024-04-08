@@ -297,7 +297,7 @@ INSERT INTO `fcs_product` VALUES
 (349,5,2,1,4.545455,'Lagerprodukt','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
 (350,5,2,1,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2018-08-16 12:19:06','2018-08-16 12:19:23'),
 (351,5,1,1,0.000000,'Lagerprodukt 2','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2019-06-05 15:09:53','2019-06-05 15:10:08'),
-(352,5,1,1,1.200000,'Lagerprodukt mit Gewichtsbarcode','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2019-06-05 15:09:53','2019-06-05 15:10:08');
+(352,15,1,1,1.200000,'Lagerprodukt mit Gewichtsbarcode','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2019-06-05 15:09:53','2019-06-05 15:10:08');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
