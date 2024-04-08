@@ -123,6 +123,7 @@ class SelfServiceController extends FrontendController
                                     break;
                                 }
                             }
+                        }
                     }
                 }
             }
