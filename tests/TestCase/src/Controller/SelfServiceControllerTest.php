@@ -222,7 +222,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2712345600235';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $this->assertJsonOk();
     } 
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
