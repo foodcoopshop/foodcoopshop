@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-eslint --fix webroot/js plugins/Admin/webroot/js plugins/Network/webroot/js
+eslint . --fix --ignore-pattern 'webroot/js/elfinder/*' --ignore-pattern 'vendor/*' --ignore-pattern '.history/*'
