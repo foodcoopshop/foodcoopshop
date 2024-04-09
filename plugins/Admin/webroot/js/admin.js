@@ -42,10 +42,11 @@ foodcoopshop.Admin = {
                             console.log(data.msg);
                         }
                     }
-                )} , 300);
-            }, function() {
-                clearTimeout(getCreditBalanceTimeouts[customerId]);
-            }
+                );
+            }, 300);
+        }, function() {
+            clearTimeout(getCreditBalanceTimeouts[customerId]);
+        }
         );
     },
 
