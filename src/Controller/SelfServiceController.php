@@ -93,7 +93,7 @@ class SelfServiceController extends FrontendController
                 $attributeId = 0;
             }
             else {
-                $prefixbarcodewithweight = "27"; //Mario: an welcher globalen Stelle willst du das hinterlegen?
+                $prefixbarcodewithweight = $BARCODE_WITH_WEIGHT_PREFIX;
                 if (strpos($keyword, $prefixbarcodewithweight) === 0){
                     $productbarcodewithoutweight = substr($keyword, 0, 7);
 				    $productbarcodewithoutweight += "000000";
@@ -113,7 +113,7 @@ class SelfServiceController extends FrontendController
                             break;
                         }
                         else {
-                            $prefixbarcodewithweight = "27"; //Mario: an welcher globalen Stelle willst du das hinterlegen?
+                            $prefixbarcodewithweight = $BARCODE_WITH_WEIGHT_PREFIX;
                             if (strpos($keyword, $prefixbarcodewithweight) === 0){
                                 $productbarcodewithoutweight = substr($keyword, 0, 7);
                                 $productbarcodewithoutweight += "000000";
