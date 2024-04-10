@@ -16,7 +16,7 @@ ports:
     onOpen: ignore
   - port: 3321
     onOpen: ignore
-  
+
 github:
   prebuilds:
     master: false
