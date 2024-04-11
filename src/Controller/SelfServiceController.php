@@ -92,14 +92,12 @@ class SelfServiceController extends FrontendController
                 $customBarcodeFound = true;
                 $attributeId = 0;
             }
-            else {
-                $prefixbarcodewithweight = $BARCODE_WITH_WEIGHT_PREFIX;
-                if (strpos($keyword, $prefixbarcodewithweight) === 0){
-                    $productbarcodewithoutweight = substr($keyword, 0, 7);
-				    $productbarcodewithoutweight += "000000";
-                    if ($productbarcodewithoutweight == $products[0]->barcode_product->barcode){
-                        $customBarcodeFound = true;
-                        $attributeId = 0;
+            else{
+                if (hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX) || hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX_INHOUSE)){
+                        if (getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode){
+                            $customBarcodeFound = true;
+                            $attributeId = 0;
+                        }
                     }
                 }
             }
@@ -113,11 +111,8 @@ class SelfServiceController extends FrontendController
                             break;
                         }
                         else {
-                            $prefixbarcodewithweight = $BARCODE_WITH_WEIGHT_PREFIX;
-                            if (strpos($keyword, $prefixbarcodewithweight) === 0){
-                                $productbarcodewithoutweight = substr($keyword, 0, 7);
-                                $productbarcodewithoutweight += "000000";
-                                if ($productbarcodewithoutweight == $productAttribute->barcode_product_attribute->barcode){
+                            if (hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX) || hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX_INHOUSE)){
+                                if (getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode){
                                     $customBarcodeFound = true;
                                     $attributeId = $productAttribute->id_product_attribute;
                                     break;

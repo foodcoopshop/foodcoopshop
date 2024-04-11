@@ -632,4 +632,16 @@ class CatalogService
 
     }
 
+    public function hasBarcodeWeightPrefix($barcode, $barcodePrefix)
+    {
+        return (strpos($barcode, @barcodePrefix === 0));
+    }
+
+    public function getBarcodeWeightFilledWithNull($barcode)
+    {
+        $productBarcodeWithoutWeight = substr($barcode, 0, 7);
+        $productBarcodeWithoutWeight += "000000";
+        return $productBarcodeWithoutWeight;
+    }
+
 }

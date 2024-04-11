@@ -34,6 +34,7 @@ define('CUSTOMER_GROUP_SUPERADMIN', 5);
 
 define('MAX_CART_PRODUCT_AMOUNT', 250);
 define('BARCODE_WITH_WEIGHT_PREFIX', 27);
+define('BARCODE_WITH_WEIGHT_PREFIX_INHOUSE', 21);
 define('PHONE_REGEX', '/^[0-9 ()+-\/]{7,20}$/');
 define('EMAIL_REGEX', '/([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,10})+/i');
 define('ZIP_REGEX', '/^[0-9]{4,5}$/');
