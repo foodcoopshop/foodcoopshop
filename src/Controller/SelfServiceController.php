@@ -93,12 +93,11 @@ class SelfServiceController extends FrontendController
                 $attributeId = 0;
             }
             else{
-                if (hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX) || hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX_INHOUSE)){
-                        if (getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode){
+                if ($catalogService->hasBarcodeWeightPrefix($keyword) || $catalogService->hasBarcodeWeightPrefixInhouse($keyword)){
+                        if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode){
                             $customBarcodeFound = true;
                             $attributeId = 0;
                         }
-                    }
                 }
             }
 
@@ -111,8 +110,8 @@ class SelfServiceController extends FrontendController
                             break;
                         }
                         else {
-                            if (hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX) || hasBarcodeWeightPrefix($keyword, $BARCODE_WITH_WEIGHT_PREFIX_INHOUSE)){
-                                if (getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode){
+                            if ($catalogService->hasBarcodeWeightPrefix($keyword) || $catalogService->hasBarcodeWeightPrefixInhouse($keyword)){
+                                if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode){
                                     $customBarcodeFound = true;
                                     $attributeId = $productAttribute->id_product_attribute;
                                     break;

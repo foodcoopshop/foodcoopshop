@@ -23,8 +23,8 @@ use App\Model\Table\ProductAttributesTable;
 use App\Model\Table\ProductsTable;
 use Cake\I18n\I18n;
 use Cake\Cache\Cache;
-use Cake\Utility\Hash;
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 use Cake\Database\Query;
 use Cake\Utility\Security;
 use Cake\Datasource\FactoryLocator;
@@ -396,14 +396,11 @@ class CatalogService
                     ]);
                 }
                 //check if barcode contains productweight
-				$prefixbarcodewithweight = "27"; //Mario: an welcher globalen Stelle willst du das hinterlegen?
-				if (strpos($keyword, $prefixbarcodewithweight) === 0){
-                    $productbarcodewithoutweight = "";
-					$productbarcodewithoutweight = substr($keyword, 0, 7);
-					$productbarcodewithoutweight .= "000000";
+                if ($this->hasBarcodeWeightPrefix($keyword) || $this->hasBarcodeWeightPrefixInhouse($keyword)){
+                    $productBarcodeWithoutWeight = $this->getBarcodeWeightFilledWithNull($keyword);
                     $or = array_merge($or, [
-                        $q->newExpr()->eq('BarcodeProducts.barcode', $productbarcodewithoutweight),
-                        $q->newExpr()->eq('BarcodeProductAttributes.barcode', $productbarcodewithoutweight),
+                        $q->newExpr()->eq('BarcodeProducts.barcode', $productBarcodeWithoutWeight),
+                        $q->newExpr()->eq('BarcodeProductAttributes.barcode', $productBarcodeWithoutWeight),
                     ]);
 				}
             }
@@ -632,15 +629,20 @@ class CatalogService
 
     }
 
-    public function hasBarcodeWeightPrefix($barcode, $barcodePrefix)
+    public function hasBarcodeWeightPrefix($barcode)
     {
-        return (strpos($barcode, @barcodePrefix === 0));
+        return (strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX) === 0);
+    }
+
+    public function hasBarcodeWeightPrefixInhouse($barcode)
+    {
+        return (strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX_INHOUSE) === 0);
     }
 
     public function getBarcodeWeightFilledWithNull($barcode)
     {
         $productBarcodeWithoutWeight = substr($barcode, 0, 7);
-        $productBarcodeWithoutWeight += "000000";
+        $productBarcodeWithoutWeight .= "000000";
         return $productBarcodeWithoutWeight;
     }
 
