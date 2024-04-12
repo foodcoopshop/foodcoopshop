@@ -628,12 +628,12 @@ class CatalogService
 
     }
 
-    public function hasABarcodeWeightPrefix($barcode)
+    public function hasABarcodeWeightPrefix(string $barcode): bool
     {
         return strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX) === 0 || strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX_INHOUSE) === 0;
     }
 
-    public function getBarcodeWeightFilledWithNull($barcode)
+    public function getBarcodeWeightFilledWithNull(string $barcode): string
     {
         $productBarcodeWithoutWeight = substr($barcode, 0, 7);
         $productBarcodeWithoutWeight .= "000000";
