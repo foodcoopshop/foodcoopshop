@@ -94,7 +94,7 @@ class SelfServiceController extends FrontendController
             }
             else {
                 if (!empty($products[0]->barcode_product)) {
-                    if ($catalogService->hasBarcodeWeightPrefix($keyword) || $catalogService->hasBarcodeWeightPrefixInhouse($keyword)){
+                    if ($catalogService->hasABarcodeWeightPrefix($keyword)){
                         if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode){
                             $customBarcodeFound = true;
                             $attributeId = 0;
@@ -110,9 +110,8 @@ class SelfServiceController extends FrontendController
                             $customBarcodeFound = true;
                             $attributeId = $productAttribute->id_product_attribute;
                             break;
-                        }
-                        else {
-                            if ($catalogService->hasBarcodeWeightPrefix($keyword) || $catalogService->hasBarcodeWeightPrefixInhouse($keyword)){
+                        } else {
+                            if ($catalogService->hasABarcodeWeightPrefix($keyword)){
                                 if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode){
                                     $customBarcodeFound = true;
                                     $attributeId = $productAttribute->id_product_attribute;

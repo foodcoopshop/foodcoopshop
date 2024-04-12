@@ -395,8 +395,7 @@ class CatalogService
                         $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
                     ]);
                 }
-                //check if barcode contains productweight
-                if ($this->hasBarcodeWeightPrefix($keyword) || $this->hasBarcodeWeightPrefixInhouse($keyword)){
+                if ($this->hasABarcodeWeightPrefix($keyword)){
                     $productBarcodeWithoutWeight = $this->getBarcodeWeightFilledWithNull($keyword);
                     $or = array_merge($or, [
                         $q->newExpr()->eq('BarcodeProducts.barcode', $productBarcodeWithoutWeight),
@@ -629,14 +628,9 @@ class CatalogService
 
     }
 
-    public function hasBarcodeWeightPrefix($barcode)
+    public function hasABarcodeWeightPrefix($barcode)
     {
-        return (strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX) === 0);
-    }
-
-    public function hasBarcodeWeightPrefixInhouse($barcode)
-    {
-        return (strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX_INHOUSE) === 0);
+        return strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX) === 0 || strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX_INHOUSE) === 0;
     }
 
     public function getBarcodeWeightFilledWithNull($barcode)
