@@ -9,7 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## Unreleased
 
 ### Neue Funktionen / Verbesserungen
-- Barcodes mit Gewichtsinformation findet jetzt das Produkt. [I#776](https://github.com/foodcoopshop/foodcoopshop/issues/776) [PR#1019](https://github.com/foodcoopshop/foodcoopshop/pull/1019) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
+- Barcodes mit Gewichtsinformation findet das Produkt. [I#776](https://github.com/foodcoopshop/foodcoopshop/issues/776) / [PR#1019](https://github.com/foodcoopshop/foodcoopshop/pull/1019) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 
 ## v4.0
 
