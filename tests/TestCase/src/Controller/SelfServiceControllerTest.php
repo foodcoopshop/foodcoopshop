@@ -210,11 +210,27 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '2345678901234';
+        $barcodeForProduct = '2145678901234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
     }
+
+    public function testSearchByCustomProductBarcodeWithWeight()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = '2712345600235';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+    } 
+
+    public function testSearchByCustomProductAttributeBarcodeWithWeight()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = '2112345601234';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+    } 
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
     {

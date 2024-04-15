@@ -6,6 +6,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Neue Funktionen / Verbesserungen
+- Barcodes mit Gewichtsinformation findet das Produkt. [I#776](https://github.com/foodcoopshop/foodcoopshop/issues/776) / [PR#1019](https://github.com/foodcoopshop/foodcoopshop/pull/1019) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
+
 ## v4.0
 
 ### Neue Funktionen / Verbesserungen

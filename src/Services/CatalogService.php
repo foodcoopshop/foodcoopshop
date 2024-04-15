@@ -23,8 +23,8 @@ use App\Model\Table\ProductAttributesTable;
 use App\Model\Table\ProductsTable;
 use Cake\I18n\I18n;
 use Cake\Cache\Cache;
-use Cake\Utility\Hash;
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 use Cake\Database\Query;
 use Cake\Utility\Security;
 use Cake\Datasource\FactoryLocator;
@@ -395,6 +395,13 @@ class CatalogService
                         $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
                     ]);
                 }
+                if ($this->hasABarcodeWeightPrefix($keyword)){
+                    $productBarcodeWithoutWeight = $this->getBarcodeWeightFilledWithNull($keyword);
+                    $or = array_merge($or, [
+                        $q->newExpr()->eq('BarcodeProducts.barcode', $productBarcodeWithoutWeight),
+                        $q->newExpr()->eq('BarcodeProductAttributes.barcode', $productBarcodeWithoutWeight),
+                    ]);
+				}
             }
             return $exp->or($or);
         });
@@ -619,6 +626,18 @@ class CatalogService
 
         return $products;
 
+    }
+
+    public function hasABarcodeWeightPrefix(string $barcode): bool
+    {
+        return strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX) === 0 || strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX_INHOUSE) === 0;
+    }
+
+    public function getBarcodeWeightFilledWithNull(string $barcode): string
+    {
+        $productBarcodeWithoutWeight = substr($barcode, 0, 7);
+        $productBarcodeWithoutWeight .= "000000";
+        return $productBarcodeWithoutWeight;
     }
 
 }
