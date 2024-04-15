@@ -272,7 +272,6 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-04',
             'delivery_rhythm_type' => 'week',
-            'delivery_rhythm_count' => 1,
             'delivery_rhythm_send_order_list_weekday' => 3,
             'delivery_rhythm_order_possible_until' => null,
         ];
@@ -284,7 +283,6 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-04',
             'delivery_rhythm_type' => 'week',
-            'delivery_rhythm_count' => 1,
             'delivery_rhythm_send_order_list_weekday' => 2,
             'delivery_rhythm_order_possible_until' => null,
         ];
@@ -296,7 +294,6 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-25',
             'delivery_rhythm_type' => 'month',
-            'delivery_rhythm_count' => 0,
             'delivery_rhythm_send_order_list_weekday' => 3,
             'delivery_rhythm_order_possible_until' => null,
         ];
@@ -308,7 +305,6 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-25',
             'delivery_rhythm_type' => 'month',
-            'delivery_rhythm_count' => 0,
             'delivery_rhythm_send_order_list_weekday' => 1,
             'delivery_rhythm_order_possible_until' => null,
         ];
@@ -320,7 +316,6 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $product = [
             'next_delivery_day' => '2020-12-25',
             'delivery_rhythm_type' => 'individual',
-            'delivery_rhythm_count' => 0,
             'delivery_rhythm_send_order_list_weekday' => 3,
             'delivery_rhythm_order_possible_until' => new Date('2020-12-12'),
         ];
@@ -1068,7 +1063,6 @@ class DeliveryRhythmServiceTest extends AppCakeTestCase
         $result = (new DeliveryRhythmService())->getLastOrderDay(
             $product['next_delivery_day'],
             $product['delivery_rhythm_type'],
-            $product['delivery_rhythm_count'],
             $product['delivery_rhythm_send_order_list_weekday'],
             $product['delivery_rhythm_order_possible_until'],
         );

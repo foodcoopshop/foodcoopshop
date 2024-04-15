@@ -60,7 +60,7 @@ class DeliveryRhythmService
         return Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY');
     }
 
-    public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
+    public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
     {
 
         if ($nextDeliveryDay == 'delivery-rhythm-triggered-delivery-break') {
@@ -105,7 +105,7 @@ class DeliveryRhythmService
         }
         return $this->getOrderPeriodFirstDay($deliveryDay);
     }
-    
+
     public function getOrderPeriodLastDayByDeliveryDay(int $deliveryDay)
     {
         if ($this->hasSaturdayThursdayConfig()) {
