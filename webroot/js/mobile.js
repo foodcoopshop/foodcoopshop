@@ -125,7 +125,7 @@ foodcoopshop.Mobile = {
         $('.self-service').after(this.getSlidebarMenu('left')).attr('canvas', '');
 
         var menuItems = [];
-        var ps = $('#product-search');
+        var ps = $('.product-search-form-wrapper');
         menuItems.push(ps.wrap('<li>').parent());
 
         var pageItems = [];
@@ -181,14 +181,13 @@ foodcoopshop.Mobile = {
 
     },
 
-
     initMenusFrontend: function () {
 
         $('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
 
         var menuItems = [];
 
-        var ps = $('#product-search');
+        var ps = $('.product-search-form-wrapper');
         if (ps.length > 0) {
             menuItems.push(ps.wrap('<li>').parent());
         }

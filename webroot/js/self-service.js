@@ -138,26 +138,35 @@ foodcoopshop.SelfService = {
 
     initSearchForm : function() {
 
-        var searchForm = $('#product-search');
+        var searchForms = $('.product-search-form-wrapper form');
 
-        var formIsSubmitted = false;
-        searchForm.on('submit', function(e) {
-            if (formIsSubmitted) {
-                return false;
+        searchForms.each(function() {
+
+            var searchForm = $(this);
+            var formIsSubmitted = false;
+            searchForm.on('submit', function(e) {
+                if (formIsSubmitted) {
+                    return false;
+                }
+                formIsSubmitted = true;
+            });
+    
+            if (!foodcoopshop.Helper.isMobile()) {
+                foodcoopshop.Helper.initBootstrapSelect(searchForm);
             }
-            formIsSubmitted = true;
+            searchForm.find('select, input[type="text"]').on('change', function() {
+                foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
+            });
+
+            var inputField = searchForm.find('input[type="text"]');
+            if (inputField.length > 0) {
+                var length = inputField.val().length;
+                inputField[0].setSelectionRange(length, length);
+                inputField.focus();
+            }
+        
         });
 
-        if (!foodcoopshop.Helper.isMobile()) {
-            foodcoopshop.Helper.initBootstrapSelect(searchForm);
-        }
-        searchForm.find('select, input[type="text"]').on('change', function() {
-            foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
-        });
-        var inputField = searchForm.find('input[type="text"]');
-        var length = inputField.val().length;
-        inputField[0].setSelectionRange(length, length);
-        inputField.focus();
     },
 
     submitForm : function(searchForm, icon) {
@@ -226,7 +235,7 @@ foodcoopshop.SelfService = {
     },
 
     setFocusToSearchInputField : function() {
-        $('#product-search input[name="keyword"]').focus();
+        $('.product-search-form-wrapper input[name="keyword"]').focus();
     },
 
     onWindowResize : function() {

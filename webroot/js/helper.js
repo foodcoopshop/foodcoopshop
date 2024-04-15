@@ -86,7 +86,7 @@ foodcoopshop.Helper = {
             'a.open-with-modal',
             'a.color-mode-toggle',
             'button.dropdown-toggle',
-            '#product-search button',
+            '.product-search-form-wrapper button',
             '.modal-content button',
             '.modal-content a',
             '#flashMessage a',
@@ -417,7 +417,7 @@ foodcoopshop.Helper = {
     },
 
     initSearchForm: function () {
-        $('#product-search button[type="submit"]').on('click', function () {
+        $('.product-search-form-wrapper form button[type="submit"]').on('click', function () {
             var form = $(this).closest('form');
             if (form.find('input').val() != '') {
                 foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
@@ -425,7 +425,8 @@ foodcoopshop.Helper = {
                 form.submit();
             }
         });
-        $('#product-search a.btn').on('click', function () {
+        $('.product-search-form-wrapper a.btn').on('click', function () {
+            console.log('click');
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-backspace');
             foodcoopshop.Helper.disableButton($(this));
         });

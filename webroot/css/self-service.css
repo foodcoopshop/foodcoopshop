@@ -48,19 +48,22 @@ body.self_services #content {
 .self-service .header h2 {
     padding-top: 10px;
 }
-.self-service #product-search {
+.self-service .product-search-form-wrapper {
     top: 53px;
     left: 10px;
 }
-.self-service #product-search .btn[type="submit"] {
-    margin-left: 5px;
-}
-.self-service #product-search input[name="keyword"] {
-    width: 215px;
+.self-service .product-search-form-wrapper .btn[type="submit"] {
+    margin-left: 0;
     margin-right: 5px;
+}
+.self-service .product-search-form-wrapper input[name="keyword"] {
+    width: 215px;
     float: left;
 }
-.self-service #product-search > .input {
+.self-service .product-search-form-wrapper a.btn {
+    margin-left: 5px;
+}
+.self-service .product-search-form-wrapper > .input {
     float: left;
 }
 .self-service #products {
