@@ -26,6 +26,7 @@ use Cake\Routing\Router;
 class CartProductsTable extends AppTable
 {
 
+    const MAX_PRODUCT_AMOUNT_FOR_CART = 250;
     use CartValidatorTrait;
 
     protected $Cart;
@@ -67,8 +68,7 @@ class CartProductsTable extends AppTable
         $productsTable = FactoryLocator::get('Table')->get('Products');
         $initialProductId = $productsTable->getCompositeProductIdAndAttributeId($productId, $attributeId);
 
-        // allow -1 and 1 to MAX_PRODUCT_AMOUNT_FOR_CART
-        if ($amount == 0 || $amount < - 1 || $amount > MAX_CART_PRODUCT_AMOUNT) {
+        if ($amount == 0 || $amount < - 1 || $amount > self::MAX_PRODUCT_AMOUNT_FOR_CART) {
             $message = __('The_desired_amount_{0}_is_not_valid.', ['<b>' . $amount . '</b>']);
             return [
                 'status' => 0,

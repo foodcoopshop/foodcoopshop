@@ -30,6 +30,11 @@ class Customer extends Entity implements IdentityInterface
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];
 
+    const GROUP_SELF_SERVICE_CUSTOMER = 2;
+    const GROUP_MEMBER = 3;
+    const GROUP_ADMIN = 4;
+    const GROUP_SUPERADMIN = 5;
+
     const SELLING_PRICE = 'SP';
     const PURCHASE_PRICE = 'PP';
     const ZERO_PRICE = 'ZP';
@@ -97,7 +102,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->id_default_group == CUSTOMER_GROUP_SUPERADMIN) {
+        if ($this->id_default_group == self::GROUP_SUPERADMIN) {
             return true;
         }
         return false;
@@ -208,7 +213,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->getGroupId() == CUSTOMER_GROUP_ADMIN) {
+        if ($this->getGroupId() == self::GROUP_ADMIN) {
             return true;
         }
         return false;
@@ -220,8 +225,8 @@ class Customer extends Entity implements IdentityInterface
             return false;
         }
         if (in_array($this->getGroupId(), [
-            CUSTOMER_GROUP_MEMBER,
-            CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER,
+            self::GROUP_MEMBER,
+            self::GROUP_SELF_SERVICE_CUSTOMER,
             ])
         ) {
             return true;
@@ -234,7 +239,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->getGroupId() == CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER) {
+        if ($this->getGroupId() == self::GROUP_SELF_SERVICE_CUSTOMER) {
             return true;
         }
         return false;

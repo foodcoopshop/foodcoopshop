@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use App\Model\Entity\Customer;
 
 class CustomersControllerTest extends AppCakeTestCase
 {
@@ -53,14 +54,14 @@ class CustomersControllerTest extends AppCakeTestCase
         $customerId = Configure::read('test.customerId');
         $this->ajaxPost('/admin/customers/ajaxEditGroup', [
             'customerId' => $customerId,
-            'groupId' => CUSTOMER_GROUP_ADMIN,
+            'groupId' => Customer::GROUP_ADMIN,
         ]);
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
             ],
         ])->first();
-        $this->assertEquals(CUSTOMER_GROUP_ADMIN, $customer->id_default_group);
+        $this->assertEquals(Customer::GROUP_ADMIN, $customer->id_default_group);
     }
 
     public function testAjaxEditGroupAsAdmin()
@@ -70,14 +71,14 @@ class CustomersControllerTest extends AppCakeTestCase
         $customerId = Configure::read('test.customerId');
         $this->ajaxPost('/admin/customers/ajaxEditGroup', [
             'customerId' => $customerId,
-            'groupId' => CUSTOMER_GROUP_SUPERADMIN,
+            'groupId' => Customer::GROUP_SUPERADMIN,
         ]);
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
             ],
         ])->first();
-        $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group);
+        $this->assertEquals(Customer::GROUP_MEMBER, $customer->id_default_group);
     }
 
     public function testCustomerEdit()

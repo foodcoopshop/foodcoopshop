@@ -6,6 +6,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use App\Test\TestCase\Traits\PrepareAndTestInvoiceDataTrait;
 use Cake\Core\Configure;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -65,7 +66,7 @@ class ListsControllerTest extends AppCakeTestCase
 
         // change admin to customer to test access from different customer
         $customerEntity = $this->Customer->get(Configure::read('test.adminId'));
-        $customerEntity->id_default_group = CUSTOMER_GROUP_MEMBER;
+        $customerEntity->id_default_group = Customer::GROUP_MEMBER;
         $this->Customer->save($customerEntity);
 
         $this->loginAsAdmin();

@@ -525,11 +525,11 @@ class MyHtmlHelper extends HtmlHelper
     {
         $groups = [];
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-            $groups[CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER] = __('Self_service_customer');
+            $groups[Customer::GROUP_SELF_SERVICE_CUSTOMER] = __('Self_service_customer');
         }
-        $groups[CUSTOMER_GROUP_MEMBER] = __('Member');
-        $groups[CUSTOMER_GROUP_ADMIN] = __('Admin');
-        $groups[CUSTOMER_GROUP_SUPERADMIN] = __('Superadmin');
+        $groups[Customer::GROUP_MEMBER] = __('Member');
+        $groups[Customer::GROUP_ADMIN] = __('Admin');
+        $groups[Customer::GROUP_SUPERADMIN] = __('Superadmin');
         return $groups;
     }
 

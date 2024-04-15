@@ -15,6 +15,7 @@ use Cake\Http\Exception\NotFoundException;
 use App\Services\OrderCustomerService;
 use App\Controller\Traits\RenewAuthSessionTrait;
 use App\Services\SanitizeService;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -304,7 +305,7 @@ class CustomersController extends FrontendController
 
         if ($this->getRequest()->is('post')) {
             // no spam protected email output in input field when login or registration fails
-            $this->protectEmailAddresses = false; 
+            $this->protectEmailAddresses = false;
         }
 
         /**
@@ -339,7 +340,7 @@ class CustomersController extends FrontendController
             [
                 'Customers' => [
                     'active' => 0,
-                    'id_default_group' => CUSTOMER_GROUP_MEMBER,
+                    'id_default_group' => Customer::GROUP_MEMBER,
                     'terms_of_use_accepted_date' => date('Y-m-d'),
                     'passwd' => $ph->hash($newPassword)
                 ]

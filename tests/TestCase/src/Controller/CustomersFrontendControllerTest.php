@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use Cake\I18n\Date;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -158,7 +159,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
             'lastname' => '',
             'email_order_reminder_enabled' => 1,
             'terms_of_use_accepted_date_checkbox' => 0,
-            'id_default_group' => CUSTOMER_GROUP_SUPERADMIN, //must not be applied!
+            'id_default_group' => Customer::GROUP_SUPERADMIN, //must not be applied!
             'active' => APP_ON, // must not be applied!
             'address_customer' => [
                 'email' => '',
@@ -350,7 +351,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
         // check customer record
         $this->assertEquals(false, (bool) $customer->active);
-        $this->assertEquals(CUSTOMER_GROUP_MEMBER, $customer->id_default_group);
+        $this->assertEquals(Customer::GROUP_MEMBER, $customer->id_default_group);
         $this->assertEquals($customerAddressEmail, $customer->email);
         $this->assertEquals('John', $customer->firstname);
         $this->assertEquals('Doe', $customer->lastname);
