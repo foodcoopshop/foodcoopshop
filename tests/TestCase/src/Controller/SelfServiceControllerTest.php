@@ -222,7 +222,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2712345600235';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-    } 
+    }
 
     public function testSearchByCustomProductAttributeBarcodeWithWeight()
     {
@@ -230,7 +230,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2112345601234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-    } 
+    }
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
     {
@@ -322,7 +322,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
 
-        // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
+        // add a product to the "normal" cart (Cart::TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
         $this->addProductToCart(346, 5);
         $this->logout();

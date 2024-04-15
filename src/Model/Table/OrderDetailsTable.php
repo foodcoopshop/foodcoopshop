@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
+use App\Model\Entity\Cart;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -432,7 +433,7 @@ class OrderDetailsTable extends AppTable
         $cartsAssociation = $this->getAssociation('CartProducts')->getAssociation('Carts');
         $cartsAssociation->setJoinType('INNER');
         $cartsAssociation->setConditions([
-            'Carts.cart_type' => CartsTable::CART_TYPE_WEEKLY_RHYTHM,
+            'Carts.cart_type' => Cart::TYPE_WEEKLY_RHYTHM,
             'Carts.status' => APP_OFF,
         ]);
 

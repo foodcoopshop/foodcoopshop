@@ -27,13 +27,6 @@ use Cake\Routing\Router;
 class CartsTable extends AppTable
 {
 
-    public const CART_TYPE_WEEKLY_RHYTHM = 1;
-    public const CART_TYPE_INSTANT_ORDER = 2;
-    public const CART_TYPE_SELF_SERVICE  = 3;
-
-    public const CART_SELF_SERVICE_PAYMENT_TYPE_CASH   = 1;
-    public const CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT = 2;
-
     protected $Product;
 
     public function initialize(array $config): void

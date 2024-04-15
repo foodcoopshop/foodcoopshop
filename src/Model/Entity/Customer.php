@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\Datasource\FactoryLocator;
 use App\Services\OrderCustomerService;
+use App\Model\Entity\Cart;
 use ArrayAccess;
 
 /**
@@ -253,15 +254,13 @@ class Customer extends Entity implements IdentityInterface
 
     public function getCartType()
     {
-        $cartsTable = FactoryLocator::get('Table')->get('Carts');
-        $cartType = $cartsTable::CART_TYPE_WEEKLY_RHYTHM;
-
+        $cartType = Cart::TYPE_WEEKLY_RHYTHM;
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-            $cartType = $cartsTable::CART_TYPE_INSTANT_ORDER;
+            $cartType = Cart::TYPE_INSTANT_ORDER;
         }
         if ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer()) {
-            $cartType = $cartsTable::CART_TYPE_SELF_SERVICE;
+            $cartType = Cart::TYPE_SELF_SERVICE;
         }
         return $cartType;
     }

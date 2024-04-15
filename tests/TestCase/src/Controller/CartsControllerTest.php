@@ -24,6 +24,7 @@ use App\Services\DeliveryRhythmService;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
+use App\Model\Entity\Cart;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -295,7 +296,7 @@ class CartsControllerTest extends AppCakeTestCase
         $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
-        $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
+        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
@@ -330,7 +331,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->Cart->CartProducts->save($cpEntity);
 
         $this->removeProduct($this->productId2);
-        $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
+        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
     }
@@ -344,7 +345,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
 
         // check if product was placed in cart
-        $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
+        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($this->productId1, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount1, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -355,7 +356,7 @@ class CartsControllerTest extends AppCakeTestCase
         $amount2 = 3;
         $this->addProductToCart($this->productId2, $amount2);
         $this->assertJsonOk();
-        $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
+        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($this->productId2, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -747,7 +748,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkStockAvailable($this->productId3, 77);
 
         // check new (empty) cart
-        $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
+        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
@@ -1028,7 +1029,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrderOk()
     {
-        // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
+        // add a product to the "normal" cart (Cart::TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 5);
         $this->logout();
@@ -1051,7 +1052,7 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $cartTable->find()->where(
             [
                 'Carts.id_customer' => Configure::read('test.customerId'),
-                'Carts.cart_type' => $cartTable::CART_TYPE_INSTANT_ORDER,
+                'Carts.cart_type' => Cart::TYPE_INSTANT_ORDER,
             ]
         )->contain(['CartProducts'])->first();
         $this->assertCount(2, $cart->cart_products);
@@ -1060,7 +1061,7 @@ class CartsControllerTest extends AppCakeTestCase
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
 
-        // product that was added as CART_TYPE_WEEKLY_RHYTHM must not be included in CART_TYPE_INSTANT_ORDER cart
+        // product that was added as Cart::TYPE_WEEKLY_RHYTHM must not be included in Cart::TYPE_INSTANT_ORDER cart
         $this->assertEquals(2, count($cart->cart_products));
 
         foreach($cart->cart_products as $cartProduct) {
@@ -1201,7 +1202,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatus()
     {
-        $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
+        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
         $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
     }
@@ -1227,7 +1228,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
         $this->assertJsonError();
-        $cart = $this->Cart->getCart($this, $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
+        $cart = $this->Cart->getCart($this, Cart::TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($expectedAmount, $cart['CartProducts'][$productIndex]['amount'], 'amount not found in cart or wrong');
     }
 

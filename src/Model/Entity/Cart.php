@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+namespace App\Model\Entity;
+
+use Cake\ORM\Entity;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -8,27 +12,20 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.3.0
+ * @since         FoodCoopShop 4.1.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+class Cart extends Entity
+{
 
-use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
-use App\Model\Entity\Cart;
+    const TYPE_WEEKLY_RHYTHM = 1;
+    const TYPE_INSTANT_ORDER = 2;
+    const TYPE_SELF_SERVICE  = 3;
 
-if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-    return false;
+    const SELF_SERVICE_PAYMENT_TYPE_CASH   = 1;
+    const SELF_SERVICE_PAYMENT_TYPE_CREDIT = 2;
+
 }
-
-$cartsTable = FactoryLocator::get('Table')->get('Carts');
-$paymentTypeAsString = __('Credit');
-if ($paymentType == Cart::SELF_SERVICE_PAYMENT_TYPE_CASH) {
-    $paymentTypeAsString =  __('Cash');
-}
-
-echo '<p class="payment-type">' .  __('Payment_type') . ': ' . $paymentTypeAsString . '</p>';
-
-?>
