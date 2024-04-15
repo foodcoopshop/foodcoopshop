@@ -44,6 +44,8 @@ class CatalogService
     protected $identity;
 
     const MAX_PRODUCTS_PER_PAGE = 100;
+    const BARCODE_WITH_WEIGHT_PREFIX = '27';
+    const BARCODE_WITH_WEIGHT_PREFIX_INHOUSE = '21';
 
     public function __construct()
     {
@@ -630,7 +632,7 @@ class CatalogService
 
     public function hasABarcodeWeightPrefix(string $barcode): bool
     {
-        return strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX) === 0 || strpos($barcode, BARCODE_WITH_WEIGHT_PREFIX_INHOUSE) === 0;
+        return strpos($barcode, self::BARCODE_WITH_WEIGHT_PREFIX) === 0 || strpos($barcode, self::BARCODE_WITH_WEIGHT_PREFIX_INHOUSE) === 0;
     }
 
     public function getBarcodeWeightFilledWithNull(string $barcode): string
