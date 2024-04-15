@@ -29,7 +29,7 @@ class GlsBankBankingReaderServiceTest extends AppCakeTestCase
     public function testRead()
     {
         $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');
-        $records = $reader->getPreparedRecords($reader->getRecords());
+        $records = $reader->getPreparedRecords();
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
         }

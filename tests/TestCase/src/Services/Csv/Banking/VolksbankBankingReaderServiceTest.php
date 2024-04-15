@@ -29,7 +29,7 @@ class VolksbankBankingReaderServiceTest extends AppCakeTestCase
     public function testRead()
     {
         $reader = VolksbankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank.csv');
-        $records = $reader->getPreparedRecords($reader->getRecords());
+        $records = $reader->getPreparedRecords();
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
         }
