@@ -1143,12 +1143,15 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
 .radio, .checkbox {
     position: static;
 }
-#product-search {
+.product-search-form-wrapper {
     position: absolute;
     top: 49px;
     left: 460px;
 }
-#product-search input {
+.product-search-form-wrapper form {
+    float: left;
+}
+.product-search-form-wrapper input {
     width: 190px;
     padding: 6px;
     background: #fbfbfb;
@@ -1156,14 +1159,14 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
 }
-#product-search .btn {
+.product-search-form-wrapper .btn {
     padding: 6px 10px;
     border-radius: 0;
     float: right;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
-#product-search a.btn {
+.product-search-form-wrapper a.btn {
     margin-left: 1px;
 }
 .blog-wrapper {
