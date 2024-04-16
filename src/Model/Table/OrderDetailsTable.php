@@ -676,6 +676,7 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
             $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetails[$key]['sum_units'] = $orderDetail->sum_units;
             $preparedOrderDetails[$key]['product_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
             $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;

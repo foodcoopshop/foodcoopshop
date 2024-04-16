@@ -39,8 +39,9 @@ declare(strict_types=1);
 
 if ($groupBy == 'product') {
     echo '<td class="right">';
-        $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');
-        echo $sumUnitsString;
+        if ($orderDetail['sum_units'] > 0) {
+            echo $this->Number->formatUnitAsDecimal($orderDetail['sum_units']);
+        }
     echo '</td>';
 }
 
