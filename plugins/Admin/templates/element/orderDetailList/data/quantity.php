@@ -15,23 +15,32 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-if ($groupBy == '') {
+ if ($groupBy == '') {
     echo '<td class="quantity-field right ' . ($orderDetail->quantityInUnitsNotYetChanged && $editRecordAllowed ? 'not-available' : '') . '">';
-    if (!empty($orderDetail->order_detail_unit)) {
-        if ($editRecordAllowed) {
-            echo $this->Html->link(
-                '<i class="fas fa-pencil-alt ok"></i>',
-                'javascript:void(0);',
-                [
-                    'class' => 'btn btn-outline-light order-detail-product-quantity-edit-button',
-                    'title' => __d('admin', 'Click_to_change_weight'),
-                    'escape' => false
-                ]
-            );
+        if ($groupBy == '') {
+            if (!empty($orderDetail->order_detail_unit)) {
+            if ($editRecordAllowed) {
+                echo $this->Html->link(
+                    '<i class="fas fa-pencil-alt ok"></i>',
+                    'javascript:void(0);',
+                    [
+                        'class' => 'btn btn-outline-light order-detail-product-quantity-edit-button',
+                        'title' => __d('admin', 'Click_to_change_weight'),
+                        'escape' => false
+                    ]
+                );
+            }
+            echo '<span class="quantity-in-units">' . $this->Number->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
+            echo '<span class="hide price-per-unit-base-info">'.$this->PricePerUnit->getPricePerUnitBaseInfo($orderDetail->order_detail_unit->price_incl_per_unit, $orderDetail->order_detail_unit->unit_name, $orderDetail->order_detail_unit->unit_amount).'</span>';
         }
-        echo '<span class="quantity-in-units">' . $this->Number->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
-        echo '<span class="hide price-per-unit-base-info">'.$this->PricePerUnit->getPricePerUnitBaseInfo($orderDetail->order_detail_unit->price_incl_per_unit, $orderDetail->order_detail_unit->unit_name, $orderDetail->order_detail_unit->unit_amount).'</span>';
     }
+    echo '</td>';
+ }
+
+if ($groupBy == 'product') {
+    echo '<td class="right">';
+        $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');
+        echo $sumUnitsString;
     echo '</td>';
 }
 
