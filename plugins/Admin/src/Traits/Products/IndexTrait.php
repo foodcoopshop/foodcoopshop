@@ -1,13 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Admin\Traits\OrderDetails;
+namespace Admin\Traits\Products;
 
+use App\Model\Table\AttributesTable;
+use App\Model\Table\CategoriesTable;
+use App\Model\Table\StorageLocationsTable;
+use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
-use Cake\Utility\Hash;
-use App\Services\DeliveryRhythmService;
-use App\Controller\Component\StringComponent;
-use App\Model\Table\InvoicesTable;
+use Network\Model\Table\SyncDomainsTable;
+use Network\Model\Table\SyncManufacturersTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,350 +27,96 @@ use App\Model\Table\InvoicesTable;
 
 trait IndexTrait {
 
-    protected InvoicesTable $Invoice;
+    protected AttributesTable $Attribute;
+    protected CategoriesTable $Category;
+    protected TaxesTable $Tax;
+    protected StorageLocationsTable $StorageLocation;
+    protected SyncManufacturersTable $SyncManufacturer;
+    protected SyncDomainsTable $SyncDomain;
 
     public function index()
     {
-
-        // for filter from action logs page
-        $orderDetailId = h($this->getRequest()->getQuery('orderDetailId', ''));
-        $this->set('orderDetailId', $orderDetailId);
-
-        $pickupDay = [];
-        if ($orderDetailId == '') {
-            if (in_array('pickupDay', array_keys($this->getRequest()->getQueryParams()))) {
-                $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
-                if ($pickupDay == '') {
-                    throw new \Exception('parameter pickupDay must not be empty');
-                }
-                $explodedPickupDay = explode(',', $pickupDay[0]); // param can be passed comma separated
-                if (count($explodedPickupDay) == 2) {
-                    $pickupDay = $explodedPickupDay;
-                }
-            } else {
-                // default values
-                if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                    $pickupDay[0] = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
-                } else {
-                    $pickupDay[0] = (new DeliveryRhythmService())->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
-                }
-            }
-        }
-
-        $pickupDay = Configure::read('app.timeHelper')->sortArrayByDate($pickupDay);
-        $this->set('pickupDay', $pickupDay);
-
-        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId', ''));
-        $this->set('manufacturerId', $manufacturerId);
-
-        $deposit = h($this->getRequest()->getQuery('deposit', ''));
-        $this->set('deposit', $deposit);
-
         $productId = h($this->getRequest()->getQuery('productId', ''));
         $this->set('productId', $productId);
 
-        $customerId = h($this->getRequest()->getQuery('customerId', ''));
-        $this->set('customerId', $customerId);
-
-        $cartType = h($this->getRequest()->getQuery('cartType', null));
-        $this->set('cartType', $cartType);
-
-        $filterByCartTypeEnabled = h($this->getRequest()->getQuery('filterByCartTypeEnabled', !is_null($cartType)));
-        $this->set('filterByCartTypeEnabled', $filterByCartTypeEnabled);
-
-        $groupBy = h($this->getRequest()->getQuery('groupBy', null));
-        if ($this->identity->isManufacturer() && $groupBy != 'product') {
-            $groupBy = '';
-        }
-        $this->set('groupBy', $groupBy);
-
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
-
-        $contain = $odParams['contain'];
-        if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
-            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
-                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
-            ]);
-            $contain[] = 'PickupDayEntities';
-        }
-
-        $group = null;
-
-        switch($groupBy) {
-            // be aware of sql-mode ONLY_FULL_GROUP_BY!
-            case 'customer':
-                $group[] = 'OrderDetails.id_customer';
-                $group[] = 'Customers.firstname';
-                $group[] = 'Customers.lastname';
-                $group[] = 'Customers.email';
-                if (count($pickupDay) == 1) {
-                    $group[] = 'PickupDayEntities.comment';
-                    $group[] = 'PickupDayEntities.products_picked_up';
-                }
-                break;
-            case 'manufacturer':
-                $group[] = 'Products.id_manufacturer';
-                $group[] = 'Manufacturers.name';
-                break;
-            case 'product':
-                $group[] = 'OrderDetails.product_id';
-                $group[] = 'Products.name';
-                $group[] = 'Products.id_manufacturer';
-                $group[] = 'Manufacturers.name';
-                $group[] = 'OrderDetailUnits.id_order_detail';
-                break;
-        }
-
-        $query = $this->OrderDetail->find('all',
-            conditions:  $odParams['conditions'],
-            contain:  $contain,
-            group:  $group,
-        );
-
-        $this->OrderDetail->getAssociation('CartProducts.Carts')->setJoinType('INNER');
-        $query->contain(['CartProducts.Carts' => function ($q) use ($cartType) {
-            if (in_array($cartType, array_keys(Configure::read('app.htmlHelper')->getCartTypes()))) {
-                $q->where([
-                    'Carts.cart_type' => $cartType,
-                ]);
+        $manufacturerId = '';
+        if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+            if ($manufacturerId != 'all') {
+                $manufacturerId = (int) $manufacturerId;
             }
-            return $q;
-        }]);
-
-        switch($groupBy) {
-            case 'customer':
-                $query = $this->addSelectGroupFields($query);
-                $query->select(['OrderDetails.id_customer']);
-                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email', 'Customers.is_company']);
-                if (count($pickupDay) == 1) {
-                    $query->select(['PickupDayEntities.comment', 'PickupDayEntities.products_picked_up']);
-                }
-                break;
-            case 'manufacturer':
-                $query = $this->addSelectGroupFields($query);
-                $query->select(['Products.id_manufacturer']);
-                $query->select(['Manufacturers.name']);
-                break;
-            case 'product':
-                $query = $this->addSelectGroupFields($query);
-                $query->select(['OrderDetails.product_id']);
-                $query->select(['Products.name', 'Products.id_manufacturer']);
-                $query->select(['Manufacturers.name']);
-                $query->select($this->OrderDetail->OrderDetailUnits);
-                break;
-            default:
-                $customerTable = $this->getTableLocator()->get('Customers');
-                $query = $customerTable->addCustomersNameForOrderSelect($query);
-                $query->select($this->OrderDetail);
-                $query->select($this->OrderDetail->CartProducts); // need to be called before ->Carts
-                $query->select($this->OrderDetail->CartProducts->Carts);
-                $query->select($this->OrderDetail->OrderDetailUnits);
-                $query->select($this->OrderDetail->OrderDetailFeedbacks);
-                $query->select($customerTable);
-                $query->select($this->OrderDetail->Products);
-                $query->select($this->OrderDetail->Products->Manufacturers);
-                $query->select($this->OrderDetail->Products->Manufacturers->AddressManufacturers);
-                if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
-                    $query->select($this->OrderDetail->Products->StorageLocations);
-                }
-                break;
         }
 
-        $orderDetails = $this->paginate($query, [
-            'sortableFields' => [
-                'OrderDetails.product_amount',
-                'OrderDetails.product_name',
-                'OrderDetails.total_price_tax_incl',
-                'OrderDetails.deposit',
-                'OrderDetails.order_state',
-                'OrderDetails.pickup_day',
-                'Manufacturers.name',
-                'CustomerNameForOrder',
-                'OrderDetailUnits.product_quantity_in_units',
-                'sum_price',
-                'sum_amount',
-                'sum_deposit',
-                'sum_units',
-                'Products.name',
-            ]
-        ])->toArray();
+        // always filter by manufacturer id so that no other products than the own are shown
+        if ($this->identity->isManufacturer()) {
+            $manufacturerId = $this->identity->getManufacturerId();
+        }
+        $this->set('manufacturerId', $manufacturerId);
+
+        $active = h($this->getRequest()->getQuery('active', 'all'));
+        $this->set('active', $active);
+
+        $categoryId = h($this->getRequest()->getQuery('categoryId', ''));
+        $this->set('categoryId', $categoryId);
+
+        $isQuantityMinFilterSet = (bool) h($this->getRequest()->getQuery('isQuantityMinFilterSet', false));
+        $this->set('isQuantityMinFilterSet', $isQuantityMinFilterSet);
+
+        $isPriceZero = (bool) h($this->getRequest()->getQuery('isPriceZero', 0));
+        $this->set('isPriceZero', $isPriceZero);
+
+        if ($manufacturerId != '') {
+            $preparedProducts = $this->Product->getProductsForBackend($productId, $manufacturerId, $active, $categoryId, $isQuantityMinFilterSet, $isPriceZero, false, $this);
+        } else {
+            $preparedProducts = [];
+        }
+        $this->set('products', $preparedProducts);
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy);
-        $this->set('orderDetails', $orderDetails);
+        $this->Attribute = $this->getTableLocator()->get('Attributes');
+        $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
+        $this->Category = $this->getTableLocator()->get('Categories');
+        $this->set('categoriesForDropdown', $this->Category->getForSelect(null, true));
+        $this->set('categoriesForCheckboxes', $this->Category->getForSelect(null, true, true));
+        $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
+        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
+        $this->Tax = $this->getTableLocator()->get('Taxes');
+        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
-        $sums = [
-            'records_count' => 0,
-            'amount' => 0,
-            'price' => 0,
-            'deposit' => 0,
-            'units' => 0,
-            'grouped_units' => [
-                'g' => 0,
-                'kg' => 0,
-                'l' => 0,
-            ],
-            'reduced_price' => 0
-        ];
-
-        foreach($orderDetails as $orderDetail) {
-            $sums['records_count']++;
-            if ($groupBy == '') {
-                $sums['price'] += $orderDetail->total_price_tax_incl;
-                $sums['amount'] += $orderDetail->product_amount;
-                $sums['deposit'] += $orderDetail->deposit;
-            } else {
-                $sums['price'] += $orderDetail['sum_price'];
-                $sums['amount'] += $orderDetail['sum_amount'];
-                if ($groupBy == 'product') {
-                    $sums['units'] += $orderDetail['sum_units'];
-                }
-                if ($groupBy == 'manufacturer') {
-                    $sums['reduced_price'] += $orderDetail['reduced_price'];
-                }
-                $sums['deposit'] += $orderDetail['sum_deposit'];
-            }
-            if (!empty($orderDetail->order_detail_unit)) {
-                $sums['grouped_units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
-            }
+        if (is_int($manufacturerId)) {
+            $manufacturer = $this->Manufacturer->find('all',
+                conditions: [
+                    'Manufacturers.id_manufacturer' => $manufacturerId
+                ]
+            )
+            ->select($this->Product->Manufacturers)
+            ->first();
+            $this->set('manufacturer', $manufacturer);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
+            $this->set('variableMemberFee', $variableMemberFee);
         }
-        $this->set('sums', $sums);
 
-        // extract all email addresses for button
-        $emailAddresses = [];
-        if ($groupBy == '') {
-            $emailAddresses = $query->all()->extract('customer.email')->toArray();
-        }
-        if ($groupBy == 'customer') {
-            $emailAddresses = Hash::extract($orderDetails, '{n}.email');
-        }
-        $emailAddresses = array_unique($emailAddresses);
-        $this->set('emailAddresses', $emailAddresses);
+        $advancedStockManagementEnabled = $manufacturerId == 'all' || (!empty($manufacturer) && $manufacturer->stock_management_enabled);
+        $this->set('advancedStockManagementEnabled', $advancedStockManagementEnabled);
 
-        $groupByForDropdown = [
-            'product' => __d('admin', 'Group_by_product')
-        ];
-        if (!$this->identity->isManufacturer()) {
-            $groupByForDropdown['customer'] = __d('admin', 'Group_by_member');
-            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
-        }
-        $this->set('groupByForDropdown', $groupByForDropdown);
-        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
+        $this->set('title_for_layout', __d('admin', 'Products'));
 
-        $this->set('title_for_layout', __d('admin', 'Orders'));
+        if (Configure::read('appDb.FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS')) {
+            $this->StorageLocation = $this->getTableLocator()->get('StorageLocations');
+            $storageLocationsForForDropdown = $this->StorageLocation->getForDropdown();
+            $this->set('storageLocationsForForDropdown', $storageLocationsForForDropdown);
+        }
+
+        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->identity->isManufacturer()) {
+            $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
+            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
+            $this->viewBuilder()->addHelper('Network.Network');
+            $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->identity);
+            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->identity->getManufacturerEnabledSyncDomains());
+            $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
+            $this->set('showSyncProductsButton', $showSyncProductsButton);
+        }
     }
-
-    private function prepareGroupedOrderDetails($orderDetails, $groupBy)
-    {
-
-        $preparedOrderDetails = [];
-        
-        switch ($groupBy) {
-            case 'customer':
-                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);
-                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-                    $this->Invoice = $this->getTableLocator()->get('Invoices');
-                    $this->Customer = $this->getTableLocator()->get('Customers');
-                    foreach($preparedOrderDetails as &$orderDetail) {
-                        $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id'], Configure::read('app.timeHelper')->getCurrentDateForDatabase());
-                        $orderDetail['latestInvoices'] = $this->Invoice->getLatestInvoicesForCustomer($orderDetail['customer_id']);
-                    }
-                }
-                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
-                break;
-            case 'manufacturer':
-                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByManufacturer($orderDetails);
-                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
-                break;
-            case 'product':
-                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByProduct($orderDetails);
-                $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
-                break;
-            default:
-                $deliveryDay = [];
-                $manufacturerName = [];
-                $productName = [];
-                $customerName = [];
-                foreach ($orderDetails as $orderDetail) {
-                    $orderDetail->quantityInUnitsNotYetChanged = false;
-                    if (!empty($orderDetail->order_detail_unit)) {
-                        $orderDetail->quantityInUnitsNotYetChanged = true;
-                        if ($orderDetail->order_detail_unit->mark_as_saved) {
-                            $orderDetail->quantityInUnitsNotYetChanged = false;
-                        }
-                    }
-                    $deliveryDay[] = $orderDetail->pickup_day;
-                    $manufacturerName[] = mb_strtolower(StringComponent::slugify($orderDetail->product->manufacturer->name));
-                    $productName[] = mb_strtolower(StringComponent::slugify($orderDetail->product_name));
-                    if (!empty($orderDetail->customer)) {
-                        $customerName[] = mb_strtolower(StringComponent::slugify($orderDetail->customer->name));
-                    } else {
-                        $customerName[] = '';
-                    }
-                }
-                if (!in_array('sort', array_keys($this->getRequest()->getQueryParams()))) {
-                    array_multisort(
-                        $deliveryDay, SORT_ASC,
-                        $manufacturerName, SORT_ASC,
-                        $productName, SORT_ASC,
-                        $customerName, SORT_ASC,
-                        $orderDetails
-                    );
-                }
-                break;
-        }
-
-        if (isset($sortField)) {
-            $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-            $orderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection, [
-                'type' => in_array($sortField, ['manufacturer_name', 'name']) ? 'locale' : 'regular',
-                'ignoreCase' => true,
-            ]);
-        }
-
-        if ($groupBy == 'customer') {
-            $orderDetails = Hash::sort($orderDetails, '{n}.products_picked_up', 'ASC');
-        }
-
-        return $orderDetails;
-
-    }
-
-    private function getSortFieldForGroupedOrderDetails($manufacturerNameField)
-    {
-        $sortField = 'name';
-        $sortMatches = [
-            'Manufacturers.name' => $manufacturerNameField,
-            'sum_price' => 'sum_price',
-            'sum_amount' => 'sum_amount',
-            'sum_deposit' => 'sum_deposit',
-            'sum_units' => 'sum_units',
-        ];
-        if (!empty($this->getRequest()->getQuery('sort')) && isset($sortMatches[$this->getRequest()->getQuery('sort')])) {
-            $sortField = $sortMatches[$this->getRequest()->getQuery('sort')];
-        }
-        return $sortField;
-    }
-
-    private function getSortDirectionForGroupedOrderDetails()
-    {
-        $sortDirection = 'ASC';
-        if (!empty($this->getRequest()->getQuery('direction') && in_array($this->getRequest()->getQuery('direction'), ['asc', 'desc']))) {
-            $sortDirection = h($this->getRequest()->getQuery('direction'));
-        }
-        return $sortDirection;
-    }
-    
-    private function addSelectGroupFields($query) {
-        $query->select([
-            'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
-            'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
-            'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
-            'sum_units' => $query->func()->sum('OrderDetailUnits.product_quantity_in_units'),
-        ]);
-        return $query;
-    }
-
 
 }
