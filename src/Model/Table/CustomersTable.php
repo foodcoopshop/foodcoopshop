@@ -13,6 +13,7 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Utility\Hash;
 use Cake\Routing\Router;
 use App\Model\Entity\Customer;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -233,7 +234,10 @@ class CustomersTable extends AppTable
             (new QueryExpression())->in('ValidOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStateIds()),
         ]);
         $this->getAssociation('ActiveOrderDetails')->setConditions([
-            (new QueryExpression())->in('ActiveOrderDetails.order_state', [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]),
+            (new QueryExpression())->in('ActiveOrderDetails.order_state', [
+                OrderDetail::STATE_OPEN,
+                OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+            ]),
         ]);
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
             (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless()),

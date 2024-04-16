@@ -5,6 +5,7 @@ namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -89,7 +90,7 @@ trait DeleteTrait {
             $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
-            if (! $this->identity->isManufacturer() && $orderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
+            if (! $this->identity->isManufacturer() && $orderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                     '<b>' . $orderDetail->customer->name . '</b>',
                     '<b>' . $orderDetail->product->manufacturer->name . '</b>'

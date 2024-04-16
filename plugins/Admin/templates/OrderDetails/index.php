@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use App\Model\Entity\OrderDetail;
 
 ?>
 <div id="order-details-list">
@@ -182,7 +183,10 @@ echo '</tr>';
 foreach ($orderDetails as $orderDetail) {
 
     $editRecordAllowed = $groupBy == '' && (
-        in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]))
+        in_array($orderDetail->order_state, [
+            OrderDetail::STATE_OPEN,
+            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+        ]))
         && (!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
 
     $rowClasses = [];

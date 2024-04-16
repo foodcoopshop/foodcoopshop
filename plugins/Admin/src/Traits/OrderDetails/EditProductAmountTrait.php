@@ -6,6 +6,7 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Services\ChangeSellingPriceService;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -101,7 +102,7 @@ trait EditProductAmountTrait {
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_amount_changed_notification);
 
-        if (! $this->identity->isManufacturer() && $oldOrderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductAmountChangedNotification) {
+        if (! $this->identity->isManufacturer() && $oldOrderDetail->order_state == OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductAmountChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'

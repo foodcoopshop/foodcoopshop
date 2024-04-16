@@ -20,6 +20,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Datasource\FactoryLocator;
+use App\Model\Entity\OrderDetail;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -183,7 +184,7 @@ class ProductsControllerTest extends AppCakeTestCase
             $orderDetailsTable->patchEntity(
                 $orderDetailsTable->get(1),
                 [
-                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                    'order_state' => OrderDetail::STATE_BILLED_CASHLESS,
                 ]
             )
         );
@@ -246,7 +247,7 @@ class ProductsControllerTest extends AppCakeTestCase
             $orderDetailsTable->patchEntity(
                 $orderDetailsTable->get(5),
                 [
-                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                    'order_state' => OrderDetail::STATE_BILLED_CASHLESS,
                 ]
             )
         );

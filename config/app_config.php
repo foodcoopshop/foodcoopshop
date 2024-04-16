@@ -22,11 +22,6 @@ define('APP_ON', 1);
 define('APP_OFF', 0);
 define('APP_DEL', -1);
 
-define('ORDER_STATE_ORDER_PLACED', 3);
-define('ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER', 10);
-define('ORDER_STATE_BILLED_CASHLESS', 11);
-define('ORDER_STATE_BILLED_CASH', 12);
-
 define('PHONE_REGEX', '/^[0-9 ()+-\/]{7,20}$/');
 define('EMAIL_REGEX', '/([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,10})+/i');
 define('ZIP_REGEX', '/^[0-9]{4,5}$/');

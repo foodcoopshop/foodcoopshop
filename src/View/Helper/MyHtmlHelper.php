@@ -14,6 +14,7 @@ use App\Services\OutputFilter\OutputFilterService;
 use App\Services\OrderCustomerService;
 use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -199,9 +200,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStateFontawesomeIcon($orderState)
     {
         return match($orderState) {
-            ORDER_STATE_ORDER_PLACED => 'fas fa-cart-arrow-down ok',
-            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER => 'far fa-envelope ok',
-            ORDER_STATE_BILLED_CASHLESS, ORDER_STATE_BILLED_CASH => 'fa fa-lock not-ok',
+            OrderDetail::STATE_OPEN => 'fas fa-cart-arrow-down ok',
+            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER => 'far fa-envelope ok',
+            OrderDetail::STATE_BILLED_CASHLESS, OrderDetail::STATE_BILLED_CASH => 'fa fa-lock not-ok',
             default => '',
         };
     }
@@ -488,9 +489,9 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderStateBilled()
     {
-        $billedOrderState = ORDER_STATE_BILLED_CASH;
+        $billedOrderState = OrderDetail::STATE_BILLED_CASH;
         if ($this->paymentIsCashless()) {
-            $billedOrderState = ORDER_STATE_BILLED_CASHLESS;
+            $billedOrderState = OrderDetail::STATE_BILLED_CASHLESS;
         }
         return $billedOrderState;
     }
@@ -923,9 +924,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStatesCashless()
     {
         return [
-            ORDER_STATE_ORDER_PLACED,
-            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
-            ORDER_STATE_BILLED_CASHLESS
+            OrderDetail::STATE_OPEN,
+            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+            OrderDetail::STATE_BILLED_CASHLESS,
         ];
     }
 

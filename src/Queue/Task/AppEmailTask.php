@@ -21,6 +21,7 @@ use Queue\Queue\Task\EmailTask;
 use Cake\Datasource\FactoryLocator;
 use Throwable;
 use Cake\I18n\DateTime;
+use App\Model\Entity\OrderDetail;
 
 class AppEmailTask extends EmailTask
 {
@@ -57,7 +58,7 @@ class AppEmailTask extends EmailTask
 
         if (isset($afterRunParams['manufacturerId']) && isset($afterRunParams['orderDetailIds'])) {
             $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-            $orderDetailTable->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
+            $orderDetailTable->updateOrderState(null, null, [OrderDetail::STATE_OPEN], OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $afterRunParams['manufacturerId'], $afterRunParams['orderDetailIds']);
         }
 
         if (isset($afterRunParams['invoiceId'])) {

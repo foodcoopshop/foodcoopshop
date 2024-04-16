@@ -11,6 +11,7 @@ use Cake\Datasource\FactoryLocator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
 use App\Model\Entity\Cart;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -262,7 +263,7 @@ class OrderDetailsTable extends AppTable
             'Products.StockAvailables',
             'ProductAttributes.StockAvailables'
         ]);
-        $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
+        $query->where(['OrderDetails.order_state' => OrderDetail::STATE_OPEN]);
         $query->where(['IF(Manufacturers.include_stock_products_in_order_lists = 0, (Products.is_stock_product = 0 OR Manufacturers.stock_management_enabled = 0), 1)']);
 
         if ($customerCanSelectPickupDay) {
@@ -533,7 +534,7 @@ class OrderDetailsTable extends AppTable
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND od.order_state NOT IN (' . ORDER_STATE_BILLED_CASHLESS.',' . ORDER_STATE_BILLED_CASH . ') ';
+        $sql .= 'AND od.order_state NOT IN (' . OrderDetail::STATE_BILLED_CASHLESS.',' . OrderDetail::STATE_BILLED_CASH . ') ';
         $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') = :dateFrom ';
         $sql .= 'GROUP BY p.id_manufacturer ';
         $params = [
@@ -745,7 +746,7 @@ class OrderDetailsTable extends AppTable
     public function onInvoiceCancellation($orderDetails)
     {
         foreach($orderDetails as $orderDetail) {
-            $orderDetail->order_state = ORDER_STATE_ORDER_PLACED;
+            $orderDetail->order_state = OrderDetail::STATE_OPEN;
             $orderDetail->id_invoice = null;
             $this->save($orderDetail);
         }

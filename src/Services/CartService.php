@@ -26,6 +26,7 @@ use Cake\Routing\Router;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -413,7 +414,7 @@ class CartService
                 'tax_unit_amount' => $cartProduct['taxPerPiece'],
                 'tax_total_amount' => $cartProduct['tax'],
                 'tax_rate' => $product->tax->rate ?? 0,
-                'order_state' => ORDER_STATE_ORDER_PLACED,
+                'order_state' => OrderDetail::STATE_OPEN,
                 'id_customer' => $this->identity->getId(),
                 'id_cart_product' => $cartProduct['cartProductId'],
                 'pickup_day' => $cartProduct['pickupDay'],

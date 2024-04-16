@@ -21,6 +21,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use App\Model\Entity\OrderDetail;
 
 abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 {
@@ -58,7 +59,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get($orderDetailId),
                 [
-                    'order_state' => ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER
+                    'order_state' => OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
                 ]
             )
         );

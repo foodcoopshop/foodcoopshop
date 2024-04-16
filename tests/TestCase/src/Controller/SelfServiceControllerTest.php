@@ -22,6 +22,7 @@ use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use App\Model\Entity\OrderDetail;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -302,7 +303,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         foreach($cart->cart_products as $cartProduct) {
             $orderDetail = $cartProduct->order_detail;
-            $this->assertEquals($orderDetail->order_state, ORDER_STATE_BILLED_CASHLESS);
+            $this->assertEquals($orderDetail->order_state, OrderDetail::STATE_BILLED_CASHLESS);
         }
 
         $this->assertMailCount(1);

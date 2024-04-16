@@ -19,6 +19,7 @@ namespace App\Services;
 use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use App\Model\Entity\Customer;
+use App\Model\Entity\OrderDetail;
 
 class ChangeSellingPriceService
 {
@@ -30,7 +31,7 @@ class ChangeSellingPriceService
             conditions: [
                 $orderDetailsTable->aliasField('product_id') => $productId,
                 $orderDetailsTable->aliasField('product_attribute_id') => $productAttributeId,
-                $orderDetailsTable->aliasField('order_state NOT IN') => [ORDER_STATE_BILLED_CASH, ORDER_STATE_BILLED_CASHLESS],
+                $orderDetailsTable->aliasField('order_state NOT IN') => [OrderDetail::STATE_BILLED_CASHLESS, OrderDetail::STATE_BILLED_CASH],
                 $orderDetailsTable->aliasField('shopping_price') => Customer::SELLING_PRICE,
             ],
             contain: [
