@@ -154,6 +154,8 @@ trait IndexTrait {
                 $query->select(['OrderDetails.product_id']);
                 $query->select(['Products.name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
+                $query->select('OrderDetailUnits.unit_name');
+                $query->groupBy('OrderDetailUnits.unit_name');
                 break;
             default:
                 $customerTable = $this->getTableLocator()->get('Customers');
@@ -187,6 +189,7 @@ trait IndexTrait {
                 'sum_price',
                 'sum_amount',
                 'sum_deposit',
+                'sum_units',
                 'Products.name',
             ]
         ])->toArray();
@@ -330,13 +333,14 @@ trait IndexTrait {
 
     private function getSortFieldForGroupedOrderDetails($manufacturerNameField)
     {
-        $sortField = 'name';
         $sortMatches = [
             'Manufacturers.name' => $manufacturerNameField,
             'sum_price' => 'sum_price',
             'sum_amount' => 'sum_amount',
-            'sum_deposit' => 'sum_deposit'
+            'sum_deposit' => 'sum_deposit',
+            'sum_units' => 'sum_units',
         ];
+        $sortField = 'name';
         if (!empty($this->getRequest()->getQuery('sort')) && isset($sortMatches[$this->getRequest()->getQuery('sort')])) {
             $sortField = $sortMatches[$this->getRequest()->getQuery('sort')];
         }
@@ -357,6 +361,7 @@ trait IndexTrait {
             'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
             'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
+            'sum_units' => $query->func()->sum('OrderDetailUnits.product_quantity_in_units'),
         ]);
         return $query;
     }

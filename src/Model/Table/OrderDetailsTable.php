@@ -111,7 +111,7 @@ class OrderDetailsTable extends AppTable
             'PurchasePriceTaxRate' => 'OrderDetailPurchasePrices.tax_rate',
             'SumPurchasePriceGross' => $query->func()->sum('OrderDetailPurchasePrices.total_price_tax_incl'),
         ]);
-        $query->group([
+        $query->groupBy([
             'OrderDetails.product_name',
             'OrderDetailPurchasePrices.tax_rate',
             'OrderDetailUnits.unit_name',
@@ -199,7 +199,7 @@ class OrderDetailsTable extends AppTable
         $query->select([
             'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
         ]);
-        $query->group([
+        $query->groupBy([
             'OrderDetails.pickup_day',
             'OrderDetails.product_id',
             'OrderDetails.product_attribute_id',
@@ -243,7 +243,7 @@ class OrderDetailsTable extends AppTable
             $query->select([
                 'SumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             ]);
-            $query->group('OrderDetails.id_customer');
+            $query->groupBy('OrderDetails.id_customer');
             $result = $query->toArray();
 
             if (isset($result[0])) {
@@ -391,7 +391,7 @@ class OrderDetailsTable extends AppTable
         $query->select(
             ['orderDetailsCount' => $query->func()->count('OrderDetails.pickup_day')]
         );
-        $query->group('OrderDetails.pickup_day');
+        $query->groupBy('OrderDetails.pickup_day');
         return $query->toArray();
     }
 
@@ -586,7 +586,7 @@ class OrderDetailsTable extends AppTable
     public function getMonthlySumProductByCustomer($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
-        $query->group('MonthAndYear');
+        $query->groupBy('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
@@ -617,7 +617,7 @@ class OrderDetailsTable extends AppTable
             });
         }
 
-        $query->group('MonthAndYear');
+        $query->groupBy('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')',
@@ -673,9 +673,14 @@ class OrderDetailsTable extends AppTable
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->product_id;
+            if (!empty($orderDetail->order_detail_unit)) {
+                $key = $orderDetail->product_id . '-' . $orderDetail->order_detail_unit->unit_name;
+                $preparedOrderDetails[$key]['unit_name'] = $orderDetail->order_detail_unit->unit_name;
+            }
             $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
             $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetails[$key]['sum_units'] = $orderDetail->sum_units;
             $preparedOrderDetails[$key]['product_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
             $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;

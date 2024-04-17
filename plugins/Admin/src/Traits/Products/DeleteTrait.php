@@ -64,7 +64,7 @@ trait DeleteTrait {
                     'productName' => 'Products.name'
                 ]
             );
-            $query->group('OrderDetails.product_id');
+            $query->groupBy('OrderDetails.product_id');
 
             $errors = [];
             if ($query->count() > 0) {

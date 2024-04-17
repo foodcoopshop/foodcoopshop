@@ -459,7 +459,7 @@ class CatalogService
         $productAttributes = Cache::remember('productAttributes', function() {
             return $this->ProductAttribute->find('all')
                 ->select(['ProductAttributes.id_product'])
-                ->group('ProductAttributes.id_product')
+                ->groupBy('ProductAttributes.id_product')
                 ->toArray();
         });
         $productIdsWithAttributes = Hash::extract($productAttributes, '{n}.id_product');

@@ -482,7 +482,7 @@ class CustomersTable extends AppTable
             ],
         );
         $query->select('OrderDetails.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
-        $query->group('OrderDetails.id_customer');
+        $query->groupBy('OrderDetails.id_customer');
 
         $removedCustomerIds = [];
         foreach($query as $orderDetail) {
@@ -527,7 +527,7 @@ class CustomersTable extends AppTable
             ],
         );
         $query->select('Payments.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
-        $query->group('Payments.id_customer');
+        $query->groupBy('Payments.id_customer');
 
         $removedCustomerIds = [];
         foreach($query as $payment) {

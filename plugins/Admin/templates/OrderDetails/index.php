@@ -347,6 +347,10 @@ if ($groupBy == '') {
     echo '<td colspan="'.$colspan.'"></td>';
 }
 
+if ($groupBy == 'product') {
+    echo '<td></td>';
+}
+
 echo '</tr>';
 echo '</table>';
 
