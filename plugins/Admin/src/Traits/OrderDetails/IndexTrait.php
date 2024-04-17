@@ -189,6 +189,7 @@ trait IndexTrait {
                 'sum_price',
                 'sum_amount',
                 'sum_deposit',
+                'sum_units',
                 'Products.name',
             ]
         ])->toArray();
@@ -332,7 +333,6 @@ trait IndexTrait {
 
     private function getSortFieldForGroupedOrderDetails($manufacturerNameField)
     {
-        $sortField = 'name';
         $sortMatches = [
             'Manufacturers.name' => $manufacturerNameField,
             'sum_price' => 'sum_price',
@@ -340,6 +340,7 @@ trait IndexTrait {
             'sum_deposit' => 'sum_deposit',
             'sum_units' => 'sum_units',
         ];
+        $sortField = 'name';
         if (!empty($this->getRequest()->getQuery('sort')) && isset($sortMatches[$this->getRequest()->getQuery('sort')])) {
             $sortField = $sortMatches[$this->getRequest()->getQuery('sort')];
         }
