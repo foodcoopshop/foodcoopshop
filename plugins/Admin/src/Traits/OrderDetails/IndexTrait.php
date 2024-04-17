@@ -317,9 +317,10 @@ trait IndexTrait {
 
         if (isset($sortField)) {
             $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
+            $isName = in_array($sortField, ['manufacturer_name', 'name']);
             $orderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection, [
-                'type' => in_array($sortField, ['manufacturer_name', 'name']) ? 'locale' : 'regular',
-                'ignoreCase' => true,
+                'type' => $isName ? 'locale' : 'regular',
+                'ignoreCase' => $isName,
             ]);
         }
 

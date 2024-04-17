@@ -672,20 +672,21 @@ class OrderDetailsTable extends AppTable
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
-            $key = $orderDetail->product_id;
+            $preparedOrderDetail = [];
             if (!empty($orderDetail->order_detail_unit)) {
-                $key = $orderDetail->product_id . '-' . $orderDetail->order_detail_unit->unit_name;
-                $preparedOrderDetails[$key]['unit_name'] = $orderDetail->order_detail_unit->unit_name;
+                $preparedOrderDetail['unit_name'] = $orderDetail->order_detail_unit->unit_name;
             }
-            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
-            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
-            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
-            $preparedOrderDetails[$key]['sum_units'] = $orderDetail->sum_units;
-            $preparedOrderDetails[$key]['product_id'] = $key;
-            $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
-            $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;
-            $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetail['sum_units'] = $orderDetail->sum_units;
+            $preparedOrderDetail['product_id'] = $orderDetail->product_id;
+            $preparedOrderDetail['name'] = $orderDetail->product->name;
+            $preparedOrderDetail['manufacturer_id'] = $orderDetail->product->id_manufacturer;
+            $preparedOrderDetail['manufacturer_name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetails[] = $preparedOrderDetail;
         }
+
         return $preparedOrderDetails;
     }
 
@@ -694,14 +695,15 @@ class OrderDetailsTable extends AppTable
         $preparedOrderDetails = [];
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         foreach ($orderDetails as $orderDetail) {
-            $key = $orderDetail->product->id_manufacturer;
-            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
-            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
-            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetail = [];
+            $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
-            $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
-            $preparedOrderDetails[$key]['manufacturer_id'] = $key;
-            $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetail['variable_member_fee'] = $variableMemberFee;
+            $preparedOrderDetail['manufacturer_id'] = $orderDetail->product->id_manufacturer;
+            $preparedOrderDetail['name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetails[] = $preparedOrderDetail;
         }
 
         foreach($preparedOrderDetails as &$pod) {
@@ -718,28 +720,29 @@ class OrderDetailsTable extends AppTable
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
-            $key = $orderDetail->id_customer;
-            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
-            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
-            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
-            $preparedOrderDetails[$key]['order_detail_count'] = $orderDetail->order_detail_count;
-            $preparedOrderDetails[$key]['customer_id'] = $key;
-            $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
-            $preparedOrderDetails[$key]['email'] = '';
+            $preparedOrderDetail = [];
+            $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetail['order_detail_count'] = $orderDetail->order_detail_count;
+            $preparedOrderDetail['customer_id'] = $orderDetail->id_customer;
+            $preparedOrderDetail['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+            $preparedOrderDetail['email'] = '';
             if ($orderDetail->customer) {
-                $preparedOrderDetails[$key]['email'] = $orderDetail->customer->email;
+                $preparedOrderDetail['email'] = $orderDetail->customer->email;
             }
             $productsPickedUp = false;
             if (!empty($orderDetail->pickup_day_entity)) {
-                $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
-                $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
+                $preparedOrderDetail['comment'] = $orderDetail->pickup_day_entity->comment;
+                $preparedOrderDetail['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
-            if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
+            if (isset($preparedOrderDetail['products_picked_up_tmp']) && $preparedOrderDetail['products_picked_up_tmp']) {
                 $productsPickedUp = true;
-                $preparedOrderDetails[$key]['row_class'] = ['selected'];
+                $preparedOrderDetail['row_class'] = ['selected'];
             }
-            $preparedOrderDetails[$key]['products_picked_up'] = $productsPickedUp;
-            unset($preparedOrderDetails[$key]['products_picked_up_tmp']);
+            $preparedOrderDetail['products_picked_up'] = $productsPickedUp;
+            unset($preparedOrderDetail['products_picked_up_tmp']);
+            $preparedOrderDetails[] = $preparedOrderDetail;
         }
 
         foreach($preparedOrderDetails as &$orderDetail) {

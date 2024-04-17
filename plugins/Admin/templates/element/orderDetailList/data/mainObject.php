@@ -18,16 +18,9 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 if ($groupBy != '') {
-    $objectId = $orderDetail[$groupBy . '_id'];
-    
-    // product-id can be a string like "123-kg" -> remove "-kg"
-    $splittedObjectId = explode('-', (string) $objectId);
-    if (count($splittedObjectId) > 1) {
-        $objectId = $splittedObjectId[0];
-    }
     $groupByObjectHref = '/admin/order-details/index/' .
         '?pickupDay[]=' . join(',', $pickupDay) .
-        '&' . $groupBy.'Id=' . $objectId .
+        '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] .
         (isset($orderDetail['customer_id']) ? '' : '&customerId=' . $customerId );
         $groupByObjectLink = $this->Html->link($orderDetail['name'], $groupByObjectHref, ['escape' => false]);
 }
