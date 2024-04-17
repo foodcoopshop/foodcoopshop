@@ -159,7 +159,7 @@ class PaymentsTable extends AppTable
             'YearWeek' => $formattedDate,
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
-        $query->group($formattedDate);
+        $query->groupBy($formattedDate);
         $result = $query->toArray();
 
         return $result;
@@ -189,7 +189,7 @@ class PaymentsTable extends AppTable
             'YearWeek' => $formattedDate,
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
-        $query->group($formattedDate);
+        $query->groupBy($formattedDate);
         $result = $query->toArray();
 
         return $result;
@@ -207,7 +207,7 @@ class PaymentsTable extends AppTable
         $query = $this->find('all', conditions: $conditions);
 
         $query->select(['sumManufacturerMoneyDeposit' => $query->func()->sum('Payments.amount')]);
-        $query->group('Payments.text');
+        $query->groupBy('Payments.text');
         $result = $query->toArray();
 
         if (isset($result[0])) {
