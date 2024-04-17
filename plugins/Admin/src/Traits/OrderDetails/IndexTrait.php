@@ -154,6 +154,8 @@ trait IndexTrait {
                 $query->select(['OrderDetails.product_id']);
                 $query->select(['Products.name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
+                $query->select('OrderDetailUnits.unit_name');
+                $query->groupBy('OrderDetailUnits.unit_name');
                 break;
             default:
                 $customerTable = $this->getTableLocator()->get('Customers');

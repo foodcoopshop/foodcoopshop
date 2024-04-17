@@ -673,6 +673,10 @@ class OrderDetailsTable extends AppTable
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->product_id;
+            if (!empty($orderDetail->order_detail_unit)) {
+                $key = $orderDetail->product_id . '-' . $orderDetail->order_detail_unit->unit_name;
+                $preparedOrderDetails[$key]['unit_name'] = $orderDetail->order_detail_unit->unit_name;
+            }
             $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
             $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
             $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;

@@ -40,7 +40,7 @@ declare(strict_types=1);
 if ($groupBy == 'product') {
     echo '<td class="right">';
         if ($orderDetail['sum_units'] > 0) {
-            echo $this->Number->formatUnitAsDecimal($orderDetail['sum_units']);
+            echo '<span class="quantity-in-units">' . $this->Number->formatUnitAsDecimal($orderDetail['sum_units']) .'</span><span class="unit-name">'. ' ' . $orderDetail['unit_name'].'</span>';
         }
     echo '</td>';
 }
