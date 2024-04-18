@@ -136,9 +136,6 @@ class CartsTable extends AppTable
                 'CartProducts.id_cart' => $cart->id_cart,
                 'CartProducts.amount > 0',
             ],
-            order: [
-                'Products.name',
-            ],
             contain: [
                 'CartProductUnits',
                 'Products.Manufacturers',
@@ -199,17 +196,17 @@ class CartsTable extends AppTable
 
         }
 
-        $productName = [];
-        $deliveryDay = [];
+        $deliveryDaySortArray = [];
+        $idSortArray = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
-            $deliveryDay[] = $cartProduct['nextDeliveryDay'];
-            $productName[] = mb_strtolower(StringComponent::slugify($cartProduct['productName']));
+            $deliveryDaySortArray[] = $cartProduct['nextDeliveryDay'];
+            $idSortArray[] = $cartProduct['cartProductId'];
         }
 
         array_multisort(
-            $deliveryDay, SORT_DESC, // !SIC - array is reversed later
-            $productName, SORT_DESC, // !SIC - array is reversed later
-            $preparedCart['CartProducts']
+            $deliveryDaySortArray, SORT_DESC, SORT_NUMERIC, // !SIC - array is reversed later
+            $idSortArray, SORT_DESC, // !SIC - array is reversed later
+            $preparedCart['CartProducts'],
         );
 
         // sum up deposits and products
