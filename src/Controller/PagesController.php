@@ -117,11 +117,10 @@ class PagesController extends FrontendController
 
     public function discourseSso()
     {
-        $user = $this->identity !== null;
-        if (!$user) {
+        if ($this->identity === null) {
             die('No User');
         }
-        if (!$user['active']) {
+        if (!$this->identity->active) {
             die('Inactive User');
         }
 
@@ -137,10 +136,10 @@ class PagesController extends FrontendController
             die('Bad SSO request');
         }
 
-        $userId = $user['id_customer'];
-        $userEmail = $user['email'];
+        $userId = $this->identity->getId();
+        $userEmail = $this->identity->email;
         $extraParameters = [
-            'name' => $user['name']
+            'name' => $this->identity->name,
         ];
 
         $nonce = $sso->getNonce($payload);
