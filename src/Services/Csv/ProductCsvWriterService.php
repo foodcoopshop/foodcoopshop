@@ -17,6 +17,8 @@ declare(strict_types=1);
 namespace App\Services\Csv;
 
 use Cake\Datasource\FactoryLocator;
+use DOMDocument;
+use DOMXPath;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -31,24 +33,40 @@ class ProductCsvWriterService extends BaseCsvWriterService
     public function getHeader()
     {
         return [
+            __('Id'),
             __('Product'),
-            __('Status'),
+            __('Manufacturer'),
+            __('Unit'),
         ];
     }
 
     public function getRecords()
     {
-        $products = FactoryLocator::get('Table')->get('Products')->find('all', [
-            'conditions' => [
-                'Products.id_product IN' => $this->productIds,
-            ],
-        ])->toArray();
+        $productsTable =FactoryLocator::get('Table')->get('Products');
+        $products = $productsTable->getProductsForBackend(
+            productIds: $this->productIds,
+            manufacturerId: 'all',
+            active: 'all',
+            addProductNameToAttributes: true,
+        );
 
         $records = [];
         foreach ($products as $product) {
+
+            $doc = new DOMDocument();
+            $doc->loadHTML($product->name);
+            $finder = new DomXPath($doc);
+
+            $productNameClassName="product-name";
+            $productName = $finder->query("//*[contains(@class, '$productNameClassName')]")->item(0)?->nodeValue;
+            $quantityInUnitsClassName="quantity-in-units";
+            $quantityInUnits = $finder->query("//*[contains(@class, '$quantityInUnitsClassName')]")->item(0)?->nodeValue;
+
             $records[] = [
-                $product->name,
-                $product->active,
+                $product->id_product,
+                $productName,
+                $product->manufacturer->name,
+                $quantityInUnits,
             ];
         }
 
