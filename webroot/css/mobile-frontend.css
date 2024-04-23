@@ -189,7 +189,7 @@
         margin-top: 5px;
     }
     .manufacturer-wrapper div.c3 a.btn {
-        margin-top: 35px ! important;
+        margin-top: 0 ! important;
         float: right ! important;
     }
     body.manufacturers.detail .manufacturer-infos {

@@ -74,6 +74,11 @@ foreach ($manufacturers as $manufacturer) {
                 $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
                 ['class' => 'btn btn-outline-light']
             );
+            if ($identity !== null) {
+                if (!empty($manufacturer->customer)) {
+                    echo '<i>' . __('Contact_person') . ':<br />' . $manufacturer->customer->name . '</i>';
+                }
+            }
         echo '</div>';
 
     echo '</div>';

@@ -495,7 +495,13 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     text-align: center;
 }
 .manufacturer-wrapper div.c3 a.btn {
-    margin-top: 65px;
+    margin-top: 23px;
+}
+.manufacturer-wrapper div.c3 i {
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+    word-break: break-all;
 }
 .pw .ew {
     float: left;
