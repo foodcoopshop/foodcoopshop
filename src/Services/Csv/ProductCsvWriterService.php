@@ -17,8 +17,7 @@ declare(strict_types=1);
 namespace App\Services\Csv;
 
 use Cake\Datasource\FactoryLocator;
-use DOMDocument;
-use DOMXPath;
+use App\Services\DomDocumentService;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -53,14 +52,10 @@ class ProductCsvWriterService extends BaseCsvWriterService
         $records = [];
         foreach ($products as $product) {
 
-            $doc = new DOMDocument();
-            $doc->loadHTML($product->name);
-            $finder = new DomXPath($doc);
-
-            $productNameClassName="product-name";
-            $productName = $finder->query("//*[contains(@class, '$productNameClassName')]")->item(0)?->nodeValue;
-            $quantityInUnitsClassName="quantity-in-units";
-            $quantityInUnits = $finder->query("//*[contains(@class, '$quantityInUnitsClassName')]")->item(0)?->nodeValue;
+            $domDocumentService = new DomDocumentService();
+            $domDocumentService->loadHTML($product->name);
+            $productName = $domDocumentService->getItemByClass('product-name')->item(0)?->nodeValue;
+            $quantityInUnits = $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue;
 
             $records[] = [
                 $product->id_product,
