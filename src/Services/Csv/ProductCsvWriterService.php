@@ -37,6 +37,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Product'),
             __('Manufacturer'),
             __('Unit'),
+            __('Amount'),
         ];
     }
 
@@ -75,6 +76,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $productName,
                 $product->manufacturer->name,
                 $unit,
+                $product->stock_available->quantity,
             ];
         }
 

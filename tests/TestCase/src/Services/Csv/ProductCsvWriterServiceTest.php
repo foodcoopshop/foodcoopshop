@@ -39,15 +39,15 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 		$lines  = explode("\n", $result);
 
         $this->assertEquals(10, count($lines));
-        $this->assertEquals(Writer::BOM_UTF8 . 'Id;Produkt;Hersteller;Einheit', $lines[0]);
-        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";StÃ¼ck', $lines[1]);
-        $this->assertEquals('344;Knoblauch;"Demo Gemüse-Hersteller";"100 g"', $lines[2]);
-        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";', $lines[3]);
-        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";ca.Â 1Â kg', $lines[4]);
-        $this->assertEquals('350;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";', $lines[5]);
-        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"0,5 kg"', $lines[6]);
-        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"1 kg"', $lines[7]);
-        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";ca. 0,5 kg', $lines[8]);
+        $this->assertEquals(Writer::BOM_UTF8 . 'Id;Produkt;Hersteller;Einheit;Anzahl', $lines[0]);
+        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";StÃ¼ck;97', $lines[1]);
+        $this->assertEquals('344;Knoblauch;"Demo Gemüse-Hersteller";"100 g";78', $lines[2]);
+        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";;5', $lines[3]);
+        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";ca.Â 1Â kg;999', $lines[4]);
+        $this->assertEquals('350;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";;1004', $lines[5]);
+        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"0,5 kg";5', $lines[6]);
+        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"1 kg";999', $lines[7]);
+        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";ca. 0,5 kg;999', $lines[8]);
 
     }
 
