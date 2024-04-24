@@ -19,6 +19,7 @@ namespace App\Services\Csv;
 use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\Product;
 use Cake\Core\Configure;
+use Cake\Controller\Exception\InvalidParameterException;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -29,17 +30,20 @@ class ProductCsvWriterService extends BaseCsvWriterService
     {
         $productsTable =FactoryLocator::get('Table')->get('Products');
         $stockProductIds = $productsTable->find()
-            ->where([
-                'Products.id_product IN' => $productIds,
-                'Products.is_stock_product' => APP_ON,
-                'Manufacturers.stock_management_enabled' => APP_ON,
-            ])
-            ->contain([
-                'Manufacturers',
-            ])
-            ->all()->extract('id_product')->toArray();
+        ->where([
+            'Products.id_product IN' => $productIds,
+            'Products.is_stock_product' => APP_ON,
+            'Manufacturers.stock_management_enabled' => APP_ON,
+        ])
+        ->contain([
+            'Manufacturers',
+        ])
+        ->all()->extract('id_product')->toArray();
 
-        // filter out products that are no stock products
+        if (empty($stockProductIds)) {
+            throw new InvalidParameterException('no stock products found');
+        }
+
         $this->productIds = $stockProductIds;
     }
 
