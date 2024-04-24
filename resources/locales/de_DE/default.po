@@ -953,6 +953,9 @@ msgstr "Preis ändern"
 msgid "Price_per_unit"
 msgstr "Preis pro Bestelleinheit"
 
+msgid "Price_per"
+msgstr "Preis pro"
+
 msgid "gross"
 msgstr "brutto"
 
@@ -961,6 +964,9 @@ msgstr "Preis nach Gewicht (für Gewichtsanpassung nach Lieferung)"
 
 msgid "for"
 msgstr "für"
+
+msgid "Stock_value"
+msgstr "Lagerwert"
 
 msgid "approximate_delivery_weight_in_{0}_per_unit"
 msgstr "ungefähres Liefergewicht in {0} pro Einheit"

@@ -48,11 +48,11 @@ trait GenerateProductCardsTrait {
             $price = Configure::read('app.numberHelper')->formatAsCurrency($product->gross_price);
             if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                 $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
-                if (!preg_match('/main-product/', $product->row_class)) {
+                if (!$this->Product->isMainProduct($product)) {
                     $product->name = $product->nameForBarcodePdf;
-               }
+                }
             }
-            if (preg_match('/main-product/', $product->row_class)) {
+            if (!$this->Product->isMainProduct($product)) {
                 $product->system_bar_code .= '0000';
             }
             $product->prepared_price = $price;

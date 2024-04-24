@@ -507,6 +507,20 @@ foodcoopshop.Admin = {
         });
     },
 
+    initExportProductsButton : function() {
+        var button = $('#exportProductsButton');
+        foodcoopshop.Helper.disableButton(button);
+
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
+        });
+
+        button.on('click', function () {
+            var productIds = foodcoopshop.Admin.getSelectedProductIds();
+            window.open('/admin/products/export?productIds=' + productIds.join(','));
+        });
+    },
+
     initProductDropdown: function (selectedProductId, manufacturerId) {
 
         manufacturerId = manufacturerId || 0;

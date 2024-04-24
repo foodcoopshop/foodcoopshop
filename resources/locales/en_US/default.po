@@ -953,6 +953,9 @@ msgstr "Change price"
 msgid "Price_per_unit"
 msgstr "Price per unit"
 
+msgid "Price_per"
+msgstr "Preis per"
+
 msgid "gross"
 msgstr "gross"
 
@@ -961,6 +964,9 @@ msgstr "Price per weight (for adapting the weight after delivery)"
 
 msgid "for"
 msgstr "for"
+
+msgid "Stock_value"
+msgstr "Stock value"
 
 msgid "approximate_delivery_weight_in_{0}_per_unit"
 msgstr "approximate delivery weight in {0} per unit"

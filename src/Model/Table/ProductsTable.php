@@ -16,8 +16,6 @@ use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
-use App\Model\Entity\Customer;
-use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -909,7 +907,7 @@ class ProductsTable extends AppTable
             $product->nameSetterMethodEnabled = false;
             $product->name = '<span class="product-name">' . $product->name . '</span>';
             if (!empty($additionalProductNameInfos)) {
-                $product->name = $product->name . ': ' . join(', ', $additionalProductNameInfos);
+                $product->name = $product->name . Product::NAME_SEPARATOR . join(', ', $additionalProductNameInfos);
             }
             $product->nameSetterMethodEnabled = true;
 
@@ -944,6 +942,7 @@ class ProductsTable extends AppTable
                         if ($product->purchase_gross_price > 0) {
                             $product->purchase_price_is_zero = false;
                         }
+                        $product->purchase_net_price = $purchasePrice;
                     }
 
                     if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
@@ -1087,6 +1086,7 @@ class ProductsTable extends AppTable
                             if ($preparedProduct['purchase_gross_price'] > 0) {
                                 $preparedProduct['purchase_price_is_zero'] = false;
                             }
+                            $preparedProduct['purchase_net_price'] = $purchasePrice;
                         }
 
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
@@ -1133,6 +1133,11 @@ class ProductsTable extends AppTable
         }
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
         return $preparedProducts;
+    }
+
+    public function isMainProduct($product)
+    {
+        return preg_match('/main-product/', $product->row_class);
     }
 
     public function getForDropdown($manufacturerId)

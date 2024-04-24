@@ -11,6 +11,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen / Verbesserungen
 - Barcodes mit Gewichtsinformation findet das Produkt. [I#776](https://github.com/foodcoopshop/foodcoopshop/issues/776) / [PR#1019](https://github.com/foodcoopshop/foodcoopshop/pull/1019) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 - Unter "Bestellungen / Gruppiert nach Produkt" befindet sich jetzt eine neue Spalte mit dem summierten Gewicht. [PR#1021](https://github.com/foodcoopshop/foodcoopshop/pull/1021) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Export-Funktion für Lagerprodukte (Inventurliste) im CSV-Format. [I#1010](https://github.com/foodcoopshop/foodcoopshop/issues/1010) / [PR#1022](https://github.com/foodcoopshop/foodcoopshop/pull/1022) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v4.0
 
