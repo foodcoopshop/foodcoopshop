@@ -953,6 +953,9 @@ msgstr "Preis ändern"
 msgid "Price_per_unit"
 msgstr "Preis pro Bestelleinheit"
 
+msgid "Price_per"
+msgstr "Preis pro"
+
 msgid "gross"
 msgstr "brutto"
 

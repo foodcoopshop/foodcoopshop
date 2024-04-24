@@ -51,8 +51,8 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Manufacturer'),
             __('Unit'),
             __('Amount'),
-            __('Gross_price'),
-            __('for'),
+            Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ?  __('Purchase_price') . ' ' . __('net') : __('Selling_price') . ' ' . __('gross') ,
+            __('Price_per'),
             __('Stock_value'),
         ];
     }
@@ -78,9 +78,16 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
             $productName = $this->getProductName($product, $isMainProduct);
             $availableQuantity = $product->stock_available->quantity;
-            $sellingPriceGross = $this->getSellingPriceGross($product);
+
+            $price = $this->getSellingPriceGross($product);
+            $pricePerUnit = $product->unit->price_incl_per_unit ?? 0;
+            if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                $price = $this->getPurchasePriceNet($product);
+                $pricePerUnit = $product->unit->purchase_price_incl_per_unit ?? 0;
+            }
+
             $unit = $this->getUnit($product, $isMainProduct);
-            $stockValue = $this->getStockValue($product, $sellingPriceGross, $availableQuantity);
+            $stockValue = $this->getStockValue($product, $price, $availableQuantity, $pricePerUnit);
 
             $stockValueSum += $stockValue;
 
@@ -90,7 +97,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $product->manufacturer->name,
                 $unit,
                 $availableQuantity,
-                Configure::read('app.numberHelper')->formatAsDecimal($sellingPriceGross),
+                Configure::read('app.numberHelper')->formatAsDecimal($price, 6),
                 $this->getUnitForPrice($product),
                 Configure::read('app.numberHelper')->formatAsDecimal($stockValue),
             ];
@@ -161,14 +168,23 @@ class ProductCsvWriterService extends BaseCsvWriterService
         return $sellingPriceGross;
     }
 
-    private function getStockValue($product, $price, $availableQuantity)
+    private function getPurchasePriceNet($product)
+    {
+        $purchasePriceNet = $product->purchase_net_price ?? 0;
+        if ($product->unit && $product->unit->price_per_unit_enabled) {
+            $purchasePriceNet = $product->unit->purchase_price_incl_per_unit ?? 0;
+        }
+        return $purchasePriceNet;
+    }
+
+    private function getStockValue($product, $price, $availableQuantity, $pricePerUnit)
     {
         if ($availableQuantity <= 0) {
             return 0;
         }
 
         if ($product->unit && $product->unit->price_per_unit_enabled) {
-            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount);
+            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($pricePerUnit, $product->unit->quantity_in_units, $product->unit->amount);
         }
 
         $stockValue = $price * $availableQuantity;

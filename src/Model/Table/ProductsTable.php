@@ -942,6 +942,7 @@ class ProductsTable extends AppTable
                         if ($product->purchase_gross_price > 0) {
                             $product->purchase_price_is_zero = false;
                         }
+                        $product->purchase_net_price = $purchasePrice;
                     }
 
                     if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
@@ -1085,6 +1086,7 @@ class ProductsTable extends AppTable
                             if ($preparedProduct['purchase_gross_price'] > 0) {
                                 $preparedProduct['purchase_price_is_zero'] = false;
                             }
+                            $preparedProduct['purchase_net_price'] = $purchasePrice;
                         }
 
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {

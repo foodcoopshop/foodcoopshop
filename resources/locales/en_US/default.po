@@ -953,6 +953,9 @@ msgstr "Change price"
 msgid "Price_per_unit"
 msgstr "Price per unit"
 
+msgid "Price_per"
+msgstr "Preis per"
+
 msgid "gross"
 msgstr "gross"
 
