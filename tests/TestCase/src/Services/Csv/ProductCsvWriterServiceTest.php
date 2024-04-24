@@ -17,13 +17,17 @@ declare(strict_types=1);
 use App\Test\TestCase\AppCakeTestCase;
 use App\Services\Csv\ProductCsvWriterService;
 use League\Csv\Writer;
-use Cake\Log\Log;
 
 class ProductCsvWriterServiceTest extends AppCakeTestCase
 {
 
     public function testWrite()
     {
+        $productsTable = $this->getTableLocator()->get('Products');
+        $productsTable->updateAll(['is_stock_product' => APP_ON], []);
+        $manufacturersTable = $this->getTableLocator()->get('Manufacturers');
+        $manufacturersTable->updateAll(['stock_management_enabled' => APP_ON], []);
+
         $productIds = [344, 346, 349, 350, 351];
         $writerService = new ProductCsvWriterService();
         $writerService->setProductIds($productIds);

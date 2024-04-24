@@ -27,7 +27,20 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     public function setProductIds($productIds)
     {
-        $this->productIds = $productIds;
+        $productsTable =FactoryLocator::get('Table')->get('Products');
+        $stockProductIds = $productsTable->find()
+            ->where([
+                'Products.id_product IN' => $productIds,
+                'Products.is_stock_product' => APP_ON,
+                'Manufacturers.stock_management_enabled' => APP_ON,
+            ])
+            ->contain([
+                'Manufacturers',
+            ])
+            ->all()->extract('id_product')->toArray();
+
+        // filter out products that are no stock products
+        $this->productIds = $stockProductIds;
     }
 
     public function getHeader()
