@@ -16,8 +16,6 @@ use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
-use App\Model\Entity\Customer;
-use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

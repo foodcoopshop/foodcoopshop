@@ -55,13 +55,17 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $domDocumentService = new DomDocumentService();
             $domDocumentService->loadHTML($product->name);
             $productName = $domDocumentService->getItemByClass('product-name')->item(0)?->nodeValue;
-            $quantityInUnits = $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue;
+            $unit = $domDocumentService->getItemByClass('unity-for-dialog')->item(0)?->nodeValue ?? $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue;
+
+            if ($product->id_product == '350-13') {
+                pr($product);
+            }
 
             $records[] = [
                 $product->id_product,
                 $productName,
                 $product->manufacturer->name,
-                $quantityInUnits,
+                $unit,
             ];
         }
 

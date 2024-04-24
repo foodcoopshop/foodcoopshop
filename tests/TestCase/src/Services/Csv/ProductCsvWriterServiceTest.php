@@ -30,12 +30,13 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 
     public function testWrite()
     {
-        $productIds = [349, 350, 351];
+        $productIds = [344, 346, 349, 350, 351];
         $writerService = new ProductCsvWriterService();
         $writerService->setProductIds($productIds);
         $writerService->render();
         $result = $writerService->writer->toString();
 		$lines  = explode("\n", $result);
+        pr($lines);
 
         /*
         $this->assertEquals(8, count($lines));
