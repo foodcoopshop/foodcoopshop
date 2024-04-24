@@ -68,6 +68,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         );
 
         $records = [];
+        $stockValueSum = 0;
         foreach ($products as $product) {
 
             $isMainProduct = $productsTable->isMainProduct($product);
@@ -79,6 +80,9 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $availableQuantity = $product->stock_available->quantity;
             $sellingPriceGross = $this->getSellingPriceGross($product);
             $unit = $this->getUnit($product, $isMainProduct);
+            $stockValue = $this->getStockValue($product, $sellingPriceGross, $availableQuantity);
+
+            $stockValueSum += $stockValue;
 
             $records[] = [
                 $product->id_product,
@@ -88,9 +92,20 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $availableQuantity,
                 Configure::read('app.numberHelper')->formatAsDecimal($sellingPriceGross),
                 $this->getUnitForPrice($product),
-                Configure::read('app.numberHelper')->formatAsDecimal($this->getStockValue($product, $sellingPriceGross, $availableQuantity)),
+                Configure::read('app.numberHelper')->formatAsDecimal($stockValue),
             ];
         }
+
+        $records[] = [
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            Configure::read('app.numberHelper')->formatAsDecimal($stockValueSum),
+        ];
 
         return $records;
     }
