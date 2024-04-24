@@ -19,6 +19,7 @@ namespace App\Services\Csv;
 use Cake\Datasource\FactoryLocator;
 use App\Services\DomDocumentService;
 use App\Model\Entity\Product;
+use Cake\Core\Configure;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -38,6 +39,8 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Manufacturer'),
             __('Unit'),
             __('Amount'),
+            __('Gross_price'),
+            __('for')
         ];
     }
 
@@ -69,10 +72,18 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 if (count($explodedName) == 2) {
                     $unit = $explodedName[1];
                 }   
-                if ($product->unit->price_per_unit_enabled) {
+                if ($product->unit && $product->unit->price_per_unit_enabled) {
                     $productName = $product->unchanged_name;
                     $unit = $product->name;
                 }
+            }
+
+            $unitForPrice = '';
+            $sellingPriceGross = $product->gross_price;
+            if ($product->unit && $product->unit->price_per_unit_enabled) {
+                //$sellingPriceGross = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount);
+                $sellingPriceGross = $product->unit->price_incl_per_unit;
+                $unitForPrice = $product->unit->amount . ' ' . $product->unit->name;
             }
 
             $records[] = [
@@ -81,6 +92,8 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $product->manufacturer->name,
                 $unit,
                 $product->stock_available->quantity,
+                Configure::read('app.numberHelper')->formatAsDecimal($sellingPriceGross),
+                $unitForPrice,
             ];
         }
 
