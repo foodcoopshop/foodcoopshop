@@ -51,16 +51,20 @@ class ProductCsvWriterService extends BaseCsvWriterService
             addProductNameToAttributes: true,
         );
 
+        $domDocumentService = new DomDocumentService();
         $records = [];
         foreach ($products as $product) {
 
-            $domDocumentService = new DomDocumentService();
+            $isMainProduct = $productsTable->isMainProduct($product);
+            if ($isMainProduct && !empty($product->product_attributes)) {
+                continue;
+            }
+
             $domDocumentService->loadHTML($product->name);
             $productName = $domDocumentService->getItemByClass('product-name')->item(0)?->nodeValue;
             $unit = $domDocumentService->getItemByClass('unity-for-dialog')->item(0)?->nodeValue ?? $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue ?? '';
             
-            $isAttribute = !$productsTable->isMainProduct($product);
-            if ($isAttribute) {
+            if (!$isMainProduct) {
                 $explodedName = explode(Product::NAME_SEPARATOR, $product->name);
                 if (count($explodedName) == 2) {
                     $unit = $explodedName[1];
