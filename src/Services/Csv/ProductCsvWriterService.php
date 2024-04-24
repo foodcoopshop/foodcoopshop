@@ -18,6 +18,7 @@ namespace App\Services\Csv;
 
 use Cake\Datasource\FactoryLocator;
 use App\Services\DomDocumentService;
+use App\Model\Entity\Product;
 
 class ProductCsvWriterService extends BaseCsvWriterService
 {
@@ -55,10 +56,18 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $domDocumentService = new DomDocumentService();
             $domDocumentService->loadHTML($product->name);
             $productName = $domDocumentService->getItemByClass('product-name')->item(0)?->nodeValue;
-            $unit = $domDocumentService->getItemByClass('unity-for-dialog')->item(0)?->nodeValue ?? $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue;
-
-            if ($product->id_product == '350-13') {
-                pr($product);
+            $unit = $domDocumentService->getItemByClass('unity-for-dialog')->item(0)?->nodeValue ?? $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue ?? '';
+            
+            $isAttribute = !$productsTable->isMainProduct($product);
+            if ($isAttribute) {
+                $explodedName = explode(Product::NAME_SEPARATOR, $product->name);
+                if (count($explodedName) == 2) {
+                    $unit = $explodedName[1];
+                }   
+                if ($product->unit->price_per_unit_enabled) {
+                    $productName = $product->unchanged_name;
+                    $unit = $product->name;
+                }
             }
 
             $records[] = [

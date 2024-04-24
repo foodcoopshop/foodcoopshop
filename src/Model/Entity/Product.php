@@ -22,9 +22,10 @@ use App\Controller\Component\StringComponent;
 
  class Product extends Entity {
 
-    public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
-    public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
-    public const ALLOWED_STATUSES = [APP_OFF, APP_ON];
+    const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
+    const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
+    const ALLOWED_STATUSES = [APP_OFF, APP_ON];
+    const NAME_SEPARATOR = ': ';
 
     public $nameSetterMethodEnabled = true;
 

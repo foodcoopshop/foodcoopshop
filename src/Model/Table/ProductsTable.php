@@ -907,7 +907,7 @@ class ProductsTable extends AppTable
             $product->nameSetterMethodEnabled = false;
             $product->name = '<span class="product-name">' . $product->name . '</span>';
             if (!empty($additionalProductNameInfos)) {
-                $product->name = $product->name . ': ' . join(', ', $additionalProductNameInfos);
+                $product->name = $product->name . Product::NAME_SEPARATOR . join(', ', $additionalProductNameInfos);
             }
             $product->nameSetterMethodEnabled = true;
 
@@ -1131,6 +1131,11 @@ class ProductsTable extends AppTable
         }
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
         return $preparedProducts;
+    }
+
+    public function isMainProduct($product)
+    {
+        return preg_match('/main-product/', $product->row_class);
     }
 
     public function getForDropdown($manufacturerId)
