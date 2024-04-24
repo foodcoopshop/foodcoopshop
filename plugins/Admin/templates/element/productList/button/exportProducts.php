@@ -19,4 +19,4 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.initExportProductsButton();"
 ]);
-echo '<a id="exportProductsButton" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-file-export ok"></i> ' . __d('admin', 'Export_products') . '</a>';
+echo '<a id="exportProductsButton" class="dropdown-item" href="javascript:void(0);"><i class="fa-fw fas fa-file-export ok"></i> ' . __d('admin', 'Export_stock_products') . '</a>';

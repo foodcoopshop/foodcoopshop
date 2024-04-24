@@ -2233,8 +2233,8 @@ msgstr "Steuersatz ändern"
 msgid "Import_products"
 msgstr "Produkte importieren"
 
-msgid "Export_products"
-msgstr "Produkte exportieren"
+msgid "Export_stock_products"
+msgstr "Lagerprodukte exportieren"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
