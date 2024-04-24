@@ -68,7 +68,6 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $productName = $domDocumentService->getItemByClass('product-name')->item(0)?->nodeValue;
             $unit = $domDocumentService->getItemByClass('unity-for-dialog')->item(0)?->nodeValue ?? $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue ?? '';
             $availableQuantity = $product->stock_available->quantity;
-            $stockValue = 0;
             
             if (!$isMainProduct) {
                 $explodedName = explode(Product::NAME_SEPARATOR, $product->name);
@@ -81,19 +80,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 }
             }
 
-            $unitForPrice = '';
-            $sellingPriceGross = $product->gross_price;
-            if ($product->unit && $product->unit->price_per_unit_enabled) {
-                if ($availableQuantity > 0) {
-                    $stockValue = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount) * $availableQuantity;
-                }
-                $sellingPriceGross = $product->unit->price_incl_per_unit;
-                $unitForPrice = $product->unit->amount . ' ' . $product->unit->name;
-            } else {
-                if ($availableQuantity > 0) {
-                    $stockValue = $sellingPriceGross * $availableQuantity;
-                }
-            }
+            $sellingPriceGross = $this->getSellingPriceGross($product);
 
             $records[] = [
                 $product->id_product,
@@ -102,12 +89,44 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $unit,
                 $availableQuantity,
                 Configure::read('app.numberHelper')->formatAsDecimal($sellingPriceGross),
-                $unitForPrice,
-                Configure::read('app.numberHelper')->formatAsDecimal($stockValue),
+                $this->getUnitForPrice($product),
+                Configure::read('app.numberHelper')->formatAsDecimal($this->getStockValue($product, $sellingPriceGross, $availableQuantity)),
             ];
         }
 
         return $records;
+    }
+
+    private function getSellingPriceGross($product)
+    {
+        $sellingPriceGross = $product->gross_price;
+        if ($product->unit && $product->unit->price_per_unit_enabled) {
+            $sellingPriceGross = $product->unit->price_incl_per_unit;
+        }
+        return $sellingPriceGross;
+    }
+
+    private function getStockValue($product, $price, $availableQuantity)
+    {
+        if ($availableQuantity <= 0) {
+            return 0;
+        }
+
+        if ($product->unit && $product->unit->price_per_unit_enabled) {
+            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount);
+        }
+
+        $stockValue = $price * $availableQuantity;
+        
+        return $stockValue;
+    }
+
+    private function getUnitForPrice($product) {
+        $unitForPrice = '';
+        if ($product->unit && $product->unit->price_per_unit_enabled) {
+            $unitForPrice = $product->unit->amount . ' ' . $product->unit->name;
+        }
+        return $unitForPrice;
     }
 
 }
