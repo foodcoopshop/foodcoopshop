@@ -38,16 +38,14 @@ class ProductsPolicy implements RequestPolicyInterface
                 return $identity->isManufacturer();
                 break;
             case 'generateProductCards':
-                return $identity->isSuperadmin() || $identity->isAdmin();
-                break;
-            case 'export':
-                    return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($identity->isSuperadmin() || $identity->isAdmin());
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($identity->isSuperadmin() || $identity->isAdmin());
                 break;
             case 'editPurchasePrice':
             case 'calculateSellingPriceWithSurcharge':
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($identity->isSuperadmin() || $identity->isAdmin());
                 break;
             case 'import':
+            case 'export':
                 return $identity->isSuperadmin() || $identity->isAdmin();
                 break;
             case 'editPrice':
