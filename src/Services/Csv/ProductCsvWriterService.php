@@ -40,7 +40,8 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Unit'),
             __('Amount'),
             __('Gross_price'),
-            __('for')
+            __('for'),
+            __('Stock_value'),
         ];
     }
 
@@ -66,6 +67,8 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $domDocumentService->loadHTML($product->name);
             $productName = $domDocumentService->getItemByClass('product-name')->item(0)?->nodeValue;
             $unit = $domDocumentService->getItemByClass('unity-for-dialog')->item(0)?->nodeValue ?? $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue ?? '';
+            $availableQuantity = $product->stock_available->quantity;
+            $stockValue = 0;
             
             if (!$isMainProduct) {
                 $explodedName = explode(Product::NAME_SEPARATOR, $product->name);
@@ -81,9 +84,15 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $unitForPrice = '';
             $sellingPriceGross = $product->gross_price;
             if ($product->unit && $product->unit->price_per_unit_enabled) {
-                //$sellingPriceGross = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount);
+                if ($availableQuantity > 0) {
+                    $stockValue = Configure::read('app.pricePerUnitHelper')->getPricePerUnit($product->unit->price_incl_per_unit, $product->unit->quantity_in_units, $product->unit->amount) * $availableQuantity;
+                }
                 $sellingPriceGross = $product->unit->price_incl_per_unit;
                 $unitForPrice = $product->unit->amount . ' ' . $product->unit->name;
+            } else {
+                if ($availableQuantity > 0) {
+                    $stockValue = $sellingPriceGross * $availableQuantity;
+                }
             }
 
             $records[] = [
@@ -91,9 +100,10 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $productName,
                 $product->manufacturer->name,
                 $unit,
-                $product->stock_available->quantity,
+                $availableQuantity,
                 Configure::read('app.numberHelper')->formatAsDecimal($sellingPriceGross),
                 $unitForPrice,
+                Configure::read('app.numberHelper')->formatAsDecimal($stockValue),
             ];
         }
 

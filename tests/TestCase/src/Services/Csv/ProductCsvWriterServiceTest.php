@@ -32,14 +32,14 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
 		$lines  = explode("\n", $result);
 
         $this->assertEquals(9, count($lines));
-        $this->assertEquals(Writer::BOM_UTF8 . 'Id;Produkt;Hersteller;Einheit;Anzahl;Bruttopreis;für', $lines[0]);
-        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";StÃ¼ck;97;1,82;', $lines[1]);
-        $this->assertEquals('344;Knoblauch;"Demo Gemüse-Hersteller";"100 g";78;0,64;', $lines[2]);
-        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";;5;5,00;', $lines[3]);
-        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";ca.Â 1Â kg;999;15,00;"1 kg"', $lines[4]);
-        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"0,5 kg";5;2,00;', $lines[5]);
-        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"1 kg";999;4,00;', $lines[6]);
-        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";ca. 0,5 kg;999;10,00;"1 kg"', $lines[7]);
+        $this->assertEquals(Writer::BOM_UTF8 . 'Id;Produkt;Hersteller;Einheit;Anzahl;Bruttopreis;für;Lagerwert', $lines[0]);
+        $this->assertEquals('346;Artischocke;"Demo Gemüse-Hersteller";StÃ¼ck;97;1,82;;176,54', $lines[1]);
+        $this->assertEquals('344;Knoblauch;"Demo Gemüse-Hersteller";"100 g";78;0,64;;49,92', $lines[2]);
+        $this->assertEquals('349;Lagerprodukt;"Demo Gemüse-Hersteller";;5;5,00;;25,00', $lines[3]);
+        $this->assertEquals('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";ca.Â 1Â kg;999;15,00;"1 kg";14.985,00', $lines[4]);
+        $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"0,5 kg";5;2,00;;10,00', $lines[5]);
+        $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";"1 kg";999;4,00;;3.996,00', $lines[6]);
+        $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";ca. 0,5 kg;999;10,00;"1 kg";4.995,00', $lines[7]);
 
     }
 
