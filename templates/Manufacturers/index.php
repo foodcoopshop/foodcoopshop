@@ -74,10 +74,8 @@ foreach ($manufacturers as $manufacturer) {
                 $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
                 ['class' => 'btn btn-outline-light']
             );
-            if ($identity !== null) {
-                if (!empty($manufacturer->customer)) {
-                    echo '<i>' . __('Contact_person') . ':<br />' . $manufacturer->customer->name . '</i>';
-                }
+            if ($identity !== null && !empty($manufacturer->customer) && !Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
+                echo '<i>' . __('Contact_person') . ':<br />' . $manufacturer->customer->name . '</i>';
             }
         echo '</div>';
 
