@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace App\Services\Csv;
 
 use Cake\Datasource\FactoryLocator;
-use App\Services\DomDocumentService;
 use App\Model\Entity\Product;
 use Cake\Core\Configure;
 
@@ -55,7 +54,6 @@ class ProductCsvWriterService extends BaseCsvWriterService
             addProductNameToAttributes: true,
         );
 
-        $domDocumentService = new DomDocumentService();
         $records = [];
         foreach ($products as $product) {
 
@@ -64,23 +62,10 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 continue;
             }
 
-            $domDocumentService->loadHTML($product->name);
-            $productName = $domDocumentService->getItemByClass('product-name')->item(0)?->nodeValue;
-            $unit = $domDocumentService->getItemByClass('unity-for-dialog')->item(0)?->nodeValue ?? $domDocumentService->getItemByClass('quantity-in-units')->item(0)?->nodeValue ?? '';
+            $productName = $this->getProductName($product, $isMainProduct);
             $availableQuantity = $product->stock_available->quantity;
-            
-            if (!$isMainProduct) {
-                $explodedName = explode(Product::NAME_SEPARATOR, $product->name);
-                if (count($explodedName) == 2) {
-                    $unit = $explodedName[1];
-                }   
-                if ($product->unit && $product->unit->price_per_unit_enabled) {
-                    $productName = $product->unchanged_name;
-                    $unit = $product->name;
-                }
-            }
-
             $sellingPriceGross = $this->getSellingPriceGross($product);
+            $unit = $this->getUnit($product, $isMainProduct);
 
             $records[] = [
                 $product->id_product,
@@ -95,6 +80,48 @@ class ProductCsvWriterService extends BaseCsvWriterService
         }
 
         return $records;
+    }
+
+    private function getFromPattern($pattern, $string)
+    {
+        preg_match($pattern, $string, $matches);
+        if (isset($matches[1])) {
+            return $matches[1];
+        }
+        return '';
+    }
+
+    private function getUnit($product, $isMainProduct)
+    {
+        $unit = $this->getFromPattern('/<span class="unity-for-dialog">(.*?)<\/span>/', $product->name);
+        if ($unit == '') {
+            $unit = $this->getFromPattern('/<span class="quantity-in-units">(.*?)<\/span>/', $product->name);
+        }
+
+        if (!$isMainProduct) {
+            $explodedName = explode(Product::NAME_SEPARATOR, $product->name);
+            if (count($explodedName) == 2) {
+                $unit = $explodedName[1];
+            }
+            if ($product->unit && $product->unit->price_per_unit_enabled) {
+                $unit = $product->name;
+            }
+        }
+
+        return $unit;
+
+    }
+
+    private function getProductName($product, $isMainProduct)
+    {
+
+        $productName = $this->getFromPattern('/<span class="product-name">(.*?)<\/span>/', $product->name);
+
+        if (!$isMainProduct && $product->unit && $product->unit->price_per_unit_enabled) {
+            return $product->unchanged_name;
+        }
+
+        return $productName;
     }
 
     private function getSellingPriceGross($product)
