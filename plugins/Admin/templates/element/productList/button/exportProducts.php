@@ -16,6 +16,10 @@ declare(strict_types=1);
  */
 use Cake\Core\Configure;
 
+if (!($identity->isSuperadmin() || $identity->isAdmin())) {
+    return false;
+}
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.initExportProductsButton();"
 ]);
