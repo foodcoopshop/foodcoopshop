@@ -2230,6 +2230,9 @@ msgstr "change tax rate"
 msgid "Import_products"
 msgstr "Import products"
 
+msgid "Export_products"
+msgstr "Export products"
+
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
 

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,6 +31,7 @@ if (!empty($products)) {
         $productImportUrl = $this->Slug->getProductImport($manufacturerId);
     }
     $buttons[] = '<a class="dropdown-item" href="' . $productImportUrl . '"><i class="fa-fw fas fa-file-import ok"></i> ' . __d('admin', 'Import_products') . '</a>';
+    $buttons[] = $this->element('productList/button/exportProducts');
 }
 
 echo $this->element('dropdownWithButtons', [

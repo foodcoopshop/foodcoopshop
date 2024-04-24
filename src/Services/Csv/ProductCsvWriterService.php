@@ -117,7 +117,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         }
 
         $stockValue = $price * $availableQuantity;
-        
+
         return $stockValue;
     }
 
