@@ -1,7 +1,5 @@
 #The provided docker should NOT BE USED IN PRODUCTION ENVIRONMENTS!
 
-version: '3'
-
 services:
 
   php-nginx:
