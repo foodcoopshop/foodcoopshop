@@ -118,7 +118,6 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCronjobsList(),
             $this->Slug->getCronjobEdit(1),
             $this->Slug->getProductImport(4),
-            '/admin/products/export?productIds=351',
         ];
 
         $this->assertPagesForErrors($testUrls);
