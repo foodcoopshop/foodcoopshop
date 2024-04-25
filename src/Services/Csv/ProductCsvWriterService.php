@@ -99,7 +99,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
             $records[] = [
                 $product->id_product,
                 $productName,
-                $product->manufacturer->name,
+                html_entity_decode($product->manufacturer->name),
                 $product->active,
                 $unit,
                 $availableQuantity,
