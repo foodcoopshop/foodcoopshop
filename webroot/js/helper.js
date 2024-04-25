@@ -35,12 +35,13 @@ foodcoopshop.Helper = {
     },
 
     // https://stackoverflow.com/questions/2367979/pass-post-data-with-window-location-href
-    postForm: function(path, params, method) {
+    postFormInNewWindow: function(path, params, method) {
         method = method || 'post';
     
         var form = document.createElement('form');
         form.setAttribute('method', method);
         form.setAttribute('action', path);
+        form.setAttribute('target', '_blank');
     
         for (var key in params) {
             if (params.hasOwnProperty(key)) {

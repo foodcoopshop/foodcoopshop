@@ -154,6 +154,7 @@ class Application extends BaseApplication
         $csrf->skipCheckCallback(function ($request) use ($apiUrls) {
             $skipUrls = array_merge($apiUrls, [
                 '/admin/products/export',
+                '/admin/products/generateProductCards',
             ]);
             return in_array($request->getPath(), $skipUrls);
         });

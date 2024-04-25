@@ -503,7 +503,7 @@ foodcoopshop.Admin = {
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            window.open('/admin/products/generateProductCards.pdf?productIds=' + productIds.join(','));
+            foodcoopshop.Helper.postFormInNewWindow('/admin/products/generateProductCards', {productIds: productIds});
         });
     },
 
@@ -517,7 +517,7 @@ foodcoopshop.Admin = {
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            foodcoopshop.Helper.postForm('/admin/products/export', {productIds: productIds});
+            foodcoopshop.Helper.postFormInNewWindow('/admin/products/export', {productIds: productIds});
         });
     },
 

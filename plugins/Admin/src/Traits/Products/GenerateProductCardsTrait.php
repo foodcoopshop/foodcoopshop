@@ -24,7 +24,7 @@ trait GenerateProductCardsTrait {
 
     public function generateProductCards()
     {
-        $productIds = h($this->getRequest()->getQuery('productIds'));
+        $productIds = h($this->getRequest()->getData('productIds'));
         if ($productIds == '') {
             throw new \Exception('no product ids passed');
         }
