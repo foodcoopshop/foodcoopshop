@@ -517,7 +517,7 @@ foodcoopshop.Admin = {
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            window.open('/admin/products/export?productIds=' + productIds.join(','));
+            foodcoopshop.Helper.postForm('/admin/products/export', {productIds: productIds});
         });
     },
 

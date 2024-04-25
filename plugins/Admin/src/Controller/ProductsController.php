@@ -78,6 +78,7 @@ class ProductsController extends AdminAppController
     {
         parent::initialize();
         $this->addViewClasses([JsonView::class]);
+        $this->loadComponent('FormProtection'); // needs to be loaded here only for testing
     }
     
     public function beforeFilter(EventInterface $event)
@@ -85,6 +86,7 @@ class ProductsController extends AdminAppController
         parent::beforeFilter($event);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Product = $this->getTableLocator()->get('Products');
+        $this->FormProtection->setConfig('unlockedActions', ['export']);
     }
 
 }
