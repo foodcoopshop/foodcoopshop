@@ -1033,7 +1033,7 @@ class ProductsTable extends AppTable
                     $preparedProduct = [
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
-                        'active' => - 1,
+                        'active' => $product->active,
                         'is_stock_product' => $product->is_stock_product,
                         'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),

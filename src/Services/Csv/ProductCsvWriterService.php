@@ -53,6 +53,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Id'),
             __('Product'),
             __('Manufacturer'),
+            __('Status'),
             __('Unit'),
             __('Amount'),
             Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ?  __('Purchase_price') . ' ' . __('net') : __('Selling_price') . ' ' . __('gross') ,
@@ -99,6 +100,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $product->id_product,
                 $productName,
                 $product->manufacturer->name,
+                $product->active,
                 $unit,
                 $availableQuantity,
                 Configure::read('app.numberHelper')->formatAsDecimal($price, 6),
@@ -108,6 +110,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         }
 
         $records[] = [
+            '',
             '',
             '',
             '',

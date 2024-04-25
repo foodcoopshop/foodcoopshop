@@ -46,9 +46,9 @@ class ProductsControllerTest extends AppCakeTestCase
         ]);
 
         $this->assertResponseOk();
-        $this->assertResponseContains('Id;Produkt;Hersteller;Einheit;Anzahl;"Verkaufspreis brutto";"Preis pro";Lagerwert');
-        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";ca. 1 kg;999;15,000000;"1 kg";14.985,00');
-        $this->assertResponseContains(';;;;;;;14.985,00');
+        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Einheit;Anzahl;"Verkaufspreis brutto";"Preis pro";Lagerwert');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;ca. 1 kg;999;15,000000;"1 kg";14.985,00');
+        $this->assertResponseContains(';;;;;;;;14.985,00');
     }
 
     public function testEditProductStatus()

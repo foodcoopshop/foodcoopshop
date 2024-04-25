@@ -978,7 +978,7 @@
         {
             "id_product": "350-13",
             "gross_price": 2,
-            "active": -1,
+            "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
             "row_class": "sub-row",
@@ -1021,7 +1021,7 @@
         {
             "id_product": "350-14",
             "gross_price": 4,
-            "active": -1,
+            "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
             "row_class": "sub-row",
@@ -1064,7 +1064,7 @@
         {
             "id_product": "350-15",
             "gross_price": 0,
-            "active": -1,
+            "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
             "row_class": "sub-row",
