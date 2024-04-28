@@ -653,7 +653,7 @@ class CustomersTable extends AppTable
             if ($includeManufacturers) {
                 $manufacturer = $this->getManufacturerRecord($customer);
                 if ($manufacturer) {
-                    $decodedManufacturerName = html_entity_decode($manufacturer->name);
+                    $decodedManufacturerName = $manufacturer->decoded_name;
                     if ($manufacturer->active) {
                         $onlineManufacturers[$customer->id_customer] = $decodedManufacturerName;
                     } else {

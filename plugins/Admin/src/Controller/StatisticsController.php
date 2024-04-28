@@ -283,7 +283,7 @@ class StatisticsController extends AdminAppController
 
                 $preparedData = [];
                 $preparedData['sum'] = $monthlySumProducts;
-                $preparedData['label'] = html_entity_decode($manufacturer->name);
+                $preparedData['label'] = $manufacturer->decoded_name;
                 $data[] = $preparedData;
 
             }

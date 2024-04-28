@@ -74,7 +74,7 @@ class SendDeliveryNotesCommand extends AppCommand
             }
 
             $newData = '- <i class="fas fa-envelope not-ok" data-identifier="send-delivery-note-'.$manufacturer->id_manufacturer.'"></i> ';
-            $newData .= html_entity_decode($manufacturer->name);
+            $newData .= $manufacturer->decoded_name;
             $actionLogDatas[] = $newData;
 
             $deliverNoteService = new DeliveryNoteService();
