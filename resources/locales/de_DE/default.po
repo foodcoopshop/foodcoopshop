@@ -1034,6 +1034,9 @@ msgstr "0 oder kleiner als 0"
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden."
 
+msgid "Minimal_stock_amount"
+msgstr "Mindestlagerbestand"
+
 msgid "Notification_if_amount_lower_than"
 msgstr "E-Mail-Benachrichtigung ab Anzahl"
 

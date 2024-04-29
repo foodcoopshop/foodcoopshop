@@ -303,6 +303,7 @@ class LocalizedController extends Controller
                 'Manufacturer' => __('Manufacturer'),
                 'ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings' => __('For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings.'),
                 'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than'),
+                'MinimalStockAmount' => __('Minimal_stock_amount'),
                 'IsProductStockProduct' => __('Is_product_a_stock_product?'),
                 'TheDeliveryRhythmOfStockProductsIsAlwaysWeekly' => __('The_delivery_rhythm_of_stock_products_is_always_weekly.'),
                 'DeliveryRhythm' => __('Delivery_rhythm'),
