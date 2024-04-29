@@ -522,30 +522,22 @@ class OrderDetailsTable extends AppTable
         return $orderDetails;
     }
 
-    /**
-     * @param int $manufacturerId
-     * @param $dateFrom
-     * @param $dateTo
-     * @return float
-     */
-    public function getOpenOrderDetailSum($manufacturerId, $dateFrom)
+    public function getOpenOrderDetailSum(int $manufacturerId, $dateFrom)
     {
-        $sql = 'SELECT SUM(od.total_price_tax_incl) as sumOrderDetail ';
-        $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
-        $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
-        $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND od.order_state NOT IN (' . OrderDetail::STATE_BILLED_CASHLESS.',' . OrderDetail::STATE_BILLED_CASH . ') ';
-        $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') = :dateFrom ';
-        $sql .= 'GROUP BY p.id_manufacturer ';
-        $params = [
-            'manufacturerId' => $manufacturerId,
-            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom)
-        ];
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $query = $this->find('all',
+        conditions: [
+            $productsTable->aliasField('id_manufacturer') => $manufacturerId,
+            $this->aliasField('order_state NOT IN') => [OrderDetail::STATE_BILLED_CASHLESS, OrderDetail::STATE_BILLED_CASH],
+            $this->aliasField('pickup_day') => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
+        ],
+        contain: ['Products']);
+        $query->select([
+            'sumOrderDetail' => $query->func()->sum($this->aliasField('total_price_tax_incl')),
+        ])
+        ->groupBy($productsTable->aliasField('id_manufacturer'));
 
-        $statement = $this->getConnection()->getDriver()->prepare($sql);
-        $statement->execute($params);
-        $orderDetails = $statement->fetchAll('assoc');
-
+        $orderDetails = $query->toArray();
         if (isset($orderDetails[0])) {
             return $orderDetails[0]['sumOrderDetail'];
         } else {
