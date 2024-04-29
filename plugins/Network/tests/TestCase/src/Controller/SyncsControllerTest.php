@@ -40,7 +40,11 @@ class SyncsControllerTest extends AppCakeTestCase
 
     protected function correctSyncDomain()
     {
-        $this->dbConnection->execute("UPDATE fcs_sync_domains SET domain = REPLACE(domain, '{{serverName}}', '" . Configure::read('App.fullBaseUrl') . "');");
+        $syncDomainsTable = $this->getTableLocator()->get('Network.SyncDomains');
+        $syncDomainsTable->updateAll(
+            ['domain' => Configure::read('App.fullBaseUrl')],
+            ['domain LIKE' => '%{{serverName}}%']
+        );
     }
 
     public function testDenyAccessIfVariableMemberFeeEnabled()

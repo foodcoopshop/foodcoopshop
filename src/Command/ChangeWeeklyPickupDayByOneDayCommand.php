@@ -25,9 +25,6 @@ use Cake\Core\Configure;
 class ChangeWeeklyPickupDayByOneDayCommand extends Command
 {
 
-    public $Product;
-    public $Configuration;
-
     public function execute(Arguments $args, ConsoleIo $io)
     {
 
@@ -39,12 +36,7 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
             throw new \Exception('args wrong');
         }
 
-        $this->Product = $this->getTableLocator()->get('Products');
-        $this->Configuration = $this->getTableLocator()->get('Configurations');
-
-        $statement = $this->Product->getConnection()->getDriver()->prepare(
-            "UPDATE fcs_configuration SET value = :newWeeklyPickupDay WHERE name = 'FCS_WEEKLY_PICKUP_DAY';"
-        );
+        $configurationsTable = $this->getTableLocator()->get('Configurations');
 
         if ($args->getArgumentAt(0) == 'increase') {
             $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
@@ -54,13 +46,17 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
         }
 
         if (isset($newWeeklyPickupDay)) {
-            $params = ['newWeeklyPickupDay' => $newWeeklyPickupDay];
-            $statement->execute($params);
+            $configurationsTable->updateAll([
+                'value' => $newWeeklyPickupDay,
+            ], [
+                'name' => 'FCS_WEEKLY_PICKUP_DAY',
+            ]);
         }
 
-        $this->Configuration->loadConfigurations();
+        $configurationsTable->loadConfigurations();
 
-        $products = $this->Product->find('all');
+        $productsTable = $this->getTableLocator()->get('Products');
+        $products = $productsTable->find('all');
         foreach($products as $product) {
             if ($args->getArgumentAt(0) == 'increase') {
                 $newDeliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $product->delivery_rhythm_send_order_list_weekday);
@@ -68,22 +64,19 @@ class ChangeWeeklyPickupDayByOneDayCommand extends Command
             if ($args->getArgumentAt(0) == 'decrease') {
                 $newDeliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday);
             }
-            $statement = $this->Product->getConnection()->getDriver()->prepare(
-                "UPDATE fcs_product SET delivery_rhythm_send_order_list_weekday = :newDeliveryRhythmSendOrderListWeekday WHERE id_product = :productId;"
-            );
             if (isset($newDeliveryRhythmSendOrderListWeekday)) {
-                $params = [
-                    'newDeliveryRhythmSendOrderListWeekday' => $newDeliveryRhythmSendOrderListWeekday,
-                    'productId' => $product->id_product
-                ];
-                $statement->execute($params);
+                $productsTable->updateAll([
+                    'delivery_rhythm_send_order_list_weekday' => $newDeliveryRhythmSendOrderListWeekday,
+                ], [
+                    'id_product' => $product->id_product,
+                ]);
             }
         }
 
         if (isset($newWeeklyPickupDay)) {
             $io->out('Changed FCS_WEEKLY_PICKUP_DAY to ' . Configure::read('app.timeHelper')->getWeekdayName($newWeeklyPickupDay) . '.');
         }
-        
+
         return static::CODE_SUCCESS;
 
     }
