@@ -1168,7 +1168,7 @@ class ProductsTable extends AppTable
         $offlineProducts = [];
         $deletedProducts = [];
         foreach ($products as $product) {
-            $productNameForDropdown = $product->name . (!empty($product->manufacturer) ? ' - ' . html_entity_decode($product->manufacturer->name) : '');
+            $productNameForDropdown = $product->name . (!empty($product->manufacturer) ? ' - ' . $product->manufacturer->decoded_name : '');
             switch($product->active) {
                 case 1:
                     $onlineProducts[$product->id_product] = $productNameForDropdown;
