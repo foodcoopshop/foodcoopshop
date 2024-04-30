@@ -681,7 +681,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     color: #fff ! important;
 }
 .dropdown .dropdown-menu {
-    font-size: 15px;
+    font-size: 14px;
 }
 .dropdown .dropdown-menu i {
     margin-right: 3px;
