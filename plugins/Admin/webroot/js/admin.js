@@ -32,7 +32,7 @@ foodcoopshop.Admin = {
         $('#latest-invoices-tooltip-wrapper-' + customerId).hover(function() {
             getCreditBalanceTimeouts[customerId] = setTimeout(function() {
                 foodcoopshop.Helper.ajaxCall(
-                    '/admin/customers/ajaxGetCreditBalance/' + customerId,
+                    '/admin/customers/getCreditBalance/' + customerId,
                     {},
                     {
                         onOk: function (data) {
@@ -586,7 +586,7 @@ foodcoopshop.Admin = {
 
     populateDropdownWithCustomers : function(customerDropdown, selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange) {
         this.populateDropdownWithData(
-            '/admin/customers/ajaxGetCustomersForDropdown/' + includeManufacturers + '/' + includeOfflineCustomers,
+            '/admin/customers/getCustomersForDropdown/' + includeManufacturers + '/' + includeOfflineCustomers,
             selector,
             customerDropdown,
             selectedCustomerId,
