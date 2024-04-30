@@ -14,10 +14,10 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Services\Csv;
+namespace App\Services\Csv\Writer;
 
 use League\Csv\Writer;
-use App\Services\Csv\CsvWriterServiceInterface;
+use App\Services\Csv\Writer\CsvWriterServiceInterface;
 
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {

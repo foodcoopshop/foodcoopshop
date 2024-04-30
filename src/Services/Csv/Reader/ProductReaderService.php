@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Services\Csv;
+namespace App\Services\Csv\Reader;
 
 use League\Csv\Reader;
 use Cake\Datasource\FactoryLocator;

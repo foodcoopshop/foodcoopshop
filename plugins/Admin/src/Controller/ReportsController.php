@@ -9,7 +9,7 @@ use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Event\EventInterface;
 use Cake\ORM\Exception\PersistenceFailedException;
-use App\Services\Csv\Banking\BankingReaderServiceFactory;
+use App\Services\Csv\Reader\Banking\BankingReaderServiceFactory;
 use Cake\I18n\DateTime;
 
 /**

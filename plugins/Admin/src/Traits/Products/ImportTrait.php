@@ -9,7 +9,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\FactoryLocator;
 use League\Csv\Writer;
 use Cake\Log\Log;
-use App\Services\Csv\ProductReaderService;
+use App\Services\Csv\Reader\ProductReaderService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

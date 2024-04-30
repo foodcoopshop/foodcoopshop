@@ -16,7 +16,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Services\Csv\Banking;
+namespace App\Services\Csv\Reader\Banking;
 
 class BankingReaderServiceFactory {
 

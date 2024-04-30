@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
-use App\Services\Csv\ProductCsvWriterService;
+use App\Services\Csv\Writer\ProductCsvWriterService;
 use League\Csv\Writer;
 
 class ProductCsvWriterServiceTest extends AppCakeTestCase

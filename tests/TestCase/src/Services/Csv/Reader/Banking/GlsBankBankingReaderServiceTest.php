@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use App\Services\Csv\Banking\GlsBankBankingReaderService;
+use App\Services\Csv\Reader\Banking\GlsBankBankingReaderService;
 
 class GlsBankBankingReaderServiceTest extends AppCakeTestCase
 {

@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
-use App\Services\Csv\ProductReaderService;
+use App\Services\Csv\Reader\ProductReaderService;
 
 class ProductReaderServiceTest extends AppCakeTestCase
 {

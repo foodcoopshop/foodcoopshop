@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use App\Services\Csv\ProductCsvWriterService;
+use App\Services\Csv\Writer\ProductCsvWriterService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
