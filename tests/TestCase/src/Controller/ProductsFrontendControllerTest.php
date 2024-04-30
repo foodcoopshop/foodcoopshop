@@ -201,12 +201,10 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         )->first();
         $nextDeliveryDay = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $this);
 
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (3);';
-        $params = [
-            'pickupDay' => $nextDeliveryDay,
-        ];
-        $statement = $this->dbConnection->getDriver()->prepare($query);
-        $statement->execute($params);
+        $this->OrderDetail->updateAll(
+            ['pickup_day' => $nextDeliveryDay],
+            ['id_order_detail' => 3],
+        );
         
         $this->loginAsCustomer();
         $this->get($this->Slug->getProductDetail($productId, 'Milch'));
