@@ -19,6 +19,7 @@ $buttons[] = $this->element('copyEmailButton', [
     'object' => 'customer',
 ]);
 $buttons[] = $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
+$buttons[] = $this->element('customerList/button/exportCustomers');
 
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,
