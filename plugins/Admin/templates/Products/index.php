@@ -142,7 +142,7 @@ $paginator = $this->loadHelper('Paginator', [
                     echo '</div>';
                 }
 
-                echo $this->element('productList/selectedProductsDropdown', [
+                echo $this->element('productList/moreDropdown', [
                     'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products')),
                     'manufacturerId' => $manufacturerId,
                 ]);
