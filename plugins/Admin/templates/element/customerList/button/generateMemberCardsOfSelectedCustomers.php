@@ -20,7 +20,7 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".Admin.initGenerateMemberCardsOfSelectedCustomersButton();"
     ]);
-    echo '<a id="generateMemberCardsOfSelectedCustomersButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_member_cards') . '</a>';
+    echo '<a id="generateMemberCardsOfSelectedCustomersButton" class="dropdown-item" href="javascript:void(0);"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_member_cards') . '</a>';
 }
 
 ?>

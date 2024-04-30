@@ -49,7 +49,9 @@ use Cake\Datasource\FactoryLocator;
                     ]);
                     echo '</div>';
                 }
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]);
+                echo $this->element('manufacturerList/moreDropdown', [
+                    'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')),
+                ]);
                 ?>
             </div>
         <?php echo $this->Form->end(); ?>
@@ -386,13 +388,6 @@ echo '<td></td>';
 
 echo '</tr>';
 echo '</table>';
-echo '<div class="sc"></div>';
-
-echo '<div class="bottom-button-container">';
-    echo $this->element('copyEmailButton', [
-        'object' => 'manufacturer',
-    ]);
-echo '</div>';
 echo '<div class="sc"></div>';
 
 ?>
