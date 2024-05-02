@@ -37,7 +37,7 @@ trait MemberCardDataTrait
             conditions: [
                 'Customers.id_customer IN' => $customerIds,
             ],
-            order: $customerTable->getCustomerOrderClause(),
+            order: $customerTable->getCustomerOrderClause('ASC'),
             contain: [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]

@@ -47,7 +47,10 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 	}
 
 	final public function paginate($query, $params) {
-		return $query->find('all');
+		$results = $query->find('all', 
+			order: $params['order'] ?? null,
+		);
+		return $results;
 	}
 
 	final public function render() {

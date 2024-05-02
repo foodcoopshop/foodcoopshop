@@ -260,10 +260,10 @@ class CustomersTable extends AppTable
         return $query->select(['CustomerNameForOrder' => $sql]);
     }
 
-    public function getCustomerOrderClause()
+    public function getCustomerOrderClause($direction)
     {
         $result = [
-            'CustomerNameForOrder' => 'ASC',
+            'CustomerNameForOrder' => $direction,
         ];
         return $result;
     }
@@ -620,7 +620,7 @@ class CustomersTable extends AppTable
 
         $customers = $this->find('all',
         conditions: $conditions,
-        order: $this->getCustomerOrderClause(),
+        order: $this->getCustomerOrderClause('ASC'),
         contain: $contain);
         $customers = $this->addCustomersNameForOrderSelect($customers);
         $customers->select($this);

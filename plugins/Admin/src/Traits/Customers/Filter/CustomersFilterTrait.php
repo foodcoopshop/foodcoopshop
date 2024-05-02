@@ -82,7 +82,7 @@ trait CustomersFilterTrait {
                 'member_fee',
                 'last_pickup_day',
             ],
-            'order' => $customersTable->getCustomerOrderClause(),
+            'order' => $customersTable->getCustomerOrderClause($this->getRequestQuery('direction') ?? 'ASC'),
         ]);
 
         $i = 0;
