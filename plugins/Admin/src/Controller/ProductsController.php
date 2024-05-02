@@ -82,12 +82,20 @@ class ProductsController extends AdminAppController
     
     public function beforeFilter(EventInterface $event)
     {
-        parent::beforeFilter($event);
+        
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Product = $this->getTableLocator()->get('Products');
-        if ($this->getRequest()->getUri()->getPath() == '/admin/products/export') {
-            $this->FormProtection->setConfig('validate', false);
+
+        // needs to be set in beforeFilter and this method can't be overwritten in trait
+        if (in_array($this->getRequest()->getParam('action'), [
+                'export', 
+                'generateProductCards'
+            ])) {
+            $this->formProtectionEnabled = false;
         }
+
+        parent::beforeFilter($event);
+
     }
 
 }
