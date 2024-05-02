@@ -30,7 +30,6 @@ class CustomersControllerTest extends AppCakeTestCase
     public $Customer;
 
     public function testExportCustomers() {
-        $this->securityTokensEnabled = false;
         $this->loginAsSuperadmin();
         $this->get('/admin/customers/export?active=1');
 

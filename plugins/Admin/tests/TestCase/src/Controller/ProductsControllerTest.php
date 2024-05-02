@@ -39,7 +39,6 @@ class ProductsControllerTest extends AppCakeTestCase
     }
 
     public function testExportProducts() {
-        $this->securityTokensEnabled = false;
         $this->loginAsSuperadmin();
         $this->post('/admin/products/export', [
             'productIds' => '351',
