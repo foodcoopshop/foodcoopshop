@@ -52,7 +52,7 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
 
         $this->assertEquals(5, count($lines));
         $this->assertEquals(Writer::BOM_UTF8 . $this->defaultHeader . ';Newsletter;"Mitgliedsbeitrag 2018"', $lines[0]);
-        $this->assertEquals('92;"Demo Superadmin";4644;Demostadt;"Demostrasse 4";;0600/000000;;Superadmin;fcs-demo-superadmin@mailinator.com;1;92,02;1;1;29.09.2016;02.02.2018;;0;1.82', $lines[3]);
+        $this->assertEquals('92;"Demo Superadmin";4644;Demostadt;"Demostrasse 4";;0600/000000;;Superadmin;fcs-demo-superadmin@mailinator.com;1;92,02;1;1;29.09.2016;02.02.2018;;0;1,82', $lines[3]);
 
     }
 

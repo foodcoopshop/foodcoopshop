@@ -98,7 +98,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             }
 
             if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
-                Configure::read('app.numberHelper')->formatAsDecimal($record[] = $customer->member_fee);
+                $record[] = Configure::read('app.numberHelper')->formatAsDecimal($customer->member_fee);
             }
 
             $records[] = $record;
