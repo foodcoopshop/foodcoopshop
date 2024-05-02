@@ -148,6 +148,9 @@ msgstr "Hersteller"
 msgid "Invoice_number_abbreviation"
 msgstr "Re. Nr."
 
+msgid "Member_fee"
+msgstr "Mitgliedsbeitrag"
+
 msgid "Sent"
 msgstr "Versendet"
 

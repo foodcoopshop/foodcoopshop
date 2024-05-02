@@ -148,6 +148,9 @@ msgstr "Manufacturer"
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"
 
+msgid "Member_fee"
+msgstr "Member fee"
+
 msgid "Sent"
 msgstr "Sent"
 

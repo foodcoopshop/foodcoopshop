@@ -26,7 +26,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
     
     public function getHeader()
     {
-        return [
+        $header = [
             __('Id'),
             __('Name'),
             __('Zip'),
@@ -45,6 +45,16 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             __('Last_pickup_day'),
             __('Comment_abbreviation'),
         ];
+
+        if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+            $header[] = __('Newsletter');
+        }
+        if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
+            $header[] = __('Member_fee') . ' ' . $this->getRequestQuery('year');
+        }
+
+        return $header;
+
     }
 
     public function getRecords()
@@ -63,7 +73,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
                 $lastPickupDay = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
             }
 
-            $records[] = [
+            $record = [
                 $customer->id_customer,
                 $customer->name,
                 $customer->address_customer->postcode,
@@ -82,6 +92,17 @@ class CustomerCsvWriterService extends BaseCsvWriterService
                 $lastPickupDay,
                 $customer->address_customer->comment,
             ];
+
+            if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
+                $record[] = $customer->newsletter_enabled;
+            }
+
+            if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
+                Configure::read('app.numberHelper')->formatAsDecimal($record[] = $customer->member_fee);
+            }
+
+            $records[] = $record;
+
         }
 
         return $records;
