@@ -10,6 +10,7 @@ use Admin\Traits\Customers\DeleteTrait;
 use Admin\Traits\Customers\EditCommentTrait;
 use Admin\Traits\Customers\EditGroupTrait;
 use Admin\Traits\Customers\EditTrait;
+use Admin\Traits\Customers\ExportTrait;
 use Admin\Traits\Customers\GenerateMemberCardsTrait;
 use Admin\Traits\Customers\GetCreditBalanceTrait;
 use Admin\Traits\Customers\GetCustomersForDropdownTrait;
@@ -21,6 +22,7 @@ use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\PaymentsTable;
 use App\Model\Table\ProductsTable;
 use Cake\View\JsonView;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -49,6 +51,7 @@ class CustomersController extends AdminAppController
     use DeleteTrait;
     use EditTrait;
     use EditCommentTrait;
+    use ExportTrait;
     use GenerateMemberCardsTrait;
     use GetCreditBalanceTrait;
     use GetCustomersForDropdownTrait;
@@ -61,6 +64,16 @@ class CustomersController extends AdminAppController
     {
         parent::initialize();
         $this->addViewClasses([JsonView::class]);
+    }
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        if ($this->getRequest()->getUri()->getPath() == '/admin/customers/export') {
+            $this->FormProtection->setConfig('validate', false);
+        }
+
     }
 
     private function generateTermsOfUsePdf()

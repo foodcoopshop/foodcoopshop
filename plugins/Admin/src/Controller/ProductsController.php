@@ -85,8 +85,9 @@ class ProductsController extends AdminAppController
         parent::beforeFilter($event);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Product = $this->getTableLocator()->get('Products');
-        $this->loadComponent('FormProtection');
-        $this->FormProtection->setConfig('validate', false);
+        if ($this->getRequest()->getUri()->getPath() == '/admin/products/export') {
+            $this->FormProtection->setConfig('validate', false);
+        }
     }
 
 }

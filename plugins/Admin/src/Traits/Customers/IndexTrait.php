@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace Admin\Traits\Customers;
 
 use Cake\Core\Configure;
-use Cake\Utility\Hash;
+use Admin\Traits\Customers\Filter\CustomersFilterTrait;
+use Admin\Traits\QueryFilterTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,26 +23,26 @@ use Cake\Utility\Hash;
 
 trait IndexTrait {
 
+    use QueryFilterTrait;
+    use CustomersFilterTrait;
+
     public function index()
     {
-        $active = 1; // default value
-        if (in_array('active', array_keys($this->getRequest()->getQueryParams()))) {
-            $active = h($this->getRequest()->getQuery('active'));
-        }
+        $active = h($this->getRequest()->getQuery('active', APP_ON));
         $this->set('active', $active);
 
-        $year = h($this->getRequest()->getQuery('year'));
-        if (!in_array('year', array_keys($this->getRequest()->getQueryParams()))) {
-            $year = date('Y');
-        }
+        $year = h($this->getRequest()->getQuery('year', date('Y')));
         $this->set('year', $year);
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $newsletter = h($this->getRequest()->getQuery('newsletter', ''));
+        $this->set('newsletter', $newsletter);
 
-        $firstOrderYear = $this->OrderDetail->getFirstOrderYear();
+        $orderDetailsTable = $this->getTableLocator()->get('OrderDetails');
+
+        $firstOrderYear = $orderDetailsTable->getFirstOrderYear();
         $this->set('firstOrderYear', $firstOrderYear);
 
-        $lastOrderYear = $this->OrderDetail->getLastOrderYear();
+        $lastOrderYear = $orderDetailsTable->getLastOrderYear();
         $this->set('lastOrderYear', $lastOrderYear);
 
         $years = null;
@@ -50,102 +51,7 @@ trait IndexTrait {
         }
         $this->set('years', $years);
 
-        $conditions = [];
-        if ($active != 'all') {
-            $conditions['Customers.active'] = $active;
-        }
-
-        if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
-            $newsletter = h($this->getRequest()->getQuery('newsletter'));
-            if (!in_array('newsletter', array_keys($this->getRequest()->getQueryParams()))) {
-                $newsletter = '';
-            }
-            $this->set('newsletter', $newsletter);
-            if ($newsletter != '') {
-                $conditions['Customers.newsletter_enabled'] = $newsletter;
-            }
-        }
-
-        $this->Customer = $this->getTableLocator()->get('Customers');
-
-        $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
-
-        $this->Customer->dropManufacturersInNextFind();
-
-        $contain = [
-            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-        ];
-
-        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
-            $contain[] = 'Feedbacks';
-        }
-
-        $query = $this->Customer->find('all',
-        conditions: $conditions,
-        contain: $contain);
-        $query = $this->Customer->addCustomersNameForOrderSelect($query);
-        $query->select($this->Customer);
-        $query->select($this->Customer->AddressCustomers);
-        if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
-            $query->select($this->Customer->Feedbacks);
-        }
-
-        $query->select([
-            'credit_balance' => 'Customers.id_customer', // add fake field to make custom sort icon work and avoid "Column not found: 1054 Unknown column"
-            'last_pickup_day' => 'Customers.id_customer',
-            'member_fee' => 'Customers.id_customer',
-        ]);
-        $query->select($this->Customer->AddressCustomers);
-        $customers = $this->paginate($query, [
-            'sortableFields' => [
-                'CustomerNameForOrder',
-                'Customers.id_default_group',
-                'Customers.id_customer',
-                'Customers.email',
-                'Customers.active',
-                'Customers.email_order_reminder_enabled',
-                'Customers.check_credit_reminder_enabled',
-                'Customers.date_add',
-                'Customers.newsletter_enabled',
-                'Feedbacks.modified',
-                'credit_balance',
-                'member_fee',
-                'last_pickup_day',
-            ],
-            'order' => $this->Customer->getCustomerOrderClause(),
-        ]);
-
-        $i = 0;
-        $this->Payment = $this->getTableLocator()->get('Payments');
-
-        foreach ($customers as $customer) {
-            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $customer->credit_balance = $this->Customer->getCreditBalance($customer->id_customer);
-            }
-            $customer->different_pickup_day_count = $this->OrderDetail->getDifferentPickupDayCountByCustomerId($customer->id_customer);
-            $customer->last_pickup_day = $this->OrderDetail->getLastPickupDay($customer->id_customer);
-            $customer->last_pickup_day_sort = '';
-            if (!is_null($customer->last_pickup_day)) {
-                $customer->last_pickup_day_sort = $customer->last_pickup_day->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-            }
-            $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
-            $i ++;
-        }
-
-        if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) 
-            && in_array($this->getRequest()->getQuery('sort'), ['credit_balance', 'member_fee', 'last_pickup_day',])) {
-            $path = '{n}.' .$this->getRequest()->getQuery('sort');
-            $type = 'numeric';
-            if ($this->getRequest()->getQuery('sort') == 'last_pickup_day') {
-                $path .= '_sort';
-                $type = 'locale';
-            }
-            $customers = Hash::sort($customers->toArray(), $path, $this->getRequest()->getQuery('direction'), [
-                'type' => $type,
-                'ignoreCase' => true,
-            ]);
-        }
-
+        $customers = $this->getCustomers($active, $year, $newsletter);
         $this->set('customers', $customers);
 
         $this->set('title_for_layout', __d('admin', 'Members'));

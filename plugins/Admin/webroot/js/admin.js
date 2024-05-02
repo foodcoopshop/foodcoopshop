@@ -527,20 +527,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initExportCustomersButton : function() {
-        var button = $('#exportCustomersButton');
-        foodcoopshop.Helper.disableButton(button);
-
-        foodcoopshop.Admin.setCheckboxClickCallback(() => 
-            foodcoopshop.Admin.updateObjectSelectionActionButton(button)
-        );
-
-        button.on('click', function () {
-            var customerIds = foodcoopshop.Admin.getSelectedIds();
-            foodcoopshop.Helper.postFormInNewWindow('/admin/customers/export', {customerIds: customerIds});
-        });
-    },
-
     initProductDropdown: function (selectedProductId, manufacturerId) {
 
         manufacturerId = manufacturerId || 0;

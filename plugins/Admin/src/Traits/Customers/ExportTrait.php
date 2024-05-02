@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+namespace Admin\Traits\Customers;
+
+use App\Services\Csv\Writer\CustomerCsvWriterService;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -15,13 +19,17 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-if (!($identity->isSuperadmin() || $identity->isAdmin())) {
-    return false;
+trait ExportTrait {
+
+    public function export()
+    {
+
+        $writerService = new CustomerCsvWriterService();
+        $writerService->setRequestQueryParams($this->getRequest()->getQueryParams());
+        $writerService->setFilename(__('Customers') . '_' . date('YmdHis') . '.csv');
+        $writerService->render();
+        return $writerService->forceDownload($this->getResponse());
+
+    }
+
 }
-
-$queryString = '';
-$queryParams = $this->request->getQueryParams() ?? [];
-$queryString = '?' . http_build_query($queryParams);
-$exportUrl = '/admin/customers/export' . $queryString;
-
-echo '<a id="exportCustomersButton" target="_blank" class="dropdown-item" href="'.$exportUrl.'"><i class="fa-fw fas fa-file-export ok"></i> ' . __d('admin', 'Export_{0}', [__d('admin', 'Members')]) . '</a>';

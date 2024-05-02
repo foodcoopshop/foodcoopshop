@@ -37,7 +37,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $writerService = new ProductCsvWriterService();
         $writerService->setProductIds($productIds);
         $writerService->render();
-        $result = $writerService->writer->toString();
+        $result = $writerService->toString();
 		$lines  = explode("\n", $result);
 
         $this->assertEquals(10, count($lines));
@@ -62,7 +62,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $writerService = new ProductCsvWriterService();
         $writerService->setProductIds($productIds);
         $writerService->render();
-        $result = $writerService->writer->toString();
+        $result = $writerService->toString();
 		$lines  = explode("\n", $result);
 
         $this->assertEquals(10, count($lines));

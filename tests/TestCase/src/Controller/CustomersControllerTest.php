@@ -29,6 +29,16 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public $Customer;
 
+    public function testExportCustomers() {
+        $this->securityTokensEnabled = false;
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers/export?active=1');
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;Gruppe;E-Mail;Status;Credit_balance;Bestell-Erinnerung;Guthaben-Aufladung-Erinnerung;Reg.-Datum;"Letzter Abholtag";Komm.');
+        $this->assertResponseContains('87;"Demo Mitglied";4644;Scharnstein;"Demostrasse 4";;0664/000000000;;Mitglied;fcs-demo-mitglied@mailinator.com;1;100.000,00;1;1;02.12.2014;;');
+    }
+
     public function testGetCustomersForDropdownAsSuperadminWithAllManufacturers()
     {
         $this->loginAsSuperadmin();

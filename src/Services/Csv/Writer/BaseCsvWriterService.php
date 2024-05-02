@@ -18,6 +18,8 @@ namespace App\Services\Csv\Writer;
 
 use League\Csv\Writer;
 use App\Services\Csv\Writer\CsvWriterServiceInterface;
+use Cake\Core\Configure;
+use App\Services\OutputFilter\OutputFilterService;
 
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {
@@ -26,8 +28,26 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 
 	public $filename = 'export.csv';
 
+	private $requestQueryParams = [];
+
 	public function setFilename($filename) {
 		$this->filename = $filename;
+	}
+
+	public function setRequestQueryParams($requestQueryParams) {
+		$this->requestQueryParams = $requestQueryParams;
+	}
+
+	public function getRequestQuery($name, $default = null) {
+		return $this->requestQueryParams[$name] ?? $default;
+	}
+
+	final public function getRequestQueryParams() {
+		return $this->requestQueryParams;
+	}
+
+	final public function paginate($query, $params) {
+		return $query->find('all');
 	}
 
 	final public function render() {
@@ -49,8 +69,17 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		}
 	}
 
+	final public function toString() {
+		$result = $this->writer->toString();
+		if (Configure::check('app.outputStringReplacements')) {
+            $result = OutputFilterService::replace($result, Configure::read('app.outputStringReplacements'));
+        }
+		return $result;
+
+	}
+
 	public function forceDownload($response) {
-		$response = $response->withStringBody($this->writer->toString());
+		$response = $response->withStringBody($this->toString());
 		$response = $response->withDownload($this->filename);
 
 		return $response;

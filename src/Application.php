@@ -153,6 +153,7 @@ class Application extends BaseApplication
         $apiUrls = $this->getApiUrls();
         $csrf->skipCheckCallback(function ($request) use ($apiUrls) {
             $skipUrls = array_merge($apiUrls, [
+                '/admin/customers/export',
                 '/admin/products/export',
                 '/admin/products/generateProductCards',
             ]);
