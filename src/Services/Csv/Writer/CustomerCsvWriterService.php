@@ -75,7 +75,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
 
             $record = [
                 $customer->id_customer,
-                $customer->name,
+                $customer->decoded_name,
                 $customer->address_customer->postcode,
                 $customer->address_customer->city,
                 $customer->address_customer->address1,

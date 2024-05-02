@@ -92,6 +92,11 @@ class Customer extends Entity implements IdentityInterface
         return $name;
     }
 
+    protected function _getDecodedName()
+    {
+        return html_entity_decode($this->name);
+    }
+
     public function termsOfUseAccepted(): bool
     {
         $formattedAcceptedDate = $this->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database'));
