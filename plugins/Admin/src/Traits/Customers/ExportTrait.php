@@ -26,7 +26,7 @@ trait ExportTrait {
 
         $writerService = new CustomerCsvWriterService();
         $writerService->setRequestQueryParams($this->getRequest()->getQueryParams());
-        $writerService->setFilename(__('Customers') . '_' . date('YmdHis') . '.csv');
+        $writerService->setFilename(__d('admin', 'Members') . '_' . date('YmdHis') . '.csv');
         $writerService->render();
         return $writerService->forceDownload($this->getResponse());
 
