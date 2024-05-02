@@ -38,7 +38,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             __('Group'),
             __('Email'),
             __('Status'),
-            __('Credit_balance'),
+            __('Credit'),
             __('Order_reminder'),
             __('Check_credit_reminder'),
             __('Register_date'),
