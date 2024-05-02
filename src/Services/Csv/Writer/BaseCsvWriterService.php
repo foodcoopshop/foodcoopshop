@@ -31,6 +31,9 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 	private $requestQueryParams = [];
 
 	public function setFilename($filename) {
+		if (Configure::check('app.outputStringReplacements')) {
+            $filename = OutputFilterService::replace($filename, Configure::read('app.outputStringReplacements'));
+        }
 		$this->filename = $filename;
 	}
 
@@ -78,7 +81,6 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
             $result = OutputFilterService::replace($result, Configure::read('app.outputStringReplacements'));
         }
 		return $result;
-
 	}
 
 	public function forceDownload($response) {
