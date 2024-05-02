@@ -41,8 +41,8 @@ class CustomerCsvWriterServiceTest extends AppCakeTestCase
 
         $this->assertEquals(5, count($lines));
         $this->assertEquals(Writer::BOM_UTF8 . 'Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;Gruppe;E-Mail;Status;Guthaben;Bestell-Erinnerung;Guthaben-Aufladung-Erinnerung;Reg.-Datum;"Letzter Abholtag";Komm.', $lines[0]);
-        $this->assertEquals('87;"Demo Mitglied";4644;Scharnstein;"Demostrasse 4";;0664/000000000;;Mitglied;fcs-demo-mitglied@mailinator.com;1;100.000,00;1;1;02.12.2014;;', $lines[1]);
-        $this->assertEquals('88;"Demo Admin";4644;Scharnstein;"Demostrasse 4";;0600/000000;;Admin;fcs-demo-admin@mailinator.com;1;0,00;1;1;02.12.2014;;test', $lines[2]);
+        $this->assertEquals('88;"Demo Admin";4644;Scharnstein;"Demostrasse 4";;0600/000000;;Admin;fcs-demo-admin@mailinator.com;1;0,00;1;1;02.12.2014;;test', $lines[1]);
+        $this->assertEquals('87;"Demo Mitglied";4644;Scharnstein;"Demostrasse 4";;0664/000000000;;Mitglied;fcs-demo-mitglied@mailinator.com;1;100.000,00;1;1;02.12.2014;;', $lines[2]);
         $this->assertEquals('92;"Demo Superadmin";4644;Demostadt;"Demostrasse 4";;0600/000000;;Superadmin;fcs-demo-superadmin@mailinator.com;1;92,02;1;1;29.09.2016;02.02.2018;', $lines[3]);
 
     }

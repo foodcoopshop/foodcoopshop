@@ -54,7 +54,7 @@ class CustomersController extends FrontendController
             'profileImage',
         ]);
 
-        if (!$this->getRequest()->is('json') && $this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
+        if (!$this->getRequest()->is('json') && !$this->formProtectionEnabled) {
             $this->FormProtection->setConfig('validate', false);
         }
     }
@@ -284,6 +284,7 @@ class CustomersController extends FrontendController
 
     public function login()
     {
+        $this->formProtectionEnabled = false;
         $this->Customer = $this->getTableLocator()->get('Customers');
         $title = __('Sign_in');
         $enableRegistrationForm = true;

@@ -28,6 +28,7 @@ class AppController extends Controller
 #
     public $protectEmailAddresses = false;
     public $identity = null;
+    public $formProtectionEnabled = true;
     
     protected $Customer;
     protected $Manufacturer;

@@ -28,17 +28,12 @@ use Cake\View\JsonView;
 class ToolsController extends AdminAppController
 {
 
+    public $formProtectionEnabled = false;
+
     public function initialize(): void
     {
         parent::initialize();
         $this->addViewClasses([JsonView::class]);
-    }
-
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        $this->loadComponent('FormProtection');
-        $this->FormProtection->setConfig('validate', false);
     }
 
     public function doTmpFileUpload()

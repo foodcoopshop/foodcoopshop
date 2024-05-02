@@ -25,7 +25,9 @@ trait ExportTrait
 
     public function export()
     {
-        
+
+        $this->formProtectionEnabled = false;
+
         $productIds = h($this->getRequest()->getData('productIds', ''));
         if ($productIds == '') {
             throw new \Exception('no product ids passed');

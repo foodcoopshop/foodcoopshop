@@ -66,16 +66,6 @@ class CustomersController extends AdminAppController
         $this->addViewClasses([JsonView::class]);
     }
 
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
-
-        if ($this->getRequest()->getUri()->getPath() == '/admin/customers/export') {
-            $this->FormProtection->setConfig('validate', false);
-        }
-
-    }
-
     private function generateTermsOfUsePdf()
     {
         $pdfWriter = new TermsOfUsePdfWriterService();
