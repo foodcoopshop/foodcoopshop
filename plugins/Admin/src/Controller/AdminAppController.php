@@ -30,6 +30,7 @@ class AdminAppController extends AppController
     {
         parent::beforeFilter($event);
         if (!$this->formProtectionEnabled) {
+            $this->loadComponent('FormProtection');
             $this->FormProtection->setConfig('validate', false);
         }
     }
