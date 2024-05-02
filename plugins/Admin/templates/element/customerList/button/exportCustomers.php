@@ -19,9 +19,8 @@ if (!($identity->isSuperadmin() || $identity->isAdmin())) {
     return false;
 }
 
-$queryString = '';
 $queryParams = $this->request->getQueryParams() ?? [];
-$queryString = '?' . http_build_query($queryParams);
+$queryString = !empty($queryParams) ? '?' . http_build_query($queryParams) : '';
 $exportUrl = '/admin/customers/export' . $queryString;
 
 echo '<a id="exportCustomersButton" target="_blank" class="dropdown-item" href="'.$exportUrl.'"><i class="fa-fw fas fa-file-export ok"></i> ' . __d('admin', 'Export_{0}', [__d('admin', 'Members')]) . '</a>';
