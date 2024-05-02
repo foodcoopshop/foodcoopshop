@@ -43,7 +43,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             __('Check_credit_reminder'),
             __('Register_date'),
             __('Last_pickup_day'),
-            __('Comment_abbreviation'),
+            __('Comment'),
         ];
 
         if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {
