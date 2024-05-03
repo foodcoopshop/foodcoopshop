@@ -90,7 +90,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
                 $customer->check_credit_reminder_enabled,
                 $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
                 $lastPickupDay,
-                $customer->address_customer->comment,
+                $this->decodeHtml($customer->address_customer->comment),
             ];
 
             if (Configure::read('appDb.FCS_NEWSLETTER_ENABLED')) {

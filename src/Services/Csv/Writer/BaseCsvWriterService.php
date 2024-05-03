@@ -20,6 +20,7 @@ use League\Csv\Writer;
 use App\Services\Csv\Writer\CsvWriterServiceInterface;
 use Cake\Core\Configure;
 use App\Services\OutputFilter\OutputFilterService;
+use App\Controller\Component\StringComponent;
 
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {
@@ -54,6 +55,10 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 			order: $params['order'] ?? null,
 		);
 		return $results;
+	}
+
+	final public function decodeHtml($string) {
+		return StringComponent::br2space(html_entity_decode($string ?? ''));
 	}
 
 	final public function render() {
