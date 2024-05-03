@@ -881,6 +881,9 @@ msgstr "Bitte auswählen..."
 msgid "all"
 msgstr "alle"
 
+msgid "All"
+msgstr "Alle"
+
 msgid "Add_product_feedback"
 msgstr "Feedback zum Produkt schreiben"
 
