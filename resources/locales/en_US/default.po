@@ -148,6 +148,9 @@ msgstr "Manufacturer"
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"
 
+msgid "Member_fee"
+msgstr "Member fee"
+
 msgid "Sent"
 msgstr "Sent"
 
@@ -267,6 +270,15 @@ msgstr "{0} created an account."
 
 msgid "Welcome"
 msgstr "Welcome"
+
+msgid "Register_date"
+msgstr "Register date"
+
+msgid "Last_pickup_day"
+msgstr "Last pickup day"
+
+msgid "Comment_abbreviation"
+msgstr "Comm."
 
 msgid "New_registration_{0}"
 msgstr "New registration {0}"
@@ -787,6 +799,9 @@ msgstr "Order period"
 msgid "An_existing_order_list_will_be_overwritten!"
 msgstr "An existing order list will be overwritten!"
 
+msgid "Group"
+msgstr "Group"
+
 msgid "Change_group_for"
 msgstr "Change group for"
 
@@ -865,6 +880,9 @@ msgstr "Please select..."
 
 msgid "all"
 msgstr "all"
+
+msgid "All"
+msgstr "All"
 
 msgid "Add_product_feedback"
 msgstr "Write feedback to product"
@@ -2242,6 +2260,9 @@ msgstr "Profit"
 
 msgid "Payment_type_credit_upload"
 msgstr "Credit upload"
+
+msgid "Check_credit_reminder"
+msgstr "Check credit reminder"
 
 msgid "Payment_type_payback"
 msgstr "Payback"

@@ -18,6 +18,9 @@ namespace App\Services\Csv\Writer;
 
 use League\Csv\Writer;
 use App\Services\Csv\Writer\CsvWriterServiceInterface;
+use Cake\Core\Configure;
+use App\Services\OutputFilter\OutputFilterService;
+use App\Controller\Component\StringComponent;
 
 abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 {
@@ -26,8 +29,36 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 
 	public $filename = 'export.csv';
 
+	private $requestQueryParams = [];
+
 	public function setFilename($filename) {
+		if (Configure::check('app.outputStringReplacements')) {
+            $filename = OutputFilterService::replace($filename, Configure::read('app.outputStringReplacements'));
+        }
 		$this->filename = $filename;
+	}
+
+	public function setRequestQueryParams($requestQueryParams) {
+		$this->requestQueryParams = $requestQueryParams;
+	}
+
+	public function getRequestQuery($name, $default = null) {
+		return $this->requestQueryParams[$name] ?? $default;
+	}
+
+	final public function getRequestQueryParams() {
+		return $this->requestQueryParams;
+	}
+
+	final public function paginate($query, $params) {
+		$results = $query->find('all', 
+			order: $params['order'] ?? null,
+		);
+		return $results;
+	}
+
+	final public function decodeHtml($string) {
+		return StringComponent::br2space(html_entity_decode($string ?? ''));
 	}
 
 	final public function render() {
@@ -49,8 +80,16 @@ abstract class BaseCsvWriterService implements CsvWriterServiceInterface
 		}
 	}
 
+	final public function toString() {
+		$result = $this->writer->toString();
+		if (Configure::check('app.outputStringReplacements')) {
+            $result = OutputFilterService::replace($result, Configure::read('app.outputStringReplacements'));
+        }
+		return $result;
+	}
+
 	public function forceDownload($response) {
-		$response = $response->withStringBody($this->writer->toString());
+		$response = $response->withStringBody($this->toString());
 		$response = $response->withDownload($this->filename);
 
 		return $response;

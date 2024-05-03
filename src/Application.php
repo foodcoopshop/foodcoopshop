@@ -152,11 +152,7 @@ class Application extends BaseApplication
         // Token check will be skipped when callback returns `true`.
         $apiUrls = $this->getApiUrls();
         $csrf->skipCheckCallback(function ($request) use ($apiUrls) {
-            $skipUrls = array_merge($apiUrls, [
-                '/admin/products/export',
-                '/admin/products/generateProductCards',
-            ]);
-            return in_array($request->getPath(), $skipUrls);
+            return in_array($request->getPath(), $apiUrls);
         });
 
         $authorizationMiddlewareConfig = [];

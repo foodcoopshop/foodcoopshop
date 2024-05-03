@@ -32,7 +32,7 @@ foodcoopshop.Admin = {
         $('#latest-invoices-tooltip-wrapper-' + customerId).hover(function() {
             getCreditBalanceTimeouts[customerId] = setTimeout(function() {
                 foodcoopshop.Helper.ajaxCall(
-                    '/admin/customers/ajaxGetCreditBalance/' + customerId,
+                    '/admin/customers/getCreditBalance/' + customerId,
                     {},
                     {
                         onOk: function (data) {
@@ -479,13 +479,19 @@ foodcoopshop.Admin = {
         $('table.list th').css('top', newTop + 11);
     },
 
+    setCheckboxClickCallback : function(callback) {
+        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
+            callback();
+        });
+    },
+
     initGenerateMemberCardsOfSelectedCustomersButton : function() {
         var button = $('#generateMemberCardsOfSelectedCustomersButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
-            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
-        });
+        foodcoopshop.Admin.setCheckboxClickCallback(() => 
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button)
+        );
 
         button.on('click', function () {
             var customerIds = foodcoopshop.Admin.getSelectedIds();
@@ -497,9 +503,9 @@ foodcoopshop.Admin = {
         var button = $('#generateProductCardsOfSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
-            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
-        });
+        foodcoopshop.Admin.setCheckboxClickCallback(() => 
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button)
+        );
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
@@ -511,9 +517,9 @@ foodcoopshop.Admin = {
         var button = $('#exportProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
-        $('table.list').find('input.row-marker[type="checkbox"],#row-marker-all').on('click', function () {
-            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
-        });
+        foodcoopshop.Admin.setCheckboxClickCallback(() => 
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button)
+        );
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
@@ -566,7 +572,7 @@ foodcoopshop.Admin = {
 
     populateDropdownWithCustomers : function(customerDropdown, selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange) {
         this.populateDropdownWithData(
-            '/admin/customers/ajaxGetCustomersForDropdown/' + includeManufacturers + '/' + includeOfflineCustomers,
+            '/admin/customers/getCustomersForDropdown/' + includeManufacturers + '/' + includeOfflineCustomers,
             selector,
             customerDropdown,
             selectedCustomerId,

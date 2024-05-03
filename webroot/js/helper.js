@@ -43,13 +43,19 @@ foodcoopshop.Helper = {
         form.setAttribute('action', path);
         form.setAttribute('target', '_blank');
     
+        var csrfToken = $('meta[name="csrfToken"]').attr('content');
+        var csrfTokenHiddenField = document.createElement('input');
+        csrfTokenHiddenField.setAttribute('type', 'hidden');
+        csrfTokenHiddenField.setAttribute('name', '_csrfToken');
+        csrfTokenHiddenField.setAttribute('value', csrfToken);
+        form.appendChild(csrfTokenHiddenField);
+
         for (var key in params) {
             if (params.hasOwnProperty(key)) {
                 var hiddenField = document.createElement('input');
                 hiddenField.setAttribute('type', 'hidden');
                 hiddenField.setAttribute('name', key);
                 hiddenField.setAttribute('value', params[key]);
-    
                 form.appendChild(hiddenField);
             }
         }

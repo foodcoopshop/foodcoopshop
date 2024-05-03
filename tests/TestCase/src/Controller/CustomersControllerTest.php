@@ -29,30 +29,39 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public $Customer;
 
-    public function testAjaxGetCustomersForDropdownAsSuperadminWithAllManufacturers()
+    public function testExportCustomers() {
+        $this->loginAsSuperadmin();
+        $this->get('/admin/customers/export?active=1');
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('Id;Name;PLZ;Ort;"Straße + Nummer";Adresszusatz;Handy;Telefon;Gruppe;E-Mail;Status;Guthaben;Bestell-Erinnerung;Guthaben-Aufladung-Erinnerung;Reg.-Datum;"Letzter Abholtag";Kommentar');
+        $this->assertResponseContains('87;"Demo Mitglied";4644;Scharnstein;"Demostrasse 4";;0664/000000000;;Mitglied;fcs-demo-mitglied@mailinator.com;1;100.000,00;1;1;02.12.2014;;');
+    }
+
+    public function testGetCustomersForDropdownAsSuperadminWithAllManufacturers()
     {
         $this->loginAsSuperadmin();
-        $this->ajaxGet('/admin/customers/ajaxGetCustomersForDropdown/1');
+        $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
         $response = $this->getJsonDecodedContent();
         $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="88">Demo Admin</option><option value="87">Demo Mitglied</option><option value="92">Demo Superadmin</option></optgroup><optgroup label="Hersteller: aktiv"><option value="91">Demo Fleisch-Hersteller</option><option value="89">Demo Gemüse-Hersteller</option><option value="90">Demo Milch-Hersteller</option></optgroup><optgroup label="Mitglieder: inaktiv"><option value="93">Demo SB-Kunde</option></optgroup>';
         $this->assertEquals($expectedHtml, $response->dropdownData);
     }
 
-    public function testAjaxGetCustomersForDropdownAsCustomerWithAllManufacturers()
+    public function testGetCustomersForDropdownAsCustomerWithAllManufacturers()
     {
         $this->loginAsCustomer();
-        $this->ajaxGet('/admin/customers/ajaxGetCustomersForDropdown/1');
+        $this->ajaxGet('/admin/customers/getCustomersForDropdown/1');
         $response = $this->getJsonDecodedContent();
         $expectedHtml = '<option value="">alle Mitglieder</option><optgroup label="Mitglieder: aktiv"><option value="87">Demo Mitglied</option></optgroup>';
         $this->assertEquals($expectedHtml, $response->dropdownData);
     }
 
-    public function testAjaxEditGroupAsSuperadmin()
+    public function testEditGroupAsSuperadmin()
     {
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.customerId');
-        $this->ajaxPost('/admin/customers/ajaxEditGroup', [
+        $this->ajaxPost('/admin/customers/editGroup', [
             'customerId' => $customerId,
             'groupId' => Customer::GROUP_ADMIN,
         ]);
@@ -64,12 +73,12 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals(Customer::GROUP_ADMIN, $customer->id_default_group);
     }
 
-    public function testAjaxEditGroupAsAdmin()
+    public function testEditGroupAsAdmin()
     {
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->loginAsAdmin();
         $customerId = Configure::read('test.customerId');
-        $this->ajaxPost('/admin/customers/ajaxEditGroup', [
+        $this->ajaxPost('/admin/customers/editGroup', [
             'customerId' => $customerId,
             'groupId' => Customer::GROUP_SUPERADMIN,
         ]);

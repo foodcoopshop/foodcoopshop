@@ -57,7 +57,6 @@ abstract class AppCakeTestCase extends TestCase
     public $Network;
     public $Payment;
     public $PricePerUnit;
-    public $securityTokensEnabled = true;
 
     public function setUp(): void
     {
@@ -79,7 +78,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         // enable tokens only for IntegrationTests
-        if (method_exists($this, 'enableSecurityToken') && $this->securityTokensEnabled) {
+        if (method_exists($this, 'enableSecurityToken')) {
             $this->enableSecurityToken();
             $this->enableCsrfToken();
         }

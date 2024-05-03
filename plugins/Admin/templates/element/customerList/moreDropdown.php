@@ -8,16 +8,23 @@ declare(strict_types=1);
  * For full copyright and license information, please see LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 3.5.0
+ * @since         FoodCoopShop 4.1.0
  * @license       https://opensource.org/licenses/AGPL-3.0
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
 
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace').".Admin.initCopySelectedEmailsToClipboard('" . $object . "');"
+$buttons[] = $this->element('copyEmailButton', [
+    'object' => 'customer',
 ]);
-echo '<a class="btn-clipboard dropdown-item"><i class="far fa-envelope"></i> ' . __d('admin', 'Copy_selected_email_addresses') . '</a>';
+$buttons[] = $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
+$buttons[] = $this->element('customerList/button/exportCustomers');
+
+echo $this->element('dropdownWithButtons', [
+    'helperLink' => $helperLink,
+    'buttons' => $buttons,
+    'label' => __d('admin', 'Actions') . '...',
+]);
+
 ?>

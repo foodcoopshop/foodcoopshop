@@ -71,6 +71,10 @@ class StringComponent extends Component
         return strip_tags(htmlspecialchars_decode(trim($string)), $allowedTags);
     }
 
+    public static function br2space($string) {
+        return preg_replace('/<br\s*\/?>/i', " ", $string);
+    }
+
     /**
      * @param string $string
      * @return string

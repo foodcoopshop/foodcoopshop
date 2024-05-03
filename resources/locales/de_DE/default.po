@@ -148,6 +148,9 @@ msgstr "Hersteller"
 msgid "Invoice_number_abbreviation"
 msgstr "Re. Nr."
 
+msgid "Member_fee"
+msgstr "Mitgliedsbeitrag"
+
 msgid "Sent"
 msgstr "Versendet"
 
@@ -267,6 +270,15 @@ msgstr "{0} hat ein Mitgliedskonto erstellt."
 
 msgid "Welcome"
 msgstr "Willkommen"
+
+msgid "Register_date"
+msgstr "Reg.-Datum"
+
+msgid "Last_pickup_day"
+msgstr "Letzter Abholtag"
+
+msgid "Comment_abbreviation"
+msgstr "Komm."
 
 msgid "New_registration_{0}"
 msgstr "Neue Registrierung: {0}"
@@ -787,6 +799,9 @@ msgstr "Bestellzeitraum"
 msgid "An_existing_order_list_will_be_overwritten!"
 msgstr "Eine bereits bestehende Bestellliste wird überschrieben!"
 
+msgid "Group"
+msgstr "Gruppe"
+
 msgid "Change_group_for"
 msgstr "Gruppe ändern für"
 
@@ -865,6 +880,9 @@ msgstr "Bitte auswählen..."
 
 msgid "all"
 msgstr "alle"
+
+msgid "All"
+msgstr "Alle"
 
 msgid "Add_product_feedback"
 msgstr "Feedback zum Produkt schreiben"
@@ -2245,6 +2263,9 @@ msgstr "Gewinn"
 
 msgid "Payment_type_credit_upload"
 msgstr "Guthaben-Aufladung"
+
+msgid "Check_credit_reminder"
+msgstr "Guthaben-Aufladung-Erinnerung"
 
 msgid "Payment_type_payback"
 msgstr "Rückzahlung"

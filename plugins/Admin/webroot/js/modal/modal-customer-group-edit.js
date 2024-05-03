@@ -56,7 +56,7 @@ foodcoopshop.ModalCustomerGroupEdit = {
         }
 
         foodcoopshop.Helper.ajaxCall(
-            '/admin/customers/ajaxEditGroup/',
+            '/admin/customers/editGroup/',
             {
                 customerId: $('#dialogCustomerGroupEditCustomerId').val(),
                 groupId: $('#dialogCustomerGroupEditGroup').val(),
