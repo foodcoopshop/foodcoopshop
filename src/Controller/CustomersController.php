@@ -54,9 +54,6 @@ class CustomersController extends FrontendController
             'profileImage',
         ]);
 
-        if (!$this->getRequest()->is('json') && $this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
-            $this->FormProtection->setConfig('validate', false);
-        }
     }
 
     public function profileImage()
