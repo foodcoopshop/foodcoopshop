@@ -23,6 +23,22 @@ use Cake\Datasource\FactoryLocator;
 
 trait CustomersFilterTrait {
 
+
+    public function getDefaultYear()
+    {
+        return date('Y');
+    }
+
+    public function getDefaultActive()
+    {
+        return APP_ON;
+    }
+
+    public function getDefaultNewsletter()
+    {
+        return '';
+    }
+
     public function getCustomers($active, $year, $newsletter)
     {
 

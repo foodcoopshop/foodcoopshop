@@ -50,7 +50,7 @@ class CustomerCsvWriterService extends BaseCsvWriterService
             $header[] = __('Newsletter');
         }
         if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')) {
-            $header[] = __('Member_fee') . ' ' . $this->getRequestQuery('year');
+            $header[] = __('Member_fee') . ' ' . h($this->getRequestQuery('year', $this->getDefaultYear()));
         }
 
         return $header;
@@ -60,9 +60,9 @@ class CustomerCsvWriterService extends BaseCsvWriterService
     public function getRecords()
     {
 
-        $active = h($this->getRequestQuery('active', APP_ON));
-        $year = h($this->getRequestQuery('year', date('Y')));
-        $newsletter = h($this->getRequestQuery('newsletter', ''));
+        $active = h($this->getRequestQuery('active', $this->getDefaultActive()));
+        $year = h($this->getRequestQuery('year', $this->getDefaultYear()));
+        $newsletter = h($this->getRequestQuery('newsletter', $this->getDefaultNewsletter()));
 
         $customers = $this->getCustomers($active, $year, $newsletter);
         $records = [];
