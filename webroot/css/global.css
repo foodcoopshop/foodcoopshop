@@ -19,6 +19,7 @@
     --dark-mode-2nd-font-color: #f4f0ec;;
     --dark-mode-main-border-color: #696969;
     --not-ok-red: #dc143c;
+    --warning-yellow: #FDB813;
 }
 
 @media print {

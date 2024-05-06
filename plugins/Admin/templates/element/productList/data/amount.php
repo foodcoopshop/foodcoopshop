@@ -16,11 +16,15 @@ declare(strict_types=1);
  */
 
 $available = true;
+$belowMinimumAmount = false;
 
 if (empty($product->product_attributes)) {
     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
         if ($product->stock_available->quantity <= 0) {
             $available = false;
+        }
+        if ($product->stock_available->sold_out_limit > 0 && $product->stock_available->quantity < $product->stock_available->sold_out_limit) {
+            $belowMinimumAmount = true;
         }
     } else {
         if ($product->stock_available->quantity <= 0 && !$product->stock_available->always_available) {
@@ -29,7 +33,15 @@ if (empty($product->product_attributes)) {
     }
 }
 
-echo '<td class="amount ' . (!$available ? 'not-available' : '') . '">';
+$rowClasses = ['amount'];
+if (!$available) {
+    $rowClasses[] = 'not-available';
+}
+if ($available && $belowMinimumAmount) {
+    $rowClasses[] = 'below-minimum-amount';
+}
+
+echo '<td class="' . join(' ', $rowClasses) . '">';
 
     if (empty($product->product_attributes)) {
         echo $this->Html->link(
