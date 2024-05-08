@@ -38,7 +38,7 @@ img, iframe {
 }
 input[type="radio"],
 input[type="checkbox"] {
-    accent-color: var(--theme-color);
+    accent-color: grey;
 }
 a {
     color: #333;
