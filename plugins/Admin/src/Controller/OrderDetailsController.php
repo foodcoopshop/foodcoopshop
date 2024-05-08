@@ -17,6 +17,7 @@ use Admin\Traits\OrderDetails\EditPurchasePriceTrait;
 use Admin\Traits\OrderDetails\IndexTrait;
 use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
+use Admin\Traits\OrderDetails\SetElFinderUploadPathTrait;
 use App\Model\Table\OrderDetailsTable;
 use Cake\Core\Configure;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
@@ -52,6 +53,7 @@ class OrderDetailsController extends AdminAppController
     use IndexTrait;
     use OrderForDifferentCustomerTrait;
     use ProfitTrait;
+    use SetElFinderUploadPathTrait;
 
     protected OrderDetailsTable $OrderDetail;
 
@@ -68,23 +70,6 @@ class OrderDetailsController extends AdminAppController
         $pdfWriter = new OrderDetailsPdfWriterService();
         $pdfWriter->prepareAndSetData($pickupDay, $order);
         die($pdfWriter->writeInline());
-    }
-
-    public function setElFinderUploadPath($orderDetailId)
-    {
-        $this->request = $this->request->withParam('_ext', 'json');
-
-        $_SESSION['ELFINDER'] = [
-            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/order_details/" . $orderDetailId,
-            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/order_details/" . $orderDetailId
-        ];
-
-        $this->set([
-            'status' => true,
-            'msg' => 'OK',
-        ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-
     }
 
 }
