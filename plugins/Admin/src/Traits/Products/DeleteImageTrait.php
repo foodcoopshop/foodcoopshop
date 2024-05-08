@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
-use Cake\Core\Configure;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,7 +17,8 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait DeleteImageTrait {
+trait DeleteImageTrait 
+{
 
     /**
      * deletes both db entries and physical files (thumbs)

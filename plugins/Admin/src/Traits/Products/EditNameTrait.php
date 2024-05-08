@@ -18,7 +18,8 @@ namespace Admin\Traits\Products;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditNameTrait {
+trait EditNameTrait 
+{
 
     public function editName()
     {

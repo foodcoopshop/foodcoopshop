@@ -21,8 +21,8 @@ use Cake\Datasource\FactoryLocator;
  * @link          https://www.foodcoopshop.com
  */
 
-trait CustomersFilterTrait {
-
+trait CustomersFilterTrait 
+{
 
     public function getDefaultYear()
     {

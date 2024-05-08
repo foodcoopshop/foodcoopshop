@@ -18,7 +18,8 @@ namespace Admin\Traits\Products;
  * @link          https://www.foodcoopshop.com
  */
 
-trait GetProductsForDropdownTrait {
+trait GetProductsForDropdownTrait 
+{
 
     public function ajaxGetProductsForDropdown($manufacturerId = 0)
     {

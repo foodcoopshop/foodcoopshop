@@ -19,7 +19,8 @@ use Authentication\PasswordHasher\DefaultPasswordHasher;
  * @link          https://www.foodcoopshop.com
  */
 
-trait ChangePasswordTrait {
+trait ChangePasswordTrait
+{
 
     public function changePassword()
     {

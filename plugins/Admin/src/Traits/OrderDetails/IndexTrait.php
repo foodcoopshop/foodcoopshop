@@ -23,7 +23,8 @@ use App\Model\Table\InvoicesTable;
  * @link          https://www.foodcoopshop.com
  */
 
-trait IndexTrait {
+trait IndexTrait 
+{
 
     protected InvoicesTable $Invoice;
 

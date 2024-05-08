@@ -17,7 +17,8 @@ namespace Admin\Traits\Customers;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditCommentTrait {
+trait EditCommentTrait
+{
 
     public function editComment()
     {

@@ -21,7 +21,8 @@ use Cake\Database\Expression\QueryExpression;
  * @link          https://www.foodcoopshop.com
  */
 
-trait ProfitTrait {
+trait ProfitTrait 
+{
 
     protected PurchasePriceProductsTable $PurchasePriceProduct;
 

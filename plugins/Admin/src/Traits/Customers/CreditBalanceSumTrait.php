@@ -21,7 +21,8 @@ use App\Services\PdfWriter\MemberCardsPdfWriterService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait CreditBalanceSumTrait {
+trait CreditBalanceSumTrait
+{
 
     public function creditBalanceSum()
     {

@@ -21,7 +21,8 @@ use Cake\Http\Exception\ForbiddenException;
  * @link          https://www.foodcoopshop.com
  */
 
-trait DeleteTrait {
+trait DeleteTrait
+{
 
     public function delete(int $customerId)
     {

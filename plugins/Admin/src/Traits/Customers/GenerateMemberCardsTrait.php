@@ -23,7 +23,8 @@ use App\Services\PdfWriter\MemberCardsPdfWriterService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait GenerateMemberCardsTrait {
+trait GenerateMemberCardsTrait
+{
 
     public function generateMyMemberCard()
     {

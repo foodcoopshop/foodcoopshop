@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Admin\Traits\Customers;
+namespace Admin\Traits\OrderDetails;
 
 use Cake\Core\Configure;
 
@@ -19,20 +19,24 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait GetCreditBalanceTrait
+trait SetElFinderUploadPathTrait
 {
 
-    public function getCreditBalance($customerId)
+    public function setElFinderUploadPath($orderDetailId)
     {
         $this->request = $this->request->withParam('_ext', 'json');
-        $customersTable = $this->getTableLocator()->get('Customers');
-        $creditBalance = $customersTable->getCreditBalance($customerId);
+
+        $_SESSION['ELFINDER'] = [
+            'uploadUrl' => Configure::read('App.fullBaseUrl') . "/files/kcfinder/order_details/" . $orderDetailId,
+            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/order_details/" . $orderDetailId
+        ];
 
         $this->set([
-            'status' => 1,
-            'creditBalance' => '<span class="'.($creditBalance < 0 ? 'negative' : '').'">' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '</span>',
+            'status' => true,
+            'msg' => 'OK',
         ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'creditBalance']);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
     }
 
 }

@@ -17,7 +17,8 @@ namespace Admin\Traits\Customers;
  * @link          https://www.foodcoopshop.com
  */
 
-trait GetCustomersForDropdownTrait {
+trait GetCustomersForDropdownTrait
+{
 
     public function getCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
     {

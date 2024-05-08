@@ -20,7 +20,8 @@ use Cake\Datasource\FactoryLocator;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditCategoriesTrait {
+trait EditCategoriesTrait 
+{
 
     public function editCategories()
     {

@@ -19,7 +19,8 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditGroupTrait {
+trait EditGroupTrait
+{
 
     public function editGroup()
     {

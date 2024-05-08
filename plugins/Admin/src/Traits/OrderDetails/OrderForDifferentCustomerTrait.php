@@ -20,7 +20,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * @link          https://www.foodcoopshop.com
  */
 
-trait OrderForDifferentCustomerTrait {
+trait OrderForDifferentCustomerTrait 
+{
 
     protected function initOrderForDifferentCustomer($customerId)
     {

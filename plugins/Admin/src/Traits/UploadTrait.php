@@ -20,7 +20,8 @@ use Intervention\Image\Drivers\Imagick\Driver;
  * @link          https://www.foodcoopshop.com
  */
 
-trait UploadTrait {
+trait UploadTrait
+{
 
     protected function deleteUploadedImage(int $imageId, string $thumbsPath): void
     {

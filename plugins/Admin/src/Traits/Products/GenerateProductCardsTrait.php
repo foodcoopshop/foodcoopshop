@@ -20,7 +20,8 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait GenerateProductCardsTrait {
+trait GenerateProductCardsTrait 
+{
 
     public function generateProductCards()
     {

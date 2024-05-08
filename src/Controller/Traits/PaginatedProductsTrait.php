@@ -19,7 +19,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * @link          https://www.foodcoopshop.com
  */
 
-trait PaginatedProductsTrait {
+trait PaginatedProductsTrait 
+{
 
     public function redirectIfPageIsSetTo1() {
         if ($this->getRequest()->getQuery('page') !== null && $this->getRequest()->getQuery('page') == 1) {

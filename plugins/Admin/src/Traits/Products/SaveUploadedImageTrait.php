@@ -22,7 +22,8 @@ use Intervention\Image\Drivers\Imagick\Driver;
  * @link          https://www.foodcoopshop.com
  */
 
-trait SaveUploadedImageTrait {
+trait SaveUploadedImageTrait 
+{
 
     public function saveUploadedImageProduct()
     {
