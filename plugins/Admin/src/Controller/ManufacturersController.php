@@ -20,6 +20,7 @@ use Network\Model\Table\SyncDomainsTable;
 use Admin\Traits\Manufacturers\AddEditTrait;
 use Admin\Traits\Manufacturers\SetElFinderUploadPathTrait;
 use Admin\Traits\Manufacturers\GetDeliveryNoteTrait;
+use Admin\Traits\Manufacturers\ExportTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -47,6 +48,7 @@ class ManufacturersController extends AdminAppController
     use GetOrderListTrait;
     use AddEditTrait;
     use EditOptionsTrait;
+    use ExportTrait;
     use IndexTrait;
     use GetDeliveryNoteTrait;
     use GetInvoiceTrait;

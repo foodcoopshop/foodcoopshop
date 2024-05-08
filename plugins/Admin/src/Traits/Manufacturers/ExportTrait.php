@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+namespace Admin\Traits\Manufacturers;
+
+use App\Services\Csv\Writer\ManufacturerCsvWriterService;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -15,15 +19,18 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 
-$buttons[] = $this->element('copyEmailButton', [
-    'object' => 'manufacturer',
-]);
-$buttons[] = $this->element('manufacturerList/button/exportManufacturers');
+trait ExportTrait
+{
 
-echo $this->element('dropdownWithButtons', [
-    'helperLink' => $helperLink,
-    'buttons' => $buttons,
-    'label' => __d('admin', 'Actions') . '...',
-]);
+    public function export()
+    {
 
-?>
+        $writerService = new ManufacturerCsvWriterService();
+        $writerService->setRequestQueryParams($this->getRequest()->getQueryParams());
+        $writerService->setFilename(__d('admin', 'Manufacturers') . '_' . date('YmdHis') . '.csv');
+        $writerService->render();
+        return $writerService->forceDownload($this->getResponse());
+
+    }
+
+}
