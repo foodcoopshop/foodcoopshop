@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Services\Csv\Writer;
 
 use Admin\Traits\Manufacturers\Filter\ManufacturersFilterTrait;
+use Cake\Core\Configure;
 
 class ManufacturerCsvWriterService extends BaseCsvWriterService
 {
@@ -28,7 +29,6 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
         $header = [
             __('Id'),
             __('Name'),
-            /*
             __('Zip'),
             __('City'),
             __('Street_and_number'),
@@ -37,13 +37,10 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
             __('Phone'),
             __('Email'),
             __('Status'),
-            __('Credit'),
-            __('Order_reminder'),
-            __('Check_credit_reminder'),
-            __('Register_date'),
-            __('Last_pickup_day'),
-            __('Comment'),
-            */
+            __('Deposit_account'),
+            __('Stock_products'),
+            __('Only_for_members'),
+            __('Contact_person'),
         ];
 
         return $header;
@@ -60,25 +57,26 @@ class ManufacturerCsvWriterService extends BaseCsvWriterService
         $records = [];
         foreach($manufacturers as $manufacturer) {
 
+            $depositCreditBalance = '';
+            if ($manufacturer->sum_deposit_delivered > 0) {
+                $depositCreditBalance = Configure::read('app.numberHelper')->formatAsDecimal($manufacturer->deposit_credit_balance);
+            }
+
             $record = [
                 $manufacturer->id_manufacturer,
                 $manufacturer->decoded_name,
-                /*
                 $manufacturer->address_manufacturer->postcode,
                 $manufacturer->address_manufacturer->city,
                 $manufacturer->address_manufacturer->address1,
                 $manufacturer->address_manufacturer->address2,
                 $manufacturer->address_manufacturer->phone_mobile,
                 $manufacturer->address_manufacturer->phone,
-                $manufacturer->email,
+                $manufacturer->address_manufacturer->email,
                 $manufacturer->active,
-                Configure::read('app.numberHelper')->formatAsDecimal($manufacturer->credit_balance),
-                $manufacturer->email_order_reminder_enabled,
-                $manufacturer->check_credit_reminder_enabled,
-                $manufacturer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
-                $lastPickupDay,
-                $this->decodeHtml($manufacturer->address_manufacturer->comment),
-                */
+                $depositCreditBalance,
+                $manufacturer->stock_management_enabled,
+                $manufacturer->is_private,
+                !empty($manufacturer->customer) ? $manufacturer->customer->name : '',
             ];
 
             $records[] = $record;
