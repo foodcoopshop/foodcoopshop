@@ -20,6 +20,8 @@ use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
 use Migrations\Migrations;
 use Network\View\Helper\NetworkHelper;
+use Cake\Routing\Router;
+use Cake\Http\ServerRequest;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -85,6 +87,11 @@ abstract class AppCakeTestCase extends TestCase
 
         // sometimes tests were interfering with each other
         TestEmailTransport::clearMessages();
+    }
+
+    protected function setDummyRequest()
+    {
+        Router::setRequest(new ServerRequest());
     }
 
     private function getLogFile(string $name): string
