@@ -40,7 +40,7 @@ class SyncsController extends AppController
         parent::initialize();
         $this->addViewClasses([JsonView::class]);
     }
-    
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -250,7 +250,12 @@ class SyncsController extends AppController
     private function getLocalSyncProducts()
     {
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend('', $this->identity->getManufacturerId(), 'all', '', false, false, true);
+        $products = $this->Product->getProductsForBackend(
+            productIds: '',
+            manufacturerId: $this->identity->getManufacturerId(),
+            active: 'all',
+            addProductNameToAttributes: true,
+        );
         $matchedProducts = $this->markProductsAsSynced($products);
         return $matchedProducts;
     }

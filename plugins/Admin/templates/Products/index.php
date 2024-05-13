@@ -107,8 +107,6 @@ $paginator = $this->loadHelper('Paginator', [
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
-            <?php echo $this->Form->control('isQuantityMinFilterSet', ['type'=>'checkbox', 'label' => __d('admin', 'amount') . ' < 3', 'checked' => $isQuantityMinFilterSet]);?>
-            <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' => __d('admin', 'price') . ' = 0', 'checked' => $isPriceZero]);?>
 
             <div class="right">
                 <?php

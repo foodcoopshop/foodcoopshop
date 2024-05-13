@@ -677,7 +677,7 @@ class ProductsTable extends AppTable
         return false;
     }
 
-    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '',  $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];
@@ -698,39 +698,6 @@ class ProductsTable extends AppTable
             $conditions['Products.active >'] = APP_DEL;
         }
 
-        if ($isQuantityMinFilterSet) {
-            $conditions[] = $this->getIsQuantityMinFilterSetCondition();
-        }
-
-        if ($isPriceZero) {
-            $conditions[] = $this->getIsPriceZeroCondition();
-        }
-
-        $quantityIsZeroFilterOn = false;
-        $priceIsZeroFilterOn = false;
-        foreach ($conditions as $condition) {
-            if (is_int($condition) || !is_array($condition)) {
-                continue;
-            }
-            if (is_string($condition)) {
-                if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
-                    $this->getAssociation('ProductAttributes')->setConditions(
-                        [
-                            'StockAvailables.quantity < 3'
-                        ]
-                    );
-                    $quantityIsZeroFilterOn = true;
-                }
-                if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                    $this->getAssociation('ProductAttributes')->setConditions(
-                        [
-                            'ProductAttributes.price' => 0
-                        ]
-                    );
-                    $priceIsZeroFilterOn = true;
-                }
-            }
-        }
         $contain = [
             'CategoryProducts',
             'CategoryProducts.Categories',
@@ -985,14 +952,8 @@ class ProductsTable extends AppTable
             $i ++;
 
             if (! empty($product->product_attributes)) {
-                $currentPreparedProduct = count($preparedProducts) - 1;
-                $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] = 0;
 
                 foreach ($product->product_attributes as $attribute) {
-                    if (($quantityIsZeroFilterOn && empty($attribute->stock_available)) || ($priceIsZeroFilterOn && empty($attribute))) {
-                        $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] ++;
-                        continue;
-                    }
 
                     $grossPrice = 0;
                     if (! empty($attribute->price)) {
@@ -1121,16 +1082,6 @@ class ProductsTable extends AppTable
             }
         }
 
-        // price zero filter is difficult to implement, because if there are attributes assigned to the product, the product's price is always 0
-        // which would lead to always showing the main product of attributes if price zero filter is set
-        // this is not the case for quantity zero filter, because the main product's quantity is the sum of the associated attribute quantities
-        if ($priceIsZeroFilterOn) {
-            foreach ($preparedProducts as $key => $preparedProduct) {
-                if (isset($preparedProducts[$key]['AttributesRemoved']) && $preparedProducts[$key]['AttributesRemoved'] == count($preparedProducts[$key]->product_attributes)) {
-                    unset($preparedProducts[$key]);
-                }
-            }
-        }
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
         return $preparedProducts;
     }
@@ -1233,16 +1184,6 @@ class ProductsTable extends AppTable
         $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
         $netPrice = round($netPrice, 6);
         return $netPrice;
-    }
-
-    private function getIsQuantityMinFilterSetCondition()
-    {
-        return '(StockAvailables.quantity < 3 && (StockAvailables.always_available = 0 || (Products.is_stock_product = 1 && Manufacturers.stock_management_enabled = 1)))';
-    }
-
-    private function getIsPriceZeroCondition()
-    {
-        return 'Products.price = 0';
     }
 
     public function setDefaultAttributeId($productId, $productAttributeId)

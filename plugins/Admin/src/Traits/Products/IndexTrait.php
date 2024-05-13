@@ -25,7 +25,7 @@ use Network\Model\Table\SyncManufacturersTable;
  * @link          https://www.foodcoopshop.com
  */
 
-trait IndexTrait 
+trait IndexTrait
 {
 
     protected AttributesTable $Attribute;
@@ -60,14 +60,14 @@ trait IndexTrait
         $categoryId = h($this->getRequest()->getQuery('categoryId', ''));
         $this->set('categoryId', $categoryId);
 
-        $isQuantityMinFilterSet = (bool) h($this->getRequest()->getQuery('isQuantityMinFilterSet', false));
-        $this->set('isQuantityMinFilterSet', $isQuantityMinFilterSet);
-
-        $isPriceZero = (bool) h($this->getRequest()->getQuery('isPriceZero', 0));
-        $this->set('isPriceZero', $isPriceZero);
-
         if ($manufacturerId != '') {
-            $preparedProducts = $this->Product->getProductsForBackend($productId, $manufacturerId, $active, $categoryId, $isQuantityMinFilterSet, $isPriceZero, false, $this);
+            $preparedProducts = $this->Product->getProductsForBackend(
+                productIds: $productId,
+                manufacturerId: $manufacturerId,
+                active: $active,
+                categoryId: $categoryId,
+                controller: $this,
+            );
         } else {
             $preparedProducts = [];
         }

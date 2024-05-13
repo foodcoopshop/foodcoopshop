@@ -20,7 +20,7 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait GenerateProductCardsTrait 
+trait GenerateProductCardsTrait
 {
 
     public function generateProductCards()
@@ -33,7 +33,11 @@ trait GenerateProductCardsTrait
         $productIds = explode(',', $productIds);
 
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend($productIds, 'all', 'all', '', false, false, true);
+        $products = $this->Product->getProductsForBackend(
+            productIds: $productIds,
+            manufacturerId: 'all',
+            addProductNameToAttributes: true,
+        );
 
         $preparedProducts = [];
         foreach($products as &$product) {
