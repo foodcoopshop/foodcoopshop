@@ -21,7 +21,8 @@ use App\Model\Entity\OrderDetail;
  * @link          https://www.foodcoopshop.com
  */
 
-trait DeleteTrait {
+trait DeleteTrait 
+{
 
     protected OrderDetailsTable $OrderDetail;
 

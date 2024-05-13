@@ -21,7 +21,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditPurchasePriceTrait {
+trait EditPurchasePriceTrait 
+{
 
     protected ProductsTable $Product;
     protected TaxesTable $Tax;

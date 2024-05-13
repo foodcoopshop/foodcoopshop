@@ -19,7 +19,8 @@ use App\Services\Csv\Writer\CustomerCsvWriterService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait ExportTrait {
+trait ExportTrait
+{
 
     public function export()
     {

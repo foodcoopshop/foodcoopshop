@@ -22,7 +22,8 @@ use App\Model\Entity\OrderDetail;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditPickupDayTrait {
+trait EditPickupDayTrait 
+{
 
     protected PickupDaysTable $PickupDay;
     

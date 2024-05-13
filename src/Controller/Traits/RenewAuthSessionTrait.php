@@ -19,7 +19,8 @@ use Cake\Routing\Router;
  * @link          https://www.foodcoopshop.com
  */
 
-trait RenewAuthSessionTrait {
+trait RenewAuthSessionTrait 
+{
 
     protected function renewAuthSession()
     {

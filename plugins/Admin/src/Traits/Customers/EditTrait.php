@@ -21,7 +21,8 @@ use App\Services\SanitizeService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditTrait {
+trait EditTrait
+{
 
     public function profile()
     {

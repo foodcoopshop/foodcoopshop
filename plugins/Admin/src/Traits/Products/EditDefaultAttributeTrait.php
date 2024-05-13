@@ -19,7 +19,8 @@ use App\Controller\Component\StringComponent;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditDefaultAttributeTrait {
+trait EditDefaultAttributeTrait 
+{
 
     public function editDefaultAttribute($productId, $productAttributeId)
     {

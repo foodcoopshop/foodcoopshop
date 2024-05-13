@@ -21,7 +21,8 @@ use App\Services\SanitizeService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditDeliveryRhythmTrait {
+trait EditDeliveryRhythmTrait 
+{
 
     public function editDeliveryRhythm()
     {

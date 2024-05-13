@@ -19,7 +19,8 @@ use App\Controller\Component\StringComponent;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditProductAttributeTrait {
+trait EditProductAttributeTrait 
+{
 
     public function editProductAttribute()
     {

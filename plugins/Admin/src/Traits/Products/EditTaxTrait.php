@@ -20,7 +20,8 @@ use Cake\Utility\Hash;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditTaxTrait {
+trait EditTaxTrait 
+{
 
     public function editTax()
     {

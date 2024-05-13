@@ -19,7 +19,8 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait CalculateSellingChargeWithSurchargeTrait {
+trait CalculateSellingChargeWithSurchargeTrait 
+{
 
     public function calculateSellingPriceWithSurcharge()
     {

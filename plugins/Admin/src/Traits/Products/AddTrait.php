@@ -19,7 +19,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * @link          https://www.foodcoopshop.com
  */
 
-trait AddTrait {
+trait AddTrait 
+{
 
     public function add()
     {

@@ -21,7 +21,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * @link          https://www.foodcoopshop.com
  */
 
-trait ChangeStatusTrait {
+trait ChangeStatusTrait
+{
 
     public function changeStatus($customerId, $status, $sendEmail)
     {

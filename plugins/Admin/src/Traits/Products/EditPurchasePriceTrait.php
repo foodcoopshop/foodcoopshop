@@ -20,7 +20,8 @@ use App\Services\SanitizeService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditPurchasePriceTrait {
+trait EditPurchasePriceTrait 
+{
 
     public function editPurchasePrice()
     {

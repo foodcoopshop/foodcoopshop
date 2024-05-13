@@ -17,7 +17,8 @@ namespace Admin\Traits;
  * @link          https://www.foodcoopshop.com
  */
 
-trait ManufacturerIdTrait {
+trait ManufacturerIdTrait
+{
 
     public $manufacturerId;
 

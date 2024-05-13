@@ -19,7 +19,8 @@ use App\Model\Table\StockAvailablesTable;
  * @link          https://www.foodcoopshop.com
  */
 
-trait UpdateOrderDetailsTrait {
+trait UpdateOrderDetailsTrait 
+{
 
     protected StockAvailablesTable $StockAvailable;
 

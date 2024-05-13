@@ -21,7 +21,8 @@ use Admin\Traits\QueryFilterTrait;
  * @link          https://www.foodcoopshop.com
  */
 
-trait IndexTrait {
+trait IndexTrait
+{
 
     use QueryFilterTrait;
     use CustomersFilterTrait;

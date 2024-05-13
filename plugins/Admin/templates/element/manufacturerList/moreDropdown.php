@@ -18,6 +18,7 @@ declare(strict_types=1);
 $buttons[] = $this->element('copyEmailButton', [
     'object' => 'manufacturer',
 ]);
+$buttons[] = $this->element('manufacturerList/button/exportManufacturers');
 
 echo $this->element('dropdownWithButtons', [
     'helperLink' => $helperLink,

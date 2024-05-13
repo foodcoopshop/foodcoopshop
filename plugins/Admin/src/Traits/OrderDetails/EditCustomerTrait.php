@@ -21,7 +21,8 @@ use App\Services\ChangeSellingPriceService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditCustomerTrait {
+trait EditCustomerTrait 
+{
 
     use UpdateOrderDetailsTrait;
 

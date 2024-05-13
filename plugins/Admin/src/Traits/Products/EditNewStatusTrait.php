@@ -20,7 +20,8 @@ use Cake\I18n\DateTime;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditNewStatusTrait {
+trait EditNewStatusTrait 
+{
 
     public function editNewStatus($productId, $status)
     {

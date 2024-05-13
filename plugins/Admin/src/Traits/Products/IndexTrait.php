@@ -25,7 +25,8 @@ use Network\Model\Table\SyncManufacturersTable;
  * @link          https://www.foodcoopshop.com
  */
 
-trait IndexTrait {
+trait IndexTrait 
+{
 
     protected AttributesTable $Attribute;
     protected CategoriesTable $Category;

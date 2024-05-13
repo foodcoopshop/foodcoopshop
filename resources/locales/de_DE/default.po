@@ -884,6 +884,12 @@ msgstr "alle"
 msgid "All"
 msgstr "Alle"
 
+msgid "Deposit_account"
+msgstr "Pfandkonto"
+
+msgid "Only_for_members"
+msgstr "Nur für Mitglieder"
+
 msgid "Add_product_feedback"
 msgstr "Feedback zum Produkt schreiben"
 
