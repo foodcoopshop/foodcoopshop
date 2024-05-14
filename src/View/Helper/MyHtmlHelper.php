@@ -14,6 +14,7 @@ use App\Services\OrderCustomerService;
 use App\Model\Entity\Customer;
 use App\Model\Entity\Cart;
 use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -610,9 +611,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getPaymentTexts()
     {
         $paymentTexts = [
-            'product' => __('Payment_type_credit_upload'),
-            'payback' => __('Payment_type_payback'),
-            'deposit' => __('Payment_type_deposit_return'),
+            Payment::TYPE_PRODUCT => __('Payment_type_credit_upload'),
+            Payment::TYPE_PAYBACK => __('Payment_type_payback'),
+            Payment::TYPE_DEPOSIT => __('Payment_type_deposit_return'),
         ];
         return $paymentTexts;
     }
@@ -622,11 +623,11 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getPaymentTexts()[$paymentType];
     }
 
-    public function getSuperadminProductPaymentTexts($identity)
+    public function getSuperadminProductPaymentTexts()
     {
         $paymentTexts = [
-            'product' => self::getPaymentText('product'),
-            'payback' => self::getPaymentText('payback')
+            Payment::TYPE_PRODUCT => self::getPaymentText(Payment::TYPE_PRODUCT),
+            Payment::TYPE_PAYBACK => self::getPaymentText(Payment::TYPE_PAYBACK),
         ];
         return $paymentTexts;
     }
@@ -634,8 +635,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerDepositPaymentTexts()
     {
         $paymentTexts = [
-            'empty_glasses' => __('Empty_glasses'),
-            'money' => __('Compensation_payment')
+            Payment::TEXT_EMPTY_GLASSES => __('Empty_glasses'),
+            Payment::TEXT_MONEY => __('Compensation_payment'),
         ];
         return $paymentTexts;
     }

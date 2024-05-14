@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 
 if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() || $this->request->getParam('action') == 'product') {
     echo $this->element('payment/addTypeManualHeader', [
@@ -71,7 +72,7 @@ if (count($payments) == 0) {
 
         echo '<td>';
 
-        if ($payment['type'] == 'product') {
+        if ($payment['type'] == Payment::TYPE_PRODUCT) {
             echo match($payment['approval']) {
                 APP_DEL => '<i class="fas fa-minus-circle not-ok payment-approval"></i>',
                 APP_OFF => '',
@@ -100,12 +101,12 @@ if (count($payments) == 0) {
 
 
         $productNumberClass = '';
-        if (in_array($payment['type'], ['payback'])) {
+        if (in_array($payment['type'], [Payment::TYPE_PAYBACK])) {
             $productNumberClass = ' class="negative"';
         }
         echo '<td style="text-align:right;" ' . $productNumberClass . '>';
-        if (in_array($payment['type'], ['product', 'payback'])) {
-            if ($payment['type'] == 'payback') {
+        if (in_array($payment['type'], [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
+            if ($payment['type'] == Payment::TYPE_PAYBACK) {
                 $payment['amount'] = $payment['amount'] * -1;
             }
             $sumPayments += $payment['amount'];
@@ -127,7 +128,7 @@ if (count($payments) == 0) {
                 echo $this->Number->formatAsCurrency($payment['deposit']);
             }
         }
-        if ($payment['type'] == 'deposit') {
+        if ($payment['type'] == Payment::TYPE_DEPOSIT) {
             $sumDeposits += $payment['amount'];
             echo $this->Number->formatAsCurrency($payment['amount']);
         }
@@ -136,10 +137,10 @@ if (count($payments) == 0) {
         echo '<td style="text-align:center;">';
         $deletablePaymentTypes = ['product'];
         if ((!$identity->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) && Configure::read('app.isDepositEnabled')) {
-            $deletablePaymentTypes[] = 'deposit';
+            $deletablePaymentTypes[] = Payment::TYPE_DEPOSIT;
         }
         if ($identity->isSuperadmin()) {
-            $deletablePaymentTypes[] = 'payback';
+            $deletablePaymentTypes[] = Payment::TYPE_PAYBACK;
         }
         if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON && (is_null($payment['invoice_id']) || $payment['invoice_id'] == 0)) {
             echo $this->Html->link(

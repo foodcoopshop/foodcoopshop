@@ -14,6 +14,7 @@ use Cake\Utility\Hash;
 use Cake\Routing\Router;
 use App\Model\Entity\Customer;
 use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -502,8 +503,8 @@ class CustomersTable extends AppTable
 
         $productBalanceSum = 0;
         foreach($customerIds as $customerId) {
-            $productPaymentSum = $paymentTable->getSum($customerId, 'product');
-            $paybackPaymentSum = $paymentTable->getSum($customerId, 'payback');
+            $productPaymentSum = $paymentTable->getSum($customerId, Payment::TYPE_PRODUCT);
+            $paybackPaymentSum = $paymentTable->getSum($customerId, Payment::TYPE_PAYBACK);
             $productOrderSum = $orderDetailTable->getSumProduct($customerId);
             $productBalance = $productPaymentSum - $paybackPaymentSum - $productOrderSum;
             $productBalanceSum += $productBalance;
@@ -594,9 +595,9 @@ class CustomersTable extends AppTable
     {
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $payment = FactoryLocator::get('Table')->get('Payments');
-        $paymentProductSum = $payment->getSum($customerId, 'product');
-        $paybackProductSum = $payment->getSum($customerId, 'payback');
-        $paymentDepositSum = $payment->getSum($customerId, 'deposit');
+        $paymentProductSum = $payment->getSum($customerId, Payment::TYPE_PRODUCT);
+        $paybackProductSum = $payment->getSum($customerId, Payment::TYPE_PAYBACK);
+        $paymentDepositSum = $payment->getSum($customerId, Payment::TYPE_DEPOSIT);
 
         $productSum = $orderDetailTable->getSumProduct($customerId);
         $depositSum = $orderDetailTable->getSumDeposit($customerId);

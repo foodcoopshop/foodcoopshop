@@ -21,6 +21,7 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
+use App\Model\Entity\Payment;
 
 
 class CheckCreditBalanceCommand extends AppCommand
@@ -65,7 +66,7 @@ class CheckCreditBalanceCommand extends AppCommand
                 'Payments.date_add',
             ],
             conditions: [
-                'Payments.type' => 'product',
+                'Payments.type' => Payment::TYPE_PRODUCT,
                 'Payments.date_transaction_add IS NOT NULL',
 
             ],

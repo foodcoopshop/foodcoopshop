@@ -8,6 +8,7 @@ use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\PaymentsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -50,14 +51,14 @@ class DepositsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Deposit_overview'));
 
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType('empty_glasses');
+        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_EMPTY_GLASSES);
         $preparedManufacturerEmptyGlassesData = [];
         foreach($manufacturerDepositSumEmptyGlassesByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
             $preparedManufacturerEmptyGlassesData[$week->YearWeek] = $week->SumAmount;
         }
 
-        $manufacturerDepositSumMoneyByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType('money');
+        $manufacturerDepositSumMoneyByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType(Payment::TEXT_MONEY);
         $preparedManufacturerMoneyData = [];
         foreach($manufacturerDepositSumMoneyByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);

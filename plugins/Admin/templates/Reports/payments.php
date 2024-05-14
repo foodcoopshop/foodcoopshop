@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
@@ -25,7 +26,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
         Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);"
 ]);
-if ($paymentType == 'product') {
+if ($paymentType == Payment::TYPE_PRODUCT) {
     $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#payment-'
     ]);
@@ -51,7 +52,7 @@ echo $this->element('navTabs/reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
-$useCsvUpload = !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && $this->request->getParam('pass')[0] == 'product';
+$useCsvUpload = !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && $this->request->getParam('pass')[0] == Payment::TYPE_PRODUCT;
 if ($useCsvUpload) {
     echo $this->element('payment/csvUpload', [
         'csvRecords' => $csvRecords ?? null,
@@ -65,7 +66,7 @@ if ($useCsvUpload) {
     $colspan++;
 }
 $this->Paginator->setPaginated($payments);
-if (in_array($paymentType, ['product', 'payback'])) {
+if (in_array($paymentType, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
     echo '<th style="width:25px;"></th>';
     echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', __d('admin', 'Status')) . '</th>';
     $colspan = $colspan + 2;
@@ -96,7 +97,7 @@ foreach ($payments as $payment) {
 
     echo '<tr id="payment-'.$payment->id.'" class="data ' . $rowClass . '">';
 
-    if (in_array($paymentType, ['product', 'payback'])) {
+    if (in_array($paymentType, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
         echo '<td>';
         if ($payment->status > APP_DEL) {
             echo $this->Html->link(
@@ -167,7 +168,7 @@ foreach ($payments as $payment) {
 
     if ($showTextColumn) {
         echo '<td>';
-        if ($paymentType == 'deposit') {
+        if ($paymentType == Payment::TYPE_DEPOSIT) {
             echo $this->Html->getManufacturerDepositPaymentText($payment->text);
         } else {
             echo $payment->text;

@@ -11,6 +11,7 @@ use Cake\Event\EventInterface;
 use Cake\ORM\Exception\PersistenceFailedException;
 use App\Services\Csv\Reader\Banking\BankingReaderServiceFactory;
 use Cake\I18n\DateTime;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -186,7 +187,7 @@ class ReportsController extends AdminAppController
     public function payments($paymentType)
     {
 
-        if ($paymentType == 'product' && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+        if ($paymentType == Payment::TYPE_PRODUCT && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
             $this->handleCsvUpload();
         }
 
@@ -253,6 +254,6 @@ class ReportsController extends AdminAppController
         $this->set('customersForDropdown', $this->Payment->Customers->getForDropdown());
         $this->set('title_for_layout', __d('admin', 'Report') . ': ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
-        $this->set('showTextColumn', $paymentType == 'deposit');
+        $this->set('showTextColumn', $paymentType == Payment::TYPE_DEPOSIT);
     }
 }

@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 
 ?>
 <div id="payments-list">
@@ -53,14 +54,14 @@ echo $this->Form->control('Payments.amount', [
     'step' => '0.01'
 ]);
 echo $this->Form->hidden('Payments.customerId', [
-    'value' => $customerId
+    'value' => $customerId,
 ]);
 echo '<br />';
 
-if ($paymentType == 'product' && $identity->isSuperadmin()) {
+if ($paymentType == Payment::TYPE_PRODUCT && $identity->isSuperadmin()) {
     echo '<p style="margin-top:10px;">'.__d('admin', 'If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
     $i = 0;
-    foreach ($this->Html->getSuperadminProductPaymentTexts($identity) as $paymentTextKey => $paymentText) {
+    foreach ($this->Html->getSuperadminProductPaymentTexts() as $paymentTextKey => $paymentText) {
         echo '<div class="radio-wrapper">';
             $checked = '';
         if ($i == 0) {

@@ -14,6 +14,7 @@ use Cake\View\JsonView;
 use App\Services\SanitizeService;
 use Cake\I18n\DateTime;
 use Cake\I18n\Date;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -58,7 +59,7 @@ class PaymentsController extends AdminAppController
         $payment = $this->Payment->find('all',
         conditions: [
             'Payments.id' => $paymentId,
-            'Payments.type' => 'product'
+            'Payments.type' => Payment::TYPE_PRODUCT,
         ],
         contain: [
             'Customers'
@@ -96,7 +97,7 @@ class PaymentsController extends AdminAppController
         $payment = $this->Payment->find('all',
         conditions: [
             'Payments.id' => $paymentId,
-            'Payments.type IN' => ['product', 'payback'],
+            'Payments.type IN' => [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK],
         ],
         contain: [
             'Customers',
@@ -180,9 +181,9 @@ class PaymentsController extends AdminAppController
         }
 
         if (! in_array($type, [
-            'product',
-            'deposit',
-            'payback',
+            Payment::TYPE_PRODUCT,
+            Payment::TYPE_PAYBACK,
+            Payment::TYPE_DEPOSIT,
         ])) {
             $message = 'payment type not correct: ' . $type;
             $this->set([
@@ -222,7 +223,7 @@ class PaymentsController extends AdminAppController
         }
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
-        if (in_array($type, ['product', 'payback'])) {
+        if (in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK])) {
             $customerId = (int) $this->getRequest()->getData('customerId');
         }
 
@@ -287,10 +288,7 @@ class PaymentsController extends AdminAppController
         }
 
         // payments paybacks and product can also be placed for other users
-        if (in_array($type, [
-            'product',
-            'payback',
-        ]) && isset($customerId)) {
+        if (in_array($type, [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK]) && isset($customerId)) {
             $customer = $this->Customer->find('all', conditions: [
                 'Customers.id_customer' => $customerId
             ])->first();
@@ -478,7 +476,7 @@ class PaymentsController extends AdminAppController
     public function overview()
     {
         $this->customerId = $this->identity->getId();
-        $this->paymentType = 'product';
+        $this->paymentType = Payment::TYPE_PRODUCT;
 
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
             $personalTransactionCode = $this->Customer->getPersonalTransactionCode($this->customerId);
@@ -492,18 +490,18 @@ class PaymentsController extends AdminAppController
     public function product()
     {
 
-        $this->paymentType = 'product';
+        $this->paymentType = Payment::TYPE_PRODUCT;
         $this->set('title_for_layout', __d('admin', 'Credit'));
 
         $this->allowedPaymentTypes = [
-            'product',
-            'payback',
-            'deposit'
+            Payment::TYPE_PRODUCT,
+            Payment::TYPE_PAYBACK,
+            Payment::TYPE_DEPOSIT,
         ];
         if (!Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $this->allowedPaymentTypes = [
-                'product',
-                'payback'
+                Payment::TYPE_PRODUCT,
+                Payment::TYPE_PAYBACK,
             ];
         }
 
@@ -557,7 +555,7 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        if ($this->paymentType == 'product') {
+        if ($this->paymentType == Payment::TYPE_PRODUCT) {
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProductByCustomer($this->getCustomerId());
 

@@ -6,6 +6,7 @@ namespace Admin\Traits\Customers;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -73,7 +74,7 @@ trait DeleteTrait
                     'id_customer' => $customerId,
                     'approval < ' => APP_ON,
                     'status' => APP_ON,
-                    'type' => 'product',
+                    'type' => Payment::TYPE_PRODUCT,
                     'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
                 ])->count();
                 if ($notApprovedPaymentsCount > 0) {
