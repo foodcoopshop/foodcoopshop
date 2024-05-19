@@ -128,9 +128,9 @@ class SelfServiceController extends FrontendController
                 $unitforproduct = 1;
                 if ($customBarcodeWithWeightFound){
                     $weightforproduct = $catalogService->getBarcodeWeight($keyword);
-                    $unitforproduct = $unitforproduct + $weightforproduct;
+                    $unitforproduct = $weightforproduct;
                 }
-                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, $unitforproduct);
+                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, $unitforproduct, $customBarcodeWithWeightFound);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
