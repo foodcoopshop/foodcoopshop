@@ -282,7 +282,7 @@ class CartsController extends FrontendController
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
             foreach($orderDetails as $orderDetail) {
-                $result = $cartProductTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount, false);
+                $result = $cartProductTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount, -1, false);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;
