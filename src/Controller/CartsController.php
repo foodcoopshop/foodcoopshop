@@ -282,7 +282,7 @@ class CartsController extends FrontendController
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
             foreach($orderDetails as $orderDetail) {
-                $result = $cartProductTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
+                $result = $cartProductTable->add($orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount, false);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;
@@ -349,7 +349,7 @@ class CartsController extends FrontendController
 
         $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProductTable = $this->getTableLocator()->get('CartProducts');
-        $result = $cartProductTable->add($ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
+        $result = $cartProductTable->add($ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits, false);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
