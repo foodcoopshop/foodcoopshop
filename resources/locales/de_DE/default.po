@@ -1059,7 +1059,7 @@ msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_set
 msgstr "An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden."
 
 msgid "Minimal_stock_amount"
-msgstr "Mindestlagerbestand"
+msgstr "Mindestlagerstand"
 
 msgid "Notification_if_amount_lower_than"
 msgstr "E-Mail-Benachrichtigung ab Anzahl"
