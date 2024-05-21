@@ -148,6 +148,9 @@ msgstr "Hersteller"
 msgid "Invoice_number_abbreviation"
 msgstr "Re. Nr."
 
+msgid "Member_fee"
+msgstr "Mitgliedsbeitrag"
+
 msgid "Sent"
 msgstr "Versendet"
 
@@ -267,6 +270,15 @@ msgstr "{0} hat ein Mitgliedskonto erstellt."
 
 msgid "Welcome"
 msgstr "Willkommen"
+
+msgid "Register_date"
+msgstr "Reg.-Datum"
+
+msgid "Last_pickup_day"
+msgstr "Letzter Abholtag"
+
+msgid "Comment_abbreviation"
+msgstr "Komm."
 
 msgid "New_registration_{0}"
 msgstr "Neue Registrierung: {0}"
@@ -787,6 +799,9 @@ msgstr "Bestellzeitraum"
 msgid "An_existing_order_list_will_be_overwritten!"
 msgstr "Eine bereits bestehende Bestellliste wird überschrieben!"
 
+msgid "Group"
+msgstr "Gruppe"
+
 msgid "Change_group_for"
 msgstr "Gruppe ändern für"
 
@@ -865,6 +880,15 @@ msgstr "Bitte auswählen..."
 
 msgid "all"
 msgstr "alle"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Deposit_account"
+msgstr "Pfandkonto"
+
+msgid "Only_for_members"
+msgstr "Nur für Mitglieder"
 
 msgid "Add_product_feedback"
 msgstr "Feedback zum Produkt schreiben"
@@ -953,6 +977,9 @@ msgstr "Preis ändern"
 msgid "Price_per_unit"
 msgstr "Preis pro Bestelleinheit"
 
+msgid "Price_per"
+msgstr "Preis pro"
+
 msgid "gross"
 msgstr "brutto"
 
@@ -961,6 +988,9 @@ msgstr "Preis nach Gewicht (für Gewichtsanpassung nach Lieferung)"
 
 msgid "for"
 msgstr "für"
+
+msgid "Stock_value"
+msgstr "Lagerwert"
 
 msgid "approximate_delivery_weight_in_{0}_per_unit"
 msgstr "ungefähres Liefergewicht in {0} pro Einheit"
@@ -990,7 +1020,7 @@ msgid "Product_declaration_ok?"
 msgstr "Produktdeklaration OK?"
 
 msgid "docs_route_product_declaration"
-msgstr "lebensmittelkennzeichnung"
+msgstr "produkte/lebensmittelkennzeichnung"
 
 msgid "Help"
 msgstr "Hilfe"
@@ -1027,6 +1057,9 @@ msgstr "0 oder kleiner als 0"
 
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden."
+
+msgid "Minimal_stock_amount"
+msgstr "Mindestlagerstand"
 
 msgid "Notification_if_amount_lower_than"
 msgstr "E-Mail-Benachrichtigung ab Anzahl"
@@ -2236,6 +2269,9 @@ msgstr "Gewinn"
 
 msgid "Payment_type_credit_upload"
 msgstr "Guthaben-Aufladung"
+
+msgid "Check_credit_reminder"
+msgstr "Guthaben-Aufladung-Erinnerung"
 
 msgid "Payment_type_payback"
 msgstr "Rückzahlung"

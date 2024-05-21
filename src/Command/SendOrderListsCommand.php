@@ -186,7 +186,7 @@ class SendOrderListsCommand extends AppCommand
                         $pickupDayFormatted = $pickupDayFormatted->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
                         $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormatted;
                         $newData = '- <i class="fas fa-book not-ok" data-identifier="generate-order-list-'.$identifier.'"></i> <i class="fas fa-envelope not-ok" data-identifier="send-order-list-'.$identifier.'"></i> ';
-                        $newData .= html_entity_decode($manufacturer->name) . ': ' .
+                        $newData .= $manufacturer->decoded_name . ': ' .
                             __('{0,plural,=1{1_product} other{#_products}}', [$tmpActionLogData['order_detail_amount_sum']]) . ' / ' .
                             Configure::read('app.numberHelper')->formatAsCurrency($tmpActionLogData['order_detail_price_sum']);
                             if ($pickupDayDbFormat != $pickupDay) {

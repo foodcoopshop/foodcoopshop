@@ -55,7 +55,9 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
                 <p class="product-sum-wrapper"><b><?php echo __('Value_of_goods');?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
                 <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             <?php } ?>
-            <p class="total-sum-wrapper"><b><?php echo __('Total'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <p class="total-sum-wrapper">
+                <b class="amount-sum-wrapper"><span class="sum"><span class="value">0</span>x</span></b>
+                <b><?php echo __('Total'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
         </div>
         <div class="sc"></div>
 

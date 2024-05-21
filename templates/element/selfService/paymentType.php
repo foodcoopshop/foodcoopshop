@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use App\Model\Entity\Cart;
 
 if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
     return false;
@@ -24,7 +25,7 @@ if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 
 $cartsTable = FactoryLocator::get('Table')->get('Carts');
 $paymentTypeAsString = __('Credit');
-if ($paymentType == $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH) {
+if ($paymentType == Cart::SELF_SERVICE_PAYMENT_TYPE_CASH) {
     $paymentTypeAsString =  __('Cash');
 }
 

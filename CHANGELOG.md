@@ -6,7 +6,14 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht
+## Unreleased
+
+### Neue Funktionen / Verbesserungen
+- Barcodes mit Gewichtsinformation findet das Produkt. [I#776](https://github.com/foodcoopshop/foodcoopshop/issues/776) / [PR#1019](https://github.com/foodcoopshop/foodcoopshop/pull/1019) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
+- Unter "Bestellungen / Gruppiert nach Produkt" befindet sich jetzt eine neue Spalte mit dem summierten Gewicht. [PR#1021](https://github.com/foodcoopshop/foodcoopshop/pull/1021) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Lagerprodukte (Inventurliste), Mitglieder und Hersteller können nun als CSV-Datei exportiert werden. [I#321](https://github.com/foodcoopshop/foodcoopshop/issues/321) / [I#1010](https://github.com/foodcoopshop/foodcoopshop/issues/1010) / [PR#1022](https://github.com/foodcoopshop/foodcoopshop/pull/1022) / [PR#1025](https://github.com/foodcoopshop/foodcoopshop/pull/1025) / [PR#1028](https://github.com/foodcoopshop/foodcoopshop/pull/1028) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+## v4.0
 
 ### Neue Funktionen / Verbesserungen
 - Bei Ändern des Produkt-Preises können jetzt optional automatisch alle Preise von offenen (dh. nicht verrechneten) Bestellungen entsprechend angepasst werden. Das ist unter anderen praktisch bei Sammelbestellungen. [I#1006](https://github.com/foodcoopshop/foodcoopshop/issues/1006) / [I#281](https://github.com/foodcoopshop/foodcoopshop/issues/281) / [PR#1007](https://github.com/foodcoopshop/foodcoopshop/pull/1007) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -18,7 +25,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Für Dorfläden: Wenn man als Einkaufspreis-User eingeloggt ist, wird jetzt im Tooltip beim Preis immer auch der Verkaufspreis angezeigt. [I#965](https://github.com/foodcoopshop/foodcoopshop/issues/965) / [PR#966](https://github.com/foodcoopshop/foodcoopshop/pull/966) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wenn ein Mitglied eine offene Bestellung hat, die vor mehr als 6 Tagen getätigt wurde (z.B. Vorbestellung Fleisch), bekommt es jetzt auch eine Bestellerinnerung. [I#976](https://github.com/foodcoopshop/foodcoopshop/issues/976) / [PR#977](https://github.com/foodcoopshop/foodcoopshop/pull/977) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bild-Upload: WEBP-Format wird jetzt unterstützt. [PR#993](https://github.com/foodcoopshop/foodcoopshop/pull/993) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Beschränkung der Produkte auf maximal 50 pro Seite, dadurch bessere Übersicht und schnellere Ladezeit von z.B. der "Alle Produkte"-Seite. [PR#999](https://github.com/foodcoopshop/foodcoopshop/pull/999) / [PR#1001](https://github.com/foodcoopshop/foodcoopshop/pull/1001) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Beschränkung der Produkte auf maximal 100 pro Seite, dadurch bessere Übersicht und schnellere Ladezeit von z.B. der "Alle Produkte"-Seite. [PR#999](https://github.com/foodcoopshop/foodcoopshop/pull/999) / [PR#1001](https://github.com/foodcoopshop/foodcoopshop/pull/1001) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die [Software-Dokumentation](https://foodcoopshop.github.io/) wurde komplett neu strukturiert, upgedated und wird jetzt mit einem neuen Tool [Docusaurus](https://docusaurus.io/) generiert. [PR#9](https://github.com/foodcoopshop/foodcoopshop.github.io/pull/9) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Austausch von Komponenten / Software-Updates / Bugfixes
 - Update auf CakePHP 5. [I#918](https://github.com/foodcoopshop/foodcoopshop/issues/918) / [PR#985](https://github.com/foodcoopshop/foodcoopshop/pull/985) / [I#917](https://github.com/foodcoopshop/foodcoopshop/issues/917) / [PR#987](https://github.com/foodcoopshop/foodcoopshop/pull/987) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -33,6 +41,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Neue Beta-Funktionen
 - Neue Produkt-Import-Funktion mittels CSV-Upload, [hier gehts zur Doku](https://foodcoopshop.github.io/de/produkt-import.html). [I#953](https://github.com/foodcoopshop/foodcoopshop/issues/953) / [PR#982](https://github.com/foodcoopshop/foodcoopshop/pull/982) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
+Datum: 29.03.2024 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/19) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.2...v4.0.0)
 
 
 ## v3.6.2

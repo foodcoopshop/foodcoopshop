@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Model\Entity\Payment;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
@@ -85,9 +86,9 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCustomerEdit(88),
             $this->Slug->getProductAdmin(),
             $this->Slug->getProductAdmin('all'),
-            $this->Slug->getReport('product'),
-            $this->Slug->getReport('payback'),
-            $this->Slug->getReport('deposit'),
+            $this->Slug->getReport(Payment::TYPE_PRODUCT),
+            $this->Slug->getReport(Payment::TYPE_PAYBACK),
+            $this->Slug->getReport(Payment::TYPE_DEPOSIT),
             $this->Slug->getMyCreditBalance(),
             $this->Slug->getPaymentEdit(1),
             $this->Slug->getBlogPostListAdmin(),

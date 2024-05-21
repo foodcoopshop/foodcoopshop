@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
 use Cake\Datasource\FactoryLocator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Routing\Router;
+use App\Model\Entity\Cart;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -109,7 +111,7 @@ class OrderDetailsTable extends AppTable
             'PurchasePriceTaxRate' => 'OrderDetailPurchasePrices.tax_rate',
             'SumPurchasePriceGross' => $query->func()->sum('OrderDetailPurchasePrices.total_price_tax_incl'),
         ]);
-        $query->group([
+        $query->groupBy([
             'OrderDetails.product_name',
             'OrderDetailPurchasePrices.tax_rate',
             'OrderDetailUnits.unit_name',
@@ -197,7 +199,7 @@ class OrderDetailsTable extends AppTable
         $query->select([
             'SumAmount' => $query->func()->sum('OrderDetails.product_amount'),
         ]);
-        $query->group([
+        $query->groupBy([
             'OrderDetails.pickup_day',
             'OrderDetails.product_id',
             'OrderDetails.product_attribute_id',
@@ -241,7 +243,7 @@ class OrderDetailsTable extends AppTable
             $query->select([
                 'SumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             ]);
-            $query->group('OrderDetails.id_customer');
+            $query->groupBy('OrderDetails.id_customer');
             $result = $query->toArray();
 
             if (isset($result[0])) {
@@ -261,7 +263,7 @@ class OrderDetailsTable extends AppTable
             'Products.StockAvailables',
             'ProductAttributes.StockAvailables'
         ]);
-        $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
+        $query->where(['OrderDetails.order_state' => OrderDetail::STATE_OPEN]);
         $query->where(['IF(Manufacturers.include_stock_products_in_order_lists = 0, (Products.is_stock_product = 0 OR Manufacturers.stock_management_enabled = 0), 1)']);
 
         if ($customerCanSelectPickupDay) {
@@ -389,7 +391,7 @@ class OrderDetailsTable extends AppTable
         $query->select(
             ['orderDetailsCount' => $query->func()->count('OrderDetails.pickup_day')]
         );
-        $query->group('OrderDetails.pickup_day');
+        $query->groupBy('OrderDetails.pickup_day');
         return $query->toArray();
     }
 
@@ -432,7 +434,7 @@ class OrderDetailsTable extends AppTable
         $cartsAssociation = $this->getAssociation('CartProducts')->getAssociation('Carts');
         $cartsAssociation->setJoinType('INNER');
         $cartsAssociation->setConditions([
-            'Carts.cart_type' => CartsTable::CART_TYPE_WEEKLY_RHYTHM,
+            'Carts.cart_type' => Cart::TYPE_WEEKLY_RHYTHM,
             'Carts.status' => APP_OFF,
         ]);
 
@@ -520,30 +522,22 @@ class OrderDetailsTable extends AppTable
         return $orderDetails;
     }
 
-    /**
-     * @param int $manufacturerId
-     * @param $dateFrom
-     * @param $dateTo
-     * @return float
-     */
-    public function getOpenOrderDetailSum($manufacturerId, $dateFrom)
+    public function getOpenOrderDetailSum(int $manufacturerId, $dateFrom)
     {
-        $sql = 'SELECT SUM(od.total_price_tax_incl) as sumOrderDetail ';
-        $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
-        $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
-        $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND od.order_state NOT IN (' . ORDER_STATE_BILLED_CASHLESS.',' . ORDER_STATE_BILLED_CASH . ') ';
-        $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') = :dateFrom ';
-        $sql .= 'GROUP BY p.id_manufacturer ';
-        $params = [
-            'manufacturerId' => $manufacturerId,
-            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom)
-        ];
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+        $query = $this->find('all',
+        conditions: [
+            $productsTable->aliasField('id_manufacturer') => $manufacturerId,
+            $this->aliasField('order_state NOT IN') => [OrderDetail::STATE_BILLED_CASHLESS, OrderDetail::STATE_BILLED_CASH],
+            $this->aliasField('pickup_day') => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
+        ],
+        contain: ['Products']);
+        $query->select([
+            'sumOrderDetail' => $query->func()->sum($this->aliasField('total_price_tax_incl')),
+        ])
+        ->groupBy($productsTable->aliasField('id_manufacturer'));
 
-        $statement = $this->getConnection()->getDriver()->prepare($sql);
-        $statement->execute($params);
-        $orderDetails = $statement->fetchAll('assoc');
-
+        $orderDetails = $query->toArray();
         if (isset($orderDetails[0])) {
             return $orderDetails[0]['sumOrderDetail'];
         } else {
@@ -584,7 +578,7 @@ class OrderDetailsTable extends AppTable
     public function getMonthlySumProductByCustomer($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
-        $query->group('MonthAndYear');
+        $query->groupBy('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
@@ -615,7 +609,7 @@ class OrderDetailsTable extends AppTable
             });
         }
 
-        $query->group('MonthAndYear');
+        $query->groupBy('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')',
@@ -670,15 +664,21 @@ class OrderDetailsTable extends AppTable
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
-            $key = $orderDetail->product_id;
-            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
-            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
-            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
-            $preparedOrderDetails[$key]['product_id'] = $key;
-            $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
-            $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;
-            $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetail = [];
+            if (!empty($orderDetail->order_detail_unit)) {
+                $preparedOrderDetail['unit_name'] = $orderDetail->order_detail_unit->unit_name;
+            }
+            $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetail['sum_units'] = $orderDetail->sum_units;
+            $preparedOrderDetail['product_id'] = $orderDetail->product_id;
+            $preparedOrderDetail['name'] = $orderDetail->product->name;
+            $preparedOrderDetail['manufacturer_id'] = $orderDetail->product->id_manufacturer;
+            $preparedOrderDetail['manufacturer_name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetails[] = $preparedOrderDetail;
         }
+
         return $preparedOrderDetails;
     }
 
@@ -687,14 +687,15 @@ class OrderDetailsTable extends AppTable
         $preparedOrderDetails = [];
         $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         foreach ($orderDetails as $orderDetail) {
-            $key = $orderDetail->product->id_manufacturer;
-            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
-            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
-            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetail = [];
+            $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
-            $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
-            $preparedOrderDetails[$key]['manufacturer_id'] = $key;
-            $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetail['variable_member_fee'] = $variableMemberFee;
+            $preparedOrderDetail['manufacturer_id'] = $orderDetail->product->id_manufacturer;
+            $preparedOrderDetail['name'] = $orderDetail->product->manufacturer->name;
+            $preparedOrderDetails[] = $preparedOrderDetail;
         }
 
         foreach($preparedOrderDetails as &$pod) {
@@ -711,28 +712,29 @@ class OrderDetailsTable extends AppTable
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
-            $key = $orderDetail->id_customer;
-            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
-            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
-            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
-            $preparedOrderDetails[$key]['order_detail_count'] = $orderDetail->order_detail_count;
-            $preparedOrderDetails[$key]['customer_id'] = $key;
-            $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
-            $preparedOrderDetails[$key]['email'] = '';
+            $preparedOrderDetail = [];
+            $preparedOrderDetail['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetail['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetail['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetail['order_detail_count'] = $orderDetail->order_detail_count;
+            $preparedOrderDetail['customer_id'] = $orderDetail->id_customer;
+            $preparedOrderDetail['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+            $preparedOrderDetail['email'] = '';
             if ($orderDetail->customer) {
-                $preparedOrderDetails[$key]['email'] = $orderDetail->customer->email;
+                $preparedOrderDetail['email'] = $orderDetail->customer->email;
             }
             $productsPickedUp = false;
             if (!empty($orderDetail->pickup_day_entity)) {
-                $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
-                $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
+                $preparedOrderDetail['comment'] = $orderDetail->pickup_day_entity->comment;
+                $preparedOrderDetail['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
-            if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
+            if (isset($preparedOrderDetail['products_picked_up_tmp']) && $preparedOrderDetail['products_picked_up_tmp']) {
                 $productsPickedUp = true;
-                $preparedOrderDetails[$key]['row_class'] = ['selected'];
+                $preparedOrderDetail['row_class'] = ['selected'];
             }
-            $preparedOrderDetails[$key]['products_picked_up'] = $productsPickedUp;
-            unset($preparedOrderDetails[$key]['products_picked_up_tmp']);
+            $preparedOrderDetail['products_picked_up'] = $productsPickedUp;
+            unset($preparedOrderDetail['products_picked_up_tmp']);
+            $preparedOrderDetails[] = $preparedOrderDetail;
         }
 
         foreach($preparedOrderDetails as &$orderDetail) {
@@ -744,7 +746,7 @@ class OrderDetailsTable extends AppTable
     public function onInvoiceCancellation($orderDetails)
     {
         foreach($orderDetails as $orderDetail) {
-            $orderDetail->order_state = ORDER_STATE_ORDER_PLACED;
+            $orderDetail->order_state = OrderDetail::STATE_OPEN;
             $orderDetail->id_invoice = null;
             $this->save($orderDetail);
         }

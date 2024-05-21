@@ -57,8 +57,9 @@ class ManufacturersController extends FrontendController
             'Manufacturers.name' => 'ASC'
         ],
         contain: [
-            'AddressManufacturers'
-        ])->select($this->Manufacturer);
+            'AddressManufacturers',
+            'Customers',
+        ]);
 
         if (empty($manufacturers->toArray())) {
             throw new RecordNotFoundException('no manufacturers available');

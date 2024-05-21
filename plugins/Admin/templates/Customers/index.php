@@ -60,7 +60,11 @@ $paginator = $this->loadHelper('Paginator', [
                 }
             ?>
             <div class="right">
-                <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
+                <?php
+                    echo $this->element('customerList/moreDropdown', [
+                        'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members')),
+                    ]);
+                ?>
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
@@ -399,14 +403,6 @@ echo '</tr>';
 
 echo '</table>';
 
-echo '<div class="sc"></div>';
-
-echo '<div class="bottom-button-container">';
-    echo $this->element('copyEmailButton', [
-        'object' => 'customer',
-    ]);
-    echo $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
-echo '</div>';
 echo '<div class="sc"></div>';
 
 echo '<div class="hide">';

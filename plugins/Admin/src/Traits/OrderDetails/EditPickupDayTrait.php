@@ -6,6 +6,7 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Model\Table\PickupDaysTable;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +22,8 @@ use App\Model\Table\PickupDaysTable;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditPickupDayTrait {
+trait EditPickupDayTrait 
+{
 
     protected PickupDaysTable $PickupDay;
     
@@ -83,7 +85,7 @@ trait EditPickupDayTrait {
                 ];
 
                 if ($resetOrderState) {
-                    $data['order_state'] = ORDER_STATE_ORDER_PLACED;
+                    $data['order_state'] = OrderDetail::STATE_OPEN;
                 }
 
                 $entity = $this->OrderDetail->patchEntity($orderDetail, $data);

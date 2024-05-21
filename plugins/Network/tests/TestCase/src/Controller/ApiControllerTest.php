@@ -187,34 +187,33 @@ class ApiControllerTest extends AppCakeTestCase
         $response = json_decode($this->_response->getBody()->__toString());
 
         $this->assertEquals(4, $response->app->orders[0]->id);
-        $this->assertEquals(348, $response->app->orders[0]->product_id);
-        $this->assertEquals(11, $response->app->orders[0]->attribute_id);
-        $this->assertEquals('Rindfleisch', $response->app->orders[0]->name);
-        $this->assertEquals(3, $response->app->orders[0]->amount);
+        $this->assertEquals(103, $response->app->orders[0]->product_id);
+        $this->assertEquals(0, $response->app->orders[0]->attribute_id);
+        $this->assertEquals('Bratwürstel', $response->app->orders[0]->name);
+        $this->assertEquals(1, $response->app->orders[0]->amount);
         $this->assertEquals(3, $response->app->orders[0]->order_state);
-        $this->assertEquals('kg', $response->app->orders[0]->unit->name);
-        $this->assertEquals(1.500, $response->app->orders[0]->unit->product_quantity_in_units);
-        $this->assertEquals(false, $response->app->orders[0]->unit->mark_as_saved);
+        $this->assertFalse(isset($response->app->orders[0]->unit));
 
         $this->assertEquals(5, $response->app->orders[1]->id);
-        $this->assertEquals(347, $response->app->orders[1]->product_id);
-        $this->assertEquals(0, $response->app->orders[1]->attribute_id);
-        $this->assertEquals('Forelle : Stück', $response->app->orders[1]->name);
-        $this->assertEquals(2, $response->app->orders[1]->amount);
+        $this->assertEquals(348, $response->app->orders[1]->product_id);
+        $this->assertEquals(11, $response->app->orders[1]->attribute_id);
+        $this->assertEquals('Rindfleisch', $response->app->orders[1]->name);
+        $this->assertEquals(3, $response->app->orders[1]->amount);
         $this->assertEquals(3, $response->app->orders[1]->order_state);
-        $this->assertEquals('g', $response->app->orders[1]->unit->name);
-        $this->assertEquals(700, $response->app->orders[1]->unit->product_quantity_in_units);
+        $this->assertEquals('kg', $response->app->orders[1]->unit->name);
+        $this->assertEquals(1.500, $response->app->orders[1]->unit->product_quantity_in_units);
         $this->assertEquals(false, $response->app->orders[1]->unit->mark_as_saved);
 
         $this->assertEquals(6, $response->app->orders[2]->id);
-        $this->assertEquals(103, $response->app->orders[2]->product_id);
+        $this->assertEquals(347, $response->app->orders[2]->product_id);
         $this->assertEquals(0, $response->app->orders[2]->attribute_id);
-        $this->assertEquals('Bratwürstel', $response->app->orders[2]->name);
-        $this->assertEquals(1, $response->app->orders[2]->amount);
+        $this->assertEquals('Forelle : Stück', $response->app->orders[2]->name);
+        $this->assertEquals(2, $response->app->orders[2]->amount);
         $this->assertEquals(3, $response->app->orders[2]->order_state);
-        $this->assertFalse(isset($response->app->orders[2]->unit));
-
-
+        $this->assertEquals('g', $response->app->orders[2]->unit->name);
+        $this->assertEquals(700, $response->app->orders[2]->unit->product_quantity_in_units);
+        $this->assertEquals(false, $response->app->orders[2]->unit->mark_as_saved);
+        
     }
 
 }

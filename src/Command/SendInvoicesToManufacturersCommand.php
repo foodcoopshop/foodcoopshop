@@ -22,6 +22,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\I18n\DateTime;
+use App\Model\Entity\OrderDetail;
 
 class SendInvoicesToManufacturersCommand extends AppCommand
 {
@@ -68,8 +69,8 @@ class SendInvoicesToManufacturersCommand extends AppCommand
             $exp->lte('DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\')', Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo));
             // order_state condition necessary for switch from OrderDetails.created to OrderDetails.pickup_day
             $notAllowedOrderStates = [
-                ORDER_STATE_BILLED_CASH,
-                ORDER_STATE_BILLED_CASHLESS,
+                OrderDetail::STATE_BILLED_CASH,
+                OrderDetail::STATE_BILLED_CASHLESS,
             ];
             $exp->notIn('OrderDetails.order_state', $notAllowedOrderStates);
             return $exp;
@@ -181,7 +182,7 @@ class SendInvoicesToManufacturersCommand extends AppCommand
                 }
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $tableData .= '<tr>';
-                $tableData .= '<td>' . html_entity_decode($manufacturer->name) . '</td>';
+                $tableData .= '<td>' . $manufacturer->decoded_name . '</td>';
                 $tableData .= '<td>' . $manufacturer->invoiceNumber . '</td>';
                 $tableData .= '<td>' . ($sendInvoice ? '<i class="fas fa-envelope not-ok" data-identifier="send-invoice-'.$identifier.'"></i>' : '') . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';

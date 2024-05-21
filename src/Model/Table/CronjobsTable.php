@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\DateTime;
+use App\Command\CronCommandFactory;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -277,11 +278,13 @@ class CronjobsTable extends AppTable
 
     private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject)
     {
-        $commandName = $cronjob->getOriginalValues()['name'] . 'Command';
-        if (!file_exists(ROOT . DS . 'src' . DS . 'Command' . DS . $commandName . '.php')) {
+        $commandName = $cronjob->getOriginalValues()['name'];
+
+        $commandClass = CronCommandFactory::get($commandName);
+        if (!class_exists($commandClass)) {
             throw new \Exception('command not found: ' . $commandName);
         }
-        $commandClass = '\\App\\Command\\' . $commandName;
+
         $command = new $commandClass();
 
         $databasePreparedCronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(

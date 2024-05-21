@@ -45,6 +45,7 @@ class ProductsPolicy implements RequestPolicyInterface
                 return Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') && ($identity->isSuperadmin() || $identity->isAdmin());
                 break;
             case 'import':
+            case 'export':
                 return $identity->isSuperadmin() || $identity->isAdmin();
                 break;
             case 'editPrice':

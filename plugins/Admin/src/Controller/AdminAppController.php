@@ -5,6 +5,7 @@ namespace Admin\Controller;
 
 use App\Controller\AppController;
 use App\Model\Table\ActionLogsTable;
+use Cake\Event\EventInterface;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,6 +26,15 @@ class AdminAppController extends AppController
 
     protected ActionLogsTable $ActionLog;
 
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        if (!$this->formProtectionEnabled) {
+            $this->loadComponent('FormProtection');
+            $this->FormProtection->setConfig('validate', false);
+        }
+    }
+    
     public function setReferer()
     {
         $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());

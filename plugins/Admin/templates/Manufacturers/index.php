@@ -38,7 +38,7 @@ use Cake\Datasource\FactoryLocator;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo __d('admin', 'Pickup_days') . ': ' .  $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
-            <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStatesOnOff(), 'default' => isset($active) ? $active : '']); ?>
+            <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             <div class="right">
                 <?php
                 if (Configure::read('app.showManufacturerListAndDetailPage') || count($manufacturers) == 0) {
@@ -49,7 +49,9 @@ use Cake\Datasource\FactoryLocator;
                     ]);
                     echo '</div>';
                 }
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]);
+                echo $this->element('manufacturerList/moreDropdown', [
+                    'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')),
+                ]);
                 ?>
             </div>
         <?php echo $this->Form->end(); ?>
@@ -386,13 +388,6 @@ echo '<td></td>';
 
 echo '</tr>';
 echo '</table>';
-echo '<div class="sc"></div>';
-
-echo '<div class="bottom-button-container">';
-    echo $this->element('copyEmailButton', [
-        'object' => 'manufacturer',
-    ]);
-echo '</div>';
 echo '<div class="sc"></div>';
 
 ?>

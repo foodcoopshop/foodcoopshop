@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\Datasource\FactoryLocator;
 use App\Services\OrderCustomerService;
+use App\Model\Entity\Cart;
 use ArrayAccess;
 
 /**
@@ -29,6 +30,11 @@ class Customer extends Entity implements IdentityInterface
     public $cart = null;
     protected array $_virtual = ['name', 'manufacturer'];
     protected array $_hidden = ['passwd'];
+
+    const GROUP_SELF_SERVICE_CUSTOMER = 2;
+    const GROUP_MEMBER = 3;
+    const GROUP_ADMIN = 4;
+    const GROUP_SUPERADMIN = 5;
 
     const SELLING_PRICE = 'SP';
     const PURCHASE_PRICE = 'PP';
@@ -86,6 +92,11 @@ class Customer extends Entity implements IdentityInterface
         return $name;
     }
 
+    protected function _getDecodedName()
+    {
+        return html_entity_decode($this->name);
+    }
+
     public function termsOfUseAccepted(): bool
     {
         $formattedAcceptedDate = $this->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database'));
@@ -97,7 +108,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->id_default_group == CUSTOMER_GROUP_SUPERADMIN) {
+        if ($this->id_default_group == self::GROUP_SUPERADMIN) {
             return true;
         }
         return false;
@@ -208,7 +219,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->getGroupId() == CUSTOMER_GROUP_ADMIN) {
+        if ($this->getGroupId() == self::GROUP_ADMIN) {
             return true;
         }
         return false;
@@ -220,8 +231,8 @@ class Customer extends Entity implements IdentityInterface
             return false;
         }
         if (in_array($this->getGroupId(), [
-            CUSTOMER_GROUP_MEMBER,
-            CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER,
+            self::GROUP_MEMBER,
+            self::GROUP_SELF_SERVICE_CUSTOMER,
             ])
         ) {
             return true;
@@ -234,7 +245,7 @@ class Customer extends Entity implements IdentityInterface
         if ($this->isManufacturer()) {
             return false;
         }
-        if ($this->getGroupId() == CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER) {
+        if ($this->getGroupId() == self::GROUP_SELF_SERVICE_CUSTOMER) {
             return true;
         }
         return false;
@@ -248,15 +259,13 @@ class Customer extends Entity implements IdentityInterface
 
     public function getCartType()
     {
-        $cartsTable = FactoryLocator::get('Table')->get('Carts');
-        $cartType = $cartsTable::CART_TYPE_WEEKLY_RHYTHM;
-
+        $cartType = Cart::TYPE_WEEKLY_RHYTHM;
         $orderCustomerService = new OrderCustomerService();
         if ($orderCustomerService->isOrderForDifferentCustomerMode()) {
-            $cartType = $cartsTable::CART_TYPE_INSTANT_ORDER;
+            $cartType = Cart::TYPE_INSTANT_ORDER;
         }
         if ($orderCustomerService->isSelfServiceModeByUrl() || $orderCustomerService->isSelfServiceModeByReferer()) {
-            $cartType = $cartsTable::CART_TYPE_SELF_SERVICE;
+            $cartType = Cart::TYPE_SELF_SERVICE;
         }
         return $cartType;
     }

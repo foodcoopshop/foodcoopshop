@@ -54,10 +54,9 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
         $lastOrderDay = (new DeliveryRhythmService())->getLastOrderDay(
             $product->next_delivery_day,
             $product->delivery_rhythm_type,
-            $product->delivery_rhythm_count,
             $product->delivery_rhythm_send_order_list_weekday,
             $product->delivery_rhythm_order_possible_until,
-            );
+        );
 
         if (!($product->delivery_rhythm_type == 'week'
             && $product->delivery_rhythm_count == 1

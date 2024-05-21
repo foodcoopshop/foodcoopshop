@@ -42,7 +42,7 @@ $paginator = $this->loadHelper('Paginator', [
             Configure::read('app.jsNamespace') . ".ModalProductAttributeAdd.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeSetDefault.init();" .
-            Configure::read('app.jsNamespace') . ".ModalProductPriceEdit.init(".Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled').", " . !$identity->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace') . ".ModalProductPriceEdit.init(".(Configure::read('app.changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled') === true ? 1 : 0).", " . !$identity->isManufacturer() . ");" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button, .purchase-price-not-set-info-text');".
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ((int) $manufacturerId > 0 ? $manufacturerId : '0') . ");".
             Configure::read('app.jsNamespace') . ".ModalProductDeliveryRhythmEdit.init();
@@ -107,8 +107,6 @@ $paginator = $this->loadHelper('Paginator', [
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
-            <?php echo $this->Form->control('isQuantityMinFilterSet', ['type'=>'checkbox', 'label' => __d('admin', 'amount') . ' < 3', 'checked' => $isQuantityMinFilterSet]);?>
-            <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' => __d('admin', 'price') . ' = 0', 'checked' => $isPriceZero]);?>
 
             <div class="right">
                 <?php
@@ -142,7 +140,7 @@ $paginator = $this->loadHelper('Paginator', [
                     echo '</div>';
                 }
 
-                echo $this->element('productList/selectedProductsDropdown', [
+                echo $this->element('productList/moreDropdown', [
                     'helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products')),
                     'manufacturerId' => $manufacturerId,
                 ]);

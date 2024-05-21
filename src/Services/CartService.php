@@ -25,6 +25,8 @@ use App\Model\Table\ProductsTable;
 use Cake\Routing\Router;
 use Cake\I18n\Date;
 use App\Model\Entity\Customer;
+use App\Model\Entity\Cart;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -115,14 +117,14 @@ class CartService
 
         $orderCustomerService = new OrderCustomerService();
         switch($cartType) {
-            case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
+            case Cart::TYPE_WEEKLY_RHYTHM;
                 $actionLogType = 'customer_order_finished';
                 $message = __('Your_order_has_been_placed_succesfully.');
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->identity->name, Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum())]);
                 $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
                 $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
                 break;
-            case $this->Cart::CART_TYPE_INSTANT_ORDER;
+            case Cart::TYPE_INSTANT_ORDER;
                 $actionLogType = 'instant_order_added';
                 $userIdForActionLog = $this->request->getSession()->read('OriginalIdentity')['id_customer'];
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
@@ -144,7 +146,7 @@ class CartService
                     $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                 }
                 break;
-            case $this->Cart::CART_TYPE_SELF_SERVICE;
+            case Cart::TYPE_SELF_SERVICE;
 
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && Configure::read('app.selfServiceModeAutoGenerateInvoice')) {
                     $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
@@ -412,7 +414,7 @@ class CartService
                 'tax_unit_amount' => $cartProduct['taxPerPiece'],
                 'tax_total_amount' => $cartProduct['tax'],
                 'tax_rate' => $product->tax->rate ?? 0,
-                'order_state' => ORDER_STATE_ORDER_PLACED,
+                'order_state' => OrderDetail::STATE_OPEN,
                 'id_customer' => $this->identity->getId(),
                 'id_cart_product' => $cartProduct['cartProductId'],
                 'pickup_day' => $cartProduct['pickupDay'],
@@ -498,7 +500,7 @@ class CartService
             $options['validate'] = 'customerCanSelectPickupDay';
         }
 
-        if ($this->identity->getCartType() == $this->Cart::CART_TYPE_SELF_SERVICE
+        if ($this->identity->getCartType() == Cart::TYPE_SELF_SERVICE
             && $orderCustomerService->isOrderForDifferentCustomerMode()) {
             $options['validate'] = 'selfServiceForDifferentCustomer';
         }

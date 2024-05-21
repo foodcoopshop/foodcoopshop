@@ -138,16 +138,14 @@ class InvoicesTable extends AppTable
                     $taxRatesSums[$trt]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
                 }
 
-                /** @phpstan-ignore-next-line */
-                $taxRates[$trt][$taxRate]['sum_price_excl'] = round($taxRates[$trt][$taxRate]['sum_price_excl'], 2);
-                /** @phpstan-ignore-next-line */
-                $taxRates[$trt][$taxRate]['sum_tax'] = round($taxRates[$trt][$taxRate]['sum_tax'], 2);
-                /** @phpstan-ignore-next-line */
-                $taxRates[$trt][$taxRate]['sum_price_incl'] = round($taxRates[$trt][$taxRate]['sum_price_incl'], 2);
-                $taxRatesSums[$trt]['sum_price_excl'] = round($taxRatesSums[$trt]['sum_price_excl'], 2);
-                $taxRatesSums[$trt]['sum_tax'] = round($taxRatesSums[$trt]['sum_tax'], 2);
-                $taxRatesSums[$trt]['sum_price_incl'] = round($taxRatesSums[$trt]['sum_price_incl'], 2);
-
+                if (isset($taxRate) && isset($taxRates[$trt][$taxRate])) {
+                    $taxRates[$trt][$taxRate]['sum_price_excl'] = round($taxRates[$trt][$taxRate]['sum_price_excl'], 2);
+                    $taxRates[$trt][$taxRate]['sum_tax'] = round($taxRates[$trt][$taxRate]['sum_tax'], 2);
+                    $taxRates[$trt][$taxRate]['sum_price_incl'] = round($taxRates[$trt][$taxRate]['sum_price_incl'], 2);
+                    $taxRatesSums[$trt]['sum_price_excl'] = round($taxRatesSums[$trt]['sum_price_excl'], 2);
+                    $taxRatesSums[$trt]['sum_tax'] = round($taxRatesSums[$trt]['sum_tax'], 2);
+                    $taxRatesSums[$trt]['sum_price_incl'] = round($taxRatesSums[$trt]['sum_price_incl'], 2);
+                }
             }
         }
 

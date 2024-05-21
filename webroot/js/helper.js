@@ -34,6 +34,36 @@ foodcoopshop.Helper = {
         }
     },
 
+    // https://stackoverflow.com/questions/2367979/pass-post-data-with-window-location-href
+    postFormInNewWindow: function(path, params, method) {
+        method = method || 'post';
+    
+        var form = document.createElement('form');
+        form.setAttribute('method', method);
+        form.setAttribute('action', path);
+        form.setAttribute('target', '_blank');
+    
+        var csrfToken = $('meta[name="csrfToken"]').attr('content');
+        var csrfTokenHiddenField = document.createElement('input');
+        csrfTokenHiddenField.setAttribute('type', 'hidden');
+        csrfTokenHiddenField.setAttribute('name', '_csrfToken');
+        csrfTokenHiddenField.setAttribute('value', csrfToken);
+        form.appendChild(csrfTokenHiddenField);
+
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement('input');
+                hiddenField.setAttribute('type', 'hidden');
+                hiddenField.setAttribute('name', key);
+                hiddenField.setAttribute('value', params[key]);
+                form.appendChild(hiddenField);
+            }
+        }
+    
+        document.body.appendChild(form);
+        form.submit();
+    },
+
     // https://github.com/Studio-42/elFinder/issues/2905#issuecomment-487106097
     copyToClipboard: function(string) {
 
@@ -50,7 +80,7 @@ foodcoopshop.Helper = {
         document.body.appendChild(temp);
         temp.focus();
         var result = document.execCommand('copy');
-        
+
         temp.blur();
         document.body.removeChild(temp);
 
@@ -86,7 +116,7 @@ foodcoopshop.Helper = {
             'a.open-with-modal',
             'a.color-mode-toggle',
             'button.dropdown-toggle',
-            '#product-search button',
+            '.product-search-form-wrapper button',
             '.modal-content button',
             '.modal-content a',
             '#flashMessage a',
@@ -417,7 +447,7 @@ foodcoopshop.Helper = {
     },
 
     initSearchForm: function () {
-        $('#product-search button[type="submit"]').on('click', function () {
+        $('.product-search-form-wrapper form button[type="submit"]').on('click', function () {
             var form = $(this).closest('form');
             if (form.find('input').val() != '') {
                 foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
@@ -425,7 +455,8 @@ foodcoopshop.Helper = {
                 form.submit();
             }
         });
-        $('#product-search a.btn').on('click', function () {
+        $('.product-search-form-wrapper a.btn').on('click', function () {
+            console.log('click');
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-backspace');
             foodcoopshop.Helper.disableButton($(this));
         });
@@ -774,7 +805,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-v3.6.jpg',
+            '/img/bg-v4.0.jpg',
             {
                 positionY: 'top',
                 transitionDuration: 400

@@ -19,7 +19,8 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditProductsPickedUpTrait {
+trait EditProductsPickedUpTrait 
+{
 
     public function editProductsPickedUp()
     {

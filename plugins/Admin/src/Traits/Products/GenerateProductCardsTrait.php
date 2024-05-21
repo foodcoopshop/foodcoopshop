@@ -20,11 +20,12 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait GenerateProductCardsTrait {
+trait GenerateProductCardsTrait
+{
 
     public function generateProductCards()
     {
-        $productIds = h($this->getRequest()->getQuery('productIds'));
+        $productIds = h($this->getRequest()->getData('productIds'));
         if ($productIds == '') {
             throw new \Exception('no product ids passed');
         }
@@ -32,7 +33,11 @@ trait GenerateProductCardsTrait {
         $productIds = explode(',', $productIds);
 
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend($productIds, 'all', 'all', '', false, false, true);
+        $products = $this->Product->getProductsForBackend(
+            productIds: $productIds,
+            manufacturerId: 'all',
+            addProductNameToAttributes: true,
+        );
 
         $preparedProducts = [];
         foreach($products as &$product) {
@@ -48,11 +53,11 @@ trait GenerateProductCardsTrait {
             $price = Configure::read('app.numberHelper')->formatAsCurrency($product->gross_price);
             if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                 $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
-                if (!preg_match('/main-product/', $product->row_class)) {
+                if (!$this->Product->isMainProduct($product)) {
                     $product->name = $product->nameForBarcodePdf;
-               }
+                }
             }
-            if (preg_match('/main-product/', $product->row_class)) {
+            if (!$this->Product->isMainProduct($product)) {
                 $product->system_bar_code .= '0000';
             }
             $product->prepared_price = $price;

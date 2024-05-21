@@ -131,6 +131,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendInstantOrderNotification = 0;
         $newDefaultTaxId = 3;
         $newDefaultTaxIdPurchasePrice = 3;
+        $newStatus = APP_OFF;
 
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
@@ -174,6 +175,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     // althouth the following property is not tested, it needs to be included in the request to avoid
                     // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
                     'send_ordered_product_deleted_notification' => 1,
+                    'active' => $newStatus,
                 ],
                 'referer' => '/'
             ]
@@ -182,7 +184,10 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $manufacturerNew = $this->Manufacturer->find('all',
             conditions: [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
+            ],
+            contain: [
+                'AddressManufacturers'
+            ],
         )->first();
 
         $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturerNew->send_order_list);
@@ -205,6 +210,10 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturerNew->default_tax_id);
         $this->assertEquals($defaultTaxId, $newDefaultTaxId, 'saving option default_tax_id failed');
+
+        $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturerNew->address_manufacturer->email);
+        $this->assertEquals($newStatus, $customerRecord->active);
+        $this->assertEquals($newStatus, $manufacturerNew->active);
 
         $this->logout();
     }

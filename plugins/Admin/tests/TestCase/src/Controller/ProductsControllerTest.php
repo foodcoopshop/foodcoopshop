@@ -20,6 +20,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\Datasource\FactoryLocator;
+use App\Model\Entity\OrderDetail;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
@@ -35,6 +36,18 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->Product = $this->getTableLocator()->get('Products');
+    }
+
+    public function testExportProducts() {
+        $this->loginAsSuperadmin();
+        $this->post('/admin/products/export', [
+            'productIds' => '351',
+        ]);
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Einheit;Anzahl;Mindestlagerstand;"Verkaufspreis brutto";"Preis pro";Lagerwert');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;ca. 1 kg;999;;15,000000;"1 kg";14.985,00');
+        $this->assertResponseContains(';;;;;;;;14.985,00');
     }
 
     public function testEditProductStatus()
@@ -183,7 +196,7 @@ class ProductsControllerTest extends AppCakeTestCase
             $orderDetailsTable->patchEntity(
                 $orderDetailsTable->get(1),
                 [
-                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                    'order_state' => OrderDetail::STATE_BILLED_CASHLESS,
                 ]
             )
         );
@@ -246,7 +259,7 @@ class ProductsControllerTest extends AppCakeTestCase
             $orderDetailsTable->patchEntity(
                 $orderDetailsTable->get(5),
                 [
-                    'order_state' => ORDER_STATE_BILLED_CASHLESS,
+                    'order_state' => OrderDetail::STATE_BILLED_CASHLESS,
                 ]
             )
         );

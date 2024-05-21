@@ -19,7 +19,8 @@ use App\Mailer\AppMailer;
  * @link          https://www.foodcoopshop.com
  */
 
-trait AddFeedbackTrait {
+trait AddFeedbackTrait 
+{
 
     public function addFeedback()
     {

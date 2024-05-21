@@ -13,6 +13,8 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Utility\Hash;
 use Cake\Routing\Router;
 use App\Model\Entity\Customer;
+use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -233,7 +235,10 @@ class CustomersTable extends AppTable
             (new QueryExpression())->in('ValidOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStateIds()),
         ]);
         $this->getAssociation('ActiveOrderDetails')->setConditions([
-            (new QueryExpression())->in('ActiveOrderDetails.order_state', [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]),
+            (new QueryExpression())->in('ActiveOrderDetails.order_state', [
+                OrderDetail::STATE_OPEN,
+                OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+            ]),
         ]);
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
             (new QueryExpression())->in('PaidCashlessOrderDetails.order_state', Configure::read('app.htmlHelper')->getOrderStatesCashless()),
@@ -256,10 +261,10 @@ class CustomersTable extends AppTable
         return $query->select(['CustomerNameForOrder' => $sql]);
     }
 
-    public function getCustomerOrderClause()
+    public function getCustomerOrderClause($direction)
     {
         $result = [
-            'CustomerNameForOrder' => 'ASC',
+            'CustomerNameForOrder' => $direction,
         ];
         return $result;
     }
@@ -478,7 +483,7 @@ class CustomersTable extends AppTable
             ],
         );
         $query->select('OrderDetails.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
-        $query->group('OrderDetails.id_customer');
+        $query->groupBy('OrderDetails.id_customer');
 
         $removedCustomerIds = [];
         foreach($query as $orderDetail) {
@@ -498,8 +503,8 @@ class CustomersTable extends AppTable
 
         $productBalanceSum = 0;
         foreach($customerIds as $customerId) {
-            $productPaymentSum = $paymentTable->getSum($customerId, 'product');
-            $paybackPaymentSum = $paymentTable->getSum($customerId, 'payback');
+            $productPaymentSum = $paymentTable->getSum($customerId, Payment::TYPE_PRODUCT);
+            $paybackPaymentSum = $paymentTable->getSum($customerId, Payment::TYPE_PAYBACK);
             $productOrderSum = $orderDetailTable->getSumProduct($customerId);
             $productBalance = $productPaymentSum - $paybackPaymentSum - $productOrderSum;
             $productBalanceSum += $productBalance;
@@ -523,7 +528,7 @@ class CustomersTable extends AppTable
             ],
         );
         $query->select('Payments.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
-        $query->group('Payments.id_customer');
+        $query->groupBy('Payments.id_customer');
 
         $removedCustomerIds = [];
         foreach($query as $payment) {
@@ -590,9 +595,9 @@ class CustomersTable extends AppTable
     {
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $payment = FactoryLocator::get('Table')->get('Payments');
-        $paymentProductSum = $payment->getSum($customerId, 'product');
-        $paybackProductSum = $payment->getSum($customerId, 'payback');
-        $paymentDepositSum = $payment->getSum($customerId, 'deposit');
+        $paymentProductSum = $payment->getSum($customerId, Payment::TYPE_PRODUCT);
+        $paybackProductSum = $payment->getSum($customerId, Payment::TYPE_PAYBACK);
+        $paymentDepositSum = $payment->getSum($customerId, Payment::TYPE_DEPOSIT);
 
         $productSum = $orderDetailTable->getSumProduct($customerId);
         $depositSum = $orderDetailTable->getSumDeposit($customerId);
@@ -616,7 +621,7 @@ class CustomersTable extends AppTable
 
         $customers = $this->find('all',
         conditions: $conditions,
-        order: $this->getCustomerOrderClause(),
+        order: $this->getCustomerOrderClause('ASC'),
         contain: $contain);
         $customers = $this->addCustomersNameForOrderSelect($customers);
         $customers->select($this);
@@ -649,7 +654,7 @@ class CustomersTable extends AppTable
             if ($includeManufacturers) {
                 $manufacturer = $this->getManufacturerRecord($customer);
                 if ($manufacturer) {
-                    $decodedManufacturerName = html_entity_decode($manufacturer->name);
+                    $decodedManufacturerName = $manufacturer->decoded_name;
                     if ($manufacturer->active) {
                         $onlineManufacturers[$customer->id_customer] = $decodedManufacturerName;
                     } else {

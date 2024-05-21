@@ -495,7 +495,13 @@ body.products.detail .pw.delivery-break-enabled .descriptions {
     text-align: center;
 }
 .manufacturer-wrapper div.c3 a.btn {
-    margin-top: 65px;
+    margin-top: 23px;
+}
+.manufacturer-wrapper div.c3 i {
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+    word-break: break-all;
 }
 .pw .ew {
     float: left;
@@ -834,6 +840,7 @@ body.carts #load-last-order-details,
     padding-top: 0;
 }
 #cart p.product-sum-wrapper,
+#cart b.amount-sum-wrapper,
 .cart p.deposit-sum-wrapper {
     display: none;
 }
@@ -845,17 +852,18 @@ body.carts #load-last-order-details,
 }
 .cart p.product-sum-wrapper span.sum,
 .cart p.deposit-sum-wrapper span.sum,
-.cart p.total-sum-wrapper span.sum,
+.cart p.total-sum-wrapper > span.sum,
 .cart b.payment {
     font-weight: 600;
     float: right;
-    margin-right: 20px;
+    margin-right: 23px;
 }
 .cart p.products span.product span.delete,
 .cart p.products span.product span.price {
     float: right;
 }
-.cart span.product-name {
+.cart span.product-name,
+.cart p.amount-sum-wrapper {
     margin-right: 3px;
 }
 .cart span.product-name-wrapper span.unity {
@@ -1016,6 +1024,10 @@ body.carts #CartsDetailForm {
 }
 .pagination-wrapper a {
     width: 32px;
+    padding: 4px 6px;
+}
+.pagination-wrapper span {
+    margin-top: 5px;
 }
 body.carts .cart:not(#cart) span.right .delete {
     margin-top: 0px;
@@ -1137,12 +1149,15 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
 .radio, .checkbox {
     position: static;
 }
-#product-search {
+.product-search-form-wrapper {
     position: absolute;
     top: 49px;
     left: 460px;
 }
-#product-search input {
+.product-search-form-wrapper form {
+    float: left;
+}
+.product-search-form-wrapper input {
     width: 190px;
     padding: 6px;
     background: #fbfbfb;
@@ -1150,14 +1165,14 @@ body.carts .cart:not(#cart) .btn-success.btn-order {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
 }
-#product-search .btn {
+.product-search-form-wrapper .btn {
     padding: 6px 10px;
     border-radius: 0;
     float: right;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
-#product-search a.btn {
+.product-search-form-wrapper a.btn {
     margin-left: 1px;
 }
 .blog-wrapper {

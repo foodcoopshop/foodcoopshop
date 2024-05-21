@@ -18,6 +18,7 @@ declare(strict_types=1);
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestEmailTransport;
+use App\Model\Entity\OrderDetail;
 
 class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTestCase
 {
@@ -52,7 +53,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertMailContainsHtmlAt(0, 'Alter Abholtag: Freitag, 02.02.2018');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailSubjectContainsAt(0, 'Der Abholtag deiner Bestellung wurde geändert auf: Freitag, 07.09.2018');
-        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, ORDER_STATE_ORDER_PLACED);
+        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_OPEN);
     }
 
     public function testEditPickupDayAsSuperadminOkIsSubscribeNewsletterLinkAddedToMail()
@@ -67,7 +68,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertJsonOk();
         $this->runAndAssertQueue();
         $this->assertMailContainsAt(0, 'Du kannst unseren Newsletter <a href="' . Configure::read('App.fullBaseUrl') . '/admin/customers/profile">im Admin-Bereich unter "Meine Daten"</a> abonnieren.');
-        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, ORDER_STATE_ORDER_PLACED);
+        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_OPEN);
     }
 
     public function testEditPickupDayAsSuperadminWithoutEmailsOk()
@@ -80,7 +81,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertJsonOk();
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
-        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, ORDER_STATE_ORDER_PLACED);
+        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_OPEN);
     }
 
     public function testEditPickupDayAsSuperadminWithoutResetOrderState()
@@ -95,7 +96,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
                 $this->OrderDetail->patchEntity(
                     $this->OrderDetail->get($orderDetailId),
                     [
-                        'order_state' => ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+                        'order_state' => OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
                     ]
                 )
             );
@@ -105,7 +106,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertJsonOk();
         $this->runAndAssertQueue();
         $this->assertMailCount(0);
-        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertChangedOrderDetails($orderDetailIds, $newPickupDay, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
     }
 
     public function testEditPickupDayAsSuperadminNoReasonEmailsOk()

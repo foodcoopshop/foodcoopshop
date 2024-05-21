@@ -379,7 +379,12 @@ class ApiController extends Controller
         $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
             $this->identity->getManufacturerVariableMemberFee()
         );
-        $preparedProducts = $this->Product->getProductsForBackend('', $this->identity->getManufacturerId(), 'all', '', false, false, true);
+        $preparedProducts = $this->Product->getProductsForBackend(
+            productIds: '',
+            manufacturerId: $this->identity->getManufacturerId(),
+            active: 'all',
+            addProductNameToAttributes: true,
+        );
 
         $this->set([
             'app' => [

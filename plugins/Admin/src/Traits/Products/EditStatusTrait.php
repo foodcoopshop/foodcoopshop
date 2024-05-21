@@ -20,7 +20,8 @@ use App\Services\SanitizeService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditStatusTrait {
+trait EditStatusTrait 
+{
 
     public function editStatusBulk()
     {

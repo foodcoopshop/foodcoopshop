@@ -5,6 +5,7 @@ namespace Admin\Traits\Products;
 
 use App\Model\Table\OrderDetailsTable;
 use Cake\I18n\DateTime;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,7 +21,8 @@ use Cake\I18n\DateTime;
  * @link          https://www.foodcoopshop.com
  */
 
-trait DeleteTrait {
+trait DeleteTrait 
+{
 
     protected OrderDetailsTable $OrderDetail;
 
@@ -48,7 +50,10 @@ trait DeleteTrait {
             $query = $this->OrderDetail->find('all',
                 conditions: [
                     'OrderDetails.product_id IN' => $productIds,
-                    'OrderDetails.order_state IN' => [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]
+                    'OrderDetails.order_state IN' => [
+                        OrderDetail::STATE_OPEN,
+                        OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+                    ],
                 ],
                 contain: [
                     'Products'
@@ -60,7 +65,7 @@ trait DeleteTrait {
                     'productName' => 'Products.name'
                 ]
             );
-            $query->group('OrderDetails.product_id');
+            $query->groupBy('OrderDetails.product_id');
 
             $errors = [];
             if ($query->count() > 0) {

@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
 use Cake\I18n\Date;
+use App\Model\Entity\OrderDetail;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -86,7 +87,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailId, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
         $this->assertMailCount(2);
 
@@ -118,9 +119,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState(2, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(1, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(2, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(3, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
         $this->assertMailCount(3);
 
@@ -150,9 +151,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState(2, ORDER_STATE_ORDER_PLACED);
-        $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(1, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(2, OrderDetail::STATE_OPEN);
+        $this->assertOrderDetailState(3, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
         $this->assertMailCount(2);
 
@@ -182,7 +183,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
+        $this->assertOrderDetailState($orderDetailId, OrderDetail::STATE_OPEN);
         $this->assertMailCount(0);
 
         // 2) change product send_order_list_weekday and run cronjob again
@@ -198,9 +199,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState(2, ORDER_STATE_ORDER_PLACED);
-        $this->assertOrderDetailState(3, ORDER_STATE_ORDER_PLACED);
+        $this->assertOrderDetailState($orderDetailId, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(2, OrderDetail::STATE_OPEN);
+        $this->assertOrderDetailState(3, OrderDetail::STATE_OPEN);
 
         $this->assertMailCount(1);
 
@@ -265,9 +266,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState($orderDetailIdIndividualDate, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState($orderDetailIdWeeklyA, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState($orderDetailIdWeeklyB, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailIdIndividualDate, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailIdWeeklyA, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailIdWeeklyB, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
         $this->assertMailCount(3);
 
@@ -312,7 +313,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
+        $this->assertOrderDetailState($orderDetailId, OrderDetail::STATE_OPEN);
         $this->assertMailCount(0);
     }
 
@@ -371,9 +372,9 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState(1, ORDER_STATE_ORDER_PLACED);
-        $this->assertOrderDetailState(2, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(1, OrderDetail::STATE_OPEN);
+        $this->assertOrderDetailState(2, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(3, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
     }
 
@@ -443,7 +444,7 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         $this->exec('send_order_lists ' . $cronjobRunDay);
         $this->runAndAssertQueue();
 
-        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailId, OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
         $this->assertMailCount(1);
         $this->assertMailSubjectContainsAt(0, 'Bestellungen für den 05.08.2020');

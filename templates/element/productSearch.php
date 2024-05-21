@@ -20,21 +20,29 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initSearchForm();"
 ]);
 ?>
-<form id="product-search" action="/<?php echo $action;?>">
-    <input placeholder="<?php echo $placeholder; ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
-    <?php
-        if ($includeCategoriesDropdown) {
+<div class="product-search-form-wrapper">
+    
+    <form id="product-search-1" action="/<?php echo $action;?>">
+        <input placeholder="<?php echo $placeholder; ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
+        <button type="submit" class="btn btn-success submit"><i class="fas fa-search"></i></button>
+    </form>
+
+    <?php if ($includeCategoriesDropdown) { ?>
+        <form id="product-search-2" class="product-search-form" action="/<?php echo $action;?>">
+        <?php
             echo $this->Form->control('categoryId', [
                 'type' => 'select',
                 'label' => '',
                 'empty' => __('chose_category...'),
                 'options' => $categoriesForSelect,
-                'default' => isset($categoryId) ? $categoryId : ''
+                'default' => isset($categoryId) ? $categoryId : '',
             ]);
-        }
-    ?>
-    <?php if (isset($keyword) || ($includeCategoriesDropdown && $categoryId > 0)) { ?>
+        ?>
+        </form>
+    <?php } ?>
+
+    <?php if ( (isset($keyword) && $keyword != '') || ($includeCategoriesDropdown && $categoryId > 0)) { ?>
         <a href="<?php echo $resetSearchUrl; ?>" class="btn btn-success do-not-change-to-target-blank reset" title="<?php echo __('Reset_search'); ?>"><i class="fas fa-backspace"></i></a>
     <?php } ?>
-    <button type="submit" class="btn btn-success submit"><i class="fas fa-search"></i></button>
-</form>
+
+</div>

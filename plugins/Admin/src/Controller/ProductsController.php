@@ -21,6 +21,7 @@ use Admin\Traits\Products\EditPurchasePriceTrait;
 use Admin\Traits\Products\EditQuantityTrait;
 use Admin\Traits\Products\EditStatusTrait;
 use Admin\Traits\Products\EditTaxTrait;
+use Admin\Traits\Products\ExportTrait;
 use Admin\Traits\Products\GenerateProductCardsTrait;
 use Admin\Traits\Products\GetProductsForDropdownTrait;
 use Admin\Traits\Products\ImportTrait;
@@ -68,6 +69,7 @@ class ProductsController extends AdminAppController
     use GetProductsForDropdownTrait;
     use IndexTrait;
     use ImportTrait;
+    use ExportTrait;
     use SaveUploadedImageTrait;
 
     protected ProductsTable $Product;
@@ -80,9 +82,20 @@ class ProductsController extends AdminAppController
     
     public function beforeFilter(EventInterface $event)
     {
-        parent::beforeFilter($event);
+        
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Product = $this->getTableLocator()->get('Products');
+
+        // needs to be set in beforeFilter and this method can't be overwritten in trait
+        if (in_array($this->getRequest()->getParam('action'), [
+                'export', 
+                'generateProductCards'
+            ])) {
+            $this->formProtectionEnabled = false;
+        }
+
+        parent::beforeFilter($event);
+
     }
 
 }

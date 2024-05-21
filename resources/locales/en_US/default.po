@@ -148,6 +148,9 @@ msgstr "Manufacturer"
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"
 
+msgid "Member_fee"
+msgstr "Member fee"
+
 msgid "Sent"
 msgstr "Sent"
 
@@ -267,6 +270,15 @@ msgstr "{0} created an account."
 
 msgid "Welcome"
 msgstr "Welcome"
+
+msgid "Register_date"
+msgstr "Register date"
+
+msgid "Last_pickup_day"
+msgstr "Last pickup day"
+
+msgid "Comment_abbreviation"
+msgstr "Comm."
 
 msgid "New_registration_{0}"
 msgstr "New registration {0}"
@@ -787,6 +799,9 @@ msgstr "Order period"
 msgid "An_existing_order_list_will_be_overwritten!"
 msgstr "An existing order list will be overwritten!"
 
+msgid "Group"
+msgstr "Group"
+
 msgid "Change_group_for"
 msgstr "Change group for"
 
@@ -865,6 +880,15 @@ msgstr "Please select..."
 
 msgid "all"
 msgstr "all"
+
+msgid "All"
+msgstr "All"
+
+msgid "Deposit_account"
+msgstr "Deposit account"
+
+msgid "Only_for_members"
+msgstr "Only for members"
 
 msgid "Add_product_feedback"
 msgstr "Write feedback to product"
@@ -953,6 +977,9 @@ msgstr "Change price"
 msgid "Price_per_unit"
 msgstr "Price per unit"
 
+msgid "Price_per"
+msgstr "Preis per"
+
 msgid "gross"
 msgstr "gross"
 
@@ -961,6 +988,9 @@ msgstr "Price per weight (for adapting the weight after delivery)"
 
 msgid "for"
 msgstr "for"
+
+msgid "Stock_value"
+msgstr "Stock value"
 
 msgid "approximate_delivery_weight_in_{0}_per_unit"
 msgstr "approximate delivery weight in {0} per unit"
@@ -2236,6 +2266,9 @@ msgstr "Profit"
 
 msgid "Payment_type_credit_upload"
 msgstr "Credit upload"
+
+msgid "Check_credit_reminder"
+msgstr "Check credit reminder"
 
 msgid "Payment_type_payback"
 msgstr "Payback"

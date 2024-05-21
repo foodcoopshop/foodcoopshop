@@ -17,7 +17,8 @@ namespace Admin\Traits\Products;
  * @link          https://www.foodcoopshop.com
  */
 
-trait AddProductAttributeTrait {
+trait AddProductAttributeTrait 
+{
 
     public function addProductAttribute($productId, $productAttributeId)
     {

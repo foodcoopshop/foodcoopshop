@@ -22,6 +22,7 @@ use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use App\Model\Entity\OrderDetail;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -210,10 +211,26 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $barcodeForProduct = '2345678901234';
+        $barcodeForProduct = '2145678901234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
+    }
+
+    public function testSearchByCustomProductBarcodeWithWeight()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = '2712345600235';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
+    }
+
+    public function testSearchByCustomProductAttributeBarcodeWithWeight()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $barcodeForProduct = '2112345601234';
+        $this->get($this->Slug->getSelfService($barcodeForProduct));
     }
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
@@ -286,7 +303,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         foreach($cart->cart_products as $cartProduct) {
             $orderDetail = $cartProduct->order_detail;
-            $this->assertEquals($orderDetail->order_state, ORDER_STATE_BILLED_CASHLESS);
+            $this->assertEquals($orderDetail->order_state, OrderDetail::STATE_BILLED_CASHLESS);
         }
 
         $this->assertMailCount(1);
@@ -306,7 +323,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
 
-        // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
+        // add a product to the "normal" cart (Cart::TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
         $this->addProductToCart(346, 5);
         $this->logout();

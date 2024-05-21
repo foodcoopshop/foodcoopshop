@@ -19,6 +19,7 @@
     --dark-mode-2nd-font-color: #f4f0ec;;
     --dark-mode-main-border-color: #696969;
     --not-ok-red: #dc143c;
+    --warning-yellow: #FDB813;
 }
 
 @media print {
@@ -37,7 +38,7 @@ img, iframe {
 }
 input[type="radio"],
 input[type="checkbox"] {
-    accent-color: var(--theme-color);
+    accent-color: grey;
 }
 a {
     color: #333;
@@ -681,7 +682,7 @@ tr.selected > td > div > i.far, table:not(.no-hover) tr:hover > td > div > i.far
     color: #fff ! important;
 }
 .dropdown .dropdown-menu {
-    font-size: 15px;
+    font-size: 14px;
 }
 .dropdown .dropdown-menu i {
     margin-right: 3px;

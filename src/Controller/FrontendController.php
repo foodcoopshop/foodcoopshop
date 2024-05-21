@@ -9,6 +9,7 @@ use App\Services\CatalogService;
 use App\Services\OrderCustomerService;
 use Cake\Routing\Router;
 use Cake\Cache\Cache;
+use App\Model\Entity\Cart;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -171,7 +172,7 @@ class FrontendController extends AppController
             $this->set('shoppingPrice', $this->identity->shopping_price);
 
             $cartsTable = $this->getTableLocator()->get('Carts');
-            $this->set('paymentType', $this->identity->isSelfServiceCustomer() ? $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CASH : $cartsTable::CART_SELF_SERVICE_PAYMENT_TYPE_CREDIT);
+            $this->set('paymentType', $this->identity->isSelfServiceCustomer() ? Cart::SELF_SERVICE_PAYMENT_TYPE_CASH : Cart::SELF_SERVICE_PAYMENT_TYPE_CREDIT);
 
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->identity->getId());

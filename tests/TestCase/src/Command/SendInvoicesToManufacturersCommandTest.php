@@ -20,6 +20,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use App\Model\Entity\OrderDetail;
 
 class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 {
@@ -66,9 +67,9 @@ class SendInvoicesToManufacturersCommandTest extends AppCakeTestCase
 
         $orderDetails = $this->OrderDetail->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
-            $expectedOrderState = ORDER_STATE_BILLED_CASHLESS;
+            $expectedOrderState = OrderDetail::STATE_BILLED_CASHLESS;
             if ($orderDetail->id_order_detail == 4) {
-                $expectedOrderState = ORDER_STATE_ORDER_PLACED;
+                $expectedOrderState = OrderDetail::STATE_OPEN;
             }
             $this->assertEquals($orderDetail->order_state, $expectedOrderState);
         }

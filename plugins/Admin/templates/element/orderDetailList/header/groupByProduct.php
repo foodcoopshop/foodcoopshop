@@ -42,4 +42,9 @@ if (Configure::read('app.isDepositEnabled')) {
         echo $paginator->sort('sum_deposit', __d('admin', 'Deposit'));
     echo '</th>';
 }
+
+echo '<th class="right">';
+    echo $paginator->sort('sum_units', __d('admin', 'Weight'));
+echo '</th>';
+
 ?>

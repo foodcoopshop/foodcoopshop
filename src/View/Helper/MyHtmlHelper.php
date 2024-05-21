@@ -4,16 +4,17 @@ declare(strict_types=1);
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
 use App\Services\DeliveryRhythmService;
 use App\Services\OutputFilter\OutputFilterService;
-use App\Model\Table\CartsTable;
 use App\Services\OrderCustomerService;
 use App\Model\Entity\Customer;
+use App\Model\Entity\Cart;
+use App\Model\Entity\OrderDetail;
+use App\Model\Entity\Payment;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,11 +43,11 @@ class MyHtmlHelper extends HtmlHelper
     public function getCartTypes()
     {
         $cartTypes = [
-            CartsTable::CART_TYPE_WEEKLY_RHYTHM => __('cart_type_weekly_rhythm'),
-            CartsTable::CART_TYPE_INSTANT_ORDER => __('cart_type_instant_order'),
+            Cart::TYPE_WEEKLY_RHYTHM => __('cart_type_weekly_rhythm'),
+            Cart::TYPE_INSTANT_ORDER => __('cart_type_instant_order'),
         ];
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-            $cartTypes[CartsTable::CART_TYPE_SELF_SERVICE] = __('cart_type_self_service');
+            $cartTypes[Cart::TYPE_SELF_SERVICE] = __('cart_type_self_service');
         }
         return $cartTypes;
     }
@@ -199,9 +200,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStateFontawesomeIcon($orderState)
     {
         return match($orderState) {
-            ORDER_STATE_ORDER_PLACED => 'fas fa-cart-arrow-down ok',
-            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER => 'far fa-envelope ok',
-            ORDER_STATE_BILLED_CASHLESS, ORDER_STATE_BILLED_CASH => 'fa fa-lock not-ok',
+            OrderDetail::STATE_OPEN => 'fas fa-cart-arrow-down ok',
+            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER => 'far fa-envelope ok',
+            OrderDetail::STATE_BILLED_CASHLESS, OrderDetail::STATE_BILLED_CASH => 'fa fa-lock not-ok',
             default => '',
         };
     }
@@ -257,20 +258,11 @@ class MyHtmlHelper extends HtmlHelper
     }
 
     /**
-     * so far software documentation only exists in DE
-     * @param string $page
-     * @return string
+     * software documentation only exists in DE
      */
-    public function getDocsUrl($page, $languageCode=null)
+    public function getDocsUrl(string $page): string
     {
-        if (is_null($languageCode)) {
-            $languageCode = substr(I18n::getLocale(), 0, 2);
-        }
-        $url = 'https://foodcoopshop.github.io/' . $languageCode . '/';
-        if ($languageCode == 'de' || $page == 'settings') {
-            $url .= $page;
-        }
-        return $url;
+        return 'https://foodcoopshop.github.io/' . $page;
     }
 
     public function getNameRespectingIsDeleted($customer)
@@ -497,9 +489,9 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderStateBilled()
     {
-        $billedOrderState = ORDER_STATE_BILLED_CASH;
+        $billedOrderState = OrderDetail::STATE_BILLED_CASH;
         if ($this->paymentIsCashless()) {
-            $billedOrderState = ORDER_STATE_BILLED_CASHLESS;
+            $billedOrderState = OrderDetail::STATE_BILLED_CASHLESS;
         }
         return $billedOrderState;
     }
@@ -534,11 +526,11 @@ class MyHtmlHelper extends HtmlHelper
     {
         $groups = [];
         if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-            $groups[CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER] = __('Self_service_customer');
+            $groups[Customer::GROUP_SELF_SERVICE_CUSTOMER] = __('Self_service_customer');
         }
-        $groups[CUSTOMER_GROUP_MEMBER] = __('Member');
-        $groups[CUSTOMER_GROUP_ADMIN] = __('Admin');
-        $groups[CUSTOMER_GROUP_SUPERADMIN] = __('Superadmin');
+        $groups[Customer::GROUP_MEMBER] = __('Member');
+        $groups[Customer::GROUP_ADMIN] = __('Admin');
+        $groups[Customer::GROUP_SUPERADMIN] = __('Superadmin');
         return $groups;
     }
 
@@ -619,9 +611,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getPaymentTexts()
     {
         $paymentTexts = [
-            'product' => __('Payment_type_credit_upload'),
-            'payback' => __('Payment_type_payback'),
-            'deposit' => __('Payment_type_deposit_return'),
+            Payment::TYPE_PRODUCT => __('Payment_type_credit_upload'),
+            Payment::TYPE_PAYBACK => __('Payment_type_payback'),
+            Payment::TYPE_DEPOSIT => __('Payment_type_deposit_return'),
         ];
         return $paymentTexts;
     }
@@ -631,11 +623,11 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getPaymentTexts()[$paymentType];
     }
 
-    public function getSuperadminProductPaymentTexts($identity)
+    public function getSuperadminProductPaymentTexts()
     {
         $paymentTexts = [
-            'product' => self::getPaymentText('product'),
-            'payback' => self::getPaymentText('payback')
+            Payment::TYPE_PRODUCT => self::getPaymentText(Payment::TYPE_PRODUCT),
+            Payment::TYPE_PAYBACK => self::getPaymentText(Payment::TYPE_PAYBACK),
         ];
         return $paymentTexts;
     }
@@ -643,8 +635,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerDepositPaymentTexts()
     {
         $paymentTexts = [
-            'empty_glasses' => __('Empty_glasses'),
-            'money' => __('Compensation_payment')
+            Payment::TEXT_EMPTY_GLASSES => __('Empty_glasses'),
+            Payment::TEXT_MONEY => __('Compensation_payment'),
         ];
         return $paymentTexts;
     }
@@ -932,9 +924,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStatesCashless()
     {
         return [
-            ORDER_STATE_ORDER_PLACED,
-            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
-            ORDER_STATE_BILLED_CASHLESS
+            OrderDetail::STATE_OPEN,
+            OrderDetail::STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+            OrderDetail::STATE_BILLED_CASHLESS,
         ];
     }
 

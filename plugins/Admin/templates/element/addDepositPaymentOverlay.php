@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Model\Entity\Payment;
 
 echo $this->Html->link(
     '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')) . '"></i> ' . $buttonText,
@@ -56,7 +57,7 @@ if (isset($manufacturerId)) {
     if ($identity->isAdmin() || $identity->isManufacturer()) {
         echo '<p style="margin-top:10px;">'.__d('admin', 'Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer.').'</p>';
         echo $this->Form->hidden('Payments.text', [
-            'value' => 'empty_glasses'
+            'value' => Payment::TEXT_EMPTY_GLASSES,
         ]);
     }
 
@@ -88,7 +89,7 @@ if (isset($manufacturerId)) {
 
 echo $this->Form->control('Payments.type', [
     'type' => 'hidden',
-    'value' => 'deposit'
+    'value' => Payment::TYPE_DEPOSIT,
 ]);
 if (isset($manufacturerId)) {
     echo $this->Form->control('Payments.manufacturerId', [

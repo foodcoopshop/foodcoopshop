@@ -972,13 +972,12 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Lagerprodukt mit Varianten",
-            "row_class": "main-product",
-            "AttributesRemoved": 0
+            "row_class": "main-product"
         },
         {
             "id_product": "350-13",
             "gross_price": 2,
-            "active": -1,
+            "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
             "row_class": "sub-row",
@@ -1021,7 +1020,7 @@
         {
             "id_product": "350-14",
             "gross_price": 4,
-            "active": -1,
+            "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
             "row_class": "sub-row",
@@ -1064,7 +1063,7 @@
         {
             "id_product": "350-15",
             "gross_price": 0,
-            "active": -1,
+            "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
             "row_class": "sub-row",

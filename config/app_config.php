@@ -22,17 +22,6 @@ define('APP_ON', 1);
 define('APP_OFF', 0);
 define('APP_DEL', -1);
 
-define('ORDER_STATE_ORDER_PLACED', 3);
-define('ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER', 10);
-define('ORDER_STATE_BILLED_CASHLESS', 11);
-define('ORDER_STATE_BILLED_CASH', 12);
-
-define('CUSTOMER_GROUP_SELF_SERVICE_CUSTOMER', 2);
-define('CUSTOMER_GROUP_MEMBER', 3);
-define('CUSTOMER_GROUP_ADMIN', 4);
-define('CUSTOMER_GROUP_SUPERADMIN', 5);
-
-define('MAX_CART_PRODUCT_AMOUNT', 250);
 define('PHONE_REGEX', '/^[0-9 ()+-\/]{7,20}$/');
 define('EMAIL_REGEX', '/([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,10})+/i');
 define('ZIP_REGEX', '/^[0-9]{4,5}$/');
@@ -190,8 +179,7 @@ return [
         'helloCashRestEndpoint' => 'https://api.hellocash.business/api/v1',
 
         'helloCashAtCredentials' => [
-            'username' => '',
-            'password' => '',
+            'token' => '',
             'cashier_id' => 0,
             'payment_type_cash' => 'Bar',
             'payment_type_cashless' => 'Guthaben-System',

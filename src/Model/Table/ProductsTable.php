@@ -16,8 +16,6 @@ use App\Model\Traits\AllowOnlyOneWeekdayValidatorTrait;
 use App\Model\Traits\ProductImportTrait;
 use App\Model\Entity\Product;
 use Cake\Routing\Router;
-use App\Model\Entity\Customer;
-use App\Services\ChangeSellingPriceService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -679,7 +677,7 @@ class ProductsTable extends AppTable
         return false;
     }
 
-    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($productIds, $manufacturerId, $active, $categoryId = '',  $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];
@@ -700,39 +698,6 @@ class ProductsTable extends AppTable
             $conditions['Products.active >'] = APP_DEL;
         }
 
-        if ($isQuantityMinFilterSet) {
-            $conditions[] = $this->getIsQuantityMinFilterSetCondition();
-        }
-
-        if ($isPriceZero) {
-            $conditions[] = $this->getIsPriceZeroCondition();
-        }
-
-        $quantityIsZeroFilterOn = false;
-        $priceIsZeroFilterOn = false;
-        foreach ($conditions as $condition) {
-            if (is_int($condition) || !is_array($condition)) {
-                continue;
-            }
-            if (is_string($condition)) {
-                if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
-                    $this->getAssociation('ProductAttributes')->setConditions(
-                        [
-                            'StockAvailables.quantity < 3'
-                        ]
-                    );
-                    $quantityIsZeroFilterOn = true;
-                }
-                if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                    $this->getAssociation('ProductAttributes')->setConditions(
-                        [
-                            'ProductAttributes.price' => 0
-                        ]
-                    );
-                    $priceIsZeroFilterOn = true;
-                }
-            }
-        }
         $contain = [
             'CategoryProducts',
             'CategoryProducts.Categories',
@@ -909,7 +874,7 @@ class ProductsTable extends AppTable
             $product->nameSetterMethodEnabled = false;
             $product->name = '<span class="product-name">' . $product->name . '</span>';
             if (!empty($additionalProductNameInfos)) {
-                $product->name = $product->name . ': ' . join(', ', $additionalProductNameInfos);
+                $product->name = $product->name . Product::NAME_SEPARATOR . join(', ', $additionalProductNameInfos);
             }
             $product->nameSetterMethodEnabled = true;
 
@@ -944,6 +909,7 @@ class ProductsTable extends AppTable
                         if ($product->purchase_gross_price > 0) {
                             $product->purchase_price_is_zero = false;
                         }
+                        $product->purchase_net_price = $purchasePrice;
                     }
 
                     if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
@@ -986,14 +952,8 @@ class ProductsTable extends AppTable
             $i ++;
 
             if (! empty($product->product_attributes)) {
-                $currentPreparedProduct = count($preparedProducts) - 1;
-                $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] = 0;
 
                 foreach ($product->product_attributes as $attribute) {
-                    if (($quantityIsZeroFilterOn && empty($attribute->stock_available)) || ($priceIsZeroFilterOn && empty($attribute))) {
-                        $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] ++;
-                        continue;
-                    }
 
                     $grossPrice = 0;
                     if (! empty($attribute->price)) {
@@ -1034,7 +994,7 @@ class ProductsTable extends AppTable
                     $preparedProduct = [
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
-                        'active' => - 1,
+                        'active' => $product->active,
                         'is_stock_product' => $product->is_stock_product,
                         'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
@@ -1087,6 +1047,7 @@ class ProductsTable extends AppTable
                             if ($preparedProduct['purchase_gross_price'] > 0) {
                                 $preparedProduct['purchase_price_is_zero'] = false;
                             }
+                            $preparedProduct['purchase_net_price'] = $purchasePrice;
                         }
 
                         if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
@@ -1121,18 +1082,13 @@ class ProductsTable extends AppTable
             }
         }
 
-        // price zero filter is difficult to implement, because if there are attributes assigned to the product, the product's price is always 0
-        // which would lead to always showing the main product of attributes if price zero filter is set
-        // this is not the case for quantity zero filter, because the main product's quantity is the sum of the associated attribute quantities
-        if ($priceIsZeroFilterOn) {
-            foreach ($preparedProducts as $key => $preparedProduct) {
-                if (isset($preparedProducts[$key]['AttributesRemoved']) && $preparedProducts[$key]['AttributesRemoved'] == count($preparedProducts[$key]->product_attributes)) {
-                    unset($preparedProducts[$key]);
-                }
-            }
-        }
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
         return $preparedProducts;
+    }
+
+    public function isMainProduct($product)
+    {
+        return preg_match('/main-product/', $product->row_class);
     }
 
     public function getForDropdown($manufacturerId)
@@ -1163,7 +1119,7 @@ class ProductsTable extends AppTable
         $offlineProducts = [];
         $deletedProducts = [];
         foreach ($products as $product) {
-            $productNameForDropdown = $product->name . (!empty($product->manufacturer) ? ' - ' . html_entity_decode($product->manufacturer->name) : '');
+            $productNameForDropdown = $product->name . (!empty($product->manufacturer) ? ' - ' . $product->manufacturer->decoded_name : '');
             switch($product->active) {
                 case 1:
                     $onlineProducts[$product->id_product] = $productNameForDropdown;
@@ -1228,16 +1184,6 @@ class ProductsTable extends AppTable
         $netPrice = $netPrice / ((100 + $newTaxRate) / 100) * (1 + $oldTaxRate / 100);
         $netPrice = round($netPrice, 6);
         return $netPrice;
-    }
-
-    private function getIsQuantityMinFilterSetCondition()
-    {
-        return '(StockAvailables.quantity < 3 && (StockAvailables.always_available = 0 || (Products.is_stock_product = 1 && Manufacturers.stock_management_enabled = 1)))';
-    }
-
-    private function getIsPriceZeroCondition()
-    {
-        return 'Products.price = 0';
     }
 
     public function setDefaultAttributeId($productId, $productAttributeId)

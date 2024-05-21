@@ -20,7 +20,8 @@ use App\Services\ChangeSellingPriceService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditPriceTrait {
+trait EditPriceTrait 
+{
 
     private function applyPriceChangeToOpenOrders($ids, $price): string
     {

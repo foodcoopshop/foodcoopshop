@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use App\Model\Entity\Payment;
 use App\Model\Table\InvoicesTable;
 use App\Model\Table\OrderDetailsTable;
 use App\Model\Table\PaymentsTable;
@@ -138,7 +139,7 @@ class InvoicesController extends AdminAppController
                     [
                         'status' => APP_ON,
                         'approval' => APP_ON,
-                        'type' => $invoiceData->sumPriceIncl > 0 ? 'product' : 'payback',
+                        'type' => $invoiceData->sumPriceIncl > 0 ? Payment::TYPE_PRODUCT : Payment::TYPE_PAYBACK,
                         'id_customer' => $customerId,
                         'id_manufacturer' => 0,
                         'date_add' => DateTime::now(),
@@ -349,7 +350,7 @@ class InvoicesController extends AdminAppController
                     'date_changed' => DateTime::now(),
                     'approval_comment' => __d('admin', 'Invoice_cancelled') . ': ' . $approvalString
                 ], [
-                    'type IN' => ['product', 'payback'],
+                    'type IN' => [Payment::TYPE_PRODUCT, Payment::TYPE_PAYBACK],
                     'id_customer' => $invoice->customer->id_customer,
                     'approval_comment' => $approvalString,
                 ]);

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Payment;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Validation\Validator;
@@ -146,7 +147,7 @@ class PaymentsTable extends AppTable
 
     public function getManufacturerDepositSumByCalendarWeekAndType($type)
     {
-        if (!in_array($type, ['empty_glasses', 'money'])) {
+        if (!in_array($type, [Payment::TEXT_EMPTY_GLASSES, Payment::TEXT_MONEY])) {
             throw new \Exception('wrong type: was ' . $type);
         }
         $conditions = $this->getManufacturerDepositConditions();
@@ -159,7 +160,7 @@ class PaymentsTable extends AppTable
             'YearWeek' => $formattedDate,
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
-        $query->group($formattedDate);
+        $query->groupBy($formattedDate);
         $result = $query->toArray();
 
         return $result;
@@ -189,7 +190,7 @@ class PaymentsTable extends AppTable
             'YearWeek' => $formattedDate,
             'SumAmount' => $query->func()->sum('Payments.amount'),
         ]);
-        $query->group($formattedDate);
+        $query->groupBy($formattedDate);
         $result = $query->toArray();
 
         return $result;
@@ -202,12 +203,12 @@ class PaymentsTable extends AppTable
     {
 
         $conditions = $this->getManufacturerDepositConditions();
-        $conditions['Payments.text'] = 'money';
+        $conditions['Payments.text'] = Payment::TEXT_MONEY;
 
         $query = $this->find('all', conditions: $conditions);
 
         $query->select(['sumManufacturerMoneyDeposit' => $query->func()->sum('Payments.amount')]);
-        $query->group('Payments.text');
+        $query->groupBy('Payments.text');
         $result = $query->toArray();
 
         if (isset($result[0])) {

@@ -65,8 +65,8 @@ body.dark .modal-content {
 }
 body.dark .btn-outline-light:not(.btn-danger),
 body.dark select,
-body.dark #product-search input,
-body.dark #product-search select,
+body.dark .product-search-form-wrapper input,
+body.dark .product-search-form-wrapper select,
 body.dark input,
 body.dark .pw .amount-wrapper input,
 body.dark textarea,
