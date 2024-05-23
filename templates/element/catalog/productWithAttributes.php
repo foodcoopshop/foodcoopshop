@@ -96,7 +96,7 @@ foreach ($preparedProductAttributes as $attribute) {
         'product' => $product,
         'stockAvailable' => $attribute->stock_available,
         'orderedTotalAmount' => $attribute->ordered_total_amount ?? null,
-        'hideAmountSelector' => $isStockProductOrderPossible || ($orderCustomerService->isSelfServiceModeByUrl() && $attribute->unit_product_attribute->price_per_unit_enabled),
+        'hideAmountSelector' => $isStockProductOrderPossible || ($orderCustomerService->isSelfServiceModeByUrl() && ($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $attribute->unit_product_attribute->price_per_unit_enabled),
         'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
     ]);
     echo $this->element('catalog/cartButton', [

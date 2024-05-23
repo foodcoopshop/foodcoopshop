@@ -56,7 +56,7 @@ echo $this->element('catalog/amountWrapper', [
     'product' => $product,
     'orderedTotalAmount' => $product->ordered_total_amount ?? null,
     'stockAvailable' => $product->stock_available,
-    'hideAmountSelector' => $isStockProductOrderPossible || ($orderCustomerService->isSelfServiceModeByUrl() && $product->unit_product->price_per_unit_enabled),
+    'hideAmountSelector' => $isStockProductOrderPossible || ($orderCustomerService->isSelfServiceModeByUrl() && ($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->unit_product->price_per_unit_enabled),
     'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
 ]);
 echo $this->element('catalog/cartButton', [
