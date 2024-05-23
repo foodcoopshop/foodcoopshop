@@ -148,7 +148,9 @@ foodcoopshop.ModalProductQuantityEdit = {
 
         if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
             if (row.find('i.quantity-limit-for-dialog').length > 0) {
-                $(modalSelector + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
+                let quantityLimitValForOverlay = row.find('i.quantity-limit-for-dialog').html();
+                quantityLimitValForOverlay = foodcoopshop.Helper.getStringAsFloat(quantityLimitValForOverlay);
+                $(modalSelector + ' #dialogQuantityQuantityLimit').val(quantityLimitValForOverlay);
             } else {
                 $(modalSelector + ' #dialogQuantityQuantityLimit').val(0);
             }
@@ -156,7 +158,9 @@ foodcoopshop.ModalProductQuantityEdit = {
                 if (row.find('i.sold-out-limit-for-dialog').html().match('fa-times')) {
                     $(modalSelector + ' #dialogQuantitySoldOutLimit').val('');
                 } else {
-                    $(modalSelector + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
+                    let quantitySoldOutLimitValForOverlay = row.find('i.sold-out-limit-for-dialog').html();
+                    quantitySoldOutLimitValForOverlay = foodcoopshop.Helper.getStringAsFloat(quantitySoldOutLimitValForOverlay);
+                    $(modalSelector + ' #dialogQuantitySoldOutLimit').val(quantitySoldOutLimitValForOverlay);
                 }
             } else {
                 $(modalSelector + ' #dialogQuantitySoldOutLimit').val(0);
@@ -165,7 +169,9 @@ foodcoopshop.ModalProductQuantityEdit = {
 
         foodcoopshop.Admin.bindToggleQuantityQuantity(modalSelector);
 
-        $(modalSelector + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
+        let quantityValForOverlay = row.find('span.quantity-for-dialog').html();
+        quantityValForOverlay = foodcoopshop.Helper.getStringAsFloat(quantityValForOverlay);
+        $(modalSelector + ' #dialogQuantityQuantity').val(quantityValForOverlay);
         if (row.find('.amount').html().match('fa-infinity')) {
             $(modalSelector + ' #dialogQuantityAlwaysAvailable').trigger('click');
         }

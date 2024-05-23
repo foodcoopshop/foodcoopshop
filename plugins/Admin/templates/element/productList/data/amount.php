@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 $available = true;
 $belowMinimumAmount = false;
+$isPricePerUnitEnabled = !empty($product->unit_product) && $product->unit_product->price_per_unit_enabled;
 
 if (empty($product->product_attributes)) {
     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
@@ -60,9 +61,14 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
             $elementsToRender[] = '<i class="always-available fas fa-infinity ok" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
         }
 
+        $formattedQuantity = $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
+        if ($isPricePerUnitEnabled) {
+            $formattedQuantity = $this->Number->formatUnitAsDecimal($product->stock_available->quantity) . ' ' . $product->unit_product->name;
+        }
+
         $elementsToRender[] =
         '<span class="quantity-for-dialog'.(!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available ? ' hide' : '').'">' .
-                 $this->Number->formatAsDecimal($product->stock_available->quantity, 0) .
+                 $formattedQuantity .
             '</span>';
 
         $elementsToRender[] =
@@ -73,18 +79,27 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
          '</span>';
 
         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+
+            $formattedQuantityLimit = $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0);
+            if ($isPricePerUnitEnabled) {
+                $formattedQuantityLimit = $this->Number->formatUnitAsDecimal($product->stock_available->quantity_limit) .  ' ' . $product->unit_product->name;
+            }
+
             if ($product->stock_available->quantity_limit != 0) {
                 $elementsToRender[] =
-                    ' <i class="small quantity-limit-for-dialog">'.
-                        $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0) .
-                '</i>';
+                    ' <i class="small quantity-limit-for-dialog">' . $formattedQuantityLimit .'</i>';
             }
             if (is_null($product->stock_available->sold_out_limit) || $product->stock_available->sold_out_limit != 0) {
+
                 $element = ' <i class="small sold-out-limit-for-dialog">';
                 if (is_null($product->stock_available->sold_out_limit)) {
                     $element .= '<i class="fas fa-times" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
                 } else {
-                    $element .= $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
+                    $formattedSoldOutLimit = $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
+                    if ($isPricePerUnitEnabled) {
+                        $formattedSoldOutLimit = $this->Number->formatUnitAsDecimal($product->stock_available->sold_out_limit) .  ' ' . $product->unit_product->name;
+                    }    
+                    $element .= $formattedSoldOutLimit;
                 }
                 $element .= '</i>';
                 $elementsToRender[] = $element;
