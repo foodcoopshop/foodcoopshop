@@ -29,6 +29,8 @@ use Cake\Core\Configure;
         <a class="as as-minus" href="javascript:void(0);">
             <i class="fas fa-minus-circle"></i>
         </a>
+    <?php } else { ?>
+        <input name="amount" value="1" type="hidden" />
     <?php } ?>
 
     <?php
