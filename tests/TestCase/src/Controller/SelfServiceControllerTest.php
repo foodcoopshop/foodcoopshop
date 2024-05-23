@@ -23,6 +23,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
+use Cake\Datasource\FactoryLocator;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -130,8 +131,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart('350-15', 1, '1,5');
-        $this->addProductToSelfServiceCart(351, 1, '0,5');
+        $this->addProductToSelfServiceCart('350-15', 1, '1,999');
+        $this->addProductToSelfServiceCart(351, 1, '0,51');
         $this->finishSelfServiceCart(1, 1);
 
         $this->Cart = $this->getTableLocator()->get('Carts');
@@ -149,12 +150,26 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
+        $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailable = $stockAvailableTable->find('all')->where([
+            'id_product' => 350,
+            'id_product_attribute' => 15,
+        ])->first();
+       $this->assertEquals(997.001, $stockAvailable->quantity);
+
+        $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailable = $stockAvailableTable->find('all')->where([
+            'id_product' => 351,
+            'id_product_attribute' => 0,
+        ])->first();
+        $this->assertEquals(998.49, $stockAvailable->quantity);
+
         $this->assertMailCount(1);
         $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
-        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt mit Varianten : 1,5 kg');
-        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
-        $this->assertMailContainsHtmlAt(0, '15,00 €');
-        $this->assertMailContainsHtmlAt(0, '5,00 €');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt mit Varianten : 1,999 kg');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,51 kg');
+        $this->assertMailContainsHtmlAt(0, '19,99 €');
+        $this->assertMailContainsHtmlAt(0, '7,65 €');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
 
     }

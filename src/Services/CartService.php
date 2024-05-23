@@ -208,7 +208,6 @@ class CartService
     public function finish()
     {
 
-        $orderCustomerService = new OrderCustomerService();
         $cart = $this->identity->getCart();
 
         $this->Cart = FactoryLocator::get('Table')->get('Carts');
@@ -463,12 +462,15 @@ class CartService
 
             if ($decreaseQuantity) {
                 $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
+                if ((new OrderCustomerService())->isSelfServiceModeByUrl() && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
+                    $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
+                }
                 $stockAvailable2saveData[] = [
-                    'quantity' => $newQuantity
+                    'quantity' => $newQuantity,
                 ];
                 $stockAvailable2saveConditions[] = [
                     'id_product' => $ids['productId'],
-                    'id_product_attribute' => $ids['attributeId']
+                    'id_product_attribute' => $ids['attributeId'],
                 ];
             }
         }
