@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -17,7 +18,7 @@ declare(strict_types=1);
 
 $available = true;
 $belowMinimumAmount = false;
-$isPricePerUnitEnabled = !empty($product->unit_product) && $product->unit_product->price_per_unit_enabled;
+$isPricePerUnitEnabled = !empty($product->unit) && $product->unit->price_per_unit_enabled;
 
 if (empty($product->product_attributes)) {
     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
@@ -63,7 +64,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
 
         $formattedQuantity = $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
         if ($isPricePerUnitEnabled) {
-            $formattedQuantity = $this->Number->formatUnitAsDecimal($product->stock_available->quantity) . ' ' . $product->unit_product->name;
+            $formattedQuantity = $this->Number->formatUnitAsDecimal($product->stock_available->quantity) . ' ' . $product->unit->name;
         }
 
         $elementsToRender[] =
@@ -82,7 +83,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
 
             $formattedQuantityLimit = $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0);
             if ($isPricePerUnitEnabled) {
-                $formattedQuantityLimit = $this->Number->formatUnitAsDecimal($product->stock_available->quantity_limit) .  ' ' . $product->unit_product->name;
+                $formattedQuantityLimit = $this->Number->formatUnitAsDecimal($product->stock_available->quantity_limit) .  ' ' . $product->unit->name;
             }
 
             if ($product->stock_available->quantity_limit != 0) {
@@ -97,7 +98,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
                 } else {
                     $formattedSoldOutLimit = $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
                     if ($isPricePerUnitEnabled) {
-                        $formattedSoldOutLimit = $this->Number->formatUnitAsDecimal($product->stock_available->sold_out_limit) .  ' ' . $product->unit_product->name;
+                        $formattedSoldOutLimit = $this->Number->formatUnitAsDecimal($product->stock_available->sold_out_limit) .  ' ' . $product->unit->name;
                     }    
                     $element .= $formattedSoldOutLimit;
                 }
