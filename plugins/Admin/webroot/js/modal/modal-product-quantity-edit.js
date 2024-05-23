@@ -51,19 +51,20 @@ foodcoopshop.ModalProductQuantityEdit = {
     },
 
     getHtmlForProductQuantityIsStockProductEdit : function(isPricePerUnitEnabled, unitName) {
+        let unitNameString = (unitName != '' ? ' - in ' + unitName : '');
         var html = '<label for="dialogQuantityQuantity"></label><br />';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + (unitName != '' ? ' (in ' + unitName + ') ' : '') + '</label>';
+        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + unitNameString + '</label>';
         html += '<input type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
         html += '<hr />';
         html += '</div>';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.OrdersPossibleUntilAmountOf + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.zeroOrSmallerZero + '.</span></label>';
+        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.OrdersPossibleUntilAmountOf + unitNameString + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.zeroOrSmallerZero + '.</span></label>';
         html += '<input max="0" type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
         html += '<hr />';
         html += '</div>';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.NotificationIfAmountLowerThan + ' (' + foodcoopshop.LocalizedJs.dialogProduct.MinimalStockAmount + ')<br /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings + '</span></label>';
+        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.NotificationIfAmountLowerThan + unitNameString + ' (' + foodcoopshop.LocalizedJs.dialogProduct.MinimalStockAmount + ')<br /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings + '</span></label>';
         html += '<input type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
         html += '</div>';
         html += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
