@@ -1608,7 +1608,7 @@ msgid "Please_enter_max_{0}_characters."
 msgstr "Bitte gib maximal {0} Zeichen ein."
 
 msgid "The_desired_amount_{0}_is_not_valid."
-msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
+msgstr "Die gewünschte Menge {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
@@ -1893,10 +1893,10 @@ msgid "{0}_needs_to_be_a_{1}."
 msgstr "{0} muss ein {1} sein."
 
 msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
+msgstr "Die gewünschte Menge {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
+msgstr "Die gewünschte Menge {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
 
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."

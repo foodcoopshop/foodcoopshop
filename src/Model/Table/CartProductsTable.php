@@ -98,10 +98,24 @@ class CartProductsTable extends AppTable
         ->first();
 
         $existingCartProduct = $identity->getProduct($initialProductId);
+
         $combinedAmount = $amount;
         if ($existingCartProduct) {
             $combinedAmount = $existingCartProduct['amount'] + $amount;
         }
+
+        $amountBasedOnQuantityInUnits = false;
+        if ($orderCustomerService->isSelfServiceModeByReferer()
+            && $product->is_stock_product && $product->manufacturer->stock_management_enabled
+            && (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled)) {
+                // TODO price per unit check for attributes needs to be implemented
+                $amountBasedOnQuantityInUnits = true;
+                $combinedAmount = $orderedQuantityInUnits;
+                if ($existingCartProduct) {
+                    $combinedAmount = $existingCartProduct['productQuantityInUnits'] + $orderedQuantityInUnits;
+                }
+        }
+
         // check if passed product exists
         if (empty($product)) {
             $message = __('Product_with_id_{0}_does_not_exist.', [$productId]);
@@ -128,6 +142,7 @@ class CartProductsTable extends AppTable
             $availableQuantity,
             $combinedAmount,
             $product->name,
+            $amountBasedOnQuantityInUnits && !empty($product->unit_product) ? $product->unit_product->name : '',
         );
         if ($message !== true && $amount > 0) {
             return [
@@ -195,6 +210,7 @@ class CartProductsTable extends AppTable
                         $combinedAmount,
                         $attribute->product_attribute_combination->attribute->name,
                         $product->name,
+                        $amountBasedOnQuantityInUnits && !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->name : '',
                     );
                     if ($message !== true && $amount > 0) {
                         return [
@@ -304,9 +320,9 @@ class CartProductsTable extends AppTable
 
         $cartProduct2save = [
             'id_product' => $productId,
-            'amount' => $combinedAmount,
+            'amount' => $amountBasedOnQuantityInUnits ? 1 : $combinedAmount,
             'id_product_attribute' => $attributeId,
-            'id_cart' => $cart['Cart']['id_cart']
+            'id_cart' => $cart['Cart']['id_cart'],
         ];
 
         $options = [];
@@ -315,11 +331,11 @@ class CartProductsTable extends AppTable
                 $orderedQuantityInUnits += $existingCartProduct['orderedQuantityInUnits'];
             }
             $cartProduct2save['cart_product_unit'] = [
-                'ordered_quantity_in_units' => $orderedQuantityInUnits
+                'ordered_quantity_in_units' => $orderedQuantityInUnits,
             ];
             $options = [
                 'associated' => [
-                    'CartProductUnits'
+                    'CartProductUnits',
                 ]
             ];
         }
