@@ -51,7 +51,7 @@ foodcoopshop.ModalProductQuantityEdit = {
     },
 
     getHtmlForProductQuantityIsStockProductEdit : function(isPricePerUnitEnabled, unitName) {
-        let unitNameString = (unitName != '' ? ' - in ' + unitName : '');
+        let unitNameString = isPricePerUnitEnabled ? ' - in ' + unitName : '';
         var html = '<label for="dialogQuantityQuantity"></label><br />';
         html += '<div class="field-wrapper">';
         html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + unitNameString + '</label>';
