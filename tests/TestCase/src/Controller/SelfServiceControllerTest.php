@@ -102,6 +102,32 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testSelfServiceAddAttributePricePerUnitNotAvailable()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $productId = 350;
+        $attributeId = 15;
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailableObject = $stockAvailablesTable->find('all')->where([
+            'id_product' => $productId,
+            'id_product_attribute' => $attributeId,
+        ])->first();
+        $patchedEntity = $stockAvailablesTable->patchEntity(
+            $stockAvailableObject,
+            [
+                'quantity' => 1.1,
+            ],
+        );
+        $stockAvailablesTable->save($patchedEntity);
+
+        $this->addProductToSelfServiceCart('350-15', 1, '1,3');
+        $response = $this->getJsonDecodedContent();
+        $expectedErrorMessage = 'Die gewünschte Menge <b>1,3 kg</b> der Variante <b>0,5 kg</b> des Produktes <b>Lagerprodukt mit Varianten</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 1,1 kg';
+        $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
+        $this->assertJsonError();
+    }
+
     public function testSelfServiceOrderWithoutCheckboxes() {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
