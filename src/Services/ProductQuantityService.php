@@ -22,11 +22,9 @@ class ProductQuantityService
     
     public function isAmountBasedOnQuantityInUnits($product, $unitObject)
     {
-        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled
-            && (!empty($unitObject) && $unitObject->price_per_unit_enabled)) {
-            return true;
-        }
-        return false;
+        return $product->is_stock_product &&
+               $product->manufacturer->stock_management_enabled  &&
+               (!empty($unitObject) && $unitObject->price_per_unit_enabled);
     }
 
     public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject)
