@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Cake\Core\Configure;
+use Cake\Controller\Exception\InvalidParameterException;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -22,6 +25,10 @@ class ProductQuantityService
     
     public function isAmountBasedOnQuantityInUnits($product, $unitObject)
     {
+        if (empty($product->manufacturer)) {
+            throw new InvalidParameterException('manufacturer must not be empty');
+        }
+
         return $product->is_stock_product &&
                $product->manufacturer->stock_management_enabled  &&
                (!empty($unitObject) && $unitObject->price_per_unit_enabled);
@@ -40,6 +47,14 @@ class ProductQuantityService
         }
         return $combinedAmount;
     }
+
+    public function getFormattedAmount($isAmountBasedOnQuantityInUnits, $amount, $unitName)
+    {
+        if ($isAmountBasedOnQuantityInUnits) {
+            return Configure::read('app.numberHelper')->formatUnitAsDecimal($amount) .  ' ' . $unitName;
+        }
+        return  Configure::read('app.numberHelper')->formatAsDecimal($amount, 0);
+}
 
 
 }

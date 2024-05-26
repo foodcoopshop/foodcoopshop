@@ -57,6 +57,7 @@ echo $this->element('catalog/amountWrapper', [
     'product' => $product,
     'orderedTotalAmount' => $product->ordered_total_amount ?? null,
     'stockAvailable' => $product->stock_available,
+    'unitObject' => $product->unit_product,
     'hideAmountSelector' => $isStockProductOrderPossible || (new ProductQuantityService())->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $product->unit_product),
     'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
 ]);

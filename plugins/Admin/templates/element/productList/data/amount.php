@@ -18,7 +18,9 @@ use App\Services\ProductQuantityService;
 
 $available = true;
 $belowMinimumAmount = false;
-$isAmountBasedOnQuantityInUnits = (new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $product->unit);
+$productQuantityService = new ProductQuantityService();
+$isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit);
+$unitName = !empty($product->unit) ? $product->unit->name : '';
 
 if (empty($product->product_attributes)) {
     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
@@ -62,10 +64,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
             $elementsToRender[] = '<i class="always-available fas fa-infinity ok" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
         }
 
-        $formattedQuantity = $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
-        if ($isAmountBasedOnQuantityInUnits) {
-            $formattedQuantity = $this->Number->formatUnitAsDecimal($product->stock_available->quantity) . ' ' . $product->unit->name;
-        }
+        $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity, $unitName);
 
         $elementsToRender[] =
         '<span class="quantity-for-dialog'.(!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available ? ' hide' : '').'">' .
@@ -81,10 +80,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
 
         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
 
-            $formattedQuantityLimit = $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0);
-            if ($isAmountBasedOnQuantityInUnits) {
-                $formattedQuantityLimit = $this->Number->formatUnitAsDecimal($product->stock_available->quantity_limit) .  ' ' . $product->unit->name;
-            }
+            $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity_limit, $unitName);
 
             if ($product->stock_available->quantity_limit != 0) {
                 $elementsToRender[] =
@@ -96,10 +92,7 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
                 if (is_null($product->stock_available->sold_out_limit)) {
                     $element .= '<i class="fas fa-times" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
                 } else {
-                    $formattedSoldOutLimit = $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
-                    if ($isAmountBasedOnQuantityInUnits) {
-                        $formattedSoldOutLimit = $this->Number->formatUnitAsDecimal($product->stock_available->sold_out_limit) .  ' ' . $product->unit->name;
-                    }    
+                    $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->sold_out_limit, $unitName);
                     $element .= $formattedSoldOutLimit;
                 }
                 $element .= '</i>';

@@ -96,6 +96,7 @@ foreach ($preparedProductAttributes as $attribute) {
     echo $this->element('catalog/amountWrapper', [
         'product' => $product,
         'stockAvailable' => $attribute->stock_available,
+        'unitObject' => $attribute->unit_product_attribute,
         'orderedTotalAmount' => $attribute->ordered_total_amount ?? null,
         'hideAmountSelector' => $isStockProductOrderPossible || (new ProductQuantityService())->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $attribute->unit_product_attribute),
         'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
