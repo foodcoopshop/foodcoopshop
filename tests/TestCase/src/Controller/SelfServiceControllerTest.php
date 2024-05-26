@@ -223,7 +223,33 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2712345600235';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+        //$this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+
+        $this->finishSelfServiceCart(1, 1);
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', order: [
+            'Carts.id_cart' => 'DESC'
+        ])->first();
+
+        $cart = $this->getCartById($cart->id_cart);
+
+        $this->assertEquals(1, count($cart->cart_products));
+
+        foreach($cart->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->order_detail_unit->mark_as_saved, 1);
+            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        }
+
+        $this->assertMailCount(1);
+        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt mit Gewichtsbarcode : 0,23 kg');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
+
+
+
+        
     }
 
     public function testSearchByCustomProductAttributeBarcodeWithWeight()
