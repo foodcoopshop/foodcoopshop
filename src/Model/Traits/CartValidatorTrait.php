@@ -121,7 +121,7 @@ trait CartValidatorTrait
     {
         $result = true;
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($orderCustomerService->isSelfServiceModeByReferer() || $orderCustomerService->isSelfServiceModeByUrl())) {
-            if ($object->{$unitObject} && $object->{$unitObject}->price_per_unit_enabled && $orderedQuantityInUnits < 0 /* !sic < 0 see getStringAsFloat */) {
+            if ($object->{$unitObject} && $object->{$unitObject}->price_per_unit_enabled && ($orderedQuantityInUnits) /* !sic < 0 see getStringAsFloat */) {
                 $result = __('Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button.');
             }
         }
