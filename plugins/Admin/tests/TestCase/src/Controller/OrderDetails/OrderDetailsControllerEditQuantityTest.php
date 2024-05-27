@@ -17,9 +17,13 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use App\Test\TestCase\Traits\SelfServiceCartTrait;
+use Cake\Datasource\FactoryLocator;
 
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
+
+    use SelfServiceCartTrait;
 
     protected $OrderDetail;
 
@@ -30,6 +34,43 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailQuantity($orderDetailId, -1);
         $this->assertEquals($this->getJsonDecodedContent()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
+    }
+
+    public function testEditOrderDetailQuantityAsSuperadminStockProduct()
+    {
+
+        $this->changeManufacturer(4, 'anonymize_customers', 1);
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
+
+        $productId = 351;
+        $this->loginAsSuperadmin();
+        $this->addProductToSelfServiceCart($productId, 1, '0,51');
+        $this->finishSelfServiceCart(1, 1);
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', order: [
+            'Carts.id_cart' => 'DESC'
+        ])->first();
+
+        $cart = $this->getCartById($cart->id_cart);
+
+        $stockAvailable = $stockAvailableTable->find('all')->where([
+            'id_product' => $productId,
+            'id_product_attribute' => 0,
+        ])->first();
+        $this->assertEquals(998.49, $stockAvailable->quantity);
+
+        $newQuantity = 0.55;
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity);
+
+        $stockAvailable = $stockAvailableTable->find('all')->where([
+            'id_product' => $productId,
+            'id_product_attribute' => 0,
+        ])->first();
+        $this->assertEquals(998.450, $stockAvailable->quantity);
+
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity()

@@ -6,6 +6,8 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Services\ChangeSellingPriceService;
+use Cake\Datasource\FactoryLocator;
+use App\Services\ProductQuantityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -87,6 +89,15 @@ trait EditProductQuantityTrait
         }
         $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
+
+        $productQuantityService = new ProductQuantityService();
+        $unitObject = (object) [
+            'price_per_unit_enabled' => true,
+        ];
+        $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($oldOrderDetail->product, $unitObject);
+        if ($isAmountBasedOnQuantityInUnits) {
+            $productQuantityService->changeStockAvailable($oldOrderDetail, $productQuantity);
+        }
 
         $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',

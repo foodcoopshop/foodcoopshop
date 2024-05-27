@@ -97,7 +97,8 @@ class CartService
     {
 
         $this->saveOrderDetails($orderDetails2save);
-        $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
         $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
         $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
@@ -598,26 +599,6 @@ class CartService
         $this->OrderDetail->saveMany(
             $this->OrderDetail->newEntities($orderDetails2save)
         );
-    }
-
-    private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions): void
-    {
-        $this->Product = FactoryLocator::get('Table')->get('Products');
-        $i = 0;
-        foreach($stockAvailable2saveConditions as $condition) {
-            $stockAvailableEntity = $this->Product->StockAvailables->find('all',
-                conditions: $condition,
-            )->first();
-            $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
-            $originalPrimaryKey = $this->Product->StockAvailables->getPrimaryKey();
-            if ($condition['id_product_attribute'] > 0) {
-                $this->Product->StockAvailables->setPrimaryKey('id_product_attribute');
-            }
-            $this->Product->StockAvailables->save($stockAvailableEntity);
-            $this->Product->StockAvailables->setPrimaryKey($originalPrimaryKey);
-            $this->Product->StockAvailables->updateQuantityForMainProduct($condition['id_product']);
-            $i++;
-        }
     }
 
     private function sendInstantOrderNotificationToManufacturers($cartProducts): array

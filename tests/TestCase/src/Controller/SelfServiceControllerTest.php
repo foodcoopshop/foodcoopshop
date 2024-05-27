@@ -23,6 +23,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Model\Entity\OrderDetail;
+use App\Test\TestCase\Traits\SelfServiceCartTrait;
 use Cake\Datasource\FactoryLocator;
 
 class SelfServiceControllerTest extends AppCakeTestCase
@@ -37,6 +38,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use AssertPagesForErrorsTrait;
     use LoginTrait;
     use EmailTrait;
+    use SelfServiceCartTrait;
 
     public function testPageSelfService()
     {
@@ -456,63 +458,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         $pickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
-    }
-
-    private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
-    {
-        $this->getSelfServicePostOptions();
-        $this->post(
-            '/warenkorb/ajaxAdd/',
-            [
-                'productId' => $productId,
-                'amount' => $amount,
-                'orderedQuantityInUnits' => $orderedQuantityInUnits
-            ],
-        );
-        return $this->getJsonDecodedContent();
-    }
-
-    private function removeProductFromSelfServiceCart($productId)
-    {
-        $this->getSelfServicePostOptions();
-        $this->post(
-            '/warenkorb/ajaxRemove/',
-            [
-                'productId' => $productId
-            ],
-        );
-        return $this->getJsonDecodedContent();
-    }
-
-    private function getSelfServicePostOptions()
-    {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-                'REFERER' => Configure::read('App.fullBaseUrl') . '/' . __('route_self_service'),
-            ],
-        ]);
-    }
-
-    private function finishSelfServiceCart($generalTermsAndConditionsAccepted, $cancellationTermsAccepted)
-    {
-        $data = [
-            'Carts' => [
-                'general_terms_and_conditions_accepted' => $generalTermsAndConditionsAccepted,
-                'cancellation_terms_accepted' => $cancellationTermsAccepted,
-            ],
-        ];
-        $this->configRequest([
-            'headers' => [
-                'REFERER' => Configure::read('App.fullBaseUrl') . '/' . __('route_self_service'),
-            ],
-        ]);
-        $this->post(
-            $this->Slug->getSelfService(),
-            $data,
-        );
-        $this->runAndAssertQueue();
     }
 
     private function doBarCodeLogin()

@@ -5,6 +5,7 @@ namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -54,7 +55,30 @@ class ProductQuantityService
             return Configure::read('app.numberHelper')->formatUnitAsDecimal($amount) .  ' ' . $unitName;
         }
         return  Configure::read('app.numberHelper')->formatAsDecimal($amount, 0);
-}
+    }
 
+    public function changeStockAvailable($orderDetail, $productQuantity)
+    {
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailable = $stockAvailablesTable->find('all', [
+            'conditions' => [
+                'id_product' => $orderDetail->product_id,
+                'id_product_attribute' => $orderDetail->product_attribute_id,
+            ],
+        ])->first();
+        $newStockAvailableQuantity = $stockAvailable->quantity + $orderDetail->order_detail_unit->product_quantity_in_units - $productQuantity;
+        $stockAvailable2saveData = [
+            [
+                'quantity' => $newStockAvailableQuantity,
+            ]
+        ];
+        $stockAvailable2saveConditions = [
+            [
+                'id_product' => $orderDetail->product_id,
+                'id_product_attribute' => $orderDetail->product_attribute_id,
+            ]
+        ];
+        $stockAvailablesTable->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
+    }
 
 }
