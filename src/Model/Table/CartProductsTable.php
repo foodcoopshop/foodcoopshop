@@ -59,11 +59,9 @@ class CartProductsTable extends AppTable
      * @param int $amount
      * @return array || boolean
      */
-    public function add($productId, $attributeId, $amount, $orderedQuantityInUnits, $isBarcodeWithWeight)
+
+    public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
     {
-        if($isBarcodeWithWeight && $amount > 0){
-            $orderedQuantityInUnits = $amount;
-        }
         $identity = Router::getRequest()->getAttribute('identity');
         $orderCustomerService = new OrderCustomerService();
 
