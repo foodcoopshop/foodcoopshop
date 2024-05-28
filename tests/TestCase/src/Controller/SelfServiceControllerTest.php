@@ -225,7 +225,13 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->get($this->Slug->getSelfService($barcodeForProduct));
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
         $this->assertRedirect($this->Slug->getSelfService());
-        
+
+        $this->CartProductUnit = $this->getTableLocator()->get('CartProductUnits');
+        $cartProductUnits = $this->CartProductUnit->find('all', order: [
+            'CartProductUnits.id_cart_product' => 'DESC'
+        ])->first();
+        $this->assertEquals(4.9, $cartProductUnits[0]->ordered_quantity_in_units);
+
         /*$this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $actionLogs[0]->text);
