@@ -223,12 +223,13 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2712345000235';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        //$this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
-
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+        $this->assertRedirect($this->Slug->getSelfService());
+        
+        /*$this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all')->toArray();
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $actionLogs[0]->text);
-
+*/
        /* $this->finishSelfServiceCart(1, 1);
 
         $this->Cart = $this->getTableLocator()->get('Carts');
@@ -262,7 +263,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2112345001234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        //$this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
     }
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
