@@ -30,10 +30,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 ?>
 <div id="login-form" class="form">
 
-  <h1><?php echo $title_for_layout; ?></h1>
-
-    <?php
-
+<?php
     echo $this->Form->create(
         null,
         [
@@ -41,6 +38,20 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
             'id' => 'LoginForm',
         ]
     );
+
+    if ($enableButtonForSelfServiceUser) { ?>
+        <h2><span><?php echo __('Self_service_login_without_account'); ?></span></h2>
+        <button type="submit" class="btn btn-outline-light"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?></button>
+        <h2><span><?php echo __('or'); ?></span></h2>
+        <h2><span><?php echo __('Self_service_login_with_account'); ?></span></h2>
+        <?php }
+    else{ ?>
+        <h1><?php echo $title_for_layout; ?></h1>
+    <?php } 
+    ?>
+
+    <?php
+
 
     if ($enableBarCodeLogin) {
         $this->element('addScript', ['script' =>
