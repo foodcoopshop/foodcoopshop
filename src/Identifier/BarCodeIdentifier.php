@@ -10,6 +10,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 use Authentication\Identifier\IdentifierInterface;
 use Authentication\Identifier\TokenIdentifier;
 use ArrayAccess;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -57,15 +58,4 @@ class BarCodeIdentifier extends AbstractIdentifier
 
     }
 
-    public function getSelfServiceUser()
-    {
-        /*$customerId = $this->identity->getId();
-        $pdfWriter = new MyMemberCardPdfWriterService();
-        $customers = $pdfWriter->getMemberCardCustomerData($customerId);
-        $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
-        $pdfWriter->setData([
-            'customers' => $customers,
-        ]);
-        die($pdfWriter->writeInline());*/
-    }
 }

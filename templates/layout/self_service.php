@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Identifier\BarCodeIdentifier;
 
 echo $this->element('layout/header');
 ?>
@@ -31,7 +32,26 @@ echo $this->element('layout/header');
     ?>
         <div class="self-service-wrapper">
             <h6><?php echo __('Self_service_login_without_account'); ?></h6>
-            <button type="submitselfserviceuserlogin" class="btn btn-success btn-success-self-service-user-login"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?></button>
+            <?php
+    /*public function isSelfServiceModeByUrl()
+    {
+        $result = Router::getRequest()->getPath() == '/' . __('route_self_service');
+        if (!empty(Router::getRequest()->getQuery('redirect'))) {
+            $result |= preg_match('`' . '/' . __('route_self_service') . '`', Router::getRequest()->getQuery('redirect'));
+        }
+        return $result;
+    }*/
+            
+            ?>
+
+           <a class="btn btn-success btn-success-self-service-user-login" href="javascript:void(0);">
+                    <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
+                </a>
+                <?php
+                /*echo Configure::read('app.BarCodeIdentifier')->doSelfServiceUserLogin('0'); 
+                echo $orderCustomerService->isSelfServiceModeByUrl(); */
+                echo $orderCustomerService->doSelfServiceUserLogin('0'); 
+                ?>
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>
         </div>

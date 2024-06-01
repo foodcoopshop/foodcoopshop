@@ -135,10 +135,11 @@ body.self_services #content {
     float: left;
     font-size: 18px;
  }
- .self-service-wrapper .btn[type="submitselfserviceuserlogin"] {
+ .self-service-wrapper .btn-success-self-service-user-login {
     font-size: 36px;
     width: auto;
     left: 10px;
+    margin-bottom: 50px; 
 }
 .self-service .footer {
     background: #fff;

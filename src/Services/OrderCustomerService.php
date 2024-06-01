@@ -18,6 +18,9 @@ namespace App\Services;
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;
+use Cake\Datasource\FactoryLocator;
+use Model\Tabel\CustomersTable;
+use App\Model\Entity\Customer;
 
 class OrderCustomerService
 {
@@ -56,4 +59,180 @@ class OrderCustomerService
         return $result;
     }
 
+    public function doSelfServiceUserLogin($selfServiceUserBarCode)
+    {
+        /*$addressCustomersTable = FactoryLocator::get('Table')->get('AddressCustomers');
+        $customers->select($addressCustomersTable);
+        $customers = $customers->toArray();
+        $i = 0;
+        foreach($customers as $customer) {     
+    ------------------------------------------*/
+
+ $customerTable = FactoryLocator::get('Table')->get('Customers');
+
+ $conditions = [];
+ $active = '1';
+
+ $customers = $customerTable->find('all',
+ fields: [
+     'system_bar_code' => $customerTable->getBarcodeFieldString(),
+ ],
+ conditions: [
+     'Customers.id_default_group =' => Customer::GROUP_SELF_SERVICE_CUSTOMER,
+     'Customers.active =' => $active,
+ ],
+ order: $customerTable->getCustomerOrderClause('ASC'),
+ contain: [
+     'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+     ]
+ );
+ $customers = $customerTable->addCustomersNameForOrderSelect($customers);
+ $customers->select($customerTable);
+ $customers->select($customerTable->AddressCustomers);
+ return $customers->first();
+
+ if (empty($customers)) {
+     throw new RecordNotFoundException('customers not found or not active');
+ }
+ else{
+ throw new RecordNotFoundException('customer gefunden');
+ }
+
+/*
+
+        $customersTable = FactoryLocator::get('Table')->get('Customers');
+        $customerTable->dropManufacturersInNextFind();
+
+        $conditions = [];
+        $active = '1';
+
+        $customers = $customerTable->find('all',
+        fields: [
+            'system_bar_code' => $customerTable->getBarcodeFieldString(),
+        ],
+        conditions: [
+            'Customers.id_default_group =' => Customer::GROUP_SELF_SERVICE_CUSTOMER,
+            'Customers.active =' => $active,
+        ],
+        order: $customerTable->getCustomerOrderClause('ASC'),
+        contain: [
+            'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+            ]
+        );
+        $customers = $customerTable->addCustomersNameForOrderSelect($customers);
+        $customers->select($customerTable);
+        $customers->select($customerTable->AddressCustomers);
+        return $customers->first();
+
+        if (empty($customers)) {
+            throw new RecordNotFoundException('customers not found or not active');
+        }
+*/
+/*
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i>',
+            $url,
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => $title,
+                'target' => $targetBlank ? '_blank' : '',
+                'escape' => false
+            ]
+        );
+       $linkToInvoice = Configure::read('app.htmlHelper')->link(
+            __d('admin', 'Print_receipt'),
+            $invoiceRoute,
+            [
+                'class' => 'btn btn-outline-light btn-flash-message',
+                'target' => '_blank',
+                'escape' => false,
+            ],
+        );
+
+        $conditions = [];
+        if ($active != 'all') {
+            $conditions['Customers.active'] = $active;
+        }
+        $query = $customersTable->find('all',
+        conditions: $conditions,
+        contain: []);
+        $query = $customersTable->addCustomersNameForOrderSelect($query);
+        $query->select($customersTable)
+
+
+        if (empty($customerIds)) {
+            throw new \Exception('no customer id passed');
+        }
+
+        $customerTable = FactoryLocator::get('Table')->get('Customers');
+
+        $customers = $customerTable->find('all',
+            fields: [
+                'system_bar_code' => $customerTable->getBarcodeFieldString(),
+            ],
+            conditions: [
+                'Customers.id_customer IN' => $customerIds,
+            ],
+            order: $customerTable->getCustomerOrderClause('ASC'),
+            contain: [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+            ]
+        );
+        $customers = $customerTable->addCustomersNameForOrderSelect($customers);
+        $customers->select($customerTable);
+        $customers->select($customerTable->AddressCustomers);
+        return $customers;
+
+
+
+        $validOrderDetails = $this->getAssociation('ValidOrderDetails');
+            $i = 0;
+            foreach($customers as $customer) {
+                $customers[$i]->   validOrderDetailCount = $validOrderDetails->find('all', conditions: [
+                    'id_customer' => $customers[$i]->id_customer
+                ])->count();
+                $i++;
+
+
+
+
+        $barCode = $credentials[TokenIdentifier::CREDENTIAL_TOKEN] ?? '';
+        $ormResolver = [
+            'className' => OrmResolver::class,
+            'userModel' => 'Customers',
+            'finder' => 'auth', // CustomersTable::findAuth
+        ];
+        $service->loadIdentifier('App.BarCode', [
+            'resolver' => $ormResolver,
+        ]);*/
+
+
+        /*$table = $this->getTableLocator()->get($this->_config['resolver']['userModel']);
+        $user =  $table->find($this->_config['resolver']['finder'])->where([
+            (new QueryExpression())->eq($this->getIdentifierField($table), $barCode),
+        ])->first();
+
+        $addressCustomersTable = FactoryLocator::get('Table')->get('AddressCustomers');
+        $customers->select($addressCustomersTable);
+        $customers = $customers->toArray();
+        $i = 0;
+        foreach($customers as $customer) {     
+    
+        $validOrderDetails = $this->getAssociation('ValidOrderDetails');
+            $i = 0;
+            foreach($customers as $customer) {
+                $customers[$i]->validOrderDetailCount = $validOrderDetails->find('all', conditions: [
+                    'id_customer' => $customers[$i]->id_customer
+                ])->count();
+                $i++;
+
+     $customerId = $this->identity->getId();
+        $pdfWriter = new MyMemberCardPdfWriterService();
+        $customers = $pdfWriter->getMemberCardCustomerData($customerId);
+        $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
+        $pdfWriter->setData([
+            'customers' => $customers,
+        ]);
+        die($pdfWriter->writeInline()); */
+    }
 }
