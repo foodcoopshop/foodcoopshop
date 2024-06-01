@@ -42,10 +42,6 @@ echo $this->Form->create(
             'id' => 'LoginForm',
         ]
     );
-    ?>
-
-    <?php
-
 
     if ($enableBarCodeLogin) {
         $this->element('addScript', ['script' =>

@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
-use App\Identifier\BarCodeIdentifier;
 
 echo $this->element('layout/header');
 ?>
