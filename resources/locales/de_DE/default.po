@@ -266,7 +266,7 @@ msgid "Sign_in_for_self_service"
 msgstr "Anmelden zur Selbstbedienung"
 
 msgid "Self_service_login_without_account"
-msgstr "Für Bar/EC-Karten-Einkauf OHNE Kundenkonto"
+msgstr "Für Einkauf OHNE Kundenkonto"
 
 msgid "Self_service_login_with_account"
 msgstr "Für Guthaben-Einkauf MIT Kundenkonto"
