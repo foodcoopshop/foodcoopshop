@@ -271,6 +271,13 @@ body.categories.detail div.description-wrapper {
     padding: 10px;
     padding-left: 108px;
 }
+#login-form h6 {
+    font-size: 28px;
+    line-height: 45px;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
 #inner-content #login-form form,
 body.customers.new_password_request #inner-content form {
     border-top: none;
@@ -905,6 +912,10 @@ body.carts #load-last-order-details,
 .btn {
     padding: 4px 8px;
     font-size: 14px;
+}
+.btn-success-self-service-user-login {
+    font-size: 36px;
+    margin-bottom: 50px; 
 }
 .edit-shortcut-button {
     padding: 0px 4px;
