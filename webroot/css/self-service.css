@@ -15,6 +15,10 @@
 body.self_services {
     margin: 0;
 }
+body.self_services .self-service-wrapper {
+    display: none;
+}
+
 body.self_services #content,
 .self-service,
 .self-service .footer {
