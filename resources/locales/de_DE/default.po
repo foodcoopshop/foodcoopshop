@@ -271,6 +271,9 @@ msgstr "Für Bar/EC-Karten-Einkauf OHNE Kundenkonto"
 msgid "Self_service_login_with_account"
 msgstr "Für Guthaben-Einkauf MIT Kundenkonto"
 
+msgid "Self_service_login_action"
+msgstr "bitte hier"
+
 msgid "You_are_already_signed_in."
 msgstr "Du bist bereits angemeldet."
 

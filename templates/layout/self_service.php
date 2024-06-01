@@ -32,6 +32,7 @@ echo $this->element('layout/header');
     ?>
         <div class="self-service-wrapper">
             <h6><?php echo __('Self_service_login_without_account'); ?></h6>
+            <h6><?php echo __('Self_service_login_action'); ?></h6>
             <?php
     /*public function isSelfServiceModeByUrl()
     {
@@ -54,6 +55,7 @@ echo $this->element('layout/header');
                 ?>
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>
+            <h6><?php echo __('Self_service_login_action'); ?></h6>
         </div>
     <?php echo $this->fetch('content'); ?>
     <?php if (!$orderCustomerService->isOrderForDifferentCustomerMode()) { ?>
