@@ -30,10 +30,10 @@ echo $this->element('layout/header');
         echo $this->Flash->render('auth');
     ?>
         <div class="self-service-wrapper">
-            <h6><span><?php echo __('Self_service_login_without_account'); ?></span></h6>
+            <h6><?php echo __('Self_service_login_without_account'); ?></h6>
             <button type="submitselfserviceuserlogin" class="btn btn-success btn-success-self-service-user-login"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?></button>
             <h6></h6><h6></h6><h6></h6>
-            <h6><span><?php echo __('Self_service_login_with_account'); ?></span></h6>
+            <h6><?php echo __('Self_service_login_with_account'); ?></h6>
         </div>
     <?php echo $this->fetch('content'); ?>
     <?php if (!$orderCustomerService->isOrderForDifferentCustomerMode()) { ?>
