@@ -94,6 +94,9 @@ msgstr "finished"
 msgid "route_self_service"
 msgstr "self-service"
 
+msgid "route_self_service_user"
+msgstr "self-service_user"
+
 msgid "Runtime"
 msgstr "Runtime"
 

@@ -56,4 +56,16 @@ class BarCodeIdentifier extends AbstractIdentifier
         return $user;
 
     }
+
+    public function getSelfServiceUser()
+    {
+        /*$customerId = $this->identity->getId();
+        $pdfWriter = new MyMemberCardPdfWriterService();
+        $customers = $pdfWriter->getMemberCardCustomerData($customerId);
+        $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
+        $pdfWriter->setData([
+            'customers' => $customers,
+        ]);
+        die($pdfWriter->writeInline());*/
+    }
 }

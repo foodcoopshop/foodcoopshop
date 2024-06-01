@@ -94,6 +94,9 @@ msgstr "abgeschlossen"
 msgid "route_self_service"
 msgstr "selbstbedienung"
 
+msgid "route_self_service_user"
+msgstr "selbstbedienungskunde"
+
 msgid "Runtime"
 msgstr "Laufzeit"
 
