@@ -260,7 +260,7 @@ msgid "Sign_in"
 msgstr "Anmelden"
 
 msgid "Sign_in_self_service_user"
-msgstr "Anmelden zur Selbstbedienung"
+msgstr "Selbstbedienung starten"
 
 msgid "Sign_in_for_self_service"
 msgstr "Anmelden zur Selbstbedienung"
