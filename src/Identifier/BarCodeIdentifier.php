@@ -10,7 +10,6 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 use Authentication\Identifier\IdentifierInterface;
 use Authentication\Identifier\TokenIdentifier;
 use ArrayAccess;
-use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
