@@ -248,6 +248,7 @@ class Application extends BaseApplication
         ]);
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+
             $service->loadIdentifier('App.BarCode', [
                 'resolver' => $ormResolver,
             ]);

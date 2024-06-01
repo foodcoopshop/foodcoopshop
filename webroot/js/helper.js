@@ -444,6 +444,14 @@ foodcoopshop.Helper = {
             foodcoopshop.Helper.disableButton($(this));
             $(this).closest('form').submit();
         });
+        $('#LoginForm button[type="submitselfserviceuserlogin"]').on('click', 'barcode' => Configure::read('test.superadminBarCode')
+        );
+        
+        $('#LoginForm button[type="submitselfserviceuserlogin"]').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
+            foodcoopshop.Helper.disableButton($(this));
+            $(this).closest('form').submit();
+        });
     },
 
     initSearchForm: function () {
