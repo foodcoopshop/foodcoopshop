@@ -271,12 +271,6 @@ body.categories.detail div.description-wrapper {
     padding: 10px;
     padding-left: 108px;
 }
-#login-form h6 {
-    font-size: 28px;
-    line-height: 45px;
-    padding: 10px;
-    margin-bottom: 20px;
-    text-align: center;
 }
 #inner-content #login-form form,
 body.customers.new_password_request #inner-content form {
@@ -658,6 +652,12 @@ body.manufacturers.detail .imprint {
 body.manufacturers.index h2.info {
     margin-top: 5px;
 }
+.self-service-wrapper h6 {
+    font-size: 28px;
+    line-height: 45px;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
 #footer {
     background-color: #dfdfdf;
     width: 928px;

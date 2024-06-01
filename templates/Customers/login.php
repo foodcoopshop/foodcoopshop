@@ -31,23 +31,17 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 <div id="login-form" class="form">
 
 <?php
-    echo $this->Form->create(
+    if (!$enableButtonForSelfServiceUser) { ?>
+        <h1><?php echo $title_for_layout; ?></h1><?php
+    } 
+
+echo $this->Form->create(
         null,
         [
             'url' => $this->Slug->getLogin($this->request->getQuery('redirect')),
             'id' => 'LoginForm',
         ]
     );
-
-    if ($enableButtonForSelfServiceUser) { ?>
-        <h6><span><?php echo __('Self_service_login_without_account'); ?></span></h6>
-        <button type="submitselfserviceuserlogin" class="btn btn-success btn-success-self-service-user-login"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?></button>
-        <h2></h2>
-        <h6><span><?php echo __('Self_service_login_with_account'); ?></span></h6>
-        <?php }
-    else{ ?>
-        <h1><?php echo $title_for_layout; ?></h1>
-    <?php } 
     ?>
 
     <?php

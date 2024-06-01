@@ -52,6 +52,11 @@ class SelfServiceController extends FrontendController
             $keyword = h(trim($this->getRequest()->getQuery('productWithError')));
         }
 
+        $selfServiceUser = '';
+        if (!empty($this->getRequest()->getQuery('selfServiceUser'))) {
+            $selfServiceUser = h(trim($this->getRequest()->getQuery('selfServiceUser')));
+        }
+
         $this->Category = $this->getTableLocator()->get('Categories');
         $categoriesForSelect = $this->Category->getForSelect(null, false, false, false);
 

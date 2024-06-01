@@ -99,6 +99,7 @@ body.self_services #content {
 .self-service #login-form form {
     padding-top: 20px;
     position: relative;
+    padding-bottom: 100px;
 }
 .self-service #login-form hr {
     clear: both;
@@ -125,6 +126,19 @@ body.self_services #content {
 .self-service #login-form h2 span {
     background: #fff;
     padding:0 10px;
+}
+.self-service .self-service-wrapper {
+    width: 100%;
+    text-align: center;
+    line-height: 0.1em;
+    margin: 15px 0 25px;
+    float: left;
+    font-size: 18px;
+ }
+ .self-service-wrapper .btn[type="submitselfserviceuserlogin"] {
+    font-size: 36px;
+    width: auto;
+    left: 10px;
 }
 .self-service .footer {
     background: #fff;
@@ -189,7 +203,7 @@ body.customers.login .self-service {
     min-height: 565px ! important;
 }
 body.customers.login .footer .left-wrapper,
-body.customers.login .footer .right-wrapper .btn-add-deposit {
+body.customers.login .footer .right-wrapper .btn-add-deposit .self-service-wrapper{
     display: none;
 }
 .self-service #cart {
