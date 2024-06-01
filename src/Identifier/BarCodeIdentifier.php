@@ -56,5 +56,4 @@ class BarCodeIdentifier extends AbstractIdentifier
         return $user;
 
     }
-
 }
