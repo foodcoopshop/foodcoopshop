@@ -44,13 +44,12 @@ echo $this->element('layout/header');
             
             ?>
 
-           <a class="btn btn-success btn-success-self-service-user-login" href="javascript:void(0);">
+<a class="btn btn-success btn-success-self-service-user-login submit" href="javascript:void(0);">
                     <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
-                </a>
+                </a>         
                 <?php
-                /*echo Configure::read('app.BarCodeIdentifier')->doSelfServiceUserLogin('0'); 
-                echo $orderCustomerService->isSelfServiceModeByUrl(); */
-                echo $orderCustomerService->doSelfServiceUserLogin('0'); 
+                /*
+                  <button type="submit" class="btn btn-success btn-success-self-service-user-login"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?></button> */
                 ?>
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>

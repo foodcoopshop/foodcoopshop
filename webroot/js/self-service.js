@@ -119,6 +119,14 @@ foodcoopshop.SelfService = {
         });
         barcodeInputField.focus();
 
+        $('.self-service-wrapper a.btn').on('click', function () {
+            console.log('click');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
+            foodcoopshop.Helper.disableButton($(this));
+            loginForm.find(barcodeInputField).val('91791C');
+            loginForm.submit();
+        });
+
         var cameraButton = $('<a/>').
             addClass('btn').
             addClass('btn-camera').

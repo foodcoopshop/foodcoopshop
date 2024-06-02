@@ -446,11 +446,7 @@ foodcoopshop.Helper = {
         });
 
         //$('#LoginForm button[type="submitselfserviceuserlogin"]').on('click', $(this).attr('barcode') = '4a1342');
-        $('.self-service-wrapper a.btn').on('click', function () {
-            console.log('click');
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
-            foodcoopshop.Helper.disableButton($(this));
-        });
+
     },
 
     initSearchForm: function () {
