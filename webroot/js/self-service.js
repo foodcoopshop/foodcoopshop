@@ -123,6 +123,45 @@ foodcoopshop.SelfService = {
             console.log('click');
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
             foodcoopshop.Helper.disableButton($(this));
+
+
+            var $barcodeselfserviceuser = '';
+            foodcoopshop.FactoryLocator.get.$customerTable;
+    
+            $conditions = [];
+            $active = '1';
+    
+            $customers = $customerTable->find('all',
+            fields: [
+                'system_bar_code' => $customerTable->getBarcodeFieldString(),
+            ],
+            conditions: [
+                'Customers.id_default_group =' => Customer::GROUP_SELF_SERVICE_CUSTOMER,
+                'Customers.active =' => $active,
+            ],
+            order: $customerTable->getCustomerOrderClause('ASC'),
+            contain: [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+                ]
+            );
+            $customers = $customerTable->addCustomersNameForOrderSelect($customers);
+            $customers->select($customerTable);
+            $customers->select($customerTable->AddressCustomers);
+            return $customers->first();
+    
+            if (empty($customers)) {
+                throw new RecordNotFoundException('customers not found or not active');
+            }
+
+
+
+
+
+
+            
+
+
+
             loginForm.find(barcodeInputField).val('91791C');
             loginForm.submit();
         });
