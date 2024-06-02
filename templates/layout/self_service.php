@@ -32,25 +32,10 @@ echo $this->element('layout/header');
         <div class="self-service-wrapper">
             <h6><?php echo __('Self_service_login_without_account'); ?></h6>
             <h6><?php echo __('Self_service_login_action'); ?></h6>
-            <?php
-    /*public function isSelfServiceModeByUrl()
-    {
-        $result = Router::getRequest()->getPath() == '/' . __('route_self_service');
-        if (!empty(Router::getRequest()->getQuery('redirect'))) {
-            $result |= preg_match('`' . '/' . __('route_self_service') . '`', Router::getRequest()->getQuery('redirect'));
-        }
-        return $result;
-    }*/
-            
-            ?>
 
 <a class="btn btn-success btn-success-self-service-user-login submit" href="javascript:void(0);">
                     <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
                 </a>         
-                <?php
-                /*
-                  <button type="submit" class="btn btn-success btn-success-self-service-user-login"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?></button> */
-                ?>
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>
             <h6><?php echo __('Self_service_login_action'); ?></h6>

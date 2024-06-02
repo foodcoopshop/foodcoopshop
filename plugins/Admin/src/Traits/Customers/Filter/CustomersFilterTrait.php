@@ -134,22 +134,5 @@ trait CustomersFilterTrait
         return $customers;
 
     }
-
-    public function getDefaultSelfServiceCustomer($barCodeDefaultSelfServiceCustomer='')
-    {
-        //$customersTable = FactoryLocator::get('Table')->get('Customers');
-
-        $customerTable = $this->getTableLocator()->get('Customers');
-        $defaultSelfServiceCustomer = $customerTable->find('all', conditions: [
-            'Customers.id_default_group' => Customer::GROUP_SELF_SERVICE_CUSTOMER,
-        ])->first();
-
-        if (empty($defaultSelfServiceCustomer)) {
-            throw new \Exception('customer not found');
-        }
-        else{
-            $barCodeDefaultSelfServiceCustomer = $defaultSelfServiceCustomer[0]->system_bar_code;
-        }
-        return $barCodeDefaultSelfServiceCustomer;
-    }
+    
 }

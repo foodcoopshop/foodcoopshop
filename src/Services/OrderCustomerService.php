@@ -59,4 +59,22 @@ class OrderCustomerService
         return $result;
     }
 
+    public function getDefaultSelfServiceCustomer($barCodeDefaultSelfServiceCustomer='')
+    {
+        if (empty($barCodeDefaultSelfServiceCustomer)) {
+            $customerTable = FactoryLocator::get('Table')->get('Customers');
+            $defaultSelfServiceCustomer = $customerTable->find('all', conditions: [
+                'Customers.id_default_group' => Customer::GROUP_SELF_SERVICE_CUSTOMER,
+            ])->first();
+            if (empty($defaultSelfServiceCustomer)) {
+                throw new \Exception('customer not found');
+            }
+            else{
+              $barCodeDefaultSelfServiceCustomer = $defaultSelfServiceCustomer->system_bar_code;
+            }
+        }
+        $barCodeDefaultSelfServiceCustomer = '91791C';
+        return $barCodeDefaultSelfServiceCustomer;
+    }
+
 }
