@@ -208,7 +208,7 @@ body.customers.login .self-service {
     min-height: 565px ! important;
 }
 body.customers.login .footer .left-wrapper,
-body.customers.login .footer .right-wrapper .btn-add-deposit .self-service-wrapper{
+body.customers.login .footer .right-wrapper .btn-add-deposit{
     display: none;
 }
 .self-service #cart {

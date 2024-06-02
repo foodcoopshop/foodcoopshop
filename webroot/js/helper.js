@@ -444,9 +444,6 @@ foodcoopshop.Helper = {
             foodcoopshop.Helper.disableButton($(this));
             $(this).closest('form').submit();
         });
-
-        //$('#LoginForm button[type="submitselfserviceuserlogin"]').on('click', $(this).attr('barcode') = '4a1342');
-
     },
 
     initSearchForm: function () {

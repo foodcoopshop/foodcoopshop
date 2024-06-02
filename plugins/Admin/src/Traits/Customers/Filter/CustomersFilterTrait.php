@@ -148,7 +148,7 @@ trait CustomersFilterTrait
             throw new \Exception('customer not found');
         }
         else{
-            $defaultSelfServiceCustomer->system_bar_code;
+            $barCodeDefaultSelfServiceCustomer = $defaultSelfServiceCustomer[0]->system_bar_code;
         }
         return $barCodeDefaultSelfServiceCustomer;
     }

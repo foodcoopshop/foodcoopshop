@@ -35,7 +35,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         <h1><?php echo $title_for_layout; ?></h1><?php
     } 
 
-echo $this->Form->create(
+    echo $this->Form->create(
         null,
         [
             'url' => $this->Slug->getLogin($this->request->getQuery('redirect')),
