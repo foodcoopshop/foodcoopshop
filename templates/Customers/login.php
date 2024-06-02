@@ -30,7 +30,10 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 ?>
 <div id="login-form" class="form">
 
-<?php
+    <h1><?php echo $title_for_layout; ?></h1>
+
+    <?php
+
     echo $this->Form->create(
         null,
         [
@@ -39,25 +42,12 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         ]
     );
 
-    if ($enableRegistrationForm) { ?>
-    <h1><?php echo $title_for_layout; ?></h1>
-    <?php }
-    else{ ?>
-    <h2><span><?php echo __('Self_service_login_without_account'); ?></span></h2>
-    <button type="submit" class="btn btn-outline-light"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?></button>
-    <h2><span><?php echo __('or'); ?></span></h2>
-    <h2><span><?php echo __('Self_service_login_with_account'); ?></span></h2>
-    <?php } 
-    ?>
-
-    <?php
-
     if ($enableBarCodeLogin) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace').".SelfService.initLoginForm();"
         ]);
         echo $this->Form->control('barcode', ['type' => 'text', 'label' => __('Scan_member_card')]);
-        echo '<h3><span>'.__('or').'</span></h3>';
+        echo '<h2><span>'.__('or').'</span></h2>';
     }
 
     echo $this->Form->control('email', ['label' => __('Email')]);
