@@ -223,15 +223,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2712345000235';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $response = $this->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $response->msg);
-        /*$this->assertRedirect($this->Slug->getSelfService());
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Gewichtsbarcode</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+        $this->assertRedirect($this->Slug->getSelfService());
 
-        $this->CartProductUnit = $this->getTableLocator()->get('CartProductUnits');
-        $cartProductUnits = $this->CartProductUnit->find('all', order: [
-            'CartProductUnits.id_cart_product' => 'DESC'
-        ])->first();
-        $this->assertEquals(4.9, $cartProductUnits[0]->ordered_quantity_in_units);*/
+        $cartProductUnitsTable = $this->getTableLocator()->get('CartProductUnits');
+        $cartProductUnits = $cartProductUnitsTable->find('all')->first();
+        $this->assertEquals(0.023, $cartProductUnits->ordered_quantity_in_units);
     }
 
     public function testSearchByCustomProductAttributeBarcodeWithWeight()
@@ -240,8 +237,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2112345001234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
-        $response = $this->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $response->msg);
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Lagerprodukt mit Varianten</b> wurde in deine Einkaufstasche gelegt.', $_SESSION['Flash']['flash'][0]['message']);
+
+        $cartProductUnitsTable = $this->getTableLocator()->get('CartProductUnits');
+        $cartProductUnits = $cartProductUnitsTable->find('all')->first();
+        $this->assertEquals(0.123, $cartProductUnits->ordered_quantity_in_units);
+
     }
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
