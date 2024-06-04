@@ -645,11 +645,11 @@ class CatalogService
     public function getBarcodeWeight(string $barcode): float
     {
         $productBarcodeWeight = substr($barcode, 7, 5);
-        $predecimalplaces = substr($productBarcodeWeight, 0, 2);
-        $postdecimalplaces = substr($productBarcodeWeight, 2, 3);
-        $productBarcodeWeight = $predecimalplaces;
+        $leadingDecimalPlaces = substr($productBarcodeWeight, 0, 2);
+        $trailingDecimalPlaces = substr($productBarcodeWeight, 2, 3);
+        $productBarcodeWeight = $leadingDecimalPlaces;
         $productBarcodeWeight .= ".";
-        $productBarcodeWeight .= $postdecimalplaces;
+        $productBarcodeWeight .= $trailingDecimalPlaces;
         $productBarcodeWeight = floatval($productBarcodeWeight);
         return $productBarcodeWeight;
     }
