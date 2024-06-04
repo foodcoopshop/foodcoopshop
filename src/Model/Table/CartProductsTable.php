@@ -61,7 +61,6 @@ class CartProductsTable extends AppTable
      */
     public function add($productId, $attributeId, $amount, $orderedQuantityInUnits = -1)
     {
-
         $identity = Router::getRequest()->getAttribute('identity');
         $orderCustomerService = new OrderCustomerService();
 
