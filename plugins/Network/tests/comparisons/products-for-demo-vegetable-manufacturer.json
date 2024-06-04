@@ -740,6 +740,140 @@
             "row_class": "main-product custom-odd"
         },
         {
+            "id_product": 352,
+            "id_manufacturer": 5,
+            "id_tax": 1,
+            "id_storage_location": 1,
+            "price": "1.200000",
+            "name": "\u003Cspan class=\u0022product-name\u0022\u003ELagerprodukt mit Gewichtsbarcode\u003C\/span\u003E: \u003Cspan class=\u0022quantity-in-units\u0022\u003Eca.\u00a01\u00a0kg\u003C\/span\u003E",
+            "description": "",
+            "description_short": "",
+            "unity": "",
+            "is_declaration_ok": 0,
+            "is_stock_product": 1,
+            "active": 1,
+            "delivery_rhythm_type": "week",
+            "delivery_rhythm_count": 1,
+            "delivery_rhythm_first_delivery_day": null,
+            "delivery_rhythm_order_possible_until": null,
+            "delivery_rhythm_send_order_list_weekday": 3,
+            "delivery_rhythm_send_order_list_day": null,
+            "created": "2019-06-05T15:09:53+02:00",
+            "modified": "2019-06-05T15:10:08+02:00",
+            "product_attributes": [],
+            "stock_available": {
+                "id_stock_available": 714,
+                "id_product": 352,
+                "id_product_attribute": 0,
+                "quantity": 999,
+                "quantity_limit": 0,
+                "sold_out_limit": null,
+                "always_available": 1,
+                "default_quantity_after_sending_order_lists": null
+            },
+            "manufacturer": {
+                "id_manufacturer": 5,
+                "name": "Demo Gem\u00fcse-Hersteller",
+                "description": "\u003Cp\u003EGem\u0026uuml;se-Hersteller Beschreibung\u0026nbsp;lang\u003C\/p\u003E",
+                "short_description": "\u003Cdiv class=\u0022entry-content\u0022\u003E\r\n\u003Cp\u003EGem\u0026uuml;se-Hersteller Beschreibung kurz\u003C\/p\u003E\r\n\u003C\/div\u003E",
+                "created": "2014-05-14T13:36:44+02:00",
+                "modified": "2016-09-27T09:34:51+02:00",
+                "active": true,
+                "is_private": 0,
+                "uid_number": "",
+                "additional_text_for_invoice": "",
+                "iban": "",
+                "bic": "",
+                "bank_name": "",
+                "firmenbuchnummer": "",
+                "firmengericht": "",
+                "aufsichtsbehoerde": "",
+                "kammer": "",
+                "homepage": "",
+                "id_customer": 88,
+                "variable_member_fee": 0,
+                "send_invoice": 1,
+                "send_order_list": 1,
+                "default_tax_id": 1,
+                "default_tax_id_purchase_price": null,
+                "send_order_list_cc": "",
+                "send_instant_order_notification": null,
+                "send_ordered_product_deleted_notification": null,
+                "send_ordered_product_price_changed_notification": null,
+                "send_ordered_product_amount_changed_notification": null,
+                "enabled_sync_domains": "1",
+                "stock_management_enabled": 1,
+                "send_product_sold_out_limit_reached_for_manufacturer": 1,
+                "send_product_sold_out_limit_reached_for_contact_person": 1,
+                "no_delivery_days": "",
+                "include_stock_products_in_order_lists": 1,
+                "send_delivery_notes": 0,
+                "anonymize_customers": 0
+            },
+            "unit_product": {
+                "id": 9,
+                "id_product": 352,
+                "id_product_attribute": 0,
+                "price_incl_per_unit": "12.00",
+                "purchase_price_incl_per_unit": null,
+                "name": "kg",
+                "amount": 1,
+                "price_per_unit_enabled": 1,
+                "quantity_in_units": "1.000"
+            },
+            "tax": {
+                "id_tax": 1,
+                "rate": "20.000",
+                "active": 1,
+                "deleted": 0
+            },
+            "image": null,
+            "deposit_product": null,
+            "category_products": [
+                {
+                    "id_category": 20,
+                    "id_product": 352,
+                    "category": {
+                        "id_category": 20,
+                        "id_parent": 0,
+                        "name": "Alle Produkte",
+                        "description": "",
+                        "nleft": 3,
+                        "nright": 4,
+                        "active": 1,
+                        "created": "2014-05-14T21:53:52+02:00",
+                        "modified": "2014-05-17T13:14:22+02:00"
+                    }
+                }
+            ],
+            "category": {
+                "names": [],
+                "all_products_found": true
+            },
+            "selected_categories": [
+                20
+            ],
+            "is_new": false,
+            "gross_price": 1.44,
+            "delivery_rhythm_string": "w\u00f6chentlich",
+            "last_order_weekday": "Dienstag",
+            "deposit": 0,
+            "price_is_zero": false,
+            "unit": {
+                "id": 9,
+                "id_product": 352,
+                "id_product_attribute": 0,
+                "price_incl_per_unit": "12.00",
+                "purchase_price_incl_per_unit": null,
+                "name": "kg",
+                "amount": 1,
+                "price_per_unit_enabled": 1,
+                "quantity_in_units": "1.000"
+            },
+            "unchanged_name": "Lagerprodukt mit Gewichtsbarcode",
+            "row_class": "main-product"
+        },
+        {
             "id_product": 350,
             "id_manufacturer": 5,
             "id_tax": 2,
@@ -972,7 +1106,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Lagerprodukt mit Varianten",
-            "row_class": "main-product"
+            "row_class": "main-product custom-odd"
         },
         {
             "id_product": "350-13",
@@ -980,7 +1114,7 @@
             "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
-            "row_class": "sub-row",
+            "row_class": "sub-row custom-odd",
             "unchanged_name": "Lagerprodukt mit Varianten",
             "name": "\u003Cspan class=\u0022product-name\u0022\u003ELagerprodukt mit Varianten\u003C\/span\u003E: 0,5 kg",
             "description_short": "",
@@ -1023,7 +1157,7 @@
             "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
-            "row_class": "sub-row",
+            "row_class": "sub-row custom-odd",
             "unchanged_name": "Lagerprodukt mit Varianten",
             "name": "\u003Cspan class=\u0022product-name\u0022\u003ELagerprodukt mit Varianten\u003C\/span\u003E: 1 kg",
             "description_short": "",
@@ -1066,7 +1200,7 @@
             "active": 1,
             "is_stock_product": 1,
             "price_is_zero": false,
-            "row_class": "sub-row",
+            "row_class": "sub-row custom-odd",
             "unchanged_name": "Lagerprodukt mit Varianten",
             "name": "ca.\u00a00,5\u00a0kg",
             "description_short": "",
@@ -1212,7 +1346,7 @@
             "price_is_zero": false,
             "unit": null,
             "unchanged_name": "Mangold",
-            "row_class": "main-product custom-odd"
+            "row_class": "main-product"
         }
     ]
 }
