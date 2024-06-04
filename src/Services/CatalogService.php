@@ -397,7 +397,7 @@ class CatalogService
                         $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
                     ]);
                 }
-                if ($this->hasABarcodeWeightPrefix($keyword)){
+                if ($this->hasABarcodeWeightPrefix($keyword)) {
                     $productBarcodeWithoutWeight = $this->getBarcodeWeightFilledWithNull($keyword);
                     $or = array_merge($or, [
                         $q->newExpr()->eq('BarcodeProducts.barcode', $productBarcodeWithoutWeight),
@@ -447,7 +447,6 @@ class CatalogService
         return $products;
 
     }
-
 
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products)
     {

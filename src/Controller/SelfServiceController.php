@@ -76,7 +76,6 @@ class SelfServiceController extends FrontendController
         $this->set('pagesCount', $pagesCount);
         $this->set('page', $page);
 
-
         $this->set('products', $products);
 
         $this->viewBuilder()->setLayout('self_service');
@@ -95,7 +94,7 @@ class SelfServiceController extends FrontendController
             } else {
                 if (!empty($products[0]->barcode_product)) {
                     if ($catalogService->hasABarcodeWeightPrefix($keyword)){
-                        if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode){
+                        if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode) {
                             $customBarcodeWithWeightFound = true;
                             $attributeId = 0;
                         }
@@ -112,7 +111,7 @@ class SelfServiceController extends FrontendController
                             break;
                         } else {
                             if ($catalogService->hasABarcodeWeightPrefix($keyword)){
-                                if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode){
+                                if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode) {
                                     $customBarcodeWithWeightFound = true;
                                     $attributeId = $productAttribute->id_product_attribute;
                                     break;
@@ -129,8 +128,8 @@ class SelfServiceController extends FrontendController
                 if ($customBarcodeWithWeightFound){
                     $quantityInUnits = $catalogService->getBarcodeWeight($keyword);
                 }
-                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, 1, $quantityInUnits); 
-                
+                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, 1, $quantityInUnits);
+
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
