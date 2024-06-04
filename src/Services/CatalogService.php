@@ -397,7 +397,7 @@ class CatalogService
                         $q->newExpr()->like($this->getProductIdentifierField(), strtolower(substr($keyword, 0, 4))),
                     ]);
                 }
-                if ($this->hasABarcodeWeightPrefix($keyword)){
+                if ($this->hasABarcodeWeightPrefix($keyword)) {
                     $productBarcodeWithoutWeight = $this->getBarcodeWeightFilledWithNull($keyword);
                     $or = array_merge($or, [
                         $q->newExpr()->eq('BarcodeProducts.barcode', $productBarcodeWithoutWeight),
@@ -447,7 +447,6 @@ class CatalogService
         return $products;
 
     }
-
 
     protected function removeProductIfAllAttributesRemovedDueToNoPurchasePrice($products)
     {
@@ -640,6 +639,18 @@ class CatalogService
         $productBarcodeWithoutWeight = substr($barcode, 0, 7);
         $productBarcodeWithoutWeight .= "000000";
         return $productBarcodeWithoutWeight;
+    }
+
+    public function getBarcodeWeight(string $barcode): float
+    {
+        $productBarcodeWeight = substr($barcode, 7, 5);
+        $leadingDecimalPlaces = substr($productBarcodeWeight, 0, 2);
+        $trailingDecimalPlaces = substr($productBarcodeWeight, 2, 3);
+        $productBarcodeWeight = $leadingDecimalPlaces;
+        $productBarcodeWeight .= ".";
+        $productBarcodeWeight .= $trailingDecimalPlaces;
+        $productBarcodeWeight = floatval($productBarcodeWeight);
+        return $productBarcodeWeight;
     }
 
 }
