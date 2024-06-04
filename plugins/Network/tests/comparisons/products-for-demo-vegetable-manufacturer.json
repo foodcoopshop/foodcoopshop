@@ -765,8 +765,8 @@
                 "id_stock_available": 714,
                 "id_product": 352,
                 "id_product_attribute": 0,
-                "quantity": 999,
-                "quantity_limit": 0,
+                "quantity": "999.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
