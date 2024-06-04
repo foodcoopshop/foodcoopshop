@@ -81,7 +81,6 @@ class SelfServiceController extends FrontendController
         $this->set('pagesCount', $pagesCount);
         $this->set('page', $page);
 
-
         $this->set('products', $products);
 
         $this->viewBuilder()->setLayout('self_service');
@@ -93,14 +92,15 @@ class SelfServiceController extends FrontendController
             $attributeId = (int) substr($keyword, 4, 4);
 
             $customBarcodeFound = false;
+            $customBarcodeWithWeightFound = false;
             if (!empty($products[0]->barcode_product) && $keyword == $products[0]->barcode_product->barcode) {
                 $customBarcodeFound = true;
                 $attributeId = 0;
             } else {
                 if (!empty($products[0]->barcode_product)) {
                     if ($catalogService->hasABarcodeWeightPrefix($keyword)){
-                        if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode){
-                            $customBarcodeFound = true;
+                        if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $products[0]->barcode_product->barcode) {
+                            $customBarcodeWithWeightFound = true;
                             $attributeId = 0;
                         }
                     }
@@ -116,8 +116,8 @@ class SelfServiceController extends FrontendController
                             break;
                         } else {
                             if ($catalogService->hasABarcodeWeightPrefix($keyword)){
-                                if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode){
-                                    $customBarcodeFound = true;
+                                if ($catalogService->getBarcodeWeightFilledWithNull($keyword) == $productAttribute->barcode_product_attribute->barcode) {
+                                    $customBarcodeWithWeightFound = true;
                                     $attributeId = $productAttribute->id_product_attribute;
                                     break;
                                 }
@@ -127,9 +127,14 @@ class SelfServiceController extends FrontendController
                 }
             }
 
-            if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound) {
+            if ($hashedProductId == $products[0]->system_bar_code || $customBarcodeFound || $customBarcodeWithWeightFound) {
                 $cartProductsTable = $this->getTableLocator()->get('CartProducts');
-                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, 1);
+                $quantityInUnits = -1;
+                if ($customBarcodeWithWeightFound){
+                    $quantityInUnits = $catalogService->getBarcodeWeight($keyword);
+                }
+                $result = $cartProductsTable->add($products[0]->id_product, $attributeId, 1, $quantityInUnits);
+
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]->id_product); // sic! no attributeId needed!
