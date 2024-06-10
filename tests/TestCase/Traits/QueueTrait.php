@@ -29,10 +29,10 @@ trait QueueTrait
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
         $queuedJobs = $this->QueuedJobs->find('all');
         foreach($queuedJobs as $queuedJob) {
-            if ($queuedJob->failed) {
+            if (!empty($queuedJob->failure_message)) {
                 pr($queuedJob->failure_message);
             }
-            $this->assertEquals(0, $queuedJob->failed);
+            $this->assertEmpty($queuedJob->failurue_message);
         }
     }
 
