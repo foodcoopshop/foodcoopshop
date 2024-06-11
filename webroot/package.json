@@ -38,7 +38,7 @@
     "slidebars": "^2.0.2",
     "swiper": "11.1.4",
     "tooltipster": "^4.2.8",
-    "uglify-js": "^3.17.4",
+    "uglify-js": "^3.18.0",
     "webrtc-adapter": "^9.0.1"
   }
 }
