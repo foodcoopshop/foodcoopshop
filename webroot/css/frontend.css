@@ -229,6 +229,7 @@ body.categories.detail div.description-wrapper {
 }
 .color-mode-toggle {
     margin-top: 1px;
+    margin-right: 10px;
     float: left;
 }
 #user-menu > li {
