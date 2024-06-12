@@ -205,8 +205,11 @@ class SelfServiceController extends FrontendController
         }
 
     }
-    public function loginWithChooesenSelfServiceUser()	
+    public function loginWithChoosenSelfServiceUser()	
     {	
+
+        //Configure::read('app.customerMainNamePart')
+
         /*$addressCustomersTable = FactoryLocator::get('Table')->get('AddressCustomers');	
         $customers->select($addressCustomersTable);	
         $customers = $customers->toArray();	
@@ -216,7 +219,7 @@ class SelfServiceController extends FrontendController
    // $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
    // $this->redirect($redirectUrl);
    // return;
-
+/*
      $customerTable = FactoryLocator::get('Table')->get('Customers');	
      $active = '1';	
 
@@ -241,7 +244,7 @@ class SelfServiceController extends FrontendController
      }	
      else{	
          throw new RecordNotFoundException('customer gefunden');	
-     }
+     }*/
 }
 
 }

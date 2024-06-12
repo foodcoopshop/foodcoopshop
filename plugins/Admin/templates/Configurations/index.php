@@ -171,7 +171,8 @@ $this->element('addScript', [
 
 
 
-
+        <?php
+                if (!empty($all_self_service_customers)) { ?>
         <tr>
                 <td class="first">
                     <b><?php echo __d('admin', 'Users_for_self_service_login'); ?></b>
@@ -180,11 +181,11 @@ $this->element('addScript', [
 
                 <td colspan="2" class="sync-domain-list">
                 <?php
-                if (!empty($all_self_service_customers)) {
                     echo '<table class="list">';
                     echo '<tr class="sort">';
                     echo '<th>'.__d('admin', 'Kunde').'</th>';
-                    echo '<th>'.__d('admin', 'Active').'</th>';
+                    echo '<th>'.__d('admin', 'KundenID').'</th>';
+                    echo '<th>'.__d('admin', 'Selbstbedienungs-Login anzeigen').'</th>';
                     echo '<th></th>';
                     echo '</th>';
                 }
@@ -192,8 +193,9 @@ $this->element('addScript', [
                 foreach ($all_self_service_customers as $self_service_customer) {
                     echo '<tr>';   
                     echo '<td>'.$self_service_customer->lastname.'</td>';
+                    echo '<td>'.$self_service_customer->id_customer.'</td>';
                     echo '<td align="center">';
-                    if ($syncDomain->active == 1) {
+                    if ($self_service_customer->active == 1) {
                         echo '<i class="fas fa-check-circle ok"></i>';
                     } else {
                         echo '<i class="fas fa-minus-circle not-ok"></i>';
@@ -202,7 +204,7 @@ $this->element('addScript', [
                     echo '<td>';
                     echo $this->Html->link(
                         '<i class="fas fa-pencil-alt ok"></i>',
-                        $this->Network->getSyncDomainEdit($syncDomain->id),
+                        $this->Network->getSyncDomainEdit($self_service_customer->id_customer),
                         [
                             'class' => 'btn btn-outline-light',
                             'title' => __d('admin', 'Edit'),
@@ -212,13 +214,12 @@ $this->element('addScript', [
                     echo '</td>';
                     echo '<tr>';
                 }
-                if (!empty($syncDomains)) {
+                if (!empty($all_self_service_customers)) {
+                    echo '</td>';
+                    echo '</tr>';
                     echo '</table>';
                 }
                     ?>
-                </td>
-
-        </tr>
         <?php } ?>
     </table>
 
@@ -425,6 +426,11 @@ $this->element('addScript', [
         <tr>
             <td>app.defaultTax</td>
             <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? __d('admin', 'activated') : __d('admin', 'deactivated'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.selfServiceLoginCustomers</td>
+            <td><?php echo json_encode(Configure::read('app.selfServiceLoginCustomers')); ?></td>
         </tr>
 
         <tr>

@@ -35,7 +35,11 @@ return [
             OrderDetail::STATE_BILLED_CASHLESS => __('order_state_billed_cashless'),
             OrderDetail::STATE_BILLED_CASH => __('order_state_billed_cash')
         ],
-        'currencyName' => Configure::read('app.htmlHelper')->getCurrencyName(Configure::read('appDb.FCS_CURRENCY_SYMBOL'))
+        'currencyName' => Configure::read('app.htmlHelper')->getCurrencyName(Configure::read('appDb.FCS_CURRENCY_SYMBOL')),
+        'selfServiceLoginCustomers' => [
+            '93',
+            '94'
+        ],
     ]
 ];
 ?>

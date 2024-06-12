@@ -163,6 +163,29 @@ class MenuHelper extends Helper
         return $menuElement;
     }
 
+    public function getSelfServiceUserLoginButton($identity)
+    {
+        $selfServiceUserLoginButton = [];
+
+
+        $this->set('orderStates', $orderStates);
+
+
+        if ($identity !== null) {
+            $userName = $identity->getAbbreviatedUserName();
+            if ($this->getView()->getPlugin() != '') {
+                $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+                //$selfServiceUserLoginButtons = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+            } else {
+                $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+                //$selfServiceUserLoginButtons = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+            }
+        } else {
+           //get default todo
+        }
+        return $selfServiceUserLoginButton;
+    }
+
     public function getPaymentProductMenuElement()
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {

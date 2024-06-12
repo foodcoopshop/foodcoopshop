@@ -75,7 +75,9 @@ INSERT INTO `fcs_address` VALUES
 (180,0,5,'Gemüse-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
 (181,0,16,'Hersteller ohne Customer-Eintrag','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
 (182,92,0,'Superadmin','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(183,93,0,'SB-Kunde','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-sb-kunde@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19');
+(183,93,0,'SB-Kunde','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-sb-kunde@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(184,94,0,'SB-Kunde2','Demo2','Demostrasse 6','','4666','Demostadt',NULL,'','0600/000000','fcs-demo-sb-kunde2@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(185,95,0,'SB-Kunde3','Demo3','Demostrasse 8','','4777','Demostadt',NULL,'','0600/000000','fcs-demo-sb-kunde3@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19');
 /*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
@@ -220,6 +222,8 @@ INSERT INTO `fcs_customer` VALUES
 (91,4,0,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0,'SP',1,1,1,1,0),
 (92,5,0,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0),
 (93,2,0,'Demo','SB-Kunde','fcs-demo-sb-kunde@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,0,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0);
+(94,2,0,'Demo2','SB-Kunde2','fcs-demo-sb-kunde2@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,1,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0);
+(95,2,0,'Demo3','SB-Kunde2','fcs-demo-sb-kunde2@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,1,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0);
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;

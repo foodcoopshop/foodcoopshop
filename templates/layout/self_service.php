@@ -33,9 +33,15 @@ echo $this->element('layout/header');
             <h6><?php echo __('Self_service_login_without_account'); ?></h6>
             <h6><?php echo __('Self_service_login_action'); ?></h6>
 
-<a class="btn btn-success btn-success-self-service-user-login submit" href="javascript:void(0);">
-                    <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
-                </a>         
+            <?php
+        $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
+
+                    $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
+                    ?>
+            <a class="btn btn-success btn-success-self-service-user-login submit" href="<?php echo $selfServiceUserButton['slug']; ?>">
+                <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
+
+            </a>   <span class="user-name-wrapper"><?php echo $identity->name; ?>      
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>
             <h6><?php echo __('Self_service_login_action'); ?></h6>

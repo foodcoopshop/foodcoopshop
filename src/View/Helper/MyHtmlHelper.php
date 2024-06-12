@@ -934,4 +934,14 @@ class MyHtmlHelper extends HtmlHelper
     {
         return array_keys(self::getOrderStates());
     }
+
+    public function getSelfServiceLoginCustomers()
+    {
+        return Configure::read('app.selfservicelogincustomers');
+    }
+
+    public function getSelfServiceLoginCustomersIds()
+    {
+        return array(self::getSelfServiceLoginCustomers());
+    }
 }

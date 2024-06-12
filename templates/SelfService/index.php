@@ -29,7 +29,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();".
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');".
-    Configure::read('app.jsNamespace').".SelfService.loginWithChooesenSelfServiceUser();"
+    Configure::read('app.jsNamespace').".SelfService.loginWithChoosenSelfServiceUser();"
 ]);
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
@@ -42,6 +42,15 @@ if ($orderCustomerService->isSelfServiceModeByUrl()) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"
     ]);
+}
+
+if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
+    if (Configure::read('app.selfServiceLoginCustomers') !== null) {
+        $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
+        
+        //    echo '<span>'.$manufacturers->count() . ' ' . __('found') . '</span>';
+    }
+
 }
 
 echo $this->element('autoPrintInvoice');
