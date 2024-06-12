@@ -111,12 +111,14 @@ foodcoopshop.Cart = {
 
     updateExistingProduct: function (productContainer, amount, price, deposit, tax, orderedQuantityInUnits, unitName) {
 
-        // update amount
-        var oldAmount = productContainer.find('span.amount span.value');
-        var oldAmountValue = parseInt(oldAmount.html());
-        var newAmount = oldAmountValue + parseInt(amount);
-        oldAmount.html(newAmount);
-        foodcoopshop.Helper.applyBlinkEffect(oldAmount);
+        // update amount, but not if a product with price per unit is added
+        if (orderedQuantityInUnits === undefined) {
+            var oldAmount = productContainer.find('span.amount span.value');
+            var oldAmountValue = parseInt(oldAmount.html());
+            var newAmount = oldAmountValue + parseInt(amount);
+            oldAmount.html(newAmount);
+            foodcoopshop.Helper.applyBlinkEffect(oldAmount);
+        }
 
         // update unity
         var oldUnity = productContainer.find('span.unity');
@@ -287,7 +289,8 @@ foodcoopshop.Cart = {
             tmpWrapper.append(cartAmountSumTmp);
             tmpWrapper.append(cartTotalSumTmp);
 
-            if (productContainer.length > 0) {
+            let productAlreadyInCart = productContainer.length > 0;
+            if (productAlreadyInCart) {
                 // product already in cart
                 foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, orderedQuantityInUnits, unitName);
             } else {
@@ -302,7 +305,11 @@ foodcoopshop.Cart = {
             foodcoopshop.Cart.updateCartProductSum(price);
             foodcoopshop.Cart.updateCartDepositSum(deposit);
             foodcoopshop.Cart.updateCartTaxSum(tax * amount);
-            foodcoopshop.Cart.updateCartAmountSum(amount);
+
+            // update amount sum, but not if a product with price per unit is added multiple times
+            if (!(productAlreadyInCart && orderedQuantityInUnits > 0)) {
+                foodcoopshop.Cart.updateCartAmountSum(amount);
+            }
             foodcoopshop.Cart.updateCartTotalSum(price + deposit);
 
             var button = productWrapper.find('.ew.active .btn-cart');
