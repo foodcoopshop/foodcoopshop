@@ -126,8 +126,10 @@ foodcoopshop.SelfService = {
             //loginForm.find(barcodeInputField).val(-->?? getDefaultSelfServiceCustomer aufrufen  -> mit übergabe barcode aus request falls gesetzt -> ajax?)
             //$this->set('barcode', $orderCustomerService->getDefaultSelfServiceCustomer());
 
-            loginForm.find(barcodeInputField).val('91791C');
-            loginForm.submit();
+            foodcoopshop.SelfService.loginWithChooesenSelfServiceUser();
+
+            //loginForm.find(barcodeInputField).val('91791C');
+            //loginForm.submit();
         });
 
         var cameraButton = $('<a/>').
