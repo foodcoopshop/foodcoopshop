@@ -125,9 +125,8 @@ foodcoopshop.SelfService = {
             foodcoopshop.Helper.disableButton($(this));
             //loginForm.find(barcodeInputField).val(-->?? getDefaultSelfServiceCustomer aufrufen  -> mit übergabe barcode aus request falls gesetzt -> ajax?)
             //$this->set('barcode', $orderCustomerService->getDefaultSelfServiceCustomer());
-
             foodcoopshop.SelfService.loginWithChooesenSelfServiceUser();
-
+            menuItems.push('<li><a href="/' + foodcoopshop.LocalizedJs.mobile.routeManufacturerList + '"><i class="fa"></i>' + foodcoopshop.LocalizedJs.mobile.manufacturers + '</a></li>');
             //loginForm.find(barcodeInputField).val('91791C');
             //loginForm.submit();
         });

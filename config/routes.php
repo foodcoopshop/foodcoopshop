@@ -65,7 +65,6 @@ return function (RouteBuilder $routes) {
         if (Configure::read('appDb.FCS_USER_FEEDBACK_ENABLED')) {
             $routes->connect('/feedback', ['controller' => 'Feedbacks', 'action' => 'index']);
         }
-
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $routes->connect('/'.__('route_self_service'), ['controller' => 'SelfService']);
         }
