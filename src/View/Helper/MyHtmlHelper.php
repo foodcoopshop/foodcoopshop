@@ -937,7 +937,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getSelfServiceLoginCustomers()
     {
-        return Configure::read('app.selfservicelogincustomers');
+        return Configure::read('app.selfServiceLoginCustomers');
     }
 
     public function getSelfServiceLoginCustomersIds()

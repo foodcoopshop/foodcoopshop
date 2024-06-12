@@ -34,14 +34,16 @@ echo $this->element('layout/header');
             <h6><?php echo __('Self_service_login_action'); ?></h6>
 
             <?php
-        $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
+                $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
 
-                    $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
+                $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
+                if ($identity !== null){
                     ?>
             <a class="btn btn-success btn-success-self-service-user-login submit" href="<?php echo $selfServiceUserButton['slug']; ?>">
                 <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
-
-            </a>   <span class="user-name-wrapper"><?php echo $identity->name; ?>      
+            </a>   <span class="user-name-wrapper"><?php echo $identity->name; ?>   
+            <?php } ?>
+               
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>
             <h6><?php echo __('Self_service_login_action'); ?></h6>
