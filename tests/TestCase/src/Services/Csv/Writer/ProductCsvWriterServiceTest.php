@@ -49,7 +49,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $this->assertEquals('350-13;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;"0,5 kg";5;0;2,000000;;10,00', $lines[5]);
         $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;"1 kg";999;;4,000000;;3.996,00', $lines[6]);
         $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;ca. 0,5 kg;999;;10,000000;"1 kg";4.995,00', $lines[7]);
-        $this->assertEquals(';;;;;;;;24.237,46', $lines[8]);
+        $this->assertEquals(';;;;;;;;;24.237,46', $lines[8]);
 
     }
 
@@ -74,7 +74,7 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
         $this->assertEquals('350-14;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;"1 kg";999;;0,000000;;0,00', $lines[5]);
         $this->assertEquals('350-15;"Lagerprodukt mit Varianten";"Demo Gemüse-Hersteller";1;ca. 0,5 kg;999;;6,000000;"1 kg";2.997,00', $lines[6]);
         $this->assertEquals('60-10;Milch;"Demo Milch-Hersteller";1;0,5l;19;;0,250000;;4,75', $lines[7]);
-        $this->assertEquals(';;;;;;;;6.551,72', $lines[8]);
+        $this->assertEquals(';;;;;;;;;6.551,72', $lines[8]);
 
     }
 

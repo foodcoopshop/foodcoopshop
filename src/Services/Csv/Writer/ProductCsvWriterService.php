@@ -120,6 +120,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
             '',
             '',
             '',
+            '',
             Configure::read('app.numberHelper')->formatAsDecimal($stockValueSum),
         ];
 
