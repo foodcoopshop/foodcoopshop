@@ -129,8 +129,8 @@ foodcoopshop.SelfService = {
             //$this->set('barcode', $orderCustomerService->getDefaultSelfServiceCustomer());
             //foodcoopshop.SelfService.loginWithChoosenSelfServiceUser();
             //menuItems.push('<li><a href="/' + foodcoopshop.LocalizedJs.mobile.routeManufacturerList + '"><i class="fa"></i>' + foodcoopshop.LocalizedJs.mobile.manufacturers + '</a></li>');
-            //loginForm.find(barcodeInputField).val('91791C');
-            //loginForm.submit();
+            loginForm.find(barcodeInputField).val('91791C');
+            loginForm.submit();
         });
 
         var cameraButton = $('<a/>').

@@ -44,17 +44,27 @@ if ($orderCustomerService->isSelfServiceModeByUrl()) {
     ]);
 }
 
+/*
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
     if (Configure::read('app.selfServiceLoginCustomers') !== null) {
         $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
-        $sessionData =  $this->login(Configure::read('93'));
-        $this->session($sessionData);
+        $selfServiceLoginCustomers = array('93','94');
 
 
+        echo $selfServiceLoginCustomers->count();
+        $i = 0;
+        foreach ($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
+            $i ++;
+            $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+            //     }
+
+            echo '<a class="btn btn-success btn-success-self-service-user-login submit" href="' . $selfServiceUserButton['slug'] . '"<i class="fas fa-sign-in-alt"></i></a>"'; 
+            echo '1'; 
+        }
         //    echo '<span>'.$manufacturers->count() . ' ' . __('found') . '</span>';
     }
 
-}
+}*/
 
 echo $this->element('autoPrintInvoice');
 

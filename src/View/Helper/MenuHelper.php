@@ -166,17 +166,16 @@ class MenuHelper extends Helper
     public function getSelfServiceUserLoginButton()
     {
         $selfServiceUserLoginButton = [];
-       // $this->set('orderStates', $orderStates);
-        //if ($identity !== null) {
-         //   $userName = $identity->getAbbreviatedUserName();
-       //     if ($this->getView()->getPlugin() != '') {
-        //        $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
-          //  } else {
+        if ($identity !== null) {
+            $userName = $identity->getAbbreviatedUserName();
+            if ($this->getView()->getPlugin() != '') {
+                $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+            } else {
                 $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
-       //     }
-        //} else {
-           //get default todo
-        //}
+            }
+        } else {
+
+        }
         return $selfServiceUserLoginButton;
     }
 

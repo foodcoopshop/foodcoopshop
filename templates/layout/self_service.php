@@ -34,24 +34,15 @@ echo $this->element('layout/header');
             <h6><?php echo __('Self_service_login_action'); ?></h6>
 
             <?php
-                $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
-                $selfServiceLoginCustomers='93';
-
-
-
-
-
-
-
-
-
-                $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
-                if ($identity !== null){
+                //$selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
+               // $selfServiceLoginCustomers='93';
+                //$selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
+                //if ($identity !== null){
                     ?>
-            <a class="btn btn-success btn-success-self-service-user-login submit" href="<?php echo $selfServiceUserButton['slug']; ?>">
-                <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
-            </a>   <span class="user-name-wrapper"><?php echo $identity->name; ?>   
-            <?php } ?>
+
+<a class="btn btn-success btn-success-self-service-user-login submit" href="javascript:void(0);">
+                    <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?> <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
+                </a> </a>  
 
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>
