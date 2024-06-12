@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Traits\Products;
 
+use Cake\Core\Configure;
+
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -90,7 +92,7 @@ trait EditQuantityTrait
                 switch($dirtyField) {
                     case 'quantity':
                         $translatedFieldName = __d('admin', 'Available_quantity') . ': ' 
-                            . __d('admin', 'Old_value') . ': <b>' . $oldStockAvailable . '</b> '
+                            . __d('admin', 'Old_value') . ': <b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($oldStockAvailable) . '</b> '
                             . __d('admin', 'New_value');
                         break;
                     case 'always_available':
@@ -99,18 +101,18 @@ trait EditQuantityTrait
                         break;
                     case 'default_quantity_after_sending_order_lists':
                         $translatedFieldName = __d('admin', 'Default_quantity_after_sending_order_lists');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : $newValue;
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : Configure::read('app.numberHelper')->formatUnitAsDecimal($newValue);
                         break;
                     case 'quantity_limit':
                         $translatedFieldName = __d('admin', 'Quantity_limit');
                         break;
                     case 'sold_out_limit':
                         $translatedFieldName = __d('admin', 'Sold_out_limit');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : $newValue;
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : Configure::read('app.numberHelper')->formatUnitAsDecimal($newValue);
                         break;
                 }
                 if (isset($translatedFieldName)) {
-                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $newValue . '</b>';
+                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($newValue) . '</b>';
                 }
             }
 
