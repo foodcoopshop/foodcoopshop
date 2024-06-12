@@ -163,7 +163,7 @@ class MenuHelper extends Helper
         return $menuElement;
     }
 
-    public function getSelfServiceUserLoginButton()
+    public function getSelfServiceUserLoginButton($identity)
     {
         $selfServiceUserLoginButton = [];
         if ($identity !== null) {
@@ -174,7 +174,7 @@ class MenuHelper extends Helper
                 $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             }
         } else {
-
+           //get default todo
         }
         return $selfServiceUserLoginButton;
     }

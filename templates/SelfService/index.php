@@ -29,7 +29,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();".
     Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');".
-    Configure::read('app.jsNamespace').".SelfService.loginWithChoosenSelfServiceUser();"
+   // Configure::read('app.jsNamespace').".SelfService.loginWithChoosenSelfServiceUser();"
 ]);
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
