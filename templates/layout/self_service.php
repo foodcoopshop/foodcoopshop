@@ -35,6 +35,15 @@ echo $this->element('layout/header');
 
             <?php
                 $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
+                $selfServiceLoginCustomers='93';
+
+
+
+
+
+
+
+
 
                 $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
                 if ($identity !== null){
@@ -43,7 +52,7 @@ echo $this->element('layout/header');
                 <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
             </a>   <span class="user-name-wrapper"><?php echo $identity->name; ?>   
             <?php } ?>
-               
+
             <h6></h6><h6></h6><h6></h6>
             <h6><?php echo __('Self_service_login_with_account'); ?></h6>
             <h6><?php echo __('Self_service_login_action'); ?></h6>

@@ -47,6 +47,9 @@ if ($orderCustomerService->isSelfServiceModeByUrl()) {
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
     if (Configure::read('app.selfServiceLoginCustomers') !== null) {
         $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
+        $sessionData =  $this->login(Configure::read('93'));
+        $this->session($sessionData);
+
 
         //    echo '<span>'.$manufacturers->count() . ' ' . __('found') . '</span>';
     }

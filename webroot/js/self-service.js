@@ -123,6 +123,7 @@ foodcoopshop.SelfService = {
             console.log('click');
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
             foodcoopshop.Helper.disableButton($(this));
+       //     }
 
             //loginForm.find(barcodeInputField).val(-->?? getDefaultSelfServiceCustomer aufrufen  -> mit übergabe barcode aus request falls gesetzt -> ajax?)
             //$this->set('barcode', $orderCustomerService->getDefaultSelfServiceCustomer());
