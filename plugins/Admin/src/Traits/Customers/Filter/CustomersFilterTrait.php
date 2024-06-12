@@ -134,5 +134,5 @@ trait CustomersFilterTrait
         return $customers;
 
     }
-    
+
 }

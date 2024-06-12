@@ -949,12 +949,6 @@ msgstr "Remote Foodcoops"
 msgid "Foodcoops_with_which_manufacturers_can_synchronize_their_product_data."
 msgstr "Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können."
 
-msgid "Users_for_self_service_login"
-msgstr "Selbstbedienungs-Kunden"
-
-msgid "Users_for_which_buttons_are_showed_for_self_service_login"
-msgstr "Kunden für deren Login jeweils ein eigener Button auf der Seite Selbstbedienung angezeigt wird."
-
 msgid "Info_page_for_network_module"
 msgstr "Infos zum Netzwerk-Modul"
 

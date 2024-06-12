@@ -52,11 +52,6 @@ class SelfServiceController extends FrontendController
             $keyword = h(trim($this->getRequest()->getQuery('productWithError')));
         }
 
-        //$selfServiceUser = '';
-        //if (!empty($this->getRequest()->getQuery('selfServiceUser'))) {
-        //    $selfServiceUser = h(trim($this->getRequest()->getQuery('selfServiceUser')));
-        //}
-
         $this->Category = $this->getTableLocator()->get('Categories');
         $categoriesForSelect = $this->Category->getForSelect(null, false, false, false);
 
@@ -205,46 +200,5 @@ class SelfServiceController extends FrontendController
         }
 
     }
-    public function loginWithChoosenSelfServiceUser()	
-    {	
-
-        //Configure::read('app.customerMainNamePart')
-
-        /*$addressCustomersTable = FactoryLocator::get('Table')->get('AddressCustomers');	
-        $customers->select($addressCustomersTable);	
-        $customers = $customers->toArray();	
-        $i = 0;	
-        foreach($customers as $customer) {     	
-    ------------------------------------------*/	
-   // $redirectUrl = Configure::read('app.slugHelper')->getSelfService();
-   // $this->redirect($redirectUrl);
-   // return;
-/*
-     $customerTable = FactoryLocator::get('Table')->get('Customers');	
-     $active = '1';	
-
-     $customers = $customerTable->find('all',	
-     conditions: [	
-         'Customers.id_default_group =' => Customer::GROUP_SELF_SERVICE_CUSTOMER,	
-         'Customers.active =' => $active,	
-     ],	
-     order: $customerTable->getCustomerOrderClause('ASC'),	
-     contain: [	
-         'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind	
-         ]	
-     );	
-     $customers = $customerTable->addCustomersNameForOrderSelect($customers);	
-     $customers->select($customerTable);	
-     $customers->select($customerTable->AddressCustomers);	
-     return $customers->first();	
-
-
-     if (empty($customers)) {	
-         throw new RecordNotFoundException('customers not found or not active');	
-     }	
-     else{	
-         throw new RecordNotFoundException('customer gefunden');	
-     }*/
-}
 
 }

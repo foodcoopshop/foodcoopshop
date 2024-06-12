@@ -54,7 +54,7 @@ class SlugHelper extends Helper
         return '/admin/hello-cash/getReceipt/' . $invoiceId . '/' . $cancellation;
     }
 
-    public function getSelfService($keyword = '', $productWithError = '', $selfServiceUser = '')
+    public function getSelfService($keyword = '', $productWithError = '')
     {
         $url = '/'.__('route_self_service');
         $queryParams = [];
@@ -63,9 +63,6 @@ class SlugHelper extends Helper
         }
         if ($productWithError != '') {
             $queryParams['productWithError'] = $productWithError;
-        }
-        if ($selfServiceUser != '') {
-            $queryParams['selfServiceUser'] = $selfServiceUser;
         }
         if (!empty($queryParams)) {
             $url .= '?' . http_build_query($queryParams);

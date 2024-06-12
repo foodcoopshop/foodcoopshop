@@ -28,8 +28,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();".
-    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');".
-   // Configure::read('app.jsNamespace').".SelfService.loginWithChoosenSelfServiceUser();"
+    Configure::read('app.jsNamespace').".Helper.setFutureOrderDetails('".addslashes(json_encode($identity->getFutureOrderDetails()))."');"
 ]);
 
 if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode() && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
@@ -43,28 +42,6 @@ if ($orderCustomerService->isSelfServiceModeByUrl()) {
         Configure::read('app.jsNamespace').".Calculator.init('.quantity-in-units-input-field-wrapper');"
     ]);
 }
-
-/*
-if (!$isMobile && !$orderCustomerService->isOrderForDifferentCustomerMode()) {
-    if (Configure::read('app.selfServiceLoginCustomers') !== null) {
-        $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
-        $selfServiceLoginCustomers = array('93','94');
-
-
-        echo $selfServiceLoginCustomers->count();
-        $i = 0;
-        foreach ($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
-            $i ++;
-            $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
-            //     }
-
-            echo '<a class="btn btn-success btn-success-self-service-user-login submit" href="' . $selfServiceUserButton['slug'] . '"<i class="fas fa-sign-in-alt"></i></a>"'; 
-            echo '1'; 
-        }
-        //    echo '<span>'.$manufacturers->count() . ' ' . __('found') . '</span>';
-    }
-
-}*/
 
 echo $this->element('autoPrintInvoice');
 

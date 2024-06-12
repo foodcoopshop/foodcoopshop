@@ -123,7 +123,6 @@ foodcoopshop.SelfService = {
             console.log('click');
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
             foodcoopshop.Helper.disableButton($(this));
-
             //loginForm.find(barcodeInputField).val('91791C');
             //loginForm.submit();
         });

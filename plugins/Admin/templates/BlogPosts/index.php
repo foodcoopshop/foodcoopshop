@@ -17,7 +17,7 @@ declare(strict_types=1);
 use Cake\Core\Configure;
 
 ?>
-<div id="blogPosts"> 
+<div id="blogPosts">
 
         <?php
         $this->element('addScript', ['script' =>

@@ -165,61 +165,6 @@ $this->element('addScript', [
                 <td colspan="2"><p><?php echo __d('admin', 'As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop.'); ?></p></td>
                 <?php } ?>
         </tr>
-
-
-
-
-
-
-        <?php
-                if (!empty($all_self_service_customers)) { ?>
-        <tr>
-                <td class="first">
-                    <b><?php echo __d('admin', 'Users_for_self_service_login'); ?></b>
-                    <br /><div class="small"><?php echo __d('admin', 'Users_for_which_buttons_are_showed_for_self_service_login'); ?></div>
-                </td>
-
-                <td colspan="2" class="sync-domain-list">
-                <?php
-                    echo '<table class="list">';
-                    echo '<tr class="sort">';
-                    echo '<th>'.__d('admin', 'Kunde').'</th>';
-                    echo '<th>'.__d('admin', 'KundenID').'</th>';
-                    echo '<th>'.__d('admin', 'Selbstbedienungs-Login anzeigen').'</th>';
-                    echo '<th></th>';
-                    echo '</th>';
-                }
-
-                foreach ($all_self_service_customers as $self_service_customer) {
-                    echo '<tr>';   
-                    echo '<td>'.$self_service_customer->lastname.'</td>';
-                    echo '<td>'.$self_service_customer->id_customer.'</td>';
-                    echo '<td align="center">';
-                    if ($self_service_customer->active == 1) {
-                        echo '<i class="fas fa-check-circle ok"></i>';
-                    } else {
-                        echo '<i class="fas fa-minus-circle not-ok"></i>';
-                    }
-                    echo '</td>';
-                    echo '<td>';
-                    echo $this->Html->link(
-                        '<i class="fas fa-pencil-alt ok"></i>',
-                        $this->Network->getSyncDomainEdit($self_service_customer->id_customer),
-                        [
-                            'class' => 'btn btn-outline-light',
-                            'title' => __d('admin', 'Edit'),
-                            'escape' => false
-                        ]
-                    );
-                    echo '</td>';
-                    echo '<tr>';
-                }
-                if (!empty($all_self_service_customers)) {
-                    echo '</td>';
-                    echo '</tr>';
-                    echo '</table>';
-                }
-                    ?>
         <?php } ?>
     </table>
 

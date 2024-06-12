@@ -6,9 +6,7 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use App\Services\OutputFilter\OutputFilterService;
 use App\Mailer\AppMailer;
-use App\Model\Entity\Customer;
 use App\Model\Table\ConfigurationsTable;
-use App\Model\Table\CustomersTable;
 use App\Model\Table\TaxesTable;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
@@ -36,7 +34,6 @@ class ConfigurationsController extends AdminAppController
     protected ConfigurationsTable $Configuration;
     protected SyncDomainsTable $SyncDomain;
     protected TaxesTable $Tax;
-    protected CustomersTable $CustomersTable;
     
     public function edit($configurationId)
     {
@@ -186,13 +183,6 @@ class ConfigurationsController extends AdminAppController
         }
 
         $this->set('title_for_layout', __d('admin', 'Settings'));
-
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $all_self_service_customers = $this->Customer->find('all', conditions: [
-           'Customers.id_default_group' => Customer::GROUP_SELF_SERVICE_CUSTOMER,
-           'Customers.active' => '1'
-        ]);
-        $this->set('all_self_service_customers', $all_self_service_customers);
     }
 
     public function sendTestEmail()
