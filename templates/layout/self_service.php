@@ -49,10 +49,12 @@ echo $this->element('layout/header');
                     }
                     for ($i=0; $i < count($selfServiceLoginCustomers); ++ $i){
 
+                        $selfServiceLoginCustomersCustomerId = $selfServiceLoginCustomers[$i];
+                        $selfServiceLoginCustomersCustomerName = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomers()[$selfServiceLoginCustomersCustomerId];
                         $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
                         $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-in-alt', 'class' => ['fas fa-sign-in-al']]];
                     ?>         
-<a class="btn btn-success btn-success-self-service-user-login submit" href="<?php echo $selfServiceUserLoginButton['slug']; ?>"><i class="fas fa-sign-in-alt"></i><?php echo __('Sign_in_self_service_user') . 'ARBING' ?></a> <span class="user-name-wrapper">
+<a class="btn btn-success btn-success-self-service-user-login submit" href="<?php echo $selfServiceUserLoginButton['slug']; ?>"><i class="fas fa-sign-in-alt"></i><?php echo $selfServiceLoginCustomersCustomerName ?></a> <span class="user-name-wrapper">
                  
 <!-- <a class="btn btn-success btn-success-self-service-user-login submit" href="'.$this->Menu->getSelfServiceUserLoginButton(.$identity)'"<i class="fas fa-sign-in-alt"></i></a>"'; 
 <a class="btn btn-success btn-success-self-service-user-login submit" href="'.$selfServiceUserButton['slug']'"<i class="fas fa-sign-in-alt"></i></a>"'; 

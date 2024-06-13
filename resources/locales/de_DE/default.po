@@ -259,8 +259,11 @@ msgstr "Neues Passwort für {0}"
 msgid "Sign_in"
 msgstr "Anmelden"
 
-msgid "Sign_in_self_service_user"
-msgstr "Selbstbedienung starten"
+msgid "Sign_in_self_service_user_for"
+msgstr "Selbstbedienung für"
+
+msgid "Sign_in_self_service_user_start"
+msgstr "starten"
 
 msgid "Sign_in_for_self_service"
 msgstr "Anmelden zur Selbstbedienung"
