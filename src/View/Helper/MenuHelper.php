@@ -174,7 +174,9 @@ class MenuHelper extends Helper
                 $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             }
         } else {
-           //get default TODO -> first user in db? -> getDefaultSelfServiceCustomer anpassen/verwenden?
+            if ($this->getView()->getPlugin() == '') {
+                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in')];
+            }
         }
         return $selfServiceUserLoginButton;
     }
