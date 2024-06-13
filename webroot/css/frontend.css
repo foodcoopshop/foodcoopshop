@@ -288,6 +288,18 @@ body.customers.new_password_request #inner-content form {
     line-height: 25px;
     margin-right: 10px;
 }
+#login-form .self-service-login-button-wrapper {
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+#login-form .self-service-login-button-wrapper a {
+    padding: 5px 15px;
+    margin-left: 10px;
+}
+#login-form .self-service-login-button-wrapper a:first-of-type {
+    margin-left: 0;
+}
 body.customers.new_password_request .input label {
     width: 70px;
     margin-bottom: 0;

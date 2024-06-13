@@ -67,6 +67,10 @@ return function (RouteBuilder $routes) {
         }
 
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $routes->connect('/'.__('route_self_service') . '/loginAsSelfServiceCustomer/{id}', [
+                'controller' => 'SelfService',
+                'action' => 'loginAsSelfServiceCustomer',
+            ])->setPatterns(['id' => '[0-9]+']);
             $routes->connect('/'.__('route_self_service'), ['controller' => 'SelfService']);
         }
 

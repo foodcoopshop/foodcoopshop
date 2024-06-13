@@ -27,6 +27,11 @@ class SelfServicePolicy implements RequestPolicyInterface
 
     public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
+        switch ($request->getParam('action')) {
+            case 'loginAsSelfServiceCustomer':
+                return true;
+                break;
+        }
 
         if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $identity !== null)) {
             return false;

@@ -97,6 +97,13 @@ return [
         'selfServiceModeAutoLogoutDesktopEnabled' => true,
         'selfServiceModeShowOnlyStockProducts' => true,
         'selfServiceModeAutoGenerateInvoice' => true,
+        'selfServiceLoginCustomers' => [
+            // [
+            //     'id' => 1,
+            //     'label' => 'City A',
+            //     'customerId' => 33,
+            // ],
+        ],
         'showOrderedProductsTotalAmountInCatalog' => false,
         'applyOpenOrderCheckForOrderReminder' => true,
         'changeOpenOrderDetailPriceOnProductPriceChangeDefaultEnabled' => false,

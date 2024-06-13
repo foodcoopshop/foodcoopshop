@@ -24,6 +24,11 @@ use App\Services\OutputFilter\OutputFilterService;
 class SlugHelper extends Helper
 {
 
+    public function getLoginAsSelfServiceCustomer($id)
+    {
+        return '/'.__('route_self_service').'/loginAsSelfServiceCustomer/' . $id;
+    }
+
     public function getFeedbackList()
     {
         return '/feedback';
