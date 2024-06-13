@@ -37,8 +37,8 @@ return [
         ],
         'currencyName' => Configure::read('app.htmlHelper')->getCurrencyName(Configure::read('appDb.FCS_CURRENCY_SYMBOL')),
         'selfServiceLoginCustomers' => [
-            '93',
-            '94'
+            '93' => 'ARBING',
+            '94' => 'PABNEUKIRCHEN'
         ],
     ]
 ];

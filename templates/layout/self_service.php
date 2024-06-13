@@ -35,10 +35,18 @@ echo $this->element('layout/header');
             <?php
             if (Configure::read('app.selfServiceLoginCustomers') !== null) {
                 $selfServiceLoginCustomers = Configure::read('app.htmlHelper')->getSelfServiceLoginCustomersIds();
+                if ($selfServiceLoginCustomers == '' || empty($selfServiceLoginCustomers) || empty($selfServiceLoginCustomers[0])){
+                  //if no self service users set take default self service user
+
+                }
+                else{
+                    if (!is_array($selfServiceLoginCustomers)){
+                        $selfServiceLoginCustomers = [$selfServiceLoginCustomers];
+                    }
                     for ($i=0; $i < count($selfServiceLoginCustomers); ++ $i){
-                    $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
-                    $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
-                ?>
+                        $selfServiceUserButton = $this->Menu->getSelfServiceUserLoginButton($identity);
+                        $selfServiceUserLoginButton = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in'), 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
+                    ?>         
 
 <!-- <a class="btn btn-success btn-success-self-service-user-login submit" href="'.$this->Menu->getSelfServiceUserLoginButton(.$identity)'"<i class="fas fa-sign-in-alt"></i></a>"'; 
 <a class="btn btn-success btn-success-self-service-user-login submit" href="'.$selfServiceUserButton['slug']'"<i class="fas fa-sign-in-alt"></i></a>"'; 
@@ -47,6 +55,7 @@ echo $this->element('layout/header');
                 <a class="btn btn-success btn-success-self-service-user-login submit" href="javascript:void(0);">
                     <i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in_self_service_user'); ?>
                 </a>
+                <?php } ?>
                 <?php } ?>
                 <?php } ?>
             <h6></h6><h6></h6><h6></h6>

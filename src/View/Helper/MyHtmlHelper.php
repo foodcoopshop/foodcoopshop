@@ -942,6 +942,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getSelfServiceLoginCustomersIds()
     {
-        return array(self::getSelfServiceLoginCustomers());
+        return array_keys(self::getSelfServiceLoginCustomers());
     }
 }
