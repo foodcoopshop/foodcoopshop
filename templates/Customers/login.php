@@ -38,6 +38,10 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
         $selfServiceLoginCustomers = Configure::read('app.selfServiceLoginCustomers');
         if (!empty($selfServiceLoginCustomers)) {
             echo '<div class="self-service-login-button-wrapper">';
+            $hasMulipleButtons = count($selfServiceLoginCustomers) > 1;
+            if ($hasMulipleButtons) {
+                echo '<h6>' . __('Login_without_account') . '</h6>';
+            }
             foreach($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
                 echo $this->Html->link(
                     '<i class="fas fa-sign-in-alt"></i> ' . $selfServiceLoginCustomer['label'],
