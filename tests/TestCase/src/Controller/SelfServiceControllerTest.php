@@ -472,6 +472,37 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertResponseContains('<span class="pickup-day">'.$pickupDay.'</span>');
     }
 
+    public function testAutoLoginAsSelfServiceCustomerOk()
+    {
+        $selfServiceCustomerId = 93;
+        $this->changeCustomer($selfServiceCustomerId, 'active', 1);
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        Configure::write('app.selfServiceLoginCustomers', [
+            [
+                'id' => 1,
+                'label' => 'SB-Kunde',
+                'customerId' => $selfServiceCustomerId,
+            ],
+        ]);
+        $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
+        $this->assertSession($selfServiceCustomerId, 'Auth.id_customer');
+    }
+
+    public function testAutoLoginAsSelfServiceCustomerNotOk()
+    {
+        $selfServiceCustomerId = 93;
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        Configure::write('app.selfServiceLoginCustomers', [
+            [
+                'id' => 1,
+                'label' => 'SB-Kunde',
+                'customerId' => $selfServiceCustomerId,
+            ],
+        ]);
+        $this->get($this->Slug->getAutoLoginAsSelfServiceCustomer(1));
+        $this->assertFlashMessage('Anmelden ist fehlgeschlagen.');
+    }
+
     private function doBarCodeLogin()
     {
         $this->post($this->Slug->getLogin(), [

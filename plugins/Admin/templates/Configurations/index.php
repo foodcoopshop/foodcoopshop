@@ -241,7 +241,6 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.emailOrderReminderEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
-
         <?php
         $ct = FactoryLocator::get('Table')->get('Configurations');
         if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == $ct::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD) { ?>
@@ -341,6 +340,16 @@ $this->element('addScript', [
         <tr>
             <td>app.selfServiceModeAutoGenerateInvoice</td>
             <td><?php echo Configure::read('app.selfServiceModeAutoGenerateInvoice') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
+            <td>app.selfServiceLoginCustomers</td>
+            <td><?php
+                $output = array_map(function($selfServiceLoginCustomer) {
+                    return $selfServiceLoginCustomer['label'] . ' (' . $selfServiceLoginCustomer['customerId'] . ')';
+                }, Configure::read('app.selfServiceLoginCustomers'));
+                echo $output ? join(' / ', $output) : '';
+            ?></td>
         </tr>
 
         <tr>

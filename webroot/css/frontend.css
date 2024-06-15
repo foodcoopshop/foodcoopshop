@@ -265,12 +265,12 @@ body.categories.detail div.description-wrapper {
 #login-form {
     width: 440px;
     margin: 0 auto;
+    text-align: center;
 }
 #login-form h1 {
     line-height: 30px;
     margin-bottom: 0px;
     padding: 10px;
-    padding-left: 108px;
 }
 #inner-content #login-form form,
 body.customers.new_password_request #inner-content form {
@@ -287,6 +287,21 @@ body.customers.new_password_request #inner-content form {
     text-align: right;
     line-height: 25px;
     margin-right: 10px;
+}
+#login-form .self-service-login-button-wrapper {
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+#login-form .self-service-login-button-wrapper a {
+    padding: 5px 15px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+#login-form .self-service-login-button-wrapper a:first-of-type {
+    margin-left: 0;
 }
 body.customers.new_password_request .input label {
     width: 70px;
@@ -328,6 +343,9 @@ body.customers.new_password_request .input {
 #RegistrationForm .detail-form {
     display: none;
     float: left;
+}
+#login-form div.input {
+    text-align: left;
 }
 #login-form .input.text input,
 #login-form .input.tel input,
