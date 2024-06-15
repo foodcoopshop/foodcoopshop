@@ -25,6 +25,10 @@ foodcoopshop.SelfService = {
         this.initDepositPayment();
     },
 
+    injectLoginButtons : function(buttonHtml) {
+        $('.self-service-login-button-wrapper').append(atob(buttonHtml));
+    },
+
     initMobileBarcodeScanningWithCamera : function(afterElementForLoader, afterElementForCamera, callback) {
 
         if (!this.isMobileBarcodeScanningSupported) {
@@ -150,7 +154,7 @@ foodcoopshop.SelfService = {
                 }
                 formIsSubmitted = true;
             });
-    
+
             if (!foodcoopshop.Helper.isMobile()) {
                 foodcoopshop.Helper.initBootstrapSelect(searchForm);
             }
@@ -164,7 +168,7 @@ foodcoopshop.SelfService = {
                 inputField[0].setSelectionRange(length, length);
                 inputField.focus();
             }
-        
+
         });
 
     },
