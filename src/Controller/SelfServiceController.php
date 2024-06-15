@@ -7,6 +7,8 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use App\Services\CatalogService;
 use App\Services\CartService;
+use Cake\Routing\Router;
+use App\Model\Entity\Customer;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -34,8 +36,43 @@ class SelfServiceController extends FrontendController
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
             'index',
+            'autoLoginAsSelfServiceCustomer',
         ]);
         $this->cartService = new CartService($this);
+    }
+
+    public function autoLoginAsSelfServiceCustomer()
+    {
+
+        $this->disableAutoRender();
+
+        $id = (int) $this->getRequest()->getParam('id');
+
+        $selfServiceLoginCustomer = array_filter(Configure::read('app.selfServiceLoginCustomers'), function($selfServiceLoginCustomer) use ($id) {
+            return $selfServiceLoginCustomer['id'] == $id;
+        });
+        if (empty($selfServiceLoginCustomer)) {
+            $this->Flash->error(__('Signing_in_failed.'));
+            $this->redirect(Configure::read('app.slugHelper')->getHome());
+        }
+
+        $customerId =   reset($selfServiceLoginCustomer)['customerId'];
+        $customerTable = $this->getTableLocator()->get('Customers');
+        $customer = $customerTable->find('auth',
+            conditions: [
+                $customerTable->aliasField('id_customer') => $customerId,
+                $customerTable->aliasField('id_default_group') => Customer::GROUP_SELF_SERVICE_CUSTOMER,
+            ],
+        )->first();
+        if (!empty($customer)) {
+            $this->Authentication->setIdentity($customer);
+            Router::setRequest($this->getRequest());
+        } else {
+            $this->Flash->error(__('Signing_in_failed.'));
+            $this->redirect(Configure::read('app.slugHelper')->getHome());
+        }
+
+        $this->redirect(Configure::read('app.slugHelper')->getSelfService());
     }
 
     public function index()

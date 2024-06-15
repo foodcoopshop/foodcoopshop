@@ -285,6 +285,7 @@ class CustomersController extends FrontendController
         $title = __('Sign_in');
         $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
+        $enableSelfServiceLoginAsCustomerButton = false;
 
         $orderCustomerService = new OrderCustomerService();
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
@@ -294,9 +295,11 @@ class CustomersController extends FrontendController
                 $title = __('Sign_in_for_self_service');
                 $enableRegistrationForm = false;
                 $enableBarCodeLogin = true;
+                $enableSelfServiceLoginAsCustomerButton = true;
             }
         $this->set('enableRegistrationForm', $enableRegistrationForm);
         $this->set('enableBarCodeLogin', $enableBarCodeLogin);
+        $this->set('enableSelfServiceLoginAsCustomerButton', $enableSelfServiceLoginAsCustomerButton);
 
         $this->set('title_for_layout', $title);
 

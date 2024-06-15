@@ -34,6 +34,33 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
 
     <?php
 
+    if ($enableSelfServiceLoginAsCustomerButton) {
+        $selfServiceLoginCustomers = Configure::read('app.selfServiceLoginCustomers');
+        if (!empty($selfServiceLoginCustomers)) {
+            echo '<div class="self-service-login-button-wrapper">';
+                $hasMulipleButtons = count($selfServiceLoginCustomers) > 1;
+                if ($hasMulipleButtons) {
+                    echo '<h6>' . __('Start_self_service') . '</h6>';
+                }
+                $buttonHtml = '';
+                foreach($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
+                    $buttonHtml .= $this->Html->link(
+                        '<i class="fas fa-sign-in-alt"></i> ' . $selfServiceLoginCustomer['label'],
+                        $this->Slug->getAutoLoginAsSelfServiceCustomer($selfServiceLoginCustomer['id']),
+                        [
+                            'class' => 'btn btn-success',
+                            'escape' => false,
+                        ],
+                    );
+                }
+            echo '</div>';
+            echo '<h6>' . __('For_self_service_with_account') . '</h6>';
+        }
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace').".SelfService.injectLoginButtons('".base64_encode($buttonHtml)."');"
+    ]);
+    }
+
     echo $this->Form->create(
         null,
         [
