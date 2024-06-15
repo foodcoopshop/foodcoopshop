@@ -36,14 +36,14 @@ class SelfServiceController extends FrontendController
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated([
             'index',
-            'loginAsSelfServiceCustomer',
+            'autoLoginAsSelfServiceCustomer',
         ]);
         $this->cartService = new CartService($this);
     }
 
-    public function loginAsSelfServiceCustomer()
+    public function autoLoginAsSelfServiceCustomer()
     {
-        
+
         $this->disableAutoRender();
 
         $id = (int) $this->getRequest()->getParam('id');

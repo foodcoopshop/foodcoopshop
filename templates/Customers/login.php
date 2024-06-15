@@ -45,7 +45,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                 foreach($selfServiceLoginCustomers as $selfServiceLoginCustomer) {
                     echo $this->Html->link(
                         '<i class="fas fa-sign-in-alt"></i> ' . $selfServiceLoginCustomer['label'],
-                        $this->Slug->getLoginAsSelfServiceCustomer($selfServiceLoginCustomer['id']),
+                        $this->Slug->getAutoLoginAsSelfServiceCustomer($selfServiceLoginCustomer['id']),
                         [
                             'class' => 'btn btn-success',
                             'escape' => false,

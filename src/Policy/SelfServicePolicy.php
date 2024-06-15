@@ -28,7 +28,7 @@ class SelfServicePolicy implements RequestPolicyInterface
     public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
         switch ($request->getParam('action')) {
-            case 'loginAsSelfServiceCustomer':
+            case 'autoLoginAsSelfServiceCustomer':
                 return true;
                 break;
         }
