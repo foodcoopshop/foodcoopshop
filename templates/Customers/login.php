@@ -55,10 +55,10 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                 }
             echo '</div>';
             echo '<h6>' . __('For_self_service_with_account') . '</h6>';
+            $this->element('addScript', ['script' =>
+                Configure::read('app.jsNamespace').".SelfService.injectLoginButtons('".base64_encode($buttonHtml)."');"
+            ]);
         }
-        $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".SelfService.injectLoginButtons('".base64_encode($buttonHtml)."');"
-    ]);
     }
 
     echo $this->Form->create(
