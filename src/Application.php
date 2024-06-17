@@ -90,7 +90,7 @@ class Application extends BaseApplication
 
         $this->addPlugin('Authentication');
         $this->addPlugin('Authorization');
-        
+
         if (Configure::read('debug')) {
             $this->addPlugin('Bake');
             Configure::write('DebugKit.forceEnable', true);
@@ -99,7 +99,10 @@ class Application extends BaseApplication
 
         $this->addPlugin('Migrations');
         $this->addPlugin('AssetCompress', ['bootstrap' => true]);
-        $this->addPlugin('Queue', ['bootstrap' => true]);
+        $this->addPlugin('Queue', [
+            'bootstrap' => true,
+            'routes' => false,
+        ]);
 
         $this->addPlugin('Admin', [
             'bootstrap' => false,
@@ -241,7 +244,7 @@ class Application extends BaseApplication
         $service->setConfig([
             'queryParam' => 'redirect',
         ]);
-        
+
         $service->loadIdentifier('Authentication.Password', [
             'resolver' => $ormResolver,
             'fields' => $fields,
