@@ -82,13 +82,13 @@ class CartService
             'StockAvailables',
             'ProductAttributes.StockAvailables',
             'ProductAttributes.ProductAttributeCombinations',
+            'ProductAttributes.UnitProductAttributes',
             'Taxes',
+            'UnitProducts'
         ];
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $contain[] = 'UnitProducts';
             $contain[] = 'PurchasePriceProducts.Taxes';
             $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
-            $contain[] = 'ProductAttributes.UnitProductAttributes';
         }
         return $contain;
     }
@@ -462,10 +462,22 @@ class CartService
             }
 
             if ($decreaseQuantity) {
+
                 $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
+
                 if ((new OrderCustomerService())->isSelfServiceModeByUrl() && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
                     $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
                 }
+
+                $unitObject = $product->unit_product;
+                if ($attribute !== null) {
+                    $unitObject = $attribute->unit_product_attribute;
+                }
+                if ((new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $unitObject))
+                {
+                    $newQuantity = $stockAvailableQuantity - ($unitObject->quantity_in_units * $cartProduct['amount']);
+                }
+
                 $stockAvailable2saveData[] = [
                     'quantity' => $newQuantity,
                 ];
@@ -474,6 +486,7 @@ class CartService
                     'id_product_attribute' => $ids['attributeId'],
                 ];
             }
+
         }
 
         $this->controller->set('cartErrors', $cartErrors);

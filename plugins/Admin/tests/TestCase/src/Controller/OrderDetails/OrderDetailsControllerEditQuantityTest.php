@@ -59,7 +59,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
             'id_product' => $productId,
             'id_product_attribute' => 0,
         ])->first();
-        $this->assertEquals(998.49, $stockAvailable->quantity);
+        $this->assertEquals(998, $stockAvailable->quantity);
 
         $newQuantity = 0.55;
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
@@ -69,7 +69,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
             'id_product' => $productId,
             'id_product_attribute' => 0,
         ])->first();
-        $this->assertEquals(998.450, $stockAvailable->quantity);
+        $this->assertEquals(997.96, $stockAvailable->quantity);
 
     }
 

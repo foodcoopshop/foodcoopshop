@@ -140,8 +140,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
     private function getUnit($product, $isMainProduct)
     {
 
-        $productQuantityService = new ProductQuantityService();
-        if ($productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit))
+        if ((new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $product->unit))
         {
             return $product->unit->name;
         }

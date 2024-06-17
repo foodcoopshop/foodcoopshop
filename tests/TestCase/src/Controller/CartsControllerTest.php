@@ -881,9 +881,11 @@ class CartsControllerTest extends AppCakeTestCase
 
         $productIdA = 347; // forelle
         $productIdB = '348-11'; // rindfleisch, 0,5 kg
+        $productIdC = 351; // stock product
 
         $this->addProductToCart($productIdA, 2);
         $this->addProductToCart($productIdB, 3);
+        $this->addProductToCart($productIdC, 2);
 
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
@@ -895,10 +897,14 @@ class CartsControllerTest extends AppCakeTestCase
         // check order_details
         $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
         $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Lagerprodukt 2', 2, 0, 0, 25, 30, 2.5, 5, 20, $pickupDay);
+
+        $this->checkStockAvailable($productIdC, 997);
 
         // check order_details_units
         $orderDetailA = $cart->cart_products[0]->order_detail;
         $orderDetailB = $cart->cart_products[1]->order_detail;
+        $orderDetailC = $cart->cart_products[2]->order_detail;
 
         $this->assertEquals($orderDetailA->order_detail_unit->product_quantity_in_units, 700);
         $this->assertEquals($orderDetailA->order_detail_unit->price_incl_per_unit, 1.5);
@@ -914,6 +920,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetailB->order_detail_unit->unit_amount, 1);
         $this->assertEquals($orderDetailB->order_detail_unit->mark_as_saved, 0);
 
+        $this->assertEquals($orderDetailC->order_detail_unit->product_quantity_in_units, 2);
+        $this->assertEquals($orderDetailC->order_detail_unit->price_incl_per_unit, 15);
+        $this->assertEquals($orderDetailC->order_detail_unit->quantity_in_units, 1);
+        $this->assertEquals($orderDetailC->order_detail_unit->unit_name, 'kg');
+        $this->assertEquals($orderDetailC->order_detail_unit->unit_amount, 1);
+        $this->assertEquals($orderDetailC->order_detail_unit->mark_as_saved, 0);
+
         $this->assertEquals($orderDetailA->tax_rate, 10);
         $this->assertEquals($orderDetailA->tax_unit_amount, 0.48);
         $this->assertEquals($orderDetailA->tax_total_amount, 0.96);
@@ -922,8 +935,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetailB->tax_unit_amount, 0.91);
         $this->assertEquals($orderDetailB->tax_total_amount, 2.73);
 
+        $this->assertEquals($orderDetailC->tax_rate, 20);
+        $this->assertEquals($orderDetailC->tax_unit_amount, 2.5);
+        $this->assertEquals($orderDetailC->tax_total_amount, 5);
+
         $this->assertMailContainsHtmlAt(0, 'Forelle : Stück, je ca. 350 g');
         $this->assertMailContainsHtmlAt(0, 'Rindfleisch : je ca. 0,5 kg');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : je ca. 1 kg');
 
     }
 
