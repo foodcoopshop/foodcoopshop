@@ -49,6 +49,7 @@ if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                         $this->Slug->getAutoLoginAsSelfServiceCustomer($selfServiceLoginCustomer['id']),
                         [
                             'class' => 'btn btn-success',
+                            'rel' => 'nofollow',
                             'escape' => false,
                         ],
                     );
