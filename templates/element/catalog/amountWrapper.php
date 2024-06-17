@@ -59,8 +59,10 @@ use App\Services\ProductQuantityService;
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $unitObject);
             $unitName = !empty($unitObject) ? $unitObject->name : '';
             $formattedAvailableQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $availableQuantity, $unitName);
+            if (!$isAmountBasedOnQuantityInUnits) {
             ?>
-            <span <?php echo !$hideAmountSelector ? 'class="below-input availibility"' : ''; ?>>(<?php echo $formattedAvailableQuantity . ' ' . __('available'); ?>)</span>
+                <span <?php echo !$hideAmountSelector ? 'class="below-input availibility"' : ''; ?>>(<?php echo $formattedAvailableQuantity . ' ' . __('available'); ?>)</span>
+            <?php } ?>
     <?php } ?>
 
 </div>
