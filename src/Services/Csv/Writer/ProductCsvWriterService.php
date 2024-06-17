@@ -18,6 +18,7 @@ namespace App\Services\Csv\Writer;
 
 use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\Product;
+use App\Services\ProductQuantityService;
 use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
 
@@ -138,6 +139,13 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     private function getUnit($product, $isMainProduct)
     {
+
+        $productQuantityService = new ProductQuantityService();
+        if ($productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit))
+        {
+            return $product->unit->name;
+        }
+
         $unit = $this->getFromPattern('/<span class="unity-for-dialog">(.*?)<\/span>/', $product->name);
         if ($unit == '') {
             $unit = $this->getFromPattern('/<span class="quantity-in-units">(.*?)<\/span>/', $product->name);

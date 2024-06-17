@@ -46,7 +46,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('Id;Produkt;Hersteller;Status;Anzahl;Einheit;Mindestlagerstand;"Verkaufspreis brutto";"Preis pro";Lagerwert');
-        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;ca. 1 kg;;15,000000;"1 kg";14.985,00');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;kg;;15,000000;"1 kg";14.985,00');
         $this->assertResponseContains(';;;;;;;;14.985,00');
     }
 
