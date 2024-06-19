@@ -2475,7 +2475,7 @@ msgid "Please_search_or_scan_a_product_or_chose_a_category."
 msgstr "Suche bzw. scanne ein Produkt oder wähle eine Kategorie aus."
 
 msgid "No_products_found."
-msgstr "Keine Produkte gefunden."
+msgstr "Keine Produkte gefunden -> Anderen Suchbegriff eingeben oder in Kategorien suchen."
 
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"
