@@ -81,8 +81,9 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart(0, 0);
-        $this->assertResponseContains('Bitte akzeptiere die AGB.');
-        $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+        $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
+
+        $this->assertResponseNotContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
     }
 
     public function testSelfServiceRemoveProductWithPricePerUnit()

@@ -266,7 +266,7 @@ msgid "Signing_in_failed."
 msgstr "Anmelden ist fehlgeschlagen."
 
 msgid "Start_self_service"
-msgstr "Selbstbedienung starten"
+msgstr "Klicke auf deinen Standort um die Selbstbedienung zu starten"
 
 msgid "For_self_service_with_account"
 msgstr "Für Selbstbedienung mit Mitgliedskonto"
