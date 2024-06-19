@@ -26,6 +26,7 @@ body.self_services #content {
 .self-service {
     background-color: #fff;
     min-height: 500px;
+    min-width: 100%;
     padding-right: 10px;
     position: relative;
     float: left;
@@ -153,8 +154,8 @@ body.self_services #content {
 .self-service .header hr {
     float: left;
     height: 1px;
-    width: 70%;
-    margin-top: 15px;
+    width: 100%;
+    margin-top: 35px;
     margin-bottom: 10px;
     border-color: #d6d4d4;
 }
