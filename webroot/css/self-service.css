@@ -26,7 +26,6 @@ body.self_services #content {
 .self-service {
     background-color: #fff;
     min-height: 500px;
-    min-width: 100%;
     padding-right: 10px;
     position: relative;
     float: left;
