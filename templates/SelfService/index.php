@@ -84,7 +84,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         } else {
             echo __('Self_service');
         }
-    ?> 
+    ?>
     </h2>
     <h4> </br>
     <?php
