@@ -18,7 +18,7 @@ body.self_services {
 body.self_services #content,
 .self-service,
 .self-service .footer {
-    width: 918px;
+    width: 100%;
 }
 body.self_services #content {
     margin-top: -46px;
@@ -32,15 +32,15 @@ body.self_services #content {
 }
 .self-service .right-box {
     position: fixed;
-    left: 611px;
-    width: 306px;
-    top: 0;
+    right:0;
+    width: 30%;
     overflow-y: auto;
     background-color: #fff;
 }
 .self-service .btn-order {
     margin-left: 5%;
     width: 90%;
+    height: 60px;
 }
 .self-service .header h1 span {
     margin-right: 10px;
@@ -57,7 +57,7 @@ body.self_services #content {
     margin-right: 5px;
 }
 .self-service .product-search-form-wrapper input[name="keyword"] {
-    width: 215px;
+    width: 415px;
     float: left;
 }
 .self-service .product-search-form-wrapper a.btn {
@@ -68,7 +68,7 @@ body.self_services #content {
 }
 .self-service #products {
     float: left;
-    width: 602px;
+    right:0;
     margin-left: 10px;
     margin-top: -5px;
     margin-bottom: 80px;
@@ -77,18 +77,20 @@ body.self_services #content {
 }
 .self-service .pw {
     border-right: 1px solid #d6d4d4;
+    width: 100%;
 }
 .self-service .pw div.c1 {
-    width: 100px;
+    width: 20%;
 }
 .self-service .pw div.c1 img {
-    width: 80px;
+    width: 130px;
 }
 .self-service .pw div.c2 {
-    width: 260px;
+    width: 25%;
 }
 .self-service .pw div.c3 {
-    width: 215px;
+    width: 20%;
+    right: 0;
 }
 .self-service #flashMessage {
     top: 46px;
@@ -141,7 +143,7 @@ body.self_services #content {
     position: fixed;
     top: 0;
     height: 110px;
-    width: 611px;
+    width: 70%;
     z-index: 1000;
     padding-left: 10px;
 }
@@ -193,11 +195,11 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     display: none;
 }
 .self-service #cart {
-    position: static;
     padding-bottom: 3px;
     border: 1px solid #ccc;
     border-top: none;
     border-right: none;
+    width: 100%;
 }
 .self-service .pw .pickup-day {
     display: none;
@@ -206,6 +208,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     padding-top: 10px;
     padding-bottom: 80px;
     border-left: 1px solid #d6d4d4;
+    width: 100%;
 }
 .self-service #SelfServiceForm p.payment-type {
     padding-left: 5px;

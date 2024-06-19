@@ -782,7 +782,8 @@ body.manufacturers.index h2.info {
     border-bottom-right-radius: 3px;
 }
 #cart {
-    min-height: 140px;
+    min-height: 1
+    40px;
 }
 #cart a.self-service {
     color: #fff;
