@@ -26,6 +26,7 @@ body.self_services #content {
 .self-service {
     background-color: #fff;
     min-height: 500px;
+    min-width: 100%;
     padding-right: 10px;
     position: relative;
     float: left;
@@ -33,6 +34,7 @@ body.self_services #content {
 .self-service .right-box {
     position: fixed;
     right:0;
+    top: 0;
     width: 30%;
     overflow-y: auto;
     background-color: #fff;
@@ -77,20 +79,19 @@ body.self_services #content {
 }
 .self-service .pw {
     border-right: 1px solid #d6d4d4;
-    width: 100%;
+    width: 70%;
 }
 .self-service .pw div.c1 {
-    width: 20%;
+    width: 25%;
 }
 .self-service .pw div.c1 img {
     width: 130px;
 }
 .self-service .pw div.c2 {
-    width: 25%;
+    width: 40%;
 }
 .self-service .pw div.c3 {
-    width: 20%;
-    right: 0;
+    width: 25%;
 }
 .self-service #flashMessage {
     top: 46px;
@@ -139,7 +140,6 @@ body.self_services #content {
     color: #fff;
 }
 .self-service .header {
-    background: #fff;
     position: fixed;
     top: 0;
     height: 110px;
@@ -150,7 +150,7 @@ body.self_services #content {
 .self-service .header hr {
     float: left;
     height: 1px;
-    width: 100%;
+    width: 70%;
     margin-top: 15px;
     margin-bottom: 10px;
     border-color: #d6d4d4;
@@ -207,7 +207,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 .self-service #SelfServiceForm {
     padding-top: 10px;
     padding-bottom: 80px;
-    border-left: 1px solid #d6d4d4;
+
     width: 100%;
 }
 .self-service #SelfServiceForm p.payment-type {
