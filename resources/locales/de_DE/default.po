@@ -2466,7 +2466,10 @@ msgid "Self_service"
 msgstr "Selbstbedienung"
 
 msgid "Search:_name_id_or_barcode"
-msgstr "Suche: Name, ID oder Barcode"
+msgstr "Suchfeld: Barcode scannen oder Suchbegriff eingeben"
+
+msgid "Scan_product"
+msgstr "Scanne das gewünschte Produkt:"
 
 msgid "Please_search_or_scan_a_product_or_chose_a_category."
 msgstr "Suche bzw. scanne ein Produkt oder wähle eine Kategorie aus."

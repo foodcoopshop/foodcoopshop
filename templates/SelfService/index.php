@@ -84,9 +84,13 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         } else {
             echo __('Self_service');
         }
-    ?>
+    ?> 
     </h2>
-    <?php if (!$isMobile) { ?>
+    <h4> </br>
+    <?php
+            echo __('Scan_product');?></h4>
+    <?php
+        if (!$isMobile) { ?>
         <h1><span><?php echo $totalProductCount; ?> <?php echo __('found'); ?></span></h1>
     <?php } ?>
     <?php echo $this->element('productSearch', [
@@ -107,6 +111,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         if (!isset($keyword) && $categoryId == 0) {
             echo __('Please_search_or_scan_a_product_or_chose_a_category.');
         } else {
+            ?></br><?php
             echo __('No_products_found.');
         }
         echo '</p>';

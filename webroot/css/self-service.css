@@ -50,16 +50,19 @@ body.self_services #content {
     padding-top: 10px;
 }
 .self-service .product-search-form-wrapper {
-    top: 53px;
+    top: 110px;
     left: 10px;
+    float: left;
 }
 .self-service .product-search-form-wrapper .btn[type="submit"] {
     margin-left: 0;
     margin-right: 5px;
+    height: 45px;
 }
 .self-service .product-search-form-wrapper input[name="keyword"] {
-    width: 415px;
-    float: left;
+    width: 595px;
+    font-size: 20px;
+    height: 45px;
 }
 .self-service .product-search-form-wrapper a.btn {
     margin-left: 5px;
@@ -68,10 +71,11 @@ body.self_services #content {
     float: left;
 }
 .self-service #products {
+    position: static;
     float: left;
     right:0;
     margin-left: 10px;
-    margin-top: -5px;
+    margin-top: 45px;
     margin-bottom: 80px;
     padding-top: 10px;
     min-height: calc(100vh - 100px - 66px - 2px);
@@ -141,7 +145,6 @@ body.self_services #content {
 .self-service .header {
     position: fixed;
     top: 0;
-    height: 110px;
     width: 70%;
     z-index: 1000;
     padding-left: 10px;
