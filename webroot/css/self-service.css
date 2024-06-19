@@ -42,6 +42,7 @@ body.self_services #content {
     margin-left: 5%;
     width: 90%;
     height: 60px;
+    font-size: 20px;
 }
 .self-service .header h1 span {
     margin-right: 10px;

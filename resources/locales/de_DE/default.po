@@ -2487,7 +2487,7 @@ msgid "Your_shopping_bag_is_empty."
 msgstr "Deine Einkaufstasche ist leer."
 
 msgid "Finish_pickup"
-msgstr "Abholung abschließen"
+msgstr "Einkauf abschließen"
 
 msgid "Continue_shopping?"
 msgstr "Weiter einkaufen?"

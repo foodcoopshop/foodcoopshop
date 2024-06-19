@@ -27,6 +27,7 @@ $cartsTable = FactoryLocator::get('Table')->get('Carts');
 $paymentTypeAsString = __('Credit');
 if ($paymentType == Cart::SELF_SERVICE_PAYMENT_TYPE_CASH) {
     $paymentTypeAsString =  __('Cash');
+    $paymentTypeAsString .= '/Karte';
 }
 
 echo '<p class="payment-type">' .  __('Payment_type') . ': ' . $paymentTypeAsString . '</p>';
