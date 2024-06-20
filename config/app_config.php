@@ -90,6 +90,7 @@ return [
         'termsOfUseEnabled' => true,
         'generalTermsAndConditionsEnabled' => true,
         'rightOfWithdrawalEnabled' => true,
+        'selfServiceGeneralTermsAndConditionsCheckboxEnabled' => true,
         'promiseToPickUpProductsCheckboxEnabled' => false,
         'showPaymentInfoText' => true,
         'showManufacturerListAndDetailPage' => true,
