@@ -99,7 +99,6 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
         <?php
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
-            echo $this->element('cart/promiseToPickUpProductsCheckbox');
         ?>
         <div class="sc"></div>
 

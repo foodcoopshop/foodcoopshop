@@ -1634,9 +1634,6 @@ msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen A
 msgid "Please_accept_the_general_terms_and_conditions."
 msgstr "Bitte akzeptiere die AGB."
 
-msgid "Please_promise_to_pick_up_the_ordered_products."
-msgstr "Bitte verspreche, die bestellten Produkte abzuholen und bei der Abholung bar zu bezahlen."
-
 msgid "Please_select_your_payment_type."
 msgstr "Bitte wähle deine Zahlungsart."
 
@@ -2554,9 +2551,6 @@ msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. D
 
 msgid "Pickup_place:_{0}"
 msgstr "Abholort: {0}"
-
-msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
-msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle den Betrag bar an der Kassa im Laden."
 
 msgid "No_order_possible"
 msgstr "Keine Bestellung möglich"
