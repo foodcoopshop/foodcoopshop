@@ -89,7 +89,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
     <?php
         if (!$isMobile) { ?>
         <h1><span><?php echo $totalProductCount; ?> <?php echo __('found'); ?></span></h1>
-        <h4></br><?php echo __('Scan_product');?></h4>
+        <h4><?php echo __('Scan_product');?></h4>
     <?php } ?>
     <?php echo $this->element('productSearch', [
         'action' => __('route_self_service'),
