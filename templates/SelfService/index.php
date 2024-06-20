@@ -160,7 +160,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         ]);
 
         if (!$orderCustomerService->isOrderForDifferentCustomerMode()){
-            if($this->element('cart/generalTermsAndConditionsCheckbox')){
+            if (Configure::read('app.selfServiceGeneralTermsAndConditionsCheckboxEnabled')){
               echo $this->element('cart/generalTermsAndConditionsCheckbox');
             }
             echo $this->element('cart/cancellationTermsCheckbox');           
