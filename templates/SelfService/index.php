@@ -86,8 +86,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         }
     ?>
     </h2>
-    <?php
-        if (!$isMobile) { ?>
+    <?php if (!$isMobile) { ?>
         <h1><span><?php echo $totalProductCount; ?> <?php echo __('found'); ?></span></h1>
         <h4><?php echo __('Scan_product');?></h4>
     <?php } ?>

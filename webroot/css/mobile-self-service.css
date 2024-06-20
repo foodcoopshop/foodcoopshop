@@ -35,6 +35,7 @@
     }
     .self-service .pw {
        padding-left: 10px;
+       width: 100%;
     }
     .self-service #login-form {
        padding-top: 0;
@@ -96,6 +97,8 @@
        margin-bottom: 0;
        padding-top: 0px;
        min-height: calc(100vh - 55px - 50px - 1px);
+       right: 0;
+       position: static;
     }
     body.self_services #responsive-header .shopping-limit-reached-info {
        width: 95%;
