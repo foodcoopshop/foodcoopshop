@@ -53,29 +53,28 @@ body.self_services #content {
 }
 .self-service .product-search-form-wrapper {
     top: 110px;
-    left: 10px;
-    float: left;
-    width: 97%;
+    left: 8px;
+    width: 99%;
 }
 .self-service .product-search-form-wrapper .btn[type="submit"] {
     margin-left: 0;
-    margin-right: 20px;
-    height: 45px;
+    margin-right: 13px;
+    height: 40px;
 }
 .self-service .product-search-form-wrapper .btn[type="button"] {
-    height: 45px;
-    font-size: 20px;
-    width: 204px;
-    margin-left: 10px;
+    height: 40px;
+    font-size: 16px;
+    width: 201px;
+    margin-left: 30px;
 }
 .self-service .product-search-form-wrapper input[name="keyword"] {
-    width: 586px;
-    font-size: 20px;
-    height: 45px;
+    width: 416px;
+    font-size: 16px;
+    height: 40px;
 }
 .self-service .product-search-form-wrapper a.btn {
-    height: 45px;
-    padding: 11px 8px;
+    height: 40px;
+    padding: 8px 8px;
     margin-left: -1px;
     float: left;
 }
@@ -99,7 +98,7 @@ body.self_services #content {
     width: 150px;
 }
 .self-service .pw div.c2 {
-    width: 46%;
+    width: 45%;
 }
 .self-service .pw div.c3 {
     width: 26%;
