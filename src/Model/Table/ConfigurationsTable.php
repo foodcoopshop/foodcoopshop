@@ -112,7 +112,7 @@ class ConfigurationsTable extends AppTable
     public function validationFcsCheckCreditBalanceLimit(Validator $validator)
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 500);
+        $validator = $this->getNumberRangeValidator($validator, 'value', -100, 500);
         return $validator;
     }
 
