@@ -2690,6 +2690,9 @@ msgstr "Betrag in {0}"
 msgid "Cash"
 msgstr "Bar"
 
+msgid "Creditcards"
+msgstr "Bankomat-/Kreditkarte"
+
 msgid "Payment_type"
 msgstr "Zahlungsart"
 
