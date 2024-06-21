@@ -104,12 +104,6 @@ body.self_services #content {
 .self-service .pw div.c3 {
     width: 26%;
 }
-.self-service .pw div.c3 a.btn {
-    width: 70%;
-}
-.self-service .pw div.amount-wrapper span[class="below-input availibility"] {
-    width: 70%;
-}
 .self-service #flashMessage {
     top: 46px;
     z-index: 1200;
