@@ -18,7 +18,7 @@ body.self_services {
 body.self_services #content,
 .self-service,
 .self-service .footer {
-    width: 100%;
+    width: 1234px;
 }
 body.self_services #content {
     margin-top: -46px;
@@ -26,15 +26,14 @@ body.self_services #content {
 .self-service {
     background-color: #fff;
     min-height: 500px;
-    min-width: 100%;
     padding-right: 10px;
     position: relative;
     float: left;
 }
 .self-service .right-box {
     position: fixed;
-    right:0;
-    width: 30%;
+    left: 865px;
+    width: 360px;
     top: 0;
     overflow-y: auto;
     background-color: #fff;
@@ -161,8 +160,9 @@ body.self_services #content {
     background: #fff;
     position: fixed;
     top: 0;
+    left: 0;
     height: 160px;
-    width: 70%;
+    width: 865px;
     z-index: 1000;
     padding-left: 10px;
 }
