@@ -2472,7 +2472,7 @@ msgid "Scan_product"
 msgstr "Scanne das gewünschte Produkt:"
 
 msgid "No_products_found."
-msgstr "Keine Produkte gefunden -> Anderen Suchbegriff eingeben oder in Kategorien suchen."
+msgstr "Keine Produkte gefunden -> Barcode scannen, Suchbegriff eingeben oder in Kategorien suchen."
 
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"
