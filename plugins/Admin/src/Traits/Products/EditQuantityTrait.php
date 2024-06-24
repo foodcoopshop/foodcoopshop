@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Admin\Traits\Products;
 
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
+use App\Services\ProductQuantityService;
 
 
 /**
@@ -20,7 +22,7 @@ use Cake\Core\Configure;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditQuantityTrait 
+trait EditQuantityTrait
 {
 
     public function editQuantity()
@@ -39,12 +41,15 @@ trait EditQuantityTrait
             contain: [
                 'StockAvailables',
                 'Manufacturers',
+                'UnitProducts',
                 'ProductAttributes',
                 'ProductAttributes.StockAvailables',
-                'ProductAttributes.ProductAttributeCombinations.Attributes'
+                'ProductAttributes.UnitProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
             ]
         )->first();
 
+        $unitObject = $oldProduct->unit_product;
         if ($ids['attributeId'] > 0) {
             // override values for messages
             foreach ($oldProduct->product_attributes as $attribute) {
@@ -53,6 +58,7 @@ trait EditQuantityTrait
                 }
                 $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
                 $oldProduct->stock_available = $attribute->stock_available;
+                $unitObject = $attribute->unit_product_attribute;
             }
         }
 
@@ -86,13 +92,17 @@ trait EditQuantityTrait
         $entity = $this->Product->StockAvailables->patchEntity($oldProduct->stock_available, $object2save);
 
         if ($entity->isDirty()) {
+
+            $productQuantityService = new ProductQuantityService();
+            $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($oldProduct, $unitObject);
+
             $dirtyFieldsWithNewValues = [];
             foreach($entity->getDirty() as $dirtyField) {
                 $newValue = $entity->get($dirtyField);
                 switch($dirtyField) {
                     case 'quantity':
-                        $translatedFieldName = __d('admin', 'Available_quantity') . ': ' 
-                            . __d('admin', 'Old_value') . ': <b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($oldStockAvailable) . '</b> '
+                        $translatedFieldName = __d('admin', 'Available_quantity') . ': '
+                            . __d('admin', 'Old_value') . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $oldStockAvailable, $unitObject->name) . '</b> '
                             . __d('admin', 'New_value');
                         break;
                     case 'always_available':
@@ -101,18 +111,18 @@ trait EditQuantityTrait
                         break;
                     case 'default_quantity_after_sending_order_lists':
                         $translatedFieldName = __d('admin', 'Default_quantity_after_sending_order_lists');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : Configure::read('app.numberHelper')->formatUnitAsDecimal($newValue);
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitObject->name);
                         break;
                     case 'quantity_limit':
                         $translatedFieldName = __d('admin', 'Quantity_limit');
                         break;
                     case 'sold_out_limit':
                         $translatedFieldName = __d('admin', 'Sold_out_limit');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : Configure::read('app.numberHelper')->formatUnitAsDecimal($newValue);
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitObject->name);
                         break;
                 }
                 if (isset($translatedFieldName)) {
-                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($newValue) . '</b>';
+                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitObject->name) . '</b>';
                 }
             }
 
