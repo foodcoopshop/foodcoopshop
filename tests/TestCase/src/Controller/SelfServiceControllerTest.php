@@ -87,7 +87,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithoutCheckboxesAndGeneralTermsAndConditionsNotEnabled() {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        Configure::write('app.selfServiceGeneralTermsAndConditionsCheckboxEnabled', false);
+        Configure::write('app.generalTermsAndConditionsEnabled', false);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart(0, 0);
