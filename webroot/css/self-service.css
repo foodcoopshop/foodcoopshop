@@ -54,6 +54,9 @@ body.self_services #content {
     top: 110px;
     left: 8px;
 }
+.self-service .product-search-form-wrapper .btn {
+    padding: 6px 14px;
+}
 .self-service .product-search-form-wrapper .btn[type="submit"] {
     margin-left: 0;
     margin-right: 13px;
@@ -72,7 +75,7 @@ body.self_services #content {
 }
 .self-service .product-search-form-wrapper a.btn {
     height: 40px;
-    padding: 8px 8px;
+    padding: 8px 14px;
     margin-left: -1px;
     float: left;
 }
@@ -83,7 +86,7 @@ body.self_services #content {
     float: left;
     width: 100%;
     margin-left: 10px;
-    margin-top: -5px;
+    margin-top: 10px;
     margin-bottom: 80px;
     padding-top: 50px;
     min-height: calc(100vh - 100px - 66px - 2px);
@@ -160,14 +163,6 @@ body.self_services #content {
     z-index: 1000;
     padding-left: 10px;
 }
-.self-service .header hr {
-    float: left;
-    height: 1px;
-    width: 100%;
-    margin-top: 55px;
-    margin-bottom: 10px;
-    border-color: #d6d4d4;
-}
 .pw {
     border-top: none;
     padding-top: 10px;
@@ -214,6 +209,9 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     border-top: none;
     border-right: none;
     width: 100%;
+}
+.self-service .cart span.product-name-wrapper {
+    width: 270px;
 }
 .self-service .pw .pickup-day {
     display: none;
@@ -264,7 +262,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service .right-box .input.checkbox,
 .self-service .right-box .input.radio {
-    width: 295px;
+    width: 345px;
     margin-left: 5px;
 }
 .self-service .right-box input[type="checkbox"] {
