@@ -2460,10 +2460,10 @@ msgid "Self_service"
 msgstr "Self-service"
 
 msgid "Search:_name_id_or_barcode"
-msgstr "Search: name, ID or barcode"
+msgstr "Search field: Scan barcode or enter search term"
 
 msgid "Please_search_or_scan_a_product_or_chose_a_category."
-msgstr "Please search or scan a product or chose a categoey."
+msgstr "Please search or scan a product or choose a category."
 
 msgid "No_products_found."
 msgstr "No products found."

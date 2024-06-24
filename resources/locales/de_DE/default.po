@@ -266,7 +266,7 @@ msgid "Signing_in_failed."
 msgstr "Anmelden ist fehlgeschlagen."
 
 msgid "Start_self_service"
-msgstr "Selbstbedienung starten"
+msgstr "Klicke auf deinen Standort um die Selbstbedienung zu starten"
 
 msgid "For_self_service_with_account"
 msgstr "Für Selbstbedienung mit Mitgliedskonto"
@@ -2463,13 +2463,16 @@ msgid "Self_service"
 msgstr "Selbstbedienung"
 
 msgid "Search:_name_id_or_barcode"
-msgstr "Suche: Name, ID oder Barcode"
+msgstr "Suchfeld: Barcode scannen oder Suchbegriff eingeben"
 
 msgid "Please_search_or_scan_a_product_or_chose_a_category."
-msgstr "Suche bzw. scanne ein Produkt oder wähle eine Kategorie aus."
+msgstr "Suchfeld: Barcode scannen oder Suchbegriff eingeben"
+
+msgid "Scan_product"
+msgstr "Scanne das gewünschte Produkt:"
 
 msgid "No_products_found."
-msgstr "Keine Produkte gefunden."
+msgstr "Keine Produkte gefunden -> Barcode scannen, Suchbegriff eingeben oder in Kategorien suchen."
 
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"
@@ -2481,7 +2484,7 @@ msgid "Your_shopping_bag_is_empty."
 msgstr "Deine Einkaufstasche ist leer."
 
 msgid "Finish_pickup"
-msgstr "Abholung abschließen"
+msgstr "Einkauf abschließen"
 
 msgid "Continue_shopping?"
 msgstr "Weiter einkaufen?"

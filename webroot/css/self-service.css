@@ -18,7 +18,7 @@ body.self_services {
 body.self_services #content,
 .self-service,
 .self-service .footer {
-    width: 918px;
+    width: 1234px;
 }
 body.self_services #content {
     margin-top: -46px;
@@ -32,8 +32,8 @@ body.self_services #content {
 }
 .self-service .right-box {
     position: fixed;
-    left: 611px;
-    width: 306px;
+    left: 865px;
+    width: 368px;
     top: 0;
     overflow-y: auto;
     background-color: #fff;
@@ -41,6 +41,8 @@ body.self_services #content {
 .self-service .btn-order {
     margin-left: 5%;
     width: 90%;
+    height: 60px;
+    font-size: 20px;
 }
 .self-service .header h1 span {
     margin-right: 10px;
@@ -48,47 +50,65 @@ body.self_services #content {
 .self-service .header h2 {
     padding-top: 10px;
 }
+.self-service .bootstrap-select {
+    width: 203px ! important;
+}
 .self-service .product-search-form-wrapper {
-    top: 53px;
-    left: 10px;
+    top: 110px;
+    left: 8px;
+}
+.self-service .product-search-form-wrapper .btn {
+    padding: 6px 14px;
 }
 .self-service .product-search-form-wrapper .btn[type="submit"] {
     margin-left: 0;
-    margin-right: 5px;
+    margin-right: 13px;
+    height: 40px;
 }
 .self-service .product-search-form-wrapper input[name="keyword"] {
-    width: 215px;
-    float: left;
+    width: 416px;
+    font-size: 16px;
+    height: 40px;
+}
+.self-service .product-search-form-wrapper .btn[type="button"] {
+    height: 40px;
+    font-size: 16px;
+    width: 211px;
+    margin-left: 30px;
 }
 .self-service .product-search-form-wrapper a.btn {
-    margin-left: 5px;
+    height: 40px;
+    padding: 8px 14px;
+    margin-left: -1px;
+    float: left;
 }
 .self-service .product-search-form-wrapper > .input {
     float: left;
 }
 .self-service #products {
     float: left;
-    width: 602px;
+    width: 100%;
     margin-left: 10px;
-    margin-top: -5px;
+    margin-top: 10px;
     margin-bottom: 80px;
-    padding-top: 10px;
+    padding-top: 50px;
     min-height: calc(100vh - 100px - 66px - 2px);
 }
 .self-service .pw {
     border-right: 1px solid #d6d4d4;
+    width: 70%;
 }
 .self-service .pw div.c1 {
-    width: 100px;
+    width: 26%;
 }
 .self-service .pw div.c1 img {
-    width: 80px;
+    width: 150px;
 }
 .self-service .pw div.c2 {
-    width: 260px;
+    width: 45%;
 }
 .self-service .pw div.c3 {
-    width: 215px;
+    width: 26%;
 }
 .self-service #flashMessage {
     top: 46px;
@@ -140,18 +160,11 @@ body.self_services #content {
     background: #fff;
     position: fixed;
     top: 0;
-    height: 110px;
-    width: 611px;
+    left: 0;
+    height: 160px;
+    width: 865px;
     z-index: 1000;
     padding-left: 10px;
-}
-.self-service .header hr {
-    float: left;
-    height: 1px;
-    width: 100%;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    border-color: #d6d4d4;
 }
 .pw {
     border-top: none;
@@ -198,6 +211,10 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
     border: 1px solid #ccc;
     border-top: none;
     border-right: none;
+    width: 100%;
+}
+.self-service .cart span.product-name-wrapper {
+    width: 270px;
 }
 .self-service .pw .pickup-day {
     display: none;
@@ -209,7 +226,6 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service #SelfServiceForm p.payment-type {
     padding-left: 5px;
-    width: 100%;
 }
 .self-service .product.error,
 .self-service .error-message {
@@ -249,7 +265,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service .right-box .input.checkbox,
 .self-service .right-box .input.radio {
-    width: 295px;
+    width: 345px;
     margin-left: 5px;
 }
 .self-service .right-box input[type="checkbox"] {
