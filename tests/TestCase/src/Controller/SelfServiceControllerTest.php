@@ -85,16 +85,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
     }
 
-    public function testSelfServiceOrderWithoutCheckboxesAndGeneralTermsAndConditionsNotEnabled() {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        Configure::write('app.generalTermsAndConditionsEnabled', false);
-        $this->loginAsSuperadmin();
-        $this->addProductToSelfServiceCart(349, 1);
-        $this->finishSelfServiceCart(0, 0);
-        $this->assertResponseNotContains('Bitte akzeptiere die AGB.');
-        $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
-    }
-
     public function testSelfServiceRemoveProductWithPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);

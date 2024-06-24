@@ -158,12 +158,10 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
-        if (!$orderCustomerService->isOrderForDifferentCustomerMode()){
-            if (Configure::read('app.generalTermsAndConditionsEnabled')){
-              echo $this->element('cart/generalTermsAndConditionsCheckbox');
-            }
-            echo $this->element('cart/cancellationTermsCheckbox'); 
+        if (Configure::read('app.generalTermsAndConditionsEnabled')){
+            echo $this->element('cart/generalTermsAndConditionsCheckbox');
         }
+        echo $this->element('cart/cancellationTermsCheckbox'); 
         echo $this->element('selfService/paymentType');
     ?>
     <button type="submit" class="btn btn-success btn-order">
