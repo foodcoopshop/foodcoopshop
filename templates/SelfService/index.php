@@ -96,7 +96,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         'resetSearchUrl' => $this->Slug->getSelfService(),
         'includeCategoriesDropdown' => true
     ]); ?>
-    <hr />
 </div>
 
 <div id="products">
