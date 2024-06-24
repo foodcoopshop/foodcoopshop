@@ -90,7 +90,6 @@ return [
         'termsOfUseEnabled' => true,
         'generalTermsAndConditionsEnabled' => true,
         'rightOfWithdrawalEnabled' => true,
-        'promiseToPickUpProductsCheckboxEnabled' => false,
         'showPaymentInfoText' => true,
         'showManufacturerListAndDetailPage' => true,
         'showPickupPlaceInfo' => true,

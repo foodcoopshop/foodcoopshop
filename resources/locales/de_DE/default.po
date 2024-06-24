@@ -266,7 +266,7 @@ msgid "Signing_in_failed."
 msgstr "Anmelden ist fehlgeschlagen."
 
 msgid "Start_self_service"
-msgstr "Selbstbedienung starten"
+msgstr "Klicke auf deinen Standort um die Selbstbedienung zu starten"
 
 msgid "For_self_service_with_account"
 msgstr "Für Selbstbedienung mit Mitgliedskonto"
@@ -1634,9 +1634,6 @@ msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen A
 msgid "Please_accept_the_general_terms_and_conditions."
 msgstr "Bitte akzeptiere die AGB."
 
-msgid "Please_promise_to_pick_up_the_ordered_products."
-msgstr "Bitte verspreche, die bestellten Produkte abzuholen und bei der Abholung bar zu bezahlen."
-
 msgid "Please_select_your_payment_type."
 msgstr "Bitte wähle deine Zahlungsart."
 
@@ -2466,13 +2463,16 @@ msgid "Self_service"
 msgstr "Selbstbedienung"
 
 msgid "Search:_name_id_or_barcode"
-msgstr "Suche: Name, ID oder Barcode"
+msgstr "Suchfeld: Barcode scannen oder Suchbegriff eingeben"
 
 msgid "Please_search_or_scan_a_product_or_chose_a_category."
-msgstr "Suche bzw. scanne ein Produkt oder wähle eine Kategorie aus."
+msgstr "Suchfeld: Barcode scannen oder Suchbegriff eingeben"
+
+msgid "Scan_product"
+msgstr "Scanne das gewünschte Produkt:"
 
 msgid "No_products_found."
-msgstr "Keine Produkte gefunden."
+msgstr "Keine Produkte gefunden -> Barcode scannen, Suchbegriff eingeben oder in Kategorien suchen."
 
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"
@@ -2484,7 +2484,7 @@ msgid "Your_shopping_bag_is_empty."
 msgstr "Deine Einkaufstasche ist leer."
 
 msgid "Finish_pickup"
-msgstr "Abholung abschließen"
+msgstr "Einkauf abschließen"
 
 msgid "Continue_shopping?"
 msgstr "Weiter einkaufen?"
@@ -2554,9 +2554,6 @@ msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. D
 
 msgid "Pickup_place:_{0}"
 msgstr "Abholort: {0}"
-
-msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
-msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle den Betrag bar an der Kassa im Laden."
 
 msgid "No_order_possible"
 msgstr "Keine Bestellung möglich"

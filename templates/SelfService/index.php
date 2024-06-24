@@ -88,6 +88,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
     </h2>
     <?php if (!$isMobile) { ?>
         <h1><span><?php echo $totalProductCount; ?> <?php echo __('found'); ?></span></h1>
+        <h4><?php echo __('Scan_product');?></h4>
     <?php } ?>
     <?php echo $this->element('productSearch', [
         'action' => __('route_self_service'),
@@ -95,7 +96,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         'resetSearchUrl' => $this->Slug->getSelfService(),
         'includeCategoriesDropdown' => true
     ]); ?>
-    <hr />
 </div>
 
 <div id="products">
@@ -107,6 +107,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         if (!isset($keyword) && $categoryId == 0) {
             echo __('Please_search_or_scan_a_product_or_chose_a_category.');
         } else {
+            ?></br><?php
             echo __('No_products_found.');
         }
         echo '</p>';

@@ -1631,9 +1631,6 @@ msgstr "Please accept the information about the right of withdrawal."
 msgid "Please_accept_the_general_terms_and_conditions."
 msgstr "Please accept the general terms and conditions."
 
-msgid "Please_promise_to_pick_up_the_ordered_products."
-msgstr "Please promise to pick up the ordered products."
-
 msgid "Please_select_your_payment_type."
 msgstr "Please select your payment type."
 
@@ -2463,10 +2460,10 @@ msgid "Self_service"
 msgstr "Self-service"
 
 msgid "Search:_name_id_or_barcode"
-msgstr "Search: name, ID or barcode"
+msgstr "Search field: Scan barcode or enter search term"
 
 msgid "Please_search_or_scan_a_product_or_chose_a_category."
-msgstr "Please search or scan a product or chose a categoey."
+msgstr "Please search or scan a product or choose a category."
 
 msgid "No_products_found."
 msgstr "No products found."
@@ -2551,9 +2548,6 @@ msgstr "Your message will be shown next to your order in the admin panel. Manufa
 
 msgid "Pickup_place:_{0}"
 msgstr "Pickup place: {0}"
-
-msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
-msgstr "I promise to pick up the products on the selected pickup day and I will pay in cash in the shop."
 
 msgid "No_order_possible"
 msgstr "No order possible"

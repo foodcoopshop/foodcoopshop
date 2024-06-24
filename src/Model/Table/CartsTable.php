@@ -61,10 +61,6 @@ class CartsTable extends AppTable
             $validator->requirePresence('general_terms_and_conditions_accepted', true, __('Please_accept_the_general_terms_and_conditions.'));
             $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
         }
-        if (Configure::read('app.promiseToPickUpProductsCheckboxEnabled')) {
-            $validator->requirePresence('promise_to_pickup_products', true, __('Please_promise_to_pick_up_the_ordered_products.'));
-            $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
-        }
         $validator->notEmptyArray('self_service_payment_type', __('Please_select_your_payment_type.'));
         return $validator;
     }
