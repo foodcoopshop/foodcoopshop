@@ -50,6 +50,9 @@ body.self_services #content {
 .self-service .header h2 {
     padding-top: 10px;
 }
+.self-service .bootstrap-select {
+    width: 203px ! important;
+}
 .self-service .product-search-form-wrapper {
     top: 110px;
     left: 8px;
@@ -70,7 +73,7 @@ body.self_services #content {
 .self-service .product-search-form-wrapper .btn[type="button"] {
     height: 40px;
     font-size: 16px;
-    width: 201px;
+    width: 211px;
     margin-left: 30px;
 }
 .self-service .product-search-form-wrapper a.btn {
