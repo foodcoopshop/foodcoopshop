@@ -162,7 +162,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
             echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
         }
-        echo $this->element('cart/cancellationTermsCheckbox'); 
         echo $this->element('selfService/paymentType');
     ?>
     <button type="submit" class="btn btn-success btn-order">
