@@ -394,7 +394,7 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
-    public function changePrice(array $products, $changeOpenOrderDetailPrice = false): bool
+    public function changePrice(array $products): bool
     {
 
         foreach ($products as $product) {
