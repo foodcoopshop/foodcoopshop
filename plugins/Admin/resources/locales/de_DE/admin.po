@@ -1811,7 +1811,7 @@ msgid "Comment"
 msgstr "Kommentar"
 
 msgid "docs_route_credit_system"
-msgstr "guthaben-system"
+msgstr "guthaben"
 
 msgid "Add_transfered_credit"
 msgstr "Eingezahltes Guthaben eintragen"
