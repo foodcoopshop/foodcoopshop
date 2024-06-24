@@ -29,7 +29,7 @@ foodcoopshop.ModalProductPriceEdit = {
 
     },
 
-    getHtml : function() {
+    getHtml : function(isStockProduct) {
         var html = '<label for="dialogPricePrice"></label><br />';
         html += '<label class="radio">';
         html += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price" checked="checked" class="price" />';
@@ -63,6 +63,12 @@ foodcoopshop.ModalProductPriceEdit = {
         html += '<option value="l">l</option>';
         html += '</select><br />';
         html += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
+        if (isStockProduct) {
+            html += '<label class="checkbox" style="margin-top:10px ! important;">';
+            html += '<input type="checkbox" name="dialogPriceUseWeightAsAmount" id="dialogPriceUseWeightAsAmount" />';
+            html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.dialogProduct.EditPriceUseWeightAsAmount + '</span>';
+            html += '</label>';
+        }
         html += '</div>';
         if (this.openOrderDetailPriceOnProductPriceChangeEnabled) {
             html += '<hr />';
@@ -102,6 +108,7 @@ foodcoopshop.ModalProductPriceEdit = {
                 priceUnitName: $('#dialogPriceUnitName').val(),
                 priceUnitAmount: $('#dialogPriceUnitAmount').val(),
                 priceQuantityInUnits : quantityInUnits,
+                priceUseWeightAsAmount: $('#dialogPriceUseWeightAsAmount:checked').length > 0 ? 1 : 0,
                 priceChangeOpenOrderDetails: $('#dialogPriceChangeOpenOrderDetails:checked').length > 0 ? 1 : 0,
             },
             {
@@ -119,10 +126,13 @@ foodcoopshop.ModalProductPriceEdit = {
 
     getOpenHandler : function(button, modalSelector) {
 
+        var row = button.closest('tr');
+        var productId = row.find('td.cell-id').html();
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.dialogProduct.ChangePrice,
-            foodcoopshop.ModalProductPriceEdit.getHtml()
+            foodcoopshop.ModalProductPriceEdit.getHtml(foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)),
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
@@ -148,9 +158,6 @@ foodcoopshop.ModalProductPriceEdit = {
         $(modalSelector + ' input, select').on('focus', function() {
             $(this).closest('div').prev().find('input').trigger('click');
         });
-
-        var row = button.closest('tr');
-        var productId = row.find('td.cell-id').html();
 
         var radioMainSelector = modalSelector + ' input[name="dialogPricePricePerUnitEnabled"]';
         var radio;
@@ -178,6 +185,7 @@ foodcoopshop.ModalProductPriceEdit = {
         $(modalSelector + ' #dialogPriceProductId').val(productId);
         var label = foodcoopshop.Admin.getProductNameForDialog(row);
         $(modalSelector + ' label[for="dialogPricePrice"]').html('<b>' + label + '</b>');
+        $(modalSelector + ' input[name="dialogPriceUseWeightAsAmount"]').prop('checked', unitData.use_weight_as_amount == 1);
 
         $('#dialogPriceUnitName').on('change', function() {
             var stepValue = '0.001';

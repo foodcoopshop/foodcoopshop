@@ -28,7 +28,7 @@ class UnitsTableTest extends AppCakeTestCase
     public $name = 'kg';
     public $amount = 2;
     public $quantityInUnits = 9.323;
-    public $useWeightAsAmount = 0;
+    public $useWeightAsAmount = false;
 
     public function setUp(): void
     {

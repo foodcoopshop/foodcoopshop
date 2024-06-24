@@ -117,7 +117,7 @@ trait EditPriceTrait
                             'unit_product_amount' => $this->getRequest()->getData('priceUnitAmount'),
                             'unit_product_quantity_in_units' => $this->getRequest()->getData('priceQuantityInUnits'),
                             'unit_product_price_per_unit_enabled' => $this->getRequest()->getData('pricePerUnitEnabled'),
-                            'use_weight_as_amount' => $this->getRequest()->getData('pricePerUnitUseWeightAsAmount'),
+                            'use_weight_as_amount' => $this->getRequest()->getData('priceUseWeightAsAmount'),
                         ]
                     ]
                 ]);

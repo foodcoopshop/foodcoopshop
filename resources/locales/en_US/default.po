@@ -1007,6 +1007,9 @@ msgstr "approximate delivery weight in {0} per unit"
 msgid "Edit_price_change_open_order_details_info_text"
 msgstr "Also adapt prices of all open orders?"
 
+msgid "Edit_price_use_weight_as_amount"
+msgstr "Use weight as available amount?"
+
 msgid "Name"
 msgstr "Name"
 

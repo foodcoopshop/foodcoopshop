@@ -1007,6 +1007,9 @@ msgstr "ungefähres Liefergewicht in {0} pro Einheit"
 msgid "Edit_price_change_open_order_details_info_text"
 msgstr "Preise von noch nicht verrechneten Bestellungen mit anpassen?"
 
+msgid "Edit_price_use_weight_as_amount"
+msgstr "Lagerstand über Gewicht berechnen?"
+
 msgid "Name"
 msgstr "Name"
 
