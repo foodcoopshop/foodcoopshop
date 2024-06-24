@@ -32,7 +32,7 @@ class ProductQuantityService
 
         return $product->is_stock_product &&
                $product->manufacturer->stock_management_enabled  &&
-               (!empty($unitObject) && $unitObject->price_per_unit_enabled);
+               (!empty($unitObject) && $unitObject->price_per_unit_enabled && $unitObject->use_weight_as_amount);
     }
 
     public function isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $unitObject)

@@ -17,5 +17,12 @@ class AvailableAmountBasedOnUnits extends AbstractMigration
         $table->changeColumn('sold_out_limit', 'decimal', $decimalOptions);
         $table->update();
 
+        $table = $this->table('fcs_units');
+        $table->addColumn('use_weight_as_amount', 'tinyinteger', [
+            'default' => 0,
+            'null' => false,
+        ]);
+        $table->update();
+
     }
 }

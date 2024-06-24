@@ -551,7 +551,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "tax": {
                 "id_tax": 2,
@@ -600,7 +601,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt",
             "row_class": "main-product"
@@ -685,7 +687,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "tax": {
                 "id_tax": 1,
@@ -734,7 +737,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt 2",
             "row_class": "main-product custom-odd"
@@ -819,7 +823,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "tax": {
                 "id_tax": 1,
@@ -868,7 +873,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt mit Gewichtsbarcode",
             "row_class": "main-product"
@@ -921,7 +927,8 @@
                         "name": "kg",
                         "amount": 1,
                         "price_per_unit_enabled": 0,
-                        "quantity_in_units": "0.000"
+                        "quantity_in_units": "0.000",
+                        "use_weight_as_amount": 0
                     },
                     "deposit_product_attribute": null,
                     "stock_available": {
@@ -961,7 +968,8 @@
                         "name": "kg",
                         "amount": 1,
                         "price_per_unit_enabled": 0,
-                        "quantity_in_units": "0.000"
+                        "quantity_in_units": "0.000",
+                        "use_weight_as_amount": 0
                     },
                     "deposit_product_attribute": null,
                     "stock_available": {
@@ -1001,7 +1009,8 @@
                         "name": "kg",
                         "amount": 1,
                         "price_per_unit_enabled": 1,
-                        "quantity_in_units": "0.500"
+                        "quantity_in_units": "0.500",
+                        "use_weight_as_amount": 0
                     },
                     "deposit_product_attribute": null,
                     "stock_available": {
@@ -1142,7 +1151,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "category": {
                 "names": [],
@@ -1185,7 +1195,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "category": {
                 "names": [],
@@ -1228,7 +1239,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "0.500"
+                "quantity_in_units": "0.500",
+                "use_weight_as_amount": 0
             },
             "category": {
                 "names": [],
