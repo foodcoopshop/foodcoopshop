@@ -580,8 +580,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart('350-14', 1); // add lagerprodukt mit variante
         $this->addProductToCart(340, 1); // add beuschl
         $this->Unit = $this->getTableLocator()->get('Units');
-        $this->Unit->saveUnits(346, 12, false, 1, 'kg', 1, 0.4); // artischocke
-        $this->Unit->saveUnits(347, 0, false, 1, 'kg', 1, 0.4); // forelle
+        $this->Unit->saveUnits(346, 12, false, 1, 'kg', 1, 0.4, 0); // artischocke
+        $this->Unit->saveUnits(347, 0, false, 1, 'kg', 1, 0.4, 0); // forelle
 
         $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
@@ -882,6 +882,15 @@ class CartsControllerTest extends AppCakeTestCase
         $productIdA = 347; // forelle
         $productIdB = '348-11'; // rindfleisch, 0,5 kg
         $productIdC = 351; // stock product
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(1);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitEntityB = $unitsTable->get(2);
+        $unitEntityB->use_weight_as_amount = 1;
+        $unitEntityC = $unitsTable->get(8);
+        $unitEntityC->use_weight_as_amount = 1;
+        $unitsTable->saveMany([$unitEntityA, $unitEntityB, $unitEntityC]);
 
         $this->addProductToCart($productIdA, 2);
         $this->addProductToCart($productIdB, 3);

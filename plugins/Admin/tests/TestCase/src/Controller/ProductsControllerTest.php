@@ -39,6 +39,12 @@ class ProductsControllerTest extends AppCakeTestCase
     }
 
     public function testExportProducts() {
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(8);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitsTable->save($unitEntityA);
+
         $this->loginAsSuperadmin();
         $this->post('/admin/products/export', [
             'productIds' => '351',

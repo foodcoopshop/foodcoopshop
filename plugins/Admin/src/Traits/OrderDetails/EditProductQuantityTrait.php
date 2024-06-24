@@ -23,7 +23,7 @@ use App\Services\ProductQuantityService;
  * @link          https://www.foodcoopshop.com
  */
 
-trait EditProductQuantityTrait 
+trait EditProductQuantityTrait
 {
 
     use UpdateOrderDetailsTrait;
@@ -90,10 +90,19 @@ trait EditProductQuantityTrait
         $newOrderDetail = (new ChangeSellingPriceService())->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
-        $productQuantityService = new ProductQuantityService();
-        $unitObject = (object) [
-            'price_per_unit_enabled' => true,
+        $unitsTable = FactoryLocator::get('Table')->get('Units');
+        $unitProductConditions = [
+            'Units.id_product' => $oldOrderDetail->product_id,
         ];
+        if ($oldOrderDetail->product_attribute_id > 0) {
+            $unitProductConditions = [
+                'Units.id_product_attribute' => $oldOrderDetail->product_attribute_id,
+            ];
+        }
+        $unitObject = $unitsTable->find('all', [
+            'conditions' => $unitProductConditions,
+        ])->first();
+        $productQuantityService = new ProductQuantityService();
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($oldOrderDetail->product, $unitObject);
         if ($isAmountBasedOnQuantityInUnits) {
             $productQuantityService->changeStockAvailable($oldOrderDetail, $productQuantity);

@@ -33,6 +33,13 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
     public function testWriteWithoutPurchasePrices()
     {
 
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(7);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitEntityB = $unitsTable->get(8);
+        $unitEntityB->use_weight_as_amount = 1;
+        $unitsTable->saveMany([$unitEntityA, $unitEntityB]);
+
         $productIds = [344, 346, 349, 350, 351];
         $writerService = new ProductCsvWriterService();
         $writerService->setProductIds($productIds);
@@ -57,6 +64,15 @@ class ProductCsvWriterServiceTest extends AppCakeTestCase
     {
 
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(1);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitEntityB = $unitsTable->get(7);
+        $unitEntityB->use_weight_as_amount = 1;
+        $unitEntityC = $unitsTable->get(8);
+        $unitEntityC->use_weight_as_amount = 1;
+        $unitsTable->saveMany([$unitEntityA, $unitEntityB, $unitEntityC]);
 
         $productIds = [347, 346, 60, 350, 351];
         $writerService = new ProductCsvWriterService();

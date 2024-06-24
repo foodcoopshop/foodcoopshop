@@ -46,18 +46,7 @@ class UnitsTable extends AppTable
         return in_array($value, ['kg', 'g', 'l'], true);
     }
 
-    /**
-     * @param int $productId
-     * @param int $productAttributeId
-     * @param boolean $pricePerUnitEnabled
-     * @param double $priceInclPerUnit
-     * @param string $name
-     * @param int $amount
-     * @param double $quantityInUnits
-     * @throws \Exception
-     * @return $result
-     */
-    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits) {
+    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits, $useWeightAsAmount) {
 
         if ($productAttributeId > 0) {
             $productId = 0;
@@ -82,6 +71,7 @@ class UnitsTable extends AppTable
             'name' => $name,
             'amount' => $amount,
             'quantity_in_units' => $quantityInUnits,
+            'use_weight_as_amount' => $useWeightAsAmount,
             ],
             [
                 'validate' => $pricePerUnitEnabled ? 'default' : false

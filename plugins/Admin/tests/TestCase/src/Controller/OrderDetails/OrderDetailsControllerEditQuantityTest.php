@@ -43,6 +43,11 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
 
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(8);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitsTable->save($unitEntityA);
+
         $productId = 351;
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart($productId, 1, '0,51');

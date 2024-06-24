@@ -28,7 +28,7 @@ class UnitsTableTest extends AppCakeTestCase
     public $name = 'kg';
     public $amount = 2;
     public $quantityInUnits = 9.323;
-
+    public $useWeightAsAmount = 0;
 
     public function setUp(): void
     {
@@ -124,13 +124,14 @@ class UnitsTableTest extends AppCakeTestCase
                 'id_product' => $this->productId
             ]
         )->first();
-        $this->assertEquals($this->productId, $unit->id_product, 'id_product not saved correctly');
-        $this->assertEquals($this->productAttributeId, $unit->id_product_attribute, 'id_product_attribute not saved correctly');
-        $this->assertEquals($this->pricePerUnitEnabled, $unit->price_per_unit_enabled, 'price_per_unit_enabled not saved correctly');
-        $this->assertEquals($this->priceInclPerUnit, $unit->price_incl_per_unit, 'price_incl_per_unit not saved correctly');
-        $this->assertEquals($this->name, $unit->name, 'name not saved correctly');
-        $this->assertEquals($this->amount, $unit->amount, 'amount not saved correctly');
-        $this->assertEquals($this->quantityInUnits, $unit->quantity_in_units, 'quantity_in_units not saved correctly');
+        $this->assertEquals($this->productId, $unit->id_product);
+        $this->assertEquals($this->productAttributeId, $unit->id_product_attribute);
+        $this->assertEquals($this->pricePerUnitEnabled, $unit->price_per_unit_enabled);
+        $this->assertEquals($this->priceInclPerUnit, $unit->price_incl_per_unit);
+        $this->assertEquals($this->name, $unit->name);
+        $this->assertEquals($this->amount, $unit->amount);
+        $this->assertEquals($this->quantityInUnits, $unit->quantity_in_units);
+        $this->assertEquals($this->useWeightAsAmount, $unit->use_weight_as_amount);
     }
 
     private function doSave()
@@ -142,7 +143,8 @@ class UnitsTableTest extends AppCakeTestCase
             $this->priceInclPerUnit,
             $this->name,
             $this->amount,
-            $this->quantityInUnits
+            $this->quantityInUnits,
+            $this->useWeightAsAmount,
         );
     }
 

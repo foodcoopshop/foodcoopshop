@@ -179,6 +179,7 @@ class ApiController extends Controller
                     $product['price']['unit_product_name'] = '';
                     $product['price']['unit_product_amount'] = 0;
                     $product['price']['unit_product_quantity_in_units'] = 0;
+                    $product['price']['unit_product_use_weight_as_amount'] = 0;
                 }
 
                 $products2saveForPrice[] = [

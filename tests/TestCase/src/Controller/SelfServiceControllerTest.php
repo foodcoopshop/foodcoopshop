@@ -71,6 +71,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceAddProductPricePerUnitNotAvailable()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntity = $unitsTable->get(8);
+        $unitEntity->use_weight_as_amount = 1;
+        $unitsTable->save($unitEntity);
+
         $this->loginAsSuperadmin();
         $productId = 351;
         $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
@@ -107,6 +113,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceAddAttributePricePerUnitNotAvailable()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntity = $unitsTable->get(7);
+        $unitEntity->use_weight_as_amount = 1;
+        $unitsTable->save($unitEntity);
+
         $this->loginAsSuperadmin();
         $productId = 350;
         $attributeId = 15;
@@ -154,6 +166,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithoutPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->finishSelfServiceCart(1, 1);
@@ -183,6 +196,14 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(7);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitEntityB = $unitsTable->get(8);
+        $unitEntityB->use_weight_as_amount = 1;
+        $unitsTable->saveMany([$unitEntityA, $unitEntityB]);
+
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,999');
         $this->addProductToSelfServiceCart(351, 1, '0,51');

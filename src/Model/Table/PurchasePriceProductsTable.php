@@ -201,6 +201,7 @@ class PurchasePriceProductsTable extends AppTable
                     'unit_product_name' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->name : null,
                     'unit_product_amount' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->amount : null,
                     'unit_product_quantity_in_units' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->quantity_in_units : null,
+                    'unit_product_use_weight_as_amount' => !empty($ppd['price_per_unit_entity']) ? $ppd['price_per_unit_entity']->use_weight_as_amount : 0,
                 ],
             ];
         }
