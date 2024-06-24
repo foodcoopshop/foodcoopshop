@@ -50,8 +50,8 @@ foodcoopshop.ModalProductQuantityEdit = {
         return html;
     },
 
-    getHtmlForProductQuantityIsStockProductEdit : function(isPricePerUnitEnabled, unitName) {
-        let unitNameString = isPricePerUnitEnabled ? ' - in ' + unitName : '';
+    getHtmlForProductQuantityIsStockProductEdit : function(isPricePerUnitEnabled, unitName, useWeightAsAmount) {
+        let unitNameString = isPricePerUnitEnabled && useWeightAsAmount ? ' - in ' + unitName : '';
         var html = '<label for="dialogQuantityQuantity"></label><br />';
         html += '<div class="field-wrapper">';
         html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + unitNameString + '</label>';
@@ -120,13 +120,15 @@ foodcoopshop.ModalProductQuantityEdit = {
             var productId = row.find('td.cell-id').html();
             var unitObject = $('#product-unit-object-' + productId);
             let pricePerUnitEnabled = false;
+            let useWeightAsAmount = false;
             let unitName = '';
             if (unitObject.length > 0) {
                 unitData = unitObject.data('product-unit-object');
                 pricePerUnitEnabled = unitData.price_per_unit_enabled;
                 unitName = unitData.name;
+                useWeightAsAmount = unitData.use_weight_as_amount;
             }
-            html = foodcoopshop.ModalProductQuantityEdit.getHtmlForProductQuantityIsStockProductEdit(pricePerUnitEnabled, unitName);
+            html = foodcoopshop.ModalProductQuantityEdit.getHtmlForProductQuantityIsStockProductEdit(pricePerUnitEnabled, unitName, useWeightAsAmount);
         } else {
             html = foodcoopshop.ModalProductQuantityEdit.getHtmlForProductQuantityEdit();
         }
