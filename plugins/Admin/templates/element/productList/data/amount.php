@@ -80,9 +80,8 @@ echo '<td class="' . join(' ', $rowClasses) . '">';
 
         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
 
-            $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity_limit, $unitName);
-
             if ($product->stock_available->quantity_limit != 0) {
+                $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $product->stock_available->quantity_limit, $unitName);
                 $elementsToRender[] =
                     ' <i class="small quantity-limit-for-dialog">' . $formattedQuantityLimit .'</i>';
             }
