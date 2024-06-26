@@ -1070,6 +1070,9 @@ msgstr "0 or smaller than 0"
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "For manufacturers and contact persons. Can be changed in the manufacturer settings."
 
+msgid "Minimal_stock_amount"
+msgstr "Minimal stock amount"
+
 msgid "Notification_if_amount_lower_than"
 msgstr "Notification if amount is lower than"
 
