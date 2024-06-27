@@ -48,7 +48,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Neue Produkt-Import-Funktion mittels CSV-Upload, [hier gehts zur Doku](https://foodcoopshop.github.io/de/produkt-import.html). [I#953](https://github.com/foodcoopshop/foodcoopshop/issues/953) / [PR#982](https://github.com/foodcoopshop/foodcoopshop/pull/982) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
-Datum: 29.03.2024 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/19) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.2...v4.0.0)
+Datum: 29.03.2024 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/2) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.6.2...v4.0.0)
 
 
 ## v3.6.2
@@ -95,7 +95,7 @@ Datum: 02.11.2023 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/
 - Sofern Rechnungen an Kunden generiert wurden (Dorfladen) UND die Steuer für Pfand nicht auf 20% gesetzt war, wurde die Steuer von geliefertem Pfand trotzdem immer mit 20% berechnet. [I#940](https://github.com/foodcoopshop/foodcoopshop/issues/940) / [PR#941](https://github.com/foodcoopshop/foodcoopshop/pull/941) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Sofort-Bestellungen ist es ab sofort nicht mehr möglich, das erneute Laden von langsamen Seiten durch wiederholtes Klicken zu erzwingen. Diese Mehrfach-Requests haben nämlich den eingeloggten User und den User, für den bestellt wird, durcheinandergewirbelt. [I#945](https://github.com/foodcoopshop/foodcoopshop/issues/945) / [PR#946](https://github.com/foodcoopshop/foodcoopshop/pull/946) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-Datum: 12.04.2023 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/18) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.5.1...v3.6.0)
+Datum: 12.04.2023 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/3) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.5.1...v3.6.0)
 
 # v3.5.1
 
@@ -157,6 +157,6 @@ Datum: 28.02.2023 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/
 - Neuer CSS-Compressor: CssMin wurde durch CleanCss ersetzt. [PR#856](https://github.com/foodcoopshop/foodcoopshop/pull/856) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Fontawesome v6 Update. [PR#855](https://github.com/foodcoopshop/foodcoopshop/pull/855) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-Datum: 12.09.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/17) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.4.2...v3.5.0)
+Datum: 12.09.2022 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/4) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.4.2...v3.5.0)
 
 [Zum Changelog von FoodCoopShop v3.0-v3.4](devtools/CHANGELOG-v3.md)
