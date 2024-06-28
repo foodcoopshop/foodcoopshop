@@ -24,7 +24,6 @@ TRUNCATE TABLE `fcs_action_logs`;
 TRUNCATE TABLE `fcs_address`;
 TRUNCATE TABLE `fcs_attribute`;
 TRUNCATE TABLE `fcs_barcodes`;
-TRUNCATE TABLE `fcs_blog_posts`;
 TRUNCATE TABLE `fcs_cart_product_units`;
 TRUNCATE TABLE `fcs_cart_products`;
 TRUNCATE TABLE `fcs_carts`;
@@ -56,7 +55,6 @@ TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_storage_locations`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
-TRUNCATE TABLE `fcs_tax`;
 TRUNCATE TABLE `fcs_units`;
 TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
@@ -92,11 +90,6 @@ INSERT INTO `fcs_barcodes` VALUES
 (3,352,0,'2712345000000'),
 (4,0,15,'2112345000000');
 /*!40000 ALTER TABLE `fcs_barcodes` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_blog_posts` DISABLE KEYS */;
-INSERT INTO `fcs_blog_posts` VALUES
-(2,'Demo Blog Artikel','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet.</p>',88,0,0,1,'2014-12-18 10:37:26','2015-03-16 12:41:46','2021-05-19');
-/*!40000 ALTER TABLE `fcs_blog_posts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cart_product_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_cart_product_units` ENABLE KEYS */;
@@ -381,13 +374,6 @@ INSERT INTO `fcs_sync_products` VALUES
 (3,1,350,350,14,14),
 (4,1,350,350,13,13);
 /*!40000 ALTER TABLE `fcs_sync_products` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_tax` DISABLE KEYS */;
-INSERT INTO `fcs_tax` VALUES
-(1,20.000,1,0),
-(2,10.000,1,0),
-(3,13.000,1,0);
-/*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_units` DISABLE KEYS */;
 INSERT INTO `fcs_units` VALUES

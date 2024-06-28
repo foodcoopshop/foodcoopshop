@@ -46,6 +46,11 @@ abstract class AppCakeTestCase extends TestCase
     use LoginTrait;
     use QueueTrait;
 
+    protected array $fixtures = [
+        'app.BlogPosts',
+        'app.Taxes',
+    ];
+
     protected $dbConnection;
     protected $testDumpDir;
     protected $appDumpDir;
