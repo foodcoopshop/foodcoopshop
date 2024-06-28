@@ -87,4 +87,20 @@ class UnitsTable extends AppTable
         return $result;
     }
 
+    public function getUnitsObjectByOrderDetail($orderDetail)
+    {
+        $unitProductConditions = [
+            'Units.id_product' => $orderDetail->product_id,
+        ];
+        if ($orderDetail->product_attribute_id > 0) {
+            $unitProductConditions = [
+                'Units.id_product_attribute' => $orderDetail->product_attribute_id,
+            ];
+        }
+        $unitObject = $this->find('all', [
+            'conditions' => $unitProductConditions,
+        ])->first();
+        return $unitObject;
+    }
+
 }

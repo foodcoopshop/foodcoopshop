@@ -91,21 +91,13 @@ trait EditProductQuantityTrait
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
         $unitsTable = FactoryLocator::get('Table')->get('Units');
-        $unitProductConditions = [
-            'Units.id_product' => $oldOrderDetail->product_id,
-        ];
-        if ($oldOrderDetail->product_attribute_id > 0) {
-            $unitProductConditions = [
-                'Units.id_product_attribute' => $oldOrderDetail->product_attribute_id,
-            ];
-        }
-        $unitObject = $unitsTable->find('all', [
-            'conditions' => $unitProductConditions,
-        ])->first();
+        $unitObject = $unitsTable->getUnitsObjectByOrderDetail($oldOrderDetail);
+
         $productQuantityService = new ProductQuantityService();
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($oldOrderDetail->product, $unitObject);
         if ($isAmountBasedOnQuantityInUnits) {
-            $productQuantityService->changeStockAvailable($oldOrderDetail, $productQuantity);
+            $increaseQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units - $productQuantity;
+            $productQuantityService->changeStockAvailable($oldOrderDetail, $increaseQuantity);
         }
 
         $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [

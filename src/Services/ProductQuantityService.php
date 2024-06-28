@@ -23,7 +23,7 @@ use Cake\Datasource\FactoryLocator;
 
 class ProductQuantityService
 {
-    
+
     public function isAmountBasedOnQuantityInUnits($product, $unitObject)
     {
         if (empty($product->manufacturer)) {
@@ -57,7 +57,7 @@ class ProductQuantityService
         return  Configure::read('app.numberHelper')->formatAsDecimal($amount, 0);
     }
 
-    public function changeStockAvailable($orderDetail, $productQuantity)
+    public function changeStockAvailable($orderDetail, $increaseQuantity): int
     {
         $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
         $stockAvailable = $stockAvailablesTable->find('all', [
@@ -66,7 +66,7 @@ class ProductQuantityService
                 'id_product_attribute' => $orderDetail->product_attribute_id,
             ],
         ])->first();
-        $newStockAvailableQuantity = $stockAvailable->quantity + $orderDetail->order_detail_unit->product_quantity_in_units - $productQuantity;
+        $newStockAvailableQuantity = $stockAvailable->quantity + $increaseQuantity;
         $stockAvailable2saveData = [
             [
                 'quantity' => $newStockAvailableQuantity,
@@ -79,6 +79,8 @@ class ProductQuantityService
             ]
         ];
         $stockAvailablesTable->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
+
+        return $newStockAvailableQuantity;
     }
 
 }
