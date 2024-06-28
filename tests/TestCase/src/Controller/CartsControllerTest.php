@@ -881,6 +881,58 @@ class CartsControllerTest extends AppCakeTestCase
 
         $productIdA = 347; // forelle
         $productIdB = '348-11'; // rindfleisch, 0,5 kg
+
+        $this->addProductToCart($productIdA, 2);
+        $this->addProductToCart($productIdB, 3);
+
+        $this->finishCart(1, 1);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+
+        $this->checkCartStatusAfterFinish();
+        $cart = $this->getCartById($cartId);
+        $pickupDay = (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb();
+
+        // check order_details
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 10, $pickupDay);
+
+        // check order_details_units
+        $orderDetailA = $cart->cart_products[0]->order_detail;
+        $orderDetailB = $cart->cart_products[1]->order_detail;
+
+        $this->assertEquals($orderDetailA->order_detail_unit->product_quantity_in_units, 700);
+        $this->assertEquals($orderDetailA->order_detail_unit->price_incl_per_unit, 1.5);
+        $this->assertEquals($orderDetailA->order_detail_unit->quantity_in_units, 350);
+        $this->assertEquals($orderDetailA->order_detail_unit->unit_name, 'g');
+        $this->assertEquals($orderDetailA->order_detail_unit->unit_amount, 100);
+        $this->assertEquals($orderDetailA->order_detail_unit->mark_as_saved, 0);
+
+        $this->assertEquals($orderDetailB->order_detail_unit->product_quantity_in_units, 1.5);
+        $this->assertEquals($orderDetailB->order_detail_unit->price_incl_per_unit, 20);
+        $this->assertEquals($orderDetailB->order_detail_unit->quantity_in_units, 0.5);
+        $this->assertEquals($orderDetailB->order_detail_unit->unit_name, 'kg');
+        $this->assertEquals($orderDetailB->order_detail_unit->unit_amount, 1);
+        $this->assertEquals($orderDetailB->order_detail_unit->mark_as_saved, 0);
+
+        $this->assertEquals($orderDetailA->tax_rate, 10);
+        $this->assertEquals($orderDetailA->tax_unit_amount, 0.48);
+        $this->assertEquals($orderDetailA->tax_total_amount, 0.96);
+
+        $this->assertEquals($orderDetailB->tax_rate, 10);
+        $this->assertEquals($orderDetailB->tax_unit_amount, 0.91);
+        $this->assertEquals($orderDetailB->tax_total_amount, 2.73);
+
+        $this->assertMailContainsHtmlAt(0, 'Forelle : Stück, je ca. 350 g');
+        $this->assertMailContainsHtmlAt(0, 'Rindfleisch : je ca. 0,5 kg');
+
+    }
+
+    public function testFinishCartWithPricePerUnitAndUseWeightAsAmount()
+    {
+        $this->loginAsSuperadmin();
+
+        $productIdA = 347; // forelle
+        $productIdB = '348-11'; // rindfleisch, 0,5 kg
         $productIdC = 351; // stock product
 
         $unitsTable = $this->getTableLocator()->get('Units');

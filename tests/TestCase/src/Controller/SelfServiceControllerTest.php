@@ -196,6 +196,39 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->loginAsSuperadmin();
+        $this->addProductToSelfServiceCart('350-15', 1, '1,5');
+        $this->addProductToSelfServiceCart(351, 1, '0,5');
+        $this->finishSelfServiceCart(1, 1);
+
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', order: [
+            'Carts.id_cart' => 'DESC'
+        ])->first();
+
+        $cart = $this->getCartById($cart->id_cart);
+
+        $this->assertEquals(2, count($cart->cart_products));
+
+        foreach($cart->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->order_detail_unit->mark_as_saved, 1);
+            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        }
+
+        $this->assertMailCount(1);
+        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt mit Varianten : 1,5 kg');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
+        $this->assertMailContainsHtmlAt(0, '15,00 €');
+        $this->assertMailContainsHtmlAt(0, '5,00 €');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
+
+    }
+
+    public function testSelfServiceOrderWithPricePerUnitAndUseWeightAsAmount()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
 
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(7);
