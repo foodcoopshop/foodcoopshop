@@ -20,11 +20,8 @@ class InitTestDataSeed extends AbstractSeed
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Truncate tables before insertion
-TRUNCATE TABLE `fcs_action_logs`;
 TRUNCATE TABLE `fcs_address`;
-TRUNCATE TABLE `fcs_attribute`;
 TRUNCATE TABLE `fcs_barcodes`;
-TRUNCATE TABLE `fcs_cart_product_units`;
 TRUNCATE TABLE `fcs_cart_products`;
 TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
@@ -61,9 +58,6 @@ TRUNCATE TABLE `queue_phinxlog`;
 TRUNCATE TABLE `queue_processes`;
 TRUNCATE TABLE `queued_jobs`;
 
-/*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
 INSERT INTO `fcs_address` VALUES
 (153,87,0,'Mitglied','Demo','Demostrasse 4','','4644','Scharnstein','','','0664/000000000','fcs-demo-mitglied@mailinator.com','2014-12-02 12:19:31','2014-12-02 12:19:31'),
@@ -76,13 +70,6 @@ INSERT INTO `fcs_address` VALUES
 (183,93,0,'SB-Kunde','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-sb-kunde@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19');
 /*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
-INSERT INTO `fcs_attribute` VALUES
-(33,'0,5l',0,1,NULL,NULL),
-(35,'1 kg',1,1,NULL,NULL),
-(36,'0,5 kg',1,1,NULL,NULL);
-/*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_barcodes` DISABLE KEYS */;
 INSERT INTO `fcs_barcodes` VALUES
 (1,349,0,'1234567890123'),
@@ -90,9 +77,6 @@ INSERT INTO `fcs_barcodes` VALUES
 (3,352,0,'2712345000000'),
 (4,0,15,'2112345000000');
 /*!40000 ALTER TABLE `fcs_barcodes` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cart_product_units` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cart_product_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
 INSERT INTO `fcs_cart_products` VALUES

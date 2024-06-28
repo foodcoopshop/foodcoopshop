@@ -47,7 +47,10 @@ abstract class AppCakeTestCase extends TestCase
     use QueueTrait;
 
     protected array $fixtures = [
+        'app.ActionLogs',
+        'app.Attributes',
         'app.BlogPosts',
+        'app.CartProductUnits',
         'app.Taxes',
     ];
 
