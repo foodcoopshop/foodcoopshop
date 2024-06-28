@@ -40,10 +40,15 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use EmailTrait;
     use SelfServiceCartTrait;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+    }
+
     public function testPageSelfService()
     {
         $this->loginAsSuperadmin();
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $testUrls = [
             $this->Slug->getSelfService()
         ];
@@ -52,14 +57,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testBarCodeLoginAsSuperadminValid()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
         $this->assertEquals($_SESSION['Auth']->id_customer, Configure::read('test.superadminId'));
     }
 
     public function testSelfServiceAddProductPricePerUnitWrong()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1);
         $response = $this->getJsonDecodedContent();
@@ -70,8 +73,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceAddProductPricePerUnitNotAvailable()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntity = $unitsTable->get(8);
         $unitEntity->use_weight_as_amount = 1;
@@ -101,7 +102,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceAddAttributePricePerUnitWrong()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, 'bla bla');
         $response = $this->getJsonDecodedContent();
@@ -112,8 +112,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceAddAttributePricePerUnitNotAvailable()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntity = $unitsTable->get(7);
         $unitEntity->use_weight_as_amount = 1;
@@ -143,7 +141,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     }
 
     public function testSelfServiceOrderWithoutCheckboxes() {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart(0, 0);
@@ -153,7 +150,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceRemoveProductWithPricePerUnit()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->removeProductFromSelfServiceCart(351);
@@ -165,8 +161,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithoutPricePerUnit()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->finishSelfServiceCart(1, 1);
@@ -195,7 +189,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithPricePerUnit()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->addProductToSelfServiceCart(351, 1, '0,5');
@@ -228,8 +221,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithPricePerUnitAndUseWeightAsAmount()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(7);
         $unitEntityA->use_weight_as_amount = 1;
@@ -283,7 +274,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithPricePerUnitPurchasePriceEnabled()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_PURCHASE_PRICE_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(347, 1, '500');
@@ -309,7 +299,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithDeliveryBreak()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb());
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
@@ -321,7 +310,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchByCustomProductBarcode()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = '1234567890123';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
@@ -331,7 +319,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchByCustomProductAttributeBarcode()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2145678901234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
@@ -341,7 +328,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchByCustomProductBarcodeWithWeight()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2712345000235';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
@@ -355,7 +341,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchByCustomProductAttributeBarcodeWithWeight()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = '2112345001234';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
@@ -369,7 +354,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchBySystemProductBarcodeWithMissingWeight()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = 'b5320000';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
@@ -379,7 +363,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSearchBySystemProductAttributeBarcodeWithMissingWeight()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $barcodeForProduct = 'e05f0015';
         $this->get($this->Slug->getSelfService($barcodeForProduct));
@@ -391,7 +374,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
 
         Configure::write('app.selfServiceModeAutoGenerateInvoice', false);
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
@@ -412,7 +394,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderWithRetailModeAndSelfServiceCustomer()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->changeCustomer(Configure::read('test.selfServiceCustomerId'), 'invoices_per_email_enabled', 0);
         $this->loginAsSuperadmin();
@@ -454,9 +435,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testSelfServiceOrderForDifferentCustomer()
     {
-
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-
         // add a product to the "normal" cart (Cart::TYPE_WEEKLY_RHYTHM)
         $this->loginAsCustomer();
         $this->addProductToCart(346, 5);
@@ -516,7 +494,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     public function testProductDetailHtmlProductCatalogSelfServiceOrder()
     {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->loginAsSuperadmin();
         $this->isSelfServiceModeByUrl = true;
         $productId = 349;
@@ -530,7 +507,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $selfServiceCustomerId = 93;
         $this->changeCustomer($selfServiceCustomerId, 'active', 1);
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         Configure::write('app.selfServiceLoginCustomers', [
             [
                 'id' => 1,
@@ -545,7 +521,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testAutoLoginAsSelfServiceCustomerNotOk()
     {
         $selfServiceCustomerId = 93;
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         Configure::write('app.selfServiceLoginCustomers', [
             [
                 'id' => 1,
