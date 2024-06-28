@@ -11,7 +11,7 @@ Datum: 18.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/f
 ### Bugfix
 - Fix error on creating build. [PR#802](https://github.com/foodcoopshop/foodcoopshop/pull/802)
 
-Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/16) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.4.0...v3.4.1)
+Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/5) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.4.0...v3.4.1)
 
 # v3.4.0
 
@@ -58,7 +58,7 @@ Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/f
 - CakePHP Update v4.3. [I#728](https://github.com/foodcoopshop/foodcoopshop/issues/728) / [PR#731](https://github.com/foodcoopshop/foodcoopshop/pull/731) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - BackupDatabaseShell now uses defined port. [PR#749](https://github.com/foodcoopshop/foodcoopshop/pull/749) <a href="https://github.com/ocapito"><img src="https://github.com/ocapito.png" width="20"></a>
 
-Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/16) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.3.0...v3.4.0)
+Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/5) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.3.0...v3.4.0)
 
 # v3.3.0
 
@@ -90,7 +90,7 @@ Datum: 06.03.2022 / [Mehr Details zum Release](https://github.com/foodcoopshop/f
 - Die alte Funktion zum Verwalten der Mitgliedbeiträge wurde entfernt. [Anleitung zum Umstellen auf das neue System](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#666](https://github.com/foodcoopshop/foodcoopshop/issues/666) / [PR#667](https://github.com/foodcoopshop/foodcoopshop/pull/667) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Sauberere SQL-Statements durch Verwendung von QueryExpression. [I#644](https://github.com/foodcoopshop/foodcoopshop/issues/644) / [PR#645](https://github.com/foodcoopshop/foodcoopshop/pull/645) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-Datum: 06.09.2021 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/15) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...v3.3.0)
+Datum: 06.09.2021 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/6) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.2.2...v3.3.0)
 
 # v3.2.2
 
@@ -156,7 +156,7 @@ Datum: 23.03.2021 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/
 ### Deprecations
 - ⚠️⚠️⚠️ Wer das [Stundenabrechnungs-Modul](https://foodcoopshop.github.io/de/stundenabrechnungs-modul.html) aktiv verwendet, soll sich bitte bei mir melden. Ich habe nämlich den Eindruck, dass es kaum in Gebrauch ist. Da aber die Wartung Aufwand bedeutet, werde ich das Modul - sofern sich bis dahin niemand meldet - ab v3.3 (Herbst 2021) aus der Software entfernen.
 
-Datum: 08.03.2021 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/14) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...v3.2.0)
+Datum: 08.03.2021 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/7) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...v3.2.0)
 
 # v3.1.0
 
@@ -192,7 +192,7 @@ Datum: 08.03.2021 / [Mehr Details zum Release](https://github.com/foodcoopshop/f
 - All tests now work without HttpClient and use IntegrationTestTrait, the tests are now about 45% faster! [I#404](https://github.com/foodcoopshop/foodcoopshop/issues/404) / [PR#550](https://github.com/foodcoopshop/foodcoopshop/pull/550) / [PR#529](https://github.com/foodcoopshop/foodcoopshop/pull/529) / [PR#531](https://github.com/foodcoopshop/foodcoopshop/pull/531) / [PR#532](https://github.com/foodcoopshop/foodcoopshop/pull/532) <a href="https://github.com/swoichha"><img src="https://github.com/swoichha.png" width="20"></a> <a href="https://github.com/dpakach"><img src="https://github.com/dpakach.png" width="20"></a> <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - FoodCoopShop verwendet jetzt CakePHP v4.1.x. [I#541](https://github.com/foodcoopshop/foodcoopshop/issues/541) / [PR#545](https://github.com/foodcoopshop/foodcoopshop/pull/545) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-Datum: 07.09.2020 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/13) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...v3.1.0)
+Datum: 07.09.2020 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/8) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...v3.1.0)
 
 # v3.0.2
 
@@ -230,6 +230,6 @@ Datum: 22.03.2020 / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/
 - Neue Kategorien waren nicht mehr alfabetisch sortiert. [I#458](https://github.com/foodcoopshop/foodcoopshop/issues/458) / [PR#459](https://github.com/foodcoopshop/foodcoopshop/pull/459) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Legacy-Code von FCS v2 wurde entfernt. [PR#468](https://github.com/foodcoopshop/foodcoopshop/pull/468) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-Datum: 20.03.2020 / [Mehr Details zum Release](https://github.com/foodcoopshop/foodcoopshop/projects/12) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...3.0.0)
+Datum: 20.03.2020 / [Mehr Details zum Release](https://github.com/orgs/foodcoopshop/projects/9) / [Alle Änderungen anzeigen](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...3.0.0)
 
 [Zum Changelog von FoodCoopShop v2.x](devtools/CHANGELOG-v2.md)
