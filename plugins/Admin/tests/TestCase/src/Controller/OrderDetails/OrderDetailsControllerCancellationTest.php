@@ -163,16 +163,19 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $productId = 351;
         $unitsTable = $this->getTableLocator()->get('Units');
         $unitEntityA = $unitsTable->get(8);
-        $unitEntityA->use_weight_as_amount = 1;
-        $unitsTable->save($unitEntityA);
+        $data = [
+            'use_weight_as_amount' => 1,
+            'quantity_in_units' => 5,
+        ];
+        $patchedEntity = $unitsTable->patchEntity($unitEntityA, $data);
+        $unitsTable->save($patchedEntity);
 
         $this->loginAsSuperadmin();
-        $this->addProductToCart($productId, 1);
+        $this->addProductToCart($productId, 2);
         $this->finishCart(1, 1);
 
-        $this->assertChangedStockAvailable($productId, 998);
+        $this->assertChangedStockAvailable($productId, 989);
         $this->deleteAndAssertRemoveFromDatabase([4]);
-
         $this->assertChangedStockAvailable($productId, 999);
 
     }
