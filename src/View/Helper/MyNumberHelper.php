@@ -49,11 +49,6 @@ class MyNumberHelper extends NumberHelper
         return $currency;
     }
 
-    public function formatAsUnit($amount, $shortcode): string
-    {
-        return self::formatAsDecimal($amount) . ' ' . $shortcode;
-    }
-
     public function formatAsPercent($amount, $decimals = 2): string
     {
         return self::formatAsDecimal($amount, $decimals) . '%';

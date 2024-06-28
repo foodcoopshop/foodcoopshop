@@ -82,13 +82,13 @@ class CartService
             'StockAvailables',
             'ProductAttributes.StockAvailables',
             'ProductAttributes.ProductAttributeCombinations',
+            'ProductAttributes.UnitProductAttributes',
             'Taxes',
+            'UnitProducts'
         ];
         if (Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED')) {
-            $contain[] = 'UnitProducts';
             $contain[] = 'PurchasePriceProducts.Taxes';
             $contain[] = 'ProductAttributes.PurchasePriceProductAttributes';
-            $contain[] = 'ProductAttributes.UnitProductAttributes';
         }
         return $contain;
     }
@@ -97,7 +97,8 @@ class CartService
     {
 
         $this->saveOrderDetails($orderDetails2save);
-        $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
+        $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
+        $stockAvailablesTable->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
         $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
         $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
@@ -208,7 +209,6 @@ class CartService
     public function finish()
     {
 
-        $orderCustomerService = new OrderCustomerService();
         $cart = $this->identity->getCart();
 
         $this->Cart = FactoryLocator::get('Table')->get('Carts');
@@ -462,15 +462,31 @@ class CartService
             }
 
             if ($decreaseQuantity) {
+
                 $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
+
+                if ((new OrderCustomerService())->isSelfServiceModeByUrl() && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
+                    $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
+                }
+
+                $unitObject = $product->unit_product;
+                if ($attribute !== null) {
+                    $unitObject = $attribute->unit_product_attribute;
+                }
+                if ((new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $unitObject))
+                {
+                    $newQuantity = $stockAvailableQuantity - ($unitObject->quantity_in_units * $cartProduct['amount']);
+                }
+
                 $stockAvailable2saveData[] = [
-                    'quantity' => $newQuantity
+                    'quantity' => $newQuantity,
                 ];
                 $stockAvailable2saveConditions[] = [
                     'id_product' => $ids['productId'],
-                    'id_product_attribute' => $ids['attributeId']
+                    'id_product_attribute' => $ids['attributeId'],
                 ];
             }
+
         }
 
         $this->controller->set('cartErrors', $cartErrors);
@@ -596,26 +612,6 @@ class CartService
         $this->OrderDetail->saveMany(
             $this->OrderDetail->newEntities($orderDetails2save)
         );
-    }
-
-    private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions): void
-    {
-        $this->Product = FactoryLocator::get('Table')->get('Products');
-        $i = 0;
-        foreach($stockAvailable2saveConditions as $condition) {
-            $stockAvailableEntity = $this->Product->StockAvailables->find('all',
-                conditions: $condition,
-            )->first();
-            $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
-            $originalPrimaryKey = $this->Product->StockAvailables->getPrimaryKey();
-            if ($condition['id_product_attribute'] > 0) {
-                $this->Product->StockAvailables->setPrimaryKey('id_product_attribute');
-            }
-            $this->Product->StockAvailables->save($stockAvailableEntity);
-            $this->Product->StockAvailables->setPrimaryKey($originalPrimaryKey);
-            $this->Product->StockAvailables->updateQuantityForMainProduct($condition['id_product']);
-            $i++;
-        }
     }
 
     private function sendInstantOrderNotificationToManufacturers($cartProducts): array

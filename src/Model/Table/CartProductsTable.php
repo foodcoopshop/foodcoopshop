@@ -9,6 +9,7 @@ use App\Services\DeliveryRhythmService;
 use App\Model\Traits\CartValidatorTrait;
 use App\Services\OrderCustomerService;
 use Cake\Routing\Router;
+use App\Services\ProductQuantityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -97,18 +98,28 @@ class CartProductsTable extends AppTable
         ->first();
 
         $existingCartProduct = $identity->getProduct($initialProductId);
-        $combinedAmount = $amount;
-        if ($existingCartProduct) {
-            $combinedAmount = $existingCartProduct['amount'] + $amount;
-        }
-        // check if passed product exists
+
         if (empty($product)) {
             $message = __('Product_with_id_{0}_does_not_exist.', [$productId]);
             return [
                 'status' => 0,
                 'msg' => $message,
-                'productId' => $initialProductId
+                'productId' => $initialProductId,
             ];
+        }
+
+        $combinedAmount = $amount;
+        if ($existingCartProduct) {
+            $combinedAmount = $existingCartProduct['amount'] + $amount;
+        }
+
+        $productQuantityService = new ProductQuantityService();
+        $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $product->unit_product);
+        if ($isAmountBasedOnQuantityInUnits) {
+            if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
+                $orderedQuantityInUnits = $product->unit_product->quantity_in_units * $amount;
+            }
+            $combinedAmount = $productQuantityService->getCombinedAmount($existingCartProduct, $orderedQuantityInUnits);
         }
 
         $product->next_delivery_day = (new DeliveryRhythmService())->getNextDeliveryDayForProduct($product, $orderCustomerService);
@@ -127,6 +138,7 @@ class CartProductsTable extends AppTable
             $availableQuantity,
             $combinedAmount,
             $product->name,
+            $isAmountBasedOnQuantityInUnits ? $product->unit_product->name : '',
         );
         if ($message !== true && $amount > 0) {
             return [
@@ -181,6 +193,14 @@ class CartProductsTable extends AppTable
 
                     $attributeIdFound = true;
 
+                    $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $attribute->unit_product_attribute);
+                    if ($isAmountBasedOnQuantityInUnits) {
+                        if ($orderedQuantityInUnits == -1 && !$orderCustomerService->isSelfServiceMode()) {
+                            $orderedQuantityInUnits = $attribute->unit_product_attribute->quantity_in_units * $amount;
+                        }
+                        $combinedAmount = $productQuantityService->getCombinedAmount($existingCartProduct, $orderedQuantityInUnits);
+                    }
+
                     // stock available check for attribute
                     $availableQuantity = $attribute->stock_available->quantity;
                     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
@@ -194,6 +214,7 @@ class CartProductsTable extends AppTable
                         $combinedAmount,
                         $attribute->product_attribute_combination->attribute->name,
                         $product->name,
+                        $isAmountBasedOnQuantityInUnits ? $attribute->unit_product_attribute->name : '',
                     );
                     if ($message !== true && $amount > 0) {
                         return [
@@ -301,11 +322,22 @@ class CartProductsTable extends AppTable
         $cart = $identity->getCart();
         $identity->setCart($cart);
 
+        $amountForDatabase = $combinedAmount;
+        if ($isAmountBasedOnQuantityInUnits) {
+            $amountForDatabase = $amount;
+            if ($existingCartProduct) {
+                $amountForDatabase = $existingCartProduct['amount'] + $amount;
+            }
+            if ($orderCustomerService->isSelfServiceMode()) {
+                $amountForDatabase = 1;
+            }
+        }
+
         $cartProduct2save = [
             'id_product' => $productId,
-            'amount' => $combinedAmount,
+            'amount' => $amountForDatabase,
             'id_product_attribute' => $attributeId,
-            'id_cart' => $cart['Cart']['id_cart']
+            'id_cart' => $cart['Cart']['id_cart'],
         ];
 
         $options = [];
@@ -314,11 +346,11 @@ class CartProductsTable extends AppTable
                 $orderedQuantityInUnits += $existingCartProduct['orderedQuantityInUnits'];
             }
             $cartProduct2save['cart_product_unit'] = [
-                'ordered_quantity_in_units' => $orderedQuantityInUnits
+                'ordered_quantity_in_units' => $orderedQuantityInUnits,
             ];
             $options = [
                 'associated' => [
-                    'CartProductUnits'
+                    'CartProductUnits',
                 ]
             ];
         }

@@ -39,14 +39,20 @@ class ProductsControllerTest extends AppCakeTestCase
     }
 
     public function testExportProducts() {
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(8);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitsTable->save($unitEntityA);
+
         $this->loginAsSuperadmin();
         $this->post('/admin/products/export', [
             'productIds' => '351',
         ]);
 
         $this->assertResponseOk();
-        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Einheit;Anzahl;Mindestlagerstand;"Verkaufspreis brutto";"Preis pro";Lagerwert');
-        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;ca. 1 kg;999;;15,000000;"1 kg";14.985,00');
+        $this->assertResponseContains('Id;Produkt;Hersteller;Status;Anzahl;Einheit;Mindestlagerstand;"Verkaufspreis brutto";"Preis pro";Lagerwert');
+        $this->assertResponseContains('351;"Lagerprodukt 2";"Demo Gemüse-Hersteller";1;999;kg;;15,000000;"1 kg";14.985,00');
         $this->assertResponseContains(';;;;;;;;14.985,00');
     }
 

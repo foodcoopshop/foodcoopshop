@@ -22,20 +22,31 @@ use Cake\Routing\Router;
 trait CartValidatorTrait
 {
 
-    public function isAmountAvailableAttribute($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $availableQuantity, $amount, $attributeName, $productName): bool|string
+    public function isAmountAvailableAttribute($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $availableQuantity, $amount, $attributeName, $productName, $unitName = ''): bool|string
     {
         $result = true;
+        $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $availableQuantity < $amount) {
-            $result = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $amount . '</b>', '<b>' . $attributeName . '</b>', '<b>' . $productName . '</b>', $availableQuantity]);
+            $result = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', [
+                '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($amount) . $unitNameString . '</b>',
+                '<b>' . $attributeName . '</b>',
+                '<b>' . $productName . '</b>',
+                Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
+            ]);
         }
         return $result;
     }
 
-    public function isAmountAvailableProduct($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $attributeId, $availableQuantity, $amount, $productName): bool|string
+    public function isAmountAvailableProduct($isStockProduct, $stockManagementEnabled, $alwaysAvailable, $attributeId, $availableQuantity, $amount, $productName, $unitName = ''): bool|string
     {
         $result = true;
+        $unitNameString = ($unitName != '') ? ' ' . $unitName : '';
         if ((($isStockProduct && $stockManagementEnabled) || !$alwaysAvailable) && $attributeId == 0 && $availableQuantity < $amount) {
-            $result = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $amount . '</b>', '<b>' . $productName . '</b>', $availableQuantity]);
+            $result = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', [
+                '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($amount) . $unitNameString . '</b>',
+                '<b>' . $productName . '</b>',
+                Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity) . $unitNameString,
+            ]);
         }
         return $result;
     }

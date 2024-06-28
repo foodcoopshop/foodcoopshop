@@ -19,7 +19,6 @@ use Admin\Traits\OrderDetails\OrderForDifferentCustomerTrait;
 use Admin\Traits\OrderDetails\ProfitTrait;
 use Admin\Traits\OrderDetails\SetElFinderUploadPathTrait;
 use App\Model\Table\OrderDetailsTable;
-use Cake\Core\Configure;
 use App\Services\PdfWriter\OrderDetailsPdfWriterService;
 use Cake\View\JsonView;
 

@@ -6,6 +6,8 @@ namespace Admin\Traits\OrderDetails;
 use Cake\Core\Configure;
 use App\Mailer\AppMailer;
 use App\Model\Entity\OrderDetail;
+use App\Services\ProductQuantityService;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +23,7 @@ use App\Model\Entity\OrderDetail;
  * @link          https://www.foodcoopshop.com
  */
 
-trait DeleteTrait 
+trait DeleteTrait
 {
 
     use UpdateOrderDetailsTrait;
@@ -45,7 +47,7 @@ trait DeleteTrait
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $flashMessage = '';
         $message = '';
-        
+
         foreach ($orderDetailIds as $orderDetailId) {
             $orderDetail = $this->OrderDetail->find('all',
                 conditions: [
@@ -71,7 +73,17 @@ trait DeleteTrait
 
             $this->OrderDetail->deleteOrderDetail($orderDetail);
 
-            $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
+
+            $unitsTable = FactoryLocator::get('Table')->get('Units');
+            $unitObject = $unitsTable->getUnitsObjectByOrderDetail($orderDetail);
+
+            $productQuantityService = new ProductQuantityService();
+            $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($orderDetail->product, $unitObject);
+            if ($isAmountBasedOnQuantityInUnits) {
+                $newQuantity = $productQuantityService->changeStockAvailable($orderDetail, $orderDetail->order_detail_unit->product_quantity_in_units);
+            } else {
+                $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
+            }
 
             // send email to customer
             $email = new AppMailer();

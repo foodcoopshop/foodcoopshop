@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use App\Services\OrderCustomerService;
 
 $beforeTotalPriceColspan = 1;
 $priceColspan = 2;
@@ -86,7 +87,8 @@ if ($depositSum > 0) {
                 <?php
                 echo $product['productName'];
                 $unity = '';
-                if (isset($product['orderedQuantityInUnits']) &&  $product['orderedQuantityInUnits'] > 0) {
+                $orderCustomerService = new OrderCustomerService();
+                if (isset($product['orderedQuantityInUnits']) &&  $product['orderedQuantityInUnits'] > 0 && $orderCustomerService->isSelfServiceMode()) {
                     $unity = $this->MyNumber->formatUnitAsDecimal($product['orderedQuantityInUnits']) . ' ' . $product['unitName'];
                 } else {
                     $unity = $product['unity_with_unit'];

@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use App\Services\ProductQuantityService;
 
 ?>
 <div class="amount-wrapper">
@@ -29,6 +30,8 @@ use Cake\Core\Configure;
         <a class="as as-minus" href="javascript:void(0);">
             <i class="fas fa-minus-circle"></i>
         </a>
+    <?php } else { ?>
+        <input name="amount" value="1" type="hidden" />
     <?php } ?>
 
     <?php
@@ -51,8 +54,15 @@ use Cake\Core\Configure;
         }
 
         $availableQuantity = $stockAvailable->quantity - $stockAvailable->quantity_limit;
-        if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailable->always_available) && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
-            <span <?php echo !$hideAmountSelector ? 'class="below-input availibility"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
+        if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$stockAvailable->always_available) && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) {
+            $productQuantityService = new ProductQuantityService();
+            $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($product, $unitObject);
+            $unitName = !empty($unitObject) ? $unitObject->name : '';
+            $formattedAvailableQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $availableQuantity, $unitName);
+            if (!$isAmountBasedOnQuantityInUnits) {
+            ?>
+                <span <?php echo !$hideAmountSelector ? 'class="below-input availibility"' : ''; ?>>(<?php echo $formattedAvailableQuantity . ' ' . __('available'); ?>)</span>
+            <?php } ?>
     <?php } ?>
 
 </div>
