@@ -17,82 +17,82 @@ msgid "order_state_billed_cash"
 msgstr "выставление счёта завершено и оплачивается наличными"
 
 msgid "route_sign_in"
-msgstr "войти"
+msgstr "sign-in"
 
 msgid "route_sign_out"
-msgstr "выйти"
+msgstr "sign-out"
 
 msgid "route_registration"
-msgstr "регистрация"
+msgstr "register"
 
 msgid "route_registration_successful"
-msgstr "зарегистрирован-успешно"
+msgstr "registration-successful"
 
 msgid "route_information_about_right_of_withdrawal"
-msgstr "информация-о-праве-на-возврат"
+msgstr "information-about-right-of-withdrawal"
 
 msgid "route_terms_of_use"
-msgstr "условия-использования"
+msgstr "terms-of-use"
 
 msgid "route_privacy_policy"
-msgstr "политика-безопасности"
+msgstr "privacy-policy"
 
 msgid "route_list_of_allergens"
-msgstr "список-аллергенов"
+msgstr "list-of-allergens"
 
 msgid "route_accept_terms_of_use"
-msgstr "принять-условия-использования"
+msgstr "accept-terms-of-use"
 
 msgid "route_new_products"
-msgstr "новые-продукты"
+msgstr "new-products"
 
 msgid "route_request_new_password"
-msgstr "запросить-новый-пароль"
+msgstr "request-new-password"
 
 msgid "route_activate_new_password"
-msgstr "активировать-новый-пароль"
+msgstr "activate-new-password"
 
 msgid "route_news_list_old"
-msgstr "новости"
+msgstr "news"
 
 msgid "route_news_list"
-msgstr "архив-блога"
+msgstr "blog-archive"
 
 msgid "route_news_detail"
-msgstr "новости"
+msgstr "news"
 
 msgid "route_search"
-msgstr "поиск"
+msgstr "search"
 
 msgid "route_category"
-msgstr "категория"
+msgstr "category"
 
 msgid "route_product"
-msgstr "товар"
+msgstr "product"
 
 msgid "route_manufacturer_list"
-msgstr "производители"
+msgstr "manufacturers"
 
 msgid "route_manufacturer_detail"
-msgstr "производитель"
+msgstr "manufacturer"
 
 msgid "route_content"
-msgstr "содержание"
+msgstr "content"
 
 msgid "route_cart"
-msgstr "корзина"
+msgstr "cart"
 
 msgid "route_cart_show"
-msgstr "показать"
+msgstr "show"
 
 msgid "route_cart_finish"
-msgstr "закончить"
+msgstr "finish"
 
 msgid "route_cart_finished"
-msgstr "законченный"
+msgstr "finished"
 
 msgid "route_self_service"
-msgstr "самообслуживание"
+msgstr "self-service"
 
 msgid "Runtime"
 msgstr "Продожительность"
