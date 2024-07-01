@@ -55,6 +55,7 @@ abstract class AppCakeTestCase extends TestCase
         'app.Carts',
         'app.CartProducts',
         'app.CartProductUnits',
+        'app.Configurations',
         'app.Taxes',
     ];
 
@@ -75,6 +76,8 @@ abstract class AppCakeTestCase extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        require CONFIG . '/bootstrap_locale.php';
 
         $this->dbConnection = ConnectionManager::get('test');
         $this->seedTestDatabase();

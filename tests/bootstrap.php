@@ -41,8 +41,6 @@ $migrations->seed([
     'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
 ]);
 
-require dirname(__DIR__) . '/config/bootstrap_locale.php';
-
 Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
 
 // always set to app.customerMainNamePart to firstname for unit tests even if different in custom_config.php
