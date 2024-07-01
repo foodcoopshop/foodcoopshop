@@ -1,0 +1,2480 @@
+msgid "Activities"
+msgstr "Activities"
+
+msgid "Add_attribute"
+msgstr "Add attribute"
+
+msgid "Edit_attribute"
+msgstr "Edit attribute"
+
+msgid "Errors_while_saving!"
+msgstr "Error occurred while saving your data!"
+
+msgid "created"
+msgstr "created"
+
+msgid "changed"
+msgstr "changed"
+
+msgid "deleted"
+msgstr "deleted"
+
+msgid "The_attribute_{0}_has_been_{1}."
+msgstr "The attribute {0} has been {1}."
+
+msgid "Attributes"
+msgstr "Attributes"
+
+msgid "Add_blog_post"
+msgstr "Add blog post"
+
+msgid "Edit_blog_post"
+msgstr "Edit blog post"
+
+msgid "The_blog_post_{0}_has_been_{1}."
+msgstr "The blog post {0} has been {1}."
+
+msgid "Blog_posts"
+msgstr "Blog posts"
+
+msgid "Add_category"
+msgstr "Add category"
+
+msgid "Edit_category"
+msgstr "Edit category"
+
+msgid "The_category_{0}_has_been_{1}."
+msgstr "The category {0} has been {1}."
+
+msgid "Categories"
+msgstr "Categories"
+
+msgid "Edit_setting"
+msgstr "Edit setting"
+
+msgid "The_setting_has_been_changed_successfully."
+msgstr "The setting has been changed successfully."
+
+msgid "The_setting_{0}_has_been_changed_to_{1}."
+msgstr "The setting {0} has been changed to {1}."
+
+msgid "Settings"
+msgstr "Setting"
+
+msgid "Send_test_email"
+msgstr "Send test email"
+
+msgid "Test_email"
+msgstr "Test email"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
+
+msgid "Edit_cronjob"
+msgstr "Edit cronjob"
+
+msgid "The_cronjob_{0}_has_been_changed."
+msgstr "The cronjob {0} has been changed."
+
+msgid "all_members"
+msgstr "all members"
+
+msgid "Member_card"
+msgstr "Member card"
+
+msgid "Members"
+msgstr "Members"
+
+msgid "The_group_of_the_member_{0}_was_changed_to_{1}."
+msgstr "The group of the member {0} was changed to {1}."
+
+msgid "Change_password"
+msgstr "Change password"
+
+msgid "The_manufacturer_{0}_has_changed_his_password."
+msgstr "The manufacturer {0} has changed his password."
+
+msgid "{0}_has_changed_the_password."
+msgstr "{0} has changed the password."
+
+msgid "Your_new_password_has_been_saved_successfully."
+msgstr "Your new password has been saved successfully."
+
+msgid "Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:"
+msgstr "Amount of orders where the invoice has not been sent yet to the manufacturer:"
+
+msgid "The_credit_is"
+msgstr "The credit is"
+
+msgid "It_needs_to_be_zero."
+msgstr "It needs to be 0."
+
+msgid "Amount_of_not_approved_payments_within_the_last_2_years:"
+msgstr "Amount of not approved payments within the last 2 years:"
+
+msgid "The_member_is_still_associated_to_the_following_manufacturers:"
+msgstr "The member is still associated to the following manufacturers:"
+
+msgid "Your_account_has_been_deleted_successfully."
+msgstr "Your account has been deleted successfully."
+
+msgid "{0}_has_deleted_an_account."
+msgstr "{0} has deleted an account."
+
+msgid "Edit_my_profile"
+msgstr "Edit my profile"
+
+msgid "Edit_profile"
+msgstr "Edit profile"
+
+msgid "Your_profile_was_changed."
+msgstr "Your profile was changed."
+
+msgid "The_profile_of_{0}_was_changed."
+msgstr "The profile of {0} was changed."
+
+msgid "The_member_{0}_has_been_deactivated_succesfully."
+msgstr "The member {0} has been deactivated successfully."
+
+msgid "The_member_{0}_has_been_activated_succesfully."
+msgstr "The member {0} has been activated successfully."
+
+msgid "Your_account_was_activated"
+msgstr "Your account was activated"
+
+msgid "Filename_Terms-of-use"
+msgstr "Terms-of-use"
+
+msgid "The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email."
+msgstr "The member {0} has been activated successfully and the member was notified by email."
+
+msgid "The_comment_was_changed_successfully."
+msgstr "The comment has been changed successfully."
+
+msgid "The_comment_of_the_member_{0}_was_changed:"
+msgstr "The comment of the member {0} was changed:"
+
+msgid "Sum_of_credits_of_activated_members"
+msgstr "Sum of credits of <b>activated</b> members"
+
+msgid "Sum_of_credits_of_deactivated_members"
+msgstr "Sum of credits of <b>deactivated</b> members"
+
+msgid "Sum_of_credits_of_deleted_members"
+msgstr "Sum of credits of <b>deleted</b> members"
+
+msgid "Sum_of_deposit_compensation_payments_for_manufactures"
+msgstr "Sum of compensation payments for manufacturers"
+
+msgid "Credit_and_deposit_balance"
+msgstr "Credit and deposit balance"
+
+msgid "Member_fee"
+msgstr "Member fee"
+
+msgid "Deposit_overview"
+msgstr "Deposit overview"
+
+msgid "Deposit_account"
+msgstr "Deposit account"
+
+msgid "Deposit_take_back_detail_for"
+msgstr "Deposit take back detail for"
+
+msgid "My_feedback"
+msgstr "My feedback"
+
+msgid "Feedback_from_{0}"
+msgstr "Feedback from {0}"
+
+msgid "Your_feedback_has_been_{0}."
+msgstr "Your feedback has been {0}."
+
+msgid "The_feedback_of_{0}_has_been_{1}."
+msgstr "The feedback of {0} has been {1}."
+
+msgid "approved"
+msgstr "approved"
+
+msgid "Invoices"
+msgstr "Invoices"
+
+msgid "No_data_available_to_generate_an_invoice."
+msgstr "No data available to generate an invoice."
+
+msgid "Paid_in_cash"
+msgstr "Paid in cash"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Invoice nº"
+
+msgid "Print_receipt"
+msgstr "Print receipt"
+
+msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr "Invoice nº {0} of {1} was generated successfully."
+
+msgid "Invoice_cancelled"
+msgstr "Invoice cancelled"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
+msgstr "Invoice nº {0} of {1} was cancelled successfully."
+
+msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
+msgstr "Cancellation invoice nº {0} was generated successfully."
+
+msgid "My_invoices"
+msgstr "My invoices"
+
+msgid "Journal"
+msgstr "Journal"
+
+msgid "_Order_list_filename_"
+msgstr "_Order_list_"
+
+msgid "product"
+msgstr "product"
+
+msgid "Order_list"
+msgstr "Order list"
+
+msgid "member"
+msgstr "member"
+
+msgid "Order_list_with_clear_names"
+msgstr "Order list with member names"
+
+msgid "Anonymized_order_list"
+msgstr "Anonymized order list"
+
+msgid "Show_order_list"
+msgstr "Show order list"
+
+msgid "Order_lists"
+msgstr "Order lists"
+
+msgid "Invoice"
+msgstr "Invoice"
+
+msgid "Add_manufacturer"
+msgstr "Add manufacturer"
+
+msgid "Edit_manufacturer"
+msgstr "Edit manufacturer"
+
+msgid "The_manufacturer_{0}_has_been_{1}."
+msgstr "The manufacturer {0} has been {1}."
+
+msgid "Manufacturers"
+msgstr "Manufacturers"
+
+msgid "Edit_settings"
+msgstr "Edit settings"
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr "The settings of manufacturer {0} have been changed."
+
+msgid "Your_settings_have_been_changed."
+msgstr "Your settings have been changed."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Add_page"
+msgstr "Add page"
+
+msgid "Edit_page"
+msgstr "Edit page"
+
+msgid "The_page_{0}_has_been_{1}."
+msgstr "The page {0} has been {1}."
+
+msgid "Pages"
+msgstr "Pages"
+
+msgid "Your_comment_will_be_shown_here."
+msgstr "Your comments will be shown here."
+
+msgid "Check_credit_upload"
+msgstr "Check credit upload"
+
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}."
+msgstr "The status of the credit upload for {0} was successfully changed to {1}."
+
+msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
+msgstr "The status of your credit upload was successfully changed to {0}."
+
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
+msgstr "The status of the credit upload for {0} was successfully changed to {1} and an email was sent to the member."
+
+msgid "for"
+msgstr "for"
+
+msgid "Deposit_take_back"
+msgstr "Deposit take back"
+
+msgid "for_the"
+msgstr "for the"
+
+msgid "was_added_successfully_{0}:_{1}"
+msgstr "was added successfully {0}: {1}"
+
+msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
+msgstr "The amount was added to the credit system of {0} and can be deleted there."
+
+msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
+msgstr "The amount was added to the deposit account of {0} and can be deleted there."
+
+msgid "The_payment_({0}_{1})_was_removed_successfully."
+msgstr "The payment ({0}, {1}) was removed successfully."
+
+msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
+msgstr "The payment ({0}, {1}) of {2} was removed successfully."
+
+msgid "Credit"
+msgstr "Credit"
+
+msgid "Orders"
+msgstr "Orders"
+
+msgid "Show_order"
+msgstr "Show order"
+
+msgid "of_{0}"
+msgstr "of {0}"
+
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr "Upload successful. Please select the records you want to import and then click the save button."
+
+msgid "The_uploaded_file_is_not_valid."
+msgstr "The uploaded file is not valid."
+
+msgid "Your_transaction_({0})_was_added_to_the_credit_system."
+msgstr "Your transaction ({0}) was added to the credit system."
+
+msgid "No_records_were_imported."
+msgstr "No records were imported."
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported._Sum:_{1}"
+msgstr "{0,plural,=1{1 record was} other{# records were}} successfully imported.  Sum: {1}"
+
+msgid "Report"
+msgstr "Report"
+
+msgid "Add_slider"
+msgstr "Add slider"
+
+msgid "Edit_slider"
+msgstr "Edit slider"
+
+msgid "The_slider_{0}_has_been_{1}."
+msgstr "The slider {0} has been {1}."
+
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgid "All_manufacturers"
+msgstr "All manufacturers"
+
+msgid "Turnover_and_profit_statistics"
+msgstr "Turnover and profit statistics"
+
+msgid "Turnover_statistics"
+msgstr "Turnover statistics"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Last_{0}_months"
+msgstr "Last {0} months"
+
+msgid "December"
+msgstr "December"
+
+msgid "Add_tax_rate"
+msgstr "Add tax rate"
+
+msgid "Edit_tax_rate"
+msgstr "Edit tax rate"
+
+msgid "The_tax_rate_{0}_has_been_{1}."
+msgstr "The tax rate {0} has been {1}."
+
+msgid "Tax_rates"
+msgstr "Tax rates"
+
+msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
+msgstr "The uploaded file needs to have the format: {0}"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "General-terms-and-conditions"
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr "{0} has written a feedback to product {1}."
+
+msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
+msgstr "Thanks for your feedback! It was successfully saved and sent to {0}."
+
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
+msgstr "Product {0} (manufacturer: {1}, price {2}) from {2} was successfully cancelled."
+
+msgid "Product_was_cancelled"
+msgstr "Product cancelled"
+
+msgid "An_email_was_sent_to_{0}."
+msgstr "An email was sent to {0}."
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr "An email was sent to {0} and to the manufacturer {1}."
+
+msgid "Reason"
+msgstr "Reason"
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr "The stock was increased to {0}."
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
+msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
+
+msgid "Please_select_a_new_member."
+msgstr "Please select a new member."
+
+msgid "The_same_member_must_not_be_selected."
+msgstr "The same member must not be selected."
+
+msgid "The_amount_is_not_valid."
+msgstr "The amount is not valid."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "The reason for changing the member is mandatory."
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Assigned_to_another_member"
+msgstr "Assigned to another member"
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr "An email was sent to {0} and {1}."
+
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr "The pickup day comment {0} was changed:"
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr "The pickup day of your order was changed to"
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}."
+msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1}."
+
+msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "{0,plural,=1{1 member was} other{# members were}} got an email."
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr "The amount of the ordered product {0} was successfully adapted from {1} to {2}."
+
+msgid "Ordered_amount_adapted"
+msgstr "Ordered amount adapted"
+
+msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
+msgstr "The name of the ordered product {0} was successfully changed to {1}."
+
+msgid "The_price_is_not_valid."
+msgstr "The price is not valid."
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "The price of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
+
+msgid "Ordered_price_adapted"
+msgstr "Price adapted"
+
+msgid "The_delivered_quantity_is_not_valid."
+msgstr "The delivered quantity is not valid."
+
+msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
+msgstr "The new price would be {0} for {1}. Please check the unit."
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
+
+msgid "Weight_adapted_for_\"0\":"
+msgstr "Weight adapted for \"{0}\":"
+
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr "The member {0} still has {1,plural,=1{1_product} other{#_products}} with unchanged weight."
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr "The following customers still have products with unchanged weight:"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 product} other{# products}}"
+
+msgid "Edit_purchase_price"
+msgstr "Edit purchase price"
+
+msgid "Purchase_price_has_been_saved_successfully."
+msgstr "The purchase price has been saved successfully."
+
+msgid "Group_by_product"
+msgstr "Group by product"
+
+msgid "Group_by_member"
+msgstr "Group by member"
+
+msgid "Group_by_manufacturer"
+msgstr "Group by manufacturer"
+
+msgid "No_member_found_with_id_{0}."
+msgstr "No member found with id {0}."
+
+msgid "Instant_order"
+msgstr "Instant order"
+
+msgid "Self_service_order"
+msgstr "Self-service order"
+
+msgid "Profit"
+msgstr "Profit"
+
+msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully created."
+
+msgid "The_product_{0}_was_created_for_{1}."
+msgstr "The product {0} was created for {1}."
+
+msgid "Surcharge_needs_to_be_greater_than_0."
+msgstr "The surcharge needs to be greater than 0."
+
+msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
+msgstr "The selling price net was set to: {0} of purchase price net"
+
+msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
+msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."
+
+msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
+msgstr "The product {0} has {1,plural,=1{1 open order} other{# open orders}}."
+
+msgid "Please_try_again_as_soon_as_the_next_invoice_has_been_generated."
+msgstr "Please try again as soon as the next invoice has been generated."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
+msgstr "{0,plural,=1{One product was} other{# products were}} deleted successfully."
+
+msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgstr "The categories of the product {0} from manufacturer {1} have been changed: {2}"
+
+msgid "Saving_successful."
+msgstr "Saving successful."
+
+msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "The default attribute of the product {0} from manufacturer {1} was changed to {2}."
+
+msgid "Order_possible_until"
+msgstr "Order possible until"
+
+msgid "Send_order_lists_day"
+msgstr "Send order lists day"
+
+msgid "Order_list_is_not_sent"
+msgstr "Order lists is not sent"
+
+msgid "Last_order_weekday"
+msgstr "Last order weekday"
+
+msgid "midnight"
+msgstr "midnight"
+
+msgid "Delivery_day"
+msgstr "Delivery day"
+
+msgid "First_delivery_day"
+msgstr "First delivery day"
+
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr "The delivery rhythm of the product {0} from manufacturer {1} was changed successfully to {2}."
+
+msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}."
+msgstr "The delivery rhythm of {0} products has been changed successfully to {1}."
+
+msgid "Attribute"
+msgstr "Attribute"
+
+msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
+msgstr "The deposit of the product {0} was changed from {1} to {2}."
+
+msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
+msgstr "The product {0} was changed successfully to a stock product."
+
+msgid "The_product_was_changed_successfully."
+msgstr "The product was changed successfully."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
+msgstr "The product {0} from manufacturer {1} was renamed to {2}."
+
+msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "The unity of the product {0} from manufacturer {1} was changed to {2}."
+
+msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "The description of the product {0} from manufacturer {1} has been changed: {2}"
+
+msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "The short description of the product {0} from manufacturer {1} has been changed: {2}"
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
+msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
+
+msgid "The_price_of_the_following_{0,plural,=1{1_ordered_product} other{#_ordered_products}}_was_changed:"
+msgstr "The price {0,plural,=1{of the following ordered product} other{of the following # ordered products}} was adapted:"
+
+msgid "The_price_of_the_product_{0}_was_changed_successfully."
+msgstr "The price of the product {0} was changed successfully."
+
+msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "The price of the product {0} from manufacturer {1} was changed from {2} to {3}."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully deleted."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_changed_successfully."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully changed."
+
+msgid "Nothing_changed."
+msgstr "Nothing changed."
+
+msgid "The_purchase_price_of_the_product_{0}_was_changed_successfully."
+msgstr "The purchase price of the product {0} was changed successfully."
+
+msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "The purchase price of the product {0} from manufacturer {1} was changed from {2} to {3}."
+
+msgid "The_amount_of_the_product_{0}_was_changed_successfully."
+msgstr "The amount of the product {0} was changed successfully."
+
+msgid "Available_quantity"
+msgstr "Available quantity"
+
+msgid "Old_value"
+msgstr "Old value"
+
+msgid "New_value"
+msgstr "New value"
+
+msgid "Always_available"
+msgstr "Always available"
+
+msgid "yes"
+msgstr "yes"
+
+msgid "no"
+msgstr "no"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr "Default quantity after sending order lists"
+
+msgid "empty"
+msgstr "empty"
+
+msgid "Quantity_limit"
+msgstr "Order possible until amount of"
+
+msgid "Sold_out_limit"
+msgstr "Notification if amount is lower than"
+
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
+msgstr "The amount of the product {0} from manufacturer {1} was changed: {2}."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
+msgstr "{0,plural,=1{One product was} other{# products were}} deactivated."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_activated."
+msgstr "{0,plural,=1{One product was} other{# products were}} activated."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
+msgstr "The product {0} of manufacturer {1} has been deactivated."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
+msgstr "The product {0} of manufacturer {1} has been activated."
+
+msgid "Selling_price"
+msgstr "Selling price"
+
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgstr "The tax rate of product {0} from manufacturer {1} was changed successfully."
+
+msgid "From_{0}_to_{1}"
+msgstr "From {0} to {1}"
+
+msgid "Products"
+msgstr "Products"
+
+msgid "All_products"
+msgstr "All products"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Description_short"
+msgstr "Description short"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Unit"
+msgstr "Unit"
+
+msgid "Gross_price"
+msgstr "Gross price"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "Storage_location"
+msgstr "Storage location"
+
+msgid "Product_import_for_{0}"
+msgstr "Product import for {0}"
+
+msgid "Product_import_successful."
+msgstr "The product import was successful."
+
+msgid "The_uploaded_file_was_empty._Please_add_products_and_upload_again."
+msgstr "The uploaded file was empty. Please add products and upload again."
+
+msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
+msgstr "A new image was uploaded to product {0} from manufacturer {1}."
+
+msgid "all_activities"
+msgstr "all activities"
+
+msgid "all_users"
+msgstr "all users"
+
+msgid "all_products"
+msgstr "all products"
+
+msgid "Action_log_type"
+msgstr "Activity Type"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "User"
+msgstr "User"
+
+msgid "Show_product"
+msgstr "Show product"
+
+msgid "Show_manufacturer"
+msgstr "Show manufacturer"
+
+msgid "Show_blog_post"
+msgstr "Show blog post"
+
+msgid "Show_page"
+msgstr "Show page"
+
+msgid "Show_category"
+msgstr "Show category"
+
+msgid "records"
+msgstr "records"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Weight_unit"
+msgstr "Weight unit"
+
+msgid "Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg)."
+msgstr "Please check, if this attribute represents a weight attribute (e.g. kg)."
+
+msgid "docs_route_products"
+msgstr ""
+
+msgid "Information_needed_for_function_price_per_unit."
+msgstr "Information needed for the function \"Price per unit\"."
+
+msgid "Delete_attribute?"
+msgstr "Delete attribute?"
+
+msgid "Attribute_can_not_be_deleted_because_products_are_associated_with_it."
+msgstr "Attribute can not be deleted because products are associated with it."
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Check and do not forget to click <b>Save</b> button."
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Weight"
+msgstr "Weight"
+
+msgid "Associated_to_active_products?"
+msgstr "Associated with active products?"
+
+msgid "Associated_to_inactive_products?"
+msgstr "Associated with inactive products?"
+
+msgid "Modified_on"
+msgstr "Modified on"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Associated_products"
+msgstr "Associated products"
+
+msgid "Show_associated_products"
+msgstr "Show associated products"
+
+msgid "{0,plural,=1{record} other{records}}"
+msgstr "{0,plural,=1{record} other{records}}"
+
+msgid "Title"
+msgstr "Title"
+
+msgid "Short_description"
+msgstr "Short description"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Click_on_image_to_change_it."
+msgstr "Click on image to change it."
+
+msgid "Upload_new_image_or_change_it"
+msgstr "Upload new image or change it"
+
+msgid "If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown."
+msgstr "If the blog post is associated to a manufacturer and no image is selected, the default image of the manufacturer profile is shown."
+
+msgid "If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown."
+msgstr "If no image is selected, the default image of your manufacturer profile is shown."
+
+msgid "Delete_image?"
+msgstr "Delete image?"
+
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
+msgid "Chose_manufacturer"
+msgstr "Chose manufacturer"
+
+msgid "Blog_post_manufacturer_description"
+msgstr "If the manufacturer is only shown for signed in members, this is also the case for the blog post (ignoring the setting for the blog post)."
+
+msgid "Show_on_startpage_until"
+msgstr "Show on start page until"
+
+msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
+msgstr "After that date, the blog post is shown in the <a href=\"/news\">blog archive</a>. Leave empty to never show blog post on start page."
+
+msgid "Only_for_members"
+msgstr "Only for members"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Move_on_first_place?"
+msgstr "Move to first place?"
+
+msgid "If_checked_the_blog_post_will_be_set_to_first_place_of_list."
+msgstr "If checked, the blog post will be set to the first place of the list."
+
+msgid "Delete_blog_post?"
+msgstr "Delete blog post?"
+
+msgid "docs_route_wysiwyg_editor"
+msgstr ""
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "How do I use the editor?"
+
+msgid "all_manufacturers"
+msgstr "all manufacturers"
+
+msgid "Modified_by"
+msgstr "Modified by"
+
+msgid "Parent_category"
+msgstr "Parent category"
+
+msgid "No_parent_category_(highest_level)"
+msgstr "No parent category (top level)"
+
+msgid "Delete_category?"
+msgstr "Delete category?"
+
+msgid "docs_route_settings"
+msgstr ""
+
+msgid "The_following_settings_can_be_changed_in_the_admin_area."
+msgstr "The following settings can be changed in the admin panel."
+
+msgid "Setting"
+msgstr "Setting"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "Remote_foodcoops"
+msgstr "Remote food-coops"
+
+msgid "Foodcoops_with_which_manufacturers_can_synchronize_their_product_data."
+msgstr "Foodcoops with which manufacturers can synchronize their product data."
+
+msgid "Info_page_for_network_module"
+msgstr "Info page for network module"
+
+msgid "Add_remote_foodcoop"
+msgstr "Add remote food-coop"
+
+msgid "Domain"
+msgstr "Domain"
+
+msgid "As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop."
+msgstr "As long as the variable member fee is activated, no remote foodcoops can be added to this foodcoop."
+
+msgid "The_following_settings_can_not_be_changed_in_the_admin_area."
+msgstr "The following settings can <b>not</b> be changed in the admin panel."
+
+msgid "Version_FoodCoopShop"
+msgstr "Version of FoodCoopShop"
+
+msgid "Last_executed_migration"
+msgstr "Last executed migration"
+
+msgid "activated"
+msgstr "activated"
+
+msgid "deactivated"
+msgstr "deactivated"
+
+msgid "Logo_for_website,_width:"
+msgstr "Logo for website, width: "
+
+msgid "Logo_for_order_lists_and_invoices,_width:"
+msgstr "Logo for order lists, invoices and other PDFs, width:"
+
+msgid "Default_image_for_product,_width:"
+msgstr "Default image for product, width:"
+
+msgid "Default_image_for_manufacturer,_width:"
+msgstr "Default image for manufacturer, width:"
+
+msgid "Default_image_for_blog_post,_width:"
+msgstr "Default image for blog post, width:"
+
+msgid "Website_administration"
+msgstr "Website administration"
+
+msgid "Configurations"
+msgstr "Settings"
+
+msgid "Time_interval"
+msgstr "Interval"
+
+msgid "Day_of_month"
+msgstr "Day of month"
+
+msgid "Please_select..."
+msgstr "Please select..."
+
+msgid "Weekday"
+msgstr "Weekday"
+
+msgid "Not_before_time"
+msgstr "Time"
+
+msgid "Cronjob_is_called_up_to_10_min_after_the_given_time."
+msgstr "Cronjob is called up to 10 min after the given time."
+
+msgid "Last_run"
+msgstr "Last run"
+
+msgid "Old_password"
+msgstr "Old password"
+
+msgid "New_password"
+msgstr "New password"
+
+msgid "min_8_characters"
+msgstr "min 8 characters"
+
+msgid "New_password_again"
+msgstr "New password (again)"
+
+msgid "Financial_reports"
+msgstr "Financial reports"
+
+msgid "Sum_of_credits"
+msgstr "Sum of credits"
+
+msgid "Included_deposit"
+msgstr "Included deposit"
+
+msgid "docs_route_members"
+msgstr ""
+
+msgid "Company_name"
+msgstr "Company name"
+
+msgid "Contact_person"
+msgstr "Contact person"
+
+msgid "Will_be_shown_on_invoices."
+msgstr "Will be shown on invoices."
+
+msgid "Firstname"
+msgstr "First name"
+
+msgid "Lastname"
+msgstr "Last name"
+
+msgid "Profile_image"
+msgstr "Profile image"
+
+msgid "Click_on_profile_image_to_change_it."
+msgstr "Click on profile image to change it."
+
+msgid "Only_visible_for_other_membes_in_the_member_list."
+msgstr "Only visible for other members in the member list."
+
+msgid "Is_shown_on_member_card."
+msgstr "Is shown on member card."
+
+msgid "Upload_new_profile_image_or_change_it"
+msgstr "Upload new profile image or change it"
+
+msgid "Delete_profile_image?"
+msgstr "Delete profile image?"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Street_and_number"
+msgstr "Street and nº"
+
+msgid "Additional_address_information"
+msgstr "Additional information"
+
+msgid "Zip"
+msgstr "Zip"
+
+msgid "City"
+msgstr "City"
+
+msgid "Mobile"
+msgstr "Mobile"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Notifications"
+msgstr "Notifications"
+
+msgid "Order_reminder"
+msgstr "Order reminder"
+
+msgid "Want_to_receive_order_reminder_emails?"
+msgstr "Do you want to receive a weekly order reminder e-mail?"
+
+msgid "Pickup_day_reminder"
+msgstr "Pickup day reminder"
+
+msgid "Want_to_receive_pickup_day_reminder_emails?"
+msgstr "Do you want to receive a pickup day reminder e-mail?"
+
+msgid "Invoices_per_email"
+msgstr "Invoices by email"
+
+msgid "Want_to_receive_invoices_per_email?"
+msgstr "Do you want to receive your invoices per e-mail?"
+
+msgid "Check_credit_reminder"
+msgstr "Check credit reminder"
+
+msgid "Want_to_receive_check_credit_reminder_emails_when_your_credit_is_lower_than_{0}?"
+msgstr "Do you want to receive a weekly reminder e-mail when your credit is lower than {0}?"
+
+msgid "Credit_upload_reminder"
+msgstr "Credit upload reminder"
+
+msgid "Want_to_receive_credit_upload_reminder?"
+msgstr "Do you want to receive an e-mail when your transaction is uploaded to the credit system?"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Want_to_receive_the_newsletter_per_email?"
+msgstr "Do you want to receive the newsletter via e-mail?"
+
+msgid "Self_service_mode"
+msgstr "Self-service mode"
+
+msgid "Generate_my_member_card"
+msgstr "Generate my member card"
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgstr "I want to use my smartphone's camera for barcode scanning."
+
+msgid "Superadmin_functions"
+msgstr "Superadmin functions"
+
+msgid "Prices"
+msgstr "Prices"
+
+msgid "Delete_member_irrevocably?"
+msgstr "Delete account irrevocably?"
+
+msgid "Show_all_years"
+msgstr "Show all years"
+
+msgid "Group"
+msgstr "Group"
+
+msgid "Feedback"
+msgstr "Feedback"
+
+msgid "Register_date"
+msgstr "Register date"
+
+msgid "Last_pickup_day"
+msgstr "Last pickup day"
+
+msgid "Comment_abbreviation"
+msgstr "Comm."
+
+msgid "Newbie_has_{0}_orders."
+msgstr "Newbie: has only ordered {0}x."
+
+msgid "Show_all_orders_from_{0}"
+msgstr "Show all orders from {0}"
+
+msgid "Change_group"
+msgstr "Change group"
+
+msgid "This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}."
+msgstr "This e-mail address is not yet activated. You can <a href=\"{0}\">activate it here</a> and by doing that you approve the registration in the name of the member."
+
+msgid "deactivate"
+msgstr "deactivate"
+
+msgid "activate"
+msgstr "activate"
+
+msgid "Show_credit"
+msgstr "Show credit"
+
+msgid "Create_feedback_for_{0}."
+msgstr "Create feedback for {0}."
+
+msgid "Purchase_price_abbreviation"
+msgstr "PP"
+
+msgid "Zero_price_abbreviation"
+msgstr "ZP"
+
+msgid "Add_comment"
+msgstr "Add comment"
+
+msgid "Delete_deposit_take_back?"
+msgstr "Delete deposit take back?"
+
+msgid "docs_route_deposit"
+msgstr ""
+
+msgid "Please_chose_a_manufacturer."
+msgstr "Please chose a manufacturer."
+
+msgid "Add_return_of_empty_glasses"
+msgstr "Add return of empty glasses"
+
+msgid "Since_{0}_there_was_no_deposit_delivered_or_returned."
+msgstr "Since {0} deposit was neither delivered nor returned."
+
+msgid "Month"
+msgstr "Month"
+
+msgid "Product_with_deposit_delivered"
+msgstr "Produt with deposit delivered"
+
+msgid "Empty_glasses_returned"
+msgstr "Empty glasses returned"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Show_details"
+msgstr "Show details"
+
+msgid "Delivered_deposit"
+msgstr "Delivered deposit"
+
+msgid "Returned_deposit"
+msgstr "Returned deposit"
+
+msgid "Your_deposit_balance"
+msgstr "Your deposit balance"
+
+msgid "docs_route_infos_for_success"
+msgstr ""
+
+msgid "Deposit_overview_for_all_manufacturers"
+msgstr "Deposit overview for all manufacturers"
+
+msgid "There_is_no_{0}_available."
+msgstr "There is no {0} available."
+
+msgid "Year"
+msgstr "Year"
+
+msgid "Compensation_payments"
+msgstr "Compensation payments"
+
+msgid "Open_deposit_demands"
+msgstr "Open deposit demands"
+
+msgid "Sum"
+msgstr "Sum"
+
+msgid "Reserved_for_compensation_payments"
+msgstr "Reserved for compensation payments"
+
+msgid "Difference_to_open_deposit_demands"
+msgstr "Difference to open deposit demands"
+
+msgid "Deposit_diagram:_Data_per_week"
+msgstr "Deposit diagram: Data per week"
+
+msgid "Deposit_diagram_explanation_text."
+msgstr "This is the explanation text."
+
+msgid "Empty_glasses_returned_by_manufacturer"
+msgstr "Empty glasses returned by manufacturer"
+
+msgid "Returned_deposit_by_member"
+msgstr "Returned deposit by member"
+
+msgid "docs_route_user_feedback"
+msgstr ""
+
+msgid "Your_feedback_has_not_yet_been_reviewed_by_an_admin_and_is_therefore_not_yet_published."
+msgstr "Your feedback has not yet been reviewed by an admin and is therefore not yet published."
+
+msgid "Your_feedback_has_been_reviewed_and_is_published_on_this_site_{0}._Thank_you."
+msgstr "Your feedback has been reviewed and is published on <a href=\"{0}\" target=\"_blank\">this site</a>. Thank you."
+
+msgid "Approval_info_text_{0}."
+msgstr "Your feedback will be visible for everybody."
+
+msgid "Feedback_intro_text_customer_{0}."
+msgstr "Tell other people why you buy at {0}."
+
+msgid "Feedback_intro_text_manufacturer_{0}."
+msgstr "Tell other people why you sell your products to {0}."
+
+msgid "Feedback_field_explanation_text_customer."
+msgstr ""
+"<b>Examples</b>\n"
+"• Only very little waste\n"
+"• I can support local farmers"
+
+msgid "Feedback_field_explanation_text_manufacturer."
+msgstr ""
+"<b>Examples</b>\n"
+"• Pre-ordering allows a very good planning\n"
+"• No waste"
+
+msgid "Max._{0}_characters."
+msgstr "Max. {0} characters."
+
+msgid "Please_enter_your_feedback_here."
+msgstr "Please enter your feedback here."
+
+msgid "Show_name?"
+msgstr "Show name?"
+
+msgid "Privacy_type_explanatin_text."
+msgstr "Should your name and your city be shown?"
+
+msgid "Approved"
+msgstr "Approved"
+
+msgid "Only_superadmins_can_approve_feedbacks."
+msgstr "Only superadmins can approve feedbacks."
+
+msgid "Delete_feedback?"
+msgstr "Delete feedback?"
+
+msgid "All_amounts_in_{0}."
+msgstr "All prices in {0}."
+
+msgid "Tax_overview_cash"
+msgstr "Tax overview cash"
+
+msgid "Tax_overview_cashless"
+msgstr "Tax overview cashless"
+
+msgid "Tax_overview_total"
+msgstr "Tax overview total"
+
+msgid "Download_invoices"
+msgstr "Download invoices"
+
+msgid "Copy_to_clipboard"
+msgstr "Copy to clipboard"
+
+msgid "Invoice_date"
+msgstr "Invoice date"
+
+msgid "Net"
+msgstr "Net"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Gross"
+msgstr "Gross"
+
+msgid "Email_sent"
+msgstr "E-mail sent"
+
+msgid "Receipt"
+msgstr "Receipt"
+
+msgid "Cancellation"
+msgstr "Cancellation"
+
+msgid "Total_sum"
+msgstr "Total sum"
+
+msgid "Pickup_day"
+msgstr "Pickup day"
+
+msgid "docs_route_pick_up_products"
+msgstr ""
+
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
+msgstr "Here you find the unchanged order lists that were sent to you."
+
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
+msgstr "Here you find the unchanged order lists that were sent to the manufacturers."
+
+msgid "Order_list_by_product"
+msgstr "Order list by product"
+
+msgid "Order_list_by_member"
+msgstr "Order list by member"
+
+msgid "docs_route_manufacturers"
+msgstr ""
+
+msgid "General"
+msgstr "General"
+
+msgid "in_your_imprint"
+msgstr "in your imprint"
+
+msgid "in_the_imprint_of_the_manufacturer"
+msgstr "the manufacturer's imprint"
+
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr "Will be shown spam-protected {0}."
+
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr "Will be shown {0}."
+
+msgid "Example_given_abbreviation"
+msgstr "E. g."
+
+msgid "Website"
+msgstr "Website"
+
+msgid "To_your_settings"
+msgstr "Go to your settings"
+
+msgid "To_the_settings_of_manufacturer"
+msgstr "Go to manufacturer's settings page"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "To_manufacturer_profile"
+msgstr "Go to the manufacturer profile page"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Click_on_logo_to_change_it."
+msgstr "Click on logo to change it."
+
+msgid "Upload_new_logo_or_change_it"
+msgstr "Upload new logo or change it"
+
+msgid "Delete_logo?"
+msgstr "Delete logo?"
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr "Will be shown on the manufacturer overview page. Can't be independently changed by the manufacturer."
+
+msgid "Long_description"
+msgstr "Long description"
+
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr "To save long description please press save and then edit the manufacturer."
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr "Will be shown on the manufacturer's profile page."
+
+msgid "Company_data"
+msgstr "Company data"
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr "for your imprint and your invoices. The imprint can be found on your profile in the bottom right corner."
+
+msgid "VAT_number"
+msgstr "VAT number"
+
+msgid "if_it_is_available"
+msgstr "if available"
+
+msgid "General_terms_and_conditions"
+msgstr "General terms and conditions"
+
+msgid "Change_general_terms_and_conditions"
+msgstr "Change general terms and conditions"
+
+msgid "Upload_general_terms_and_conditions"
+msgstr "Upload general terms and conditions"
+
+msgid "Upload_general_terms_and_conditions_or_change_them"
+msgstr "Upload general terms and conditions or change them"
+
+msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
+msgstr "If you do not upload your own general terms and conditions (as pdf), the default general terms and conditions are applied when products are ordered."
+
+msgid "Delete_general_terms_and_conditions?"
+msgstr "Delete general terms and conditions?"
+
+msgid "Commercial_register_number"
+msgstr "Comercial register number"
+
+msgid "Company_court"
+msgstr "Company court"
+
+msgid "Supervisory_authority"
+msgstr "Supervisory authority"
+
+msgid "e. g. chamber_of_agriculture"
+msgstr "e. g. chamber of agriculture"
+
+msgid "Chamber"
+msgstr "Chamber"
+
+msgid "Additional_text_for_invoice"
+msgstr "Additional text for invoice"
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr "Will be printed on the end of your invoice's overview page."
+
+msgid "Example_for_additional_invoice_text"
+msgstr " "
+
+msgid "Visibility_of_the_products"
+msgstr "Visibility of products"
+
+msgid "Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer)."
+msgstr "Manufacturer profile and products are visibile. (Can't be changed by the manufacturer)."
+
+msgid "Delivery_break"
+msgstr "Delivery break"
+
+msgid "How_do_I_use_the_function_delivery_break?"
+msgstr "How do I use the function \"delivery break\"?"
+
+msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
+msgstr "Manufacturer profile and products are only visible for signed in members."
+
+msgid "Order_lists_by_email"
+msgstr "Order lists by email"
+
+msgid "I_want"
+msgstr "I want"
+
+msgid "The_manufacturer_wants"
+msgstr "The manufacturer wants"
+
+msgid "to_receive_the_orders_per_email."
+msgstr "to receive the orders per email."
+
+msgid "CC_recipient_for_order_lists"
+msgstr "CC recipient for order lists"
+
+msgid "Separate_multiple_emails_with_comma."
+msgstr "Separate multiple emails with comma."
+
+msgid "Only_works_if_order_lists_by_email_is_checked."
+msgstr "Only works if \"Order lists by email\" is checked."
+
+msgid "Invoices_by_email"
+msgstr "Invoices by email"
+
+msgid "to_receive_his_invoice_every_month_by_email."
+msgstr "to receive his invoice every month by email."
+
+msgid "Delivery_notes_by_email"
+msgstr "Delivery notes by email"
+
+msgid "to_receive_his_delivery_note_every_month_by_email."
+msgstr "to receive his delivery note every month by email."
+
+msgid "Cancellations"
+msgstr "Cancellations"
+
+msgid "to_receive_an_email_on_every_cancellation."
+msgstr "to receive an email on every cancellation."
+
+msgid "Adaptions_of_price_and_weight_of_ordered_products"
+msgstr "Adaptions of price and weight of ordered products"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
+msgstr "to receive an email on every adaptaion of price or weight"
+
+msgid "Adaptions_of_price_of_ordered_products"
+msgstr "Adaptions of price of ordered products"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
+msgstr "to receive an email on every adaptaion of price"
+
+msgid "Adaptions_of_the_ordered_amount"
+msgstr "Adaptions of the ordered amount"
+
+msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product."
+msgstr "to receive an email on every adaption of the amount of an ordered product."
+
+msgid "Instant_orders"
+msgstr "Instant orders"
+
+msgid "to_receive_an_email_on_every_instant_order."
+msgstr "to receive an email on every instant order (except for stock products)."
+
+msgid "Other_settings"
+msgstr "Other settings"
+
+msgid "Variable_member_fee_in"
+msgstr "Variable member fee in "
+
+msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
+msgstr "The invoice for the manufacturer will be reduced by the given percentage. No decimals allowed."
+
+msgid "Purchase_price"
+msgstr "Purchase price"
+
+msgid "Preselected_tax_rate_for_new_products"
+msgstr "Preselected tax rate for new products"
+
+msgid "Advanced_stock_management_active?"
+msgstr "Advanced stock management active?"
+
+msgid "Infos_to_the_advanced_stock_management"
+msgstr "Information to the advanced stock management"
+
+msgid "Sold_out_limit_reached_notification_for_manufacturer?"
+msgstr "Sold out limit reached notification for manufacturer?"
+
+msgid "to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr "to receive an email when the stock limit for a product is reached."
+
+msgid "Sold_out_limit_reached_notification_for_contact_person?"
+msgstr "Sold out limit reached notification for contact person?"
+
+msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr "The contact person wants to receive an email when the stock limit for a product is reached."
+
+msgid "Stock_products_in_order_lists"
+msgstr "Stock products in order lists"
+
+msgid "Should_stock_products_be_included_in_order_lists?"
+msgstr "Should stock products be included in order lists?"
+
+msgid "Chose_member"
+msgstr "Chose member..."
+
+msgid "Anonymize_customers?"
+msgstr "Anonymize members?"
+
+msgid "Customer_data_(firstname_lastname_email)_will_either_be_hidden_or_anonymized_for_this_manufacturer."
+msgstr "Anonymize member data like firstname, lastname, email for this manufacturer globally."
+
+msgid "Pickup_days"
+msgstr "Pickup days"
+
+msgid "Stock_products"
+msgstr "Stock products"
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr "Sum of open orders in given time range"
+
+msgid "Open_orders_abbreviation"
+msgstr "Oo"
+
+msgid "Settings_abbreviation"
+msgstr "Set."
+
+msgid "Show_all_products_from_{0}"
+msgstr "Show all products from {0}"
+
+msgid "Show_deposit_account"
+msgstr "Show deposit account"
+
+msgid "Edit_manufacturer_settings"
+msgstr "Edit manufacturer settings"
+
+msgid "grouped_by_product"
+msgstr "group by product"
+
+msgid "Anonymized_list"
+msgstr "Anonymized list"
+
+msgid "grouped_by_customer"
+msgstr "group by member"
+
+msgid "Test_order_list"
+msgstr "Test order list"
+
+msgid "Delivery_note"
+msgstr "Delivery note"
+
+msgid "Test_invoice"
+msgstr "Test invoice"
+
+msgid "Manufacturer_profile"
+msgstr "Manufacturer profile"
+
+msgid "Member"
+msgstr "Member"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Purchase_price_tax_excl"
+msgstr "Purchase price tax excl."
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_order."
+msgstr "Please chose the member you want to place the order for in the dropdown above."
+
+msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
+msgstr "The pickup day of the instant order will be automatically changed to <b>today, {0}</b>."
+
+msgid "Group_by..."
+msgstr "Group by..."
+
+msgid "all_cart_types"
+msgstr "all order types"
+
+msgid "Deposit_return"
+msgstr "Deposit return"
+
+msgid "No_orders_found_for_pickup_day_{0}."
+msgstr "No orders found for the pickup day {0}."
+
+msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
+msgstr "No orders found for the delivery period {0} to {1}."
+
+msgid "Show_all_ordered_products"
+msgstr "Show all ordered products"
+
+msgid "Net_profit"
+msgstr "Net profit"
+
+msgid "Page_title"
+msgstr "Page title"
+
+msgid "Pages_menu_type_main_description"
+msgstr "In which menu"
+
+msgid "Pages_menu_type_sub_description"
+msgstr "should the page be shown?"
+
+msgid "Pages_parent_main_description"
+msgstr "Parent menu item"
+
+msgid "Pages_parent_sub_description"
+msgstr "Main menu: leave empty"
+
+msgid "Chose_parent_menu_item"
+msgstr "Chose parent menu item"
+
+msgid "Pages_position_main_description"
+msgstr "Rank in menu"
+
+msgid "Pages_position_sub_description"
+msgstr "Number between 0 and 100"
+
+msgid "Pages_position_sub2_description"
+msgstr "\"0\" hides the page from the menu but the page can be opened if the address is known."
+
+msgid "Pages_full_width_main_description"
+msgstr "Full width?"
+
+msgid "Pages_full_width_sub_description"
+msgstr "The left menu will be hidden to make the content area wider."
+
+msgid "Pages_extern_url_main_description"
+msgstr "Link to external page?"
+
+msgid "Pages_extern_url_sub_description"
+msgstr "Menu item leads to the given url, content of page is not shown."
+
+msgid "Pages_delete_page_main_description"
+msgstr "Delete page?"
+
+msgid "to_the_admin_area"
+msgstr "to the admin panel"
+
+msgid "to_the_manufacturer_area"
+msgstr "to the manufacturer panel"
+
+msgid "Welcome"
+msgstr "Welcome"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Rank_in_menu"
+msgstr "Rank in menu"
+
+msgid "Full_width"
+msgstr "Full width"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Date_of_upload"
+msgstr "Date of upload"
+
+msgid "Date_last_modified"
+msgstr "Last modified date"
+
+msgid "Transaction_added_on"
+msgstr "Transaction received on"
+
+msgid "Transaction_text"
+msgstr "Transaction text"
+
+msgid "Last_editor"
+msgstr "Last editor"
+
+msgid "This_payment_has_not_been_changed_yet."
+msgstr "This payment has not been changed yet."
+
+msgid "Send_email?"
+msgstr "Send email?"
+
+msgid "If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment."
+msgstr "If checked, the member will be notified about the status change by email on saving (including the comment)."
+
+msgid "Email_preview"
+msgstr "Email preview"
+
+msgid "Comment"
+msgstr "Comment"
+
+msgid "docs_route_credit_system"
+msgstr ""
+
+msgid "Add_transfered_credit"
+msgstr "Add transfered credit"
+
+msgid "Order_value"
+msgstr "Order value"
+
+msgid "Delete_upload?"
+msgstr "Delete upload?"
+
+msgid "Your_credit_balance"
+msgstr "Your credit balance"
+
+msgid "Back_to_member_overview"
+msgstr "Back to member overview"
+
+msgid "docs_route_product_import"
+msgstr ""
+
+msgid "Read_guide_for_product_import"
+msgstr "Read guide for product import"
+
+msgid "Download_empty_CSV_template"
+msgstr "Download empty CSV template"
+
+msgid "Upload_changed_template_with_products"
+msgstr "Upload changed template file with products."
+
+msgid "Back_to_product_page"
+msgstr "Back to products"
+
+msgid "chose_manufacturer..."
+msgstr "chose manufacturer..."
+
+msgid "chose_category..."
+msgstr "chose category..."
+
+msgid "amount"
+msgstr "amount"
+
+msgid "price"
+msgstr "price"
+
+msgid "Add_product"
+msgstr "Add product"
+
+msgid "Synchronize_products"
+msgstr "Synchronize products"
+
+msgid "Name_and_categories"
+msgstr "Name and categories"
+
+msgid "Stock_product"
+msgstr "Stock product"
+
+msgid "gross"
+msgstr "gross"
+
+msgid "Surcharge"
+msgstr "Surcharge"
+
+msgid "net"
+msgstr "net"
+
+msgid "Selling_price_abbreviation"
+msgstr "SP"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "New?"
+msgstr "New?"
+
+msgid "Delivery_rhythm"
+msgstr "Delivery rhythm"
+
+msgid "Added_on"
+msgstr "Added on"
+
+msgid "Added_by"
+msgstr "Added by"
+
+msgid "deleted_on"
+msgstr "deleted on"
+
+msgid "does_not_appear_in_sum."
+msgstr "not included in sum."
+
+msgid "Slider_image"
+msgstr "Slider image"
+
+msgid "Width"
+msgstr "Width"
+
+msgid "Linked_to"
+msgstr "Linked to"
+
+msgid "Rank"
+msgstr "Rank"
+
+msgid "Delete_slider_image?"
+msgstr "Delete slider image?"
+
+msgid "No_turnover_available."
+msgstr "No turnover available."
+
+msgid "Net_purchase_price"
+msgstr "Net purchase price"
+
+msgid "Gross_turnover"
+msgstr "Gross turnover"
+
+msgid "Net_turnover_selling_price"
+msgstr "Net turnover (SP)"
+
+msgid "total"
+msgstr "total"
+
+msgid "per_month"
+msgstr "per month"
+
+msgid "Go_to_profit_detail_page"
+msgstr "Go to profit detail page"
+
+msgid "For_filtering_data_click_on_legend_on_top_of_chart."
+msgstr "Data can be filtered by clicking on the legend on top of chart."
+
+msgid "Variable_member_fee_is_included_in_turnover."
+msgstr "The variable member fee is included in turnover."
+
+msgid "Member_fee_products_are_excluded_from_statistics."
+msgstr "Member fee products are excluded from this statistics."
+
+msgid "Tax_rates_can_not_be_changed."
+msgstr "Tax rates can not be changed."
+
+msgid "e.g._10_for_10%"
+msgstr "e.g. 10 for 10%"
+
+msgid "Tax_rates_can_not_be_changed_later."
+msgstr "Tax rates can not be changed later."
+
+msgid "Add_deposit_amount"
+msgstr "Add deposit amount"
+
+msgid "Add_deposit"
+msgstr "Add deposit"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Add deposit amount for {0}"
+
+msgid "Add_deposit_amount_for"
+msgstr "Add deposit amount for"
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr "Please add the value of empty glasses that are taken back by the manufacturer."
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr "Did the manufacturer take away empty glasses or was his deposit account equalized with money?"
+
+msgid "Amount_in_{0}"
+msgstr "Amount in {0}"
+
+msgid "Instant_order_for_today"
+msgstr "Instant order for today"
+
+msgid "chose_member..."
+msgstr "chose member..."
+
+msgid "Order_stock_products"
+msgstr "Order stock products"
+
+msgid "Copy_selected_email_addresses"
+msgstr "Copy selected e-mail adresses"
+
+msgid "Generate_member_cards"
+msgstr "Generate member cards"
+
+msgid "1_day_ahead"
+msgstr "1 day ahead"
+
+msgid "1_day_back"
+msgstr "1 day back"
+
+msgid "to"
+msgstr "to"
+
+msgid "Print_page"
+msgstr "Print page"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "Bank_account_data"
+msgstr "Bank account data"
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr "is kept private and is only used to transfer money to your bank account."
+
+msgid "Bank"
+msgstr "Ban"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "My_products"
+msgstr "My products"
+
+msgid "My_profile"
+msgstr "My profile"
+
+msgid "All_products_picked_up?"
+msgstr "All products picked up?"
+
+msgid "Back_to_deposit_account"
+msgstr "Back to deposit account"
+
+msgid "Change_pickup_day"
+msgstr "Change pickup day"
+
+msgid "Cancel_selected_products"
+msgstr "Cancel selected products"
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
+
+msgid "Filter_by_cart_type"
+msgstr "Filter by order type"
+
+msgid "Orders_as_pdf"
+msgstr "Orders as PDF"
+
+msgid "Multiple_pickup_days"
+msgstr "Multiple pickup days"
+
+msgid "Click_to_change_amount"
+msgstr "Click to change amount"
+
+msgid "Click_to_cancel_product"
+msgstr "Click to cancel product"
+
+msgid "Click_to_change_member"
+msgstr "Click to change member"
+
+msgid "Invoice_cannot_be_generated"
+msgstr "Invoice cannot be generated"
+
+msgid "No_invoices_available."
+msgstr "No invoices available."
+
+msgid "Add_product_feedback"
+msgstr "Give the manufacturer feedback for the product"
+
+msgid "Click_to_change_name"
+msgstr "Click to change name"
+
+msgid "Ordered_products"
+msgstr "Ordered products"
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Show all ordered products from {0}"
+
+msgid "Order_state"
+msgstr "Order state"
+
+msgid "Cart_type"
+msgstr "Order type"
+
+msgid "Order_date"
+msgstr "Order date"
+
+msgid "products_picked_up"
+msgstr "Products picked up"
+
+msgid "Click_to_change_price"
+msgstr "Click to change price"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
+
+msgid "Click_to_change_weight"
+msgstr "Click to change weight"
+
+msgid "Picked_up"
+msgstr "Picked up"
+
+msgid "Delivery_days"
+msgstr "Delivery days"
+
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr ""
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Add_new_payment"
+msgstr "Add new payment"
+
+msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
+msgstr "Please enter the amount that you just transfered to our bank account."
+
+msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
+msgstr "If you chose \"payback\", please enter the amount that you just transfered back to the bank account of the user."
+
+msgid "Upload_CSV_file_with_bank_transactions"
+msgstr "Upload CSV file with bank transactions"
+
+msgid "Please_select_a_member."
+msgstr "Please select a member."
+
+msgid "This_transaction_was_already_imported."
+msgstr "This transaction was already imported."
+
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr "Your code has been copied successfully into the clipboard."
+
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr "Please add this code to your transaction: {0}"
+
+msgid "Order_list_grouped_by"
+msgstr "Order list grouped by"
+
+msgid "Order_day"
+msgstr "Order day"
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Thank you very much for delivering your products to us!"
+
+msgid "Customer_ID"
+msgstr "Customer-ID"
+
+msgid "Calculate_selling_price"
+msgstr "Calculate selling price"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Edit_delivery_rhythm"
+msgstr "Edit delivery rhythm"
+
+msgid "Edit_status"
+msgstr "Edit status"
+
+msgid "Generate_product_cards"
+msgstr "Generate product cards"
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Add new attribute for product {0}"
+
+msgid "change_amount"
+msgstr "change amount"
+
+msgid "This_product_is_always_available."
+msgstr "This product is always available."
+
+msgid "No_email_notifications_are_sent_for_this_product."
+msgstr "Notifications are never sent for this product if the stock is low."
+
+msgid "Member_choses_pickup_day."
+msgstr "Member choses pickup day."
+
+msgid "change_delivery_rhythm"
+msgstr "change delivery rhythm"
+
+msgid "delivery_rhythm_from"
+msgstr "beginning"
+
+msgid "change_deposit"
+msgstr "change deposit"
+
+msgid "add_image"
+msgstr "add image"
+
+msgid "New"
+msgstr "New"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Mark product as new for the next {0} days?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Do not mark product as new any more?"
+
+msgid "Is_stock_product"
+msgstr "Is stock product"
+
+msgid "Edit_attribute_for_product_{0}"
+msgstr "Edit attribute for product {0}"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "This attribute is the default attribute."
+
+msgid "Define_as_new_default_attribute"
+msgstr "Define as new default attribute"
+
+msgid "change_category"
+msgstr "change category"
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Category \"all products\" is missing!"
+
+msgid "product_preview"
+msgstr "product preview"
+
+msgid "change_price"
+msgstr "change price"
+
+msgid "Purchase_price_not_set_and_therefore_never_active."
+msgstr "The purchase price was not yet set, only then the product can be ordered."
+
+msgid "change_tax_rate"
+msgstr "change tax rate"
+
+msgid "Import_products"
+msgstr "Import products"
+
+msgid "Export_{0}"
+msgstr "Export {0}"
+
+msgid "Dear_financial_responsible"
+msgstr "Dear financial responsible"
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr "the invoices from {0} have just been sent."
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr "Here you find the overview for making the money transfers:"
+
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr "This is a great opportunity to check the creit uploads."
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr "(Link only works for superadmins)."
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr "Thank you very much for your work!"
+
+msgid "your_current_credit_equals_{0}."
+msgstr "your current credit equals {0}."
+
+msgid "Please_soon_transfer_new_credit_to_our_bank_account."
+msgstr "Pleas soon transfer new credit to our bank account."
+
+msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
+msgstr "Do not forget to add it to our credit system after the bank transfer."
+
+msgid "Here_you_find_the_link_to_add_the_credit:"
+msgstr "Here you find the link to add credit:"
+
+msgid "Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_add_your_personal_transaction_code_{0}."
+msgstr "Pleas soon transfer new credit to our bank account and do not forget to add your personal transaction code: {0}"
+
+msgid "Transactions_were_checked_until_{0}."
+msgstr "Transactions were checked until {0}."
+
+msgid "Here_you_can_unsubscribe_this_email_reminder"
+msgstr "Here you can unsubscribe from this email reminder"
+
+msgid "Amount_(Money)"
+msgstr "Amount"
+
+msgid "Date_when_payment_was_received_on_bank_account"
+msgstr "Date when payment was received on the bank account"
+
+msgid "Today_is_the_last_order_day_and_you_can_place_your_orders_until_today_midnight."
+msgstr "today is the last order day and you can place your orders until <b>today midnight</b>."
+
+msgid "The_last_order_days_have_started_you_can_place_your_orders_until_{0}_midnight."
+msgstr "the last order days have started and you can place your orders until <b>{0} midnight</b>."
+
+msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
+msgstr "Do you want to load your last order into your shopping cart? The current cart will be emptied for that."
+
+msgid "route_cart"
+msgstr "cart"
+
+msgid "Click_here_to_open_the"
+msgstr "Click here to open the"
+
+msgid "The_amount_of_the_product_{0}_has_been_adapted."
+msgstr "The amount of the product {0} has been apapted."
+
+msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
+msgstr "You have ordered it on {0} at manufacturer {1}."
+
+msgid "Old_amount"
+msgstr "Old amunt"
+
+msgid "New_amount"
+msgstr "New amount"
+
+msgid "Why_has_the_amount_been_adpated?"
+msgstr "Why has the amount been adapted?"
+
+msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr "PS: Your credit has been adapted automatically."
+
+msgid "Why_has_another_member_been_assigned?"
+msgstr "Why has the product been assigned to another member?"
+
+msgid "sorry,_{0}_can_not_be_delivered."
+msgstr "sorry, the product \"{0}\" can not be delivered."
+
+msgid "Why_has_the_product_been_cancelled?"
+msgstr "Why has the product been cancelled?"
+
+msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
+msgstr "Sorry, but sometimes our manufacturers are not able to deliver the ordered products. You receive this email so you can buy the products elsewhere on time."
+
+msgid "Thanks_for_respecting_that!"
+msgstr "Thanks for respecting that!"
+
+msgid "Hello"
+msgstr "Hello"
+
+msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
+msgstr "If you want to answer, please write an email to {0} and <b>do not reply to this email</b>!"
+
+msgid "New_pickup_day"
+msgstr "New pickup day"
+
+msgid "Old_pickup_day"
+msgstr "Old pickup day"
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr "Why was the pickup day changed?"
+
+msgid "The_following_product_is_affected"
+msgstr "The following product is affected"
+
+msgid "The_following_{0}_products_are_affected"
+msgstr "The following products are affected"
+
+msgid "The_price_of_the_product_{0}_has_been_adapted."
+msgstr "The price of the product {0} has been adapted."
+
+msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
+msgstr "You have ordered {0} unit(s) of it on {1} at manufacturer {2}."
+
+msgid "Old_price"
+msgstr "Old price"
+
+msgid "New_price"
+msgstr "New price"
+
+msgid "Why_has_the_price_been_adpated?"
+msgstr "Why has the price been adapted?"
+
+msgid "The_weight_of_the_product_{0}_has_been_adapted."
+msgstr "The weight of the product {0} has been adapated."
+
+msgid "Old_price_for"
+msgstr "Old price for"
+
+msgid "New_price_for"
+msgstr "New price for"
+
+msgid "The_base_price_is_{0}."
+msgstr "The base price is {0}."
+
+msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
+msgstr "The status of your credit upload of {0} ({1}) was changed to {2}."
+
+msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
+msgstr "Please compare the credit upload that you added to our system with the actual bank account transfer."
+
+msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
+msgstr "Please do not forget that you have products to pick up on {0}."
+
+msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
+msgstr "As you placed your order earlier than {0} days ago, you get this reminder."
+
+msgid "Please_find_your_cancellation_invoice_attached."
+msgstr "Please find your cancellation invoice attached."
+
+msgid "Post_scriptum_abbreviation"
+msgstr "PS"
+
+msgid "Your_current_credit_equals_{0}."
+msgstr "Your current credit equals {0}."
+
+msgid "this_delivery_note_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "this delivery note contains all products that have been delivered in {0}."
+
+msgid "Please_find_your_invoice_attached."
+msgstr "Please find your invoice attached."
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr "Thank you for your purchase!"
+
+msgid "Pay_this_invoice_with_paypal"
+msgstr "Pay this invoice with paypal"
+
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "this invoice contains all products that have been delivered in {0}."
+
+msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
+msgstr "If the invoice amount should differ from your own recordings, please tell us."
+
+msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
+msgstr "The invoice amount will be transfered to your bank account within the next days."
+
+msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
+msgstr "please find two order lists attached for the next delivery (grouped by product and member)."
+
+msgid "Your_personal_manufacturer_panel"
+msgstr "Your personal manufacturer panel"
+
+msgid "Help_pages"
+msgstr "Online help"
+
+msgid "docs_route_order_handling"
+msgstr ""
+
+msgid "You_can_change_your_imprint_by_yourself."
+msgstr "You can change your imprint by yourself."
+
+msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
+msgstr "Your products are only visible for members. To view your products as the member sees them, you need to be logged in."
+
+msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
+msgstr "For signing in please use the email address of this message. If you want to order products from other manufacturers, please sign on with a different email address."
+
+msgid "Your_contact_person"
+msgstr "Your contact person"
+
+msgid "Cancellation_invoice"
+msgstr "Cancellation invoice"
+
+msgid "Paid_in_cash_on_{0}."
+msgstr "Paid in cash on {0}."
+
+msgid "conveyed_for"
+msgstr "conveyed for"
+
+msgid "Orders_from"
+msgstr "Orders from"
+
+msgid "Price_excl."
+msgstr "Price excl."
+
+msgid "Price_incl."
+msgstr "Price incl."
+
+msgid "variable_member_fee"
+msgstr "variable member fee"
+
+msgid "New_total_sum"
+msgstr "New total sum"
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as soon as possible."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
+
+msgid "Detail_view"
+msgstr "Detail view"
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+msgid "Product_ID"
+msgstr "ProductID"
