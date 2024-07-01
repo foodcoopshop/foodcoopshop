@@ -17,9 +17,7 @@ declare(strict_types=1);
 
 namespace App\Test\Fixture;
 
-use Cake\TestSuite\Fixture\TestFixture;
-
-class BarcodesFixture extends TestFixture
+class BarcodesFixture extends AppFixture
 {
     public string $table = 'fcs_barcodes';
 

@@ -18,9 +18,8 @@ declare(strict_types=1);
 namespace App\Test\Fixture;
 
 use App\Model\Entity\Cart;
-use Cake\TestSuite\Fixture\TestFixture;
 
-class CartsFixture extends TestFixture
+class CartsFixture extends AppFixture
 {
     public string $table = 'fcs_carts';
 

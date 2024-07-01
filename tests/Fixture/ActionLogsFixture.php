@@ -17,9 +17,7 @@ declare(strict_types=1);
 
 namespace App\Test\Fixture;
 
-use Cake\TestSuite\Fixture\TestFixture;
-
-class ActionLogsFixture extends TestFixture
+class ActionLogsFixture extends AppFixture
 {
     public string $table = 'fcs_action_logs';
 }

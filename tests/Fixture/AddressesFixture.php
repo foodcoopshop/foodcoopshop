@@ -17,9 +17,7 @@ declare(strict_types=1);
 
 namespace App\Test\Fixture;
 
-use Cake\TestSuite\Fixture\TestFixture;
-
-class AddressesFixture extends TestFixture
+class AddressesFixture extends AppFixture
 {
     public string $table = 'fcs_address';
 

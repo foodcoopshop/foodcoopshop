@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "faad3d7ebbf8caf84c667605d8fd14a0",
+    "content-hash": "8b5e7bf40c6a74adb270779d50878acf",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -4725,6 +4725,67 @@
                 "source": "https://github.com/ergebnis/phpstan-rules"
             },
             "time": "2024-02-07T17:49:28+00:00"
+        },
+        {
+            "name": "friendsofcake/fixturize",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfCake/fixturize.git",
+                "reference": "32594c8d5b617d39e6fa681b61db09e76f5c04a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfCake/fixturize/zipball/32594c8d5b617d39e6fa681b61db09e76f5c04a5",
+                "reference": "32594c8d5b617d39e6fa681b61db09e76f5c04a5",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^5.0.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^5.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "FriendsOfCake\\Fixturize\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Winther",
+                    "homepage": "http://cakephp.nu/",
+                    "role": "Author"
+                },
+                {
+                    "name": "José Lorenzo Rodríguez",
+                    "homepage": "https://github.com/lorenzo",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "CakePHP Fixture classes to help increase productivity or performance",
+            "homepage": "https://github.com/FriendsOfCake/fixturize",
+            "keywords": [
+                "Fixture",
+                "cakephp",
+                "fixtures",
+                "performance",
+                "phpunit",
+                "testing",
+                "unittest"
+            ],
+            "support": {
+                "irc": "irc://irc.freenode.org/cakephp",
+                "issues": "https://github.com/FriendsOfCake/fixturize/issues",
+                "source": "https://github.com/FriendsOfCake/fixturize"
+            },
+            "time": "2023-10-13T18:33:09+00:00"
         },
         {
             "name": "jasny/twig-extensions",
