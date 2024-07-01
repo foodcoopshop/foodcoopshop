@@ -77,8 +77,6 @@ abstract class AppCakeTestCase extends TestCase
     {
         parent::setUp();
 
-        require CONFIG . '/bootstrap_locale.php';
-
         $this->dbConnection = ConnectionManager::get('test');
         $this->seedTestDatabase();
         $this->resetLogs();

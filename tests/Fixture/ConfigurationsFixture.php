@@ -31,8 +31,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'number',
             'position' => 600,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2014-06-01 01:40:34',
         ],
         [
             'id_configuration' => 31,
@@ -43,8 +41,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'number',
             'position' => 700,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2014-05-14 21:15:45',
         ],
         [
             'id_configuration' => 456,
@@ -55,8 +51,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea_big',
             'position' => 920,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2014-06-11 17:50:55',
         ],
         [
             'id_configuration' => 508,
@@ -67,8 +61,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 910,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2015-07-08 13:23:54',
         ],
         [
             'id_configuration' => 538,
@@ -79,8 +71,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea_big',
             'position' => 1700,
             'locale' => 'de_DE',
-            'date_add' => '2016-06-26 00:00:00',
-            'date_upd' => '2016-06-26 00:00:00',
         ],
         [
             'id_configuration' => 543,
@@ -91,8 +81,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea_big',
             'position' => 1500,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:24:47',
-            'date_upd' => '2017-07-26 13:24:47',
         ],
         [
             'id_configuration' => 544,
@@ -103,8 +91,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'multiple_dropdown',
             'position' => 100,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 545,
@@ -115,8 +101,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 1100,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 546,
@@ -127,8 +111,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea_big',
             'position' => 1600,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 547,
@@ -139,8 +121,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 200,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 548,
@@ -151,8 +131,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 500,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 549,
@@ -163,8 +141,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'number',
             'position' => 1250,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 550,
@@ -175,8 +151,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 1300,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 552,
@@ -187,8 +161,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 1200,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-26 13:19:19',
-            'date_upd' => '2017-07-26 13:19:19',
         ],
         [
             'id_configuration' => 553,
@@ -199,8 +171,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 1900,
             'locale' => 'de_DE',
-            'date_add' => '2016-10-06 00:00:00',
-            'date_upd' => '2016-10-06 00:00:00',
         ],
         [
             'id_configuration' => 554,
@@ -211,8 +181,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 930,
             'locale' => 'de_DE',
-            'date_add' => '2016-11-27 00:00:00',
-            'date_upd' => '2016-11-27 00:00:00',
         ],
         [
             'id_configuration' => 556,
@@ -223,8 +191,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 50,
             'locale' => 'de_DE',
-            'date_add' => '2017-01-12 00:00:00',
-            'date_upd' => '2017-01-12 00:00:00',
         ],
         [
             'id_configuration' => 557,
@@ -235,8 +201,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea',
             'position' => 60,
             'locale' => 'de_DE',
-            'date_add' => '2017-01-12 00:00:00',
-            'date_upd' => '2017-01-12 00:00:00',
         ],
         [
             'id_configuration' => 558,
@@ -247,8 +211,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 900,
             'locale' => 'de_DE',
-            'date_add' => '2017-01-12 00:00:00',
-            'date_upd' => '2017-01-12 00:00:00',
         ],
         [
             'id_configuration' => 559,
@@ -259,8 +221,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea',
             'position' => 90,
             'locale' => 'de_DE',
-            'date_add' => '2017-01-12 00:00:00',
-            'date_upd' => '2017-01-12 00:00:00',
         ],
         [
             'id_configuration' => 564,
@@ -271,8 +231,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 130,
             'locale' => 'de_DE',
-            'date_add' => '2017-07-09 00:00:00',
-            'date_upd' => '2017-07-09 00:00:00',
         ],
         [
             'id_configuration' => 565,
@@ -283,8 +241,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 400,
             'locale' => 'de_DE',
-            'date_add' => '2017-08-02 00:00:00',
-            'date_upd' => '2017-08-02 00:00:00',
         ],
         [
             'id_configuration' => 566,
@@ -295,8 +251,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 500,
             'locale' => 'de_DE',
-            'date_add' => '2017-08-02 00:00:00',
-            'date_upd' => '2017-08-02 00:00:00',
         ],
         [
             'id_configuration' => 567,
@@ -307,8 +261,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 500,
             'locale' => 'de_DE',
-            'date_add' => '2017-09-14 00:00:00',
-            'date_upd' => '2017-09-14 00:00:00',
         ],
         [
             'id_configuration' => 574,
@@ -319,8 +271,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 210,
             'locale' => 'de_DE',
-            'date_add' => '2018-05-28 18:05:57',
-            'date_upd' => '2018-05-28 18:05:57',
         ],
         [
             'id_configuration' => 575,
@@ -331,8 +281,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 520,
             'locale' => 'de_DE',
-            'date_add' => '2018-06-13 19:53:14',
-            'date_upd' => '2018-06-13 19:53:14',
         ],
         [
             'id_configuration' => 576,
@@ -343,8 +291,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 550,
             'locale' => 'de_DE',
-            'date_add' => '2018-06-26 10:18:55',
-            'date_upd' => '2018-06-26 10:18:55',
         ],
         [
             'id_configuration' => 577,
@@ -355,8 +301,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 1280,
             'locale' => 'de_DE',
-            'date_add' => '2019-02-11 22:22:06',
-            'date_upd' => '2019-02-11 22:22:06',
         ],
         [
             'id_configuration' => 578,
@@ -367,8 +311,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 600,
             'locale' => 'de_DE',
-            'date_add' => '2019-02-18 12:38:10',
-            'date_upd' => '2019-02-18 12:38:10',
         ],
         [
             'id_configuration' => 579,
@@ -379,8 +321,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 650,
             'locale' => 'de_DE',
-            'date_add' => '2019-02-18 12:38:10',
-            'date_upd' => '2019-02-18 12:38:10',
         ],
         [
             'id_configuration' => 580,
@@ -391,8 +331,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 750,
             'locale' => 'de_DE',
-            'date_add' => '2019-02-18 12:38:00',
-            'date_upd' => '2019-02-18 12:38:00',
         ],
         [
             'id_configuration' => 581,
@@ -403,8 +341,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 760,
             'locale' => 'de_DE',
-            'date_add' => '2019-02-18 12:38:00',
-            'date_upd' => '2019-02-18 12:38:00',
         ],
         [
             'id_configuration' => 582,
@@ -415,8 +351,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 600,
             'locale' => 'de_DE',
-            'date_add' => '2019-02-18 12:38:00',
-            'date_upd' => '2019-02-18 12:38:00',
         ],
         [
             'id_configuration' => 583,
@@ -427,8 +361,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 550,
             'locale' => 'de_DE',
-            'date_add' => '2019-03-05 20:08:00',
-            'date_upd' => '2019-03-05 20:08:00',
         ],
         [
             'id_configuration' => 584,
@@ -439,8 +371,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 3000,
             'locale' => 'de_DE',
-            'date_add' => '2019-04-17 20:01:59',
-            'date_upd' => '2019-04-17 20:01:59',
         ],
         [
             'id_configuration' => 585,
@@ -451,8 +381,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea',
             'position' => 80,
             'locale' => 'de_DE',
-            'date_add' => '2019-08-03 20:07:17',
-            'date_upd' => '2019-08-03 20:07:17',
         ],
         [
             'id_configuration' => 586,
@@ -463,8 +391,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 3100,
             'locale' => 'de_DE',
-            'date_add' => '2019-12-09 13:46:41',
-            'date_upd' => '2019-12-09 13:46:41',
         ],
         [
             'id_configuration' => 587,
@@ -475,8 +401,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'dropdown',
             'position' => 1450,
             'locale' => 'de_DE',
-            'date_add' => '2020-02-11 10:13:10',
-            'date_upd' => '2020-02-11 10:13:10',
         ],
         [
             'id_configuration' => 589,
@@ -487,8 +411,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 3200,
             'locale' => 'de_DE',
-            'date_add' => '2020-06-19 09:03:00',
-            'date_upd' => '2020-06-19 09:03:00',
         ],
         [
             'id_configuration' => 590,
@@ -499,8 +421,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 590,
             'locale' => 'de_DE',
-            'date_add' => '2020-07-06 10:34:48',
-            'date_upd' => '2020-07-06 10:34:48',
         ],
         [
             'id_configuration' => 592,
@@ -511,8 +431,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 580,
             'locale' => 'de_DE',
-            'date_add' => '2020-10-29 10:06:50',
-            'date_upd' => '2020-10-29 10:06:50',
         ],
         [
             'id_configuration' => 593,
@@ -523,8 +441,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 581,
             'locale' => 'de_DE',
-            'date_add' => '2020-11-03 15:24:12',
-            'date_upd' => '2020-11-03 15:24:12',
         ],
         [
             'id_configuration' => 594,
@@ -535,8 +451,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 582,
             'locale' => 'de_DE',
-            'date_add' => '2020-11-03 15:24:12',
-            'date_upd' => '2020-11-03 15:24:12',
         ],
         [
             'id_configuration' => 595,
@@ -547,8 +461,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'multiple_dropdown',
             'position' => 3300,
             'locale' => 'de_DE',
-            'date_add' => '2020-12-20 19:26:26',
-            'date_upd' => '2020-12-20 19:26:26',
         ],
         [
             'id_configuration' => 596,
@@ -559,8 +471,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'number',
             'position' => 1450,
             'locale' => 'de_DE',
-            'date_add' => '2021-01-19 11:23:49',
-            'date_upd' => '2021-01-19 11:23:49',
         ],
         [
             'id_configuration' => 597,
@@ -571,8 +481,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 587,
             'locale' => 'de_DE',
-            'date_add' => '2021-05-12 15:24:17',
-            'date_upd' => '2021-05-12 15:24:17',
         ],
         [
             'id_configuration' => 598,
@@ -583,8 +491,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 588,
             'locale' => 'de_DE',
-            'date_add' => '2021-05-12 15:24:17',
-            'date_upd' => '2021-05-12 15:24:17',
         ],
         [
             'id_configuration' => 599,
@@ -595,8 +501,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 589,
             'locale' => 'de_DE',
-            'date_add' => '2021-05-12 15:24:17',
-            'date_upd' => '2021-05-12 15:24:17',
         ],
         [
             'id_configuration' => 600,
@@ -607,8 +511,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'text',
             'position' => 920,
             'locale' => 'de_DE',
-            'date_add' => '2021-05-12 15:24:17',
-            'date_upd' => '2021-05-12 15:24:17',
         ],
         [
             'id_configuration' => 601,
@@ -619,8 +521,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 3210,
             'locale' => 'de_DE',
-            'date_add' => '2022-02-01 17:48:46',
-            'date_upd' => '2022-02-01 17:48:46',
         ],
         [
             'id_configuration' => 602,
@@ -631,8 +531,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 586,
             'locale' => 'de_DE',
-            'date_add' => '2022-03-21 12:03:07',
-            'date_upd' => '2022-03-21 12:03:07',
         ],
         [
             'id_configuration' => 603,
@@ -643,8 +541,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'readonly',
             'position' => 585,
             'locale' => 'de_DE',
-            'date_add' => '2022-03-23 09:12:43',
-            'date_upd' => '2022-03-23 09:12:43',
         ],
         [
             'id_configuration' => 604,
@@ -655,8 +551,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 3400,
             'locale' => 'de_DE',
-            'date_add' => '2022-04-12 15:28:47',
-            'date_upd' => '2022-04-12 15:28:47',
         ],
         [
             'id_configuration' => 605,
@@ -667,8 +561,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'boolean',
             'position' => 3500,
             'locale' => 'de_DE',
-            'date_add' => '2022-07-19 14:39:45',
-            'date_upd' => '2022-07-19 14:39:45',
         ],
         [
             'id_configuration' => 606,
@@ -679,8 +571,6 @@ class ConfigurationsFixture extends AppFixture
             'type' => 'textarea_big',
             'position' => 1290,
             'locale' => 'de_DE',
-            'date_add' => '2023-06-12 18:29:02',
-            'date_upd' => '2023-06-12 18:29:02',
         ],
     ];
 
