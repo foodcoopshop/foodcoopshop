@@ -20,11 +20,6 @@ class InitTestDataSeed extends AbstractSeed
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Truncate tables before insertion
-TRUNCATE TABLE `fcs_category`;
-TRUNCATE TABLE `fcs_category_product`;
-TRUNCATE TABLE `fcs_cronjob_logs`;
-TRUNCATE TABLE `fcs_cronjobs`;
-TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_feedbacks`;
 TRUNCATE TABLE `fcs_images`;
@@ -52,56 +47,6 @@ TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
 TRUNCATE TABLE `queue_processes`;
 TRUNCATE TABLE `queued_jobs`;
-
-/*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
-INSERT INTO `fcs_category` VALUES
-(16,0,'Fleischprodukte','',11,12,1,'2014-05-14 21:40:51','2014-05-14 21:48:48'),
-(20,0,'Alle Produkte','',3,4,1,'2014-05-14 21:53:52','2014-05-17 13:14:22');
-/*!40000 ALTER TABLE `fcs_category` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_category_product` DISABLE KEYS */;
-INSERT INTO `fcs_category_product` VALUES
-(20,60),
-(16,102),
-(20,102),
-(16,103),
-(20,103),
-(20,163),
-(20,339),
-(16,340),
-(20,340),
-(20,344),
-(20,346),
-(16,347),
-(20,347),
-(16,348),
-(20,348),
-(20,349),
-(20,350),
-(20,351),
-(20,352);
-/*!40000 ALTER TABLE `fcs_category_product` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cronjob_logs` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cronjobs` DISABLE KEYS */;
-INSERT INTO `fcs_cronjobs` VALUES
-(1,'TestCronjob','day',NULL,NULL,'22:30:00',1),
-(2,'TestCronjob','week',NULL,'Monday','09:00:00',1),
-(3,'TestCronjob','month',11,NULL,'07:30:00',1);
-/*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
-INSERT INTO `fcs_customer` VALUES
-(87,3,0,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0,0,'SP',1,1,1,1,0),
-(88,4,0,'Demo','Admin','fcs-demo-admin@mailinator.com','$2y$10\\\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,1,'2018-08-03',NULL,1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0,0,'SP',1,1,1,1,0),
-(89,4,0,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0,0,'SP',1,1,1,1,0),
-(90,4,0,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0,0,'SP',1,1,1,1,0),
-(91,4,0,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,0,'2018-08-03',NULL,1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0,0,'SP',1,1,1,1,0),
-(92,5,0,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,1,'2018-08-03',NULL,1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0),
-(93,2,0,'Demo','SB-Kunde','fcs-demo-sb-kunde@mailinator.com','$2y$10\$uu/znwy2GwCx0NlLOIqaquY862AdcV6BgTGtNEUdKj4o1US.idVlm',NULL,NULL,0,'2018-08-03',NULL,0,'2016-09-29 16:26:12','2016-09-29 16:26:12',0,0,'SP',1,1,1,1,0);
-/*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
 INSERT INTO `fcs_deposits` VALUES

@@ -6,7 +6,7 @@
     },
     "identity": {
         "id_customer": 89,
-        "id_default_group": 4,
+        "id_default_group": 3,
         "is_company": 0,
         "firstname": "Demo",
         "lastname": "Gem\u00fcse-Hersteller",
