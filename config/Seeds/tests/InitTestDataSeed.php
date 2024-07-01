@@ -33,7 +33,6 @@ TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_pickup_days`;
-TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
 TRUNCATE TABLE `fcs_purchase_prices`;
@@ -108,24 +107,6 @@ INSERT INTO `fcs_payments` VALUES
 
 /*!40000 ALTER TABLE `fcs_pickup_days` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_pickup_days` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
-INSERT INTO `fcs_product` VALUES
-(60,15,3,1,0.909091,'Milch','','1 Liter','',0,0,1,'week',1,NULL,NULL,3,NULL,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
-(102,4,2,1,0.000000,'Frankfurter','','<p>2 Paar</p>','',0,0,1,'week',1,NULL,NULL,3,NULL,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
-(103,4,2,1,3.181819,'Bratwürstel','','2 Paar','',0,0,1,'week',1,NULL,NULL,3,NULL,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
-(163,5,0,1,1.363637,'Mangold','','0,25kg','',0,0,1,'week',1,NULL,NULL,3,NULL,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
-(339,5,0,1,0.000000,'Kartoffel','','','',0,0,1,'week',1,NULL,NULL,3,NULL,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
-(340,4,0,1,4.545455,'Beuschl','','','',0,0,1,'week',1,NULL,NULL,3,NULL,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
-(344,5,0,1,0.636364,'Knoblauch','','','100 g',0,0,1,'week',1,NULL,NULL,3,NULL,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
-(346,5,2,1,1.652893,'Artischocke','','','Stück',0,0,1,'week',1,NULL,NULL,3,NULL,'2015-08-19 09:35:46','2015-08-19 09:35:45'),
-(347,4,2,1,0.000000,'Forelle','','','Stück',0,0,1,'week',1,NULL,NULL,3,NULL,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
-(348,4,2,1,0.000000,'Rindfleisch','','','',0,0,1,'week',1,NULL,NULL,3,NULL,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
-(349,5,2,1,4.545455,'Lagerprodukt','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
-(350,5,2,1,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2018-08-16 12:19:06','2018-08-16 12:19:23'),
-(351,5,1,1,0.000000,'Lagerprodukt 2','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2019-06-05 15:09:53','2019-06-05 15:10:08'),
-(352,5,1,1,1.200000,'Lagerprodukt mit Gewichtsbarcode','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2019-06-05 15:09:53','2019-06-05 15:10:08');
-/*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute` VALUES

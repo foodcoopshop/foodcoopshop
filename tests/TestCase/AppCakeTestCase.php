@@ -61,6 +61,7 @@ abstract class AppCakeTestCase extends TestCase
         'app.CronjobLogs',
         'app.Cronjobs',
         'app.Customers',
+        'app.Products',
         'app.Taxes',
     ];
 
