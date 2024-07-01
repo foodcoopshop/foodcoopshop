@@ -33,12 +33,6 @@ TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_pickup_days`;
-TRUNCATE TABLE `fcs_product_attribute`;
-TRUNCATE TABLE `fcs_product_attribute_combination`;
-TRUNCATE TABLE `fcs_purchase_prices`;
-TRUNCATE TABLE `fcs_sliders`;
-TRUNCATE TABLE `fcs_stock_available`;
-TRUNCATE TABLE `fcs_storage_locations`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_units`;
@@ -107,74 +101,6 @@ INSERT INTO `fcs_payments` VALUES
 
 /*!40000 ALTER TABLE `fcs_pickup_days` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_pickup_days` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
-INSERT INTO `fcs_product_attribute` VALUES
-(10,60,0.545455,0),
-(11,348,0.000000,1),
-(12,348,0.000000,0),
-(13,350,1.818182,1),
-(14,350,3.636364,0),
-(15,350,0.000000,0);
-/*!40000 ALTER TABLE `fcs_product_attribute` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
-INSERT INTO `fcs_product_attribute_combination` VALUES
-(33,10),
-(36,11),
-(35,12),
-(36,13),
-(35,14),
-(36,15);
-/*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_purchase_prices` DISABLE KEYS */;
-INSERT INTO `fcs_purchase_prices` VALUES
-(1,346,0,1,1.200000),
-(2,0,13,0,1.400000),
-(3,347,0,3,NULL),
-(4,348,0,3,NULL),
-(5,60,0,2,NULL),
-(6,0,10,0,0.250000),
-(7,163,0,0,1.072727);
-/*!40000 ALTER TABLE `fcs_purchase_prices` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
-INSERT INTO `fcs_sliders` VALUES
-(6,'demo-slider.jpg',NULL,0,0,1);
-/*!40000 ALTER TABLE `fcs_sliders` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
-INSERT INTO `fcs_stock_available` VALUES
-(132,60,0,1015,0,NULL,1,NULL),
-(195,102,0,2996,0,NULL,1,NULL),
-(196,103,0,990,0,NULL,1,NULL),
-(318,163,0,988,0,NULL,1,NULL),
-(674,339,0,2959,0,NULL,1,NULL),
-(678,340,0,990,0,NULL,1,NULL),
-(680,344,0,78,0,NULL,0,NULL),
-(686,346,0,97,0,NULL,0,NULL),
-(692,60,9,996,0,NULL,1,NULL),
-(693,60,10,19,0,NULL,0,NULL),
-(704,347,0,999,0,NULL,1,NULL),
-(705,348,0,1998,0,NULL,1,NULL),
-(706,348,11,999,0,NULL,1,NULL),
-(707,348,12,999,0,NULL,1,NULL),
-(708,349,0,5,-5,0,0,NULL),
-(709,350,0,1004,0,NULL,1,NULL),
-(710,350,13,5,-5,0,0,NULL),
-(711,350,14,999,0,NULL,1,NULL),
-(712,350,15,999,0,NULL,1,NULL),
-(713,351,0,999,0,NULL,1,NULL),
-(714,352,0,999,0,NULL,1,NULL);
-/*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_storage_locations` DISABLE KEYS */;
-INSERT INTO `fcs_storage_locations` VALUES
-(1,'Keine Kühlung',10),
-(2,'Kühlschrank',20),
-(3,'Tiefkühler',30);
-/*!40000 ALTER TABLE `fcs_storage_locations` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
 INSERT INTO `fcs_sync_domains` VALUES
