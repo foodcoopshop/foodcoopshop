@@ -20,9 +20,6 @@ class InitTestDataSeed extends AbstractSeed
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Truncate tables before insertion
-TRUNCATE TABLE `fcs_deposits`;
-TRUNCATE TABLE `fcs_feedbacks`;
-TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoice_taxes`;
 TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
@@ -40,23 +37,6 @@ TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
 TRUNCATE TABLE `queue_processes`;
 TRUNCATE TABLE `queued_jobs`;
-
-/*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
-INSERT INTO `fcs_deposits` VALUES
-(1,346,0,0.5),
-(2,0,9,0.5),
-(3,0,10,0.5);
-/*!40000 ALTER TABLE `fcs_deposits` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_feedbacks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_feedbacks` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_images` DISABLE KEYS */;
-INSERT INTO `fcs_images` VALUES
-(154,60),
-(156,340),
-(157,338);
-/*!40000 ALTER TABLE `fcs_images` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_invoice_taxes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_invoice_taxes` ENABLE KEYS */;
