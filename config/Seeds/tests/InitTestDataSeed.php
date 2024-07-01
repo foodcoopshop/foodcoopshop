@@ -20,10 +20,6 @@ class InitTestDataSeed extends AbstractSeed
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Truncate tables before insertion
-TRUNCATE TABLE `fcs_address`;
-TRUNCATE TABLE `fcs_barcodes`;
-TRUNCATE TABLE `fcs_cart_products`;
-TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
 TRUNCATE TABLE `fcs_category_product`;
 TRUNCATE TABLE `fcs_configuration`;
@@ -57,38 +53,6 @@ TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
 TRUNCATE TABLE `queue_processes`;
 TRUNCATE TABLE `queued_jobs`;
-
-/*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
-INSERT INTO `fcs_address` VALUES
-(153,87,0,'Mitglied','Demo','Demostrasse 4','','4644','Scharnstein','','','0664/000000000','fcs-demo-mitglied@mailinator.com','2014-12-02 12:19:31','2014-12-02 12:19:31'),
-(154,88,0,'Admin','Demo','Demostrasse 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','2014-12-02 12:28:44','2014-12-02 12:28:44'),
-(173,0,4,'Fleisch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','2014-05-27 22:20:18','2015-04-07 16:18:28'),
-(177,0,15,'Milch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','2014-06-04 21:46:38','2015-10-16 10:06:52'),
-(180,0,5,'Gemüse-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
-(181,0,16,'Hersteller ohne Customer-Eintrag','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
-(182,92,0,'Superadmin','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(183,93,0,'SB-Kunde','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-sb-kunde@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19');
-/*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_barcodes` DISABLE KEYS */;
-INSERT INTO `fcs_barcodes` VALUES
-(1,349,0,'1234567890123'),
-(2,0,13,'2145678901234'),
-(3,352,0,'2712345000000'),
-(4,0,15,'2112345000000');
-/*!40000 ALTER TABLE `fcs_barcodes` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
-INSERT INTO `fcs_cart_products` VALUES
-(1,1,346,0,1,'2018-03-01 10:17:14','2018-03-01 10:17:14'),
-(2,1,340,0,1,'2018-03-01 10:17:14','2018-03-01 10:17:14'),
-(3,1,60,10,1,'2018-03-01 10:17:14','2018-03-01 10:17:14');
-/*!40000 ALTER TABLE `fcs_cart_products` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_carts` DISABLE KEYS */;
-INSERT INTO `fcs_carts` VALUES
-(1,92,1,0,'2018-03-01 10:17:14','2018-03-01 10:17:14');
-/*!40000 ALTER TABLE `fcs_carts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
 INSERT INTO `fcs_category` VALUES

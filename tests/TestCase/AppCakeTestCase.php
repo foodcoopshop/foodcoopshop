@@ -48,8 +48,12 @@ abstract class AppCakeTestCase extends TestCase
 
     protected array $fixtures = [
         'app.ActionLogs',
+        'app.Addresses',
         'app.Attributes',
+        'app.Barcodes',
         'app.BlogPosts',
+        'app.Carts',
+        'app.CartProducts',
         'app.CartProductUnits',
         'app.Taxes',
     ];
