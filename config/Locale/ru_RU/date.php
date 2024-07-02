@@ -16,15 +16,15 @@ declare(strict_types=1);
  */
 return [
     'DateFormat' => [
-        'DateShort' => 'MM/dd/yy',
-        'DateLong2' => 'MM/dd/yyyy',
-        'DateNTimeShort' => 'MM/dd/y HH:mm',
-        'DateNTimeShort2' => 'MM/dd/yy HH:mm',
-        'DateNTimeLongWithSecs' => 'MM/dd/y HH:mm:ss',
-        'TimeShort' => 'HH:mm',
-        'DateForDatepicker' => 'mm/dd/yy',
-        'Year' => 'Y',
-        'DateShortAlt' => 'm/d/Y'
+        'DateShort' => 'ММ/дд/гг',
+        'DateLong2' => 'ММ/дд/гггг',
+        'DateNTimeShort' => 'ММ/дд/г ЧЧ:мм',
+        'DateNTimeShort2' => 'ММ/дд/гг ЧЧ:мм',
+        'DateNTimeLongWithSecs' => 'ММ/дд/г ЧЧ:мм:сс',
+        'TimeShort' => 'ЧЧ:мм',
+        'DateForDatepicker' => 'мм/дд/гг',
+        'Year' => 'Г',
+        'DateShortAlt' => 'м/д/Г'
     ]
 ];
 ?>
