@@ -1845,7 +1845,7 @@ msgid "The_price_per_unit_needs_to_be_greater_than_0."
 msgstr "Цена за единицу должна быть дольше чем 0."
 
 msgid "The_name_is_not_valid."
-msgstr "The name is not valid."
+msgstr "Неверное название."
 
 msgid "The_amount_(quantity)_needs_to_be_a_number."
 msgstr "Количество должно быть в цифрах."
