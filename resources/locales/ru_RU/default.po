@@ -17,82 +17,82 @@ msgid "order_state_billed_cash"
 msgstr "выставление счёта завершено и оплачивается наличными"
 
 msgid "route_sign_in"
-msgstr "sign-in"
+msgstr "vhod"
 
 msgid "route_sign_out"
-msgstr "sign-out"
+msgstr "vyhod"
 
 msgid "route_registration"
-msgstr "register"
+msgstr "registraciya"
 
 msgid "route_registration_successful"
-msgstr "registration-successful"
+msgstr "uspeshnaya-registraciya"
 
 msgid "route_information_about_right_of_withdrawal"
-msgstr "information-about-right-of-withdrawal"
+msgstr "informaciya-o-prave-vozvrata"
 
 msgid "route_terms_of_use"
-msgstr "terms-of-use"
+msgstr "usloviya-ispolzovaniya"
 
 msgid "route_privacy_policy"
-msgstr "privacy-policy"
+msgstr "politika-bezopasnosti"
 
 msgid "route_list_of_allergens"
-msgstr "list-of-allergens"
+msgstr "spisok-allergenov"
 
 msgid "route_accept_terms_of_use"
-msgstr "accept-terms-of-use"
+msgstr "prinyat-usloviya-ispolzovaniya"
 
 msgid "route_new_products"
-msgstr "new-products"
+msgstr "novye-tovary"
 
 msgid "route_request_new_password"
-msgstr "request-new-password"
+msgstr "zapros-novogo-parolya"
 
 msgid "route_activate_new_password"
-msgstr "activate-new-password"
+msgstr "aktivaciya-novogo-parolya"
 
 msgid "route_news_list_old"
-msgstr "news"
+msgstr "novosti"
 
 msgid "route_news_list"
-msgstr "blog-archive"
+msgstr "blog-arhiv"
 
 msgid "route_news_detail"
-msgstr "news"
+msgstr "novosti"
 
 msgid "route_search"
-msgstr "search"
+msgstr "poisk"
 
 msgid "route_category"
-msgstr "category"
+msgstr "kategoriya"
 
 msgid "route_product"
-msgstr "product"
+msgstr "tovar"
 
 msgid "route_manufacturer_list"
-msgstr "manufacturers"
+msgstr "proizvoditel"
 
 msgid "route_manufacturer_detail"
-msgstr "manufacturer"
+msgstr "proizvoditel"
 
 msgid "route_content"
-msgstr "content"
+msgstr "soderzhanie"
 
 msgid "route_cart"
-msgstr "cart"
+msgstr "korzina"
 
 msgid "route_cart_show"
-msgstr "show"
+msgstr "pokazat"
 
 msgid "route_cart_finish"
-msgstr "finish"
+msgstr "zakonchit"
 
 msgid "route_cart_finished"
-msgstr "finished"
+msgstr "zakoncheno"
 
 msgid "route_self_service"
-msgstr "self-service"
+msgstr "samoobsluzhivanie"
 
 msgid "Runtime"
 msgstr "Продожительность"
@@ -2090,7 +2090,7 @@ msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Информация-о-праве-на-возврат"
 
 msgid "Customer_adds_payment_manually"
-msgstr "Покупатели add their payments manually"
+msgstr "Покупатели добавят способ оплаты вручную"
 
 msgid "Payment_is_added_by_uploading_a_list"
 msgstr "Платежи добавлены суперадмином посредством загрузки списка CSV"
