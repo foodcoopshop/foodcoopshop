@@ -19,5 +19,51 @@ namespace App\Test\Fixture;
 
 use FriendsOfCake\Fixturize\TestSuite\Fixture\ChecksumTestFixture;
 
-abstract class AppFixture extends ChecksumTestFixture {}
+
+abstract class AppFixture extends ChecksumTestFixture {
+
+    const IMPLEMENTED_FIXTURES = [
+        'app.ActionLogs',
+        'app.Addresses',
+        'app.Attributes',
+        'app.Barcodes',
+        'app.BlogPosts',
+        'app.Carts',
+        'app.CartProducts',
+        'app.CartProductUnits',
+        'app.Categories',
+        'app.CategoryProducts',
+        'app.Configurations',
+        'app.CronjobLogs',
+        'app.Cronjobs',
+        'app.Customers',
+        'app.Deposits',
+        'app.Images',
+        'app.Invoices',
+        'app.InvoiceTaxes',
+        'app.Feedbacks',
+        'app.Manufacturers',
+        'app.OrderDetails',
+        'app.OrderDetailFeedbacks',
+        'app.OrderDetailPurchasePrices',
+        'app.OrderDetailUnits',
+        'app.Pages',
+        'app.Payments',
+        'app.PickupDays',
+        'app.Products',
+        'app.ProductAttributes',
+        'app.ProductAttributeCombination',
+        'app.PurchasePrices',
+        'app.QueuedJobs',
+        'app.QueueProcesses',
+        'app.Sliders',
+        'app.StockAvailables',
+        'app.StorageLocations',
+        'app.SyncDomains',
+        'app.SyncProducts',
+        'app.Taxes',
+        'app.Units',
+    ];
+
+}
 ?>

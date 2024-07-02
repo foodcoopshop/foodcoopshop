@@ -21,6 +21,7 @@ use Cake\TestSuite\TestEmailTransport;
 use Network\View\Helper\NetworkHelper;
 use Cake\Routing\Router;
 use Cake\Http\ServerRequest;
+use App\Test\Fixture\AppFixture;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -45,49 +46,6 @@ abstract class AppCakeTestCase extends TestCase
     use LoginTrait;
     use QueueTrait;
 
-    protected array $fixtures = [
-        'app.ActionLogs',
-        'app.Addresses',
-        'app.Attributes',
-        'app.Barcodes',
-        'app.BlogPosts',
-        'app.Carts',
-        'app.CartProducts',
-        'app.CartProductUnits',
-        'app.Categories',
-        'app.CategoryProducts',
-        'app.Configurations',
-        'app.CronjobLogs',
-        'app.Cronjobs',
-        'app.Customers',
-        'app.Deposits',
-        'app.Images',
-        'app.Invoices',
-        'app.InvoiceTaxes',
-        'app.Feedbacks',
-        'app.Manufacturers',
-        'app.OrderDetails',
-        'app.OrderDetailFeedbacks',
-        'app.OrderDetailPurchasePrices',
-        'app.OrderDetailUnits',
-        'app.Pages',
-        'app.Payments',
-        'app.PickupDays',
-        'app.Products',
-        'app.ProductAttributes',
-        'app.ProductAttributeCombination',
-        'app.PurchasePrices',
-        'app.QueuedJobs',
-        'app.QueueProcesses',
-        'app.Sliders',
-        'app.StockAvailables',
-        'app.StorageLocations',
-        'app.SyncDomains',
-        'app.SyncProducts',
-        'app.Taxes',
-        'app.Units',
-    ];
-
     protected $dbConnection;
     protected $testDumpDir;
     protected $appDumpDir;
@@ -104,6 +62,8 @@ abstract class AppCakeTestCase extends TestCase
 
     public function setUp(): void
     {
+
+        $this->fixtures = AppFixture::IMPLEMENTED_FIXTURES;
         parent::setUp();
 
         $this->dbConnection = ConnectionManager::get('test');
