@@ -30,6 +30,7 @@ class SendDeliveryNotesCommandTest extends AppCakeTestCase
 
     public function tearDown(): void
     {
+        parent::tearDown();
         unlink(TMP . 'Lieferschein-01.02.2018-28.02.2018-Demo-Milch-Hersteller-FoodCoop-Test.xlsx');
     }
 

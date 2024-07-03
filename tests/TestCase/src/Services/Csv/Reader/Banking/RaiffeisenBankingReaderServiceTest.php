@@ -21,11 +21,6 @@ use App\Services\Csv\Reader\Banking\RaiffeisenBankingReaderService;
 class RaiffeisenBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function tearDown(): void
-    {
-        $this->assertLogFilesForErrors();
-    }
-
     public function testRead()
     {
         $reader = RaiffeisenBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'raiffeisen.csv');

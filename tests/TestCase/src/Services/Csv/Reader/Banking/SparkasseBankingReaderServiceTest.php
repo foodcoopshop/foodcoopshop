@@ -21,11 +21,6 @@ use App\Services\Csv\Reader\Banking\SparkasseBankingReaderService;
 class SparkasseBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function tearDown(): void
-    {
-        $this->assertLogFilesForErrors();
-    }
-
     public function testRead()
     {
         $reader = SparkasseBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'sparkasse.csv');
