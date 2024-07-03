@@ -20,6 +20,7 @@ use App\Services\OutputFilter\OutputFilterService;
 use Cake\Core\Configure;
 use TCPDF;
 use App\Controller\Component\StringComponent;
+use Cake\I18n\I18n;
 
 abstract class AppTcpdfService extends TCPDF
 {
@@ -79,6 +80,11 @@ abstract class AppTcpdfService extends TCPDF
 
         $this->SetCreator(Configure::read('appDb.FCS_APP_NAME'));
         $this->SetAuthor(Configure::read('appDb.FCS_APP_NAME'));
+
+        if (I18n::getLocale() == 'ru_RU') {
+            $this->SetFont('freesans');
+        }
+
     }
 
     protected function drawLine()
