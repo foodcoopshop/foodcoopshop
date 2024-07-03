@@ -1879,7 +1879,7 @@ msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
 msgstr "{0} был активирован перерыв в доставке и {1} не может быть заказан."
 
 msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "Не возможно заказать товар {0} больше."
+msgstr "Больше невозможно заказать товар {0}."
 
 msgid "{0}_can_be_ordered_next_week."
 msgstr "{0} может быть заказан на следующей неделе."
@@ -2291,7 +2291,7 @@ msgid "routes_product"
 msgstr "товар"
 
 msgid "Modified_on"
-msgstr "Изменено на"
+msgstr "Изменено в"
 
 msgid "Edit"
 msgstr "Редактировать"
@@ -2348,7 +2348,7 @@ msgid "Password"
 msgstr "Пароль"
 
 msgid "Stay_signed_in"
-msgstr "Оставайтесь в системе"
+msgstr "запомнить"
 
 msgid "Forgot_password?"
 msgstr "Забыли пароль?"
@@ -2591,7 +2591,7 @@ msgid "Upload_new_file"
 msgstr "Загрузить новый файл"
 
 msgid "Search_PC"
-msgstr "Поиск компьютера"
+msgstr "Поиск на компьютере"
 
 msgid "Other_initiatives"
 msgstr "Все производители"
