@@ -35,12 +35,7 @@ $migrations = new Migrations();
 $migrations->markMigrated('20240313184917_ManufacturerLoginFix', ['connection' => 'test']);
 $migrations->migrate(['connection' => 'test']);
 
-// 3) add test data (generated to fit after run migrations in init folder)
-$migrations->seed([
-    'connection' => 'test',
-    'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
-]);
-
+Configure::write('appDb.FCS_DEFAULT_LOCALE', 'de_DE'); // manually set locale as fixtures are not loaded yet
 require dirname(__DIR__) . '/config/bootstrap_locale.php';
 
 Security::setSalt(Configure::read('Security.salt_for_unit_tests'));

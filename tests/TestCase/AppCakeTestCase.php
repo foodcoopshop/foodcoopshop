@@ -18,10 +18,10 @@ use Cake\Datasource\ConnectionManager;
 use Cake\View\View;
 use Cake\TestSuite\TestCase;
 use Cake\TestSuite\TestEmailTransport;
-use Migrations\Migrations;
 use Network\View\Helper\NetworkHelper;
 use Cake\Routing\Router;
 use Cake\Http\ServerRequest;
+use App\Test\Fixture\AppFixture;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -62,10 +62,11 @@ abstract class AppCakeTestCase extends TestCase
 
     public function setUp(): void
     {
+
+        $this->fixtures = AppFixture::IMPLEMENTED_FIXTURES;
         parent::setUp();
 
         $this->dbConnection = ConnectionManager::get('test');
-        $this->seedTestDatabase();
         $this->resetLogs();
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->Configuration->loadConfigurations();
@@ -120,15 +121,6 @@ abstract class AppCakeTestCase extends TestCase
         $log .= file_get_contents($this->getLogFile('cli-debug'));
         $log .= file_get_contents($this->getLogFile('cli-error'));
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
-    }
-
-    protected function seedTestDatabase()
-    {
-        $migrations = new Migrations();
-        $migrations->seed([
-            'connection' => 'test',
-            'source' => 'Seeds' . DS . 'tests', // needs to be a subfolder of config
-        ]);
     }
 
     protected function getJsonDecodedContent()

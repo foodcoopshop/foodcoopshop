@@ -17,6 +17,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Verbessertes, breiteres Layout für SB-Modus. [I#1037](https://github.com/foodcoopshop/foodcoopshop/issues/1037) / [PR#1039](https://github.com/foodcoopshop/foodcoopshop/pull/1039) <a href="https://github.com/pabneukistl"><img src="https://github.com/pabneukistl.png" width="20"></a>
 - Vereinfachter Login für den SB-Modus: Man kann sich jetzt mit einem Klick als vorkonfigurierter SB-Kunde einloggen (`app.selfServiceLoginCustomers`). [I#1031](https://github.com/foodcoopshop/foodcoopshop/issues/1031) / [PR#1035](https://github.com/foodcoopshop/foodcoopshop/pull/1035) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### For developers
+- Für die Tests werden jetzt ChecksumTestFixtures verwendet, was zu einer massiven Performance-Steigerung führt (ca. 3:40 min => ca. 2:20 min auf Github Actions). [I#1040](https://github.com/foodcoopshop/foodcoopshop/issues/1040) / [PR#1049](https://github.com/foodcoopshop/foodcoopshop/pull/1049) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v4.0
 

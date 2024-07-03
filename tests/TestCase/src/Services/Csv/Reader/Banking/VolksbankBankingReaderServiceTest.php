@@ -21,11 +21,6 @@ use App\Services\Csv\Reader\Banking\VolksbankBankingReaderService;
 class VolksbankBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function tearDown(): void
-    {
-        $this->assertLogFilesForErrors();
-    }
-
     public function testRead()
     {
         $reader = VolksbankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'volksbank.csv');
