@@ -32,7 +32,8 @@ class UnitsFixture extends AppFixture
             'name' => 'g',
             'amount' => 100,
             'price_per_unit_enabled' => 1,
-            'quantity_in_units' => 350.000
+            'quantity_in_units' => 350.000,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 2,
@@ -43,7 +44,8 @@ class UnitsFixture extends AppFixture
             'name' => 'kg',
             'amount' => 1,
             'price_per_unit_enabled' => 1,
-            'quantity_in_units' => 0.500
+            'quantity_in_units' => 0.500,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 3,
@@ -54,7 +56,8 @@ class UnitsFixture extends AppFixture
             'name' => 'g',
             'amount' => 500,
             'price_per_unit_enabled' => 1,
-            'quantity_in_units' => 300.000
+            'quantity_in_units' => 300.000,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 4,
@@ -65,7 +68,8 @@ class UnitsFixture extends AppFixture
             'name' => 'kg',
             'amount' => 1,
             'price_per_unit_enabled' => 0,
-            'quantity_in_units' => 0.000
+            'quantity_in_units' => 0.000,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 5,
@@ -76,7 +80,8 @@ class UnitsFixture extends AppFixture
             'name' => 'kg',
             'amount' => 1,
             'price_per_unit_enabled' => 0,
-            'quantity_in_units' => 0.000
+            'quantity_in_units' => 0.000,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 6,
@@ -87,7 +92,8 @@ class UnitsFixture extends AppFixture
             'name' => 'kg',
             'amount' => 1,
             'price_per_unit_enabled' => 0,
-            'quantity_in_units' => 0.000
+            'quantity_in_units' => 0.000,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 7,
@@ -98,7 +104,8 @@ class UnitsFixture extends AppFixture
             'name' => 'kg',
             'amount' => 1,
             'price_per_unit_enabled' => 1,
-            'quantity_in_units' => 0.500
+            'quantity_in_units' => 0.500,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 8,
@@ -109,7 +116,8 @@ class UnitsFixture extends AppFixture
             'name' => 'kg',
             'amount' => 1,
             'price_per_unit_enabled' => 1,
-            'quantity_in_units' => 1.000
+            'quantity_in_units' => 1.000,
+            'use_weight_as_amount' => 0,
         ],
         [
             'id' => 9,
@@ -120,7 +128,8 @@ class UnitsFixture extends AppFixture
             'name' => 'kg',
             'amount' => 1,
             'price_per_unit_enabled' => 1,
-            'quantity_in_units' => 1.000
+            'quantity_in_units' => 1.000,
+            'use_weight_as_amount' => 0,
         ]
    ];
 }
