@@ -173,7 +173,7 @@ msgid "Credit_and_deposit_balance"
 msgstr "Кредитный и депозитный баланс"
 
 msgid "Member_fee"
-msgstr "Взнос участника"
+msgstr "Взнос покупателя"
 
 msgid "Deposit_overview"
 msgstr "Просмотр депозита"
@@ -847,7 +847,7 @@ msgid "Associated_to_inactive_products?"
 msgstr "Связан с неактивными товарами?"
 
 msgid "Modified_on"
-msgstr "Изменено на"
+msgstr "Изменено в"
 
 msgid "Edit"
 msgstr "Редактировать"
@@ -1070,10 +1070,10 @@ msgid "Click_on_profile_image_to_change_it."
 msgstr "Нажмите на изображение профиля чтобы изменить его."
 
 msgid "Only_visible_for_other_membes_in_the_member_list."
-msgstr "Видимость только для других участников в листе участников."
+msgstr "Видимость только для других покупетелей из списка."
 
 msgid "Is_shown_on_member_card."
-msgstr "Будет отображаться на карте участника."
+msgstr "Будет отображаться на карте покупателя."
 
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Загрузить новое изображение профиля или изменить его"
@@ -1158,7 +1158,7 @@ msgid "Prices"
 msgstr "Цены"
 
 msgid "Delete_member_irrevocably?"
-msgstr "Удалить участника безвозвратно?"
+msgstr "Удалить покупателя безвозвратно?"
 
 msgid "Show_all_years"
 msgstr "Показать все года"
@@ -1188,7 +1188,7 @@ msgid "Change_group"
 msgstr "Изменить группу"
 
 msgid "This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}."
-msgstr "Этот адрес эл.почты ещё не активирован. Вы можете <a href=\"{0}\">активировать здесь</a> и тем самым вы подтвердить регистрацию на имя участника."
+msgstr "Этот адрес эл.почты ещё не активирован. Вы можете <a href=\"{0}\">активировать здесь</a> и тем самым вы подтвердить регистрацию на имя покупателя."
 
 msgid "deactivate"
 msgstr "деактивировать"
@@ -1527,7 +1527,7 @@ msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "Как я могу использовать перерыв доставки?"
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
-msgstr "Профиль производителей и товары могут видны только зарегистрированным участникам."
+msgstr "Профиль производителей и товары могут видны только зарегистрированным покупателям."
 
 msgid "Order_lists_by_email"
 msgstr "Список заказов по эл.почте"
@@ -2124,7 +2124,7 @@ msgid "Add_new_payment"
 msgstr "Добавить новый платёж"
 
 msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
-msgstr "Пожалуйста переведите сумму которую вы только что перевели на наш счёт."
+msgstr "Пожалуйста введите сумму которую вы только что перевели на наш счёт."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr "Если это \"возврат\", пожалуйста введите сумму , которую вы перевели, обратно покупателю."
@@ -2145,7 +2145,7 @@ msgid "Please_add_this_code_to_your_transaction:_{0}"
 msgstr "Пожалуйста добавьте этот код к вашему переводу: {0}"
 
 msgid "Order_list_grouped_by"
-msgstr "Лист заказа сгруппирован по"
+msgstr "Список заказа сгруппирован по"
 
 msgid "Order_day"
 msgstr "День заказа"
@@ -2184,7 +2184,7 @@ msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Уведомления никогда не будут отправляться для этого товара."
 
 msgid "Member_choses_pickup_day."
-msgstr "Участник выбирает день выдачи."
+msgstr "Покупатель выбирает день выдачи."
 
 msgid "change_delivery_rhythm"
 msgstr "изменить график доставки"
