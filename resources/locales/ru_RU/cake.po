@@ -1,0 +1,207 @@
+msgid "You are not authorized to access that location."
+msgstr ""
+
+msgid "Missing CSRF token cookie"
+msgstr ""
+
+msgid "Отсутствует токен CSRF."
+msgstr ""
+
+msgid "Not Found"
+msgstr "Не найден."
+
+msgid "An Internal Error Has Occurred."
+msgstr "Произошла внутренняя ошибка."
+
+msgid "The requested file contains `..` and will not be read."
+msgstr ""
+
+msgid "The requested file was not found"
+msgstr ""
+
+msgid "{0,number,#,###.##} KB"
+msgstr ""
+
+msgid "{0,number,#,###.##} MB"
+msgstr ""
+
+msgid "{0,number,#,###.##} GB"
+msgstr ""
+
+msgid "{0,number,#,###.##} TB"
+msgstr ""
+
+msgid "{0,number,integer} Byte"
+msgid_plural "{0,number,integer} Bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "{0} from now"
+msgstr ""
+
+msgid "{0} ago"
+msgstr ""
+
+msgid "{0} after"
+msgstr ""
+
+msgid "{0} before"
+msgstr ""
+
+msgid "just now"
+msgstr ""
+
+msgid "about a second ago"
+msgstr ""
+
+msgid "about a minute ago"
+msgstr ""
+
+msgid "about an hour ago"
+msgstr ""
+
+msgid "about a day ago"
+msgstr ""
+
+msgid "about a week ago"
+msgstr ""
+
+msgid "about a month ago"
+msgstr ""
+
+msgid "about a year ago"
+msgstr ""
+
+msgid "in about a second"
+msgstr ""
+
+msgid "in about a minute"
+msgstr ""
+
+msgid "in about an hour"
+msgstr ""
+
+msgid "in about a day"
+msgstr ""
+
+msgid "in about a week"
+msgstr ""
+
+msgid "in about a month"
+msgstr ""
+
+msgid "in about a year"
+msgstr ""
+
+msgid "today"
+msgstr ""
+
+msgid "%s ago"
+msgstr ""
+
+msgid "on %s"
+msgstr ""
+
+msgid "{0} year"
+msgid_plural "{0} years"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "{0} month"
+msgid_plural "{0} months"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "{0} week"
+msgid_plural "{0} weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "This value is already in use"
+msgstr ""
+
+msgid "This value does not exist"
+msgstr ""
+
+msgid "The count does not match {0}{1}"
+msgstr ""
+
+msgid "and"
+msgstr "und"
+
+msgid "This field is required"
+msgstr ""
+
+msgid "This field cannot be left empty"
+msgstr ""
+
+msgid "The provided value is invalid"
+msgstr ""
+
+msgid "Edit {0}"
+msgstr ""
+
+msgid "New {0}"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
