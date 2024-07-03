@@ -793,10 +793,10 @@ msgid "Change_group_for"
 msgstr "Изменить группу для"
 
 msgid "The_user_needs_to_sign_again."
-msgstr "Пользователи должны войти снова."
+msgstr "Пользователь должен войти снова."
 
 msgid "Member"
-msgstr "Участник"
+msgstr "Покупатель"
 
 msgid "Why_is_pickup_day_changed_(optional_field)?"
 msgstr "Почему день выдачи изменён (необязательно)?"
@@ -1340,7 +1340,7 @@ msgid "Action_Log_Ordered_product_feedback_added"
 msgstr "Заказанный товар: Отзыв составлен"
 
 msgid "Action_Log_Member_credit_upload_added"
-msgstr "Участник: Баланс загружен"
+msgstr "Покупатель: Баланс загружен"
 
 msgid "Action_Log_Credit_upload_csv_imported"
 msgstr "Баланс загружен: CSV файл импортирован"
@@ -1361,7 +1361,7 @@ msgid "Action_Log_Member_payback_deleted"
 msgstr "Покупатель: Возврат удалён"
 
 msgid "Action_Log_Member_credit_deleted"
-msgstr "Участник: Загрузка баланса удалена"
+msgstr "Покупатель: Загрузка баланса удалена"
 
 msgid "Action_Log_Member_deposit_added"
 msgstr "Покупатель: Депозит добавлен"
@@ -1704,10 +1704,10 @@ msgid "Please_accept_the_terms_of_use."
 msgstr "Пожалуйста примите условия использования."
 
 msgid "Members:_active"
-msgstr "Участник: активен"
+msgstr "Покупатель: активен"
 
 msgid "Members:_never_ordered"
-msgstr "Участник: никогда не размещал заказ"
+msgstr "Покупатель: никогда не размещал заказ"
 
 msgid "Manufacturers:_active"
 msgstr "Производитель: активен"
@@ -1716,7 +1716,7 @@ msgid "Manufacturers:_inactive"
 msgstr "Производитель: неактивен"
 
 msgid "Members:_inactive"
-msgstr "Участник: неактивен"
+msgstr "Покупатель: неактивен"
 
 msgid "Please_enter_between_{0}_and_{1}_characters."
 msgstr "Пожалуйста введите от {0} до {1} символов."
@@ -2096,7 +2096,7 @@ msgid "Payment_is_added_by_uploading_a_list"
 msgstr "Платежи добавлены суперадмином посредством загрузки списка CSV"
 
 msgid "Members"
-msgstr "Участники"
+msgstr "Покупатели"
 
 msgid "News"
 msgstr "Новости"
@@ -2204,10 +2204,10 @@ msgid "Chamber"
 msgstr "Дополнительная информация"
 
 msgid "Header_(top)"
-msgstr "Заголовок (сверху)"
+msgstr "Заголовок (верхний)"
 
 msgid "Footer_(bottom)"
-msgstr "Нижний колонтитул (нижний)"
+msgstr "Колонтитул (внизу)"
 
 msgid "Self_service_customer"
 msgstr "Самообслуживание покупателя"
@@ -2285,10 +2285,10 @@ msgid "price_will_be_adapted."
 msgstr "цена будет скорректирована."
 
 msgid "route_all_products"
-msgstr "Все-товары"
+msgstr "vse-tovari"
 
 msgid "routes_product"
-msgstr "товар"
+msgstr "tovar"
 
 msgid "Modified_on"
 msgstr "Изменено на"
@@ -2507,10 +2507,10 @@ msgid "Write_message_to_{0}_for_{1}?"
 msgstr "Хотите написать сообщение на адрес {0} для {1}?"
 
 msgid "Write_message_to_your_order."
-msgstr "Добивать сообщение к заказу?"
+msgstr "Добавить сообщение к заказу?"
 
 msgid "Placeholder_message_pickup_day_comment."
-msgstr "Ваше сообщение будет отображаться рядом с вашим заказом в панели администратора. Производители не могут видеть это сообщение."
+msgstr "Ваше сообщение будет отображаться рядом с вашим заказом в административной панели. Производители не могут видеть это сообщение."
 
 msgid "Pickup_place:_{0}"
 msgstr "Место выдачи: {0}"
@@ -2624,7 +2624,7 @@ msgid "This_page_uses_cookies"
 msgstr "Эта страница использует файлы cookies"
 
 msgid "Cookies_explaination_text"
-msgstr "Примите файлы cookies. Узнать больше можно на странице <a href=\"/privacy-policy\">политика конфиденциальности</a>"
+msgstr "Примите файлы cookies. Узнать больше можно на странице <a href=\"/politika-konfidencialnosti\">политика конфиденциальности</a>"
 
 msgid "Accept_cookies"
 msgstr "Принять файлы cookies"
