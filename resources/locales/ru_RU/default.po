@@ -2156,7 +2156,7 @@ msgid "midnight"
 msgstr "полночь"
 
 msgid "default_value"
-msgstr "объем по умолчанию"
+msgstr "значение по умолчанию"
 
 msgid "yes"
 msgstr "да"
