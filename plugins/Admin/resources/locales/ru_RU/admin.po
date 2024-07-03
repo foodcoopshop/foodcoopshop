@@ -173,7 +173,7 @@ msgid "Credit_and_deposit_balance"
 msgstr "Кредитный и депозитный баланс"
 
 msgid "Member_fee"
-msgstr "Взнос покупателя"
+msgstr "Взнос участника"
 
 msgid "Deposit_overview"
 msgstr "Просмотр депозита"
@@ -559,7 +559,7 @@ msgid "Surcharge_needs_to_be_greater_than_0."
 msgstr "Наценка должна быть больше чем 0."
 
 msgid "The_selling_price_net_was_set_to:_{0}_of_purchase_price_net"
-msgstr "Цена продажи нетто была установлена на: {0} продажной цены неттоЦена продажи нетто была успешно рассчитана: {0} от нетто цены покупки."
+msgstr "Цена продажи нетто была установлена на: {0} продажной цены нетто была успешно рассчитана: {0} от нетто цены покупки."
 
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Изображение (ID {0}) от производителя {1} было успешно удалено. Товар: {1}, Производитель: {2}."
@@ -712,7 +712,7 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Товар {0} от производителя {1} был активирован."
 
 msgid "Selling_price"
-msgstr "Цена продажи"
+msgstr "Добавить к цене продажи"
 
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_successfully."
 msgstr "Налоговая ставка {0} от производителя {1} была успешно изменена."
@@ -742,7 +742,7 @@ msgid "Gross_price"
 msgstr "Цена брутто"
 
 msgid "Tax_rate"
-msgstr "Налоговая ставка"
+msgstr "Налог.ставка"
 
 msgid "Deposit"
 msgstr "Депозит"
@@ -751,7 +751,7 @@ msgid "Status"
 msgstr "Статус"
 
 msgid "Product_declaration"
-msgstr "Сертификат товара"
+msgstr "Сертификат"
 
 msgid "Storage_location"
 msgstr "Место хранения"
@@ -805,7 +805,7 @@ msgid "Show_category"
 msgstr "Показать категорию"
 
 msgid "records"
-msgstr "записи"
+msgstr "записи(ей)"
 
 msgid "Save"
 msgstr "Сохранить"
@@ -847,7 +847,7 @@ msgid "Associated_to_inactive_products?"
 msgstr "Связан с неактивными товарами?"
 
 msgid "Modified_on"
-msgstr "Изменено в"
+msgstr "Изменено"
 
 msgid "Edit"
 msgstr "Редактировать"
@@ -895,10 +895,10 @@ msgid "Blog_post_manufacturer_description"
 msgstr "Если производители видимы только для зарегистрированным покупателям, это так же относится и к блог постам (игнорируются в настройках для блог поста)."
 
 msgid "Show_on_startpage_until"
-msgstr "Показывать на стартовой странице до"
+msgstr "Показ на стартовой стр. до"
 
 msgid "After_that_date_the_blog_post_is_shown_in_the_blog_archive._Leave_empty_to_never_show_blog_post_on_start_page."
-msgstr "После этой даты блог будет показываться архиве блогов. Оставьте поле пустым, чтобы никогда не показывать блог на стартовой странице."
+msgstr "После этой даты блог будет показываться в архиве. Оставьте поле пустым, чтобы никогда не показывать блог на стартовой странице."
 
 msgid "Only_for_members"
 msgstr "Только для покупателей"
@@ -1070,10 +1070,10 @@ msgid "Click_on_profile_image_to_change_it."
 msgstr "Нажмите на изображение профиля чтобы изменить его."
 
 msgid "Only_visible_for_other_membes_in_the_member_list."
-msgstr "Видимость только для других покупетелей из списка."
+msgstr "Видимость только для других участников в листе участников."
 
 msgid "Is_shown_on_member_card."
-msgstr "Будет отображаться на карте покупателя."
+msgstr "Будет отображаться на карте участника."
 
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Загрузить новое изображение профиля или изменить его"
@@ -1158,7 +1158,7 @@ msgid "Prices"
 msgstr "Цены"
 
 msgid "Delete_member_irrevocably?"
-msgstr "Удалить покупателя безвозвратно?"
+msgstr "Удалить участника безвозвратно?"
 
 msgid "Show_all_years"
 msgstr "Показать все года"
@@ -1188,7 +1188,7 @@ msgid "Change_group"
 msgstr "Изменить группу"
 
 msgid "This_email_address_is_not_yet_activated_you_can_activate_it_here_{0}."
-msgstr "Этот адрес эл.почты ещё не активирован. Вы можете <a href=\"{0}\">активировать здесь</a> и тем самым вы подтвердить регистрацию на имя покупателя."
+msgstr "Этот адрес эл.почты ещё не активирован. Вы можете <a href=\"{0}\">активировать здесь</a> и тем самым вы подтвердить регистрацию на имя участника."
 
 msgid "deactivate"
 msgstr "деактивировать"
@@ -1389,7 +1389,7 @@ msgid "docs_route_pick_up_products"
 msgstr "vydacha-tovarov"
 
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
-msgstr "Здесь вы видите не измененные списки заказов, которые были отправлены вам."
+msgstr "Здесь вы видите не изменённые списки заказов, которые были отправлены вам."
 
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr "Здесь вы видите не измененные списки заказов, которые были отправлены производителям."
@@ -1416,7 +1416,7 @@ msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
 msgstr "Контакт будет показан защищённый от спама {0}."
 
 msgid "Will_be_shown_in_imprint_{0}."
-msgstr "Будет показано контактах {0}."
+msgstr "Будет показано в {0}."
 
 msgid "Example_given_abbreviation"
 msgstr "Напр."
@@ -1500,7 +1500,7 @@ msgid "Supervisory_authority"
 msgstr "Надзорный орган"
 
 msgid "e. g. chamber_of_agriculture"
-msgstr "например материнская компания или гос.(муниципальный) орган (налоговая инспекция и т.п.)"
+msgstr "материнская орг-ция и т.п."
 
 msgid "Chamber"
 msgstr "Дополнительная информация"
@@ -1527,7 +1527,7 @@ msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "Как я могу использовать перерыв доставки?"
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
-msgstr "Профиль производителей и товары могут видны только зарегистрированным покупателям."
+msgstr "Профиль производителей и товары могут видны только зарегистрированным участникам."
 
 msgid "Order_lists_by_email"
 msgstr "Список заказов по эл.почте"
@@ -1554,7 +1554,7 @@ msgid "Invoices_by_email"
 msgstr "Счета по эл.почте"
 
 msgid "to_receive_his_invoice_every_month_by_email."
-msgstr "получать его счета каждый месяц по эл.почте."
+msgstr "получать их счета каждый месяц по эл.почте."
 
 msgid "Delivery_notes_by_email"
 msgstr "Уведомления о доставке по эл.почте"
@@ -1605,7 +1605,7 @@ msgid "Purchase_price"
 msgstr "Стоимость покупки"
 
 msgid "Preselected_tax_rate_for_new_products"
-msgstr "Предустановленный размер налоговой ставки для новых товаров"
+msgstr "Заданный размер налог.ставки для новых товаров"
 
 msgid "Advanced_stock_management_active?"
 msgstr "Расширенное управление запасами активно?"
@@ -1767,7 +1767,7 @@ msgid "to_the_admin_area"
 msgstr "к панели администратора"
 
 msgid "to_the_manufacturer_area"
-msgstr "к панели производителя"
+msgstr "в панель производителя"
 
 msgid "Welcome"
 msgstr "Добро пожаловать"
@@ -1866,7 +1866,7 @@ msgid "Synchronize_products"
 msgstr "Синхронизировать товары"
 
 msgid "Name_and_categories"
-msgstr "Название и категории"
+msgstr "Назв. и катег."
 
 msgid "Stock_product"
 msgstr "Товар на складе"
@@ -2016,7 +2016,7 @@ msgid "Bank_account_data"
 msgstr "Банковские реквизиты"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
-msgstr "хранится в тайне и используется только для перевода денег на ваш банковский счет."
+msgstr "хранятся в тайне и используются только для перевода денег на ваш банковский счёт."
 
 msgid "Bank"
 msgstr "Банк"
@@ -2124,7 +2124,7 @@ msgid "Add_new_payment"
 msgstr "Добавить новый платёж"
 
 msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
-msgstr "Пожалуйста введите сумму которую вы только что перевели на наш счёт."
+msgstr "Пожалуйста переведите сумму которую вы только что перевели на наш счёт."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr "Если это \"возврат\", пожалуйста введите сумму , которую вы перевели, обратно покупателю."
@@ -2145,7 +2145,7 @@ msgid "Please_add_this_code_to_your_transaction:_{0}"
 msgstr "Пожалуйста добавьте этот код к вашему переводу: {0}"
 
 msgid "Order_list_grouped_by"
-msgstr "Список заказа сгруппирован по"
+msgstr "Лист заказа сгруппирован по"
 
 msgid "Order_day"
 msgstr "День заказа"
@@ -2184,7 +2184,7 @@ msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Уведомления никогда не будут отправляться для этого товара."
 
 msgid "Member_choses_pickup_day."
-msgstr "Покупатель выбирает день выдачи."
+msgstr "Участник выбирает день выдачи."
 
 msgid "change_delivery_rhythm"
 msgstr "изменить график доставки"
