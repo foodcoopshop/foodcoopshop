@@ -2114,10 +2114,10 @@ msgid "Order_adaptions"
 msgstr "Другие корректировки"
 
 msgid "My_data"
-msgstr "My data"
+msgstr "Мои данные"
 
 msgid "Change_password"
-msgstr "Change password"
+msgstr "Изменить пароль"
 
 msgid "My_invoices"
 msgstr "Мои счета"
