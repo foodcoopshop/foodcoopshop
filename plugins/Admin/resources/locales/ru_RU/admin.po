@@ -1671,7 +1671,7 @@ msgid "Anonymized_list"
 msgstr "Анонимный список"
 
 msgid "grouped_by_customer"
-msgstr "группировать по покупателям"
+msgstr "группировать по покупателю"
 
 msgid "Test_order_list"
 msgstr "Тестовый список заказов"
@@ -2124,7 +2124,7 @@ msgid "Add_new_payment"
 msgstr "Добавить новый платёж"
 
 msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
-msgstr "Пожалуйста переведите сумму которую вы только что перевели на наш счёт."
+msgstr "Пожалуйста, введите сумму которую вы только что перевели на наш счёт."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr "Если это \"возврат\", пожалуйста введите сумму , которую вы перевели, обратно покупателю."
