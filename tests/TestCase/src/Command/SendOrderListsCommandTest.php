@@ -539,9 +539,4 @@ class SendOrderListsCommandTest extends AppCakeTestCase
         }
     }
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        unset($this->SendOrderLists);
-    }
 }

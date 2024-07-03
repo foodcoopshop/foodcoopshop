@@ -43,7 +43,8 @@
         "phpunit/phpunit": "^10.0",
         "phpstan/phpstan": "^1.0",
         "cakephp/bake": "^3.0.0",
-        "ergebnis/phpstan-rules": "^2.0"
+        "ergebnis/phpstan-rules": "^2.0",
+        "friendsofcake/fixturize": "^3.0"
     },
     "autoload": {
         "psr-4": {

@@ -21,11 +21,6 @@ use App\Services\Csv\Reader\Banking\GlsBankBankingReaderService;
 class GlsBankBankingReaderServiceTest extends AppCakeTestCase
 {
 
-    public function tearDown(): void
-    {
-        $this->assertLogFilesForErrors();
-    }
-
     public function testRead()
     {
         $reader = GlsBankBankingReaderService::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'bankCsvExports' . DS . 'glsbank.csv');

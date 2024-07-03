@@ -6,7 +6,7 @@
   processIsolation="false"
   stopOnFailure="false"
   bootstrap="./tests/bootstrap.php"
-  cacheDirectory=".phpunit.cache" 
+  cacheDirectory=".phpunit.cache"
   displayDetailsOnTestsThatTriggerDeprecations="true"
   displayDetailsOnTestsThatTriggerWarnings="true"
   >
@@ -22,6 +22,9 @@
       <directory>./plugins/Network/tests/TestCase/</directory>
     </testsuite>
   </testsuites>
+  <extensions>
+    <bootstrap class="Cake\TestSuite\Fixture\Extension\PHPUnitExtension"/>
+  </extensions>
   <source>
     <include>
       <directory>./src/</directory>
