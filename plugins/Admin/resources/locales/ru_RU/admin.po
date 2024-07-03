@@ -904,7 +904,7 @@ msgid "Only_for_members"
 msgstr "Только для покупателей"
 
 msgid "Active"
-msgstr "Активный"
+msgstr "Активировать"
 
 msgid "Move_on_first_place?"
 msgstr "Поместить на первое место?"
@@ -1218,7 +1218,7 @@ msgid "docs_route_deposit"
 msgstr "depozit"
 
 msgid "Please_chose_a_manufacturer."
-msgstr "Пожалуйста выберите производителей."
+msgstr "Пожалуйста выберите производителя"
 
 msgid "Add_return_of_empty_glasses"
 msgstr "Добавить возврат пустой тары"
@@ -1764,10 +1764,10 @@ msgid "Pages_delete_page_main_description"
 msgstr "Удалить страницу?"
 
 msgid "to_the_admin_area"
-msgstr "к панели администратора"
+msgstr "в панель администратора"
 
 msgid "to_the_manufacturer_area"
-msgstr "к панели производителя"
+msgstr "в панель производителя"
 
 msgid "Welcome"
 msgstr "Добро пожаловать"
@@ -1818,7 +1818,7 @@ msgid "docs_route_credit_system"
 msgstr "kreditnaya-sistema"
 
 msgid "Add_transfered_credit"
-msgstr "Добавить переведенный кредит"
+msgstr "Добавить переведённый кредит"
 
 msgid "Order_value"
 msgstr "Стоимость заказа"
