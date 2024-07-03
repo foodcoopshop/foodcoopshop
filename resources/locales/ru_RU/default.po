@@ -8,7 +8,7 @@ msgid "order_state_order_placed"
 msgstr "заказ размещён"
 
 msgid "order_state_order_list_sent_to_manufacturer"
-msgstr "Список заказа отправлен производителю"
+msgstr "Лист заказа отправлен производителю"
 
 msgid "order_state_billed_cashless"
 msgstr "выставление счёта завершено"
@@ -672,10 +672,10 @@ msgid "Deactivate"
 msgstr "Деактивировать"
 
 msgid "Activate_product"
-msgstr "Вы действительно хотите активировать товар {0}?"
+msgstr "Вы действительно хотите активировать товар?"
 
 msgid "Deactivate_product"
-msgstr "Вы действительно хотите деактивировать товар {0}?"
+msgstr "Вы действительно хотите деактивировать товар?"
 
 msgid "Activate_member?"
 msgstr "Активировать покупателя?"
@@ -778,16 +778,16 @@ msgid "This_function_is_not_available_today."
 msgstr "Эта функция сегодня недоступна."
 
 msgid "Manually_send_order_list?"
-msgstr "Отправить список заказа вручную?"
+msgstr "Отправить лист заказа вручную?"
 
 msgid "Really_manually_send_order_list_to_{0}?"
-msgstr "Вы действительно хотите отправить список заказа вручную для {0}?"
+msgstr "Вы действительно хотите отправить лист заказа вручную для {0}?"
 
 msgid "Order_period"
 msgstr "Период заказа"
 
 msgid "An_existing_order_list_will_be_overwritten!"
-msgstr "Существующий список заказа будет переписан!"
+msgstr "Существующий лист заказа будет переписан!"
 
 msgid "Change_group_for"
 msgstr "Изменить группу для"
@@ -1879,7 +1879,7 @@ msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
 msgstr "{0} был активирован перерыв в доставке и {1} не может быть заказан."
 
 msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "Больше невозможно заказать товар {0}."
+msgstr "Не возможно заказать товар {0} больше."
 
 msgid "{0}_can_be_ordered_next_week."
 msgstr "{0} может быть заказан на следующей неделе."
@@ -1903,7 +1903,7 @@ msgid "member"
 msgstr "покупатель"
 
 msgid "Order_lists_for_the_day"
-msgstr "Списки заказа для"
+msgstr "Листы заказов для"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Вы успешно разместили заказ."
@@ -2114,10 +2114,10 @@ msgid "Order_adaptions"
 msgstr "Другие корректировки"
 
 msgid "My_data"
-msgstr "Мои данные"
+msgstr "My data"
 
 msgid "Change_password"
-msgstr "Изменить пароль"
+msgstr "Change password"
 
 msgid "My_invoices"
 msgstr "Мои счета"
@@ -2291,7 +2291,7 @@ msgid "routes_product"
 msgstr "товар"
 
 msgid "Modified_on"
-msgstr "Изменено в"
+msgstr "Изменено на"
 
 msgid "Edit"
 msgstr "Редактировать"
@@ -2348,7 +2348,7 @@ msgid "Password"
 msgstr "Пароль"
 
 msgid "Stay_signed_in"
-msgstr "запомнить"
+msgstr "Оставайтесь в системе"
 
 msgid "Forgot_password?"
 msgstr "Забыли пароль?"
@@ -2591,7 +2591,7 @@ msgid "Upload_new_file"
 msgstr "Загрузить новый файл"
 
 msgid "Search_PC"
-msgstr "Поиск на компьютере"
+msgstr "Поиск компьютера"
 
 msgid "Other_initiatives"
 msgstr "Все производители"
@@ -2618,7 +2618,7 @@ msgid "Upload_new_image"
 msgstr "Загрузить новое изображение"
 
 msgid "Image_upload_legal_hint."
-msgstr "Пожалуйста, загрузите изображения, только если у вас есть права на использование!"
+msgstr "Пожалуйста, загружайте изображение, только если у вас есть права на использование!"
 
 msgid "This_page_uses_cookies"
 msgstr "Эта страница использует файлы cookies"
