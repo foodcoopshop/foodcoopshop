@@ -8,7 +8,7 @@ msgid "order_state_order_placed"
 msgstr "заказ размещён"
 
 msgid "order_state_order_list_sent_to_manufacturer"
-msgstr "Лист заказа отправлен производителю"
+msgstr "Список заказа отправлен производителю"
 
 msgid "order_state_billed_cashless"
 msgstr "выставление счёта завершено"
@@ -778,16 +778,16 @@ msgid "This_function_is_not_available_today."
 msgstr "Эта функция сегодня недоступна."
 
 msgid "Manually_send_order_list?"
-msgstr "Отправить лист заказа вручную?"
+msgstr "Отправить список заказа вручную?"
 
 msgid "Really_manually_send_order_list_to_{0}?"
-msgstr "Вы действительно хотите отправить лист заказа вручную для {0}?"
+msgstr "Вы действительно хотите отправить список заказа вручную для {0}?"
 
 msgid "Order_period"
 msgstr "Период заказа"
 
 msgid "An_existing_order_list_will_be_overwritten!"
-msgstr "Существующий лист заказа будет переписан!"
+msgstr "Существующий список заказа будет переписан!"
 
 msgid "Change_group_for"
 msgstr "Изменить группу для"
@@ -1903,7 +1903,7 @@ msgid "member"
 msgstr "покупатель"
 
 msgid "Order_lists_for_the_day"
-msgstr "Листы заказов для"
+msgstr "Списки заказа для"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Вы успешно разместили заказ."
