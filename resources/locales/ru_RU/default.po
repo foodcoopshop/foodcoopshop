@@ -763,7 +763,7 @@ msgid "Really_delete_1_product?"
 msgstr "Вы действительно хотите удалить один товар?"
 
 msgid "Errors_occurred_while_product_was_deleted"
-msgstr "Произошла ошибка когда товар был удалён"
+msgstr "Произошла ошибка при удалении товара"
 
 msgid "Add_comment"
 msgstr "Добавить комментарий"
@@ -1085,7 +1085,7 @@ msgid "Default_quantity_after_sending_order_lists"
 msgstr "Количество по умолчанию после отправки списка заказов"
 
 msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
-msgstr "После отправки списков заказов доступная сумма составит это значение.<br /><b>Отправка списка заказов дожна быть активирована (в настройка производителя)!</b>"
+msgstr "После отправки списков заказов, доступное количество составит это значение.<br /><b>Отправка списка заказов дожна быть активирована (в настройках производителя)!</b>"
 
 msgid "Enter_purchase_price"
 msgstr "Введите цену покупки"
@@ -1142,7 +1142,7 @@ msgid "Image"
 msgstr "Изображение"
 
 msgid "Name_additional_info"
-msgstr "Название, единица, описания, сертификация товара"
+msgstr "Название, единица, описания, сертификат товара"
 
 msgid "Quantity"
 msgstr "Количество"
