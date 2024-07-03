@@ -274,7 +274,7 @@ class DepositsController extends AdminAppController
         $this->set('sumDepositsReturned', $sumDepositsReturned);
         $this->set('deposits', $deposits);
 
-        $title = 'Pfandkonto für ';
+        $title = __d('admin', 'Deposit_account') . ' ' . __d('admin', 'for') . ' ';
         if ($this->identity->isManufacturer()) {
             $title .= $manufacturer->name;
         }
