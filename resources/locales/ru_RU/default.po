@@ -179,7 +179,7 @@ msgid "Finish_cart"
 msgstr "Оформить корзину"
 
 msgid "Your_cart_was_empty."
-msgstr "Корзина пуста."
+msgstr "Пустая корзина."
 
 msgid "Your_order_has_been_placed"
 msgstr "Ваш заказ был размещён"
@@ -2747,7 +2747,7 @@ msgid "Cart"
 msgstr "Корзина"
 
 msgid "Your_cart_is_empty."
-msgstr "Корзина пуста."
+msgstr "Пустая корзина."
 
 msgid "This_email_was_created_automatically."
 msgstr "Это эл.письмо было создано автоматически."
