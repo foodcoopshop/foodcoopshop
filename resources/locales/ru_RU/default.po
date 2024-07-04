@@ -2309,7 +2309,7 @@ msgid "Your_cart_is_empty"
 msgstr "Ваша корзина пуста"
 
 msgid "Value_of_goods"
-msgstr "Стоимость товаров"
+msgstr "Объём товаров"
 
 msgid "Deposit_sum"
 msgstr "Сумма депозита"
