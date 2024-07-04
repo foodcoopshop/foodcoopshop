@@ -260,7 +260,7 @@ msgid "You_are_already_signed_in."
 msgstr "Вы уже вошли."
 
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
-msgstr "Вход не удался. Учётная запись не активирован или неправильный пароль?"
+msgstr "Вход не удался. Учётная запись не активирована или неправильный пароль?"
 
 msgid "{0}_created_an_account."
 msgstr "{0} учётная запись создана."
@@ -275,7 +275,7 @@ msgid "Your_registration_was_successful."
 msgstr "Вы успешно зарегистрировались."
 
 msgid "Account_created_successfully"
-msgstr "Аккаунт успешно создан"
+msgstr "Учётная запись успешно создана"
 
 msgid "You_have_been_signed_out."
 msgstr "Вы вышли из учётной записи."
@@ -561,7 +561,7 @@ msgid "Adapt_weight?"
 msgstr "Корректировать вес?"
 
 msgid "Delivered_weight"
-msgstr "Доставляемый вес"
+msgstr "Доставленный вес"
 
 msgid "Delivered_total_weight"
 msgstr "Доставленный общий вес"
@@ -884,7 +884,7 @@ msgid "Really_generate_invoice_for_{0}?"
 msgstr "Действительно генерировать счёт для {0}?"
 
 msgid "Show_preview"
-msgstr "Показать предварительный просмотр"
+msgstr "Предварительный просмотр"
 
 msgid "Paid_in_cash"
 msgstr "Оплата наличными"
@@ -992,7 +992,7 @@ msgid "Product_declaration_ok?"
 msgstr "Товар сертифицирован?"
 
 msgid "docs_route_product_declaration"
-msgstr "сертификат-товара"
+msgstr "sertifikat-tovara"
 
 msgid "Help"
 msgstr "Справка"
@@ -1016,7 +1016,7 @@ msgid "Stock_product"
 msgstr "Товар на складе"
 
 msgid "Current_stock"
-msgstr "Существующие на складе"
+msgstr "Есть на складе"
 
 msgid "Available_amount"
 msgstr "Количество в наличии"
@@ -1028,7 +1028,7 @@ msgid "zero_or_smaller_zero"
 msgstr "0 или меньше чем 0"
 
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
-msgstr "Для производителей и для контактных лиц. Может быть изменено в настройках производительа."
+msgstr "Для производителей и для контактных лиц. Может быть изменено в настройках производителя."
 
 msgid "Notification_if_amount_lower_than"
 msgstr "Уведомлять если количество ниже чем"
@@ -1064,10 +1064,10 @@ msgid "Info_page_for_delivery_rhythm"
 msgstr "Информационная страница о графике доставки"
 
 msgid "docs_route_order_handling"
-msgstr "обработка-заказов"
+msgstr "obrabotka-zakazov"
 
 msgid "Last_order_weekday"
-msgstr "Крайний срок оформления заказа"
+msgstr "Последний срок оформления заказа"
 
 msgid "Send_order_lists_day"
 msgstr "День отправки списка заказов"
@@ -1160,7 +1160,7 @@ msgid "No_product_data_selected."
 msgstr "Не выбраны данные о товаре."
 
 msgid "Please_enter_your_credentials."
-msgstr "Пожалуйста, введите свои учетные данные."
+msgstr "Пожалуйста, введите свои учётные данные."
 
 msgid "Really_synchronize?"
 msgstr "Действительно синхронизировать?"
@@ -1169,7 +1169,7 @@ msgid "This_action_cannot_be_undone."
 msgstr "Это действие нельзя отменить."
 
 msgid "Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops?_{3}"
-msgstr "Действительно синхронизируйте данные {0} из {1} и {2} на следующий сервер? {3}"
+msgstr "Хотите синхронизировать данные {0} из {1} и {2} на следующий сервер? {3}"
 
 msgid "attribute"
 msgstr "вариант"
@@ -1903,7 +1903,7 @@ msgid "member"
 msgstr "покупатель"
 
 msgid "Order_lists_for_the_day"
-msgstr "Листы заказов для"
+msgstr "Список заказов для"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Вы успешно разместили заказ."
@@ -2114,10 +2114,10 @@ msgid "Order_adaptions"
 msgstr "Другие корректировки"
 
 msgid "My_data"
-msgstr "My data"
+msgstr "Мои данные"
 
 msgid "Change_password"
-msgstr "Change password"
+msgstr "Изменить пароль"
 
 msgid "My_invoices"
 msgstr "Мои счета"
@@ -2264,7 +2264,7 @@ msgid "approval_state_open"
 msgstr "открыт"
 
 msgid "approval_state_not_ok"
-msgstr "что то так"
+msgstr "что то не так"
 
 msgid "active_state_active"
 msgstr "подключённые"
@@ -2291,7 +2291,7 @@ msgid "routes_product"
 msgstr "tovar"
 
 msgid "Modified_on"
-msgstr "Изменено на"
+msgstr "Изменено"
 
 msgid "Edit"
 msgstr "Редактировать"
@@ -2321,7 +2321,7 @@ msgid "Including_vat"
 msgstr "Включая НДС"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "Вес доставки будет в конечном счёте скорректирован, что означает что цена будет немного изменена."
+msgstr "Вес доставки будет в конечном счёте скорректирован, это значит что цена будет немного изменена."
 
 msgid "To_finish_order_click_here."
 msgstr "Для завершения заказа пожалуйста нажмите на кнопку ниже."
@@ -2348,13 +2348,13 @@ msgid "Password"
 msgstr "Пароль"
 
 msgid "Stay_signed_in"
-msgstr "Оставайтесь в системе"
+msgstr "запомнить"
 
 msgid "Forgot_password?"
 msgstr "Забыли пароль?"
 
 msgid "Create_account"
-msgstr "Создать аккаунт"
+msgstr "Создать учётную запись"
 
 msgid "Register_as_company?"
 msgstr "Зарегистрироваться как компания?"
@@ -2438,7 +2438,7 @@ msgid "Shopping_bag"
 msgstr "Корзина"
 
 msgid "docs_route_self_service"
-msgstr "режим-самообслуживания"
+msgstr "rezhim-samoobsluzhivaniya"
 
 msgid "Your_shopping_bag_is_empty."
 msgstr "Ваша корзина была пуста."
@@ -2591,7 +2591,7 @@ msgid "Upload_new_file"
 msgstr "Загрузить новый файл"
 
 msgid "Search_PC"
-msgstr "Поиск компьютера"
+msgstr "Загрузить с компьютера"
 
 msgid "Other_initiatives"
 msgstr "Все производители"
@@ -2645,7 +2645,7 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Добавьте сумму депозита для {0}"
 
 msgid "The_entered_deposit_will_not_show_up_in_the_cart."
-msgstr "Внесенный депозит не будет отображаться в корзине но будет добавлен в вашем балансе."
+msgstr "Внесённый депозит не будет отображаться в корзине, но будет добавлен на ваш баланс."
 
 msgid "Amount_in_{0}"
 msgstr "Сумма в {0}"
@@ -2699,7 +2699,7 @@ msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
 msgstr "Мгновенный заказ на {0} был только что размещён покупателем {1}."
 
 msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr "Вы получили это сообщение поскольку дата доставки этого заказа была автоматически установлена на <b>сегодня ({0})</b>, и поэтому он не отображается в ваших списках заказов."
+msgstr "Вы получили это сообщение поскольку дата доставки этого заказа была автоматически установлена на <b>сегодня ({0})</b> и поэтому он не отображается в ваших списках заказов."
 
 msgid "your_new_password_is:"
 msgstr "ваш новый пароль:"
