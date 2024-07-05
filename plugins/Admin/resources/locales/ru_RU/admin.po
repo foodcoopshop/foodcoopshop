@@ -998,7 +998,7 @@ msgid "Default_image_for_blog_post,_width:"
 msgstr "Изображение для блога по умолчанию, ширина:"
 
 msgid "Website_administration"
-msgstr "Администрирование вебсайта"
+msgstr "Настройки вебсайта"
 
 msgid "Configurations"
 msgstr "Настройки"
@@ -1281,7 +1281,7 @@ msgid "Deposit_diagram:_Data_per_week"
 msgstr "График депозита: Данные за неделю"
 
 msgid "Deposit_diagram_explanation_text."
-msgstr "Зеленая и синяя линии всегда должны быть примерно одинаковыми (с небольшой задержкой по времени). Погашение депозита и компенсационные выплаты можно корректировать во времени: удалите запись в депозитном счёте соответствующего производителя и введите ее заново с исправленной датой."
+msgstr "Зеленая и синяя линии всегда должны быть примерно одинаковыми (с небольшой задержкой по времени). Погашение депозита и компенсационные выплаты можно корректировать во времени: удалите запись в депозитном счёте соответствующего производителя и введите её заново с исправленной датой."
 
 msgid "Empty_glasses_returned_by_manufacturer"
 msgstr "Пустая тара возвращена производителем"
@@ -1893,7 +1893,7 @@ msgid "Delivery_rhythm"
 msgstr "График доставки"
 
 msgid "Added_on"
-msgstr "Добавлен на"
+msgstr "Добавлено"
 
 msgid "Added_by"
 msgstr "Добавил"
@@ -2383,7 +2383,7 @@ msgid "The_base_price_is_{0}."
 msgstr "Базовая цена {0}."
 
 msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
-msgstr "Статус поплнеия вашего кредита {0} ({1}) был изменён на {2}."
+msgstr "Статус пополнения вашего кредита {0} ({1}) был изменён на {2}."
 
 msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
 msgstr "Пожалуйста, сравните пополнение кредита, которое вы добавили в нашу систему, с фактическим переводом на банковский счет."
