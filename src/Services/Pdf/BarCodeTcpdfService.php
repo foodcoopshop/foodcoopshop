@@ -31,7 +31,6 @@ class BarCodeTcpdfService extends AppTcpdfService
         'fgcolor' => [0,0,0],
         'bgcolor' => false,
         'text' => true,
-        'font' => 'helvetica',
         'fontsize' => 8,
         'stretchtext' => 4
     ];

@@ -28,12 +28,10 @@ trait FooterTrait
      */
     public function footer()
     {
+        $this->SetFont('freesans');
         $this->SetY(-19);
         $this->drawLine();
         $this->SetFontSize(10);
-        if (I18n::getLocale() == 'ru_RU') {
-            $this->SetFont('freesans');
-        }
         $this->Cell(0, 10, $this->infoTextForFooter , 0, false, 'L', 0, '', 0, false, 'T', 'M');
         $this->Ln(4);
         $now = new DateTime();

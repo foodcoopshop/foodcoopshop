@@ -75,15 +75,14 @@ abstract class AppTcpdfService extends TCPDF
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {
+
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
         mb_internal_encoding('UTF-8');
 
+        $this->FontFamily = 'freesans'; // freesans supports cyrillic characters
+
         $this->SetCreator(Configure::read('appDb.FCS_APP_NAME'));
         $this->SetAuthor(Configure::read('appDb.FCS_APP_NAME'));
-
-        if (I18n::getLocale() == 'ru_RU') {
-            $this->SetFont('freesans');
-        }
 
     }
 
