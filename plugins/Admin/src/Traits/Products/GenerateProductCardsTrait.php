@@ -37,6 +37,7 @@ trait GenerateProductCardsTrait
             productIds: $productIds,
             manufacturerId: 'all',
             addProductNameToAttributes: true,
+            active: 'all',
         );
 
         $preparedProducts = [];
