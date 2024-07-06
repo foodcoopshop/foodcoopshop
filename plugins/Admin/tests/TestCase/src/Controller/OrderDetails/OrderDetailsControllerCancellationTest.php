@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
 
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
@@ -155,6 +156,28 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->loginAsSuperadmin();
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdC]);
         $this->assertChangedStockAvailable($this->productIdC, 10);
+    }
+
+    public function testCancellationStockProductWithPricePerWeightUseAmountAsWeight()
+    {
+        $productId = 351;
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(8);
+        $data = [
+            'use_weight_as_amount' => 1,
+            'quantity_in_units' => 5,
+        ];
+        $patchedEntity = $unitsTable->patchEntity($unitEntityA, $data);
+        $unitsTable->save($patchedEntity);
+
+        $this->loginAsSuperadmin();
+        $this->addProductToCart($productId, 2);
+        $this->finishCart(1, 1);
+
+        $this->assertChangedStockAvailable($productId, 989);
+        $this->deleteAndAssertRemoveFromDatabase([4]);
+        $this->assertChangedStockAvailable($productId, 999);
+
     }
 
     private function deleteAndAssertRemoveFromDatabase($orderDetailIds)

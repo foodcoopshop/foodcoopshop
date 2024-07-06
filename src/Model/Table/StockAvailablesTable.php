@@ -52,6 +52,25 @@ class StockAvailablesTable extends AppTable
         return $validator;
     }
 
+    public function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions): void
+    {
+        $i = 0;
+        foreach($stockAvailable2saveConditions as $condition) {
+            $stockAvailableEntity = $this->find('all',
+                conditions: $condition,
+            )->first();
+            $stockAvailableEntity->quantity = $stockAvailable2saveData[$i]['quantity'];
+            $originalPrimaryKey = $this->getPrimaryKey();
+            if ($condition['id_product_attribute'] > 0) {
+                $this->setPrimaryKey('id_product_attribute');
+            }
+            $this->save($stockAvailableEntity);
+            $this->setPrimaryKey($originalPrimaryKey);
+            $this->updateQuantityForMainProduct($condition['id_product']);
+            $i++;
+        }
+    }
+
     public function updateQuantityForMainProduct($productId)
     {
         $productId = (int) $productId;

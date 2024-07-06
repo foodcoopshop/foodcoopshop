@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Model\Entity\Customer;
+use App\Services\ProductQuantityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -51,12 +52,14 @@ if ($showProductPrice) {
     echo '<div class="tax hide">'. $this->Number->formatAsCurrency(0) . '</div>';
 }
 
+$isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck = (new ProductQuantityService())->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $product->unit_product);
 echo $this->element('catalog/hiddenProductIdField', ['productId' => $product->id_product]);
 echo $this->element('catalog/amountWrapper', [
     'product' => $product,
     'orderedTotalAmount' => $product->ordered_total_amount ?? null,
     'stockAvailable' => $product->stock_available,
-    'hideAmountSelector' => $isStockProductOrderPossible,
+    'unitObject' => $product->unit_product,
+    'hideAmountSelector' => $isStockProductOrderPossible || $isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck,
     'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
 ]);
 echo $this->element('catalog/cartButton', [
@@ -93,9 +96,11 @@ $unityStrings = [];
 if ($product->unity != '') {
     $unityStrings[] = $product->unity;
 }
-$unitString = $this->PricePerUnit->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->name);
-if ($unitString != '') {
-    $unityStrings[] = $unitString;
+if (!$isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck) {
+    $unitString = $this->PricePerUnit->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->name);
+    if ($unitString != '') {
+        $unityStrings[] = $unitString;
+    }   
 }
 if (!empty($unityStrings)) {
     echo '<div class="unity">'.__('Unit').': <span class="value">' . join(', ', $unityStrings).'</span></div>';

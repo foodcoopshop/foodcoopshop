@@ -258,7 +258,7 @@ class ProductsTableTest extends AppCakeTestCase
             $exceptionThrown = true;
         }
 
-        $this->assertProductQuantity($products, '97');
+        $this->assertProductQuantity($products, 97.000);
         $this->assertSame(true, $exceptionThrown);
     }
 
@@ -672,7 +672,7 @@ class ProductsTableTest extends AppCakeTestCase
             $originalProductId = key($product);
             $productAndAttributeId = $this->Product->getProductIdAndAttributeId($originalProductId);
             $productId = $productAndAttributeId['productId'];
-            $expectedQuantity = $product[$originalProductId]['quantity'];
+            $expectedQuantity = (float) $product[$originalProductId]['quantity'];
             if ($forceUseThisQuantity) {
                 $expectedQuantity = $forceUseThisQuantity;
             }
@@ -695,7 +695,7 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $result = $changedProduct->product_attributes[0]->stock_available->quantity;
             }
-            $this->assertEquals($expectedQuantity, $result, 'changing the quantity flag did not work');
+            $this->assertEquals($expectedQuantity, $result);
         }
     }
 

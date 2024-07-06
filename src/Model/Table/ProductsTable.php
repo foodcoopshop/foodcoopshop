@@ -394,7 +394,7 @@ class ProductsTable extends AppTable
         return (bool) $success;
     }
 
-    public function changePrice(array $products, $changeOpenOrderDetailPrice = false): bool
+    public function changePrice(array $products): bool
     {
 
         foreach ($products as $product) {
@@ -452,8 +452,6 @@ class ProductsTable extends AppTable
 
             if (isset($product[$productId]['unit_product_price_per_unit_enabled']) && isset($product[$productId]['unit_product_price_incl_per_unit'])) {
 
-                $this->Unit = FactoryLocator::get('Table')->get('Units');
-
                 $priceInclPerUnit = $product[$productId]['unit_product_price_incl_per_unit'];
                 if (is_string($priceInclPerUnit)) {
                     $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($priceInclPerUnit);
@@ -463,14 +461,16 @@ class ProductsTable extends AppTable
                     $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($quantityInUnits);
                 }
 
-                $this->Unit->saveUnits(
+                $unitsTable = FactoryLocator::get('Table')->get('Units');
+                $unitsTable->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
                     $product[$productId]['unit_product_price_per_unit_enabled'],
                     $priceInclPerUnit == -1 ? 0 : $priceInclPerUnit,
                     $product[$productId]['unit_product_name'],
                     $product[$productId]['unit_product_amount'],
-                    $quantityInUnits == -1 ? 0 : $quantityInUnits
+                    $quantityInUnits == -1 ? 0 : $quantityInUnits,
+                    $product[$productId]['use_weight_as_amount'] ?? 0,
                 );
             }
 

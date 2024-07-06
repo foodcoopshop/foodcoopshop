@@ -135,7 +135,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 340;
         $this->Unit = $this->getTableLocator()->get('Units');
-        $this->Unit->saveUnits($productId, 0, true, 1, 'kg', 1, 0.4);
+        $this->Unit->saveUnits($productId, 0, true, 1, 'kg', 1, 0.4, 0);
         $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
         $this->assertResponseCode(404);
     }
@@ -167,7 +167,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 348;
         $this->Unit = $this->getTableLocator()->get('Units');
-        $this->Unit->saveUnits($productId, 12, false, 1, 'kg', 1, 0.4);
+        $this->Unit->saveUnits($productId, 12, false, 1, 'kg', 1, 0.4, 0);
         $this->get($this->Slug->getProductDetail($productId, 'Beuschl'));
         $this->assertResponseCode(404);
     }
@@ -205,7 +205,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
             ['pickup_day' => $nextDeliveryDay],
             ['id_order_detail' => 3],
         );
-        
+
         $this->loginAsCustomer();
         $this->get($this->Slug->getProductDetail($productId, 'Milch'));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($nextDeliveryDay));

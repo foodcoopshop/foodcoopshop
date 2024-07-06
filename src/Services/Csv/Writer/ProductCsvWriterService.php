@@ -18,6 +18,7 @@ namespace App\Services\Csv\Writer;
 
 use Cake\Datasource\FactoryLocator;
 use App\Model\Entity\Product;
+use App\Services\ProductQuantityService;
 use Cake\Core\Configure;
 use Cake\Controller\Exception\InvalidParameterException;
 
@@ -54,8 +55,8 @@ class ProductCsvWriterService extends BaseCsvWriterService
             __('Product'),
             __('Manufacturer'),
             __('Status'),
-            __('Unit'),
             __('Amount'),
+            __('Unit'),
             __('Minimal_stock_amount'),
             Configure::read('appDb.FCS_PURCHASE_PRICE_ENABLED') ?  __('Purchase_price') . ' ' . __('net') : __('Selling_price') . ' ' . __('gross') ,
             __('Price_per'),
@@ -102,9 +103,9 @@ class ProductCsvWriterService extends BaseCsvWriterService
                 $productName,
                 html_entity_decode($product->manufacturer->name),
                 $product->active,
+                Configure::read('app.numberHelper')->formatUnitAsDecimal($availableQuantity),
                 $unit,
-                $availableQuantity,
-                $product->stock_available->sold_out_limit,
+                $product->stock_available->sold_out_limit ? Configure::read('app.numberHelper')->formatUnitAsDecimal($product->stock_available->sold_out_limit) : null,
                 Configure::read('app.numberHelper')->formatAsDecimal($price, 6),
                 $this->getUnitForPrice($product),
                 Configure::read('app.numberHelper')->formatAsDecimal($stockValue),
@@ -112,6 +113,7 @@ class ProductCsvWriterService extends BaseCsvWriterService
         }
 
         $records[] = [
+            '',
             '',
             '',
             '',
@@ -137,6 +139,12 @@ class ProductCsvWriterService extends BaseCsvWriterService
 
     private function getUnit($product, $isMainProduct)
     {
+
+        if ((new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $product->unit))
+        {
+            return $product->unit->name;
+        }
+
         $unit = $this->getFromPattern('/<span class="unity-for-dialog">(.*?)<\/span>/', $product->name);
         if ($unit == '') {
             $unit = $this->getFromPattern('/<span class="quantity-in-units">(.*?)<\/span>/', $product->name);

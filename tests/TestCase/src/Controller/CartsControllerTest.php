@@ -98,7 +98,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 251);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>251</b> ist nicht gültig.', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>251</b> ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -106,7 +106,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 98);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
         $this->assertJsonError();
     }
 
@@ -224,7 +224,7 @@ class CartsControllerTest extends AppCakeTestCase
         ]]]);
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 50);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>50</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
 
     public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProductAttributes()
@@ -239,7 +239,7 @@ class CartsControllerTest extends AppCakeTestCase
         ]]]);
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId2, 50);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>50</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
 
     public function testStockManagementEnabledIsStockProductFalseAndQuantityLimitLessThanZero()
@@ -254,7 +254,7 @@ class CartsControllerTest extends AppCakeTestCase
         ]]]);
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId2, 1);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>1</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 0', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>1</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 0', $response->msg);
     }
 
     /**
@@ -367,7 +367,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $amount = 1;
         $this->addProductToCart($this->productId1, $amount);
-        $this->addTooManyProducts($this->productId1, 250, $amount, 'Die gewünschte Anzahl <b>251</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
+        $this->addTooManyProducts($this->productId1, 250, $amount, 'Die gewünschte Menge <b>251</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
     }
 
     public function testAddTooManyAttributes()
@@ -375,7 +375,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $amount = 1;
         $this->addProductToCart($this->productId2, $amount);
-        $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 19', 0);
+        $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Menge <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 19', 0);
     }
 
     public function testProductDeactivatedWhileShopping()
@@ -464,7 +464,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId1, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/Anzahl <b>2/', $this->_response->getBody()->__toString());
+        $this->assertMatchesRegularExpression('/Menge <b>2/', $this->_response->getBody()->__toString());
         $this->assertResponseContains('Menge: 1');
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
     }
@@ -478,7 +478,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertMatchesRegularExpression('/Anzahl \<b\>3/', $this->_response->getBody()->__toString());
+        $this->assertMatchesRegularExpression('/Menge \<b\>3/', $this->_response->getBody()->__toString());
         $this->assertResponseContains('Menge: 1');
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
@@ -580,8 +580,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart('350-14', 1); // add lagerprodukt mit variante
         $this->addProductToCart(340, 1); // add beuschl
         $this->Unit = $this->getTableLocator()->get('Units');
-        $this->Unit->saveUnits(346, 12, false, 1, 'kg', 1, 0.4); // artischocke
-        $this->Unit->saveUnits(347, 0, false, 1, 'kg', 1, 0.4); // forelle
+        $this->Unit->saveUnits(346, 12, false, 1, 'kg', 1, 0.4, 0); // artischocke
+        $this->Unit->saveUnits(347, 0, false, 1, 'kg', 1, 0.4, 0); // forelle
 
         $this->addAllDifferentProductTypesToCart();
         $this->finishCart(1,1);
@@ -781,7 +781,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturer(5, 'stock_management_enabled', 1);
         $this->loginAsCustomer();
         $response = $this->addProductToCart(349, 11);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Menge <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
         $this->assertJsonError();
     }
 
@@ -924,6 +924,85 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->assertMailContainsHtmlAt(0, 'Forelle : Stück, je ca. 350 g');
         $this->assertMailContainsHtmlAt(0, 'Rindfleisch : je ca. 0,5 kg');
+
+    }
+
+    public function testFinishCartWithPricePerUnitAndUseWeightAsAmount()
+    {
+        $this->loginAsSuperadmin();
+
+        $productIdA = 347; // forelle
+        $productIdB = '348-11'; // rindfleisch, 0,5 kg
+        $productIdC = 351; // stock product
+
+        $unitsTable = $this->getTableLocator()->get('Units');
+        $unitEntityA = $unitsTable->get(1);
+        $unitEntityA->use_weight_as_amount = 1;
+        $unitEntityB = $unitsTable->get(2);
+        $unitEntityB->use_weight_as_amount = 1;
+        $unitEntityC = $unitsTable->get(8);
+        $unitEntityC->use_weight_as_amount = 1;
+        $unitsTable->saveMany([$unitEntityA, $unitEntityB, $unitEntityC]);
+
+        $this->addProductToCart($productIdA, 2);
+        $this->addProductToCart($productIdB, 3);
+        $this->addProductToCart($productIdC, 3);
+
+        $this->finishCart(1, 1);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+
+        $this->checkCartStatusAfterFinish();
+        $cart = $this->getCartById($cartId);
+        $pickupDay = (new DeliveryRhythmService())->getDeliveryDateByCurrentDayForDb();
+
+        // check order_details
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 10, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Lagerprodukt 2', 3, 0, 0, 22.5, 45, 7.5, 22.5, 20, $pickupDay);
+
+        $this->checkStockAvailable($productIdC, 996);
+
+        // check order_details_units
+        $orderDetailA = $cart->cart_products[0]->order_detail;
+        $orderDetailB = $cart->cart_products[1]->order_detail;
+        $orderDetailC = $cart->cart_products[2]->order_detail;
+
+        $this->assertEquals($orderDetailA->order_detail_unit->product_quantity_in_units, 700);
+        $this->assertEquals($orderDetailA->order_detail_unit->price_incl_per_unit, 1.5);
+        $this->assertEquals($orderDetailA->order_detail_unit->quantity_in_units, 350);
+        $this->assertEquals($orderDetailA->order_detail_unit->unit_name, 'g');
+        $this->assertEquals($orderDetailA->order_detail_unit->unit_amount, 100);
+        $this->assertEquals($orderDetailA->order_detail_unit->mark_as_saved, 0);
+
+        $this->assertEquals($orderDetailB->order_detail_unit->product_quantity_in_units, 1.5);
+        $this->assertEquals($orderDetailB->order_detail_unit->price_incl_per_unit, 20);
+        $this->assertEquals($orderDetailB->order_detail_unit->quantity_in_units, 0.5);
+        $this->assertEquals($orderDetailB->order_detail_unit->unit_name, 'kg');
+        $this->assertEquals($orderDetailB->order_detail_unit->unit_amount, 1);
+        $this->assertEquals($orderDetailB->order_detail_unit->mark_as_saved, 0);
+
+        $this->assertEquals($orderDetailC->order_detail_unit->product_quantity_in_units, 3);
+        $this->assertEquals($orderDetailC->order_detail_unit->price_incl_per_unit, 15);
+        $this->assertEquals($orderDetailC->order_detail_unit->quantity_in_units, 1);
+        $this->assertEquals($orderDetailC->order_detail_unit->unit_name, 'kg');
+        $this->assertEquals($orderDetailC->order_detail_unit->unit_amount, 1);
+        $this->assertEquals($orderDetailC->order_detail_unit->mark_as_saved, 0);
+
+        $this->assertEquals($orderDetailA->tax_rate, 10);
+        $this->assertEquals($orderDetailA->tax_unit_amount, 0.48);
+        $this->assertEquals($orderDetailA->tax_total_amount, 0.96);
+
+        $this->assertEquals($orderDetailB->tax_rate, 10);
+        $this->assertEquals($orderDetailB->tax_unit_amount, 0.91);
+        $this->assertEquals($orderDetailB->tax_total_amount, 2.73);
+
+        $this->assertEquals($orderDetailC->tax_rate, 20);
+        $this->assertEquals($orderDetailC->tax_unit_amount, 7.5);
+        $this->assertEquals($orderDetailC->tax_total_amount, 22.5);
+
+        $this->assertMailContainsHtmlAt(0, 'Forelle : Stück, je ca. 350 g');
+        $this->assertMailContainsHtmlAt(0, 'Rindfleisch : je ca. 0,5 kg');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : je ca. 1 kg');
 
     }
 

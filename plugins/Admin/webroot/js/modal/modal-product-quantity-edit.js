@@ -23,6 +23,10 @@ foodcoopshop.ModalProductQuantityEdit = {
 
     },
 
+    getStep : function(isPricePerUnitEnabled) {
+        return Boolean(isPricePerUnitEnabled) ? '0.001' : '1';
+    },
+
     getHtmlForProductQuantityEdit : function() {
         var html = '<label for="dialogQuantityQuantity"></label><br />';
         html += '<div class="field-wrapper">';
@@ -46,21 +50,22 @@ foodcoopshop.ModalProductQuantityEdit = {
         return html;
     },
 
-    getHtmlForProductQuantityIsStockProductEdit : function() {
+    getHtmlForProductQuantityIsStockProductEdit : function(isPricePerUnitEnabled, unitName, useWeightAsAmount) {
+        let unitNameString = isPricePerUnitEnabled && useWeightAsAmount ? ' - in ' + unitName : '';
         var html = '<label for="dialogQuantityQuantity"></label><br />';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + '</label>';
-        html += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
+        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + unitNameString + '</label>';
+        html += '<input type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
         html += '<hr />';
         html += '</div>';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.OrdersPossibleUntilAmountOf + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.zeroOrSmallerZero + '.</span></label>';
-        html += '<input max="0" type="number" step="1" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
+        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.OrdersPossibleUntilAmountOf + unitNameString + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.zeroOrSmallerZero + '.</span></label>';
+        html += '<input max="0" type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
         html += '<hr />';
         html += '</div>';
         html += '<div class="field-wrapper">';
-        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.NotificationIfAmountLowerThan + ' (' + foodcoopshop.LocalizedJs.dialogProduct.MinimalStockAmount + ')<br /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings + '</span></label>';
-        html += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
+        html += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.NotificationIfAmountLowerThan + unitNameString + ' (' + foodcoopshop.LocalizedJs.dialogProduct.MinimalStockAmount + ')<br /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings + '</span></label>';
+        html += '<input type="number" step="' + this.getStep(isPricePerUnitEnabled) + '" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
         html += '</div>';
         html += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         return html;
@@ -112,7 +117,18 @@ foodcoopshop.ModalProductQuantityEdit = {
 
         var html;
         if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
-            html = foodcoopshop.ModalProductQuantityEdit.getHtmlForProductQuantityIsStockProductEdit();
+            var productId = row.find('td.cell-id').html();
+            var unitObject = $('#product-unit-object-' + productId);
+            let pricePerUnitEnabled = false;
+            let useWeightAsAmount = false;
+            let unitName = '';
+            if (unitObject.length > 0) {
+                unitData = unitObject.data('product-unit-object');
+                pricePerUnitEnabled = unitData.price_per_unit_enabled;
+                unitName = unitData.name;
+                useWeightAsAmount = unitData.use_weight_as_amount;
+            }
+            html = foodcoopshop.ModalProductQuantityEdit.getHtmlForProductQuantityIsStockProductEdit(pricePerUnitEnabled, unitName, useWeightAsAmount);
         } else {
             html = foodcoopshop.ModalProductQuantityEdit.getHtmlForProductQuantityEdit();
         }
@@ -135,7 +151,9 @@ foodcoopshop.ModalProductQuantityEdit = {
 
         if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
             if (row.find('i.quantity-limit-for-dialog').length > 0) {
-                $(modalSelector + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
+                let quantityLimitValForOverlay = row.find('i.quantity-limit-for-dialog').html();
+                quantityLimitValForOverlay = foodcoopshop.Helper.getStringAsFloat(quantityLimitValForOverlay);
+                $(modalSelector + ' #dialogQuantityQuantityLimit').val(quantityLimitValForOverlay);
             } else {
                 $(modalSelector + ' #dialogQuantityQuantityLimit').val(0);
             }
@@ -143,7 +161,9 @@ foodcoopshop.ModalProductQuantityEdit = {
                 if (row.find('i.sold-out-limit-for-dialog').html().match('fa-times')) {
                     $(modalSelector + ' #dialogQuantitySoldOutLimit').val('');
                 } else {
-                    $(modalSelector + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
+                    let quantitySoldOutLimitValForOverlay = row.find('i.sold-out-limit-for-dialog').html();
+                    quantitySoldOutLimitValForOverlay = foodcoopshop.Helper.getStringAsFloat(quantitySoldOutLimitValForOverlay);
+                    $(modalSelector + ' #dialogQuantitySoldOutLimit').val(quantitySoldOutLimitValForOverlay);
                 }
             } else {
                 $(modalSelector + ' #dialogQuantitySoldOutLimit').val(0);
@@ -152,7 +172,9 @@ foodcoopshop.ModalProductQuantityEdit = {
 
         foodcoopshop.Admin.bindToggleQuantityQuantity(modalSelector);
 
-        $(modalSelector + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
+        let quantityValForOverlay = row.find('span.quantity-for-dialog').html();
+        quantityValForOverlay = foodcoopshop.Helper.getStringAsFloat(quantityValForOverlay);
+        $(modalSelector + ' #dialogQuantityQuantity').val(quantityValForOverlay);
         if (row.find('.amount').html().match('fa-infinity')) {
             $(modalSelector + ' #dialogQuantityAlwaysAvailable').trigger('click');
         }

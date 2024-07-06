@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Model\Entity\Customer;
+use App\Services\ProductQuantityService;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -95,8 +96,9 @@ foreach ($preparedProductAttributes as $attribute) {
     echo $this->element('catalog/amountWrapper', [
         'product' => $product,
         'stockAvailable' => $attribute->stock_available,
+        'unitObject' => $attribute->unit_product_attribute,
         'orderedTotalAmount' => $attribute->ordered_total_amount ?? null,
-        'hideAmountSelector' => $isStockProductOrderPossible,
+        'hideAmountSelector' => $isStockProductOrderPossible || (new ProductQuantityService())->isAmountBasedOnQuantityInUnitsIncludingSelfServiceCheck($product, $attribute->unit_product_attribute),
         'hideIsStockProductIcon' => $orderCustomerService->isSelfServiceModeByUrl(),
     ]);
     echo $this->element('catalog/cartButton', [
