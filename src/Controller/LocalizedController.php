@@ -281,6 +281,7 @@ class LocalizedController extends Controller
                 'for' => __('for'),
                 'approximateDeliveryWeightIn0PerUnit' => __('approximate_delivery_weight_in_{0}_per_unit'),
                 'EditPriceChangeOpenOrderDetailsInfoText' => __('Edit_price_change_open_order_details_info_text'),
+                'EditPriceUseWeightAsAmount' => __('Edit_price_use_weight_as_amount'),
                 'Name' => __('Name'),
                 'ProductRenameInfoText' => __('Product_rename_info_text'),
                 'Unit' => __('Unit'),

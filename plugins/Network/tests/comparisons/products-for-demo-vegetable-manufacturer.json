@@ -156,8 +156,8 @@
                 "id_stock_available": 686,
                 "id_product": 346,
                 "id_product_attribute": 0,
-                "quantity": 97,
-                "quantity_limit": 0,
+                "quantity": "97.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
@@ -275,8 +275,8 @@
                 "id_stock_available": 674,
                 "id_product": 339,
                 "id_product_attribute": 0,
-                "quantity": 2959,
-                "quantity_limit": 0,
+                "quantity": "2959.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
@@ -386,8 +386,8 @@
                 "id_stock_available": 680,
                 "id_product": 344,
                 "id_product_attribute": 0,
-                "quantity": 78,
-                "quantity_limit": 0,
+                "quantity": "78.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
@@ -497,9 +497,9 @@
                 "id_stock_available": 708,
                 "id_product": 349,
                 "id_product_attribute": 0,
-                "quantity": 5,
-                "quantity_limit": -5,
-                "sold_out_limit": 0,
+                "quantity": "5.000",
+                "quantity_limit": "-5.000",
+                "sold_out_limit": "0.000",
                 "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
@@ -551,7 +551,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "tax": {
                 "id_tax": 2,
@@ -600,7 +601,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt",
             "row_class": "main-product"
@@ -631,8 +633,8 @@
                 "id_stock_available": 713,
                 "id_product": 351,
                 "id_product_attribute": 0,
-                "quantity": 999,
-                "quantity_limit": 0,
+                "quantity": "999.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
@@ -685,7 +687,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "tax": {
                 "id_tax": 1,
@@ -734,7 +737,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt 2",
             "row_class": "main-product custom-odd"
@@ -765,8 +769,8 @@
                 "id_stock_available": 714,
                 "id_product": 352,
                 "id_product_attribute": 0,
-                "quantity": 999,
-                "quantity_limit": 0,
+                "quantity": "999.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
@@ -819,7 +823,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "tax": {
                 "id_tax": 1,
@@ -868,7 +873,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "1.000"
+                "quantity_in_units": "1.000",
+                "use_weight_as_amount": 0
             },
             "unchanged_name": "Lagerprodukt mit Gewichtsbarcode",
             "row_class": "main-product"
@@ -921,16 +927,17 @@
                         "name": "kg",
                         "amount": 1,
                         "price_per_unit_enabled": 0,
-                        "quantity_in_units": "0.000"
+                        "quantity_in_units": "0.000",
+                        "use_weight_as_amount": 0
                     },
                     "deposit_product_attribute": null,
                     "stock_available": {
                         "id_stock_available": 710,
                         "id_product": 350,
                         "id_product_attribute": 13,
-                        "quantity": 5,
-                        "quantity_limit": -5,
-                        "sold_out_limit": 0,
+                        "quantity": "5.000",
+                        "quantity_limit": "-5.000",
+                        "sold_out_limit": "0.000",
                         "always_available": 0,
                         "default_quantity_after_sending_order_lists": null
                     }
@@ -961,15 +968,16 @@
                         "name": "kg",
                         "amount": 1,
                         "price_per_unit_enabled": 0,
-                        "quantity_in_units": "0.000"
+                        "quantity_in_units": "0.000",
+                        "use_weight_as_amount": 0
                     },
                     "deposit_product_attribute": null,
                     "stock_available": {
                         "id_stock_available": 711,
                         "id_product": 350,
                         "id_product_attribute": 14,
-                        "quantity": 999,
-                        "quantity_limit": 0,
+                        "quantity": "999.000",
+                        "quantity_limit": "0.000",
                         "sold_out_limit": null,
                         "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
@@ -1001,15 +1009,16 @@
                         "name": "kg",
                         "amount": 1,
                         "price_per_unit_enabled": 1,
-                        "quantity_in_units": "0.500"
+                        "quantity_in_units": "0.500",
+                        "use_weight_as_amount": 0
                     },
                     "deposit_product_attribute": null,
                     "stock_available": {
                         "id_stock_available": 712,
                         "id_product": 350,
                         "id_product_attribute": 15,
-                        "quantity": 999,
-                        "quantity_limit": 0,
+                        "quantity": "999.000",
+                        "quantity_limit": "0.000",
                         "sold_out_limit": null,
                         "always_available": 1,
                         "default_quantity_after_sending_order_lists": null
@@ -1020,8 +1029,8 @@
                 "id_stock_available": 709,
                 "id_product": 350,
                 "id_product_attribute": 0,
-                "quantity": 1004,
-                "quantity_limit": 0,
+                "quantity": "1004.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
@@ -1126,9 +1135,9 @@
             },
             "default_on": 1,
             "stock_available": {
-                "quantity": 5,
-                "quantity_limit": -5,
-                "sold_out_limit": 0,
+                "quantity": "5.000",
+                "quantity_limit": "-5.000",
+                "sold_out_limit": "0.000",
                 "always_available": 0,
                 "default_quantity_after_sending_order_lists": null
             },
@@ -1142,7 +1151,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "category": {
                 "names": [],
@@ -1169,8 +1179,8 @@
             },
             "default_on": 0,
             "stock_available": {
-                "quantity": 999,
-                "quantity_limit": 0,
+                "quantity": "999.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
@@ -1185,7 +1195,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 0,
-                "quantity_in_units": "0.000"
+                "quantity_in_units": "0.000",
+                "use_weight_as_amount": 0
             },
             "category": {
                 "names": [],
@@ -1212,8 +1223,8 @@
             },
             "default_on": 0,
             "stock_available": {
-                "quantity": 999,
-                "quantity_limit": 0,
+                "quantity": "999.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null
@@ -1228,7 +1239,8 @@
                 "name": "kg",
                 "amount": 1,
                 "price_per_unit_enabled": 1,
-                "quantity_in_units": "0.500"
+                "quantity_in_units": "0.500",
+                "use_weight_as_amount": 0
             },
             "category": {
                 "names": [],
@@ -1263,8 +1275,8 @@
                 "id_stock_available": 318,
                 "id_product": 163,
                 "id_product_attribute": 0,
-                "quantity": 988,
-                "quantity_limit": 0,
+                "quantity": "988.000",
+                "quantity_limit": "0.000",
                 "sold_out_limit": null,
                 "always_available": 1,
                 "default_quantity_after_sending_order_lists": null

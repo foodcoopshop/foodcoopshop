@@ -111,12 +111,14 @@ foodcoopshop.Cart = {
 
     updateExistingProduct: function (productContainer, amount, price, deposit, tax, orderedQuantityInUnits, unitName) {
 
-        // update amount
-        var oldAmount = productContainer.find('span.amount span.value');
-        var oldAmountValue = parseInt(oldAmount.html());
-        var newAmount = oldAmountValue + parseInt(amount);
-        oldAmount.html(newAmount);
-        foodcoopshop.Helper.applyBlinkEffect(oldAmount);
+        // update amount, but not if a product with price per unit is added
+        if (orderedQuantityInUnits === undefined) {
+            var oldAmount = productContainer.find('span.amount span.value');
+            var oldAmountValue = parseInt(oldAmount.html());
+            var newAmount = oldAmountValue + parseInt(amount);
+            oldAmount.html(newAmount);
+            foodcoopshop.Helper.applyBlinkEffect(oldAmount);
+        }
 
         // update unity
         var oldUnity = productContainer.find('span.unity');
@@ -276,7 +278,6 @@ foodcoopshop.Cart = {
             var productContainerTmp = productContainer.clone();
             var cartProductSumTmp = $('.cart p.product-sum-wrapper').clone();
             var cartDepositSumTmp = $('.cart p.deposit-sum-wrapper').clone();
-            var cartAmountSumTmp = $('.cart p.amount-sum-wrapper').clone();
             var cartTotalSumTmp = $('.cart p.total-sum-wrapper').clone();
 
             var tmpWrapper = $('#cart p.tmp-wrapper');
@@ -284,10 +285,10 @@ foodcoopshop.Cart = {
             tmpWrapper.append(productContainerTmp);
             tmpWrapper.append(cartProductSumTmp);
             tmpWrapper.append(cartDepositSumTmp);
-            tmpWrapper.append(cartAmountSumTmp);
             tmpWrapper.append(cartTotalSumTmp);
 
-            if (productContainer.length > 0) {
+            let productAlreadyInCart = productContainer.length > 0;
+            if (productAlreadyInCart) {
                 // product already in cart
                 foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, orderedQuantityInUnits, unitName);
             } else {
@@ -302,7 +303,11 @@ foodcoopshop.Cart = {
             foodcoopshop.Cart.updateCartProductSum(price);
             foodcoopshop.Cart.updateCartDepositSum(deposit);
             foodcoopshop.Cart.updateCartTaxSum(tax * amount);
-            foodcoopshop.Cart.updateCartAmountSum(amount);
+
+            // update amount sum, but not if a product with price per unit is added multiple times
+            if (!(productAlreadyInCart && orderedQuantityInUnits > 0)) {
+                foodcoopshop.Cart.updateCartAmountSum(amount);
+            }
             foodcoopshop.Cart.updateCartTotalSum(price + deposit);
 
             var button = productWrapper.find('.ew.active .btn-cart');
@@ -362,12 +367,12 @@ foodcoopshop.Cart = {
         var tmpCartProductSum = $('#cart p.tmp-wrapper p.product-sum-wrapper span.sum');
         var tmpCartDepositSum = $('#cart p.tmp-wrapper p.deposit-sum-wrapper span.sum');
         var tmpCartAmountSum = $('#cart p.tmp-wrapper p.amount-sum-wrapper span.sum');
-        var tmpCartTotalSum = $('#cart p.tmp-wrapper p.total-sum-wrapper span.sum');
+        var tmpCartTotalSum = $('#cart p.tmp-wrapper p.total-sum-wrapper > span.sum');
 
         $('#cart p.product-sum-wrapper span.sum').html(tmpCartProductSum.html());
         $('#cart p.deposit-sum-wrapper span.sum').html(tmpCartDepositSum.html());
         $('#cart p.amount-sum-wrapper span.sum').html(tmpCartAmountSum.html());
-        $('#cart p.total-sum-wrapper span.sum').html(tmpCartTotalSum.html());
+        $('#cart p.total-sum-wrapper > span.sum').html(tmpCartTotalSum.html());
 
         if (foodcoopshop.Helper.isMobile()) {
             $('.responsive-cart span.sum').html(tmpCartTotalSum.html());
@@ -526,7 +531,7 @@ foodcoopshop.Cart = {
     },
 
     updateCartTotalSum: function (amount) {
-
+        
         var cartTotalSum = $('.cart .sums-wrapper .total-sum-wrapper > span.sum');
         if (cartTotalSum.length == 0) {
             return;

@@ -27,6 +27,11 @@ class OrderCustomerService
         return Router::getRequest()->getSession()->read('OrderIdentity');
     }
 
+    public function isSelfServiceMode()
+    {
+        return $this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer();
+    }
+
     public function isSelfServiceModeByUrl()
     {
         $result = Router::getRequest()->getPath() == '/' . __('route_self_service');

@@ -420,7 +420,8 @@ class CartsTable extends AppTable
             $productData['quantityInUnits'] = $unitProduct->quantity_in_units ?? 0;
             $productQuantityInUnits = $unitProduct->quantity_in_units * $cartProduct->amount;
             $markAsSaved = APP_OFF;
-            if (!is_null($orderedQuantityInUnits)) {
+            $orderCustomerService = new OrderCustomerService();
+            if (!is_null($orderedQuantityInUnits) && $orderCustomerService->isSelfServiceMode())  {
                 $productQuantityInUnits = $orderedQuantityInUnits;
                 $markAsSaved = APP_ON;
             }
@@ -523,7 +524,8 @@ class CartsTable extends AppTable
             $productData['quantityInUnits'] = isset($unitProductAttribute->quantity_in_units) ? $unitProductAttribute->quantity_in_units : 0;
             $productQuantityInUnits = $unitProductAttribute->quantity_in_units * $cartProduct->amount;
             $markAsSaved = APP_OFF;
-            if (!is_null($orderedQuantityInUnits)) {
+            $orderCustomerService = new OrderCustomerService();
+            if (!is_null($orderedQuantityInUnits) &&  $orderCustomerService->isSelfServiceMode()) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
                 $markAsSaved = APP_ON;
             }

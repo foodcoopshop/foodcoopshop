@@ -72,7 +72,8 @@ foodcoopshop.SyncProductData = {
                 unit_product_name: 'unit.name',
                 unit_product_amount: 'unit.amount',
                 unit_product_quantity_in_units: 'unit.quantity_in_units',
-                unit_product_price_per_unit_enabled: 'unit.price_per_unit_enabled'
+                unit_product_price_per_unit_enabled: 'unit.price_per_unit_enabled',
+                unit_product_use_weight_as_amount: 'unit.use_weight_as_amount',
             },
             column: 6
         },
