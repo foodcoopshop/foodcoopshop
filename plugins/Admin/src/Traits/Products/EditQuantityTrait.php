@@ -97,12 +97,13 @@ trait EditQuantityTrait
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($oldProduct, $unitObject);
 
             $dirtyFieldsWithNewValues = [];
+            $unitName = $unitObject->name ?? '';
             foreach($entity->getDirty() as $dirtyField) {
                 $newValue = $entity->get($dirtyField);
                 switch($dirtyField) {
                     case 'quantity':
                         $translatedFieldName = __d('admin', 'Available_quantity') . ': '
-                            . __d('admin', 'Old_value') . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $oldStockAvailable, $unitObject->name) . '</b> '
+                            . __d('admin', 'Old_value') . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $oldStockAvailable, $unitName) . '</b> '
                             . __d('admin', 'New_value');
                         break;
                     case 'always_available':
@@ -111,18 +112,18 @@ trait EditQuantityTrait
                         break;
                     case 'default_quantity_after_sending_order_lists':
                         $translatedFieldName = __d('admin', 'Default_quantity_after_sending_order_lists');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitObject->name);
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                     case 'quantity_limit':
                         $translatedFieldName = __d('admin', 'Quantity_limit');
                         break;
                     case 'sold_out_limit':
                         $translatedFieldName = __d('admin', 'Sold_out_limit');
-                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitObject->name);
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                 }
                 if (isset($translatedFieldName)) {
-                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitObject->name) . '</b>';
+                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName) . '</b>';
                 }
             }
 
