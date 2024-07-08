@@ -32,6 +32,8 @@
   <span> · </span>
   <a href="https://demo-en.foodcoopshop.com">English Demo</a>
   <span> · </span>
+  <a href="https://demo-ru.foodcoopshop.com">Russian Demo</a>
+  <span> · </span>
   <a href="https://foodcoopshop.github.io/users">Users</a>
   <span> · </span>
   <a href="https://signal.group/#CjQKIBEXUVQCyyQu3-7kOgvPIuFDcAN_12WPTAWs4L8kkyGZEhBefC_uCkp2pqHpl8XljqlN">Signal Support Group</a>
