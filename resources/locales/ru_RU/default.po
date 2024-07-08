@@ -929,10 +929,10 @@ msgid "Change_status"
 msgstr "Изменить статус"
 
 msgid "Were_the_products_picked_up?"
-msgstr "Где забрать товар?"
+msgstr "Где получить товар?"
 
 msgid "All_products_picked_up?"
-msgstr "Забраны все товары?"
+msgstr "Получены все товары?"
 
 msgid "Were_the_products_of_all_members_picked_up?"
 msgstr "Где выдаются товары всех покупателей?"
@@ -1049,10 +1049,10 @@ msgid "First_delivery_day"
 msgstr "Первый день доставки"
 
 msgid "First_delivery_day_info_(one_product)."
-msgstr "Товар можно заказать с этого момента."
+msgstr "Дата получения товара."
 
 msgid "First_delivery_day_info_(multiple_products)."
-msgstr "Товары можно заказать с этого момента."
+msgstr "Дата получения товаров."
 
 msgid "can_be_left_blank"
 msgstr "можно оставить пустым"
