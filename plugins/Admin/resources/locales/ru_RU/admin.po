@@ -2034,7 +2034,7 @@ msgid "My_profile"
 msgstr "Мой профиль"
 
 msgid "All_products_picked_up?"
-msgstr "Забраны все товары?"
+msgstr "Получены все товары?"
 
 msgid "Back_to_deposit_account"
 msgstr "Вернуться в депозитный счёт"
@@ -2094,7 +2094,7 @@ msgid "Order_date"
 msgstr "Дата заказа"
 
 msgid "products_picked_up"
-msgstr "Забраны все товары"
+msgstr "Получены все товары"
 
 msgid "Click_to_change_price"
 msgstr "Нажмите для изменения цены"
