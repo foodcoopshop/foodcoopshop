@@ -971,10 +971,10 @@ msgid "Edit_price_change_open_order_details_info_text"
 msgstr "Также адаптировать цены для всех открытых заказов?"
 
 msgid "Edit_price_use_weight_as_amount"
-msgstr "Use weight as amount?"
+msgstr "Использовать вес как количество?"
 
 msgid "Name"
-msgstr "Name"
+msgstr "Название"
 
 msgid "Product_rename_info_text"
 msgstr "Важно: Пожалуйста не переименовывайте название товаров. Вместо этого создайте новый товар!"
