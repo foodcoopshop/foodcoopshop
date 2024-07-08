@@ -257,7 +257,11 @@ $this->element('addScript', [
 
         <tr>
             <td>app.orderStates</td>
-            <td><?php echo json_encode(Configure::read('app.orderStates')); ?></td>
+            <td><?php
+                foreach(Configure::read('app.orderStates') as $key => $value) {
+                    echo $value . ' (' . $key . ')<br />';
+                }
+            ?></td>
         </tr>
 
         <tr>
