@@ -64,7 +64,7 @@ foodcoopshop.ModalProductPriceEdit = {
         html += '</select><br />';
         html += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
         if (isStockProduct) {
-            html += '<label class="checkbox" style="margin-top:10px ! important;">';
+            html += '<br /><label class="checkbox" style="margin-top:10px ! important;">';
             html += '<input type="checkbox" name="dialogPriceUseWeightAsAmount" id="dialogPriceUseWeightAsAmount" />';
             html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.dialogProduct.EditPriceUseWeightAsAmount + '</span>';
             html += '</label>';
