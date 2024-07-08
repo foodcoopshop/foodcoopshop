@@ -2437,7 +2437,7 @@ msgid "docs_route_order_handling"
 msgstr "obrabotka-zakazov"
 
 msgid "You_can_change_your_imprint_by_yourself."
-msgstr "You can change your imprint by yourself."
+msgstr "Информацию о себе, вы можете сменить самостоятельно."
 
 msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
 msgstr "Ваши товары видны только для покупателей. Для просмотра товаров как видят его покупатели, вам необходимо войти."
