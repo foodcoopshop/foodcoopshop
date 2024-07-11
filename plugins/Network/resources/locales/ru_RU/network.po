@@ -1,0 +1,159 @@
+msgid "No_fields_were_selected_for_synchronizing."
+msgstr "Не выбраны поля для синхронизации."
+
+msgid "Image"
+msgstr "Изображение"
+
+msgid "Name"
+msgstr "Название"
+
+msgid "Stock_product"
+msgstr "Товар на складе"
+
+msgid "Amount"
+msgstr "Кол-во"
+
+msgid "Price"
+msgstr "Цена"
+
+msgid "Deposit"
+msgstr "Депозит"
+
+msgid "Delivery_rhythm"
+msgstr "График доставки"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "product"
+msgstr "товар"
+
+msgid "products"
+msgstr "товары"
+
+msgid "attribute"
+msgstr "вариант"
+
+msgid "attributes"
+msgstr "варианты"
+
+msgid "{0}_and_{1}_({2})_have_been_successfully_synchronized."
+msgstr "{0} и {1} ({2}) были успешно синхронизированы."
+
+msgid "Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized."
+msgstr "С помощью {0} там были {1} и {2} ({3}) успешно синхронизированы."
+
+msgid "Errors_occurred_while_synchronizing!"
+msgstr "При синхронизации произошли ошибки!"
+
+msgid "{0}_has_not_been_updated."
+msgstr "{0} не был обновлён."
+
+msgid "{0}_have_not_been_updated."
+msgstr "{0} не были обновлены."
+
+msgid "Add_remote_foodcoop"
+msgstr "Добавить дистанционный сервер"
+
+msgid "Edit_remote_foodcoop"
+msgstr "Редактировать дистанционный сервер"
+
+msgid "Errors_while_saving!"
+msgstr "Ошибка при сохранении!"
+
+msgid "created"
+msgstr "созданный"
+
+msgid "changed"
+msgstr "изменённый"
+
+msgid "deleted"
+msgstr "удалённый"
+
+msgid "The_remote_foodcoop_{0}_has_been_{1}."
+msgstr "Дистанционный foodcoop {0} был {1}."
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "Attribute"
+msgstr "Вариант"
+
+msgid "{0}_{1}_was_successfully_associated."
+msgstr "{0} {1} был успешно связан."
+
+msgid "{0}_{1}_could_not_be_associated."
+msgstr "{0} {1} не может быть связан."
+
+msgid "Associate_products"
+msgstr "Связанные товары"
+
+msgid "The_product_{0}_has_been_deleted_successfully."
+msgstr "Товар {0} был успешно удалён."
+
+msgid "While_deleting_the_product_{0}_there_has_an_error_occurred."
+msgstr "Во время удаления товара {0} произошла ошибка."
+
+msgid "Synchronize_products"
+msgstr "Синхронизировать товары"
+
+#, fuzzy
+msgid "There_have_not_been_any_products_associated_from_your_master_foodcoop_{0}_to_your_remote_foodcoop(s)_{1}."
+msgstr "Не было никаких продуктов, связанных с master сервер {0} к вашему удалённому серверу(ам) {1}."
+
+msgid "The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash)."
+msgstr "Домен может содержать только https:// and the hostname (без косой черты)."
+
+msgid "The_domain_needs_to_start_with_https://."
+msgstr "Домен должен начинаться с https://."
+
+msgid "The_domain_already_exists."
+msgstr "Домен уже существует."
+
+msgid "docs_route_network_module"
+msgstr "сетевой- модуль"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Cancel"
+msgstr "Отменить"
+
+msgid "Caution!_Editing_a_remote_foodcoop_can_result_in_problems_if_manufacturers_already_associated_products!"
+msgstr "<b>Осторожно!</b> Редактирование дистанционно сервера может привести к проблемам если организаторы уже связали товары!"
+
+msgid "Remote_foodcoop"
+msgstr "Дистанционный сервер"
+
+msgid "Domain_of_the_foodcoop_needs_to_start_with_https"
+msgstr "Домен сервера должен начинаться с https"
+
+msgid "Delete_remote_foodcoop"
+msgstr "Удалить дистанционный сервер"
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Проверьте и не забудьте нажать кнопку сохранить."
+
+msgid "Load_preview"
+msgstr "Загрузить предпросмотр"
+
+msgid "Show_only_products_with_differences"
+msgstr "Показать только товары с различиями"
+
+msgid "Fields_with_red_background_show_differences_between_master_foodcoop_and_remote_foodcoop."
+msgstr "Поля с красным фоном показывают различия между master сервер и дистанционным сервером."
+
+msgid "Perfect!_You_can_lean_back_and_relax_as_all_products_are_synchronized."
+msgstr "Отлично! Вы можете откинуться назад и расслабиться, так как все продукты синхронизированы."
+
+msgid "Load_products"
+msgstr "Загружать товары"
+
+msgid "Show_more"
+msgstr "Показать больше"
+
+msgid "Email"
+msgstr "Эл.почта"
+
+msgid "Password"
+msgstr "Пароль"

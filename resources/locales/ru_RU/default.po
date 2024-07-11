@@ -1,0 +1,2819 @@
+msgid "Access_denied_please_sign_in."
+msgstr "Доступ запрещён, пожалуйста войдите."
+
+msgid "This_order_contains_the_variable_member_fee."
+msgstr "Этот заказ включает изменяемый членский сбор."
+
+msgid "order_state_order_placed"
+msgstr "заказ размещён"
+
+msgid "order_state_order_list_sent_to_manufacturer"
+msgstr "Лист заказа отправлен производителю"
+
+msgid "order_state_billed_cashless"
+msgstr "выставление счёта завершено"
+
+msgid "order_state_billed_cash"
+msgstr "выставление счёта завершено и оплачивается наличными"
+
+msgid "route_sign_in"
+msgstr "vhod"
+
+msgid "route_sign_out"
+msgstr "vyhod"
+
+msgid "route_registration"
+msgstr "registraciya"
+
+msgid "route_registration_successful"
+msgstr "uspeshnaya-registraciya"
+
+msgid "route_information_about_right_of_withdrawal"
+msgstr "informaciya-o-prave-vozvrata"
+
+msgid "route_terms_of_use"
+msgstr "usloviya-ispolzovaniya"
+
+msgid "route_privacy_policy"
+msgstr "politika-bezopasnosti"
+
+msgid "route_list_of_allergens"
+msgstr "spisok-allergenov"
+
+msgid "route_accept_terms_of_use"
+msgstr "prinyat-usloviya-ispolzovaniya"
+
+msgid "route_new_products"
+msgstr "novye-tovary"
+
+msgid "route_request_new_password"
+msgstr "zapros-novogo-parolya"
+
+msgid "route_activate_new_password"
+msgstr "aktivaciya-novogo-parolya"
+
+msgid "route_news_list_old"
+msgstr "novosti"
+
+msgid "route_news_list"
+msgstr "blog-arhiv"
+
+msgid "route_news_detail"
+msgstr "novosti"
+
+msgid "route_search"
+msgstr "poisk"
+
+msgid "route_category"
+msgstr "kategoriya"
+
+msgid "route_product"
+msgstr "tovar"
+
+msgid "route_manufacturer_list"
+msgstr "proizvoditel"
+
+msgid "route_manufacturer_detail"
+msgstr "proizvoditel"
+
+msgid "route_content"
+msgstr "soderzhanie"
+
+msgid "route_cart"
+msgstr "korzina"
+
+msgid "route_cart_show"
+msgstr "pokazat"
+
+msgid "route_cart_finish"
+msgstr "zakonchit"
+
+msgid "route_cart_finished"
+msgstr "zakoncheno"
+
+msgid "route_self_service"
+msgstr "samoobsluzhivanie"
+
+msgid "Runtime"
+msgstr "Продожительность"
+
+msgid "Database_backup_successful"
+msgstr "Резервное копирование базы данных успешно завершено"
+
+msgid "Please_add_credit"
+msgstr "Пожалуйста, пополните баланс"
+
+msgid "Sum"
+msgstr "Сумма"
+
+msgid "Sent_emails"
+msgstr "Эл.письма отправлены"
+
+msgid "today"
+msgstr "сегодня"
+
+msgid "tomorrow"
+msgstr "завтра"
+
+msgid "Order_reminder"
+msgstr "Напоминание о заказе"
+
+msgid "Pickup_reminder_for"
+msgstr "Напоминание о дне выдаче"
+
+msgid "{0,plural,=1{1_delivery_note_was} other{#_delivery_notes_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 примечание к доставке было} other{# примечания к доставкам были}} успешно сгенерированны."
+
+msgid "Delivery_note_for_{0}"
+msgstr "Доставка отмечена для {0}"
+
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
+msgstr "{0,plural,=1{1 счёт был} other{# счета были}} успешно сгенерированны."
+
+msgid "to_(time_context)"
+msgstr "в"
+
+msgid "Generated_invoices"
+msgstr "Сгенерированные счета"
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr "Счета для {0} были отправлены"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 товар} other{# товары}}"
+
+msgid "Manufacturer"
+msgstr "Производитель"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Счёт №"
+
+msgid "Sent"
+msgstr "Отправлено"
+
+msgid "Products"
+msgstr "Товары"
+
+msgid "Total_sum"
+msgstr "Итоговая сумма"
+
+msgid "Sent_order_lists"
+msgstr "Отправлены списки заказов"
+
+msgid "Delivery_day"
+msgstr "День доставки"
+
+msgid "Blog_archive"
+msgstr "Архив блога"
+
+msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
+msgstr "Для размещения заказа <a href=\"{0}\">пожалуйста войдите или зарегистрируйтесь</a>."
+
+msgid "No_access_for_manufacturers."
+msgstr "Извините, но производитель не имеет доступа."
+
+msgid "Your_cart"
+msgstr "Ваша корзина"
+
+msgid "Finish_cart"
+msgstr "Оформить корзину"
+
+msgid "Your_cart_was_empty."
+msgstr "Пустая корзина."
+
+msgid "Your_order_has_been_placed"
+msgstr "Ваш заказ был размещён"
+
+msgid "Product_{0}_was_not_available_in_cart."
+msgstr "Товар {0} не был доступен в корзине."
+
+msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
+msgstr "Ваша корзина пуста, сейчас вы можете добавить новые товары."
+
+msgid "Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart."
+msgstr "Ваша корзина пуста и ваш последний заказ был загружен в корзину."
+
+msgid "You_can_add_more_products_now."
+msgstr "Сейчас вы можете добавить больше товаров."
+
+msgid "1_product_is_not_available_any_more."
+msgstr "1 товар больше недоступен."
+
+msgid "{0}_products_are_not_available_any_more."
+msgstr "{0} товары больше недоступны."
+
+msgid "There_are_no_orders_available."
+msgstr "Нет  доступных заказов."
+
+msgid "New_products"
+msgstr "Новые товары"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Accept_terms_of_use"
+msgstr "Принятие условий использования"
+
+msgid "Accepting_the_terms_of_use_have_been_saved."
+msgstr "Принятие условий использования было сохранено."
+
+msgid "Your_email_address_was_already_activated_or_the_activation_code_was_not_valid."
+msgstr "Ваш адрес эл.почты уже был активирован или код активации был не действителен."
+
+msgid "Your_email_address_has_been_activated_successfully."
+msgstr "Ваш адрес эл.почты был успешно активирован."
+
+msgid "Filename_Terms-of-use"
+msgstr "Условия использования"
+
+msgid "Your_email_address_has_been_activated_successfully._Your_password_has_been_sent_to_you."
+msgstr "Ваш адрес эл.почты был успешно активирован, ваш пароль был отправлен вам."
+
+msgid "Request_new_password"
+msgstr "Запросить новый пароль"
+
+msgid "Errors_while_saving!"
+msgstr "Ошибка при сохранении!"
+
+msgid "New_password_request_for_{0}"
+msgstr " Запрос нового пароля для {0}"
+
+msgid "We_successfully_sent_the_activation_link_for_your_new_password_to_you."
+msgstr "Мы успешно отправили вам ссылку для вашего нового пароля."
+
+msgid "Your_new_password_was_already_activated_or_the_activation_code_was_not_valid."
+msgstr "Ваш новый пароль был активирован или код активации недействителен."
+
+msgid "Your_new_password_was_successfully_activated_and_sent_to_you."
+msgstr "Ваш новый пароль успешно активирован и отправлен вам."
+
+msgid "New_password_for_{0}"
+msgstr "Новый пароль для {0}"
+
+msgid "Sign_in"
+msgstr "Войти"
+
+msgid "Sign_in_for_self_service"
+msgstr "Войти в сервис самообслуживания"
+
+msgid "You_are_already_signed_in."
+msgstr "Вы уже вошли."
+
+msgid "Signing_in_failed_account_inactive_or_password_wrong?"
+msgstr "Вход не удался. Учётная запись не активирована или неправильный пароль?"
+
+msgid "{0}_created_an_account."
+msgstr "{0} учётная запись создана."
+
+msgid "Welcome"
+msgstr "Добро пожаловать"
+
+msgid "New_registration_{0}"
+msgstr "Новая регистрация {0}"
+
+msgid "Your_registration_was_successful."
+msgstr "Вы успешно зарегистрировались."
+
+msgid "Account_created_successfully"
+msgstr "Учётная запись успешно создана"
+
+msgid "You_have_been_signed_out."
+msgstr "Вы вышли из учётной записи."
+
+msgid "Feedback"
+msgstr "Отзыв"
+
+msgid "All_products"
+msgstr "Все товары"
+
+msgid "datepicker_close"
+msgstr "закрыть"
+
+msgid "datepicker_prev"
+msgstr "пред"
+
+msgid "datepicker_next"
+msgstr "след"
+
+msgid "datepicker_today"
+msgstr "сегодня"
+
+msgid "WeekHeader"
+msgstr "Нед."
+
+msgid "Really_sign_out?"
+msgstr "Вы действительно хотите выйти?"
+
+msgid "Sign_out?"
+msgstr "Выйти?"
+
+msgid "An_error_occurred"
+msgstr "Произошла ошибка"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Cancel"
+msgstr "Отменить"
+
+msgid "Cancel_order?"
+msgstr "Отменить заказ?"
+
+msgid "Really_cancel_order?"
+msgstr "Вы действительно хотите отменить заказ?"
+
+msgid "January"
+msgstr "Январь"
+
+msgid "February"
+msgstr "Февраль"
+
+msgid "March"
+msgstr "Март"
+
+msgid "April"
+msgstr "Апрель"
+
+msgid "May"
+msgstr "Май"
+
+msgid "June"
+msgstr "Июнь"
+
+msgid "July"
+msgstr "Июль"
+
+msgid "August"
+msgstr "Август"
+
+msgid "September"
+msgstr "Сентябрь"
+
+msgid "October"
+msgstr "Октябрь"
+
+msgid "November"
+msgstr "Ноябрь"
+
+msgid "December"
+msgstr "Декабрь"
+
+msgid "JanuaryShort"
+msgstr "Янв"
+
+msgid "FebruaryShort"
+msgstr "Фев"
+
+msgid "MarchShort"
+msgstr "Март"
+
+msgid "AprilShort"
+msgstr "Апр"
+
+msgid "MayShort"
+msgstr "Май"
+
+msgid "JuneShort"
+msgstr "Июн"
+
+msgid "JulyShort"
+msgstr "Июл"
+
+msgid "AugustShort"
+msgstr "Aвг"
+
+msgid "SeptemberShort"
+msgstr "Сент"
+
+msgid "OctoberShort"
+msgstr "Окт"
+
+msgid "NovemberShort"
+msgstr "Ноя"
+
+msgid "DecemberShort"
+msgstr "Дек"
+
+msgid "Monday"
+msgstr "Понедельник"
+
+msgid "Tuesday"
+msgstr "Вторник "
+
+msgid "Wednesday"
+msgstr "Среда"
+
+msgid "Thursday"
+msgstr "Четверг"
+
+msgid "Friday"
+msgstr "Пятница"
+
+msgid "Saturday"
+msgstr "Суббота"
+
+msgid "Sunday"
+msgstr "Воскресенье"
+
+msgid "MondayShort"
+msgstr "Пнд"
+
+msgid "TuesdayShort"
+msgstr "Втр"
+
+msgid "WednesdayShort"
+msgstr "Срд"
+
+msgid "ThursdayShort"
+msgstr "Четв"
+
+msgid "FridayShort"
+msgstr "Пятн"
+
+msgid "SaturdayShort"
+msgstr "Суб"
+
+msgid "SundayShort"
+msgstr "Вск"
+
+msgid "Show_more"
+msgstr "Показать больше"
+
+msgid "Show_less"
+msgstr "Показать меньше"
+
+msgid "Close"
+msgstr "Закрыть"
+
+# раз (times)
+msgid "You_have_already_ordered_{0}_{1}_times_for_{2}."
+msgstr "Вы уже сделали заказ {0} {1} х для {2}."
+
+msgid "Firstname"
+msgstr "Имя"
+
+msgid "Lastname"
+msgstr "Фамилия"
+
+msgid "Contact_person"
+msgstr "Контактное лицо"
+
+msgid "Company_name"
+msgstr "Название компании"
+
+msgid "Please_enter_the_contact_person"
+msgstr "Пожалуйста введите контактное лицо"
+
+msgid "Please_enter_your_lastname"
+msgstr "Пожалуйста введите фамилию"
+
+msgid "Empty_cart"
+msgstr "Удалить товары из корзины"
+
+msgid "deposit"
+msgstr "Депозит"
+
+msgid "Really_empty_cart?"
+msgstr "Очистить корзину?"
+
+msgid "Load_past_order"
+msgstr "Загрузить прошлый заказ"
+
+msgid "Load_past_order_dialog_description_html"
+msgstr "<p>Выбранный заказ будет загружен и <b>текущая корзина будет опустошена</b>.</p><p>Вы можете добавить товары после.</p>"
+
+msgid "Remove_from_cart?"
+msgstr "Удалить из корзины?"
+
+msgid "for_each"
+msgstr "для каждого"
+
+msgid "approx."
+msgstr "прим."
+
+msgid "Pickup_day"
+msgstr "День выдачи"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "Manufacturers"
+msgstr "Производитель"
+
+msgid "Pages"
+msgstr "Страницы"
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "Show_all_products"
+msgstr "Показать все товары"
+
+msgid "Place_order_for"
+msgstr "Разместить заказ для"
+
+msgid "Close_all_orders?"
+msgstr "Закрыть все заказы?"
+
+msgid "Really_close_all_orders?"
+msgstr "Действительно закрыть все видимые заказы?"
+
+msgid "Email_addresses"
+msgstr "Адреса эл.почты"
+
+msgid "Decrease_amount"
+msgstr "Уменьшить количество"
+
+msgid "Stock"
+msgstr "На складе"
+
+msgid "New_amount"
+msgstr "Новое количество"
+
+msgid "Why_is_amount_decreased_(mandatory_field)?"
+msgstr "Почему уменьшилось количество (обязательно)?"
+
+msgid "Adapt_price?"
+msgstr "Корректировать цену?"
+
+msgid "ordered_by"
+msgstr "заказан"
+
+msgid "Explaination_text_apdapt_price_form_apapt_weight."
+msgstr "Чтобы скорректировать вес, пожалуйста, измените значение \"вес\" справа. После этого цена будет адаптирована автоматически и реальный вес будет напечатан на счёте."
+
+msgid "Why_is_price_adapted_(optional_field)?"
+msgstr "Почему цена скорректирована (необязательно)?"
+
+msgid "Original_price_without_reduction_of_price_in_time"
+msgstr "Первоначальная цена без снижения цены во времени"
+
+msgid "From_which_really_paid_in"
+msgstr "Из которого действительно заплачено"
+
+msgid "Adapt_weight?"
+msgstr "Корректировать вес?"
+
+msgid "Delivered_weight"
+msgstr "Доставленный вес"
+
+msgid "Delivered_total_weight"
+msgstr "Доставленный общий вес"
+
+msgid "Base_price"
+msgstr "Базовая цена "
+
+msgid "Price_is_automatically_adapted_after_save."
+msgstr "Цена будет автоматически скорректирована после сохранения."
+
+msgid "Do_not_automatically_apapt_price_just_change_weight."
+msgstr "Не корректируйте цену автоматически, просто измените вес."
+
+msgid "Calculator"
+msgstr "Калькулятор"
+
+msgid "Example_given_abbr"
+msgstr "Напр."
+
+msgid "Really_delete_ordered_product?"
+msgstr "Действительно удалить заказанный товар?"
+
+msgid "Product_cancellation"
+msgstr "Отмена"
+
+msgid "Do_you_really_want_to_cancel_product_{0}?"
+msgstr "Вы действительно хотите отменить товар {0}?"
+
+msgid "Do_you_really_want_to_cancel_product_{0}_from_{1}?"
+msgstr "Вы действительно хотите отменить товар {0} от производителя {1}?"
+
+msgid "Why_is_product_cancelled_(mandatory_field)?"
+msgstr "Почему товар отменён (обязательно)?"
+
+msgid "Why_are_products_cancelled_(mandatory_field)?"
+msgstr "Почему товары отменены (обязательно)?"
+
+msgid "Yes_do_cancel_button!"
+msgstr "Отменить товар!"
+
+msgid "Please_only_cancel_if_ok_for_manufacturer!"
+msgstr "Пожалуйста отменяйте только если это приемлемо для производителя!"
+
+msgid "You_selected_1_product."
+msgstr "Вы выбрали 1 товар."
+
+msgid "You_selected_{0}_products."
+msgstr "Вы выбрали {0} товаров."
+
+msgid "Adapt_amount_reason_is_mandatory."
+msgstr "Пожалуйста, скажите нам почему вы уменьшили количество."
+
+msgid "Adapt_price_reason_is_mandatory."
+msgstr "Пожалуйста, скажите нам почему вы скорректировали цену."
+
+msgid "Cancellation_reason_is_mandatory."
+msgstr "Пожалуйста, скажите нам почему вы отменили товар."
+
+msgid "Please_enter_a_number."
+msgstr "Пожалуйста введите номер."
+
+msgid "Add_new_attribute_for_product"
+msgstr "Добавьте новый вариант для этого товара"
+
+msgid "Please_chose_the_new_attribute_for_product_{0}."
+msgstr "Пожалуйста выберите новый вариант для товаров {0}."
+
+msgid "Attention_attributes_are_shown_in_same_order_as_added_and_this_cannot_be_changed_afterwards."
+msgstr "<b>Внимание:</b> Варианты указаны в том же порядке как они добавлены. Это не может быть изменено после."
+
+msgid "This_function_can_only_be_used_if_attributes_exist."
+msgstr "Эта функция может быть использована только если существуют варианты."
+
+msgid "Changing_default_attribute_info_text_{0}_html"
+msgstr "<p> Вариант по умолчанию, это предварительно выбранный вариант при заказе.</p><p>Действительно изменить вариант по умолчанию на {0}?</p>"
+
+msgid "Change_default_attribute"
+msgstr "Изменить вариант по умолчанию"
+
+msgid "Change_categories"
+msgstr "Изменить категории"
+
+msgid "Weight"
+msgstr "Вес"
+
+msgid "Enter_approximate_weight_in_price_dialog."
+msgstr "Пожалуйста введите прим. вес в диалоговом окне цены."
+
+msgid "Change_tax_rate"
+msgstr "Изменить налоговую ставку"
+
+msgid "Show_product_as_new?"
+msgstr "Показывать товар как \"новый\""
+
+msgid "Do_not_show_product_as_new?"
+msgstr "Показывать товар как \"не новый\""
+
+msgid "Really_show_product_{0}_as_new?"
+msgstr "Вы действительно хотите показать товар {0} как \"новый\"?"
+
+msgid "Really_do_not_show_product_{0}_as_new?"
+msgstr "Вы действительно хотите показать товар {0} как \"не новый\"?"
+
+msgid "Activate"
+msgstr "Активировать"
+
+msgid "Deactivate"
+msgstr "Деактивировать"
+
+msgid "Activate_product"
+msgstr "Вы действительно хотите активировать товар?"
+
+msgid "Deactivate_product"
+msgstr "Вы действительно хотите деактивировать товар?"
+
+msgid "Activate_member?"
+msgstr "Активировать покупателя?"
+
+msgid "Deactivate_member?"
+msgstr "Деактивировать покупателя?"
+
+msgid "Really_activate_member_{0}_?"
+msgstr "Вы действительно хотите активировать покупателя {0}?"
+
+msgid "Really_deactivate_member_{0}?"
+msgstr "Вы действительно хотите деактивировать покупателя {0}?"
+
+msgid "Yes_info_mail_will_be_sent"
+msgstr "Да (информация будет отправлена по эл.почте)"
+
+msgid "Really_activate_product_{0}_?"
+msgstr "Вы действительно хотите активировать товар {0}?"
+
+msgid "Really_deactivate_product_{0}?"
+msgstr "Вы действительно хотите деактивировать товар {0}?"
+
+msgid "Edit_attribute"
+msgstr "Редактировать вариант"
+
+msgid "Delete_attribute_{0}?"
+msgstr "Удалить вариант {0}?"
+
+# Отметить галочкой об удалении профиля
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Отметьте и не забудьте нажать кнопку сохранить."
+
+msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
+msgstr "Пожалуйста выберите если вы хотите добавить возврат средств или пополнить баланс."
+
+msgid "Please_chose_the_type_of_your_payment."
+msgstr "Пожалуйста выберите способ оплаты"
+
+msgid "Delete_payment"
+msgstr "Удалить оплату"
+
+msgid "Really_delete_payment?"
+msgstr "Вы действительно хотите удалить оплату?"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Amount"
+msgstr "Кол-во"
+
+msgid "Amount_(Money)"
+msgstr "Кол-во"
+
+msgid "Please_chose_at_least_one_month."
+msgstr "Пожалуйста выберите по крайней мере один месяц."
+
+msgid "Delete_member?"
+msgstr "Удалить покупателя?"
+
+msgid "Really_delete_member?"
+msgstr "Действительно удалить покупателя?"
+
+msgid "Be_careful_there_is_no_way_back!"
+msgstr "Будьте осторожны, вы не сможете отменить это действие!"
+
+msgid "Errors_occurred_while_member_was_deleted"
+msgstr "Во время удаления покупателя произошла ошибка"
+
+msgid "Errors_occurred_while_product_status_was_changed"
+msgstr "Произошла ошибка во время изменения статуса товара"
+
+msgid "Delete_products?"
+msgstr "Удалить товары?"
+
+msgid "Really_delete_{0}_products?"
+msgstr "Действительно удалить {0} товары?"
+
+msgid "Errors_occurred_while_products_were_deleted"
+msgstr "Произошла ошибка во время удаления товаров"
+
+msgid "Delete_product?"
+msgstr "Удалить товар?"
+
+msgid "Really_delete_1_product?"
+msgstr "Вы действительно хотите удалить один товар?"
+
+msgid "Errors_occurred_while_product_was_deleted"
+msgstr "Произошла ошибка при удалении товара"
+
+msgid "Add_comment"
+msgstr "Добавить комментарий"
+
+msgid "Please_cancel_all_ordered_products_before_cancelling_the_order."
+msgstr "Пожалуйста отмените все заказанные товары перед отменой заказа."
+
+msgid "Add_new_product?"
+msgstr "Добавить новый товар?"
+
+msgid "This_function_is_not_available_today."
+msgstr "Эта функция сегодня недоступна."
+
+msgid "Manually_send_order_list?"
+msgstr "Отправить лист заказа вручную?"
+
+msgid "Really_manually_send_order_list_to_{0}?"
+msgstr "Вы действительно хотите отправить лист заказа вручную для {0}?"
+
+msgid "Order_period"
+msgstr "Период заказа"
+
+msgid "An_existing_order_list_will_be_overwritten!"
+msgstr "Существующий лист заказа будет переписан!"
+
+msgid "Change_group_for"
+msgstr "Изменить группу для"
+
+msgid "The_user_needs_to_sign_again."
+msgstr "Пользователь должен войти снова."
+
+msgid "Member"
+msgstr "Покупатель"
+
+msgid "Why_is_pickup_day_changed_(optional_field)?"
+msgstr "Почему день выдачи изменён (необязательно)?"
+
+msgid "Change_pickup_day"
+msgstr "Изменить день выдачи"
+
+msgid "New_pickup_day"
+msgstr "Новый день выдачи"
+
+msgid "Change_pickup_day_invoices_info_text"
+msgstr "Когда вы изменили день выдачи, пожалуйста примите к сведению что день выдачи важен для автоматической генерации счетов!"
+
+msgid "Change_pickup_day_invoices_reset_order_state_info_text"
+msgstr "Показать товары снова в будущих списках заказа"
+
+msgid "products"
+msgstr "товары"
+
+msgid "product"
+msgstr "товар"
+
+msgid "{0}_email_addresses_have_been_copied_successfully_to_your_clipboard."
+msgstr "{0} адрес эл.почты был успешно скопирован в буфер обмена."
+
+msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
+msgstr "Один адрес эл.почты был успешно скопирован в буфер обмена."
+
+msgid "The_url_of_the_file_has_been_copied_successfully_to_your_clipboard."
+msgstr "url загруженного файла был успешно скопирован в буфер обмена."
+
+msgid "Upload_image_or_file"
+msgstr "Загрузить изображение или файл"
+
+msgid "Emoji_explanation_text"
+msgstr ""
+"Вы можете вставить эмодзи следующим образом:\n"
+"- Windows: Windows-key и . (точка)\n"
+"- Apple: Ctrl-cmd-space\n"
+"- Смартфон: вы найдете эмодзи согласно настройкам вашей клавиатуры"
+
+msgid "The_table_content_was_copied_successfully_to_your_clipboard."
+msgstr "Содержание таблицы было успешно скопировано в ваш буфер обмена."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "Причина изменения покупателя обязательна."
+
+msgid "Why_is_the_member_edited?"
+msgstr "Почему заказанный товар передан другому покупателю?"
+
+msgid "Change_member"
+msgstr "Передать товар другому покупателю"
+
+msgid "To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?"
+msgstr "Какому покупателю следует передать заказанный товар {0} от {1} ?"
+
+msgid "Please_select_new_member."
+msgstr "Пожалуйста выберите нового покупателя."
+
+msgid "Please_select_a_member."
+msgstr "Пожалуйста выберите покупателя."
+
+msgid "Amount_that_should_be_changed_to_member?"
+msgstr "Количество которое должно быть передано покупателю?"
+
+msgid "Please_select..."
+msgstr "Пожалуйста выберите..."
+
+msgid "all"
+msgstr "все"
+
+msgid "Add_product_feedback"
+msgstr "Написать отзыв о товаре"
+
+msgid "Add_product_feedback_explanation_text_{0}."
+msgstr "Ваш отзыв будет отправлен производителю {0} после успешного сохранения, вы <b>не сможете изменить его </b> потом. Производитель получит ваше имя и адрес эл. почты для возможной обратной связи."
+
+msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
+msgstr "Вы сможете изменить график доставки для нескольких продуктов выбрав их и затем нажав на кнопку \"Действия\"."
+
+msgid "Generate_invoice"
+msgstr "Генерировать счёт"
+
+msgid "Really_generate_invoice_for_{0}?"
+msgstr "Действительно генерировать счёт для {0}?"
+
+msgid "Show_preview"
+msgstr "Предварительный просмотр"
+
+msgid "Paid_in_cash"
+msgstr "Оплата наличными"
+
+msgid "Really_cancel_invoice_number_{0}_of_{1}?"
+msgstr "Действительно отменить счёт {0} от {1}?"
+
+msgid "Cancel_invoice"
+msgstr "Отменить счёт"
+
+msgid "The_order_was_placed_successfully."
+msgstr "Заказ был успешно размещён."
+
+msgid "Errors_occurred_while_calculating_selling_price."
+msgstr "Произошли ошибки при расчете цены продажи."
+
+msgid "Calculate_selling_price"
+msgstr "Рассчитать цену продажи"
+
+msgid "Surcharge_in_percent_from_purchase_price_net"
+msgstr "Наценка в % от цены покупки (нетто)"
+
+msgid "Calculate_selling_price_explanation_text."
+msgstr "Подсчитать цену продажи."
+
+msgid "Change_product_name"
+msgstr "Изменить название товара"
+
+msgid "Given_amount"
+msgstr "Заданное количество"
+
+msgid "back"
+msgstr "назад"
+
+msgid "Send_email_to_member"
+msgstr "Отправить эл.письмо покупателю"
+
+msgid "Send_email_to_both_members"
+msgstr "Отправить эл.письмо обоим покупателям"
+
+msgid "Change_status"
+msgstr "Изменить статус"
+
+msgid "Were_the_products_picked_up?"
+msgstr "Где получить товар?"
+
+msgid "All_products_picked_up?"
+msgstr "Получены все товары?"
+
+msgid "Were_the_products_of_all_members_picked_up?"
+msgstr "Где выдаются товары всех покупателей?"
+
+msgid "Change_pickup_day_comment"
+msgstr "Изменить комментарий к дню выдачи"
+
+msgid "Change_member_comment"
+msgstr "Изменить комментарий покупателя"
+
+msgid "Change_group"
+msgstr "Изменить группу"
+
+msgid "Change_amount"
+msgstr "Изменить кол-во"
+
+msgid "Change_price"
+msgstr "Изменить цену"
+
+msgid "Price_per_unit"
+msgstr "Цена за единицу"
+
+msgid "gross"
+msgstr "брутто"
+
+msgid "Price_per_weight_(for_adaption_after_delivery)"
+msgstr "Цена по весу (или с корректировкой веса после доставки)"
+
+msgid "for"
+msgstr "для"
+
+msgid "approximate_delivery_weight_in_{0}_per_unit"
+msgstr "приблизительный вес доставки в {0} за единицу"
+
+msgid "Edit_price_change_open_order_details_info_text"
+msgstr "Также адаптировать цены для всех открытых заказов?"
+
+msgid "Edit_price_use_weight_as_amount"
+msgstr "Использовать вес как количество?"
+
+msgid "Name"
+msgstr "Название"
+
+msgid "Product_rename_info_text"
+msgstr "Важно: Пожалуйста не переименовывайте название товаров. Вместо этого создайте новый товар!"
+
+msgid "Unit"
+msgstr "Единица"
+
+msgid "Unit_description_example"
+msgstr "(напр. 100мл, 2 пакета, 6-упаковок, 0.25л)"
+
+msgid "Description_short"
+msgstr "Короткое описание"
+
+msgid "Description_long"
+msgstr "Полное описание"
+
+msgid "Product_declaration_ok?"
+msgstr "Товар сертифицирован?"
+
+msgid "docs_route_product_declaration"
+msgstr "sertifikat-tovara"
+
+msgid "Help"
+msgstr "Справка"
+
+msgid "Change_name_and_description"
+msgstr "Изменить название и описание"
+
+msgid "Enter_deposit"
+msgstr "Введите депозит"
+
+msgid "Deposit"
+msgstr "Депозит"
+
+msgid "Enter_zero_for_delete"
+msgstr "0 удалённых депозитов"
+
+msgid "Is_the_product_a_stock_product?"
+msgstr "Этот товар, товар на складе?"
+
+msgid "Stock_product"
+msgstr "Товар на складе"
+
+msgid "Current_stock"
+msgstr "Есть на складе"
+
+msgid "Available_amount"
+msgstr "Количество в наличии"
+
+msgid "Orders_possible_until_amount_of"
+msgstr "Заказы возможны в количестве до"
+
+msgid "zero_or_smaller_zero"
+msgstr "0 или меньше чем 0"
+
+msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
+msgstr "Для производителей и для контактных лиц. Может быть изменено в настройках производителя."
+
+msgid "Notification_if_amount_lower_than"
+msgstr "Уведомлять если количество ниже чем"
+
+msgid "Is_product_a_stock_product?"
+msgstr "Этот товар, товар на складе?"
+
+msgid "The_delivery_rhythm_of_stock_products_is_always_weekly."
+msgstr "График доставки товаров со склада всегда \"еженедельно\" и не может быть изменён."
+
+msgid "Delivery_rhythm"
+msgstr "График доставки"
+
+msgid "Change_delivery_rhythm"
+msgstr "Изменить график доставки"
+
+msgid "First_delivery_day"
+msgstr "Первый день доставки"
+
+msgid "First_delivery_day_info_(one_product)."
+msgstr "Дата получения товара."
+
+msgid "First_delivery_day_info_(multiple_products)."
+msgstr "Дата получения товаров."
+
+msgid "can_be_left_blank"
+msgstr "можно оставить пустым"
+
+msgid "Order_possible_until"
+msgstr "Заказ возможен до"
+
+msgid "Info_page_for_delivery_rhythm"
+msgstr "Информационная страница о графике доставки"
+
+msgid "docs_route_order_handling"
+msgstr "obrabotka-zakazov"
+
+msgid "Last_order_weekday"
+msgstr "Последний срок оформления заказа"
+
+msgid "Send_order_lists_day"
+msgstr "День отправки списка заказов"
+
+msgid "Order_lists_are_sent_automatically_next_day_in_the_morning."
+msgstr "Списки заказов высылаются автоматически на следующий день утром."
+
+msgid "Order_lists_are_sent_automatically_on_this_day."
+msgstr "Списки заказов высылаются автоматически в указанный день. Если оставить <b>пустое поле</b>, списки заказов <b>не будут отправлены</b>."
+
+msgid "Is_the_product_always_available?"
+msgstr "Товар доступен всегда?"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr "Количество по умолчанию после отправки списка заказов"
+
+msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
+msgstr "После отправки списков заказов, доступное количество составит это значение.<br /><b>Отправка списка заказов дожна быть активирована (в настройках производителя)!</b>"
+
+msgid "Enter_purchase_price"
+msgstr "Введите цену покупки"
+
+msgid "Storage_location"
+msgstr "Место хранения"
+
+msgid "EAN_13_code"
+msgstr "EAN13 штрих код"
+
+msgid "delete"
+msgstr "удалить"
+
+msgid "Delete_image?"
+msgstr "Удалить изображение?"
+
+msgid "Really_delete_image?"
+msgstr "Вы действительно хотите удалить изображение?"
+
+msgid "rotate_anti_clockwise?"
+msgstr "вращать против часовой стрелки?"
+
+msgid "rotate_clockwise?"
+msgstr "вращать по часовой стрелке?"
+
+msgid "Change_general_terms_and_conditions"
+msgstr "Изменить общие положения и условия"
+
+msgid "Please_upload_an_image."
+msgstr "Пожалуйста загрузите изображение."
+
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
+msgstr "Неверный адрес эл.почты или пароль. Пожалуйста, убедитесь, что в вашем пароле нет специальных символов."
+
+msgid "Id"
+msgstr "Id"
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "An_attribute_cannot_be_assigned_to_a_product."
+msgstr "Вариант не может быть назначен товару."
+
+msgid "A_product_cannot_be_assigned_to_an_attribute."
+msgstr "Товар не может быть назначен к варианту."
+
+msgid "This_product_is_always_available."
+msgstr "Этот товар всегда доступен."
+
+msgid "Please_update_FoodCoopShop."
+msgstr "Пожалуйста обновите FoodCoopShop."
+
+msgid "Image"
+msgstr "Изображение"
+
+msgid "Name_additional_info"
+msgstr "Название, единица, описания, сертификат товара"
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "Price"
+msgstr "Цена"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "No_products_or_attributes_selected."
+msgstr "Товары и варианты не выбраны."
+
+msgid "No_product_data_selected."
+msgstr "Не выбраны данные о товаре."
+
+msgid "Please_enter_your_credentials."
+msgstr "Пожалуйста, введите свои учётные данные."
+
+msgid "Really_synchronize?"
+msgstr "Действительно синхронизировать?"
+
+msgid "This_action_cannot_be_undone."
+msgstr "Это действие нельзя отменить."
+
+msgid "Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops?_{3}"
+msgstr "Хотите синхронизировать данные {0} из {1} и {2} на следующий сервер? {3}"
+
+msgid "attribute"
+msgstr "вариант"
+
+msgid "attributes"
+msgstr "варианты"
+
+msgid "Terms_of_use"
+msgstr "Условия использования"
+
+msgid "Privacy_policy"
+msgstr "Политика безопасности"
+
+msgid "List_of_allergens"
+msgstr "Список аллергенов"
+
+msgid "Self_service_mode"
+msgstr "Режим самообслуживания"
+
+msgid "The_product_{0}_was_added_to_your_cart."
+msgstr "Товар {0} был добавлен в вашу корзину."
+
+msgid "Your_shopping_bag_was_empty."
+msgstr "Ваша корзина была пуста."
+
+msgid "You_are_not_signed_in."
+msgstr "Вы не вошли."
+
+msgid "BackupDatabaseCronjob"
+msgstr "Резервное копирование базы данных"
+
+msgid "CheckCreditBalanceCronjob"
+msgstr "Напоминание о балансе"
+
+msgid "EmailOrderReminderCronjob"
+msgstr "Напоминание о заказе"
+
+msgid "PickupReminderCronjob"
+msgstr "Напоминание о выдачи"
+
+msgid "SendOrderListsCronjob"
+msgstr "Списки заказа"
+
+msgid "SendInvoicesToCustomersCronjob"
+msgstr "Счета"
+
+msgid "SendInvoicesToManufacturersCronjob"
+msgstr "Счета"
+
+msgid "SendDeliveryNotesCronjob"
+msgstr "Накладные"
+
+msgid "Action_Log_Invoice_added"
+msgstr "Счёт: Добавлен"
+
+msgid "Action_Log_Invoice_cancelled"
+msgstr "Счёт: Отменён"
+
+msgid "Action_Log_Product_added"
+msgstr "Товар: Добавлен"
+
+msgid "Action_Log_Product_attribute_added"
+msgstr "Товар: Вариант добавлен"
+
+msgid "Action_Log_Product_attribute_changed"
+msgstr "Товар: Вариант изменён"
+
+msgid "Action_Log_Product_image_uploaded"
+msgstr "Товар: Изображение загружено"
+
+msgid "Action_Log_Product_image_deleted"
+msgstr "Товар: Изображение удалено"
+
+msgid "Action_Log_Product_attribute_deleted"
+msgstr "Товар: Вариант удалён"
+
+msgid "Action_Log_Product_deactivated"
+msgstr "Товар: деактивирован"
+
+msgid "Action_Log_Product_activated"
+msgstr "Товар: активирован"
+
+msgid "Action_Log_Product_quantity_changed"
+msgstr "Товар: Количество изменено"
+
+msgid "Action_Log_Product_purchase_price_changed"
+msgstr "Товар: Цена покупки изменена"
+
+msgid "Action_Log_Product_price_changed"
+msgstr "Товар: Цена изменена"
+
+msgid "Action_Log_Product_name_changed"
+msgstr "Товар: Название изменено"
+
+msgid "Action_Log_Product_unity_changed"
+msgstr "Товар: Единица измерения изменена"
+
+msgid "Action_Log_Product_description_changed"
+msgstr "Товар: Описание изменено"
+
+msgid "Action_Log_Product_description_short_changed"
+msgstr "Товар: Короткое описание изменено"
+
+msgid "Action_Log_Product_deposit_changed"
+msgstr "Товар: Депозит изменён"
+
+msgid "Action_Log_Product_tax_rate_changed"
+msgstr "Товар: Налоговая ставка изменена"
+
+msgid "Action_Log_Product_categories_changed"
+msgstr "Товар: Категории изменены"
+
+msgid "Action_Log_Product_set_to_not_new"
+msgstr "Товар: больше не установлен как \"новый\""
+
+msgid "Action_Log_Product_set_to_new"
+msgstr "Товар: установить как \"новый\""
+
+msgid "Action_Log_Product_default_attribute_changed"
+msgstr "Товар: Вариант по умолчанию изменён"
+
+msgid "Action_Log_Network_module_product_synchronized"
+msgstr "Сетевой модуль: Товары синхронизированы"
+
+msgid "Action_Log_Delivery_rhythm_changed"
+msgstr "Товар: График доставки изменён"
+
+msgid "Action_Log_Product_deleted"
+msgstr "Товар: удалён"
+
+msgid "Action_Log_Order_status_changed"
+msgstr "Заказ: Статус изменён"
+
+msgid "Action_Log_Orders_closed"
+msgstr "Заказы: закрытый"
+
+msgid "Action_Log_Order_comment_changed"
+msgstr "Заказ: Комментарий изменён"
+
+msgid "Action_Log_Order_date_changed"
+msgstr "Заказ: Дата перенесена"
+
+msgid "Action_Log_Instant_order_placed"
+msgstr "Заказ: Мгновенный заказ размещён"
+
+msgid "Action_Log_Self_service_order_placed"
+msgstr "Заказ: размещение заказа самообслуживания"
+
+msgid "Action_Log_Order_detail_product_price_changed"
+msgstr "Заказанные товары: Цена изменилась"
+
+msgid "Action_Log_Order_detail_product_quantity_changed"
+msgstr "Заказанные товары: Вес изменился"
+
+msgid "Action_Log_Order_detail_product_amount_changed"
+msgstr "Заказанный товар: Количество изменилось"
+
+msgid "Action_Log_Order_detail_customer_changed"
+msgstr "Заказанный товар: Передан другому покупателю"
+
+msgid "Action_Log_Ordered_product_cancelled"
+msgstr "Заказанный товар: Отменён"
+
+msgid "Action_Log_Ordered_product_pickup_day_changed"
+msgstr "Заказанный товар: День выдачи изменён"
+
+msgid "Action_Log_Ordered_product_feedback_added"
+msgstr "Заказанный товар: Отзыв составлен"
+
+msgid "Action_Log_Member_credit_upload_added"
+msgstr "Покупатель: Баланс загружен"
+
+msgid "Action_Log_Credit_upload_csv_imported"
+msgstr "Баланс загружен: CSV файл импортирован"
+
+msgid "Action_Log_Credit_upload_approval_ok"
+msgstr "Баланс загружен: OK"
+
+msgid "Action_Log_Credit_upload_approval_open"
+msgstr "Баланс загружен: Подтверждение открыто"
+
+msgid "Action_Log_Credit_upload_approval_not_ok"
+msgstr "Загрузка баланса: Что-то не так..."
+
+msgid "Action_Log_Member_payback_added"
+msgstr "Покупатель: Возврат добавлен"
+
+msgid "Action_Log_Member_payback_deleted"
+msgstr "Покупатель: Возврат удалён"
+
+msgid "Action_Log_Member_credit_deleted"
+msgstr "Покупатель: Загрузка баланса удалена"
+
+msgid "Action_Log_Member_deposit_added"
+msgstr "Покупатель: Депозит добавлен"
+
+msgid "Action_Log_Manfufacturer_deposit_added"
+msgstr "Производитель: Депозит добавлен"
+
+msgid "Action_Log_Member_deposit_deleted"
+msgstr "Покупатель: Депозит удалён"
+
+msgid "Action_Log_Manufacturer_deposit_deleted"
+msgstr "Производитель: Депозит удалён"
+
+msgid "Action_Log_Blog_post_added"
+msgstr "Блог: Добавлен"
+
+msgid "Action_Log_Blog_post_changed"
+msgstr "Блог: Изменён"
+
+msgid "Action_Log_Blog_post_deleted"
+msgstr "Блог: Удалён"
+
+msgid "Action_Log_Page_added"
+msgstr "Страница: Добавлена"
+
+msgid "Action_Log_Page_changed"
+msgstr "Блог: Изменён"
+
+msgid "Action_Log_Page_deleted"
+msgstr "Блог: Удалён"
+
+msgid "Action_Log_Category_added"
+msgstr "Категория: Добавлена"
+
+msgid "Action_Log_Category_changed"
+msgstr "Категория: Изменена"
+
+msgid "Action_Log_Category_deleted"
+msgstr "Категория: Удалена"
+
+msgid "Action_Log_Remote_food_coop_added"
+msgstr "Удалённый сервер: Добавлен"
+
+msgid "Action_Log_Remote_food_coop_changed"
+msgstr "Удалённый сервер: Изменён"
+
+msgid "Action_Log_Remote_food_coop_deleted"
+msgstr "Удалённый сервер: Удалён"
+
+msgid "Action_Log_Slider_added"
+msgstr "Слайдер: Добавлен"
+
+msgid "Action_Log_Slider_changed"
+msgstr "Слайдер: Изменён"
+
+msgid "Action_Log_Slider_deleted"
+msgstr "Слайдер: Удалён"
+
+msgid "Action_Log_Tax_rate_added"
+msgstr "Налоговая ставка: Добавлена"
+
+msgid "Action_Log_Tax_rate_changed"
+msgstr "Налоговая ставка: Изменена"
+
+msgid "Action_Log_Tax_rate_deleted"
+msgstr "Налоговая ставка: Удалена"
+
+msgid "Action_Log_Member_account_created"
+msgstr "Покупатель: Учётная запись создана"
+
+msgid "Action_Log_Member_profile_changed"
+msgstr "Покупатель: Профиль изменён"
+
+msgid "Action_Log_Member_password_changed"
+msgstr "Покупатель: Пароль изменён"
+
+msgid "Action_Log_Member_order_placed"
+msgstr "Покупатель: Мгновенный заказ размещён"
+
+msgid "Action_Log_Member_set_inactive"
+msgstr "Покупатель: Дезактивирован"
+
+msgid "Action_Log_Member_set_active"
+msgstr "Покупатель: Активирован"
+
+msgid "Action_Log_Member_comment_changed"
+msgstr "Покупатель: Комментарий изменён"
+
+msgid "Action_Log_Member_group_changed"
+msgstr "Покупатель: Группа изменена"
+
+msgid "Action_Log_Member_deleted"
+msgstr "Покупатель: Удалён"
+
+msgid "Action_Log_Manufacturer_settings_changed"
+msgstr "Производитель: Настройки изменены"
+
+msgid "Action_Log_Manufacturer_password_changed"
+msgstr "Производитель: Пароль изменён"
+
+msgid "Action_Log_Manufacturer_added"
+msgstr "Производитель: Добавлен"
+
+msgid "Action_Log_Manufacturer_changed"
+msgstr "Производитель: Профиль изменён"
+
+msgid "Action_Log_Feedback_created"
+msgstr "Отзыв создан"
+
+msgid "Action_Log_Feedback_changed"
+msgstr "Отзыв изменён"
+
+msgid "Action_Log_Feedback_approved"
+msgstr "Отзыв одобрен"
+
+msgid "Action_Log_Feedback_deleted"
+msgstr "Отзыв удалён"
+
+msgid "Action_Log_Cronjob_changed"
+msgstr "Cronjob: Изменён"
+
+msgid "Action_Log_Cronjob_database_backup_done"
+msgstr "Cronjob: Резервное копирование завершено"
+
+msgid "Action_Log_Cronjob_order_lists_sent"
+msgstr "Cronjob: Списки заказов отправлены"
+
+msgid "Action_Log_Cronjob_invoices_sent"
+msgstr "Cronjob: Счета отправлены"
+
+msgid "Action_Log_Cronjob_delivery_notes_sent"
+msgstr "Cronjob: Накладные отправлены"
+
+msgid "Action_Log_Cronjob_email_order_reminder_sent"
+msgstr "Cronjob: Напоминания о заказе по эл.почте отправлены"
+
+msgid "Action_Log_Cronjob_pickup_reminder_sent"
+msgstr "Cronjob: Напоминания о дне выдаче отправлены"
+
+msgid "Action_Log_Cronjob_check_credit_balance"
+msgstr "Cronjob: Баланс проверен"
+
+msgid "Action_Log_Superadmin_deploy_successful"
+msgstr "Суперадмин: Успешно развёрнуто"
+
+msgid "Action_Log_Attribute_added"
+msgstr "Вариант: создан"
+
+msgid "Action_Log_Attribute_changed"
+msgstr "Вариант: Изменён"
+
+msgid "Action_Log_Attribute_deleted"
+msgstr "Вариант: удалён"
+
+msgid "Action_Log_Setting_changed"
+msgstr "Настройки: изменены"
+
+msgid "Please_enter_your_email_address."
+msgstr "Пожалуйста, введите свой адрес эл.почты."
+
+msgid "The_email_address_is_not_valid."
+msgstr "Неверный адрес эл.почты."
+
+msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
+msgstr "Адрес эл.почты уже используется другим покупателем или производителем."
+
+msgid "Please_enter_your_street_and_number."
+msgstr "Пожалуйста введите вашу улицу и № дома"
+
+msgid "Please_enter_your_city."
+msgstr "Пожалуйста введите ваш населённый пункт."
+
+msgid "Please_enter_your_zip."
+msgstr "Пожалуйста введите ваш индекс."
+
+msgid "The_zip_is_not_valid."
+msgstr "Неверный индекс."
+
+msgid "Please_enter_your_mobile_number."
+msgstr "Пожалуйста введите ваш мобильный номер."
+
+msgid "The_mobile_number_is_not_valid."
+msgstr "Неверный номер мобильного телефона."
+
+msgid "The_phone_number_is_not_valid."
+msgstr "Неверный номер телефона."
+
+msgid "Please_enter_the_first_name."
+msgstr "Пожалуйста введите ваше имя."
+
+msgid "Please_enter_the_last_name."
+msgstr "Пожалуйста введите вашу фамилию."
+
+msgid "Please_enter_an_email_address."
+msgstr "Пожалуйста введите ваш адрес эл.почты."
+
+msgid "Please_enter_a_name."
+msgstr "Пожалуйста введите название."
+
+msgid "An_attribute_with_this_name_already_exists."
+msgstr "Вариант с таким же названием уже существует."
+
+msgid "The_length_of_the_barcode_needs_to_be_exactly_{0}."
+msgstr "Длина штрих кода должна быть точной {0}."
+
+msgid "Please_enter_a_title."
+msgstr "Пожалуйста, введите заголовок."
+
+msgid "Please_enter_at_least_{0}_characters."
+msgstr "Пожалуйста введите по меньшей мере {0} символов."
+
+msgid "Please_enter_max_{0}_characters."
+msgstr "Пожалуйста введите максимум {0} символов."
+
+#, fuzzy
+msgid "The_desired_amount_{0}_is_not_valid."
+msgstr "Желаемое количество {0} недопустимо"
+
+msgid "Product_with_id_{0}_does_not_exist."
+msgstr "Товар с id {0} не существует."
+
+msgid "The_attribute_does_not_exist:_{0}"
+msgstr "Вариант не существует: {0}"
+
+msgid "Please_accept_the_information_about_right_of_withdrawal"
+msgstr "Пожалуйста, примите информацию о праве на возврат"
+
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr "Пожалуйста, примите информацию о праве на возврат"
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr "Пожалуйста, примите общие положения и условия."
+
+msgid "Please_promise_to_pick_up_the_ordered_products."
+msgstr "Пожалуйста пообещайте забрать заказанные товары."
+
+msgid "Please_select_your_payment_type."
+msgstr "Пожалуйста, выберите способ оплаты."
+
+msgid "Please_select_a_pickup_day."
+msgstr "Пожалуйста выберите день выдачи."
+
+msgid "The_pickup_day_is_not_valid."
+msgstr "День выдачи недействителен."
+
+msgid "Delivery_break"
+msgstr "Перерыв доставки"
+
+msgid "offline"
+msgstr "оффлайн"
+
+msgid "Please_enter_a_valid_internet_address."
+msgstr "Пожалуйста, введите действительный адрес эл.почты.."
+
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
+msgstr "По крайней мере, один адрес эл.почты недействителен. Пожалуйста, разделяйте несколько адресов с помощью , (без пробелов)."
+
+msgid "Decimals_are_not_allowed."
+msgstr "Десятичные дроби не допускаются."
+
+msgid "The_following_values_are_valid:"
+msgstr "Допустимы следующие значения:"
+
+msgid "Please_enter_the_name_of_the_foodcoop."
+msgstr "Пожалуйста введите название производителя фермерской/сельскохозяйственной продукции."
+
+msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
+msgstr "Количество символов должно быть между {0} и {1}."
+
+msgid "The_time_interval_is_not_valid."
+msgstr "Неправильный временной интервал."
+
+msgid "Please_select_a_day_of_month."
+msgstr "Пожалуйста выберите день месяца."
+
+msgid "The_day_of_month_is_not_valid."
+msgstr "Неправильный день месяца."
+
+msgid "Please_select_a_weekday."
+msgstr "Пожалуйста выберите день недели."
+
+msgid "The_weekday_is_not_valid."
+msgstr "Неправильный день недели."
+
+msgid "daily"
+msgstr "ежедневно"
+
+msgid "weekly"
+msgstr "еженедельно"
+
+msgid "No_day_of_month_allowed_for_time_interval_{0}."
+msgstr "Не указан день месяца для временного интервала \"{0}\"."
+
+msgid "monthly"
+msgstr "ежемесячно"
+
+msgid "No_weekday_allowed_for_time_interval_{0}."
+msgstr "Не указан день недели для временного интервала \"{0}\"."
+
+msgid "Please_enter_a_valid_time."
+msgstr "Пожалуйста введите правильное время."
+
+msgid "The_time_interval_needs_to_equal_\"{0}\""
+msgstr "Временной интервал должен быть равен \"{0}\"."
+
+msgid "Last_day_of_month"
+msgstr "Последний день месяца"
+
+msgid "Please_enter_your_first_name."
+msgstr "Пожалуйста введите ваше имя."
+
+msgid "Please_enter_your_last_name."
+msgstr "Пожалуйста введите вашу фамилию."
+
+msgid "The_shopping_price_is_not_valid."
+msgstr "Недопустимый тип цены."
+
+msgid "Please_enter_your_old_password."
+msgstr "Пожалуйста введите ваш старый пароль."
+
+msgid "Your_old_password_is_wrong."
+msgstr "Ваш старый пароль неверен."
+
+msgid "Please_enter_a_new_password."
+msgstr "Пожалуйста введите новый пароль."
+
+msgid "The_password_needs_to_be_at_least_8_characters_long."
+msgstr "Пароль должен содержать не менее 8 символов."
+
+msgid "The_passwords_do_not_match."
+msgstr "Пароли не совпадают."
+
+msgid "We_did_not_find_this_email_address."
+msgstr "Мы не нашли этот адрес эл.почты."
+
+msgid "Your_account_is_not_active_any_more._If_you_want_to_reactivate_it_please_write_an_email."
+msgstr "Ваша учётная запись больше не активна. Если вы хотите восстановить её, пожалуйста напишите нам эл.письмо."
+
+msgid "Please_accept_the_terms_of_use."
+msgstr "Пожалуйста примите условия использования."
+
+msgid "Members:_active"
+msgstr "Покупатель: активен"
+
+msgid "Members:_never_ordered"
+msgstr "Покупатель: никогда не размещал заказ"
+
+msgid "Manufacturers:_active"
+msgstr "Производитель: активен"
+
+msgid "Manufacturers:_inactive"
+msgstr "Производитель: неактивен"
+
+msgid "Members:_inactive"
+msgstr "Покупатель: неактивен"
+
+msgid "Please_enter_between_{0}_and_{1}_characters."
+msgstr "Пожалуйста введите от {0} до {1} символов."
+
+msgid "deactivated"
+msgstr "деактивирован"
+
+msgid "Please_enter_a_valid_IBAN."
+msgstr "Пожалуйста введите правильный IBAN."
+
+msgid "Please_enter_a_valid_BIC."
+msgstr "Пожалуйста введите правильный BIC."
+
+msgid "online"
+msgstr "онлайн"
+
+msgid "Please_enter_your_feedback."
+msgstr "Пожалуйста оставьте свой отзыв."
+
+msgid "Please_enter_a_correct_number."
+msgstr "Пожалуйста введите правильный номер."
+
+msgid "Please_enter_a_number_between_{0}_and_{1}."
+msgstr "Пожалуйста введите число от {0} до {1}."
+
+msgid "The_amount_(money)_needs_to_be_greater_than_0."
+msgstr "Сумма должна быть больше чем 0."
+
+msgid "The_date_must_not_be_a_future_date."
+msgstr "Дата не может быть в будущем."
+
+msgid "Please_enter_a_correct_amount."
+msgstr "Пожалуйста введите правильную сумму."
+
+msgid "Please_enter_a_correct_date."
+msgstr "Пожалуйста введите правильную дату."
+
+msgid "Please_select_a_customer."
+msgstr "Пожалуйста выберите покупателя."
+
+msgid "The_name_of_the_product_needs_to_be_at_least_{0}_characters_long."
+msgstr "Название товара должно содержать не менее {0} символов."
+
+msgid "The_delivery_ryhthm_is_not_valid."
+msgstr "Недопустимый график доставки."
+
+msgid "The_first_delivery_day_is_not_valid."
+msgstr "Недопустимый день первой доставки ."
+
+msgid "The_order_possible_until_field_is_not_valid."
+msgstr "Поле: \"заказ возможен до\" недопустимо."
+
+msgid "The_order_possible_until_field_needs_to_be_smaller_than_the_delivery_date."
+msgstr "Дата заказа должна быть меньше даты доставки."
+
+msgid "The_first_delivery_day"
+msgstr "Первый день доставки"
+
+msgid "The_send_order_list_day_field_is_not_valid."
+msgstr "Поле \"отправить дату списка заказа\" недопустимо."
+
+msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
+msgstr "Поле \"отправить дату списка заказа\" должно быть между \"заказ возможен до\" и днём доставки."
+
+msgid "first_for_weekday"
+msgstr "первый"
+
+msgid "second_for_weekday"
+msgstr "второй"
+
+msgid "third_for_weekday"
+msgstr "третий"
+
+msgid "fourth_for_weekday"
+msgstr "четвёртый"
+
+msgid "last_for_weekday"
+msgstr "последний"
+
+msgid "The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month."
+msgstr "Первый день доставки должен приходиться на {0} {1} месяца."
+
+msgid "deleted"
+msgstr "удалён"
+
+msgid "The_price_needs_to_be_greater_or_equal_than_0."
+msgstr "Цена должна быть больше чем 0."
+
+msgid "Purchase_price"
+msgstr "Стоимость покупки"
+
+msgid "The_quantity_needs_to_be_a_number."
+msgstr "Количество должно быть числом."
+
+msgid "Field:_Stock"
+msgstr "Поле: На складе"
+
+msgid "The_quantity_limit_needs_to_be_a_number."
+msgstr "Ограничение по количеству должно быть числом."
+
+msgid "Field:_Order_possible_until"
+msgstr "Поле: заказ возможен до"
+
+msgid "The_sold_out_quantity_needs_to_be_a_number."
+msgstr "Количество для отправки уведомления списка заказов должно быть числом."
+
+msgid "Field:_Notification_if_quantity_limit_reached"
+msgstr "Поле: уведомление если количество достигло лимита"
+
+msgid "The_default_quantity_after_sending_order_lists_needs_to_be_a_number."
+msgstr "Количество по умолчанию после отправки списка заказов должно быть числом."
+
+msgid "Field:_Default_quantity_after_sending_order_lists"
+msgstr "Поле: Количество по умолчанию после отправки списка заказов"
+
+msgid "Please_enter_a_tax_rate."
+msgstr "Пожалуйста введите налоговую ставку."
+
+msgid "This_tax_rate_is_already_being_used."
+msgstr "Налоговая ставка уже используется."
+
+msgid "The_price_per_unit_needs_to_be_a_number."
+msgstr "Цена за единицу должна быть числом."
+
+msgid "The_price_per_unit_needs_to_be_greater_than_0."
+msgstr "Цена за единицу должна быть дольше чем 0."
+
+msgid "The_name_is_not_valid."
+msgstr "Неверное название."
+
+msgid "The_amount_(quantity)_needs_to_be_a_number."
+msgstr "Количество должно быть в цифрах."
+
+msgid "The_amount_(quantity)_needs_to_be_greater_than_0."
+msgstr "Количество должно быть больше 0."
+
+#, fuzzy
+msgid "The_approximate_weight_needs_to_be_a_number."
+msgstr "Приблизительный вес должен быть числом."
+
+msgid "The_approximate_weight_needs_to_be_greater_than_0."
+msgstr "Приблизительный вес должен быть больше чем 0."
+
+msgid "{0}_needs_to_be_a_{1}."
+msgstr "{0} должно быть {1}."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "Желаемое количество {0} вариантов {1} товара {2} больше не доступно. Доступное количество: {3}"
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr "Желаемое количество {0} товара {1} больше не доступно. Доступное количество: {2}"
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "Товар {0} больше не активирован."
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr "Производитель товара {0} или сделал перерыв в доставке или товар больше не активирован."
+
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr "{0} был активирован перерыв в доставке и {1} не может быть заказан."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "Не возможно заказать товар {0} больше."
+
+msgid "{0}_can_be_ordered_next_week."
+msgstr "{0} может быть заказан на следующей неделе."
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
+msgstr "Пожалуйста, укажите желаемый вес и нажмите на кнопку корзины."
+
+msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
+msgstr "Товар ({0}) не может быть добавлен в вашу корзину. Пожалуйста пополните баланс, ваш баланс за вычетом корзины и депозита равен {1}. Вы можете размещать заказы до {2}."
+
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
+msgstr "Следующий день(и) доставки уже содержит заказы: {0}. Чтобы избежать перерыва в доставке, либо отмените их, либо измените день выдачи."
+
+msgid "Manufacturer_not_found."
+msgstr "Продавец не найден."
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Счёт № {0}, {1}"
+
+msgid "member"
+msgstr "покупатель"
+
+msgid "Order_lists_for_the_day"
+msgstr "Список заказов для"
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Вы успешно разместили заказ."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} разместил новый заказ ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Мгновенный заказ ({0}) успешно размещён для {1}."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Мгновенный заказ ({0}) успешно размещён для {1}. Следующие производителе будут уведомлены: {2}"
+
+msgid "Thank_you_for_your_purchase!"
+msgstr "Спасибо за покупку!"
+
+#, fuzzy
+msgid "Sign_out"
+msgstr "Выйти"
+
+msgid "Continue_shopping"
+msgstr "Продолжить покупки"
+
+msgid "Print_receipt"
+msgstr "Распечатать квитанцию"
+
+msgid "{0}_has_placed_a_new_order_for_{1}_({2})."
+msgstr "{0} разместил новый заказ для {1} ({2})."
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "Пожалуйста пополните баланс, ваш баланс за вычетом корзины равен {0}. Вы можете размещать заказы до {1}."
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Пожалуйста измените количество или удалите товар из корзины чтобы завершить заказ."
+
+msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "Товар{0} не может быть больше заказ по по причинам отсутствия данных о нём."
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Пожалуйста удалите товар из корзины чтобы завершить заказ."
+
+msgid "The_attribute_{0}_of_the_product_{1}_cannot_be_ordered_any_more_due_to_interal_reasons."
+msgstr "Вариант {0} товара {1} больше не может быть упорядочен по внутренним причинам."
+
+msgid "The_attribute_does_not_exist."
+msgstr "Этот вариант не существует."
+
+msgid "The_product_now_contains_attributes."
+msgstr "Сейчас товар имеет варианты."
+
+msgid "You_can_add_it_again_after_having_it_deleted."
+msgstr "Вы можете добавить это ещё раз после того как удалили его."
+
+msgid "Errors_occurred."
+msgstr "Произошли ошибки."
+
+msgid "Notification_about_instant_order_order"
+msgstr "Уведомления о немедленных заказах"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Товар с низким количеством единиц на складе \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Привет"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "Вы можете отписаться от этого эл.письма<a href=\"{0}\">в настройках производителя</a>."
+
+msgid "Your_purchase"
+msgstr "Ваша покупка"
+
+msgid "New_order_comment__was_written_by_{0}_for_{1}"
+msgstr "Новый комментарий к заказу был оставлен {0} для {1}"
+
+msgid "Order_confirmation"
+msgstr "Подтверждение заказа"
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr "Право-на-возврат-информация-и-форма"
+
+msgid "Filename_Order-confirmation"
+msgstr "Подтверждение-заказа"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Общие-положения-и-условия"
+
+msgid "The_structure_of_the_uploaded_file_is_not_valid."
+msgstr "Неверный файл для загрузки."
+
+msgid "Gross_price"
+msgstr "Цена брутто"
+
+msgid "Tax_rate"
+msgstr "Налоговая ставка"
+
+msgid "Product_declaration"
+msgstr "Сертификат товара"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "net_per_piece_abbr"
+msgstr "нетто/шт."
+
+msgid "net"
+msgstr "нетто"
+
+msgid "VAT"
+msgstr "НДС"
+
+msgid "Tax_rates_overview_table"
+msgstr "Обзорная таблица налоговых ставок"
+
+msgid "All_amounts_in_{0}."
+msgstr "Все цены в {0}."
+
+msgid "Delivery_note"
+msgstr "Товарная накладная"
+
+msgid "Delivered_deposit"
+msgstr "Доставленный депозит"
+
+msgid "Payment_type_deposit_return"
+msgstr "Возврат депозита"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Отмена счёта № {0}, {1}"
+
+msgid "Invoice"
+msgstr "Счёт"
+
+msgid "Cancellation_invoice"
+msgstr "Отмена счёта"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Price_excl."
+msgstr "Цена искл."
+
+msgid "Price_incl."
+msgstr "Цена вкл."
+
+msgid "Price_net"
+msgstr "Цена нетто"
+
+msgid "Total_sum_net"
+msgstr "Общая сумма нетто"
+
+msgid "Value_added_tax"
+msgstr "Налог на добавленную стоимость"
+
+msgid "Total_sum_gross"
+msgstr "Итого сумма брутто"
+
+msgid "Deleted_member"
+msgstr "Удалённый покупатель"
+
+msgid "Order_day"
+msgstr "День заказа"
+
+msgid "Deleted_Member"
+msgstr "Удалить покупателя"
+
+msgid "Price_per_weight"
+msgstr "Цена за вес"
+
+msgid "Generated_on_{0}"
+msgstr "Сгенерировано {0}"
+
+msgid "Page_{0}_of_{1}"
+msgstr "Страница {0} из {1}"
+
+msgid "Sum_price_excl."
+msgstr "Общая цена искл."
+
+msgid "Sum_tax"
+msgstr "Общий налог"
+
+msgid "Sum_price_incl."
+msgstr "Общая цена вкл."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Информация-о-праве-на-возврат"
+
+msgid "Customer_adds_payment_manually"
+msgstr "Покупатели добавят способ оплаты вручную"
+
+msgid "Payment_is_added_by_uploading_a_list"
+msgstr "Платежи добавлены суперадмином посредством загрузки списка CSV"
+
+msgid "Members"
+msgstr "Покупатели"
+
+msgid "News"
+msgstr "Новости"
+
+msgid "Activities"
+msgstr "Активность"
+
+msgid "Credit"
+msgstr "Баланс"
+
+msgid "Orders"
+msgstr "Заказы"
+
+msgid "Order_adaptions"
+msgstr "Другие корректировки"
+
+msgid "My_data"
+msgstr "Мои данные"
+
+msgid "Change_password"
+msgstr "Изменить пароль"
+
+msgid "My_invoices"
+msgstr "Мои счета"
+
+msgid "cart_type_weekly_rhythm"
+msgstr "Предзаказ"
+
+msgid "cart_type_instant_order"
+msgstr "Мгновенный заказ"
+
+msgid "cart_type_self_service"
+msgstr "Самообслуживание / товар на заказ"
+
+msgid "Shopping_with_selling_price"
+msgstr "Покупка по сниженной цене"
+
+msgid "Shopping_with_purchase_price"
+msgstr "Купить по цене покупки"
+
+msgid "Shopping_with_zero_price"
+msgstr "Покупка по нулевой цене"
+
+msgid "every_{0}_week"
+msgstr "каждую {0} неделю"
+
+msgid "every_{0}_{1}_of_a_month"
+msgstr "каждую {0} {1} месяца"
+
+msgid "every_last_{0}_of_a_month"
+msgstr "каждую последнюю {0} месяца"
+
+msgid "bulk_order"
+msgstr "дата заказа"
+
+msgid "midnight"
+msgstr "полночь"
+
+msgid "default_value"
+msgstr "значение по умолчанию"
+
+msgid "yes"
+msgstr "да"
+
+msgid "no"
+msgstr "нет"
+
+msgid "Deleted_Email_Address"
+msgstr "Удалённый адрес эл.почты"
+
+msgid "{0}_further_delivery_breaks"
+msgstr "{0} будущие перерывы в доставке"
+
+msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
+msgstr "Производитель {0} делает перерыв в доставке на {1}."
+
+msgid "{0}_takes_a_break_on_{1}."
+msgstr "{0} делает перерыв в доставке на {1}."
+
+msgid "Mobile"
+msgstr "Мобильный номер"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Email"
+msgstr "Эл.почта"
+
+msgid "Website"
+msgstr "Вебсайт"
+
+msgid "VAT_number"
+msgstr "Номер плательщика НДС"
+
+msgid "Commercial_register_number"
+msgstr "Номер ИНН или ОГРН (ОГРНИП)"
+
+msgid "Company_court"
+msgstr "Судебная юрисдикция"
+
+msgid "Supervisory_authority"
+msgstr "Надзорный орган"
+
+msgid "Chamber"
+msgstr "Дополнительная информация"
+
+msgid "Header_(top)"
+msgstr "Заголовок (верхний)"
+
+msgid "Footer_(bottom)"
+msgstr "Колонтитул (внизу)"
+
+msgid "Self_service_customer"
+msgstr "Самообслуживание покупателя"
+
+msgid "Admin"
+msgstr "Админ"
+
+msgid "Superadmin"
+msgstr "Суперадмин"
+
+msgid "Configurations"
+msgstr "Настройки"
+
+msgid "Cronjobs"
+msgstr "Cronjobs"
+
+msgid "Tax_rates"
+msgstr "Налоговые ставки"
+
+msgid "Credit_overview"
+msgstr "Обзор баланса"
+
+msgid "Deposit_overview"
+msgstr "Просмотр депозита"
+
+msgid "Journal"
+msgstr "Журнал"
+
+msgid "Profit"
+msgstr "Доход"
+
+msgid "Payment_type_credit_upload"
+msgstr "Баланс загружен"
+
+msgid "Payment_type_payback"
+msgstr "Возврат средств"
+
+msgid "Empty_glasses"
+msgstr "Пустая тара"
+
+msgid "Compensation_payment"
+msgstr "Компенсационная выплата"
+
+msgid "_Order_list_filename_"
+msgstr "_Список заказов_"
+
+msgid "_Invoice_filename_"
+msgstr "_Счёт_"
+
+msgid "approval_state_ok"
+msgstr "ок"
+
+msgid "approval_state_open"
+msgstr "открыт"
+
+msgid "approval_state_not_ok"
+msgstr "что то не так"
+
+msgid "active_state_active"
+msgstr "подключённые"
+
+msgid "active_state_inactive"
+msgstr "отключённые"
+
+msgid "active_state_all"
+msgstr "все"
+
+msgid "{0,plural,=1{1_minute} other{#_minutes}}"
+msgstr "{0,plural,=1{1 минута} other{# минут}}"
+
+msgid "{0,plural,=1{1_second} other{#_seconds}}"
+msgstr "{0,plural,=1{1 секунда} other{# секунд}}"
+
+msgid "price_will_be_adapted."
+msgstr "цена будет скорректирована."
+
+msgid "route_all_products"
+msgstr "vse-tovari"
+
+msgid "routes_product"
+msgstr "tovar"
+
+msgid "Modified_on"
+msgstr "Изменено"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Further_news"
+msgstr "Другие новости"
+
+msgid "of_{0}"
+msgstr "от {0}"
+
+msgid "found"
+msgstr "найден"
+
+msgid "Your_cart_is_empty"
+msgstr "Ваша корзина пуста"
+
+msgid "Value_of_goods"
+msgstr "Объём товаров"
+
+msgid "Deposit_sum"
+msgstr "Сумма депозита"
+
+msgid "Total"
+msgstr "Всего"
+
+msgid "Including_vat"
+msgstr "Включая НДС"
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Вес доставки будет в конечном счёте скорректирован, это значит что цена будет немного изменена."
+
+msgid "To_finish_order_click_here."
+msgstr "Для завершения заказа пожалуйста нажмите на кнопку ниже."
+
+msgid "Order_placed"
+msgstr "Заказ размещён"
+
+msgid "Thank_you_your_order_was_placed_succesfully."
+msgstr "Благодарим вас за успешно размещённый заказ."
+
+msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+msgstr "Подтверждение заказа направлено вам на эл.почту ({0})."
+
+msgid "Please_pick_up_the_ordered_products_at:_{0}"
+msgstr "Пожалуйста, получите заказанные товары здесь: {0}"
+
+msgid "Scan_member_card"
+msgstr "Сканируйте карту покупателя"
+
+msgid "or"
+msgstr "или"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Stay_signed_in"
+msgstr "запомнить"
+
+msgid "Forgot_password?"
+msgstr "Забыли пароль?"
+
+msgid "Create_account"
+msgstr "Создать учётную запись"
+
+msgid "Register_as_company?"
+msgstr "Зарегистрироваться как компания?"
+
+msgid "Street_and_number"
+msgstr "Улица и № дома"
+
+msgid "Additional_address_information"
+msgstr "Дополнительный адрес"
+
+msgid "Zip"
+msgstr "Индекс"
+
+msgid "City"
+msgstr "Населённый пункт"
+
+msgid "Want_to_receive_the_newsletter?"
+msgstr "Хотите получать новостную рассылку по эл.почте?"
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Вы хотите получать напоминание о заказе каждую неделю?"
+
+msgid "terms_of_use"
+msgstr "условия использования"
+
+msgid "I_accept_the_{0}"
+msgstr "Я принимаю {0}"
+
+msgid "Please_enter_your_email_address_and_click_on_send_button."
+msgstr "Пожалуйста, введите свой адрес эл.почты и нажмите кнопку отправить."
+
+msgid "Send"
+msgstr "Отправить"
+
+msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr "Подтверждение вашей регистрации было отправлено вам по эл.почте."
+
+msgid "Please_also_check_the_spam_folder_of_your_inbox_and_be_aware_that_receiving_the_mail_might_last_up_to_a_several_minutes!"
+msgstr "Пожалуйста, также проверьте папку спам в вашем почтовом ящике и имейте в виду, что получение эл.почты может длиться до нескольких минут!"
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr "Ваша учётная запись создана, но еще не активирована. Это означает, что вы пока не можете войти в систему!"
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr "Вы получите эл.письмо, как только мы активируем вас."
+
+msgid "Click_here_to_write_your_own_feedback."
+msgstr "Нажмите здесь, чтобы оставить отзыв."
+
+msgid "Members_feedback"
+msgstr "Отзыв покупателя"
+
+msgid "Manufacturers_feedback"
+msgstr "Отзыв производителя"
+
+msgid "Imprint"
+msgstr "О нас"
+
+msgid "Show_manufacturer_profile"
+msgstr "Показать производителя"
+
+msgid "Show_products"
+msgstr "Показать товары"
+
+msgid "Stock_products"
+msgstr "Товары на складе"
+
+msgid "Self_service"
+msgstr "Самообслуживание"
+
+msgid "Search:_name_id_or_barcode"
+msgstr "Поиск: название, ID или штрихкод"
+
+msgid "Please_search_or_scan_a_product_or_chose_a_category."
+msgstr "Пожалуйста найдите или сканируйте товар или выберите категорию."
+
+msgid "No_products_found."
+msgstr "Товары не найдены."
+
+msgid "Shopping_bag"
+msgstr "Корзина"
+
+msgid "docs_route_self_service"
+msgstr "rezhim-samoobsluzhivaniya"
+
+msgid "Your_shopping_bag_is_empty."
+msgstr "Ваша корзина была пуста."
+
+msgid "Finish_pickup"
+msgstr "Закончить выдачу"
+
+msgid "Continue_shopping?"
+msgstr "Продолжить покупки?"
+
+msgid "terms_and_conditions"
+msgstr "условия и положения"
+
+msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+msgstr "если вы хотите продолжать использовать эту платформу, пожалуйста прочтите изменения {0} и примите их."
+
+msgid "I_accept_the_{0}."
+msgstr "Я принимаю {0}"
+
+msgid "This_order_will_be_placed_for_{0}."
+msgstr "Этот заказ будет размещён для {0}."
+
+msgid "Only_stock_products_are_shown."
+msgstr "Показаны только товары на складе."
+
+msgid "activated"
+msgstr "активированный"
+
+msgid "Load_past_orders"
+msgstr "Загрузка прошлых заказов"
+
+msgid "Your_credit_balance"
+msgstr "Ваш баланс"
+
+msgid "Show_cart_button"
+msgstr "Показать корзину"
+
+msgid "Already_ordered_products"
+msgstr "Заказанные товары"
+
+msgid "right_of_withdrawal"
+msgstr "право на возврат"
+
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+msgstr "Я принимаю {0} и соглашаюсь с тем, что это не относится к скоропортящимся товарам."
+
+msgid "general_terms_and_conditions"
+msgstr "общие положения и условия"
+
+msgid "General_terms_and_conditions_of_{0}"
+msgstr "общие положения и условия {0}"
+
+msgid "Order_button"
+msgstr "Оплатить"
+
+msgid "The_amount_will_be_reduced_from_the_credit_balance."
+msgstr "Сумма спишется с вашего баланса."
+
+msgid "Please_pay_when_picking_up_products."
+msgstr "Пожалуйста, оплатите при получении товара."
+
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr "Хотите написать сообщение команде выдачи для {0}?"
+
+msgid "Write_message_to_{0}_for_{1}?"
+msgstr "Хотите написать сообщение на адрес {0} для {1}?"
+
+msgid "Write_message_to_your_order."
+msgstr "Добавить сообщение к заказу?"
+
+msgid "Placeholder_message_pickup_day_comment."
+msgstr "Ваше сообщение будет отображаться рядом с вашим заказом в административной панели. Производители не могут видеть это сообщение."
+
+msgid "Pickup_place:_{0}"
+msgstr "Место выдачи: {0}"
+
+msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
+msgstr "Я обещаю получить товар в выбранный день выдачи и оплатить наличными на месте."
+
+msgid "No_order_possible"
+msgstr "Заказ невозможен"
+
+msgid "{0}_times_ordered_for_pickup_day_{1}."
+msgstr "{0} раз заказан для дня выдачи {1}."
+
+msgid "available"
+msgstr "доступен"
+
+msgid "New"
+msgstr "Новый"
+
+msgid "More_infos_to_product_{0}"
+msgstr "Больше информации о товаре {0}"
+
+msgid "Instant_order"
+msgstr "Мгновенный заказ"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 неделя} other{# недель}}"
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 неделя} other{# недель}} {1,plural,=1{и 1 день} other{and # дней}}"
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Товары со склада: можно заказать только через {0}."
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr "Товар со склада: заказать можно только при формировании мгновенного заказа."
+
+msgid "Currently_not_on_stock"
+msgstr "В данный момент нет на складе"
+
+msgid "Page"
+msgstr "Страница"
+
+msgid "Selling_price"
+msgstr "Цена продажи"
+
+msgid "Move_in_shopping_bag"
+msgstr "Отправить в корзину"
+
+msgid "Move_in_cart"
+msgstr "В корзину"
+
+msgid "Weight_in"
+msgstr "Вес в"
+
+msgid "Comment"
+msgstr "Комментарий"
+
+msgid "You_can_sign_in_here_for_ordering"
+msgstr "Вы можете зарегистрироваться здесь для размещения нового заказа"
+
+msgid "E-mail_address"
+msgstr "Адрес эл.почты"
+
+msgid "Please_be_careful_that_there_is_no_empty_space_at_the_end_of_the_password_when_you_double_click_and_copy_it."
+msgstr "Пожалуйста, обратите внимание, чтобы в конце пароля не было пустого места, когда вы дважды щёлкаете и копируете его."
+
+msgid "You_can_change_your_password_here"
+msgstr "Вы можете изменить свой пароль здесь"
+
+msgid "You_can_change_your_profile_here"
+msgstr "Вы можете изменить свой профиль здесь"
+
+msgid "Replace_existing_file"
+msgstr "Замена существующего файла"
+
+msgid "Upload_new_file"
+msgstr "Загрузить новый файл"
+
+msgid "Search_PC"
+msgstr "Загрузить с компьютера"
+
+msgid "Other_initiatives"
+msgstr "Все производители"
+
+msgid "Map_with_all_Austrian_foodocops"
+msgstr "Карта со <b>всеми</b> с производителями фермерских продуктов"
+
+msgid "Information"
+msgstr "Информация"
+
+msgid "Contact"
+msgstr "Контакт"
+
+msgid "Attention_delivery_break!"
+msgstr "Внимание, перерыв в доставке!"
+
+msgid "Help?"
+msgstr "Справка?"
+
+msgid "Replace_existing_image"
+msgstr "Замена существующего изображения"
+
+msgid "Upload_new_image"
+msgstr "Загрузить новое изображение"
+
+msgid "Image_upload_legal_hint."
+msgstr "Пожалуйста, загружайте изображение, только если у вас есть права на использование!"
+
+msgid "This_page_uses_cookies"
+msgstr "Эта страница использует файлы cookies"
+
+msgid "Cookies_explaination_text"
+msgstr "Примите файлы cookies. Узнать больше можно на странице <a href=\"/politika-konfidencialnosti\">политика конфиденциальности</a>"
+
+msgid "Accept_cookies"
+msgstr "Принять файлы cookies"
+
+msgid "Print"
+msgstr "Распечатать"
+
+msgid "chose_category..."
+msgstr "выбрать категорию..."
+
+msgid "Reset_search"
+msgstr "Сбросить поиск"
+
+msgid "Add_deposit"
+msgstr "Добавить депозит"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Добавьте сумму депозита для {0}"
+
+msgid "The_entered_deposit_will_not_show_up_in_the_cart."
+msgstr "Внесённый депозит не будет отображаться в корзине, но будет добавлен на ваш баланс."
+
+msgid "Amount_in_{0}"
+msgstr "Сумма в {0}"
+
+msgid "Cash"
+msgstr "Наличные"
+
+msgid "Payment_type"
+msgstr "Оплата"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid "There_are_only_stock_products_shown_in_this_list."
+msgstr "В этом списке показаны только товары со склада."
+
+msgid "Admin_area"
+msgstr "Панель администратора"
+
+msgid "Manufacturer_area"
+msgstr "Панель производителя"
+
+msgid "To_change_your_profile_please_stop_the_instant_order_mode."
+msgstr "Для изменения вашего профиля пожалуйста остановите режим мгновенного заказа."
+
+msgid "Signed_in"
+msgstr "Вошёл"
+
+msgid "Your_account_at_{0}_has_just_been_activated."
+msgstr "Ваша учётная запись на {0} была только что активирована."
+
+msgid "Your_registration_at_{0}_has_just_been_successful!"
+msgstr "Ваша регистрация {0} была успешна!"
+
+msgid "Please_confirm_your_email_address"
+msgstr "Пожалуйста, подтвердите свой адрес эл.почты"
+
+msgid "Dear_responsible_person_for_new_members,"
+msgstr "Уважаемые лица, ответственные за новых покупателей,"
+
+msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
+msgstr "произведена новая регистрация: {0} ({1}) из {2}."
+
+msgid "Here_you_can_activate_the_new_member_and_see_the_data"
+msgstr "Здесь вы можете активировать нового покупателя и посмотреть данные"
+
+msgid "Here_you_can_see_the_data_of_the_new_member"
+msgstr "Здесь вы можете видеть данные нового покупателя"
+
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
+msgstr "Мгновенный заказ на {0} был только что размещён покупателем {1}."
+
+msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr "Вы получили это сообщение поскольку дата доставки этого заказа была автоматически установлена на <b>сегодня ({0})</b> и поэтому он не отображается в ваших списках заказов."
+
+msgid "your_new_password_is:"
+msgstr "ваш новый пароль:"
+
+msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgstr "Пожалуйста для активации нового пароля нажмите на эту ссылку"
+
+msgid "thank_you_for_your_order_from_{0}."
+msgstr "спасибо за ваш заказ от {0}."
+
+msgid "The_amount_was_reduced_from_your_credit_balance."
+msgstr "Сумма была списана с вашего баланса."
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr "Вы найдёте подробный список вашего заказа в прилагаемом файле подтверждения заказа."
+
+msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
+msgstr "Информация о праве на возврат является обязательной, но она недействительна для скоропортящихся товаров."
+
+msgid "You_can_subscribe_our_newsletter_<a href=\"{0}\">in_the_admin_areas_menu_point_my_data</a>."
+msgstr "Вы можете отказаться от подписки на нашу рассылку <a href=\"{0}\">в пункте меню администратора \"Мои данные\"</a>."
+
+msgid "thank_you_for_your_purchase."
+msgstr "спасибо за покупку."
+
+msgid "This_is_the_text_of_the_email_(with_attached_logo)."
+msgstr "Это текст эл.письма (с вложением логотипа)."
+
+msgid "Units_on_stock:"
+msgstr "Единиц на складе:"
+
+msgid "Product_orders_are_not_possible_any_more!"
+msgstr "Больше нельзя делать заказы!"
+
+msgid "Product_orders_possible_until:"
+msgstr "Товары можно заказать до:"
+
+msgid "This_notification_triggered_if_stock_available_is_less_than:"
+msgstr "Это уведомление активируется по эл.почте, если на складе доступно меньше чем:"
+
+msgid "Click_here_to_edit_the_product."
+msgstr "Нажмите здесь, чтобы отредактировать товар."
+
+msgid "Cart"
+msgstr "Корзина"
+
+msgid "Your_cart_is_empty."
+msgstr "Пустая корзина."
+
+msgid "This_email_was_created_automatically."
+msgstr "Это эл.письмо было создано автоматически."
+
+msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr "Вы можете отказаться от подписки <a href=\"{0}\">в настройках</a>."
+
+msgid "homepage"
+msgstr "главная"
+
+msgid "page_you_have_just_been_to"
+msgstr "страница, на которой вы только что побывали"
+
+msgid "Click_here_to_open_the"
+msgstr "Нажмите здесь, чтобы открыть"
+
+msgid "Auto_logout_in_X_sec"
+msgstr "Авто-выход через X сек."
+
+msgid "Terms_and_conditions"
+msgstr "Условия и положения"
+
+msgid "Information_about_right_of_withdrawal"
+msgstr "Информация о праве на возврат"
+
+msgid "and_withdrawal_form"
+msgstr "и форма возврат"
+
+msgid "Withdrawal_form"
+msgstr "Форма возврата"
+
+msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
+msgstr "Если вы хотите расторгнуть договор, пожалуйста, заполните эту форму и отправьте нам обратно."
+
+msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
+msgstr "Настоящим я расторгаю договор купли следующих товаров или услуг."
+
+msgid "Ordered_on"
+msgstr "Заказано на"
+
+msgid "Received_on"
+msgstr "Получено"
+
+msgid "Name_of_consumer(s)"
+msgstr "Имя покупателя(ей)"
+
+msgid "Address_of_consumer(s)"
+msgstr "Адреса покупателя(ей)"
+
+msgid "Signature_of_consumer_only_if_transmitted_on_paper."
+msgstr "Подпись участика (только при передаче на бумажном носителе)."
+
+msgid "Strike_out_unnecessary_items."
+msgstr "Вычеркните ненужные элементы."
+
+msgid "Order_overview"
+msgstr "Обзор заказа"
+
+msgid "Order"
+msgstr "Заказ"
+
+msgid "placed_on"
+msgstr "размещён на"
+
+msgid "Prices_are_including_vat."
+msgstr "Цены включают НДС."

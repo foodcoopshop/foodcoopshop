@@ -5,6 +5,7 @@ namespace App\Services\Pdf\Traits;
 
 use Cake\Core\Configure;
 use Cake\I18n\DateTime;
+use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,6 +28,7 @@ trait FooterTrait
      */
     public function footer()
     {
+        $this->SetFont('freesans');
         $this->SetY(-19);
         $this->drawLine();
         $this->SetFontSize(10);

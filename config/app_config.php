@@ -153,7 +153,7 @@ return [
          */
         'termsOfUseLastUpdate' => '2016-11-28',
 
-        'implementedLocales' => ['de_DE', 'en_US'],
+        'implementedLocales' => ['de_DE', 'en_US', 'ru_RU'],
 
         // must be a valid 6-digit hex code
         'customThemeMainColor' => '#719f41',
