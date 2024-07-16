@@ -65,8 +65,8 @@ class InvoiceToManufacturerPdfWriterService extends PdfWriterService
             'newInvoiceNumber' => $newInvoiceNumber,
             'period' => $period,
             'invoiceDate' => $invoiceDate,
-            'dateFrom' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateFrom))),
-            'dateTo' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateTo))),
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
             'manufacturer' => $manufacturer,
             'variableMemberFee' => $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee),
         ]);
