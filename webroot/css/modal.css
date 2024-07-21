@@ -298,8 +298,20 @@ body.iframe_self_service_order {
 }
 #modal-product-quantity-edit .field-wrapper label:not(.checkbox),
 #modal-product-calculate-selling-price-with-surcharge .field-wrapper label:not(.checkbox) {
-    width: 75%;
+    width: 73%;
 }
+#modal-product-quantity-edit .calculator-output {
+    float: left;
+}
+#modal-product-quantity-edit .calculator-toggle-button {
+    margin-left:5px;
+    margin-top:3px;
+    float:left;
+}
+#modal-product-quantity-edit .calculator-input {
+    margin-left: 10px;
+    width: 178px;
+},
 #modal-product-price-edit .deactivated {
     opacity: 0.3;
 }
