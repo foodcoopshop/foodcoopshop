@@ -100,6 +100,13 @@ trait EditQuantityTrait
             $unitName = $unitObject->name ?? '';
             foreach($entity->getDirty() as $dirtyField) {
                 $newValue = $entity->get($dirtyField);
+
+                // quantity_limit was always logged (0 vs 0.000)
+                if (Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) ==
+                    Configure::read('app.numberHelper')->formatAsDecimal($oldProduct->stock_available->getOriginal($dirtyField), 3)) {
+                    continue;
+                }
+
                 switch($dirtyField) {
                     case 'quantity':
                         $translatedFieldName = __d('admin', 'Available_quantity') . ': '
@@ -127,17 +134,19 @@ trait EditQuantityTrait
                 }
             }
 
-            $this->ActionLog->customSave(
-                'product_quantity_changed',
-                $this->identity->getId(),
-                $productId,
-                'products',
-                __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}.', [
-                    '<b>' . $oldProduct->name . '</b>',
-                    '<b>' . $oldProduct->manufacturer->name . '</b>',
-                    join(', ', $dirtyFieldsWithNewValues),
-                ])
-            );
+            if (!empty($dirtyFieldsWithNewValues)) {
+                $this->ActionLog->customSave(
+                    'product_quantity_changed',
+                    $this->identity->getId(),
+                    $productId,
+                    'products',
+                    __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}.', [
+                        '<b>' . $oldProduct->name . '</b>',
+                        '<b>' . $oldProduct->manufacturer->name . '</b>',
+                        join(', ', $dirtyFieldsWithNewValues),
+                    ])
+                );
+            }
         }
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
