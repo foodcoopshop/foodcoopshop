@@ -123,6 +123,7 @@ trait EditQuantityTrait
                         break;
                     case 'quantity_limit':
                         $translatedFieldName = __d('admin', 'Quantity_limit');
+                        $newValue = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                     case 'sold_out_limit':
                         $translatedFieldName = __d('admin', 'Sold_out_limit');
@@ -130,7 +131,7 @@ trait EditQuantityTrait
                         break;
                 }
                 if (isset($translatedFieldName)) {
-                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName) . '</b>';
+                    $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $newValue . '</b>';
                 }
             }
 
