@@ -274,6 +274,7 @@ class LocalizedController extends Controller
             ],
             'dialogProduct' => [
                 'ChangeAmount' => __('Change_amount'),
+                'ChangeStock' => __('Change_stock'),
                 'ChangePrice' => __('Change_price'),
                 'PricePerUnit' => __('Price_per_unit'),
                 'gross' => __('gross'),

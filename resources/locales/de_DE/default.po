@@ -980,6 +980,9 @@ msgstr "Gruppe ändern"
 msgid "Change_amount"
 msgstr "Anzahl ändern"
 
+msgid "Change_stock"
+msgstr "Lagerstand ändern"
+
 msgid "Change_price"
 msgstr "Preis ändern"
 

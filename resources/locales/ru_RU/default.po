@@ -949,6 +949,9 @@ msgstr "Изменить группу"
 msgid "Change_amount"
 msgstr "Изменить кол-во"
 
+msgid "Change_stock"
+msgstr "Изменить наличие"
+
 msgid "Change_price"
 msgstr "Изменить цену"
 

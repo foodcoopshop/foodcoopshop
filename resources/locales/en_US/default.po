@@ -980,6 +980,9 @@ msgstr "Change group"
 msgid "Change_amount"
 msgstr "Change amount"
 
+msgid "Change_stock"
+msgstr "Change stock"
+
 msgid "Change_price"
 msgstr "Change price"
 
