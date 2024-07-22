@@ -3081,31 +3081,31 @@ msgid "Configuration_text_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
 msgstr "Lagerort für Produkte erfassen und in Bestelllisten anzeigen?"
 
 msgid "Configuration_text_FCS_INSTAGRAM_URL"
-msgstr "Instagram url for embedding in footer"
+msgstr "Instagram-Url für die Einbindung im Footer"
 
 msgid "Configuration_text_FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY"
-msgstr "Ordering products with delivery rhythm one or two weeks is only possible in the week before delivery."
+msgstr "Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich."
 
 msgid "Configuration_text_FCS_INVOICE_NUMBER_PREFIX"
-msgstr "Prefix for invoice numbers"
+msgstr "Präfix für Rechnungs-Nummernkreis"
 
 msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
-msgstr "Max. 6 chars incl. separator."
+msgstr "Max. 6 Zeichen inkl. Trennzeichen."
 
 msgid "Configuration_text_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
-msgstr "Invoices for companies with fixed tax rate"
+msgstr "Rechnungslegung für pauschalierte Betriebe"
 
 msgid "Configuration_subtext_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
-msgstr "Vat is calculated based on the sum of net price of the invoice."
+msgstr "Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück."
 
 msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
-msgstr "Newsletter enabled?"
+msgstr "Newsletter-Funktion aktiv?"
 
 msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
-msgstr "Shows newsletter checkbox on registration."
+msgstr "Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a>"
 
 msgid "Configuration_text_FCS_USER_FEEDBACK_ENABLED"
-msgstr "Member and manufacturer feedback enabled?"
+msgstr "Mitglieder- und Hersteller-Feedback aktiv?"
 
 msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
-msgstr "Members and manufacturers can write feedback."
+msgstr "Ermöglicht das Erfassen und Anzeigen von Feedback. <a href=\"https://foodcoopshop.github.io/de/user-feedback.html\" target=\"_blank\">Mehr Infos</a>"

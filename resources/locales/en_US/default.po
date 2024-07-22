@@ -2865,7 +2865,7 @@ msgid "Configuration_text_FCS_DAYS_SHOW_PRODUCT_AS_NEW"
 msgstr "How many days products should be \"marked as new\"?"
 
 msgid "Configuration_text_FCS_FOOTER_CMS_TEXT"
-msgstr ""
+msgstr "Additional text for footer"
 
 msgid "Configuration_text_FCS_FACEBOOK_URL"
 msgstr "Facebook url for embedding in footer"
@@ -2901,7 +2901,7 @@ msgid "Configuration_subtext_FCS_REGISTRATION_INFO_TEXT"
 msgstr "This info text is shown in the registration form below the e-mail address."
 
 msgid "Configuration_text_FCS_SHOW_PRODUCTS_FOR_GUESTS"
-msgstr "Products visible for guests?"
+msgstr "Are products visible for guests?"
 
 msgid "Configuration_text_FCS_DEFAULT_NEW_MEMBER_ACTIVE"
 msgstr "Automatically activate new members?"
@@ -2976,10 +2976,10 @@ msgid "Configuration_text_FCS_NETWORK_PLUGIN_ENABLED"
 msgstr "Network module activated?"
 
 msgid "Configuration_subtext_FCS_NETWORK_PLUGIN_ENABLED"
-msgstr "<a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos to the network module</a>"
+msgstr "<a href=\"https://foodcoopshop.github.io/netzwerk-modul\" target=\"_blank\">Infos to the network module</a>"
 
 msgid "Configuration_text_FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS"
-msgstr "Shop product price for guests?"
+msgstr "Show product price for guests?"
 
 msgid "Configuration_text_FCS_CURRENCY_SYMBOL"
 msgstr "Currency symbol"
@@ -2991,7 +2991,7 @@ msgid "Configuration_text_FCS_FOODCOOPS_MAP_ENABLED"
 msgstr "Show map with other foodcoops on home?"
 
 msgid "Configuration_text_FCS_WEEKLY_PICKUP_DAY"
-msgstr "'Weekly pickup day"
+msgstr "Weekly pickup day"
 
 msgid "Configuration_text_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA"
 msgstr "Sending of order lists: x days before pickup day"
@@ -3024,7 +3024,7 @@ msgid "Configuration_text_FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED"
 msgstr "Run self-service mode in test mode?"
 
 msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED"
-msgstr "Does not add links to main menu and to stock products.."
+msgstr "Does not add links to main menu and to stock products."
 
 msgid "Configuration_text_FCS_CASHLESS_PAYMENT_ADD_TYPE"
 msgstr "Type of adding the payments"
@@ -3075,31 +3075,31 @@ msgid "Configuration_text_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
 msgstr "Save storage location for products?"
 
 msgid "Configuration_text_FCS_INSTAGRAM_URL"
-msgstr "Instagram-Url für die Einbindung im Footer"
+msgstr "Instagram url for embedding in footer"
 
 msgid "Configuration_text_FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY"
-msgstr "Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich."
+msgstr "Ordering products with delivery rhythm one or two weeks is only possible in the week before delivery."
 
 msgid "Configuration_text_FCS_INVOICE_NUMBER_PREFIX"
-msgstr "Präfix für Rechnungs-Nummernkreis"
+msgstr "Prefix for invoice numbers"
 
 msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
-msgstr "Max. 6 Zeichen inkl. Trennzeichen."
+msgstr "Max. 6 chars incl. separator."
 
 msgid "Configuration_text_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
-msgstr "Rechnungslegung für pauschalierte Betriebe"
+msgstr "Invoices for companies with fixed tax rate"
 
 msgid "Configuration_subtext_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
-msgstr "Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück."
+msgstr "Vat is calculated based on the sum of net price of the invoice."
 
 msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
-msgstr "Newsletter-Funktion aktiv?"
+msgstr "Newsletter enabled?"
 
 msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
-msgstr "Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a>"
+msgstr "Shows newsletter checkbox on registration."
 
 msgid "Configuration_text_FCS_USER_FEEDBACK_ENABLED"
-msgstr "Mitglieder- und Hersteller-Feedback aktiv?"
+msgstr "Member and manufacturer feedback enabled?"
 
 msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
-msgstr "Ermöglicht das Erfassen und Anzeigen von Feedback. <a href=\"https://foodcoopshop.github.io/de/user-feedback.html\" target=\"_blank\">Mehr Infos</a>"
+msgstr "Members and manufacturers can write feedback."

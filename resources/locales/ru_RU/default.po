@@ -2820,3 +2820,249 @@ msgstr "размещён на"
 
 msgid "Prices_are_including_vat."
 msgstr "Цены включают НДС."
+
+msgid "Configuration_text_FCS_PRODUCT_AVAILABILITY_LOW"
+msgstr "Доступно небольшое количество"
+
+msgid "Configuration_subtext_FCS_PRODUCT_AVAILABILITY_LOW"
+msgstr "С какого количества должна появляться информация \"(x доступно\")?"
+
+msgid "Configuration_text_FCS_DAYS_SHOW_PRODUCT_AS_NEW"
+msgstr "Сколько дней товары должны быть\"отмечены как новые\"?"
+
+msgid "Configuration_text_FCS_FOOTER_CMS_TEXT"
+msgstr "Дополнительный текст для нижнего колонтитула"
+
+msgid "Configuration_text_FCS_FACEBOOK_URL"
+msgstr "Facebook url для интеграции в колонтитул"
+
+msgid "Configuration_text_FCS_REGISTRATION_EMAIL_TEXT"
+msgstr "Дополнительный текст который будет отправлен в регистрационном письме после успешной регистрации по эл.почте."
+
+msgid "Configuration_subtext_FCS_REGISTRATION_EMAIL_TEXT"
+msgstr "<a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> Предварительный просмотр эл.письма<</a>"
+
+msgid "Configuration_text_FCS_RIGHT_INFO_BOX_HTML"
+msgstr "Содержимое поля в правой колонке под корзиной."
+
+msgid "Configuration_subtext_FCS_RIGHT_INFO_BOX_HTML"
+msgstr "Чтобы сделать фон строки зелёным, отформатируйте как \"Заголовок 3\"."
+
+msgid "Configuration_text_FCS_NO_DELIVERY_DAYS_GLOBAL"
+msgstr "Перерыв доставки для всех производителей?"
+
+msgid "Configuration_subtext_FCS_NO_DELIVERY_DAYS_GLOBAL"
+msgstr "Здесь вы можете определить дни без доставки для всего сайта."
+
+msgid "Configuration_text_FCS_ACCOUNTING_EMAIL"
+msgstr "Адрес эл.почты финансового директора"
+
+msgid "Configuration_subtext_FCS_ACCOUNTING_EMAIL"
+msgstr "Кто получит уведомление об отправке счетов?"
+
+msgid "Configuration_text_FCS_REGISTRATION_INFO_TEXT"
+msgstr "Информационный текст в регистрационной форме"
+
+msgid "Configuration_subtext_FCS_REGISTRATION_INFO_TEXT"
+msgstr "В регистрационной форме этот текст отображается под адресом эл.почты."
+
+msgid "Configuration_text_FCS_SHOW_PRODUCTS_FOR_GUESTS"
+msgstr "Товары видимы для гостей?"
+
+msgid "Configuration_text_FCS_DEFAULT_NEW_MEMBER_ACTIVE"
+msgstr "Автоматически активировать новых покупателей?"
+
+msgid "Configuration_text_FCS_MINIMAL_CREDIT_BALANCE"
+msgstr "Кредитный лимит до которого заказы будут возможны?"
+
+msgid "Configuration_text_FCS_BANK_ACCOUNT_DATA"
+msgstr "Банковские реквизиты для загрузки ден.средств."
+
+msgid "Configuration_text_FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS"
+msgstr "Дополнительная информация о доставке для производителей"
+
+msgid "Configuration_subtext_FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS"
+msgstr "будет отображаться в списках заказов после даты доставки."
+
+msgid "Configuration_text_FCS_BACKUP_EMAIL_ADDRESS_BCC"
+msgstr "Адрес эл.почты, на который отправляются все автоматически сгенерированные эл.письма в качестве Bcc:скрытая копия (Резервная копия)."
+
+msgid "Configuration_subtext_FCS_BACKUP_EMAIL_ADDRESS_BCC"
+msgstr "Можно оставить пустым."
+
+msgid "Configuration_text_FCS_SHOW_FOODCOOPSHOP_BACKLINK"
+msgstr "Показывать ссылку www.foodcoopshop.com?"
+
+msgid "Configuration_subtext_FCS_SHOW_FOODCOOPSHOP_BACKLINK"
+msgstr "Эта ссылка отображается в нижнем колонтитуле."
+
+msgid "Configuration_text_FCS_HOME_TEXT"
+msgstr "Text that is shown on the home page."
+
+msgid "Configuration_subtext_FCS_HOME_TEXT"
+msgstr "Optional."
+
+msgid "Configuration_text_FCS_APP_NAME"
+msgstr "Название сайта"
+
+msgid "Configuration_text_FCS_APP_ADDRESS"
+msgstr "Адрес организации (владельца сайта)"
+
+msgid "Configuration_subtext_FCS_APP_ADDRESS"
+msgstr "Используется в нижнем колонтитуле главной страницы и эл.письмах, политике конфиденциальности и условиях использования."
+
+msgid "Configuration_text_FCS_APP_EMAIL"
+msgstr "Адрес эл.почты организации (владельца сайта)"
+
+msgid "Configuration_text_FCS_PLATFORM_OWNER"
+msgstr "Оператор платформы"
+
+msgid "Configuration_subtext_FCS_PLATFORM_OWNER"
+msgstr "Для политики конфиденциальности и условий использования, пожалуйста, также добавьте адрес. Может быть оставлен пустым, если владелец сайта является оператором."
+
+msgid "Configuration_text_FCS_ORDER_COMMENT_ENABLED"
+msgstr "Показывать поле для комментариев во время размещения заказа?"
+
+msgid "Configuration_subtext_FCS_ORDER_COMMENT_ENABLED"
+msgstr "Показывать в пространстве администратора под \"Заказами\"."
+
+msgid "Configuration_text_FCS_USE_VARIABLE_MEMBER_FEE"
+msgstr "Использовать изменяемые членские взносы?"
+
+msgid "Configuration_subtext_FCS_USE_VARIABLE_MEMBER_FEE"
+msgstr "Вычесть переменный членский взнос из счетов производителя(лей)? Цены на продукцию должны быть соответственно выше."
+
+msgid "Configuration_text_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
+msgstr "Значение по умолчанию для переменного членского взноса"
+
+msgid "Configuration_subtext_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
+msgstr "Процентное соотношение можно изменить в настройках производителя(лей).."
+
+msgid "Configuration_text_FCS_NETWORK_PLUGIN_ENABLED"
+msgstr "Сетевой модуль активирован?"
+
+msgid "Configuration_subtext_FCS_NETWORK_PLUGIN_ENABLED"
+msgstr "<a href=\"https://foodcoopshop.github.io/netzwerk-modul\" target=\"_blank\">Информация о сетевом модуле</a>"
+
+msgid "Configuration_text_FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS"
+msgstr "Показать цену товара для пользователей, которые не вошли в систему?"
+
+msgid "Configuration_text_FCS_CURRENCY_SYMBOL"
+msgstr "Денежная единица"
+
+msgid "Configuration_text_FCS_DEFAULT_LOCALE"
+msgstr "Язык"
+
+msgid "Configuration_text_FCS_FOODCOOPS_MAP_ENABLED"
+msgstr "Показывать карту с другими продуктовыми кооперативами?"
+
+msgid "Configuration_text_FCS_WEEKLY_PICKUP_DAY"
+msgstr "Еженедельный день получения"
+
+msgid "Configuration_text_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA"
+msgstr "Отправка списков заказа: x дней до дня выдачи"
+
+msgid "Configuration_text_FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM"
+msgstr "Разрешать еженедельные заказы для товаров на складе?"
+
+msgid "Configuration_text_FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS"
+msgstr "Показывать только товары для мгновенного заказа со склада?"
+
+msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
+msgstr "Включать товары со склада складских продуктов в счета?"
+
+msgid "Configuration_text_FCS_REGISTRATION_NOTIFICATION_EMAILS"
+msgstr "Кто должен быть уведомлен о новых регистрациях?"
+
+msgid "Configuration_subtext_FCS_REGISTRATION_NOTIFICATION_EMAILS"
+msgstr "Разделяйте несколько получателей эл.писем (,) запятой."
+
+msgid "Configuration_text_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
+msgstr "Использовать режим сомообслуживания для товаров со склада?"
+
+msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
+msgstr "<a href=\"https://foodcoopshop.github.io/selbstbedienungs-modus\" target=\"_blank\">Онлайн документация</a>"
+
+msgid "Configuration_text_FCS_APP_ADDITIONAL_DATA"
+msgstr "Дополнительная информация о сервисе"
+
+msgid "Configuration_text_FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED"
+msgstr "Запустить самообслуживание в тестовом режиме?"
+
+msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED"
+msgstr "Не добавляет ссылки на главное меню и на складские товары."
+
+msgid "Configuration_text_FCS_CASHLESS_PAYMENT_ADD_TYPE"
+msgstr "Способ оформления пополнения кредита"
+
+msgid "Configuration_subtext_FCS_CASHLESS_PAYMENT_ADD_TYPE"
+msgstr "Как пополнение кредита поступает с банковского счета в сервис?"
+
+msgid "Configuration_text_FCS_FEEDBACK_TO_PRODUCTS_ENABLED"
+msgstr "Покупателям разрешено писать отзывы о продуктах?"
+
+msgid "Configuration_text_FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY"
+msgstr "Участник может выбрать день получения при заказе."
+
+msgid "Configuration_text_FCS_SEND_INVOICES_TO_CUSTOMERS"
+msgstr "Режим розничной торговли включён?"
+
+msgid "Configuration_text_FCS_DEPOSIT_TAX_RATE"
+msgstr "НДС для депозита"
+
+msgid "Configuration_text_FCS_INVOICE_HEADER_TEXT"
+msgstr "Текст заголовка для счетов покупателям"
+
+msgid "Configuration_text_FCS_MEMBER_FEE_PRODUCTS"
+msgstr "Какие товары используются в качестве членских взносов?"
+
+msgid "Configuration_subtext_FCS_MEMBER_FEE_PRODUCTS"
+msgstr "Выбранные продукты являются базой данных столбца Членский взнос в администрировании членства и не отображаются в статистике продаж."
+
+msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
+msgstr "На каком уровне кредита должно быть отправлено эл.письмо с напоминанием."
+
+msgid "Configuration_text_FCS_PURCHASE_PRICE_ENABLED"
+msgstr "Включить ввод закупочной цены?"
+
+msgid "Configuration_subtext_FCS_PURCHASE_PRICE_ENABLED"
+msgstr "Закупочная цена является основой для статистики прибыли и накладной производителям."
+
+msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
+msgstr "Активировать API для hellocash.at?"
+
+msgid "Configuration_subtext_FCS_HELLO_CASH_API_ENABLED"
+msgstr "Счета (наличные и безналичные) генерированные hellocash.at."
+
+msgid "Configuration_text_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
+msgstr "Местонахождение товаров?"
+
+msgid "Configuration_text_FCS_INSTAGRAM_URL"
+msgstr "Инстаграм url для встраивания в нижний колонтитул"
+
+msgid "Configuration_text_FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY"
+msgstr "«Заказы в одно- и двухнедельном режиме доставки возможны только за неделю до доставки."
+
+msgid "Configuration_text_FCS_INVOICE_NUMBER_PREFIX"
+msgstr "Префикс для диапазона номеров счетов"
+
+msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
+msgstr "Не более 6 символов, включая разделители."
+
+msgid "Configuration_text_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
+msgstr "Счета для компаний с фиксированной налоговой ставкой"
+
+msgid "Configuration_subtext_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
+msgstr "НДС рассчитывается исходя из суммы основанной на нетто цене счёта."
+
+msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
+msgstr "Рассылка включена?"
+
+msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
+msgstr "Покупатели могут подписаться на новостную рассылку при регистрации."
+
+msgid "Configuration_text_FCS_USER_FEEDBACK_ENABLED"
+msgstr "Для производителей и покупателей активирована возможность создавать отзывы?"
+
+msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
+msgstr "Покупатели и производители могут отавлять отзывы."
