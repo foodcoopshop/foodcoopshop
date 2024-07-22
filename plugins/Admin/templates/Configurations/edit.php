@@ -53,8 +53,7 @@ echo $this->Form->create($configuration, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-$label = $configuration->text;
-
+$label = $configuration->fulltext;
 switch ($configuration->type) {
     case 'number':
     case 'text':

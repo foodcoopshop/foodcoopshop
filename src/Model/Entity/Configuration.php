@@ -28,7 +28,24 @@ class Configuration extends Entity
 
     protected function _getSubtext()
     {
-        return __('Configuration_subtext_' . $this->name);
+
+        $subtextKey = 'Configuration_subtext_' . $this->name;
+
+        if (__($subtextKey) == $subtextKey) {
+            return '';
+        }
+
+        return __($subtextKey);
+
     }
+
+    protected function _getFulltext()
+    {
+        $subtextIncludingWrapper = '';
+        if ($this->subtext != '') {
+            $subtextIncludingWrapper = '<br /><div class="small">' . $this->subtext . '</div>';
+        }
+        return $this->text . $subtextIncludingWrapper;
+}
 
 }

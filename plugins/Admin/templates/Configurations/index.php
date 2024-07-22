@@ -81,11 +81,7 @@ $this->element('addScript', [
             echo '<tr>';
 
                 echo '<td class="first">';
-                    echo $configuration->text;
-                    $subtext = $configuration->subtext;
-                    if ($subtext != '') {
-                        echo '<br /><div class="small">' . $subtext . '</div>';
-                    }
+                    echo $configuration->fulltext;
                 echo '</td>';
 
                 echo '<td style="width:30px;">';
