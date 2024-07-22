@@ -2964,13 +2964,13 @@ msgid "Configuration_text_FCS_USE_VARIABLE_MEMBER_FEE"
 msgstr "Use variable member fee?"
 
 msgid "Configuration_subtext_FCS_USE_VARIABLE_MEMBER_FEE"
-msgstr "Reduce the variable member fee in the manufacturer\'s invoices? Therefore the prices need to be increased."
+msgstr "Reduce the variable member fee in the manufacturer's invoices? Therefore the prices need to be increased."
 
 msgid "Configuration_text_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
 msgstr "Default value for variable member fee"
 
 msgid "Configuration_subtext_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
-msgstr "The percentage can be changed in the manufacturer\'s settings."
+msgstr "The percentage can be changed in the manufacturer's settings."
 
 msgid "Configuration_text_FCS_NETWORK_PLUGIN_ENABLED"
 msgstr "Network module activated?"
