@@ -7,8 +7,14 @@ class Configurations extends AbstractMigration
 {
     public function change(): void
     {
-        $this->table('fcs_configuration')
+        $table = $this->table('fcs_configuration');
+        
+        $table->removeColumn('id_configuration')
         ->removeColumn('text')
+        ->removeColumn('locale')
         ->update();
+
+        $table->addPrimaryKey(['name'])->update();
+        
     }
 }

@@ -87,7 +87,7 @@ $this->element('addScript', [
                 echo '<td style="width:30px;">';
                     echo $this->Html->link(
                         '<i class="fas fa-pencil-alt ok"></i>',
-                        $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name),
+                        $this->Slug->getConfigurationEdit($configuration->name),
                         [
                             'class' => 'btn btn-outline-light',
                             'title' => __d('admin', 'Edit'),

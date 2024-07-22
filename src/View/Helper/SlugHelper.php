@@ -505,9 +505,9 @@ class SlugHelper extends Helper
         return '/admin/configurations';
     }
 
-    public function getConfigurationEdit($configurationId)
+    public function getConfigurationEdit($name)
     {
-        return '/admin/configurations/edit/'.$configurationId;
+        return '/admin/configurations/edit/'.$name;
     }
 
     public function getCronjobsList()

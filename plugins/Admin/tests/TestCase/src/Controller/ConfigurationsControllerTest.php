@@ -40,7 +40,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
                 'Configurations.name' => $configKey
             ]
         )->first();
-        $this->post('/admin/configurations/edit/'.$configuration->id_configuration, [
+        $this->post('/admin/configurations/edit/'.$configuration->name, [
            'Configurations' => [
                'value' => $newValue
            ],

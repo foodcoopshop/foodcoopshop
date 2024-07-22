@@ -115,7 +115,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Network->getSyncDomainAdd(),
             $this->Network->getSyncDomainEdit(1),
             $this->Slug->getConfigurationsList(),
-            $this->Slug->getConfigurationEdit(544),
+            $this->Slug->getConfigurationEdit('FCS_NO_DELIVERY_DAYS_GLOBAL'),
             $this->Slug->getCronjobsList(),
             $this->Slug->getCronjobEdit(1),
             $this->Slug->getProductImport(4),
