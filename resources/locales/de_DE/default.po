@@ -2863,3 +2863,203 @@ msgstr "Geringe Verfügbarkeit"
 
 msgid "Configuration_subtext_FCS_PRODUCT_AVAILABILITY_LOW"
 msgstr "Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?"
+
+msgid "Configuration_text_FCS_DAYS_SHOW_PRODUCT_AS_NEW"
+msgstr "Wie viele Tage sollen Produkte \"als neu markiert\" bleiben?"
+
+msgid "Configuration_text_FCS_FOOTER_CMS_TEXT"
+msgstr "Zusätzlicher Text für den Footer"
+
+msgid "Configuration_text_FCS_FACEBOOK_URL"
+msgstr "Facebook-Url für die Einbindung im Footer"
+
+msgid "Configuration_text_FCS_REGISTRATION_EMAIL_TEXT"
+msgstr "Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird."
+
+msgid "Configuration_text_FCS_RIGHT_INFO_BOX_HTML"
+msgstr "Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes."
+
+msgid "Configuration_text_FCS_NO_DELIVERY_DAYS_GLOBAL"
+msgstr "Lieferpause für alle Hersteller?"
+
+msgid "Configuration_text_FCS_ACCOUNTING_EMAIL"
+msgstr "E-Mail-Adresse des Finanzverantwortlichen"
+
+msgid "Configuration_text_FCS_REGISTRATION_INFO_TEXT"
+msgstr "Info-Text beim Registrierungsformular"
+
+msgid "Configuration_text_FCS_SHOW_PRODUCTS_FOR_GUESTS"
+msgstr "Produkte für nicht eingeloggte Mitglieder sichtbar?"
+
+msgid "Configuration_text_FCS_DEFAULT_NEW_MEMBER_ACTIVE"
+msgstr "Neue Mitglieder automatisch aktivieren?"
+
+msgid "Configuration_text_FCS_MINIMAL_CREDIT_BALANCE"
+msgstr "Bis zu welchem Guthaben-Betrag sollen Bestellungen möglich sein?"
+
+msgid "Configuration_text_FCS_BANK_ACCOUNT_DATA"
+msgstr "Bankverbindung für die Guthaben-Einzahlungen"
+
+msgid "Configuration_text_FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS"
+msgstr "Zusätzliche Liefer-Informationen für die Hersteller"
+
+msgid "Configuration_text_FCS_BACKUP_EMAIL_ADDRESS_BCC"
+msgstr "E-Mail-Adresse, an die sämtliche vom System generierten E-Mails als BCC verschickt werden (Backup)."
+
+msgid "Configuration_text_FCS_SHOW_FOODCOOPSHOP_BACKLINK"
+msgstr "Auf Homepage Link auf www.foodcoopshop.com anzeigen?"
+
+msgid "Configuration_text_FCS_APP_NAME"
+msgstr "Name der Foodcoop"
+
+msgid "Configuration_text_FCS_APP_ADDRESS"
+msgstr "Adresse der Foodcoop"
+
+msgid "Configuration_text_FCS_APP_EMAIL"
+msgstr "E-Mail-Adresse der Foodcoop"
+
+msgid "Configuration_text_FCS_PLATFORM_OWNER"
+msgstr "Betreiber der Plattform"
+
+msgid "Configuration_subtext_FCS_PLATFORM_OWNER"
+msgstr "Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt."
+
+msgid "Configuration_text_FCS_ORDER_COMMENT_ENABLED"
+msgstr "Kommentarfeld bei Bestell-Abschluss anzeigen?"
+
+msgid "Configuration_text_FCS_USE_VARIABLE_MEMBER_FEE"
+msgstr "Variablen Mitgliedsbeitrag verwenden?"
+
+msgid "Configuration_text_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
+msgstr "Standardwert für variablen Mitgliedsbeitrag"
+
+msgid "Configuration_text_FCS_NETWORK_PLUGIN_ENABLED"
+msgstr "Netzwerk-Modul aktiviert?"
+
+msgid "Configuration_subtext_FCS_NETWORK_PLUGIN_ENABLED"
+msgstr "<a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a>"
+
+msgid "Configuration_text_FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS"
+msgstr "Produktpreis für nicht eingeloggte Mitglieder anzeigen?"
+
+msgid "Configuration_text_FCS_CURRENCY_SYMBOL"
+msgstr "Währungssymbol"
+
+msgid "Configuration_text_FCS_DEFAULT_LOCALE"
+msgstr "Sprache"
+
+msgid "Configuration_text_FCS_FOODCOOPS_MAP_ENABLED"
+msgstr "Auf Home Karte mit anderen Foodcoops anzeigen?"
+
+msgid "Configuration_text_FCS_WEEKLY_PICKUP_DAY"
+msgstr "Wöchentlicher Abholtag"
+
+msgid "Configuration_text_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA"
+msgstr "Bestelllisten-Versand: x Tage vor dem Abholtag"
+
+msgid "Configuration_text_FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM"
+msgstr "Sollen Lagerprodukte mit der wöchentlichen Bestellung bestellt werden können?"
+
+msgid "Configuration_text_FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS"
+msgstr "In der Sofort-Bestellung ausschließlich Lagerprodukte anzeigen?"
+
+msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
+msgstr "Lagerprodukte in Rechnungen miteinbeziehen?"
+
+msgid "Configuration_text_FCS_REGISTRATION_NOTIFICATION_EMAILS"
+msgstr "Wer soll bei neuen Registrierungen informiert werden?"
+
+msgid "Configuration_text_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
+msgstr "Selbstbedienungs-Modus für Lagerprodukte aktiv?"
+
+msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
+msgstr "<a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a>"
+
+msgid "Configuration_text_FCS_APP_ADDITIONAL_DATA"
+msgstr "Zusätzliche Infos zur Foodcoop"
+
+msgid "Configuration_text_FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED"
+msgstr "Selbstbedienungs-Modus im Test-Modus ausführen?"
+
+msgid "Configuration_text_FCS_CASHLESS_PAYMENT_ADD_TYPE"
+msgstr "Art der Eintragung der Guthaben-Aufladungen"
+
+msgid "Configuration_subtext_FCS_CASHLESS_PAYMENT_ADD_TYPE"
+msgstr "Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?"
+
+msgid "Configuration_text_FCS_FEEDBACK_TO_PRODUCTS_ENABLED"
+msgstr "Feedback-Funktion für Produkte aktiviert?"
+
+msgid "Configuration_text_FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY"
+msgstr "Mitglied kann Abholtag beim Bestellen selbst auswählen."
+
+msgid "Configuration_text_FCS_SEND_INVOICES_TO_CUSTOMERS"
+msgstr "Einzelhandels-Modus aktiviert?"
+
+msgid "Configuration_subtext_FCS_SEND_INVOICES_TO_CUSTOMERS"
+msgstr "<a href=\"https://foodcoopshop.github.io/de/dorfladen-online\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a>"
+
+msgid "Configuration_text_FCS_DEPOSIT_TAX_RATE"
+msgstr "Umsatzsteuersatz für Pfand"
+
+msgid "Configuration_text_FCS_INVOICE_HEADER_TEXT"
+msgstr "Header-Text für Rechnungen an Mitglieder"
+
+msgid "Configuration_text_FCS_MEMBER_FEE_PRODUCTS"
+msgstr "Welche Produkte werden als Mitgliedsbeitrag verwendet?"
+
+msgid "Configuration_subtext_FCS_MEMBER_FEE_PRODUCTS"
+msgstr "Die ausgewählten Produkte sind Datengrundlage der Spalte Mitgliedsbeitrag in der Mitgliederverwaltung und werden nicht in der Umsatzstatistik angezeigt."
+
+msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
+msgstr "Ab welchem Guthaben-Stand soll die Erinnerungsmail versendet werden?"
+
+msgid "Configuration_text_FCS_PURCHASE_PRICE_ENABLED"
+msgstr "Einkaufspreis für Produkte erfassen?"
+
+msgid "Configuration_subtext_FCS_PURCHASE_PRICE_ENABLED"
+msgstr "Der Einkaufspreis ist die Datengrundlage für die Gewinn-Statistik und für Lieferscheine an die Hersteller."
+
+msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
+msgstr "Schnittstelle (API) zu Registrierkasse HelloCash (hellocash.at) aktivieren?"
+
+msgid "Configuration_subtext_FCS_HELLO_CASH_API_ENABLED"
+msgstr "Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen."
+
+msgid "Configuration_text_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
+msgstr "Lagerort für Produkte erfassen und in Bestelllisten anzeigen?"
+
+msgid "Configuration_subtext_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
+msgstr "Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\""
+
+msgid "Configuration_text_FCS_INSTAGRAM_URL"
+msgstr "Instagram-Url für die Einbindung im Footer"
+
+msgid "Configuration_text_FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY"
+msgstr "Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich."
+
+msgid "Configuration_text_FCS_INVOICE_NUMBER_PREFIX"
+msgstr "Präfix für Rechnungs-Nummernkreis"
+
+msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
+msgstr "Max. 6 Zeichen inkl. Trennzeichen."
+
+msgid "Configuration_text_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
+msgstr "Rechnungslegung für pauschalierte Betriebe"
+
+msgid "Configuration_subtext_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
+msgstr "Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück."
+
+msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
+msgstr "Newsletter-Funktion aktiv?"
+
+msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
+msgstr "Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a>"
+
+msgid "Configuration_text_FCS_USER_FEEDBACK_ENABLED"
+msgstr "Mitglieder- und Hersteller-Feedback aktiv?"
+
+msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
+msgstr "Ermöglicht das Erfassen und Anzeigen von Feedback. <a href=\"https://foodcoopshop.github.io/de/user-feedback.html\" target=\"_blank\">Mehr Infos</a>"
+
+
