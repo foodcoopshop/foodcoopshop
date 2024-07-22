@@ -214,7 +214,7 @@ class ConfigurationsTable extends AppTable
             'active' => APP_ON
         ], $customConditions);
         $configurations = $this->find('all',
-        fields: ['id_configuration', 'name', 'value', 'type', 'text'],
+        fields: ['id_configuration', 'name', 'value', 'type'],
         conditions: $conditions,
         order: [
             'position' => 'ASC'
