@@ -8,7 +8,7 @@ class InitDataSeed extends AbstractSeed
     public function run(): void
     {
 
-        $translatedValuesMap = [
+        $translatedConfigurationValuesMap = [
             'FCS_RIGHT_INFO_BOX_HTML' => '<h3>Delivery time</h3><p>You can order every week until Tuesday midnight and pick the products up the following Friday.</p>',
             'FCS_REGISTRATION_INFO_TEXT' => 'You need to be a member if you want to order here.',
             'FCS_BANK_ACCOUNT_DATA' => 'Credit account Example Bank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878',
@@ -16,8 +16,8 @@ class InitDataSeed extends AbstractSeed
             'FCS_CURRENCY_SYMBOL' => '$',
             'FCS_DEFAULT_LOCALE' => 'en_US',
         ];
-        foreach($translatedValuesMap as $name => $value) {
-            $query = "UPDATE fcs_configuration SET value = '$value' WHERE name = '$name';";
+        foreach($translatedConfigurationValuesMap as $configurationName => $value) {
+            $query = "UPDATE fcs_configuration SET value = '$value' WHERE name = '$configurationName';";
             $this->execute($query);
         }
 
