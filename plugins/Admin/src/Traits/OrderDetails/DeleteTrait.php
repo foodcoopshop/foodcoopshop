@@ -75,7 +75,7 @@ trait DeleteTrait
 
 
             $unitsTable = FactoryLocator::get('Table')->get('Units');
-            $unitObject = $unitsTable->getUnitsObjectByOrderDetail($orderDetail);
+            $unitObject = $unitsTable->getUnitsObject($orderDetail->product_id, $orderDetail->product_attribute_id);
 
             $productQuantityService = new ProductQuantityService();
             $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($orderDetail->product, $unitObject);
