@@ -194,7 +194,7 @@ $this->element('addScript', [
             echo '<tr>';
 
                 echo '<td class="first">';
-                    echo $configuration->text;
+                    echo $configuration->fulltext;
                 echo '</td>';
 
                 echo '<td>';
