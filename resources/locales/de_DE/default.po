@@ -2894,6 +2894,9 @@ msgstr "Hier können lieferfreie Tage (z.B. Feiertage) für die gesamte Foodcoop
 msgid "Configuration_text_FCS_ACCOUNTING_EMAIL"
 msgstr "E-Mail-Adresse des Finanzverantwortlichen"
 
+msgid "Configuration_subtext_FCS_ACCOUNTING_EMAIL"
+msgstr "Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?"
+
 msgid "Configuration_text_FCS_REGISTRATION_INFO_TEXT"
 msgstr "Info-Text beim Registrierungsformular"
 
@@ -2963,14 +2966,20 @@ msgstr "Wird im Admin-Bereich unter \"Bestellungen\" angezeigt."
 msgid "Configuration_text_FCS_USE_VARIABLE_MEMBER_FEE"
 msgstr "Variablen Mitgliedsbeitrag verwenden?"
 
+msgid "Configuration_subtext_FCS_USE_VARIABLE_MEMBER_FEE"
+msgstr "Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden."
+
 msgid "Configuration_text_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
-msgstr "Standardwert für variablen Mitgliedsbeitrag"
+msgstr "Standardwert für variablen Mitgliedsbeitrag"#
+
+msgid "Configuration_subtext_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
+msgstr "Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden."
 
 msgid "Configuration_text_FCS_NETWORK_PLUGIN_ENABLED"
 msgstr "Netzwerk-Modul aktiviert?"
 
 msgid "Configuration_subtext_FCS_NETWORK_PLUGIN_ENABLED"
-msgstr "<a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a>"
+msgstr "<a href=\"https://foodcoopshop.github.io/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a>"
 
 msgid "Configuration_text_FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS"
 msgstr "Produktpreis für nicht eingeloggte Mitglieder anzeigen?"
@@ -3009,7 +3018,7 @@ msgid "Configuration_text_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
 msgstr "Selbstbedienungs-Modus für Lagerprodukte aktiv?"
 
 msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
-msgstr "<a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a>"
+msgstr "<a href=\"https://foodcoopshop.github.io/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a>"
 
 msgid "Configuration_text_FCS_APP_ADDITIONAL_DATA"
 msgstr "Zusätzliche Infos zur Foodcoop"
@@ -3039,7 +3048,7 @@ msgid "Configuration_text_FCS_SEND_INVOICES_TO_CUSTOMERS"
 msgstr "Einzelhandels-Modus aktiviert?"
 
 msgid "Configuration_subtext_FCS_SEND_INVOICES_TO_CUSTOMERS"
-msgstr "<a href=\"https://foodcoopshop.github.io/de/dorfladen-online\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a>"
+msgstr "<a href=\"https://foodcoopshop.github.io/dorfladen-online\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a>"
 
 msgid "Configuration_text_FCS_DEPOSIT_TAX_RATE"
 msgstr "Umsatzsteuersatz für Pfand"
@@ -3071,37 +3080,32 @@ msgstr "Alle Rechnungen (bar und unbar) über die Registrierkasse erstellen."
 msgid "Configuration_text_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
 msgstr "Lagerort für Produkte erfassen und in Bestelllisten anzeigen?"
 
-msgid "Configuration_subtext_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
-msgstr "Lagerorte: Keine Kühlung / Kühlschrank / Tiefkühler. Es erscheint ein zusätzlicher Button neben \"Bestellungen - Bestellungen als PDF generieren\""
-
 msgid "Configuration_text_FCS_INSTAGRAM_URL"
-msgstr "Instagram-Url für die Einbindung im Footer"
+msgstr "Instagram url for embedding in footer"
 
 msgid "Configuration_text_FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY"
-msgstr "Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich."
+msgstr "Ordering products with delivery rhythm one or two weeks is only possible in the week before delivery."
 
 msgid "Configuration_text_FCS_INVOICE_NUMBER_PREFIX"
-msgstr "Präfix für Rechnungs-Nummernkreis"
+msgstr "Prefix for invoice numbers"
 
 msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
-msgstr "Max. 6 Zeichen inkl. Trennzeichen."
+msgstr "Max. 6 chars incl. separator."
 
 msgid "Configuration_text_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
-msgstr "Rechnungslegung für pauschalierte Betriebe"
+msgstr "Invoices for companies with fixed tax rate"
 
 msgid "Configuration_subtext_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
-msgstr "Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück."
+msgstr "Vat is calculated based on the sum of net price of the invoice."
 
 msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
-msgstr "Newsletter-Funktion aktiv?"
+msgstr "Newsletter enabled?"
 
 msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
-msgstr "Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a>"
+msgstr "Shows newsletter checkbox on registration."
 
 msgid "Configuration_text_FCS_USER_FEEDBACK_ENABLED"
-msgstr "Mitglieder- und Hersteller-Feedback aktiv?"
+msgstr "Member and manufacturer feedback enabled?"
 
 msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
-msgstr "Ermöglicht das Erfassen und Anzeigen von Feedback. <a href=\"https://foodcoopshop.github.io/de/user-feedback.html\" target=\"_blank\">Mehr Infos</a>"
-
-
+msgstr "Members and manufacturers can write feedback."

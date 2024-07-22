@@ -2854,3 +2854,252 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+msgid "Configuration_text_FCS_PRODUCT_AVAILABILITY_LOW"
+msgstr "Low availability"
+
+msgid "Configuration_subtext_FCS_PRODUCT_AVAILABILITY_LOW"
+msgstr "From which amount on there should be an information text visible \"(x available\")?"
+
+msgid "Configuration_text_FCS_DAYS_SHOW_PRODUCT_AS_NEW"
+msgstr "How many days products should be \"marked as new\"?"
+
+msgid "Configuration_text_FCS_FOOTER_CMS_TEXT"
+msgstr ""
+
+msgid "Configuration_text_FCS_FACEBOOK_URL"
+msgstr "Facebook url for embedding in footer"
+
+msgid "Configuration_text_FCS_REGISTRATION_EMAIL_TEXT"
+msgstr "Additional text that is sent in the registration e-mail after a successful registration."
+
+msgid "Configuration_subtext_FCS_REGISTRATION_EMAIL_TEXT"
+msgstr "<a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-mail preview<</a>"
+
+msgid "Configuration_text_FCS_RIGHT_INFO_BOX_HTML"
+msgstr "Content of the box in the right column below the shopping cart."
+
+msgid "Configuration_subtext_FCS_RIGHT_INFO_BOX_HTML"
+msgstr "To make the background of a row colored, please format as \"Heading 3\"."
+
+msgid "Configuration_text_FCS_NO_DELIVERY_DAYS_GLOBAL"
+msgstr "Delivery break for all manufacturers?"
+
+msgid "Configuration_subtext_FCS_NO_DELIVERY_DAYS_GLOBAL"
+msgstr "Here you can define delivery-free days for the whole food-coop."
+
+msgid "Configuration_text_FCS_ACCOUNTING_EMAIL"
+msgstr "E-mail address for the financial manager"
+
+msgid "Configuration_subtext_FCS_ACCOUNTING_EMAIL"
+msgstr "Who receives the notification that invoices have been sent?"
+
+msgid "Configuration_text_FCS_REGISTRATION_INFO_TEXT"
+msgstr "Info text in registration form"
+
+msgid "Configuration_subtext_FCS_REGISTRATION_INFO_TEXT"
+msgstr "This info text is shown in the registration form below the e-mail address."
+
+msgid "Configuration_text_FCS_SHOW_PRODUCTS_FOR_GUESTS"
+msgstr "Products visible for guests?"
+
+msgid "Configuration_text_FCS_DEFAULT_NEW_MEMBER_ACTIVE"
+msgstr "Automatically activate new members?"
+
+msgid "Configuration_text_FCS_MINIMAL_CREDIT_BALANCE"
+msgstr "Up to which credit amount orders should be possible?"
+
+msgid "Configuration_text_FCS_BANK_ACCOUNT_DATA"
+msgstr "Bank account for credit uploads."
+
+msgid "Configuration_text_FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS"
+msgstr "Additional deliverey details for manufacturers"
+
+msgid "Configuration_subtext_FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS"
+msgstr "will be shown in the order lists after the delivery date."
+
+msgid "Configuration_text_FCS_BACKUP_EMAIL_ADDRESS_BCC"
+msgstr "E-mail adress to which all automatically generated e-mail are sent to as BCC (Backup)."
+
+msgid "Configuration_subtext_FCS_BACKUP_EMAIL_ADDRESS_BCC"
+msgstr "Can be left empty."
+
+msgid "Configuration_text_FCS_SHOW_FOODCOOPSHOP_BACKLINK"
+msgstr "Show link to www.foodcoopshop.com?"
+
+msgid "Configuration_subtext_FCS_SHOW_FOODCOOPSHOP_BACKLINK"
+msgstr "The link is shown in the footer."
+
+msgid "Configuration_text_FCS_HOME_TEXT"
+msgstr "Text that is shown on the home page."
+
+msgid "Configuration_subtext_FCS_HOME_TEXT"
+msgstr "Optional."
+
+msgid "Configuration_text_FCS_APP_NAME"
+msgstr "Name of the food-coop"
+
+msgid "Configuration_text_FCS_APP_ADDRESS"
+msgstr "Address of the food-coop"
+
+msgid "Configuration_subtext_FCS_APP_ADDRESS"
+msgstr "Used in footer of homepage and e-mails, privacy policy and terms of use."
+
+msgid "Configuration_text_FCS_APP_EMAIL"
+msgstr "E-mail address of the food-coop"
+
+msgid "Configuration_text_FCS_PLATFORM_OWNER"
+msgstr "Operator of the platform"
+
+msgid "Configuration_subtext_FCS_PLATFORM_OWNER"
+msgstr "For privacy policy and terms of use, please also add adrress. Can be left empty if the food-coop itself is operator."
+
+msgid "Configuration_text_FCS_ORDER_COMMENT_ENABLED"
+msgstr "Show comment field when placing an order?"
+
+msgid "Configuration_subtext_FCS_ORDER_COMMENT_ENABLED"
+msgstr "Shown in the admin area \"Orders\"."
+
+msgid "Configuration_text_FCS_USE_VARIABLE_MEMBER_FEE"
+msgstr "Use variable member fee?"
+
+msgid "Configuration_subtext_FCS_USE_VARIABLE_MEMBER_FEE"
+msgstr "Reduce the variable member fee in the manufacturer\'s invoices? Therefore the prices need to be increased."
+
+msgid "Configuration_text_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
+msgstr "Default value for variable member fee"
+
+msgid "Configuration_subtext_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE"
+msgstr "The percentage can be changed in the manufacturer\'s settings."
+
+msgid "Configuration_text_FCS_NETWORK_PLUGIN_ENABLED"
+msgstr "Network module activated?"
+
+msgid "Configuration_subtext_FCS_NETWORK_PLUGIN_ENABLED"
+msgstr "<a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos to the network module</a>"
+
+msgid "Configuration_text_FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS"
+msgstr "Shop product price for guests?"
+
+msgid "Configuration_text_FCS_CURRENCY_SYMBOL"
+msgstr "Currency symbol"
+
+msgid "Configuration_text_FCS_DEFAULT_LOCALE"
+msgstr "Language"
+
+msgid "Configuration_text_FCS_FOODCOOPS_MAP_ENABLED"
+msgstr "Show map with other foodcoops on home?"
+
+msgid "Configuration_text_FCS_WEEKLY_PICKUP_DAY"
+msgstr "'Weekly pickup day"
+
+msgid "Configuration_text_FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA"
+msgstr "Sending of order lists: x days before pickup day"
+
+msgid "Configuration_text_FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM"
+msgstr "Allow weekly orders for stock products?"
+
+msgid "Configuration_text_FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS"
+msgstr "Only show stock products in instant orders?"
+
+msgid "Configuration_text_FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES"
+msgstr "Include stock products in invoices?"
+
+msgid "Configuration_text_FCS_REGISTRATION_NOTIFICATION_EMAILS"
+msgstr "Who should be notified on new registrations?"
+
+msgid "Configuration_subtext_FCS_REGISTRATION_NOTIFICATION_EMAILS"
+msgstr "Please separate multiple e-mail addresses with , (no space)."
+
+msgid "Configuration_text_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
+msgstr "Use self-service mode for stock products?"
+
+msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED"
+msgstr "<a href=\"https://foodcoopshop.github.io/selbstbedienungs-modus\" target=\"_blank\">Online documentation</a>"
+
+msgid "Configuration_text_FCS_APP_ADDITIONAL_DATA"
+msgstr "Additional food-coop infos"
+
+msgid "Configuration_text_FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED"
+msgstr "Run self-service mode in test mode?"
+
+msgid "Configuration_subtext_FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED"
+msgstr "Does not add links to main menu and to stock products.."
+
+msgid "Configuration_text_FCS_CASHLESS_PAYMENT_ADD_TYPE"
+msgstr "Type of adding the payments"
+
+msgid "Configuration_subtext_FCS_CASHLESS_PAYMENT_ADD_TYPE"
+msgstr "How do the payment addings get into FoodCoopShop?"
+
+msgid "Configuration_text_FCS_FEEDBACK_TO_PRODUCTS_ENABLED"
+msgstr "Are members allowed to write feedback to products?"
+
+msgid "Configuration_text_FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY"
+msgstr "Pickup day can be selected by member on order confirmation."
+
+msgid "Configuration_text_FCS_SEND_INVOICES_TO_CUSTOMERS"
+msgstr "Retail mode activated?"
+
+msgid "Configuration_subtext_FCS_SEND_INVOICES_TO_CUSTOMERS"
+msgstr "<a href=\"https://foodcoopshop.github.io/dorfladen-online\" target=\"_blank\">Online Documentation</a>"
+
+msgid "Configuration_text_FCS_DEPOSIT_TAX_RATE"
+msgstr "VAT rate for deposit"
+
+msgid "Configuration_text_FCS_INVOICE_HEADER_TEXT"
+msgstr "Header text for invoices to members"
+
+msgid "Configuration_text_FCS_MEMBER_FEE_PRODUCTS"
+msgstr "Which products are used as member fee product"
+
+msgid "Configuration_subtext_FCS_MEMBER_FEE_PRODUCTS"
+msgstr "The selected products are the basis for the column Member Fee in the members adminstration and are not shown in the turnover statistics."
+
+msgid "Configuration_text_FCS_CHECK_CREDIT_BALANCE_LIMIT"
+msgstr "Limit of credit saldo when the reminder email is sent."
+
+msgid "Configuration_text_FCS_PURCHASE_PRICE_ENABLED"
+msgstr "Enable input of purchase price?"
+
+msgid "Configuration_subtext_FCS_PURCHASE_PRICE_ENABLED"
+msgstr "The purchase price is the base for profit statistics and bill of delivery to manufacturers."
+
+msgid "Configuration_text_FCS_HELLO_CASH_API_ENABLED"
+msgstr "Enable API to hellocash.at?"
+
+msgid "Configuration_subtext_FCS_HELLO_CASH_API_ENABLED"
+msgstr "Invoices (cash and cashless) are generated by hellocash.at."
+
+msgid "Configuration_text_FCS_SAVE_STORAGE_LOCATION_FOR_PRODUCTS"
+msgstr "Save storage location for products?"
+
+msgid "Configuration_text_FCS_INSTAGRAM_URL"
+msgstr "Instagram-Url für die Einbindung im Footer"
+
+msgid "Configuration_text_FCS_ALLOW_ORDERS_FOR_DELIVERY_RHYTHM_ONE_OR_TWO_WEEKS_ONLY_IN_WEEK_BEFORE_DELIVERY"
+msgstr "Bestellungen beim ein- und zweiwöchigen Lieferhythmus sind nur in der Woche vor der Lieferung möglich."
+
+msgid "Configuration_text_FCS_INVOICE_NUMBER_PREFIX"
+msgstr "Präfix für Rechnungs-Nummernkreis"
+
+msgid "Configuration_subtext_FCS_INVOICE_NUMBER_PREFIX"
+msgstr "Max. 6 Zeichen inkl. Trennzeichen."
+
+msgid "Configuration_text_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
+msgstr "Rechnungslegung für pauschalierte Betriebe"
+
+msgid "Configuration_subtext_FCS_TAX_BASED_ON_NET_INVOICE_SUM"
+msgstr "Die Berechnung der Umsatzsteuer erfolgt auf Basis der Netto-Rechnungsumme und ist <b>nicht</b> die Summe der Umsatzsteuerbeträge pro Stück."
+
+msgid "Configuration_text_FCS_NEWSLETTER_ENABLED"
+msgstr "Newsletter-Funktion aktiv?"
+
+msgid "Configuration_subtext_FCS_NEWSLETTER_ENABLED"
+msgstr "Mitglieder können sich bei der Registrierung für den Newsletter anmelden. <a href=\"https://foodcoopshop.github.io/de/mitglieder.html#newsletter-funktion\" target=\"_blank\">Mehr Infos</a>"
+
+msgid "Configuration_text_FCS_USER_FEEDBACK_ENABLED"
+msgstr "Mitglieder- und Hersteller-Feedback aktiv?"
+
+msgid "Configuration_subtext_FCS_USER_FEEDBACK_ENABLED"
+msgstr "Ermöglicht das Erfassen und Anzeigen von Feedback. <a href=\"https://foodcoopshop.github.io/de/user-feedback.html\" target=\"_blank\">Mehr Infos</a>"
