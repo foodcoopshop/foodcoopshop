@@ -67,7 +67,7 @@ class MyNumberHelper extends NumberHelper
         return self::formatAsDecimal($amount, 3, true);
     }
 
-    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false, $minDecimals = null): string
+    public function formatAsDecimal(string|float|int $amount, $decimals = 2, $removeTrailingZeros = false, $minDecimals = null): string
     {
         $options = [
             'locale' => I18n::getLocale()
