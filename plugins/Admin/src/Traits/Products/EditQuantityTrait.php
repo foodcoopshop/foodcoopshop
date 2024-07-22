@@ -102,8 +102,13 @@ trait EditQuantityTrait
                 $newValue = $entity->get($dirtyField);
 
                 // quantity_limit was always logged (0 vs 0.000)
+                $originalValue = $oldProduct->stock_available->getOriginal($dirtyField);
+                if ($originalValue === null && $newValue === null) {
+                    continue;
+                }
+
                 if (Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) ==
-                    Configure::read('app.numberHelper')->formatAsDecimal($oldProduct->stock_available->getOriginal($dirtyField), 3)) {
+                    Configure::read('app.numberHelper')->formatAsDecimal($originalValue, 3)) {
                     continue;
                 }
 

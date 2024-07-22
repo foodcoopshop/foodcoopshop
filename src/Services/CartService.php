@@ -704,12 +704,20 @@ class CartService
 
             // send email to manufacturer
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
+
+                $productQuantityService = new ProductQuantityService();
+                $unitsTable = FactoryLocator::get('Table')->get('Units');
+                $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
+                $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
+                $unitName = !empty($unitObject) ? $unitObject->name : '';
+                $formattedAvailableQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitName);
+    
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
                     $cartProduct->order_detail->product_name,
-                    $stockAvailable->quantity
+                    $formattedAvailableQuantity,
                 ]))
                 ->setViewVars([
                     'identity' => $this->identity,

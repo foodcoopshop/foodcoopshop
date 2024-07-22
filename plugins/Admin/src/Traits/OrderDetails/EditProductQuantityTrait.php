@@ -91,7 +91,7 @@ trait EditProductQuantityTrait
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
         $unitsTable = FactoryLocator::get('Table')->get('Units');
-        $unitObject = $unitsTable->getUnitsObjectByOrderDetail($oldOrderDetail);
+        $unitObject = $unitsTable->getUnitsObject($oldOrderDetail->product_id, $oldOrderDetail->product_attribute_id);
 
         $productQuantityService = new ProductQuantityService();
         $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($oldOrderDetail->product, $unitObject);
