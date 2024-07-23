@@ -107,8 +107,7 @@ trait EditQuantityTrait
                     continue;
                 }
 
-                if (Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) ==
-                    Configure::read('app.numberHelper')->formatAsDecimal($originalValue, 3)) {
+                if ($originalValue !== null && (Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) == Configure::read('app.numberHelper')->formatAsDecimal($originalValue, 3))) {
                     continue;
                 }
 
