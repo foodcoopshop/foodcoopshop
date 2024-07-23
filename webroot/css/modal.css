@@ -307,9 +307,8 @@ body.iframe_self_service_order {
     width: 100%;
 }
 #modal-product-quantity-edit .calculator-toggle-button {
-    margin-left:5px;
     margin-top:3px;
-    float:left;
+    float:right;
 }
 #modal-product-quantity-edit .calculator-input {
     margin-left: 10px;
