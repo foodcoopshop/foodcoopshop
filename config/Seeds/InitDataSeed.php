@@ -81,6 +81,7 @@ class InitDataSeed extends AbstractSeed
             ('FCS_NEWSLETTER_ENABLED','0','boolean',3400),
             ('FCS_USER_FEEDBACK_ENABLED','0','boolean',3500);
             ";
+            // FCS_HOME_TEXT added in Migration AddConfigurationTextForHome
         $this->execute($query);
 
         $query = "
