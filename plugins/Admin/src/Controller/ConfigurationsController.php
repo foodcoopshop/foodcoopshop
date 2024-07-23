@@ -35,18 +35,18 @@ class ConfigurationsController extends AdminAppController
     protected SyncDomainsTable $SyncDomain;
     protected TaxesTable $Tax;
     
-    public function edit($configurationId)
+    public function edit($name)
     {
 
         $this->viewBuilder()->addHelper('Configuration');
 
-        if ($configurationId === null) {
+        if ($name === null) {
             throw new NotFoundException;
         }
 
         $this->Configuration = $this->getTableLocator()->get('Configurations');
         $configuration = $this->Configuration->find('all', conditions: [
-            'Configurations.id_configuration' => $configurationId
+            'Configurations.name' => $name,
         ])->first();
 
         if (empty($configuration)) {
@@ -104,7 +104,7 @@ class ConfigurationsController extends AdminAppController
             $configuration = $this->Configuration->save($configuration);
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
-            $this->ActionLog->customSave('configuration_changed', $this->identity->getId(), $configuration->id_configuration, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
+            $this->ActionLog->customSave('configuration_changed', $this->identity->getId(), 0, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
             $this->redirect($this->getPreparedReferer());
         }
 

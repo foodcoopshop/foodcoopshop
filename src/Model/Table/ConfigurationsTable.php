@@ -38,7 +38,7 @@ class ConfigurationsTable extends AppTable
     {
         $this->setTable('configuration');
         parent::initialize($config);
-        $this->setPrimaryKey('id_configuration');
+        $this->setPrimaryKey('name');
     }
 
     public function getVersion(): string
@@ -214,7 +214,7 @@ class ConfigurationsTable extends AppTable
             'active' => APP_ON
         ], $customConditions);
         $configurations = $this->find('all',
-        fields: ['id_configuration', 'name', 'value', 'type', 'text'],
+        fields: ['name', 'value', 'type'],
         conditions: $conditions,
         order: [
             'position' => 'ASC'

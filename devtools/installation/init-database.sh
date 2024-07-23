@@ -15,5 +15,8 @@ fi
 
 bash ./bin/cake migrations migrate -p Queue
 bash ./bin/cake migrations migrate
-bash ./bin/cake migrations seed --source Seeds/locale/$locale --seed InitDataSeed
 bash ./bin/cake migrations seed --seed InitDataSeed
+
+if [[ "$locale" != "de_DE" ]]; then
+    bash ./bin/cake migrations seed --source Seeds/locale/de_DE --seed InitDataSeed
+fi

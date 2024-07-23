@@ -187,11 +187,9 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function changeConfiguration(string $configKey, $value)
     {
-        $this->Configuration->setPrimaryKey('name');
         $configurationEntity = $this->Configuration->get($configKey);
         $configurationEntity->value = $value;
         $this->Configuration->save($configurationEntity);
-        $this->Configuration->setPrimaryKey('id_configuration');
         $this->Configuration->loadConfigurations();
         $this->logout();
     }
