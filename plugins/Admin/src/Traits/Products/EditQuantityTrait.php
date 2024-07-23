@@ -117,6 +117,7 @@ trait EditQuantityTrait
                         $translatedFieldName = __d('admin', 'Available_quantity') . ': '
                             . __d('admin', 'Old_value') . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $oldStockAvailable, $unitName) . '</b> '
                             . __d('admin', 'New_value');
+                        $newValue = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                     case 'always_available':
                         $translatedFieldName = __d('admin', 'Always_available');
