@@ -1070,6 +1070,9 @@ msgstr "Order possible until amount of"
 msgid "zero_or_smaller_zero"
 msgstr "0 or smaller than 0"
 
+msgid "Reason_for_change"
+msgstr "Reason for change"
+
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "For manufacturers and contact persons. Can be changed in the manufacturer settings."
 

@@ -1070,6 +1070,9 @@ msgstr "Bestellbar bis zu einer Anzahl von"
 msgid "zero_or_smaller_zero"
 msgstr "0 oder kleiner als 0"
 
+msgid "Reason_for_change"
+msgstr "Änderungsgrund"
+
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden."
 

@@ -40,6 +40,9 @@ msgstr "Blog-Artikel"
 msgid "Add_category"
 msgstr "Neue Kategorie erstellen"
 
+msgid "Reason_for_change"
+msgstr "Änderungsgrund"
+
 msgid "Edit_category"
 msgstr "Kategorie bearbeiten"
 

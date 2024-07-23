@@ -141,6 +141,12 @@ trait EditQuantityTrait
             }
 
             if (!empty($dirtyFieldsWithNewValues)) {
+
+                $changeReason = $this->getRequest()->getData('changeReason', '');
+                if ($changeReason != '') {
+                    $dirtyFieldsWithNewValues[] = __d('admin', 'Reason_for_change') . ': <b>' . $changeReason . '</b>';
+                }
+
                 $this->ActionLog->customSave(
                     'product_quantity_changed',
                     $this->identity->getId(),
