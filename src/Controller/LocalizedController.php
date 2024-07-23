@@ -302,6 +302,7 @@ class LocalizedController extends Controller
                 'AvailableAmount' => __('Available_amount'),
                 'OrdersPossibleUntilAmountOf' => __('Orders_possible_until_amount_of'),
                 'zeroOrSmallerZero' => __('zero_or_smaller_zero'),
+                'ReasonForChange' => __('Reason_for_change'),
                 'Manufacturer' => __('Manufacturer'),
                 'ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings' => __('For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings.'),
                 'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than'),

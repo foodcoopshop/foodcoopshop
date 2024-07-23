@@ -57,7 +57,7 @@ class ProductQuantityService
         return  Configure::read('app.numberHelper')->formatAsDecimal($amount, 0);
     }
 
-    public function changeStockAvailable($orderDetail, $increaseQuantity): int
+    public function changeStockAvailable($orderDetail, $increaseQuantity): int|float
     {
         $stockAvailablesTable = FactoryLocator::get('Table')->get('StockAvailables');
         $stockAvailable = $stockAvailablesTable->find('all', [

@@ -18,6 +18,8 @@ declare(strict_types=1);
 namespace App\Test\Fixture;
 
 use FriendsOfCake\Fixturize\TestSuite\Fixture\ChecksumTestFixture;
+use Cake\Datasource\ConnectionInterface;
+use Cake\Core\Configure;
 
 
 abstract class AppFixture extends ChecksumTestFixture {
@@ -64,6 +66,14 @@ abstract class AppFixture extends ChecksumTestFixture {
         'app.Taxes',
         'app.Units',
     ];
+
+    public function truncate(ConnectionInterface $connection): bool
+    {
+        if (Configure::read('app.testDebug')) {
+            return true;
+        }
+        return parent::truncate($connection);
+    }
 
 }
 ?>

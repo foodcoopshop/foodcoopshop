@@ -253,14 +253,14 @@ class SelfServiceControllerTest extends AppCakeTestCase
             'id_product' => 350,
             'id_product_attribute' => 15,
         ])->first();
-       $this->assertEquals(998.5, $stockAvailable->quantity);
+        $this->assertEquals(997.001, $stockAvailable->quantity);
 
         $stockAvailableTable = FactoryLocator::get('Table')->get('StockAvailables');
         $stockAvailable = $stockAvailableTable->find('all')->where([
             'id_product' => 351,
             'id_product_attribute' => 0,
         ])->first();
-        $this->assertEquals(998, $stockAvailable->quantity);
+        $this->assertEquals(998.49, $stockAvailable->quantity);
 
         $this->assertMailCount(1);
         $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');

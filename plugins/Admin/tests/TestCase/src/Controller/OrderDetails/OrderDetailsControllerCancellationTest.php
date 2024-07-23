@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
-use Cake\Datasource\FactoryLocator;
 
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
@@ -165,7 +164,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $unitEntityA = $unitsTable->get(8);
         $data = [
             'use_weight_as_amount' => 1,
-            'quantity_in_units' => 5,
+            'quantity_in_units' => 5.3,
         ];
         $patchedEntity = $unitsTable->patchEntity($unitEntityA, $data);
         $unitsTable->save($patchedEntity);
@@ -174,7 +173,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->addProductToCart($productId, 2);
         $this->finishCart(1, 1);
 
-        $this->assertChangedStockAvailable($productId, 989);
+        $this->assertChangedStockAvailable($productId, 988.4);
         $this->deleteAndAssertRemoveFromDatabase([4]);
         $this->assertChangedStockAvailable($productId, 999);
 

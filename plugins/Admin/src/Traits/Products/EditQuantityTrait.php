@@ -107,8 +107,7 @@ trait EditQuantityTrait
                     continue;
                 }
 
-                if (Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) ==
-                    Configure::read('app.numberHelper')->formatAsDecimal($originalValue, 3)) {
+                if ($originalValue !== null && (Configure::read('app.numberHelper')->formatAsDecimal($newValue, 3) == Configure::read('app.numberHelper')->formatAsDecimal($originalValue, 3))) {
                     continue;
                 }
 
@@ -117,6 +116,7 @@ trait EditQuantityTrait
                         $translatedFieldName = __d('admin', 'Available_quantity') . ': '
                             . __d('admin', 'Old_value') . ': <b>' . $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $oldStockAvailable, $unitName) . '</b> '
                             . __d('admin', 'New_value');
+                        $newValue = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $newValue, $unitName);
                         break;
                     case 'always_available':
                         $translatedFieldName = __d('admin', 'Always_available');
@@ -141,6 +141,12 @@ trait EditQuantityTrait
             }
 
             if (!empty($dirtyFieldsWithNewValues)) {
+
+                $changeReason = $this->getRequest()->getData('changeReason', '');
+                if ($changeReason != '') {
+                    $dirtyFieldsWithNewValues[] = __d('admin', 'Reason_for_change') . ': <b>' . $changeReason . '</b>';
+                }
+
                 $this->ActionLog->customSave(
                     'product_quantity_changed',
                     $this->identity->getId(),

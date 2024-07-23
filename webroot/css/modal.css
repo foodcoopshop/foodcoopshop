@@ -303,6 +303,9 @@ body.iframe_self_service_order {
 #modal-product-quantity-edit .calculator-output {
     float: left;
 }
+#modal-product-quantity-edit #dialogQuantityChangeReason {
+    width: 100%;
+}
 #modal-product-quantity-edit .calculator-toggle-button {
     margin-left:5px;
     margin-top:3px;

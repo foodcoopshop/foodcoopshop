@@ -63,12 +63,10 @@ foodcoopshop.ModalProductPriceEdit = {
         html += '<option value="l">l</option>';
         html += '</select><br />';
         html += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
-        if (isStockProduct) {
-            html += '<br /><label class="checkbox" style="margin-top:10px ! important;">';
-            html += '<input type="checkbox" name="dialogPriceUseWeightAsAmount" id="dialogPriceUseWeightAsAmount" />';
-            html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.dialogProduct.EditPriceUseWeightAsAmount + '</span>';
-            html += '</label>';
-        }
+        html += '<br /><label class="checkbox" style="margin-top:10px ! important;">';
+        html += '<input ' + (!isStockProduct ? 'disabled ' : '') + 'type="checkbox" name="dialogPriceUseWeightAsAmount" id="dialogPriceUseWeightAsAmount" />';
+        html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.dialogProduct.EditPriceUseWeightAsAmount + '</span>';
+        html += '</label>';
         html += '</div>';
         if (this.openOrderDetailPriceOnProductPriceChangeEnabled) {
             html += '<hr />';
