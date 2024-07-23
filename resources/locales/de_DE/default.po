@@ -2862,7 +2862,7 @@ msgid "Configuration_text_FCS_PRODUCT_AVAILABILITY_LOW"
 msgstr "Geringe Verfügbarkeit"
 
 msgid "Configuration_subtext_FCS_PRODUCT_AVAILABILITY_LOW"
-msgstr "Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?"
+msgstr "Ab welcher verfügbaren Produkt-Menge soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?"
 
 msgid "Configuration_text_FCS_DAYS_SHOW_PRODUCT_AS_NEW"
 msgstr "Wie viele Tage sollen Produkte \"als neu markiert\" bleiben?"
