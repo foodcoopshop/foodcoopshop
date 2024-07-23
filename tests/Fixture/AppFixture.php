@@ -19,6 +19,7 @@ namespace App\Test\Fixture;
 
 use FriendsOfCake\Fixturize\TestSuite\Fixture\ChecksumTestFixture;
 use Cake\Datasource\ConnectionInterface;
+use Cake\Core\Configure;
 
 
 abstract class AppFixture extends ChecksumTestFixture {
@@ -68,7 +69,9 @@ abstract class AppFixture extends ChecksumTestFixture {
 
     public function truncate(ConnectionInterface $connection): bool
     {
-        //return true; // for debugging - keeps test data in test database after test
+        if (Configure::read('app.testDebug')) {
+            return true;
+        }
         return parent::truncate($connection);
     }
 

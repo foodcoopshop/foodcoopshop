@@ -464,18 +464,18 @@ class CartService
             if ($decreaseQuantity) {
 
                 $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
-
-                if ((new OrderCustomerService())->isSelfServiceModeByUrl() && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
-                    $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
-                }
+                $productQuantityService = new ProductQuantityService();
 
                 $unitObject = $product->unit_product;
                 if ($attribute !== null) {
                     $unitObject = $attribute->unit_product_attribute;
                 }
-                if ((new ProductQuantityService())->isAmountBasedOnQuantityInUnits($product, $unitObject))
-                {
+                if ($productQuantityService->isAmountBasedOnQuantityInUnits($product, $unitObject)) {
                     $newQuantity = $stockAvailableQuantity - ($unitObject->quantity_in_units * $cartProduct['amount']);
+                }
+
+                if ($orderCustomerService->isSelfServiceModeByUrl() && isset($cartProduct['productQuantityInUnits']) && $cartProduct['productQuantityInUnits'] > 0) {
+                    $newQuantity = $stockAvailableQuantity - $cartProduct['productQuantityInUnits'];
                 }
 
                 $stockAvailable2saveData[] = [
