@@ -122,9 +122,7 @@ foodcoopshop.ModalProductQuantityEdit = {
         var row = button.closest('tr');
 
         var html;
-        let modalHeading = foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount;
         if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
-            modalHeading = foodcoopshop.LocalizedJs.dialogProduct.ChangeStock;
             var productId = row.find('td.cell-id').html();
             var unitObject = $('#product-unit-object-' + productId);
             let pricePerUnitEnabled = false;
@@ -143,7 +141,7 @@ foodcoopshop.ModalProductQuantityEdit = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            modalHeading,
+            foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount,
             html,
         );
 

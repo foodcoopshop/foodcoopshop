@@ -32,7 +32,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
         $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, -1, $this->editAmountReason);
-        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Die Anzahl ist nicht gültig.');
+        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Die Menge ist nicht gültig.');
     }
 
     public function testEditOrderDetailAmountAsManufacturer()
@@ -164,10 +164,10 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
     private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail)
     {
         $this->runAndAssertQueue();
-        $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Anzahl angepasst: Artischocke : Stück');
-        $this->assertMailContainsHtmlAt($emailIndex, 'Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde angepasst');
+        $this->assertMailSubjectContainsAt($emailIndex, 'Bestellte Menge angepasst: Artischocke : Stück');
+        $this->assertMailContainsHtmlAt($emailIndex, 'Die Menge des Produktes <b>Artischocke : Stück</b> wurde angepasst');
         $this->assertMailContainsHtmlAt($emailIndex, $this->editAmountReason);
-        $this->assertMailContainsHtmlAt($emailIndex, 'Neue Anzahl: <b>' . $this->newAmount . '</b>');
+        $this->assertMailContainsHtmlAt($emailIndex, 'Neue Menge: <b>' . $this->newAmount . '</b>');
         $this->assertMailContainsHtmlAt($emailIndex, 'Demo Gemüse-Hersteller');
         $this->assertMailSentToAt($emailIndex, $expectedToEmail);
     }

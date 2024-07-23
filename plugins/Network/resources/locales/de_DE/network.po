@@ -11,7 +11,7 @@ msgid "Stock_product"
 msgstr "Lagerprodukt"
 
 msgid "Amount"
-msgstr "Anzahl"
+msgstr "Menge"
 
 msgid "Price"
 msgstr "Preis"

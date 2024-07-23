@@ -9,7 +9,7 @@ class InitDataSeed extends AbstractSeed
     {
         $query = "
 INSERT INTO `fcs_configuration` VALUES
-(11,1,'FCS_PRODUCT_AVAILABILITY_LOW','Geringe Verfügbarkeit<br /><div class=\"small\">Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?</div>','10','number',600,'de_DE','2017-07-26 13:24:47','2014-06-01 01:40:34'),
+(11,1,'FCS_PRODUCT_AVAILABILITY_LOW','Geringe Verfügbarkeit<br /><div class=\"small\">Ab welcher verfügbaren Produkt-Menge soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?</div>','10','number',600,'de_DE','2017-07-26 13:24:47','2014-06-01 01:40:34'),
 (31,1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','Wie viele Tage sollen Produkte \"als neu markiert\" bleiben?','7','number',700,'de_DE','2017-07-26 13:24:47','2014-05-14 21:15:45'),
 (456,1,'FCS_FOOTER_CMS_TEXT','Zusätzlicher Text für den Footer',NULL,'textarea_big',920,'de_DE','2014-06-11 17:50:55','2016-07-01 21:47:47'),
 (508,1,'FCS_FACEBOOK_URL','Facebook-Url für die Einbindung im Footer','https://www.facebook.com/FoodCoopShop/','text',910,'de_DE','2015-07-08 13:23:54','2015-07-08 13:23:54'),

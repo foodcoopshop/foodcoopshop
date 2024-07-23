@@ -452,7 +452,7 @@ msgid "The_same_member_must_not_be_selected."
 msgstr "Bitte wähle ein anderes Mitglied aus."
 
 msgid "The_amount_is_not_valid."
-msgstr "Die Anzahl ist nicht gültig."
+msgstr "Die Menge ist nicht gültig."
 
 msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
@@ -461,7 +461,7 @@ msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
 
 msgid "Amount"
-msgstr "Anzahl"
+msgstr "Menge"
 
 msgid "Assigned_to_another_member"
 msgstr "Auf ein anderes Mitglied umgebucht"
@@ -482,10 +482,10 @@ msgid "{0,plural,=1{1_customer} other{#_customers}}_were_notified."
 msgstr "{0,plural,=1{Ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
 
 msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
-msgstr "Die Anzahl des bestellten Produktes {0} wurde erfolgreich von {1} auf {2} angepasst."
+msgstr "Die Menge des bestellten Produktes {0} wurde erfolgreich von {1} auf {2} angepasst."
 
 msgid "Ordered_amount_adapted"
-msgstr "Bestellte Anzahl angepasst"
+msgstr "Bestellte Menge angepasst"
 
 msgid "The_name_of_the_ordered_product_{0}_was_successfully_changed_to_{1}."
 msgstr "Der Name des bestellten Produktes {0} wurde erfolgreich auf {1} geändert."
@@ -494,7 +494,7 @@ msgid "The_price_is_not_valid."
 msgstr "Der Preis ist nicht gültig."
 
 msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
+msgstr "Der Preis des bestellten Produktes {0} (Menge: {1}) wurde erfolgreich von {2} auf {3} angepasst."
 
 msgid "Ordered_price_adapted"
 msgstr "Preis angepasst"
@@ -506,7 +506,7 @@ msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
 msgstr "Der neue Preis wäre {0} für {1}. Bitte überprüfe die Einheit."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
-msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
+msgstr "Das Gewicht des bestellten Produktes {0} (Menge: {1}) wurde erfolgreich von {2} auf {3} angepasst."
 
 msgid "Weight_adapted_for_\"0\":"
 msgstr "Gewicht angepasst für \"{0}\":"
@@ -662,7 +662,7 @@ msgid "The_purchase_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_f
 msgstr "Der Einkaufspreis des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
-msgstr "Die Anzahl des Produktes {0} wurde erfolgreich geändert."
+msgstr "Die Menge des Produktes {0} wurde erfolgreich geändert."
 
 msgid "Available_quantity"
 msgstr "Verfügbare Menge"
@@ -683,19 +683,19 @@ msgid "no"
 msgstr "nein"
 
 msgid "Default_quantity_after_sending_order_lists"
-msgstr "Standard-Anzahl pro Lieferrhythmus"
+msgstr "Standard-Menge pro Lieferrhythmus"
 
 msgid "empty"
 msgstr "leer"
 
 msgid "Quantity_limit"
-msgstr "Bestellbar bis zu einer Anzahl von"
+msgstr "Bestellbar bis zu einer Menge von"
 
 msgid "Sold_out_limit"
-msgstr "E-Mail-Benachrichtigung ab Anzahl"
+msgstr "E-Mail-Benachrichtigung ab Menge"
 
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
-msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde geändert: {2}."
+msgstr "Die Menge des Produktes {0} vom Hersteller {1} wurde geändert: {2}."
 
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deactivated."
 msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} deaktiviert."
@@ -1580,10 +1580,10 @@ msgid "to_receive_an_email_on_every_adaption_of_price_of_a_ordered_product."
 msgstr "bei jeder Preisanpassung eines bereits bestellten Produktes eine Info-Mail erhalten."
 
 msgid "Adaptions_of_the_ordered_amount"
-msgstr "Änderungen der bestellten Anzahl"
+msgstr "Änderungen der bestellten Menge"
 
 msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product."
-msgstr "bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine Info-Mail erhalten."
+msgstr "bei jeder Änderung der Menge eines bereits bestellten Produktes eine Info-Mail erhalten."
 
 msgid "Instant_orders"
 msgstr "Sofort-Bestellungen"
@@ -1852,9 +1852,6 @@ msgstr "Hersteller auswählen..."
 msgid "chose_category..."
 msgstr "Kategorie auswählen..."
 
-msgid "amount"
-msgstr "Anzahl"
-
 msgid "price"
 msgstr "Preis"
 
@@ -2054,7 +2051,7 @@ msgid "Multiple_pickup_days"
 msgstr "Mehrere Abholtage"
 
 msgid "Click_to_change_amount"
-msgstr "Zum Ändern der Anzahl anklicken"
+msgstr "Zum Ändern der Menge anklicken"
 
 msgid "Click_to_cancel_product"
 msgstr "Zum Stornieren des Produktes anklicken"
@@ -2171,7 +2168,7 @@ msgid "Add_new_attribute_for_product_{0}"
 msgstr "Neue Variante für Produkt {0} erstellen"
 
 msgid "change_amount"
-msgstr "Anzahl ändern"
+msgstr "Menge ändern"
 
 msgid "This_product_is_always_available."
 msgstr "Dieses Produkt ist immer verfügbar."
@@ -2300,19 +2297,19 @@ msgid "Click_here_to_open_the"
 msgstr "Hier geht's zur"
 
 msgid "The_amount_of_the_product_{0}_has_been_adapted."
-msgstr "Die Anzahl des Produktes {0} wurde angepasst."
+msgstr "Die Menge des Produktes {0} wurde angepasst."
 
 msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
 msgstr "Du hast es am {0} beim Hersteller {1} bestellt."
 
 msgid "Old_amount"
-msgstr "Alte Anzahl"
+msgstr "Alte Menge"
 
 msgid "New_amount"
-msgstr "Neue Anzahl"
+msgstr "Neue Menge"
 
 msgid "Why_has_the_amount_been_adpated?"
-msgstr "Warum wurde die Anzahl angepasst?"
+msgstr "Warum wurde die Menge angepasst?"
 
 msgid "PS:_Your_credit_has_been_adapted_automatically."
 msgstr "PS: Dein Guthaben wurde automatisch angepasst."

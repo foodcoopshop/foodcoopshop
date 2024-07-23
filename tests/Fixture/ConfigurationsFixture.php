@@ -26,7 +26,7 @@ class ConfigurationsFixture extends AppFixture
             'id_configuration' => 11,
             'active' => 1,
             'name' => 'FCS_PRODUCT_AVAILABILITY_LOW',
-            'text' => 'Geringe Verfügbarkeit<br /><div class="small">Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis "(x verfügbar") angezeigt werden?',
+            'text' => 'Geringe Verfügbarkeit<br /><div class="small">Ab welcher verfügbaren Produkt-Menge soll beim Bestellen der Hinweis "(x verfügbar") angezeigt werden?',
             'value' => '10',
             'type' => 'number',
             'position' => 600,

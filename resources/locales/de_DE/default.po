@@ -548,16 +548,16 @@ msgid "Email_addresses"
 msgstr "E-Mail-Adressen"
 
 msgid "Decrease_amount"
-msgstr "Anzahl vermindern"
+msgstr "Menge vermindern"
 
 msgid "Stock"
 msgstr "Lagerstand"
 
 msgid "New_amount"
-msgstr "Neue Anzahl"
+msgstr "Neue Menge"
 
 msgid "Why_is_amount_decreased_(mandatory_field)?"
-msgstr "Warum wird Anzahl vermindert (Pflichtfeld)?"
+msgstr "Warum wird die Menge vermindert (Pflichtfeld)?"
 
 msgid "Adapt_price?"
 msgstr "Preis anpassen?"
@@ -632,7 +632,7 @@ msgid "You_selected_{0}_products."
 msgstr "Du hast {0} Produkte markiert."
 
 msgid "Adapt_amount_reason_is_mandatory."
-msgstr "Bitte gib an, warum die Anzahl vermindert wird."
+msgstr "Bitte gib an, warum die Menge vermindert wird."
 
 msgid "Adapt_price_reason_is_mandatory."
 msgstr "Bitte gib an, warum der Preis angepasst wird."
@@ -743,7 +743,7 @@ msgid "Date"
 msgstr "Datum"
 
 msgid "Amount"
-msgstr "Anzahl"
+msgstr "Menge"
 
 msgid "Amount_(Money)"
 msgstr "Betrag"
@@ -882,7 +882,7 @@ msgid "Please_select_a_member."
 msgstr "Bitte wähle ein Mitglied aus."
 
 msgid "Amount_that_should_be_changed_to_member?"
-msgstr "Welche Anzahl soll umgebucht werden?"
+msgstr "Welche Menge soll umgebucht werden?"
 
 msgid "Please_select..."
 msgstr "Bitte auswählen..."
@@ -978,7 +978,7 @@ msgid "Change_group"
 msgstr "Gruppe ändern"
 
 msgid "Change_amount"
-msgstr "Anzahl ändern"
+msgstr "Menge ändern"
 
 msgid "Change_stock"
 msgstr "Lagerstand ändern"
@@ -1065,7 +1065,7 @@ msgid "Available_amount"
 msgstr "Verfügbare Menge"
 
 msgid "Orders_possible_until_amount_of"
-msgstr "Bestellbar bis zu einer Anzahl von"
+msgstr "Bestellbar bis zu einer Menge von"
 
 msgid "zero_or_smaller_zero"
 msgstr "0 oder kleiner als 0"
@@ -1080,7 +1080,7 @@ msgid "Minimal_stock_amount"
 msgstr "Mindestlagerstand"
 
 msgid "Notification_if_amount_lower_than"
-msgstr "E-Mail-Benachrichtigung ab Anzahl"
+msgstr "E-Mail-Benachrichtigung ab Menge"
 
 msgid "Is_product_a_stock_product?"
 msgstr "Ist das Produkt ein Lagerprodukt?"
@@ -1131,10 +1131,10 @@ msgid "Is_the_product_always_available?"
 msgstr "Produkt immer verfügbar?"
 
 msgid "Default_quantity_after_sending_order_lists"
-msgstr "Standard-Anzahl pro Lieferrhythmus"
+msgstr "Standard-Menge pro Lieferrhythmus"
 
 msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
-msgstr "Nach jedem Bestelllisten-Versand wird die verfügbare Anzahl automatisch wieder auf diesen Wert gesetzt. Zum Deaktivieren leer lassen.<br /><b>Der Bestelllisten-Versand muss aktiviert sein (in den Hersteller-Einstellungen)!</b>"
+msgstr "Nach jedem Bestelllisten-Versand wird die verfügbare Menge automatisch wieder auf diesen Wert gesetzt. Zum Deaktivieren leer lassen.<br /><b>Der Bestelllisten-Versand muss aktiviert sein (in den Hersteller-Einstellungen)!</b>"
 
 msgid "Enter_purchase_price"
 msgstr "Einkaufspreis eintragen"
@@ -1192,9 +1192,6 @@ msgstr "Bild"
 
 msgid "Name_additional_info"
 msgstr "Name, Einheit, Beschreibungen, Produkt-Deklaration"
-
-msgid "Quantity"
-msgstr "Anzahl"
 
 msgid "Price"
 msgstr "Preis"
@@ -1302,7 +1299,7 @@ msgid "Action_Log_Product_activated"
 msgstr "Produkt: aktiviert"
 
 msgid "Action_Log_Product_quantity_changed"
-msgstr "Produkt: Anzahl geändert"
+msgstr "Produkt: Menge geändert"
 
 msgid "Action_Log_Product_purchase_price_changed"
 msgstr "Produkt: Einkaufspreis geändert"
@@ -1374,7 +1371,7 @@ msgid "Action_Log_Order_detail_product_quantity_changed"
 msgstr "Bestelltes Produkt: Gewicht geändert"
 
 msgid "Action_Log_Order_detail_product_amount_changed"
-msgstr "Bestelltes Produkt: Anzahl geändert"
+msgstr "Bestelltes Produkt: Menge geändert"
 
 msgid "Action_Log_Order_detail_customer_changed"
 msgstr "Bestelltes Produkt: Auf ein anderes Mitglied umgebucht"
@@ -1860,22 +1857,22 @@ msgid "Field:_Stock"
 msgstr "Feld: Lagerstand / verfügbare Menge"
 
 msgid "The_quantity_limit_needs_to_be_a_number."
-msgstr "Die bestellbar-bis-Anzahl muss eine Zahl sein."
+msgstr "Die bestellbar-bis-Menge muss eine Zahl sein."
 
 msgid "Field:_Order_possible_until"
-msgstr "Feld: Bestellbar bis zu einer Anzahl von"
+msgstr "Feld: Bestellbar bis zu einer Menge von"
 
 msgid "The_sold_out_quantity_needs_to_be_a_number."
-msgstr "Die Anzahl für die E-Mail-Benachrichtigung muss eine Zahl sein."
+msgstr "Die Menge für die E-Mail-Benachrichtigung muss eine Zahl sein."
 
 msgid "Field:_Notification_if_quantity_limit_reached"
 msgstr "Feld: E-Mail-Benachrichtigung"
 
 msgid "The_default_quantity_after_sending_order_lists_needs_to_be_a_number."
-msgstr "Standard-Anzahl pro Lieferrhythmus muss eine Zahl sein."
+msgstr "Standard-Menge pro Lieferrhythmus muss eine Zahl sein."
 
 msgid "Field:_Default_quantity_after_sending_order_lists"
-msgstr "Feld: Standard-Anzahl pro Lieferrhythmus"
+msgstr "Feld: Standard-Menge pro Lieferrhythmus"
 
 msgid "Please_enter_a_tax_rate."
 msgstr "Bitte gib einen Steuersatz ein."
@@ -1893,10 +1890,10 @@ msgid "The_name_is_not_valid."
 msgstr "Der Name ist nicht erlaubt."
 
 msgid "The_amount_(quantity)_needs_to_be_a_number."
-msgstr "Die Anzahl muss eine Zahl sein."
+msgstr "Die Menge muss eine Zahl sein."
 
 msgid "The_amount_(quantity)_needs_to_be_greater_than_0."
-msgstr "Die Anzahl muss größer als 0 sein."
+msgstr "Die Menge muss größer als 0 sein."
 
 msgid "The_approximate_weight_needs_to_be_a_number."
 msgstr "Das ungefähre Liefergewicht muss eine Zahl sein."
@@ -1980,7 +1977,7 @@ msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr "Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {0}, du kannst bis {1} bestellen."
 
 msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr "Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+msgstr "Bitte ändere die Menge oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
 
 msgid "The_product_{0}_cannot_be_ordered_any_more_due_to_interal_reasons."
 msgstr "Das Produkt {0} kann aufgrund von fehlenden Produktdaten zur Zeit leider nicht bestellt werden."
@@ -2784,7 +2781,7 @@ msgid "Product_orders_possible_until:"
 msgstr "Weitere Bestellungen möglich bis zu einem Lagerstand von:"
 
 msgid "This_notification_triggered_if_stock_available_is_less_than:"
-msgstr "Diese E-Mail-Benachrichtigung wird verschickt, sobald diese Anzahl erreicht ist:"
+msgstr "Diese E-Mail-Benachrichtigung wird verschickt, sobald diese Menge erreicht ist:"
 
 msgid "Click_here_to_edit_the_product."
 msgstr "Hier kannst du das Produkt bearbeiten."
