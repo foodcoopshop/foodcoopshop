@@ -1011,7 +1011,7 @@ msgid "Edit_price_change_open_order_details_info_text"
 msgstr "Preise von noch nicht verrechneten Bestellungen mit anpassen?"
 
 msgid "Edit_price_use_weight_as_amount"
-msgstr "Lagerstand über das Gewicht berechnen?"
+msgstr "Lagerstand über das Gewicht berechnen (nur für Lagerprodukte)?"
 
 msgid "Name"
 msgstr "Name"
