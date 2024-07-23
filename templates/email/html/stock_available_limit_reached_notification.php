@@ -35,16 +35,16 @@ use Cake\Core\Configure;
                         }
                     ?>
                     <?php echo __('Product') . ': <b>' . $cartProduct->order_detail->product_name . '</b><br />'; ?>
-                    <?php echo __('Units_on_stock:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->quantity, 0) . '</b>'; ?><br />
+                    <?php echo __('Units_on_stock:') . ' <b>' . $formattedQuantity . '</b>'; ?><br />
                     <?php
                         if ($stockAvailable->quantity_limit == $stockAvailable->quantity) {
                             echo __('Product_orders_are_not_possible_any_more!');
                         } else {
-                            echo __('Product_orders_possible_until:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->quantity_limit, 0) . '</b>';
+                            echo __('Product_orders_possible_until:') . ' <b>' . $formattedQuantityLimit . '</b>';
                         }
                     ?>
                     <br />
-                    <?php echo __('This_notification_triggered_if_stock_available_is_less_than:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->sold_out_limit, 0) . '</b>'; ?>
+                    <?php echo __('This_notification_triggered_if_stock_available_is_less_than:') . ' <b>' . $formattedSoldOutLimit . '</b>'; ?>
                 </p>
                 <p>
                     <a href="<?php echo Configure::read('App.fullBaseUrl').$productEditLink; ?>"><?php echo __('Click_here_to_edit_the_product.'); ?></a>

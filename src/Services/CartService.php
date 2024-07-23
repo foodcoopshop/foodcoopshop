@@ -192,7 +192,7 @@ class CartService
                         Configure::read('app.numberHelper')->formatAsCurrency($this->identity->getProductSum()),
                     ]);
                 } else {
-                    $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
+                    $this->sendConfirmationEmailToCustomerSelfService($cart);
                 }
                 break;
         }
@@ -710,14 +710,16 @@ class CartService
                 $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
                 $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
                 $unitName = !empty($unitObject) ? $unitObject->name : '';
-                $formattedAvailableQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitName);
+                $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitName);
+                $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity_limit, $unitName);
+                $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->sold_out_limit, $unitName);
     
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
                     $cartProduct->order_detail->product_name,
-                    $formattedAvailableQuantity,
+                    $formattedQuantity,
                 ]))
                 ->setViewVars([
                     'identity' => $this->identity,
@@ -725,6 +727,9 @@ class CartService
                     'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin(null, $cartProduct->product->id_product),
                     'cartProduct' => $cartProduct,
                     'stockAvailable' => $stockAvailable,
+                    'formattedQuantity' => $formattedQuantity,
+                    'formattedQuantityLimit' => $formattedQuantityLimit,
+                    'formattedSoldOutLimit' => $formattedSoldOutLimit,
                     'manufacturer' => $cartProduct->product->manufacturer,
                     'showManufacturerUnsubscribeLink' => true
                 ]);
@@ -738,7 +743,7 @@ class CartService
                 $email->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
                     $cartProduct->order_detail->product_name,
-                    $stockAvailable->quantity
+                    $formattedQuantity,
                 ]))
                 ->setViewVars([
                     'identity' => $this->identity,
@@ -746,6 +751,9 @@ class CartService
                     'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin($cartProduct->product->id_manufacturer, $cartProduct->product->id_product),
                     'cartProduct' => $cartProduct,
                     'stockAvailable' => $stockAvailable,
+                    'formattedQuantity' => $formattedQuantity,
+                    'formattedQuantityLimit' => $formattedQuantityLimit,
+                    'formattedSoldOutLimit' => $formattedSoldOutLimit,
                     'manufacturer' => $cartProduct->product->manufacturer,
                     'showManufacturerName' => true,
                     'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('App.fullBaseUrl') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
@@ -757,7 +765,7 @@ class CartService
 
     }
 
-    private function sendConfirmationEmailToCustomerSelfService($cart, $products)
+    private function sendConfirmationEmailToCustomerSelfService($cart)
     {
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');
