@@ -19,20 +19,22 @@ class InitDataSeed extends AbstractSeed
         foreach($translatedConfigurationValuesMap as $configurationName => $value) {
             $this->execute("UPDATE fcs_configuration SET value = '$value' WHERE name = '$configurationName';");
         }
+ 
+        $translatedStorageLocationValuesMap = [
+            1 => 'No cooling',
+            2 => 'Refrigerator',
+            3 => 'Freezer',
+        ];
+        foreach($translatedStorageLocationValuesMap as $id => $name) {
+            $this->execute("UPDATE fcs_storage_locations SET name = '$value' WHERE id = '$id';");
+        }
 
-        $query = "
-            INSERT INTO `fcs_storage_locations` VALUES
-            (1,'No cooling',10),
-            (2,'Refrigerator',20),
-            (3,'Freezer',30);
-        ";
-        $this->execute($query);
-
-        $query = "
-            INSERT INTO `fcs_category` VALUES
-            (20,2,'All Products','',3,4,1,'2016-10-19 21:05:00','2016-10-19 21:05:00');
-        ";
-        $this->execute($query);
+        $translatedCategoryValuesMap = [
+            20 => 'All Products',
+        ];
+        foreach($translatedCategoryValuesMap as $id => $name) {
+            $this->execute("UPDATE fcs_category SET name = '$name' WHERE id_category = '$id';");
+        }
 
     }
 }
