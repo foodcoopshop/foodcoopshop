@@ -702,17 +702,17 @@ class CartService
 
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
 
+            $productQuantityService = new ProductQuantityService();
+            $unitsTable = FactoryLocator::get('Table')->get('Units');
+            $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
+            $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
+            $unitName = !empty($unitObject) ? $unitObject->name : '';
+            $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitName);
+            $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity_limit, $unitName);
+            $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->sold_out_limit, $unitName);
+
             // send email to manufacturer
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
-
-                $productQuantityService = new ProductQuantityService();
-                $unitsTable = FactoryLocator::get('Table')->get('Units');
-                $unitObject = $unitsTable->getUnitsObject($cartProduct->id_product, $cartProduct->id_product_attribute);
-                $isAmountBasedOnQuantityInUnits = $productQuantityService->isAmountBasedOnQuantityInUnits($cartProduct->product, $unitObject);
-                $unitName = !empty($unitObject) ? $unitObject->name : '';
-                $formattedQuantity = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity, $unitName);
-                $formattedQuantityLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->quantity_limit, $unitName);
-                $formattedSoldOutLimit = $productQuantityService->getFormattedAmount($isAmountBasedOnQuantityInUnits, $stockAvailable->sold_out_limit, $unitName);
     
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
